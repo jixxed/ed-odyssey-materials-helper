@@ -10,7 +10,6 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -49,7 +48,7 @@ public class HorizonsWishlist {
                             .filter(wishlist -> wishlist != HorizonsWishlist.ALL)
                             .flatMap(wishlist -> wishlist.getItems().stream())
                             .toList())
-                    .orElse(Collections.unmodifiableList(this.items));
+                    .orElseGet(() -> new ArrayList<>(this.items));
         }
         return this.items;
     }

@@ -196,13 +196,15 @@ public class OdysseyWishlistTab extends OdysseyTab implements DestroyableEventTe
                                             .build();
                                     final DestroyableHBox popOverContent = BoxBuilder.builder()
                                             .withNodes(textField, button).buildHBox();
-                                    final PopOver popOver = new PopOver(BoxBuilder.builder()
-                                            .withStyleClass("popover-menubutton-box")
-                                            .withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox());
-                                    popOver.setDetachable(false);
-                                    popOver.setHeaderAlwaysVisible(false);
-                                    popOver.getStyleClass().add("popover-menubutton-layout");
-                                    popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
+                                    final DestroyablePopOver popOver = PopOverBuilder.builder()
+                                            .withStyleClass("popover-menubutton-layout")
+                                            .withContent(BoxBuilder.builder()
+                                                    .withStyleClass("popover-menubutton-box")
+                                                    .withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox())
+                                            .withDetachable(false)
+                                            .withHeaderAlwaysVisible(false)
+                                            .withArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER)
+                                            .build();
                                     popOver.show(this.menuButton);
                                     button.setOnAction(eventB -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                                         final Wishlists wishlists = WishlistService.getWishlists(commander);
@@ -228,13 +230,15 @@ public class OdysseyWishlistTab extends OdysseyTab implements DestroyableEventTe
                                             .build();
                                     final DestroyableHBox popOverContent = BoxBuilder.builder()
                                             .withNodes(textField, button).buildHBox();
-                                    final PopOver popOver = new PopOver(BoxBuilder.builder()
-                                            .withStyleClass("popover-menubutton-box")
-                                            .withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox());
-                                    popOver.setDetachable(false);
-                                    popOver.setHeaderAlwaysVisible(false);
-                                    popOver.getStyleClass().add("popover-menubutton-layout");
-                                    popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
+                                    final DestroyablePopOver popOver = PopOverBuilder.builder()
+                                            .withStyleClass("popover-menubutton-layout")
+                                            .withContent(BoxBuilder.builder()
+                                                    .withStyleClass("popover-menubutton-box")
+                                                    .withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox())
+                                            .withDetachable(false)
+                                            .withHeaderAlwaysVisible(false)
+                                            .withArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER)
+                                            .build();
                                     popOver.show(this.menuButton);
                                     button.setOnAction(eventB -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                                         final Wishlists wishlists = WishlistService.getWishlists(commander);
@@ -341,13 +345,16 @@ public class OdysseyWishlistTab extends OdysseyTab implements DestroyableEventTe
                         .withStyleClass("wishlist-hint-white")
                         .withText("tab.wishlist.material.hint.green.explain")
                         .build()).buildHBox();
-
-        final PopOver popOverMaterials = new PopOver();
-        final DestroyableVBox contentNodeMaterials = BoxBuilder.builder()
+        final DestroyableVBox contentNodeMaterials = BoxBuilder.builder().withStyleClass("help-popover")
                 .withNodes(this.materialHintRed, this.materialHintYellow, this.materialHintGreen).buildVBox();
-        contentNodeMaterials.getStyleClass().add("help-popover");
-        popOverMaterials.setContentNode(contentNodeMaterials);
-        popOverMaterials.setDetachable(false);
+        final DestroyablePopOver popOverMaterials = PopOverBuilder.builder()
+                .withStyleClass("popover-menubutton-layout")
+                .withContent(contentNodeMaterials)
+                .withDetachable(false)
+                .withHeaderAlwaysVisible(false)
+                .withArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER)
+                .build();
+
         this.materialsHelp = ResizableImageViewBuilder.builder()
                 .withOnMouseClicked(event -> {
                     popOverMaterials.show(this.materialsHelp, event.getScreenX(), event.getScreenY());
@@ -386,12 +393,17 @@ public class OdysseyWishlistTab extends OdysseyTab implements DestroyableEventTe
                         .withStyleClass("wishlist-hint-white")
                         .withText("tab.wishlist.selected.blueprints.hint.green.explain")
                         .build()).buildHBox();
-        final PopOver popOver = new PopOver();
         final DestroyableVBox contentNode = BoxBuilder.builder()
-                .withNodes(this.selectedBlueprintsHintWhite, this.selectedBlueprintsHintYellow, this.selectedBlueprintsHintGreen).buildVBox();
-        contentNode.getStyleClass().add("help-popover");
-        popOver.setContentNode(contentNode);
-        popOver.setDetachable(false);
+                .withStyleClass("help-popover")
+                .withNodes(this.selectedBlueprintsHintWhite, this.selectedBlueprintsHintYellow, this.selectedBlueprintsHintGreen)
+                .buildVBox();
+        final DestroyablePopOver popOver = PopOverBuilder.builder()
+                .withStyleClass("popover-menubutton-layout")
+                .withContent(contentNode)
+                .withDetachable(false)
+                .withHeaderAlwaysVisible(false)
+                .withArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER)
+                .build();
         this.blueprintsHelp = ResizableImageViewBuilder.builder()
                 .withOnMouseClicked(event -> {
                     popOver.show(this.blueprintsHelp, event.getScreenX(), event.getScreenY());

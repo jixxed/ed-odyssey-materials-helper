@@ -78,8 +78,8 @@ public class ApplicationLayout extends DestroyableAnchorPane implements Destroya
                 .withSelectedTab(PreferencesService.getPreference(PreferenceConstants.SELECTED_TAB_MAIN, 0))
                 .withSelectedItemListener((_, _, newValue) -> PreferencesService.setPreference(PreferenceConstants.SELECTED_TAB_MAIN, this.tabsMain.getTabs().indexOf(newValue)))
                 .build();
-        this.tabsMain.addBinding(this.tabsMain.minWidthProperty(), this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)));
-        this.tabsMain.addBinding(this.tabsMain.maxWidthProperty(), this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)));
+        this.tabsMain.addBinding(this.tabsMain.tabMinWidthProperty(), this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)));
+        this.tabsMain.addBinding(this.tabsMain.tabMaxWidthProperty(), this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)));
         AnchorPaneHelper.setAnchor(this.tabsMain, 0.0, ScalingHelper.getPixelDoubleFromEm(2D), 0.0, 0.0);
 //        this.tabsMain.getStyleClass().add("tab-main");
 //        this.tabsMain.setSide(Side.LEFT);

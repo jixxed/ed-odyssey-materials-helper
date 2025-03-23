@@ -5,6 +5,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
@@ -25,6 +26,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.math.BigInteger;
 
+@Slf4j
 public class HorizonsCommodityCard extends DestroyableStackPane implements DestroyableEventTemplate {
     @Getter
     private Integer fleetcarrierAmount;
@@ -163,7 +165,7 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
         StackPane.setAlignment(rareImage, Pos.TOP_RIGHT);
         StackPane.setAlignment(market, Pos.BOTTOM_CENTER);
         updateStyle();
-
+        this.setOnMouseEntered(event -> log.info("Mouse entered"));
         MaterialService.addMaterialInfoPopOver(this, this.commodity, false);
 
     }

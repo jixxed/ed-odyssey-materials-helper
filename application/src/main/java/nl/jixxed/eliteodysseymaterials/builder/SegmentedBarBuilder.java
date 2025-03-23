@@ -35,7 +35,8 @@ public class SegmentedBarBuilder<T extends SegmentedBar.Segment & Destroyable> e
         this.infoNodeFactory = infoNodeFactory;
         return this;
     }
-    public SegmentedBarBuilder<T>  withSegmentViewFactory(Callback<T, Node> segmentViewFactory) {
+
+    public SegmentedBarBuilder<T> withSegmentViewFactory(Callback<T, Node> segmentViewFactory) {
         this.segmentViewFactory = segmentViewFactory;
         return this;
     }
@@ -45,19 +46,20 @@ public class SegmentedBarBuilder<T extends SegmentedBar.Segment & Destroyable> e
         final DestroyableSegmentedBar<T> segmentedBar = new DestroyableSegmentedBar<>();
         super.build(segmentedBar);
 
-        if(segments != null) {
+        if (infoNodeFactory != null) {
+            segmentedBar.setInfoNodeFactory(infoNodeFactory);
+        }
+        if (segmentViewFactory != null) {
+            segmentedBar.setSegmentViewFactory(segmentViewFactory);
+        }
+
+        if (segments != null) {
             segmentedBar.registerAll(segments);
             segmentedBar.getSegments().addAll(this.segments);
         }
 
         if (orientation != null) {
             segmentedBar.setOrientation(orientation);
-        }
-        if (infoNodeFactory != null) {
-            segmentedBar.setInfoNodeFactory(infoNodeFactory);
-        }
-        if (segmentViewFactory != null) {
-            segmentedBar.setInfoNodeFactory(segmentViewFactory);
         }
         return segmentedBar;
     }

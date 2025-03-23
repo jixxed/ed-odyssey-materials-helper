@@ -23,7 +23,7 @@ public class MenuButtonBuilder extends AbstractButtonBaseBuilder<MenuButtonBuild
         this.items = menuItems.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(stringEventHandlerEntry -> {
             final EventHandler<ActionEvent> eventHandler = stringEventHandlerEntry.getValue();
             final String textLocaleKey = stringEventHandlerEntry.getKey();
-            return  MenuItemBuilder.builder()
+            return MenuItemBuilder.builder()
                     .withOnAction(eventHandler)
                     .withText(textLocaleKey)
                     .build();
@@ -49,7 +49,8 @@ public class MenuButtonBuilder extends AbstractButtonBaseBuilder<MenuButtonBuild
     @SuppressWarnings("unchecked")
     public DestroyableMenuButton build() {
         final DestroyableMenuButton menuButton = new DestroyableMenuButton();
-        if (this.items != null){
+        super.build(menuButton);
+        if (this.items != null) {
             menuButton.registerAll(this.items);
             menuButton.getItems().addAll(this.items);
         }

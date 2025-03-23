@@ -33,11 +33,6 @@ public class TextBuilder extends AbstractShapeBuilder<TextBuilder> {
         return this;
     }
 
-    public TextBuilder withNodeOrientation(final NodeOrientation nodeOrientation) {
-        this.nodeOrientation = nodeOrientation;
-        return this;
-    }
-
     public TextBuilder withWrappingWidth(final Double wrappingWidth) {
         this.wrappingWidth = wrappingWidth;
         return this;
@@ -45,6 +40,7 @@ public class TextBuilder extends AbstractShapeBuilder<TextBuilder> {
 
     public DestroyableText build() {
         final DestroyableText text = new DestroyableText();
+        super.build(text);
         if (this.stringBinding != null) {
             text.addBinding(text.textProperty(), this.stringBinding);
         } else if (this.nonLocalizedText != null) {

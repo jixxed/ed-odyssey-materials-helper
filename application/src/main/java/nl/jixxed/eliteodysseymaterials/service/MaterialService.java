@@ -4,9 +4,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 import javafx.util.Pair;
@@ -58,36 +55,36 @@ public class MaterialService {
                 .withText(LocaleService.getStringBinding(horizonsMaterial.getLocalizationKey()))
                 .build();
         if (horizonsMaterial.isUnknown()) {
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_TITLE)
                     .withText(LocaleService.getStringBinding("material.tooltip.unknown"))
                     .build());
         } else {
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_TITLE)
                     .withText(LocaleService.getStringBinding(horizonsMaterial.getLocalizationKey()))
                     .build());
             if (GameVersion.LIVE.equals(horizonsMaterial.getGameVersion())) {
-                vBox.getChildren().add(LabelBuilder.builder()
+                vBox.getNodes().add(LabelBuilder.builder()
                         .withText(LocaleService.getStringBinding((horizonsMaterial instanceof Commodity) ? "material.tooltip.is.live.commodity" : "material.tooltip.is.live"))
                         .build());
             }
             if (horizonsMaterial instanceof Commodity commodity) {
-                vBox.getChildren().add(
+                vBox.getNodes().add(
                         LabelBuilder.builder()
                                 .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_DESCRIPTION)
                                 .withText(ObservableResourceFactory.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale(commodity.getDescriptionLocalizationKey())))
                                 .build());
-                vBox.getChildren().add(LabelBuilder.builder()
+                vBox.getNodes().add(LabelBuilder.builder()
                         .build());
                 if (horizonsMaterial instanceof RareCommodity rareCommodity) {
-                    vBox.getChildren().add(getMarketLocation(rareCommodity));
+                    vBox.getNodes().add(getMarketLocation(rareCommodity));
                 }
-                vBox.getChildren().add(
+                vBox.getNodes().add(
                         LabelBuilder.builder()
                                 .withText(ObservableResourceFactory.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("material.tooltip.type") + " " + LocaleService.getLocalizedStringForCurrentLocale(commodity.getCommodityType().getLocalizationKey())))
                                 .build());
-                vBox.getChildren().add(
+                vBox.getNodes().add(
                         LabelBuilder.builder()
                                 .withText(ObservableResourceFactory.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("material.tooltip.is.rare") + " " + LocaleService.getLocalizedStringForCurrentLocale(commodity instanceof RareCommodity ? "material.tooltip.text.yes" : "material.tooltip.text.no")))
                                 .build());
@@ -95,15 +92,15 @@ public class MaterialService {
                 addRefinableToTooltip(commodity, vBox);
                 addFleetCarrierOrdersToTooltip(commodity, vBox);
             } else if (horizonsMaterial instanceof Raw) {
-                vBox.getChildren().add(LabelBuilder.builder()
+                vBox.getNodes().add(LabelBuilder.builder()
                         .withText(LocaleService.getStringBinding("material.tooltip.type.raw"))
                         .build());
             } else if (horizonsMaterial instanceof Encoded) {
-                vBox.getChildren().add(LabelBuilder.builder()
+                vBox.getNodes().add(LabelBuilder.builder()
                         .withText(LocaleService.getStringBinding("material.tooltip.type.encoded"))
                         .build());
             } else if (horizonsMaterial instanceof Manufactured) {
-                vBox.getChildren().add(LabelBuilder.builder()
+                vBox.getNodes().add(LabelBuilder.builder()
                         .withText(LocaleService.getStringBinding("material.tooltip.type.manufactured"))
                         .build());
             }
@@ -128,14 +125,14 @@ public class MaterialService {
         final boolean buys = MarketService.buys(commodity);
         marketItem.ifPresent(item -> {
             if (buys || sells) {
-                vBox.getChildren().add(LabelBuilder.builder()
+                vBox.getNodes().add(LabelBuilder.builder()
                         .build());
-                vBox.getChildren().add(LabelBuilder.builder()
+                vBox.getNodes().add(LabelBuilder.builder()
                         .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE)
                         .withText(LocaleService.getStringBinding("material.tooltip.market"))
                         .build());
                 if (buys) {
-                    vBox.getChildren().add(LabelBuilder.builder()
+                    vBox.getNodes().add(LabelBuilder.builder()
                             .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_DESCRIPTION)
                             .withText(
                                     LocaleService.getStringBinding("material.tooltip.market.buys",
@@ -144,7 +141,7 @@ public class MaterialService {
                             .build());
                 }
                 if (sells) {
-                    vBox.getChildren().add(LabelBuilder.builder()
+                    vBox.getNodes().add(LabelBuilder.builder()
                             .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_DESCRIPTION)
                             .withText(
                                     LocaleService.getStringBinding("material.tooltip.market.sells",
@@ -157,7 +154,7 @@ public class MaterialService {
 
     }
 
-    private static FlowPane getMarketLocation(RareCommodity rareCommodity) {
+    private static DestroyableFlowPane getMarketLocation(RareCommodity rareCommodity) {
         var engineerLocation = LabelBuilder.builder()
                 .withStyleClass("market-location")
                 .withNonLocalizedText(rareCommodity.getStation() + " | " + rareCommodity.getStarSystem().getName())
@@ -197,15 +194,15 @@ public class MaterialService {
         ClipboardHelper.copyToClipboard(starSystem.getName());
     }
 
-    private static void addRefinableToTooltip(Commodity commodity, VBox vBox) {
+    private static void addRefinableToTooltip(Commodity commodity, DestroyableVBox vBox) {
         Refinable.getRefinable(commodity).ifPresent(refinable -> {
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .build());
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE)
                     .withText(LocaleService.getStringBinding("material.tooltip.refining"))
                     .build());
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withText(
                             LocaleService.getStringBinding("material.tooltip.refinable",
                                     LocaleService.LocalizationKey.of(refinable.getCommodityFrom().getLocalizationKey()),
@@ -218,9 +215,9 @@ public class MaterialService {
 
     private static void addHorizonsTradeToTooltip(final HorizonsMaterial horizonsMaterial, final DestroyableVBox vBox) {
         if (horizonsMaterial.getRarity() != UNKNOWN && horizonsMaterial.getMaterialType().isTradable() && !(horizonsMaterial instanceof Commodity)) {
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .build());
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE)
                     .withText(LocaleService.getStringBinding("material.tooltip.trade"))
                     .build());
@@ -229,7 +226,7 @@ public class MaterialService {
                 tradeSuggestions.forEach(tradeSuggestion -> {
                     final NumberFormat percentFormat = NumberFormat.getPercentInstance();
                     percentFormat.setMaximumFractionDigits(1);
-                    vBox.getChildren().add(
+                    vBox.getNodes().add(
 
                             BoxBuilder.builder()
                                     .withNodes(LabelBuilder.builder()
@@ -250,7 +247,7 @@ public class MaterialService {
                     );
                 });
             } else {
-                vBox.getChildren().add(LabelBuilder.builder()
+                vBox.getNodes().add(LabelBuilder.builder()
                         .withText(LocaleService.getStringBinding("material.tooltip.tradesuggestions.none"))
                         .build());
             }
@@ -269,9 +266,9 @@ public class MaterialService {
 
     private static void addHorizonsTradeToTooltipClassic(final HorizonsMaterial horizonsMaterial, final DestroyableVBox vBox) {
         if (horizonsMaterial.getRarity() != UNKNOWN && horizonsMaterial.getMaterialType().isTradable() && !(horizonsMaterial instanceof Commodity)) {
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .build());
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE)
                     .withText(LocaleService.getStringBinding("material.tooltip.downtrade"))
                     .build());
@@ -281,12 +278,12 @@ public class MaterialService {
                     final int materialCount = StorageService.getMaterialCount(material);
                     final int factor = material.getRarity().getLevel() - horizonsMaterial.getRarity().getLevel();
                     final int potentialFromTrade = materialCount * (int) Math.pow(3, factor);
-                    vBox.getChildren().add(LabelBuilder.builder()
+                    vBox.getNodes().add(LabelBuilder.builder()
                             .withText(LocaleService.getStringBinding("material.tooltip.downtrade.entry", potentialFromTrade, LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey())))
                             .build());
                 });
             } else {
-                vBox.getChildren().add(LabelBuilder.builder()
+                vBox.getNodes().add(LabelBuilder.builder()
                         .withText(LocaleService.getStringBinding("material.tooltip.downtrade.none"))
                         .build());
             }
@@ -297,9 +294,9 @@ public class MaterialService {
 
     private static void addHorizonsSpawnLocationsToTooltip(final List<HorizonsMaterialSpawnLocation> horizonsMaterialSpawnLocations, final DestroyableVBox vBox) {
         if (horizonsMaterialSpawnLocations != null && !horizonsMaterialSpawnLocations.isEmpty()) {
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .build());
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE)
                     .withText(LocaleService.getStringBinding("material.tooltip.spawnlocations"))
                     .build());
@@ -307,7 +304,7 @@ public class MaterialService {
                     .withText(LocaleService.getStringBinding(() -> horizonsMaterialSpawnLocations.stream().map(horizonsMaterialSpawnLocation -> LocaleService.getLocalizedStringForCurrentLocale(horizonsMaterialSpawnLocation.getLocalizationKey())).collect(Collectors.joining("\n"))))
                     .build();
             locations.setWrapText(true);
-            vBox.getChildren().add(locations);
+            vBox.getNodes().add(locations);
         }
     }
 
@@ -315,17 +312,17 @@ public class MaterialService {
         final DestroyableVBox vBox = BoxBuilder.builder()
                 .withStyleClass("material-popover-content").buildVBox();
         if (odysseyMaterial.isUnknown()) {
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_TITLE)
                     .withText(LocaleService.getStringBinding("material.tooltip.unknown"))
                     .build());
         } else {
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_TITLE)
                     .withText(LocaleService.getStringBinding(odysseyMaterial.getLocalizationKey()))
                     .build());
             if (odysseyMaterial.isIllegal()) {
-                vBox.getChildren().add(LabelBuilder.builder()
+                vBox.getNodes().add(LabelBuilder.builder()
                         .withText(LocaleService.getStringBinding("material.tooltip.illegal"))
                         .build());
             }
@@ -345,12 +342,12 @@ public class MaterialService {
 
     }
 
-    private static void addSpawnRatesToTooltip(final Data data, final VBox vBox) {
+    private static void addSpawnRatesToTooltip(final Data data, final DestroyableVBox vBox) {
         final Map<DataPortType, Double> dataPortSpawnRates = SpawnConstants.DATA_SPAWN_CHANCE.get(data);
         if (dataPortSpawnRates != null) {
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .build());
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE)
                     .withText(LocaleService.getStringBinding("material.tooltip.spawnrates"))
                     .build());
@@ -359,7 +356,7 @@ public class MaterialService {
                     .sorted((Comparator<Map.Entry<DataPortType, Double>>) (Comparator<?>) Map.Entry.comparingByValue().reversed())
                     .map((entry) -> entry.getKey() + "(" + NUMBER_FORMAT.format(entry.getValue()) + "%)")
                     .collect(Collectors.joining(", "));
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withNonLocalizedText(rates)
                     .build());
         }
@@ -367,17 +364,23 @@ public class MaterialService {
 
 
     public static <E extends Node & DestroyableComponent> void addMaterialInfoPopOver(final E hoverableNode, final Material material, final boolean wishlist) {
-        hoverableNode.registerEventHandler(MouseEvent.MOUSE_ENTERED, mouseEvent -> {
-            final Node contentNode = (material instanceof HorizonsMaterial) ? getMaterialPopOverContent((HorizonsMaterial) material, wishlist) : getMaterialPopOverContent((OdysseyMaterial) material);
+        hoverableNode.addEventBinding(hoverableNode.onMouseEnteredProperty(), mouseEvent -> {
+            final Node contentNode = switch (material) {
+                case HorizonsMaterial horizonsMaterial -> getMaterialPopOverContent(horizonsMaterial, wishlist);
+                case OdysseyMaterial odysseyMaterial -> getMaterialPopOverContent(odysseyMaterial);
+            };
             contentNode.getStyleClass().add("material-popover");
-            final PopOver popOver = new PopOver(contentNode);
-            popOver.setDetachable(false);
-            popOver.setHeaderAlwaysVisible(false);
-            popOver.arrowSizeProperty().set(0);
-            popOver.arrowIndentProperty().set(0);
-            popOver.cornerRadiusProperty().set(0);
+            final DestroyablePopOver popOver = PopOverBuilder.builder()
+                    .withStyleClass("popover-menubutton-layout")
+                    .withContent((Node & Destroyable) contentNode)
+                    .withArrowIndent(0)
+                    .withArrowSize(0)
+                    .withCornerRadius(0)
+                    .withDetachable(false)
+                    .withHeaderAlwaysVisible(false)
+                    .build();
             try {
-                final Rectangle2D currentScreen = Screen.getScreensForRectangle(mouseEvent.getScreenX(), mouseEvent.getScreenY(), 1, 1).get(0).getBounds();
+                final Rectangle2D currentScreen = Screen.getScreensForRectangle(mouseEvent.getScreenX(), mouseEvent.getScreenY(), 1, 1).getFirst().getBounds();
                 final double mouseXOnScreen = mouseEvent.getScreenX() - currentScreen.getMinX();
                 final double mouseYOnScreen = mouseEvent.getScreenY() - currentScreen.getMinY();
                 if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {
@@ -390,19 +393,23 @@ public class MaterialService {
                     popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_BOTTOM);
                 }
                 final Timeline timelineShow = new Timeline();
+                final Timeline timelineHide = new Timeline();
+
                 timelineShow.getKeyFrames().add(new KeyFrame(Duration.millis(500)));
                 timelineShow.setOnFinished(_ -> {
                     if ((hoverableNode).isHover() || (contentNode.isHover())) {
                         if (popOver.getContentNode() != null) {
                             popOver.show(hoverableNode);
+                            hoverableNode.addEventBinding(hoverableNode.onMouseExitedProperty(), mouseEvent2 -> timelineHide.play());
                         }
+                    } else {
+                        popOver.destroy();
                     }
                 });
                 timelineShow.play();
-                final Timeline timelineHide = new Timeline();
                 timelineHide.getKeyFrames().add(new KeyFrame(Duration.millis(100)));
                 timelineHide.setOnFinished(_ -> {
-                    if (((Node)hoverableNode).isHover() || contentNode.isHover()) {
+                    if (((Node) hoverableNode).isHover() || contentNode.isHover()) {
                         timelineHide.play();
                     } else {
                         popOver.hide(Duration.ZERO);
@@ -412,7 +419,6 @@ public class MaterialService {
                         timelineHide.stop();
                     }
                 });
-                hoverableNode.addEventHandler(MouseEvent.MOUSE_EXITED, mouseEvent2 -> timelineHide.play());
             } catch (IndexOutOfBoundsException ex) {
                 log.warn("Unable to determine screen to show material info on.");
             }
@@ -422,7 +428,7 @@ public class MaterialService {
     }
 
 
-    private static void addSettlementStatistic(final VBox vBox, final SettlementStatistic settlementStatistic) {
+    private static void addSettlementStatistic(final DestroyableVBox vBox, final SettlementStatistic settlementStatistic) {
         final Double distance = LocationService.calculateDistance(LocationService.getCurrentStarSystem(), new StarSystem(settlementStatistic.getSystem(), settlementStatistic.getX(), settlementStatistic.getY(), settlementStatistic.getZ()));
         final String settlement = POIHelper.map(settlementStatistic.getSettlement());
         final DestroyableLabel label = LabelBuilder.builder()
@@ -435,7 +441,7 @@ public class MaterialService {
         final DestroyableStackPane copyIconStackPane = StackPaneBuilder.builder()
                 .withNodes(copyIcon)
                 .build();
-        vBox.getChildren().add(BoxBuilder.builder()
+        vBox.getNodes().add(BoxBuilder.builder()
                 .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_LOCATION_LINE)
                 .withOnMouseClicked(event -> {
                     copyLocationToClipboard(settlementStatistic.getSystem());
@@ -448,103 +454,103 @@ public class MaterialService {
         ClipboardHelper.copyToClipboard(text);
     }
 
-    private static void addTransferTimeToTooltip(final Data data, final VBox vBox) {
-        vBox.getChildren().add(LabelBuilder.builder()
+    private static void addTransferTimeToTooltip(final Data data, final DestroyableVBox vBox) {
+        vBox.getNodes().add(LabelBuilder.builder()
                 .build());
-        vBox.getChildren().add(LabelBuilder.builder()
+        vBox.getNodes().add(LabelBuilder.builder()
                 .withText(LocaleService.getStringBinding((data.isUpload()) ? "material.tooltip.data.upload" : "material.tooltip.data.download", data.getTransferTime()))
                 .build());
     }
 
-    private static void addBarterInfoToTooltip(final OdysseyMaterial odysseyMaterial, final VBox vBox) {
+    private static void addBarterInfoToTooltip(final OdysseyMaterial odysseyMaterial, final DestroyableVBox vBox) {
         final Integer barterSellPrice = BarterConstants.getBarterSellPrice(odysseyMaterial);
-        vBox.getChildren().add(LabelBuilder.builder()
+        vBox.getNodes().add(LabelBuilder.builder()
                 .build());
-        vBox.getChildren().add(LabelBuilder.builder()
+        vBox.getNodes().add(LabelBuilder.builder()
                 .withText(LocaleService.getStringBinding("material.tooltip.barter.sell.price", barterSellPrice == -1 ? "?" : NUMBER_FORMAT.format(barterSellPrice)))
                 .build());
         if (odysseyMaterial instanceof Asset asset) {
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withText(LocaleService.getStringBinding("material.tooltip.barter.trade", asset.getBuyValue() + "/" + asset.getSellValue()))
                     .build());
         }
     }
 
-    private static void addFleetCarrierOrdersToTooltip(final OdysseyMaterial odysseyMaterial, final VBox vBox) {
+    private static void addFleetCarrierOrdersToTooltip(final OdysseyMaterial odysseyMaterial, final DestroyableVBox vBox) {
         final BuyOrder buyOrder = OrderService.getBuyOrder(odysseyMaterial);
         final SellOrder sellOrder = OrderService.getSellOrder(odysseyMaterial);
         final Integer fleetCarrierStorageAmount = StorageService.getMaterialStorage(odysseyMaterial).getFleetCarrierValue();
         if (buyOrder != null || sellOrder != null || CAPIService.getInstance().getActive().not().get() || fleetCarrierStorageAmount > 0) {
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .build());
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE)
                     .withText(LocaleService.getStringBinding("material.tooltip.fleetcarrier"))
                     .build());
         }
         if (CAPIService.getInstance().getActive().not().get()) {
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withText(LocaleService.getStringBinding("material.tooltip.fleetcarrier.not.linked"))
                     .build());
         }
         if (buyOrder != null) {
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withText(LocaleService.getStringBinding("material.tooltip.fleetcarrier.buy", buyOrder.getTotal(), buyOrder.getOutstanding(), NUMBER_FORMAT.format(buyOrder.getPrice())))
                     .build());
         }
         if (sellOrder != null) {
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withText(LocaleService.getStringBinding("material.tooltip.fleetcarrier.sell", sellOrder.getStock(), NUMBER_FORMAT.format(sellOrder.getPrice())))
                     .build());
         }
         if (fleetCarrierStorageAmount > 0) {
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withText(LocaleService.getStringBinding("material.tooltip.fleetcarrier.storage", fleetCarrierStorageAmount))
                     .build());
         }
 
     }
 
-    private static void addFleetCarrierOrdersToTooltip(final Commodity commodity, final VBox vBox) {
+    private static void addFleetCarrierOrdersToTooltip(final Commodity commodity, final DestroyableVBox vBox) {
         final BuyOrder buyOrder = OrderService.getBuyOrder(commodity);
         final SellOrder sellOrder = OrderService.getSellOrder(commodity);
         final Integer fleetCarrierStorageAmount = StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER);
         if (buyOrder != null || sellOrder != null || CAPIService.getInstance().getActive().not().get() || fleetCarrierStorageAmount > 0) {
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .build());
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE)
                     .withText(LocaleService.getStringBinding("material.tooltip.fleetcarrier"))
                     .build());
         }
         if (CAPIService.getInstance().getActive().not().get()) {
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withText(LocaleService.getStringBinding("material.tooltip.fleetcarrier.not.linked"))
                     .build());
         }
         if (buyOrder != null) {
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withText(LocaleService.getStringBinding("material.tooltip.fleetcarrier.buy", buyOrder.getTotal(), buyOrder.getOutstanding(), NUMBER_FORMAT.format(buyOrder.getPrice())))
                     .build());
         }
         if (sellOrder != null) {
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withText(LocaleService.getStringBinding("material.tooltip.fleetcarrier.sell", sellOrder.getStock(), NUMBER_FORMAT.format(sellOrder.getPrice())))
                     .build());
         }
         if (fleetCarrierStorageAmount > 0) {
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withText(LocaleService.getStringBinding("material.tooltip.fleetcarrier.storage", fleetCarrierStorageAmount))
                     .build());
         }
 
     }
 
-    private static void addRecipesToTooltip(final Map<OdysseyBlueprintName, Integer> recipesContainingMaterial, final VBox vBox) {
+    private static void addRecipesToTooltip(final Map<OdysseyBlueprintName, Integer> recipesContainingMaterial, final DestroyableVBox vBox) {
         if (!recipesContainingMaterial.isEmpty()) {
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .build());
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE)
                     .withText(LocaleService.getStringBinding("material.tooltip.used.in.recipes"))
                     .build());
@@ -564,14 +570,14 @@ public class MaterialService {
                     titledPane.addBinding(titledPane.textProperty(), LocaleService.getStringBinding(odysseyBlueprintListing.category().getLocalizationKey()));
                     titledPane.setContent(catBox);
                     titledPane.setExpanded(PreferencesService.getPreference(PreferenceConstants.TOOLTIP_BLUEPRINT_EXPANDED, Boolean.FALSE));
-                    vBox.getChildren().add(titledPane);
+                    vBox.getNodes().add(titledPane);
                     final String[] classes = new String[]{"blueprint-listing-label"};
                     final DestroyableLabel build = LabelBuilder.builder()
                             .withStyleClasses(classes)
                             .withText(odysseyBlueprintListing.toStringBinding())
                             .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(odysseyBlueprintListing.name())))
                             .build();
-                    catBox.getChildren().add(build);
+                    catBox.getNodes().add(build);
                 } else {
                     //append
                     final String[] classes = new String[]{"blueprint-listing-label"};
@@ -580,7 +586,7 @@ public class MaterialService {
                             .withText(odysseyBlueprintListing.toStringBinding())
                             .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(odysseyBlueprintListing.name())))
                             .build();
-                    catBox.getChildren().add(build);
+                    catBox.getNodes().add(build);
                     catBox.addBinding(catBox.prefWrapLengthProperty(), ScalingHelper.getPixelDoubleBindingFromEm(23.33 * 2));
                 }
             }
@@ -589,11 +595,11 @@ public class MaterialService {
         }
     }
 
-    private static void addHorizonsBlueprintsToTooltip(final Map<HorizonsBlueprint, Integer> horizonsBlueprintMap, final VBox vBox) {
+    private static void addHorizonsBlueprintsToTooltip(final Map<HorizonsBlueprint, Integer> horizonsBlueprintMap, final DestroyableVBox vBox) {
         if (!horizonsBlueprintMap.isEmpty()) {
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .build());
-            vBox.getChildren().add(LabelBuilder.builder()
+            vBox.getNodes().add(LabelBuilder.builder()
                     .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE)
                     .withText(LocaleService.getStringBinding("material.tooltip.used.in.recipes"))
                     .build());
@@ -624,18 +630,18 @@ public class MaterialService {
                     catBox = FlowPaneBuilder.builder()
                             .withStyleClass("blueprint-listing-flowpane")
                             .build();
-                    final DestroyableTitledPane titledPane =  TitledPaneBuilder.builder().build();
+                    final DestroyableTitledPane titledPane = TitledPaneBuilder.builder().build();
                     titledPane.addBinding(titledPane.textProperty(), LocaleService.getStringBinding(horizonsBlueprintListing.category().getLocalizationKey()));
                     titledPane.setContent(catBox);
                     titledPane.setExpanded(PreferencesService.getPreference(PreferenceConstants.TOOLTIP_BLUEPRINT_EXPANDED, Boolean.FALSE));
-                    vBox.getChildren().add(titledPane);
+                    vBox.getNodes().add(titledPane);
                     final String[] classes = (horizonsBlueprintListing.type().isExperimental()) ? new String[]{"blueprint-listing-label", "blueprint-listing-label-experimental"} : new String[]{"blueprint-listing-label"};
                     final DestroyableLabel build = LabelBuilder.builder()
                             .withStyleClasses(classes)
                             .withText(horizonsBlueprintListing.toStringBinding())
                             .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(horizonsBlueprintListing.name(), horizonsBlueprintListing.type(), horizonsBlueprintListing.gradeGroups().get(0).getKey()))))
                             .build();
-                    catBox.getChildren().add(build);
+                    catBox.getNodes().add(build);
                 } else {
                     //append
                     final String[] classes = (horizonsBlueprintListing.type().isExperimental()) ? new String[]{"blueprint-listing-label", "blueprint-listing-label-experimental"} : new String[]{"blueprint-listing-label"};
@@ -644,7 +650,7 @@ public class MaterialService {
                             .withText(horizonsBlueprintListing.toStringBinding())
                             .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(horizonsBlueprintListing.name(), horizonsBlueprintListing.type(), horizonsBlueprintListing.gradeGroups().get(0).getKey()))))
                             .build();
-                    catBox.getChildren().add(build);
+                    catBox.getNodes().add(build);
                     catBox.addBinding(catBox.prefWrapLengthProperty(), ScalingHelper.getPixelDoubleBindingFromEm(23.33 * 2));
                 }
             }

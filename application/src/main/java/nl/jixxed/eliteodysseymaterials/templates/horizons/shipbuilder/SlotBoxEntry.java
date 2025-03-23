@@ -1,6 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import lombok.extern.slf4j.Slf4j;
@@ -87,7 +86,7 @@ public class SlotBoxEntry extends DestroyableVBox {
                                             })
                                             .build();
 
-                                    button.registerEventHandler(MouseEvent.MOUSE_ENTERED, _ ->
+                                    button.addEventBinding(button.onMouseEnteredProperty(), _ ->
                                             EventService.publish(new ModuleHighlightEvent(shipModule)));
                                     List<DestroyableResizableImageView> images = new ArrayList<>();
                                     if (shipModule instanceof ExternalModule externalModule && !externalModule.getMounting().equals(Mounting.NA)) {

@@ -1,9 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.builder;
 
 import javafx.beans.binding.StringBinding;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -18,7 +16,6 @@ import java.util.List;
 public class HighlightTextFlowBuilder extends AbstractPaneBuilder<HighlightTextFlowBuilder> {
     public static final String WITH_NODES_ERROR = "Use withText(String, Object...) instead.";
     private final List<String> highlightStyleClasses = new ArrayList<>();
-    private EventHandler<? super MouseEvent> onMouseClicked;
     private String localeKey;
     private Object[] parameters;
 

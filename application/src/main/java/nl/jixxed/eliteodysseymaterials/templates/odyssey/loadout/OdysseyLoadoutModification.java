@@ -39,7 +39,7 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableE
     private DestroyableLabel label;
     private Loadout loadout;
     private final int position;
-    private PopOver popOver;
+    private DestroyablePopOver popOver;
     private OdysseyLoadoutItem loadoutItem;
 
     private boolean dragFlag = false;
@@ -95,8 +95,8 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableE
 
             };
 
-            this.imageView.registerEventHandler(MouseEvent.MOUSE_CLICKED, imageClickMouseEventHandler);
-            this.imageView.registerEventHandler(MouseEvent.MOUSE_DRAGGED, imageDragMouseEventHandler);
+            this.imageView.addEventBinding(this.imageView.onMouseClickedProperty(), imageClickMouseEventHandler);
+            this.imageView.addEventBinding(this.imageView.onMouseDraggedProperty(), imageDragMouseEventHandler);
         }
         VBox.setVgrow(this.imageView, Priority.ALWAYS);
         this.getNodes().addAll(this.imageView, this.label);
@@ -120,13 +120,16 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableE
                             if (!event.getButton().equals(MouseButton.PRIMARY)) {
                                 return;
                             }
-                            this.popOver = new PopOver();
-                            this.popOver.getStyleClass().add("loadout-modification-popover");
-                            this.popOver.setContentNode(createModificationOptionsGrid());
-                            this.popOver.setDetachable(false);
-                            this.popOver.arrowSizeProperty().set(0);
-                            this.popOver.arrowIndentProperty().set(0);
-                            this.popOver.cornerRadiusProperty().set(0);
+                            this.popOver = PopOverBuilder.builder()
+                                    .withStyleClass("loadout-modification-popover")
+                                    .withContent(createModificationOptionsGrid())
+                                    .withDetachable(false)
+                                    .withHeaderAlwaysVisible(false)
+                                    .withArrowIndent(0)
+                                    .withArrowSize(0)
+                                    .withCornerRadius(0)
+                                    .withArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER)
+                                    .build();
                             this.popOver.show(this, event.getScreenX(), event.getScreenY());
                         })
                 , 300, TimeUnit.MILLISECONDS);
@@ -228,7 +231,7 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableE
         if (Arrays.stream(this.loadout.getModifications()).map(SelectedModification::getModification).anyMatch(modification::equals)) {
             modSelectImage.getStyleClass().add(LOADOUT_MODIFICATION_IMAGE_CONSUMED_STYLE_CLASS);
         } else {
-            modSelectImage.registerEventHandler(MouseEvent.MOUSE_CLICKED, getModificationSelectedEventHandler(modification));
+            modSelectImage.addEventBinding(modSelectImage.onMouseClickedProperty(), getModificationSelectedEventHandler(modification));
         }
         final DestroyableLabel modLabel = LabelBuilder.builder()
                 .withStyleClass(LOADOUT_MODIFICATION_LABEL_STYLE_CLASS)

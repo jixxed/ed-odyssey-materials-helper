@@ -110,7 +110,10 @@ public class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHBox imp
             this.removeBlueprint = ButtonBuilder.builder()
                     .withStyleClass("wishlist-item-button")
                     .withNonLocalizedText("X")
-                    .withOnAction(event -> destroyTemplate())
+                    .withOnAction(event -> {
+                        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new HorizonsWishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.wishlistBlueprint), Action.REMOVED)));
+                        destroyTemplate();
+                    })
                     .build();
             final AtomicReference<PopOver> popOverRef = new AtomicReference<>();
             this.toggleControls = ButtonBuilder.builder()
@@ -179,12 +182,14 @@ public class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHBox imp
                                                     .withText("wishlist.percentage.per.grade.explain")
                                                     .build(),
                                             grades).buildVBox();
-                            final PopOver popOver = new PopOver(gradePopOverContent);
+                            final DestroyablePopOver popOver = PopOverBuilder.builder()
+                                    .withStyleClass("popover-menubutton-layout")
+                                    .withContent(gradePopOverContent)
+                                    .withDetachable(false)
+                                    .withHeaderAlwaysVisible(false)
+                                    .withArrowLocation(PopOver.ArrowLocation.TOP_CENTER)
+                                    .build();
                             popOverRef.set(popOver);
-                            popOver.setDetachable(false);
-                            popOver.setHeaderAlwaysVisible(false);
-                            popOver.getStyleClass().add("popover-menubutton-layout");
-                            popOver.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
                             popOver.show(this.toggleControls);
                         } else {
                             popOverRef.get().hide();
@@ -210,10 +215,10 @@ public class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHBox imp
         this.canCraft(craftability);
     }
 
-    @Override
-    public void destroyInternal() {
-        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new HorizonsWishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.wishlistBlueprint), Action.REMOVED)));
-    }
+//    @Override
+//    public void destroyInternal() {
+//        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new HorizonsWishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.wishlistBlueprint), Action.REMOVED)));
+//    }
 
     private void modify() {
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new HorizonsWishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.wishlistBlueprint), Action.MODIFY)));

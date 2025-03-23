@@ -1,21 +1,24 @@
 package nl.jixxed.eliteodysseymaterials.templates.destroyables;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 
 import java.util.*;
 
 public interface Destroyable {
-    default Map<ObservableValue<Object>, List<ChangeListener<Object>>> getListeners(){
+    default Map<ObservableValue<Object>, List<ChangeListener<Object>>> getListeners() {
         return DestroyableManager.getListeners(this);
     }
 
-    default Set<Property<Object>> getBindings(){
+    default Set<Property<Object>> getBindings() {
         return DestroyableManager.getBindings(this);
     }
 
-    default Set<Destroyable> getDestroyables(){
+    default Set<Destroyable> getDestroyables() {
         return DestroyableManager.getDestroyables(this);
     }
 
@@ -27,8 +30,13 @@ public interface Destroyable {
     default <T extends Destroyable> void registerAll(final T... destroyables) {
         getDestroyables().addAll(Arrays.stream(destroyables).toList());
     }
+
     default <T extends Destroyable> void registerAll(final Collection<T> destroyables) {
         getDestroyables().addAll(destroyables);
+    }
+
+    default <T extends Destroyable> void deregisterAll(final Collection<T> destroyables) {
+        getDestroyables().removeAll(destroyables);
     }
 
     default void destroy() {
@@ -62,6 +70,18 @@ public interface Destroyable {
     default <P> void addBinding(final Property<P> observableValue, final ObservableValue<P> binding) {
         getBindings().add((Property<Object>) observableValue);
         observableValue.bind(binding);
+    }
+
+    @SuppressWarnings("unchecked")
+    default <P extends Event> void addEventBinding(final ObjectProperty<EventHandler<? super P>> observableValue, final EventHandler<P> handler) {
+        getBindings().add((Property<Object>) (Property<?>) observableValue);
+        observableValue.set(handler);
+    }
+
+    @SuppressWarnings("unchecked")
+    default <P extends Event> void addActionEventBinding(final ObjectProperty<EventHandler<P>> observableValue, final EventHandler<P> handler) {
+        getBindings().add((Property<Object>) (Property<?>) observableValue);
+        observableValue.set(handler);
     }
 
     default void destroyInternal() {

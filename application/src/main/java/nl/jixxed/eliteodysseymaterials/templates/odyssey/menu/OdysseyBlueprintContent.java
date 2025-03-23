@@ -113,16 +113,11 @@ class OdysseyBlueprintContent extends DestroyableVBox implements DestroyableEven
 
         this.recipeHeader = BoxBuilder.builder()
                 .withNodes(descriptionTitle, descriptionRegion).buildHBox();
-        final DestroyableText description = TextBuilder.builder()
-                .withStyleClass("blueprint-description-text")
+        final DestroyableLabel description = LabelBuilder.builder()
+                .withStyleClass("blueprint-description")
                 .withText(this.blueprint.getBlueprintName().getDescriptionLocalizationKey())
                 .build();
-        description.addBinding(description.wrappingWidthProperty(), this.widthProperty().subtract(35));
-        final DestroyableTextFlow textFlow = TextFlowBuilder.builder()
-                .withTexts(description)
-                .build();
-        textFlow.getStyleClass().add("blueprint-description");
-        this.getNodes().addAll(this.recipeHeader, textFlow);
+        this.getNodes().addAll(this.recipeHeader, description);
     }
 
     private void initTips(final EngineerBlueprint engineerBlueprint) {
@@ -131,16 +126,11 @@ class OdysseyBlueprintContent extends DestroyableVBox implements DestroyableEven
                 .withText("blueprint.label.tips")
                 .build();
 
-        final DestroyableText tips = TextBuilder.builder()
-                .withStyleClass("blueprint-description-text")
+        final DestroyableLabel description = LabelBuilder.builder()
+                .withStyleClass("blueprint-description")
                 .withText(engineerBlueprint.getTipsLocalizationKey())
                 .build();
-        tips.addBinding(tips.wrappingWidthProperty(), this.widthProperty().subtract(35));
-        final DestroyableTextFlow textFlow = TextFlowBuilder.builder()
-                .withTexts(tips)
-                .build();
-        textFlow.getStyleClass().add("blueprint-description");
-        this.getNodes().addAll(tipsTitle, textFlow);
+        this.getNodes().addAll(tipsTitle, description);
     }
 
     @SuppressWarnings("java:S1192")
@@ -158,7 +148,7 @@ class OdysseyBlueprintContent extends DestroyableVBox implements DestroyableEven
                 this.addToWishlist.getStyleClass().remove("hidden-menu-button");
             }
         });
-        this.addToWishlist.setOnMouseClicked(event -> {
+        this.addToWishlist.addEventBinding(this.addToWishlist.onMouseClickedProperty(), event -> {
             if (this.addToWishlist.getItems().size() == 1) {
                 this.addToWishlist.getItems().getFirst().fire();
                 event.consume();
@@ -206,14 +196,19 @@ class OdysseyBlueprintContent extends DestroyableVBox implements DestroyableEven
 
     private Wishlists loadCommanderWishlists(final Commander commander) {
         final Wishlists wishlists = WishlistService.getWishlists(commander);
+        this.addToWishlist.deregisterAll((List<DestroyableMenuItem>) (List<?>) this.addToWishlist.getItems());
+        this.addToWishlist.getItems().forEach(item -> ((DestroyableComponent) item).destroy());
         this.addToWishlist.getItems().clear();
-        final List<MenuItem> menuItems = wishlists.getAllWishlists().stream().filter(wishlist -> wishlist != Wishlist.ALL).sorted(Comparator.comparing(Wishlist::getName)).map(wishlist -> {
-            final MenuItem menuItem = new MenuItem();
-            menuItem.setOnAction(event -> EventService.publish(new WishlistBlueprintEvent(commander, wishlist.getUuid(), List.of(new OdysseyWishlistBlueprint((OdysseyBlueprintName) this.blueprint.getBlueprintName(), true)), Action.ADDED)));
-            menuItem.setText(wishlist.getName());
-            return menuItem;
-        }).toList();
+        final List<DestroyableMenuItem> menuItems = wishlists.getAllWishlists().stream()
+                .filter(wishlist -> wishlist != Wishlist.ALL)
+                .sorted(Comparator.comparing(Wishlist::getName))
+                .map(wishlist -> MenuItemBuilder.builder()
+                        .withNonLocalizedText(wishlist.getName())
+                        .withOnAction(event -> EventService.publish(new WishlistBlueprintEvent(commander, wishlist.getUuid(), List.of(new OdysseyWishlistBlueprint((OdysseyBlueprintName) this.blueprint.getBlueprintName(), true)), Action.ADDED)))
+                        .build())
+                .toList();
         this.addToWishlist.getItems().addAll(menuItems);
+        this.addToWishlist.registerAll(menuItems);
         return wishlists;
     }
 

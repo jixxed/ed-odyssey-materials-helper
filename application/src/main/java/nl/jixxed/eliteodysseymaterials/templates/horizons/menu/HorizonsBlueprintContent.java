@@ -184,17 +184,11 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
                     .build();
             this.getNodes().add(liveOnly);
         }
-        //TODO: could be a label?
-        final DestroyableText description = TextBuilder.builder()
-                .withStyleClass("blueprint-description-text")
-                .withWrappingWidth(465D)
+        final DestroyableLabel description = LabelBuilder.builder()
+                .withStyleClass("blueprint-description")
                 .withText(HorizonsBlueprintType.SYNTHESIS.equals(this.blueprint.getHorizonsBlueprintType()) || HorizonsBlueprintType.ENGINEER.equals(this.blueprint.getHorizonsBlueprintType()) ? this.blueprint.getHorizonsBlueprintName().getDescriptionLocalizationKey() : this.blueprint.getHorizonsBlueprintType().getDescriptionLocalizationKey(this.blueprint.getHorizonsBlueprintName().lcName()))
                 .build();
-        final DestroyableTextFlow textFlow = TextFlowBuilder.builder()
-                .withStyleClass("blueprint-description")
-                .withTexts(description)
-                .build();
-        this.getNodes().add(textFlow);
+        this.getNodes().addAll(description);
     }
 
     @SuppressWarnings("java:S1192")
@@ -213,7 +207,7 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
                 this.addToWishlist.getStyleClass().remove("hidden-menu-button");
             }
         });
-        this.addToWishlist.setOnMouseClicked(event -> {
+        this.addToWishlist.addEventBinding(this.addToWishlist.onMouseClickedProperty(), event -> {
             if (this.addToWishlist.getItems().size() == 1) {
                 this.addToWishlist.getItems().get(0).fire();
                 event.consume();

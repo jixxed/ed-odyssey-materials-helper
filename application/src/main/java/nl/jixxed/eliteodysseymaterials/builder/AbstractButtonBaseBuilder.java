@@ -20,7 +20,7 @@ public abstract class AbstractButtonBaseBuilder<T extends AbstractButtonBaseBuil
         super.build(button);
 
         if (this.onAction != null) {
-            button.registerEventHandler(ActionEvent.ACTION, this.onAction);
+            button.addActionEventBinding(button.onActionProperty(), this.onAction);
         }
         return button;
     }

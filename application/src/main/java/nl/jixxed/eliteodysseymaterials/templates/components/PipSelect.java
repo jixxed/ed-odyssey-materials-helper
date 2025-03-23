@@ -37,12 +37,12 @@ public class PipSelect extends DestroyableHBox {
         addChangeListener(this.value, (_, _, _) -> render());
     }
 
-    private DestroyableRectangle getRectangle(EventHandler<MouseEvent> event) {
+    private DestroyableRectangle getRectangle(EventHandler<MouseEvent> eventHandler) {
         final DestroyableRectangle rectangle = RectangleBuilder.builder()
                 .withStyleClass("pipselect-rectangle")
                 .withWidth(ScalingHelper.getPixelDoubleFromEm(1.5))
                 .withHeight(ScalingHelper.getPixelDoubleFromEm(1.5))
-                .withOnMouseClicked(event)
+                .withOnMouseClicked(eventHandler)
                 .build();
         rectangle.addBinding(rectangle.widthProperty(), ScalingHelper.getPixelDoubleBindingFromEm(1.5));
         rectangle.addBinding(rectangle.heightProperty(), ScalingHelper.getPixelDoubleBindingFromEm(1.5));

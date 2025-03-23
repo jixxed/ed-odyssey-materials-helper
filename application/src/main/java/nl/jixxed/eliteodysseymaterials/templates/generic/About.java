@@ -7,6 +7,7 @@ import nl.jixxed.eliteodysseymaterials.FXApplication;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.VersionService;
+import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.io.IOException;
@@ -83,12 +84,12 @@ class About extends DestroyableVBox implements DestroyableTemplate {
                 .build();
 
         this.getNodes().addAll(
-                this.versionLabel,
-                this.link,
+                BoxBuilder.builder().withNodes(new GrowingRegion(), this.versionLabel, new GrowingRegion()).buildHBox(),
+                BoxBuilder.builder().withNodes(new GrowingRegion(), this.link, new GrowingRegion()).buildHBox(),
                 donateButtons(),
                 donateLabels(),
-                this.discord,
-                this.linkTutorial
+                BoxBuilder.builder().withNodes(new GrowingRegion(), this.discord, new GrowingRegion()).buildHBox(),
+                BoxBuilder.builder().withNodes(new GrowingRegion(), this.linkTutorial, new GrowingRegion()).buildHBox()
         );
     }
 
@@ -114,8 +115,10 @@ class About extends DestroyableVBox implements DestroyableTemplate {
         return BoxBuilder.builder()
                 .withStyleClass("about-donate")
                 .withNodes(
+                        new GrowingRegion(),
                         commissionPP,
-                        commissionGH
+                        commissionGH,
+                        new GrowingRegion()
                 ).buildHBox();
     }
 
@@ -123,8 +126,11 @@ class About extends DestroyableVBox implements DestroyableTemplate {
         return BoxBuilder.builder()
                 .withStyleClass("about-donate")
                 .withNodes(
+                        new GrowingRegion(),
                         this.donate,
-                        this.donate2
+                        this.donate2,
+                        new GrowingRegion()
+
                 ).buildHBox();
     }
 

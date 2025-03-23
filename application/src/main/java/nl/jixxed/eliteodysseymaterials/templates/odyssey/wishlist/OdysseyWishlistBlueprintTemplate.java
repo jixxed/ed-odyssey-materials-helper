@@ -90,7 +90,10 @@ public class OdysseyWishlistBlueprintTemplate extends DestroyableHBox implements
             this.removeBlueprint = ButtonBuilder.builder()
                     .withStyleClass("wishlist-item-button")
                     .withNonLocalizedText("X")
-                    .withOnAction(event -> destroyTemplate())
+                    .withOnAction(event -> {
+                        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.odysseyWishlistBlueprint), Action.REMOVED)));
+                        destroyTemplate();
+                    })
                     .build();
             this.getNodes().add(this.removeBlueprint);
         }
@@ -208,10 +211,10 @@ public class OdysseyWishlistBlueprintTemplate extends DestroyableHBox implements
         return this.odysseyWishlistBlueprint;
     }
 
-    @Override
-    public void destroyInternal() {
-        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.odysseyWishlistBlueprint), Action.REMOVED)));
-    }
+//    @Override
+//    public void destroyInternal() {
+//        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.odysseyWishlistBlueprint), Action.REMOVED)));
+//    }
 
     @Override
     public void setEngineer(Engineer engineer) {

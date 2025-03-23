@@ -8,32 +8,16 @@ import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public abstract class AbstractTextInputControlBuilder<T extends AbstractTextInputControlBuilder<T>> extends AbstractControlBuilder<T> {
-    private final List<String> styleClasses = new ArrayList<>();
     private StringBinding stringBinding;
     private StringBinding promptTextBinding;
     private String nonLocalizedText;
     private ChangeListener<String> textPropertyChangeListener;
-    private Boolean isTraversable;
     private Boolean isEditable;
-
-    public T withStyleClass(final String styleClass) {
-        this.styleClasses.add(styleClass);
-        return (T) this;
-    }
 
     public T withPromptTextProperty(final StringBinding promptTextBinding) {
         this.promptTextBinding = promptTextBinding;
-        return (T) this;
-    }
-
-    public T withStyleClasses(final String... styleClasses) {
-        this.styleClasses.addAll(Arrays.asList(styleClasses));
         return (T) this;
     }
 
@@ -57,12 +41,6 @@ public abstract class AbstractTextInputControlBuilder<T extends AbstractTextInpu
         return (T) this;
     }
 
-
-    public T withFocusTraversable(final boolean isTraversable) {
-        this.isTraversable = isTraversable;
-        return (T) this;
-    }
-
     public T withEditable(final boolean isEditable) {
         this.isEditable = isEditable;
         return (T) this;
@@ -78,9 +56,6 @@ public abstract class AbstractTextInputControlBuilder<T extends AbstractTextInpu
         }
         if (this.promptTextBinding != null) {
             textInputControl.addBinding(textInputControl.promptTextProperty(), this.promptTextBinding);
-        }
-        if (this.isTraversable != null) {
-            textInputControl.setFocusTraversable(this.isTraversable);
         }
         if (this.isEditable != null) {
             textInputControl.setEditable(this.isEditable);

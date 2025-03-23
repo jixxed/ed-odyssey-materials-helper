@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.templates.destroyables;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import lombok.Getter;
 
@@ -14,18 +15,18 @@ public class DestroyableResizableImageView extends Pane implements DestroyablePa
         return override;
     }
 
-    private final DestroyableImageView iv;
+    private final ImageView iv;
 
     public DestroyableResizableImageView() {
-        this.iv = new DestroyableImageView();
+        this.iv = new ImageView();
         this.iv.setSmooth(true);
-        getNodes().add(this.iv);
+        getChildren().add(this.iv);
     }
 
     public final void setImage(final Image image) {
         this.iv.setImage(image);
-        this.iv.addBinding(this.iv.fitWidthProperty(),widthProperty());
-        this.iv.addBinding(this.iv.fitHeightProperty(),heightProperty());
+        this.iv.fitWidthProperty().bind(widthProperty());
+        this.iv.fitHeightProperty().bind(heightProperty());
     }
 
     public final void setPreserveRatio(final boolean preserveRatio) {

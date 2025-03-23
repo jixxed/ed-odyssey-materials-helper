@@ -6,7 +6,11 @@ import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.SkinBase;
 import javafx.util.Callback;
-import org.controlsfx.control.PopOver;
+import nl.jixxed.eliteodysseymaterials.builder.PopOverBuilder;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyablePopOver;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableSegmentedBar;
 import org.controlsfx.control.SegmentedBar;
 
 import java.util.HashMap;
@@ -22,7 +26,7 @@ public class SegmentedBarSkin<T extends SegmentedBar.Segment> extends SkinBase<S
     private WeakInvalidationListener weakBuildListener;
     private InvalidationListener layoutListener;
     private WeakInvalidationListener weakLayoutListener;
-    private Map<SegmentedBar.Segment, PopOver> popOvers = new HashMap<>();
+    private Map<SegmentedBar.Segment, DestroyablePopOver> popOvers = new HashMap<>();
 
     public SegmentedBarSkin(SegmentedBar<T> bar) {
         super(bar);
@@ -118,28 +122,36 @@ public class SegmentedBarSkin<T extends SegmentedBar.Segment> extends SkinBase<S
     }
 
     private void showPopOver(Node owner, T segment) {
-        Callback<T, Node> infoNodeFactory = ((SegmentedBar) this.getSkinnable()).getInfoNodeFactory();
+        Callback<T, Node> infoNodeFactory = ((DestroyableSegmentedBar<T>) this.getSkinnable()).getInfoNodeFactory();
         Node infoNode = null;
         if (infoNodeFactory != null) {
             infoNode = (Node) infoNodeFactory.call(segment);
         }
         if (infoNode != null && this.popOvers.get(segment) == null) {
-            var popOver = new PopOver();
+            DestroyablePopOver popOver = PopOverBuilder.builder()
+                    .withDetachable(false)
+                    .withHeaderAlwaysVisible(false)
+                    .withStyleClass("power-progressbar-popover")
+                    .withArrowIndent(0)
+                    .withArrowSize(0)
+                    .withCornerRadius(0)
+                    .withContent((Node & Destroyable) infoNode)
+                    .build();
             this.popOvers.put(segment, popOver);
-            popOver.getStyleClass().add("power-progressbar-popover");
-            popOver.setDetachable(false);
-            popOver.setHeaderAlwaysVisible(false);
-            popOver.arrowSizeProperty().set(0);
-            popOver.arrowIndentProperty().set(0);
-            popOver.cornerRadiusProperty().set(0);
-            popOver.setContentNode(infoNode);
+//            popOver.getStyleClass().add("power-progressbar-popover");
+//            popOver.setDetachable(false);
+//            popOver.setHeaderAlwaysVisible(false);
+//            popOver.arrowSizeProperty().set(0);
+//            popOver.arrowIndentProperty().set(0);
+//            popOver.cornerRadiusProperty().set(0);
+//            popOver.setContentNode(infoNode);
             popOver.show(owner, -2.0);
         }
 
     }
 
     private void hidePopOver(T segment) {
-        final PopOver popOver = this.popOvers.get(segment);
+        final DestroyablePopOver popOver = this.popOvers.get(segment);
         if (popOver != null && popOver.isShowing()) {
             popOver.hide();
             this.popOvers.put(segment, null);
@@ -169,5 +181,11 @@ public class SegmentedBarSkin<T extends SegmentedBar.Segment> extends SkinBase<S
             }
         }
 
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        this.popOvers.values().forEach(DestroyableComponent::destroy);
     }
 }

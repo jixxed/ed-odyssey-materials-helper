@@ -5,7 +5,6 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -233,7 +232,7 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
                     shipModule.getModuleClass(),
                     (shipModule instanceof HardpointModule hardpointModule ? "-" + hardpointModule.getMounting() : "")));
 
-            saveButton.registerEventHandler(ActionEvent.ACTION, _ -> {
+            saveButton.addActionEventBinding(saveButton.onActionProperty(), _ -> {
                 LegacyModuleService.updateLegacyModule(newValue.getUuid(), nameValue.getText(), shipModule);
                 updateModules();
                 modulesList.getSelectionModel().select(newValue);

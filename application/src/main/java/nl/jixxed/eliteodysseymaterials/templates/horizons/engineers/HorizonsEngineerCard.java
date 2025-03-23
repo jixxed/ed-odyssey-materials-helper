@@ -82,7 +82,6 @@ class HorizonsEngineerCard extends EngineerCard {
                 .withInfoNodeFactory(_ -> null)
                 .withSegmentViewFactory(segmentViewFactory)
                 .build();
-
         final DestroyableStackPane stackPane = StackPaneBuilder.builder()
                 .withNodes(segmentedBar, this.grade)
                 .build();

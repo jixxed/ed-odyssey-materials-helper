@@ -21,7 +21,7 @@ public abstract class AbstractNodeBuilder<T extends AbstractNodeBuilder<T>> {
     private boolean disable = false;
     private Boolean pickOnBounds;
 
-    private EventHandler<? super MouseEvent> onMouseClicked;
+    private EventHandler<MouseEvent> onMouseClicked;
     private ObservableValue<Boolean> visibilityObservable;
     private ObservableValue<Boolean> disableObservable;
     private ObservableValue<Boolean> managedObservable;
@@ -58,7 +58,7 @@ public abstract class AbstractNodeBuilder<T extends AbstractNodeBuilder<T>> {
         return (T) this;
     }
 
-    public T withOnMouseClicked(final EventHandler<? super MouseEvent> onMouseClicked) {
+    public T withOnMouseClicked(final EventHandler<MouseEvent> onMouseClicked) {
         this.onMouseClicked = onMouseClicked;
         return (T) this;
     }
@@ -88,7 +88,8 @@ public abstract class AbstractNodeBuilder<T extends AbstractNodeBuilder<T>> {
         node.setDisable(this.disable);
         node.setVisible(this.visibility);
         if (this.onMouseClicked != null) {
-            node.registerEventHandler(MouseEvent.MOUSE_CLICKED, this.onMouseClicked);
+            node.addEventBinding(node.onMouseClickedProperty(), this.onMouseClicked);
+//            node.registerEventHandler(MouseEvent.MOUSE_CLICKED, this.onMouseClicked);
         }
         if (this.visibilityObservable != null) {
             node.addBinding(node.visibleProperty(), this.visibilityObservable);

@@ -36,12 +36,12 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
 
     OdysseyWishlistIngredient(final OdysseyStorageType storageType, final OdysseyMaterial odysseyMaterial, final Integer amountRequired, final Integer amountAvailable) {
         super(storageType, odysseyMaterial, amountRequired, amountAvailable);
-        initComponents();
-        initEventHandling();
+        initComponents2();
+        initEventHandling2();
     }
 
     @SuppressWarnings("java:S2177")
-    public void initComponents() {
+    public void initComponents2() {
         this.getStyleClass().add("wishlist-ingredient");
         this.hoverProperty().addListener((observable, oldValue, newValue) -> {
             showAsHovered(newValue);
@@ -73,7 +73,7 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
     }
 
     @SuppressWarnings("java:S2177")
-    public void initEventHandling() {
+    public void initEventHandling2() {
         register(EventService.addListener(true, this, FlipRemainingAvailableEvent.class, flipRemainingAvailableEvent -> {
             if (Expansion.ODYSSEY.equals(flipRemainingAvailableEvent.getExpansion())) {
                 showAsHovered(this.hoverProperty().getValue());

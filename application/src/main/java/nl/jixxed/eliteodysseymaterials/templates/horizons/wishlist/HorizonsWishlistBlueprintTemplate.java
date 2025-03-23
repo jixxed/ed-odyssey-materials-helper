@@ -108,7 +108,10 @@ public class HorizonsWishlistBlueprintTemplate extends DestroyableHBox implement
             this.removeBlueprint = ButtonBuilder.builder()
                     .withStyleClass("wishlist-item-button")
                     .withNonLocalizedText("X")
-                    .withOnAction(event -> destroyTemplate())
+                    .withOnAction(event -> {
+                        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new HorizonsWishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.wishlistBlueprint), Action.REMOVED)));
+                        destroyTemplate();
+                    })
                     .build();
             this.getNodes().add(this.removeBlueprint);
         }
@@ -249,8 +252,8 @@ public class HorizonsWishlistBlueprintTemplate extends DestroyableHBox implement
         //not needed
     }
 
-    @Override
-    public void destroyInternal() {
-        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new HorizonsWishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.wishlistBlueprint), Action.REMOVED)));
-    }
+//    @Override
+//    public void destroyInternal() {
+//        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new HorizonsWishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.wishlistBlueprint), Action.REMOVED)));
+//    }
 }

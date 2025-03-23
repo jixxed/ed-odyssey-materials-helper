@@ -94,14 +94,18 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
                                             .build();
                                     final DestroyableHBox popOverContent = BoxBuilder.builder()
                                             .withNodes(textField, button).buildHBox();
-                                    final PopOver popOver = new PopOver(BoxBuilder.builder()
+                                    final DestroyableVBox content = BoxBuilder.builder()
                                             .withStyleClass("popover-menubutton-box")
                                             .withNodes(new GrowingRegion(), popOverContent, new GrowingRegion())
-                                            .buildVBox());
-                                    popOver.setDetachable(false);
-                                    popOver.setHeaderAlwaysVisible(false);
-                                    popOver.getStyleClass().add("popover-menubutton-layout");
-                                    popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
+                                            .buildVBox();
+
+                                    final DestroyablePopOver popOver = PopOverBuilder.builder()
+                                            .withStyleClass("popover-menubutton-layout")
+                                            .withContent(content)
+                                            .withDetachable(false)
+                                            .withHeaderAlwaysVisible(false)
+                                            .withArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER)
+                                            .build();
                                     popOver.show(this.menuButton);
                                     button.setOnAction(eventB -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                                         final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
@@ -127,13 +131,15 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
                                             .build();
                                     final DestroyableHBox popOverContent = BoxBuilder.builder()
                                             .withNodes(textField, button).buildHBox();
-                                    final PopOver popOver = new PopOver(BoxBuilder.builder()
-                                            .withStyleClass("popover-menubutton-box")
-                                            .withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox());
-                                    popOver.setDetachable(false);
-                                    popOver.setHeaderAlwaysVisible(false);
-                                    popOver.getStyleClass().add("popover-menubutton-layout");
-                                    popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
+                                    final DestroyablePopOver popOver = PopOverBuilder.builder()
+                                            .withStyleClass("popover-menubutton-layout")
+                                            .withContent(BoxBuilder.builder()
+                                                    .withStyleClass("popover-menubutton-box")
+                                                    .withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox())
+                                            .withDetachable(false)
+                                            .withHeaderAlwaysVisible(false)
+                                            .withArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER)
+                                            .build();
                                     popOver.show(this.menuButton);
                                     button.setOnAction(eventB -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                                         final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
@@ -264,14 +270,16 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
                                 .withText("tab.ships.yellowblue.hint.explain")
                                 .build()
                 ).buildHBox();
-        final PopOver popOver = new PopOver();
-        final DestroyableVBox contentNode = BoxBuilder.builder()
+        final DestroyableVBox contentNode = BoxBuilder.builder().withStyleClass("help-popover")
                 .withNodes(dragDropHint, lockModeHint, legacyHint, liveModeHint, yellowBlueHint)
                 .buildVBox();
-        contentNode.getStyleClass().add("help-popover");
-        popOver.setArrowLocation(PopOver.ArrowLocation.TOP_RIGHT);
-        popOver.setContentNode(contentNode);
-        popOver.setDetachable(false);
+        final DestroyablePopOver popOver = PopOverBuilder.builder()
+                .withStyleClass("popover-menubutton-layout")
+                .withContent(contentNode)
+                .withDetachable(false)
+                .withHeaderAlwaysVisible(false)
+                .withArrowLocation(PopOver.ArrowLocation.TOP_RIGHT)
+                .build();
         this.shipsHelp = ResizableImageViewBuilder.builder()
                 .withOnMouseClicked(event -> {
                     popOver.show(this.shipsHelp, event.getScreenX(), event.getScreenY());

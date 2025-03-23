@@ -4,7 +4,6 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.StringBinding;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -20,7 +19,6 @@ public class MenuItemBuilder {
     private final List<String> styleClasses = new ArrayList<>();
     private boolean visibility = true;
     private EventHandler<ActionEvent> onAction;
-    private EventHandler<? super MouseEvent> onMouseClicked;
     private StringBinding stringBinding;
     private String nonLocalizedText;
     private DestroyableResizableImageView graphic;
@@ -42,11 +40,6 @@ public class MenuItemBuilder {
 
     public MenuItemBuilder withVisibility(final boolean visibility) {
         this.visibility = visibility;
-        return this;
-    }
-
-    public MenuItemBuilder withOnMouseClicked(final EventHandler<? super MouseEvent> onMouseClicked) {
-        this.onMouseClicked = onMouseClicked;
         return this;
     }
 
@@ -93,12 +86,8 @@ public class MenuItemBuilder {
         if (this.graphic != null) {
             menuItem.setGraphic(this.graphic);
         }
-        if (this.onMouseClicked != null) {
-            menuItem.registerEventHandler(MouseEvent.MOUSE_CLICKED, this.onMouseClicked);
-        }
         if (this.onAction != null) {
-            menuItem.registerEventHandler(ActionEvent.ACTION, this.onAction);
-            menuItem.setOnAction(this.onAction);
+            menuItem.addActionEventBinding(menuItem.onActionProperty(), this.onAction);
         }
         if (this.disabledBinding != null) {
             menuItem.addBinding(menuItem.disableProperty(), this.disabledBinding);

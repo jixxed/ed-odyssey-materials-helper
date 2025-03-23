@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class PowerplayPerk extends DestroyableHBox implements DestroyableEventTemplate {
+public class PowerplayPerk extends DestroyableVBox implements DestroyableEventTemplate {
 
 
     public static final int MAX_RANK = 100;
@@ -77,6 +77,8 @@ public class PowerplayPerk extends DestroyableHBox implements DestroyableEventTe
         this.getNodes().add(new DestroyableSeparator(Orientation.HORIZONTAL));
         this.getNodes().add(category);
         this.getNodes().add(subtitle);
+        this.getNodes().add(segmentedBar);
+        this.getNodes().add(currentProgress);
         update();
     }
 
@@ -91,17 +93,17 @@ public class PowerplayPerk extends DestroyableHBox implements DestroyableEventTe
     }
 
     public void update() {
-        this.getNodes().remove(segmentedBar);
-        this.getNodes().remove(currentProgress);
+        this.getChildren().remove(segmentedBar);
+        this.getChildren().remove(currentProgress);
         if ((Power.ALL.equals(this.power) && !Power.NONE.equals(ApplicationState.getInstance().getPower())) || this.power.equals(ApplicationState.getInstance().getPower())) {
             segmentedBar = createSegmentedBar();
-            this.getNodes().add(segmentedBar);
+            this.getChildren().add(segmentedBar);
             final Integer reward = this.rewards.stream().filter(rankReward -> rankReward.rank() <= ApplicationState.getInstance().getPowerRank()).max(Comparator.comparing(RankReward::rank)).map(RankReward::reward).orElse(0);
             final StringBinding currentProgressBinding = (PowerPerk.RANK_DECAL.equals(this.perk))
                     ? LocaleService.getStringBinding(getRankRewardStringBinding(reward))
                     : LocaleService.getStringBinding("tab.powerplay.current.reward", reward);
             currentProgress.addBinding(currentProgress.textProperty(), currentProgressBinding);
-            this.getNodes().add(currentProgress);
+            this.getChildren().add(currentProgress);
         }
     }
 

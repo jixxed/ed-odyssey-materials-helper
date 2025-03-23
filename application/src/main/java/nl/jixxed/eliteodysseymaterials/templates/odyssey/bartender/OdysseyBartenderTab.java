@@ -129,16 +129,16 @@ public class OdysseyBartenderTab extends OdysseyTab implements DestroyableEventT
         this.detailView.set(false);
         this.title.addBinding(this.title.textProperty(), LocaleService.getStringBinding("tabs.bartender.select.material"));
         this.odysseyBartenderResult.reset();
-        this.right.getNodes().remove(this.odysseyBartenderResult);
-        this.bottom.getNodes().clear();
-        this.categories.values().forEach(flowPane -> flowPane.getNodes().clear());
+        this.right.getChildren().remove(this.odysseyBartenderResult);
+        this.bottom.getChildren().clear();
+        this.categories.values().forEach(flowPane -> flowPane.getChildren().clear());
         for (final AssetType assetType : Arrays.stream(AssetType.values()).sorted().toArray(AssetType[]::new)) {
             final DestroyableFlowPane flowPane = this.categories.get(assetType);
-            flowPane.getNodes().addAll(this.bartenderMaterials.get(assetType));
+            flowPane.getChildren().addAll(this.bartenderMaterials.get(assetType));
             this.bartenderMaterials.get(assetType).forEach(odysseyBartenderMaterial -> odysseyBartenderMaterial.setLayoutMode(LayoutMode.DEFAULT));
         }
-        this.bottom.getNodes().addAll(this.categories.values());
-        this.top.getNodes().remove(this.selectedMaterial);
+        this.bottom.getChildren().addAll(this.categories.values());
+        this.top.getChildren().remove(this.selectedMaterial);
         this.selectedMaterial = null;
     }
 
@@ -149,19 +149,19 @@ public class OdysseyBartenderTab extends OdysseyTab implements DestroyableEventT
             this.title.addBinding(this.title.textProperty(), LocaleService.getStringBinding("tabs.bartender.select.material.trade"));
             final OdysseyBartenderMaterial odysseyBartenderMaterial = odysseyBartenderMaterialSelectedEvent.getOdysseyBartenderMaterial();
             this.selectedMaterial = odysseyBartenderMaterial;
-            this.top.getNodes().add(this.selectedMaterial);
+            this.top.getChildren().add(this.selectedMaterial);
             this.categories.forEach((assetType, flowPane) -> {
                 if (assetType.equals(odysseyBartenderMaterial.getAsset().getType())) {
-                    flowPane.getNodes().remove(odysseyBartenderMaterial);
+                    flowPane.getChildren().remove(odysseyBartenderMaterial);
                     odysseyBartenderMaterial.setLayoutMode(LayoutMode.SELECTED);
                     flowPane.getChildren().forEach(material -> ((OdysseyBartenderMaterial) material).setLayoutMode(LayoutMode.TRADE));
 
                 } else {
-                    this.bottom.getNodes().remove(flowPane);
+                    this.bottom.getChildren().remove(flowPane);
                 }
             });
-            if (!this.right.getNodes().contains(this.odysseyBartenderResult)) {
-                this.right.getNodes().add(1, this.odysseyBartenderResult);
+            if (!this.right.getChildren().contains(this.odysseyBartenderResult)) {
+                this.right.getChildren().add(1, this.odysseyBartenderResult);
             }
 
         }));

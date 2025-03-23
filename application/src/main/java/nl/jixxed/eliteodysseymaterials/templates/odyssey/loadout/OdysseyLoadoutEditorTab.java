@@ -171,13 +171,15 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements DestroyableEv
                     .build();
             final DestroyableHBox popOverContent = BoxBuilder.builder()
                     .withNodes(textField, button).buildHBox();
-            final PopOver popOver = new PopOver(BoxBuilder.builder()
-                    .withStyleClass("popover-menubutton-box")
-                    .withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox());
-            popOver.setDetachable(false);
-            popOver.setHeaderAlwaysVisible(false);
-            popOver.getStyleClass().add("popover-menubutton-layout");
-            popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
+            final DestroyablePopOver popOver = PopOverBuilder.builder()
+                    .withStyleClass("popover-menubutton-layout")
+                    .withContent(BoxBuilder.builder()
+                            .withStyleClass("popover-menubutton-box")
+                            .withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox())
+                    .withDetachable(false)
+                    .withHeaderAlwaysVisible(false)
+                    .withArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER)
+                    .build();
             popOver.show(this.menuButton);
             button.setOnAction(eventB -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                 final LoadoutSetList loadoutSetList = LoadoutService.getLoadoutSetList(commander);
@@ -204,13 +206,15 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements DestroyableEv
                     .build();
             final DestroyableHBox popOverContent = BoxBuilder.builder()
                     .withNodes(textField, button).buildHBox();
-            final PopOver popOver = new PopOver(BoxBuilder.builder()
-                    .withStyleClass("popover-menubutton-box")
-                    .withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox());
-            popOver.setDetachable(false);
-            popOver.setHeaderAlwaysVisible(false);
-            popOver.getStyleClass().add("popover-menubutton-layout");
-            popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
+            final DestroyablePopOver popOver = PopOverBuilder.builder()
+                    .withStyleClass("popover-menubutton-layout")
+                    .withContent(BoxBuilder.builder()
+                            .withStyleClass("popover-menubutton-box")
+                            .withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox())
+                    .withDetachable(false)
+                    .withHeaderAlwaysVisible(false)
+                    .withArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER)
+                    .build();
             popOver.show(this.menuButton);
             button.setOnAction(eventB -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                 final LoadoutSetList loadoutSetList = LoadoutService.getLoadoutSetList(commander);
@@ -262,14 +266,15 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements DestroyableEv
                                 "tab.loadout.rename", renameHandler,
                                 "tab.loadout.delete", deleteHandler,
                                 "tab.loadout.clone", cloneHandler,
-                                "tab.loadout.copy", copyHandler))
+                                "tab.loadout.copy", copyHandler),
+                        Map.of(
+                                "tab.loadout.delete", this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isEqualTo(LoadoutSet.CURRENT),
+                                "tab.loadout.copy", this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isEqualTo(LoadoutSet.CURRENT),
+                                "tab.loadout.rename", this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isEqualTo(LoadoutSet.CURRENT)
+                        ))
+                .withFocusTraversable(false)
                 .build();
-        this.menuButton.setFocusTraversable(false);
-        this.menuButton.getItems().forEach(menuItem -> {
-            if (!menuItem.getOnAction().equals(createHandler) && !menuItem.getOnAction().equals(cloneHandler)) {
-                ((DestroyableMenuItem) menuItem).addBinding(menuItem.disableProperty(), this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isEqualTo(LoadoutSet.CURRENT));
-            }
-        });
+
         final DestroyableHBox hBoxBlueprints = BoxBuilder.builder()
                 .withNodes(this.loadoutSetSelect, this.menuButton, addSuitButton, addWeaponButton, this.addToWishlist).buildHBox();
         hBoxBlueprints.addBinding(hBoxBlueprints.spacingProperty(), ScalingHelper.getPixelDoubleBindingFromEm(0.25));

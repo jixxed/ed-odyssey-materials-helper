@@ -10,7 +10,6 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Bounds;
 import javafx.geometry.Orientation;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
@@ -34,7 +33,6 @@ import nl.jixxed.eliteodysseymaterials.service.event.ShipBuilderEvent;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
-import org.controlsfx.control.PopOver;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -79,7 +77,7 @@ class SlotBox extends DestroyableStackPane {
     private DestroyableLabel classLabel;
     private DestroyableLabel mountingLabel;
     private DestroyableLabel sizeLabel;
-    private PopOver popOver;
+    private DestroyablePopOver popOver;
     private boolean isControlDown;
     private boolean dragging;
     private DestroyableButton powerButton;
@@ -189,40 +187,40 @@ class SlotBox extends DestroyableStackPane {
 
     private void mouseBehaviour(ModulesLayer modulesLayer, Slot slot) {
         if (slot.getSlotType().equals(SlotType.HARDPOINT)) {
-            this.onMouseEnteredProperty().set(event -> {
+            this.addEventBinding(this.onMouseEnteredProperty(), event -> {
                 if (!event.isAltDown()) {
                     EventService.publish(new ModuleHighlightEvent(this.slot.getShipModule()));
                     modulesLayer.toggleHardpointImage(true);
                     modulesLayer.drawHardpointLine(slot.getIndex());
                 }
             });
-            this.onMouseExitedProperty().set(event -> {
+            this.addEventBinding(this.onMouseExitedProperty(), event -> {
                 if (!event.isAltDown()) {
                     modulesLayer.toggleHardpointImage(false);
                 }
             });
         } else if (slot.getSlotType().equals(SlotType.UTILITY)) {
-            this.onMouseEnteredProperty().set(event -> {
+            this.addEventBinding(this.onMouseEnteredProperty(), event -> {
                 if (!event.isAltDown()) {
                     EventService.publish(new ModuleHighlightEvent(this.slot.getShipModule()));
                     modulesLayer.toggleUtilityImage(true);
                     modulesLayer.drawUtilityLine(slot.getIndex());
                 }
             });
-            this.onMouseExitedProperty().set(event -> {
+            this.addEventBinding(this.onMouseExitedProperty(), event -> {
                 if (!event.isAltDown()) {
                     modulesLayer.toggleUtilityImage(false);
                 }
             });
         } else {
-            this.onMouseEnteredProperty().set(event -> {
+            this.addEventBinding(this.onMouseEnteredProperty(), event -> {
                 if (!event.isAltDown()) {
                     EventService.publish(new ModuleHighlightEvent(this.slot.getShipModule()));
                 }
             });
         }
         if (!isCurrentShip()) {
-            this.setOnMouseClicked(event -> {
+            this.addEventBinding(this.onMouseClickedProperty(), event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY)) {
                     if (this.popOver != null && this.popOver.isShowing()) {
                         close();
@@ -243,7 +241,7 @@ class SlotBox extends DestroyableStackPane {
                     }
                 }
             });
-            this.setOnDragDetected(event -> {
+            this.addEventBinding(this.onDragDetectedProperty(), event -> {
                 close();
 //                log.debug("setOnDragDetected " + this.slot.getIndex());
                 final Dragboard db = this.startDragAndDrop(TransferMode.ANY);
@@ -258,7 +256,7 @@ class SlotBox extends DestroyableStackPane {
                 }
             });
             AtomicReference<TransferMode> atomicBoolean = new AtomicReference<>();
-            this.setOnDragOver(event -> {
+            this.addEventBinding(this.onDragOverProperty(), event -> {
 //                log.debug("setOnDragOver " + this.slot.getIndex() + " " + event.getTransferMode());
 
                 if (slot.getSlotType().equals(SlotType.HARDPOINT)) {
@@ -321,7 +319,7 @@ class SlotBox extends DestroyableStackPane {
                 }
                 event.consume();
             });
-            this.setOnDragEntered(event -> {
+            this.addEventBinding(this.onDragEnteredProperty(), event -> {
 //                log.debug("setOnDragEntered " + this.slot.getIndex());
                 /* the drag-and-drop gesture entered the target */
                 /* show to the user that it is an actual gesture target */
@@ -332,7 +330,7 @@ class SlotBox extends DestroyableStackPane {
                     event.consume();
                 }
             });
-            this.setOnDragExited(event -> {
+            this.addEventBinding(this.onDragExitedProperty(), event -> {
 //                log.debug("setOnDragExited " + this.slot.getIndex());
                 layer1.getStyleClass().removeAll("shipbuilder-slots-slotbox-hover-bad", "shipbuilder-slots-slotbox-hover-good");
                 if (slot.getSlotType().equals(SlotType.HARDPOINT)) {
@@ -348,7 +346,7 @@ class SlotBox extends DestroyableStackPane {
                 }
                 event.consume();
             });
-            this.setOnDragDropped(event -> {
+            this.addEventBinding(this.onDragDroppedProperty(), event -> {
 //                log.debug("setOnDragDropped " + this.slot.getIndex());
                 layer1.getStyleClass().removeAll("shipbuilder-slots-slotbox-hover-bad", "shipbuilder-slots-slotbox-hover-good");
                 /* data dropped */
@@ -381,7 +379,7 @@ class SlotBox extends DestroyableStackPane {
                     event.consume();
                 }
             });
-            this.setOnDragDone(event -> {
+            this.addEventBinding(this.onDragDoneProperty(), event -> {
 //                log.debug("setOnDragDone " + this.slot.getIndex());
                 /* the drag and drop gesture ended */
                 /* if the data was successfully moved, clear it */
@@ -901,7 +899,7 @@ class SlotBox extends DestroyableStackPane {
     }
 
 
-    private PopOver getPopOver() {
+    private DestroyablePopOver getPopOver() {
         final DestroyableVBox content = BoxBuilder.builder()
                 .withStyleClass("shipbuilder-slots-slotbox-popover-vbox")
                 .buildVBox();
@@ -924,17 +922,20 @@ class SlotBox extends DestroyableStackPane {
             addExperimentalEffects(content);
         }
         content.getNodes().addAll(entries);
-        final ScrollPane scrollPane = new ScrollPane(content);
-        scrollPane.getStyleClass().add("shipbuilder-slots-slotbox-popover-content");
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        final PopOver popOver = new PopOver(scrollPane);
-        popOver.getStyleClass().add("shipbuilder-slots-slotbox-popover");
+        final DestroyableScrollPane scrollPane = ScrollPaneBuilder.builder()
+                .withContent(content)
+                .withStyleClass("shipbuilder-slots-slotbox-popover-content")
+                .build();
 
-        popOver.setDetachable(false);
-        popOver.setHeaderAlwaysVisible(false);
-        popOver.arrowSizeProperty().set(0);
-        popOver.arrowIndentProperty().set(0);
-        popOver.cornerRadiusProperty().set(0);
+        final DestroyablePopOver popOver = PopOverBuilder.builder()
+                .withStyleClass("shipbuilder-slots-slotbox-popover")
+                .withContent(scrollPane)
+                .withDetachable(false)
+                .withHeaderAlwaysVisible(false)
+                .withArrowIndent(0)
+                .withArrowSize(0)
+                .withCornerRadius(0)
+                .build();
         return popOver;
     }
 

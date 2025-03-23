@@ -73,8 +73,8 @@ public class EngineerBlueprintLabel extends DestroyableHBox implements Destroyab
             }
         }
         if (this.horizonsBlueprint instanceof HorizonsModuleBlueprint) {
-            this.registerEventHandler(MouseEvent.MOUSE_CLICKED, getClickMouseEventHandler());
-            this.registerEventHandler(MouseEvent.MOUSE_DRAGGED, getDragMouseEventHandler());
+            this.addEventBinding(this.onMouseClickedProperty(), getClickMouseEventHandler());
+            this.addEventBinding(this.onMouseDraggedProperty(), getDragMouseEventHandler());
         }
 
         update();

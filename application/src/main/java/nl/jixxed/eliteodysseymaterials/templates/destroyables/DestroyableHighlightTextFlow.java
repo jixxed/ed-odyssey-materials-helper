@@ -37,6 +37,7 @@ public class DestroyableHighlightTextFlow extends DestroyableTextFlow {
                 StringBinding textBinding = Bindings.createStringBinding(() -> localeStringBinding.get().substring(finalLastIndex, finalStart), localeStringBinding);
                 final DestroyableText text = new DestroyableText();
                 text.addBinding(text.textProperty(), textBinding);
+                text.getStyleClass().addAll("bluetext");
                 this.getNodes().add(text);
             }
 
@@ -57,6 +58,7 @@ public class DestroyableHighlightTextFlow extends DestroyableTextFlow {
             StringBinding textBinding = Bindings.createStringBinding(() -> localeStringBinding.get().substring(finalLastIndex), localeStringBinding);
             final DestroyableText text = new DestroyableText();
             text.addBinding(text.textProperty(), textBinding);
+            text.getStyleClass().addAll("bluetext");
             this.getNodes().add(text);
         }
     }

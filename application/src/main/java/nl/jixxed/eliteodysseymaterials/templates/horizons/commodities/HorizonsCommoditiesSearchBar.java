@@ -20,7 +20,6 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsCommoditiesShow;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsCommoditiesSort;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsCommoditiesSearchEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
@@ -50,7 +49,7 @@ public class HorizonsCommoditiesSearchBar extends DestroyableHBox implements Des
 
         setDefaultOptions();
 
-        applyFontSizingHack();
+//        applyFontSizingHack();
 
         HBox.setHgrow(this.textField, Priority.ALWAYS);
 
@@ -59,13 +58,13 @@ public class HorizonsCommoditiesSearchBar extends DestroyableHBox implements Des
 
     public void initEventHandling() {
         //hack for component resizing on other fontsizes
-        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
-            final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
-            this.styleProperty().set(fontStyle);
-            this.showMaterialsComboBox.styleProperty().set(fontStyle);
-            this.textField.styleProperty().set(fontStyle);
-            this.sortMaterialsComboBox.styleProperty().set(fontStyle);
-        }));
+//        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+//            final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
+//            this.styleProperty().set(fontStyle);
+//            this.showMaterialsComboBox.styleProperty().set(fontStyle);
+//            this.textField.styleProperty().set(fontStyle);
+//            this.sortMaterialsComboBox.styleProperty().set(fontStyle);
+//        }));
     }
 
     private void applyFontSizingHack() {
