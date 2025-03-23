@@ -147,16 +147,15 @@ public class PowerplayCard extends DestroyableVBox implements DestroyableEventTe
                 .withStyleClass("power-location")
                 .withNonLocalizedText(this.power.getStarSystem().getName())
                 .build();
-        String distance = "(" + Formatters.NUMBER_FORMAT_2.format(
-                power.getDistance(
-                        LocationService.getCurrentStarSystem().getX(),
-                        LocationService.getCurrentStarSystem().getY(),
-                        LocationService.getCurrentStarSystem().getZ()
-                )
-        ) + "Ly)";
         this.powerDistance = LabelBuilder.builder()
                 .withStyleClass("power-distance")
-                .withText("tab.powerplay.distance", distance)
+                .withText("tab.powerplay.distance", Formatters.NUMBER_FORMAT_2.format(
+                        power.getDistance(
+                                LocationService.getCurrentStarSystem().getX(),
+                                LocationService.getCurrentStarSystem().getY(),
+                                LocationService.getCurrentStarSystem().getZ()
+                        )
+                ))
                 .build();
 
         final DestroyableResizableImageView copyIcon = ResizableImageViewBuilder.builder()
