@@ -10,6 +10,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHighlig
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -50,7 +51,7 @@ public class HighlightTextFlowBuilder extends AbstractPaneBuilder<HighlightTextF
     }
 
     @Override
-    public <E extends Node & DestroyableComponent> HighlightTextFlowBuilder withNodes(List<E> nodes) {
+    public <E extends Node & DestroyableComponent> HighlightTextFlowBuilder withNodes(Collection<E> nodes) {
         throw new UnsupportedOperationException(WITH_NODES_ERROR);
     }
 

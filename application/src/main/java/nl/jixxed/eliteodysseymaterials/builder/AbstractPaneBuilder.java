@@ -9,6 +9,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableCompone
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
@@ -28,7 +29,7 @@ public abstract class AbstractPaneBuilder<T extends AbstractPaneBuilder<T>> exte
     }
 
     @SuppressWarnings("unchecked")
-    public <E extends Node & DestroyableComponent> T withNodes(final List<E> nodes) {
+    public <E extends Node & DestroyableComponent> T withNodes(final Collection<E> nodes) {
         this.nodes.addAll(nodes);
         return (T) this;
     }

@@ -58,66 +58,62 @@
       }
     }
 
-    .engineer-card {
-      .engineer-blueprint {
-        -fx-text-fill: #0078d6;
-        -fx-label-padding: 0 5px 0 2px;
-        -fx-max-width: 19.6em;
-        -fx-wrap-text: true;
+    .engineer-blueprint {
+      -fx-text-fill: #0078d6;
+      -fx-label-padding: 0 5px 0 2px;
+      -fx-max-width: 19.6em;
+      -fx-wrap-text: true;
 
-        &:hover {
-          -fx-text-fill: #2e92df;
-          -fx-cursor: hand;
-        }
-      }
-
-      .specialisation {
-        -fx-padding: 0 0 0 5;
-
-        .name {
-          -fx-alignment: center-right;
-          -fx-max-height: 2.2em;
-        }
-
-        .image {
-          -fx-max-width: 2.2em;
-          -fx-max-height: 2.2em;
-          -fx-fit-to-height: true;
-          -fx-fit-to-width: true;
-        }
-
-        &:force {
-          .name {
-            -fx-text-fill: #ff3c00;
-          }
-        }
-
-        &:dynamic {
-          .name {
-            -fx-text-fill: #ff00e7;
-          }
-        }
-
-        &:strategic {
-          .name {
-            -fx-text-fill: #7cd429;
-          }
-        }
-
-        &:hybrid {
-          .name {
-            -fx-text-fill: #ffffff;
-          }
-        }
-
-        &:unknown {
-          .name {
-            -fx-text-fill: #ffffff;
-          }
-        }
+      &:hover {
+        -fx-text-fill: #2e92df;
+        -fx-cursor: hand;
       }
     }
 
+    .specialisation {
+      -fx-padding: 0 0 0 5;
 
+      .name {
+        -fx-alignment: center-right;
+        -fx-max-height: 2.2em;
+      }
+
+      .image {
+        -fx-max-width: 2.2em;
+        -fx-max-height: 2.2em;
+        -fx-fit-to-height: true;
+        -fx-fit-to-width: true;
+      }
+
+      &:force {
+        .name {
+          -fx-text-fill: #ff3c00;
+        }
+      }
+
+      &:dynamic {
+        .name {
+          -fx-text-fill: #ff00e7;
+        }
+      }
+
+      &:strategic {
+        .name {
+          -fx-text-fill: #7cd429;
+        }
+      }
+
+      &:hybrid {
+        .name {
+          -fx-text-fill: #ffffff;
+        }
+      }
+
+      &:unknown {
+        .name {
+          -fx-text-fill: #ffffff;
+        }
+      }
+    }
   }
 }

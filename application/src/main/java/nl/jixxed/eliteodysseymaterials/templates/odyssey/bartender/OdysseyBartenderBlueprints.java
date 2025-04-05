@@ -17,24 +17,23 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-public class OdysseyBartenderRecipes extends DestroyableVBox implements DestroyableEventTemplate {
-    private DestroyableLabel title;
+public class OdysseyBartenderBlueprints extends DestroyableVBox implements DestroyableEventTemplate {
     private final List<DestroyableLabel> recipes = new ArrayList<>();
 
 
-    OdysseyBartenderRecipes() {
+    OdysseyBartenderBlueprints() {
         initComponents();
         initEventHandling();
     }
 
     @Override
     public void initComponents() {
-        this.getStyleClass().add("bartender-recipes");
-        this.title = LabelBuilder.builder()
-                .withStyleClass("bartender-recipes-header")
+        this.getStyleClass().add("bartender-blueprints");
+        DestroyableLabel title = LabelBuilder.builder()
+                .withStyleClass("title")
                 .withText("tab.bartender.used.in")
                 .build();
-        this.getNodes().add(this.title);
+        this.getNodes().add(title);
     }
 
     @Override
@@ -50,7 +49,7 @@ public class OdysseyBartenderRecipes extends DestroyableVBox implements Destroya
         recipesContaining.entrySet().stream()
                 .sorted(Comparator.comparing(entry -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getLocalizationKey())))
                 .forEach(entry -> this.recipes.add(LabelBuilder.builder()
-                        .withStyleClass("bartender-recipes-line")
+                        .withStyleClass("blueprint")
                         .withText("tab.bartender.entry", LocaleService.LocalizationKey.of(entry.getKey().getLocalizationKey()), entry.getValue())
                         .build()));
         this.getNodes().addAll(this.recipes);

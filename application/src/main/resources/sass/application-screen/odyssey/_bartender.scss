@@ -7,191 +7,188 @@
 
   @include scroll-pane-content;
 
-  .bartender-material {
-    -fx-border-color: black;
-    -fx-pref-height: 4em;
-    -fx-min-height: 4em;
-    -fx-max-height: 4em;
-    -fx-alignment: center-left;
-    -fx-background-color: #0f0f0f;
-    -fx-pref-width: 50em;
-    -fx-min-width: 50em;
-    -fx-max-width: 50em;
-    -fx-padding: 0 0.2em 0 0;
-  }
-
-  .bartender-material-line {
-    -fx-pref-height: 2em;
-    -fx-min-height: 2em;
-    -fx-max-height: 2em;
-    -fx-alignment: center-left;
-  }
-
-  .bartender-material-line-image {
-    -fx-pref-height: 2em;
-    -fx-min-height: 2em;
-    -fx-max-height: 2em;
-    -fx-alignment: top-left;
-  }
-
-  .bartender-material:hover {
-    -fx-background-color: #252525;
-  }
-
-  .bartender-material-hover:hover {
-    /*-fx-background-color: #252525;*/
-    -fx-cursor: hand;
-  }
-
-  .bartender-material-amount-selected {
-    -fx-font-weight: bold;
-  }
-
-  .bartender-material-amount-selected-value {
-    -fx-label-padding: 0 1em 0 0;
-    -fx-font-weight: bold;
-  }
-
-  .bartender-material-value {
-    /*-fx-alignment: center-right;*/
-    /*-fx-text-alignment: right;*/
-    -fx-label-padding: 0 0 0 1em;
-    -fx-pref-width: 13em;
-    -fx-min-width: 13em;
-    -fx-max-width: 13em;
-    -fx-font-style: italic;
-  }
-
-  .bartender-material-value:disabled {
-    -fx-text-fill: #4f4f4f;
-  }
-
-  .bartender-material-name {
-    /*-fx-pref-width: 30em;*/
-    /*-fx-min-width: 30em;*/
-    /*-fx-max-width: 30em;*/
-    -fx-label-padding: 0 0 0 1em;
-    -fx-font-weight: bold;
-  }
-
-  .bartender-material-wishlist {
-    -fx-alignment: center;
-    -fx-text-alignment: center;
-    -fx-pref-width: 3em;
-    -fx-min-width: 3em;
-    -fx-max-width: 3em;
-  }
-
-  .bartender-material-button {
-    -fx-border-color: #0f0f0f;
-    -fx-background-color: #252525;
-    -fx-alignment: center;
-    -fx-text-alignment: center;
-    -fx-pref-width: 2em;
-    -fx-min-width: 2em;
-    -fx-max-width: 2em;
-  }
-
-  .bartender-material-button:hover {
-    -fx-background-color: #252525;
-    -fx-cursor: hand;
-  }
-
-  .bartender-material-amount {
-    -fx-alignment: center;
-    -fx-text-alignment: center;
-    -fx-pref-width: 3em;
-    -fx-min-width: 3em;
-    -fx-max-width: 3em;
-  }
-
-  .bartender-flow {
-    /*-fx-spacing: 0.1em;*/
-    /*-fx-padding: 0, 0, 0.2em, 0;*/
-    -fx-vgap: 0.2em;
-    -fx-pref-width: 50em;
-    -fx-min-width: 50em;
-    -fx-max-width: 50em;
-  }
-
-  .bartender-top {
-    -fx-padding: 0, 0, 2em, 0;
-  }
-
-  .bartender-bottom {
-    -fx-spacing: 0.2em;
-    -fx-vgap: 0.2em;
-  }
-
-  .bartender-left {
-    -fx-padding: 0, 0, 0.2em, 0;
-    /*-fx-vgap: 0.2em;*/
-    -fx-vgap: 0.5em;
-    -fx-spacing: 1em;
-  }
 
   .bartender-layout {
-    -fx-padding: 0.4em;
-    -fx-spacing: 0.75em;
-    /*-fx-hgap: 0.75em;*/
+    //-fx-spacing: 0.25em;
+
+    .left-section {
+
+      -fx-spacing: 1.25em;
+
+      .title-section {
+
+        .title {
+          -fx-font-size: 1.35em;
+          -fx-min-height: 2em;
+          -fx-font-weight: bold;
+        }
+
+        -fx-spacing: 0.25em;
+      }
+
+      .top-section {
+        -fx-spacing: 0.25em;
+      }
+
+      .bottom-section {
+        -fx-spacing: 0.25em;
+
+        .bartender-flow {
+          @include hvGap(0.25em);
+          @include fixedWidth(50em);
+        }
+      }
+
+
+      .bartender-material {
+        @include fixedWidth(50em);
+        @include fixedHeight(4.5em);
+        -fx-alignment: center-left;
+        -fx-background-color: $background-color-dark;
+        -fx-border-color: $background-color-dark;
+        -fx-padding: 0.25em;
+
+        &:default:hover {
+          -fx-background-color: $background-color-lighter;
+          -fx-cursor: hand;
+        }
+
+        .left-middle-section {
+          @include fixedHeight(4em);
+          -fx-alignment: center-left;
+        }
+
+        left-middle-bottom-section,
+        .middle-top-section,
+        .middle-bottom-section,
+        .right-top-section,
+        .right-bottom-section {
+          @include fixedHeight(2em);
+          -fx-alignment: center-left;
+        }
+
+        .material-image {
+          @include fixedWidth(2em);
+          @include fixedHeight(2em);
+          -fx-fit-to-height: true;
+          -fx-fit-to-width: true;
+        }
+
+        .storage-image {
+          @include fixedHeight(2em);
+          -fx-alignment: top-left;
+        }
+
+        .selected-label {
+          -fx-font-weight: bold;
+        }
+
+        .selected-value {
+          -fx-label-padding: 0 1em 0 0;
+          -fx-font-weight: bold;
+        }
+
+        .buy-value, .sell-value {
+          @include fixedHeight(2em);
+          -fx-label-padding: 0 0 0 0.25em;
+          @include fixedWidth(13em);
+          -fx-alignment: baseline-left;
+          -fx-font-style: italic;
+
+          &:disabled {
+            -fx-text-fill: #4f4f4f;
+          }
+        }
+
+        .name {
+          @include fixedHeight(2em);
+          -fx-alignment: baseline-left;
+          -fx-label-padding: 0 0 0 0.25em;
+          -fx-font-weight: bold;
+
+          &:lowamount {
+            -fx-text-fill: $text-color-red;
+          }
+        }
+
+        .storage-value {
+          -fx-alignment: center;
+          -fx-text-alignment: center;
+          @include fixedWidth(3em);
+        }
+
+        .trade-button {
+          @include fixedWidth(2em);
+          -fx-border-color: $background-color-dark;
+          -fx-background-color: $background-color-lighter;
+          -fx-alignment: center;
+          -fx-text-alignment: center;
+
+          &:hover {
+            -fx-background-color: ligthen($background-color-lighter, 10%);
+            -fx-cursor: hand;
+          }
+        }
+
+        .amount {
+          @include fixedWidth(3em);
+          -fx-alignment: center;
+          -fx-text-alignment: center;
+        }
+
+      }
+
+    }
+
+    .right-section {
+      -fx-spacing: 0.25em;
+
+      .bartender-result {
+        -fx-background-color: $background-color-dark;
+        -fx-border-color: $background-color-dark;
+
+        .line {
+          -fx-background-color: #0f0f0f;
+          @include fixedWidth(34.32em);
+
+          .title {
+            -fx-font-size: 1.2em;
+            -fx-label-padding: 0.5em;
+          }
+
+          .value {
+            -fx-font-size: 1.2em;
+            -fx-alignment: center-right;
+            -fx-text-alignment: right;
+            @include fixedWidth(5em);
+            -fx-label-padding: 0.5em;
+          }
+        }
+
+      }
+
+
+      .bartender-blueprints {
+        -fx-background-color: $background-color-dark;
+        -fx-border-color: $background-color-dark;
+
+        .title {
+          @include fixedWidth(28.6em);
+          -fx-font-size: 1.2em;
+          -fx-label-padding: 0.5em;
+        }
+
+        .blueprint {
+          -fx-font-size: 1em;
+          @include fixedWidth(34.32em);
+          -fx-label-padding: 0.2em 0 1em 1em;
+        }
+
+      }
+
+    }
+
   }
 
-  .bartender-header {
-    -fx-font-size: 1.35em;
-    -fx-min-height: 2em;
-    -fx-font-weight: bold;
-  }
-
-  .bartender-total {
-    /*-fx-border-color: black;*/
-    /*-fx-background-color: #0f0f0f;*/
-  }
-
-  .bartender-total-line {
-    -fx-background-color: #0f0f0f;
-    -fx-font-size: 1.3em;
-    -fx-pref-width: 26.4em;
-    -fx-min-width: 26.4em;
-    -fx-max-width: 26.4em;
-  }
-
-  .bartender-total-header {
-    /*-fx-pref-width: 20em;*/
-    /*-fx-min-width: 20em;*/
-    /*-fx-max-width: 20em;*/
-    -fx-label-padding: 0.5em;
-  }
-
-  .bartender-recipes {
-    /*-fx-border-color: black;*/
-    /*-fx-background-color: #0f0f0f;*/
-  }
-
-  .bartender-recipes-line {
-    -fx-background-color: #0f0f0f;
-    -fx-font-size: 1em;
-    -fx-pref-width: 34.32em;
-    -fx-min-width: 34.32em;
-    -fx-max-width: 34.32em;
-    -fx-label-padding: 0.2em 0 1em 1em;
-  }
-
-  .bartender-recipes-header {
-    -fx-background-color: #0f0f0f;
-    -fx-pref-width: 28.6em;
-    -fx-min-width: 28.6em;
-    -fx-max-width: 28.6em;
-    -fx-font-size: 1.2em;
-    -fx-label-padding: 0.5em;
-  }
-
-  .bartender-total-value {
-    -fx-alignment: center-right;
-    -fx-text-alignment: right;
-    -fx-pref-width: 5em;
-    -fx-min-width: 5em;
-    -fx-max-width: 5em;
-    -fx-label-padding: 0.5em;
-  }
 
 }

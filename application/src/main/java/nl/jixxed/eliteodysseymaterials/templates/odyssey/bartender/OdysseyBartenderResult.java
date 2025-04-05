@@ -15,6 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OdysseyBartenderResult extends DestroyableVBox implements DestroyableEventTemplate {
+    public static final String TITLE_STYLE_CLASS = "title";
+    public static final String VALUE_STYLE_CLASS = "value";
+    public static final String LINE_STYLE_CLASS = "line";
     private final Map<Asset, Integer> tradeList = new HashMap<>();
     private Asset selectedAsset;
     private DestroyableLabel costPerItem;
@@ -30,55 +33,55 @@ public class OdysseyBartenderResult extends DestroyableVBox implements Destroyab
 
     @Override
     public void initComponents() {
-        this.getStyleClass().add("bartender-total");
+        this.getStyleClass().add("bartender-result");
         //cost per item
         final DestroyableLabel costPerItemLabel = LabelBuilder.builder()
-                .withStyleClass("bartender-total-header")
+                .withStyleClass(TITLE_STYLE_CLASS)
                 .withText("tab.bartender.total.cost")
                 .build();
         this.costPerItem = LabelBuilder.builder()
-                .withStyleClass("bartender-total-value")
+                .withStyleClass(VALUE_STYLE_CLASS)
                 .withNonLocalizedText("")
                 .build();
         //total offered
         final DestroyableLabel totalOfferedLabel = LabelBuilder.builder()
-                .withStyleClass("bartender-total-header")
+                .withStyleClass(TITLE_STYLE_CLASS)
                 .withText("tab.bartender.total.offered")
                 .build();
         this.totalOffered = LabelBuilder.builder()
-                .withStyleClass("bartender-total-value")
+                .withStyleClass(VALUE_STYLE_CLASS)
                 .withNonLocalizedText("")
                 .build();
         //wasted from non perfect trade
         final DestroyableLabel wastedLabel = LabelBuilder.builder()
-                .withStyleClass("bartender-total-header")
+                .withStyleClass(TITLE_STYLE_CLASS)
                 .withText("tab.bartender.total.wasted")
                 .build();
         this.wasted = LabelBuilder.builder()
-                .withStyleClass("bartender-total-value")
+                .withStyleClass(VALUE_STYLE_CLASS)
                 .withNonLocalizedText("")
                 .build();
         //items to receive from trade
         final DestroyableLabel toReceiveLabel = LabelBuilder.builder()
-                .withStyleClass("bartender-total-header")
+                .withStyleClass(TITLE_STYLE_CLASS)
                 .withText("tab.bartender.total.receive")
                 .build();
         this.toReceive = LabelBuilder.builder()
-                .withStyleClass("bartender-total-value")
+                .withStyleClass(VALUE_STYLE_CLASS)
                 .withNonLocalizedText("")
                 .build();
         this.getNodes().addAll(
                 BoxBuilder.builder()
-                        .withStyleClass("bartender-total-line")
+                        .withStyleClass(LINE_STYLE_CLASS)
                         .withNodes(costPerItemLabel, new GrowingRegion(), this.costPerItem).buildHBox(),
                 BoxBuilder.builder()
-                        .withStyleClass("bartender-total-line")
+                        .withStyleClass(LINE_STYLE_CLASS)
                         .withNodes(totalOfferedLabel, new GrowingRegion(), this.totalOffered).buildHBox(),
                 BoxBuilder.builder()
-                        .withStyleClass("bartender-total-line")
+                        .withStyleClass(LINE_STYLE_CLASS)
                         .withNodes(wastedLabel, new GrowingRegion(), this.wasted).buildHBox(),
                 BoxBuilder.builder()
-                        .withStyleClass("bartender-total-line")
+                        .withStyleClass(LINE_STYLE_CLASS)
                         .withNodes(toReceiveLabel, new GrowingRegion(), this.toReceive).buildHBox()
         );
         recalculate();
