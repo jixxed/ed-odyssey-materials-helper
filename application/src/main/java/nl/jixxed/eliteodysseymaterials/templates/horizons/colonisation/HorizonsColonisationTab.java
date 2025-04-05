@@ -15,10 +15,12 @@ public class HorizonsColonisationTab extends HorizonsTab implements DestroyableT
 
     @Override
     public void initComponents() {
+        this.getStyleClass().add("colonisation-tab");
         ColonisationView colonisationView = new ColonisationView();
-        this.addBinding(this.textProperty(),LocaleService.getStringBinding("tabs.horizons.colonisation"));
+        this.addBinding(this.textProperty(), LocaleService.getStringBinding("tabs.horizons.colonisation"));
         this.setClosable(false);
         DestroyableScrollPane scrollPane = register(ScrollPaneBuilder.builder()
+                .withStyleClass("colonisation-tab-content")
                 .withContent(colonisationView)
                 .build());
         this.setContent(scrollPane);

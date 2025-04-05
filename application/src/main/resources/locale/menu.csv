@@ -23,3 +23,5 @@ menu.about.tutorial,Official video howto guide,Official video howto guide,Offizi
 menu.about.commission,Commission,,,,,,
 menu.broker.distance,"({0}Ly)",,,,,,
 menu.broker.distance.in.system,"({0}Ls ±{1}Ls)",,,,,,
+system.copy.distance,"({0}Ly)",,,,,,
+system.copy.distance.in.system,"({0}Ls ±{1}Ls)",,,,,,

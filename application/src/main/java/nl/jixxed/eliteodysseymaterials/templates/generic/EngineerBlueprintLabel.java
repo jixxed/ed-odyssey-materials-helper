@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.generic;
 
+import javafx.css.PseudoClass;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
@@ -23,14 +24,16 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizab
 
 public class EngineerBlueprintLabel extends DestroyableHBox implements DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    public static final String LOWGRADE = "lowgrade";
+    public static final String UNLOCKED = "unlocked";
 
     private final Engineer engineer;
     private final int blueprintGrade;
     private final boolean exact;
     private final HorizonsBlueprint horizonsBlueprint;
-    private DestroyableLabel label;
-    private DestroyableResizableImageView image;
-    private DestroyableResizableImageView pinned;
+    private DestroyableLabel engineerName;
+    private DestroyableResizableImageView gradeImage;
+    private DestroyableResizableImageView pinnedImage;
     private Integer currentEngineerRank = 0;
     private boolean dragFlag = false;
 
@@ -54,20 +57,29 @@ public class EngineerBlueprintLabel extends DestroyableHBox implements Destroyab
     }
 
     public void initComponents() {
-        this.getStyleClass().add("engineer-label");
-        this.label = LabelBuilder.builder()
+        this.getStyleClass().add("engineer");
+        this.engineerName = LabelBuilder.builder()
+                .withStyleClass("name")
                 .withText(LocaleService.getStringBinding(this.engineer.getLocalizationKey()))
                 .build();
         if (this.engineer.isHorizons()) {
             addGradeImage();
             addPinnedImage();
-            this.getStyleClass().add("engineer-label-big");
+            if (this.horizonsBlueprint instanceof HorizonsModuleBlueprint) {
+                final Tooltip tooltip = TooltipBuilder.builder()
+                        .withText(LocaleService.getStringBinding("blueprint.engineer.pinnable.tooltip"))
+                        .build();
+                Tooltip.install(this, tooltip);
+                this.getStyleClass().add("pinnable");
+
+            }
         }
-        this.getNodes().add(this.label);
+        this.getNodes().add(this.engineerName);
         if (this.engineer.isHorizons() && this.horizonsBlueprint != null) {
             final int engineerMaxGrade = HorizonsBlueprintConstants.getEngineerMaxGrade(this.horizonsBlueprint, this.engineer);
             if (engineerMaxGrade > 0) {
                 this.getNodes().add(LabelBuilder.builder()
+                        .withStyleClass("maxgrade")
                         .withNonLocalizedText("\u2191" + engineerMaxGrade)
                         .build());
             }
@@ -102,18 +114,18 @@ public class EngineerBlueprintLabel extends DestroyableHBox implements Destroyab
     }
 
     private void addPinnedImage() {
-        this.pinned = ResizableImageViewBuilder.builder()
-                .withStyleClasses("engineer-pinned-image")
+        this.pinnedImage = ResizableImageViewBuilder.builder()
+                .withStyleClasses("pinned-image")
                 .withImage("/images/ships/engineers/pinned.png")
                 .build();
-        this.getNodes().add(this.pinned);
+        this.getNodes().add(this.pinnedImage);
     }
 
     private void addGradeImage() {
-        this.image = ResizableImageViewBuilder.builder()
-                .withStyleClasses("engineer-grade-image")
+        this.gradeImage = ResizableImageViewBuilder.builder()
+                .withStyleClasses("grade-image")
                 .build();
-        this.getNodes().add(this.image);
+        this.getNodes().add(this.gradeImage);
     }
 
     public void initEventHandling() {
@@ -137,7 +149,7 @@ public class EngineerBlueprintLabel extends DestroyableHBox implements Destroyab
             final Integer engineerRank = APPLICATION_STATE.getEngineerRank(this.engineer);
             if (!this.currentEngineerRank.equals(engineerRank)) {//only update if image has changed
                 final String imageString = getEngineerRankImage(engineerRank);
-                this.image.setImage(ImageService.getImage("/images/ships/engineers/ranks/" + imageString + ".png"));
+                this.gradeImage.setImage(ImageService.getImage("/images/ships/engineers/ranks/" + imageString + ".png"));
                 this.currentEngineerRank = engineerRank;
             }
             setPinnedVisibility(PinnedBlueprintService.isPinned(this.engineer, this.horizonsBlueprint));
@@ -145,8 +157,8 @@ public class EngineerBlueprintLabel extends DestroyableHBox implements Destroyab
     }
 
     private void setPinnedVisibility(boolean visible) {
-        this.pinned.setVisible(visible);
-        this.pinned.setManaged(visible);
+        this.pinnedImage.setVisible(visible);
+        this.pinnedImage.setManaged(visible);
     }
 
 
@@ -178,26 +190,21 @@ public class EngineerBlueprintLabel extends DestroyableHBox implements Destroyab
 
 
     private void updateStyle(final boolean unlocked, final Integer currentEngineerRank) {
-        this.label.getStyleClass().removeAll("engineer-unlocked", "engineer-locked");
-        final String styleClass;
         if (unlocked && currentEngineerRank >= this.blueprintGrade) {
-            styleClass = "engineer-unlocked";
-            if (this.horizonsBlueprint instanceof HorizonsModuleBlueprint) {
-                final Tooltip tooltip = TooltipBuilder.builder()
-                        .withText(LocaleService.getStringBinding("blueprint.engineer.pinnable.tooltip"))
-                        .build();
-                Tooltip.install(this, tooltip);
-                this.getStyleClass().add("engineer-label-pinnable");
-            }
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(UNLOCKED), true);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(LOWGRADE), false);
+
         } else if (unlocked) {
-            styleClass = "engineer-lowgrade";
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(UNLOCKED), true);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(LOWGRADE), true);
         } else {
-            styleClass = "engineer-locked";
+
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(UNLOCKED), false);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(LOWGRADE), false);
         }
-        this.label.getStyleClass().add(styleClass);
     }
 
     public String getEngineerName() {
-        return this.label.getText();
+        return this.engineerName.getText();
     }
 }

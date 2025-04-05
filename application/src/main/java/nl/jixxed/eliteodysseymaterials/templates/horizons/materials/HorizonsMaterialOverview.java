@@ -10,24 +10,28 @@ import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.SpawnConstants;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsMaterialsSearch;
 import nl.jixxed.eliteodysseymaterials.enums.*;
-import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsMaterialSearchEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class HorizonsMaterialOverview extends DestroyableVBox implements DestroyableEventTemplate {
 
-    private HorizonsMaterialCard[] rawCards;
-    private HorizonsMaterialCard[] encodedCards;
-    private HorizonsMaterialCard[] manufacturedCards;
+
+    private static final String FLOW_PANE_STYLE_CLASS = "material-card-flow-pane";
     private DestroyableHBox nearestTraders;
     private HorizonsMaterialsSearch currentSearch = new HorizonsMaterialsSearch("", HorizonsMaterialsShow.ALL);
+    private final List<DestroyableFlowPane> rawFlowPanes = new ArrayList<>();
+    private final List<DestroyableFlowPane> encodedFlowPanes = new ArrayList<>();
+    private final List<DestroyableFlowPane> manufacturedFlowPanes = new ArrayList<>();
+    private DestroyableSeparator rawLine;
+    private DestroyableSeparator encodedLine;
+    private DestroyableSeparator manufacturedLine;
 
     HorizonsMaterialOverview() {
         initComponents();
@@ -37,9 +41,6 @@ public class HorizonsMaterialOverview extends DestroyableVBox implements Destroy
     @Override
     public void initComponents() {
         this.getStyleClass().add("horizons-material-overview");
-//        Arrays.stream(HorizonsMaterialType.getRawTypes()).forEach(type -> {
-//
-//        });
         final DestroyableFlowPane traders = FlowPaneBuilder.builder()
                 .withOrientation(Orientation.HORIZONTAL)
                 .withStyleClass("nearest-trader-flow")
@@ -50,20 +51,19 @@ public class HorizonsMaterialOverview extends DestroyableVBox implements Destroy
                 )
                 .build();
         final DestroyableLabel nearestTradersTitle = LabelBuilder.builder()
-                .withStyleClass("horizons-material-overview-row-name")
+                .withStyleClass("row-name")
                 .withText("horizons.materials.nearest.trader")
                 .build();
         this.nearestTraders = BoxBuilder.builder()
                 .withNodes(nearestTradersTitle, traders)
                 .buildHBox();
         HBox.setHgrow(traders, Priority.ALWAYS);
-        this.nearestTraders.addBinding(this.nearestTraders.spacingProperty(), ScalingHelper.getPixelDoubleBindingFromEm(0.25));
-        this.rawCards = Arrays.stream(Raw.values()).map(HorizonsMaterialCard::new).toList().toArray(HorizonsMaterialCard[]::new);
-        this.encodedCards = Arrays.stream(Encoded.values()).map(HorizonsMaterialCard::new).toList().toArray(HorizonsMaterialCard[]::new);
-        this.manufacturedCards = Arrays.stream(Manufactured.values()).map(HorizonsMaterialCard::new).toList().toArray(HorizonsMaterialCard[]::new);
 
-        update();
-        this.addBinding(this.spacingProperty(), ScalingHelper.getPixelDoubleBindingFromEm(0.5));
+        rawLine = new DestroyableSeparator(Orientation.HORIZONTAL);
+        encodedLine = new DestroyableSeparator(Orientation.HORIZONTAL);
+        manufacturedLine = new DestroyableSeparator(Orientation.HORIZONTAL);
+
+        initCards();
     }
 
     @Override
@@ -75,48 +75,60 @@ public class HorizonsMaterialOverview extends DestroyableVBox implements Destroy
     }
 
     private void update() {
-        this.getNodes().clear();
+        updateCategory(this.rawFlowPanes, rawLine);
+        updateCategory(this.encodedFlowPanes, encodedLine);
+        updateCategory(this.manufacturedFlowPanes, manufacturedLine);
+        this.layoutChildren();
+    }
+
+    private void updateCategory(List<DestroyableFlowPane> rawFlowPanes, DestroyableSeparator rawLine) {
+        rawFlowPanes.forEach(flowPane -> {
+            final boolean match = flowPane.getChildren().stream()
+                    .map(HorizonsMaterialCard.class::cast)
+                    .anyMatch(materialCard -> searchForMaterial(materialCard.getMaterial()));
+            flowPane.setVisible(match);
+            flowPane.setManaged(match);
+        });
+        rawLine.setVisible(rawFlowPanes.stream().anyMatch(DestroyableFlowPane::isVisible));
+        rawLine.setManaged(rawFlowPanes.stream().anyMatch(DestroyableFlowPane::isVisible));
+    }
+
+    private void initCards() {
         this.getNodes().add(this.nearestTraders);
-        final DestroyableSeparator rawLine = new DestroyableSeparator(Orientation.HORIZONTAL);
-        final DestroyableSeparator encodedLine = new DestroyableSeparator(Orientation.HORIZONTAL);
-        final DestroyableSeparator manufacturedLine = new DestroyableSeparator(Orientation.HORIZONTAL);
         this.getNodes().add(rawLine);
-        AtomicBoolean hasRaw = new AtomicBoolean(false);
-        AtomicBoolean hasEncoded = new AtomicBoolean(false);
-        AtomicBoolean hasManufactured = new AtomicBoolean(false);
         Arrays.stream(HorizonsMaterialType.getRawTypes()).forEach(type -> {
             if (Arrays.stream(Raw.materialsForType(type)).anyMatch(this::searchForMaterial)) {
-                final HorizonsMaterialCard[] array = Arrays.stream(this.rawCards).filter(horizonsMaterialCard -> horizonsMaterialCard.getMaterial().getMaterialType().equals(type)).sorted(Comparator.comparing(card -> card.getMaterial().getRarity())).toList().toArray(HorizonsMaterialCard[]::new);
-                createMaterialCardRow(type, array);
-                hasRaw.set(true);
+                final HorizonsMaterialCard[] array = Arrays.stream(Raw.values())
+                        .filter(material -> material.getMaterialType().equals(type))
+                        .map(HorizonsMaterialCard::new)
+                        .sorted(Comparator.comparing(card -> card.getMaterial().getRarity()))
+                        .toArray(HorizonsMaterialCard[]::new);
+                rawFlowPanes.add(createMaterialCardRow(type, array));
             }
         });
-        if (!hasRaw.get()) {
-            this.getNodes().remove(rawLine);
-        }
+
         this.getNodes().add(encodedLine);
         Arrays.stream(HorizonsMaterialType.getEncodedTypes()).forEach(type -> {
             if (Arrays.stream(Encoded.materialsForType(type)).anyMatch(this::searchForMaterial)) {
-                final HorizonsMaterialCard[] array = Arrays.stream(this.encodedCards).filter(horizonsMaterialCard -> horizonsMaterialCard.getMaterial().getMaterialType().equals(type)).sorted(Comparator.comparing(card -> card.getMaterial().getRarity())).toList().toArray(HorizonsMaterialCard[]::new);
-                createMaterialCardRow(type, array);
-                hasEncoded.set(true);
+                final HorizonsMaterialCard[] array = Arrays.stream(Encoded.values())
+                        .filter(material -> material.getMaterialType().equals(type))
+                        .map(HorizonsMaterialCard::new)
+                        .sorted(Comparator.comparing(card -> card.getMaterial().getRarity()))
+                        .toArray(HorizonsMaterialCard[]::new);
+                encodedFlowPanes.add(createMaterialCardRow(type, array));
 
             }
         });
-        if (!hasEncoded.get()) {
-            this.getNodes().remove(encodedLine);
-        }
+
         this.getNodes().add(manufacturedLine);
         Arrays.stream(HorizonsMaterialType.getManufacturedTypes()).forEach(type -> {
-            if (Arrays.stream(Manufactured.materialsForType(type)).anyMatch(this::searchForMaterial)) {
-                final HorizonsMaterialCard[] array = Arrays.stream(this.manufacturedCards).filter(horizonsMaterialCard -> horizonsMaterialCard.getMaterial().getMaterialType().equals(type)).sorted(Comparator.comparing(card -> card.getMaterial().getRarity())).toList().toArray(HorizonsMaterialCard[]::new);
-                createMaterialCardRow(type, array);
-                hasManufactured.set(true);
-            }
+            final HorizonsMaterialCard[] array = Arrays.stream(Manufactured.values())
+                    .filter(material -> material.getMaterialType().equals(type))
+                    .map(HorizonsMaterialCard::new)
+                    .sorted(Comparator.comparing(card -> card.getMaterial().getRarity()))
+                    .toArray(HorizonsMaterialCard[]::new);
+            manufacturedFlowPanes.add(createMaterialCardRow(type, array));
         });
-        if (!hasManufactured.get()) {
-            this.getNodes().remove(manufacturedLine);
-        }
     }
 
     private boolean searchForMaterial(HorizonsMaterial material) {
@@ -135,20 +147,23 @@ public class HorizonsMaterialOverview extends DestroyableVBox implements Destroy
         return false;
     }
 
-    private void createMaterialCardRow(final HorizonsMaterialType type, final HorizonsMaterialCard[] array) {
+    private DestroyableFlowPane createMaterialCardRow(final HorizonsMaterialType type, final HorizonsMaterialCard[] array) {
         final DestroyableLabel category = LabelBuilder.builder()
-                .withStyleClass("horizons-material-overview-row-name")
+                .withStyleClass("row-name")
                 .withText(type.getLocalizationKey())
                 .build();
         final DestroyableFlowPane materials = FlowPaneBuilder.builder()
+                .withStyleClass(FLOW_PANE_STYLE_CLASS)
                 .withNodes(array)
                 .build();
-        materials.addBinding(materials.vgapProperty(), ScalingHelper.getPixelDoubleBindingFromEm(0.25));
-        materials.addBinding(materials.hgapProperty(), ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         HBox.setHgrow(materials, Priority.ALWAYS);
         final DestroyableHBox row = BoxBuilder.builder()
-                .withNodes(category, materials).buildHBox();
-        row.addBinding(row.spacingProperty(), ScalingHelper.getPixelDoubleBindingFromEm(0.25));
+                .withStyleClass("category-row")
+                .withNodes(category, materials)
+                .buildHBox();
+        row.addBinding(row.visibleProperty(), materials.visibleProperty());
+        row.addBinding(row.managedProperty(), materials.managedProperty());
         this.getNodes().add(row);
+        return materials;
     }
 }

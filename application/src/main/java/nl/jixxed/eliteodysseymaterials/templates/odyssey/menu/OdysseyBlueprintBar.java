@@ -1,7 +1,10 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.menu;
 
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -12,6 +15,7 @@ import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TitledPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.UTF8Constants;
 import nl.jixxed.eliteodysseymaterials.domain.OdysseyBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.BlueprintCategory;
 import nl.jixxed.eliteodysseymaterials.enums.Craftability;
@@ -20,14 +24,13 @@ import nl.jixxed.eliteodysseymaterials.helper.BlueprintHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
-import nl.jixxed.eliteodysseymaterials.templates.generic.About;
+import nl.jixxed.eliteodysseymaterials.templates.generic.menu.About;
 
 import java.util.Comparator;
-import java.util.EnumMap;
 import java.util.Map;
 
 @Slf4j
-public class OdysseyBlueprintBar extends Accordion implements DestroyableEventTemplate {
+public class OdysseyBlueprintBar extends DestroyableAccordion implements DestroyableEventTemplate {
     private About about;
     private TitledPane[] categoryTitledPanes;
     private TitledPane aboutTitledPane;
@@ -59,7 +62,7 @@ public class OdysseyBlueprintBar extends Accordion implements DestroyableEventTe
                 setText(null);
                 setGraphic(null);
             } else {
-                setText(item + (BlueprintHelper.isCompletedEngineerRecipe(item) ? " \u2714" : ""));
+                setText(item + (BlueprintHelper.isCompletedEngineerRecipe(item) ? " " + UTF8Constants.CHECK_TRUE : ""));
             }
         }
 
@@ -76,16 +79,17 @@ public class OdysseyBlueprintBar extends Accordion implements DestroyableEventTe
     };
 
     public OdysseyBlueprintBar() {
+        super();
         initComponents();
 
     }
 
     public void initComponents() {
-        this.getStyleClass().add("blueprint-bar");
+        this.getStyleClass().add("blueprint-menu");
         this.categoryTitledPanes = OdysseyBlueprintConstants.RECIPES.entrySet().stream()
                 .sorted(Comparator.comparing(recipeCategoryMapEntry -> recipeCategoryMapEntry.getKey().toString()))
                 .map(this::createCategoryTitledPane)
-                .toArray(TitledPane[]::new);
+                .toArray(DestroyableTitledPane[]::new);
         initAboutTitledPane();
         this.getPanes().addAll(this.categoryTitledPanes);
         this.getPanes().add(this.aboutTitledPane);
@@ -94,24 +98,22 @@ public class OdysseyBlueprintBar extends Accordion implements DestroyableEventTe
 
     @Override
     public void initEventHandling() {
-
+        //see createCategoryTitledPane
     }
 
     private void initAboutTitledPane() {
         this.about = new About();
         this.aboutTitledPane = TitledPaneBuilder.builder()
+                .withStyleClass("about-titled-pane")
                 .withContent(this.about)
                 .withText("menu.about")
                 .build();
     }
 
     private DestroyableTitledPane createCategoryTitledPane(final Map.Entry<BlueprintCategory, Map<OdysseyBlueprintName, ? extends OdysseyBlueprint>> recipesEntry) {
-        final DestroyableScrollPane scroll = ScrollPaneBuilder.builder().build();
-        scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scroll.setPannable(true);
-        scroll.setFitToHeight(true);
-        scroll.setFitToWidth(true);
+        final DestroyableScrollPane scroll = ScrollPaneBuilder.builder()
+                .withVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER)
+                .build();
 
         final DestroyableComboBox<OdysseyBlueprintName> recipes = ComboBoxBuilder.builder(OdysseyBlueprintName.class)
                 .withStyleClass("blueprint-list")
@@ -132,33 +134,30 @@ public class OdysseyBlueprintBar extends Accordion implements DestroyableEventTe
         VBox.setVgrow(scroll, Priority.ALWAYS);
 
         final DestroyableTitledPane categoryTitledPane = TitledPaneBuilder.builder()
-                .withStyleClass("category-title-pane")
+                .withStyleClass("blueprint-title-pane")
                 .withText(recipesEntry.getKey().getLocalizationKey())
                 .withContent(content)
                 .build();
 
-        final Map<OdysseyBlueprintName, Node> recipeContent = createRecipeContent(recipesEntry, recipes, categoryTitledPane);
-        recipes.addChangeListener(recipes.valueProperty(), (_, _, newValue) ->
-                scroll.setContent(recipeContent.get(newValue)));
+        recipes.addChangeListener(recipes.valueProperty(), (_, _, newValue) -> {
+            if (scroll.getContent() != null) ((DestroyableTemplate) scroll.getContent()).destroyTemplate();
+            scroll.setContent(createRecipeContent(OdysseyBlueprintConstants.getRecipe(newValue)));
+        });
         recipes.setCellFactory(cellFactory);
         recipes.getSelectionModel().select(recipes.getItems().get(0));
         recipes.setButtonCell(cellFactory.call(null));
+
+        register(EventService.addListener(true, this, BlueprintClickEvent.class, blueprintClickEvent -> {
+            if (blueprintClickEvent.getBlueprintName() instanceof OdysseyBlueprintName odysseyBlueprintName && recipes.getItems().contains(odysseyBlueprintName)) {
+                recipes.getSelectionModel().select(odysseyBlueprintName);
+                this.setExpandedPane(categoryTitledPane);
+            }
+        }));
+
         return categoryTitledPane;
     }
 
-
-    private Map<OdysseyBlueprintName, Node> createRecipeContent(final Map.Entry<BlueprintCategory, Map<OdysseyBlueprintName, ? extends OdysseyBlueprint>> recipesEntry, final ComboBox<OdysseyBlueprintName> comboBox, final TitledPane categoryTitledPane) {
-        final Map<OdysseyBlueprintName, Node> contents = new EnumMap<>(OdysseyBlueprintName.class);
-        recipesEntry.getValue().forEach((key, value) -> {
-            register(EventService.addListener(true, this, BlueprintClickEvent.class, blueprintClickEvent -> {
-                if (blueprintClickEvent.getBlueprintName().equals(key)) {
-                    comboBox.getSelectionModel().select(key);
-                    this.setExpandedPane(categoryTitledPane);
-                }
-            }));
-            final OdysseyBlueprintContent odysseyBlueprintContent = new OdysseyBlueprintContent(value);
-            contents.put(key, odysseyBlueprintContent);
-        });
-        return contents;
+    private Node createRecipeContent(OdysseyBlueprint odysseyBlueprint) {
+        return new OdysseyBlueprintContent(odysseyBlueprint);
     }
 }

@@ -44,6 +44,7 @@ public class HorizonsContentArea extends DestroyableAnchorPane implements Destro
     }
 
     public void initComponents() {
+        this.getStyleClass().add("horizons-tab-content");
         HorizonsMaterialTab horizonsMaterialOverview = new HorizonsMaterialTab();
         horizonsMaterialOverview.setClosable(false);
         HorizonsCommoditiesOverviewTab horizonsCommoditiesOverview = new HorizonsCommoditiesOverviewTab();
@@ -63,7 +64,7 @@ public class HorizonsContentArea extends DestroyableAnchorPane implements Destro
         HorizonsSearchBar searchBar = new HorizonsSearchBar();
         this.tabs = TabPaneBuilder.builder()
                 .withTabs(horizonsMaterialOverview, horizonsCommoditiesOverview, this.horizonsWishlistTab, this.horizonsShipBuilderTab, horizonsEngineersTab, powerplayTab, horizonsColonisationTab)
-                .withStyleClass("odyssey-tab-pane")
+                .withStyleClass("horizons-tab-pane")
                 .withSelectedItemListener((_, _, newValue) -> {
                     if (newValue != null) {
                         final HorizonsTabs tabType = ((HorizonsTab) newValue).getTabType();

@@ -1,8 +1,12 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.materials;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.css.PseudoClass;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import lombok.Getter;
@@ -37,7 +41,8 @@ public class HorizonsMaterialCard extends DestroyableVBox implements Destroyable
     private final HorizonsMaterial material;
     private TypeSegment present;
     private TypeSegment notPresent;
-    private static final Callback<TypeSegment, Node> segmentViewFactory = segment -> new TypeSegmentView(segment, Map.of(SegmentType.PRESENT, Color.web("#89d07f"), SegmentType.NOT_PRESENT, Color.web("#ff7c7c")), true);
+    private static final Callback<TypeSegment, Node> segmentViewFactory = segment ->
+            new TypeSegmentView(segment, Map.of(SegmentType.PRESENT, Color.web("#89d07f"), SegmentType.NOT_PRESENT, Color.web("#ff7c7c")), true);
 
 
     HorizonsMaterialCard(final HorizonsMaterial material) {
@@ -48,29 +53,24 @@ public class HorizonsMaterialCard extends DestroyableVBox implements Destroyable
 
     @Override
     public void initComponents() {
-        this.getStyleClass().add("horizons-materialcard");
+        this.getStyleClass().add("material-card");
         if (GameVersion.LIVE.equals(this.material.getGameVersion())) {
-            this.getStyleClass().add("horizons-materialcard-live");
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass("live"), true);
         }
         if (HorizonsMaterialType.THARGOID.equals(this.material.getMaterialType())) {
-            this.getStyleClass().add("horizons-materialcard-thargoid");
-            if (GameVersion.LIVE.equals(this.material.getGameVersion())) {
-                this.getStyleClass().add("horizons-materialcard-thargoid-live");
-            }
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass("thargoid"), true);
         } else if (HorizonsMaterialType.GUARDIAN.equals(this.material.getMaterialType())) {
-            this.getStyleClass().add("horizons-materialcard-guardian");
-            if (GameVersion.LIVE.equals(this.material.getGameVersion())) {
-                this.getStyleClass().add("horizons-materialcard-guardian-live");
-            }
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass("guardian"), true);
         }
         this.gradeImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("horizons-materialcard-image")
+                .withStyleClass("image")
                 .withImage(this.material.getRarity().getImagePath())
                 .build();
         this.nameLabel = LabelBuilder.builder()
-                .withStyleClass("horizons-materialcard-name")
+                .withStyleClass("name")
                 .withText(this.material.getLocalizationKey())
                 .build();
+        HBox.setHgrow(nameLabel, Priority.ALWAYS);
         final Integer materialCount = StorageService.getMaterialCount(this.material);
         final Integer maxAmount = this.material.getMaxAmount();
         this.present = new TypeSegment(Math.max(0D, materialCount), SegmentType.PRESENT);
@@ -87,8 +87,9 @@ public class HorizonsMaterialCard extends DestroyableVBox implements Destroyable
                 .build();
 
         final DestroyableHBox hBox = BoxBuilder.builder()
-                .withStyleClass("horizons-materialcard-textline")
+                .withStyleClass("text-line")
                 .withNodes(this.gradeImage, this.nameLabel).buildHBox();
+        VBox.setVgrow(hBox, Priority.ALWAYS);
         this.getNodes().add(hBox);
         this.getNodes().add(new GrowingRegion());
         this.getNodes().add(segmentedBar);
@@ -119,10 +120,7 @@ public class HorizonsMaterialCard extends DestroyableVBox implements Destroyable
     }
 
     private void update(final String search) {
-        this.nameLabel.getStyleClass().removeAll("horizons-materialcard-name-highlight");
-        if (!search.isBlank() && searchForMaterial(search)) {
-            this.nameLabel.getStyleClass().add("horizons-materialcard-name-highlight");
-        }
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("highlight"), !search.isBlank() && searchForMaterial(search));
     }
 
     private boolean searchForMaterial(final String search) {

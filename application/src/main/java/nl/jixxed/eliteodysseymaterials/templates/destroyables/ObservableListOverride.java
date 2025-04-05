@@ -102,8 +102,11 @@ public class ObservableListOverride {
     }
 
     public <E extends Node & Destroyable> boolean remove(E node) {
-        destroy(node);
-        return children().remove(node);
+        if (node != null) {
+            destroy(node);
+            return children().remove(node);
+        }
+        return false;
     }
 
     public boolean containsAll(Collection<?> collection) {

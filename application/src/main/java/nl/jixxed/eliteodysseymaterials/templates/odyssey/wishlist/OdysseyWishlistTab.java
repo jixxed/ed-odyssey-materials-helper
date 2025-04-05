@@ -127,6 +127,7 @@ public class OdysseyWishlistTab extends OdysseyTab implements DestroyableEventTe
     }
 
     public void initComponents() {
+        this.getStyleClass().add("wishlist-tab");
         initLabels();
         initShortestPathTable();
         final Set<Wishlist> items = APPLICATION_STATE.getPreferredCommander()
@@ -421,6 +422,7 @@ public class OdysseyWishlistTab extends OdysseyTab implements DestroyableEventTe
                 .withStyleClass(WISHLIST_CONTENT_STYLE_CLASS)
                 .withNodes(hBoxBlueprints, this.wishlistSize > 0 ? this.contentChild : this.noBlueprint).buildVBox();
         this.scrollPane = ScrollPaneBuilder.builder()
+                .withStyleClass("wishlist-tab-content")
                 .withContent(this.content)
                 .build();
         this.setContent(this.scrollPane);

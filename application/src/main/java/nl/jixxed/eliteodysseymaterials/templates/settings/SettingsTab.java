@@ -32,7 +32,8 @@ public class SettingsTab extends OdysseyTab {
     }
 
     private void initComponents() {
-        this.addBinding(this.textProperty(),LocaleService.getStringBinding("tabs.settings"));
+        this.getStyleClass().add("settings-tab");
+        this.addBinding(this.textProperty(), LocaleService.getStringBinding("tabs.settings"));
         final DestroyableLabel settingsLabel = LabelBuilder.builder()
                 .withStyleClass("settings-header")
                 .withText(LocaleService.getStringBinding("tabs.settings"))
@@ -59,6 +60,7 @@ public class SettingsTab extends OdysseyTab {
         settings.getNodes().add(new Tracking());
 
         ScrollPane scrollPane = ScrollPaneBuilder.builder()
+                .withStyleClass("settings-tab-content")
                 .withContent(settings)
                 .build();
         this.setContent(scrollPane);

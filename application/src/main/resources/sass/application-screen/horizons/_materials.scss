@@ -1,0 +1,151 @@
+.materials-tab {
+  @include tab;
+}
+
+.materials-tab-content {
+
+  @include scroll-pane-content;
+
+  .horizons-material-overview {
+    -fx-spacing: 0.5em;
+
+    .category-row {
+      -fx-spacing: 0.25em;
+    }
+
+    .material-card-flow-pane {
+      @include hvGap(0.25em);
+    }
+
+    .row-name {
+      @include fixedWidth(10em);
+      @include fixedHeight(3em);
+      -fx-font-weight: bold;
+      -fx-font-size: 1.2em;
+      -fx-text-alignment: left;
+      -fx-alignment: center-left;
+      -fx-wrap-text: true;
+    }
+
+    .material-card {
+      -fx-background-color: $background-color-dark;
+      -fx-alignment: center-left;
+      @include fixedWidth(16.5em);
+
+      &:thargoid {
+        -fx-background-color: $background-color-thargoid;
+      }
+
+      &:guardian {
+        -fx-background-color: $background-color-guardian;
+      }
+
+      &:live {
+        -fx-background-color: linear-gradient(from 0 0 to 0.5em 0.5em, repeat, $background-color-dark 0%, lighten($background-color-dark, 6.25%) 25%, $background-color-dark 50%, lighten($background-color-dark, 6.25%) 75%, $background-color-dark 100%);
+      }
+
+      &:thargoid:live {
+        -fx-background-color: linear-gradient(from 0 0 to 0.5em 0.5em, repeat, $background-color-thargoid 0%, lighten($background-color-thargoid, 6.25%) 25%, $background-color-thargoid 50%, lighten($background-color-thargoid, 6.25%) 75%, $background-color-thargoid 100%);
+      }
+
+      &:guardian:live {
+        -fx-background-color: linear-gradient(from 0 0 to 0.5em 0.5em, repeat, $background-color-guardian 0%, lighten($background-color-guardian, 6.25%) 25%, $background-color-guardian 50%, lighten($background-color-guardian, 6.25%) 75%, $background-color-guardian 100%);
+      }
+
+      &:highlight {
+        .name {
+          -fx-text-fill: $text-color-yellow;
+          -fx-font-weight: bold;
+        }
+      }
+
+      .name {
+        -fx-text-fill: $text-color-white;
+        @include fixedWidth(14em);
+        -fx-min-height: 2em;
+        -fx-max-height: 12em;
+        -fx-wrap-text: true;
+
+        -fx-alignment: top-left;
+      }
+
+
+      .image {
+        @include fixedWidth(2em);
+        @include fixedHeight(2em);
+        -fx-fit-to-height: true;
+        -fx-fit-to-width: true;
+      }
+
+      .segmented-bar {
+        @include fixedWidth(16.5em);
+        @include fixedHeight(1em);
+
+        &:horizontal > .only-segment {
+          -fx-background-radius: 0;
+          -fx-border-radius: 0;
+        }
+
+        &:horizontal > .first-segment {
+          -fx-background-insets: 0 0 0 0;
+          -fx-background-radius: 0 0 0 0;
+        }
+
+        &:horizontal > .middle-segment {
+          -fx-background-insets: 0 0 0 0;
+          -fx-background-radius: 0;
+          -fx-border-radius: 0;
+        }
+
+        &:horizontal > .last-segment {
+          -fx-background-radius: 0 0 0 0;
+          -fx-border-radius: 0 0 0 0;
+        }
+
+        .segment {
+          -fx-font-weight: bold;
+          -fx-text-overrun: clip;
+
+          .label {
+            -fx-text-fill: $text-color-black;
+          }
+
+          //-fx-alignment: center-left;
+        }
+      }
+
+      .text-line {
+        -fx-spacing: 0.25em;
+        @include fixedWidth(16.5em);
+        -fx-padding: 0.25em;
+      }
+    }
+
+
+    .nearest-trader-flow {
+      -fx-hgap: 0.25em;
+      -fx-vgap: 0.25em;
+    }
+
+    .nearest-trader {
+      -fx-padding: 0.25em;
+      -fx-background-color: $background-color-dark;
+      -fx-border-color: $border-color-black;
+
+      &:hidden {
+        -fx-opacity: 0;
+      }
+
+      .title {
+        -fx-text-fill: white;
+        -fx-font-size: 1.2em;
+        -fx-font-weight: normal;
+      }
+
+      .copyable-location {
+        @include copyable-location;
+      }
+    }
+  }
+
+}

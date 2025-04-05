@@ -31,6 +31,7 @@ public class OdysseyEngineersTab extends OdysseyTab implements DestroyableEventT
     }
 
     public void initComponents() {
+        this.getStyleClass().add("engineers-tab");
         this.addBinding(this.textProperty(), LocaleService.getStringBinding("tabs.engineers"));
         this.odysseyEngineerCards = Arrays.stream(Engineer.values())
                 .filter(Engineer::isOdyssey)
@@ -42,6 +43,7 @@ public class OdysseyEngineersTab extends OdysseyTab implements DestroyableEventT
                 .withNodes(this.odysseyEngineerCards)
                 .build();
         this.scrollPane = ScrollPaneBuilder.builder()
+                .withStyleClass("engineers-tab-content")
                 .withContent(this.flowPane)
                 .build();
         this.setContent(this.scrollPane);

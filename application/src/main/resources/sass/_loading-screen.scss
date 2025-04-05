@@ -1,0 +1,12 @@
+.loading-screen {
+  -fx-background-color: $background-color-dark;
+
+  .text {
+    -fx-font-size: 3em;
+  }
+
+  .progressbar {
+    @include fixedHeight(2em);
+    @include fixedWidth(25em);
+  }
+}

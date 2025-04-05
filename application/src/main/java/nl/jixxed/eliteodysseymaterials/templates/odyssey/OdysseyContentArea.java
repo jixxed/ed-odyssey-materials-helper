@@ -48,6 +48,7 @@ class OdysseyContentArea extends DestroyableAnchorPane implements DestroyableEve
     }
 
     public void initComponents() {
+        this.getStyleClass().add("odyssey-tab-content");
         this.overview = new OdysseyMaterialTab();
         this.wishlistTab = new OdysseyWishlistTab();
         this.loadoutEditorTab = new OdysseyLoadoutEditorTab();
@@ -81,8 +82,8 @@ class OdysseyContentArea extends DestroyableAnchorPane implements DestroyableEve
         this.odysseyBlueprintBar = new OdysseyBlueprintBar();
         addChangeListener(this.odysseyBlueprintBar.visibleProperty(), (_, _, newValue) ->
                 setBodyAnchor(newValue, this.odysseyBlueprintBar.getWidth()));
-        addChangeListener(this.odysseyBlueprintBar.widthProperty(), (_, _, newValue) ->
-                setBodyAnchor(isRecipeBarVisible(), newValue.doubleValue()));
+//        addChangeListener(this.odysseyBlueprintBar.widthProperty(), (_, _, newValue) ->
+//                setBodyAnchor(isRecipeBarVisible(), newValue.doubleValue()));
         this.odysseyBlueprintBar.setVisible(isRecipeBarVisible());
 
         AnchorPaneHelper.setAnchor(this.odysseyBlueprintBar, 0.0, 0.0, 0.0, null);

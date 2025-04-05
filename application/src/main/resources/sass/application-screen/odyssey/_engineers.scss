@@ -1,0 +1,65 @@
+.engineers-tab {
+  @include tab;
+}
+
+.engineers-tab-content {
+  @include scroll-pane-content;
+
+  .engineer-grid {
+    @include hvGap(0.25em);
+    -fx-spacing: 0.25em;
+
+    .engineer-card {
+      @include engineer-card;
+
+      .specialisation {
+        //-fx-padding: 0 0 0 5;
+
+        .name {
+          -fx-alignment: center-right;
+          -fx-max-height: 2.2em;
+          -fx-font-size: 1em;
+        }
+
+        .spec-image {
+          -fx-max-width: 2.2em;
+          -fx-max-height: 2.2em;
+          -fx-fit-to-height: true;
+          -fx-fit-to-width: true;
+        }
+
+        &:force {
+          .name {
+            -fx-text-fill: #ff3c00;
+          }
+        }
+
+        &:dynamic {
+          .name {
+            -fx-text-fill: #ff00e7;
+          }
+        }
+
+        &:strategic {
+          .name {
+            -fx-text-fill: #7cd429;
+          }
+        }
+
+        &:hybrid {
+          .name {
+            -fx-text-fill: #ffffff;
+          }
+        }
+
+        &:unknown {
+          .name {
+            -fx-text-fill: #ffffff;
+          }
+        }
+      }
+    }
+
+
+  }
+}

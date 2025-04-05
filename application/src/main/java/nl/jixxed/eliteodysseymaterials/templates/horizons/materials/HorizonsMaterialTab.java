@@ -15,10 +15,12 @@ public class HorizonsMaterialTab extends HorizonsTab implements DestroyableTempl
 
     @Override
     public void initComponents() {
+        this.getStyleClass().add("materials-tab");
         HorizonsMaterialOverview materialOverview = new HorizonsMaterialOverview();
         this.addBinding(this.textProperty(), LocaleService.getStringBinding("tabs.horizons.materials"));
         this.setClosable(false);
         ScrollPane scrollPane = register(ScrollPaneBuilder.builder()
+                .withStyleClass("materials-tab-content")
                 .withContent(materialOverview)
                 .build());
         this.setContent(scrollPane);

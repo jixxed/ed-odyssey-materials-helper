@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist;
 
+import javafx.css.PseudoClass;
 import javafx.geometry.Orientation;
 import javafx.scene.paint.Color;
 import lombok.EqualsAndHashCode;
@@ -30,18 +31,20 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
     private static final String INGREDIENT_FILLED_CLASS = "ingredient-filled";
     private static final String INGREDIENT_UNFILLED_CLASS = "ingredient-unfilled";
     private static final String INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS = "ingredient-filled-partial";
+    public static final String PARTIAL = "partial";
+    public static final String FILLED = "filled";
     private DestroyableSegmentedBar<TypeSegment> segmentedBar;
     private TypeSegment present;
     private TypeSegment notPresent;
 
     OdysseyWishlistIngredient(final OdysseyStorageType storageType, final OdysseyMaterial odysseyMaterial, final Integer amountRequired, final Integer amountAvailable) {
         super(storageType, odysseyMaterial, amountRequired, amountAvailable);
-        initComponents2();
-        initEventHandling2();
     }
 
+    @Override
     @SuppressWarnings("java:S2177")
-    public void initComponents2() {
+    public void initComponents() {
+        super.initComponents();
         this.getStyleClass().add("wishlist-ingredient");
         this.hoverProperty().addListener((observable, oldValue, newValue) -> {
             showAsHovered(newValue);
@@ -72,8 +75,10 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
         }
     }
 
+    @Override
     @SuppressWarnings("java:S2177")
-    public void initEventHandling2() {
+    public void initEventHandling() {
+        super.initEventHandling();
         register(EventService.addListener(true, this, FlipRemainingAvailableEvent.class, flipRemainingAvailableEvent -> {
             if (Expansion.ODYSSEY.equals(flipRemainingAvailableEvent.getExpansion())) {
                 showAsHovered(this.hoverProperty().getValue());
@@ -86,14 +91,15 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
 
         final Storage storage = StorageService.getMaterialStorage(this.getOdysseyMaterial());
         final int leftAmount = Integer.parseInt(this.getLeftAmountLabel().getText());
-        this.getStyleClass().removeAll(INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS, INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
         if (storage.getTotalValue() >= leftAmount && storage.getShipLockerValue() + storage.getBackPackValue() < leftAmount) {
-
-            this.getStyleClass().addAll(INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(PARTIAL), true);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(FILLED), false);
         } else if (storage.getTotalValue() >= leftAmount) {
-            this.getStyleClass().addAll(INGREDIENT_FILLED_CLASS);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(PARTIAL), false);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(FILLED), true);
         } else {
-            this.getStyleClass().addAll(INGREDIENT_UNFILLED_CLASS);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(PARTIAL), false);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(FILLED), false);
         }
         showAsHovered(this.hoverProperty().getValue());
         if (this.present != null) {
@@ -119,9 +125,9 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
             this.getStyleClass().add("wishlist-highlight");
             this.getLeftAmountLabel().setText(amountRequiredForRecipe.toString());
         } else {
-            this.getStyleClass().removeAll("wishlist-highlight");
             this.getLeftAmountLabel().setText(this.getLeftAmount().toString());
         }
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("highlight"), enable);
         update();
     }
 

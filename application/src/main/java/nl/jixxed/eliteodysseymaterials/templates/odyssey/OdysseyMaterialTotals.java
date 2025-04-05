@@ -19,7 +19,7 @@ public class OdysseyMaterialTotals extends DestroyableFlowPane implements Destro
         OdysseyMaterialTotal dataTotal = new OdysseyMaterialTotal(OdysseyStorageType.DATA, MaterialTotalType.BLUEPRINT, MaterialTotalType.POWERPLAY, MaterialTotalType.IRRELEVANT);
         this.getNodes().addAll(goodsTotal, assetsTotal, dataTotal);
         this.setOrientation(Orientation.HORIZONTAL);
-        this.getStyleClass().add("material-overview-flow-pane");
+        this.getStyleClass().add("totals-flow-pane");
 
     }
 }

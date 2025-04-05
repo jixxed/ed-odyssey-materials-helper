@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.service;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.stage.Screen;
@@ -42,7 +43,7 @@ public class MaterialService {
     private static final String STYLECLASS_MATERIAL_TOOLTIP_LOCATION_LINE = "material-tooltip-location-line";
     private static final String STYLECLASS_MATERIAL_TOOLTIP_TITLE = "material-tooltip-title";
     private static final String STYLECLASS_MATERIAL_TOOLTIP_DESCRIPTION = "material-tooltip-description";
-
+    private static final Map<Node, PopOver> POPOVERS = new HashMap<>();
 
     static {
         NUMBER_FORMAT.setMaximumFractionDigits(2);
@@ -365,6 +366,9 @@ public class MaterialService {
 
     public static <E extends Node & DestroyableComponent> void addMaterialInfoPopOver(final E hoverableNode, final Material material, final boolean wishlist) {
         hoverableNode.addEventBinding(hoverableNode.onMouseEnteredProperty(), mouseEvent -> {
+            if (POPOVERS.containsKey(hoverableNode)) {
+                return;
+            }
             final Node contentNode = switch (material) {
                 case HorizonsMaterial horizonsMaterial -> getMaterialPopOverContent(horizonsMaterial, wishlist);
                 case OdysseyMaterial odysseyMaterial -> getMaterialPopOverContent(odysseyMaterial);
@@ -379,6 +383,7 @@ public class MaterialService {
                     .withDetachable(false)
                     .withHeaderAlwaysVisible(false)
                     .build();
+            POPOVERS.put(hoverableNode, popOver);
             try {
                 final Rectangle2D currentScreen = Screen.getScreensForRectangle(mouseEvent.getScreenX(), mouseEvent.getScreenY(), 1, 1).getFirst().getBounds();
                 final double mouseXOnScreen = mouseEvent.getScreenX() - currentScreen.getMinX();
@@ -397,28 +402,31 @@ public class MaterialService {
 
                 timelineShow.getKeyFrames().add(new KeyFrame(Duration.millis(500)));
                 timelineShow.setOnFinished(_ -> {
-                    if ((hoverableNode).isHover() || (contentNode.isHover())) {
+                    if (hoverableNode.isHover() || (contentNode.isHover())) {
                         if (popOver.getContentNode() != null) {
                             popOver.show(hoverableNode);
-                            hoverableNode.addEventBinding(hoverableNode.onMouseExitedProperty(), mouseEvent2 -> timelineHide.play());
                         }
                     } else {
                         popOver.destroy();
+                        POPOVERS.remove(hoverableNode);
                     }
                 });
-                timelineShow.play();
                 timelineHide.getKeyFrames().add(new KeyFrame(Duration.millis(100)));
                 timelineHide.setOnFinished(_ -> {
-                    if (((Node) hoverableNode).isHover() || contentNode.isHover()) {
+                    if (hoverableNode.isHover() || contentNode.isHover()) {
                         timelineHide.play();
                     } else {
                         popOver.hide(Duration.ZERO);
                         if (popOver.getContentNode() != null) {
                             popOver.setContentNode(null);
                         }
+                        popOver.destroy();
+                        POPOVERS.remove(hoverableNode);
                         timelineHide.stop();
                     }
                 });
+                hoverableNode.addEventBinding(hoverableNode.onMouseExitedProperty(), _ -> Platform.runLater(timelineHide::play));
+                timelineShow.play();
             } catch (IndexOutOfBoundsException ex) {
                 log.warn("Unable to determine screen to show material info on.");
             }

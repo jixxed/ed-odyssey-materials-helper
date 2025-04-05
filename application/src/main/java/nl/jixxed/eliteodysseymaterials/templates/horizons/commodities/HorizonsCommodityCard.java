@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.commodities;
 
+import javafx.application.Platform;
+import javafx.css.PseudoClass;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -10,15 +12,15 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.enums.Commodity;
-import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
-import nl.jixxed.eliteodysseymaterials.enums.RareCommodity;
-import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
+import nl.jixxed.eliteodysseymaterials.domain.CommoditiesSearch;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MarketService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.HorizonsCommoditiesSearchEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.MarketUpdatedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
@@ -55,20 +57,20 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
 
     @Override
     public void initComponents() {
-        this.getStyleClass().add("horizons-commoditycard-pane");
+        this.getStyleClass().add("commodity-card");
         if (GameVersion.LIVE.equals(this.commodity.getGameVersion())) {
-            this.getStyleClass().add("horizons-commoditycard-pane-live");
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass("live"), true);
         }
         DestroyableResizableImageView rareImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("horizons-commoditycard-rare-image")
+                .withStyleClass("rare-image")
                 .withImage("/images/material/stock/rare.png")
                 .build();
         DestroyableResizableImageView typeImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("horizons-commoditycard-image")
+                .withStyleClass("image")
                 .withImage(this.commodity.getCommodityType().getImagePath())
                 .build();
         DestroyableLabel nameLabel = LabelBuilder.builder()
-                .withStyleClass("horizons-commoditycard-name")
+                .withStyleClass("name")
                 .withText(this.commodity.getLocalizationKey())
                 .build();
         this.leftAmountLabel = LabelBuilder.builder()
@@ -78,31 +80,31 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
                 .withStyleClass("ship-amount")
                 .build();
         DestroyableResizableImageView leftImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("horizons-materialcard-image")
+                .withStyleClass("image")
                 .withImage("/images/material/fleetcarrier.png")
                 .build();
         DestroyableResizableImageView rightImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("horizons-materialcard-image")
+                .withStyleClass("image")
                 .withImage("/images/material/ship.png")
                 .build();
         DestroyableResizableImageView coriolisImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("horizons-materialcard-image")
+                .withStyleClass("image")
                 .withImage("/images/material/coriolis.png")
                 .build();
         this.bracket1SellImage = ResizableImageViewBuilder.builder()
-                .withStyleClasses("horizons-materialcard-image")
+                .withStyleClasses("image")
                 .withImage("/images/material/stock/bracket1.png")
                 .build();
         this.bracket3SellImage = ResizableImageViewBuilder.builder()
-                .withStyleClasses("horizons-materialcard-image")
+                .withStyleClasses("image")
                 .withImage("/images/material/stock/bracket3.png")
                 .build();
         this.bracket1BuyImage = ResizableImageViewBuilder.builder()
-                .withStyleClasses("horizons-materialcard-image")
+                .withStyleClasses("image")
                 .withImage("/images/material/stock/bracket1.png")
                 .build();
         this.bracket3BuyImage = ResizableImageViewBuilder.builder()
-                .withStyleClasses("horizons-materialcard-image")
+                .withStyleClasses("image")
                 .withImage("/images/material/stock/bracket3.png")
                 .build();
         this.bracket1SellImage.addBinding(this.bracket1SellImage.managedProperty(), this.bracket1SellImage.visibleProperty());
@@ -134,7 +136,7 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
                 .withNodes(stationSell, bracket1SellImage, bracket3SellImage, new GrowingRegion())
                 .buildHBox();
         this.market = BoxBuilder.builder()
-                .withStyleClass("horizons-commoditycard-market-box")
+                .withStyleClass("market")
                 .withNodes(new GrowingRegion(), buy, stationBuyArrow, coriolisImage, stationSellArrow, sell, new GrowingRegion())
                 .buildHBox();
         DestroyableHBox leftHBox = BoxBuilder.builder()
@@ -150,12 +152,15 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
         this.leftAmountLabel.addBinding(this.leftAmountLabel.visibleProperty(), ApplicationState.getInstance().getFcMaterials());
         leftImage.addBinding(leftImage.visibleProperty(), ApplicationState.getInstance().getFcMaterials());
         DestroyableHBox firstLine = BoxBuilder.builder()
-                .withStyleClass("horizons-commoditycard-firstline")
+                .withStyleClass("name-line")
                 .withNodes(typeImage, nameLabel).buildHBox();
         firstLine.addBinding(firstLine.spacingProperty(), ScalingHelper.getPixelDoubleBindingFromEm(0.5));
-        DestroyableHBox secondLine = BoxBuilder.builder().withNodes(leftHBox, new GrowingRegion(), rightHBox).buildHBox();
+        DestroyableHBox secondLine = BoxBuilder.builder()
+                .withStyleClass("quantity-line")
+                .withNodes(leftHBox, new GrowingRegion(), rightHBox)
+                .buildHBox();
         DestroyableVBox content = BoxBuilder.builder()
-                .withStyleClass("horizons-commoditycard")
+                .withStyleClass("content")
                 .withNodes(firstLine, new GrowingRegion(), secondLine).buildVBox();
         if (this.commodity instanceof RareCommodity) {
             this.getNodes().add(rareImage);
@@ -172,15 +177,29 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
 
     @Override
     public void initEventHandling() {
+        register(EventService.addListener(true, this, HorizonsCommoditiesSearchEvent.class, horizonsCommoditiesSearchEvent -> {
+            Platform.runLater(() -> this.update(horizonsCommoditiesSearchEvent.getSearch()));
+        }));
+
         register(EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
             if (storageEvent.getStoragePool().equals(StoragePool.FLEETCARRIER) || storageEvent.getStoragePool().equals(StoragePool.SHIP)) {
                 updateQuantity();
             }
         }));
+
         register(EventService.addListener(true, this, MarketUpdatedEvent.class, marketUpdatedEvent -> {
             updateQuantity();
             updateStyle();
         }));
+    }
+
+    private void update(CommoditiesSearch search) {
+        boolean visible = HorizonsCommoditiesShow.getFilter(search).test(this) &&
+                (search.getQuery().isBlank()
+                        || LocaleService.getLocalizedStringForCurrentLocale(commodity.getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(search.getQuery().toLowerCase(LocaleService.getCurrentLocale()))
+                        || LocaleService.getLocalizedStringForCurrentLocale(commodity.getCommodityType().getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(search.getQuery().toLowerCase(LocaleService.getCurrentLocale())));
+        this.setVisible(visible);
+        this.setManaged(visible);
     }
 
     private void updateQuantity() {
@@ -194,19 +213,13 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
     }
 
     private void updateStyle() {
-        this.getStyleClass().removeAll("horizons-commoditycard-sells", "horizons-commoditycard-buys", "horizons-commoditycard-buys-sells");
         final boolean sells = MarketService.sells(commodity);
         final boolean buys = MarketService.buys(commodity);
 
-        if (sells && buys) {
-            this.getStyleClass().add("horizons-commoditycard-buys-sells");
-        } else if (sells) {
-            this.getStyleClass().add("horizons-commoditycard-sells");
-        } else if (buys) {
-            this.getStyleClass().add("horizons-commoditycard-buys");
-        }
-        MarketService.getMarketItem(this.commodity).ifPresentOrElse((marketItem) -> {
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("sells"), sells);
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("buys"), buys);
 
+        MarketService.getMarketItem(this.commodity).ifPresentOrElse(marketItem -> {
             final boolean buyIsZero = stationBuy.getText().equals("0");
             final boolean sellIsZero = stationSell.getText().equals("0");
             this.market.setVisible(!buyIsZero || !sellIsZero);
@@ -220,9 +233,7 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
             stationBuy.setVisible(!buyIsZero);
             stationSell.setVisible(!sellIsZero);
 
-        }, () -> {
-            this.market.setVisible(false);
-        });
+        }, () -> this.market.setVisible(false));
 
     }
 }

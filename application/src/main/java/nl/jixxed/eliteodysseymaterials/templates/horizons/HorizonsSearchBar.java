@@ -37,7 +37,7 @@ class HorizonsSearchBar extends DestroyableHBox implements DestroyableEventTempl
     }
 
     public void initComponents() {
-        this.getStyleClass().add("root");
+        this.getStyleClass().add("search");
         initMenuButton();
         this.materialSearchBar = new HorizonsMaterialSearchBar();
         //register bars that are not yet added

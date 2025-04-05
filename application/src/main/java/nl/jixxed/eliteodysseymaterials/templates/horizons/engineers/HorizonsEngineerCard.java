@@ -18,8 +18,9 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.PinnedBlueprintService;
-import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.HorizonsEngineerSearchEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegmentView;
@@ -30,10 +31,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("java:S2177")
-class HorizonsEngineerCard extends EngineerCard {
-
-    private DestroyableLabel pinnedBlueprintTitle;
-    private DestroyableSeparator pinnedBlueprintSeparator;
+class HorizonsEngineerCard extends EngineerCard implements DestroyableEventTemplate {
 
     protected DestroyableResizableImageView grade;
     private DestroyableResizableImageView gradeIcon;
@@ -48,12 +46,11 @@ class HorizonsEngineerCard extends EngineerCard {
 
     HorizonsEngineerCard(final Engineer engineer) {
         super(engineer);
-        initComponents();
-        initEventHandling();
     }
 
-
+    @Override
     public void initComponents() {
+        super.initComponents();
         this.getStyleClass().add("engineer-card");
 
         if (APPLICATION_STATE.isEngineerUnlockedExact(engineer)) {
@@ -61,17 +58,15 @@ class HorizonsEngineerCard extends EngineerCard {
         } else {
             this.image.setImage(ImageService.getImage("/images/engineer/locked.png"));
         }
-        this.pinnedBlueprintTitle = register(getPinnedBlueprintTitle());
-        this.pinnedBlueprintSeparator = register(new DestroyableSeparator(Orientation.HORIZONTAL));
         DestroyableLabel hardpointTitle = register(getHardpointTitle());
         DestroyableLabel utilityMountTitle = register(getUtilityMountTitle());
         DestroyableLabel coreInternalTitle = register(getCoreInternalTitle());
         DestroyableLabel optionalInternalTitle = register(getOptionalInternalTitle());
         this.grade = getEngineerGrade();
-        List<DestroyableHBox> hardpointBlueprintLabels = getBlueprints(HorizonsBlueprintConstants.getHardpointBlueprints(), false);
-        List<DestroyableHBox> utilityMountBlueprintLabels = getBlueprints(HorizonsBlueprintConstants.getUtilityMountBlueprints(), false);
-        List<DestroyableHBox> coreInternalBlueprintLabels = getBlueprints(HorizonsBlueprintConstants.getCoreInternalBlueprints(), false);
-        List<DestroyableHBox> optionalInternalBlueprintLabels = getBlueprints(HorizonsBlueprintConstants.getOptionalInternalBlueprints(), false);
+        List<DestroyableHBox> hardpointBlueprintLabels = getBlueprints(HorizonsBlueprintConstants.getHardpointBlueprints());
+        List<DestroyableHBox> utilityMountBlueprintLabels = getBlueprints(HorizonsBlueprintConstants.getUtilityMountBlueprints());
+        List<DestroyableHBox> coreInternalBlueprintLabels = getBlueprints(HorizonsBlueprintConstants.getCoreInternalBlueprints());
+        List<DestroyableHBox> optionalInternalBlueprintLabels = getBlueprints(HorizonsBlueprintConstants.getOptionalInternalBlueprints());
 
         final int engineerProgress = APPLICATION_STATE.getEngineerRank(this.engineer).equals(5) ? 100 : APPLICATION_STATE.getEngineerProgress(this.engineer);
         this.present = new TypeSegment(Math.max(0D, engineerProgress), SegmentType.PRESENT);
@@ -92,120 +87,99 @@ class HorizonsEngineerCard extends EngineerCard {
         final DestroyableHBox box = BoxBuilder.builder()
                 .withStyleClass("grade-box")
                 .withNodes(stackPane).buildHBox();
-        this.getNodes().addAll(this.image, this.name, box, this.location);
-        if (hasPinnedBlueprint()) {
-            this.getNodes().addAll(this.pinnedBlueprintSeparator, this.pinnedBlueprintTitle);
-            this.getNodes().addAll(getPinnedBlueprintLabels());
-        }
+        final DestroyableVBox text = BoxBuilder.builder()
+                .withStyleClass("text-box")
+                .withNodes(this.name, box, this.location).buildVBox();
+        this.getNodes().addAll(this.image, text);
+        text.getNodes().addAll(new PinnedBlueprintSection(engineer));
         if (!hardpointBlueprintLabels.isEmpty()) {
-            this.getNodes().addAll(new DestroyableSeparator(Orientation.HORIZONTAL), hardpointTitle);
-            this.getNodes().addAll(hardpointBlueprintLabels);
+            text.getNodes().addAll(new DestroyableSeparator(Orientation.HORIZONTAL), hardpointTitle);
+            text.getNodes().addAll(hardpointBlueprintLabels);
         }
         if (!utilityMountBlueprintLabels.isEmpty()) {
-            this.getNodes().addAll(new DestroyableSeparator(Orientation.HORIZONTAL), utilityMountTitle);
-            this.getNodes().addAll(utilityMountBlueprintLabels);
+            text.getNodes().addAll(new DestroyableSeparator(Orientation.HORIZONTAL), utilityMountTitle);
+            text.getNodes().addAll(utilityMountBlueprintLabels);
         }
         if (!coreInternalBlueprintLabels.isEmpty()) {
-            this.getNodes().addAll(new DestroyableSeparator(Orientation.HORIZONTAL), coreInternalTitle);
-            this.getNodes().addAll(coreInternalBlueprintLabels);
+            text.getNodes().addAll(new DestroyableSeparator(Orientation.HORIZONTAL), coreInternalTitle);
+            text.getNodes().addAll(coreInternalBlueprintLabels);
         }
         if (!optionalInternalBlueprintLabels.isEmpty()) {
-            this.getNodes().addAll(new DestroyableSeparator(Orientation.HORIZONTAL), optionalInternalTitle);
-            this.getNodes().addAll(optionalInternalBlueprintLabels);
+            text.getNodes().addAll(new DestroyableSeparator(Orientation.HORIZONTAL), optionalInternalTitle);
+            text.getNodes().addAll(optionalInternalBlueprintLabels);
         }
-        if (!APPLICATION_STATE.isEngineerUnlockedExact(engineer)) {
-            this.getNodes().addAll(this.unlockSeparator, this.unlockRequirementsTitle);
-            this.getNodes().addAll(this.unlockRequirementsLabels);
-        }
+        text.getNodes().add(this.unlockSection);
+
     }
 
-    private boolean hasPinnedBlueprint() {
-        return PinnedBlueprintService.hasPinnedBlueprint(this.engineer);
-    }
-
-    private List<DestroyableHBox> getPinnedBlueprintLabels() {
-        HorizonsBlueprint blueprint = PinnedBlueprintService.getPinnedBlueprint(this.engineer);
-        blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(blueprint.getBlueprintName(), blueprint.getHorizonsBlueprintType(), HorizonsBlueprintGrade.forDigit(HorizonsBlueprintConstants.getEngineerMaxGrade(blueprint, this.engineer)));
-        return getBlueprints(Map.of(blueprint.getHorizonsBlueprintName(), Map.of(blueprint.getHorizonsBlueprintType(), Map.of(HorizonsBlueprintGrade.forDigit(HorizonsBlueprintConstants.getEngineerMaxGrade(blueprint, this.engineer)), blueprint))), true);
-    }
-
-    private DestroyableLabel getPinnedBlueprintTitle() {
-        return LabelBuilder.builder()
-                .withStyleClass(ENGINEER_CATEGORY_STYLE_CLASS)
-                .withText("tab.engineer.pinned.blueprint")
-                .build();
-    }
-
+    @Override
     public void initEventHandling() {
-        register(EventService.addListener(true, this, JournalInitEvent.class, event -> {
-            if (event.isInitialised()) {
-                updatePinnedBlueprint();
-            }
-        }));
-        register(EventService.addListener(true, this, 9, EngineerPinEvent.class, engineerPinEvent -> {
-            if (this.engineer.equals(engineerPinEvent.getEngineer())) {
-                updatePinnedBlueprint();
-            }
-        }));
-        register(EventService.addListener(true, this, EngineerEvent.class, _ -> {
-            this.getNodes().removeAll(this.unlockSeparator, this.unlockRequirementsTitle);
-            this.getNodes().removeAll(this.unlockRequirementsLabels);
-            final Integer rank = APPLICATION_STATE.getEngineerRank(this.engineer);
-            final String imageString;
-            if ((rank > 0)) {
-                imageString = "rank_" + rank;
-            } else if (APPLICATION_STATE.isEngineerInvited(this.engineer)) {
-                imageString = "invited";
-            } else {
-                imageString = "lock";
-            }
-            final int engineerProgress = rank.equals(5) ? 100 : APPLICATION_STATE.getEngineerProgress(this.engineer);
-            this.present.setValue(engineerProgress);
-            this.notPresent.setValue(100.0 - engineerProgress);
-            this.gradeIcon.setImage(ImageService.getImage("/images/ships/engineers/ranks/" + imageString + ".png"));
-            if (APPLICATION_STATE.isEngineerUnlockedExact(engineer)) {
-                this.image.setImage(ImageService.getImage("/images/engineer/" + engineer.name().toLowerCase() + ".jpg"));
-            } else {
-                this.image.setImage(ImageService.getImage("/images/engineer/locked.png"));
-                this.unlockRequirementsLabels = getUnlockRequirements();
-                this.getNodes().addAll(this.unlockSeparator, this.unlockRequirementsTitle);
-                this.getNodes().addAll(this.unlockRequirementsLabels);
-            }
-        }));
+        super.initEventHandling();
+        register(EventService.addListener(true, this, EngineerEvent.class, _ -> updateProgress()));
+        register(EventService.addListener(true, this, HorizonsEngineerSearchEvent.class, horizonsEngineerSearchEvent -> update(horizonsEngineerSearchEvent.getSearch())));
     }
 
-    private void updatePinnedBlueprint() {
-        if (this.getNodes().contains(this.pinnedBlueprintSeparator)) {
-            this.getNodes().remove(4, 7);
-        }
-        if (hasPinnedBlueprint()) {
-            this.getNodes().add(4, this.pinnedBlueprintSeparator);
-            this.getNodes().add(5, this.pinnedBlueprintTitle);
-            this.getNodes().addAll(6, getPinnedBlueprintLabels());
+    private void updateProgress() {
+        final Integer rank = APPLICATION_STATE.getEngineerRank(this.engineer);
+        final int engineerProgress = rank.equals(5) ? 100 : APPLICATION_STATE.getEngineerProgress(this.engineer);
+        this.present.setValue(engineerProgress);
+        this.notPresent.setValue(100.0 - engineerProgress);
+        this.gradeIcon.setImage(ImageService.getImage("/images/ships/engineers/ranks/" + getGradeImage() + ".png"));
+        if (APPLICATION_STATE.isEngineerUnlockedExact(engineer)) {
+            this.image.setImage(ImageService.getImage("/images/engineer/" + engineer.name().toLowerCase() + ".jpg"));
+        } else {
+            this.image.setImage(ImageService.getImage("/images/engineer/locked.png"));
         }
     }
 
-    private DestroyableResizableImageView getEngineerGrade() {
-
-        final Integer engineerRank = APPLICATION_STATE.getEngineerRank(this.engineer);
+    private String getGradeImage() {
+        final Integer rank = APPLICATION_STATE.getEngineerRank(this.engineer);
         final String imageString;
-        if ((engineerRank > 0)) {
-            imageString = "rank_" + engineerRank;
+        if ((rank > 0)) {
+            imageString = "rank_" + rank;
         } else if (APPLICATION_STATE.isEngineerInvited(this.engineer)) {
             imageString = "invited";
         } else {
             imageString = "lock";
         }
+        return imageString;
+    }
 
+    private void update(final String search) {
+        boolean visible = search.isBlank()
+                || engineer.getSettlement().getSettlementName().toLowerCase().contains(search.toLowerCase())
+                || engineer.getStarSystem().getName().toLowerCase().contains(search.toLowerCase())
+                || LocaleService.getLocalizedStringForCurrentLocale(engineer.getLocalizationKey()).toLowerCase().contains(search.toLowerCase())
+                || hasBlueprintLike(engineer, search);
+        this.setVisible(visible);
+        this.setManaged(visible);
+    }
+
+    private boolean hasBlueprintLike(final Engineer engineer, final String search) {
+        return hasBlueprintLike(HorizonsBlueprintConstants.getHardpointBlueprints(), engineer, search)
+                || hasBlueprintLike(HorizonsBlueprintConstants.getUtilityMountBlueprints(), engineer, search)
+                || hasBlueprintLike(HorizonsBlueprintConstants.getCoreInternalBlueprints(), engineer, search)
+                || hasBlueprintLike(HorizonsBlueprintConstants.getOptionalInternalBlueprints(), engineer, search);
+    }
+
+    private static boolean hasBlueprintLike(Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> blueprints, Engineer engineer, String search) {
+        return blueprints.values().stream()
+                .flatMap(horizonsBlueprintTypeMapMap -> horizonsBlueprintTypeMapMap.values().stream())
+                .flatMap(horizonsBlueprintGradeHorizonsBlueprintMap -> horizonsBlueprintGradeHorizonsBlueprintMap.values().stream())
+                .filter(horizonsBlueprint -> horizonsBlueprint.getEngineers().contains(engineer))
+                .anyMatch(horizonsBlueprint -> LocaleService.getLocalizedStringForCurrentLocale(horizonsBlueprint.getBlueprintName().getLocalizationKey()).toLowerCase().contains(search.toLowerCase()));
+    }
+
+    private DestroyableResizableImageView getEngineerGrade() {
         this.gradeIcon = ResizableImageViewBuilder.builder()
                 .withStyleClass("grade-bar-image")
-                .withImage("/images/ships/engineers/ranks/" + imageString + ".png")
+                .withImage("/images/ships/engineers/ranks/" + getGradeImage() + ".png")
                 .build();
         return this.gradeIcon;
     }
 
     @SuppressWarnings("java:S1640")
-    private List<DestroyableHBox> getBlueprints(final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> blueprints, final boolean withType) {
+    private List<DestroyableHBox> getBlueprints(final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> blueprints) {
         final Map<HorizonsBlueprint, Integer> maxGrades = new HashMap<>();
         blueprints.values().stream()
                 .flatMap(horizonsBlueprintTypeMapMap -> horizonsBlueprintTypeMapMap.values().stream())
@@ -218,28 +192,15 @@ class HorizonsEngineerCard extends EngineerCard {
                         maxGrades.put(horizonsBlueprint, horizonsBlueprint.getHorizonsBlueprintGrade().getGrade());
                     }
                 });
-        return getBlueprintLabels(maxGrades, withType);
+        return getBlueprintLabels(maxGrades);
     }
 
     @SuppressWarnings("unchecked")
-    private ArrayList<DestroyableHBox> getBlueprintLabels(final Map<HorizonsBlueprint, Integer> maxGrades, final boolean withType) {
+    private List<DestroyableHBox> getBlueprintLabels(final Map<HorizonsBlueprint, Integer> maxGrades) {
         return maxGrades.entrySet().stream()
-                .sorted(((Comparator<Map.Entry<HorizonsBlueprint, Integer>>) (Comparator<?>) Map.Entry.comparingByValue().reversed()).thenComparing(entry -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getHorizonsBlueprintName().getLocalizationKey())))
-                .map(entry -> {
-                    final DestroyableLabel name =
-                            LabelBuilder.builder()
-                                    .withStyleClass("engineer-blueprint")
-                                    .withText((!withType) ? LocaleService.getStringBinding(entry.getKey().getHorizonsBlueprintName().getLocalizationKey()) : LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getHorizonsBlueprintName().getLocalizationKey()) + " - " + LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getHorizonsBlueprintType().getLocalizationKey())))
-                                    .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(entry.getKey())))
-                                    .build();
-                    return BoxBuilder.builder()
-                            .withNodes(LabelBuilder.builder()
-                                            .withStyleClass("engineer-bullet")
-                                            .withNonLocalizedText(entry.getValue().toString())
-                                            .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(entry.getKey())))
-                                            .build(),
-                                    name).buildHBox();
-                })
+                .sorted(((Comparator<Map.Entry<HorizonsBlueprint, Integer>>) (Comparator<?>) Map.Entry.comparingByValue().reversed())
+                        .thenComparing(entry -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getHorizonsBlueprintName().getLocalizationKey())))
+                .map(entry -> new Blueprint(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 

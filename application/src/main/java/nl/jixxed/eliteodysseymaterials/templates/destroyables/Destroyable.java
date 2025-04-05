@@ -41,7 +41,7 @@ public interface Destroyable {
 
     default void destroy() {
         //clean changeListeners
-        getListeners().forEach((observableValue, changeListeners) -> changeListeners.forEach(observableValue::removeListener));
+        getListeners().forEach((observableValue, changeListeners) -> changeListeners.forEach((observableValue)::removeListener));
         getListeners().forEach((observableValue, changeListeners) -> changeListeners.clear());
         getListeners().clear();
 
@@ -50,7 +50,13 @@ public interface Destroyable {
         getBindings().clear();
 
         //clean destroyables
-        getDestroyables().forEach(Destroyable::destroy);
+        getDestroyables().forEach(destroyable -> {
+            if (destroyable instanceof DestroyableTemplate template) {
+                template.destroyTemplate();
+            } else {
+                destroyable.destroy();
+            }
+        });
         getDestroyables().clear();
 
         //additional optional cleanup if required
@@ -60,11 +66,12 @@ public interface Destroyable {
     @SuppressWarnings("unchecked")
     default <T> void addChangeListener(final ObservableValue<T> observableValue, final ChangeListener<T> listener) {
         final Map<ObservableValue<Object>, List<ChangeListener<Object>>> listenersMap = getListeners();
-        final List<ChangeListener<Object>> listeners = listenersMap.getOrDefault(observableValue, new ArrayList<>());
+        final List<ChangeListener<Object>> listeners = listenersMap.computeIfAbsent((ObservableValue<Object>) observableValue, _ -> new ArrayList<>());
         listeners.add((ChangeListener<Object>) listener);
         listenersMap.put((ObservableValue<Object>) observableValue, listeners);
         observableValue.addListener(listener);
     }
+
 
     @SuppressWarnings("unchecked")
     default <P> void addBinding(final Property<P> observableValue, final ObservableValue<P> binding) {

@@ -18,11 +18,15 @@ public class OdysseyMaterialTab extends OdysseyTab implements DestroyableTemplat
     }
 
     public void initComponents() {
+        this.getStyleClass().add("materials-tab");
         this.addBinding(this.textProperty(), LocaleService.getStringBinding("tabs.odyssey.materials"));
+        this.materialOverview = new OdysseyMaterialOverview();
         this.scrollPane = ScrollPaneBuilder.builder()
+                .withStyleClass("materials-tab-content")
+                .withContent(this.materialOverview)
                 .build();
-        this.materialOverview = new OdysseyMaterialOverview(this.scrollPane);
-        this.scrollPane.setContent(this.materialOverview);
+
+        this.scrollPane.addChangeListener(this.scrollPane.widthProperty(), this.materialOverview.getResizeListener());
         this.setContent(this.scrollPane);
         this.scrollPane.getContent().setOnScroll(scrollEvent -> {
             final double speed = this.scrollPane.getHeight() / this.scrollPane.getContent().getLayoutBounds().getHeight();

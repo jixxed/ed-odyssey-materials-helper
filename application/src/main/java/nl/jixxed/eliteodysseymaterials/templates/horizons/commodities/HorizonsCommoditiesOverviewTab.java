@@ -15,15 +15,18 @@ public class HorizonsCommoditiesOverviewTab extends HorizonsTab implements Destr
 
     @Override
     public void initComponents() {
+        this.getStyleClass().add("commodities-tab");
         HorizonsCommoditiesOverview commoditiesOverview = new HorizonsCommoditiesOverview();
-        this.addBinding(this.textProperty(),LocaleService.getStringBinding("tabs.horizons.commodities"));
+        this.addBinding(this.textProperty(), LocaleService.getStringBinding("tabs.horizons.commodities"));
         this.setClosable(false);
         ScrollPane scrollPane = register(ScrollPaneBuilder.builder()
+                .withStyleClass("commodities-tab-content")
                 .withContent(commoditiesOverview)
                 .build());
         this.setContent(scrollPane);
 
     }
+
     @Override
     public HorizonsTabs getTabType() {
         return HorizonsTabs.COMMODITIES;

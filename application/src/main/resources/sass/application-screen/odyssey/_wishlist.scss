@@ -1,0 +1,18 @@
+.wishlist-tab {
+  @include tab;
+}
+
+.wishlist-tab-content {
+
+  .wishlist-highlight > .required {
+    -fx-font-weight: bold;
+  }
+
+  .wishlist-highlight > .available {
+    -fx-font-weight: bold;
+  }
+
+  .wishlist-highlight > .name {
+    -fx-font-weight: bold;
+  }
+}

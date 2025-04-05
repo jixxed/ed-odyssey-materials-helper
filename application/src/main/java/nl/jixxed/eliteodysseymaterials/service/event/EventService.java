@@ -19,8 +19,8 @@ public class EventService {
         //clean up null references
         LISTENERS_MAP.getOrDefault(event.getClass(), Collections.emptyList()).removeIf(ref -> ref.get() == null);
         LISTENERS_MAP.getOrDefault(event.getClass(), Collections.emptyList()).stream()
-                .filter(ref ->ref.get() != null)
-                .sorted(Comparator.comparingInt(ref-> ref.get().getPriority()))
+                .filter(ref -> ref.get() != null)
+                .sorted(Comparator.comparingInt(ref -> ref.get().getPriority()))
                 .forEachOrdered(ref -> {
                     if (event instanceof TerminateApplicationEvent) {
                         //make sure we call each TerminateApplicationEvent listener and try to close all running threads
@@ -29,23 +29,27 @@ public class EventService {
                         } catch (final Exception ex) {
                             log.error(ex.getMessage(), ex);
                         }
-                    } else if(ref.get() != null){
+                    } else if (ref.get() != null) {
                         ((EventListener<T>) ref.get()).handleEvent(event);
                     }
                 });
     }
+
     @CheckReturnValue
     public static <T extends Event> EventListener<T> addListener(final Object owner, final Class<T> eventClass, final Consumer<T> consumer) {
         return addListener(false, owner, eventClass, consumer);
     }
+
     @CheckReturnValue
     public static <T extends Event> EventListener<T> addListener(final boolean fxThread, final Object owner, final Class<T> eventClass, final Consumer<T> consumer) {
         return addListener(fxThread, owner, 5, eventClass, consumer);
     }
+
     @CheckReturnValue
     public static <T extends Event> EventListener<T> addListener(final Object owner, final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
         return addListener(false, owner, priority, eventClass, consumer);
     }
+
     @CheckReturnValue
     public static <T extends Event> EventListener<T> addListener(final boolean fxThread, final Object owner, final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
         final NonStaticEventListener<T> listener = new NonStaticEventListener<>(fxThread, owner, priority, eventClass, consumer);
@@ -56,18 +60,22 @@ public class EventService {
         logListenerSize();
         return listener;
     }
+
     @CheckReturnValue
     public static <T extends Event> EventListener<T> addStaticListener(final Class<T> eventClass, final Consumer<T> consumer) {
-        return addStaticListener( 5, eventClass, consumer);
+        return addStaticListener(5, eventClass, consumer);
     }
+
     @CheckReturnValue
     public static <T extends Event> EventListener<T> addStaticListener(final boolean fxThread, final Class<T> eventClass, final Consumer<T> consumer) {
         return addStaticListener(fxThread, 5, eventClass, consumer);
     }
+
     @CheckReturnValue
     public static <T extends Event> EventListener<T> addStaticListener(final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
         return addStaticListener(false, priority, eventClass, consumer);
     }
+
     @CheckReturnValue
     public static <T extends Event> EventListener<T> addStaticListener(final boolean fxThread, final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
         final EventListener<T> listener = new EventListener<>(fxThread, priority, eventClass, consumer);
@@ -82,7 +90,7 @@ public class EventService {
     public static void removeListener(final Consumer<? extends Event> eventConsumer, final Class<? extends Event> eventClass) {
         LISTENERS_MAP.computeIfPresent(eventClass, (aClass, eventListeners) -> {
             eventListeners.removeIf(ref -> {
-                if(ref.get() == null){
+                if (ref.get() == null) {
                     return true;
                 }
                 final boolean remove = ref.get().getConsumer().equals(eventConsumer);
@@ -99,7 +107,7 @@ public class EventService {
     public static void removeListener(final EventListener<? extends Event> eventListener) {
         logListener(null, eventListener, "deregister");
         LISTENERS_MAP.computeIfPresent(eventListener.getEventClass(), (aClass, eventListeners) -> {
-            eventListeners.removeIf(ref-> ref.get() == eventListener);
+            eventListeners.removeIf(ref -> ref.get() == eventListener);
             return eventListeners;
         });
         logListenerSize();
@@ -107,7 +115,7 @@ public class EventService {
 
     public static void removeListener(final Object owner) {
         LISTENERS_MAP.values().forEach(eventListeners -> eventListeners.removeIf(ref -> {
-            if(ref.get() == null){
+            if (ref.get() == null) {
                 return true;
             }
             final boolean remove = ref.get() instanceof NonStaticEventListener nonStaticEventListener && nonStaticEventListener.hasOwner(owner);

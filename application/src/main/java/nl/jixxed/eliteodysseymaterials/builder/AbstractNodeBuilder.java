@@ -18,6 +18,7 @@ import java.util.List;
 public abstract class AbstractNodeBuilder<T extends AbstractNodeBuilder<T>> {
     private final List<String> styleClasses = new ArrayList<>();
     private boolean visibility = true;
+    private boolean managed = true;
     private boolean disable = false;
     private Boolean pickOnBounds;
 
@@ -35,6 +36,11 @@ public abstract class AbstractNodeBuilder<T extends AbstractNodeBuilder<T>> {
 
     public T withStyleClasses(final String... styleClasses) {
         this.styleClasses.addAll(Arrays.asList(styleClasses));
+        return (T) this;
+    }
+
+    public T withManaged(boolean managed) {
+        this.managed = managed;
         return (T) this;
     }
 
@@ -87,6 +93,7 @@ public abstract class AbstractNodeBuilder<T extends AbstractNodeBuilder<T>> {
         node.getStyleClass().addAll(this.styleClasses);
         node.setDisable(this.disable);
         node.setVisible(this.visibility);
+        node.setManaged(this.managed);
         if (this.onMouseClicked != null) {
             node.addEventBinding(node.onMouseClickedProperty(), this.onMouseClicked);
 //            node.registerEventHandler(MouseEvent.MOUSE_CLICKED, this.onMouseClicked);

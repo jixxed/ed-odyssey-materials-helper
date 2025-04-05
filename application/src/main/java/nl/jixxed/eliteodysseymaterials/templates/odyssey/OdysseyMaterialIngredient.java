@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey;
 
 import javafx.beans.binding.StringBinding;
+import javafx.css.PseudoClass;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -26,9 +27,7 @@ import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
 
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 public class OdysseyMaterialIngredient extends Ingredient implements DestroyableEventTemplate {
-    private static final String INGREDIENT_WITH_AMOUNT_CLASS = "ingredient-with-amount";
-    private static final String INGREDIENT_FILLED_CLASS = "ingredient-filled";
-    private static final String INGREDIENT_UNFILLED_CLASS = "ingredient-unfilled";
+    public static final String FILLED = "filled";
     @EqualsAndHashCode.Include
     private final OdysseyStorageType storageType;
     @Getter
@@ -58,35 +57,37 @@ public class OdysseyMaterialIngredient extends Ingredient implements Destroyable
     }
 
     public void initComponents() {
+        this.getStyleClass().add("ingredient");
+
         this.nameLabel = LabelBuilder.builder()
-                .withStyleClass("ingredient-name")
+                .withStyleClass("name")
                 .withText(this.odysseyMaterial.getLocalizationKey())
                 .build();
         initImage();
 
         this.leftAmountLabel = LabelBuilder.builder()
-                .withStyleClass("ingredient-required")
+                .withStyleClass("quantity")
                 .withNonLocalizedText("0")
                 .build();
         this.rightAmountLabel = LabelBuilder.builder()
-                .withStyleClass("ingredient-available")
+                .withStyleClass("quantity")
                 .withNonLocalizedText("0")
                 .build();
         DestroyableLabel leftDescriptionLabel = LabelBuilder.builder()
-                .withStyleClass("ingredient-quantity-label")
+                .withStyleClass("required")
                 .withText("blueprint.header.required")
                 .build();
         this.rightDescriptionLabel = LabelBuilder.builder()
-                .withStyleClass("ingredient-quantity-label")
+                .withStyleClass("available")
                 .withText("blueprint.header.available")
                 .build();
 
         DestroyableHBox leftHBox = BoxBuilder.builder()
                 .withNodes(leftDescriptionLabel, this.leftAmountLabel)
-                .withStyleClass("ingredient-quantity-section").buildHBox();
+                .withStyleClass("quantity-section").buildHBox();
         DestroyableHBox rightHBox = BoxBuilder.builder()
                 .withNodes(this.rightAmountLabel, this.rightDescriptionLabel)
-                .withStyleClass("ingredient-quantity-section").buildHBox();
+                .withStyleClass("quantity-section").buildHBox();
         this.leftAmountLabel.setText(this.leftAmount.toString());
         HBox.setHgrow(this.leftAmountLabel, Priority.ALWAYS);
         this.rightAmountLabel.setText(this.rightAmount.toString());
@@ -100,7 +101,6 @@ public class OdysseyMaterialIngredient extends Ingredient implements Destroyable
         this.getNodes().addAll(firstLine, new GrowingRegion(), secondLine);
 
         MaterialService.addMaterialInfoPopOver(this, this.odysseyMaterial, false);
-        this.getStyleClass().add("ingredient");
 
         update();
     }
@@ -135,15 +135,14 @@ public class OdysseyMaterialIngredient extends Ingredient implements Destroyable
 
 
     protected void update() {
+
         setRightAmount(StorageService.getMaterialStorage(this.odysseyMaterial).getTotalValue());
         if (this.rightAmount >= this.leftAmount) {
             this.rightAmountLabel.setText(this.rightAmount.toString());
-            this.getStyleClass().removeAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
-            this.getStyleClass().addAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_FILLED_CLASS);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(FILLED), true);
         } else {
             this.rightAmountLabel.setText(this.rightAmount.toString());
-            this.getStyleClass().removeAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
-            this.getStyleClass().addAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_UNFILLED_CLASS);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(FILLED), false);
         }
     }
 

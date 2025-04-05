@@ -1,0 +1,120 @@
+.colonisation-tab {
+  @include tab;
+}
+
+.colonisation-tab-content {
+
+  .horizons-colonisation-entry {
+    -fx-min-width: 32em;
+    -fx-max-width: 32em;
+    -fx-padding: 0.2em;
+    -fx-hgap: 0.2em;
+    -fx-background-color: #0f0f0f;
+    -fx-border-color: #0f0f0f;
+  }
+
+  .horizons-colonisation-entry-available {
+    -fx-border-color: #dcc030;
+  }
+
+  .horizons-colonisation-entry-values {
+    -fx-hgap: 0.5em;
+    -fx-spacing: 0.5em;
+    -fx-min-width: 31.6em;
+    -fx-max-width: 31.6em;
+  }
+
+  .horizons-colonisation-entry-values-sub {
+    -fx-hgap: 0.5em;
+    -fx-spacing: 0.5em;
+    -fx-min-width: 15.28em;
+    -fx-max-width: 15.28em;
+  }
+
+  .horizons-colonisation-entry-values-market {
+    -fx-hgap: 0.2em;
+    -fx-spacing: 0.2em;
+  }
+
+  .horizons-colonisation-entry-commodity {
+    -fx-min-width: 30em;
+    -fx-max-width: 30em;
+    -fx-alignment: center-left;
+    -fx-min-height: 2em;
+    -fx-alignment: center-left;
+  }
+
+  .horizons-colonisation-entry-amount-left {
+    /*-fx-min-width: 5.5em;*/
+    /*-fx-pref-width: 5.5em;*/
+    /*-fx-padding: 0, 0, 0, 3em;*/
+    -fx-min-height: 2em;
+    -fx-alignment: center-left;
+    -fx-text-alignment: left;
+  }
+
+  .horizons-colonisation-entry-amount-sum {
+    -fx-min-height: 2em;
+    -fx-alignment: center-left;
+    -fx-text-alignment: left;
+    -fx-min-width: 5.5em;
+    -fx-max-width: 5.5em;
+  }
+
+  .horizons-colonisation-entry-amount-right {
+    /*-fx-min-width: 5.5em;*/
+    /*-fx-pref-width: 5.5em;*/
+    /*-fx-padding: 0, 0, 0, 3em;*/
+    -fx-min-height: 2em;
+    -fx-alignment: center-right;
+    -fx-text-alignment: right;
+  }
+
+  .bill-of-materials {
+    -fx-padding: 0.2em;
+    -fx-hgap: 0.2em;
+    -fx-vgap: 0.2em;
+  }
+
+  .colonisation-buttons {
+    -fx-padding: 0.2em;
+    -fx-hgap: 0.2em;
+    -fx-vgap: 0.2em;
+  }
+
+  .colonisation-projects {
+    -fx-padding: 0.2em;
+    -fx-hgap: 0.2em;
+    -fx-vgap: 0.2em;
+  }
+
+  .market-location {
+    -fx-text-fill: #0078d6 !important;
+    -fx-label-padding: 0em 0.4em 0em 0em;
+  }
+
+  .market-location-line {
+    -fx-max-width: 35em;
+  }
+
+  .market-location-line:hover {
+    -fx-cursor: hand;
+  }
+
+  .market-copy-icon {
+    -fx-max-width: 1em;
+    -fx-max-height: 1em;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
+  }
+
+  .market-distance {
+    -fx-text-fill: #777 !important;
+    -fx-label-padding: 0.4em;
+  }
+
+  .market-location-line:hover > .market-location {
+    -fx-text-fill: #2e92df !important;
+  }
+
+}

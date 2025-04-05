@@ -30,9 +30,9 @@ public class OdysseyBartenderTab extends OdysseyTab implements DestroyableEventT
     private final Map<AssetType, DestroyableFlowPane> categories = new HashMap<>();
     private DestroyableScrollPane scrollPane;
     private DestroyableVBox bottom;
+    private DestroyableVBox top;
     private OdysseyBartenderResult odysseyBartenderResult;
     private OdysseyBartenderRecipes odysseyBartenderRecipes;
-    private DestroyableVBox top;
     private DestroyableLabel title;
     private DestroyableVBox right;
     private DestroyableRegion filler;
@@ -46,6 +46,7 @@ public class OdysseyBartenderTab extends OdysseyTab implements DestroyableEventT
 
     @Override
     public void initComponents() {
+        this.getStyleClass().add("bartender-tab");
         this.addBinding(this.textProperty(), LocaleService.getStringBinding("tabs.bartender"));
         //what material do you want to trade
         this.title = LabelBuilder.builder()
@@ -100,6 +101,7 @@ public class OdysseyBartenderTab extends OdysseyTab implements DestroyableEventT
                 .withNodes(left, this.right)
                 .buildHBox();
         this.scrollPane = ScrollPaneBuilder.builder()
+                .withStyleClass("bartender-tab-content")
                 .withContent(layout)
                 .build();
 

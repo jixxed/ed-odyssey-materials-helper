@@ -20,9 +20,9 @@ public class MissionIngredient extends Ingredient {
     }
 
     private void initComponents() {
-        this.getStyleClass().addAll("ingredient", "ingredient-without-amount");
+        this.getStyleClass().addAll("ingredient", "mission");
         this.nameLabel = LabelBuilder.builder()
-                .withStyleClass("ingredient-name")
+                .withStyleClass("name")
                 .withText(this.localeKey)
                 .build();
         DestroyableHBox line = BoxBuilder.builder()

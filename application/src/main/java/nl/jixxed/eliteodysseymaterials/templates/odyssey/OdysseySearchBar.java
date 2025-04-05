@@ -33,7 +33,7 @@ class OdysseySearchBar extends DestroyableHBox implements DestroyableEventTempla
     }
 
     public void initComponents() {
-        this.getStyleClass().add("root");
+        this.getStyleClass().add("search");
         initMenuButton();
         this.materialSearchBar = new OdysseyMaterialSearchBar();
         this.wishlistSearchBar = register(new OdysseyWishlistSearchBar());

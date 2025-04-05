@@ -145,6 +145,7 @@ public class HorizonsWishlistTab extends HorizonsTab implements DestroyableEvent
     }
 
     public void initComponents() {
+        this.getStyleClass().add("wishlist-tab");
         initLabels();
         initShortestPathTable();
         final Set<HorizonsWishlist> items = APPLICATION_STATE.getPreferredCommander()
@@ -488,6 +489,7 @@ public class HorizonsWishlistTab extends HorizonsTab implements DestroyableEvent
                 .withNodes(hBoxBlueprints, this.wishlistSize > 0 ? this.contentChild : this.noBlueprint)
                 .buildVBox();
         this.scrollPane = ScrollPaneBuilder.builder()
+                .withStyleClass("wishlist-tab-content")
                 .withContent(this.content)
                 .build();
         this.setContent(this.scrollPane);

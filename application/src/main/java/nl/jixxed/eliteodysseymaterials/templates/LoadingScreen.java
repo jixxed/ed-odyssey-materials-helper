@@ -20,7 +20,7 @@ public class LoadingScreen extends DestroyableAnchorPane implements DestroyableE
     public void initComponents() {
         this.getStyleClass().add("loading-screen");
         final DestroyableLabel loading = LabelBuilder.builder()
-                .withStyleClass("loading-screen-text")
+                .withStyleClass("text")
                 .withNonLocalizedText("LOADING")
                 .build();
         final DestroyableHBox hBox = BoxBuilder.builder()
@@ -40,7 +40,7 @@ public class LoadingScreen extends DestroyableAnchorPane implements DestroyableE
 
     private static DestroyableProgressBar getProgressBar() {
         progressBar = new DestroyableProgressBar();
-        progressBar.getStyleClass().add("loading-screen-progressbar");
+        progressBar.getStyleClass().add("progressbar");
         return progressBar;
     }
 }

@@ -94,6 +94,7 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements DestroyableEv
 
     @Override
     public void initComponents() {
+        this.getStyleClass().add("loadout-tab");
         this.addBinding(this.textProperty(), LocaleService.getStringBinding("tabs.loadout"));
         final DestroyableHBox menu = initMenu();
         this.loadoutItemsFlow = FlowPaneBuilder.builder()
@@ -105,6 +106,7 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements DestroyableEv
                 .withNodes(menu, this.loadoutItemsFlow).buildVBox();
         vBox.addBinding(vBox.spacingProperty(), ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         this.scrollPane = ScrollPaneBuilder.builder()
+                .withStyleClass("loadout-tab-content")
                 .withContent(vBox)
                 .build();
         this.setContent(this.scrollPane);

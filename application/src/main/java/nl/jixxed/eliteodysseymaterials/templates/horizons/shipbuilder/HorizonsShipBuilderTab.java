@@ -58,6 +58,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab implements DestroyableEv
     }
 
     public void initComponents() {
+        this.getStyleClass().add("shipbuilder-tab");
         this.addBinding(this.textProperty(), LocaleService.getStringBinding("tabs.shipeditor"));
 
 
@@ -83,7 +84,8 @@ public class HorizonsShipBuilderTab extends HorizonsTab implements DestroyableEv
         statsBGLayer.setPickOnBounds(false);
         detailsLayer.setPickOnBounds(false);
         final StackPane stackPane = register(StackPaneBuilder.builder()
-                .withStyleClass(SHIP_CONTENT_STYLE_CLASS)
+                .withStyleClass("shipbuilder-tab-content")
+                .withStyleClass(SHIP_CONTENT_STYLE_CLASS)//TODO remove
                 .withNodes(noShipLayer, shipSelectionLayer, modulesLayer, statsBGLayer, controlsLayer, detailsLayer, statsLayer)
                 .build());
         this.setContent(stackPane);

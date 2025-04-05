@@ -1,0 +1,156 @@
+.materials-tab {
+  @include tab;
+}
+
+.materials-tab-content {
+
+  @include scroll-pane-content;
+
+  .material-overview {
+    -fx-spacing: 0.5em;
+  }
+
+  .material-card-flow-pane {
+    -fx-hgap: 0.25em;
+    -fx-vgap: 0.25em;
+  }
+
+  .totals-flow-pane {
+    -fx-hgap: 0.25em;
+    -fx-vgap: 0.25em;
+  }
+
+  //total
+  .material-total {
+    -fx-border-width: 1px;
+    -fx-border-color: black;
+    -fx-background-color: #0f0f0f;
+    -fx-padding: 5px;
+    -fx-pref-width: 32em;
+    -fx-min-width: 32em;
+    -fx-max-width: 32em;
+  }
+
+  .material-total .separator *.line {
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
+    -fx-border-color: white;
+  }
+
+  .material-total .text {
+    -fx-text-fill: white;
+  }
+
+  .material-total-name {
+    -fx-font-size: 1.2em;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+  }
+
+  .material-total-total-row {
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+  }
+
+  .material-total-value-row {
+    -fx-text-fill: white;
+    -fx-label-padding: 2px;
+  }
+
+  .material-total-value-irrelevant-row {
+    -fx-text-fill: #2e92df;
+    -fx-label-padding: 2px;
+  }
+
+  .material-total-value-powerplay-row {
+    -fx-text-fill: #6d3da8;
+    -fx-label-padding: 2px;
+  }
+
+  //material card
+
+  .material-card {
+    -fx-border-color: $border-color-black;
+    @include fixedHeight(2em);
+    -fx-alignment: center-left;
+    -fx-background-color: $background-color-dark;
+    @include fixedWidth(32em);
+
+
+    &:hover {
+      -fx-cursor: hand;
+      -fx-background-color: #1f1f1f;
+    }
+
+    .name {
+      -fx-padding: 0.25em;
+    }
+
+    .material-image, .fleetcarrier-image, .wishlist-image, .backpack-image, .ship-image {
+      @include fixedWidth(2em);
+    }
+
+    .fleetcarrier-amount, .wishlist-amount, .backpack-amount, .ship-amount, .total-amount {
+      -fx-padding: 0.25em;
+      -fx-text-alignment: right;
+      @include fixedWidth(3em);
+    }
+
+    &:relevant {
+      .name, .fleetcarrier-amount, .wishlist-amount, .backpack-amount, .ship-amount, .total-amount {
+        -fx-font-weight: bold;
+        -fx-text-fill: white;
+      }
+    }
+
+    &:irrelevant {
+      .name, .fleetcarrier-amount, .wishlist-amount, .backpack-amount, .ship-amount, .total-amount {
+        -fx-font-weight: normal;
+        -fx-text-fill: #2e92df;
+      }
+    }
+
+    &:powerplay {
+      .name, .fleetcarrier-amount, .wishlist-amount, .backpack-amount, .ship-amount, .total-amount {
+        -fx-font-weight: normal;
+        -fx-text-fill: #6d3da8;
+      }
+    }
+
+
+  }
+
+  .material-name-line {
+    -fx-alignment: center-left;
+  }
+
+  .material:hover {
+    -fx-cursor: hand;
+    -fx-background-color: #4f4f4f;
+  }
+
+  .material .label {
+    -fx-text-fill: #2e92df;
+  }
+
+  .category-label {
+    -fx-min-width: 400;
+    -fx-font-size: 1.35em;
+    -fx-font-weight: bold;
+    -fx-label-padding: 5;
+  }
+
+
+  .materialcard-image {
+    -fx-max-height: 2em;
+    -fx-max-width: 2em;
+    -fx-pref-height: 2em;
+    -fx-pref-width: 2em;
+    -fx-min-height: 2em;
+    -fx-min-width: 2em;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
+  }
+
+
+}

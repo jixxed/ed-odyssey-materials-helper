@@ -1,9 +1,11 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons;
 
 import javafx.beans.binding.StringBinding;
+import javafx.css.PseudoClass;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,10 +27,8 @@ import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishl
 
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 public class HorizonsMaterialIngredient extends Ingredient implements DestroyableComponent, DestroyableEventTemplate {
-    private static final String INGREDIENT_WITH_AMOUNT_CLASS = "ingredient-with-amount";
-    private static final String INGREDIENT_FILLED_CLASS = "ingredient-filled";
-    private static final String INGREDIENT_UNFILLED_CLASS = "ingredient-unfilled";
-    private static final String INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS = "ingredient-filled-partial";
+    public static final String FILLED = "filled";
+    public static final String PARTIAL = "partial";
     @EqualsAndHashCode.Include
     private final HorizonsStorageType storageType;
     @Getter
@@ -72,34 +72,37 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
     }
 
     public void initComponents() {
+        this.getStyleClass().add("ingredient");
         this.nameLabel = LabelBuilder.builder()
-                .withStyleClass("ingredient-name")
+                .withStyleClass("name")
                 .withText(this.horizonsMaterial.getLocalizationKey())
                 .build();
+        VBox.setVgrow(this.nameLabel, Priority.ALWAYS);
+        HBox.setHgrow(this.nameLabel, Priority.ALWAYS);
         initImage();
 
         final Boolean showRemaining = PreferencesService.getPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_HORIZONS, Boolean.FALSE);
         this.leftAmountLabel = LabelBuilder.builder()
-                .withStyleClass("ingredient-required")
+                .withStyleClass("quantity")
                 .build();
         this.rightAmountLabel = LabelBuilder.builder()
-                .withStyleClass("ingredient-available")
+                .withStyleClass("quantity")
                 .build();
         this.leftDescriptionLabel = LabelBuilder.builder()
-                .withStyleClass("ingredient-quantity-label")
+                .withStyleClass("required")
                 .withText("blueprint.header.required")
                 .build();
         this.rightDescriptionLabel = LabelBuilder.builder()
-                .withStyleClass("ingredient-quantity-label")
+                .withStyleClass("available")
                 .withText(Boolean.TRUE.equals(showRemaining && this instanceof HorizonsWishlistIngredient) ? "blueprint.header.remaining" : "blueprint.header.available")
                 .build();
 
         this.leftHBox = BoxBuilder.builder()
                 .withNodes(this.leftDescriptionLabel, this.leftAmountLabel)
-                .withStyleClass("ingredient-quantity-section").buildHBox();
+                .withStyleClass("quantity-section").buildHBox();
         this.rightHBox = BoxBuilder.builder()
                 .withNodes(this.rightAmountLabel, this.rightDescriptionLabel)
-                .withStyleClass("ingredient-quantity-section").buildHBox();
+                .withStyleClass("quantity-section").buildHBox();
         this.leftAmountLabel.setText(getLeftAmountString());
         HBox.setHgrow(this.leftAmountLabel, Priority.ALWAYS);
         this.rightAmountLabel.setText(getRightAmountString());
@@ -107,14 +110,13 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
         this.firstLine = BoxBuilder.builder()
                 .withNodes(this.image, this.nameLabel)
                 .buildHBox();
-        this.firstLine.addBinding(this.firstLine.prefHeightProperty(), this.nameLabel.heightProperty());
+//        this.firstLine.addBinding(this.firstLine.prefHeightProperty(), this.nameLabel.heightProperty());
         this.secondLine = BoxBuilder.builder()
                 .withNodes(this.leftHBox, new GrowingRegion(), this.rightHBox)
                 .buildHBox();
         this.getNodes().addAll(this.firstLine, new GrowingRegion(), this.secondLine);
 
         installPopOver();
-        this.getStyleClass().add("ingredient");
 
         update();
     }
@@ -135,12 +137,12 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
     private void initImage() {
         if (this.horizonsMaterial instanceof Commodity commodity) {
             this.image = ResizableImageViewBuilder.builder()
-                    .withStyleClass("horizons-materialcard-image")
+                    .withStyleClass("image")
                     .withImage(commodity.getCommodityType().getImagePath())
                     .build();
         } else {
             this.image = ResizableImageViewBuilder.builder()
-                    .withStyleClass("horizons-materialcard-image")
+                    .withStyleClass("image")
                     .withImage(this.horizonsMaterial.getRarity().getImagePath())
                     .build();
         }
@@ -163,13 +165,15 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
         }
         setRightAmount(materialCountBoth);
         this.rightAmountLabel.setText(getRightAmountString());
-        this.getStyleClass().removeAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS, INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS);
         if (materialCountBoth >= this.leftAmount && materialCountShip < this.leftAmount) {
-            this.getStyleClass().addAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(FILLED), true);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(PARTIAL), true);
         } else if (materialCountBoth >= this.leftAmount) {
-            this.getStyleClass().addAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_FILLED_CLASS);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(FILLED), true);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(PARTIAL), false);
         } else {
-            this.getStyleClass().addAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_UNFILLED_CLASS);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(FILLED), false);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(PARTIAL), false);
         }
     }
 

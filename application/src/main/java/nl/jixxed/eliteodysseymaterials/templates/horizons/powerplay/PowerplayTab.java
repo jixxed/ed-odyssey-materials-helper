@@ -31,7 +31,8 @@ public class PowerplayTab extends HorizonsTab implements DestroyableEventTemplat
 
     @Override
     public void initComponents() {
-        this.addBinding(this.textProperty(),LocaleService.getStringBinding("tabs.powerplay"));
+        this.getStyleClass().add("powerplay-tab");
+        this.addBinding(this.textProperty(), LocaleService.getStringBinding("tabs.powerplay"));
         this.powerplayCards = Arrays.stream(Power.values())
                 .filter(power -> power != Power.NONE)
                 .map(PowerplayCard::new)
@@ -44,6 +45,7 @@ public class PowerplayTab extends HorizonsTab implements DestroyableEventTemplat
                 .withNodes(this.powerplayCards)
                 .build();
         DestroyableScrollPane scrollPane = register(ScrollPaneBuilder.builder()
+                .withStyleClass("powerplay-tab-content")
                 .withContent(this.flowPane)
                 .build());
         this.setContent(scrollPane);
@@ -58,6 +60,7 @@ public class PowerplayTab extends HorizonsTab implements DestroyableEventTemplat
 
         register(EventService.addListener(true, this, PowerplayEvent.class, _ -> update(currentSearch)));
     }
+
     //TODO test with visible/managed state instead of recreate
     private void update(final String search) {
         this.flowPane.getNodes().clear();

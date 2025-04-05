@@ -1,0 +1,11 @@
+.application-screen {
+  @import "horizons/horizons";
+  @import "odyssey/odyssey";
+  @import "settings/settings";
+  @import "bottombar";
+
+
+  .tab-main {
+    @include tabpane;
+  }
+}

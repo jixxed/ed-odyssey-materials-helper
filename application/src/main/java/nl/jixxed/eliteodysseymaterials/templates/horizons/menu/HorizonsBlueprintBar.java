@@ -12,6 +12,7 @@ import javafx.util.Callback;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.UTF8Constants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.BlueprintCategory;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
@@ -22,11 +23,12 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
-import nl.jixxed.eliteodysseymaterials.templates.generic.About;
+import nl.jixxed.eliteodysseymaterials.templates.generic.menu.About;
 
 import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 public
@@ -37,7 +39,7 @@ class HorizonsBlueprintBar extends DestroyableAccordion implements DestroyableEv
     private static final Callback<ListView<HorizonsBlueprintName>, ListCell<HorizonsBlueprintName>> cellFactory = _ -> new DestroyableListCell<>() {
 
         @SuppressWarnings("java:S1068")
-        private final nl.jixxed.eliteodysseymaterials.service.event.EventListener<StorageEvent> storageEventListener = register(EventService.addListener(true,  this, StorageEvent.class, _ -> {
+        private final nl.jixxed.eliteodysseymaterials.service.event.EventListener<StorageEvent> storageEventListener = register(EventService.addListener(true, this, StorageEvent.class, _ -> {
             updateStyle(getItem());
             updateText(getItem(), this.emptyProperty().get());
         }));
@@ -61,7 +63,7 @@ class HorizonsBlueprintBar extends DestroyableAccordion implements DestroyableEv
                 setText(null);
                 setGraphic(null);
             } else {
-                setText(item + (BlueprintHelper.isCompletedEngineerRecipe(item) ? " \u2714" : ""));
+                setText(item + (BlueprintHelper.isCompletedEngineerRecipe(item) ? " " + UTF8Constants.CHECK_TRUE : ""));
             }
         }
 
@@ -81,7 +83,8 @@ class HorizonsBlueprintBar extends DestroyableAccordion implements DestroyableEv
     }
 
     public void initComponents() {
-        this.getStyleClass().add("blueprint-bar");
+        this.getStyleClass().add("blueprint-menu");
+//        this.getStyleClass().add("blueprint-bar");
         TitledPane[] categoryTitledPanes = HorizonsBlueprintConstants.RECIPES.entrySet().stream()
                 .sorted(Comparator.comparing(recipeCategoryMapEntry -> recipeCategoryMapEntry.getKey().getOrder()))
                 .map(this::createBlueprintCategoryTitledPane)
@@ -408,24 +411,20 @@ class HorizonsBlueprintBar extends DestroyableAccordion implements DestroyableEv
     }
 
     private List<DestroyableToggleButton> getGradeToggleButtons(final ScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> recipeEntry) {
-        final DestroyableToggleButton toggleButton1 = getToggleButton(scroll, selectedType, selectedBlueprint, HorizonsBlueprintGrade.GRADE_1, recipeEntry);
-        final DestroyableToggleButton toggleButton2 = getToggleButton(scroll, selectedType, selectedBlueprint, HorizonsBlueprintGrade.GRADE_2, recipeEntry);
-        final DestroyableToggleButton toggleButton3 = getToggleButton(scroll, selectedType, selectedBlueprint, HorizonsBlueprintGrade.GRADE_3, recipeEntry);
-        final DestroyableToggleButton toggleButton4 = getToggleButton(scroll, selectedType, selectedBlueprint, HorizonsBlueprintGrade.GRADE_4, recipeEntry);
-        final DestroyableToggleButton toggleButton5 = getToggleButton(scroll, selectedType, selectedBlueprint, HorizonsBlueprintGrade.GRADE_5, recipeEntry);
-        return List.of(toggleButton1, toggleButton2, toggleButton3, toggleButton4, toggleButton5);
+        return Stream.of(HorizonsBlueprintGrade.GRADE_1, HorizonsBlueprintGrade.GRADE_2, HorizonsBlueprintGrade.GRADE_3, HorizonsBlueprintGrade.GRADE_4, HorizonsBlueprintGrade.GRADE_5)
+                .map(grade -> getToggleButton(scroll, selectedType, selectedBlueprint, grade, recipeEntry))
+                .toList();
     }
 
     private List<DestroyableToggleButton> getSynthesisToggleButtons(final ScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> recipesEntry) {
-        final DestroyableToggleButton toggleButton1 = getSynthesisToggleButton(scroll, selectedType, selectedBlueprint, HorizonsBlueprintGrade.GRADE_1, recipesEntry);
-        final DestroyableToggleButton toggleButton2 = getSynthesisToggleButton(scroll, selectedType, selectedBlueprint, HorizonsBlueprintGrade.GRADE_2, recipesEntry);
-        final DestroyableToggleButton toggleButton3 = getSynthesisToggleButton(scroll, selectedType, selectedBlueprint, HorizonsBlueprintGrade.GRADE_3, recipesEntry);
-        return List.of(toggleButton1, toggleButton2, toggleButton3);
+        return Stream.of(HorizonsBlueprintGrade.GRADE_1, HorizonsBlueprintGrade.GRADE_2, HorizonsBlueprintGrade.GRADE_3)
+                .map(grade -> getSynthesisToggleButton(scroll, selectedType, selectedBlueprint, grade, recipesEntry))
+                .toList();
     }
 
     private DestroyableToggleButton getToggleButton(final ScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final HorizonsBlueprintGrade grade, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> recipeEntry) {
         final DestroyableToggleButton toggleButton = ToggleButtonBuilder.builder()
-                .withStyleClass("recipe-grade-togglebutton")
+                .withStyleClass("blueprint-grade-togglebutton")
                 .build();
         toggleButton.setGraphic(ResizableImageViewBuilder.builder()
                 .withImage("/images/ships/engineers/ranks/" + grade.getGrade() + ".png")
@@ -443,7 +442,7 @@ class HorizonsBlueprintBar extends DestroyableAccordion implements DestroyableEv
     private DestroyableToggleButton getSynthesisToggleButton(final ScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final HorizonsBlueprintGrade grade, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> recipesEntry) {
         final DestroyableToggleButton toggleButton = ToggleButtonBuilder.builder()
                 .withText("blueprint.synthesis.grade" + grade.getGrade())
-                .withStyleClass("recipe-synthesis-togglebutton")
+                .withStyleClass("blueprint-synthesis-togglebutton")
                 .build();
         toggleButton.addChangeListener(toggleButton.selectedProperty(), (_, _, newValue) ->
         {
@@ -464,9 +463,9 @@ class HorizonsBlueprintBar extends DestroyableAccordion implements DestroyableEv
     private void setContent(final ScrollPane scroll, final HorizonsBlueprintName name, final HorizonsBlueprintType type, final Boolean isSelected, final Node content) {
         if (Objects.equals(true, isSelected) && type != null && name != null) {
             try {
-                if (scroll.getContent() instanceof Destroyable destroyableContent) {
+                if (scroll.getContent() instanceof DestroyableTemplate destroyableContent) {
                     log.debug("destroy existing content" + destroyableContent);
-                    destroyableContent.destroy();
+                    destroyableContent.destroyTemplate();
                 }
                 log.debug("set content" + content);
                 scroll.setContent(content);
@@ -474,9 +473,9 @@ class HorizonsBlueprintBar extends DestroyableAccordion implements DestroyableEv
                 log.error("NPE", ex);
             }
         } else {
-            if (content instanceof Destroyable destroyableContent) {
+            if (content instanceof DestroyableTemplate destroyableContent) {
                 log.debug("set provided content" + destroyableContent);
-                destroyableContent.destroy();
+                destroyableContent.destroyTemplate();
             }
         }
     }
@@ -523,45 +522,7 @@ class HorizonsBlueprintBar extends DestroyableAccordion implements DestroyableEv
         }));
         blueprints.setCellFactory(cellFactory);
         blueprints.getSelectionModel().select(blueprints.getItems().getFirst());
-        blueprints.setButtonCell(new ListCell<>() {
-            @SuppressWarnings("java:S1068")
-            private final nl.jixxed.eliteodysseymaterials.service.event.EventListener<StorageEvent> storageEventEventListener = EventService.addListener(true, HorizonsBlueprintBar.this, StorageEvent.class, event -> {
-                updateStyle(getItem());
-                updateText(getItem(), this.emptyProperty().get());
-            });
-            @SuppressWarnings("java:S1068")
-            private final nl.jixxed.eliteodysseymaterials.service.event.EventListener<EngineerEvent> engineerEventEventListener = EventService.addListener(true, HorizonsBlueprintBar.this, EngineerEvent.class, event -> {
-                updateStyle(getItem());
-                updateText(getItem(), this.emptyProperty().get());
-            });
-
-            @Override
-            protected void updateItem(final HorizonsBlueprintName item, final boolean empty) {
-                super.updateItem(item, empty);
-                updateText(item, empty);
-                updateStyle(item);
-            }
-
-
-            private void updateText(final HorizonsBlueprintName item, final boolean empty) {
-                if (empty || item == null) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    setText(item.toString() + (BlueprintHelper.isCompletedEngineerRecipe(item) ? " \u2714" : ""));
-                }
-            }
-
-
-            private void updateStyle(final HorizonsBlueprintName item) {
-                if (item != null && BlueprintHelper.isCompletedEngineerRecipe(item)) {
-                    this.setStyle("-fx-text-fill: #89d07f;");
-                } else {
-                    this.setStyle("-fx-text-fill: white;");
-                }
-            }
-
-        });
+        blueprints.setButtonCell(cellFactory.call(null));
         return categoryTitledPane;
     }
 

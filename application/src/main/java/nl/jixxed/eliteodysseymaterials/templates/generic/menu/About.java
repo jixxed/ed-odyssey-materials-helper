@@ -1,4 +1,4 @@
-package nl.jixxed.eliteodysseymaterials.templates.generic;
+package nl.jixxed.eliteodysseymaterials.templates.generic.menu;
 
 import javafx.scene.control.Tooltip;
 import javafx.util.Duration;

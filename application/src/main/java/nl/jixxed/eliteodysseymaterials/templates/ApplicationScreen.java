@@ -23,7 +23,7 @@ import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsContentArea;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyContentArea;
 import nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab;
 
-public class ApplicationLayout extends DestroyableAnchorPane implements DestroyableEventTemplate {
+public class ApplicationScreen extends DestroyableAnchorPane implements DestroyableEventTemplate {
     private BottomBar bottomBar;
     private OdysseyContentArea odysseyContentArea;
     private HorizonsContentArea horizonsContentArea;
@@ -35,7 +35,7 @@ public class ApplicationLayout extends DestroyableAnchorPane implements Destroya
     private final IntegerProperty fontSize = new SimpleIntegerProperty(14);
 
 
-    public ApplicationLayout() {
+    public ApplicationScreen() {
         initComponents();
         initEventHandling();
     }
@@ -53,7 +53,7 @@ public class ApplicationLayout extends DestroyableAnchorPane implements Destroya
     }
 
     public void initComponents() {
-        this.getStyleClass().add("app");
+        this.getStyleClass().add("application-screen");
         this.bottomBar = new BottomBar();
         addChangeListener(this.bottomBar.heightProperty(), (_, _, _) -> AnchorPaneHelper.setAnchor(this.odysseyContentArea, 0.0, this.bottomBar.getHeight(), 0.0, 0.0));
         this.settingsTab = new SettingsTab();
@@ -62,11 +62,13 @@ public class ApplicationLayout extends DestroyableAnchorPane implements Destroya
         this.odysseyContentArea = new OdysseyContentArea();
         this.horizonsContentArea = new HorizonsContentArea();
         this.odyssey = TabBuilder.builder()
+                .withStyleClass("odyssey-tab")
                 .withText(LocaleService.getStringBinding("tabs.onfoot"))
                 .withClosable(false)
                 .withContent(this.odysseyContentArea)
                 .build();
         this.horizons = TabBuilder.builder()
+                .withStyleClass("horizons-tab")
                 .withText(LocaleService.getStringBinding("tabs.ships"))
                 .withClosable(false)
                 .withContent(this.horizonsContentArea)

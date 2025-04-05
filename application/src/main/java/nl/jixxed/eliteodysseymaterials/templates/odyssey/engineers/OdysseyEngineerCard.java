@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.engineers;
 
+import javafx.css.PseudoClass;
 import javafx.geometry.Orientation;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
@@ -26,12 +27,12 @@ class OdysseyEngineerCard extends EngineerCard implements DestroyableEventTempla
 
     protected static final Function<OdysseyBlueprintName, DestroyableHBox> RECIPE_TO_ENGINEER_BLUEPRINT_LABEL = recipeName -> BoxBuilder.builder()
             .withNodes(LabelBuilder.builder()
-                            .withStyleClass("engineer-bullet")
+                            .withStyleClass("bullet")
                             .withNonLocalizedText("\u2022")
                             .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(recipeName)))
                             .build(),
                     LabelBuilder.builder()
-                            .withStyleClass("engineer-blueprint")
+                            .withStyleClass("blueprint")
                             .withText(recipeName.getLocalizationKey())
                             .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(recipeName)))
                             .build())
@@ -46,73 +47,82 @@ class OdysseyEngineerCard extends EngineerCard implements DestroyableEventTempla
 
     OdysseyEngineerCard(final Engineer engineer) {
         super(engineer);
-        if (APPLICATION_STATE.isEngineerUnlocked(engineer)) {
-            this.image.setImage(ImageService.getImage("/images/engineer/" + engineer.name().toLowerCase() + ".jpg"));
-        } else {
-            this.image.setImage(ImageService.getImage("/images/engineer/locked.png"));
-        }
-        initComponents();
-        initEventHandling();
     }
 
     @SuppressWarnings("java:S2177")
     @Override
     public void initComponents() {
-
+        super.initComponents();
+        if (APPLICATION_STATE.isEngineerUnlocked(engineer)) {
+            this.image.setImage(ImageService.getImage("/images/engineer/" + engineer.name().toLowerCase() + ".jpg"));
+        } else {
+            this.image.setImage(ImageService.getImage("/images/engineer/locked.png"));
+        }
         this.suitModulesTitle = getSuitModulesTitle();
         this.suitBlueprintLabels = getSuitBlueprints();
         this.weaponModulesTitle = getWeaponModulesTitle();
         this.weaponBlueprintLabels = getWeaponBlueprints();
         this.specialisation = getEngineerSpecialisation();
-        this.getNodes().addAll(this.image, this.name, this.specialisation, this.location, new DestroyableSeparator(Orientation.HORIZONTAL), this.suitModulesTitle);
-        this.getNodes().addAll(this.suitBlueprintLabels);
-        this.getNodes().addAll(new DestroyableSeparator(Orientation.HORIZONTAL), this.weaponModulesTitle);
-        this.getNodes().addAll(this.weaponBlueprintLabels);
-        this.getNodes().addAll(this.unlockSeparator, this.unlockRequirementsTitle);
-        this.getNodes().addAll(this.unlockRequirementsLabels);
-        this.getStyleClass().add("engineer-card");
+        final DestroyableVBox text = BoxBuilder.builder()
+                .withStyleClass("text-box")
+                .withNodes(this.name,
+                        this.specialisation,
+                        this.location,
+                        new DestroyableSeparator(Orientation.HORIZONTAL),
+                        this.suitModulesTitle).buildVBox();
+        text.getNodes().addAll(this.suitBlueprintLabels);
+        text.getNodes().addAll(new DestroyableSeparator(Orientation.HORIZONTAL), this.weaponModulesTitle);
+        text.getNodes().addAll(this.weaponBlueprintLabels);
+        text.getNodes().add(this.unlockSection);
+        this.getNodes().addAll(this.image, text);
     }
 
     @SuppressWarnings("java:S2177")
     @Override
     public void initEventHandling() {
+        super.initEventHandling();
         register(EventService.addListener(true, this, EngineerEvent.class, _ -> {
-            this.getNodes().removeAll(this.unlockSeparator, this.unlockRequirementsTitle);
-            this.getNodes().removeAll(this.unlockRequirementsLabels);
+//            this.getNodes().removeAll(this.unlockSeparator, this.unlockRequirementsTitle);
+//            this.getNodes().removeAll(this.unlockRequirementsLabels);
             if (APPLICATION_STATE.isEngineerUnlocked(engineer)) {
                 this.image.setImage(ImageService.getImage("/images/engineer/" + engineer.name().toLowerCase() + ".jpg"));
             } else {
                 this.image.setImage(ImageService.getImage("/images/engineer/locked.png"));
-                this.unlockRequirementsLabels = getUnlockRequirements();
-                this.getNodes().addAll(this.unlockSeparator, this.unlockRequirementsTitle);
-                this.getNodes().addAll(this.unlockRequirementsLabels);
+//                this.unlockRequirementsLabels = getUnlockRequirements();
+//                this.getNodes().addAll(this.unlockSeparator, this.unlockRequirementsTitle);
+//                this.getNodes().addAll(this.unlockRequirementsLabels);
             }
         }));
     }
 
     private DestroyableHBox getEngineerSpecialisation() {
         final DestroyableLabel engineerSpecialisation = LabelBuilder.builder()
-                .withStyleClass(switch (this.engineer.getSpecialisation()) {
-                    case FORCE -> "specialisation-force";
-                    case DYNAMIC -> "specialisation-dynamic";
-                    case STRATEGIC -> "specialisation-strategic";
-                    case UNKNOWN -> "specialisation-unknown";
-                })
+                .withStyleClass("name")
                 .withText(this.engineer.getSpecialisation().getLocalizationKey())
                 .build();
 
         final DestroyableResizableImageView specialisationIcon = ResizableImageViewBuilder.builder()
-                .withStyleClass("specialisation-image")
+                .withStyleClass("spec-image")
                 .withImage("/images/engineer/specialisation/" + this.engineer.getSpecialisation().name().toLowerCase() + ".png")
                 .build();
 
         final DestroyableStackPane specialisationIconStackPane = StackPaneBuilder.builder()
                 .withNodes(specialisationIcon)
                 .build();
-        return BoxBuilder.builder()
-                .withStyleClass("specialisation-line")
-                .withNodes(specialisationIconStackPane, engineerSpecialisation)
+
+        final DestroyableHBox specialisationLine = BoxBuilder.builder()
+                .withStyleClass("specialisation")
+                .withNodes(specialisationIcon, engineerSpecialisation)
                 .buildHBox();
+
+        String specialisationType = switch (this.engineer.getSpecialisation()) {
+            case FORCE -> "force";
+            case DYNAMIC -> "dynamic";
+            case STRATEGIC -> "strategic";
+            case UNKNOWN -> "unknown";
+        };
+        specialisationLine.pseudoClassStateChanged(PseudoClass.getPseudoClass(specialisationType), true);
+        return specialisationLine;
     }
 
     private List<DestroyableHBox> getWeaponBlueprints() {
