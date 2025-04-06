@@ -211,7 +211,10 @@
   //-fx-padding: 0 0 1em 0;
 
   .separator {
-    -fx-padding: 0.5em 0 0 0;
+    .line {
+      -fx-border-width: 0.1em;
+      -fx-border-insets: 0.25em 0 0.25em 0;
+    }
   }
 
 
@@ -222,6 +225,7 @@
 
   .text-box {
     -fx-padding: 0.25em;
+    -fx-spacing: 0.1em;
   }
 
   .name {
@@ -238,12 +242,10 @@
   .category {
     -fx-text-fill: white;
     -fx-font-size: 1.1em;
-    -fx-label-padding: 5px;
   }
 
   .blueprint {
     -fx-text-fill: $text-color-blue;
-    -fx-label-padding: 0 5px 0 2px;
     -fx-max-width: 19.6em;
     -fx-wrap-text: true;
 
@@ -255,7 +257,6 @@
 
   .bullet {
     -fx-text-fill: $text-color-blue;
-    -fx-label-padding: 0 0 0 0.3em;
     -fx-text-alignment: center;
     -fx-min-width: 1.3em;
     -fx-max-width: 1.3em;
@@ -263,7 +264,6 @@
 
   .prerequisite {
     -fx-text-fill: $text-color-blue;
-    -fx-label-padding: 0 5px 0 2px;
     -fx-max-width: 19.6em;
     -fx-wrap-text: true;
 
@@ -275,5 +275,28 @@
 
   .copyable-location {
     @include copyable-location;
+  }
+}
+
+@mixin segmented-bar-straight {
+  &:horizontal > .only-segment {
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+  }
+
+  &:horizontal > .first-segment {
+    -fx-background-insets: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+  }
+
+  &:horizontal > .middle-segment {
+    -fx-background-insets: 0 0 0 0;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+  }
+
+  &:horizontal > .last-segment {
+    -fx-background-radius: 0 0 0 0;
+    -fx-border-radius: 0 0 0 0;
   }
 }

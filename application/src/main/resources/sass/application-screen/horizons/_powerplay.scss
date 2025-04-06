@@ -4,4 +4,113 @@
 
 .powerplay-tab-content {
 
+  @include scroll-pane-content;
+
+  .powerplay-flow {
+    @include hvGap(0.25em);
+
+
+    .powerplay-card {
+      @include fixedWidth(21em);
+      -fx-background-color: $background-color-dark;
+
+      .separator {
+        .line {
+          -fx-border-width: 0.1em;
+          -fx-border-insets: 0.25em 0 0.25em 0;
+        }
+      }
+
+      .name {
+        -fx-text-fill: $text-color-white;
+        -fx-font-size: 1.2em;
+      }
+
+      .photo {
+        /*225x140*/
+        @include fixedWidth(21em);
+        @include fixedHeight(13.06em);
+        -fx-pref-height: 13.06em;
+      }
+
+      .text-box {
+        -fx-padding: 0.25em;
+        -fx-spacing: 0.1em;
+      }
+
+      .category {
+        -fx-padding: 0.25em 0 0.25em 0;
+        -fx-text-fill: $text-color-white;
+        -fx-font-size: 1.1em;
+      }
+
+      .merits {
+        -fx-text-fill: $text-color-white;
+      }
+
+
+      .power-rank {
+        -fx-text-fill: $text-color-blue;
+        -fx-text-alignment: center;
+        @include fixedWidth(2em);
+
+        &:unlocked {
+          -fx-text-fill: $text-color-yellow;
+        }
+      }
+
+      .powerplay-perk {
+
+        .category {
+          -fx-text-fill: $text-color-white;
+          -fx-font-size: 1.1em;
+        }
+
+        .description {
+          -fx-padding: 0 0 0.25em 0;
+          -fx-fill: $text-color-blue;
+        }
+
+        .description-highlight {
+          -fx-fill: $text-color-white;
+        }
+
+        .progress {
+          -fx-padding: 0.25em 0 0.25em 0;
+          -fx-text-fill: $text-color-white;
+          -fx-font-style: italic;
+        }
+
+        .unlock-progress-bar {
+          @include fixedHeight(1em);
+          @include segmented-bar-straight;
+        }
+      }
+
+      .powerplay-unlockable {
+
+        .rank {
+          @include fixedWidth(1.5em);
+          -fx-text-fill: $text-color-white;
+        }
+
+        .module {
+          -fx-text-fill: $text-color-blue;
+          -fx-max-width: 17.9em;
+          -fx-wrap-text: true;
+        }
+
+        &:unlocked {
+          .module {
+            -fx-text-fill: $text-color-yellow;
+          }
+        }
+      }
+
+      .copyable-location {
+        @include copyable-location;
+        -fx-padding: 0.25em 0 0.25em 0;
+      }
+    }
+  }
 }

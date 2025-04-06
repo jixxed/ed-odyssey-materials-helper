@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.powerplay;
 
+import javafx.css.PseudoClass;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
@@ -27,12 +28,13 @@ public class PowerplayUnlockableModule extends DestroyableHBox implements Destro
 
     @Override
     public void initComponents() {
+        this.getStyleClass().addAll("powerplay-unlockable");
         final DestroyableLabel rank = LabelBuilder.builder()
-                .withStyleClass("power-rank")
+                .withStyleClass("rank")
                 .withNonLocalizedText(unlockRank.toString())
                 .build();
         final DestroyableLabel module = LabelBuilder.builder()
-                .withStyleClass("power-module")
+                .withStyleClass("module")
                 .withText(unlockable.getName().getLocalizationKey())
                 .build();
         this.getNodes().addAll(rank, module);
@@ -47,11 +49,6 @@ public class PowerplayUnlockableModule extends DestroyableHBox implements Destro
     }
 
     public void update(Power power, long rank) {
-        this.getNodes().iterator().forEachRemaining(node -> node.getStyleClass().remove("power-rank-unlocked"));
-
-        if (this.power.equals(power) &&  unlockRank <= rank) {
-            this.getNodes().iterator().forEachRemaining(node -> node.getStyleClass().add("power-rank-unlocked"));
-        }
-
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("unlocked"), this.power.equals(power) && unlockRank <= rank);
     }
 }

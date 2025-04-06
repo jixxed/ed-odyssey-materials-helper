@@ -56,13 +56,14 @@ public class PowerplayPerk extends DestroyableVBox implements DestroyableEventTe
 
     @Override
     public void initComponents() {
+        this.getStyleClass().add("powerplay-perk");
         DestroyableLabel category = LabelBuilder.builder()
-                .withStyleClass("power-category")
+                .withStyleClass("category")
                 .withText(this.perk.getLocalizationTitleKey())
                 .build();
         DestroyableHighlightTextFlow subtitle = HighlightTextFlowBuilder.builder()
-                .withStyleClass("power-category-explain")
-                .withHighlightStyleClass("power-category-explain-highlight")
+                .withStyleClass("description")
+                .withHighlightStyleClass("description-highlight")
                 .withText(this.perk.getLocalizationKey(), this.rewards.getLast().reward() + "%", this.rewards.stream().map(RankReward::rank).map(String::valueOf).collect(Collectors.joining(", ")))
                 .build();
         final Integer reward = this.rewards.stream().filter(rankReward -> rankReward.rank() <= 55).max(Comparator.comparing(RankReward::rank)).map(RankReward::reward).orElse(0);
@@ -70,7 +71,7 @@ public class PowerplayPerk extends DestroyableVBox implements DestroyableEventTe
                 ? LocaleService.getStringBinding(getRankRewardStringBinding(reward))
                 : LocaleService.getStringBinding("tab.powerplay.current.reward", reward);
         currentProgress = LabelBuilder.builder()
-                .withStyleClass("power-category-current")
+                .withStyleClass("progress")
                 .withText(currentProgressBinding)
                 .build();
         segmentedBar = createSegmentedBar();
@@ -88,7 +89,7 @@ public class PowerplayPerk extends DestroyableVBox implements DestroyableEventTe
 
     @Override
     public void initEventHandling() {
-        register(EventService.addListener(true, this, PowerplayEvent.class, powerplayEvent ->
+        register(EventService.addListener(true, this, PowerplayEvent.class, _ ->
                 this.update()));
     }
 
@@ -109,7 +110,7 @@ public class PowerplayPerk extends DestroyableVBox implements DestroyableEventTe
 
     private DestroyableSegmentedBar<TypeSegment> createSegmentedBar() {
         segmentedBar = SegmentedBarBuilder.builder(TypeSegment.class)
-                .withStyleClass("power-segmented-bar")
+                .withStyleClass("unlock-progress-bar")
                 .withOrientation(Orientation.HORIZONTAL)
                 .withInfoNodeFactory(_ -> null)
                 .withSegmentViewFactory(segmentViewFactory)

@@ -41,7 +41,7 @@ public class PowerplayTab extends HorizonsTab implements DestroyableEventTemplat
                         .thenComparing(powerplayCard -> LocaleService.getLocalizedStringForCurrentLocale(powerplayCard.getPower().getLocalizationKey())))
                 .toArray(PowerplayCard[]::new);
         this.flowPane = FlowPaneBuilder.builder()
-                .withStyleClass("power-grid")
+                .withStyleClass("powerplay-flow")
                 .withNodes(this.powerplayCards)
                 .build();
         DestroyableScrollPane scrollPane = register(ScrollPaneBuilder.builder()
@@ -61,23 +61,24 @@ public class PowerplayTab extends HorizonsTab implements DestroyableEventTemplat
         register(EventService.addListener(true, this, PowerplayEvent.class, _ -> update(currentSearch)));
     }
 
-    //TODO test with visible/managed state instead of recreate
     private void update(final String search) {
-        this.flowPane.getNodes().clear();
-
+        Arrays.stream(this.powerplayCards).forEach(powerplayCard -> {
+            boolean visible = search.isBlank()
+                    || powerplayCard.getPower().getPerks().keySet().stream().anyMatch(powerPerk -> LocaleService.getLocalizedStringForCurrentLocale(powerPerk.getLocalizationKey()).toLowerCase().contains(search.toLowerCase()))
+                    || powerplayCard.getPower().getPerks().keySet().stream().anyMatch(powerPerk -> LocaleService.getLocalizedStringForCurrentLocale(powerPerk.getLocalizationTitleKey()).toLowerCase().contains(search.toLowerCase()))
+                    || powerplayCard.getPower().getUnlockables().keySet().stream().anyMatch(module -> LocaleService.getLocalizedStringForCurrentLocale(module.getLocalizationKey()).toLowerCase().contains(search.toLowerCase()))
+                    || powerplayCard.getPower().getStarSystem().getName().toLowerCase().contains(search.toLowerCase())
+                    || LocaleService.getLocalizedStringForCurrentLocale(powerplayCard.getPower().getLocalizationKey()).toLowerCase().contains(search.toLowerCase());
+            powerplayCard.setVisible(visible);
+            powerplayCard.setManaged(visible);
+        });
+        this.flowPane.getChildren().clear();
         final List<PowerplayCard> cards = Arrays.stream(this.powerplayCards)
-                .filter(powerplayCard -> search.isBlank()
-                        || powerplayCard.getPower().getPerks().keySet().stream().anyMatch(powerPerk -> LocaleService.getLocalizedStringForCurrentLocale(powerPerk.getLocalizationKey()).toLowerCase().contains(search.toLowerCase()))
-                        || powerplayCard.getPower().getPerks().keySet().stream().anyMatch(powerPerk -> LocaleService.getLocalizedStringForCurrentLocale(powerPerk.getLocalizationTitleKey()).toLowerCase().contains(search.toLowerCase()))
-                        || powerplayCard.getPower().getUnlockables().keySet().stream().anyMatch(module -> LocaleService.getLocalizedStringForCurrentLocale(module.getLocalizationKey()).toLowerCase().contains(search.toLowerCase()))
-                        || powerplayCard.getPower().getStarSystem().getName().toLowerCase().contains(search.toLowerCase())
-                        || LocaleService.getLocalizedStringForCurrentLocale(powerplayCard.getPower().getLocalizationKey()).toLowerCase().contains(search.toLowerCase())
-                )
                 .sorted(Comparator.comparing((PowerplayCard powerPlayCard) -> !powerPlayCard.getPower().equals(Power.ALL))
                         .thenComparing(powerplayCard -> !powerplayCard.getPower().equals(ApplicationState.getInstance().getPower()))
                         .thenComparing(powerplayCard -> LocaleService.getLocalizedStringForCurrentLocale(powerplayCard.getPower().getLocalizationKey())))
                 .toList();
-        this.flowPane.getNodes().addAll(cards);
+        this.flowPane.getChildren().addAll(cards);
     }
 
     @Override

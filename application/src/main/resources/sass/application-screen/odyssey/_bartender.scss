@@ -125,7 +125,7 @@
           -fx-text-alignment: center;
 
           &:hover {
-            -fx-background-color: ligthen($background-color-lighter, 10%);
+            -fx-background-color: lighten($background-color-lighter, 10%);
             -fx-cursor: hand;
           }
         }

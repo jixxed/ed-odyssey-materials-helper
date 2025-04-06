@@ -81,26 +81,7 @@
         @include fixedWidth(16.5em);
         @include fixedHeight(1em);
 
-        &:horizontal > .only-segment {
-          -fx-background-radius: 0;
-          -fx-border-radius: 0;
-        }
-
-        &:horizontal > .first-segment {
-          -fx-background-insets: 0 0 0 0;
-          -fx-background-radius: 0 0 0 0;
-        }
-
-        &:horizontal > .middle-segment {
-          -fx-background-insets: 0 0 0 0;
-          -fx-background-radius: 0;
-          -fx-border-radius: 0;
-        }
-
-        &:horizontal > .last-segment {
-          -fx-background-radius: 0 0 0 0;
-          -fx-border-radius: 0 0 0 0;
-        }
+        @include segmented-bar-straight;
 
         .segment {
           -fx-font-weight: bold;

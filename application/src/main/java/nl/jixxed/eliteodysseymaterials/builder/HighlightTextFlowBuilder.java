@@ -1,6 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.builder;
 
-import javafx.beans.binding.StringBinding;
 import javafx.scene.Node;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -57,15 +56,10 @@ public class HighlightTextFlowBuilder extends AbstractPaneBuilder<HighlightTextF
 
     @SuppressWarnings("unchecked")
     public DestroyableHighlightTextFlow build() {
-        final DestroyableHighlightTextFlow textFlow = new DestroyableHighlightTextFlow();
+        final DestroyableHighlightTextFlow textFlow = new DestroyableHighlightTextFlow(LocaleService.getStringBinding(this.localeKey), this.parameters);
         super.build(textFlow);
         textFlow.getHighlightStyleClasses().addAll(this.highlightStyleClasses);
-        textFlow.setParameters(this.parameters);
-
-        StringBinding localeStringBinding = LocaleService.getStringBinding(this.localeKey);
-
-        textFlow.populateTextFlow(localeStringBinding);
-        localeStringBinding.subscribe(_ -> textFlow.populateTextFlow(localeStringBinding));
+        textFlow.populateTextFlow();
         return textFlow;
     }
 
