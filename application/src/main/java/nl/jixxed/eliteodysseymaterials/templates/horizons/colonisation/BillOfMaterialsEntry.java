@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation;
 
+import javafx.css.PseudoClass;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.IntFieldBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
@@ -53,17 +54,17 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
 
     @Override
     public void initComponents() {
-        this.getStyleClass().add("horizons-colonisation-entry");
+        this.getStyleClass().add("bom-entry");
         commodityLabel = LabelBuilder.builder()
-                .withStyleClass("horizons-colonisation-entry-commodity")
+                .withStyleClass("name")
                 .withText(commodity.getLocalizationKey())
                 .build();
         amountLabel = LabelBuilder.builder()
-                .withStyleClass("horizons-colonisation-entry-amount-left")
+                .withStyleClass("amount-left")
                 .withNonLocalizedText(requiredAmount.toString())
                 .build();
         amountField = IntFieldBuilder.builder()
-                .withStyleClass("horizons-colonisation-entry-amount-sum")
+                .withStyleClass("amount-sum")
                 .withMinValue(0)
                 .withMaxValue(999999)
                 .withInitialValue(requiredAmount)
@@ -77,60 +78,60 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
             colonisationItem.updateAmount(commodity, newValue.intValue());
         });
         fleetCarrierLabel = LabelBuilder.builder()
-                .withStyleClass("horizons-colonisation-entry-amount-right")
+                .withStyleClass("amount-right")
                 .withNonLocalizedText("0")
                 .build();
         shipLabel = LabelBuilder.builder()
-                .withStyleClass("horizons-colonisation-entry-amount-left")
+                .withStyleClass("amount-left")
                 .withNonLocalizedText("0")
                 .build();
         marketLabel = LabelBuilder.builder()
-                .withStyleClass("horizons-colonisation-entry-amount-right")
+                .withStyleClass("amount-right")
                 .withNonLocalizedText("0")
                 .build();
         this.commodityImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("horizons-materialcard-image")
+                .withStyleClass("material-image")
                 .withImage(commodity.getCommodityType().getImagePath())
                 .build();
         this.fleetCarrierImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("horizons-materialcard-image")
+                .withStyleClass("storage-image")
                 .withImage("/images/material/fleetcarrier.png")
                 .build();
         this.shipImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("horizons-materialcard-image")
+                .withStyleClass("storage-image")
                 .withImage("/images/material/ship.png")
                 .build();
         this.sumImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("horizons-materialcard-image")
+                .withStyleClass("storage-image")
                 .withImage("/images/material/sum.png")
                 .build();
         this.coriolisImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("horizons-materialcard-image")
+                .withStyleClass("storage-image")
                 .withImage("/images/material/coriolis.png")
                 .build();
         this.bracket1Image = ResizableImageViewBuilder.builder()
-                .withStyleClasses("horizons-materialcard-image")
+                .withStyleClasses("storage-image")
                 .withImage("/images/material/stock/bracket1.png")
                 .build();
         this.bracket3Image = ResizableImageViewBuilder.builder()
-                .withStyleClasses("horizons-materialcard-image")
+                .withStyleClasses("storage-image")
                 .withImage("/images/material/stock/bracket3.png")
                 .build();
         addBinding(this.bracket1Image.managedProperty(), this.bracket1Image.visibleProperty());
         addBinding(this.bracket3Image.managedProperty(), this.bracket3Image.visibleProperty());
         final DestroyableHBox title = BoxBuilder.builder()
-                .withStyleClass("horizons-colonisation-entry-values")
+                .withStyleClass("values")
                 .withNodes(commodityImage, commodityLabel).buildHBox();
         final DestroyableHBox left = BoxBuilder.builder()
-                .withStyleClass("horizons-colonisation-entry-values-sub")
+                .withStyleClass("values-sub")
                 .withNodes(sumImage, colonisationItem == ColonisationItem.ALL ? amountLabel : amountField, new GrowingRegion(), fleetCarrierLabel, fleetCarrierImage).buildHBox();
         final DestroyableHBox right = BoxBuilder.builder()
-                .withStyleClass("horizons-colonisation-entry-values-sub")
+                .withStyleClass("values-sub")
                 .withNodes(shipImage, shipLabel, new GrowingRegion(), bracket1Image, BoxBuilder.builder()
-                        .withStyleClass("horizons-colonisation-entry-values-market")
+                        .withStyleClass("values-market")
                         .withNodes(bracket3Image, marketLabel).buildHBox(), coriolisImage).buildHBox();
         final DestroyableHBox values = BoxBuilder.builder()
-                .withStyleClass("horizons-colonisation-entry-values")
+                .withStyleClass("values")
                 .withNodes(left, right).buildHBox();
         this.getNodes().addAll(title, values);
         MaterialService.addMaterialInfoPopOver(this, this.commodity, false);
@@ -157,10 +158,7 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
     }
 
     private void updateStyle() {
-        this.getStyleClass().remove("horizons-colonisation-entry-available");
-        if (!"0".equals(marketLabel.getText())) {
-            this.getStyleClass().add("horizons-colonisation-entry-available");
-        }
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("available"), !"0".equals(marketLabel.getText()));
         MarketService.getMarketItem(commodity).ifPresentOrElse(marketItem -> {
             this.bracket1Image.setVisible(marketItem.stockBracket().equals(BigInteger.ONE));
             this.bracket3Image.setVisible(marketItem.stockBracket().equals(BigInteger.valueOf(3)));

@@ -105,11 +105,8 @@ public class PopOverBuilder {
         }
         if (destroyOnHide) {
             popOver.addChangeListener(popOver.showingProperty(), (_, _, newValue) -> {
-                if (newValue == false) {
-                    log.info("Destroying popOver");
+                if (Boolean.FALSE.equals(newValue)) {
                     popOver.destroy();
-                } else {
-                    log.info("Showing popOver");
                 }
             });
         }

@@ -31,6 +31,7 @@ public class ColonisationView extends DestroyableVBox implements DestroyableEven
 
     @Override
     public void initComponents() {
+        this.getStyleClass().add("colonisation-view");
         final DestroyableMenuButton[] list = Arrays.stream(ColonisationCategory.values())
                 .map(category ->
                         MenuButtonBuilder.builder()
@@ -40,11 +41,11 @@ public class ColonisationView extends DestroyableVBox implements DestroyableEven
                                         .collect(Collectors.toMap(ColonisationBuildable::getLocalizationKey, c -> _ -> addColonisationItem(c))))
                                 .build()).toArray(DestroyableMenuButton[]::new);
         DestroyableFlowPane buildables = FlowPaneBuilder.builder()
-                .withStyleClass("colonisation-buttons")
+                .withStyleClass("buttons")
                 .withNodes(list)
                 .build();
         projects = FlowPaneBuilder.builder()
-                .withStyleClass("colonisation-projects")
+                .withStyleClass("projects")
                 .build();
         refreshProjects();
         billOfMaterials = new BillOfMaterials();
