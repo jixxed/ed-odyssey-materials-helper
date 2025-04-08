@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "description": "When Written: Every 15 seconds while docked at a construction depot",
+  "extends": {
+    "$ref": "../_Event.json"
+  },
+  "allOf": [
+    {
+      "$ref": "../_Event.json"
+    }
+  ],
+  "properties": {
+    "MarketID": {
+      "title": "MarketID",
+      "type": "integer",
+      "examples": [
+        4217038595
+      ]
+    },
+    "ConstructionProgress": {
+      "title": "ConstructionProgress",
+      "type": "number",
+      "examples": [
+        0.141462
+      ]
+    },
+    "ConstructionComplete": {
+      "title": "ConstructionComplete",
+      "type": "boolean",
+      "examples": [
+        true,
+        false
+      ]
+    },
+    "ConstructionFailed": {
+      "title": "ConstructionFailed",
+      "type": "boolean",
+      "examples": [
+        true,
+        false
+      ]
+    },
+    "ResourcesRequired": {
+      "title": "ResourcesRequired",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "title": "Name",
+            "type": "string",
+            "examples": [
+              "$aluminium_name;"
+            ]
+          },
+          "Name_Localised": {
+            "title": "Name_Localised",
+            "type": "string",
+            "examples": [
+              "Aluminium"
+            ]
+          },
+          "RequiredAmount": {
+            "title": "RequiredAmount",
+            "type": "integer",
+            "examples": [
+              43618
+            ]
+          },
+          "ProvidedAmount": {
+            "title": "ProvidedAmount",
+            "type": "integer",
+            "examples": [
+              621
+            ]
+          },
+          "Payment": {
+            "title": "Payment",
+            "type": "integer",
+            "examples": [
+              3239
+            ]
+          }
+        },
+        "required": [
+          "Name",
+          "Name_Localised",
+          "RequiredAmount",
+          "ProvidedAmount",
+          "Payment"
+        ]
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "timestamp",
+    "event",
+    "MarketID",
+    "ConstructionProgress",
+    "ConstructionComplete",
+    "ConstructionFailed",
+    "ResourcesRequired"
+  ]
+}

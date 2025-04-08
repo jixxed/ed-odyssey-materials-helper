@@ -1,47 +1,26 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "type": "object",
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
   "description": "When written: when receiving salary payment from a power",
-  "extends": {
-    "$ref": "../_Event.json"
-  },
-  "allOf": [
-    {
-      "$ref": "../_Event.json"
-    }
-  ],
-  "properties": {
-    "Power": {
-      "title": "Power",
-      "type": "string",
-      "examples": [
-        "Li Yong-Rui",
-        "Aisling Duval"
-      ]
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Power" : {
+      "title" : "Power",
+      "type" : "string",
+      "examples" : [ "Li Yong-Rui", "Aisling Duval" ]
     },
-    "MeritsGained": {
-      "title": "MeritsGained",
-      "type": "integer",
-      "examples": [
-        100,
-        50,
-        200
-      ]
+    "MeritsGained" : {
+      "title" : "MeritsGained",
+      "type" : "integer",
+      "examples" : [ 100, 50, 200 ]
     },
-    "TotalMerits": {
-      "title": "TotalMerits",
-      "type": "integer",
-      "examples": [
-        15000,
-        1000,
-        26000
-      ]
+    "TotalMerits" : {
+      "title" : "TotalMerits",
+      "type" : "integer",
+      "examples" : [ 15000, 1000, 26000 ]
     }
   },
-  "additionalProperties": false,
-  "required": [
-    "Power",
-    "MeritsGained",
-    "TotalMerits"
-  ]
+  "additionalProperties" : false,
+  "required" : [ "Power", "MeritsGained", "TotalMerits" ]
 }

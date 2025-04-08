@@ -1,3 +1,11 @@
+Version 2.152
+-------------
+Add colonisation journal events - no UI changes yet
+
+Version 2.151
+-------------
+Add Corsair placeholder
+
 Version 2.150
 -------------
 Add sending new powerplay related data to EDDN
