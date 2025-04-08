@@ -53,11 +53,11 @@
           "Amount"
         ]
       }
-    },
-    "additionalProperties": false,
-    "required": [
-      "MarketID",
-      "Contributions"
-    ]
-  }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "MarketID",
+    "Contributions"
+  ]
 }
