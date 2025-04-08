@@ -48,8 +48,8 @@ public class MenuItemBuilder {
         return this;
     }
 
-    public MenuItemBuilder withText(final String stringBinding, Object... parameters) {
-        this.stringBinding = LocaleService.getStringBinding(stringBinding, parameters);
+    public MenuItemBuilder withText(final String localeKey, Object... parameters) {
+        this.stringBinding = LocaleService.getStringBinding(localeKey, parameters);
         return this;
     }
 

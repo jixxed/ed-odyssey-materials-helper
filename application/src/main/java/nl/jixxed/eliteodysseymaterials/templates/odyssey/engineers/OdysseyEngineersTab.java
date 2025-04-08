@@ -42,10 +42,10 @@ public class OdysseyEngineersTab extends OdysseyTab implements DestroyableEventT
                 .withStyleClass("engineer-grid")
                 .withNodes(this.odysseyEngineerCards)
                 .build();
-        this.scrollPane = ScrollPaneBuilder.builder()
+        this.scrollPane = register(ScrollPaneBuilder.builder()
                 .withStyleClass("engineers-tab-content")
                 .withContent(this.flowPane)
-                .build();
+                .build());
         this.setContent(this.scrollPane);
     }
 

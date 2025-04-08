@@ -488,10 +488,10 @@ public class HorizonsWishlistTab extends HorizonsTab implements DestroyableEvent
                 .withStyleClass(WISHLIST_CONTENT_STYLE_CLASS)
                 .withNodes(hBoxBlueprints, this.wishlistSize > 0 ? this.contentChild : this.noBlueprint)
                 .buildVBox();
-        this.scrollPane = ScrollPaneBuilder.builder()
+        this.scrollPane = register(ScrollPaneBuilder.builder()
                 .withStyleClass("wishlist-tab-content")
                 .withContent(this.content)
-                .build();
+                .build());
         this.setContent(this.scrollPane);
         subscribe = Observable.create((ObservableEmitter<JournalLineProcessedEvent> emitter) -> register(EventService.addListener(true, this, JournalLineProcessedEvent.class, emitter::onNext)))
                 .debounce(500, TimeUnit.MILLISECONDS)

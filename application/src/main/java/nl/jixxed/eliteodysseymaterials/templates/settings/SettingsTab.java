@@ -59,10 +59,10 @@ public class SettingsTab extends OdysseyTab {
         //Tracking
         settings.getNodes().add(new Tracking());
 
-        ScrollPane scrollPane = ScrollPaneBuilder.builder()
+        ScrollPane scrollPane = register(ScrollPaneBuilder.builder()
                 .withStyleClass("settings-tab-content")
                 .withContent(settings)
-                .build();
+                .build());
         this.setContent(scrollPane);
     }
 

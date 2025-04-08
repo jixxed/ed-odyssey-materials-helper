@@ -105,10 +105,10 @@ public class OdysseyBartenderTab extends OdysseyTab implements DestroyableEventT
                 .withStyleClasses("bartender-layout")
                 .withNodes(left, new GrowingRegion(), this.right)
                 .buildHBox();
-        this.scrollPane = ScrollPaneBuilder.builder()
+        this.scrollPane = register(ScrollPaneBuilder.builder()
                 .withStyleClass("bartender-tab-content")
                 .withContent(layout)
-                .build();
+                .build());
 
         this.scrollPane.addChangeListener(this.scrollPane.skinProperty(), (_, _, _) ->
                 ((ScrollPaneSkin) this.scrollPane.getSkin()).getVerticalScrollBar().valueProperty()

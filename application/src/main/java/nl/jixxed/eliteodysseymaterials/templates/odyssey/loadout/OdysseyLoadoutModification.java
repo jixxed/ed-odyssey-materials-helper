@@ -1,12 +1,15 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.loadout;
 
 import javafx.application.Platform;
+import javafx.css.PseudoClass;
 import javafx.event.EventHandler;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 import javafx.util.Duration;
 import lombok.NonNull;
 import nl.jixxed.eliteodysseymaterials.builder.*;
@@ -15,142 +18,138 @@ import nl.jixxed.eliteodysseymaterials.domain.LoadoutSet;
 import nl.jixxed.eliteodysseymaterials.domain.ModificationChange;
 import nl.jixxed.eliteodysseymaterials.domain.SelectedModification;
 import nl.jixxed.eliteodysseymaterials.enums.*;
-import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ModificationChangedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.TerminateApplicationEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import org.controlsfx.control.PopOver;
 
 import java.util.Arrays;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
-class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableEventTemplate {
-    private static final String LOADOUT_MODIFICATION_STYLE_CLASS = "loadout-modification";
-    private static final String LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS = "loadout-modification-image";
-    private static final String LOADOUT_MODIFICATION_IMAGE_HOVER_STYLE_CLASS = "loadout-modification-image-hover";
-    private static final String LOADOUT_MODIFICATION_IMAGE_CONSUMED_STYLE_CLASS = "loadout-modification-image-consumed";
-    private static final String LOADOUT_MODIFICATION_LABEL_STYLE_CLASS = "loadout-modification-label";
+class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableTemplate {
+    private static final String LOADOUT_MODIFICATION_STYLE_CLASS = "modification";
+    private static final String LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS = "mod-image";
+    private static final String LOADOUT_MODIFICATION_LABEL_STYLE_CLASS = "name";
     private DestroyableResizableImageView imageView;
     private DestroyableLabel label;
+    private final LoadoutSet loadoutSet;
     private Loadout loadout;
     private final int position;
     private DestroyablePopOver popOver;
-    private OdysseyLoadoutItem loadoutItem;
 
-    private boolean dragFlag = false;
+    private DestroyableStackPane stackPane;
+    private DestroyableLabel setEquiped;
+    private DestroyableLabel changeMod;
 
-    private ScheduledThreadPoolExecutor executor;
-
-    private ScheduledFuture<?> scheduledFuture;
-
-    OdysseyLoadoutModification(final Loadout loadout, final Integer position, final OdysseyLoadoutItem loadoutItem) {
+    OdysseyLoadoutModification(final LoadoutSet loadoutSet, final Loadout loadout, final Integer position) {
         this.loadout = loadout;
-        this.loadoutItem = loadoutItem;
+        this.loadoutSet = loadoutSet;
         this.position = position;
         initComponents();
-        initEventHandling();
     }
 
     @Override
     public void initComponents() {
-        this.executor = new ScheduledThreadPoolExecutor(1);
-        this.executor.setRemoveOnCancelPolicy(true);
         this.getStyleClass().add(LOADOUT_MODIFICATION_STYLE_CLASS);
         this.imageView = ResizableImageViewBuilder.builder()
                 .withStyleClasses(LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS)
                 .withImage((this.loadout.getModifications()[this.position] != null) ? this.loadout.getModifications()[this.position].getImage() : "/images/modification/empty.png")
                 .build();
+        final boolean hasModification = this.loadout.getModifications()[this.position] != null && this.loadout.getModifications()[this.position].getModification() != null;
         this.label = LabelBuilder.builder()
                 .withStyleClass(LOADOUT_MODIFICATION_LABEL_STYLE_CLASS)
-                .withText((this.loadout.getModifications()[this.position] != null && this.loadout.getModifications()[this.position].getModification() != null) ? this.loadout.getModifications()[this.position].getModification().getLocalizationKey() : "loadout.modification.name.none")
+                .withText(hasModification ? this.loadout.getModifications()[this.position].getModification().getLocalizationKey() : "loadout.modification.name.none")
                 .build();
-        if (!this.loadoutItem.getLoadoutSet().equals(LoadoutSet.CURRENT)) {
-            this.imageView.getStyleClass().add(LOADOUT_MODIFICATION_IMAGE_HOVER_STYLE_CLASS);
-            final EventHandler<MouseEvent> imageDragMouseEventHandler = event -> {
-                if (event.getButton().equals(MouseButton.PRIMARY)) {
-                    this.dragFlag = true;
-                }
-            };
-
-            final EventHandler<MouseEvent> imageClickMouseEventHandler = event -> {
-
-                if (event.getButton().equals(MouseButton.SECONDARY)) {
-                    clear();
-                    return;
-                }
-                if (!this.dragFlag) {
-                    if (event.getClickCount() == 1) {
+        if (!this.loadoutSet.equals(LoadoutSet.CURRENT)) {
+            this.imageView.pseudoClassStateChanged(PseudoClass.getPseudoClass("modifiable"), true);
+            setEquiped = LabelBuilder.builder()
+                    .withStyleClass("control")
+                    .withNonLocalizedText(hasModification && !this.loadout.getModifications()[this.position].isPresent() ? "Set equiped" : "Set Unequiped")
+                    .withOnMouseClicked(_ -> togglePresent())
+                    .withVisibility(hasModification)
+                    .withManaged(hasModification)
+                    .build();
+            changeMod = LabelBuilder.builder()
+                    .withStyleClass("control")
+                    .withNonLocalizedText(hasModification ? "Change mod" : "Select mod")
+                    .withOnMouseClicked(event -> {
+                        if (event.getButton().equals(MouseButton.SECONDARY)) {
+                            clear();
+                            return;
+                        }
                         processSingleClick(event);
-                    } else if (event.getClickCount() > 1 && this.scheduledFuture != null && !this.scheduledFuture.isCancelled() && !this.scheduledFuture.isDone()) {
-                        processMultiClick();
-                    }
-
-                }
-                this.dragFlag = false;
-
-            };
-
-            this.imageView.addEventBinding(this.imageView.onMouseClickedProperty(), imageClickMouseEventHandler);
-            this.imageView.addEventBinding(this.imageView.onMouseDraggedProperty(), imageDragMouseEventHandler);
+                    })
+                    .build();
+            final DestroyableVBox controls = BoxBuilder.builder()
+                    .withStyleClass("controls")
+                    .withNodes(setEquiped, changeMod)
+                    .buildVBox();
+            VBox.setVgrow(setEquiped, Priority.ALWAYS);
+            VBox.setVgrow(changeMod, Priority.ALWAYS);
+            stackPane = StackPaneBuilder.builder()
+                    .withStyleClass("layers")
+                    .withNodes(this.imageView, controls)
+                    .build();
         }
-        VBox.setVgrow(this.imageView, Priority.ALWAYS);
-        this.getNodes().addAll(this.imageView, this.label);
+
+        VBox.setVgrow(stackPane, Priority.ALWAYS);
+        this.getNodes().addAll(stackPane, this.label);
 
     }
 
-    private void processMultiClick() {
-        this.scheduledFuture.cancel(false);
-        setPresent();
-    }
 
     private void processSingleClick(final MouseEvent event) {
-        this.scheduledFuture = this.executor.schedule(() ->
-                        Platform.runLater(() -> {
-                            if (this.popOver != null && this.popOver.isShowing()) {
-                                this.popOver.hide(Duration.ZERO);
-                                this.popOver.setContentNode(null);
-                                this.popOver = null;
-                                return;
-                            }
-                            if (!event.getButton().equals(MouseButton.PRIMARY)) {
-                                return;
-                            }
-                            this.popOver = PopOverBuilder.builder()
-                                    .withStyleClass("loadout-modification-popover")
-                                    .withContent(createModificationOptionsGrid())
-                                    .withDetachable(false)
-                                    .withHeaderAlwaysVisible(false)
-                                    .withArrowIndent(0)
-                                    .withArrowSize(0)
-                                    .withCornerRadius(0)
-                                    .withArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER)
-                                    .build();
-                            this.popOver.show(this, event.getScreenX(), event.getScreenY());
-                        })
-                , 300, TimeUnit.MILLISECONDS);
+        Platform.runLater(() -> {
+            if (this.popOver != null && this.popOver.isShowing()) {
+                this.popOver.hide(Duration.ZERO);
+                this.popOver.setContentNode(null);
+                this.popOver = null;
+                return;
+            }
+            if (!event.getButton().equals(MouseButton.PRIMARY)) {
+                return;
+            }
+            this.popOver = PopOverBuilder.builder()
+                    .withStyleClass("loadout-modification-popover")
+                    .withContent(createModificationOptionsGrid())
+                    .withDetachable(false)
+                    .withHeaderAlwaysVisible(false)
+                    .withArrowIndent(0)
+                    .withArrowSize(0)
+                    .withCornerRadius(0)
+                    .build();
+            final Rectangle2D currentScreen = Screen.getScreensForRectangle(event.getScreenX(), event.getScreenY(), 1, 1).getFirst().getBounds();
+            final double mouseXOnScreen = event.getScreenX() - currentScreen.getMinX();
+            final double mouseYOnScreen = event.getScreenY() - currentScreen.getMinY();
+            if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {
+                popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_TOP);
+            } else if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen > currentScreen.getHeight() / 2) {
+                popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_BOTTOM);
+            } else if (mouseXOnScreen > currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {
+                popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_TOP);
+            } else {
+                popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_BOTTOM);
+            }
+            this.popOver.show(this, event.getScreenX(), event.getScreenY());
+        });
     }
 
-    private void setPresent() {
+    private void togglePresent() {
         if (this.loadout.getModifications()[this.position] != null) {
             this.loadout.getModifications()[this.position].setPresent(!this.loadout.getModifications()[this.position].isPresent());
             this.imageView.setImage(ImageService.getImage(this.loadout.getModifications()[this.position].getImage()));
             final ModificationChange modificationChange = new ModificationChange(this.loadout.getModifications()[this.position], this.loadout.getModifications()[this.position]);
-            EventService.publish(new ModificationChangedEvent(this.loadoutItem, modificationChange));
+            EventService.publish(new ModificationChangedEvent(this.loadout, modificationChange));
         }
+        setEquiped.setText(this.loadout.getModifications()[this.position] != null && !this.loadout.getModifications()[this.position].isPresent() ? "Set equiped" : "Set Unequiped");
     }
 
 
     private DestroyablePane createModificationOptionsGrid() {
         final DestroyableGridPane gridPane = GridPaneBuilder.builder().build();
         final DestroyablePane pane = PaneBuilder.builder().withNode(gridPane).build();
-        gridPane.getStyleClass().add("loadout-modification-grid");
-        gridPane.addBinding(gridPane.hgapProperty(), ScalingHelper.getPixelDoubleBindingFromEm(0.71));
-        gridPane.addBinding(gridPane.vgapProperty(), ScalingHelper.getPixelDoubleBindingFromEm(0.71));
+        gridPane.getStyleClass().add("grid");
 
         if (this.loadout.getEquipment() instanceof Weapon) {
             createGridPaneCell(getHeadshotDamageModification(), 0, 0, gridPane);
@@ -228,8 +227,9 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableE
                 .withStyleClass(LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS)
                 .withImage(modification.getImage(false))
                 .build();
+        modSelectImage.pseudoClassStateChanged(PseudoClass.getPseudoClass("modifiable"), true);
         if (Arrays.stream(this.loadout.getModifications()).map(SelectedModification::getModification).anyMatch(modification::equals)) {
-            modSelectImage.getStyleClass().add(LOADOUT_MODIFICATION_IMAGE_CONSUMED_STYLE_CLASS);
+            modSelectImage.pseudoClassStateChanged(PseudoClass.getPseudoClass("consumed"), true);
         } else {
             modSelectImage.addEventBinding(modSelectImage.onMouseClickedProperty(), getModificationSelectedEventHandler(modification));
         }
@@ -274,49 +274,41 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableE
         final SelectedModification newModification = new SelectedModification(null, false);
         final ModificationChange modificationChange = new ModificationChange(this.loadout.getModifications()[this.position], newModification);
         this.loadout.getModifications()[this.position] = newModification;
-        EventService.publish(new ModificationChangedEvent(this.loadoutItem, modificationChange));
+        EventService.publish(new ModificationChangedEvent(this.loadout, modificationChange));
+        updateControls(false);
     }
 
     private EventHandler<MouseEvent> getModificationSelectedEventHandler(final Modification modification) {
         return e -> {
             this.imageView.setImage(ImageService.getImage(modification.getImage(false)));
             this.label.addBinding(this.label.textProperty(), LocaleService.getStringBinding(modification.getLocalizationKey()));
-            this.label.setWrapText(true);
             final SelectedModification newModification = new SelectedModification(modification, false);
             final ModificationChange modificationChange = new ModificationChange(this.loadout.getModifications()[this.position], newModification);
             this.loadout.getModifications()[this.position] = newModification;
-            EventService.publish(new ModificationChangedEvent(this.loadoutItem, modificationChange));
+            EventService.publish(new ModificationChangedEvent(this.loadout, modificationChange));
             this.popOver.hide(Duration.ZERO);
             this.popOver.setContentNode(null);
             this.popOver = null;
+            updateControls(true);
         };
     }
 
-
-    @Override
-    public void initEventHandling() {
-        register(EventService.addListener(true, this, TerminateApplicationEvent.class, event -> {
-            stopExecutor();
-        }));
-    }
-
-    private void stopExecutor() {
-        if (this.scheduledFuture != null) {
-            this.scheduledFuture.cancel(true);
-        }
-        this.executor.shutdownNow();
+    private void updateControls(boolean equiped) {
+        setEquiped.setVisible(equiped);
+        setEquiped.setManaged(equiped);
+        setEquiped.setText("Set equiped");
+        changeMod.setText(equiped ? "Change mod" : "Select mod");
     }
 
     @Override
     public void destroyInternal() {
         if (this.popOver != null) {
+            this.popOver.destroy();
             this.popOver.setContentNode(null);
             this.popOver = null;
         }
         this.loadout = null;
-        this.loadoutItem = null;
         this.imageView = null;
         this.label = null;
-        stopExecutor();
     }
 }

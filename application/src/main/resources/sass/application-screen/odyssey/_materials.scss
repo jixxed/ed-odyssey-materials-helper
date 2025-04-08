@@ -13,6 +13,10 @@
   .material-card-flow-pane {
     -fx-hgap: 0.25em;
     -fx-vgap: 0.25em;
+    //-fx-fill-height: true;
+    //-fx-fill-width: true;
+    //-fx-fit-to-width: true;
+    //-fx-fit-to-height: true;
   }
 
   .totals-flow-pane {
