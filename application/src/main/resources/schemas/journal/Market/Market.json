@@ -1,220 +1,129 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "type": "object",
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
   "description": "When written: when accessing the commodity market in a station. A separate file Market.json is written to the same folder as the journal, containing full market price info.",
-  "extends": {
-    "$ref": "../_Event.json"
-  },
-  "allOf": [
-    {
-      "$ref": "../_Event.json"
-    }
-  ],
-  "properties": {
-    "MarketID": {
-      "title": "MarketID",
-      "type": "integer",
-      "examples": [
-        3705689344,
-        3226155264,
-        128750927
-      ]
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3705689344, 3226155264, 128750927 ]
     },
-    "StationName": {
-      "title": "StationName",
-      "type": "string",
-      "examples": [
-        "A1A-B2B",
-        "Gann Dock",
-        "$EXT_PANEL_ColonisationShip:#index=1;"
-      ]
+    "StationName" : {
+      "title" : "StationName",
+      "type" : "string",
+      "examples" : [ "A1A-B2B", "Gann Dock", "$EXT_PANEL_ColonisationShip:#index=1;" ]
     },
-    "StationName_Localised": {
-      "title": "StationName_Localised",
-      "type": "string",
-      "examples": [
-        "System Colonisation Ship"
-      ]
+    "StationName_Localised" : {
+      "title" : "StationName_Localised",
+      "type" : "string",
+      "examples" : [ "System Colonisation Ship" ]
     },
-    "StationType": {
-      "title": "StationType",
-      "type": "string",
-      "examples": [
-        "FleetCarrier",
-        "Orbis",
-        "AsteroidBase"
-      ]
+    "StationType" : {
+      "title" : "StationType",
+      "type" : "string",
+      "examples" : [ "FleetCarrier", "Orbis", "AsteroidBase" ]
     },
-    "CarrierDockingAccess": {
-      "title": "CarrierDockingAccess",
-      "type": "string",
-      "examples": [
-        "all",
-        "friends",
-        "squadronfriends",
-        "squadron",
-        "none"
-      ]
+    "CarrierDockingAccess" : {
+      "title" : "CarrierDockingAccess",
+      "type" : "string",
+      "examples" : [ "all", "friends", "squadronfriends", "squadron", "none" ]
     },
-    "StarSystem": {
-      "title": "StarSystem",
-      "type": "string",
-      "examples": [
-        "HIP 20485",
-        "Thereila",
-        "Pleione"
-      ]
+    "StarSystem" : {
+      "title" : "StarSystem",
+      "type" : "string",
+      "examples" : [ "HIP 20485", "Thereila", "Pleione" ]
     },
-    "Items": {
-      "title": "Items",
+    "Items" : {
+      "title" : "Items",
       "description": "When written to Market.json",
-      "type": "array",
+      "type" : "array",
       "default": null,
-      "items": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "title": "id",
-            "type": "integer",
-            "examples": [
-              128049152,
-              128049153,
-              128049154
-            ]
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "title" : "id",
+            "type" : "integer",
+            "examples" : [ 128049152, 128049153, 128049154 ]
           },
-          "Name": {
-            "title": "Name",
-            "type": "string",
-            "examples": [
-              "$platinum_name;",
-              "$palladium_name;",
-              "$gold_name;"
-            ]
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "$platinum_name;", "$palladium_name;", "$gold_name;" ]
           },
-          "Name_Localised": {
-            "title": "Name_Localised",
-            "type": "string",
-            "examples": [
-              "Platinum",
-              "Palladium",
-              "Gold"
-            ]
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "type" : "string",
+            "examples" : [ "Platinum", "Palladium", "Gold" ]
           },
-          "Category": {
-            "title": "Category",
-            "type": "string",
-            "examples": [
-              "$MARKET_category_metals;"
-            ]
+          "Category" : {
+            "title" : "Category",
+            "type" : "string",
+            "examples" : [ "$MARKET_category_metals;" ]
           },
-          "Category_Localised": {
-            "title": "Category_Localised",
-            "type": "string",
-            "examples": [
-              "Metals"
-            ]
+          "Category_Localised" : {
+            "title" : "Category_Localised",
+            "type" : "string",
+            "examples" : [ "Metals" ]
           },
-          "BuyPrice": {
-            "title": "BuyPrice",
-            "type": "integer",
-            "examples": [
-              0
-            ]
+          "BuyPrice" : {
+            "title" : "BuyPrice",
+            "type" : "integer",
+            "examples" : [ 0 ]
           },
-          "SellPrice": {
-            "title": "SellPrice",
-            "type": "integer",
-            "examples": [
-              42220,
-              13999,
-              10831
-            ]
+          "SellPrice" : {
+            "title" : "SellPrice",
+            "type" : "integer",
+            "examples" : [ 42220, 13999, 10831 ]
           },
-          "MeanPrice": {
-            "title": "MeanPrice",
-            "type": "integer",
-            "examples": [
-              19756,
-              13244,
-              9373
-            ]
+          "MeanPrice" : {
+            "title" : "MeanPrice",
+            "type" : "integer",
+            "examples" : [ 19756, 13244, 9373 ]
           },
-          "StockBracket": {
-            "title": "StockBracket",
-            "type": "integer",
-            "examples": [
-              0
-            ]
+          "StockBracket" : {
+            "title" : "StockBracket",
+            "type" : "integer",
+            "examples" : [ 0 ]
           },
-          "DemandBracket": {
-            "title": "DemandBracket",
-            "type": "integer",
-            "examples": [
-              3
-            ]
+          "DemandBracket" : {
+            "title" : "DemandBracket",
+            "type" : "integer",
+            "examples" : [ 3 ]
           },
-          "Stock": {
-            "title": "Stock",
-            "type": "integer",
-            "examples": [
-              0
-            ]
+          "Stock" : {
+            "title" : "Stock",
+            "type" : "integer",
+            "examples" : [ 0 ]
           },
-          "Demand": {
-            "title": "Demand",
-            "type": "integer",
-            "examples": [
-              9182,
-              123183,
-              151492
-            ]
+          "Demand" : {
+            "title" : "Demand",
+            "type" : "integer",
+            "examples" : [ 9182, 123183, 151492 ]
           },
-          "Consumer": {
-            "title": "Consumer",
-            "type": "boolean",
-            "examples": [
-              true
-            ]
+          "Consumer" : {
+            "title" : "Consumer",
+            "type" : "boolean",
+            "examples" : [ true ]
           },
-          "Producer": {
-            "title": "Producer",
-            "type": "boolean",
-            "examples": [
-              false
-            ]
+          "Producer" : {
+            "title" : "Producer",
+            "type" : "boolean",
+            "examples" : [ false ]
           },
-          "Rare": {
-            "title": "Rare",
-            "type": "boolean",
-            "examples": [
-              false
-            ]
+          "Rare" : {
+            "title" : "Rare",
+            "type" : "boolean",
+            "examples" : [ false ]
           }
         },
-        "additionalProperties": false,
-        "required": [
-          "id",
-          "Name",
-          "Category",
-          "BuyPrice",
-          "SellPrice",
-          "MeanPrice",
-          "StockBracket",
-          "DemandBracket",
-          "Stock",
-          "Demand",
-          "Consumer",
-          "Producer",
-          "Rare"
-        ]
+        "additionalProperties" : false,
+        "required" : [ "id", "Name", "Category", "BuyPrice", "SellPrice", "MeanPrice", "StockBracket", "DemandBracket", "Stock", "Demand", "Consumer", "Producer", "Rare" ]
       }
     }
   },
-  "additionalProperties": false,
-  "required": [
-    "MarketID",
-    "StationName",
-    "StationType",
-    "StarSystem"
-  ]
+  "additionalProperties" : false,
+  "required" : [ "MarketID", "StationName", "StationType", "StarSystem" ]
 }

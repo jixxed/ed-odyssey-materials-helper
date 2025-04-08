@@ -587,14 +587,15 @@
                   "Asooraja Netcoms Inc"
                 ]
               },
-              "Stake": {
-                "title": "Stake",
-                "type": "string",
-                "examples": [
-                  "Malchiodi Works",
-                  "Joint Biological Scientific",
-                  "Galactic Energy Exploration"
-                ]
+              "Stake" : {
+                "title" : "Stake",
+                "type" : "string",
+                "examples" : [ "Saavedra Depot", "Sagan Landing", "$EXT_PANEL_ColonisationShip;" ]
+              },
+              "Stake_Localised" : {
+                "title" : "Stake_Localised",
+                "type" : "string",
+                "examples" : [ "System Colonisation Ship" ]
               },
               "WonDays": {
                 "title": "WonDays",
