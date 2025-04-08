@@ -665,4 +665,10 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.service.ships;
     exports nl.jixxed.eliteodysseymaterials.templates.components.slider;
     opens nl.jixxed.eliteodysseymaterials.domain to com.fasterxml.jackson.databind, javafx.fxml, org.controlsfx.controls;
+
+
+    exports nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationContribution;
+    exports nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationConstructionDepot;
+    opens nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationContribution to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationConstructionDepot to com.fasterxml.jackson.databind;
 }

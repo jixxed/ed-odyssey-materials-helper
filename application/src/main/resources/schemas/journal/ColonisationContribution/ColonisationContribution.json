@@ -1,14 +1,24 @@
 {
-  "$schema" : "https://json-schema.org/draft/2020-12/schema",
-  "type" : "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
   "description": "When Written: when contributing materials to a colonisation effort",
-  "extends" : { "$ref": "../_Event.json"},
-  "allOf": [{ "$ref": "../_Event.json"}],
-  "properties" : {
-    "MarketID" : {
-      "title" : "MarketID",
-      "type" : "integer",
-      "examples" : [ 128666762, 129009496, 3705689344 ]
+  "extends": {
+    "$ref": "../_Event.json"
+  },
+  "allOf": [
+    {
+      "$ref": "../_Event.json"
+    }
+  ],
+  "properties": {
+    "MarketID": {
+      "title": "MarketID",
+      "type": "integer",
+      "examples": [
+        128666762,
+        129009496,
+        3705689344
+      ]
     },
     "Contributions": {
       "type": "array",
@@ -18,22 +28,36 @@
           "Name": {
             "title": "Name",
             "type": "string",
-            "examples": ["$Aluminium_name;"]
+            "examples": [
+              "$Aluminium_name;"
+            ]
           },
           "Name_Localised": {
             "title": "Name_Localised",
             "type": "string",
-            "examples": ["Aluminium"]
+            "examples": [
+              "Aluminium"
+            ]
           },
           "Amount": {
             "title": "Amount",
             "type": "integer",
-            "examples": [724]
+            "examples": [
+              724
+            ]
           }
         },
-        "required": ["Name", "Name_Localised", "Amount"]
+        "required": [
+          "Name",
+          "Name_Localised",
+          "Amount"
+        ]
       }
-  },
-  "additionalProperties" : false,
-  "required" : [ "MarketID", "Contributions" ]
+    },
+    "additionalProperties": false,
+    "required": [
+      "MarketID",
+      "Contributions"
+    ]
+  }
 }
