@@ -2939,20 +2939,20 @@ public class Ship {
                     Slot.builder().slotType(SlotType.CORE_FRAME_SHIFT_DRIVE).index(3).slotSize(5).shipModule(FrameShiftDrive.FRAME_SHIFT_DRIVE_OVERCHARGE_5_E).build(),
                     Slot.builder().slotType(SlotType.CORE_LIFE_SUPPORT).index(4).slotSize(4).shipModule(LifeSupport.LIFE_SUPPORT_4_E).build(),
                     Slot.builder().slotType(SlotType.CORE_POWER_DISTRIBUTION).index(5).slotSize(7).shipModule(PowerDistributor.POWER_DISTRIBUTOR_7_E).build(),
-                    Slot.builder().slotType(SlotType.CORE_SENSORS).index(6).slotSize(6).shipModule(Sensors.SENSORS_3_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_SENSORS).index(6).slotSize(6).shipModule(Sensors.SENSORS_6_E).build(),
                     Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(5).shipModule(FuelTank.FUEL_TANK_5_C).build()
             ),
             List.of(
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(6).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(6).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(6).shipModule(ShieldGenerator.SHIELD_GENERATOR_5_E).build(),
                     Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(6).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(5).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
                     Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(5).build(),
                     Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(5).build(),
                     Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(4).build(),
                     Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(3).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(2).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(2).shipModule(Computer.SUPERCRUISE_ASSIST).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(1).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build()
             ));
     public static final List<Ship> ALL = List.of(
             SIDE_WINDER,
