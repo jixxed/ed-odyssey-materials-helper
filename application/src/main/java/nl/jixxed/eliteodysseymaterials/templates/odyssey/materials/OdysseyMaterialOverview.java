@@ -180,7 +180,6 @@ public class OdysseyMaterialOverview extends DestroyableVBox implements Destroya
 
         double availableWidth = 1 + newValue.doubleValue() - ScalingHelper.getPixelDoubleFromEm(2D);
 
-        log.info("Setting flowPane Width to " + availableWidth);
         if (Orientation.VERTICAL.equals(flowPane.getOrientation())) {
             if (!flowPane.getNodes().isEmpty()) {
                 final OdysseyMaterialCard card = flowPane.getNodes().get(0);
