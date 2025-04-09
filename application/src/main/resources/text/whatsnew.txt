@@ -1,3 +1,7 @@
+Version 2.153
+-------------
+Add missing mapping for colonisation journal events
+
 Version 2.152
 -------------
 Add colonisation journal events - no UI changes yet
