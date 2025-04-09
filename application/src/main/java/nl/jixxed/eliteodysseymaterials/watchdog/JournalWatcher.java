@@ -53,38 +53,39 @@ public class JournalWatcher {
                     return;
                 }
                 this.currentlyWatchedFile.ifPresent(fileSwitchedProcessor);
-                this.fileWatcher = new FileWatcher(true).withListener(new FileAdapter() {
-                    @Override
-                    public void onModified(final FileEvent event) {
-                        final File file = event.getFile();
-                        final String currentFilePath = getCurrentFilePath();
-                        final boolean isSameFile = currentFilePath.equals(file.getAbsolutePath());
-                        if (isSameFile || isValidOdysseyJournal(file)) {
-                            if (isSameFile) {
-                                fileModifiedProcessor.accept(file);
-                            } else if (isNewerJournal(file)) {
-                                setCurrentlyWatchedFile(file);
-                                fileSwitchedProcessor.accept(file);
-                                log.info("Switched to journal: " + file.getAbsolutePath());
-                            } else {
-                                log.info("Rejected journal: " + file.getAbsolutePath());
+                this.fileWatcher = new FileWatcher(true)
+                        .withListener(new FileAdapter() {
+                            @Override
+                            public void onModified(final FileEvent event) {
+                                final File file = event.getFile();
+                                final String currentFilePath = getCurrentFilePath();
+                                final boolean isSameFile = currentFilePath.equals(file.getAbsolutePath());
+                                if (isSameFile || isValidOdysseyJournal(file)) {
+                                    if (isSameFile) {
+                                        fileModifiedProcessor.accept(file);
+                                    } else if (isNewerJournal(file)) {
+                                        setCurrentlyWatchedFile(file);
+                                        fileSwitchedProcessor.accept(file);
+                                        log.info("Switched to journal: " + file.getAbsolutePath());
+                                    } else {
+                                        log.info("Rejected journal: " + file.getAbsolutePath());
+                                    }
+                                }
                             }
-                        }
-                    }
 
-                    private boolean isValidOdysseyJournal(final File file) {
-                        return file.isFile()
-                                && file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX)
-                                && file.getName().endsWith(AppConstants.JOURNAL_FILE_SUFFIX)
-                                && isNewerThanTwoYears(file)
-                                && hasFileHeader(file)
-                                && hasCommanderHeader(file)
-                                && isSelectedCommander(file);
-                    }
-                }).watch(folder);
+                            private boolean isValidOdysseyJournal(final File file) {
+                                return file.isFile()
+                                        && file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX)
+                                        && file.getName().endsWith(AppConstants.JOURNAL_FILE_SUFFIX)
+                                        && isNewerThanTwoYears(file)
+                                        && hasFileHeader(file)
+                                        && hasCommanderHeader(file)
+                                        && isSelectedCommander(file);
+                            }
+                        }).watch(folder);
             } catch (Exception ex) {
                 log.error("failed to initialize journal", ex);
-                NotificationService.showError(NotificationType.ERROR,"Error initializing", "Check logs for errors and contact the developer for support");
+                NotificationService.showError(NotificationType.ERROR, "Error initializing", "Check logs for errors and contact the developer for support");
                 EventService.publish(new JournalInitEvent(true));
             }
         });

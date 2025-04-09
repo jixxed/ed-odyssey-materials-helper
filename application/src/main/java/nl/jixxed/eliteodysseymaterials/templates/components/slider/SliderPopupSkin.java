@@ -1,15 +1,16 @@
 package nl.jixxed.eliteodysseymaterials.templates.components.slider;
 
-import javafx.beans.binding.StringBinding;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.control.PopupControl;
 import javafx.scene.control.Skin;
+import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
-public class SliderPopupSkin implements Skin<SliderPopup> {
+public class SliderPopupSkin implements Skin<SliderPopup>, Destroyable {
 
     SliderPopup skinnable;
-    Label valueText;
+    DestroyableLabel valueText;
 
     /**
      * Constructor for all SkinBase instances.
@@ -17,19 +18,10 @@ public class SliderPopupSkin implements Skin<SliderPopup> {
      * @param control The control for which this Skin should attach to.
      */
     public SliderPopupSkin(PopupControl control) {
-        skinnable = (SliderPopup)control;
-        valueText = new Label();
-
-        valueText.textProperty().bind(new StringBinding() {
-            {
-                super.bind(skinnable.valueProperty());
-            }
-
-            @Override
-            protected String computeValue() {
-                return String.format("%.2f", skinnable.getValue());
-            }
-        });
+        skinnable = (SliderPopup) control;
+        valueText = register(LabelBuilder.builder()
+                .build());
+        valueText.addBinding(valueText.textProperty(), skinnable.valueProperty().map(value -> String.format("%.2f", value.doubleValue())));
     }
 
     @Override
@@ -44,6 +36,6 @@ public class SliderPopupSkin implements Skin<SliderPopup> {
 
     @Override
     public void dispose() {
-
+        this.destroy();
     }
 }

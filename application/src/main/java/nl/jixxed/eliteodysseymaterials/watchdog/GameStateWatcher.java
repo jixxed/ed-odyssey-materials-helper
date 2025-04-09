@@ -17,36 +17,38 @@ public class GameStateWatcher {
         findLatestFile(folder, filename);
         this.allowPolling = allowPolling;
         this.watchedFile.ifPresent((f) -> fileProcessor.accept(this.watchedFile));
-        this.fileWatcher = new FileWatcher(allowPolling).withListener(new FileAdapter() {
-            @Override
-            public void onCreated(final FileEvent event) {
-                handleFile(event, fileProcessor);
-            }
+        this.fileWatcher = new FileWatcher(allowPolling)
+                .withListener(new FileAdapter() {
+                    @Override
+                    public void onCreated(final FileEvent event) {
+                        handleFile(event, fileProcessor);
+                    }
 
-            @Override
-            public void onModified(final FileEvent event) {
-                handleFile(event, fileProcessor);
-            }
+                    @Override
+                    public void onModified(final FileEvent event) {
+                        handleFile(event, fileProcessor);
+                    }
 
-            @Override
-            public void onDeleted(FileEvent event) {
-                handleDelete(event, fileProcessor);
-            }
+                    @Override
+                    public void onDeleted(FileEvent event) {
+                        handleDelete(event, fileProcessor);
+                    }
 
-            private void handleFile(final FileEvent event, final Consumer<Optional<File>> fileProcessor) {
-                final File file = event.getFile();
-                if (file.isFile() && file.getName().equals(filename)) {
-                    GameStateWatcher.this.watchedFile = Optional.of(file);
-                    fileProcessor.accept(Optional.of(file));
-                }
-            }
-            private void handleDelete(final FileEvent event, final Consumer<Optional<File>> fileProcessor) {
-                final File file = event.getFile();
-                if (file.getName().equals(filename)) {
-                    fileProcessor.accept(Optional.empty());
-                }
-            }
-        }).watch(folder);
+                    private void handleFile(final FileEvent event, final Consumer<Optional<File>> fileProcessor) {
+                        final File file = event.getFile();
+                        if (file.isFile() && file.getName().equals(filename)) {
+                            GameStateWatcher.this.watchedFile = Optional.of(file);
+                            fileProcessor.accept(Optional.of(file));
+                        }
+                    }
+
+                    private void handleDelete(final FileEvent event, final Consumer<Optional<File>> fileProcessor) {
+                        final File file = event.getFile();
+                        if (file.getName().equals(filename)) {
+                            fileProcessor.accept(Optional.empty());
+                        }
+                    }
+                }).watch(folder);
     }
 
     private void findLatestFile(final File folder, final String filename) {

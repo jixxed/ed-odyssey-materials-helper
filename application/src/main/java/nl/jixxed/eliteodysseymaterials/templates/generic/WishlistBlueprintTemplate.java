@@ -5,11 +5,12 @@ import nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.BlueprintCategory;
 import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 
 import java.util.List;
 import java.util.Map;
 
-public interface WishlistBlueprintTemplate<E extends BlueprintName<E>> {
+public interface WishlistBlueprintTemplate<E extends BlueprintName<E>> extends DestroyableComponent {
 
     Map<Blueprint<E>, Double> getRecipe();
 
@@ -24,10 +25,6 @@ public interface WishlistBlueprintTemplate<E extends BlueprintName<E>> {
     boolean isVisibleBlueprint();
 
     WishlistBlueprint<E> getWishlistRecipe();
-
-    public void remove();
-
-    void onDestroy();
 
     void setVisibility(boolean b);
 

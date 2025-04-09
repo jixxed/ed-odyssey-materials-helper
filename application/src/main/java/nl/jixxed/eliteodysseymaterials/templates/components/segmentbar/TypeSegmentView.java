@@ -1,27 +1,28 @@
 package nl.jixxed.eliteodysseymaterials.templates.components.segmentbar;
 
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableStackPane;
 
 import java.util.Map;
 
-public class TypeSegmentView extends StackPane {
+public class TypeSegmentView extends DestroyableStackPane {
 
     public TypeSegmentView(final TypeSegment segment, final Map<SegmentType, Color> colorMap, final boolean withLabel) {
-        final Label label;
+        final DestroyableLabel label;
         final Color color = colorMap.get(segment.getSegmentType());
         this.setStyle("-fx-background-color: " + toHexString(color) + ";");
         this.setPadding(new Insets(5.0));
         this.setPrefHeight(30.0);
         if (withLabel) {
-            label = LabelBuilder.builder().build();
-            label.textProperty().bind(segment.textProperty());
-            label.getStyleClass().add("horizons-materialcard-amount");
-            this.getChildren().add(label);
-            label.visibleProperty().bind(segment.textProperty().isNotEqualTo("0"));
+            label = LabelBuilder.builder()
+                    .withStyleClass("horizons-materialcard-amount")
+                    .withVisibilityProperty(segment.textProperty().isNotEqualTo("0"))
+                    .build();
+            label.addBinding(label.textProperty(), segment.textProperty());
+            this.getNodes().add(label);
         }
     }
 

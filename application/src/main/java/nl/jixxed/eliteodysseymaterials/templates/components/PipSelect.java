@@ -1,16 +1,19 @@
 package nl.jixxed.eliteodysseymaterials.templates.components;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.layout.HBox;
-import javafx.scene.shape.Rectangle;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+import nl.jixxed.eliteodysseymaterials.builder.RectangleBuilder;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableRectangle;
 
-public class PipSelect extends HBox {
+public class PipSelect extends DestroyableHBox {
 
-    private final Rectangle rectangle1;
-    private final Rectangle rectangle2;
-    private final Rectangle rectangle3;
-    private final Rectangle rectangle4;
+    private final DestroyableRectangle rectangle1;
+    private final DestroyableRectangle rectangle2;
+    private final DestroyableRectangle rectangle3;
+    private final DestroyableRectangle rectangle4;
 
     private static final int MIN_VALUE = 0;
     private static final int MAX_VALUE = 8;
@@ -20,33 +23,38 @@ public class PipSelect extends HBox {
         super();
         this.getStyleClass().add("pipselect");
         this.value = new SimpleIntegerProperty(clamp(value, MIN_VALUE, MAX_VALUE));
-        rectangle1 = getRectangle();
-        rectangle2 = getRectangle();
-        rectangle3 = getRectangle();
-        rectangle4 = getRectangle();
-        this.getChildren().addAll(
+        rectangle1 = getRectangle(_ -> this.decrease());
+        rectangle2 = getRectangle(_ -> this.decrease());
+        rectangle3 = getRectangle(_ -> this.increase());
+        rectangle4 = getRectangle(_ -> this.increase());
+        this.getNodes().addAll(
                 rectangle1,
                 rectangle2,
                 rectangle3,
                 rectangle4
         );
         render();
-        eventHandling();
+        addChangeListener(this.value, (_, _, _) -> render());
     }
 
-    private static Rectangle getRectangle() {
-        final Rectangle rectangle = new Rectangle(ScalingHelper.getPixelDoubleFromEm(1.5), ScalingHelper.getPixelDoubleFromEm(1.5));
-        rectangle.widthProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(1.5));
-        rectangle.heightProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(1.5));
-        rectangle.getStyleClass().add("pipselect-rectangle");
+    private DestroyableRectangle getRectangle(EventHandler<MouseEvent> eventHandler) {
+        final DestroyableRectangle rectangle = RectangleBuilder.builder()
+                .withStyleClass("pipselect-rectangle")
+                .withWidth(ScalingHelper.getPixelDoubleFromEm(1.5))
+                .withHeight(ScalingHelper.getPixelDoubleFromEm(1.5))
+                .withOnMouseClicked(eventHandler)
+                .build();
+        rectangle.addBinding(rectangle.widthProperty(), ScalingHelper.getPixelDoubleBindingFromEm(1.5));
+        rectangle.addBinding(rectangle.heightProperty(), ScalingHelper.getPixelDoubleBindingFromEm(1.5));
         return rectangle;
     }
 
     public int getValue() {
         return value.get();
     }
+
     public void setValue(int value) {
-         this.value.set(value);
+        this.value.set(value);
     }
 
     public SimpleIntegerProperty valueProperty() {
@@ -57,25 +65,9 @@ public class PipSelect extends HBox {
      * Simple utility function which clamps the given value to be strictly
      * between the min and max values.
      */
-    public static int clamp(int value,int min, int max) {
+    public static int clamp(int value, int min, int max) {
         if (value < min) return min;
         return Math.min(value, max);
-    }
-
-    private void eventHandling() {
-        rectangle1.setOnMouseClicked(event -> {
-            this.decrease();
-        });
-        rectangle2.setOnMouseClicked(event -> {
-            this.decrease();
-        });
-        rectangle3.setOnMouseClicked(event -> {
-            this.increase();
-        });
-        rectangle4.setOnMouseClicked(event -> {
-            this.increase();
-        });
-        this.value.addListener((observable, oldValue, newValue) -> render());
     }
 
     private void decrease() {

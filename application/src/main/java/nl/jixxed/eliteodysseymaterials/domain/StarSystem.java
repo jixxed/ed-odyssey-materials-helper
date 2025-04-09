@@ -1,9 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.math.BigInteger;
@@ -11,9 +8,11 @@ import java.math.BigInteger;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Getter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class StarSystem {
     public static final StarSystem SOL = new StarSystem("Sol", 0, 0, 0);
     public static final StarSystem COLONIA = new StarSystem("Colonia", -9530.5, -910.28125, 19808.125);
+    @EqualsAndHashCode.Include
     private final String name;
     @Setter
     private Economy primaryEconomy = Economy.UNKNOWN;
@@ -29,8 +28,11 @@ public class StarSystem {
     private BigInteger population = BigInteger.ZERO;
     @Setter
     private State state = State.NONE;
+    @EqualsAndHashCode.Include
     private final double x;
+    @EqualsAndHashCode.Include
     private final double y;
+    @EqualsAndHashCode.Include
     private final double z;
 
 

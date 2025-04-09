@@ -1,48 +1,40 @@
 package nl.jixxed.eliteodysseymaterials.templates.components;
 
-import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableButton;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.util.function.IntConsumer;
 
-public class ButtonIntField extends HBox implements Template {
+public class ButtonIntField extends DestroyableHBox implements DestroyableTemplate {
     private final IntField intField;
-    private Button minus;
-    private Button plus;
 
     public ButtonIntField(final Integer min, final Integer max, final Integer initial) {
         this.intField = new IntField(min, max, initial);
         initComponents();
-        initEventHandling();
     }
 
     @Override
     public void initComponents() {
-        this.minus = ButtonBuilder.builder()
+        DestroyableButton minus = ButtonBuilder.builder()
                 .withNonLocalizedText("-")
                 .withOnAction(event -> {
                     this.intField.setValue(this.intField.getValue() - 1);
                 })
                 .build();
-        this.plus = ButtonBuilder.builder()
+        DestroyableButton plus = ButtonBuilder.builder()
                 .withNonLocalizedText("+")
                 .withOnAction(event -> {
                     this.intField.setValue(this.intField.getValue() + 1);
                 })
                 .build();
-        this.getChildren().addAll(this.minus, this.intField, this.plus);
-    }
-
-    @Override
-    public void initEventHandling() {
-        //NOOP
+        this.getNodes().addAll(minus, this.intField, plus);
     }
 
     public void addHandlerOnValidChange(final IntConsumer function) {
-        this.intField.textProperty().addListener((observableValue, oldValue, newValue) -> {
-            if (newValue == null || "".equals(newValue) || (this.intField.getMinValue() < 0 && "-".equals(newValue))) {
+        addChangeListener(this.intField.textProperty(), (_, _, newValue) -> {
+            if (newValue == null || newValue.isEmpty() || (this.intField.getMinValue() < 0 && "-".equals(newValue))) {
                 return;
             }
 
