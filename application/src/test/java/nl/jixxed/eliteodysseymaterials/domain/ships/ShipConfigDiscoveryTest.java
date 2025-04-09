@@ -1,0 +1,288 @@
+package nl.jixxed.eliteodysseymaterials.domain.ships;
+
+
+import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.ShieldGenerator;
+import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military.GuardianShieldReinforcementPackage;
+import nl.jixxed.eliteodysseymaterials.domain.ships.utility.ShieldBooster;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats.ModuleProfile;
+import org.junit.jupiter.api.Test;
+
+import java.util.Optional;
+
+import static nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier.*;
+
+@Slf4j
+public class ShipConfigDiscoveryTest {
+    @Test
+    void findShipStats() {
+
+        ShipModule.getBasicModules();
+        final Ship corsair = Ship.CORSAIR;
+        //Fill in MASS and FUEL_RESERVE on the ship
+
+//        findTopSpeed(corsair, 288.0, 0.5);
+//        findBoostSpeed(corsair, 366.0, 0.5);
+//        findPitch(corsair, 26.78, 0.5);
+//        findRoll(corsair, 82.40, 0.5);
+//        findYaw(corsair, 10.30, 0.5);
+//        findShieldStrength(corsair, 264.0, 0.5);
+//        findArmourStrength(corsair, 486.0, 0.5);
+    }
+
+
+    private double calculateMaxSpeed(final Ship ship, final double speed, final ModuleProfile moduleProfile) {
+        return speed * getMassCurveMultiplier(ship.getEmptyMass(), moduleProfile) / 100D;
+    }
+
+    private static Double getMaximumMultiplier(Optional<Slot> thrusters) {
+        return thrusters
+                .map(Slot::getShipModule)
+                .flatMap(shipModule -> Optional.ofNullable((Double) shipModule.getAttributeValueOrDefault(HorizonsModifier.MAXIMUM_MULTIPLIER_SPEED, null)))
+                .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MAXIMUM_MULIPLIER)).orElse(0D));
+    }
+
+    private static Double getOptimalMultiplier(Optional<Slot> thrusters) {
+        return thrusters
+                .map(Slot::getShipModule)
+                .flatMap(shipModule -> Optional.ofNullable((Double) shipModule.getAttributeValueOrDefault(HorizonsModifier.OPTIMAL_MULTIPLIER_SPEED, null)))
+                .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.OPTIMAL_MULTIPLIER)).orElse(0D));
+    }
+
+    private static Double getMinimumMultiplier(Optional<Slot> thrusters) {
+        return thrusters
+                .map(Slot::getShipModule)
+                .flatMap(shipModule -> Optional.ofNullable((Double) shipModule.getAttributeValueOrDefault(HorizonsModifier.MINIMUM_MULTIPLIER_SPEED, null)))
+                .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MINIMUM_MULTIPLIER)).orElse(0D));
+    }
+
+
+    protected void findTopSpeed(Ship ship, Double expected, Double delta) {
+
+        final Optional<Slot> thrusters = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_THRUSTERS)).findFirst().filter(Slot::isOccupied);
+        final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS)).orElse(0D);
+        final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS)).orElse(0D);
+        final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS)).orElse(0D);
+        final Double minimumMultiplier = getMinimumMultiplier(thrusters);
+        final Double optimalMultiplier = getOptimalMultiplier(thrusters);
+        final Double maximumMultiplier = getMaximumMultiplier(thrusters);
+        final ModuleProfile moduleProfile = new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumMultiplier, optimalMultiplier, maximumMultiplier);
+
+        Double value = 0D;
+        Double maxSpeed = 0D;
+        while (!within(maxSpeed, expected, delta) && value < 1000D) {
+            final Double topSpeed = value = value + delta;
+
+            maxSpeed = calculateMaxSpeed(ship, topSpeed, moduleProfile);
+
+        }
+        log.info("Value of {} results in max speed of {} which is within range", value, maxSpeed);
+        var maxSpeed2 = calculateMaxSpeed(ship, value + delta, moduleProfile);
+        var inRange = within(maxSpeed2, expected, delta);
+        log.info("Value of {} results in max speed of {} which is {}within range", value + delta, maxSpeed2, (!inRange) ? "not " : "");
+
+    }
+
+
+    protected void findBoostSpeed(Ship ship, Double expected, Double delta) {
+
+        final Optional<Slot> thrusters = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_THRUSTERS)).findFirst().filter(Slot::isOccupied);
+        final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS)).orElse(0D);
+        final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS)).orElse(0D);
+        final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS)).orElse(0D);
+        final Double minimumMultiplier = getMinimumMultiplier(thrusters);
+        final Double optimalMultiplier = getOptimalMultiplier(thrusters);
+        final Double maximumMultiplier = getMaximumMultiplier(thrusters);
+
+        final ModuleProfile moduleProfile = new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumMultiplier, optimalMultiplier, maximumMultiplier);
+
+        Double value = 0D;
+        Double maxBoost = 0D;
+        while (!within(maxBoost, expected, delta) && value < 1000D) {
+            final Double boostSpeed = value = value + delta;
+
+            maxBoost = calculateMaxSpeed(ship, boostSpeed, moduleProfile);
+
+        }
+        log.info("Value of {} results in max boost of {} which is within range", value, maxBoost);
+        var maxBoost2 = calculateMaxSpeed(ship, value + delta, moduleProfile);
+        var inRange = within(maxBoost2, expected, delta);
+        log.info("Value of {} results in max boost of {} which is {}within range", value + delta, maxBoost2, (!inRange) ? "not " : "");
+    }
+
+    private boolean within(Double value, Double expected, double v) {
+        return value >= expected - v && value <= expected + v;
+    }
+
+    protected double getMassCurveMultiplier(final double mass, final ModuleProfile moduleProfile) {
+        return (
+                moduleProfile.minimumMultiplier() + Math.pow(
+                        Math.min(
+                                1.0,
+                                (moduleProfile.maximumMass() - mass) / (moduleProfile.maximumMass() - moduleProfile.minimumMass())
+                        ),
+                        Math.log(
+                                (moduleProfile.optimalMultiplier() - moduleProfile.minimumMultiplier()) / (moduleProfile.maximumMultiplier() - moduleProfile.minimumMultiplier())
+                        ) / Math.log(
+                                (moduleProfile.maximumMass() - moduleProfile.optimalMass()) / (moduleProfile.maximumMass() - moduleProfile.minimumMass())
+                        )
+                ) * (moduleProfile.maximumMultiplier() - moduleProfile.minimumMultiplier())
+        );
+    }
+
+
+    private double calculatePitchCurrent(Ship ship, double pitchSpeed, ModuleProfile moduleProfile) {
+        return pitchSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100;
+    }
+
+    private double calculateRollCurrent(Ship ship, double rollSpeed, ModuleProfile moduleProfile) {
+        return rollSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100;
+    }
+
+    private double calculateYawCurrent(Ship ship, double yawSpeed, ModuleProfile moduleProfile) {
+        return yawSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100;
+    }
+
+    protected void findPitch(Ship ship, Double expected, Double delta) {
+        final Optional<Slot> thrusters = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_THRUSTERS)).findFirst().filter(Slot::isOccupied);
+        final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS)).orElse(0D);
+        final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS)).orElse(0D);
+        final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS)).orElse(0D);
+        final Double minimumMultiplier = getMinimumMultiplier(thrusters);
+        final Double optimalMultiplier = getOptimalMultiplier(thrusters);
+        final Double maximumMultiplier = getMaximumMultiplier(thrusters);
+        final ModuleProfile moduleProfile = new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumMultiplier, optimalMultiplier, maximumMultiplier);
+
+        Double value = 0D;
+        Double maximumPitch = 0D;
+        while (!within(maximumPitch, expected, delta / 10D) && value < 1000D) {
+            final Double pitchSpeed = value = value + delta;
+
+            maximumPitch = calculatePitchCurrent(ship, pitchSpeed, moduleProfile);
+
+        }
+        log.info("Value of {} results in max pitch of {} which is {}within range", value, maximumPitch, (!within(maximumPitch, expected, delta / 10D)) ? "not " : "");
+        var maximumPitch2 = calculatePitchCurrent(ship, value + delta, moduleProfile);
+        var inRange = within(maximumPitch2, expected, delta / 10D);
+        log.info("Value of {} results in max pitch of {} which is {}within range", value + delta, maximumPitch2, (!inRange) ? "not " : "");
+
+    }
+
+    protected void findRoll(Ship ship, Double expected, Double delta) {
+        final Optional<Slot> thrusters = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_THRUSTERS)).findFirst().filter(Slot::isOccupied);
+        final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS)).orElse(0D);
+        final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS)).orElse(0D);
+        final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS)).orElse(0D);
+        final Double minimumMultiplier = getMinimumMultiplier(thrusters);
+        final Double optimalMultiplier = getOptimalMultiplier(thrusters);
+        final Double maximumMultiplier = getMaximumMultiplier(thrusters);
+        final ModuleProfile moduleProfile = new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumMultiplier, optimalMultiplier, maximumMultiplier);
+
+
+        Double value = 0D;
+        Double maximumRoll = 0D;
+        while (!within(maximumRoll, expected, delta / 10D) && value < 1000D) {
+            final Double rollSpeed = value = value + delta;
+
+            maximumRoll = calculateRollCurrent(ship, rollSpeed, moduleProfile);
+
+        }
+        log.info("Value of {} results in max roll of {} which is {}within range", value, maximumRoll, (!within(maximumRoll, expected, delta / 10D)) ? "not " : "");
+        var maximumRoll2 = calculateRollCurrent(ship, value + delta, moduleProfile);
+        var inRange = within(maximumRoll2, expected, delta / 10D);
+        log.info("Value of {} results in max roll of {} which is {}within range", value + delta, maximumRoll2, (!inRange) ? "not " : "");
+
+    }
+
+    protected void findYaw(Ship ship, Double expected, Double delta) {
+        final Optional<Slot> thrusters = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_THRUSTERS)).findFirst().filter(Slot::isOccupied);
+        final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS)).orElse(0D);
+        final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS)).orElse(0D);
+        final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS)).orElse(0D);
+        final Double minimumMultiplier = getMinimumMultiplier(thrusters);
+        final Double optimalMultiplier = getOptimalMultiplier(thrusters);
+        final Double maximumMultiplier = getMaximumMultiplier(thrusters);
+        final ModuleProfile moduleProfile = new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumMultiplier, optimalMultiplier, maximumMultiplier);
+
+
+        Double value = 0D;
+        Double maximumYaw = 0D;
+        while (!within(maximumYaw, expected, delta / 10D) && value < 1000D) {
+            final Double yawSpeed = value = value + delta;
+
+            maximumYaw = calculateYawCurrent(ship, yawSpeed, moduleProfile);
+
+        }
+        log.info("Value of {} results in max yaw of {} which is {}within range", value, maximumYaw, (!within(maximumYaw, expected, delta / 10D)) ? "not " : "");
+        var maximumYaw2 = calculateYawCurrent(ship, value + delta, moduleProfile);
+        var inRange = within(maximumYaw2, expected, delta / 10D);
+        log.info("Value of {} results in max yaw of {} which is {}within range", value + delta, maximumYaw2, (!inRange) ? "not " : "");
+
+    }
+
+    private void findShieldStrength(Ship ship, Double expected, Double delta) {
+        ship.getOptionalSlots().stream()
+                .filter(slot -> slot.getShipModule() instanceof ShieldGenerator)
+                .findFirst()
+                .ifPresent(shieldGeneratorSlot -> {
+                    ShipModule module = shieldGeneratorSlot.getShipModule();
+                    Double minimumMass = (Double) module.getAttributeValue(SHIELDGEN_MINIMUM_MASS);
+                    Double optimalMass = (Double) module.getAttributeValue(SHIELDGEN_OPTIMAL_MASS);
+                    Double maximumMass = (Double) module.getAttributeValue(SHIELDGEN_MAXIMUM_MASS);
+                    Double minimumStrength = (Double) module.getAttributeValue(SHIELDGEN_MINIMUM_STRENGTH);
+                    Double optimalStrength = (Double) module.getAttributeValue(SHIELDGEN_OPTIMAL_STRENGTH);
+                    Double maximumStrength = (Double) module.getAttributeValue(SHIELDGEN_MAXIMUM_STRENGTH);
+                    double shieldReinforcement = ship.getOptionalSlots().stream()
+                            .filter(slot -> slot.getShipModule() instanceof GuardianShieldReinforcementPackage)
+                            .mapToDouble(slot -> (Double) slot.getShipModule().getAttributeValue(SHIELD_REINFORCEMENT))
+                            .sum();
+                    double totalShieldBoost = ship.getUtilitySlots().stream()
+                            .filter(slot -> slot.getShipModule() instanceof ShieldBooster)
+                            .mapToDouble(slot -> (Double) slot.getShipModule().getAttributeValue(SHIELD_BOOST))
+                            .sum();
+
+                    Double value = 0D;
+                    Double shields = 0D;
+                    while (!within(shields, expected, delta) && value < 1000D) {
+
+                        final Double shieldValue = value = value + delta;
+                        shields = shieldReinforcement + (shieldValue
+                                * getEffectiveShieldBoostMultiplier(totalShieldBoost)
+                                * getMassCurveMultiplier((double) ship.getAttributes().getOrDefault(MASS, 0D), new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumStrength, optimalStrength, maximumStrength)));
+
+                    }
+                    log.info("Value of {} results in shields of {} which is within range", value, shields);
+                    var shields2 = shieldReinforcement + ((value + delta)
+                            * getEffectiveShieldBoostMultiplier(totalShieldBoost)
+                            * getMassCurveMultiplier((double) ship.getAttributes().getOrDefault(MASS, 0D), new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumStrength, optimalStrength, maximumStrength)));
+                    var inRange = within(shields2, expected, delta);
+                    log.info("Value of {} results in shields of {} which is {}within range", value + delta, shields2, (!inRange) ? "not " : "");
+                });
+
+    }
+
+    private double getEffectiveShieldBoostMultiplier(Double shieldbst) {
+        return 1 + shieldbst;
+    }
+
+
+    public void findArmourStrength(Ship ship, Double expected, Double delta) {
+
+        final Optional<ShipModule> armourModule = ship.getCoreSlots().stream().filter(slot -> SlotType.CORE_ARMOUR.equals(slot.getSlotType())).findFirst().map(Slot::getShipModule);
+        double hullBoost = (double) armourModule.map(shipModule -> shipModule.getAttributeValue(HorizonsModifier.HULL_BOOST)).orElse(0D);
+
+        Double value = 0D;
+        Double armour = 0D;
+        while (!within(armour, expected, delta) && value < 1000D) {
+
+            final Double armourValue = value = value + delta;
+            armour = (armourValue * (1D + hullBoost));
+        }
+        log.info("Value of {} results in armour of {} which is within range", value, armour);
+        var armour2 = ((value + delta) * (1D + hullBoost));
+        var inRange = within(armour2, expected, delta);
+        log.info("Value of {} results in armour of {} which is {}within range", value + delta, armour2, (!inRange) ? "not " : "");
+
+    }
+}
