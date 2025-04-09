@@ -91,10 +91,12 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
                     .withStyleClass("layers")
                     .withNodes(this.imageView, controls)
                     .build();
+            VBox.setVgrow(stackPane, Priority.ALWAYS);
+            this.getNodes().addAll(stackPane, this.label);
+        } else {
+            this.getNodes().addAll(this.imageView, this.label);
         }
 
-        VBox.setVgrow(stackPane, Priority.ALWAYS);
-        this.getNodes().addAll(stackPane, this.label);
 
     }
 

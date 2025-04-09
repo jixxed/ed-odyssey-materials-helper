@@ -90,8 +90,8 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
                         Map.of("tab.loadout.create", getCreateHandler(),
                                 "tab.loadout.rename", getRenameHandler(),
                                 "tab.loadout.delete", getDeleteHandler(),
-                                "tab.loadout.clone", getCopyHandler(),
-                                "tab.loadout.copy", getCloneHandler()),
+                                "tab.loadout.clone", getCloneHandler(),
+                                "tab.loadout.copy", getCopyHandler()),
                         Map.of(
                                 "tab.loadout.delete", this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isEqualTo(LoadoutSet.CURRENT),
                                 "tab.loadout.copy", this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isEqualTo(LoadoutSet.CURRENT),
