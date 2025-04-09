@@ -1,0 +1,6 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "description": "When Written: When a system is claimed for colonisation by paying for the claim.",
+  "extends": {"$ref": "../_Event.json"}
+}

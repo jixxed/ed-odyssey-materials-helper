@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "description": "When Written: when a colonisation claim is released",
+  "extends": {
+    "$ref": "../_Event.json"
+  },
+  "allOf": [
+    {
+      "$ref": "../_Event.json"
+    }
+  ],
+  "properties": {
+    "StarSystem" : {
+      "title" : "StarSystem",
+      "type" : "string",
+      "examples" : [ "Celaeno", "Panoi", "HIP 20485" ]
+    },
+    "SystemAddress" : {
+      "title" : "SystemAddress",
+      "type" : "integer",
+      "examples" : [ 198875014308, 6955800204002, 3657265287866 ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "StarSystem",
+    "SystemAddress"
+  ]
+}

@@ -669,6 +669,12 @@ module nl.jixxed.eliteodysseymaterials {
 
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationContribution;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationConstructionDepot;
+    exports nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationSystemClaim;
+    exports nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationSystemClaimRelease;
+    exports nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationBeaconDeployed;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationContribution to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationConstructionDepot to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationSystemClaim to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationSystemClaimRelease to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationBeaconDeployed to com.fasterxml.jackson.databind;
 }
