@@ -117,8 +117,11 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.CodexEntry;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.CollectCargo;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.CollectItems;
+    exports nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationBeaconDeployed;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationConstructionDepot;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationContribution;
+    exports nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationSystemClaim;
+    exports nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationSystemClaimRelease;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.Commander;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.CommitCrime;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.CommunityGoal;
@@ -437,8 +440,11 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.CodexEntry to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.CollectCargo to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.CollectItems to com.fasterxml.jackson.databind;
-    opens nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationContribution to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationBeaconDeployed to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationConstructionDepot to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationContribution to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationSystemClaim to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationSystemClaimRelease to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.Commander to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.CommitCrime to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.CommunityGoal to com.fasterxml.jackson.databind;

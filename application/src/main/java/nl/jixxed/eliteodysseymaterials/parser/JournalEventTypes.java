@@ -47,8 +47,11 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.CockpitBreached.CockpitBr
 import nl.jixxed.eliteodysseymaterials.schemas.journal.CodexEntry.CodexEntry;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.CollectCargo.CollectCargo;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.CollectItems.CollectItems;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationBeaconDeployed.ColonisationBeaconDeployed;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationConstructionDepot.ColonisationConstructionDepot;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationContribution.ColonisationContribution;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationSystemClaim.ColonisationSystemClaim;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationSystemClaimRelease.ColonisationSystemClaimRelease;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Commander.Commander;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.CommitCrime.CommitCrime;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.CommunityGoal.CommunityGoal;
@@ -533,6 +536,9 @@ public class JournalEventTypes {
             Map.entry("DeliverPowerMicroResources", DeliverPowerMicroResources.class),
             Map.entry("HoloscreenHacked", HoloscreenHacked.class),
             Map.entry("ColonisationContribution", ColonisationContribution.class),
-            Map.entry("ColonisationConstructionDepot", ColonisationConstructionDepot.class)
+            Map.entry("ColonisationConstructionDepot", ColonisationConstructionDepot.class),
+            Map.entry("ColonisationSystemClaim", ColonisationSystemClaim.class),
+            Map.entry("ColonisationSystemClaimRelease", ColonisationSystemClaimRelease.class),
+            Map.entry("ColonisationBeaconDeployed", ColonisationBeaconDeployed.class)
     );
 }
