@@ -2608,7 +2608,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.PITCH_SPEED, 26.0),//unittest
                     Map.entry(HorizonsModifier.YAW_SPEED, 10.0),//unittest
                     Map.entry(HorizonsModifier.ROLL_SPEED, 80.0),//unittest
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 14.0),//ingame testing
+                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 23.0),//ingame testing
                     Map.entry(HorizonsModifier.HEAT_CAPACITY, 230.0),//ingame testing
                     Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 1.62),//ingame testing
                     Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 52.05),//ingame testing
@@ -2617,18 +2617,18 @@ public class Ship {
                     Map.entry(HorizonsModifier.MASS_LOCK, 7.0)//ingame testing
             ),
             List.of(
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1490).y(504).index(0).slotSize(3).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1490).y(504).index(1).slotSize(3).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1313).y(283).index(2).slotSize(3).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(875).y(378).index(3).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1329).y(502).index(4).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1070).y(784).index(5).slotSize(2).build()
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1055).y(504).index(0).slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(4).x(786).y(429).index(1).slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1144).y(431).index(2).slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1005).y(553).index(3).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(3).x(879).y(549).index(4).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(800).y(785).index(5).slotSize(2).build()
             ),
             List.of(
-                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1193).y(792).index(0).slotSize(0).build(),
-                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(691).y(395).index(1).slotSize(0).build(),
-                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1096).y(225).index(2).slotSize(0).build(),
-                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(661).y(635).index(3).slotSize(0).build()
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1110).y(198).index(0).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(550).y(745).index(1).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(722).y(758).index(2).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(4).x(1209).y(758).index(3).slotSize(0).build()
             ),
             List.of(
                     Slot.builder().slotType(SlotType.CORE_ARMOUR).index(0).slotSize(1).shipModule(Armour.CORSAIR_ARMOUR_GRADE_1).build(),
