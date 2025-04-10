@@ -1,3 +1,12 @@
+Version 2.155
+-------------
+Fix colonisation journal events
+
+Version 2.154
+-------------
+Complete corsair stats, images still missing
+Add support for more colonisation journal events
+
 Version 2.153
 -------------
 Add missing mapping for colonisation journal events

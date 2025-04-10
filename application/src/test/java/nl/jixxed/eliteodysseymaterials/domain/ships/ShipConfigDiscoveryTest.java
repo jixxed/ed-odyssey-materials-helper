@@ -29,6 +29,39 @@ public class ShipConfigDiscoveryTest {
 //        findYaw(corsair, 10.30, 0.5);
 //        findShieldStrength(corsair, 264.0, 0.5);
 //        findArmourStrength(corsair, 486.0, 0.5);
+// Requires TOP_SPEED to be set
+//        findMinThrust(corsair, 185.0, 0.5);
+//        findMinPitch(corsair, 14.12, 0.5D);
+
+    }
+
+    private double calculatePitchMinimum(Ship ship, double pitchSpeed, ModuleProfile moduleProfile) {
+        return pitchSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo() + ship.getMaxFuelReserve(), moduleProfile) / 100;
+    }
+
+    protected void findMinPitch(Ship ship, Double expected, Double delta) {
+        final Optional<Slot> thrusters = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_THRUSTERS)).findFirst().filter(Slot::isOccupied);
+        final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS)).orElse(0D);
+        final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS)).orElse(0D);
+        final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS)).orElse(0D);
+        final Double minimumMultiplier = getMinimumMultiplier(thrusters);
+        final Double optimalMultiplier = getOptimalMultiplier(thrusters);
+        final Double maximumMultiplier = getMaximumMultiplier(thrusters);
+        final ModuleProfile moduleProfile = new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumMultiplier, optimalMultiplier, maximumMultiplier);
+
+        Double value = 0D;
+        Double minimumPitch = 0D;
+        while (!within(minimumPitch, expected, delta / 10D) && value < 1000D) {
+            final Double pitchSpeed = value = value + delta;
+
+            minimumPitch = calculatePitchMinimum(ship, pitchSpeed, moduleProfile);
+
+        }
+        log.info("Value of {} results in max pitch of {} which is {}within range", value, minimumPitch, (!within(minimumPitch, expected, delta / 10D)) ? "not " : "");
+        var minimumPitch2 = calculatePitchMinimum(ship, value + delta, moduleProfile);
+        var inRange = within(minimumPitch2, expected, delta / 10D);
+        log.info("Value of {} results in max pitch of {} which is {}within range", value + delta, minimumPitch2, (!inRange) ? "not " : "");
+
     }
 
 
@@ -57,6 +90,36 @@ public class ShipConfigDiscoveryTest {
                 .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MINIMUM_MULTIPLIER)).orElse(0D));
     }
 
+    private double calculateMinSpeed(Ship ship, Double speed, Double minimumThrust, ModuleProfile moduleProfile) {
+        return speed * (getMassCurveMultiplier(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo() + ship.getMaxFuelReserve(), moduleProfile) / 100D) * (minimumThrust / 100D);
+    }
+
+    protected void findMinThrust(Ship ship, Double expected, Double delta) {
+
+        final Optional<Slot> thrusters = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_THRUSTERS)).findFirst().filter(Slot::isOccupied);
+        final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS)).orElse(0D);
+        final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS)).orElse(0D);
+        final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS)).orElse(0D);
+        final Double minimumMultiplier = getMinimumMultiplier(thrusters);
+        final Double optimalMultiplier = getOptimalMultiplier(thrusters);
+        final Double maximumMultiplier = getMaximumMultiplier(thrusters);
+        final ModuleProfile moduleProfile = new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumMultiplier, optimalMultiplier, maximumMultiplier);
+
+        final Double topSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.TOP_SPEED, 0.0D);
+        Double value = 0D;
+        Double thrust = 0D;
+        while (!within(thrust, expected, delta) && value < 1000D) {
+            final Double minThrust = value = value + delta;
+
+            thrust = calculateMinSpeed(ship, topSpeed, minThrust, moduleProfile);
+
+        }
+        log.info("Value of {} results in min thrust of {} which is within range", value, thrust);
+        var thrust2 = calculateMinSpeed(ship, topSpeed, value + delta, moduleProfile);
+        var inRange = within(thrust2, expected, delta);
+        log.info("Value of {} results in min thrust of {} which is {}within range", value + delta, thrust2, (!inRange) ? "not " : "");
+
+    }
 
     protected void findTopSpeed(Ship ship, Double expected, Double delta) {
 
