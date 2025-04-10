@@ -2602,19 +2602,19 @@ public class Ship {
                     Map.entry(HorizonsModifier.SHIELDS, 235.0),//unittest
                     Map.entry(HorizonsModifier.ARMOUR, 270.0),//unittest
                     Map.entry(HorizonsModifier.MASS, 265.0),//from the buy screen
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, Double.NaN),//ingame testing
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, Double.NaN),//ingame testing
-                    Map.entry(HorizonsModifier.BOOST_COST, Double.NaN),//ingame testing
+                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 64.0),//ingame testing
+                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 5.0),//ingame testing
+                    Map.entry(HorizonsModifier.BOOST_COST, 19.0),//ingame testing
                     Map.entry(HorizonsModifier.PITCH_SPEED, 26.0),//unittest
                     Map.entry(HorizonsModifier.YAW_SPEED, 10.0),//unittest
                     Map.entry(HorizonsModifier.ROLL_SPEED, 80.0),//unittest
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, Double.NaN),//ingame testing
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, Double.NaN),//ingame testing
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, Double.NaN),//ingame testing
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, Double.NaN),//ingame testing
+                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 14.0),//ingame testing
+                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 230.0),//ingame testing
+                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 1.62),//ingame testing
+                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 52.05),//ingame testing
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.41),//from journal
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 65.0),//side panel (Armour Rating)
-                    Map.entry(HorizonsModifier.MASS_LOCK, 8.0)//ingame testing
+                    Map.entry(HorizonsModifier.MASS_LOCK, 7.0)//ingame testing
             ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1490).y(504).index(0).slotSize(3).build(),
