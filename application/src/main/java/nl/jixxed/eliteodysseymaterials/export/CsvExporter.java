@@ -50,7 +50,7 @@ public class CsvExporter {
 
     public static String createCsvWishlist(final Map<Raw, WishlistMaterial> wishlistNeededRaw, final Map<Encoded, WishlistMaterial> wishlistNeededEncoded, final Map<Manufactured, WishlistMaterial> wishlistNeededManufactured, final Map<Commodity, WishlistMaterial> wishlistNeededCommodity) {
         final StringBuilder textBuilder = new StringBuilder();
-        textBuilder.append(String.join(",", "Material", "Available S", "Available FC", "Available Total", "Required", "Need"));
+        textBuilder.append(String.join(",", "Material", "Available S", "Available FC", "Available Total", "Required minimum", "Required current", "Required maximum", "Need"));
         textBuilder.append("\n");
         ((List<Map<HorizonsMaterial, WishlistMaterial>>) (List<?>) List.of(wishlistNeededRaw, wishlistNeededEncoded, wishlistNeededManufactured, wishlistNeededCommodity)).forEach(wishlistNeededMaterials ->
                 wishlistNeededMaterials.entrySet().stream()
@@ -70,7 +70,7 @@ public class CsvExporter {
                                         StorageService.getCommodityCount((Commodity) item.getKey(), StoragePool.SHIP) + StorageService.getCommodityCount((Commodity) item.getKey(), StoragePool.FLEETCARRIER);
                                 default -> 0;
                             };
-                            textBuilder.append(String.join(",", materialName, String.valueOf(ship), String.valueOf(fc), String.valueOf(total), String.valueOf(item.getValue()), String.valueOf(Math.max(0, item.getValue().getRequired() - ship))));
+                            textBuilder.append(String.join(",", materialName, String.valueOf(ship), String.valueOf(fc), String.valueOf(total), String.valueOf(item.getValue().getMinimum()), String.valueOf(item.getValue().getRequired()), String.valueOf(item.getValue().getMaximum()), String.valueOf(Math.max(0, item.getValue().getRequired() - ship))));
                             textBuilder.append("\n");
                         })
         );
