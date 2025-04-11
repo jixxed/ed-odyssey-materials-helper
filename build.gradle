@@ -119,7 +119,7 @@ ext {
     version_junit_jupiter = "5.12.1"
     version_junit_platform = "1.12.1"
     version_javafx = "23.0.1"
-    version_controlsfx = "11.2.1"
+    version_controlsfx = "11.2.2"
     version_scribejava = "8.3.3"
     version_sparsebitset = "1.3"
     version_apache_poi = "5.4.0"
