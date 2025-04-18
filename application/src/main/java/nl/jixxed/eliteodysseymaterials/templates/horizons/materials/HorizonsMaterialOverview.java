@@ -11,6 +11,7 @@ import nl.jixxed.eliteodysseymaterials.constants.SpawnConstants;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsMaterialsSearch;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsMaterialSearchEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
@@ -34,6 +35,8 @@ public class HorizonsMaterialOverview extends DestroyableVBox implements Destroy
     private DestroyableSeparator manufacturedLine;
 
     HorizonsMaterialOverview() {
+        final HorizonsMaterialsShow filter = HorizonsMaterialsShow.valueOf(PreferencesService.getPreference("search.horizons.materials.filter", "ALL"));
+        currentSearch.setMaterialsShow(filter);
         initComponents();
         initEventHandling();
     }

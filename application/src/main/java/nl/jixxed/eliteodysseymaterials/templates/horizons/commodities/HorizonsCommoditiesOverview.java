@@ -12,6 +12,7 @@ import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.CommoditiesSearch;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsCommoditiesSearchEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
@@ -30,6 +31,11 @@ public class HorizonsCommoditiesOverview extends DestroyableVBox implements Dest
     private List<DestroyableFlowPane> flows = new ArrayList<>();
 
     HorizonsCommoditiesOverview() {
+        final HorizonsCommoditiesSort materialSort = HorizonsCommoditiesSort.valueOf(PreferencesService.getPreference("search.commodities.sort", "ALPHABETICAL"));
+        final HorizonsCommoditiesShow filter = HorizonsCommoditiesShow.valueOf(PreferencesService.getPreference("search.commodities.filter", "ALL"));
+        currentSearch.setCommoditiesShow(filter);
+        currentSearch.setCommoditiesSort(materialSort);
+
         initComponents();
         initEventHandling();
     }

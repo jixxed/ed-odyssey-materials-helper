@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.DoubleConsumer;
 import java.util.stream.Collectors;
 
-public class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHBox implements WishlistBlueprintTemplate<HorizonsBlueprintName>, DestroyableEventTemplate {
+public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHBox implements WishlistBlueprintTemplate<HorizonsBlueprintName>, DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String VISIBLE_STYLE_CLASS = "visible";
     private static final String WISHLIST_VISIBLE_ICON_STYLE_CLASS = "wishlist-visible-icon";
@@ -90,15 +90,15 @@ public class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHBox imp
                 .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getPercentageToComplete().keySet().stream().findFirst().orElse(HorizonsBlueprintGrade.GRADE_1)))))
                 .withHoverProperty((observable, oldValue, newValue) -> {
 
-
-                    this.wishlistIngredients.forEach(wishlistIngredient -> {
-                        Integer requiredAmount = (this.blueprints.entrySet().stream().map(entry -> (int) Math.ceil(entry.getValue() * ((HorizonsBlueprint) entry.getKey()).getRequiredAmount(wishlistIngredient.getHorizonsMaterial(), engineer))).reduce(0, Integer::sum));
-                        Integer minimumAmount = (this.blueprints.entrySet().stream().map(entry -> (int) Math.ceil(entry.getValue() * ((HorizonsBlueprint) entry.getKey()).getMinimumAmount(wishlistIngredient.getHorizonsMaterial()))).reduce(0, Integer::sum));
-                        Integer maximumAmount = (this.blueprints.entrySet().stream().map(entry -> (int) Math.ceil(entry.getValue() * ((HorizonsBlueprint) entry.getKey()).getMaximumAmount(wishlistIngredient.getHorizonsMaterial()))).reduce(0, Integer::sum));
-                        wishlistIngredient.highlight(newValue, new WishlistMaterial(minimumAmount, requiredAmount, maximumAmount));
-                    });
-                    this.otherIngredients.forEach(wishlistIngredient -> wishlistIngredient.lowlight(newValue));
-                    this.highlight(newValue);
+                    EventService.publish(new HorizonsWishlistHighlightEvent(this.wishlistBlueprint, newValue));
+//                    this.wishlistIngredients.forEach(wishlistIngredient -> {
+//                        Integer requiredAmount = (this.blueprints.entrySet().stream().map(entry -> (int) Math.ceil(entry.getValue() * ((HorizonsBlueprint) entry.getKey()).getRequiredAmount(wishlistIngredient.getHorizonsMaterial(), engineer))).reduce(0, Integer::sum));
+//                        Integer minimumAmount = (this.blueprints.entrySet().stream().map(entry -> (int) Math.ceil(entry.getValue() * ((HorizonsBlueprint) entry.getKey()).getMinimumAmount(wishlistIngredient.getHorizonsMaterial()))).reduce(0, Integer::sum));
+//                        Integer maximumAmount = (this.blueprints.entrySet().stream().map(entry -> (int) Math.ceil(entry.getValue() * ((HorizonsBlueprint) entry.getKey()).getMaximumAmount(wishlistIngredient.getHorizonsMaterial()))).reduce(0, Integer::sum));
+//                        wishlistIngredient.highlight(newValue, new WishlistMaterial(minimumAmount, requiredAmount, maximumAmount));
+//                    });
+//                    this.otherIngredients.forEach(wishlistIngredient -> wishlistIngredient.lowlight(newValue));
+//                    this.highlight(newValue);
                 })
                 .build();
         final DestroyableAnchorPane anchorPane = AnchorPaneBuilder.builder().withNode(this.wishlistRecipeName).build();

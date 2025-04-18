@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.service;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
@@ -27,6 +28,129 @@ public class PathService {
 
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
+    private static StarSystem lastHorizonsStarSystem;
+    private static List<HorizonsWishlistBlueprint> lastHorizonsWishlistBlueprints;
+    private static List<PathItem<HorizonsBlueprintName>> lastHorizonsCalculation;
+
+    public static List<PathItem<HorizonsBlueprintName>> calculateHorizonsShortestPath2(final List<HorizonsWishlistBlueprint> wishlistBlueprints) {
+        if (LocationService.getCurrentStarSystem().equals(lastHorizonsStarSystem) && wishlistBlueprints.equals(lastHorizonsWishlistBlueprints)) {
+            log.info("Shortest path horizons cache hit");
+            return lastHorizonsCalculation;
+        }
+        final LinkedHashSet<HorizonsEngineeringBlueprint> distinctRecipes = wishlistBlueprints.stream()
+                .map(WishlistBlueprint::getBlueprint)
+                .map(HorizonsEngineeringBlueprint.class::cast)
+                .filter(distinctByKey2(PathService::getKey2))
+                .sorted(Comparator.comparing(HorizonsEngineeringBlueprint::hasSingleEngineerPerRegion)
+                        .thenComparing(horizonsEngineeringBlueprint -> (HorizonsBlueprintName) horizonsEngineeringBlueprint.getBlueprintName())
+                        .thenComparing(horizonsEngineeringBlueprint -> horizonsEngineeringBlueprint.getHorizonsBlueprintGrade().getGrade()).reversed())
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+
+        lastHorizonsStarSystem = LocationService.getCurrentStarSystem();
+        lastHorizonsWishlistBlueprints = wishlistBlueprints;
+        lastHorizonsCalculation = calculateShortestPath2(wishlistBlueprints, distinctRecipes, false);
+        return lastHorizonsCalculation;
+    }
+
+    @SuppressWarnings("java:S1640")
+    private static <T extends BlueprintName<T>> List<PathItem<T>> calculateShortestPath2(final List<? extends WishlistBlueprint<T>> wishlistBlueprints, final LinkedHashSet<? extends EngineeringBlueprint<T>> distinctRecipes, final boolean isOdyssey) {
+        final List<PathItem<T>> sortedPathItems = new ArrayList<>();
+        final List<PathItem<T>> pathItems = new ArrayList<>();
+        final Map<Engineer, Integer> engineerPreference = new HashMap<>();
+        StarSystem currentStarSystem = LocationService.getCurrentStarSystem();
+        final StarSystem finalCurrentStarSystem1 = currentStarSystem;
+        final Set<Engineer> allowedEngineers = Arrays.stream(Engineer.values())
+                .filter(engineer -> engineer.getDistance(finalCurrentStarSystem1) < MAX_ENGINEER_DISTANCE)
+                .filter(engineer -> (isOdyssey) ? APPLICATION_STATE.isEngineerUnlocked(engineer) : APPLICATION_STATE.isEngineerUnlockedExact(engineer))
+                .collect(Collectors.toSet());
+        allowedEngineers.add(Engineer.REMOTE_WORKSHOP);
+        distinctRecipes.forEach(recipe -> {
+                    final Engineer closestEngineer = recipe.getEngineers().stream().min(Comparator.comparing(engineer -> engineer.getDistance(finalCurrentStarSystem1))).orElseThrow(IllegalArgumentException::new);
+                    recipe.getEngineers().stream()
+                            .filter(allowedEngineers::contains)
+                            .forEach(engineer -> {
+                                int value = 1;
+                                if (engineer.getDistance(finalCurrentStarSystem1).equals(0D)) {
+                                    value = 100;
+                                } else if (closestEngineer == engineer) {
+                                    value = 2;
+                                }
+                                engineerPreference.put(engineer, value + engineerPreference.getOrDefault(engineer, 0));
+                            });
+                }
+        );
+//        distinctRecipes.forEach(recipe -> log.debug(recipe.toString()));
+        Stream<EngineeringBlueprint<?>> stream = (isOdyssey ?
+                distinctRecipes.stream()
+                        .map(ModuleBlueprint.class::cast)
+                        .sorted(Comparator
+                                .comparing(ModuleBlueprint::hasSingleEngineerPerRegion)
+                                .thenComparing(bp -> bp.getEngineers().stream().filter(allowedEngineers::contains).max(Comparator.comparingInt(engineerPreference::get)).map(engineerPreference::get).orElse(0))
+                                .thenComparing((ModuleBlueprint moduleBlueprint) -> (OdysseyBlueprintName) moduleBlueprint.getBlueprintName())) :
+                distinctRecipes.stream()
+                        .map(HorizonsEngineeringBlueprint.class::cast)
+                        .sorted(Comparator
+                                .comparing(HorizonsEngineeringBlueprint::hasSingleEngineerPerRegion)
+                                .thenComparing(bp -> bp.getEngineers().stream().filter(allowedEngineers::contains).max(Comparator.comparingInt(engineerPreference::get)).map(engineerPreference::get).orElse(0))
+                                .thenComparing(horizonsEngineeringBlueprint -> (HorizonsBlueprintName) horizonsEngineeringBlueprint.getBlueprintName())
+                                .thenComparing(horizonsEngineeringBlueprint -> horizonsEngineeringBlueprint.getHorizonsBlueprintGrade().getGrade()).reversed()))
+                .map(EngineeringBlueprint.class::cast);
+        stream.filter(recipe -> recipe.getEngineers().stream().anyMatch(engineerPreference::containsKey))
+                .forEachOrdered(recipe -> {
+                    if (recipe.getEngineers().stream().anyMatch(engineer -> engineer.getDistance(finalCurrentStarSystem1).equals(0D)) || pathItems.stream().noneMatch(pathItem -> pathItem.getRecipes().containsKey(recipe))) {
+                        final List<Engineer> engineers = mostPreferredEngineers(engineerPreference, recipe, allowedEngineers);
+                        //prefer a previously selected engineer, otherwise first in the list
+                        final Engineer selectedEngineer = engineers.stream()
+                                .filter(engineer -> pathItems.stream().anyMatch(pathItem -> pathItem.getEngineers().contains(engineer)) || engineer.getDistance(finalCurrentStarSystem1).equals(0D))
+                                .min(Comparator.comparing(engineer -> engineer.getDistance(finalCurrentStarSystem1)))
+                                .orElse(engineers.getFirst());
+                        recipe.getEngineers().stream()
+                                .filter(engineer -> engineer != selectedEngineer)
+                                .forEach(engineer -> {
+                                    if (engineerPreference.containsKey(engineer)) {
+                                        engineerPreference.put(engineer, engineerPreference.get(engineer) - 1);
+                                    }
+                                });
+                        final List<? extends WishlistBlueprint<T>> blueprintsForEngineer = getBlueprintsForEngineer2(wishlistBlueprints, pathItems, selectedEngineer, allowedEngineers);
+                        if (!blueprintsForEngineer.isEmpty()) {
+                            final PathItem<T> e = new PathItem<>(engineers, blueprintsForEngineer.stream().map(WishlistBlueprint::getBlueprint).toList());
+                            pathItems.add(e);
+                        }
+                    }
+                });
+
+
+        final int systemsToVisit = pathItems.size();
+        for (int i = 0; i < systemsToVisit; i++) {
+            final StarSystem finalCurrentStarSystem = currentStarSystem;
+            if (pathItems.size() > 1) {
+                final PathItem<T> closest = pathItems.stream()
+                        .min(Comparator.comparingDouble(pathItem -> pathItem.getAndSetDistanceToClosestEngineer(finalCurrentStarSystem)))
+                        .orElseThrow(IllegalArgumentException::new);
+                sortedPathItems.add(closest);
+                currentStarSystem = closest.getEngineer().getStarSystem();
+                pathItems.remove(closest);
+            } else if (pathItems.size() == 1) {
+                final PathItem<T> closest = pathItems.get(0);
+                closest.getAndSetDistanceToClosestEngineer(currentStarSystem);
+                sortedPathItems.add(closest);
+            }
+        }
+        optimizePathItems(sortedPathItems);
+        tryOptimizePath(sortedPathItems);
+        final List<? extends WishlistBlueprint<T>> unCraftable = wishlistBlueprints.stream()
+                .filter(WishlistBlueprint::isVisible)
+                .filter(bp -> bp.getBlueprint() instanceof EngineeringBlueprint<T>)
+                .filter(bp -> ((EngineeringBlueprint<T>) bp.getBlueprint()).getEngineers().stream().noneMatch(engineerPreference::containsKey))
+                .toList();
+        if (!unCraftable.isEmpty()) {
+            final PathItem<T> pathItem = new PathItem<>(List.of(Engineer.UNKNOWN), unCraftable.stream().map(WishlistBlueprint::getBlueprint).toList());
+            pathItem.setEngineer(Engineer.UNKNOWN);
+            pathItem.setDistance(0.0);
+            sortedPathItems.add(pathItem);
+        }
+        return sortedPathItems;
+    }
 
     public static List<PathItem<HorizonsBlueprintName>> calculateHorizonsShortestPath(final List<WishlistBlueprintTemplate<HorizonsBlueprintName>> wishlistBlueprints) {
         final LinkedHashSet<HorizonsEngineeringBlueprint> distinctRecipes = wishlistBlueprints.stream()
@@ -41,6 +165,15 @@ public class PathService {
                 .collect(Collectors.toCollection(LinkedHashSet::new));
 
         return calculateShortestPath(wishlistBlueprints, distinctRecipes, false);
+    }
+
+    private static Predicate<HorizonsEngineeringBlueprint> distinctByKey2(final Function<HorizonsEngineeringBlueprint, Object> keyExtractor) {
+        final Set<Object> seen = ConcurrentHashMap.newKeySet();
+        return t -> seen.add(keyExtractor.apply(t));
+    }
+
+    private static Function<HorizonsEngineeringBlueprint, Object> getKey2(final HorizonsEngineeringBlueprint blueprint) {
+        return bp -> blueprint.getBlueprintName().toString() + blueprint.getHorizonsBlueprintType().toString();
     }
 
     private static Predicate<WishlistBlueprintTemplate<HorizonsBlueprintName>> distinctByKey(final Function<WishlistBlueprintTemplate<HorizonsBlueprintName>, Object> keyExtractor) {
@@ -130,7 +263,7 @@ public class PathService {
                                 });
                         final List<? extends WishlistBlueprintTemplate<T>> blueprintsForEngineer = getBlueprintsForEngineer(wishlistBlueprints, pathItems, selectedEngineer, allowedEngineers);
                         if (!blueprintsForEngineer.isEmpty()) {
-                            final PathItem<T> e = new PathItem<>(engineers, blueprintsForEngineer);
+                            final PathItem<T> e = new PathItem<>(engineers, blueprintsForEngineer.stream().map(WishlistBlueprintTemplate::getPrimaryRecipe).toList());
                             pathItems.add(e);
                         }
                     }
@@ -161,7 +294,7 @@ public class PathService {
                 .filter(bp -> ((EngineeringBlueprint<T>) bp.getPrimaryRecipe()).getEngineers().stream().noneMatch(engineerPreference::containsKey))
                 .toList();
         if (!unCraftable.isEmpty()) {
-            final PathItem<T> pathItem = new PathItem<>(List.of(Engineer.UNKNOWN), unCraftable);
+            final PathItem<T> pathItem = new PathItem<>(List.of(Engineer.UNKNOWN), unCraftable.stream().map(WishlistBlueprintTemplate::getPrimaryRecipe).toList());
             pathItem.setEngineer(Engineer.UNKNOWN);
             pathItem.setDistance(0.0);
             sortedPathItems.add(pathItem);
@@ -175,10 +308,10 @@ public class PathService {
             if (toMove.getEngineer().getDistance(LocationService.getCurrentStarSystem()).equals(0D)) {
                 continue;
             }
-            final List<? extends WishlistBlueprintTemplate<T>> blueprints = toMove.getBlueprints();
+            final List<? extends Blueprint<T>> blueprints = toMove.getRecipes().entrySet().stream().flatMap(entry -> createList(entry.getKey(), entry.getValue()).stream()).toList();
             final int finalIndex = index;
             final AtomicInteger count = new AtomicInteger(0);
-            for (final WishlistBlueprintTemplate<T> blueprint : blueprints) {
+            for (final Blueprint<T> blueprint : blueprints) {
                 for (int index2 = 0; index2 < pathItems.size(); index2++) {
                     //skip self
                     if (finalIndex == index2) {
@@ -189,19 +322,19 @@ public class PathService {
 //                        .flatMap(horizonsBlueprintTypeMapMap -> horizonsBlueprintTypeMapMap.values().stream())
 //                        .flatMap(horizonsBlueprintGradeHorizonsBlueprintMap -> horizonsBlueprintGradeHorizonsBlueprintMap.values().stream())
 //                        .filter(horizonsBlueprint -> horizonsBlueprint.getEngineers().contains(this.engineer))
-                    if (blueprint.getPrimaryRecipe() instanceof ModuleBlueprint mbp) {
+                    if (blueprint instanceof ModuleBlueprint mbp) {
                         if (mbp.getEngineers().stream().anyMatch(eng -> toMoveTo.getEngineer().equals(eng))) {
                             count.incrementAndGet();
                             break;
                         }
                     }
-                    if (blueprint.getPrimaryRecipe() instanceof HorizonsBlueprint hbp) {
+                    if (blueprint instanceof HorizonsBlueprint hbp) {
                         if (hbp.getEngineers().stream().anyMatch(eng -> toMoveTo.getEngineer().equals(eng))) {
                             count.incrementAndGet();
                             break;
                         }
                     }
-                    if (blueprint.getPrimaryRecipe() instanceof HorizonsExperimentalEffectBlueprint hbp) {
+                    if (blueprint instanceof HorizonsExperimentalEffectBlueprint hbp) {
                         if (hbp.getEngineers().stream().anyMatch(eng -> toMoveTo.getEngineer().equals(eng))) {
                             count.incrementAndGet();
                             break;
@@ -213,20 +346,20 @@ public class PathService {
             }
             if (count.get() == blueprints.size()) {//all bp's can be moved
                 for (int i = 0; i < blueprints.size(); i++) {
-                    final WishlistBlueprintTemplate<T> bp = blueprints.get(i);
+                    final Blueprint<T> bp = blueprints.get(i);
                     for (int index2 = 0; index2 < pathItems.size(); index2++) {
                         //skip self
                         if (finalIndex == index2) {
                             continue;
                         }
                         final PathItem<T> toMoveTo = pathItems.get(index2);
-                        if (bp.getPrimaryRecipe() instanceof ModuleBlueprint mbp) {
+                        if (bp instanceof ModuleBlueprint mbp) {
                             if (mbp.getEngineers().stream().anyMatch(eng -> toMoveTo.getEngineer().equals(eng))) {
                                 toMoveTo.addBlueprint(bp);
                                 break;
                             }
                         }
-                        if (bp.getPrimaryRecipe() instanceof HorizonsBlueprint hbp) {
+                        if (bp instanceof HorizonsBlueprint hbp) {
                             if (hbp.getEngineers().stream().anyMatch(eng -> toMoveTo.getEngineer().equals(eng))) {
                                 toMoveTo.addBlueprint(bp);
                                 break;
@@ -239,6 +372,14 @@ public class PathService {
                 pathItems.remove(toMove);
             }
         }
+    }
+
+    private static <T extends BlueprintName<T>> List<? extends Blueprint<T>> createList(Blueprint<T> key, Integer value) {
+        final List<Blueprint<T>> list = new ArrayList<>();
+        for (int i = 0; i < value; i++) {
+            list.add(key);
+        }
+        return list;
     }
 
     private static <T extends BlueprintName<T>> void tryOptimizePath(final List<PathItem<T>> sortedPathItems) {
@@ -301,6 +442,56 @@ public class PathService {
             }
         }
         return paths;
+    }
+
+    private static <T extends BlueprintName<T>> List<? extends WishlistBlueprint<T>> getBlueprintsForEngineer2(final List<? extends WishlistBlueprint<T>> wishlistBlueprints, final List<PathItem<T>> pathItems, final Engineer engineer, final Set<Engineer> allowedEngineers) {
+//        final LinkedHashSet<HorizonsModuleBlueprint> moduleBlueprints = filtered.get(HorizonsModuleWishlistBlueprint.class).stream()
+//                .map(HorizonsModuleWishlistBlueprint.class::cast)
+//                .flatMap(bp -> bp.getPercentageToComplete().keySet().stream().map(grade -> HorizonsBlueprintConstants.getRecipe(bp.getRecipeName(), bp.getBlueprintType(), grade)))
+//                .map(HorizonsModuleBlueprint.class::cast)
+//                .sorted(Comparator.comparing((HorizonsModuleBlueprint bp) -> bp.getHorizonsBlueprintGrade().getGrade()).reversed())
+//                .filter(distinctByKey2(PathService::getKey2))
+//                .collect(Collectors.toCollection(LinkedHashSet::new));
+//        final LinkedHashSet<HorizonsExperimentalEffectBlueprint> experimentalBlueprints = filtered.get(HorizonsExperimentalWishlistBlueprint.class).stream()
+//                .map(HorizonsExperimentalWishlistBlueprint.class::cast)
+//                .map(bp -> HorizonsBlueprintConstants.getRecipe(bp.getRecipeName(), bp.getBlueprintType(), null))
+//                .map(HorizonsExperimentalEffectBlueprint.class::cast)
+//                .filter(distinctByKey2(PathService::getKey2))
+//                .collect(Collectors.toCollection(LinkedHashSet::new));
+        return wishlistBlueprints.stream()
+                .filter(WishlistBlueprint::isVisible)
+                .filter(bp -> bp instanceof HorizonsModuleWishlistBlueprint || bp instanceof HorizonsExperimentalWishlistBlueprint || bp instanceof OdysseyWishlistBlueprint)
+                .filter(bp -> getEngineers((EngineeringBlueprint<?>) bp.getBlueprint()).contains(engineer))
+                .filter(bp -> pathItems.stream().noneMatch(pathItem -> pathItem.getRecipes().containsKey(bp.getBlueprint())))
+                .filter(bp -> engineer.equals(Engineer.REMOTE_WORKSHOP) || !(getEngineers((EngineeringBlueprint<?>) bp.getBlueprint()).contains(Engineer.REMOTE_WORKSHOP)))
+                .filter(bp -> (wishlistBlueprints.stream().filter(WishlistBlueprint::isVisible).noneMatch(
+                                wbp -> (wbp instanceof HorizonsModuleWishlistBlueprint hmwbp)
+                                        && hmwbp.getBlueprint().getBlueprintName().equals(bp.getBlueprint().getBlueprintName())
+                                        && !hmwbp.getPercentageToComplete().keySet().stream().allMatch(grade -> ((HorizonsModuleBlueprint) HorizonsBlueprintConstants.getRecipe(hmwbp.getRecipeName(), hmwbp.getBlueprintType(), grade)).getEngineers().contains(engineer)))
+                                ||
+                                wishlistBlueprints.stream().filter(WishlistBlueprint::isVisible).anyMatch(wbp -> (wbp.getBlueprint() instanceof HorizonsModuleBlueprint hwbp)
+                                        && hwbp.getBlueprintName().equals(bp.getBlueprint().getBlueprintName())
+                                        && (hwbp.getEngineers().stream().noneMatch(allowedEngineers::contains)
+                                        || hwbp.getEngineers().contains(Engineer.REMOTE_WORKSHOP))
+                                )
+                        )
+                )
+                .collect(Collectors.toList());
+
+    }
+
+    public static List<Engineer> getEngineers(EngineeringBlueprint<?> blueprint) {
+        if (blueprint instanceof HorizonsModuleBlueprint moduleBlueprint && hasBlueprintPinned(moduleBlueprint)) {
+            final List<Engineer> withRemote = new ArrayList<>(blueprint.getEngineers());
+            withRemote.add(Engineer.REMOTE_WORKSHOP);
+            return withRemote;
+        }
+
+        return blueprint.getEngineers();
+    }
+
+    private static boolean hasBlueprintPinned(HorizonsModuleBlueprint moduleBlueprint) {
+        return moduleBlueprint.getEngineers().stream().anyMatch(engineer -> PinnedBlueprintService.isPinned(engineer, moduleBlueprint));
     }
 
     private static <T extends BlueprintName<T>> List<? extends WishlistBlueprintTemplate<T>> getBlueprintsForEngineer(final List<? extends WishlistBlueprintTemplate<T>> wishlistBlueprints, final List<PathItem<T>> pathItems, final Engineer engineer, final Set<Engineer> allowedEngineers) {

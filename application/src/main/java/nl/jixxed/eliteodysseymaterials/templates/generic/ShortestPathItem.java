@@ -10,6 +10,7 @@ import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
+import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
@@ -18,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Slf4j
 class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBox implements DestroyableTemplate {
@@ -52,13 +52,14 @@ class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBox imple
                 .withStyleClass("shortest-path-item-label-big")
                 .withText(this.pathItem.getEngineer().getLocalizationKey())
                 .build();
-        List<DestroyableLabel> blueprints = new ArrayList<>(this.pathItem.getBlueprints().stream().flatMap(temp -> temp.getRecipe().keySet().stream().map(bp -> (bp instanceof HorizonsBlueprint horizonsBlueprint)
-                        ? HorizonsBlueprintConstants.getRecipe(horizonsBlueprint.getBlueprintName(), horizonsBlueprint.getHorizonsBlueprintType(), HorizonsBlueprintGrade.GRADE_1)
-                        : bp).distinct())
-                .collect(Collectors.groupingBy(
-                        recipe -> recipe,
-                        Collectors.summingInt(value -> 1))
-                ).entrySet().stream()
+        List<DestroyableLabel> blueprints = new ArrayList<>(this.pathItem.getRecipes().entrySet().stream()
+//                .map(bp -> (bp instanceof HorizonsBlueprint horizonsBlueprint)
+//                        ? HorizonsBlueprintConstants.getRecipe(horizonsBlueprint.getBlueprintName(), horizonsBlueprint.getHorizonsBlueprintType(), HorizonsBlueprintGrade.GRADE_1)
+//                        : bp).distinct())
+//                .collect(Collectors.groupingBy(
+//                        recipe -> recipe,
+//                        Collectors.summingInt(value -> 1))
+//                ).entrySet().stream()
                 .sorted(Comparator.comparing((Map.Entry o) -> o.getKey() instanceof HorizonsExperimentalEffectBlueprint)
                         .thenComparing((Map.Entry o) -> LocaleService.getLocalizedStringForCurrentLocale(((Blueprint) o.getKey()).getBlueprintName().getLocalizationKey())))
                 .map(entry ->
@@ -103,9 +104,11 @@ class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBox imple
         }
         this.getNodes().addAll(blueprintsLabel);
         this.getNodes().addAll(blueprints);
-        this.getNodes().addAll(new GrowingRegion("shortest-path-item-spacer"));
-        final String wishlistUUID = this.pathItem.getBlueprints().stream().findFirst().map(WishlistBlueprintTemplate::getWishlistUUID).orElse("");
-        if (!wishlistUUID.equals(Wishlist.ALL.getUuid())) {
+        this.getNodes().addAll(new GrowingRegion("-spacer"));
+//        final String wishlistUUID = this.pathItem.getBlueprints().stream().findFirst().map(WishlistBlueprintTemplate::getWishlistUUID).orElse("");
+        if (!ApplicationState.getInstance().getPreferredCommander()
+                .map(commander -> WishlistService.getHorizonsWishlists(commander).getSelectedWishlistUUID().equals(Wishlist.ALL.getUuid()))
+                .orElse(false)) {
             DestroyableButton removeButton = ButtonBuilder.builder()
                     .withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions.remove"))
                     .withOnAction(_ -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsRemoveWishlistShortestPathItemEvent((PathItem<HorizonsBlueprintName>) this.pathItem) : new RemoveWishlistShortestPathItemEvent((PathItem<OdysseyBlueprintName>) this.pathItem)))

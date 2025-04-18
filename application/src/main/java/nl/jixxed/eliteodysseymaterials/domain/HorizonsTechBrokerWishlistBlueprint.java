@@ -10,6 +10,6 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 @AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class HorizonsTechBrokerWishlistBlueprint extends HorizonsWishlistBlueprint {
+public final class HorizonsTechBrokerWishlistBlueprint extends HorizonsWishlistBlueprint {
     private HorizonsBlueprintType blueprintType;
 }

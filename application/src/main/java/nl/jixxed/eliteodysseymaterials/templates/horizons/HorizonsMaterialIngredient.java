@@ -23,7 +23,6 @@ import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
-import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishlistIngredient;
 
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 public class HorizonsMaterialIngredient extends Ingredient implements DestroyableComponent, DestroyableEventTemplate {
@@ -94,7 +93,7 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
                 .build();
         this.rightDescriptionLabel = LabelBuilder.builder()
                 .withStyleClass("available")
-                .withText(Boolean.TRUE.equals(showRemaining && this instanceof HorizonsWishlistIngredient) ? "blueprint.header.remaining" : "blueprint.header.available")
+                .withText(Boolean.TRUE.equals(showRemaining) ? "blueprint.header.remaining" : "blueprint.header.available")
                 .build();
 
         this.leftHBox = BoxBuilder.builder()

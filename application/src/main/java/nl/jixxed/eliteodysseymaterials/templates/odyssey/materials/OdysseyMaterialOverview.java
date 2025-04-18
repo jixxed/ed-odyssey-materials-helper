@@ -65,6 +65,11 @@ public class OdysseyMaterialOverview extends DestroyableVBox implements Destroya
 
 
     OdysseyMaterialOverview() {
+        final OdysseyMaterialSort materialSort = OdysseyMaterialSort.valueOf(PreferencesService.getPreference("search.sort", "ALPHABETICAL"));
+        final OdysseyMaterialShow filter = OdysseyMaterialShow.valueOf(PreferencesService.getPreference("search.filter", "ALL"));
+        currentSearch.setMaterialShow(filter);
+        currentSearch.setMaterialSort(materialSort);
+
         initComponents();
         initEventHandling();
     }

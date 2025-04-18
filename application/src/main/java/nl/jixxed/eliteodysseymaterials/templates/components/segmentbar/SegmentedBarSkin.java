@@ -86,6 +86,7 @@ public class SegmentedBarSkin<T extends SegmentedBar.Segment> extends SkinBase<S
     }
 
     private void buildSegments() {
+        this.segmentNodes.values().stream().map(Destroyable.class::cast).forEach(Destroyable::destroy);
         this.segmentNodes.clear();
         this.getChildren().clear();
         List<T> segments = ((SegmentedBar) this.getSkinnable()).getSegments();
@@ -187,5 +188,6 @@ public class SegmentedBarSkin<T extends SegmentedBar.Segment> extends SkinBase<S
     public void dispose() {
         super.dispose();
         this.popOvers.values().forEach(DestroyableComponent::destroy);
+        this.segmentNodes.values().stream().map(Destroyable.class::cast).forEach(Destroyable::destroy);
     }
 }

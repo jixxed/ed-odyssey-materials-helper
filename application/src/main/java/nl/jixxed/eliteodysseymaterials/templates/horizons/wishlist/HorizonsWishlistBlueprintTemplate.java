@@ -15,10 +15,7 @@ import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.HorizonsBlueprintClickEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.HorizonsWishlistBlueprintEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
 import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTemplate;
@@ -26,7 +23,7 @@ import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTempla
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class HorizonsWishlistBlueprintTemplate extends DestroyableHBox implements WishlistBlueprintTemplate<HorizonsBlueprintName>, DestroyableEventTemplate {
+public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBox implements WishlistBlueprintTemplate<HorizonsBlueprintName>, DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String VISIBLE_STYLE_CLASS = "visible";
     private static final String WISHLIST_VISIBLE_ICON_STYLE_CLASS = "wishlist-visible-icon";
@@ -92,15 +89,17 @@ public class HorizonsWishlistBlueprintTemplate extends DestroyableHBox implement
                 .withText(Bindings.createStringBinding(() -> titleStringBinding.get().trim(), titleStringBinding))
                 .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(this.blueprint)))
                 .withHoverProperty((observable, oldValue, newValue) -> {
-                    this.wishlistIngredients.forEach(wishlistIngredient -> {
-                        final Integer requiredAmount = this.blueprint.getRequiredAmount(wishlistIngredient.getHorizonsMaterial(), null);
-                        final Integer minimumAmount = this.blueprint.getMinimumAmount(wishlistIngredient.getHorizonsMaterial());
-                        final Integer maximumAmount = this.blueprint.getMaximumAmount(wishlistIngredient.getHorizonsMaterial());
+                    EventService.publish(new HorizonsWishlistHighlightEvent(this.wishlistBlueprint, newValue));
+//                    this.wishlistIngredients.forEach(wishlistIngredient -> {
+//                        final Integer requiredAmount = this.blueprint.getRequiredAmount(wishlistIngredient.getHorizonsMaterial(), null);
+//                        final Integer minimumAmount = this.blueprint.getMinimumAmount(wishlistIngredient.getHorizonsMaterial());
+//                        final Integer maximumAmount = this.blueprint.getMaximumAmount(wishlistIngredient.getHorizonsMaterial());
+//
+//                        wishlistIngredient.highlight(newValue, new WishlistMaterial(minimumAmount, requiredAmount, maximumAmount));
 
-                        wishlistIngredient.highlight(newValue, new WishlistMaterial(minimumAmount, requiredAmount, maximumAmount));
-                    });
-                    this.otherIngredients.forEach(wishlistIngredient -> wishlistIngredient.lowlight(newValue));
-                    this.highlight(newValue);
+//                    });
+//                    this.otherIngredients.forEach(wishlistIngredient -> wishlistIngredient.lowlight(newValue));
+//                    this.highlight(newValue);
                 })
                 .build();
         this.getNodes().addAll(this.wishlistRecipeName);

@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class OdysseyWishlistBlueprintTemplate extends DestroyableHBox implements WishlistBlueprintTemplate<OdysseyBlueprintName>, DestroyableEventTemplate {
+public final class OdysseyWishlistBlueprintTemplate extends DestroyableHBox implements WishlistBlueprintTemplate<OdysseyBlueprintName>, DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String VISIBLE_STYLE_CLASS = "visible";
     private static final String WISHLIST_VISIBLE_ICON_STYLE_CLASS = "wishlist-visible-icon";
