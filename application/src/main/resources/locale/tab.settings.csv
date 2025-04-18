@@ -98,3 +98,4 @@ tab.settings.ar.bartender.toggle.explain,NOTE: Disabling the blur graphics setti
 tab.settings.ar.color.powerplay,Powerplay color,,,Color Powerplay,,,Цвет для Powerplay
 ar.overlay.powerplay,Powerplay,,,,,,
 tab.settings.capi.explain,Retrieves API data like fleetcarrier stock and orders on a 5 minute interval. Make sure you login with the same commander you selected in the bottom right corner. You will need to reauthenticate on a monthly basis.,,,Recupera Datos de API como las existencias del Portanaves y ordenes en un intervalo de 5 minutos. Asegúrese de iniciar sesión con el mismo comandante seleccionado en la esquina inferior derecha. Deberás reautenticar mensualmente.,,,
+tab.settings.module,{0} {1}{2}{3},,,,,,

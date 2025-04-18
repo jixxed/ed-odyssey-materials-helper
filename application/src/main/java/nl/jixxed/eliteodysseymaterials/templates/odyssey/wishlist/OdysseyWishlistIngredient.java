@@ -1,51 +1,129 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist;
 
+import javafx.beans.binding.StringBinding;
+import javafx.css.PseudoClass;
 import javafx.geometry.Orientation;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.SegmentedBarBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
-import nl.jixxed.eliteodysseymaterials.enums.AmountType;
-import nl.jixxed.eliteodysseymaterials.enums.Expansion;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.FlipRemainingAvailableEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
+import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegmentView;
-import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyMaterialIngredient;
-import org.controlsfx.control.SegmentedBar;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
 
 import java.util.Map;
 
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public
-class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
+class OdysseyWishlistIngredient extends Ingredient implements DestroyableEventTemplate {
+    public static final String FILLED = "filled";
+    @EqualsAndHashCode.Include
+    private final OdysseyStorageType storageType;
+    @Getter
+    @EqualsAndHashCode.Include
+    private final OdysseyMaterial odysseyMaterial;
+    @Getter
+    private final Integer leftAmount;
+    private Integer rightAmount;
 
+    private DestroyableLabel nameLabel;
+    private DestroyableResizableImageView image;
+    private DestroyableLabel leftAmountLabel;
+    private DestroyableLabel rightAmountLabel;
+    private DestroyableLabel rightDescriptionLabel;
     private static final String INGREDIENT_FILLED_CLASS = "ingredient-filled";
     private static final String INGREDIENT_UNFILLED_CLASS = "ingredient-unfilled";
     private static final String INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS = "ingredient-filled-partial";
-    private SegmentedBar<TypeSegment> segmentedBar;
+    public static final String PARTIAL = "partial";
+    private DestroyableSegmentedBar<TypeSegment> segmentedBar;
     private TypeSegment present;
     private TypeSegment notPresent;
 
     OdysseyWishlistIngredient(final OdysseyStorageType storageType, final OdysseyMaterial odysseyMaterial, final Integer amountRequired, final Integer amountAvailable) {
-        super(storageType, odysseyMaterial, amountRequired, amountAvailable);
+        if (storageType.equals(OdysseyStorageType.OTHER)) {
+            throw new IllegalArgumentException("StorageType Other must use MissionIngredient class");
+        }
+        this.storageType = storageType;
+        this.leftAmount = amountRequired;
+        this.odysseyMaterial = odysseyMaterial;
+        this.rightAmount = amountAvailable;
         initComponents();
         initEventHandling();
     }
 
+    @Override
     @SuppressWarnings("java:S2177")
-    private void initComponents() {
+    public void initComponents() {
+        this.getStyleClass().add("ingredient");
+
+        this.nameLabel = LabelBuilder.builder()
+                .withStyleClass("name")
+                .withText(this.odysseyMaterial.getLocalizationKey())
+                .build();
+        initImage();
+
+        this.leftAmountLabel = LabelBuilder.builder()
+                .withStyleClass("quantity")
+                .withNonLocalizedText("0")
+                .build();
+        this.rightAmountLabel = LabelBuilder.builder()
+                .withStyleClass("quantity")
+                .withNonLocalizedText("0")
+                .build();
+        DestroyableLabel leftDescriptionLabel = LabelBuilder.builder()
+                .withStyleClass("required")
+                .withText("blueprint.header.required")
+                .build();
+        this.rightDescriptionLabel = LabelBuilder.builder()
+                .withStyleClass("available")
+                .withText("blueprint.header.available")
+                .build();
+
+        DestroyableHBox leftHBox = BoxBuilder.builder()
+                .withNodes(leftDescriptionLabel, this.leftAmountLabel)
+                .withStyleClass("quantity-section").buildHBox();
+        DestroyableHBox rightHBox = BoxBuilder.builder()
+                .withNodes(this.rightAmountLabel, this.rightDescriptionLabel)
+                .withStyleClass("quantity-section").buildHBox();
+        this.leftAmountLabel.setText(this.leftAmount.toString());
+        HBox.setHgrow(this.leftAmountLabel, Priority.ALWAYS);
+        this.rightAmountLabel.setText(this.rightAmount.toString());
+
+        DestroyableHBox firstLine = BoxBuilder.builder()
+                .withNodes(this.image, this.nameLabel)
+                .buildHBox();
+        DestroyableHBox secondLine = BoxBuilder.builder()
+                .withNodes(leftHBox, new GrowingRegion(), rightHBox)
+                .buildHBox();
+        this.getNodes().addAll(firstLine, new GrowingRegion(), secondLine);
+
+        MaterialService.addMaterialInfoPopOver(this, this.odysseyMaterial, false);
+
+        update();
         this.getStyleClass().add("wishlist-ingredient");
         this.hoverProperty().addListener((observable, oldValue, newValue) -> {
             showAsHovered(newValue);
         });
-        this.segmentedBar = new SegmentedBar<>();
+        this.segmentedBar = SegmentedBarBuilder.builder(TypeSegment.class).build();
         this.segmentedBar.getStyleClass().add("ingredient-progressbar");
         this.segmentedBar.setOrientation(Orientation.HORIZONTAL);
         this.segmentedBar.setInfoNodeFactory(segment -> null);
@@ -57,7 +135,7 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
         this.present = new TypeSegment(Math.max(0, progress), SegmentType.PRESENT);
         this.notPresent = new TypeSegment(Math.max(0, this.getLeftAmount() - progress), SegmentType.NOT_PRESENT);
         this.segmentedBar.getSegments().addAll(this.present, this.notPresent);
-        this.getChildren().add(this.segmentedBar);
+        this.getNodes().add(this.segmentedBar);
     }
 
     private void showAsHovered(final Boolean newValue) {
@@ -71,40 +149,94 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
         }
     }
 
+    @Override
     @SuppressWarnings("java:S2177")
-    private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, FlipRemainingAvailableEvent.class, flipRemainingAvailableEvent -> {
-            if(Expansion.ODYSSEY.equals(flipRemainingAvailableEvent.getExpansion())){
+    public void initEventHandling() {
+        register(EventService.addListener(true, this, JournalLineProcessedEvent.class, _ -> this.update()));
+
+        register(EventService.addListener(true, this, FlipRemainingAvailableEvent.class, flipRemainingAvailableEvent -> {
+            if (Expansion.ODYSSEY.equals(flipRemainingAvailableEvent.getExpansion())) {
                 showAsHovered(this.hoverProperty().getValue());
             }
         }));
     }
 
+    @SuppressWarnings("java:S6205")
+    private void initImage() {
+        final ResizableImageViewBuilder imageViewBuilder = ResizableImageViewBuilder.builder()
+                .withStyleClass("ingredient-image");
+        switch (this.storageType) {
+            case DATA -> imageViewBuilder.withImage("/images/material/data.png");
+            case GOOD -> imageViewBuilder.withImage("/images/material/good.png");
+            case ASSET -> {
+                switch (((Asset) this.odysseyMaterial).getType()) {
+                    case TECH -> imageViewBuilder.withImage("/images/material/tech.png");
+                    case CIRCUIT -> imageViewBuilder.withImage("/images/material/circuit.png");
+                    case CHEMICAL -> imageViewBuilder.withImage("/images/material/chemical.png");
+                }
+            }
+            case CONSUMABLE -> imageViewBuilder.withImage("/images/material/unknown.png");
+            case OTHER -> throw new IllegalArgumentException("StorageType Other must use MissionIngredient class");
+        }
+        this.image = imageViewBuilder.build();
+    }
+
+    private void setRightAmount(final Integer rightAmount) {
+        this.rightAmount = rightAmount;
+    }
+
+
     @Override
+    public StorageType getType() {
+        return this.storageType;
+    }
+
+    @Override
+    public String getName() {
+        return this.nameLabel.getText();
+    }
+
+    protected Label getLeftAmountLabel() {
+        return this.leftAmountLabel;
+    }
+
+    protected Integer getRightAmount() {
+        return this.rightAmount;
+    }
+
+    protected Label getRightAmountLabel() {
+        return this.rightAmountLabel;
+    }
+
+    protected void setRightDescriptionLabel(final StringBinding rightDescriptionLabel) {
+        this.rightDescriptionLabel.addBinding(this.rightDescriptionLabel.textProperty(), rightDescriptionLabel);
+    }
+
     protected void update() {
 
         final Storage storage = StorageService.getMaterialStorage(this.getOdysseyMaterial());
         final int leftAmount = Integer.parseInt(this.getLeftAmountLabel().getText());
-        this.getStyleClass().removeAll(INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS, INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
         if (storage.getTotalValue() >= leftAmount && storage.getShipLockerValue() + storage.getBackPackValue() < leftAmount) {
-
-            this.getStyleClass().addAll(INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(PARTIAL), true);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(FILLED), false);
         } else if (storage.getTotalValue() >= leftAmount) {
-            this.getStyleClass().addAll(INGREDIENT_FILLED_CLASS);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(PARTIAL), false);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(FILLED), true);
         } else {
-            this.getStyleClass().addAll(INGREDIENT_UNFILLED_CLASS);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(PARTIAL), false);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(FILLED), false);
         }
         showAsHovered(this.hoverProperty().getValue());
-        if(this.present != null){
+        if (this.present != null) {
             final int progress = Math.min(this.getLeftAmount(), this.getRightAmount());
             this.present.setValue(progress);
             this.notPresent.setValue(Math.max(this.getLeftAmount() - progress, 0));
-            if(Math.max(this.getLeftAmount() - progress, 0) > 0){
+            if (Math.max(this.getLeftAmount() - progress, 0) > 0) {
                 this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(
                         SegmentType.PRESENT, Color.web("#ff7c7c"),
                         SegmentType.NOT_PRESENT, Color.rgb(128, 128, 128)
                 ), false));
-            }else{
+            } else {
                 this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(
                         SegmentType.PRESENT, Color.web("#89d07f"),
                         SegmentType.NOT_PRESENT, Color.rgb(128, 128, 128)
@@ -118,9 +250,9 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
             this.getStyleClass().add("wishlist-highlight");
             this.getLeftAmountLabel().setText(amountRequiredForRecipe.toString());
         } else {
-            this.getStyleClass().removeAll("wishlist-highlight");
             this.getLeftAmountLabel().setText(this.getLeftAmount().toString());
         }
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("highlight"), enable);
         update();
     }
 

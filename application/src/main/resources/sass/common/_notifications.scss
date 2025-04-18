@@ -1,0 +1,8 @@
+.notification-bar.dark > .pane {
+  -fx-background-color: #111111;
+}
+
+.notification-bar.dark > .pane .title,
+.notification-bar.dark > .pane .label {
+  -fx-text-fill: #ffffff;
+}

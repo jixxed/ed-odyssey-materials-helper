@@ -1,34 +1,19 @@
 package nl.jixxed.eliteodysseymaterials.builder;
 
 import javafx.beans.value.ChangeListener;
-import javafx.scene.control.Slider;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableSlider;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class SliderBuilder {
+public class SliderBuilder extends AbstractControlBuilder<SliderBuilder> {
     private double value;
     private double min;
     private double max;
-    private final List<String> styleClasses = new ArrayList<>();
     private ChangeListener<Number> changeListener;
 
     public static SliderBuilder builder() {
         return new SliderBuilder();
-    }
-
-    public SliderBuilder withStyleClass(final String styleClass) {
-        this.styleClasses.add(styleClass);
-        return this;
-    }
-
-    public SliderBuilder withStyleClasses(final String... styleClasses) {
-        this.styleClasses.addAll(Arrays.asList(styleClasses));
-        return this;
     }
 
     public SliderBuilder withChangeListener(final ChangeListener<Number> changeListener) {
@@ -51,12 +36,15 @@ public class SliderBuilder {
         return this;
     }
 
-    public Slider build() {
-        final Slider slider = new Slider(this.min, this.max, this.value);
-        slider.getStyleClass().addAll(this.styleClasses);
+    @SuppressWarnings("unchecked")
+    public DestroyableSlider build() {
+        final DestroyableSlider slider = new DestroyableSlider(this.min, this.max, this.value);
+        super.build(slider);
+
         if (this.changeListener != null) {
-            slider.valueProperty().addListener(this.changeListener);
+            slider.addChangeListener(slider.valueProperty(), this.changeListener);
         }
+
         return slider;
     }
 }

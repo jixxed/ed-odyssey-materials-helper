@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -20,30 +21,32 @@ import nl.jixxed.eliteodysseymaterials.enums.WishlistMaterialGrouping;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyWishlistSearchEvent;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComboBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTextField;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public
-class OdysseyWishlistSearchBar extends HBox {
+class OdysseyWishlistSearchBar extends DestroyableHBox implements DestroyableEventTemplate {
 
     private static final String FX_FONT_SIZE_DPX = "-fx-font-size: %dpx";
-    private TextField textField;
-    private ComboBox<WishlistMaterialGrouping> groupMaterialsComboBox;
-    private ComboBox<OdysseyWishlistMaterialSort> sortMaterialsComboBox;
+    private DestroyableTextField textField;
+    private DestroyableComboBox<WishlistMaterialGrouping> groupMaterialsComboBox;
+    private DestroyableComboBox<OdysseyWishlistMaterialSort> sortMaterialsComboBox;
+    private Disposable subscribe;
 
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
     public OdysseyWishlistSearchBar() {
         initComponents();
         initEventHandling();
     }
 
-    private void initComponents() {
+    public void initComponents() {
         this.getStyleClass().add("root");
         initSearchTextField();
         initSearchTextFilter();
@@ -55,7 +58,7 @@ class OdysseyWishlistSearchBar extends HBox {
 
         HBox.setHgrow(this.textField, Priority.ALWAYS);
 
-        this.getChildren().addAll(this.textField, this.groupMaterialsComboBox, this.sortMaterialsComboBox);
+        this.getNodes().addAll(this.textField, this.groupMaterialsComboBox, this.sortMaterialsComboBox);
     }
 
     private void applyFontSizingHack() {
@@ -70,7 +73,7 @@ class OdysseyWishlistSearchBar extends HBox {
 
     private void initSearchTextSort() {
         final Tooltip sortMaterialsTooltip = TooltipBuilder.builder()
-                .withText(LocaleService.getStringBinding("search.sort.placeholder"))
+                .withText("search.sort.placeholder")
                 .build();
         this.sortMaterialsComboBox = ComboBoxBuilder.builder(OdysseyWishlistMaterialSort.class)
                 .withStyleClasses("root", "filter-and-sort")
@@ -88,7 +91,9 @@ class OdysseyWishlistSearchBar extends HBox {
     }
 
     private void initSearchTextFilter() {
-        final Tooltip groupMaterialsTooltip = TooltipBuilder.builder().withText(LocaleService.getStringBinding("search.grouping.placeholder")).build();
+        final Tooltip groupMaterialsTooltip = TooltipBuilder.builder()
+                .withText("search.grouping.placeholder")
+                .build();
         this.groupMaterialsComboBox = ComboBoxBuilder.builder(WishlistMaterialGrouping.class)
                 .withStyleClasses("root", "filter-and-sort")
                 .withItemsProperty(LocaleService.getListBinding(WishlistMaterialGrouping.CATEGORY,
@@ -111,16 +116,16 @@ class OdysseyWishlistSearchBar extends HBox {
                 .withPromptTextProperty(LocaleService.getStringBinding("search.text.placeholder"))
                 .withFocusTraversable(false)
                 .build();
-        Observable.create((ObservableEmitter<String> emitter) -> this.textField.textProperty().addListener((observable, oldValue, newValue) -> emitter.onNext(newValue)))
+        subscribe = Observable.create((ObservableEmitter<String> emitter) -> this.textField.textProperty().addListener((observable, oldValue, newValue) -> emitter.onNext(newValue)))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
                 .subscribe(newValue -> EventService.publish(new OdysseyWishlistSearchEvent(new OdysseyWishlistMaterialSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.groupMaterialsComboBox)))));
     }
 
 
-    private void initEventHandling() {
+    public void initEventHandling() {
         //hack for component resizing on other fontsizes
-        this.eventListeners.add(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
             this.styleProperty().set(fontStyle);
             this.groupMaterialsComboBox.styleProperty().set(fontStyle);
@@ -158,4 +163,10 @@ class OdysseyWishlistSearchBar extends HBox {
         return (sortMaterialsComboBox.getValue() != null) ? sortMaterialsComboBox.getValue() : OdysseyWishlistMaterialSort.ALPHABETICAL;
     }
 
+    @Override
+    public void destroyInternal() {
+        if (subscribe != null) {
+            subscribe.dispose();
+        }
+    }
 }

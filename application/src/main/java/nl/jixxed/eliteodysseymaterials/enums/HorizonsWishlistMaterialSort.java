@@ -22,13 +22,23 @@ public enum HorizonsWishlistMaterialSort {
 
     @SuppressWarnings("java:S1452")
     public static Comparator<HorizonsWishlistIngredient> getSort(final HorizonsWishlistMaterialSearch search) {
-        return switch (search.getWishlistMaterialSort()) {
+        return getSort(search.getWishlistMaterialSort());
+    }
+
+    @SuppressWarnings("java:S1452")
+    public Comparator<HorizonsWishlistIngredient> getSort() {
+        return getSort(this);
+    }
+
+    @SuppressWarnings("java:S1452")
+    public static Comparator<HorizonsWishlistIngredient> getSort(HorizonsWishlistMaterialSort sort) {
+        return switch (sort) {
             case ALPHABETICAL ->
                     Comparator.comparing((HorizonsWishlistIngredient o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getHorizonsMaterial().getLocalizationKey()));
             case GRADE ->
                     Comparator.comparing((HorizonsWishlistIngredient o) -> o.getHorizonsMaterial().getRarity().getLevel()).reversed();
             case QUANTITY_REQUIRED ->
-                    Comparator.comparing((HorizonsWishlistIngredient o) -> o.getLeftAmount()).reversed();
+                    Comparator.comparing((HorizonsWishlistIngredient o) -> o.getRequired()).reversed();
         };
     }
 }

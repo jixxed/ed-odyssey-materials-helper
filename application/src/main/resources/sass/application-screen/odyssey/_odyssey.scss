@@ -1,0 +1,20 @@
+.odyssey-tab {
+  @include tab;
+}
+
+.odyssey-tab-content {
+  -fx-background-color: $background-color-dark;
+  @import "bartender";
+  @import "engineers";
+  @import "loadout";
+  @import "materials";
+  @import "menu";
+  @import "search";
+  @import "wishlist";
+
+  .odyssey-tab-pane {
+    @include tabpane;
+  }
+
+}
+

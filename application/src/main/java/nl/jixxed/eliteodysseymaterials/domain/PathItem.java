@@ -6,7 +6,6 @@ import lombok.ToString;
 import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTemplate;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -19,27 +18,31 @@ import java.util.stream.Collectors;
 @ToString
 public class PathItem<E extends BlueprintName<E>> {
     private final List<Engineer> engineers;
-    private final List<WishlistBlueprintTemplate<E>> blueprints;
+    //    private final List<WishlistBlueprintTemplate<E>> blueprints;
     private Map<Blueprint<E>, Integer> recipes;
     private Engineer engineer;
     private List<Engineer> alternateEngineers = new ArrayList<>();
     private double distance;
 
-    public PathItem(final List<Engineer> engineers, final List<? extends WishlistBlueprintTemplate<E>> blueprints) {
+    public PathItem(final List<Engineer> engineers, final List<? extends Blueprint<E>> blueprints) {
         this.engineers = engineers;
-        this.blueprints = (List<WishlistBlueprintTemplate<E>>) blueprints;
-        this.recipes = blueprints.stream().map(WishlistBlueprintTemplate::getPrimaryRecipe).collect(Collectors.groupingBy(
+//        this.blueprints = (List<WishlistBlueprintTemplate<E>>) blueprints;
+        this.recipes = blueprints.stream().collect(Collectors.groupingBy(
                 recipe -> recipe,
                 Collectors.summingInt(value -> 1))
         );
     }
-    public void addBlueprint(final WishlistBlueprintTemplate<E> blueprint){
-        this.blueprints.add(blueprint);
-        this.recipes = this.blueprints.stream().map(WishlistBlueprintTemplate::getPrimaryRecipe).collect(Collectors.groupingBy(
-                recipe -> recipe,
-                Collectors.summingInt(value -> 1))
-        );
+
+    public void addBlueprint(final Blueprint<E> blueprint) {
+//        this.blueprints.add(blueprint);
+        this.recipes.compute(blueprint, (key, value) -> value != null ? value + 1 : 1);
+
+//                = this.blueprints.stream().map(WishlistBlueprintTemplate::getPrimaryRecipe).collect(Collectors.groupingBy(
+//                recipe -> recipe,
+//                Collectors.summingInt(value -> 1))
+//        );
     }
+
     public String getRecipesString() {
         return this.recipes.entrySet().stream().map(recipe -> {
             if (recipe.getKey() instanceof ModuleBlueprint moduleBlueprint) {
@@ -81,7 +84,7 @@ public class PathItem<E extends BlueprintName<E>> {
     }
 
     public double getDistance() {
-        if(engineers.contains(Engineer.REMOTE_WORKSHOP))
+        if (engineers.contains(Engineer.REMOTE_WORKSHOP))
             return -0.000000001;
         return distance;
     }

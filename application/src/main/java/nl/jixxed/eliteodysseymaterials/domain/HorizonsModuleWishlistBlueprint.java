@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 //@AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class HorizonsModuleWishlistBlueprint extends HorizonsWishlistBlueprint {
+public final class HorizonsModuleWishlistBlueprint extends HorizonsWishlistBlueprint {
     private HorizonsBlueprintType blueprintType;
     //no longer persisting the data
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -22,7 +22,7 @@ public class HorizonsModuleWishlistBlueprint extends HorizonsWishlistBlueprint {
     private Map<HorizonsBlueprintGrade, Double> percentageToComplete;
 
     public Map<HorizonsBlueprintGrade, Double> getPercentageToComplete() {
-        return percentageToComplete != null ? percentageToComplete : blueprintGradeRolls.entrySet().stream().map(entry -> Map.entry(entry.getKey(),entry.getValue() > 0 ? 1D : 0D)).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        return percentageToComplete != null ? percentageToComplete : blueprintGradeRolls.entrySet().stream().map(entry -> Map.entry(entry.getKey(), entry.getValue() > 0 ? 1D : 0D)).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public HorizonsModuleWishlistBlueprint(HorizonsBlueprintType blueprintType, Map<HorizonsBlueprintGrade, Double> percentageToComplete) {

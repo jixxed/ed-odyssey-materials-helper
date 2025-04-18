@@ -21,6 +21,7 @@ import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.perc
 public class KillWarrantScannerPreEngineeredBlueprints {
     // KWS from Hudson data CG
     // https://forums.frontier.co.uk/threads/support-president-hudson-to-increase-federal-surveillance-data.573553/page-24
+    // https://forums.frontier.co.uk/threads/defeat-pirates-in-planetary-rings-of-dhan-bounty-hunting.636453/
     public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> PRE_ENGINEERED_BLUEPRINTS = Map.of(
             HorizonsBlueprintType.FAST_SCANNER_LONG_RANGE_SCANNER,
             Map.of(

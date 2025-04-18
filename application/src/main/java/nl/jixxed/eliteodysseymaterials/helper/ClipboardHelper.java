@@ -4,12 +4,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.introspect.AnnotatedMember;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.service.LoadoutService;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
@@ -42,8 +45,8 @@ public class ClipboardHelper {
                 final String wishlistJson = OBJECT_MAPPER.writeValueAsString(wishlist);
                 final String wishlist64 = convertJsonToBase64Compressed(wishlistJson);
                 final String url = "edomh://horizonswishlist/?" + wishlist64;
-                if(url.length() > 2048){
-                    NotificationService.showWarning(NotificationType.COPY, "Clipboard", "Due to the length, the URL might not work in browsers and must be directly imported inside the app.");
+                if (url.length() > 2048) {
+                    NotificationService.showWarning(NotificationType.COPY, LocaleService.LocaleString.of("notification.clipboard.title"), LocaleService.LocaleString.of("notification.clipboard.url.length.text"));
                 }
                 return url;
             } catch (final JsonProcessingException e) {
@@ -59,8 +62,8 @@ public class ClipboardHelper {
                 final String wishlistJson = OBJECT_MAPPER.writeValueAsString(new ClipboardWishlist("wishlist", 1, WishlistService.getWishlists(commander).getSelectedWishlist()));
                 final String wishlist64 = convertJsonToBase64Compressed(wishlistJson);
                 final String url = "edomh://wishlist/?" + wishlist64;
-                if(url.length() > 2048){
-                    NotificationService.showWarning(NotificationType.COPY, "Clipboard", "Due to the length, the URL might not work in browsers and must be directly imported inside the app.");
+                if (url.length() > 2048) {
+                    NotificationService.showWarning(NotificationType.COPY, LocaleService.LocaleString.of("notification.clipboard.title"), LocaleService.LocaleString.of("notification.clipboard.url.length.text"));
                 }
                 return url;
             } catch (final JsonProcessingException e) {
@@ -76,8 +79,8 @@ public class ClipboardHelper {
                 final String loadoutJson = OBJECT_MAPPER.writeValueAsString(new ClipboardLoadout("loadout", 1, LoadoutService.getLoadoutSetList(commander).getSelectedLoadoutSet()));
                 final String loadout64 = convertJsonToBase64Compressed(loadoutJson);
                 final String url = "edomh://loadout/?" + loadout64;
-                if(url.length() > 2048){
-                    NotificationService.showWarning(NotificationType.COPY, "Clipboard", "Due to the length, the URL might not work in browsers and must be directly imported inside the app.");
+                if (url.length() > 2048) {
+                    NotificationService.showWarning(NotificationType.COPY, LocaleService.LocaleString.of("notification.clipboard.title"), LocaleService.LocaleString.of("notification.clipboard.url.length.text"));
                 }
                 return url;
             } catch (final JsonProcessingException e) {
@@ -105,8 +108,8 @@ public class ClipboardHelper {
                         final String shipJson = OBJECT_MAPPER.writeValueAsString(new ClipboardShip("ship", 1, configuration));
                         final String ship64 = convertJsonToBase64Compressed(shipJson);
                         final String url = "edomh://ship/?" + ship64;
-                        if(url.length() > 2048){
-                            NotificationService.showWarning(NotificationType.COPY, "Clipboard", "Due to the length, the URL might not work in browsers and must be directly imported inside the app.");
+                        if (url.length() > 2048) {
+                            NotificationService.showWarning(NotificationType.COPY, LocaleService.LocaleString.of("notification.clipboard.title"), LocaleService.LocaleString.of("notification.clipboard.url.length.text"));
                         }
                         return url;
                     } catch (final JsonProcessingException e) {
@@ -115,5 +118,12 @@ public class ClipboardHelper {
                     return "";
                 }).orElse("")
         ).orElse("");
+    }
+
+    public static void copyToClipboard(final String text) {
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        content.putString(text);
+        clipboard.setContent(content);
     }
 }

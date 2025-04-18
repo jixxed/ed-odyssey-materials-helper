@@ -1,8 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey;
 
-import javafx.scene.control.Tab;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTab;
 
-public abstract class OdysseyTab extends Tab {
+public abstract class OdysseyTab extends DestroyableTab {
     public abstract OdysseyTabs getTabType();
 }

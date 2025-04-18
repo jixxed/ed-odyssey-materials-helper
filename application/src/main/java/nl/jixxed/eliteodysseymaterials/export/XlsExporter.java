@@ -39,8 +39,10 @@ public class XlsExporter {
         createCell(sheet, row, 1, "Available BP+S", style);
         createCell(sheet, row, 2, "Available FC", style);
         createCell(sheet, row, 3, "Available Total", style);
-        createCell(sheet, row, 4, "Required", style);
-        createCell(sheet, row, 5, "Need", style);
+        createCell(sheet, row, 4, "Required minimum", style);
+        createCell(sheet, row, 5, "Required current", style);
+        createCell(sheet, row, 6, "Required maximum", style);
+        createCell(sheet, row, 7, "Need", style);
         final AtomicInteger rowNumber = new AtomicInteger(1);
         final CellStyle dataStyle = workbook.createCellStyle();
         final XSSFFont dataFont = workbook.createFont();
@@ -52,15 +54,18 @@ public class XlsExporter {
                         .forEach(item -> {
                             final String materialName = LocaleService.getLocalizedStringForCurrentLocale(item.getKey().getLocalizationKey());
                             final Integer ship = switch (item.getKey().getStorageType()) {
-                                case GOOD, DATA, ASSET -> StorageService.getMaterialCount(item.getKey(), AmountType.AVAILABLE);
+                                case GOOD, DATA, ASSET ->
+                                        StorageService.getMaterialCount(item.getKey(), AmountType.AVAILABLE);
                                 case CONSUMABLE, OTHER -> 0;
                             };
                             final Integer fc = switch (item.getKey().getStorageType()) {
-                                case GOOD, DATA, ASSET -> StorageService.getMaterialCount(item.getKey(), AmountType.FLEETCARRIER);
+                                case GOOD, DATA, ASSET ->
+                                        StorageService.getMaterialCount(item.getKey(), AmountType.FLEETCARRIER);
                                 case CONSUMABLE, OTHER -> 0;
                             };
                             final Integer total = switch (item.getKey().getStorageType()) {
-                                case GOOD, DATA, ASSET -> StorageService.getMaterialCount(item.getKey(), AmountType.TOTAL);
+                                case GOOD, DATA, ASSET ->
+                                        StorageService.getMaterialCount(item.getKey(), AmountType.TOTAL);
                                 case CONSUMABLE, OTHER -> 0;
                             };
                             final Row dataRow = sheet.createRow(rowNumber.getAndIncrement());
@@ -78,7 +83,6 @@ public class XlsExporter {
     public static XSSFWorkbook createXlsWishlist(final Map<Raw, WishlistMaterial> wishlistNeededRaw, final Map<Encoded, WishlistMaterial> wishlistNeededEncoded, final Map<Manufactured, WishlistMaterial> wishlistNeededManufactured, final Map<Commodity, WishlistMaterial> wishlistNeededCommodity) {
         final XSSFWorkbook workbook = new XSSFWorkbook();
         final XSSFSheet sheet = workbook.createSheet("wishlist");
-//        final StringBuilder textBuilder = new StringBuilder();
         final Row row = sheet.createRow(0);
         final CellStyle style = workbook.createCellStyle();
         final XSSFFont font = workbook.createFont();
@@ -89,8 +93,10 @@ public class XlsExporter {
         createCell(sheet, row, 1, "Available S", style);
         createCell(sheet, row, 2, "Available FC", style);
         createCell(sheet, row, 3, "Available Total", style);
-        createCell(sheet, row, 4, "Required", style);
-        createCell(sheet, row, 5, "Need", style);
+        createCell(sheet, row, 4, "Required minimum", style);
+        createCell(sheet, row, 5, "Required current", style);
+        createCell(sheet, row, 6, "Required maximum", style);
+        createCell(sheet, row, 7, "Need", style);
         final AtomicInteger rowNumber = new AtomicInteger(1);
         final CellStyle dataStyle = workbook.createCellStyle();
         final XSSFFont dataFont = workbook.createFont();
@@ -119,8 +125,10 @@ public class XlsExporter {
                             createCell(sheet, dataRow, 1, ship, dataStyle);
                             createCell(sheet, dataRow, 2, fc, dataStyle);
                             createCell(sheet, dataRow, 3, total, dataStyle);
-                            createCell(sheet, dataRow, 4, item.getValue().getRequired(), dataStyle);
-                            createCell(sheet, dataRow, 5, Math.max(0, item.getValue().getRequired() - ship), dataStyle);
+                            createCell(sheet, dataRow, 4, item.getValue(), dataStyle);
+                            createCell(sheet, dataRow, 5, item.getValue(), dataStyle);
+                            createCell(sheet, dataRow, 6, item.getValue(), dataStyle);
+                            createCell(sheet, dataRow, 7, Math.max(0, item.getValue().getRequired() - ship), dataStyle);
                         })
         );
         return workbook;

@@ -2,7 +2,6 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
 import javafx.beans.binding.StringBinding;
 import javafx.geometry.Orientation;
-import javafx.scene.control.Separator;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
@@ -13,9 +12,10 @@ import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableSeparator;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-public class ThermalStats extends Stats implements Template {
+public class ThermalStats extends Stats implements DestroyableEventTemplate {
     private DestroyableLabel idleThermals;
     private DestroyableLabel thrusterThermals;
     private DestroyableLabel fsdThermals;
@@ -36,21 +36,28 @@ public class ThermalStats extends Stats implements Template {
 
     @Override
     public void initComponents() {
-        this.getChildren().add(BoxBuilder.builder().withNodes(new GrowingRegion(), createTitle("ship.stats.thermal"), new GrowingRegion()).buildHBox());
-        this.getChildren().add(new Separator(Orientation.HORIZONTAL));
+        this.getNodes().add(BoxBuilder.builder()
+                .withNodes(new GrowingRegion(), createTitle("ship.stats.thermal"), new GrowingRegion()).buildHBox());
+        this.getNodes().add(new DestroyableSeparator(Orientation.HORIZONTAL));
         this.idleThermals = createValueSmallLabel("ship.stats.thermal.idle.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
         this.thrusterThermals = createValueSmallLabel("ship.stats.thermal.thruster.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
         this.fsdThermals = createValueSmallLabel("ship.stats.thermal.fsd.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
 
-        this.getChildren().add(BoxBuilder.builder().withNodes(createSmallLabel("ship.stats.thermal.idle.thermals"), new GrowingRegion(), this.idleThermals).buildHBox());
-        this.getChildren().add(BoxBuilder.builder().withNodes(createSmallLabel("ship.stats.thermal.thruster.thermals"), new GrowingRegion(), this.thrusterThermals).buildHBox());
-        this.getChildren().add(BoxBuilder.builder().withNodes(createSmallLabel("ship.stats.thermal.fsd.thermals"), new GrowingRegion(), this.fsdThermals).buildHBox());
+        this.getNodes().add(BoxBuilder.builder()
+                .withNodes(createSmallLabel("ship.stats.thermal.idle.thermals"), new GrowingRegion(), this.idleThermals)
+                .buildHBox());
+        this.getNodes().add(BoxBuilder.builder()
+                .withNodes(createSmallLabel("ship.stats.thermal.thruster.thermals"), new GrowingRegion(), this.thrusterThermals)
+                .buildHBox());
+        this.getNodes().add(BoxBuilder.builder()
+                .withNodes(createSmallLabel("ship.stats.thermal.fsd.thermals"), new GrowingRegion(), this.fsdThermals)
+                .buildHBox());
 
     }
 
     @Override
     public void initEventHandling() {
-        eventListeners.add(EventService.addListener(true, this, ShipConfigEvent.class, event -> update()));
+        register(EventService.addListener(true, this, ShipConfigEvent.class, event -> update()));
     }
 
     Value getHeatLevel(double thermalLoad, double baseThermalLoad, double maximumHeatDissipation, double heatCapacity) {
@@ -116,11 +123,11 @@ public class ThermalStats extends Stats implements Template {
                 var baseHeatLevel = getEquilibriumHeatLevel(maximumHeatDissipation, baseThermalLoad);
                 var time10 = getTimeUntilHeatLevel(heatCapacity, maximumHeatDissipation, thermalLoad, baseHeatLevel, 1.0);
                 if ((time10 > duration)) {
-                    return new Value(getHeatLevelAtTime(heatCapacity, maximumHeatDissipation, thermalLoad, baseHeatLevel, duration) / 1.5* 100, Value.ValueType.PERCENTAGE);
+                    return new Value(getHeatLevelAtTime(heatCapacity, maximumHeatDissipation, thermalLoad, baseHeatLevel, duration) / 1.5 * 100, Value.ValueType.PERCENTAGE);
                 } else {
                     var time15 = (heatCapacity / 2) / (thermalLoad - maximumHeatDissipation); // displayed heatlevel 66% -> 100% is actual heatlevel 1.0 -> 1.5
                     if ((time10 + time15) > duration) {
-                        return new Value((2 + ((duration - time10) / time15)) / 3* 100, Value.ValueType.SECONDS);
+                        return new Value((2 + ((duration - time10) / time15)) / 3 * 100, Value.ValueType.SECONDS);
                     } else {
                         duration -= time10 + time15;
                         var peakHeatLevel = 1.5 + (duration * (thermalLoad - maximumHeatDissipation) / heatCapacity);
@@ -128,7 +135,7 @@ public class ThermalStats extends Stats implements Template {
                     }
                 }
             } else {
-                return new Value(getEquilibriumHeatLevel(maximumHeatDissipation, thermalLoad) / 1.5* 100, Value.ValueType.PERCENTAGE);
+                return new Value(getEquilibriumHeatLevel(maximumHeatDissipation, thermalLoad) / 1.5 * 100, Value.ValueType.PERCENTAGE);
             }
         }
         return new Value(Double.NaN, Value.ValueType.ERROR);
@@ -370,9 +377,9 @@ public class ThermalStats extends Stats implements Template {
 
     @Override
     protected void update() {
-        this.idleThermals.textProperty().bind(calculateIdleThermals().format());
-        this.thrusterThermals.textProperty().bind(calculateThrusterThermals().format());
-        this.fsdThermals.textProperty().bind(calculateFsdThermals().format());
+        this.idleThermals.addBinding(this.idleThermals.textProperty(), calculateIdleThermals().format());
+        this.thrusterThermals.addBinding(this.thrusterThermals.textProperty(), calculateThrusterThermals().format());
+        this.fsdThermals.addBinding(this.fsdThermals.textProperty(), calculateFsdThermals().format());
     }
 
     @AllArgsConstructor

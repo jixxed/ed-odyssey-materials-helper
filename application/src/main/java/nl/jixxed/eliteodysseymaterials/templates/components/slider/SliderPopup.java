@@ -9,7 +9,6 @@ class SliderPopup extends PopupControl {
     private static final String DEFAULT_STYLE_CLASS = "slider-popup";
 
 
-
     SliderPopup() {
         getStyleClass().add(DEFAULT_STYLE_CLASS);
 
@@ -18,9 +17,13 @@ class SliderPopup extends PopupControl {
 
     private DoubleProperty value = new SimpleDoubleProperty();
 
-    DoubleProperty valueProperty() { return value; }
+    DoubleProperty valueProperty() {
+        return value;
+    }
 
-    double getValue() { return value.get(); }
+    double getValue() {
+        return value.get();
+    }
 
     void setValue(double value) {
         this.value.set(value);

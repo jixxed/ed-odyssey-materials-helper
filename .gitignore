@@ -18,3 +18,5 @@ application/out
 /application/local.properties
 todo.txt
 ship.full
+application/src/main/resources/css/sass/main.css
+application/src/main/resources/css/sass/main.css.map

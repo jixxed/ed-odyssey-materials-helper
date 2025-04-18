@@ -1,0 +1,20 @@
+.horizons-tab {
+  @include tab;
+}
+
+.horizons-tab-content {
+  -fx-background-color: $background-color-dark;
+  @import "colonisation";
+  @import "commodities";
+  @import "engineers";
+  @import "materials";
+  @import "menu";
+  @import "powerplay";
+  @import "search";
+  @import "shipbuilder";
+  @import "wishlist";
+
+  .horizons-tab-pane {
+    @include tabpane;
+  }
+}

@@ -1,0 +1,39 @@
+.engineers-tab {
+  @include tab;
+}
+
+.engineers-tab-content {
+  @include scroll-pane-content;
+
+  .engineer-grid {
+    @include hvGap(0.25em);
+
+    .engineer-card {
+      @include engineer-card;
+
+      .segmented-bar {
+        @include fixedWidth(17.5em);
+        @include fixedHeight(1em);
+
+        @include segmented-bar-straight;
+
+        .segment {
+          -fx-font-weight: bold;
+          -fx-text-overrun: clip;
+
+          .label {
+            -fx-text-fill: $text-color-black;
+          }
+        }
+      }
+
+      .grade-bar-image {
+        -fx-min-height: 2.2em;
+        -fx-pref-height: 2.2em;
+        -fx-max-height: 2.2em;
+        -fx-fit-to-height: true;
+      }
+    }
+
+  }
+}
