@@ -10,7 +10,6 @@ import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishl
 import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishlistModuleBlueprintTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist.OdysseyWishlistBlueprintTemplate;
 
-import java.util.List;
 import java.util.Map;
 
 public sealed interface WishlistBlueprintTemplate<E extends BlueprintName<E>> extends DestroyableComponent permits HorizonsWishlistBlueprintTemplate, OdysseyWishlistBlueprintTemplate, HorizonsWishlistModuleBlueprintTemplate {
@@ -32,7 +31,7 @@ public sealed interface WishlistBlueprintTemplate<E extends BlueprintName<E>> ex
     void setVisibility(boolean b);
 
 
-    void addWishlistIngredients(final List<Ingredient> wishlistIngredients);
+//    void addWishlistIngredients(final List<Ingredient> wishlistIngredients);
 
     String getWishlistUUID();
 

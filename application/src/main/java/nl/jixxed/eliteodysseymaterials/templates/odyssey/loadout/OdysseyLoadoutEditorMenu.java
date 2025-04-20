@@ -133,7 +133,6 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                     LoadoutService.deleteLoadoutSet(this.activeLoadoutSetUUID, commander);
                     Platform.runLater(this::refreshLoadoutSetSelect);
-
                 });
             }
         };

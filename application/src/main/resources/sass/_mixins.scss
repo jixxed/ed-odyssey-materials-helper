@@ -300,3 +300,25 @@
     -fx-border-radius: 0 0 0 0;
   }
 }
+
+@mixin popover-help {
+
+  //.popover-menubutton-layout {
+  -fx-background-color: transparent !important;
+  -fx-border-width: 0;
+  //}
+  //
+  //.popover-menubutton-layout > .border {
+  //  -fx-stroke: #fff !important;
+  //  -fx-stroke-width: 0.05em !important;
+  //  -fx-fill: #fff !important;
+  //}
+
+  & > .border {
+    -fx-stroke: #fff !important;
+    -fx-stroke-width: 0.1em !important;
+    -fx-fill: #0f0f0f !important; //#35790e !important;
+    //-fx-border-width: 0.01em !important;
+  }
+
+}

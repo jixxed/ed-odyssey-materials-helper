@@ -153,7 +153,7 @@ public final class OdysseyWishlistBlueprintTemplate extends DestroyableHBox impl
         }
     }
 
-    @Override
+    //    @Override
     public void addWishlistIngredients(final List<Ingredient> wishlistIngredients) {
         this.wishlistIngredients.clear();
         this.otherIngredients.clear();

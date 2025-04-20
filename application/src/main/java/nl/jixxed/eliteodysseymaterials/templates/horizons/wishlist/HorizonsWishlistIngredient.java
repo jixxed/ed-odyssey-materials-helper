@@ -65,6 +65,7 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
     private Integer availableShip = 0;
     private Integer availableFleetCarrier = 0;
     private Integer remaining = 0;
+    private Integer remainingFull = 0;
     private List<PathItem<HorizonsBlueprintName>> pathItems = new ArrayList<>();
     final BooleanProperty showRemaining;
     final BooleanProperty hideCompleted;
@@ -165,20 +166,32 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
                 .withVisibilityProperty(remainingLabel.visibleProperty().not())
                 .withManagedProperty(remainingLabel.visibleProperty().not())
                 .build();
+        HBox.setHgrow(requiredLabel, Priority.ALWAYS);
+        HBox.setHgrow(remainingLabel, Priority.ALWAYS);
+        HBox.setHgrow(availableLabel, Priority.ALWAYS);
+        HBox.setHgrow(requiredAmountLabel, Priority.ALWAYS);
+        HBox.setHgrow(remainingAmountLabel, Priority.ALWAYS);
+        HBox.setHgrow(availableAmountLabel, Priority.ALWAYS);
 
 
 //        this.requiredAmountLabel.setText(getLeftAmountString());
-        HBox.setHgrow(this.requiredAmountLabel, Priority.ALWAYS);
+//        HBox.setHgrow(this.requiredAmountLabel, Priority.ALWAYS);
 //        this.availableAmountLabel.setText(getRightAmountString());
 
         DestroyableHBox firstLine = BoxBuilder.builder()
+                .withStyleClass("title-line")
                 .withNodes(this.image, nameLabel)
                 .buildHBox();
 //        this.firstLine.addBinding(this.firstLine.prefHeightProperty(), this.nameLabel.heightProperty());
         DestroyableHBox secondLine = BoxBuilder.builder()
+                .withStyleClass("amount-line")
                 .withNodes(requiredLabel, this.requiredAmountLabel, new GrowingRegion(), this.availableAmountLabel, availableLabel, this.remainingAmountLabel, remainingLabel)
                 .buildHBox();
-        this.getNodes().addAll(firstLine, new GrowingRegion(), secondLine, progressbar);
+        final DestroyableVBox text = BoxBuilder.builder()
+                .withStyleClass("text-lines")
+                .withNodes(firstLine, new GrowingRegion(), secondLine)
+                .buildVBox();
+        this.getNodes().addAll(text, progressbar);
 
         installPopOver();
 
@@ -333,6 +346,7 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("filled"), availableShip >= required);
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("partial"), availableShip < required && availableShip + availableFleetCarrier >= required);
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("search"), matchesSearch());
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("filter"), this.blueprint != null && required == 0);
     }
 
     private boolean matchesSearch() {
@@ -441,7 +455,10 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
             count(blueprint);
         }
         remaining = Math.max(0, required - availableShip);
-        completed.set(remaining.equals(0));
+        if (blueprint == null) {
+            remainingFull = remaining;
+        }
+        completed.set(remainingFull.equals(0));
     }
 
     private void defaults() {
@@ -472,8 +489,9 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
 
     private void add(HorizonsBlueprint blueprint, Double percentage) {
         Map<HorizonsMaterial, Integer> materials = blueprint.getMaterialCollection(this.horizonsMaterial.getClass());
-        if (materials.isEmpty() || percentage < 0.2) return;
+        if (materials.isEmpty() || percentage < 0.2 || !materials.containsKey(this.horizonsMaterial)) return;
 
+        final Integer amount = materials.get(this.horizonsMaterial);
         if (blueprint instanceof HorizonsModuleBlueprint moduleBlueprint) {
             final Integer minRank = blueprint.getEngineers().stream()
                     .map(eng -> ApplicationState.getInstance().getEngineerRank(eng))
@@ -485,14 +503,13 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
                     .orElse(0);
 
             final Engineer engineer = getCurrentEngineerForBlueprint(blueprint, pathItems).orElseGet(() -> getWorstEngineer(blueprint));
-
-            minimum += (int) Math.ceil(percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(maxRank, moduleBlueprint.getHorizonsBlueprintType()));
-            required += (int) Math.ceil(percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(engineer, moduleBlueprint.getHorizonsBlueprintType()));
-            maximum += (int) Math.ceil(percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(minRank, moduleBlueprint.getHorizonsBlueprintType()));
+            minimum += (int) Math.ceil(amount * percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(maxRank, moduleBlueprint.getHorizonsBlueprintType()));
+            required += (int) Math.ceil(amount * percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(engineer, moduleBlueprint.getHorizonsBlueprintType()));
+            maximum += (int) Math.ceil(amount * percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(minRank, moduleBlueprint.getHorizonsBlueprintType()));
         } else {
-            minimum += 1;
-            required += 1;
-            maximum += 1;
+            minimum += amount;
+            required += amount;
+            maximum += amount;
         }
 
     }

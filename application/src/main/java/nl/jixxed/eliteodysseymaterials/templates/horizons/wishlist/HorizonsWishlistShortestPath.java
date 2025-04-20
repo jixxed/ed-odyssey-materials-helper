@@ -37,6 +37,7 @@ public class HorizonsWishlistShortestPath extends DestroyableVBox implements Des
     @SuppressWarnings("unchecked")
     @Override
     public void initComponents() {
+        this.getStyleClass().add("shortest-path");
         final List<PathItem<HorizonsBlueprintName>> pathItems = getPathItems();
 
         this.shortestPathFlow = ShortestPathFlowBuilder.<HorizonsBlueprintName>builder()
@@ -47,7 +48,7 @@ public class HorizonsWishlistShortestPath extends DestroyableVBox implements Des
         this.shortestPathFlow.addBinding(this.shortestPathFlow.managedProperty(), Bindings.greaterThan(Bindings.size(this.shortestPathFlow.getItems()), 0));
 
         this.travelPathLabel = LabelBuilder.builder()
-                .withStyleClass(WISHLIST_HEADER_CLASS)
+                .withStyleClass("title")
                 .withText("tab.wishlist.travel.path")
                 .withVisibilityProperty(Bindings.greaterThan(Bindings.size(this.shortestPathFlow.getItems()), 0))
                 .withManagedProperty(Bindings.greaterThan(Bindings.size(this.shortestPathFlow.getItems()), 0))

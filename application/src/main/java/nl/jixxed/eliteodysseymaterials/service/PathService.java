@@ -34,11 +34,12 @@ public class PathService {
 
     public static List<PathItem<HorizonsBlueprintName>> calculateHorizonsShortestPath2(final List<HorizonsWishlistBlueprint> wishlistBlueprints) {
         if (LocationService.getCurrentStarSystem().equals(lastHorizonsStarSystem) && wishlistBlueprints.equals(lastHorizonsWishlistBlueprints)) {
-            log.info("Shortest path horizons cache hit");
+//            log.info("Shortest path horizons cache hit");
             return lastHorizonsCalculation;
         }
         final LinkedHashSet<HorizonsEngineeringBlueprint> distinctRecipes = wishlistBlueprints.stream()
                 .map(WishlistBlueprint::getBlueprint)
+                .filter(HorizonsEngineeringBlueprint.class::isInstance)
                 .map(HorizonsEngineeringBlueprint.class::cast)
                 .filter(distinctByKey2(PathService::getKey2))
                 .sorted(Comparator.comparing(HorizonsEngineeringBlueprint::hasSingleEngineerPerRegion)

@@ -6,483 +6,538 @@
   @include scroll-pane-content;
 
   .wishlist-content {
-    -fx-spacing: 10;
-    -fx-padding: 5;
+    -fx-spacing: 0.25em;
 
-    .materials {
-      .material {
-        -fx-background-color: #0f0f0f;
-        -fx-border-color: black;
-        -fx-min-height: 2.5em;
-        -fx-max-width: 21em;
-        -fx-min-width: 21em;
+    .wishlist-menu {
+      -fx-spacing: 0.25em;
+
+      .wishlist-select {
+        -fx-min-width: 10em;
+        -fx-pref-width: 35em;
+        -fx-max-width: 35em;
+      }
+
+      .wishlist-newname {
+        -fx-min-width: 20em;
+        //-fx-background-insets: 1;
+        //-fx-background-radius: 0, 0;
+        //-fx-border-width: 1;
+        -fx-border-color: #2e2e2e;
+      }
+    }
+
+    .blueprints {
+      .wishlist-blueprints {
+        -fx-spacing: 0.5em;
+
+      }
+
+      .title-bar {
+        @include fixedHeight(3em);
+        -fx-spacing: 0.5em;
         -fx-alignment: center-left;
 
-        &:filled {
-          .ingredient-progressbar {
-            .present-ship {
-              -fx-background-color: $progress-bar-color-green;
-            }
-          }
-
-          .quantity, .required, .remaining, .available {
-            -fx-text-fill: $text-color-green;
-          }
+        .title {
+          -fx-font-size: 1.35em;
+          -fx-font-weight: bold;
+          -fx-text-alignment: center;
         }
 
-        &:partial {
-          .ingredient-progressbar {
-            .present-ship {
-              -fx-background-color: $progress-bar-color-green;
-            }
-          }
-
-          .quantity, .required, .remaining, .available {
-            -fx-text-fill: $text-color-yellow;
-          }
-        }
-
-        &:search {
-          -fx-border-color: $border-color-yellow;
-        }
-
-        .ingredient-progressbar {
-          @include segmented-bar-straight;
-          @include fixedHeight(0.5em);
-
-          .present-ship {
-            -fx-background-color: $progress-bar-color-red;
-          }
-
-          .present-fleet-carrier {
-            -fx-background-color: $progress-bar-color-yellow;
-          }
-
-          .missing-for-minimum {
-            -fx-background-color: $progress-bar-color-grey;
-          }
-
-          .missing-for-required {
-            -fx-background-color: $progress-bar-color-light-grey;
-          }
-
-          .missing-for-maximum {
-            -fx-background-color: $progress-bar-color-white;
-          }
-        }
-
-        .image {
-          @include fixedWidth(2em);
+        .help-image {
           @include fixedHeight(2em);
-          -fx-fit-to-height: true;
-          -fx-fit-to-width: true;
+          @include fixedWidth(2em);
+          -fx-cursor: hand;
         }
 
-        .name {
-          -fx-label-padding: 5;
+        @at-root {
+          .horizons-wishlist-blueprints-help-popover {
+            @include popover-help;
+
+            .help-popover {
+              .hint-line {
+                -fx-spacing: 0.5em;
+              }
+
+              .wishlist-hint-explain {
+                -fx-text-fill: $text-color-white;
+                -fx-max-width: 30em;
+                -fx-wrap-text: true;
+                -fx-font-style: italic;
+              }
+
+              .wishlist-hint-white {
+                -fx-text-fill: $text-color-white;
+                -fx-min-width: 5em;
+                -fx-font-style: italic;
+              }
+
+              .wishlist-hint-yellow {
+                -fx-min-width: 5em;
+                -fx-text-fill: $text-color-yellow;
+                -fx-font-style: italic;
+              }
+
+              .wishlist-hint-green {
+                -fx-min-width: 5em;
+                -fx-text-fill: $text-color-green;
+                -fx-font-style: italic;
+              }
+            }
+          }
+        }
+      }
+
+      .category {
+        .category-title {
+          //-fx-font-size: 1em;
+          -fx-min-height: 2em;
+          //-fx-font-weight: normal;
+          -fx-min-width: 20em;
+        }
+
+        .list {
+          @include hvGap(0.25em);
+
+          .blueprint {
+            -fx-background-color: $background-color-dark;
+
+            &:filled {
+
+
+              .name {
+                -fx-text-fill: $text-color-green;
+              }
+            }
+
+            &:partial {
+
+
+              .name {
+                -fx-text-fill: $text-color-yellow;
+              }
+            }
+
+            .visible-image {
+
+              -fx-max-width: 2em;
+              -fx-max-height: 2em;
+              -fx-pref-width: 2em;
+              -fx-pref-height: 2em;
+              -fx-fit-to-height: true;
+              -fx-fit-to-width: true;
+              -fx-alignment: center;
+            }
+
+            .visible-button {
+              -fx-background-color: #0f0f0f;
+              -fx-cursor: hand;
+              -fx-background-insets: 0 0 0 0;
+              -fx-max-height: 2em;
+              -fx-max-width: 2em;
+              -fx-padding: 2;
+              -fx-border-color: black;
+              -fx-border-width: 0;
+              //-fx-alignment: center-left;
+
+              &:armed,
+              &:pressed,
+              &:selected,
+              &:visited,
+              &:selected:focused,
+              &:focused {
+                -fx-background-color: #0f0f0f;
+                -fx-cursor: hand;
+                -fx-background-insets: 0 0 0 0;
+                -fx-max-height: 2em;
+                -fx-max-width: 2em;
+                -fx-padding: 1;
+                -fx-border-color: black;
+                -fx-border-width: 0;
+              }
+
+              &:hover {
+                -fx-background-color: #303235;
+              }
+            }
+
+            .name {
+              -fx-label-padding: 5;
+              -fx-text-fill: white;
+              -fx-cursor: hand;
+              -fx-alignment: center;
+              -fx-text-alignment: center;
+            }
+
+            .remove, .config {
+              -fx-background-color: #4f4f4f;
+              -fx-background-insets: 0 0 0 0;
+              -fx-border-color: black;
+              -fx-text-fill: #fff;
+              -fx-border-width: 0;
+              -fx-cursor: hand;
+              -fx-max-height: 2em;
+              -fx-max-width: 2em;
+              -fx-min-width: 2em;
+              -fx-padding: 2;
+              -fx-focus-traversable: false;
+
+
+              &:hover {
+                -fx-background-color: #fff;
+                -fx-text-fill: black;
+              }
+
+              &:armed,
+              &:pressed,
+              &:selected,
+              &:visited,
+              &:selected:focused,
+              &:focused {
+                -fx-background-color: black;
+                -fx-background-insets: 0 0 0 0;
+                -fx-border-color: black;
+                -fx-text-fill: #fff;
+                -fx-border-width: 0;
+                -fx-cursor: hand;
+              }
+
+              &:focused {
+                -fx-background-color: #2e92df;
+              }
+
+              &:pressed {
+                -fx-background-color: black;
+              }
+            }
+
+          }
+        }
+      }
+    }
+
+    .materials {
+
+      .title-bar {
+        @include fixedHeight(3em);
+        -fx-spacing: 0.5em;
+        -fx-alignment: center-left;
+
+        .title {
+          -fx-font-size: 1.35em;
           -fx-font-weight: bold;
+          -fx-text-alignment: center;
         }
 
-        .quantity {
-          -fx-font-weight: bold;
-          -fx-text-fill: $text-color-red;
+        .help-image {
+          @include fixedHeight(2em);
+          @include fixedWidth(2em);
+          -fx-cursor: hand;
         }
 
-        .required {
+        @at-root {
+          .horizons-wishlist-materials-help-popover {
+            @include popover-help;
 
-          -fx-pref-width: 50;
-          -fx-padding: 5;
-          -fx-text-alignment: right;
-          -fx-text-fill: $text-color-red;
+            .help-popover {
+              .hint-line {
+                -fx-spacing: 0.5em;
+              }
+
+              .wishlist-hint-explain {
+                -fx-text-fill: $text-color-white;
+                -fx-max-width: 30em;
+                -fx-wrap-text: true;
+                -fx-font-style: italic;
+              }
+
+              .wishlist-hint-red {
+                -fx-text-fill: $text-color-red;
+                -fx-min-width: 5em;
+                -fx-font-style: italic;
+              }
+
+              .wishlist-hint-yellow {
+                -fx-min-width: 5em;
+                -fx-text-fill: $text-color-yellow;
+                -fx-font-style: italic;
+              }
+
+              .wishlist-hint-green {
+                -fx-min-width: 5em;
+                -fx-text-fill: $text-color-green;
+                -fx-font-style: italic;
+              }
+            }
+          }
         }
+      }
 
-        .remaining {
+      .flows {
+        -fx-spacing: 0.5em;
 
-          -fx-pref-width: 50;
-          -fx-padding: 5;
-          -fx-text-alignment: right;
-          -fx-text-fill: $text-color-red;
+        .materials-flow {
+          @include hvGap(0.25em);
+
+          .material {
+            -fx-background-color: #0f0f0f;
+            -fx-border-color: black;
+            -fx-min-height: 2.5em;
+            -fx-max-width: 21em;
+            -fx-min-width: 21em;
+            -fx-alignment: center-left;
+
+            &:filled {
+              .ingredient-progressbar {
+                .present-ship {
+                  -fx-background-color: $progress-bar-color-green;
+                }
+              }
+
+              .amount-line {
+                .quantity, .required, .remaining, .available {
+                  -fx-text-fill: $text-color-green;
+                }
+              }
+            }
+
+            &:partial {
+              .ingredient-progressbar {
+                .present-ship {
+                  -fx-background-color: $progress-bar-color-green;
+                }
+              }
+
+              .amount-line {
+                .quantity, .required, .remaining, .available {
+                  -fx-text-fill: $text-color-yellow;
+                }
+              }
+            }
+
+            &:search {
+              -fx-border-color: $border-color-yellow;
+            }
+
+            &:filter {
+              -fx-background-color: $background-color-light;
+
+              .title-line {
+                .name {
+                  -fx-text-fill: $text-color-black;
+                }
+
+                .image {
+                  -fx-opacity: 0.5;
+                }
+              }
+
+              .amount-line {
+                .quantity {
+                  -fx-text-fill: $text-color-black;
+                }
+
+                .required, .remaining, .available {
+                  -fx-text-fill: $text-color-black;
+                }
+              }
+            }
+
+            .ingredient-progressbar {
+              @include segmented-bar-straight;
+              @include fixedHeight(0.5em);
+
+              .present-ship {
+                -fx-background-color: $progress-bar-color-red;
+              }
+
+              .present-fleet-carrier {
+                -fx-background-color: $progress-bar-color-yellow;
+              }
+
+              .missing-for-minimum {
+                -fx-background-color: $progress-bar-color-grey;
+              }
+
+              .missing-for-required {
+                -fx-background-color: $progress-bar-color-light-grey;
+              }
+
+              .missing-for-maximum {
+                -fx-background-color: $progress-bar-color-white;
+              }
+            }
+
+            .title-line {
+              -fx-spacing: 0.25em;
+
+              .image {
+                @include fixedWidth(2em);
+                @include fixedHeight(2em);
+                -fx-fit-to-height: true;
+                -fx-fit-to-width: true;
+              }
+
+              .name {
+                @include fixedHeight(2em);
+                -fx-font-weight: bold;
+                -fx-alignment: center-left;
+              }
+            }
+
+            .text-lines {
+              -fx-padding: 0.25em;
+            }
+
+            .amount-line {
+              -fx-spacing: 0.25em;
+
+              .quantity {
+                -fx-font-weight: bold;
+                -fx-text-fill: $text-color-red;
+              }
+
+              .required, .remaining, .available {
+                -fx-text-alignment: right;
+                -fx-text-fill: $text-color-red;
+              }
+            }
+          }
         }
+      }
 
-        .available {
+    }
 
-          -fx-pref-width: 50;
-          -fx-padding: 5;
-          -fx-text-alignment: right;
-          -fx-text-fill: $text-color-red;
+    .shortest-path {
+      .title {
+        -fx-font-size: 1.35em;
+        -fx-min-height: 2em;
+        -fx-font-weight: bold;
+      }
+
+      .shortest-path-flow {
+        -fx-hgap: 0.25em;
+        -fx-vgap: 0.25em;
+
+        .shortest-path-item {
+          -fx-background-color: #0f0f0f;
+          -fx-padding: 0.25em;
+
+          .distance-title, .blueprints-title {
+            -fx-font-size: 1em;
+            -fx-font-weight: bold;
+          }
+
+          .copyable-location {
+            @include copyable-location;
+          }
+
+          .distance-line {
+            -fx-padding: 0 0 1em 0;
+            -fx-spacing: 0.25em;
+
+            .distance {
+            }
+          }
+
+          .title-line {
+            .engineer, .index {
+              -fx-font-size: 2em;
+            }
+          }
+
+          .blueprint {
+            -fx-text-fill: $text-color-blue;
+
+            &:hover {
+              -fx-text-fill: lighten($text-color-blue, 10%);
+              -fx-cursor: hand;
+              //-fx-underline: true;
+            }
+          }
+
+          .buttons {
+            -fx-padding: 1em 0 0 0;
+            -fx-spacing: 0.25em;
+          }
         }
       }
     }
   }
 
-  .wishlist-recipes {
-    -fx-hgap: 0.75em;
-    -fx-vgap: 0.75em;
-  }
-
-  .wishlist-ingredients {
-    -fx-hgap: 0.25em;
-    -fx-vgap: 0.25em;
-  }
-
-  .wishlist-blueprints {
-    -fx-spacing: 0.25em;
-  }
-
-  .ingredient {
-    -fx-border-color: #0f0f0f;
-    -fx-alignment: center-left;
-    -fx-min-height: 2.5em;
-    -fx-max-width: 17.4em;
-    -fx-min-width: 17.4em;
-    -fx-background-color: #0f0f0f;
-  }
-
-  .wishlist-ingredient {
-    -fx-border-color: black;
-    -fx-min-height: 2.5em;
-    -fx-max-width: 21em;
-    -fx-min-width: 21em;
-    -fx-alignment: center-left;
-  }
-
-  .wishlist-ingredient > .label {
-    -fx-text-fill: black;
-  }
-
-  .wishlist-ingredient-name {
-    -fx-label-padding: 5;
-    -fx-font-weight: bold;
-  }
-
-  .wishlist-ingredient > .available {
-    -fx-pref-width: 50;
-    -fx-padding: 5;
-    -fx-text-alignment: right;
-  }
-
-  .wishlist-ingredient > .required {
-    -fx-pref-width: 50;
-    -fx-padding: 5;
-    -fx-text-alignment: right;
-  }
-
-  .trade-ingredient {
-    -fx-min-height: 2.5em;
-    -fx-max-width: 21em;
-    -fx-min-width: 21em;
-  }
-
-  .wishlist-select {
-    -fx-min-width: 10em;
-    -fx-pref-width: 35em;
-    -fx-max-width: 35em;
-  }
-
-  .wishlist-newname {
-    -fx-min-width: 20em;
-    -fx-background-insets: 1;
-    -fx-background-radius: 0, 0;
-    -fx-border-width: 1;
-    -fx-border-color: #2e2e2e;
-  }
-
-  .wishlist-item > .text {
-    -fx-text-fill: black;
-  }
-
-  .wishlist-item {
-    /*-fx-background-radius: 5;*/
-    -fx-background-color: #0f0f0f;
-    -fx-text-fill: white;
-  }
-
-  .wishlist-item > .wishlist-label {
-    -fx-label-padding: 5;
-    -fx-text-fill: white;
-    -fx-cursor: hand;
-    -fx-alignment: center;
-    -fx-text-alignment: center;
-  }
-
-  .wishlist-item-button {
-    -fx-background-color: #4f4f4f;
-    -fx-background-insets: 0 0 0 0;
-    -fx-border-color: black;
-    -fx-text-fill: #fff;
-    -fx-border-width: 0;
-    -fx-cursor: hand;
-    -fx-max-height: 2em;
-    -fx-max-width: 2em;
-    -fx-min-width: 2em;
-    -fx-padding: 2;
-    -fx-focus-traversable: false;
-  }
-
-  .wishlist-item-button:hover {
-    -fx-background-color: #fff;
-    -fx-text-fill: black;
-  }
-
-  .wishlist-item-button:armed,
-  .wishlist-item-button:pressed,
-  .wishlist-item-button:selected,
-  .wishlist-item-button:visited,
-  .wishlist-item-button:selected:focused,
-  .wishlist-item-button:focused {
-    -fx-background-color: black;
-    -fx-background-insets: 0 0 0 0;
-    -fx-border-color: black;
-    -fx-text-fill: #fff;
-    -fx-border-width: 0;
-    -fx-cursor: hand;
-  }
-
-  .wishlist-item-button:focused {
-    -fx-background-color: #2e92df;
-  }
-
-  .wishlist-item-button:pressed {
-    -fx-background-color: black;
-  }
-
-  .wishlist-lowlight.ingredient-filled {
-    -fx-background-color: rgba(15, 15, 15, 0.05);
-    -fx-text-fill: rgba(0, 0, 0, 0.05) !important;
-  }
-
-  .wishlist-lowlight.ingredient-unfilled {
-    -fx-background-color: rgba(15, 15, 15, 0.05);
-    -fx-text-fill: rgba(0, 0, 0, 0.05) !important;
-  }
-
-  .wishlist-lowlight.ingredient-filled-partial {
-    -fx-background-color: rgba(15, 15, 15, 0.05);
-    -fx-text-fill: rgba(0, 0, 0, 0.05) !important;
-  }
-
-  .wishlist-lowlight.ingredient-filled .label {
-    -fx-text-fill: rgba(0, 0, 0, 0.5) !important;
-  }
-
-  .wishlist-lowlight.ingredient-unfilled .label {
-    -fx-text-fill: rgba(0, 0, 0, 0.5) !important;
-  }
-
-  .wishlist-lowlight.ingredient-filled-partial .label {
-    -fx-text-fill: rgba(0, 0, 0, 0.5) !important;
-  }
-
-  .wishlist-item.wishlist-highlight .wishlist-label {
-    -fx-background-color: #4f4f4f;
-    -fx-text-fill: #2e92df;
-  }
-
-  /*.wishlist-item.wishlist-highlight {*/
-  /*    -fx-background-color: #4f4f4f;*/
-  /*    -fx-text-fill: #2e92df;*/
-  /*}*/
-  .recipe-wishlist-count {
-    -fx-background-radius: 15;
-    -fx-background-color: white;
-    -fx-label-padding: 6;
-    -fx-font-weight: bold;
-    -fx-text-fill: black;
-  }
-
-  .recipe-wishlist-count-box {
-    -fx-spacing: 10;
-    -fx-alignment: top-right;
-  }
-
-  .wishlist-highlight > .required {
-    -fx-font-weight: bold;
-  }
-
-  .wishlist-highlight > .available {
-    -fx-font-weight: bold;
-  }
-
-  .wishlist-highlight > .name {
-    -fx-font-weight: bold;
-  }
-
-  .wishlist-header {
-    -fx-font-size: 1.35em;
-    -fx-min-height: 2em;
-    -fx-font-weight: bold;
-  }
-
-  .wishlist-label {
-    -fx-label-padding: 5;
-    -fx-max-height: 2em;
-    -fx-pref-height: 2em;
-    -fx-min-height: 2em;
-    -fx-alignment: center;
-  }
-
-  .wishlist-visible-image {
-    -fx-max-width: 2em;
-    -fx-max-height: 2em;
-    -fx-pref-width: 2em;
-    -fx-pref-height: 2em;
-    -fx-fit-to-height: true;
-    -fx-fit-to-width: true;
-    -fx-alignment: center;
-  }
-
-  .wishlist-visible-icon {
-    -fx-background-color: #0f0f0f;
-    -fx-cursor: hand;
-    -fx-background-insets: 0 0 0 0;
-    -fx-max-height: 2em;
-    -fx-max-width: 2em;
-    -fx-padding: 2;
-    -fx-border-color: black;
-    -fx-border-width: 0;
-    -fx-alignment: center-left;
-  }
-
-  .wishlist-visible-icon:armed,
-  .wishlist-visible-icon:pressed,
-  .wishlist-visible-icon:selected,
-  .wishlist-visible-icon:visited,
-  .wishlist-visible-icon:selected:focused,
-  .wishlist-visible-icon:focused {
-    -fx-background-color: #0f0f0f;
-    -fx-cursor: hand;
-    -fx-background-insets: 0 0 0 0;
-    -fx-max-height: 2em;
-    -fx-max-width: 2em;
-    -fx-padding: 1;
-    -fx-border-color: black;
-    -fx-border-width: 0;
-  }
-
-  .wishlist-visible-icon:hover {
-    -fx-background-color: #303235;
-  }
-
-  .wishlist-visible-icon.visible {
-    -fx-background-color: #0f0f0f;
-    -fx-cursor: hand;
-    -fx-background-insets: 0 0 0 0;
-    -fx-max-height: 2em;
-    -fx-max-width: 2em;
-    -fx-padding: 2;
-    -fx-border-color: black;
-    -fx-border-width: 0;
-  }
-
-  .wishlist-visible-icon.visible:armed,
-  .wishlist-visible-icon.visible:pressed,
-  .wishlist-visible-icon.visible:selected,
-  .wishlist-visible-icon.visible:visited,
-  .wishlist-visible-icon.visible:selected:focused,
-  .wishlist-visible-icon.visible:focused {
-    -fx-background-color: #0f0f0f;
-    -fx-cursor: hand;
-    -fx-background-insets: 0 0 0 0;
-    -fx-max-height: 2em;
-    -fx-max-width: 2em;
-    -fx-padding: 1;
-    -fx-border-color: black;
-    -fx-border-width: 0;
-  }
-
-  .wishlist-visible-icon.visible:hover {
-    -fx-background-color: #303235;
-  }
-
-  .wishlist-category {
-    -fx-min-width: 246px;
-    -fx-padding: 5px;
-  }
-
-  .wishlist-item .label.wishlist-craftable {
-    -fx-text-fill: #89d07f;
-  }
-
-  .wishlist-item .label.wishlist-craftable:hover {
-    -fx-text-fill: #2e92df;
-  }
-
-  .wishlist-item .label.wishlist-craftable-with-trade {
-    -fx-text-fill: #dcc030;
-  }
-
-  .wishlist-item .label.wishlist-craftable-with-trade:hover {
-    -fx-text-fill: #2e92df;
-  }
-
-  .wishlist-checkbox {
-    -fx-padding: 5;
-    -fx-min-height: 3em;
-  }
-
-  .wishlist-travel-path-table {
-    -fx-fixed-cell-size: 2.5em;
-    -fx-spacing: 5;
-    -fx-hbar-policy: never;
-  }
-
-  .wishlist-travel-path-table *.scroll-bar:horizontal *.increment-button,
-  .wishlist-travel-path-table *.scroll-bar:horizontal *.decrement-button {
-    -fx-background-color: null;
-    -fx-background-radius: 0;
-    -fx-background-insets: 0;
-    -fx-padding: 0;
-  }
-
-  .wishlist-travel-path-table *.scroll-bar:horizontal *.increment-arrow,
-  .wishlist-travel-path-table *.scroll-bar:horizontal *.decrement-arrow {
-    -fx-background-color: null;
-    -fx-background-radius: 0;
-    -fx-background-insets: 0;
-    -fx-padding: 0;
-    -fx-shape: null;
-  }
-
-
-  .shortest-path-flow {
-    -fx-hgap: 0.25em;
-    -fx-vgap: 0.25em;
-  }
-
-  .shortest-path-item {
-    -fx-background-color: #0f0f0f;
-    -fx-padding: 0.3em;
-  }
-
-  .shortest-path-item-label {
-    -fx-font-size: 1em;
-    -fx-font-weight: bold;
-    -fx-padding: 0em 0em 0em 0.5em;
-  }
-
-  .shortest-path-item-label-value {
-    -fx-padding: 0em 0.5em 0em 0.5em;
-    -fx-text-fill: #2e92df;
-  }
-
-  .shortest-path-item-label-big {
-    -fx-font-size: 2em;
-    -fx-padding: 0em 0.1em 0em 1em;
-  }
-
-  .shortest-path-item-label-blueprint:hover {
-    -fx-text-fill: #2e92df;
-    -fx-cursor: hand;
-    -fx-underline: true;
-  }
-
-  .shortest-path-item-button {
-    -fx-hgap: 0.25em;
-    -fx-spacing: 0.25em;
-  }
-
-  .shortest-path-item-spacer {
-    -fx-min-height: 1em;
-  }
-
 }
+
+//
+//.wishlist-rolls-select > .button {
+//  -fx-min-height: 2em;
+//  -fx-pref-height: 2em;
+//  -fx-max-height: 2em;
+//  -fx-padding: 0.1em;
+//  -fx-min-width: 1.2em;
+//  -fx-focus-traversable: false;
+//}
+//
+//.wishlist-rolls-select > .text-field {
+//  -fx-min-width: 2.5em;
+//  -fx-pref-width: 2.5em;
+//  -fx-max-width: 2.5em;
+//  -fx-min-height: 2em;
+//  -fx-pref-height: 2em;
+//  -fx-max-height: 2em;
+//  -fx-focus-traversable: false;
+//}
+//
+//.wishlist-rolls-label {
+//  -fx-text-alignment: center;
+//  -fx-alignment: center;
+//  -fx-min-height: 2em;
+//  -fx-max-height: 2em;
+//  -fx-padding: 0 0.5em 0 0.2em;
+//}
+//
+//.grade-selects {
+//  -fx-spacing: 0.2em;
+//}
+//
+//.grade-selects-title {
+//  -fx-font-size: 1.3em;
+//  -fx-max-width: 20.7em;
+//  -fx-wrap-text: true;
+//}
+//
+//.grade-selects-explain {
+//  -fx-font-size: 1.0em;
+//  -fx-font-style: italic;
+//  -fx-max-width: 20.7em;
+//  -fx-wrap-text: true;
+//  -fx-padding: 0.5em 0 1em 0;
+//}
+//
+//.wishlist-hint-box {
+//  -fx-min-width: 3em;
+//}
+//
+//.wishlist-hint-white {
+//  -fx-text-fill: #fff;
+//  -fx-font-style: italic;
+//  -fx-max-width: 30em;
+//  -fx-wrap-text: true;
+//}
+//
+//.wishlist-hint-yellow {
+//  -fx-text-fill: #dcc030;
+//  -fx-font-style: italic;
+//}
+//
+//.wishlist-hint-red {
+//  -fx-text-fill: #ff7c7c;
+//  -fx-font-style: italic;
+//}
+//
+//.wishlist-hint-green {
+//  -fx-text-fill: #89d07f;
+//  -fx-font-style: italic;
+//}
+//
+//.wishlist-tooltip {
+//  -fx-wrap-text: true;
+//}

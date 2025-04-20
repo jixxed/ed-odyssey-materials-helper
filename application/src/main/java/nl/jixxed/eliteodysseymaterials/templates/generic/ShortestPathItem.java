@@ -2,14 +2,14 @@ package nl.jixxed.eliteodysseymaterials.templates.generic;
 
 import javafx.beans.binding.StringBinding;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.*;
+import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
-import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
@@ -36,20 +36,21 @@ class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBox imple
 
     @Override
     public void initComponents() {
+        this.getStyleClass().add("shortest-path-item");
         DestroyableLabel distanceLabel = LabelBuilder.builder()
-                .withStyleClass(SHORTEST_PATH_ITEM_LABEL_STYLE_CLASS)
+                .withStyleClass("distance-title")
                 .withText("tab.wishlist.travel.path.column.distance")
                 .build();
         DestroyableLabel blueprintsLabel = LabelBuilder.builder()
-                .withStyleClass(SHORTEST_PATH_ITEM_LABEL_STYLE_CLASS)
+                .withStyleClass("blueprints-title")
                 .withText("tab.wishlist.travel.path.column.blueprints")
                 .build();
         DestroyableLabel distance = LabelBuilder.builder()
-                .withStyleClass("shortest-path-item-distance")
+                .withStyleClass("distance")
                 .withText(((this.index > 1) ? "tab.wishlist.distance.plus" : "tab.wishlist.distance"), Formatters.NUMBER_FORMAT_2.format(this.pathItem.getDistance()))
                 .build();
         DestroyableLabel engineer = LabelBuilder.builder()
-                .withStyleClass("shortest-path-item-label-big")
+                .withStyleClass("engineer")
                 .withText(this.pathItem.getEngineer().getLocalizationKey())
                 .build();
         List<DestroyableLabel> blueprints = new ArrayList<>(this.pathItem.getRecipes().entrySet().stream()
@@ -77,7 +78,7 @@ class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBox imple
                                 stringBinding = LocaleService.getStringBinding("tab.wishlist.travel.path.column.blueprints.blueprint.odyssey", LocaleService.LocalizationKey.of(entry.getKey().getBlueprintName().getLocalizationKey()), entry.getValue());
                             }
                             return LabelBuilder.builder()
-                                    .withStyleClasses("shortest-path-item-label-value", "shortest-path-item-label-blueprint")
+                                    .withStyleClasses("blueprint")
                                     .withOnMouseClicked(event -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsBlueprintClickEvent(entry.getKey()) : new BlueprintClickEvent(entry.getKey().getBlueprintName())))
                                     .withText(stringBinding
                                     )
@@ -85,27 +86,32 @@ class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBox imple
                         }
                 ).toList());
 
-        this.getStyleClass().add("shortest-path-item");
         if (!Engineer.UNKNOWN.equals(this.pathItem.getEngineer())) {
-            this.getNodes().addAll(BoxBuilder.builder()
-                    .withNodes(engineer, new GrowingRegion(), LabelBuilder.builder()
-                            .withStyleClass("shortest-path-item-label-big")
-                            .withNonLocalizedText("  " + this.index)
-                            .build()).buildHBox());
+            final DestroyableLabel indexLabel = LabelBuilder.builder()
+                    .withStyleClass("index")
+                    .withNonLocalizedText(String.valueOf(this.index))
+                    .build();
+            final DestroyableHBox titleBox = BoxBuilder.builder()
+                    .withStyleClass("title-line")
+                    .withNodes(engineer, new GrowingRegion(), indexLabel)
+                    .buildHBox();
+            this.getNodes().addAll(titleBox);
 
             if (!Engineer.REMOTE_WORKSHOP.equals(this.pathItem.getEngineer())) {
-                addLocation(this.pathItem.getEngineer());
-                this.getNodes().addAll(BoxBuilder.builder()
-                        .withNodes(distanceLabel, distance).buildHBox());
-                this.getNodes().addAll(new DestroyableLabel());
+                final CopyableLocation copyableLocation = new CopyableLocation(this.pathItem.getEngineer().getStarSystem(), this.pathItem.getEngineer().getSettlement().getSettlementName());
+
+                final DestroyableHBox distanceBox = BoxBuilder.builder()
+                        .withStyleClass("distance-line")
+                        .withNodes(distanceLabel, distance)
+                        .buildHBox();
+                this.getNodes().addAll(copyableLocation, distanceBox);
             }
         } else {
-            this.getNodes().addAll(engineer);
+            this.getNodes().add(engineer);
         }
-        this.getNodes().addAll(blueprintsLabel);
+        this.getNodes().add(blueprintsLabel);
         this.getNodes().addAll(blueprints);
-        this.getNodes().addAll(new GrowingRegion("-spacer"));
-//        final String wishlistUUID = this.pathItem.getBlueprints().stream().findFirst().map(WishlistBlueprintTemplate::getWishlistUUID).orElse("");
+        this.getNodes().add(new GrowingRegion());
         if (!ApplicationState.getInstance().getPreferredCommander()
                 .map(commander -> WishlistService.getHorizonsWishlists(commander).getSelectedWishlistUUID().equals(Wishlist.ALL.getUuid()))
                 .orElse(false)) {
@@ -118,7 +124,7 @@ class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBox imple
                     .withOnAction(_ -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsHideWishlistShortestPathItemEvent((PathItem<HorizonsBlueprintName>) this.pathItem) : new HideWishlistShortestPathItemEvent((PathItem<OdysseyBlueprintName>) this.pathItem)))
                     .build();
             this.getNodes().addAll(BoxBuilder.builder()
-                    .withStyleClass("shortest-path-item-button")
+                    .withStyleClass("buttons")
                     .withNodes(hideButton, new GrowingRegion(), removeButton).buildHBox());
         }
     }
@@ -128,34 +134,5 @@ class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBox imple
             return horizonsModuleWishlistBlueprint.getHorizonsBlueprintType();
         }
         return null;
-    }
-
-    private static final String STYLECLASS_MATERIAL_TOOLTIP_LOCATION_LINE = "material-tooltip-location-line";
-
-    private void addLocation(final Engineer engineer) {
-        final DestroyableLabel label = LabelBuilder.builder()
-                .withStyleClass("shortest-path-item-label-value")
-                .withNonLocalizedText(engineer.getSettlement().getSettlementName() + " | " + engineer.getStarSystem().getName() + " ")
-                .build();
-        final DestroyableResizableImageView copyIcon = ResizableImageViewBuilder.builder()
-                .withStyleClass("material-tooltip-copy-icon")
-                .withImage("/images/other/copy.png")
-                .build();
-        final DestroyableStackPane copyIconStackPane = StackPaneBuilder.builder()
-                .withNodes(copyIcon)
-                .build();
-        final DestroyableHBox locationLine = BoxBuilder.builder()
-                .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_LOCATION_LINE)
-                .withNodes(label, copyIconStackPane)
-                .withOnMouseClicked(_ -> {
-                    copyLocationToClipboard(engineer.getStarSystem().getName());
-                    NotificationService.showInformation(NotificationType.COPY, LocaleService.LocaleString.of("notification.clipboard.title"), LocaleService.LocaleString.of("notification.clipboard.system.copied.text"));
-                })
-                .buildHBox();
-        this.getNodes().add(locationLine);
-    }
-
-    private static void copyLocationToClipboard(final String text) {
-        ClipboardHelper.copyToClipboard(text);
     }
 }

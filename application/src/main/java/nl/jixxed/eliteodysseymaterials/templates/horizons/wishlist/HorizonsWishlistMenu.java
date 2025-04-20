@@ -12,7 +12,6 @@ import javafx.util.Duration;
 import nl.jixxed.eliteodysseymaterials.FXApplication;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.export.CsvExporter;
@@ -31,6 +30,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.controlsfx.control.PopOver;
 
 import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -56,6 +56,7 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
 
     @Override
     public void initComponents() {
+        this.getStyleClass().add("wishlist-menu");
         final Set<HorizonsWishlist> items = APPLICATION_STATE.getPreferredCommander()
                 .map(commander -> WishlistService.getHorizonsWishlists(commander).getAllWishlists())
                 .orElse(Collections.emptySet());
@@ -112,8 +113,8 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
                 .withText("horizons.wishlist.coriolis.tooltip")
                 .build());
 
-        final Integer fontSize = FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize();
-        applyFontSizingHack(fontSize);
+//        final Integer fontSize = FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize();
+//        applyFontSizingHack(fontSize);
         this.getNodes().addAll(this.wishlistSelect, this.menuButton, shipBuilderButton, edsyButton, coriolisButton);
     }
 
@@ -151,80 +152,56 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
     }
 
     private EventHandler<ActionEvent> getRenameHandler() {
-        return _ -> {
-            final DestroyableTextField textField = TextFieldBuilder.builder()
-                    .withStyleClasses("root", "wishlist-newname")
-                    .withPromptTextProperty(LocaleService.getStringBinding("tab.wishlist.rename.prompt"))
-                    .build();
-            final DestroyableButton button = ButtonBuilder.builder()
-                    .withText("tab.wishlist.rename")
-                    .build();
-            final DestroyableHBox popOverContent = BoxBuilder.builder()
-                    .withNodes(textField, button).buildHBox();
-            final DestroyablePopOver popOver = PopOverBuilder.builder()
-                    .withStyleClass("popover-menubutton-layout")
-                    .withContent(BoxBuilder.builder()
-                            .withStyleClass("popover-menubutton-box")
-                            .withNodes(new GrowingRegion(), popOverContent, new GrowingRegion())
-                            .buildVBox())
-                    .withDetachable(false)
-                    .withHeaderAlwaysVisible(false)
-                    .withArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER)
-                    .build();
-            popOver.show(this.menuButton);
-            button.setOnAction(_ -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                final HorizonsWishlists wishlists = WishlistService.getHorizonsWishlists(commander);
-                wishlists.renameWishlist(this.activeWishlistUUID, textField.getText());
-                WishlistService.saveHorizonsWishlists(commander, wishlists);
-                textField.clear();
-                refreshWishlistSelect();
-                popOver.hide();
-            }));
-            textField.setOnKeyPressed(event -> {
-                if (event.getCode().equals(KeyCode.ENTER)) {
-                    button.fire();
-                }
-            });
-        };
+        return _ -> showInputPopOver("tab.wishlist.rename", "tab.wishlist.rename.prompt",
+                (commander, input) -> {
+                    final HorizonsWishlists wishlists = WishlistService.getHorizonsWishlists(commander);
+                    wishlists.renameWishlist(this.activeWishlistUUID, input);
+                    WishlistService.saveHorizonsWishlists(commander, wishlists);
+                });
     }
 
     private EventHandler<ActionEvent> getCreateHandler() {
-        return _ -> {
-            final DestroyableTextField textField = TextFieldBuilder.builder()
-                    .withStyleClasses("root", "wishlist-newname")
-                    .withPromptTextProperty(LocaleService.getStringBinding("tab.wishlist.rename.prompt"))
-                    .build();
-            final DestroyableButton button = ButtonBuilder.builder()
-                    .withText("tab.wishlist.create")
-                    .build();
-            final DestroyableHBox popOverContent = BoxBuilder.builder()
-                    .withNodes(textField, button)
-                    .buildHBox();
-            final DestroyablePopOver popOver = PopOverBuilder.builder()
-                    .withStyleClass("popover-menubutton-layout")
-                    .withContent(BoxBuilder.builder()
-                            .withStyleClass("popover-menubutton-box")
-                            .withNodes(new GrowingRegion(), popOverContent, new GrowingRegion())
-                            .buildVBox())
-                    .withDetachable(false)
-                    .withHeaderAlwaysVisible(false)
-                    .withArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER)
-                    .build();
-            popOver.show(this.menuButton);
-            button.setOnAction(eventB -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                final HorizonsWishlists wishlists = WishlistService.getHorizonsWishlists(commander);
-                wishlists.createWishlist(textField.getText());
-                WishlistService.saveHorizonsWishlists(commander, wishlists);
-                textField.clear();
-                refreshWishlistSelect();
-                popOver.hide();
-            }));
-            textField.setOnKeyPressed(ke -> {
-                if (ke.getCode().equals(KeyCode.ENTER)) {
-                    button.fire();
-                }
-            });
-        };
+        return _ -> showInputPopOver("tab.wishlist.create", "tab.wishlist.create.prompt",
+                (commander, input) -> {
+                    final HorizonsWishlists wishlists = WishlistService.getHorizonsWishlists(commander);
+                    wishlists.createWishlist(input);
+                    WishlistService.saveHorizonsWishlists(commander, wishlists);
+                });
+    }
+
+    private void showInputPopOver(String buttonLocaleKey, String textfieldPromptLocaleKey, BiConsumer<Commander, String> inputHandler) {
+        final DestroyableTextField textField = TextFieldBuilder.builder()
+                .withStyleClasses("root", "wishlist-newname")
+                .withPromptTextProperty(LocaleService.getStringBinding(textfieldPromptLocaleKey))
+                .build();
+
+        final DestroyableButton button = ButtonBuilder.builder()
+                .withText(buttonLocaleKey)
+                .build();
+        final DestroyableHBox popOverContent = BoxBuilder.builder()
+                .withNodes(textField, button).buildHBox();
+        final DestroyablePopOver popOver = PopOverBuilder.builder()
+                .withStyleClass("popover-menubutton-layout")
+                .withContent(BoxBuilder.builder()
+                        .withStyleClass("popover-menubutton-box")
+                        .withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox())
+                .withDetachable(false)
+                .withHeaderAlwaysVisible(false)
+                .withCornerRadius(0)
+                .withArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER)
+                .build();
+        popOver.show(this.menuButton);
+        button.setOnAction(_ -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+            inputHandler.accept(commander, textField.getText());
+            textField.clear();
+            refreshWishlistSelect();
+            popOver.hide();
+        }));
+        textField.setOnKeyPressed(ke -> {
+            if (ke.getCode().equals(KeyCode.ENTER)) {
+                button.fire();
+            }
+        });
     }
 
     private Supplier<XSSFWorkbook> getXlsExporter() {
