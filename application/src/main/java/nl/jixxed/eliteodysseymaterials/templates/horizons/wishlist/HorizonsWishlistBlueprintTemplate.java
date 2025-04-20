@@ -25,8 +25,6 @@ import java.util.Map;
 
 public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBox implements WishlistBlueprintTemplate<HorizonsBlueprintName>, DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private static final String VISIBLE_STYLE_CLASS = "visible";
-    private static final String WISHLIST_VISIBLE_ICON_STYLE_CLASS = "wishlist-visible-icon";
     private static int counter = 0;
 
     private boolean visible;
@@ -37,13 +35,7 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
     @Getter
     private final String wishlistUUID;
 
-    private DestroyableButton visibilityButton;
     private DestroyableResizableImageView visibilityImage;
-    private DestroyableLabel wishlistRecipeName;
-    private DestroyableButton removeBlueprint;
-    //    private final Set<HorizonsWishlistIngredient> wishlistIngredients = new HashSet<>();
-//    private final Set<HorizonsWishlistIngredient> otherIngredients = new HashSet<>();
-    private DestroyableTooltip tooltip;
 
     HorizonsWishlistBlueprintTemplate(final String wishlistUUID, final WishlistBlueprint<HorizonsBlueprintName> wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
@@ -61,15 +53,15 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
                 .withStyleClass("visible-image")
                 .withImage("/images/other/visible_blue.png")
                 .build();
-        this.visibilityButton = ButtonBuilder.builder()
+        DestroyableButton visibilityButton = ButtonBuilder.builder()
                 .withStyleClass("visible-button")
                 .withOnAction(_ -> setVisibility(!this.visible))
                 .withGraphic(this.visibilityImage)
                 .build();
         if (Wishlist.ALL.getUuid().equals(this.wishlistUUID)) {
             setVisibility(true);
-            this.visibilityButton.setVisible(false);
-            this.visibilityButton.setManaged(false);
+            visibilityButton.setVisible(false);
+            visibilityButton.setManaged(false);
         } else {
             setVisibility(this.wishlistBlueprint.isVisible());
         }
@@ -83,7 +75,7 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
             case null, default ->
                     LocaleService.getStringBinding("wishlist.blueprint.horizons.title.engineer", LocaleService.LocalizationKey.of(this.wishlistBlueprint.getRecipeName().getLocalizationKey()));
         };
-        this.wishlistRecipeName = LabelBuilder.builder()
+        DestroyableLabel wishlistRecipeName = LabelBuilder.builder()
                 .withStyleClass("name")
                 .withText(Bindings.createStringBinding(() -> titleStringBinding.get().trim(), titleStringBinding))
                 .withOnMouseClicked(_ -> EventService.publish(new HorizonsBlueprintClickEvent(this.blueprint)))
@@ -91,7 +83,7 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
                     EventService.publish(new HorizonsWishlistHighlightEvent(this.wishlistBlueprint, newValue));
                 })
                 .build();
-        this.removeBlueprint = ButtonBuilder.builder()
+        DestroyableButton removeBlueprint = ButtonBuilder.builder()
                 .withStyleClass("remove")
                 .withNonLocalizedText("X")
                 .withManaged(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()))
@@ -104,15 +96,15 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
 
 
         if (this.blueprint instanceof HorizonsExperimentalEffectBlueprint moduleRecipe) {
-            this.tooltip = TooltipBuilder.builder()
+            DestroyableTooltip tooltip = TooltipBuilder.builder()
                     .withText(LocaleService.getToolTipStringBinding(moduleRecipe, "tab.wishlist.blueprint.tooltip"))
                     .withShowDelay(Duration.millis(100))
                     .build();
-            Tooltip.install(this.wishlistRecipeName, this.tooltip);
+            Tooltip.install(wishlistRecipeName, tooltip);
         }
         initFadeTransition();
         this.updateStyle();
-        this.getNodes().addAll(this.visibilityButton, this.wishlistRecipeName, this.removeBlueprint);
+        this.getNodes().addAll(visibilityButton, wishlistRecipeName, removeBlueprint);
     }
 
     private void initFadeTransition() {
@@ -137,12 +129,6 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
         var craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), getBlueprintGrade());
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("filled"), Craftability.CRAFTABLE.equals(craftability));
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("partial"), Craftability.CRAFTABLE_WITH_TRADE.equals(craftability));
-//        this.wishlistRecipeName.getStyleClass().removeAll("wishlist-craftable", "wishlist-craftable-with-trade");
-//        if (Craftability.CRAFTABLE.equals(craftability)) {
-//            this.wishlistRecipeName.getStyleClass().add("wishlist-craftable");
-//        } else if (Craftability.CRAFTABLE_WITH_TRADE.equals(craftability)) {
-//            this.wishlistRecipeName.getStyleClass().add("wishlist-craftable-with-trade");
-//        }
     }
 
     @Override

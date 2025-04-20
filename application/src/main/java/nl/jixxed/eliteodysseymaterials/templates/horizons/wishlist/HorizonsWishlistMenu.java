@@ -113,8 +113,6 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
                 .withText("horizons.wishlist.coriolis.tooltip")
                 .build());
 
-//        final Integer fontSize = FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize();
-//        applyFontSizingHack(fontSize);
         this.getNodes().addAll(this.wishlistSelect, this.menuButton, shipBuilderButton, edsyButton, coriolisButton);
     }
 
@@ -197,8 +195,8 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
             refreshWishlistSelect();
             popOver.hide();
         }));
-        textField.setOnKeyPressed(ke -> {
-            if (ke.getCode().equals(KeyCode.ENTER)) {
+        textField.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode().equals(KeyCode.ENTER)) {
                 button.fire();
             }
         });
@@ -219,6 +217,7 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
                 () -> TextExporter.createTextWishlist(raw, encoded, manufactured, commodity));
     }
 
+    @SuppressWarnings("java:S1640")
     private <T> Supplier<T> getExporter(QuadFunction<Map<Raw, WishlistMaterial>, Map<Encoded, WishlistMaterial>, Map<Manufactured, WishlistMaterial>, Map<Commodity, WishlistMaterial>, Supplier<T>> exporter) {
         final Map<Raw, WishlistMaterial> wishlistNeededRaw = new HashMap<>();
         final Map<Encoded, WishlistMaterial> wishlistNeededEncoded = new HashMap<>();
@@ -253,32 +252,28 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
         return APPLICATION_STATE.getPreferredCommander().map(commander ->
                         WishlistService.getHorizonsWishlists(commander).getSelectedWishlist().getItems().stream()
                                 .map(bp -> {
-                                    if (bp instanceof HorizonsModuleWishlistBlueprint horizonsModuleWishlistBlueprint) {//modules
-                                        return horizonsModuleWishlistBlueprint.getPercentageToComplete().keySet().stream()
-                                                .map(grade -> {
-                                                    final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsModuleWishlistBlueprint.getRecipeName(), HorizonsWishlistBlueprint.getBlueprintType(horizonsModuleWishlistBlueprint), grade);
-                                                    return blueprint.getRequiredAmount(horizonsMaterial, getCurrentEngineerForRecipe(blueprint).orElseGet(() -> getWorstEngineerForRecipe(blueprint)));
-                                                })
-                                                .reduce(Integer::sum)
-                                                .orElse(0);
-                                    } else if (bp instanceof HorizonsWishlistBlueprint horizonsWishlistBlueprint) {//other
-                                        final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsWishlistBlueprint.getRecipeName(), HorizonsWishlistBlueprint.getBlueprintType(bp), HorizonsWishlistBlueprint.getBlueprintGrade(bp));
-                                        return blueprint.getRequiredAmount(horizonsMaterial, getCurrentEngineerForRecipe(blueprint).orElseGet(() -> getWorstEngineerForRecipe(blueprint)));
-                                    } else {
-                                        return 0;
+                                    switch (bp) {
+                                        case HorizonsModuleWishlistBlueprint horizonsModuleWishlistBlueprint -> {//modules
+                                            return horizonsModuleWishlistBlueprint.getPercentageToComplete().keySet().stream()
+                                                    .map(grade -> {
+                                                        final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsModuleWishlistBlueprint.getRecipeName(), HorizonsWishlistBlueprint.getBlueprintType(horizonsModuleWishlistBlueprint), grade);
+                                                        return blueprint.getRequiredAmount(horizonsMaterial, getCurrentEngineerForRecipe(blueprint).orElseGet(() -> getWorstEngineerForRecipe(blueprint)));
+                                                    })
+                                                    .reduce(Integer::sum)
+                                                    .orElse(0);
+                                        }
+                                        case HorizonsWishlistBlueprint horizonsWishlistBlueprint -> {//other
+                                            final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsWishlistBlueprint.getRecipeName(), HorizonsWishlistBlueprint.getBlueprintType(bp), HorizonsWishlistBlueprint.getBlueprintGrade(bp));
+                                            return blueprint.getRequiredAmount(horizonsMaterial, getCurrentEngineerForRecipe(blueprint).orElseGet(() -> getWorstEngineerForRecipe(blueprint)));
+                                        }
+                                        default -> {
+                                            return 0;
+                                        }
                                     }
                                 })
                                 .reduce(Integer::sum)
                                 .orElse(0))
                 .orElse(0);
-    }
-
-    private static <T extends BlueprintName<T>> List<? extends Blueprint<T>> createList(Blueprint<T> key, Integer value) {
-        final List<Blueprint<T>> list = new ArrayList<>();
-        for (int i = 0; i < value; i++) {
-            list.add(key);
-        }
-        return list;
     }
 
     private Optional<Engineer> getCurrentEngineerForRecipe(Blueprint<HorizonsBlueprintName> blueprint) {
@@ -301,45 +296,16 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
         return ((HorizonsModuleBlueprint) recipe).getEngineers().stream().min(Comparator.comparingInt(eng -> ApplicationState.getInstance().getEngineerRank(eng))).orElse(null);
 
     }
-//    private Engineer getWorstEngineerForRecipe(HorizonsWishlistBlueprint bp) {
-//        if (bp instanceof HorizonsModuleWishlistBlueprint horizonsModuleWishlistBlueprint) {//modules
-//            final HorizonsBlueprintGrade grade = horizonsModuleWishlistBlueprint.getPercentageToComplete().entrySet().stream()
-//                    .filter(entry -> entry.getValue() > 0D)
-//                    .map(Map.Entry::getKey)
-//                    .max(Comparator.comparing(HorizonsBlueprintGrade::getGrade))
-//                    .orElse(HorizonsBlueprintGrade.GRADE_1);
-//            final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsModuleWishlistBlueprint.getRecipeName(), HorizonsWishlistBlueprint.getBlueprintType(horizonsModuleWishlistBlueprint), HorizonsBlueprintGrade.GRADE_1);
-//            return blueprint.getEngineers().stream().min(Comparator.comparing(engineer -> ApplicationState.getInstance().getEngineerRank(engineer))).orElse(null);
-//        } else if (bp instanceof HorizonsWishlistBlueprint horizonsWishlistBlueprint) {//other
-//            final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsWishlistBlueprint.getRecipeName(), HorizonsWishlistBlueprint.getBlueprintType(bp), HorizonsWishlistBlueprint.getBlueprintGrade(bp));
-//            return blueprint.getEngineers().stream().min(Comparator.comparing(engineer -> ApplicationState.getInstance().getEngineerRank(engineer))).orElse(null);
-//        }
-//        return null;
-//    }
-
 
     @Override
     public void initEventHandling() {
         register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> applyFontSizingHack(fontSizeEvent.getFontSize())));
-        register(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent ->
-        {
-            refreshWishlistSelect();
-        }));
-        register(EventService.addListener(true, this, LanguageChangedEvent.class, languageChangedEvent ->
-        {
-            refreshWishlistSelect();
-        }));
-        register(EventService.addListener(true, this, HorizonsWishlistCreatedEvent.class, event ->
-        {
-            refreshWishlistSelect();
-        }));
-
-        register(EventService.addListener(true, this, HorizonsWishlistSearchEvent.class, horizonsWishlistSearchEvent -> {
-            this.currentSearch = horizonsWishlistSearchEvent.getSearch();//intended for export sorting
-        }));
-        register(EventService.addListener(true, this, ShortestPathChangedEvent.class, shortestPathChangedEvent -> {
-            this.shortestPath = shortestPathChangedEvent.getPathItems();
-        }));
+        register(EventService.addListener(true, this, CommanderSelectedEvent.class, _ -> refreshWishlistSelect()));
+        register(EventService.addListener(true, this, LanguageChangedEvent.class, _ -> refreshWishlistSelect()));
+        register(EventService.addListener(true, this, HorizonsWishlistCreatedEvent.class, _ -> refreshWishlistSelect()));
+        register(EventService.addListener(true, this, HorizonsWishlistSearchEvent.class, horizonsWishlistSearchEvent ->
+                this.currentSearch = horizonsWishlistSearchEvent.getSearch()));//intended for export sorting
+        register(EventService.addListener(true, this, ShortestPathChangedEvent.class, shortestPathChangedEvent -> this.shortestPath = shortestPathChangedEvent.getPathItems()));
     }
 
     private void refreshWishlistSelect() {

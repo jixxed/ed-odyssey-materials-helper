@@ -32,32 +32,20 @@ import java.util.*;
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class HorizonsWishlistIngredient extends DestroyableVBox implements DestroyableComponent, DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    //    public static final String FILLED = "filled";
-//    public static final String PARTIAL = "partial";
     @Getter
     @EqualsAndHashCode.Include
     private final HorizonsMaterial horizonsMaterial;
-//    @Getter
-//    @Setter
-//    private Integer leftAmount;
-//    private Integer rightAmount;
 
     private DestroyableResizableImageView image;
     private DestroyableLabel requiredAmountLabel;
     private DestroyableLabel availableAmountLabel;
     private DestroyableLabel remainingAmountLabel;
-    //    private static final String INGREDIENT_FILLED_CLASS = "ingredient-filled";
-//    private static final String INGREDIENT_UNFILLED_CLASS = "ingredient-unfilled";
-//    private static final String INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS = "ingredient-filled-partial";
 
     private TypeSegment presentShip;
     private TypeSegment presentFleetCarrier;
     private TypeSegment missingForMinimum;
     private TypeSegment missingForRequired;
     private TypeSegment missingForMaximum;
-    //    private Integer amountMinimum;
-//    private Integer amountRequired;
-//    private Integer amountMaximum;
     private Integer minimum = 0;
     @Getter
     private Integer required = 0;
@@ -65,6 +53,7 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
     private Integer availableShip = 0;
     private Integer availableFleetCarrier = 0;
     private Integer remaining = 0;
+    //field to store the original full amount, so we have something to compare when hovering
     private Integer remainingFull = 0;
     private List<PathItem<HorizonsBlueprintName>> pathItems = new ArrayList<>();
     final BooleanProperty showRemaining;
@@ -88,11 +77,8 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
     public void initComponents() {
         this.getStyleClass().add("wishlist-ingredient");
         this.getStyleClass().add("material");
-//        this.hoverProperty().addListener((observable, oldValue, newValue) -> {
-//            showAsHovered(newValue);
-//        });
-        this.visibleProperty().bind(hideCompleted.and(completed).not());//todo also managed
-        this.managedProperty().bind(hideCompleted.and(completed).not());//todo also managed
+        this.visibleProperty().bind(hideCompleted.and(completed).not());
+        this.managedProperty().bind(hideCompleted.and(completed).not());
         final int progressShip = Math.min(availableShip, this.maximum);
         final int progressFleetCarrier = Math.min(availableFleetCarrier, this.maximum - progressShip);
         final int progressTotal = Math.min(progressShip + progressFleetCarrier, this.maximum);
@@ -108,23 +94,7 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
                 .withSegmentViewFactory(segment -> new TypeSegmentView(segment, false))
                 .withSegments(presentShip, presentFleetCarrier, missingForMinimum, missingForRequired, missingForMaximum)
                 .build();
-//        this.segmentedBar.getStyleClass().add("ingredient-progressbar");
-//        this.segmentedBar.setOrientation(Orientation.HORIZONTAL);
-//        this.segmentedBar.setInfoNodeFactory(segment -> null);
-//        green/red = current material count
-//        dark grey = minimum requirement(all engineers G5) - current material count
-//        light grey = current requirement(based on shortest path) - max(minimum requirement, current material count)
-//        light green/red = maximum requirement(all engineers G1) - current requirement(based on shortest path)
 
-//        this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(
-//                SegmentType.PRESENT, Color.rgb(255, 255, 255),
-//                SegmentType.MISSING_FOR_MINIMUM, Color.rgb(128, 128, 128),
-//                SegmentType.MISSING_FOR_REQUIRED, Color.rgb(192, 192, 192),
-//                SegmentType.MISSING_FOR_MAXIMUM, Color.rgb(255, 255, 255)
-//        ), false));
-
-//        this.segmentedBar.getSegments().addAll(this.present, this.missingForMinimum, this.missingForRequired, this.missingForMaximum);
-//        this.getRequiredAmountLabel().setText(getLeftAmountString());
         DestroyableLabel nameLabel = LabelBuilder.builder()
                 .withStyleClass("name")
                 .withText(this.horizonsMaterial.getLocalizationKey())
@@ -174,15 +144,10 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
         HBox.setHgrow(availableAmountLabel, Priority.ALWAYS);
 
 
-//        this.requiredAmountLabel.setText(getLeftAmountString());
-//        HBox.setHgrow(this.requiredAmountLabel, Priority.ALWAYS);
-//        this.availableAmountLabel.setText(getRightAmountString());
-
         DestroyableHBox firstLine = BoxBuilder.builder()
                 .withStyleClass("title-line")
                 .withNodes(this.image, nameLabel)
                 .buildHBox();
-//        this.firstLine.addBinding(this.firstLine.prefHeightProperty(), this.nameLabel.heightProperty());
         DestroyableHBox secondLine = BoxBuilder.builder()
                 .withStyleClass("amount-line")
                 .withNodes(requiredLabel, this.requiredAmountLabel, new GrowingRegion(), this.availableAmountLabel, availableLabel, this.remainingAmountLabel, remainingLabel)
@@ -201,20 +166,6 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
     protected void installPopOver() {
         MaterialService.addMaterialInfoPopOver(this, this.getHorizonsMaterial(), true);
     }
-
-//    private void showAsHovered(final Boolean newValue) {
-//        final Boolean showRemaining = !PreferencesService.getPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_HORIZONS, Boolean.FALSE);
-//        if (showRemaining.equals(newValue) && getHorizonsMaterial() instanceof Commodity commodity && (required - (StorageService.getCommodityCount(commodity, StoragePool.SHIP))) > 0) {
-//            this.getAvailableAmountLabel().setText(String.valueOf((required - StorageService.getCommodityCount(commodity, StoragePool.SHIP))));
-//            setAvailableLabel(LocaleService.getStringBinding("blueprint.header.remaining"));
-//        } else if (showRemaining.equals(newValue) && !(getHorizonsMaterial() instanceof Commodity) && (required - (StorageService.getMaterialCount(getHorizonsMaterial()))) > 0) {
-//            this.getAvailableAmountLabel().setText(String.valueOf((required - StorageService.getMaterialCount(getHorizonsMaterial()))));
-//            setAvailableLabel(LocaleService.getStringBinding("blueprint.header.remaining"));
-//        } else {
-//            setAvailableLabel(LocaleService.getStringBinding("blueprint.header.available"));
-//            this.getAvailableAmountLabel().setText(this.getRightAmount().toString());
-//        }
-//    }
 
     @SuppressWarnings("java:S2177")
     public void initEventHandling() {
@@ -252,44 +203,14 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
 
     protected void update() {
         this.calculate();
-//        final Integer materialCountShip;
-//        final Integer materialCountBoth;
-//        if (this.horizonsMaterial instanceof Commodity commodity) {
-//            materialCountShip = StorageService.getCommodityCount(commodity, StoragePool.SHIP);
-//            materialCountBoth = materialCountShip + StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER);
-//        } else {
-//            materialCountBoth = StorageService.getMaterialCount(this.horizonsMaterial);
-//            materialCountShip = materialCountBoth;
-//        }
-//        setRightAmount(materialCountBoth);
-//        this.rightAmountLabel.setText(getRightAmountString());
-//        if (materialCountBoth >= this.leftAmount && materialCountShip < this.leftAmount) {
-//            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(FILLED), true);
-//            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(PARTIAL), true);
-//        } else if (materialCountBoth >= this.leftAmount) {
-//            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(FILLED), true);
-//            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(PARTIAL), false);
-//        } else {
-//            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(FILLED), false);
-//            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(PARTIAL), false);
-//        }
-//        final Integer materialCountShip;
-//        final Integer materialCountBoth;
-//        if (getHorizonsMaterial() instanceof Commodity commodity) {
-//            materialCountShip = StorageService.getCommodityCount(commodity, StoragePool.SHIP);
-//            materialCountBoth = materialCountShip + StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER);
-//        } else {
-//            materialCountBoth = StorageService.getMaterialCount(getHorizonsMaterial());
-//            materialCountShip = materialCountBoth;
-//        }
 
         requiredAmountLabel.setText(maximum.equals(minimum) ? required.toString() : required + " (" + minimum + " - " + maximum + ")");
         availableAmountLabel.setText(availableFleetCarrier > 0 ? availableShip + " + " + availableFleetCarrier : availableShip.toString());
         remainingAmountLabel.setText(remaining.toString());
         //progressbar
-        final Integer progressShip = Math.min(availableShip, this.maximum);
-        final Integer progressFleetCarrier = Math.min(availableFleetCarrier, this.maximum - progressShip);
-        final Integer progressTotal = Math.min(progressShip + progressFleetCarrier, this.maximum);
+        final int progressShip = Math.min(availableShip, this.maximum);
+        final int progressFleetCarrier = Math.min(availableFleetCarrier, this.maximum - progressShip);
+        final int progressTotal = Math.min(progressShip + progressFleetCarrier, this.maximum);
         this.presentShip.setValue(Math.max(0, progressShip));
         this.presentFleetCarrier.setValue(Math.max(0, progressFleetCarrier));
         this.missingForMinimum.setValue(Math.max(0, minimum - progressTotal));
@@ -298,48 +219,6 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
 
         updateStyle();
 
-
-//        final Integer progress = Math.min(availableShip, maximum);
-//        this.present.setValue(progress);
-//        this.missingForMinimum.setValue(Math.max(0, minimum - progress));
-//        this.missingForRequired.setValue(Math.max(0, required - Math.max(minimum, progress)));
-//        this.missingForMaximum.setValue(Math.max(0, maximum - Math.max(required, progress)));
-
-//        final Boolean showRemaining = !PreferencesService.getPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_HORIZONS, Boolean.FALSE);
-//
-//        this.setRightAmount(materialCountBoth);
-//        this.getStyleClass().removeAll(INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS, INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS);
-//        if (materialCountBoth >= required && materialCountShip < required) {
-//            this.getStyleClass().addAll(INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS);
-//        } else if (this.getRightAmount() >= required) {
-//            this.getStyleClass().addAll(INGREDIENT_FILLED_CLASS);
-//        } else {
-//            this.getStyleClass().addAll(INGREDIENT_UNFILLED_CLASS);
-//        }
-//        if (this.present != null) {
-//            final Integer progress = Math.min(this.getRightAmount(), maximum);
-////            final int progress = Math.min(this.getLeftAmount(), this.getRightAmount());
-//            this.present.setValue(progress);
-//            this.missingForMinimum.setValue(Math.max(0, minimum - progress));
-//            this.missingForRequired.setValue(Math.max(0, required - Math.max(minimum, progress)));
-//            this.missingForMaximum.setValue(Math.max(0, maximum - Math.max(required, progress)));
-////            this.notPresent.setValue(Math.max(this.getLeftAmount() - progress, 0));
-//            if (Math.max(required - progress, 0) > 0) {
-//                this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(
-//                        SegmentType.PRESENT, Color.web("#ff7c7c"),
-//                        SegmentType.MISSING_FOR_MINIMUM, Color.rgb(128, 128, 128),
-//                        SegmentType.MISSING_FOR_REQUIRED, Color.rgb(192, 192, 192),
-//                        SegmentType.MISSING_FOR_MAXIMUM, Color.web("#FFC8C8")
-//                ), false));
-//            } else {
-//                this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(
-//                        SegmentType.PRESENT, Color.web("#89d07f"),
-//                        SegmentType.MISSING_FOR_MINIMUM, Color.rgb(128, 128, 128),
-//                        SegmentType.MISSING_FOR_REQUIRED, Color.rgb(192, 192, 192),
-//                        SegmentType.MISSING_FOR_MAXIMUM, Color.web("#BED3BB")
-//                ), false));
-//            }
-//        }
     }
 
     private void updateStyle() {
@@ -354,53 +233,6 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
                 && (LocaleService.getLocalizedStringForCurrentLocale(this.horizonsMaterial.getLocalizationKey()).toLowerCase().contains(this.currentSearchQuery.toLowerCase())
                 || LocaleService.getLocalizedStringForCurrentLocale(this.horizonsMaterial.getMaterialType().getLocalizationKey()).toLowerCase().contains(this.currentSearchQuery.toLowerCase()));
     }
-
-//    void searchHighlight(final boolean enable) {
-//        if (enable) {
-//            this.getStyleClass().add("wishlist-search-highlight");
-//        } else {
-//            this.getStyleClass().removeAll("wishlist-search-highlight");
-//        }
-//        update();
-//    }
-//
-//    void highlight(final boolean enable, final WishlistMaterial amount) {
-//        if (enable) {
-//            this.getStyleClass().add("wishlist-highlight");
-//            setLeftAmount(amount.getRequired());
-//            this.amountMinimum = amount.getMinimum();
-//            this.amountMaximum = amount.getMaximum();
-//            this.amountRequired = amount.getRequired();
-//        } else {
-//            this.getStyleClass().removeAll("wishlist-highlight");
-//            setLeftAmount(required);
-//            this.amountMinimum = minimum;
-//            this.amountMaximum = maximum;
-//            this.amountRequired = required;
-//        }
-//        this.getRequiredAmountLabel().setText(getLeftAmountString());
-//        update();
-//    }
-//
-//    void lowlight(final boolean enable) {
-//        if (enable) {
-//            this.getStyleClass().add("wishlist-lowlight");
-//        } else {
-//            this.getStyleClass().removeAll("wishlist-lowlight");
-//        }
-//    }
-
-//
-//    protected String getLeftAmountString() {
-//        if (Objects.equals(this.amountMinimum, this.amountMaximum)) {
-//            return this.amountRequired != null ? this.amountRequired.toString() : "0";
-//        }
-//        return this.amountRequired + " (" + this.amountMinimum + " - " + this.amountMaximum + ")";
-//    }
-//
-//    protected String getRightAmountString() {
-//        return this.rightAmount.toString();
-//    }
 
     @SuppressWarnings("java:S6205")
     private void initImage() {
@@ -417,27 +249,7 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
         }
     }
 
-//    protected void setRightAmount(final Integer rightAmount) {
-//        this.rightAmount = rightAmount;
-//    }
-//
-//
-//    protected Label getRequiredAmountLabel() {
-//        return this.requiredAmountLabel;
-//    }
-//
-//    protected Integer getRightAmount() {
-//        return this.rightAmount;
-//    }
-//
-//    protected Label getAvailableAmountLabel() {
-//        return this.availableAmountLabel;
-//    }
-//
-//    protected void setAvailableLabel(final StringBinding availableLabel) {
-//        this.availableLabel.addBinding(this.availableLabel.textProperty(), availableLabel);
-//    }
-
+    @SuppressWarnings("unchecked")
     private void calculate() {
         defaults();
         final Optional<HorizonsWishlist> horizonsWishlist = APPLICATION_STATE.getPreferredCommander()
@@ -478,12 +290,12 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
     private void count(HorizonsWishlistBlueprint wishlistItem) {
         if (wishlistItem instanceof HorizonsModuleWishlistBlueprint moduleWishlistBlueprint) {
             moduleWishlistBlueprint.getPercentageToComplete().forEach((grade, percentage) -> {
-                final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(moduleWishlistBlueprint.getRecipeName(), moduleWishlistBlueprint.getBlueprintType(), grade);
-                add(blueprint, percentage);
+                final HorizonsBlueprint bp = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(moduleWishlistBlueprint.getRecipeName(), moduleWishlistBlueprint.getBlueprintType(), grade);
+                add(bp, percentage);
             });
         } else {
-            final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(wishlistItem.getRecipeName(), WishlistService.getBlueprintType(wishlistItem), WishlistService.getBlueprintGrade(wishlistItem));
-            add(blueprint);
+            final HorizonsBlueprint bp = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(wishlistItem.getRecipeName(), WishlistService.getBlueprintType(wishlistItem), WishlistService.getBlueprintGrade(wishlistItem));
+            add(bp);
         }
     }
 
@@ -530,14 +342,6 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
                 .filter(pathItem -> !pathItem.getEngineer().equals(Engineer.UNKNOWN))
                 .map(PathItem::getEngineer);
     }
-
-//    private Engineer getBestEngineer(Blueprint<HorizonsBlueprintName> recipe) {
-//        if (!(recipe instanceof HorizonsModuleBlueprint)) {
-//            return null;
-//        }
-//        return ((HorizonsModuleBlueprint) recipe).getEngineers().stream().max(Comparator.comparingInt(eng -> ApplicationState.getInstance().getEngineerRank(eng))).orElse(null);
-//
-//    }
 
     private Engineer getWorstEngineer(Blueprint<HorizonsBlueprintName> recipe) {
         if (!(recipe instanceof HorizonsModuleBlueprint)) {

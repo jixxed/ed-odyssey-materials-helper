@@ -35,8 +35,9 @@ public class CompletionSlider extends DestroyableHBox implements DestroyableTemp
 
     @Override
     public void initComponents() {
+        this.getStyleClass().add("completion-slider");
         progressSlider = SliderBuilder.builder()
-                .withStyleClass("completion-slider")
+                .withStyleClass("slider")
                 .withMin(min)
                 .withMax(max)
                 .withValue(initial)
@@ -45,7 +46,7 @@ public class CompletionSlider extends DestroyableHBox implements DestroyableTemp
 
         final DestroyableTextField textValue = TextFieldBuilder.builder()
                 .withDisable(true)
-                .withStyleClass("completion-slider-textfield")
+                .withStyleClass("value")
                 .withFocusTraversable(false)
                 .build();
         textValue.addBinding(textValue.textProperty(), progressSlider.valueProperty().map(number -> Formatters.NUMBER_FORMAT_2.format(number) + "%"));

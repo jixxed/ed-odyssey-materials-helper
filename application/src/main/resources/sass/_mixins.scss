@@ -301,24 +301,27 @@
   }
 }
 
-@mixin popover-help {
-
-  //.popover-menubutton-layout {
+@mixin popover-style {
   -fx-background-color: transparent !important;
   -fx-border-width: 0;
-  //}
-  //
-  //.popover-menubutton-layout > .border {
-  //  -fx-stroke: #fff !important;
-  //  -fx-stroke-width: 0.05em !important;
-  //  -fx-fill: #fff !important;
-  //}
 
   & > .border {
     -fx-stroke: #fff !important;
     -fx-stroke-width: 0.1em !important;
-    -fx-fill: #0f0f0f !important; //#35790e !important;
-    //-fx-border-width: 0.01em !important;
+    -fx-fill: #0f0f0f !important;
   }
+}
 
+@mixin tooltip {
+  -fx-background: #1e1e1e;
+  -fx-text-fill: white;
+  -fx-background-color: #1e1e1e;
+  -fx-background-radius: 0px;
+  -fx-background-insets: 0;
+  -fx-padding: 0.667em 0.75em 0.667em 0.75em;
+  /* 10px */
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 10, 0, 0, 3);
+  -fx-font-size: 0.85em;
+  -fx-font-weight: normal;
+  -fx-font-style: normal;
 }

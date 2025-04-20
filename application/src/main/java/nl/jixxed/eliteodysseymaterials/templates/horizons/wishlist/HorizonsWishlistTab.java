@@ -25,7 +25,6 @@ public class HorizonsWishlistTab extends HorizonsTab implements DestroyableEvent
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private int wishlistSize;
     private DestroyableLabel noBlueprint;
-    private HorizonsWishlistMenu horizonsWishlistMenu;
     private HorizonsWishlistBlueprints horizonsWishlistBlueprints;
     private HorizonsWishlistMaterials horizonsWishlistMaterials;
     private HorizonsWishlistShortestPath horizonsWishlistShortestPath;
@@ -35,6 +34,7 @@ public class HorizonsWishlistTab extends HorizonsTab implements DestroyableEvent
         initEventHandling();
     }
 
+    @SuppressWarnings("unchecked")
     public void initComponents() {
         this.getStyleClass().add("wishlist-tab");
 
@@ -47,13 +47,13 @@ public class HorizonsWishlistTab extends HorizonsTab implements DestroyableEvent
                 .withText("tab.wishlist.no.blueprint")
                 .build();
 
-        this.horizonsWishlistMenu = new HorizonsWishlistMenu();
+        HorizonsWishlistMenu horizonsWishlistMenu = new HorizonsWishlistMenu();
         this.horizonsWishlistBlueprints = new HorizonsWishlistBlueprints();
         this.horizonsWishlistMaterials = new HorizonsWishlistMaterials();
         this.horizonsWishlistShortestPath = new HorizonsWishlistShortestPath();
         DestroyableVBox content = BoxBuilder.builder()
                 .withStyleClass("wishlist-content")
-                .withNodes(this.horizonsWishlistMenu, this.horizonsWishlistBlueprints, this.horizonsWishlistMaterials, this.horizonsWishlistShortestPath, this.noBlueprint)
+                .withNodes(horizonsWishlistMenu, this.horizonsWishlistBlueprints, this.horizonsWishlistMaterials, this.horizonsWishlistShortestPath, this.noBlueprint)
                 .buildVBox();
         ScrollPane scrollPane = register(ScrollPaneBuilder.builder()
                 .withStyleClass("wishlist-tab-content")
@@ -63,6 +63,7 @@ public class HorizonsWishlistTab extends HorizonsTab implements DestroyableEvent
 
     }
 
+    @SuppressWarnings("unchecked")
     private void update() {
         this.wishlistSize = APPLICATION_STATE.getPreferredCommander().map(commander -> WishlistService.getHorizonsWishlists(commander).getSelectedWishlist().getItems().size()).orElse(0);
         //no need to use addBinding, since it is already registered

@@ -25,8 +25,6 @@ import java.util.Optional;
 @Slf4j
 public class HorizonsWishlistShortestPath extends DestroyableVBox implements DestroyableEventTemplate {
 
-    private static final String WISHLIST_HEADER_CLASS = "wishlist-header";
-    private DestroyableLabel travelPathLabel;
     private ShortestPathFlow<HorizonsBlueprintName> shortestPathFlow;
 
     public HorizonsWishlistShortestPath() {
@@ -34,7 +32,6 @@ public class HorizonsWishlistShortestPath extends DestroyableVBox implements Des
         initEventHandling();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void initComponents() {
         this.getStyleClass().add("shortest-path");
@@ -47,14 +44,14 @@ public class HorizonsWishlistShortestPath extends DestroyableVBox implements Des
         this.shortestPathFlow.addBinding(this.shortestPathFlow.visibleProperty(), Bindings.greaterThan(Bindings.size(this.shortestPathFlow.getItems()), 0));
         this.shortestPathFlow.addBinding(this.shortestPathFlow.managedProperty(), Bindings.greaterThan(Bindings.size(this.shortestPathFlow.getItems()), 0));
 
-        this.travelPathLabel = LabelBuilder.builder()
+        DestroyableLabel travelPathLabel = LabelBuilder.builder()
                 .withStyleClass("title")
                 .withText("tab.wishlist.travel.path")
                 .withVisibilityProperty(Bindings.greaterThan(Bindings.size(this.shortestPathFlow.getItems()), 0))
                 .withManagedProperty(Bindings.greaterThan(Bindings.size(this.shortestPathFlow.getItems()), 0))
                 .build();
 
-        this.getNodes().addAll(this.travelPathLabel, this.shortestPathFlow);
+        this.getNodes().addAll(travelPathLabel, this.shortestPathFlow);
     }
 
     @Override
@@ -72,6 +69,7 @@ public class HorizonsWishlistShortestPath extends DestroyableVBox implements Des
         EventService.publish(new ShortestPathChangedEvent(pathItems));
     }
 
+    @SuppressWarnings("unchecked")
     private static List<PathItem<HorizonsBlueprintName>> getPathItems() {
         final Optional<HorizonsWishlist> horizonsWishlist = ApplicationState.getInstance().getPreferredCommander()
                 .map(commander -> WishlistService.getHorizonsWishlists(commander).getSelectedWishlist());

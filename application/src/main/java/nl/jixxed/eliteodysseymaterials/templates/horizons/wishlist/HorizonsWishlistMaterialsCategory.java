@@ -50,19 +50,9 @@ public class HorizonsWishlistMaterialsCategory extends DestroyableFlowPane imple
             }
             this.currentSearch = event.getSearch();
         }));
-        register(EventService.addListener(true, this, HorizonsWishlistSelectedEvent.class, wishlistChangedEvent -> {
-            refreshContent();
-        }));
-        register(EventService.addListener(true, this, HorizonsWishlistBlueprintAlteredEvent.class, wishlistChangedEvent -> {
-            refreshContent();
-        }));
-        register(EventService.addListener(true, this, HorizonsWishlistChangedEvent.class, wishlistChangedEvent -> {
-            refreshContent();
-//            this.activeWishlistUUID = wishlistChangedEvent.getWishlistUUID();
-//            APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> this.wishlistSize = Optional.ofNullable(WishlistService.getHorizonsWishlists(commander).getWishlist(this.activeWishlistUUID)).map(wl -> wl.getItems().size()).orElse(0));
-//
-//            this.addBinding(this.textProperty(), LocaleService.getSupplierStringBinding("tabs.wishlist", () -> (this.wishlistSize > 0) ? " (" + this.wishlistSize + ")" : ""));
-        }));
+        register(EventService.addListener(true, this, HorizonsWishlistSelectedEvent.class, _ -> refreshContent()));
+        register(EventService.addListener(true, this, HorizonsWishlistBlueprintAlteredEvent.class, _ -> refreshContent()));
+        register(EventService.addListener(true, this, HorizonsWishlistChangedEvent.class, _ -> refreshContent()));
 
         register(EventService.addListener(true, this, 9, WishlistHideCompletedEvent.class, event -> {
             if (Expansion.HORIZONS.equals(event.getExpansion())) {
@@ -110,7 +100,6 @@ public class HorizonsWishlistMaterialsCategory extends DestroyableFlowPane imple
         this.getChildren().sort((Comparator<Node>) (Comparator<?>) sort.getSort());
     }
 
-    @SuppressWarnings("unchecked")
     private void group(WishlistMaterialGrouping grouping) {
         final boolean visible = (grouping.equals(WishlistMaterialGrouping.NONE) && WishlistMaterialsCategory.ALL.equals(this.wishlistMaterialsCategory))
                 || (grouping.equals(WishlistMaterialGrouping.CATEGORY) && !WishlistMaterialsCategory.ALL.equals(this.wishlistMaterialsCategory));
@@ -135,7 +124,7 @@ public class HorizonsWishlistMaterialsCategory extends DestroyableFlowPane imple
     private Set<HorizonsMaterial> getMaterials(HorizonsWishlistBlueprint wishlistBlueprint) {
         Set<HorizonsMaterial> materials = new HashSet<>();
         if (wishlistBlueprint instanceof HorizonsModuleWishlistBlueprint moduleWishlistBlueprint) {
-            moduleWishlistBlueprint.getPercentageToComplete().forEach((grade, percentage) -> {
+            moduleWishlistBlueprint.getPercentageToComplete().forEach((grade, _) -> {
                 final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(moduleWishlistBlueprint.getRecipeName(), moduleWishlistBlueprint.getBlueprintType(), grade);
                 materials.addAll(blueprint.getMaterialCollection(HorizonsMaterial.class).keySet());
             });
