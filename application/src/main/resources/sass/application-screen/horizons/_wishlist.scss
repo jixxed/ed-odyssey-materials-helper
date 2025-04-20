@@ -12,17 +12,12 @@
       -fx-spacing: 0.25em;
 
       .wishlist-select {
-        -fx-min-width: 10em;
-        -fx-pref-width: 35em;
-        -fx-max-width: 35em;
+        @include fixedWidth(35em);
       }
 
       .wishlist-newname {
         -fx-min-width: 20em;
-        //-fx-background-insets: 1;
-        //-fx-background-radius: 0, 0;
-        //-fx-border-width: 1;
-        -fx-border-color: #2e2e2e;
+        -fx-border-color: $border-color-black;
       }
     }
 
@@ -72,14 +67,14 @@
               }
 
               .wishlist-hint-yellow {
-                -fx-min-width: 5em;
                 -fx-text-fill: $text-color-yellow;
+                -fx-min-width: 5em;
                 -fx-font-style: italic;
               }
 
               .wishlist-hint-green {
-                -fx-min-width: 5em;
                 -fx-text-fill: $text-color-green;
+                -fx-min-width: 5em;
                 -fx-font-style: italic;
               }
             }
@@ -89,9 +84,7 @@
 
       .category {
         .category-title {
-          //-fx-font-size: 1em;
           -fx-min-height: 2em;
-          //-fx-font-weight: normal;
           -fx-min-width: 20em;
         }
 
@@ -102,42 +95,34 @@
             -fx-background-color: $background-color-dark;
 
             &:filled {
-
-
               .name {
                 -fx-text-fill: $text-color-green;
               }
             }
 
             &:partial {
-
-
               .name {
                 -fx-text-fill: $text-color-yellow;
               }
             }
 
             .visible-image {
-
-              -fx-max-width: 2em;
-              -fx-max-height: 2em;
-              -fx-pref-width: 2em;
-              -fx-pref-height: 2em;
+              @include fixedWidth(1.8em);
+              @include fixedHeight(1.8em);
               -fx-fit-to-height: true;
               -fx-fit-to-width: true;
               -fx-alignment: center;
             }
 
             .visible-button {
-              -fx-background-color: #0f0f0f;
+              @include fixedWidth(2em);
+              @include fixedHeight(2em);
+              -fx-background-color: $background-color-dark;
               -fx-cursor: hand;
               -fx-background-insets: 0 0 0 0;
-              -fx-max-height: 2em;
-              -fx-max-width: 2em;
               -fx-padding: 2;
-              -fx-border-color: black;
+              -fx-border-color: $border-color-black;
               -fx-border-width: 0;
-              //-fx-alignment: center-left;
 
               &:armed,
               &:pressed,
@@ -145,13 +130,13 @@
               &:visited,
               &:selected:focused,
               &:focused {
-                -fx-background-color: #0f0f0f;
+                @include fixedWidth(2em);
+                @include fixedHeight(2em);
+                -fx-background-color: $background-color-dark;
                 -fx-cursor: hand;
                 -fx-background-insets: 0 0 0 0;
-                -fx-max-height: 2em;
-                -fx-max-width: 2em;
                 -fx-padding: 1;
-                -fx-border-color: black;
+                -fx-border-color: $border-color-black;
                 -fx-border-width: 0;
               }
 
@@ -173,22 +158,18 @@
             }
 
             .remove, .config {
-              -fx-background-color: #4f4f4f;
+              @include fixedWidth(2em);
               -fx-background-insets: 0 0 0 0;
-              -fx-border-color: black;
-              -fx-text-fill: #fff;
               -fx-border-width: 0;
               -fx-cursor: hand;
               -fx-max-height: 2em;
-              -fx-max-width: 2em;
-              -fx-min-width: 2em;
               -fx-padding: 2;
               -fx-focus-traversable: false;
 
 
               &:hover {
-                -fx-background-color: #fff;
-                -fx-text-fill: black;
+                -fx-background-color: $background-color-white;
+                -fx-text-fill: $text-color-black;
               }
 
               &:armed,
@@ -197,16 +178,16 @@
               &:visited,
               &:selected:focused,
               &:focused {
-                -fx-background-color: black;
+                -fx-background-color: $background-color-dark;
                 -fx-background-insets: 0 0 0 0;
-                -fx-border-color: black;
-                -fx-text-fill: #fff;
+                -fx-border-color: $border-color-black;
+                -fx-text-fill: $text-color-white;
                 -fx-border-width: 0;
                 -fx-cursor: hand;
               }
 
               &:focused {
-                -fx-background-color: #2e92df;
+                -fx-background-color: $text-color-blue;
               }
 
               &:pressed {
@@ -219,50 +200,52 @@
 
                 @include popover-style;
 
-                .grade-selects-content {
+                .content {
                   -fx-padding: 0.25em;
+                  -fx-spacing: 0.25em;
+                  -fx-max-width: 22em;
 
-                  .grade-selects-title {
+                  .title {
                     -fx-font-size: 1.3em;
                     -fx-max-width: 21.5em;
                     -fx-wrap-text: true;
                   }
 
-                  .grade-selects-explain {
-                    -fx-font-size: 1.0em;
+                  .explain {
                     -fx-font-style: italic;
                     -fx-max-width: 21.5em;
                     -fx-wrap-text: true;
-                    -fx-padding: 0.5em 0 1em 0;
                   }
 
                   .grade-selects {
                     -fx-spacing: 0.25em;
 
-                    .completion-slider {
-                      -fx-spacing: 1em;
+                    .grade-select {
+                      -fx-spacing: 0.25em;
 
-                      .slider {
-                        -fx-fit-to-width: true;
-                        @include fixedWidth(15em);
+                      .grade {
+                        @include fixedWidth(1em);
+                        @include fixedHeight(2em);
+                        -fx-alignment: center;
                       }
 
-                      .value {
-                        @include fixedWidth(4.5em);
-                      }
-                    }
+                      .completion-slider {
+                        -fx-spacing: 0.75em;
 
-                    .grade {
-                      @include fixedHeight(2em);
-                      //-fx-text-alignment: center;
-                      -fx-alignment: center;
-                      -fx-padding: 0 0.5em 0 0.2em;
+                        .slider {
+                          -fx-fit-to-width: true;
+                          @include fixedWidth(15em);
+                        }
+
+                        .value {
+                          @include fixedWidth(4.5em);
+                        }
+                      }
                     }
                   }
                 }
               }
             }
-
           }
         }
       }
@@ -332,11 +315,10 @@
           @include hvGap(0.25em);
 
           .material {
-            -fx-background-color: #0f0f0f;
-            -fx-border-color: black;
+            @include fixedWidth(21em);
+            -fx-background-color: $background-color-dark;
+            -fx-border-color: $border-color-black;
             -fx-min-height: 2.5em;
-            -fx-max-width: 21em;
-            -fx-min-width: 21em;
             -fx-alignment: center-left;
 
             &:filled {
@@ -431,14 +413,17 @@
               }
 
               .name {
-                @include fixedHeight(2em);
+                //@include fixedHeight(2em);
                 -fx-font-weight: bold;
                 -fx-alignment: center-left;
+                -fx-wrap-text: true;
+                -fx-padding: 0.25em 0 0 0;
               }
             }
 
             .text-lines {
               -fx-padding: 0.25em;
+
             }
 
             .amount-line {
@@ -472,7 +457,7 @@
         -fx-vgap: 0.25em;
 
         .shortest-path-item {
-          -fx-background-color: #0f0f0f;
+          -fx-background-color: $background-color-dark;
           -fx-padding: 0.25em;
 
           .distance-title, .blueprints-title {
@@ -504,7 +489,6 @@
             &:hover {
               -fx-text-fill: lighten($text-color-blue, 10%);
               -fx-cursor: hand;
-              //-fx-underline: true;
             }
           }
 
@@ -516,81 +500,4 @@
       }
     }
   }
-
 }
-
-//
-//.wishlist-rolls-select > .button {
-//  -fx-min-height: 2em;
-//  -fx-pref-height: 2em;
-//  -fx-max-height: 2em;
-//  -fx-padding: 0.1em;
-//  -fx-min-width: 1.2em;
-//  -fx-focus-traversable: false;
-//}
-//
-//.wishlist-rolls-select > .text-field {
-//  -fx-min-width: 2.5em;
-//  -fx-pref-width: 2.5em;
-//  -fx-max-width: 2.5em;
-//  -fx-min-height: 2em;
-//  -fx-pref-height: 2em;
-//  -fx-max-height: 2em;
-//  -fx-focus-traversable: false;
-//}
-//
-//.wishlist-rolls-label {
-//  -fx-text-alignment: center;
-//  -fx-alignment: center;
-//  -fx-min-height: 2em;
-//  -fx-max-height: 2em;
-//  -fx-padding: 0 0.5em 0 0.2em;
-//}
-//
-//.grade-selects {
-//  -fx-spacing: 0.2em;
-//}
-//
-//.grade-selects-title {
-//  -fx-font-size: 1.3em;
-//  -fx-max-width: 20.7em;
-//  -fx-wrap-text: true;
-//}
-//
-//.grade-selects-explain {
-//  -fx-font-size: 1.0em;
-//  -fx-font-style: italic;
-//  -fx-max-width: 20.7em;
-//  -fx-wrap-text: true;
-//  -fx-padding: 0.5em 0 1em 0;
-//}
-//
-//.wishlist-hint-box {
-//  -fx-min-width: 3em;
-//}
-//
-//.wishlist-hint-white {
-//  -fx-text-fill: #fff;
-//  -fx-font-style: italic;
-//  -fx-max-width: 30em;
-//  -fx-wrap-text: true;
-//}
-//
-//.wishlist-hint-yellow {
-//  -fx-text-fill: #dcc030;
-//  -fx-font-style: italic;
-//}
-//
-//.wishlist-hint-red {
-//  -fx-text-fill: #ff7c7c;
-//  -fx-font-style: italic;
-//}
-//
-//.wishlist-hint-green {
-//  -fx-text-fill: #89d07f;
-//  -fx-font-style: italic;
-//}
-//
-//.wishlist-tooltip {
-//  -fx-wrap-text: true;
-//}

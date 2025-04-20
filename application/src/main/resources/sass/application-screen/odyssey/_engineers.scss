@@ -29,31 +29,31 @@
 
         &:force {
           .name {
-            -fx-text-fill: #ff3c00;
+            -fx-text-fill: $text-color-force;
           }
         }
 
         &:dynamic {
           .name {
-            -fx-text-fill: #ff00e7;
+            -fx-text-fill: $text-color-dynamic;
           }
         }
 
         &:strategic {
           .name {
-            -fx-text-fill: #7cd429;
+            -fx-text-fill: $text-color-stategic;
           }
         }
 
         &:hybrid {
           .name {
-            -fx-text-fill: #ffffff;
+            -fx-text-fill: $text-color-white;
           }
         }
 
         &:unknown {
           .name {
-            -fx-text-fill: #ffffff;
+            -fx-text-fill: $text-color-white;
           }
         }
       }

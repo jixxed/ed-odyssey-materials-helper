@@ -143,32 +143,30 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
                                 .withNonLocalizedText(String.valueOf(grade.getGrade()))
                                 .build();
                         return BoxBuilder.builder()
-                                .withNodes(
-                                        label,
-                                        completionSlider
-                                ).buildHBox();
+                                .withStyleClasses("grade-select")
+                                .withNodes(label, completionSlider)
+                                .buildHBox();
                     })
                     .toArray(DestroyableHBox[]::new);
 
             final DestroyableVBox grades = BoxBuilder.builder()
                     .withStyleClasses("grade-selects")
                     .withNodes(gradeControls).buildVBox();
-            final DestroyableVBox gradePopOverContent = BoxBuilder.builder()
-                    .withStyleClass("grade-selects-content")
-                    .withNodes(
-                            LabelBuilder.builder()
-                                    .withStyleClass("grade-selects-title")
-                                    .withText("wishlist.percentage.per.grade")
-                                    .build(),
-                            LabelBuilder.builder()
-                                    .withStyleClass("grade-selects-explain")
-                                    .withText("wishlist.percentage.per.grade.explain")
-                                    .build(),
-                            grades)
+            final DestroyableLabel title = LabelBuilder.builder()
+                    .withStyleClass("title")
+                    .withText("wishlist.percentage.per.grade")
+                    .build();
+            final DestroyableLabel explain = LabelBuilder.builder()
+                    .withStyleClass("explain")
+                    .withText("wishlist.percentage.per.grade.explain")
+                    .build();
+            final DestroyableVBox content = BoxBuilder.builder()
+                    .withStyleClass("content")
+                    .withNodes(title, explain, grades)
                     .buildVBox();
             final DestroyablePopOver popOver = PopOverBuilder.builder()
                     .withStyleClass("horizons-wishlist-blueprints-module-popover")
-                    .withContent(gradePopOverContent)
+                    .withContent(content)
                     .withDetachable(false)
                     .withHeaderAlwaysVisible(false)
                     .withArrowLocation(PopOver.ArrowLocation.TOP_CENTER)

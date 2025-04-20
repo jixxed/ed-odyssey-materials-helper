@@ -16,17 +16,12 @@
       }
 
       .loadout-select {
-        -fx-min-width: 10em;
-        -fx-pref-width: 35em;
-        -fx-max-width: 35em;
+        @include fixedWidth(35em);
       }
 
       .loadout-newname {
         -fx-min-width: 20em;
-        //-fx-background-insets: 1;
-        //-fx-background-radius: 0, 0;
-        //-fx-border-width: 1;
-        -fx-border-color: #2e2e2e;
+        -fx-border-color: $border-color-black;
       }
     }
 
@@ -89,22 +84,14 @@
               -fx-background-color: rgba($background-color-lighter, .8);
               -fx-opacity: 0;
               -fx-alignment: center;
-              //-fx-fill-height: true;
-
-              //.control-box {
-              //  @include fixedHeight(3.035em);
-              //-fx-fill-height: true;
-              //}
 
               .control {
                 @include fixedWidth(7.25em);
-                //@include fixedHeight(3.035em);
                 -fx-max-height: 10em;
                 -fx-text-alignment: center;
                 -fx-alignment: center;
                 -fx-opacity: 0.5;
                 -fx-wrap-text: true;
-                //-fx-fill-height: true;
 
                 &:hover {
                   -fx-opacity: 1;
@@ -146,17 +133,15 @@
 
             @at-root .loadout-modification-popover {
               > .border {
-                -fx-stroke: #fff !important;
+                -fx-stroke: $border-color-white !important;
                 -fx-stroke-width: 0.1em !important;
-                -fx-fill: #0f0f0f !important;
+                -fx-fill: $background-color-dark !important;
               }
 
               .grid {
-                -fx-background-color: #0f0f0f;
+                -fx-background-color: $background-color-dark;
                 -fx-padding: 0.25em;
                 @include hvGap(0.25em);
-
-
               }
 
               .name {
@@ -234,17 +219,6 @@
                   }
                 }
 
-                //.separator {
-                //  -fx-padding: 0.6em 0 0 0;
-                //
-                //  .line {
-                //    -fx-border-style: solid;
-                //    -fx-border-width: 0 0 1 7;
-                //    /* trick to set the thickness of only one of the borders */
-                //    -fx-border-color: white;
-                //  }
-                //}
-
               }
             }
 
@@ -264,10 +238,8 @@
               }
 
               .value {
+                @include fixedWidth(5.1em);
                 -fx-wrap-text: true;
-                -fx-min-width: 5.1em;
-                -fx-pref-width: 5.1em;
-                -fx-max-width: 5.1em;
                 -fx-alignment: center-right;
                 -fx-text-alignment: right;
 
@@ -297,11 +269,11 @@
         }
 
         .warning {
+          @include fixedWidth(30.5em);
           -fx-wrap-text: true;
-          -fx-text-fill: crimson;
+          -fx-text-fill: $text-color-red;
           -fx-alignment: center-right;
           -fx-text-alignment: right;
-          @include fixedWidth(30.5em);
         }
 
       }

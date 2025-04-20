@@ -156,6 +156,7 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
                 .withStyleClass("text-lines")
                 .withNodes(firstLine, new GrowingRegion(), secondLine)
                 .buildVBox();
+        VBox.setVgrow(text, Priority.ALWAYS);
         this.getNodes().addAll(text, progressbar);
 
         installPopOver();

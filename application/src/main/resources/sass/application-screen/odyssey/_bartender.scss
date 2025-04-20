@@ -90,13 +90,13 @@
 
         .buy-value, .sell-value {
           @include fixedHeight(2em);
-          -fx-label-padding: 0 0 0 0.25em;
           @include fixedWidth(13em);
+          -fx-label-padding: 0 0 0 0.25em;
           -fx-alignment: baseline-left;
           -fx-font-style: italic;
 
           &:disabled {
-            -fx-text-fill: #4f4f4f;
+            -fx-text-fill: $text-color-grey;
           }
         }
 
