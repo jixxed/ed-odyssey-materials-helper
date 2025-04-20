@@ -84,7 +84,7 @@ public class ImportService {
                         final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
                         final String name = LocaleService.getLocalizedStringForCurrentLocale(ship.getShipType().getLocalizationKey()) + "(SLEF)";
                         final ShipConfiguration shipConfiguration = shipConfigurations.createShipConfiguration(name);
-                        ShipMapper.toShipConfiguration(ship,shipConfiguration, name);
+                        ShipMapper.toShipConfiguration(ship, shipConfiguration, name);
                         ShipService.saveShipConfigurations(commander, shipConfigurations);
                         results.add(new ImportResult(ImportResult.ResultType.SUCCESS_SLEF, name));
                     });
@@ -288,10 +288,10 @@ public class ImportService {
                 wishlist.setItems(clipboardWishlist.getWishlist().getItems());
 
                 final Commander commander = APPLICATION_STATE.getPreferredCommander().orElseThrow(IllegalArgumentException::new);
-                final Wishlists wishlists = WishlistService.getWishlists(commander);
+                final Wishlists wishlists = WishlistService.getOdysseyWishlists(commander);
                 wishlists.addWishlist(wishlist);
                 wishlists.setSelectedWishlistUUID(wishlist.getUuid());
-                WishlistService.saveWishlists(commander, wishlists);
+                WishlistService.saveOdysseyWishlists(commander, wishlists);
                 return new ImportResult(ImportResult.ResultType.SUCCESS_ODYSSEY_WISHLIST, name);
             } else {
                 throw new OdysseyWishlistDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.");

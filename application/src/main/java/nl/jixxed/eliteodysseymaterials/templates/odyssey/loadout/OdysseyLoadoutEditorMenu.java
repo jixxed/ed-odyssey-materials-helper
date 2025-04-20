@@ -51,7 +51,7 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
     @Override
     public void initEventHandling() {
 
-        register(EventService.addListener(true, this, WishlistSelectedEvent.class, _ ->
+        register(EventService.addListener(true, this, OdysseyWishlistSelectedEvent.class, _ ->
                 APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists)));
         register(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent ->
         {
@@ -259,7 +259,7 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
     }
 
     private void loadCommanderWishlists(final Commander commander) {
-        final Wishlists wishlists = WishlistService.getWishlists(commander);
+        final Wishlists wishlists = WishlistService.getOdysseyWishlists(commander);
         if (this.addToWishlist != null) {
             this.addToWishlist.clear();
             final List<DestroyableMenuItem> menuItems = wishlists.getAllWishlists().stream()
@@ -272,7 +272,7 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
                                 if (wishlistBlueprints.isEmpty()) {
                                     NotificationService.showWarning(NotificationType.ERROR, LocaleService.LocaleString.of("notification.wishlist.cannot.add.title"), LocaleService.LocaleString.of("notification.wishlist.cannot.add.text"));
                                 } else {
-                                    EventService.publish(new WishlistBlueprintEvent(commander, wishlist.getUuid(), wishlistBlueprints, Action.ADDED));
+                                    EventService.publish(new OdysseyWishlistBlueprintEvent(commander, wishlist.getUuid(), wishlistBlueprints, Action.ADDED));
                                 }
                             })
                             .build())
@@ -291,11 +291,11 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
                     if (wishlistBlueprints.isEmpty()) {
                         NotificationService.showWarning(NotificationType.ERROR, LocaleService.LocaleString.of("notification.wishlist.cannot.add.title"), LocaleService.LocaleString.of("notification.wishlist.cannot.add.text"));
                     } else {
-                        final Wishlists odysseyWishlists = WishlistService.getWishlists(commander);
+                        final Wishlists odysseyWishlists = WishlistService.getOdysseyWishlists(commander);
                         final Wishlist newWishlist = odysseyWishlists.createWishlist(this.loadoutSetSelect.getSelectionModel().getSelectedItem().getName());
-                        WishlistService.saveWishlists(commander, odysseyWishlists);
-                        EventService.publish(new WishlistCreatedEvent());//refreshes wishlist dropdown
-                        EventService.publish(new WishlistBlueprintEvent(commander, newWishlist.getUuid(), wishlistBlueprints, Action.ADDED));
+                        WishlistService.saveOdysseyWishlists(commander, odysseyWishlists);
+                        EventService.publish(new OdysseyWishlistCreatedEvent());//refreshes wishlist dropdown
+                        EventService.publish(new OdysseyWishlistBlueprintEvent(commander, newWishlist.getUuid(), wishlistBlueprints, Action.ADDED));
                     }
                 })
                 .build();

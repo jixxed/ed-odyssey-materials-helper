@@ -23,10 +23,7 @@ import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyWishlistSearchEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComboBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTextField;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.concurrent.TimeUnit;
 
@@ -72,14 +69,14 @@ class OdysseyWishlistSearchBar extends DestroyableHBox implements DestroyableEve
     }
 
     private void initSearchTextSort() {
-        final Tooltip sortMaterialsTooltip = TooltipBuilder.builder()
+        final DestroyableTooltip sortMaterialsTooltip = TooltipBuilder.builder()
                 .withText("search.sort.placeholder")
                 .build();
         this.sortMaterialsComboBox = ComboBoxBuilder.builder(OdysseyWishlistMaterialSort.class)
                 .withStyleClasses("root", "filter-and-sort")
                 .withItemsProperty(LocaleService.getListBinding(OdysseyWishlistMaterialSort.ALPHABETICAL, OdysseyWishlistMaterialSort.QUANTITY_REQUIRED))
                 .withPromptTextProperty(LocaleService.getStringBinding("search.sort.placeholder"))
-                .withValueChangeListener((options, oldValue, newValue) -> {
+                .withValueChangeListener((_, _, newValue) -> {
                     if (newValue != null) {
                         EventService.publish(new OdysseyWishlistSearchEvent(new OdysseyWishlistMaterialSearch(getQueryOrDefault(this.textField), newValue, getShowOrDefault(this.groupMaterialsComboBox))));
                         PreferencesService.setPreference("search.odyssey.wishlist.sort", newValue.name());
@@ -98,7 +95,7 @@ class OdysseyWishlistSearchBar extends DestroyableHBox implements DestroyableEve
                 .withStyleClasses("root", "filter-and-sort")
                 .withItemsProperty(LocaleService.getListBinding(WishlistMaterialGrouping.CATEGORY,
                         WishlistMaterialGrouping.NONE))
-                .withValueChangeListener((options, oldValue, newValue) -> {
+                .withValueChangeListener((_, _, newValue) -> {
                     if (newValue != null) {
                         EventService.publish(new OdysseyWishlistSearchEvent(new OdysseyWishlistMaterialSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.groupMaterialsComboBox))));
                         PreferencesService.setPreference("search.odyssey.wishlist.grouping", newValue.name());
@@ -116,10 +113,10 @@ class OdysseyWishlistSearchBar extends DestroyableHBox implements DestroyableEve
                 .withPromptTextProperty(LocaleService.getStringBinding("search.text.placeholder"))
                 .withFocusTraversable(false)
                 .build();
-        subscribe = Observable.create((ObservableEmitter<String> emitter) -> this.textField.textProperty().addListener((observable, oldValue, newValue) -> emitter.onNext(newValue)))
+        subscribe = Observable.create((ObservableEmitter<String> emitter) -> this.textField.addChangeListener(this.textField.textProperty(), (_, _, newValue) -> emitter.onNext(newValue)))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
-                .subscribe(newValue -> EventService.publish(new OdysseyWishlistSearchEvent(new OdysseyWishlistMaterialSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.groupMaterialsComboBox)))));
+                .subscribe(_ -> EventService.publish(new OdysseyWishlistSearchEvent(new OdysseyWishlistMaterialSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.groupMaterialsComboBox)))));
     }
 
 

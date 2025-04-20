@@ -188,7 +188,7 @@ public class OdysseyMaterialCard extends DestroyableVBox implements DestroyableE
         register(EventService.addListener(true, this, IrrelevantMaterialOverrideEvent.class, _ ->
                 Platform.runLater(this::updateMaterialCardStyle)
         ));
-        register(EventService.addListener(true, this, 9, WishlistBlueprintEvent.class, _ -> {
+        register(EventService.addListener(true, this, 9, OdysseyWishlistBlueprintEvent.class, _ -> {
             Platform.runLater(() -> this.wishlistAmount.setText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.odysseyMaterial)).mapToInt(Integer::intValue).sum())));
             Platform.runLater(this::updateStyle);
         }));

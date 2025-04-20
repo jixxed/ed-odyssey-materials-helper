@@ -53,7 +53,7 @@ public class OdysseyLoadoutItem extends DestroyableVBox implements DestroyableEv
     public void initEventHandling() {
         if (!Suit.FLIGHTSUIT.equals(this.loadout.getEquipment())) {
 
-            register(EventService.addListener(true, this, WishlistSelectedEvent.class, wishlistSelectedEvent -> {
+            register(EventService.addListener(true, this, OdysseyWishlistSelectedEvent.class, wishlistSelectedEvent -> {
                 if (Suit.FLIGHTSUIT != this.loadout.getEquipment()) {
                     APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
                 }
@@ -183,7 +183,7 @@ public class OdysseyLoadoutItem extends DestroyableVBox implements DestroyableEv
     }
 
     private void loadCommanderWishlists(final Commander commander) {
-        final Wishlists wishlists = WishlistService.getWishlists(commander);
+        final Wishlists wishlists = WishlistService.getOdysseyWishlists(commander);
         if (this.addToWishlist != null) {
             this.addToWishlist.clear();
             final List<DestroyableMenuItem> menuItems = wishlists.getAllWishlists().stream()
@@ -196,7 +196,7 @@ public class OdysseyLoadoutItem extends DestroyableVBox implements DestroyableEv
                                 if (wishlistBlueprints.isEmpty()) {
                                     NotificationService.showWarning(NotificationType.ERROR, LocaleService.LocaleString.of("notification.wishlist.cannot.create.title"), LocaleService.LocaleString.of("notification.wishlist.cannot.create.text"));
                                 } else {
-                                    EventService.publish(new WishlistBlueprintEvent(commander, wishlist.getUuid(), wishlistBlueprints, Action.ADDED));
+                                    EventService.publish(new OdysseyWishlistBlueprintEvent(commander, wishlist.getUuid(), wishlistBlueprints, Action.ADDED));
                                 }
                             })
                             .build())
@@ -210,11 +210,11 @@ public class OdysseyLoadoutItem extends DestroyableVBox implements DestroyableEv
                         if (wishlistBlueprints.isEmpty()) {
                             NotificationService.showWarning(NotificationType.ERROR, LocaleService.LocaleString.of("notification.wishlist.cannot.create.title"), LocaleService.LocaleString.of("notification.wishlist.cannot.create.text"));
                         } else {
-                            final Wishlists odysseyWishlists = WishlistService.getWishlists(commander);
+                            final Wishlists odysseyWishlists = WishlistService.getOdysseyWishlists(commander);
                             final Wishlist newWishlist = odysseyWishlists.createWishlist(this.loadoutSet.getName());
-                            WishlistService.saveWishlists(commander, odysseyWishlists);
-                            EventService.publish(new WishlistCreatedEvent());//refreshes wishlist dropdown
-                            EventService.publish(new WishlistBlueprintEvent(commander, newWishlist.getUuid(), wishlistBlueprints, Action.ADDED));
+                            WishlistService.saveOdysseyWishlists(commander, odysseyWishlists);
+                            EventService.publish(new OdysseyWishlistCreatedEvent());//refreshes wishlist dropdown
+                            EventService.publish(new OdysseyWishlistBlueprintEvent(commander, newWishlist.getUuid(), wishlistBlueprints, Action.ADDED));
                         }
                     })
                     .build();

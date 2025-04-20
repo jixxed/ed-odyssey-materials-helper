@@ -56,10 +56,10 @@ public class ClipboardHelper {
         }).orElse("");
     }
 
-    public static String createClipboardWishlist() {
+    public static String createClipboardOdysseyWishlist() {
         return APPLICATION_STATE.getPreferredCommander().map(commander -> {
             try {
-                final String wishlistJson = OBJECT_MAPPER.writeValueAsString(new ClipboardWishlist("wishlist", 1, WishlistService.getWishlists(commander).getSelectedWishlist()));
+                final String wishlistJson = OBJECT_MAPPER.writeValueAsString(new ClipboardWishlist("wishlist", 1, WishlistService.getOdysseyWishlists(commander).getSelectedWishlist()));
                 final String wishlist64 = convertJsonToBase64Compressed(wishlistJson);
                 final String url = "edomh://wishlist/?" + wishlist64;
                 if (url.length() > 2048) {

@@ -9,7 +9,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.export.CsvExporter;
@@ -34,22 +33,27 @@ import java.util.function.Supplier;
 public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private DestroyableComboBox<Wishlist> wishlistSelect;
+    private DestroyableMenuButton menuButton;
     private String activeWishlistUUID;
+    private List<PathItem<OdysseyBlueprintName>> shortestPath;
     private OdysseyWishlistMaterialSearch currentSearch = new OdysseyWishlistMaterialSearch("", OdysseyWishlistMaterialSort.ALPHABETICAL, WishlistMaterialGrouping.CATEGORY);
 
-    private DestroyableMenuButton menuButton;
-
     public OdysseyWishlistMenu() {
+        final OdysseyWishlistMaterialSort materialSort = OdysseyWishlistMaterialSort.valueOf(PreferencesService.getPreference("search.odyssey.wishlist.sort", "ALPHABETICAL"));
+        final WishlistMaterialGrouping filter = WishlistMaterialGrouping.valueOf(PreferencesService.getPreference("search.odyssey.wishlist.grouping", "CATEGORY"));
+        currentSearch.setWishlistMaterialGrouping(filter);
+        currentSearch.setWishlistMaterialSort(materialSort);
+
         initComponents();
         initEventHandling();
     }
 
+
     @Override
     public void initComponents() {
-        this.getStyleClass().add("menu");
-
+        this.getStyleClass().add("wishlist-menu");
         final Set<Wishlist> items = APPLICATION_STATE.getPreferredCommander()
-                .map(commander -> WishlistService.getWishlists(commander).getAllWishlists())
+                .map(commander -> WishlistService.getOdysseyWishlists(commander).getAllWishlists())
                 .orElse(Collections.emptySet());
         this.wishlistSelect = ComboBoxBuilder.builder(Wishlist.class)
                 .withStyleClass("wishlist-select")
@@ -58,17 +62,17 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
                     if (newValue != null) {
                         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                             this.activeWishlistUUID = newValue.getUuid();
-                            WishlistService.selectWishlist(this.activeWishlistUUID, commander);
-                            EventService.publish(new WishlistSelectedEvent(this.activeWishlistUUID));
+                            WishlistService.selectOdysseyWishlist(this.activeWishlistUUID, commander);
+                            EventService.publish(new OdysseyWishlistSelectedEvent(this.activeWishlistUUID));
                         });
                     }
                 })
                 .build();
-
+        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> this.wishlistSelect.getSelectionModel().select(WishlistService.getOdysseyWishlists(commander).getSelectedWishlist()));
         this.menuButton = MenuButtonBuilder.builder()
                 .withText("tab.wishlist.options")
-                .withMenuItems(
-                        Map.of("tab.wishlist.create", getCreateHandler(),
+                .withMenuItems(Map.of(
+                                "tab.wishlist.create", getCreateHandler(),
                                 "tab.wishlist.rename", getRenameHandler(),
                                 "tab.wishlist.delete", getDeleteHandler(),
                                 "tab.wishlist.copy", getCopyHandler(),
@@ -78,21 +82,21 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
                                 "tab.wishlist.rename", this.wishlistSelect.getSelectionModel().selectedItemProperty().isEqualTo(Wishlist.ALL),
                                 "tab.wishlist.copy", this.wishlistSelect.getSelectionModel().selectedItemProperty().isEqualTo(Wishlist.ALL),
                                 "tab.wishlist.delete", this.wishlistSelect.getSelectionModel().selectedItemProperty().isEqualTo(Wishlist.ALL)
-                        )
-                )
+                        ))
                 .build();
         this.menuButton.setFocusTraversable(false);
-        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> this.wishlistSelect.getSelectionModel().select(WishlistService.getWishlists(commander).getSelectedWishlist()));
-        this.getNodes().addAll(this.wishlistSelect, this.menuButton);
-//        hBoxBlueprints.addBinding(hBoxBlueprints.spacingProperty(), ScalingHelper.getPixelDoubleBindingFromEm(0.25));
 
 
-        final Integer fontSize = FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize();
-        applyFontSizingHack(fontSize);
+//        DestroyableButton loadoutEditorButton = ButtonBuilder.builder()
+//                .withText("odyssey.wishlist.loadouteditor")
+//                .withOnAction(_ -> EventService.publish(new OdysseyWishlistOpenLoadoutEditorEvent()))
+//                .build();
+
+        this.getNodes().addAll(this.wishlistSelect, this.menuButton/*, loadoutEditorButton*/);
     }
 
     private EventHandler<ActionEvent> getExportHandler() {
-        return event ->
+        return _ ->
                 EventService.publish(new SaveWishlistEvent(
                         getTextExporter(),
                         getCsvExporter(),
@@ -101,14 +105,14 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
     }
 
     private EventHandler<ActionEvent> getCopyHandler() {
-        return event -> {
+        return _ -> {
             copyWishListToClipboard();
             NotificationService.showInformation(NotificationType.COPY, LocaleService.LocaleString.of("notification.clipboard.title"), LocaleService.LocaleString.of("notification.clipboard.wishlist.copied.text"));
         };
     }
 
     private EventHandler<ActionEvent> getDeleteHandler() {
-        return event -> {
+        return _ -> {
             final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle(LocaleService.getLocalizedStringForCurrentLocale("tab.wishlist.delete.confirm.title"));
             alert.setHeaderText(LocaleService.getLocalizedStringForCurrentLocale("tab.wishlist.delete.confirm.header"));
@@ -117,7 +121,7 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
             final Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                    WishlistService.deleteWishlist(this.activeWishlistUUID, commander);
+                    WishlistService.deleteOdysseyWishlist(this.activeWishlistUUID, commander);
                     Platform.runLater(this::refreshWishlistSelect);
                 });
             }
@@ -127,18 +131,18 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
     private EventHandler<ActionEvent> getRenameHandler() {
         return _ -> showInputPopOver("tab.wishlist.rename", "tab.wishlist.rename.prompt",
                 (commander, input) -> {
-                    final Wishlists wishlists = WishlistService.getWishlists(commander);
+                    final Wishlists wishlists = WishlistService.getOdysseyWishlists(commander);
                     wishlists.renameWishlist(this.activeWishlistUUID, input);
-                    WishlistService.saveWishlists(commander, wishlists);
+                    WishlistService.saveOdysseyWishlists(commander, wishlists);
                 });
     }
 
     private EventHandler<ActionEvent> getCreateHandler() {
         return _ -> showInputPopOver("tab.wishlist.create", "tab.wishlist.create.prompt",
                 (commander, input) -> {
-                    final Wishlists wishlists = WishlistService.getWishlists(commander);
+                    final Wishlists wishlists = WishlistService.getOdysseyWishlists(commander);
                     wishlists.createWishlist(input);
-                    WishlistService.saveWishlists(commander, wishlists);
+                    WishlistService.saveOdysseyWishlists(commander, wishlists);
                 });
     }
 
@@ -147,6 +151,7 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
                 .withStyleClasses("root", "wishlist-newname")
                 .withPromptTextProperty(LocaleService.getStringBinding(textfieldPromptLocaleKey))
                 .build();
+
         final DestroyableButton button = ButtonBuilder.builder()
                 .withText(buttonLocaleKey)
                 .build();
@@ -159,6 +164,7 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
                         .withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox())
                 .withDetachable(false)
                 .withHeaderAlwaysVisible(false)
+                .withCornerRadius(0)
                 .withArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER)
                 .build();
         popOver.show(this.menuButton);
@@ -195,7 +201,7 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
         final Map<Good, Integer> wishlistNeededGoods = new EnumMap<>(Good.class);
         final Map<Asset, Integer> wishlistNeededAssets = new EnumMap<>(Asset.class);
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander ->
-                WishlistService.getWishlists(commander).getSelectedWishlist().getItems().stream()
+                WishlistService.getOdysseyWishlists(commander).getSelectedWishlist().getItems().stream()
                         .filter(OdysseyWishlistBlueprint::isVisible)
                         .map((OdysseyWishlistBlueprint odysseyWishlistBlueprint) -> OdysseyBlueprintConstants.getRecipe(odysseyWishlistBlueprint.getRecipeName()))
                         .forEach(recipe -> {
@@ -212,11 +218,22 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
         register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> applyFontSizingHack(fontSizeEvent.getFontSize())));
         register(EventService.addListener(true, this, CommanderSelectedEvent.class, _ -> refreshWishlistSelect()));
         register(EventService.addListener(true, this, LanguageChangedEvent.class, _ -> refreshWishlistSelect()));
-        register(EventService.addListener(true, this, WishlistCreatedEvent.class, _ -> refreshWishlistSelect()));
+        register(EventService.addListener(true, this, OdysseyWishlistCreatedEvent.class, _ -> refreshWishlistSelect()));
         register(EventService.addListener(true, this, OdysseyWishlistSearchEvent.class, odysseyWishlistSearchEvent ->
-                this.currentSearch = odysseyWishlistSearchEvent.getSearch()));
+                this.currentSearch = odysseyWishlistSearchEvent.getSearch()));//intended for export sorting
+        register(EventService.addListener(true, this, OdysseyShortestPathChangedEvent.class, shortestPathChangedEvent ->
+                this.shortestPath = shortestPathChangedEvent.getPathItems()));
     }
 
+    private void refreshWishlistSelect() {
+        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+            final Wishlists wishlists = WishlistService.getOdysseyWishlists(commander);
+            final Set<Wishlist> items = wishlists.getAllWishlists();
+            this.wishlistSelect.getItems().clear();
+            this.wishlistSelect.getItems().addAll(items.stream().sorted(Comparator.comparing(Wishlist::getName)).toList());
+            this.wishlistSelect.getSelectionModel().select(wishlists.getSelectedWishlist());
+        });
+    }
 
     private static final String FX_FONT_SIZE_DPX = "-fx-font-size: %dpx";
 
@@ -226,17 +243,7 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
         this.wishlistSelect.styleProperty().set(fontStyle);
     }
 
-    private void refreshWishlistSelect() {
-        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-            final Wishlists wishlists = WishlistService.getWishlists(commander);
-            final Set<Wishlist> items = wishlists.getAllWishlists();
-            this.wishlistSelect.getItems().clear();
-            this.wishlistSelect.getItems().addAll(items.stream().sorted(Comparator.comparing(Wishlist::getName)).toList());
-            this.wishlistSelect.getSelectionModel().select(wishlists.getSelectedWishlist());
-        });
-    }
-
     private void copyWishListToClipboard() {
-        ClipboardHelper.copyToClipboard(ClipboardHelper.createClipboardWishlist());
+        ClipboardHelper.copyToClipboard(ClipboardHelper.createClipboardOdysseyWishlist());
     }
 }

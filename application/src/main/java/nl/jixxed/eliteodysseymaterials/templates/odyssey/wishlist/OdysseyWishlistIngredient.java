@@ -1,171 +1,248 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist;
 
-import javafx.beans.binding.StringBinding;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.css.PseudoClass;
 import javafx.geometry.Orientation;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.VBox;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.SegmentedBarBuilder;
+import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.domain.Storage;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.OdysseyBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.OdysseyWishlistBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.Wishlist;
 import nl.jixxed.eliteodysseymaterials.enums.*;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.MaterialService;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.StorageService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.FlipRemainingAvailableEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
+import nl.jixxed.eliteodysseymaterials.service.*;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegmentView;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
-import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
 
 import java.util.Map;
+import java.util.Optional;
 
+@Slf4j
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public
-class OdysseyWishlistIngredient extends Ingredient implements DestroyableEventTemplate {
-    public static final String FILLED = "filled";
-    @EqualsAndHashCode.Include
-    private final OdysseyStorageType storageType;
+public class OdysseyWishlistIngredient extends DestroyableVBox implements DestroyableComponent, DestroyableEventTemplate {
+    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     @Getter
     @EqualsAndHashCode.Include
     private final OdysseyMaterial odysseyMaterial;
-    @Getter
-    private final Integer leftAmount;
-    private Integer rightAmount;
 
-    private DestroyableLabel nameLabel;
     private DestroyableResizableImageView image;
-    private DestroyableLabel leftAmountLabel;
-    private DestroyableLabel rightAmountLabel;
-    private DestroyableLabel rightDescriptionLabel;
-    private static final String INGREDIENT_FILLED_CLASS = "ingredient-filled";
-    private static final String INGREDIENT_UNFILLED_CLASS = "ingredient-unfilled";
-    private static final String INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS = "ingredient-filled-partial";
-    public static final String PARTIAL = "partial";
-    private DestroyableSegmentedBar<TypeSegment> segmentedBar;
-    private TypeSegment present;
-    private TypeSegment notPresent;
+    private DestroyableLabel requiredAmountLabel;
+    private DestroyableLabel availableAmountLabel;
+    private DestroyableLabel remainingAmountLabel;
 
-    OdysseyWishlistIngredient(final OdysseyStorageType storageType, final OdysseyMaterial odysseyMaterial, final Integer amountRequired, final Integer amountAvailable) {
-        if (storageType.equals(OdysseyStorageType.OTHER)) {
-            throw new IllegalArgumentException("StorageType Other must use MissionIngredient class");
-        }
-        this.storageType = storageType;
-        this.leftAmount = amountRequired;
+    private TypeSegment presentShip;
+    private TypeSegment presentFleetCarrier;
+    private TypeSegment missingForMinimum;
+    private TypeSegment missingForRequired;
+    private TypeSegment missingForMaximum;
+    private Integer minimum = 0;
+    @Getter
+    private Integer required = 0;
+    private Integer maximum = 0;
+    private Integer availableShip = 0;
+    private Integer availableFleetCarrier = 0;
+    private Integer remaining = 0;
+    //field to store the original full amount, so we have something to compare when hovering
+    private Integer remainingFull = 0;
+    final BooleanProperty showRemaining;
+    final BooleanProperty hideCompleted;
+    final BooleanProperty completed = new SimpleBooleanProperty(false);
+    private String currentSearchQuery = "";
+    private OdysseyWishlistBlueprint blueprint;
+
+    OdysseyWishlistIngredient(final OdysseyMaterial odysseyMaterial) {
         this.odysseyMaterial = odysseyMaterial;
-        this.rightAmount = amountAvailable;
+        this.hideCompleted = new SimpleBooleanProperty(PreferencesService.getPreference("blueprint.hide.completed", false));
+        this.showRemaining = new SimpleBooleanProperty(PreferencesService.getPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_ODYSSEY, Boolean.FALSE));
+        calculate();
+
         initComponents();
         initEventHandling();
     }
 
-    @Override
+
     @SuppressWarnings("java:S2177")
     public void initComponents() {
-        this.getStyleClass().add("ingredient");
+        this.getStyleClass().add("wishlist-ingredient");
+        this.getStyleClass().add("material");
+        this.visibleProperty().bind(hideCompleted.and(completed).not());
+        this.managedProperty().bind(hideCompleted.and(completed).not());
+        final int progressShip = Math.min(availableShip, this.maximum);
+        final int progressFleetCarrier = Math.min(availableFleetCarrier, this.maximum - progressShip);
+        final int progressTotal = Math.min(progressShip + progressFleetCarrier, this.maximum);
+        this.presentShip = new TypeSegment(Math.max(0, progressShip), SegmentType.PRESENT_SHIP);
+        this.presentFleetCarrier = new TypeSegment(Math.max(0, progressFleetCarrier), SegmentType.PRESENT_FLEET_CARRIER);
+        this.missingForMinimum = new TypeSegment(Math.max(0, minimum - progressTotal), SegmentType.MISSING_FOR_MINIMUM);
+        this.missingForRequired = new TypeSegment(Math.max(0, required - Math.max(minimum, progressTotal)), SegmentType.MISSING_FOR_REQUIRED);
+        this.missingForMaximum = new TypeSegment(Math.max(0, maximum - Math.max(required, progressTotal)), SegmentType.MISSING_FOR_MAXIMUM);
+        DestroyableSegmentedBar<TypeSegment> progressbar = SegmentedBarBuilder.builder(TypeSegment.class)
+                .withStyleClass("ingredient-progressbar")
+                .withOrientation(Orientation.HORIZONTAL)
+                .withInfoNodeFactory(_ -> null)
+                .withSegmentViewFactory(segment -> new TypeSegmentView(segment, false))
+                .withSegments(presentShip, presentFleetCarrier, missingForMinimum, missingForRequired, missingForMaximum)
+                .build();
 
-        this.nameLabel = LabelBuilder.builder()
+        DestroyableLabel nameLabel = LabelBuilder.builder()
                 .withStyleClass("name")
                 .withText(this.odysseyMaterial.getLocalizationKey())
                 .build();
+        VBox.setVgrow(nameLabel, Priority.ALWAYS);
+        HBox.setHgrow(nameLabel, Priority.ALWAYS);
         initImage();
 
-        this.leftAmountLabel = LabelBuilder.builder()
+        this.requiredAmountLabel = LabelBuilder.builder()
                 .withStyleClass("quantity")
-                .withNonLocalizedText("0")
+                .withNonLocalizedText(maximum.equals(minimum) ? required.toString() : required + " (" + minimum + " - " + maximum + ")")
                 .build();
-        this.rightAmountLabel = LabelBuilder.builder()
+        this.remainingAmountLabel = LabelBuilder.builder()
                 .withStyleClass("quantity")
-                .withNonLocalizedText("0")
+                .withNonLocalizedText(remaining.toString())
+                .withVisibilityProperty(showRemaining.or(this.hoverProperty()).and(this.hoverProperty().and(showRemaining).not()))//xor?
+                .withManagedProperty(showRemaining.or(this.hoverProperty()).and(this.hoverProperty().and(showRemaining).not()))//xor?
                 .build();
-        DestroyableLabel leftDescriptionLabel = LabelBuilder.builder()
+        this.availableAmountLabel = LabelBuilder.builder()
+                .withStyleClass("quantity")
+                .withNonLocalizedText(availableFleetCarrier > 0 ? availableShip + " + " + availableFleetCarrier : availableShip.toString())
+                .withVisibilityProperty(this.remainingAmountLabel.visibleProperty().not())
+                .withManagedProperty(this.remainingAmountLabel.visibleProperty().not())
+                .build();
+        DestroyableLabel requiredLabel = LabelBuilder.builder()
                 .withStyleClass("required")
                 .withText("blueprint.header.required")
                 .build();
-        this.rightDescriptionLabel = LabelBuilder.builder()
+        //xor?
+        DestroyableLabel remainingLabel = LabelBuilder.builder()
+                .withStyleClass("remaining")
+                .withText("blueprint.header.remaining")
+                .withVisibilityProperty(showRemaining.or(this.hoverProperty()).and(this.hoverProperty().and(showRemaining).not()))//xor?
+                .withManagedProperty(showRemaining.or(this.hoverProperty()).and(this.hoverProperty().and(showRemaining).not()))//xor?
+                .build();
+        DestroyableLabel availableLabel = LabelBuilder.builder()
                 .withStyleClass("available")
                 .withText("blueprint.header.available")
+                .withVisibilityProperty(remainingLabel.visibleProperty().not())
+                .withManagedProperty(remainingLabel.visibleProperty().not())
                 .build();
+        HBox.setHgrow(requiredLabel, Priority.ALWAYS);
+        HBox.setHgrow(remainingLabel, Priority.ALWAYS);
+        HBox.setHgrow(availableLabel, Priority.ALWAYS);
+        HBox.setHgrow(requiredAmountLabel, Priority.ALWAYS);
+        HBox.setHgrow(remainingAmountLabel, Priority.ALWAYS);
+        HBox.setHgrow(availableAmountLabel, Priority.ALWAYS);
 
-        DestroyableHBox leftHBox = BoxBuilder.builder()
-                .withNodes(leftDescriptionLabel, this.leftAmountLabel)
-                .withStyleClass("quantity-section").buildHBox();
-        DestroyableHBox rightHBox = BoxBuilder.builder()
-                .withNodes(this.rightAmountLabel, this.rightDescriptionLabel)
-                .withStyleClass("quantity-section").buildHBox();
-        this.leftAmountLabel.setText(this.leftAmount.toString());
-        HBox.setHgrow(this.leftAmountLabel, Priority.ALWAYS);
-        this.rightAmountLabel.setText(this.rightAmount.toString());
 
         DestroyableHBox firstLine = BoxBuilder.builder()
-                .withNodes(this.image, this.nameLabel)
+                .withStyleClass("title-line")
+                .withNodes(this.image, nameLabel)
                 .buildHBox();
         DestroyableHBox secondLine = BoxBuilder.builder()
-                .withNodes(leftHBox, new GrowingRegion(), rightHBox)
+                .withStyleClass("amount-line")
+                .withNodes(requiredLabel, this.requiredAmountLabel, new GrowingRegion(), this.availableAmountLabel, availableLabel, this.remainingAmountLabel, remainingLabel)
                 .buildHBox();
-        this.getNodes().addAll(firstLine, new GrowingRegion(), secondLine);
+        final DestroyableVBox text = BoxBuilder.builder()
+                .withStyleClass("text-lines")
+                .withNodes(firstLine, new GrowingRegion(), secondLine)
+                .buildVBox();
+        VBox.setVgrow(text, Priority.ALWAYS);
+        this.getNodes().addAll(text, progressbar);
 
-        MaterialService.addMaterialInfoPopOver(this, this.odysseyMaterial, false);
+        installPopOver();
 
-        update();
-        this.getStyleClass().add("wishlist-ingredient");
-        this.hoverProperty().addListener((observable, oldValue, newValue) -> {
-            showAsHovered(newValue);
-        });
-        this.segmentedBar = SegmentedBarBuilder.builder(TypeSegment.class).build();
-        this.segmentedBar.getStyleClass().add("ingredient-progressbar");
-        this.segmentedBar.setOrientation(Orientation.HORIZONTAL);
-        this.segmentedBar.setInfoNodeFactory(segment -> null);
-        this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(
-                SegmentType.PRESENT, Color.rgb(255, 255, 255),
-                SegmentType.NOT_PRESENT, Color.rgb(128, 128, 128)
-        ), false));
-        final Integer progress = Math.min(this.getLeftAmount(), this.getRightAmount());
-        this.present = new TypeSegment(Math.max(0, progress), SegmentType.PRESENT);
-        this.notPresent = new TypeSegment(Math.max(0, this.getLeftAmount() - progress), SegmentType.NOT_PRESENT);
-        this.segmentedBar.getSegments().addAll(this.present, this.notPresent);
-        this.getNodes().add(this.segmentedBar);
+        updateStyle();
     }
 
-    private void showAsHovered(final Boolean newValue) {
-        final Boolean showRemaining = !PreferencesService.getPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_ODYSSEY, Boolean.FALSE);
-        if (showRemaining.equals(newValue) && (this.getLeftAmount() - StorageService.getMaterialCount(getOdysseyMaterial(), AmountType.AVAILABLE)) > 0) {
-            this.getRightAmountLabel().setText(String.valueOf(this.getLeftAmount() - StorageService.getMaterialCount(getOdysseyMaterial(), AmountType.AVAILABLE)));
-            setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.remaining"));
-        } else {
-            setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.available"));
-            this.getRightAmountLabel().setText(this.getRightAmount().toString());
-        }
+    protected void installPopOver() {
+        MaterialService.addMaterialInfoPopOver(this, this.getOdysseyMaterial(), true);
     }
 
-    @Override
     @SuppressWarnings("java:S2177")
     public void initEventHandling() {
-        register(EventService.addListener(true, this, JournalLineProcessedEvent.class, _ -> this.update()));
-
         register(EventService.addListener(true, this, FlipRemainingAvailableEvent.class, flipRemainingAvailableEvent -> {
             if (Expansion.ODYSSEY.equals(flipRemainingAvailableEvent.getExpansion())) {
-                showAsHovered(this.hoverProperty().getValue());
+                this.showRemaining.set(flipRemainingAvailableEvent.isShowRemaining());
             }
         }));
+        register(EventService.addListener(true, this, StorageEvent.class, evt -> {
+            if (evt.getStoragePool().equals(StoragePool.SHIP) || evt.getStoragePool().equals(StoragePool.FLEETCARRIER)) {
+                this.update();
+            }
+        }));
+        //when we highlight a specific blueprint
+        register(EventService.addListener(true, this, OdysseyWishlistHighlightEvent.class, event -> {
+            if (event.isActive()) {
+                this.blueprint = event.getBlueprint();
+            } else {
+                this.blueprint = null;
+            }
+            this.update();
+        }));
+        //search
+        register(EventService.addListener(true, this, OdysseyWishlistSearchEvent.class, odysseyWishlistSearchEvent -> {
+            this.currentSearchQuery = odysseyWishlistSearchEvent.getSearch().getQuery();
+            this.updateStyle();
+        }));
+
+        register(EventService.addListener(true, this, WishlistHideCompletedEvent.class, event -> {
+            if (Expansion.ODYSSEY.equals(event.getExpansion())) {
+                hideCompleted.set(event.getHideCompleted());
+            }
+        }));
+    }
+
+    protected void update() {
+        this.calculate();
+
+        requiredAmountLabel.setText(maximum.equals(minimum) ? required.toString() : required + " (" + minimum + " - " + maximum + ")");
+        availableAmountLabel.setText(availableFleetCarrier > 0 ? availableShip + " + " + availableFleetCarrier : availableShip.toString());
+        remainingAmountLabel.setText(remaining.toString());
+        //progressbar
+        final int progressShip = Math.min(availableShip, this.maximum);
+        final int progressFleetCarrier = Math.min(availableFleetCarrier, this.maximum - progressShip);
+        final int progressTotal = Math.min(progressShip + progressFleetCarrier, this.maximum);
+        this.presentShip.setValue(Math.max(0, progressShip));
+        this.presentFleetCarrier.setValue(Math.max(0, progressFleetCarrier));
+        this.missingForMinimum.setValue(Math.max(0, minimum - progressTotal));
+        this.missingForRequired.setValue(Math.max(0, required - Math.max(minimum, progressTotal)));
+        this.missingForMaximum.setValue(Math.max(0, maximum - Math.max(required, progressTotal)));
+
+        updateStyle();
+
+    }
+
+    private void updateStyle() {
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("filled"), availableShip >= required);
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("partial"), availableShip < required && availableShip + availableFleetCarrier >= required);
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("search"), matchesSearch());
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("filter"), this.blueprint != null && required == 0);
+    }
+
+    private boolean matchesSearch() {
+        return !this.currentSearchQuery.isEmpty()
+                && (LocaleService.getLocalizedStringForCurrentLocale(this.odysseyMaterial.getLocalizationKey()).toLowerCase().contains(this.currentSearchQuery.toLowerCase())
+                || LocaleService.getLocalizedStringForCurrentLocale(this.odysseyMaterial.getStorageType().getLocalizationKey()).toLowerCase().contains(this.currentSearchQuery.toLowerCase()));
     }
 
     @SuppressWarnings("java:S6205")
     private void initImage() {
         final ResizableImageViewBuilder imageViewBuilder = ResizableImageViewBuilder.builder()
-                .withStyleClass("ingredient-image");
-        switch (this.storageType) {
+                .withStyleClass("image");
+        switch (OdysseyStorageType.forMaterial(this.odysseyMaterial)) {
             case DATA -> imageViewBuilder.withImage("/images/material/data.png");
             case GOOD -> imageViewBuilder.withImage("/images/material/good.png");
             case ASSET -> {
@@ -181,95 +258,50 @@ class OdysseyWishlistIngredient extends Ingredient implements DestroyableEventTe
         this.image = imageViewBuilder.build();
     }
 
-    private void setRightAmount(final Integer rightAmount) {
-        this.rightAmount = rightAmount;
-    }
+    @SuppressWarnings("unchecked")
+    private void calculate() {
+        defaults();
+        final Optional<Wishlist> odysseyWishlist = APPLICATION_STATE.getPreferredCommander()
+                .map(commander -> WishlistService.getOdysseyWishlists(commander).getSelectedWishlist());
 
-
-    @Override
-    public StorageType getType() {
-        return this.storageType;
-    }
-
-    @Override
-    public String getName() {
-        return this.nameLabel.getText();
-    }
-
-    protected Label getLeftAmountLabel() {
-        return this.leftAmountLabel;
-    }
-
-    protected Integer getRightAmount() {
-        return this.rightAmount;
-    }
-
-    protected Label getRightAmountLabel() {
-        return this.rightAmountLabel;
-    }
-
-    protected void setRightDescriptionLabel(final StringBinding rightDescriptionLabel) {
-        this.rightDescriptionLabel.addBinding(this.rightDescriptionLabel.textProperty(), rightDescriptionLabel);
-    }
-
-    protected void update() {
-
-        final Storage storage = StorageService.getMaterialStorage(this.getOdysseyMaterial());
-        final int leftAmount = Integer.parseInt(this.getLeftAmountLabel().getText());
-        if (storage.getTotalValue() >= leftAmount && storage.getShipLockerValue() + storage.getBackPackValue() < leftAmount) {
-            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(PARTIAL), true);
-            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(FILLED), false);
-        } else if (storage.getTotalValue() >= leftAmount) {
-            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(PARTIAL), false);
-            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(FILLED), true);
+        if (blueprint == null) {
+            odysseyWishlist.ifPresent(wishlist ->
+                    wishlist.getItems().stream()
+                            .filter(OdysseyWishlistBlueprint::isVisible)
+                            .forEach(this::count));
         } else {
-            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(PARTIAL), false);
-            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(FILLED), false);
+            count(blueprint);
         }
-        showAsHovered(this.hoverProperty().getValue());
-        if (this.present != null) {
-            final int progress = Math.min(this.getLeftAmount(), this.getRightAmount());
-            this.present.setValue(progress);
-            this.notPresent.setValue(Math.max(this.getLeftAmount() - progress, 0));
-            if (Math.max(this.getLeftAmount() - progress, 0) > 0) {
-                this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(
-                        SegmentType.PRESENT, Color.web("#ff7c7c"),
-                        SegmentType.NOT_PRESENT, Color.rgb(128, 128, 128)
-                ), false));
-            } else {
-                this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(
-                        SegmentType.PRESENT, Color.web("#89d07f"),
-                        SegmentType.NOT_PRESENT, Color.rgb(128, 128, 128)
-                ), false));
-            }
+        remaining = Math.max(0, required - availableShip);
+        if (blueprint == null) {
+            remainingFull = remaining;
         }
+        completed.set(remainingFull.equals(0));
     }
 
-    void highlight(final boolean enable, final Integer amountRequiredForRecipe) {
-        if (enable) {
-            this.getStyleClass().add("wishlist-highlight");
-            this.getLeftAmountLabel().setText(amountRequiredForRecipe.toString());
-        } else {
-            this.getLeftAmountLabel().setText(this.getLeftAmount().toString());
-        }
-        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("highlight"), enable);
-        update();
+    private void defaults() {
+        minimum = 0;
+        required = 0;
+        maximum = 0;
+
+        availableShip = StorageService.getMaterialCount(odysseyMaterial, AmountType.SHIPLOCKER);
+        availableFleetCarrier = StorageService.getMaterialCount(odysseyMaterial, AmountType.FLEETCARRIER);
+        remaining = 0;
     }
 
-    void lowlight(final boolean enable) {
-        if (enable) {
-            this.getStyleClass().add("wishlist-lowlight");
-        } else {
-            this.getStyleClass().removeAll("wishlist-lowlight");
-        }
+    private void count(OdysseyWishlistBlueprint wishlistItem) {
+        final OdysseyBlueprint bp = OdysseyBlueprintConstants.getRecipe(wishlistItem.getRecipeName());
+        add(bp);
     }
 
-    void searchHighlight(final boolean enable) {
-        if (enable) {
-            this.getStyleClass().add("wishlist-search-highlight");
-        } else {
-            this.getStyleClass().removeAll("wishlist-search-highlight");
-        }
-        update();
+    private void add(OdysseyBlueprint blueprint) {
+        Map<OdysseyMaterial, Integer> materials = blueprint.getMaterialCollection(this.odysseyMaterial.getClass());
+        if (materials.isEmpty() || !materials.containsKey(this.odysseyMaterial)) return;
+
+        final Integer amount = materials.get(this.odysseyMaterial);
+        minimum += amount;
+        required += amount;
+        maximum += amount;
+
     }
 }

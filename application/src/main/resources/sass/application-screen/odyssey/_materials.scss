@@ -13,12 +13,10 @@
       @include hvGap(0.25em);
     }
 
-    .totals-flow-pane {
-      @include hvGap(0.25em);
-    }
-
     //total
     .totals-flow-pane {
+      @include hvGap(0.25em);
+
       .material-total {
         -fx-border-width: 1px;
         -fx-border-color: $border-color-black;

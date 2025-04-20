@@ -217,7 +217,7 @@ class OdysseyBlueprintContent extends DestroyableVBox implements DestroyableEven
     }
 
     public void initEventHandling() {
-        register(EventService.addListener(true, this, WishlistSelectedEvent.class, wishlistSelectedEvent -> {
+        register(EventService.addListener(true, this, OdysseyWishlistSelectedEvent.class, wishlistSelectedEvent -> {
             if (!(this.blueprint instanceof EngineerBlueprint) || this.ingredients.stream().noneMatch(ingredient -> OdysseyStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
                 APPLICATION_STATE.getPreferredCommander().ifPresent(this::updateWishlistsAndCount);
             }
@@ -232,10 +232,10 @@ class OdysseyBlueprintContent extends DestroyableVBox implements DestroyableEven
                 APPLICATION_STATE.getPreferredCommander().ifPresent(this::updateWishlistsAndCount);
             }
         }));
-        register(EventService.addListener(true, this, WishlistChangedEvent.class, wishlistEvent -> {
+        register(EventService.addListener(true, this, OdysseyWishlistChangedEvent.class, wishlistEvent -> {
             if (this.countLabel != null) {
                 final long count = APPLICATION_STATE.getPreferredCommander()
-                        .map(commander -> WishlistService.getWishlists(commander).getSelectedWishlist().getItems().stream()
+                        .map(commander -> WishlistService.getOdysseyWishlists(commander).getSelectedWishlist().getItems().stream()
                                 .filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(this.blueprint.getBlueprintName()))
                                 .count())
                         .orElse(0L);
@@ -250,7 +250,7 @@ class OdysseyBlueprintContent extends DestroyableVBox implements DestroyableEven
     }
 
     public long getBlueprintCountForCurrentWishtlist(final Commander commander, OdysseyBlueprintName odysseyBlueprintName) {
-        return WishlistService.getWishlists(commander).getSelectedWishlist().getItems().stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(odysseyBlueprintName)).count();
+        return WishlistService.getOdysseyWishlists(commander).getSelectedWishlist().getItems().stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(odysseyBlueprintName)).count();
     }
 
     private void updateCount(final long count) {

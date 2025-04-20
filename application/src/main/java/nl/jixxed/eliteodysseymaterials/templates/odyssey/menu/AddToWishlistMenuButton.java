@@ -13,7 +13,7 @@ import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.WishlistBlueprintEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.OdysseyWishlistBlueprintEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableMenuButton;
@@ -68,7 +68,7 @@ public class AddToWishlistMenuButton extends DestroyableMenuButton implements De
     }
 
     public void loadCommanderWishlists(final Commander commander, OdysseyBlueprintName odysseyBlueprintName) {
-        final Wishlists wishlists = WishlistService.getWishlists(commander);
+        final Wishlists wishlists = WishlistService.getOdysseyWishlists(commander);
         this.deregisterAll((List<DestroyableMenuItem>) (List<?>) this.getItems());
         this.getItems().forEach(item -> ((DestroyableComponent) item).destroy());
         this.getItems().clear();
@@ -77,7 +77,7 @@ public class AddToWishlistMenuButton extends DestroyableMenuButton implements De
                 .sorted(Comparator.comparing(Wishlist::getName))
                 .map(wishlist -> MenuItemBuilder.builder()
                         .withNonLocalizedText(wishlist.getName())
-                        .withOnAction(event -> EventService.publish(new WishlistBlueprintEvent(commander, wishlist.getUuid(), List.of(new OdysseyWishlistBlueprint(odysseyBlueprintName, true)), Action.ADDED)))
+                        .withOnAction(event -> EventService.publish(new OdysseyWishlistBlueprintEvent(commander, wishlist.getUuid(), List.of(new OdysseyWishlistBlueprint(odysseyBlueprintName, true)), Action.ADDED)))
                         .build())
                 .toList();
         this.getItems().addAll(menuItems);

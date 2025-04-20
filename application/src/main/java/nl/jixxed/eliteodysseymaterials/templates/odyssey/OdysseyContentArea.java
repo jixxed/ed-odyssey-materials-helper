@@ -94,7 +94,7 @@ class OdysseyContentArea extends DestroyableAnchorPane implements DestroyableEve
     }
 
     public void initEventHandling() {
-        register(EventService.addListener(true, this, WishlistBlueprintEvent.class, wishlistEvent -> {
+        register(EventService.addListener(true, this, OdysseyWishlistBlueprintEvent.class, wishlistEvent -> {
             if (Action.ADDED.equals(wishlistEvent.getAction())) {
                 this.tabs.getSelectionModel().select(this.wishlistTab);
             }

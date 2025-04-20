@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class WishlistSelectedEvent implements Event {
+public class OdysseyWishlistSelectedEvent implements Event {
     private final String wishlistUUID;
 }

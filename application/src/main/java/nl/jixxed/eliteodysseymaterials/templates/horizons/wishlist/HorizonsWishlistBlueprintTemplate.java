@@ -1,6 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 
-import javafx.animation.FadeTransition;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 import javafx.css.PseudoClass;
@@ -21,7 +20,6 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTemplate;
 
 import java.util.List;
-import java.util.Map;
 
 public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBox implements WishlistBlueprintTemplate<HorizonsBlueprintName>, DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
@@ -30,18 +28,18 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
     private boolean visible;
     private final Integer sequenceID;
     private final HorizonsWishlistBlueprint wishlistBlueprint;
-    private final BlueprintCategory blueprintCategory;
     private final HorizonsBlueprint blueprint;
-    @Getter
     private final String wishlistUUID;
 
     private DestroyableResizableImageView visibilityImage;
+
+    @Getter
+    private boolean deleted = false;
 
     HorizonsWishlistBlueprintTemplate(final String wishlistUUID, final WishlistBlueprint<HorizonsBlueprintName> wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
         this.wishlistBlueprint = (HorizonsWishlistBlueprint) wishlistBlueprint;
         this.sequenceID = counter++;
-        this.blueprintCategory = HorizonsBlueprintConstants.getRecipeCategory(wishlistBlueprint.getRecipeName(), wishlistBlueprint instanceof HorizonsExperimentalWishlistBlueprint);
         this.blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), getBlueprintGrade());
         initComponents();
         initEventHandling();
@@ -89,8 +87,9 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
                 .withManaged(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()))
                 .withVisibility(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()))
                 .withOnAction(_ -> {
+                    //deleted by parent category
+                    this.deleted = true;
                     APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new HorizonsWishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.wishlistBlueprint), Action.REMOVED)));
-                    destroyTemplate();
                 })
                 .build();
 
@@ -102,17 +101,8 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
                     .build();
             Tooltip.install(wishlistRecipeName, tooltip);
         }
-        initFadeTransition();
         this.updateStyle();
         this.getNodes().addAll(visibilityButton, wishlistRecipeName, removeBlueprint);
-    }
-
-    private void initFadeTransition() {
-        final FadeTransition fadeTransition = new FadeTransition(Duration.millis(2000));
-        fadeTransition.setNode(this);
-        fadeTransition.setFromValue(0.3);
-        fadeTransition.setToValue(1.0);
-        fadeTransition.play();
     }
 
     public void initEventHandling() {
@@ -140,17 +130,6 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
                 EventService.publish(new HorizonsWishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.wishlistBlueprint), Action.VISIBILITY_CHANGED)));
     }
 
-    @Override
-    public Map<Blueprint<HorizonsBlueprintName>, Double> getRecipe() {
-        return null;
-    }
-
-    @Override
-    public HorizonsBlueprint getPrimaryRecipe() {
-        return null;
-    }
-
-    @Override
     public HorizonsBlueprintName getRecipeName() {
         return this.wishlistBlueprint.getRecipeName();
     }
@@ -177,11 +156,6 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
     }
 
     @Override
-    public BlueprintCategory getRecipeCategory() {
-        return this.blueprintCategory;
-    }
-
-    @Override
     public Integer getSequenceID() {
         return this.sequenceID;
     }
@@ -195,15 +169,4 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
     public WishlistBlueprint getWishlistRecipe() {
         return this.wishlistBlueprint;
     }
-
-
-    @Override
-    public void setEngineer(Engineer engineer) {
-        //not needed
-    }
-
-//    @Override
-//    public void destroyInternal() {
-//        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new HorizonsWishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.wishlistBlueprint), Action.REMOVED)));
-//    }
 }

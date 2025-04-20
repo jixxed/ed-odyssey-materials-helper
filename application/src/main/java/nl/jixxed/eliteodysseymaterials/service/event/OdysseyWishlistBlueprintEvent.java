@@ -10,7 +10,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Getter
-public class WishlistBlueprintEvent implements Event {
+public class OdysseyWishlistBlueprintEvent implements Event {
     private final Commander commander;
     private final String wishlistUUID;
     private final List<OdysseyWishlistBlueprint> wishlistBlueprints;

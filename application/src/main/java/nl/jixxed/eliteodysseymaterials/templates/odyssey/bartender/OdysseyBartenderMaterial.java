@@ -243,7 +243,7 @@ public class OdysseyBartenderMaterial extends DestroyableHBox implements Destroy
             this.fleetCarrierLabel.setText(String.valueOf(StorageService.getMaterialStorage(this.asset).getFleetCarrierValue()));
             updateStyle();
         }));
-        register(EventService.addListener(true, this, 9, WishlistBlueprintEvent.class, event -> {
+        register(EventService.addListener(true, this, 9, OdysseyWishlistBlueprintEvent.class, event -> {
             Platform.runLater(() -> {
                 this.wishlistLabel.setText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.asset)).mapToInt(Integer::intValue).sum()));
                 updateStyle();

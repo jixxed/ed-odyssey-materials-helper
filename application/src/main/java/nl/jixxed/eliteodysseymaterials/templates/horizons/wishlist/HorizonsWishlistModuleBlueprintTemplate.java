@@ -1,6 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 
-import javafx.animation.FadeTransition;
 import javafx.css.PseudoClass;
 import javafx.scene.control.Tooltip;
 import javafx.util.Duration;
@@ -11,17 +10,15 @@ import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.PathService;
+import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.CompletionSlider;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTemplate;
 import org.controlsfx.control.PopOver;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.DoubleConsumer;
 import java.util.stream.Collectors;
@@ -33,9 +30,6 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
     private boolean visible;
     private final Integer sequenceID;
     private final HorizonsModuleWishlistBlueprint wishlistBlueprint;
-    private final BlueprintCategory blueprintCategory;
-    //    private Map<Blueprint<HorizonsBlueprintName>, Double> blueprints;
-    @Getter
     private final String wishlistUUID;
 
     private DestroyableResizableImageView visibilityImage;
@@ -44,15 +38,15 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
     private DestroyableTooltip tooltip;
     final AtomicReference<PopOver> popOverRef = new AtomicReference<>();
 
-    private Engineer engineer;
     private List<CompletionSlider> sliders = new ArrayList<>();
+
+    @Getter
+    private boolean deleted = false;
 
     HorizonsWishlistModuleBlueprintTemplate(final String wishlistUUID, final HorizonsModuleWishlistBlueprint wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
         this.wishlistBlueprint = wishlistBlueprint;
         this.sequenceID = counter++;
-        this.blueprintCategory = HorizonsBlueprintConstants.getRecipeCategory(wishlistBlueprint.getRecipeName(), false);
-//        this.blueprints = wishlistBlueprint.getPercentageToComplete().entrySet().stream().map(gradePercentage -> Map.entry(HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), gradePercentage.getKey()), gradePercentage.getValue())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         initComponents();
         initEventHandling();
     }
@@ -93,8 +87,9 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
                 .withManaged(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()))
                 .withVisibility(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()))
                 .withOnAction(_ -> {
+                    //deleted by parent category
+                    this.deleted = true;
                     APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new HorizonsWishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.wishlistBlueprint), Action.REMOVED)));
-                    destroyTemplate();
                 })
                 .build();
         this.toggleControls = ButtonBuilder.builder()
@@ -115,7 +110,6 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
                 .build();
         Tooltip.install(this.wishlistRecipeName, this.tooltip);
 
-        initFadeTransition();
         this.canCraft();
     }
 
@@ -125,7 +119,6 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
                     {
                         DoubleConsumer function = percentage -> {
                             this.wishlistBlueprint.setBlueprintGradePercentageToComplete(grade, percentage / 100D);
-//                            this.blueprints = this.wishlistBlueprint.getPercentageToComplete().entrySet().stream().map(gradePercentage -> Map.entry(HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), gradePercentage.getKey()), gradePercentage.getValue())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
                             modify();
                             EventService.publish(new HorizonsWishlistBlueprintAlteredEvent(this.wishlistUUID));
                             final String gradeList2 = this.wishlistBlueprint.getPercentageToComplete().keySet().stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(HorizonsBlueprintGrade::getGrade).map(String::valueOf).collect(Collectors.joining(","));
@@ -184,14 +177,6 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new HorizonsWishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.wishlistBlueprint), Action.MODIFY)));
     }
 
-    private void initFadeTransition() {
-        final FadeTransition fadeTransition = new FadeTransition(Duration.millis(2000));
-        fadeTransition.setNode(this);
-        fadeTransition.setFromValue(0.3);
-        fadeTransition.setToValue(1.0);
-        fadeTransition.play();
-    }
-
     public void initEventHandling() {
         register(EventService.addListener(true, this, StorageEvent.class, _ -> {
             this.canCraft();
@@ -199,7 +184,7 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
     }
 
     private void canCraft() {
-        final Craftability craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getPercentageToComplete(), engineer);
+        final Craftability craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getPercentageToComplete(), getCurrentEngineerForBlueprint(this.wishlistBlueprint.getBlueprint()).orElse(null));
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("filled"), Craftability.CRAFTABLE.equals(craftability));
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("partial"), Craftability.CRAFTABLE_WITH_TRADE.equals(craftability));
         if (Craftability.CRAFTABLE.equals(craftability)) {
@@ -207,6 +192,25 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
         } else if (Craftability.CRAFTABLE_WITH_TRADE.equals(craftability)) {
             this.tooltip.addBinding(this.tooltip.textProperty(), LocaleService.getToolTipStringBinding((HorizonsEngineeringBlueprint) HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), HorizonsBlueprintGrade.GRADE_1), "tab.wishlist.blueprint.tooltip.craftable"));
         }
+    }
+
+    private Optional<Engineer> getCurrentEngineerForBlueprint(Blueprint<HorizonsBlueprintName> blueprint) {
+        final Optional<HorizonsWishlist> horizonsWishlist = APPLICATION_STATE.getPreferredCommander()
+                .map(commander -> WishlistService.getHorizonsWishlists(commander).getSelectedWishlist());
+        var pathItems = horizonsWishlist
+                .map(wishlist -> PathService.calculateHorizonsShortestPath((List<HorizonsWishlistBlueprint>) (List<?>) wishlist.getItems()))
+                .orElse(Collections.emptyList());
+
+        if (blueprint == null) {
+            return Optional.empty();
+        }
+        return pathItems.stream()
+                .filter(pathItem -> pathItem.getRecipes().keySet().stream()
+                        .anyMatch(bp -> bp.getBlueprintName().equals(blueprint.getBlueprintName())
+                                && ((HorizonsBlueprint) bp).getHorizonsBlueprintType().equals(((HorizonsBlueprint) blueprint).getHorizonsBlueprintType())))
+                .findFirst()
+                .filter(pathItem -> !pathItem.getEngineer().equals(Engineer.UNKNOWN))
+                .map(PathItem::getEngineer);
     }
 
     @Override
@@ -218,28 +222,12 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
                 EventService.publish(new HorizonsWishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.wishlistBlueprint), Action.VISIBILITY_CHANGED)));
     }
 
-    @Override
-    public Map<Blueprint<HorizonsBlueprintName>, Double> getRecipe() {
-        return null;
-    }
-
-    @Override
-    public @Nullable HorizonsBlueprint getPrimaryRecipe() {
-        return null;
-    }
-
-    @Override
     public HorizonsBlueprintName getRecipeName() {
         return this.wishlistBlueprint.getRecipeName();
     }
 
     private HorizonsBlueprintType getBlueprintType() {
         return this.wishlistBlueprint.getBlueprintType();
-    }
-
-    @Override
-    public BlueprintCategory getRecipeCategory() {
-        return this.blueprintCategory;
     }
 
     @Override
@@ -255,11 +243,5 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
     @Override
     public WishlistBlueprint<HorizonsBlueprintName> getWishlistRecipe() {
         return this.wishlistBlueprint;
-    }
-
-    @Override
-    public void setEngineer(Engineer engineer) {
-        this.engineer = engineer;
-        this.canCraft();
     }
 }

@@ -66,7 +66,7 @@ public class HorizonsWishlistShortestPath extends DestroyableVBox implements Des
     private void update() {
         final List<PathItem<HorizonsBlueprintName>> pathItems = getPathItems();
         this.shortestPathFlow.setItems(pathItems);
-        EventService.publish(new ShortestPathChangedEvent(pathItems));
+        EventService.publish(new HorizonsShortestPathChangedEvent(pathItems));
     }
 
     @SuppressWarnings("unchecked")
@@ -74,7 +74,7 @@ public class HorizonsWishlistShortestPath extends DestroyableVBox implements Des
         final Optional<HorizonsWishlist> horizonsWishlist = ApplicationState.getInstance().getPreferredCommander()
                 .map(commander -> WishlistService.getHorizonsWishlists(commander).getSelectedWishlist());
         return horizonsWishlist
-                .map(wishlist -> PathService.calculateHorizonsShortestPath2((List<HorizonsWishlistBlueprint>) (List<?>) wishlist.getItems()))
+                .map(wishlist -> PathService.calculateHorizonsShortestPath((List<HorizonsWishlistBlueprint>) (List<?>) wishlist.getItems()))
                 .orElse(Collections.emptyList());
     }
 }

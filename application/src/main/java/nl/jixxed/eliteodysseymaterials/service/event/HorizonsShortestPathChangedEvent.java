@@ -9,6 +9,6 @@ import java.util.List;
 
 @AllArgsConstructor
 @Getter
-public class ShortestPathChangedEvent implements Event {
+public class HorizonsShortestPathChangedEvent implements Event {
     final List<PathItem<HorizonsBlueprintName>> pathItems;
 }

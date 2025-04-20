@@ -31,16 +31,16 @@ public class WishlistService {
 
     static {
 
-        EVENT_LISTENERS.add(EventService.addStaticListener(0, WishlistBlueprintEvent.class,
+        EVENT_LISTENERS.add(EventService.addStaticListener(0, OdysseyWishlistBlueprintEvent.class,
                 wishlistEvent -> Platform.runLater(() ->
                         wishlistEvent.getWishlistBlueprints().forEach(wishlistRecipe -> {
                             switch (wishlistEvent.getAction()) {
                                 case ADDED ->
-                                        addToWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getCommander(), wishlistRecipe.getRecipeName());
+                                        addToOdysseyWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getCommander(), wishlistRecipe.getRecipeName());
                                 case REMOVED ->
-                                        removeFromWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getCommander(), wishlistRecipe);
+                                        removeFromOdysseyWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getCommander(), wishlistRecipe);
                                 case VISIBILITY_CHANGED ->
-                                        changeVisibility(wishlistEvent.getWishlistUUID(), wishlistEvent.getCommander(), wishlistRecipe);
+                                        changeOdysseyVisibility(wishlistEvent.getWishlistUUID(), wishlistEvent.getCommander(), wishlistRecipe);
                                 case MODIFY -> {
                                 }
                             }
@@ -64,7 +64,7 @@ public class WishlistService {
 
     public static Integer getAllWishlistsCount(final OdysseyMaterial odysseyMaterial) {
         return APPLICATION_STATE.getPreferredCommander().map(commander ->
-                        getWishlists(commander).getWishlists().stream().mapToInt(wishlist -> wishlist.getItems().stream()
+                        getOdysseyWishlists(commander).getWishlists().stream().mapToInt(wishlist -> wishlist.getItems().stream()
                                         .map(odysseyWishlistBlueprint -> OdysseyBlueprintConstants.getRecipe(odysseyWishlistBlueprint.getRecipeName()).getRequiredAmount(odysseyMaterial))
                                         .mapToInt(Integer::intValue)
                                         .sum())
@@ -75,7 +75,7 @@ public class WishlistService {
 
     public static Integer getCurrentWishlistCount(final OdysseyMaterial odysseyMaterial) {
         return APPLICATION_STATE.getPreferredCommander().map(commander ->
-                getWishlists(commander).getSelectedWishlist().getItems().stream()
+                getOdysseyWishlists(commander).getSelectedWishlist().getItems().stream()
                         .map(odysseyWishlistBlueprint -> OdysseyBlueprintConstants.getRecipe(odysseyWishlistBlueprint.getRecipeName()).getRequiredAmount(odysseyMaterial))
                         .mapToInt(Integer::intValue)
                         .sum()
@@ -161,7 +161,7 @@ public class WishlistService {
 
     public static boolean isMaterialOnWishlist(final OdysseyMaterial odysseyMaterial) {
         return APPLICATION_STATE.getPreferredCommander()
-                .map(commander -> getWishlists(commander).getWishlists().stream()
+                .map(commander -> getOdysseyWishlists(commander).getWishlists().stream()
                         .anyMatch(wishlist -> wishlist.getItems().stream()
                                 .anyMatch(wishlistBlueprint -> OdysseyBlueprintConstants.getRecipe(wishlistBlueprint.getRecipeName()).hasIngredient(odysseyMaterial))))
                 .orElse(false);
@@ -189,12 +189,12 @@ public class WishlistService {
     }
 
 
-    private static void addToWishList(final String wishlistUUID, final Commander commander, final BlueprintName recipe) {
-        final Wishlists wishlists = getWishlists(commander);
+    private static void addToOdysseyWishList(final String wishlistUUID, final Commander commander, final BlueprintName recipe) {
+        final Wishlists wishlists = getOdysseyWishlists(commander);
         final Wishlist wishlist = wishlists.getWishlist(wishlistUUID);
         wishlist.getItems().add(new OdysseyWishlistBlueprint((OdysseyBlueprintName) recipe, true));
-        saveWishlists(commander, wishlists);
-        EventService.publish(new WishlistChangedEvent(wishlistUUID));
+        saveOdysseyWishlists(commander, wishlists);
+        EventService.publish(new OdysseyWishlistChangedEvent(wishlistUUID));
     }
 
     private static void addToHorizonsWishList(final String wishlistUUID, final Commander commander, final HorizonsWishlistBlueprint recipe) {
@@ -207,13 +207,13 @@ public class WishlistService {
         }
     }
 
-    private static void removeFromWishList(final String wishlistUUID, final Commander commander, final OdysseyWishlistBlueprint recipe) {
-        final Wishlists wishlists = getWishlists(commander);
+    private static void removeFromOdysseyWishList(final String wishlistUUID, final Commander commander, final OdysseyWishlistBlueprint recipe) {
+        final Wishlists wishlists = getOdysseyWishlists(commander);
         final Wishlist wishlist = wishlists.getWishlist(wishlistUUID);
         final Optional<OdysseyWishlistBlueprint> found = wishlist.getItems().stream().filter(wishlistRecipe -> wishlistRecipe.equals(recipe)).findFirst();
         found.ifPresent(wishlistRecipe -> wishlist.getItems().remove(wishlistRecipe));
-        saveWishlists(commander, wishlists);
-        EventService.publish(new WishlistChangedEvent(wishlistUUID));
+        saveOdysseyWishlists(commander, wishlists);
+        EventService.publish(new OdysseyWishlistChangedEvent(wishlistUUID));
     }
 
     private static void removeFromHorizonsWishList(final String wishlistUUID, final Commander commander, final HorizonsWishlistBlueprint recipe) {
@@ -227,14 +227,14 @@ public class WishlistService {
         }
     }
 
-    private static void changeVisibility(final String wishlistUUID, final Commander commander, final OdysseyWishlistBlueprint wishlistBlueprint) {
-        final Wishlists wishlists = getWishlists(commander);
+    private static void changeOdysseyVisibility(final String wishlistUUID, final Commander commander, final OdysseyWishlistBlueprint wishlistBlueprint) {
+        final Wishlists wishlists = getOdysseyWishlists(commander);
         final Wishlist wishlist = wishlists.getWishlist(wishlistUUID);
         if (wishlist != null) {
             final Optional<OdysseyWishlistBlueprint> existingRecipe = wishlist.getItems().stream().filter(recipe -> recipe.getRecipeName().equals(wishlistBlueprint.getRecipeName()) && recipe.isVisible() == !wishlistBlueprint.isVisible()).findFirst();
             existingRecipe.ifPresent(recipe -> recipe.setVisible(wishlistBlueprint.isVisible()));
-            saveWishlists(commander, wishlists);
-            EventService.publish(new WishlistChangedEvent(wishlistUUID));
+            saveOdysseyWishlists(commander, wishlists);
+            EventService.publish(new OdysseyWishlistChangedEvent(wishlistUUID));
         }
     }
 
@@ -274,10 +274,10 @@ public class WishlistService {
         saveHorizonsWishlists(commander, wishlists);
     }
 
-    public static void selectWishlist(final String wishlistUUID, final Commander commander) {
-        final Wishlists wishlists = getWishlists(commander);
+    public static void selectOdysseyWishlist(final String wishlistUUID, final Commander commander) {
+        final Wishlists wishlists = getOdysseyWishlists(commander);
         wishlists.setSelectedWishlistUUID(wishlistUUID);
-        saveWishlists(commander, wishlists);
+        saveOdysseyWishlists(commander, wishlists);
     }
 
 
@@ -311,7 +311,7 @@ public class WishlistService {
         }
     }
 
-    public static Wishlists getWishlists(final Commander commander) {
+    public static Wishlists getOdysseyWishlists(final Commander commander) {
         try {
             final String pathname = commander.getCommanderFolder();
             final File commanderFolder = new File(pathname);
@@ -321,17 +321,17 @@ public class WishlistService {
             if (wishlistsFile.exists()) {//load from file if exists
                 wishlistsFileContents = Files.readString(wishlistsFile.toPath());
                 if (wishlistsFileContents.isEmpty()) {//create default if empty
-                    createWishlist(commander);
+                    createOdysseyWishlist(commander);
                 }
             } else {//save to file from preferences
-                createWishlist(commander);
+                createOdysseyWishlist(commander);
             }
             wishlistsFileContents = Files.readString(wishlistsFile.toPath());
             try {
                 return OBJECT_MAPPER.readValue(wishlistsFileContents, Wishlists.class);
             } catch (final IOException e) {
                 log.warn("Unable to load wishlists from configuration. Try to create new one.", e);
-                createWishlist(commander);
+                createOdysseyWishlist(commander);
                 wishlistsFileContents = Files.readString(wishlistsFile.toPath());
                 return OBJECT_MAPPER.readValue(wishlistsFileContents, Wishlists.class);
             }
@@ -341,12 +341,12 @@ public class WishlistService {
         }
     }
 
-    private static void createWishlist(final Commander commander) {
+    private static void createOdysseyWishlist(final Commander commander) {
         final Wishlists wishlists = new Wishlists();
         final Wishlist defaultWishlist = new Wishlist();
         defaultWishlist.setName("Default wishlist");
         wishlists.addWishlist(defaultWishlist);
-        saveWishlists(commander, wishlists);
+        saveOdysseyWishlists(commander, wishlists);
     }
 
     public static void saveHorizonsWishlists(final Commander commander, final HorizonsWishlists wishlists) {
@@ -366,7 +366,7 @@ public class WishlistService {
         }
     }
 
-    public static void saveWishlists(final Commander commander, final Wishlists wishlists) {
+    public static void saveOdysseyWishlists(final Commander commander, final Wishlists wishlists) {
         try {
             final String wishlistsJson = OBJECT_MAPPER.writeValueAsString(wishlists);
             final String pathname = commander.getCommanderFolder();
@@ -383,10 +383,10 @@ public class WishlistService {
         }
     }
 
-    public static void deleteWishlist(final String activeWishlistUUID, final Commander commander) {
-        final Wishlists wishlists = getWishlists(commander);
+    public static void deleteOdysseyWishlist(final String activeWishlistUUID, final Commander commander) {
+        final Wishlists wishlists = getOdysseyWishlists(commander);
         wishlists.delete(activeWishlistUUID);
-        saveWishlists(commander, wishlists);
+        saveOdysseyWishlists(commander, wishlists);
     }
 
     public static void deleteHorizonsWishlist(final String activeWishlistUUID, final Commander commander) {
