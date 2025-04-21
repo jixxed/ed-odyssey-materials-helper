@@ -1,3 +1,7 @@
+Version 2.156
+-------------
+Updated corsair ship images and weapon slot locations
+
 Version 2.155
 -------------
 Fix colonisation journal events
