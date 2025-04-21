@@ -57,8 +57,8 @@ public class FileService {
 
     public static void unsubscribe(final FileListener fileListener) {
         WATCHPATH_LISTENERS.values().forEach(fileListeners -> fileListeners.remove(fileListener));
-        stopWatchers();
-        startWatchers();
+//        stopWatchers();
+//        startWatchers();
     }
 
     private static void stopWatchers() {

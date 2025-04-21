@@ -148,7 +148,7 @@
         -fx-border-color: $background-color-dark;
 
         .line {
-          -fx-background-color: #0f0f0f;
+          -fx-background-color: $background-color-dark;
           @include fixedWidth(34.32em);
 
           .title {

@@ -60,6 +60,7 @@
       }
 
       .name {
+        -fx-padding: 0.25em 0 0 0;
         -fx-text-fill: $text-color-white;
         @include fixedWidth(14em);
         -fx-min-height: 2em;
@@ -118,7 +119,7 @@
       }
 
       .title {
-        -fx-text-fill: white;
+        -fx-text-fill: $text-color-white;
         -fx-font-size: 1.2em;
         -fx-font-weight: normal;
       }

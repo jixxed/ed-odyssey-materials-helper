@@ -95,7 +95,7 @@
       &:relevant {
         .name, .fleetcarrier-amount, .wishlist-amount, .backpack-amount, .ship-amount, .total-amount {
           -fx-font-weight: bold;
-          -fx-text-fill: white;
+          -fx-text-fill: $text-color-white;
         }
       }
 

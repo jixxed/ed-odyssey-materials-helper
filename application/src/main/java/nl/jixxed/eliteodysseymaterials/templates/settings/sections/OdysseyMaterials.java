@@ -1,6 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ListBinding;
+import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -18,7 +20,6 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
@@ -124,9 +125,9 @@ public class OdysseyMaterials extends DestroyableVBox implements DestroyableEven
         this.overrideSelect = ComboBoxBuilder.builder(OdysseyMaterial.class)
                 .withStyleClass(SETTINGS_DROPDOWN_CLASS)
                 .withItemsProperty(odysseyMaterialListBinding)
-                .withValueChangeListener((_, _, newValue) ->
-                        this.overrideAddButton.setDisable(newValue == null || this.overrideListView.getItems().contains(newValue))
-                )
+//                .withValueChangeListener((_, _, newValue) ->
+//                        this.overrideAddButton.disableProperty().set(newValue == null || this.overrideListView.getItems().contains(newValue))
+//                )
                 .asLocalized()
                 .build();
 
@@ -140,14 +141,11 @@ public class OdysseyMaterials extends DestroyableVBox implements DestroyableEven
                         items.add(this.overrideSelect.getSelectionModel().getSelectedItem());
                         PreferencesService.setPreference(PreferenceConstants.IRRELEVANT_OVERRIDE, items.stream().map(OdysseyMaterial::name).collect(Collectors.joining(",")));
                         this.overrideListView.getItems().add(this.overrideSelect.getSelectionModel().getSelectedItem());
-                        this.overrideAddButton.setDisable(true);
                         EventService.publish(new IrrelevantMaterialOverrideEvent());
                     }
                 })
-                .withDisableProperty(this.overrideListView.itemsProperty().map(list -> list.contains(this.overrideSelect.getSelectionModel().getSelectedItem())))
-                .withDisable(true)
+                .withDisableProperty(Bindings.createBooleanBinding(() -> this.overrideListView.getItems().contains(this.overrideSelect.getSelectionModel().getSelectedItem()), this.overrideSelect.getSelectionModel().selectedItemProperty(), new SimpleListProperty<>(this.overrideListView.getItems()).sizeProperty()))
                 .build();
-//        this.overrideAddButton.setDisable(true);
 
         return BoxBuilder.builder()
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)
@@ -169,6 +167,7 @@ public class OdysseyMaterials extends DestroyableVBox implements DestroyableEven
                 .collect(Collectors.toCollection(FXCollections::observableArrayList));
 
         this.overrideListView = ListViewBuilder.builder(OdysseyMaterial.class)
+                .withStyleClass("override-list")
                 .withItems(items)
                 .withCellFactory(cellFactory)
                 .build();
@@ -186,11 +185,9 @@ public class OdysseyMaterials extends DestroyableVBox implements DestroyableEven
                             .map(OdysseyMaterial::name)
                             .collect(Collectors.joining(",")));
                     this.overrideListView.getItems().remove(this.overrideListView.getSelectionModel().getSelectedItem());
-                    this.overrideAddButton.setDisable(this.overrideSelect.getSelectionModel().getSelectedItem() == null || this.overrideListView.getItems().contains(this.overrideSelect.getSelectionModel().getSelectedItem()));
                     EventService.publish(new IrrelevantMaterialOverrideEvent());
                 })
-                .withDisableProperty(this.overrideListView.getSelectionModel().selectedItemProperty().map(Objects::nonNull))
-                .withDisable(true)
+                .withDisableProperty(this.overrideListView.getSelectionModel().selectedItemProperty().isNull())
                 .build();
 
         return BoxBuilder.builder()
