@@ -64,6 +64,7 @@
     }
 
     .ingredient {
+      -fx-padding: 0.25em;
       @include fixedWidth(17.5em);
 
       -fx-border-color: $border-color-black;
@@ -78,16 +79,21 @@
         -fx-label-padding: 0.25em;
         -fx-wrap-text: true;
         -fx-font-weight: bold;
+        -fx-max-width: 15em;
       }
 
       .required, .available {
-        -fx-padding: 0.25em;
+        //-fx-padding: 0.25em;
         -fx-font-weight: normal;
       }
 
       .quantity {
         -fx-font-weight: bold;
-        -fx-padding: 0.25em;
+        //-fx-padding: 0.25em;
+      }
+
+      .quantity-section {
+        -fx-spacing: 0.25em;
       }
 
       .required, .available, .quantity {
@@ -98,7 +104,7 @@
         -fx-text-fill: $text-color-green;
       }
 
-      .image {
+      .ingredient-image {
         @include fixedWidth(2em);
         @include fixedHeight(2em);
         -fx-fit-to-height: true;

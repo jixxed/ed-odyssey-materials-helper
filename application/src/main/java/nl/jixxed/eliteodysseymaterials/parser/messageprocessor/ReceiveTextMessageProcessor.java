@@ -37,18 +37,29 @@ public class ReceiveTextMessageProcessor implements MessageProcessor<ReceiveText
                     try {
                         final OdysseyMaterial odysseyMaterial = OdysseyMaterial.forLocalizedName(matcher.group(1));
                         EventService.publish(new PointToOdysseyResourceEvent(odysseyMaterial));
-                        final String text;
+                        final LocaleService.LocaleString text;
                         final Integer backPackValue = StorageService.getMaterialStorage(odysseyMaterial).getBackPackValue();
                         final String backPackText = backPackValue > 0 ? "(" + backPackValue + ")" : "";
                         if (WishlistService.isMaterialOnWishlist(odysseyMaterial)) {
-                            text = LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()) + "(" + odysseyMaterial.getTypeNameLocalized() + ")" + " - Wishlist - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText + "/" + WishlistService.getAllWishlistsCount(odysseyMaterial);
-                            NotificationService.showInformation(NotificationType.WISHLIST_POINT, "Material information", text);
+                            text = LocaleService.LocaleString.of("notification.material.information.wishlist.text",
+                                    LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()),
+                                    odysseyMaterial.getTypeNameLocalized(),
+                                    StorageService.getMaterialStorage(odysseyMaterial).getTotalValue(),
+                                    backPackText,
+                                    WishlistService.getAllWishlistsCount(odysseyMaterial));
+                            NotificationService.showInformation(NotificationType.WISHLIST_POINT, LocaleService.LocaleString.of("notification.material.information.title"), text);
                         } else if (OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(odysseyMaterial)) {
-                            text = LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()) + "(" + odysseyMaterial.getTypeNameLocalized() + ")" + " - Engineer/Blueprint - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText;
-                            NotificationService.showInformation(NotificationType.RELEVANT_POINT, "Material information", text);
+                            text = LocaleService.LocaleString.of("notification.material.information.relevant.text",
+                                    LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()),
+                                    odysseyMaterial.getTypeNameLocalized(),
+                                    StorageService.getMaterialStorage(odysseyMaterial).getTotalValue(),
+                                    backPackText);
+                            NotificationService.showInformation(NotificationType.RELEVANT_POINT, LocaleService.LocaleString.of("notification.material.information.title"), text);
                         } else {
-                            text = LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()) + "(" + odysseyMaterial.getTypeNameLocalized() + ")" + " - Irrelevant";
-                            NotificationService.showInformation(NotificationType.IRRELEVANT_POINT, "Material information", text);
+                            text = LocaleService.LocaleString.of("notification.material.information.irrelevant.text",
+                                    LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()),
+                                    odysseyMaterial.getTypeNameLocalized());
+                            NotificationService.showInformation(NotificationType.IRRELEVANT_POINT, LocaleService.LocaleString.of("notification.material.information.title"), text);
                         }
                     } catch (final IllegalArgumentException ex) {
                         log.warn("Resource not an OdysseyMaterial");

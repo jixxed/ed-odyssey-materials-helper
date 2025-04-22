@@ -24,8 +24,8 @@ public class MaterialCollectedMessageProcessor implements MessageProcessor<Mater
                 }
                 if (WishlistService.isMaterialOnWishlist(horizonsMaterial)) {
                     final IntegerRange allWishlistsCount = WishlistService.getAllWishlistsCount(horizonsMaterial);
-                    NotificationService.showInformation(NotificationType.SHIP_WISHLIST_PICKUP, LocaleService.getLocalizedStringForCurrentLocale("notification.collected.wishlist.material.title"),
-                            LocaleService.getLocalizedStringForCurrentLocale("notification.collected.wishlist.material.notification.horizons",
+                    NotificationService.showInformation(NotificationType.SHIP_WISHLIST_PICKUP, LocaleService.LocaleString.of("notification.collected.wishlist.material.title"),
+                            LocaleService.LocaleString.of("notification.collected.wishlist.material.notification.horizons",
                                     LocaleService.LocalizationKey.of(horizonsMaterial.getLocalizationKey()),
                                     event.getCount().intValue(),
                                     StorageService.getMaterialCount(horizonsMaterial),

@@ -39,54 +39,6 @@ public class NotificationService {
         EVENT_LISTENERS.add(EventService.addStaticListener(JournalInitEvent.class, journalInitEvent -> enabled = journalInitEvent.isInitialised()));
     }
 
-    /**
-     * @deprecated Use {@link NotificationService#showInformation(NotificationType, LocaleService.LocaleString, LocaleService.LocaleString)} instead.
-     */
-    @Deprecated(since = "2.77")
-    public static void showInformation(final NotificationType notificationType, final String title, final String text) {
-        showInformation(notificationType, LocaleService.LocaleString.ofText(title), LocaleService.LocaleString.ofText(text), false);
-    }
-
-    /**
-     * @deprecated Use {@link NotificationService#showWarning(NotificationType, LocaleService.LocaleString, LocaleService.LocaleString)} instead.
-     */
-    @Deprecated(since = "2.77")
-    public static void showWarning(final NotificationType notificationType, final String title, final String text) {
-        showWarning(notificationType, LocaleService.LocaleString.ofText(title), LocaleService.LocaleString.ofText(text), false);
-    }
-
-    /**
-     * @deprecated Use {@link NotificationService#showError(NotificationType, LocaleService.LocaleString, LocaleService.LocaleString)} instead.
-     */
-    @Deprecated(since = "2.77")
-    public static void showError(final NotificationType notificationType, final String title, final String text) {
-        showError(notificationType, LocaleService.LocaleString.ofText(title), LocaleService.LocaleString.ofText(text), false);
-    }
-
-    /**
-     * @deprecated Use {@link NotificationService#showInformation(NotificationType, LocaleService.LocaleString, LocaleService.LocaleString, boolean)} instead.
-     */
-    @Deprecated(since = "2.77")
-    public static void showInformation(final NotificationType notificationType, final String title, final String text, final boolean silent) {
-        showInformation(notificationType, LocaleService.LocaleString.ofText(title), LocaleService.LocaleString.ofText(text), silent);
-    }
-
-    /**
-     * @deprecated Use {@link NotificationService#showWarning(NotificationType, LocaleService.LocaleString, LocaleService.LocaleString, boolean)} instead.
-     */
-    @Deprecated(since = "2.77")
-    public static void showWarning(final NotificationType notificationType, final String title, final String text, final boolean silent) {
-        showWarning(notificationType, LocaleService.LocaleString.ofText(title), LocaleService.LocaleString.ofText(text), silent);
-    }
-
-    /**
-     * @deprecated Use {@link NotificationService#showError(NotificationType, LocaleService.LocaleString, LocaleService.LocaleString, boolean)} instead.
-     */
-    @Deprecated(since = "2.77")
-    public static void showError(final NotificationType notificationType, final String title, final String text, final boolean silent) {
-        showError(notificationType, LocaleService.LocaleString.ofText(title), LocaleService.LocaleString.ofText(text), silent);
-    }
-
     public static void showInformation(final NotificationType notificationType, final LocaleService.LocaleString title, final LocaleService.LocaleString text) {
         showInformation(notificationType, title, text, false);
     }

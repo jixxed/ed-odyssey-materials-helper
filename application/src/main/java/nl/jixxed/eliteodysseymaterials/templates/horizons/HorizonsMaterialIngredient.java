@@ -136,12 +136,12 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
     private void initImage() {
         if (this.horizonsMaterial instanceof Commodity commodity) {
             this.image = ResizableImageViewBuilder.builder()
-                    .withStyleClass("image")
+                    .withStyleClass("ingredient-image")
                     .withImage(commodity.getCommodityType().getImagePath())
                     .build();
         } else {
             this.image = ResizableImageViewBuilder.builder()
-                    .withStyleClass("image")
+                    .withStyleClass("ingredient-image")
                     .withImage(this.horizonsMaterial.getRarity().getImagePath())
                     .build();
         }

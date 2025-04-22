@@ -47,7 +47,7 @@ public class ModulesLayer extends DestroyableAnchorPane implements DestroyableEv
 
     @Override
     public void initComponents() {
-        this.getStyleClass().add("shipbuilder-modules-layer");
+        this.getStyleClass().add("modules");
         initShipLayout();
 
     }
@@ -105,11 +105,11 @@ public class ModulesLayer extends DestroyableAnchorPane implements DestroyableEv
                 .withImage("/images/ships/ship/grid.png")
                 .build();
         this.imageLayer = StackPaneBuilder.builder()
+                .withStyleClass("shipbuilder-stackpane")
                 .withNodes(gridImage, shipImage)
+                .withVisibility(false)
+                .withPickOnBounds(false)
                 .build();
-        this.imageLayer.getStyleClass().add("shipbuilder-stackpane");
-        this.imageLayer.setVisible(false);
-        this.imageLayer.setPickOnBounds(false);
         final DestroyableRegion region = new DestroyableRegion();
         region.addBinding(region.minHeightProperty(), this.tab.getStatsLayer().getStats().heightProperty());
         region.addBinding(region.maxHeightProperty(), this.tab.getStatsLayer().getStats().heightProperty());
@@ -308,5 +308,10 @@ public class ModulesLayer extends DestroyableAnchorPane implements DestroyableEv
         line.setEndY(endY);
         line.setStrokeWidth(ScalingHelper.getPixelDoubleFromEm(0.1D));
         line.setStroke(Color.valueOf("#89D07F"));
+    }
+
+    @Override
+    public void destroyInternal() {
+        this.tab = null;
     }
 }

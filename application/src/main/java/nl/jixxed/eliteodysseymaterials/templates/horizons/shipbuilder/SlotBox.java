@@ -906,7 +906,7 @@ class SlotBox extends DestroyableStackPane {
         final List<SlotBoxEntry> entries = ShipModule.getModules(this.slot.getSlotType()).stream()
                 .filter(module -> module.isAllowed(ApplicationState.getInstance().getShip().getShipType()))
                 .collect(Collectors.groupingBy(ShipModule::getClass))
-                .values().stream().map(list -> new SlotBoxEntry(modulesLayer, this, list))
+                .values().stream().map(list -> new SlotBoxEntry(this, list))
                 .sorted(Comparator.comparing(slotBoxEntry -> slotBoxEntry.name.getText()))
                 .toList();
         if (entries.size() > 1) {

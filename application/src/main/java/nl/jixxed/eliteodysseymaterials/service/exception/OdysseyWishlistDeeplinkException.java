@@ -1,22 +1,22 @@
 package nl.jixxed.eliteodysseymaterials.service.exception;
 
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+
 public class OdysseyWishlistDeeplinkException extends RuntimeException {
-    public OdysseyWishlistDeeplinkException() {
-    }
+    private final String errorLocaleKey;
 
-    public OdysseyWishlistDeeplinkException(final String message) {
+    public OdysseyWishlistDeeplinkException(final String message, final String errorLocaleKey) {
         super(message);
+        this.errorLocaleKey = errorLocaleKey;
     }
 
-    public OdysseyWishlistDeeplinkException(final String message, final Throwable cause) {
-        super(message, cause);
+    @Override
+    public String getLocalizedMessage() {
+        return LocaleService.getLocalizedStringForCurrentLocale(errorLocaleKey);
     }
 
-    public OdysseyWishlistDeeplinkException(final Throwable cause) {
-        super(cause);
+    public LocaleService.LocaleString getLocaleString() {
+        return LocaleService.LocaleString.of(errorLocaleKey);
     }
 
-    public OdysseyWishlistDeeplinkException(final String message, final Throwable cause, final boolean enableSuppression, final boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
 }

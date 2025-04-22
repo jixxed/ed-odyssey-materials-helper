@@ -3,7 +3,6 @@ tab.wishlist.blueprint.tooltip.craftable,Engineers crafting this blueprint:\n{0}
 tab.wishlist.blueprint.tooltip,Engineers crafting this blueprint:\n{0},Engineers crafting this blueprint:\n{0},"Ingenieure, die diesen Bauplan herstellen:\n{0}",Ingenieros que crean este plano:\n{0},Ingénieurs élaborant ce plan:\n{0},Engenheiros elaborando este projeto:\n{0},"Инженеры, создающие этот чертеж:\n{0}"
 tab.wishlist.copy,Copy wishlist to clipboard,Copy wishlist to clipboard,Wunschliste in die Zwischenablage kopieren,Copiar lista de deseos al portapapeles,Copier la liste de souhaits dans le presse-papiers,Copiar lista de desejos para a área de transferência,Скопировать список желаемого в буфер обмена
 tab.wishlist.create,Create wishlist,Create wishlist,Wunschliste erstellen,Crear lista de deseos,Créer une liste de souhaits,Criar lista de desejos,Создать список желаемого
-tab.wishlist.create.prompt,New name (max. 50 characters),New name (max. 50 characters),Neuer Name (max. 50 Zeichen),Nuevo nombre (máx.50 caracteres),Nouveau nom (max. 50 caractères),Novo nome (máx. 50 caracteres),Новое имя (макс.50 знаков)
 tab.wishlist.delete.confirm.content,Do you wish to continue?,Do you wish to continue?,Möchten Sie fortfahren?,¿Desea continuar?,Souhaitez-vous continuer?,Você deseja continuar?,Вы хотите продолжить?
 tab.wishlist.delete.confirm.header,You are about to delete your wishlist,You are about to delete your wishlist,"Sie sind dabei, Ihre Wunschliste zu löschen",Estás a punto de eliminar tu lista de deseos,Vous êtes sur le point de supprimer votre liste de souhaits,Você está prestes a deletar sua lista de desejos,Вы собираетесь удалить свой список желаемого
 tab.wishlist.delete.confirm.title,Confirm deletion,Confirm deletion,Löschen bestätigen,Confirmar la eliminación,Confirmer la suppression,Confirme a exclusão,Подтвердить удаление
@@ -61,3 +60,6 @@ tab.colonisation.delete.confirm.title,Confirm deletion,,,Confirmar borrado,,,П�
 tab.colonisation.delete,Delete colonisation project,,,Borrar proyecto de colonización,,,Удалить проект колонизации
 tab.wishlist.distance,{0}Ly,,,,,,
 tab.wishlist.distance.plus,+{0}Ly,,,,,,
+tab.wishlist.import.edsy.name,ED Shipyard - Imported,,,,,,
+tab.wishlist.import.coriolis.name,Coriolis - Imported,,,,,,
+tab.wishlist.create.prompt,Name (max. 50 characters),,,,,,

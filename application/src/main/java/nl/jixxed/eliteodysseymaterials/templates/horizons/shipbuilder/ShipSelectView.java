@@ -50,6 +50,7 @@ public class ShipSelectView extends DestroyableVBox implements DestroyableTempla
 
     @Override
     public void initComponents() {
+        this.getStyleClass().add("ship-select-view");
         table = new Table<>();
         Ship.ALL.forEach(ship -> {
             final LinkedHashMap<String, Supplier<Object>> values = new LinkedHashMap<>();
@@ -84,7 +85,7 @@ public class ShipSelectView extends DestroyableVBox implements DestroyableTempla
         });
 
         header = BoxBuilder.builder()
-                .withStyleClass("shipbuilder-ship-header")
+                .withStyleClass("header")
                 .withNodes(
                         table.backingMap.values().stream()
                                 .findFirst()
@@ -92,7 +93,7 @@ public class ShipSelectView extends DestroyableVBox implements DestroyableTempla
                                 .map(keys -> keys.stream()
                                         .map(key -> LabelBuilder.builder()
                                                 .withOnMouseClicked(event -> sortTable(key))
-                                                .withStyleClasses("shipbuilder-ship-cell", "shipbuilder-ship-header-cell", key.replace(".", "-"))
+                                                .withStyleClasses("cell", key.replace("ship.view.header", "col").replace(".", "-"))
                                                 .withText(key)
                                                 .build())
                                         .toList()
@@ -102,11 +103,11 @@ public class ShipSelectView extends DestroyableVBox implements DestroyableTempla
         rows = new HashMap<>();
         table.backingMap.entrySet().forEach(rowEntry ->
                 rows.put(rowEntry.getValue(), BoxBuilder.builder()
-                        .withStyleClass("shipbuilder-ship-row")
+                        .withStyleClass("row")
                         .withNodes(
                                 rowEntry.getValue().entrySet().stream()
                                         .map(entry -> LabelBuilder.builder()
-                                                .withStyleClasses("shipbuilder-ship-cell", "shipbuilder-ship-value-cell", entry.getKey().replace(".", "-"))
+                                                .withStyleClasses("cell", entry.getKey().replace("ship.view.header", "col").replace(".", "-"))
                                                 .withText(getStringBinding(entry.getValue()))
                                                 .build())
                                         .toArray(DestroyableLabel[]::new))

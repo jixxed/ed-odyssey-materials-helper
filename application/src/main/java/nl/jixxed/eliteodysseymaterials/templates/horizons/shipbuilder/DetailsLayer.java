@@ -17,7 +17,7 @@ public class DetailsLayer extends DestroyableAnchorPane implements DestroyableTe
 
     @Override
     public void initComponents() {
-        this.getStyleClass().add("shipbuilder-details-layer");
+        this.getStyleClass().add("details");
         this.moduleDetails = new ModuleDetails(this);
         moduleDetails.setPickOnBounds(false);
         final DestroyableVBox vBox = BoxBuilder.builder()

@@ -23,7 +23,7 @@ public class StatsLayer extends DestroyableAnchorPane implements DestroyableEven
 
     @Override
     public void initComponents() {
-        this.getStyleClass().add("shipbuilder-stats-layer");
+        this.getStyleClass().add("stats");
         stats = BoxBuilder.builder()
                 .withStyleClass("shipbuilder-stats-box")
                 .withNodes(new Config(),

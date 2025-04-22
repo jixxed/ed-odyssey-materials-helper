@@ -84,10 +84,12 @@ public class OdysseyMaterialIngredient extends Ingredient implements Destroyable
 
         DestroyableHBox leftHBox = BoxBuilder.builder()
                 .withNodes(leftDescriptionLabel, this.leftAmountLabel)
-                .withStyleClass("quantity-section").buildHBox();
+                .withStyleClass("quantity-section")
+                .buildHBox();
         DestroyableHBox rightHBox = BoxBuilder.builder()
                 .withNodes(this.rightAmountLabel, this.rightDescriptionLabel)
-                .withStyleClass("quantity-section").buildHBox();
+                .withStyleClass("quantity-section")
+                .buildHBox();
         this.leftAmountLabel.setText(this.leftAmount.toString());
         HBox.setHgrow(this.leftAmountLabel, Priority.ALWAYS);
         this.rightAmountLabel.setText(this.rightAmount.toString());

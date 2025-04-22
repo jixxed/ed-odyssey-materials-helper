@@ -10,6 +10,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.CommanderAllListedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -85,7 +86,7 @@ public class JournalWatcher {
                         }).watch(folder);
             } catch (Exception ex) {
                 log.error("failed to initialize journal", ex);
-                NotificationService.showError(NotificationType.ERROR, "Error initializing", "Check logs for errors and contact the developer for support");
+                NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.journal.init.error.title"), LocaleService.LocaleString.of("notification.journal.init.error.text"));
                 EventService.publish(new JournalInitEvent(true));
             }
         });

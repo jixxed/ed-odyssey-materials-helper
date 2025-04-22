@@ -17,7 +17,7 @@ public class ShipSelectionLayer extends DestroyableAnchorPane implements Destroy
 
     @Override
     public void initComponents() {
-        this.getStyleClass().add("shipbuilder-shipselection-layer");
+        this.getStyleClass().add("ship-selection");
         ShipSelectView shipSelectView = new ShipSelectView(this.tab);
 
         DestroyableScrollPane scrollPane = ScrollPaneBuilder.builder()

@@ -1,22 +1,21 @@
 package nl.jixxed.eliteodysseymaterials.service.exception;
 
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+
 public class CoriolisDeeplinkException extends RuntimeException {
-    public CoriolisDeeplinkException() {
-    }
+    private final String errorLocaleKey;
 
-    public CoriolisDeeplinkException(final String message) {
+    public CoriolisDeeplinkException(final String message, final String errorLocaleKey) {
         super(message);
+        this.errorLocaleKey = errorLocaleKey;
     }
 
-    public CoriolisDeeplinkException(final String message, final Throwable cause) {
-        super(message, cause);
+    @Override
+    public String getLocalizedMessage() {
+        return LocaleService.getLocalizedStringForCurrentLocale(errorLocaleKey);
     }
 
-    public CoriolisDeeplinkException(final Throwable cause) {
-        super(cause);
-    }
-
-    public CoriolisDeeplinkException(final String message, final Throwable cause, final boolean enableSuppression, final boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+    public LocaleService.LocaleString getLocaleString() {
+        return LocaleService.LocaleString.of(errorLocaleKey);
     }
 }
