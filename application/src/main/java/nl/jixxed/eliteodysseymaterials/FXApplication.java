@@ -133,12 +133,12 @@ public class FXApplication extends Application {
 //            HighGradeEmissionService.initialize();
             CAPIService.getInstance(this);
             this.loadingScreen = new LoadingScreen();
-            eventListeners.add(EventService.addListener(this, JournalInitEvent.class, event -> {
+            eventListeners.add(EventService.addListener(true, this, JournalInitEvent.class, event -> {
 
                 if (event.isInitialised() && this.applicationScreen == null) {
                     log.debug("applicationLayout");
 
-                    Platform.runLater(() -> {
+//                    Platform.runLater(() -> {
                         try {
                             this.applicationScreen = new ApplicationScreen();
                             this.content.getChildren().add(this.applicationScreen);
@@ -152,12 +152,21 @@ public class FXApplication extends Application {
                             String supportFile = SupportService.createSupportPackage();
                             showAlert(supportFile, t);
                         }
-                    });
+//                    });
                     log.debug("setupFleetCarrierWatcher");
-                    Platform.runLater(() -> setupFleetCarrierWatcher(this.journalWatcher.getWatchedFolder(), APPLICATION_STATE.getPreferredCommander().orElse(null)));
+//                    Platform.runLater(() ->
+                            setupFleetCarrierWatcher(this.journalWatcher.getWatchedFolder(), APPLICATION_STATE.getPreferredCommander().orElse(null));
+//                    );
                     log.debug("loadingScreen");
-                    Platform.runLater(() -> this.content.getChildren().remove(this.loadingScreen));
+//                    Platform.runLater(                            () ->
+                            this.content.getChildren().remove(this.loadingScreen);
+//                    );
 
+                } else {
+                    this.applicationScreen = null;
+                    if(!this.content.getChildren().contains(this.loadingScreen)) {
+                        this.content.getChildren().add(this.loadingScreen);
+                    }
                 }
             }));
             this.primaryStage = primaryStage;
@@ -166,8 +175,8 @@ public class FXApplication extends Application {
             setupDeeplinkWatcher();
             setupWatchers();
 
-            initEventHandling();
             createApplicationScene();
+            initEventHandling();
             KeyCombination kc = new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN);
             Runnable rn = () -> {
                 Platform.runLater(() -> {
@@ -230,7 +239,7 @@ public class FXApplication extends Application {
         this.eventListeners.add(EventService.addListener(this, CommanderAllListedEvent.class, event -> {
             this.initialized = true;
         }));
-        this.eventListeners.add(EventService.addListener(this, JournalInitEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(true, this, JournalInitEvent.class, event -> {
 //            if (event.isInitialised()) {
 //                Platform.runLater(() -> setupFleetCarrierWatcher(this.journalWatcher.getWatchedFolder(), APPLICATION_STATE.getPreferredCommander().orElse(null)));
 //                Platform.runLater(() -> this.content.getChildren().remove(this.loadingScreen));
@@ -345,7 +354,7 @@ public class FXApplication extends Application {
     }
 
     private Scene createApplicationScene() {
-        content = new StackPane(/*this.applicationLayout, */this.loadingScreen);
+        content = new StackPane(/*this.applicationLayout, this.loadingScreen*/);
         content.getStyleClass().add("app");
         scene = new Scene(content, PreferencesService.getPreference(PreferenceConstants.APP_WIDTH, 800D), PreferencesService.getPreference(PreferenceConstants.APP_HEIGHT, 600D), false, SceneAntialiasing.BALANCED);
 

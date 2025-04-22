@@ -140,4 +140,27 @@ public class EventService {
     public static void shutdown() {
         LISTENERS_MAP.clear();
     }
+
+    public static void removeUIListeners() {
+        LISTENERS_MAP.values().stream()
+                .flatMap(Collection::stream)
+                .filter(EventService::isTemplateListener)
+                .forEach(ref -> {
+                    if(ref.get() != null && ref.get() instanceof NonStaticEventListener nonStaticEventListener && nonStaticEventListener.eventClass.equals(TerminateApplicationEvent.class)) {
+                        ((EventListener<TerminateApplicationEvent>)ref.get()).handleEvent(new TerminateApplicationEvent());
+                    }
+                });
+        LISTENERS_MAP.values().forEach( value -> value.removeIf(EventService::isTemplateListener));
+    }
+
+    private static boolean isTemplateListener(WeakReference<EventListener<? extends Event>> ref) {
+        var toremove = ref.get() == null
+                || (ref.get() instanceof NonStaticEventListener nonStaticEventListener
+                && (nonStaticEventListener.getOwnerRef().get() == null
+                || nonStaticEventListener.getOwnerRef().get().getClass().getName().startsWith("nl.jixxed.eliteodysseymaterials.templates")));
+//        if (toremove) {
+//            log.info("Removing listener for:" + ((NonStaticEventListener)ref.get()).getOwnerRef().get().getClass().getName());
+//        }
+        return toremove;
+    }
 }

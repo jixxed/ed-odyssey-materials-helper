@@ -1,4 +1,4 @@
-package nl.jixxed.eliteodysseymaterials.templates;
+package nl.jixxed.eliteodysseymaterials;
 
 import javafx.scene.layout.AnchorPane;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
