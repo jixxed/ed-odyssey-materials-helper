@@ -110,7 +110,7 @@ public class CAPIService {
                                 final String pathname = commander.getCommanderFolder();
                                 final File fleetCarrierFileDir = new File(pathname);
                                 fleetCarrierFileDir.mkdirs();
-                                final File fleetCarrierFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.FLEETCARRIER_FILE);
+                                final File fleetCarrierFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.FLEETCARRIER_FILE);
                                 this.timer = new Timer("Fleetcarrier-api-task", true);
                                 this.timerTask = new TimerTask() {
                                     @Override
@@ -194,7 +194,7 @@ public class CAPIService {
                             Platform.runLater(() -> {
                                 this.fcEnabled.set(false);
                             });
-                        }else if (response.getCode() == 400) {
+                        } else if (response.getCode() == 400) {
                             log.warn("Frontier API returned a " + response.getCode() + "(No game entitlement). Disabling FC endpoint.");
                             // no FC -> disable endpoint
                             Platform.runLater(() -> {
@@ -207,7 +207,7 @@ public class CAPIService {
                             final String pathname = commander.getCommanderFolder();
                             final File fleetCarrierFileDir = new File(pathname);
                             fleetCarrierFileDir.mkdirs();
-                            final File fleetCarrierFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.FLEETCARRIER_FILE);
+                            final File fleetCarrierFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.FLEETCARRIER_FILE);
                             try (final FileOutputStream fileOutputStream = new FileOutputStream(fleetCarrierFile)) {
                                 fileOutputStream.write(response.getBody().getBytes(StandardCharsets.UTF_8));
                             }
@@ -228,8 +228,8 @@ public class CAPIService {
                         Platform.runLater(() -> {
                             this.active.set(false);
                             final String pathname = commander.getCommanderFolder();
-                            final boolean delete = new File(pathname + OsConstants.OS_SLASH + AppConstants.FLEETCARRIER_FILE).delete();
-                            if(delete) log.info("Deleted stale fleetcarrier file");
+                            final boolean delete = new File(pathname + OsConstants.getOsSlash() + AppConstants.FLEETCARRIER_FILE).delete();
+                            if (delete) log.info("Deleted stale fleetcarrier file");
                             NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.auth.fail"));
                         });
                     }
@@ -261,7 +261,7 @@ public class CAPIService {
             final String pathname = commander.getLiveCommanderFolder();
             final File capiTokenDir = new File(pathname);
             capiTokenDir.mkdirs();
-            final File capiTokenFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.CAPI_FILE);
+            final File capiTokenFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.CAPI_FILE);
             if (capiTokenFile.exists()) {
                 try {
                     final JsonNode tokenJson = OBJECT_MAPPER.readTree(Files.readString(capiTokenFile.toPath()));
@@ -290,7 +290,7 @@ public class CAPIService {
                 final String pathname = commander.getLiveCommanderFolder();
                 final File capiTokenDir = new File(pathname);
                 capiTokenDir.mkdirs();
-                final File capiTokenFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.CAPI_FILE);
+                final File capiTokenFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.CAPI_FILE);
                 try (final FileOutputStream fileOutputStream = new FileOutputStream(capiTokenFile)) {
                     fileOutputStream.write(tokenJson.getBytes(StandardCharsets.UTF_8));
                 }

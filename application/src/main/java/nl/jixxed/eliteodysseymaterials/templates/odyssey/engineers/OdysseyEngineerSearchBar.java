@@ -85,6 +85,7 @@ class OdysseyEngineerSearchBar extends DestroyableHBox implements DestroyableEve
 
     @Override
     public void destroyInternal() {
+        super.destroyInternal();
         if (subscribe != null) {
             subscribe.dispose();
         }

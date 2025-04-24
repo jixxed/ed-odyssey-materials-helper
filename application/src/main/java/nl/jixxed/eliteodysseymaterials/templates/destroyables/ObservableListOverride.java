@@ -46,6 +46,7 @@ public class ObservableListOverride {
 
     @SafeVarargs
     public final <E extends Node & Destroyable> boolean setAll(E... elements) {
+        children().forEach(child -> parent().deregister((Destroyable) child));
         children().forEach(this::destroy);
         parent().registerAll(elements);
         return children().setAll(elements);
@@ -58,6 +59,7 @@ public class ObservableListOverride {
     }
 
     public <E extends Node & Destroyable> boolean removeAll(E... elements) {
+        Arrays.stream(elements).forEach(child -> parent().deregister((Destroyable) child));
         Arrays.stream(elements).forEach(this::destroy);
         return children().removeAll(elements);
     }
@@ -68,6 +70,7 @@ public class ObservableListOverride {
     }
 
     public void remove(int from, int to) {
+        children().subList(from, to).forEach(child -> parent().deregister((Destroyable) child));
         children().subList(from, to).forEach(this::destroy);
         children().remove(from, to);
     }
@@ -103,6 +106,7 @@ public class ObservableListOverride {
 
     public <E extends Node & Destroyable> boolean remove(E node) {
         if (node != null) {
+            parent().deregister(node);
             destroy(node);
             return children().remove(node);
         }
@@ -124,6 +128,7 @@ public class ObservableListOverride {
     }
 
     public boolean removeAll(Collection<?> collection) {
+        collection.forEach(child -> parent().deregister((Destroyable) child));
         collection.forEach(node -> {
             if (node instanceof Destroyable destroyable) {
                 destroyable.destroy();
@@ -133,11 +138,13 @@ public class ObservableListOverride {
     }
 
     public boolean retainAll(Collection<?> collection) {
+        children().stream().filter(node -> !collection.contains(node)).forEach(child -> parent().deregister((Destroyable) child));
         children().stream().filter(node -> !collection.contains(node)).forEach(this::destroy);
         return children().retainAll(collection);
     }
 
     public void clear() {
+        children().forEach(child -> parent().deregister((Destroyable) child));
         children().forEach(this::destroy);
         children().clear();
     }
@@ -149,6 +156,7 @@ public class ObservableListOverride {
 
     public <E extends Node & Destroyable> E set(int index, E element) {
         final E node = (E) children().set(index, element);
+        parent().deregister(node);
         destroy(node);
         return node;
     }
@@ -164,6 +172,7 @@ public class ObservableListOverride {
     }
 
     public Node remove(int index) {
+        parent().deregister((Destroyable) children().get(index));
         this.destroy(children().get(index));
         return children().remove(index);
     }
@@ -200,10 +209,16 @@ public class ObservableListOverride {
 
     private void destroy(Node node) {
         try {
-            if (node instanceof DestroyableTemplate template) {
+            if (node instanceof DestroyableEventTemplate template) {
                 template.destroyTemplate();
-            } else if (node instanceof Destroyable destroyable) {
-                destroyable.destroy();
+            } else if (node instanceof DestroyableTemplate template) {
+                template.destroyTemplate();
+            } else if (node instanceof DestroyableParent p) {
+                p.destroy();
+            } else if (node instanceof DestroyableComponent c) {
+                c.destroy();
+            } else if (node instanceof Destroyable d) {
+                d.destroy();
             } else {
                 throw new IllegalArgumentException();
             }

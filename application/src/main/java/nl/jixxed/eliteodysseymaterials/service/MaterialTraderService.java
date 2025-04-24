@@ -20,7 +20,7 @@ import java.util.List;
 public class MaterialTraderService {
     private static final List<MaterialTrader> MATERIAL_TRADERS = new ArrayList<>();
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    private static final String TRADERS_FILE_PATH = OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + "traders.jsonl";
+    private static final String TRADERS_FILE_PATH = OsConstants.getConfigDirectory() + OsConstants.getOsSlash() + "traders.jsonl";
 
     static {
         File brokersFile = new File(TRADERS_FILE_PATH);
@@ -31,6 +31,7 @@ public class MaterialTraderService {
             update(inputStream);
         }
     }
+
     private static void update(InputStream inputStream) {
         try (final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             MATERIAL_TRADERS.clear();

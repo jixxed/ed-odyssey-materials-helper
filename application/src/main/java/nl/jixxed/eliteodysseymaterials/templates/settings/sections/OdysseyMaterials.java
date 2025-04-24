@@ -96,6 +96,7 @@ public class OdysseyMaterials extends DestroyableVBox implements DestroyableEven
 
         this.readingDirectionSelect = ComboBoxBuilder.builder(MaterialOrientation.class)
                 .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withSelected(MaterialOrientation.valueOf(PreferencesService.getPreference(PreferenceConstants.ORIENTATION, "VERTICAL")))
                 .withItemsProperty(LocaleService.getListBinding(MaterialOrientation.values()))
                 .withValueChangeListener((obs, oldValue, newValue) -> {
                     if (newValue != null) {
@@ -105,9 +106,6 @@ public class OdysseyMaterials extends DestroyableVBox implements DestroyableEven
                 })
                 .asLocalized()
                 .build();
-
-        this.readingDirectionSelect.getSelectionModel()
-                .select(MaterialOrientation.valueOf(PreferencesService.getPreference(PreferenceConstants.ORIENTATION, "VERTICAL")));
 
         return BoxBuilder.builder()
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)

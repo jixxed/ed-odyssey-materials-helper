@@ -286,7 +286,7 @@ public class WishlistService {
             final String pathname = commander.getCommanderFolder();
             final File commanderFolder = new File(pathname);
             commanderFolder.mkdirs();
-            final File wishlistsFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.HORIZONS_WISHLIST_FILE);
+            final File wishlistsFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.HORIZONS_WISHLIST_FILE);
             String wishlistsFileContents;
             if (wishlistsFile.exists()) {//load from file if exists
                 wishlistsFileContents = Files.readString(wishlistsFile.toPath());
@@ -316,7 +316,7 @@ public class WishlistService {
             final String pathname = commander.getCommanderFolder();
             final File commanderFolder = new File(pathname);
             commanderFolder.mkdirs();
-            final File wishlistsFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.ODYSSEY_WISHLIST_FILE);
+            final File wishlistsFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.ODYSSEY_WISHLIST_FILE);
             String wishlistsFileContents;
             if (wishlistsFile.exists()) {//load from file if exists
                 wishlistsFileContents = Files.readString(wishlistsFile.toPath());
@@ -355,7 +355,7 @@ public class WishlistService {
             final String pathname = commander.getCommanderFolder();
             final File commanderFolder = new File(pathname);
             commanderFolder.mkdirs();
-            final File wishlistsFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.HORIZONS_WISHLIST_FILE);
+            final File wishlistsFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.HORIZONS_WISHLIST_FILE);
             try (final FileOutputStream fileOutputStream = new FileOutputStream(wishlistsFile)) {
                 fileOutputStream.write(wishlistsJson.getBytes(StandardCharsets.UTF_8));
             }
@@ -372,7 +372,7 @@ public class WishlistService {
             final String pathname = commander.getCommanderFolder();
             final File commanderFolder = new File(pathname);
             commanderFolder.mkdirs();
-            final File wishlistsFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.ODYSSEY_WISHLIST_FILE);
+            final File wishlistsFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.ODYSSEY_WISHLIST_FILE);
             try (final FileOutputStream fileOutputStream = new FileOutputStream(wishlistsFile)) {
                 fileOutputStream.write(wishlistsJson.getBytes(StandardCharsets.UTF_8));
             }

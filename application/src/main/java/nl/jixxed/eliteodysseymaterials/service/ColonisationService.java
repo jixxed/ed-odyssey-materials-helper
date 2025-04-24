@@ -19,6 +19,7 @@ import java.nio.file.Files;
 @Slf4j
 public class ColonisationService {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
     static {
         SimpleModule simpleModule = new SimpleModule();
         simpleModule.addKeyDeserializer(Commodity.class, new CommodityKeyDeserializer());
@@ -31,7 +32,7 @@ public class ColonisationService {
             final String pathname = commander.getCommanderFolder();
             final File commanderFolder = new File(pathname);
             commanderFolder.mkdirs();
-            final File wishlistsFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.HORIZONS_COLONISATION_FILE);
+            final File wishlistsFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.HORIZONS_COLONISATION_FILE);
             try (final FileOutputStream fileOutputStream = new FileOutputStream(wishlistsFile)) {
                 fileOutputStream.write(colonisationItemsJson.getBytes(StandardCharsets.UTF_8));
             }
@@ -47,7 +48,7 @@ public class ColonisationService {
             final String pathname = commander.getCommanderFolder();
             final File commanderFolder = new File(pathname);
             commanderFolder.mkdirs();
-            final File colonisationItemsFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.HORIZONS_COLONISATION_FILE);
+            final File colonisationItemsFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.HORIZONS_COLONISATION_FILE);
             String colonisationItemsFileContents;
             if (colonisationItemsFile.exists()) {//load from file if exists
                 colonisationItemsFileContents = Files.readString(colonisationItemsFile.toPath());

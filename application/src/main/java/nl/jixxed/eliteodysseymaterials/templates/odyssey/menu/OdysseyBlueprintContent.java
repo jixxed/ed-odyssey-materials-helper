@@ -112,8 +112,8 @@ class OdysseyBlueprintContent extends DestroyableVBox implements DestroyableEven
         this.ingredients.addAll(getRecipeIngredients(Data.class, OdysseyStorageType.DATA));
         if (this.blueprint instanceof EngineerBlueprint engineerRecipe) {
             this.ingredients.addAll(engineerRecipe.getOther().stream()
+                    .sorted(Comparator.comparing(LocaleService::getLocalizedStringForCurrentLocale))
                     .map(text -> new MissionIngredient(text, OdysseyStorageType.OTHER))
-                    .sorted(Comparator.comparing(MissionIngredient::getName))
                     .collect(Collectors.toCollection(ArrayList::new)));
         }
     }
@@ -263,8 +263,8 @@ class OdysseyBlueprintContent extends DestroyableVBox implements DestroyableEven
 
     private List<OdysseyMaterialIngredient> getRecipeIngredients(final Class<? extends OdysseyMaterial> materialClass, final OdysseyStorageType storageType) {
         return this.blueprint.getMaterialCollection(materialClass).entrySet().stream()
+                .sorted(Comparator.comparing(entry -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getLocalizationKey())))
                 .map(material -> new OdysseyMaterialIngredient(storageType, material.getKey(), material.getValue(), StorageService.getMaterialCount(material.getKey(), AmountType.TOTAL)))
-                .sorted(Comparator.comparing(OdysseyMaterialIngredient::getName))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 

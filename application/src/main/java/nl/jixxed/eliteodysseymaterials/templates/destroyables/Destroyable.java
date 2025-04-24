@@ -35,6 +35,10 @@ public interface Destroyable {
         getDestroyables().addAll(destroyables);
     }
 
+    default <T extends Destroyable> void deregister(final T destroyable) {
+        getDestroyables().remove(destroyable);
+    }
+
     default <T extends Destroyable> void deregisterAll(final Collection<T> destroyables) {
         getDestroyables().removeAll(destroyables);
     }
@@ -51,16 +55,23 @@ public interface Destroyable {
 
         //clean destroyables
         getDestroyables().forEach(destroyable -> {
-            if (destroyable instanceof DestroyableTemplate template) {
+            if (destroyable instanceof DestroyableEventTemplate template) {
                 template.destroyTemplate();
-            } else {
-                destroyable.destroy();
+            } else if (destroyable instanceof DestroyableTemplate template) {
+                template.destroyTemplate();
+            } else if (destroyable instanceof DestroyableParent p) {
+                p.destroy();
+            } else if (destroyable instanceof DestroyableComponent c) {
+                c.destroy();
+            } else if (destroyable instanceof Destroyable d) {
+                d.destroy();
             }
         });
         getDestroyables().clear();
 
         //additional optional cleanup if required
         destroyInternal();
+        DestroyableManager.destroy(this);
     }
 
     @SuppressWarnings("unchecked")

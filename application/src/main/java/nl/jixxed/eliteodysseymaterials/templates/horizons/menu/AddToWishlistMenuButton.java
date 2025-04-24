@@ -21,6 +21,8 @@ import java.util.*;
 
 public class AddToWishlistMenuButton extends DestroyableMenuButton implements DestroyableEventTemplate {
 
+    private ListChangeListener<MenuItem> menuItemListChangeListener;
+
     public AddToWishlistMenuButton() {
         initComponents();
         initEventHandling();
@@ -31,7 +33,7 @@ public class AddToWishlistMenuButton extends DestroyableMenuButton implements De
         this.getStyleClass().add("recipe-wishlist-button");
         this.addBinding(this.textProperty(), LocaleService.getStringBinding("blueprint.add.to.wishlist"));
         this.getItems().addAll(new ArrayList<>());
-        this.getItems().addListener((ListChangeListener<MenuItem>) c -> {
+        menuItemListChangeListener = c -> {
             if (c.getList().size() <= 1) {
                 if (!this.getStyleClass().contains("hidden-menu-button")) {
                     this.getStyleClass().add("hidden-menu-button");
@@ -39,7 +41,8 @@ public class AddToWishlistMenuButton extends DestroyableMenuButton implements De
             } else {
                 this.getStyleClass().remove("hidden-menu-button");
             }
-        });
+        };
+        this.getItems().addListener(menuItemListChangeListener);
         this.addEventBinding(this.onMouseClickedProperty(), event -> {
             if (this.getItems().size() == 1) {
                 this.getItems().get(0).fire();
@@ -65,8 +68,7 @@ public class AddToWishlistMenuButton extends DestroyableMenuButton implements De
 
     public void loadCommanderWishlists(final Commander commander, HorizonsBlueprint blueprint) {
         final HorizonsWishlists wishlists = WishlistService.getHorizonsWishlists(commander);
-        this.deregisterAll((List<DestroyableMenuItem>) (List<?>) this.getItems());
-        this.getItems().clear();
+        this.clear();
         final List<DestroyableMenuItem> menuItems = wishlists.getAllWishlists().stream().filter(horizonsWishlist -> !horizonsWishlist.equals(HorizonsWishlist.ALL)).sorted(Comparator.comparing(HorizonsWishlist::getName)).flatMap(wishlist -> {
             final List<DestroyableMenuItem> items = new ArrayList<>();
             if (blueprint instanceof HorizonsModuleBlueprint) {
@@ -83,8 +85,7 @@ public class AddToWishlistMenuButton extends DestroyableMenuButton implements De
             }
             return items.stream();
         }).toList();
-        this.getItems().addAll(menuItems);
-        this.registerAll(menuItems);
+        this.addAll(menuItems);
     }
 
 
@@ -124,4 +125,9 @@ public class AddToWishlistMenuButton extends DestroyableMenuButton implements De
                 }).build();
     }
 
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        this.getItems().removeListener(menuItemListChangeListener);
+    }
 }

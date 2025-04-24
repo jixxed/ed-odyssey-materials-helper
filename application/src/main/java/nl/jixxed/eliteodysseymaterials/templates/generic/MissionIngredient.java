@@ -31,17 +31,9 @@ public class MissionIngredient extends Ingredient {
         this.getNodes().addAll(line, new GrowingRegion());
     }
 
-
     @Override
     public StorageType getType() {
         return this.storageType;
     }
-
-
-    @Override
-    public String getName() {
-        return this.nameLabel.getText();
-    }
-
 
 }

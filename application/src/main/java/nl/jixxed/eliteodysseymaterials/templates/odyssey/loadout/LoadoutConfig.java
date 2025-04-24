@@ -76,6 +76,7 @@ public class LoadoutConfig extends DestroyableVBox implements DestroyableTemplat
                 .withText("loadout.equipment.level.current")
                 .build();
         currentLevel = ComboBoxBuilder.builder(Integer.class)
+                .withSelected(this.loadout.getCurrentLevel())
                 .withItemsProperty(FXCollections.observableArrayList(1, 2, 3, 4, 5))
                 .withValueChangeListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
@@ -86,7 +87,6 @@ public class LoadoutConfig extends DestroyableVBox implements DestroyableTemplat
                 })
                 .withDisable(this.loadoutSet.equals(LoadoutSet.CURRENT))
                 .build();
-        currentLevel.getSelectionModel().select(this.loadout.getCurrentLevel());
         final DestroyableRegion regionCurrent = new DestroyableRegion();
         HBox.setHgrow(regionCurrent, Priority.ALWAYS);
         currentLevelLabel.setAlignment(Pos.CENTER_LEFT);
@@ -102,6 +102,7 @@ public class LoadoutConfig extends DestroyableVBox implements DestroyableTemplat
                 .withText("loadout.equipment.level.target")
                 .build();
         targetLevel = ComboBoxBuilder.builder(Integer.class)
+                .withSelected(this.loadout.getTargetLevel())
                 .withItemsProperty(FXCollections.observableArrayList(1, 2, 3, 4, 5))
                 .withValueChangeListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
@@ -112,7 +113,6 @@ public class LoadoutConfig extends DestroyableVBox implements DestroyableTemplat
                 })
                 .withDisable(this.loadoutSet.equals(LoadoutSet.CURRENT))
                 .build();
-        targetLevel.getSelectionModel().select(this.loadout.getTargetLevel());
         final DestroyableRegion regionTarget = new DestroyableRegion();
         HBox.setHgrow(regionTarget, Priority.ALWAYS);
         targetLevelLabel.setAlignment(Pos.CENTER_LEFT);

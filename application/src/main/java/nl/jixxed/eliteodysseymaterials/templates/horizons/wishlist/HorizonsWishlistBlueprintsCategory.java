@@ -4,6 +4,7 @@ import javafx.beans.binding.Bindings;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
@@ -17,16 +18,14 @@ import nl.jixxed.eliteodysseymaterials.service.event.CommanderSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsWishlistBlueprintEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsWishlistSelectedEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTemplate;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+@Slf4j
 public class HorizonsWishlistBlueprintsCategory extends DestroyableHBox implements DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private DestroyableFlowPane blueprints;
@@ -42,6 +41,7 @@ public class HorizonsWishlistBlueprintsCategory extends DestroyableHBox implemen
     @Override
     public void initComponents() {
         this.getStyleClass().add("category");
+        log.debug("init");
         final List<WishlistBlueprintTemplate<HorizonsBlueprintName>> blueprintTemplates = createBlueprintTemplates();
 
         this.blueprints = FlowPaneBuilder.builder()
@@ -70,8 +70,10 @@ public class HorizonsWishlistBlueprintsCategory extends DestroyableHBox implemen
                     final String selectedWishlistUUID = WishlistService.getHorizonsWishlists(commander).getSelectedWishlistUUID();
                     if (selectedWishlistUUID.equals(wishlistEvent.getWishlistUUID())) {
                         if (Action.REMOVED.equals(wishlistEvent.getAction())) {
+                            log.debug("Action.REMOVED");
                             remove();
                         } else if (Action.ADDED.equals(wishlistEvent.getAction())) {
+                            log.debug("Action.ADDED");
                             add(wishlistEvent.getWishlistBlueprints(), wishlistEvent.getWishlistUUID());
                         }
                     }
@@ -91,6 +93,7 @@ public class HorizonsWishlistBlueprintsCategory extends DestroyableHBox implemen
         wishlistBlueprints.stream()
                 .filter(blueprint -> this.blueprintCategory.equals(getBlueprintCategory(blueprint)))
                 .forEach(wishlistRecipe -> {
+                    log.debug("add");
                     final WishlistBlueprintTemplate<HorizonsBlueprintName> wishlistBlueprint = createWishListBlueprintTemplate(wishlistRecipe, wishlistUUID);
                     addBluePrint(wishlistBlueprint);
                 });
@@ -115,18 +118,22 @@ public class HorizonsWishlistBlueprintsCategory extends DestroyableHBox implemen
         return new HorizonsWishlistBlueprintTemplate(wishlistUUID, wishlistRecipe);
     }
 
-    private void refreshBlueprints() {
+    private <E extends Node & Destroyable> void refreshBlueprints() {
         this.blueprints.getNodes().clear();
         final List<WishlistBlueprintTemplate<HorizonsBlueprintName>> blueprintTemplates = createBlueprintTemplates();
-        this.blueprints.getNodes().addAll((List) blueprintTemplates);
+        this.blueprints.getNodes().addAll((List<E>) (List<?>) blueprintTemplates);
         sort();
     }
 
     @SuppressWarnings("unchecked")
     private void sort() {
-        final List<Node> list = this.blueprints.getChildren().stream().sorted(Comparator.comparing(x -> LocaleService.getLocalizedStringForCurrentLocale(((WishlistBlueprintTemplate<HorizonsBlueprintName>) x).getWishlistRecipe().getRecipeName().getLocalizationKey()))
-                .thenComparing(x -> ((WishlistBlueprintTemplate<HorizonsBlueprintName>) x).getSequenceID())).toList();
-        this.blueprints.getChildren().setAll(list);
+        final List<Node> list = this.blueprints.getChildren().stream()
+                .sorted(Comparator
+                        .comparing(x -> LocaleService.getLocalizedStringForCurrentLocale(((WishlistBlueprintTemplate<HorizonsBlueprintName>) x).getWishlistRecipe().getRecipeName().getLocalizationKey()))
+                        .thenComparing(x -> ((WishlistBlueprintTemplate<HorizonsBlueprintName>) x).getSequenceID()))
+                .toList();
+        this.blueprints.getChildren().clear();
+        this.blueprints.getChildren().addAll(list);
     }
 
     @SuppressWarnings("unchecked")

@@ -7,12 +7,12 @@ import lombok.Getter;
 
 @Getter
 public class DestroyableResizableImageView extends Pane implements DestroyableParent {
-    ObservableListOverride override = new ObservableListOverride(DestroyableResizableImageView.this, super.getChildren());
-
-    @Override
-    public ObservableListOverride getNodes() {
-        return override;
-    }
+//    ObservableListOverride override = new ObservableListOverride(DestroyableResizableImageView.this, super.getChildren());
+//
+//    @Override
+//    public ObservableListOverride getNodes() {
+//        return override;
+//    }
 
     private final DestroyableImageView iv;
 
@@ -24,8 +24,8 @@ public class DestroyableResizableImageView extends Pane implements DestroyablePa
 
     public final void setImage(final Image image) {
         this.iv.setImage(image);
-        this.iv.fitWidthProperty().bind(widthProperty());
-        this.iv.fitHeightProperty().bind(heightProperty());
+        this.iv.addBinding(this.iv.fitWidthProperty(), widthProperty());
+        this.iv.addBinding(this.iv.fitHeightProperty(), heightProperty());
     }
 
     public final void setPreserveRatio(final boolean preserveRatio) {
@@ -42,5 +42,14 @@ public class DestroyableResizableImageView extends Pane implements DestroyablePa
 
     public final Image getImage() {
         return this.iv.getImage();
+    }
+
+    @Override
+    public void destroyInternal() {
+        this.iv.setImage(null);
+        this.iv.destroy();
+        DestroyableParent.super.destroyInternal();
+//        this.iv.fitWidthProperty().unbind();
+//        this.iv.fitHeightProperty().unbind();
     }
 }

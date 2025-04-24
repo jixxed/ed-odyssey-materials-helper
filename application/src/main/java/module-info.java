@@ -662,7 +662,6 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.WingLeave to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.slef to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.service.message to com.fasterxml.jackson.databind;
-    opens nl.jixxed.eliteodysseymaterials.templates to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.components to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.components.segmentbar to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.components.slider to javafx.fxml, org.controlsfx.controls;
@@ -683,4 +682,5 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.templates.overlay.ar to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.settings to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.settings.sections to javafx.fxml, org.controlsfx.controls;
+    opens nl.jixxed.eliteodysseymaterials.templates to java.desktop, javafx.fxml, javafx.graphics, org.controlsfx.controls;
 }

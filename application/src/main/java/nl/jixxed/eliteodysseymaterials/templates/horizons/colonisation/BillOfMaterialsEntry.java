@@ -69,7 +69,7 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
                 .withMaxValue(999999)
                 .withInitialValue(requiredAmount)
                 .build();
-        amountField.valueProperty().addListener((observable, oldValue, newValue) -> {
+        amountField.addChangeListener(amountField.valueProperty(), (observable, oldValue, newValue) -> {
             ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
                 final ColonisationItems colonisationItems = ColonisationService.getColonisationItems(commander);
                 colonisationItems.getColonisationItem(colonisationItem.getUuid()).updateAmount(commodity, newValue.intValue());
@@ -77,6 +77,8 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
             });
             colonisationItem.updateAmount(commodity, newValue.intValue());
         });
+        this.register(amountLabel);
+        this.register(amountField);
         fleetCarrierLabel = LabelBuilder.builder()
                 .withStyleClass("amount-right")
                 .withNonLocalizedText("0")

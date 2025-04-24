@@ -7,5 +7,4 @@ public abstract class Ingredient extends DestroyableVBox {
 
     public abstract StorageType getType();
 
-    public abstract String getName();
 }

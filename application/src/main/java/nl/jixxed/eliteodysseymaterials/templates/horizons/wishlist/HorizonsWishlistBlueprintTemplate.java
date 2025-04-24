@@ -35,6 +35,8 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
 
     @Getter
     private boolean deleted = false;
+    private DestroyableTooltip tooltip;
+    private DestroyableLabel wishlistRecipeName;
 
     HorizonsWishlistBlueprintTemplate(final String wishlistUUID, final WishlistBlueprint<HorizonsBlueprintName> wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
@@ -57,11 +59,15 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
                 .withGraphic(this.visibilityImage)
                 .build();
         if (Wishlist.ALL.getUuid().equals(this.wishlistUUID)) {
-            setVisibility(true);
+            this.visible = true;
+            this.wishlistBlueprint.setVisible(true);
+            this.visibilityImage.setImage(ImageService.getImage("/images/other/visible_blue.png"));
             visibilityButton.setVisible(false);
             visibilityButton.setManaged(false);
         } else {
-            setVisibility(this.wishlistBlueprint.isVisible());
+            this.visible = this.wishlistBlueprint.isVisible();
+            this.wishlistBlueprint.setVisible(this.visible);
+            this.visibilityImage.setImage(ImageService.getImage(this.visible ? "/images/other/visible_blue.png" : "/images/other/invisible_gray.png"));
         }
         final StringBinding titleStringBinding = switch (this.wishlistBlueprint) {
             case HorizonsSynthesisWishlistBlueprint wbp ->
@@ -73,7 +79,7 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
             case null, default ->
                     LocaleService.getStringBinding("wishlist.blueprint.horizons.title.engineer", LocaleService.LocalizationKey.of(this.wishlistBlueprint.getRecipeName().getLocalizationKey()));
         };
-        DestroyableLabel wishlistRecipeName = LabelBuilder.builder()
+        wishlistRecipeName = LabelBuilder.builder()
                 .withStyleClass("name")
                 .withText(Bindings.createStringBinding(() -> titleStringBinding.get().trim(), titleStringBinding))
                 .withOnMouseClicked(_ -> EventService.publish(new HorizonsBlueprintClickEvent(this.blueprint)))
@@ -95,11 +101,12 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
 
 
         if (this.blueprint instanceof HorizonsExperimentalEffectBlueprint moduleRecipe) {
-            DestroyableTooltip tooltip = TooltipBuilder.builder()
+            tooltip = TooltipBuilder.builder()
                     .withText(LocaleService.getToolTipStringBinding(moduleRecipe, "tab.wishlist.blueprint.tooltip"))
                     .withShowDelay(Duration.millis(100))
                     .build();
             Tooltip.install(wishlistRecipeName, tooltip);
+            register(this.tooltip);
         }
         this.updateStyle();
         this.getNodes().addAll(visibilityButton, wishlistRecipeName, removeBlueprint);
@@ -168,5 +175,12 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
     @Override
     public WishlistBlueprint getWishlistRecipe() {
         return this.wishlistBlueprint;
+    }
+
+
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        Tooltip.uninstall(this.wishlistRecipeName, this.tooltip);
     }
 }

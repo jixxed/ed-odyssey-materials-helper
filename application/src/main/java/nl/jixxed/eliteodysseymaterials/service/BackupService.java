@@ -23,8 +23,8 @@ public class BackupService {
     public static final int DAYS_OF_BACKUPS_TO_KEEP = 14;
 
     public static void createConfigBackup() {
-        Path configFolder = Path.of(OsConstants.CONFIG_DIRECTORY);
-        Path backupFolder = Path.of(OsConstants.CONFIG_DIRECTORY + "/backup");
+        Path configFolder = Path.of(OsConstants.getConfigDirectory());
+        Path backupFolder = Path.of(OsConstants.getConfigDirectory() + "/backup");
         try {
             log.info("Creating config backup.");
             zipFolder(configFolder, backupFolder);

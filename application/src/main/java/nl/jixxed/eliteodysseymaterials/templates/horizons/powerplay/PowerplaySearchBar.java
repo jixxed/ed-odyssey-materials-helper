@@ -85,6 +85,7 @@ class PowerplaySearchBar extends DestroyableHBox implements DestroyableEventTemp
 
     @Override
     public void destroyInternal() {
+        super.destroyInternal();
         if (subscribe != null) {
             subscribe.dispose();
         }

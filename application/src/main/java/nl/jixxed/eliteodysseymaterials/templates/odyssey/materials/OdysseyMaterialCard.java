@@ -5,6 +5,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.css.PseudoClass;
 import javafx.geometry.NodeOrientation;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import lombok.Getter;
@@ -17,10 +18,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.domain.Wishlist;
 import nl.jixxed.eliteodysseymaterials.enums.*;
-import nl.jixxed.eliteodysseymaterials.service.FavouriteService;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.MaterialService;
-import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
@@ -110,14 +108,18 @@ public class OdysseyMaterialCard extends DestroyableVBox implements DestroyableE
                 .withNonLocalizedText(String.valueOf(this.amounts.getTotalValue()))
                 .build();
 
-        this.image = createMaterialImage(this.odysseyMaterial);
+        this.image = ResizableImageViewBuilder.builder()
+                .withStyleClass("material-image")
+                .withImage(getMaterialImage(this.odysseyMaterial))
+                .build();
+
 
         final DestroyableRegion region = new DestroyableRegion();
         HBox.setHgrow(region, Priority.ALWAYS);
         MaterialService.addMaterialInfoPopOver(this, this.odysseyMaterial, false);
 
         this.setFavourite(this.odysseyMaterial, FavouriteService.isFavourite(this.odysseyMaterial));
-        this.setOnMouseClicked(_ -> setFavourite(this.odysseyMaterial, FavouriteService.toggleFavourite(this.odysseyMaterial)));
+        this.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> setFavourite(this.odysseyMaterial, FavouriteService.toggleFavourite(this.odysseyMaterial)));
 
         this.fleetCarrierImage = ResizableImageViewBuilder.builder()
                 .withStyleClasses("fleetcarrier-image")
@@ -210,7 +212,7 @@ public class OdysseyMaterialCard extends DestroyableVBox implements DestroyableE
     }
 
     private void updateMaterialCardStyle() {
-        this.image = createMaterialImage(this.odysseyMaterial);
+        this.image.setImage(ImageService.getImage(getMaterialImage(this.odysseyMaterial)));
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass(MATERIAL_IRRELEVANT_CLASS), false);
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass(MATERIAL_RELEVANT_CLASS), false);
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass(MATERIAL_POWERPLAY_CLASS), false);
@@ -234,27 +236,26 @@ public class OdysseyMaterialCard extends DestroyableVBox implements DestroyableE
         }
     }
 
-    private DestroyableResizableImageView createMaterialImage(final OdysseyMaterial odysseyMaterial) {
+    private String getMaterialImage(final OdysseyMaterial odysseyMaterial) {
 
         final boolean isEngineerUnlockMaterial = (APPLICATION_STATE.getSoloMode()) ? OdysseyBlueprintConstants.isEngineeringIngredientAndNotCompleted(odysseyMaterial) : OdysseyBlueprintConstants.isEngineeringIngredient(odysseyMaterial);
-        ResizableImageViewBuilder imageViewBuilder = ResizableImageViewBuilder.builder()
-                .withStyleClass("material-image");
+
         if (odysseyMaterial.isUnknown()) {
-            imageViewBuilder.withImage("/images/material/unknown.png");
+            return "/images/material/unknown.png";
         } else if (isEngineerUnlockMaterial) {
-            imageViewBuilder = imageViewBuilder.withImage("/images/material/engineer.png");
+            return "/images/material/engineer.png";
         } else if (odysseyMaterial instanceof Data) {
-            imageViewBuilder = imageViewBuilder.withImage("/images/material/data.png");
+            return "/images/material/data.png";
         } else if (odysseyMaterial instanceof Good) {
-            imageViewBuilder = imageViewBuilder.withImage("/images/material/good.png");
+            return "/images/material/good.png";
         } else if (odysseyMaterial instanceof Asset asset) {
-            imageViewBuilder = switch (asset.getType()) {
-                case TECH -> imageViewBuilder.withImage("/images/material/tech.png");
-                case CIRCUIT -> imageViewBuilder.withImage("/images/material/circuit.png");
-                case CHEMICAL -> imageViewBuilder.withImage("/images/material/chemical.png");
+            return switch (asset.getType()) {
+                case TECH -> "/images/material/tech.png";
+                case CIRCUIT -> "/images/material/circuit.png";
+                case CHEMICAL -> "/images/material/chemical.png";
             };
         }
-        return imageViewBuilder.build();
+        throw new IllegalArgumentException("Not a valid material");
     }
 
     private void setFavourite(final OdysseyMaterial odysseyMaterial, final boolean isFavourite) {

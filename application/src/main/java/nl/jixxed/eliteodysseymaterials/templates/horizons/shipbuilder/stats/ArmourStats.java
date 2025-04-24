@@ -1,7 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
 import javafx.geometry.Orientation;
-import javafx.scene.control.Tooltip;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
@@ -59,7 +58,7 @@ public class ArmourStats extends Stats implements DestroyableTemplate {
         final DestroyableLabel mrp = LabelBuilder.builder()
                 .withText("ship.stats.armour.mrp.short")
                 .build();
-        Tooltip.install(mrp, TooltipBuilder.builder()
+        mrp.setTooltip(TooltipBuilder.builder()
                 .withShowDelay(Duration.ZERO)
                 .withText("ship.stats.armour.mrp")
                 .build());

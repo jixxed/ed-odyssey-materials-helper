@@ -10,4 +10,11 @@ public class DestroyableAccordion extends Accordion implements DestroyableCompon
     public DestroyableAccordion(TitledPane... titledPanes) {
         super(titledPanes);
     }
+
+
+    @Override
+    public void destroyInternal() {
+        this.getChildren().clear();
+        DestroyableComponent.super.destroyInternal();
+    }
 }

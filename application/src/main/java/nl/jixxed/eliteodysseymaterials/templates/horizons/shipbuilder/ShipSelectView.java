@@ -115,7 +115,13 @@ public class ShipSelectView extends DestroyableVBox implements DestroyableTempla
                             APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                                         final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
                                         shipConfigurations.getSelectedShipConfiguration().ifPresent(configuration -> {
-                                            APPLICATION_STATE.setShip(new Ship(rowEntry.getKey()));
+                                            final Ship ship = new Ship(rowEntry.getKey());
+                                            //set all old slot modules
+                                            ship.getHardpointSlots().forEach(slot -> slot.setOldShipModule(slot.getShipModule()));
+                                            ship.getCoreSlots().forEach(slot -> slot.setOldShipModule(slot.getShipModule()));
+                                            ship.getOptionalSlots().forEach(slot -> slot.setOldShipModule(slot.getShipModule()));
+                                            ship.getUtilitySlots().forEach(slot -> slot.setOldShipModule(slot.getShipModule()));
+                                            APPLICATION_STATE.setShip(ship);
                                             ShipMapper.toShipConfiguration(APPLICATION_STATE.getShip(), configuration, tab.getControlsLayer().getShipSelect().getSelectionModel().getSelectedItem().getName());
                                             ShipService.saveShipConfigurations(commander, shipConfigurations);
                                             EventService.publish(new HorizonsShipSelectedEvent(configuration.getUuid()));

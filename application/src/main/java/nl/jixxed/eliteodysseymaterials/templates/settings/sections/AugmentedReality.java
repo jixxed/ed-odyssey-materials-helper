@@ -30,7 +30,7 @@ import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 
 @Slf4j
 public class AugmentedReality extends DestroyableVBox implements DestroyableEventTemplate {
-    private static final String TESS4J_DIR = new File(OsConstants.TESS4J).getPath();
+    private static final String TESS4J_DIR = new File(OsConstants.getTess4j()).getPath();
 
     private DestroyableLabel arOverlayLabel;
     private DestroyableToggleSwitch arOverlayButton;
@@ -149,6 +149,7 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableEven
         DestroyableComboBox<ApplicationLocale> arLocaleSelect = ComboBoxBuilder.builder(ApplicationLocale.class)
                 .withStyleClass(SETTINGS_DROPDOWN_CLASS)
                 .withItemsProperty(LocaleService.getListBinding(ApplicationLocale.values()))
+                .withSelected(ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")))
                 .withValueChangeListener((_, _, newValue) -> {
                     if (newValue != null) {
                         final File tessdataPath = new File(TESS4J_DIR, "tessdata");
@@ -176,7 +177,6 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableEven
                 })
                 .asLocalized()
                 .build();
-        arLocaleSelect.getSelectionModel().select(ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")));
 
 
         return BoxBuilder.builder()

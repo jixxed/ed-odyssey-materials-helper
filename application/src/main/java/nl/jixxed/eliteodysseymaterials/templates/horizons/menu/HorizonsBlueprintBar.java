@@ -31,8 +31,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Slf4j
-public
-class HorizonsBlueprintBar extends DestroyableAccordion implements DestroyableEventTemplate {
+public class HorizonsBlueprintBar extends DestroyableAccordion implements DestroyableEventTemplate {
     private static final String BLUEPRINT_TITLED_PANE_CONTENT_STYLE_CLASS = "blueprint-titled-pane-content";
     private static final String BLUEPRINT_LIST_STYLE_CLASS = "blueprint-list";
 
@@ -410,26 +409,28 @@ class HorizonsBlueprintBar extends DestroyableAccordion implements DestroyableEv
         return scroll;
     }
 
-    private List<DestroyableToggleButton> getGradeToggleButtons(final ScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> recipeEntry) {
+    private List<DestroyableToggleButton> getGradeToggleButtons(final DestroyableScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> recipeEntry) {
         return Stream.of(HorizonsBlueprintGrade.GRADE_1, HorizonsBlueprintGrade.GRADE_2, HorizonsBlueprintGrade.GRADE_3, HorizonsBlueprintGrade.GRADE_4, HorizonsBlueprintGrade.GRADE_5)
                 .map(grade -> getToggleButton(scroll, selectedType, selectedBlueprint, grade, recipeEntry))
                 .toList();
     }
 
-    private List<DestroyableToggleButton> getSynthesisToggleButtons(final ScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> recipesEntry) {
+    private List<DestroyableToggleButton> getSynthesisToggleButtons(final DestroyableScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> recipesEntry) {
         return Stream.of(HorizonsBlueprintGrade.GRADE_1, HorizonsBlueprintGrade.GRADE_2, HorizonsBlueprintGrade.GRADE_3)
                 .map(grade -> getSynthesisToggleButton(scroll, selectedType, selectedBlueprint, grade, recipesEntry))
                 .toList();
     }
 
-    private DestroyableToggleButton getToggleButton(final ScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final HorizonsBlueprintGrade grade, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> recipeEntry) {
+    private DestroyableToggleButton getToggleButton(final DestroyableScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final HorizonsBlueprintGrade grade, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> recipeEntry) {
         final DestroyableToggleButton toggleButton = ToggleButtonBuilder.builder()
                 .withStyleClass("blueprint-grade-togglebutton")
                 .build();
-        toggleButton.setGraphic(ResizableImageViewBuilder.builder()
+        var graphic = ResizableImageViewBuilder.builder()
                 .withImage("/images/ships/engineers/ranks/" + grade.getGrade() + ".png")
                 .withStyleClasses("blueprint-grade-image")
-                .build());
+                .build();
+        toggleButton.setGraphic(graphic);
+        toggleButton.register(graphic);
         toggleButton.addChangeListener(toggleButton.selectedProperty(), (_, _, newValue) ->
         {
             if (Boolean.TRUE.equals(newValue)) {
@@ -439,7 +440,7 @@ class HorizonsBlueprintBar extends DestroyableAccordion implements DestroyableEv
         return toggleButton;
     }
 
-    private DestroyableToggleButton getSynthesisToggleButton(final ScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final HorizonsBlueprintGrade grade, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> recipesEntry) {
+    private DestroyableToggleButton getSynthesisToggleButton(final DestroyableScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final HorizonsBlueprintGrade grade, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> recipesEntry) {
         final DestroyableToggleButton toggleButton = ToggleButtonBuilder.builder()
                 .withText("blueprint.synthesis.grade" + grade.getGrade())
                 .withStyleClass("blueprint-synthesis-togglebutton")
@@ -453,28 +454,27 @@ class HorizonsBlueprintBar extends DestroyableAccordion implements DestroyableEv
         return toggleButton;
     }
 
-    private Node generateContent(final HorizonsBlueprint horizonsBlueprint) {
+    private <E extends Node & Destroyable> E generateContent(final HorizonsBlueprint horizonsBlueprint) {
         if (horizonsBlueprint != null) {
-            return new HorizonsBlueprintContent(horizonsBlueprint);
+            return (E) new HorizonsBlueprintContent(horizonsBlueprint);
         }
         return null;
     }
 
-    private void setContent(final ScrollPane scroll, final HorizonsBlueprintName name, final HorizonsBlueprintType type, final Boolean isSelected, final Node content) {
+    private <E extends Node & Destroyable> void setContent(final DestroyableScrollPane scroll, final HorizonsBlueprintName name, final HorizonsBlueprintType type, final Boolean isSelected, final E content) {
         if (Objects.equals(true, isSelected) && type != null && name != null) {
             try {
                 if (scroll.getContent() instanceof DestroyableTemplate destroyableContent) {
-                    log.debug("destroy existing content" + destroyableContent);
+                    scroll.deregister(destroyableContent);
                     destroyableContent.destroyTemplate();
                 }
-                log.debug("set content" + content);
                 scroll.setContent(content);
+                scroll.register(content);
             } catch (final NullPointerException ex) {
                 log.error("NPE", ex);
             }
         } else {
             if (content instanceof DestroyableTemplate destroyableContent) {
-                log.debug("set provided content" + destroyableContent);
                 destroyableContent.destroyTemplate();
             }
         }

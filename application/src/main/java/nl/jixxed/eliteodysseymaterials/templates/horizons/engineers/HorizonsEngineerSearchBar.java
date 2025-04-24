@@ -83,6 +83,7 @@ public class HorizonsEngineerSearchBar extends DestroyableHBox implements Destro
 
     @Override
     public void destroyInternal() {
+        super.destroyInternal();
         if (subscribe != null) {
             subscribe.dispose();
         }

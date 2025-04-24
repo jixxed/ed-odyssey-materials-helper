@@ -31,10 +31,10 @@ import java.util.stream.Collectors;
 
 class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEventTemplate {
     private static final String TITLE_STYLE_CLASS = "title";
-    public static final String SPACING = "spacing";
+    private static final String SPACING = "spacing";
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private DestroyableLabel countLabel;
-    private final List<Ingredient> ingredients = new ArrayList<>();
+    private List<Ingredient> ingredients = new ArrayList<>();
     private final HorizonsBlueprint blueprint;
     private DestroyableHBox recipeHeader;
     private AddToWishlistMenuButton addToWishlist;
@@ -133,7 +133,7 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
 
     private void initIngredients() {
         final DestroyableFlowPane ingredientFlow = FlowPaneBuilder.builder()
-                .withStyleClass("ingredient-flow")
+                .withStyleClass("ingredient-flowz")
                 .withNodes(this.ingredients.stream().filter(ingredient -> !ingredient.getType().equals(HorizonsStorageType.OTHER)).toList())
                 .build();
         this.getNodes().add(ingredientFlow);
@@ -326,14 +326,15 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
         }));
     }
 
-    private List<HorizonsMaterialIngredient> getRecipeIngredients(final HorizonsBlueprint recipe, final Class<? extends HorizonsMaterial> materialClass, final HorizonsStorageType storageType) {
-        return recipe.getMaterialCollection(materialClass).entrySet().stream()
+    private List<HorizonsMaterialIngredient> getRecipeIngredients(final HorizonsBlueprint blueprint, final Class<? extends HorizonsMaterial> materialClass, final HorizonsStorageType storageType) {
+        return blueprint.getMaterialCollection(materialClass).entrySet().stream()
+                .sorted(Comparator.comparing(entry -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getLocalizationKey())))
                 .map(material ->
-                        new HorizonsMaterialIngredient(storageType, material.getKey(), material.getValue(),
+                        new HorizonsMaterialIngredient(blueprint, storageType, material.getKey(), material.getValue(),
                                 storageType == HorizonsStorageType.COMMODITY
                                         ? StorageService.getCommodityCount((Commodity) material.getKey(), StoragePool.SHIP)
                                         : StorageService.getMaterialCount(material.getKey())))
-                .sorted(Comparator.comparing(HorizonsMaterialIngredient::getName))
-                .collect(Collectors.toCollection(ArrayList::new));
+                .toList();
     }
+
 }

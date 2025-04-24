@@ -14,7 +14,6 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyWishlistBlueprintEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableMenuButton;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableMenuItem;
@@ -69,9 +68,7 @@ public class AddToWishlistMenuButton extends DestroyableMenuButton implements De
 
     public void loadCommanderWishlists(final Commander commander, OdysseyBlueprintName odysseyBlueprintName) {
         final Wishlists wishlists = WishlistService.getOdysseyWishlists(commander);
-        this.deregisterAll((List<DestroyableMenuItem>) (List<?>) this.getItems());
-        this.getItems().forEach(item -> ((DestroyableComponent) item).destroy());
-        this.getItems().clear();
+        this.clear();
         final List<DestroyableMenuItem> menuItems = wishlists.getAllWishlists().stream()
                 .filter(wishlist -> wishlist != Wishlist.ALL)
                 .sorted(Comparator.comparing(Wishlist::getName))
@@ -80,7 +77,6 @@ public class AddToWishlistMenuButton extends DestroyableMenuButton implements De
                         .withOnAction(event -> EventService.publish(new OdysseyWishlistBlueprintEvent(commander, wishlist.getUuid(), List.of(new OdysseyWishlistBlueprint(odysseyBlueprintName, true)), Action.ADDED)))
                         .build())
                 .toList();
-        this.getItems().addAll(menuItems);
-        this.registerAll(menuItems);
+        this.addAll(menuItems);
     }
 }

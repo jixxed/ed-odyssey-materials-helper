@@ -34,6 +34,8 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableHBox
     private DestroyableResizableImageView visibilityImage;
     @Getter
     private boolean deleted = false;
+    private DestroyableLabel wishlistRecipeName;
+    private DestroyableTooltip tooltip;
 
     OdysseyWishlistBlueprintTemplate(final String wishlistUUID, final WishlistBlueprint<OdysseyBlueprintName> wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
@@ -56,13 +58,17 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableHBox
                 .withGraphic(this.visibilityImage)
                 .build();
         if (Wishlist.ALL.getUuid().equals(this.wishlistUUID)) {
-            setVisibility(true);
+            this.visible = true;
+            this.wishlistBlueprint.setVisible(true);
+            this.visibilityImage.setImage(ImageService.getImage("/images/other/visible_blue.png"));
             visibilityButton.setVisible(false);
             visibilityButton.setManaged(false);
         } else {
-            setVisibility(this.wishlistBlueprint.isVisible());
+            this.visible = this.wishlistBlueprint.isVisible();
+            this.wishlistBlueprint.setVisible(this.visible);
+            this.visibilityImage.setImage(ImageService.getImage(this.visible ? "/images/other/visible_blue.png" : "/images/other/invisible_gray.png"));
         }
-        DestroyableLabel wishlistRecipeName = LabelBuilder.builder()
+        wishlistRecipeName = LabelBuilder.builder()
                 .withStyleClass("name")
                 .withText(this.wishlistBlueprint.getRecipeName().getLocalizationKey())
                 .withOnMouseClicked(_ -> EventService.publish(new BlueprintClickEvent(this.blueprint.getBlueprintName())))
@@ -83,12 +89,13 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableHBox
                 .build();
 
         if (this.blueprint instanceof ModuleBlueprint moduleRecipe) {
-            DestroyableTooltip tooltip = TooltipBuilder.builder()
+            tooltip = TooltipBuilder.builder()
                     .withStyleClass("wishlist-tooltip")
                     .withText(LocaleService.getToolTipStringBinding(moduleRecipe, "tab.wishlist.blueprint.tooltip"))
                     .withShowDelay(Duration.millis(100))
                     .build();
             Tooltip.install(wishlistRecipeName, tooltip);
+            register(this.tooltip);
         }
         this.updateStyle();
         this.getNodes().addAll(visibilityButton, wishlistRecipeName, removeBlueprint);
@@ -134,5 +141,11 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableHBox
     @Override
     public WishlistBlueprint getWishlistRecipe() {
         return this.wishlistBlueprint;
+    }
+
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        Tooltip.uninstall(this.wishlistRecipeName, this.tooltip);
     }
 }

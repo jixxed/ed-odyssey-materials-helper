@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 import nl.jixxed.eliteodysseymaterials.FXApplication;
@@ -57,11 +56,12 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
     @Override
     public void initComponents() {
         this.getStyleClass().add("wishlist-menu");
-        final Set<HorizonsWishlist> items = APPLICATION_STATE.getPreferredCommander()
-                .map(commander -> WishlistService.getHorizonsWishlists(commander).getAllWishlists())
+        final Optional<HorizonsWishlists> wishlists = APPLICATION_STATE.getPreferredCommander().map(WishlistService::getHorizonsWishlists);
+        final Set<HorizonsWishlist> items = wishlists.map(HorizonsWishlists::getAllWishlists)
                 .orElse(Collections.emptySet());
         this.wishlistSelect = ComboBoxBuilder.builder(HorizonsWishlist.class)
                 .withStyleClass("wishlist-select")
+                .withSelected(wishlists.map(HorizonsWishlists::getSelectedWishlist).orElse(null))
                 .withItemsProperty(FXCollections.observableArrayList(items.stream().sorted(Comparator.comparing(HorizonsWishlist::getName)).toList()))
                 .withValueChangeListener((_, _, newValue) -> {
                     if (newValue != null) {
@@ -73,7 +73,6 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
                     }
                 })
                 .build();
-        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> this.wishlistSelect.getSelectionModel().select(WishlistService.getHorizonsWishlists(commander).getSelectedWishlist()));
         this.menuButton = MenuButtonBuilder.builder()
                 .withText("tab.wishlist.options")
                 .withMenuItems(Map.of(
@@ -104,11 +103,11 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
                 .withText("horizons.wishlist.coriolis")
                 .withOnAction(_ -> FXApplication.getInstance().getHostServices().showDocument("https://coriolis.io"))
                 .build();
-        Tooltip.install(edsyButton, TooltipBuilder.builder()
+        edsyButton.setTooltip(TooltipBuilder.builder()
                 .withShowDelay(Duration.millis(100D))
                 .withText("horizons.wishlist.edsy.tooltip")
                 .build());
-        Tooltip.install(coriolisButton, TooltipBuilder.builder()
+        coriolisButton.setTooltip(TooltipBuilder.builder()
                 .withShowDelay(Duration.millis(100D))
                 .withText("horizons.wishlist.coriolis.tooltip")
                 .build());

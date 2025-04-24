@@ -24,15 +24,12 @@ import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyContentArea;
 import nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab;
 
 public class ApplicationScreen extends DestroyableAnchorPane implements DestroyableEventTemplate {
-    private BottomBar bottomBar;
-    private OdysseyContentArea odysseyContentArea;
-    private HorizonsContentArea horizonsContentArea;
 
     private DestroyableTabPane tabsMain;
     private DestroyableTab odyssey;
     private DestroyableTab horizons;
-    private SettingsTab settingsTab;
-    private final IntegerProperty fontSize = new SimpleIntegerProperty(14);
+
+    private IntegerProperty fontSize = new SimpleIntegerProperty(14);
 
 
     public ApplicationScreen() {
@@ -54,27 +51,28 @@ public class ApplicationScreen extends DestroyableAnchorPane implements Destroya
 
     public void initComponents() {
         this.getStyleClass().add("application-screen");
-        this.bottomBar = new BottomBar();
-        addChangeListener(this.bottomBar.heightProperty(), (_, _, _) -> AnchorPaneHelper.setAnchor(this.odysseyContentArea, 0.0, this.bottomBar.getHeight(), 0.0, 0.0));
-        this.settingsTab = new SettingsTab();
-        this.settingsTab.setClosable(false);
-        AnchorPaneHelper.setAnchor(this.bottomBar, null, 0.0, 0.0, 0.0);
-        this.odysseyContentArea = new OdysseyContentArea();
-        this.horizonsContentArea = new HorizonsContentArea();
+        BottomBar bottomBar = new BottomBar();
+        OdysseyContentArea odysseyContentArea = new OdysseyContentArea();
+        HorizonsContentArea horizonsContentArea = new HorizonsContentArea();
+
+        addChangeListener(bottomBar.heightProperty(), (_, _, _) -> AnchorPaneHelper.setAnchor(odysseyContentArea, 0.0, bottomBar.getHeight(), 0.0, 0.0));
+        SettingsTab settingsTab = new SettingsTab();
+        settingsTab.setClosable(false);
+        AnchorPaneHelper.setAnchor(bottomBar, null, 0.0, 0.0, 0.0);
         this.odyssey = TabBuilder.builder()
                 .withStyleClass("odyssey-tab")
                 .withText(LocaleService.getStringBinding("tabs.onfoot"))
                 .withClosable(false)
-                .withContent(this.odysseyContentArea)
+                .withContent(odysseyContentArea)
                 .build();
         this.horizons = TabBuilder.builder()
                 .withStyleClass("horizons-tab")
                 .withText(LocaleService.getStringBinding("tabs.ships"))
                 .withClosable(false)
-                .withContent(this.horizonsContentArea)
+                .withContent(horizonsContentArea)
                 .build();
         this.tabsMain = TabPaneBuilder.builder()
-                .withTabs(this.odyssey, this.horizons, this.settingsTab)
+                .withTabs(this.odyssey, this.horizons, settingsTab)
                 .withStyleClass("tab-main")
                 .withSide(Side.LEFT)
                 .withSelectedTab(PreferencesService.getPreference(PreferenceConstants.SELECTED_TAB_MAIN, 0))
@@ -83,16 +81,20 @@ public class ApplicationScreen extends DestroyableAnchorPane implements Destroya
         this.tabsMain.addBinding(this.tabsMain.tabMinWidthProperty(), this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)));
         this.tabsMain.addBinding(this.tabsMain.tabMaxWidthProperty(), this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)));
         AnchorPaneHelper.setAnchor(this.tabsMain, 0.0, ScalingHelper.getPixelDoubleFromEm(2D), 0.0, 0.0);
-//        this.tabsMain.getStyleClass().add("tab-main");
-//        this.tabsMain.setSide(Side.LEFT);
-//        this.tabsMain.addBinding(//        this.tabsMain.tabMaxWidthProperty(),this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)));
-//        this.tabsMain.addBinding(//        this.tabsMain.tabMinWidthProperty(),this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)));
-//        this.odyssey.setContent(this.odysseyContentArea);
-//        this.horizons.setContent(this.horizonsContentArea);
-//        this.tabsMain.getSelectionModel().select(Math.min(PreferencesService.getPreference(PreferenceConstants.SELECTED_TAB_MAIN, 0), this.tabsMain.getTabs().size()-1));
-//        this.tabsMain.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-//            PreferencesService.setPreference(PreferenceConstants.SELECTED_TAB_MAIN, this.tabsMain.getTabs().indexOf(newValue));
-//        });
-        this.getNodes().addAll(this.tabsMain, this.bottomBar);
+        this.getNodes().addAll(this.tabsMain, bottomBar);
+    }
+
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+
+        this.fontSize.unbind();
+        this.tabsMain.getTabs().clear();
+        this.horizons.setContent(null);
+        this.odyssey.setContent(null);
+        this.fontSize = null;
+        this.tabsMain = null;
+        this.horizons = null;
+        this.odyssey = null;
     }
 }

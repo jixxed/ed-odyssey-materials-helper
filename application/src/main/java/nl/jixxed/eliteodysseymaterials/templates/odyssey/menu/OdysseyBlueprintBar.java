@@ -140,8 +140,12 @@ public class OdysseyBlueprintBar extends DestroyableAccordion implements Destroy
                 .build();
 
         recipes.addChangeListener(recipes.valueProperty(), (_, _, newValue) -> {
-            if (scroll.getContent() != null) ((DestroyableTemplate) scroll.getContent()).destroyTemplate();
+            if (scroll.getContent() instanceof DestroyableTemplate destroyableContent) {
+                scroll.deregister(destroyableContent);
+                destroyableContent.destroyTemplate();
+            }
             scroll.setContent(createRecipeContent(OdysseyBlueprintConstants.getRecipe(newValue)));
+            scroll.register(content);
         });
         recipes.setCellFactory(cellFactory);
         recipes.getSelectionModel().select(recipes.getItems().get(0));

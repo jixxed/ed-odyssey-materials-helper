@@ -49,8 +49,6 @@ class OdysseyWishlistSearchBar extends DestroyableHBox implements DestroyableEve
         initSearchTextFilter();
         initSearchTextSort();
 
-        setDefaultOptions();
-
         applyFontSizingHack();
 
         HBox.setHgrow(this.textField, Priority.ALWAYS);
@@ -74,6 +72,7 @@ class OdysseyWishlistSearchBar extends DestroyableHBox implements DestroyableEve
                 .build();
         this.sortMaterialsComboBox = ComboBoxBuilder.builder(OdysseyWishlistMaterialSort.class)
                 .withStyleClasses("root", "filter-and-sort")
+                .withSelected(OdysseyWishlistMaterialSort.valueOf(PreferencesService.getPreference("search.odyssey.wishlist.sort", "ALPHABETICAL")))
                 .withItemsProperty(LocaleService.getListBinding(OdysseyWishlistMaterialSort.ALPHABETICAL, OdysseyWishlistMaterialSort.QUANTITY_REQUIRED))
                 .withPromptTextProperty(LocaleService.getStringBinding("search.sort.placeholder"))
                 .withValueChangeListener((_, _, newValue) -> {
@@ -93,6 +92,7 @@ class OdysseyWishlistSearchBar extends DestroyableHBox implements DestroyableEve
                 .build();
         this.groupMaterialsComboBox = ComboBoxBuilder.builder(WishlistMaterialGrouping.class)
                 .withStyleClasses("root", "filter-and-sort")
+                .withSelected(WishlistMaterialGrouping.valueOf(PreferencesService.getPreference("search.odyssey.wishlist.grouping", "CATEGORY")))
                 .withItemsProperty(LocaleService.getListBinding(WishlistMaterialGrouping.CATEGORY,
                         WishlistMaterialGrouping.NONE))
                 .withValueChangeListener((_, _, newValue) -> {
@@ -131,23 +131,6 @@ class OdysseyWishlistSearchBar extends DestroyableHBox implements DestroyableEve
         }));
     }
 
-    private void setDefaultOptions() {
-        try {
-            final OdysseyWishlistMaterialSort materialSort = OdysseyWishlistMaterialSort.valueOf(PreferencesService.getPreference("search.odyssey.wishlist.sort", "ALPHABETICAL"));
-            this.sortMaterialsComboBox.getSelectionModel().select(materialSort);
-        } catch (final IllegalArgumentException ex) {
-            log.error("sort error", ex);
-        }
-
-        try {
-            final WishlistMaterialGrouping filter = WishlistMaterialGrouping.valueOf(PreferencesService.getPreference("search.odyssey.wishlist.grouping", "CATEGORY"));
-            this.groupMaterialsComboBox.getSelectionModel().select(filter);
-        } catch (final IllegalArgumentException ex) {
-            log.error("grouping error", ex);
-        }
-    }
-
-
     private String getQueryOrDefault(final TextField textField) {
         return (textField.getText() != null) ? textField.getText() : "";
     }
@@ -162,6 +145,7 @@ class OdysseyWishlistSearchBar extends DestroyableHBox implements DestroyableEve
 
     @Override
     public void destroyInternal() {
+        super.destroyInternal();
         if (subscribe != null) {
             subscribe.dispose();
         }

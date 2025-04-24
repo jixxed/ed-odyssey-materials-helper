@@ -62,7 +62,7 @@ public class Main {
                 } catch (Exception e) {
                     log.error("Failed to create support package", e);
                 }
-                if(!supportFile.isBlank()) {
+                if (!supportFile.isBlank()) {
                     Attachment attachment = new Attachment(supportFile);
                     hint.addAttachment(attachment);
                 }
@@ -71,7 +71,7 @@ public class Main {
                 os.setVersion(System.getProperty("os.version"));
                 os.setBuild(System.getProperty("os.arch"));
                 event.getContexts().setOperatingSystem(os);
-                if(APPLICATION_STATE.getFileheader() != null) {
+                if (APPLICATION_STATE.getFileheader() != null) {
                     event.setTag("game.version", APPLICATION_STATE.getFileheader().getGameversion());
                     event.setTag("game.build", APPLICATION_STATE.getFileheader().getBuild());
                     event.setTag("game.language", APPLICATION_STATE.getFileheader().getLanguage());
@@ -86,40 +86,44 @@ public class Main {
     private static String getEnvironment(String buildVersion) {
         if (buildVersion.equals("dev")) {
             return "Development";
-        }else if(buildVersion.contains("beta")){
+        } else if (buildVersion.contains("beta")) {
             return "Beta";
-        }else{
+        } else {
             return "Production";
         }
     }
 
     public static String getBuildVersion() {
         var version = System.getProperty("app.version");
-        if(version == null){
+        if (version == null) {
             return "dev";
         }
         return version;
     }
 
     private static void handleDeeplink(final String arg) {
-        try (final OutputStream output = new FileOutputStream(OsConstants.DEEPLINK + ".tmp")) {
+        try (final OutputStream output = new FileOutputStream(OsConstants.getDeeplink() + ".tmp")) {
             output.write(arg.getBytes(StandardCharsets.UTF_8));
         } catch (final IOException e) {
             log.error("Error creating create deeplink tmp file", e);
         }
         try {
-            Files.move(Path.of(OsConstants.DEEPLINK + ".tmp"), Path.of(OsConstants.DEEPLINK), StandardCopyOption.REPLACE_EXISTING);
+            Files.move(Path.of(OsConstants.getDeeplink() + ".tmp"), Path.of(OsConstants.getDeeplink()), StandardCopyOption.REPLACE_EXISTING);
         } catch (final IOException e) {
             log.error("Error moving deeplink tmp file", e);
         }
     }
+
     private static int getVersion() {
         String version = System.getProperty("java.version");
-        if(version.startsWith("1.")) {
+        if (version.startsWith("1.")) {
             version = version.substring(2, 3);
         } else {
             final int dot = version.indexOf(".");
-            if(dot != -1) { version = version.substring(0, dot); }
-        } return Integer.parseInt(version);
+            if (dot != -1) {
+                version = version.substring(0, dot);
+            }
+        }
+        return Integer.parseInt(version);
     }
 }

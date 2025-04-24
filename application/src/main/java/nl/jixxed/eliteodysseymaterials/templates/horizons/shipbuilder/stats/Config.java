@@ -225,8 +225,10 @@ public class Config extends Stats implements DestroyableEventTemplate {
 
     private void updatePower(ShipModule shipModule) {
         if (shipModule != null) {
+            //todo memory leak? destroy old graphic if exists
             this.power = createIcon("shipbuilder-slots-slotbox-button-icon", "/images/ships/icons/" + (shipModule.isPowered() ? "powered" : "unpowered") + shipModule.getPowerGroup() + ".png", shipModule.getPowerGroup());
             this.powerButton.setGraphic(this.power);
+            this.powerButton.register(this.power);
             final boolean hasPowerToggle = shipModule.hasPowerToggle();
             this.power.setVisible(hasPowerToggle);
             if (!isCurrentShip()) {

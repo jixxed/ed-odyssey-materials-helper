@@ -304,6 +304,7 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
 
     @Override
     public void destroyInternal() {
+        super.destroyInternal();
         if (this.popOver != null) {
             this.popOver.destroy();
             this.popOver.setContentNode(null);

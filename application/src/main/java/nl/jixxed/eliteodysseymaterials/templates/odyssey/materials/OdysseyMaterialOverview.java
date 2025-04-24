@@ -267,6 +267,7 @@ public class OdysseyMaterialOverview extends DestroyableVBox implements Destroya
 
     @Override
     public void destroyInternal() {
+        super.destroyInternal();
         if (subscribe != null) {
             subscribe.dispose();
         }

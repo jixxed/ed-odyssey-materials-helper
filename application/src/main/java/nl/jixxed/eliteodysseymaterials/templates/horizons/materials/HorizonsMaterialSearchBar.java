@@ -51,7 +51,6 @@ public class HorizonsMaterialSearchBar extends DestroyableHBox implements Destro
         initSearchTextField();
         initSearchTextFilter();
         applyFontSizingHack();
-        setDefaultOptions();
         HBox.setHgrow(this.textField, Priority.ALWAYS);
 
         this.getNodes().addAll(this.textField, this.showMaterialsComboBox);
@@ -84,6 +83,7 @@ public class HorizonsMaterialSearchBar extends DestroyableHBox implements Destro
                 .build();
         this.showMaterialsComboBox = ComboBoxBuilder.builder(HorizonsMaterialsShow.class)
                 .withStyleClasses("root", "filter-and-sort")
+                .withSelected(HorizonsMaterialsShow.valueOf(PreferencesService.getPreference("search.horizons.materials.filter", "ALL")))
                 .withItemsProperty(LocaleService.getListBinding(
                         HorizonsMaterialsShow.ALL,
                         HorizonsMaterialsShow.RAW,
@@ -118,16 +118,6 @@ public class HorizonsMaterialSearchBar extends DestroyableHBox implements Destro
         }));
     }
 
-    private void setDefaultOptions() {
-
-        try {
-            final HorizonsMaterialsShow filter = HorizonsMaterialsShow.valueOf(PreferencesService.getPreference("search.horizons.materials.filter", "ALL"));
-            this.showMaterialsComboBox.getSelectionModel().select(filter);
-        } catch (final IllegalArgumentException ex) {
-            log.error("filter error", ex);
-        }
-    }
-
     @SuppressWarnings("java:S1144")
     private String getQueryOrDefault(final TextField textField) {
         return (textField.getText() != null) ? textField.getText() : "";
@@ -139,6 +129,7 @@ public class HorizonsMaterialSearchBar extends DestroyableHBox implements Destro
 
     @Override
     public void destroyInternal() {
+        super.destroyInternal();
         if (subscribe != null) {
             subscribe.dispose();
         }

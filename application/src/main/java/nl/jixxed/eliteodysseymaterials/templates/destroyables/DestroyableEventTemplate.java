@@ -12,9 +12,11 @@ public interface DestroyableEventTemplate extends DestroyableTemplate {
         return eventListener;
     }
 
+    @Override
     default void destroyTemplate() {
         //deregister event listeners
         getEventListeners().forEach(EventService::removeListener);
+        getEventListeners().clear();
         DestroyableTemplate.super.destroyTemplate();
 
     }

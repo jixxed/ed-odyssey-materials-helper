@@ -312,6 +312,7 @@ public class ModulesLayer extends DestroyableAnchorPane implements DestroyableEv
 
     @Override
     public void destroyInternal() {
+        super.destroyInternal();
         this.tab = null;
     }
 }

@@ -40,7 +40,7 @@ public class JournalWatcher {
     private final Pattern journalPatternDate = Pattern.compile("Journal\\.(\\d{4})-(\\d{2})-(\\d{2})T(\\d{6})\\.(\\d{2})\\.log");
 
     public void watch(final File folder, final Consumer<File> fileModifiedProcessor, final Consumer<File> fileSwitchedProcessor) {
-        Platform.runLater(() -> {
+//        Platform.runLater(() -> {
         try {
             this.watchedFolder = folder;
             if (!folder.exists()) {
@@ -90,7 +90,7 @@ public class JournalWatcher {
             });
             EventService.publish(new JournalInitEvent(true));
         }
-        });
+//        });
     }
 
     private synchronized String getCurrentFilePath() {

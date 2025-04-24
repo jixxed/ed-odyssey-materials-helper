@@ -47,6 +47,7 @@ public class ModuleDetails extends DestroyableVBox implements DestroyableEventTe
     private BooleanProperty hasModule = new SimpleBooleanProperty(false);
     private ShipModule shipModule;
     DetailsLayer layer;
+    private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     public ModuleDetails(DetailsLayer layer) {
         this.layer = layer;
@@ -156,11 +157,13 @@ public class ModuleDetails extends DestroyableVBox implements DestroyableEventTe
         properties.getNodes().add(flowPane);
     }
 
-    private static final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     @Override
     public void initEventHandling() {
 
+        register(EventService.addListener(false, this, TerminateApplicationEvent.class, event -> {
+            executorService.shutdownNow();
+        }));
         register(EventService.addListener(true, this, 9, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             update();
         }));
@@ -383,5 +386,11 @@ public class ModuleDetails extends DestroyableVBox implements DestroyableEventTe
 
     private static boolean isModifiedAttribute(Object originalAttributeValue, Object attributeValue) {
         return !originalAttributeValue.equals(attributeValue);
+    }
+
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        executorService.shutdownNow();
     }
 }

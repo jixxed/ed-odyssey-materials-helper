@@ -47,8 +47,6 @@ public class HorizonsCommoditiesSearchBar extends DestroyableHBox implements Des
         initSearchTextFilter();
         initSearchTextSort();
 
-        setDefaultOptions();
-
 //        applyFontSizingHack();
 
         HBox.setHgrow(this.textField, Priority.ALWAYS);
@@ -83,6 +81,7 @@ public class HorizonsCommoditiesSearchBar extends DestroyableHBox implements Des
                 .build();
         this.sortMaterialsComboBox = ComboBoxBuilder.builder(HorizonsCommoditiesSort.class)
                 .withStyleClasses("root", "filter-and-sort")
+                .withSelected(HorizonsCommoditiesSort.valueOf(PreferencesService.getPreference("search.commodities.sort", "ALPHABETICAL")))
                 .withItemsProperty(LocaleService.getListBinding(HorizonsCommoditiesSort.ALPHABETICAL, HorizonsCommoditiesSort.QUANTITY_SHIP, HorizonsCommoditiesSort.QUANTITY_FLEETCARRIER, HorizonsCommoditiesSort.QUANTITY_TOTAL))
                 .withPromptTextProperty(LocaleService.getStringBinding("search.sort.placeholder"))
                 .withValueChangeListener((options, oldValue, newValue) -> {
@@ -102,6 +101,7 @@ public class HorizonsCommoditiesSearchBar extends DestroyableHBox implements Des
                 .build();
         this.showMaterialsComboBox = ComboBoxBuilder.builder(HorizonsCommoditiesShow.class)
                 .withStyleClasses("root", "filter-and-sort")
+                .withSelected(HorizonsCommoditiesShow.valueOf(PreferencesService.getPreference("search.commodities.filter", "ALL")))
                 .withItemsProperty(LocaleService.getListBinding(
                         HorizonsCommoditiesShow.ALL,
                         HorizonsCommoditiesShow.ALL_WITH_STOCK,
@@ -151,23 +151,6 @@ public class HorizonsCommoditiesSearchBar extends DestroyableHBox implements Des
     }
 
 
-    private void setDefaultOptions() {
-        try {
-            final HorizonsCommoditiesSort materialSort = HorizonsCommoditiesSort.valueOf(PreferencesService.getPreference("search.commodities.sort", "ALPHABETICAL"));
-            this.sortMaterialsComboBox.getSelectionModel().select(materialSort);
-        } catch (final IllegalArgumentException ex) {
-            log.error("sort error", ex);
-        }
-
-        try {
-            final HorizonsCommoditiesShow filter = HorizonsCommoditiesShow.valueOf(PreferencesService.getPreference("search.commodities.filter", "ALL"));
-            this.showMaterialsComboBox.getSelectionModel().select(filter);
-        } catch (final IllegalArgumentException ex) {
-            log.error("filter error", ex);
-        }
-    }
-
-
     private String getQueryOrDefault(final TextField textField) {
         return (textField.getText() != null) ? textField.getText() : "";
     }
@@ -182,6 +165,7 @@ public class HorizonsCommoditiesSearchBar extends DestroyableHBox implements Des
 
     @Override
     public void destroyInternal() {
+        super.destroyInternal();
         if (subscribe != null) {
             subscribe.dispose();
         }

@@ -5,7 +5,6 @@ import javafx.css.PseudoClass;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
@@ -25,13 +24,13 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
 
-@EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
+//@EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 public class OdysseyMaterialIngredient extends Ingredient implements DestroyableEventTemplate {
     public static final String FILLED = "filled";
-    @EqualsAndHashCode.Include
+    //    @EqualsAndHashCode.Include
     private final OdysseyStorageType storageType;
     @Getter
-    @EqualsAndHashCode.Include
+//    @EqualsAndHashCode.Include
     private final OdysseyMaterial odysseyMaterial;
     @Getter
     private final Integer leftAmount;
@@ -151,11 +150,6 @@ public class OdysseyMaterialIngredient extends Ingredient implements Destroyable
     @Override
     public StorageType getType() {
         return this.storageType;
-    }
-
-    @Override
-    public String getName() {
-        return this.nameLabel.getText();
     }
 
     protected Label getLeftAmountLabel() {

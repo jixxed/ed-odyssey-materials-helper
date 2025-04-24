@@ -68,7 +68,7 @@ public class FavouriteService {
             final String pathname = commander.getCommanderFolder();
             final File commanderFolder = new File(pathname);
             commanderFolder.mkdirs();
-            final File favouritesFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.ODYSSEY_FAVOURITES_FILE);
+            final File favouritesFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.ODYSSEY_FAVOURITES_FILE);
             String favouritesFileContents;
             if (favouritesFile.exists()) {//load from file if exists
                 favouritesFileContents = Files.readString(favouritesFile.toPath());
@@ -93,7 +93,7 @@ public class FavouriteService {
             final String pathname = commander.getCommanderFolder();
             final File commanderFolder = new File(pathname);
             commanderFolder.mkdirs();
-            final File favouritesFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.ODYSSEY_FAVOURITES_FILE);
+            final File favouritesFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.ODYSSEY_FAVOURITES_FILE);
             try (final FileOutputStream fileOutputStream = new FileOutputStream(favouritesFile)) {
                 fileOutputStream.write(wishlistsJson.getBytes(StandardCharsets.UTF_8));
             }

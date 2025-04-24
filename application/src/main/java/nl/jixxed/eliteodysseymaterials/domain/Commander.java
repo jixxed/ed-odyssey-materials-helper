@@ -25,10 +25,11 @@ public class Commander {
     }
 
     public String getCommanderFolder() {
-        return OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + this.fid.toLowerCase(Locale.ENGLISH) + (this.gameVersion.equals(GameVersion.LEGACY) ? ".legacy" : "");
+        return OsConstants.getConfigDirectory() + OsConstants.getOsSlash() + this.fid.toLowerCase(Locale.ENGLISH) + (this.gameVersion.equals(GameVersion.LEGACY) ? ".legacy" : "");
     }
+
     public String getLiveCommanderFolder() {
-        return OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + this.fid.toLowerCase(Locale.ENGLISH);
+        return OsConstants.getConfigDirectory() + OsConstants.getOsSlash() + this.fid.toLowerCase(Locale.ENGLISH);
     }
 
 }

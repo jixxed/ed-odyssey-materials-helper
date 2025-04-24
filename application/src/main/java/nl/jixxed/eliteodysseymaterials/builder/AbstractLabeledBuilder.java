@@ -49,6 +49,7 @@ public abstract class AbstractLabeledBuilder<T extends AbstractLabeledBuilder<T>
         }
         if (this.graphic != null) {
             labeled.setGraphic(this.graphic);
+            labeled.register(this.graphic);
         }
         if (this.mnemonicParsing != null) {
             labeled.setMnemonicParsing(this.mnemonicParsing);

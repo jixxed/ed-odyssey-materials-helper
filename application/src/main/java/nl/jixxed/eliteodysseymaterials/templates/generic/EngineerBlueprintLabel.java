@@ -36,6 +36,7 @@ public class EngineerBlueprintLabel extends DestroyableHBox implements Destroyab
     private DestroyableResizableImageView pinnedImage;
     private Integer currentEngineerRank = 0;
     private boolean dragFlag = false;
+    private Tooltip tooltip;
 
     public EngineerBlueprintLabel(final Engineer engineer) {
         this(engineer, false, 0);
@@ -66,7 +67,7 @@ public class EngineerBlueprintLabel extends DestroyableHBox implements Destroyab
             addGradeImage();
             addPinnedImage();
             if (this.horizonsBlueprint instanceof HorizonsModuleBlueprint) {
-                final Tooltip tooltip = TooltipBuilder.builder()
+                tooltip = TooltipBuilder.builder()
                         .withText(LocaleService.getStringBinding("blueprint.engineer.pinnable.tooltip"))
                         .build();
                 Tooltip.install(this, tooltip);
@@ -206,5 +207,13 @@ public class EngineerBlueprintLabel extends DestroyableHBox implements Destroyab
 
     public String getEngineerName() {
         return this.engineerName.getText();
+    }
+
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        if (tooltip != null) {
+            Tooltip.uninstall(this, tooltip);
+        }
     }
 }

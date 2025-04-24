@@ -85,6 +85,7 @@ public class MenuItemBuilder {
         }
         if (this.graphic != null) {
             menuItem.setGraphic(this.graphic);
+            menuItem.register(this.graphic);
         }
         if (this.onAction != null) {
             menuItem.addActionEventBinding(menuItem.onActionProperty(), this.onAction);

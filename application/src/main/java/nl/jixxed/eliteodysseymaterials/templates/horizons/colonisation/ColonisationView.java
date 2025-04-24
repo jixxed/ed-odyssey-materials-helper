@@ -85,7 +85,7 @@ public class ColonisationView extends DestroyableVBox implements DestroyableEven
 
     @Override
     public void initEventHandling() {
-        register(EventService.addListener(this, JournalInitEvent.class, journalInitEvent -> {
+        register(EventService.addListener(true, this, JournalInitEvent.class, journalInitEvent -> {
             if (journalInitEvent.isInitialised()) refreshProjects();
 
             APPLICATION_STATE.getPreferredCommander().ifPresentOrElse(commander ->

@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfig;
 import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
+import nl.jixxed.eliteodysseymaterials.enums.LoadingStage;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Event;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Status.Status;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
@@ -70,17 +71,20 @@ public class FileProcessor {
 
     @SuppressWarnings("java:S2674")
     private static synchronized void processJournalFast(final File file) {
+        log.debug("processJournalFast");
         executorService.execute(() -> {
-            EventService.removeUIListeners();
+//            Platform.runLater(() -> EventService.removeUIListeners());
             Semaphore semaphore = new Semaphore(0);
-            Semaphore semaphore2 = new Semaphore(5);
+            EventService.publish(new LoadingEvent(LoadingStage.EVENTS));
             EventService.publish(new JournalInitEvent(false));
+            log.debug("JournalInitEvent false");
             Platform.runLater(semaphore::release);
             try {
                 semaphore.acquire();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            log.debug("start events processing");
             try (final CountingInputStream is = new CountingInputStream(Files.newInputStream(Paths.get(file.toURI()), StandardOpenOption.READ))) {
                 final List<String> messages = new ArrayList<>();
                 if (file.length() >= position) {
@@ -106,6 +110,7 @@ public class FileProcessor {
 
                 AtomicInteger index = new AtomicInteger(1);
                 Integer total = messages.size();
+                Semaphore semaphore2 = new Semaphore(Math.max(1, total / 25));
                 messages.stream()
                         .sorted(Comparator.comparing(event -> {
                             try {
@@ -136,12 +141,22 @@ public class FileProcessor {
                             } catch (InterruptedException e) {
                                 throw new RuntimeException(e);
                             }
-                            Platform.runLater(() -> EventService.publish(new EventProcessedEvent(index.getAndIncrement(), total)));
+                            log.debug("Processed event {} of {}", index.get(), total);
+                            EventService.publish(new EventProcessedEvent(index.getAndIncrement(), total));
+//                            Platform.runLater(() -> ));
                         });
             } catch (final JsonProcessingException e) {
                 log.error("Read error", e);
             } catch (final IOException e) {
                 log.error("Error processing journal", e);
+            }
+            log.debug("JournalInitEvent true");
+            EventService.publish(new LoadingEvent(LoadingStage.UI));
+            Platform.runLater(semaphore::release);
+            try {
+                semaphore.acquire();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
             Platform.runLater(() -> EventService.publish(new JournalInitEvent(true)));
         });

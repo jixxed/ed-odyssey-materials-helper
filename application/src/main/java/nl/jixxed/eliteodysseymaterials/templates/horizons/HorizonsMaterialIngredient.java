@@ -1,22 +1,22 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons;
 
-import javafx.beans.binding.StringBinding;
 import javafx.css.PseudoClass;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.Blueprint;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
@@ -24,39 +24,46 @@ import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
 
-@EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
+import java.util.Comparator;
+import java.util.Objects;
+
+//@EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 public class HorizonsMaterialIngredient extends Ingredient implements DestroyableComponent, DestroyableEventTemplate {
     public static final String FILLED = "filled";
     public static final String PARTIAL = "partial";
-    @EqualsAndHashCode.Include
+    //    @EqualsAndHashCode.Include
     private final HorizonsStorageType storageType;
     @Getter
-    @EqualsAndHashCode.Include
+//    @EqualsAndHashCode.Include
     private final HorizonsMaterial horizonsMaterial;
+    private final HorizonsBlueprint horizonsBlueprint;
     @Getter
     @Setter
-    private Integer leftAmount;
-    private Integer rightAmount;
+    private Integer minRequired;
+    private Integer maxRequired;
+    private Integer available;
 
     private DestroyableLabel nameLabel;
     private DestroyableResizableImageView image;
-    private DestroyableLabel leftAmountLabel;
-    private DestroyableLabel rightAmountLabel;
-    private DestroyableLabel leftDescriptionLabel;
-    private DestroyableLabel rightDescriptionLabel;
-    private DestroyableHBox leftHBox;
-    private DestroyableHBox rightHBox;
-    private DestroyableHBox firstLine;
-    private DestroyableHBox secondLine;
+    private DestroyableLabel requiredLabel;
+    private DestroyableLabel availableLabel;
+    private DestroyableLabel availableTitle;
 
-    public HorizonsMaterialIngredient(final HorizonsStorageType storageType, final HorizonsMaterial horizonsMaterial, final Integer leftAmount, final Integer rightAmount) {
+    public HorizonsMaterialIngredient(final HorizonsBlueprint horizonsBlueprint, final HorizonsStorageType storageType, final HorizonsMaterial horizonsMaterial, final Integer required, final Integer available) {
         if (storageType.equals(HorizonsStorageType.OTHER)) {
             throw new IllegalArgumentException("StorageType Other must use MissionIngredient class");
         }
+        this.horizonsBlueprint = horizonsBlueprint;
         this.storageType = storageType;
-        this.leftAmount = leftAmount;
+        if (horizonsBlueprint instanceof HorizonsModuleBlueprint) {
+            this.minRequired = horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getBestEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintType());
+            this.maxRequired = horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getWorstEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintType());
+        } else {
+            this.minRequired = required;
+            this.maxRequired = required;
+        }
         this.horizonsMaterial = horizonsMaterial;
-        this.rightAmount = rightAmount;
+        this.available = available;
         initComponents();
         initEventHandling();
     }
@@ -67,6 +74,14 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
             if (evt.getStoragePool().equals(StoragePool.SHIP)) {
                 this.update();
             }
+        }));
+        register(EventService.addListener(true, this, EngineerEvent.class, _ -> {
+            if (horizonsBlueprint instanceof HorizonsModuleBlueprint) {
+                this.minRequired = horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getBestEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintType());
+                this.maxRequired = horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getWorstEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintType());
+            }
+            String required = Objects.equals(minRequired, maxRequired) ? minRequired.toString() : minRequired + " - " + maxRequired;
+            this.requiredLabel.setText(required);
         }));
     }
 
@@ -80,52 +95,51 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
         HBox.setHgrow(this.nameLabel, Priority.ALWAYS);
         initImage();
 
-        final Boolean showRemaining = PreferencesService.getPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_HORIZONS, Boolean.FALSE);
-        this.leftAmountLabel = LabelBuilder.builder()
+        this.requiredLabel = LabelBuilder.builder()
                 .withStyleClass("quantity")
                 .build();
-        this.rightAmountLabel = LabelBuilder.builder()
+        this.availableLabel = LabelBuilder.builder()
                 .withStyleClass("quantity")
                 .build();
-        this.leftDescriptionLabel = LabelBuilder.builder()
+        DestroyableLabel requiredTitle = LabelBuilder.builder()
                 .withStyleClass("required")
                 .withText("blueprint.header.required")
                 .build();
-        this.rightDescriptionLabel = LabelBuilder.builder()
+        this.availableTitle = LabelBuilder.builder()
                 .withStyleClass("available")
-                .withText(Boolean.TRUE.equals(showRemaining) ? "blueprint.header.remaining" : "blueprint.header.available")
+                .withText("blueprint.header.available")
                 .build();
 
-        this.leftHBox = BoxBuilder.builder()
-                .withNodes(this.leftDescriptionLabel, this.leftAmountLabel)
+        DestroyableHBox leftHBox = BoxBuilder.builder()
+                .withNodes(requiredTitle, this.requiredLabel)
                 .withStyleClass("quantity-section").buildHBox();
-        this.rightHBox = BoxBuilder.builder()
-                .withNodes(this.rightAmountLabel, this.rightDescriptionLabel)
+        DestroyableHBox rightHBox = BoxBuilder.builder()
+                .withNodes(this.availableLabel, this.availableTitle)
                 .withStyleClass("quantity-section").buildHBox();
-        this.leftAmountLabel.setText(getLeftAmountString());
-        HBox.setHgrow(this.leftAmountLabel, Priority.ALWAYS);
-        this.rightAmountLabel.setText(getRightAmountString());
+        String required = Objects.equals(minRequired, maxRequired) ? minRequired.toString() : minRequired + " - " + maxRequired;
+        this.requiredLabel.setText(required);
+        HBox.setHgrow(this.requiredLabel, Priority.ALWAYS);
+        this.availableLabel.setText(this.available.toString());
 
-        this.firstLine = BoxBuilder.builder()
+        DestroyableHBox firstLine = BoxBuilder.builder()
+                .withStyleClass("first-line")
                 .withNodes(this.image, this.nameLabel)
                 .buildHBox();
 //        this.firstLine.addBinding(this.firstLine.prefHeightProperty(), this.nameLabel.heightProperty());
-        this.secondLine = BoxBuilder.builder()
-                .withNodes(this.leftHBox, new GrowingRegion(), this.rightHBox)
+        DestroyableHBox secondLine = BoxBuilder.builder()
+                .withStyleClass("second-line")
+                .withNodes(leftHBox, new GrowingRegion(), rightHBox)
                 .buildHBox();
-        this.getNodes().addAll(this.firstLine, new GrowingRegion(), this.secondLine);
+        this.getNodes().addAll(firstLine, new GrowingRegion(), secondLine);
 
         installPopOver();
-
+        this.hoverProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                minRequired = 1;
+            }
+        });
         update();
-    }
-
-    protected String getRightAmountString() {
-        return this.rightAmount.toString();
-    }
-
-    protected String getLeftAmountString() {
-        return this.leftAmount.toString();
+        this.requestLayout();
     }
 
     protected void installPopOver() {
@@ -147,8 +161,8 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
         }
     }
 
-    protected void setRightAmount(final Integer rightAmount) {
-        this.rightAmount = rightAmount;
+    protected void setAvailable(final Integer available) {
+        this.available = available;
     }
 
 
@@ -162,12 +176,12 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
             materialCountBoth = StorageService.getMaterialCount(this.horizonsMaterial);
             materialCountShip = materialCountBoth;
         }
-        setRightAmount(materialCountBoth);
-        this.rightAmountLabel.setText(getRightAmountString());
-        if (materialCountBoth >= this.leftAmount && materialCountShip < this.leftAmount) {
+        setAvailable(materialCountBoth);
+        this.availableLabel.setText(this.available.toString());
+        if (materialCountBoth >= this.minRequired && materialCountShip < this.minRequired) {
             this.pseudoClassStateChanged(PseudoClass.getPseudoClass(FILLED), true);
             this.pseudoClassStateChanged(PseudoClass.getPseudoClass(PARTIAL), true);
-        } else if (materialCountBoth >= this.leftAmount) {
+        } else if (materialCountBoth >= this.minRequired) {
             this.pseudoClassStateChanged(PseudoClass.getPseudoClass(FILLED), true);
             this.pseudoClassStateChanged(PseudoClass.getPseudoClass(PARTIAL), false);
         } else {
@@ -181,25 +195,23 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
         return this.storageType;
     }
 
-    @Override
-    public String getName() {
-        return this.nameLabel.getText();
+    private Engineer getWorstEngineer(Blueprint<HorizonsBlueprintName> recipe) {
+        if (!(recipe instanceof HorizonsModuleBlueprint)) {
+            return null;
+        }
+        return ((HorizonsModuleBlueprint) recipe).getEngineers().stream()
+                .min(Comparator.comparingInt(eng -> ApplicationState.getInstance().getEngineerRank(eng)))
+                .orElse(null);
+
     }
 
-    protected Label getLeftAmountLabel() {
-        return this.leftAmountLabel;
-    }
+    private Engineer getBestEngineer(Blueprint<HorizonsBlueprintName> recipe) {
+        if (!(recipe instanceof HorizonsModuleBlueprint)) {
+            return null;
+        }
+        return ((HorizonsModuleBlueprint) recipe).getEngineers().stream()
+                .max(Comparator.comparingInt(eng -> ApplicationState.getInstance().getEngineerRank(eng)))
+                .orElse(null);
 
-    protected Integer getRightAmount() {
-        return this.rightAmount;
     }
-
-    protected Label getRightAmountLabel() {
-        return this.rightAmountLabel;
-    }
-
-    protected void setRightDescriptionLabel(final StringBinding rightDescriptionLabel) {
-        this.rightDescriptionLabel.addBinding(this.rightDescriptionLabel.textProperty(), rightDescriptionLabel);
-    }
-
 }

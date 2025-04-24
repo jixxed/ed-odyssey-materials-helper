@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTab;
 
@@ -60,7 +61,7 @@ public class TabBuilder {
         return this;
     }
 
-    public TabBuilder withContent(Node content) {
+    public <E extends Node & Destroyable> TabBuilder withContent(E content) {
         this.content = content;
         return this;
     }
@@ -77,9 +78,11 @@ public class TabBuilder {
         }
         if (this.graphic != null) {
             tab.setGraphic(this.graphic);
+            tab.register(this.graphic);
         }
-        if(content != null) {
+        if (content != null) {
             tab.setContent(content);
+            tab.register((Node & Destroyable) content);
         }
         return tab;
     }

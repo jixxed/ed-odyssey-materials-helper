@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.service.event;
 
 import javafx.application.Platform;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.function.Consumer;
@@ -12,7 +13,9 @@ public class EventListener<T extends Event> {
     protected final boolean fxThread;
     protected final Integer priority;
     protected final Class<T> eventClass;
-    protected final Consumer<T> consumer;
+    protected Consumer<T> consumer;
+    @Setter
+    protected boolean disabled = false;
 
     EventListener(final boolean fxThread, final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
         this.fxThread = fxThread;
@@ -23,7 +26,11 @@ public class EventListener<T extends Event> {
 
     void handleEvent(final T event) {
         if (fxThread) {
-            Platform.runLater(() -> this.consumer.accept(event));
+            Platform.runLater(() -> {
+                if (!this.disabled) {
+                    this.consumer.accept(event);
+                }
+            });
         } else {
             this.consumer.accept(event);
         }

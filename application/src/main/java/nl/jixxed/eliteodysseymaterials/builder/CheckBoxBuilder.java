@@ -31,11 +31,12 @@ public class CheckBoxBuilder extends AbstractButtonBaseBuilder<CheckBoxBuilder> 
         DestroyableCheckBox checkBox = new DestroyableCheckBox();
         super.build(checkBox);
 
+        checkBox.setSelected(this.selected);
+
         if (this.changeListener != null) {
             checkBox.addChangeListener(checkBox.selectedProperty(), this.changeListener);
         }
 
-        checkBox.setSelected(this.selected);
         return checkBox;
     }
 }

@@ -18,6 +18,20 @@ public class DestroyableMenuButton extends MenuButton implements DestroyableComp
     }
 
     public void clear() {
-        getItems().stream().map(DestroyableMenuItem.class::cast).forEach(DestroyableMenuItem::destroy);
+        getItems().forEach(item -> deregister((Destroyable) item));
+        getItems().stream()
+                .map(DestroyableMenuItem.class::cast)
+                .forEach(DestroyableMenuItem::destroy);
+        this.getItems().clear();
+    }
+
+    @Override
+    public void destroyInternal() {
+        DestroyableComponent.super.destroyInternal();
+        getItems().forEach(item -> deregister((Destroyable) item));
+        getItems().stream()
+                .map(DestroyableMenuItem.class::cast)
+                .forEach(DestroyableMenuItem::destroy);
+        this.getItems().clear();
     }
 }

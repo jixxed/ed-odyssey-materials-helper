@@ -51,8 +51,6 @@ class OdysseyMaterialSearchBar extends DestroyableHBox implements DestroyableEve
         initSearchTextFilter();
         initSearchTextSort();
 
-        setDefaultOptions();
-
         applyFontSizingHack();
 
         HBox.setHgrow(this.textField, Priority.ALWAYS);
@@ -78,6 +76,7 @@ class OdysseyMaterialSearchBar extends DestroyableHBox implements DestroyableEve
                 .build();
         this.sortMaterialsComboBox = ComboBoxBuilder.builder(OdysseyMaterialSort.class)
                 .withStyleClasses("root", "filter-and-sort")
+                .withSelected(OdysseyMaterialSort.valueOf(PreferencesService.getPreference("search.sort", "ALPHABETICAL")))
                 .withItemsProperty(LocaleService.getListBinding(OdysseyMaterialSort.ENGINEER_BLUEPRINT_IRRELEVANT, OdysseyMaterialSort.RELEVANT_IRRELEVANT, OdysseyMaterialSort.ALPHABETICAL, OdysseyMaterialSort.QUANTITY))
                 .withPromptTextProperty(LocaleService.getStringBinding("search.sort.placeholder"))
                 .withValueChangeListener((options, oldValue, newValue) -> {
@@ -97,6 +96,7 @@ class OdysseyMaterialSearchBar extends DestroyableHBox implements DestroyableEve
                 .build();
         this.showMaterialsComboBox = ComboBoxBuilder.builder(OdysseyMaterialShow.class)
                 .withStyleClasses("root", "filter-and-sort")
+                .withSelected(OdysseyMaterialShow.valueOf(PreferencesService.getPreference("search.filter", "ALL")))
                 .withItemsProperty(LocaleService.getListBinding(OdysseyMaterialShow.ALL,
                         OdysseyMaterialShow.ALL_WITH_STOCK,
                         OdysseyMaterialShow.ALL_ENGINEER_BLUEPRINT,
@@ -162,23 +162,6 @@ class OdysseyMaterialSearchBar extends DestroyableHBox implements DestroyableEve
         ));
     }
 
-    private void setDefaultOptions() {
-        try {
-            final OdysseyMaterialSort materialSort = OdysseyMaterialSort.valueOf(PreferencesService.getPreference("search.sort", "ALPHABETICAL"));
-            this.sortMaterialsComboBox.getSelectionModel().select(materialSort);
-        } catch (final IllegalArgumentException ex) {
-            log.error("sort error", ex);
-        }
-
-        try {
-            final OdysseyMaterialShow filter = OdysseyMaterialShow.valueOf(PreferencesService.getPreference("search.filter", "ALL"));
-            this.showMaterialsComboBox.getSelectionModel().select(filter);
-        } catch (final IllegalArgumentException ex) {
-            log.error("filter error", ex);
-        }
-    }
-
-
     private String getQueryOrDefault(final TextField textField) {
         return (textField.getText() != null) ? textField.getText() : "";
     }
@@ -193,6 +176,7 @@ class OdysseyMaterialSearchBar extends DestroyableHBox implements DestroyableEve
 
     @Override
     public void destroyInternal() {
+        super.destroyInternal();
         if (subscribe != null) {
             subscribe.dispose();
         }

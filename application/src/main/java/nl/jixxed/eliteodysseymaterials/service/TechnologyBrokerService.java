@@ -21,7 +21,7 @@ import java.util.List;
 public class TechnologyBrokerService {
     private static final List<TechnologyBroker> TECHNOLOGY_BROKERS = new ArrayList<>();
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    private static final String BROKERS_FILE_PATH = OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + "brokers.jsonl";
+    private static final String BROKERS_FILE_PATH = OsConstants.getConfigDirectory() + OsConstants.getOsSlash() + "brokers.jsonl";
 
     static {
         File brokersFile = new File(BROKERS_FILE_PATH);
@@ -39,7 +39,7 @@ public class TechnologyBrokerService {
             while (reader.ready()) {
                 final String line = reader.readLine();
                 final TechnologyBrokerJson jsonBroker = OBJECT_MAPPER.readValue(line, TechnologyBrokerJson.class);
-                TECHNOLOGY_BROKERS.add(new TechnologyBroker(new StarSystem(jsonBroker.getName(), jsonBroker.getCoords().getX(), jsonBroker.getCoords().getY(), jsonBroker.getCoords().getZ()), jsonBroker.getStation().getName(), jsonBroker.getStation().getDistanceToArrival(),jsonBroker.getStation().getVarianceToArrival(), HorizonsBrokerType.forDisplayName(jsonBroker.getStation().getType())));
+                TECHNOLOGY_BROKERS.add(new TechnologyBroker(new StarSystem(jsonBroker.getName(), jsonBroker.getCoords().getX(), jsonBroker.getCoords().getY(), jsonBroker.getCoords().getZ()), jsonBroker.getStation().getName(), jsonBroker.getStation().getDistanceToArrival(), jsonBroker.getStation().getVarianceToArrival(), HorizonsBrokerType.forDisplayName(jsonBroker.getStation().getType())));
             }
         } catch (final IOException ex) {
             throw new RuntimeException(ex);
@@ -60,7 +60,7 @@ public class TechnologyBrokerService {
     }
 
     public static void update(String file) {
-        try (var stream = new FileInputStream(file)){
+        try (var stream = new FileInputStream(file)) {
             update(stream);
         } catch (final Exception ex) {
             log.error("Failed to update technology brokers.", ex);

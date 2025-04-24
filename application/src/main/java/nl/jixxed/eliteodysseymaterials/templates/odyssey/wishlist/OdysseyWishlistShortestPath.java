@@ -17,6 +17,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTe
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 import nl.jixxed.eliteodysseymaterials.templates.generic.ShortestPathFlow;
+import nl.jixxed.eliteodysseymaterials.templates.generic.ShortestPathItem;
 
 import java.util.Collections;
 import java.util.List;
@@ -64,9 +65,14 @@ public class OdysseyWishlistShortestPath extends DestroyableVBox implements Dest
     }
 
     private void update() {
+//        final List<PathItem<OdysseyBlueprintName>> pathItems = getPathItems();
+//        this.shortestPathFlow.setItems(pathItems);
+//        EventService.publish(new OdysseyShortestPathChangedEvent(pathItems));
         final List<PathItem<OdysseyBlueprintName>> pathItems = getPathItems();
-        this.shortestPathFlow.setItems(pathItems);
-        EventService.publish(new OdysseyShortestPathChangedEvent(pathItems));
+        if (this.shortestPathFlow.getItems().size() != pathItems.size() || !this.shortestPathFlow.getItems().stream().map(ShortestPathItem::getPathItem).allMatch(pathItems::contains)) {
+            this.shortestPathFlow.setItems(pathItems);
+            EventService.publish(new OdysseyShortestPathChangedEvent(pathItems));
+        }
     }
 
     @SuppressWarnings("unchecked")

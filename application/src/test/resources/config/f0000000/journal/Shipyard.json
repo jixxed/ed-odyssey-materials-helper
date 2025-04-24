@@ -1,0 +1,20 @@
+{ "timestamp":"2025-04-12T18:34:42Z", "event":"Shipyard", "MarketID":3705689344, "StationName":"V1B-WQB", "StarSystem":"HR 3635", "Horizons":true, "AllowCobraMkIV":false, "PriceList":[ 
+{ "id":0, "ShipType":"mandalay", "ShipPrice":47088694 }, 
+{ "id":0, "ShipType":"python_nx", "ShipType_Localised":"Python Mk II", "ShipPrice":0 }, 
+{ "id":0, "ShipType":"vulture", "ShipPrice":0 }, 
+{ "id":0, "ShipType":"hauler", "ShipPrice":46998 }, 
+{ "id":0, "ShipType":"empire_eagle", "ShipType_Localised":"Imperial Eagle", "ShipPrice":87525 }, 
+{ "id":0, "ShipType":"empire_courier", "ShipType_Localised":"Imperial Courier", "ShipPrice":7179579 }, 
+{ "id":0, "ShipType":"federation_dropship_mkii", "ShipType_Localised":"Federal Assault Ship", "ShipPrice":20821608 }, 
+{ "id":0, "ShipType":"asp", "ShipType_Localised":"Asp Explorer", "ShipPrice":38511767 }, 
+{ "id":0, "ShipType":"python", "ShipPrice":49998352 }, 
+{ "id":0, "ShipType":"empire_trader", "ShipType_Localised":"Imperial Clipper", "ShipPrice":58332237 }, 
+{ "id":0, "ShipType":"python", "ShipPrice":70595124 }, 
+{ "id":0, "ShipType":"type9", "ShipType_Localised":"Type-9 Heavy", "ShipPrice":77186942 }, 
+{ "id":0, "ShipType":"python", "ShipPrice":87549138 }, 
+{ "id":0, "ShipType":"krait_mkii", "ShipType_Localised":"Krait Mk II", "ShipPrice":135144720 }, 
+{ "id":0, "ShipType":"federation_corvette", "ShipType_Localised":"Federal Corvette", "ShipPrice":324736474 }, 
+{ "id":0, "ShipType":"cutter", "ShipType_Localised":"Imperial Cutter", "ShipPrice":391226894 }, 
+{ "id":0, "ShipType":"anaconda", "ShipPrice":534360620 }, 
+{ "id":0, "ShipType":"anaconda", "ShipPrice":663419871 }
+ ] }

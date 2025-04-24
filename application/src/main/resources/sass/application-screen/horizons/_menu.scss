@@ -92,82 +92,62 @@
     }
 
     //ingredients
-    .ingredient-flow {
+    .ingredient-flowz, .ingredient-flow {
       @include hvGap(0.25em);
       @include fixedWidth(35.5em);
-    }
 
-    .ingredient {
-      @include fixedWidth(17.5em);
-      -fx-padding: 0.25em;
-      -fx-border-color: $border-color-black;
-      -fx-background-color: $background-color-dark;
-      //-fx-pref-height: 4em;
+      .ingredient {
+        @include fixedWidth(17.5em);
+        -fx-padding: 0.25em;
+        -fx-border-color: $border-color-black;
+        -fx-background-color: $background-color-dark;
 
-      &.mission {
+
+        .name {
+          -fx-text-fill: $text-color-white;
+          -fx-label-padding: 0.25em;
+          -fx-wrap-text: true;
+          -fx-font-weight: bold;
+          -fx-max-width: 15em;
+        }
+
+
+        .quantity {
+          -fx-font-weight: bold;
+          //-fx-padding: 0.25em;
+        }
+
+        .quantity-section {
+          -fx-spacing: 0.25em;
+        }
+
+        .required, .available, .quantity {
+          -fx-text-fill: $text-color-red;
+        }
+
+        &:filled .required, &:filled .available, &:filled .quantity {
+          -fx-text-fill: $text-color-green;
+        }
+
+        .ingredient-image {
+          @include fixedWidth(2em);
+          @include fixedHeight(2em);
+          -fx-fit-to-height: true;
+          -fx-fit-to-width: true;
+        }
+
+        &:partial .required, &:partial .available, &:partial .quantity {
+          -fx-text-fill: $text-color-yellow;
+        }
+      }
+
+      .mission {
         @include fixedWidth(35.25em);
+
+        .name {
+          -fx-max-width: 34.75em;
+        }
       }
-
-      .name {
-        -fx-text-fill: $text-color-white;
-        -fx-label-padding: 0.25em;
-        -fx-wrap-text: true;
-        -fx-font-weight: bold;
-        -fx-max-width: 15em;
-      }
-
-      .quantity {
-        -fx-font-weight: bold;
-        //-fx-padding: 0.25em;
-      }
-
-      .quantity-section {
-        -fx-spacing: 0.25em;
-      }
-
-      .required, .available, .quantity {
-        -fx-text-fill: $text-color-red;
-      }
-
-      &:filled .required, &:filled .available, &:filled .quantity {
-        -fx-text-fill: $text-color-green;
-      }
-
-      .ingredient-image {
-        @include fixedWidth(2em);
-        @include fixedHeight(2em);
-        -fx-fit-to-height: true;
-        -fx-fit-to-width: true;
-      }
-
-      //.required, .available {
-      //  -fx-padding: 0.25em;
-      //  -fx-font-weight: normal;
-      //}
-      //
-      //.quantity {
-      //  -fx-font-weight: bold;
-      //  -fx-padding: 0.25em;
-      //}
-      //
-      //.required, .available, .quantity {
-      //  -fx-text-fill: $text-color-red;
-      //}
-      //
-      //&:filled .required, &:filled .available, &:filled .quantity {
-      //  -fx-text-fill: $text-color-green;
-      //}
-
-      &:partial .required, &:partial .available, &:partial .quantity {
-        -fx-text-fill: $text-color-yellow;
-      }
-
-      //.image {
-      //  @include fixedWidth(2em);
-      //  @include fixedHeight(2em);
-      //  -fx-fit-to-height: true;
-      //  -fx-fit-to-width: true;
-      //}
     }
 
     //engineers

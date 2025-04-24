@@ -37,14 +37,14 @@ public class SupportService {
     }
 
     public static String createSupportPackage(String name) {
-        final Path zipPath = Path.of(OsConstants.CONFIG_DIRECTORY + "/support");
+        final Path zipPath = Path.of(OsConstants.getConfigDirectory() + "/support");
         List<Path> excludedPaths = List.of(
-                Path.of(OsConstants.CONFIG_DIRECTORY + "/tesseract"),
-                Path.of(OsConstants.CONFIG_DIRECTORY + "/backup"),
+                Path.of(OsConstants.getConfigDirectory() + "/tesseract"),
+                Path.of(OsConstants.getConfigDirectory() + "/backup"),
                 zipPath
         );
-        Path configFolder = Path.of(OsConstants.CONFIG_DIRECTORY);
-        Path journalFolder = Path.of(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER));
+        Path configFolder = Path.of(OsConstants.getConfigDirectory());
+        Path journalFolder = Path.of(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.getDefaultWatchedFolder()));
         try {
             log.info("Creating support package.");
             return zipFolder(configFolder, journalFolder, zipPath, excludedPaths, name);

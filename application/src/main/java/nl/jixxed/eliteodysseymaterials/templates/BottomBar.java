@@ -12,7 +12,6 @@ import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
-import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
 import nl.jixxed.eliteodysseymaterials.helper.POIHelper;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -25,7 +24,6 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
-import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -95,7 +93,7 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> this.commanderSelect.getSelectionModel().select(commander));
         this.commanderSelect.setFocusTraversable(false);
         this.commanderSelect.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
-        final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER));
+        final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.getDefaultWatchedFolder()));
         final String watchedFile = ApplicationState.getInstance().getWatchedFile();
         if (!watchedFile.isBlank()) {
             this.watchedFileLabel = LabelBuilder.builder()
@@ -210,10 +208,10 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
     private void updateApiLabel() {
 
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-            final String pathname = OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + commander.getFid().toLowerCase(Locale.ENGLISH) + (commander.getGameVersion().equals(GameVersion.LEGACY) ? ".legacy" : "");
+            final String pathname = commander.getCommanderFolder();
             final File fleetCarrierFileDir = new File(pathname);
             fleetCarrierFileDir.mkdirs();
-            final File fleetCarrierFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.FLEETCARRIER_FILE);
+            final File fleetCarrierFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.FLEETCARRIER_FILE);
             if (fleetCarrierFile.exists()) {
                 if (CAPIService.getInstance().getActive().getValue().equals(false)) {
                     this.apiLabel.addBinding(this.apiLabel.textProperty(), LocaleService.getStringBinding("statusbar.api.stale"));
@@ -240,5 +238,11 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
                 (this.station.isBlank() || this.station.equals(this.body) ? "" : " | " + POIHelper.map(this.station)) +
                 (this.latitude != null && !this.latitude.equals(999.9) ? " (" + this.latitude + ", " + this.longitude + ")" : "")
         ));
+    }
+
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        executorService.shutdownNow();
     }
 }

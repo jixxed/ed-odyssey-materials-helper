@@ -33,20 +33,21 @@ public class ShipService {
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
     private static ShipConfigurations cache;
     private static String cacheFID;
+
     public static ShipConfigurations getShipConfigurations(@NonNull final Commander commander) {
         //reset cache if commander changed
-        if(commander.getFid() == null || !commander.getFid().equals(cacheFID)){
+        if (commander.getFid() == null || !commander.getFid().equals(cacheFID)) {
             cache = null;
         }
         //load from cache if exists
-        if(cache != null){
+        if (cache != null) {
             return cache;
         }
         try {
             final String pathname = commander.getCommanderFolder();
             final File commanderFolder = new File(pathname);
             commanderFolder.mkdirs();
-            final File shipConfigurationFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.SHIP_CONFIGURATION_FILE);
+            final File shipConfigurationFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.SHIP_CONFIGURATION_FILE);
             String shipConfigurationFileContents;
             if (shipConfigurationFile.exists()) {//load from file if exists
                 shipConfigurationFileContents = Files.readString(shipConfigurationFile.toPath());
@@ -85,7 +86,7 @@ public class ShipService {
             final String pathname = commander.getCommanderFolder();
             final File commanderFolder = new File(pathname);
             commanderFolder.mkdirs();
-            final File shipConfigurationsFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.SHIP_CONFIGURATION_FILE);
+            final File shipConfigurationsFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.SHIP_CONFIGURATION_FILE);
             try (final FileOutputStream fileOutputStream = new FileOutputStream(shipConfigurationsFile)) {
                 fileOutputStream.write(shipConfigurationsJson.getBytes(StandardCharsets.UTF_8));
             }
@@ -114,10 +115,12 @@ public class ShipService {
         shipConfigurations.delete(shipConfigurationUUID);
         saveShipConfigurations(commander, shipConfigurations);
     }
-    public static Ship createShip(ShipType shipType){
+
+    public static Ship createShip(ShipType shipType) {
         return new Ship(Ship.ALL.stream().filter(ship -> ship.getShipType().equals(shipType)).findFirst().orElseThrow(IllegalArgumentException::new));
     }
-    public static Ship createBlankShip(ShipType shipType){
+
+    public static Ship createBlankShip(ShipType shipType) {
         final Ship blankShip = createShip(shipType);
         blankShip.getUtilitySlots().forEach(imageSlot -> imageSlot.setShipModule(null));
         blankShip.getHardpointSlots().forEach(imageSlot -> imageSlot.setShipModule(null));
@@ -125,12 +128,13 @@ public class ShipService {
         blankShip.getOptionalSlots().forEach(slot -> slot.setShipModule(null));
         return blankShip;
     }
-    public static Optional<ShipModule> findShipModule(SlotType slotType, String internalName, List<HorizonsBlueprintType> modifications, List<HorizonsBlueprintType> experimentalEffects){
+
+    public static Optional<ShipModule> findShipModule(SlotType slotType, String internalName, List<HorizonsBlueprintType> modifications, List<HorizonsBlueprintType> experimentalEffects) {
         final List<ShipModule> list = ShipModule.getModules(slotType).stream().filter(shipModule -> shipModule.getInternalName().equals(internalName)).toList();
-        if(list.size() > 1){
+        if (list.size() > 1) {
             list.forEach(shipModule -> {
-                if(shipModule instanceof FrameShiftDrive fsd){
-                    if(fsd.getModifications().stream().allMatch(modification -> modifications.contains(modification.getModification()))){
+                if (shipModule instanceof FrameShiftDrive fsd) {
+                    if (fsd.getModifications().stream().allMatch(modification -> modifications.contains(modification.getModification()))) {
 
                     }
                 }

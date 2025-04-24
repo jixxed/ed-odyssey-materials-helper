@@ -1,11 +1,16 @@
 .loading-screen {
   -fx-background-color: $background-color-dark;
 
-  .text {
+  .text-title {
     -fx-font-size: 3em;
   }
 
-  .progressbar {
+  .text-status {
+    -fx-font-size: 1em;
+    -fx-font-style: italic;
+  }
+
+  .loadingbar {
     @include fixedHeight(2em);
     @include fixedWidth(25em);
   }

@@ -36,7 +36,7 @@ import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 @Slf4j
 public class General extends DestroyableVBox implements DestroyableEventTemplate {
 
-    private static final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+    private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     private DestroyableLabel selectedFolderLabel;
     private DestroyableButton journalSelectButton;
     private DestroyableComboBox<FontSize> fontsizeSelect;
@@ -91,7 +91,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
     @Override
     public void initEventHandling() {
         register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> applyFontSizeToComponents(fontSizeEvent.getFontSize(), this.journalSelectButton, this.fontsizeSelect, this.languageSelect)));
-        register(EventService.addStaticListener(true, TerminateApplicationEvent.class, _ -> executorService.shutdownNow()));
+        register(EventService.addListener(false, true, TerminateApplicationEvent.class, _ -> executorService.shutdownNow()));
     }
 
     private static void applyFontSizeToComponents(Integer size, Node... components) {
@@ -110,6 +110,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
         this.languageSelect = ComboBoxBuilder.builder(ApplicationLocale.class)
                 .withStyleClass(SETTINGS_DROPDOWN_CLASS)
                 .withItemsProperty(LocaleService.getListBinding(ApplicationLocale.values()))
+                .withSelected(ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.LANGUAGE, "ENGLISH")))
                 .withValueChangeListener((obs, oldValue, newValue) -> {
                     if (newValue != null) {
                         LocaleService.setCurrentLocale(newValue.getLocale());
@@ -119,8 +120,6 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 })
                 .asLocalized()
                 .build();
-
-        this.languageSelect.getSelectionModel().select(ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.LANGUAGE, "ENGLISH")));
 
 
         return BoxBuilder.builder()
@@ -158,7 +157,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 .build();
         this.selectedFolderLabel = LabelBuilder.builder()
                 .withStyleClass(SETTINGS_LABEL_CLASS)
-                .withNonLocalizedText(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER))
+                .withNonLocalizedText(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.getDefaultWatchedFolder()))
                 .build();
 
         final DirectoryChooser journalFolderSelect = new DirectoryChooser();
@@ -166,9 +165,9 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 .withStyleClass(SETTINGS_BUTTON_STYLE_CLASS)
                 .withText("tab.settings.journal.folder.select")
                 .withOnAction(e -> {
-                    File initialDirectory = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER));
+                    File initialDirectory = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.getDefaultWatchedFolder()));
                     if (!initialDirectory.exists()) {
-                        initialDirectory = new File(OsConstants.DEFAULT_WATCHED_FOLDER);
+                        initialDirectory = new File(OsConstants.getDefaultWatchedFolder());
                     }
                     if (initialDirectory.exists()) {
                         journalFolderSelect.setInitialDirectory(initialDirectory);
@@ -197,6 +196,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 .build();
         this.fontsizeSelect = ComboBoxBuilder.builder(FontSize.class)
                 .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withSelected(FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")))
                 .withItemsProperty(LocaleService.getListBinding(FontSize::values))
                 .withValueChangeListener((obs, oldValue, newValue) -> {
                     if (newValue != null) {
@@ -207,7 +207,6 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 .asLocalized()
                 .build();
 
-        this.fontsizeSelect.getSelectionModel().select(FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")));
 
         return BoxBuilder.builder()
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)
@@ -383,5 +382,11 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(supportPackageLabel, supportPackage, supportPackageExplainLabel)
                 .buildHBox();
+    }
+
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        executorService.shutdownNow();
     }
 }

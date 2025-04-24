@@ -225,8 +225,11 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
     }
 
     private void initLoadoutSelect(Set<LoadoutSet> loadoutSets) {
+        final Optional<LoadoutSet> loadoutSet = APPLICATION_STATE.getPreferredCommander()
+                .map(commander -> LoadoutService.getLoadoutSetList(commander).getSelectedLoadoutSet());
         this.loadoutSetSelect = ComboBoxBuilder.builder(LoadoutSet.class)
                 .withStyleClass("loadout-select")
+                .withSelected(loadoutSet.orElse(null))
                 .withItemsProperty(FXCollections.observableArrayList(loadoutSets.stream().sorted(Comparator.comparing(LoadoutSet::getName)).toList()))
                 .withValueChangeListener((_, _, newValue) -> {
                     if (newValue != null) {
@@ -238,9 +241,6 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
                     }
                 })
                 .build();
-        APPLICATION_STATE.getPreferredCommander()
-                .ifPresent(commander -> this.loadoutSetSelect.getSelectionModel()
-                        .select(LoadoutService.getLoadoutSetList(commander).getSelectedLoadoutSet()));
 
     }
 

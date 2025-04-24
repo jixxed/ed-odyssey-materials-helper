@@ -34,7 +34,6 @@ import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
-import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
 import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
 import nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper;
 import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
@@ -135,48 +134,50 @@ public class FXApplication extends Application {
             this.loadingScreen = new LoadingScreen();
             eventListeners.add(EventService.addListener(true, this, JournalInitEvent.class, event -> {
 
-                if (event.isInitialised() && this.applicationScreen == null) {
+                if (event.isInitialised() && getApplicationScreen() == null) {
                     log.debug("applicationLayout");
 
 //                    Platform.runLater(() -> {
-                        try {
-                            this.applicationScreen = new ApplicationScreen();
-                            this.content.getChildren().add(this.applicationScreen);
+                    try {
+                        initApplicationScreen();
+                        this.content.getChildren().add(getApplicationScreen());
 //                            setupStyling(scene);
-                            this.applicationScreen.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
-                            Platform.runLater(() -> {
-                                EventService.publish(new ApplicationLifeCycleEvent());
-                            });
-                        } catch (Throwable t) {
-                            log.error("Failed to initialize the UI", t);
-                            String supportFile = SupportService.createSupportPackage();
-                            showAlert(supportFile, t);
-                        }
+                        getApplicationScreen().styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
+                        Platform.runLater(() -> {
+                            EventService.publish(new ApplicationLifeCycleEvent());
+                        });
+                    } catch (Throwable t) {
+                        log.error("Failed to initialize the UI", t);
+                        String supportFile = SupportService.createSupportPackage();
+                        showAlert(supportFile, t);
+                    }
 //                    });
                     log.debug("setupFleetCarrierWatcher");
 //                    Platform.runLater(() ->
-                            setupFleetCarrierWatcher(this.journalWatcher.getWatchedFolder(), APPLICATION_STATE.getPreferredCommander().orElse(null));
+                    setupFleetCarrierWatcher(this.journalWatcher.getWatchedFolder(), APPLICATION_STATE.getPreferredCommander().orElse(null));
 //                    );
                     log.debug("loadingScreen");
 //                    Platform.runLater(                            () ->
-                            this.content.getChildren().remove(this.loadingScreen);
+                    this.content.getChildren().remove(this.loadingScreen);
 //                    );
 
                 } else {
-                    this.applicationScreen = null;
-                    if(!this.content.getChildren().contains(this.loadingScreen)) {
+                    this.content.getChildren().remove(this.applicationScreen);
+                    if (!this.content.getChildren().contains(this.loadingScreen)) {
                         this.content.getChildren().add(this.loadingScreen);
                     }
+                    destroyApplicationScreen();
+
                 }
             }));
             this.primaryStage = primaryStage;
             primaryStage.setTitle(AppConstants.APP_TITLE);
             primaryStage.getIcons().add(new Image(FXApplication.class.getResourceAsStream(AppConstants.APP_ICON_PATH)));
+            createApplicationScene();
+            initEventHandling();
             setupDeeplinkWatcher();
             setupWatchers();
 
-            createApplicationScene();
-            initEventHandling();
             KeyCombination kc = new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN);
             Runnable rn = () -> {
                 Platform.runLater(() -> {
@@ -213,6 +214,19 @@ public class FXApplication extends Application {
         }
     }
 
+    private void destroyApplicationScreen() {
+        if (getApplicationScreen() != null) {
+            log.debug("applicationScreen destroyTemplate");
+            getApplicationScreen().destroyTemplate();
+        }
+        this.applicationScreen = null;
+        log.debug("cleanup complete");
+    }
+
+    private void initApplicationScreen() {
+        this.applicationScreen = new ApplicationScreen();
+    }
+
 
     private void showAlert(final String supportFile, final Throwable t) {
         final Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -232,6 +246,7 @@ public class FXApplication extends Application {
         this.eventListeners.add(EventService.addListener(this, WatchedFolderChangedEvent.class, event -> resetWatchedFolder(new File(event.getPath()))));
         this.eventListeners.add(EventService.addListener(this, CommanderSelectedEvent.class, event -> {
             UserPreferencesService.loadUserPreferences(event.getCommander());
+            log.debug("CommanderSelectedEvent " + this.initialized);
             if (this.initialized) {
                 reset(this.journalWatcher.getWatchedFolder());
             }
@@ -246,8 +261,8 @@ public class FXApplication extends Application {
 //            }
         }));
         this.eventListeners.add(EventService.addListener(this, FontSizeEvent.class, fontSizeEvent -> {
-            if (applicationScreen != null) {
-                this.applicationScreen.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px");
+            if (getApplicationScreen() != null) {
+                getApplicationScreen().styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px");
             }
             EventService.publish(new AfterFontSizeSetEvent(fontSizeEvent.getFontSize()));
         }));
@@ -302,8 +317,12 @@ public class FXApplication extends Application {
         }));
     }
 
+    private ApplicationScreen getApplicationScreen() {
+        return this.applicationScreen;
+    }
+
     private void setupWatchers() {
-        final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER));
+        final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.getDefaultWatchedFolder()));
         setupStorageWatchers(watchedFolder);
     }
 
@@ -327,7 +346,7 @@ public class FXApplication extends Application {
     private void setupFleetCarrierWatcher(final File watchedFolder, final Commander commander) {
 
         if (commander != null) {
-            final String pathname = OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + commander.getFid().toLowerCase(Locale.ENGLISH) + (commander.getGameVersion().equals(GameVersion.LEGACY) ? ".legacy" : "");
+            final String pathname = commander.getCommanderFolder();
             final File watchedFolderFleetCarrier = new File(pathname);
             if (!watchedFolderFleetCarrier.exists()) {
                 watchedFolderFleetCarrier.mkdirs();
@@ -344,7 +363,7 @@ public class FXApplication extends Application {
 
         this.deeplinkReference.set(EventService.addListener(this, CommanderAllListedEvent.class, event -> {
 
-            final File deeplinkWatchedFolder = new File(OsConstants.DEEPLINK_FOLDER);
+            final File deeplinkWatchedFolder = new File(OsConstants.getDeeplinkFolder());
 
             this.deeplinkWatcher.watch(deeplinkWatchedFolder, deeplinkConsumer, AppConstants.DEEPLINK_FILE);
             EventService.removeListener(this.deeplinkReference.get());
@@ -409,8 +428,8 @@ public class FXApplication extends Application {
     }
 
     private void setupStyling(final Scene scene) {
-        if (applicationScreen != null) {
-            this.applicationScreen.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
+        if (getApplicationScreen() != null) {
+            getApplicationScreen().styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
         }
         final JMetro jMetro = new JMetro(Style.DARK);
         jMetro.setScene(scene);
@@ -465,7 +484,7 @@ public class FXApplication extends Application {
 
     @SuppressWarnings("java:S899")
     private void addCustomCss(final Scene scene) {
-        final File customCss = new File(OsConstants.CUSTOM_CSS);
+        final File customCss = new File(OsConstants.getCustomCss());
         if (customCss.exists()) {
             importCustomCss(scene, customCss);
         }
@@ -569,6 +588,7 @@ public class FXApplication extends Application {
     }
 
     private void reset(final File watchedFolder) {
+        log.debug("resetting");
         APPLICATION_STATE.resetEngineerStates();
         APPLICATION_STATE.resetPowerplay();
         StorageService.resetShipLockerCounts();

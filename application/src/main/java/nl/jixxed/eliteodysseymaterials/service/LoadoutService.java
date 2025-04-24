@@ -16,16 +16,18 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
+
 @Slf4j
 public class LoadoutService {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
     public static LoadoutSetList getLoadoutSetList(final Commander commander) {
         try {
             final String pathname = commander.getCommanderFolder();
             final File commanderFolder = new File(pathname);
             commanderFolder.mkdirs();
-            final File loadoutsFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.ODYSSEY_LOADOUTS_FILE);
+            final File loadoutsFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.ODYSSEY_LOADOUTS_FILE);
             String loadoutFileContents;
             if (loadoutsFile.exists()) {//load from file if exists
                 loadoutFileContents = Files.readString(loadoutsFile.toPath());
@@ -36,9 +38,9 @@ public class LoadoutService {
                 createLoadoutSetList(commander);
             }
             loadoutFileContents = Files.readString(loadoutsFile.toPath());
-            try{
+            try {
                 return OBJECT_MAPPER.readValue(loadoutFileContents, LoadoutSetList.class);
-            }catch (final IOException e) {
+            } catch (final IOException e) {
                 log.warn("Unable to load loadouts from configuration. Try to create new one.", e);
                 createLoadoutSetList(commander);
                 loadoutFileContents = Files.readString(loadoutsFile.toPath());
@@ -77,7 +79,7 @@ public class LoadoutService {
             final String pathname = commander.getCommanderFolder();
             final File commanderFolder = new File(pathname);
             commanderFolder.mkdirs();
-            final File loadoutsFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.ODYSSEY_LOADOUTS_FILE);
+            final File loadoutsFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.ODYSSEY_LOADOUTS_FILE);
             try (final FileOutputStream fileOutputStream = new FileOutputStream(loadoutsFile)) {
                 fileOutputStream.write(loadoutJson.getBytes(StandardCharsets.UTF_8));
             }

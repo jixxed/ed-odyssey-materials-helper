@@ -17,6 +17,7 @@ public abstract class AbstractComboBoxBuilder<T, V extends AbstractComboBoxBuild
     private StringBinding promptTextBinding;
     private Tooltip tooltip;
     private boolean localized = false;
+    private T selected;
 
     public V asLocalized() {
         this.localized = true;
@@ -38,12 +39,20 @@ public abstract class AbstractComboBoxBuilder<T, V extends AbstractComboBoxBuild
         return (V) this;
     }
 
+    public V withSelected(T selected) {
+        this.selected = selected;
+        return (V) this;
+
+    }
 
     public <N extends ComboBox<T> & DestroyableComponent> N build(N comboBox) {
         super.build(comboBox);
 
         if (this.items != null) {
             comboBox.itemsProperty().set(new SimpleListProperty<>(this.items));
+        }
+        if (this.selected != null) {
+            comboBox.getSelectionModel().select(this.selected);
         }
         if (this.listener != null) {
             comboBox.addChangeListener(comboBox.valueProperty(), this.listener);

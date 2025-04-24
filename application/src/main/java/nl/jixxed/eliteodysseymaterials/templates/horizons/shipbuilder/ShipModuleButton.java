@@ -1,7 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
 import javafx.css.PseudoClass;
-import javafx.scene.layout.HBox;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
@@ -18,6 +17,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ModuleHighlightEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableButton;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
 import java.util.ArrayList;
@@ -35,11 +35,12 @@ public class ShipModuleButton extends DestroyableButton {
                 EventService.publish(new ModuleHighlightEvent(shipModule)));
         final List<DestroyableResizableImageView> icons = getIcons(shipModule);
         if (!icons.isEmpty()) {
-            HBox imagesBox = BoxBuilder.builder()
+            DestroyableHBox imagesBox = BoxBuilder.builder()
                     .withStyleClass("ships-button-image-box")
                     .withNodes(icons.toArray(DestroyableResizableImageView[]::new))
                     .buildHBox();
             this.setGraphic(imagesBox);
+            this.register(imagesBox);
 
         }
         checkOverload(shipModule);

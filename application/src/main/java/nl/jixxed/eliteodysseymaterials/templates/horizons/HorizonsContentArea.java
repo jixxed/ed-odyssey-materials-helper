@@ -25,7 +25,6 @@ import nl.jixxed.eliteodysseymaterials.templates.horizons.engineers.HorizonsEngi
 import nl.jixxed.eliteodysseymaterials.templates.horizons.materials.HorizonsMaterialTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.menu.HorizonsBlueprintBar;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.powerplay.PowerplayTab;
-import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.HorizonsShipBuilderTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishlistTab;
 
 @SuppressWarnings("java:S110")
@@ -36,7 +35,7 @@ public class HorizonsContentArea extends DestroyableAnchorPane implements Destro
     private DestroyableTabPane tabs;
     private DestroyableVBox body;
     private HorizonsWishlistTab horizonsWishlistTab;
-    private HorizonsShipBuilderTab horizonsShipBuilderTab;
+//    private HorizonsShipBuilderTab horizonsShipBuilderTab;
 
     public HorizonsContentArea() {
         initComponents();
@@ -56,14 +55,14 @@ public class HorizonsContentArea extends DestroyableAnchorPane implements Destro
         powerplayTab.setClosable(false);
         this.horizonsWishlistTab = new HorizonsWishlistTab();
         this.horizonsWishlistTab.setClosable(false);
-        this.horizonsShipBuilderTab = new HorizonsShipBuilderTab();
-        this.horizonsShipBuilderTab.setClosable(false);
+//        this.horizonsShipBuilderTab = new HorizonsShipBuilderTab();
+//        this.horizonsShipBuilderTab.setClosable(false);
         HorizonsColonisationTab horizonsColonisationTab = new HorizonsColonisationTab();
         horizonsColonisationTab.setClosable(false);
 
         HorizonsSearchBar searchBar = new HorizonsSearchBar();
         this.tabs = TabPaneBuilder.builder()
-                .withTabs(horizonsMaterialOverview, horizonsCommoditiesOverview, this.horizonsWishlistTab, this.horizonsShipBuilderTab, horizonsEngineersTab, powerplayTab, horizonsColonisationTab)
+                .withTabs(horizonsMaterialOverview, horizonsCommoditiesOverview, this.horizonsWishlistTab, /*this.horizonsShipBuilderTab, */horizonsEngineersTab, powerplayTab, horizonsColonisationTab)
                 .withStyleClass("horizons-tab-pane")
                 .withSelectedItemListener((_, _, newValue) -> {
                     if (newValue != null) {
@@ -105,8 +104,8 @@ public class HorizonsContentArea extends DestroyableAnchorPane implements Destro
                 this.tabs.getSelectionModel().select(this.horizonsWishlistTab);
             }
         }));
-        register(EventService.addListener(true, this, HorizonsWishlistOpenShipBuilderEvent.class, _ ->
-                this.tabs.getSelectionModel().select(this.horizonsShipBuilderTab)));
+//        register(EventService.addListener(true, this, HorizonsWishlistOpenShipBuilderEvent.class, _ ->
+//                this.tabs.getSelectionModel().select(this.horizonsShipBuilderTab)));
         register(EventService.addListener(true, this, HorizonsBlueprintClickEvent.class, _ -> {
             this.recipeBar.setVisible(true);
             PreferencesService.setPreference(PreferenceConstants.HORIZONS_RECIPES_VISIBLE, true);
@@ -126,9 +125,9 @@ public class HorizonsContentArea extends DestroyableAnchorPane implements Destro
             final ImportResult.ResultType resultType = importResultEvent.getResult().getResultType();
             if (isWishlistResult(resultType)) {
                 this.tabs.getSelectionModel().select(this.horizonsWishlistTab);
-            } else if (isShipBuilderResult(resultType)) {
+            }/* else if (isShipBuilderResult(resultType)) {
                 this.tabs.getSelectionModel().select(this.horizonsShipBuilderTab);
-            }
+            }*/
         }));
     }
 

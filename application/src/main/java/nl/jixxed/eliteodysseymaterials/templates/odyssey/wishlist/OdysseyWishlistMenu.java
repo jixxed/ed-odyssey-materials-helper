@@ -52,11 +52,12 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
     @Override
     public void initComponents() {
         this.getStyleClass().add("wishlist-menu");
-        final Set<Wishlist> items = APPLICATION_STATE.getPreferredCommander()
-                .map(commander -> WishlistService.getOdysseyWishlists(commander).getAllWishlists())
+        final Optional<Wishlists> wishlists = APPLICATION_STATE.getPreferredCommander().map(WishlistService::getOdysseyWishlists);
+        final Set<Wishlist> items = wishlists.map(Wishlists::getAllWishlists)
                 .orElse(Collections.emptySet());
         this.wishlistSelect = ComboBoxBuilder.builder(Wishlist.class)
                 .withStyleClass("wishlist-select")
+                .withSelected(wishlists.map(Wishlists::getSelectedWishlist).orElse(null))
                 .withItemsProperty(FXCollections.observableArrayList(items.stream().sorted(Comparator.comparing(Wishlist::getName)).toList()))
                 .withValueChangeListener((_, _, newValue) -> {
                     if (newValue != null) {
@@ -68,7 +69,7 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
                     }
                 })
                 .build();
-        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> this.wishlistSelect.getSelectionModel().select(WishlistService.getOdysseyWishlists(commander).getSelectedWishlist()));
+
         this.menuButton = MenuButtonBuilder.builder()
                 .withText("tab.wishlist.options")
                 .withMenuItems(Map.of(

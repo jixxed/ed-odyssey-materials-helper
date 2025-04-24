@@ -10,4 +10,9 @@ public class DestroyableScrollPane extends ScrollPane implements DestroyableComp
         setContent(value);
     }
 
+    @Override
+    public void destroyInternal() {
+        this.setContent(null);
+        DestroyableComponent.super.destroyInternal();
+    }
 }

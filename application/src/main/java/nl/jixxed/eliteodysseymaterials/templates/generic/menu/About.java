@@ -110,8 +110,8 @@ class About extends DestroyableVBox implements DestroyableTemplate {
                 .withShowDelay(Duration.ZERO)
                 .withText("menu.about.commission")
                 .build();
-        Tooltip.install(commissionPP, tooltipPP);
-        Tooltip.install(commissionGH, tooltipGH);
+        commissionPP.setTooltip(tooltipPP);
+        commissionGH.setTooltip(tooltipGH);
         return BoxBuilder.builder()
                 .withStyleClass("about-donate")
                 .withNodes(
@@ -160,6 +160,7 @@ class About extends DestroyableVBox implements DestroyableTemplate {
 
     @Override
     public void destroyInternal() {
+        super.destroyInternal();
         Tooltip.uninstall(commissionPP, tooltipPP);
         Tooltip.uninstall(commissionGH, tooltipGH);
     }

@@ -1,7 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
 import javafx.geometry.Orientation;
-import javafx.scene.control.Tooltip;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
@@ -68,11 +67,11 @@ public class ShieldStats extends Stats implements DestroyableEventTemplate {
         final DestroyableLabel rebuild = LabelBuilder.builder()
                 .withText("ship.stats.shield.rebuild")
                 .build();
-        Tooltip.install(regen, TooltipBuilder.builder()
+        regen.setTooltip(TooltipBuilder.builder()
                 .withShowDelay(Duration.ZERO)
                 .withText("ship.stats.shield.regen.tooltip")
                 .build());
-        Tooltip.install(rebuild, TooltipBuilder.builder()
+        rebuild.setTooltip(TooltipBuilder.builder()
                 .withShowDelay(Duration.ZERO)
                 .withText("ship.stats.shield.rebuild.tooltip")
                 .build());

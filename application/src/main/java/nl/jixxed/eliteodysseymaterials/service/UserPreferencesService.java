@@ -41,7 +41,7 @@ public class UserPreferencesService {
         }
         //create folder if not exists
         final String commanderFolder = ApplicationState.getInstance().getGameVersion().equals(GameVersion.LIVE) ? commander.getLiveCommanderFolder() : commander.getCommanderFolder();
-        final File targetFile = new File(commanderFolder + OsConstants.OS_SLASH + AppConstants.USER_PREFERENCES_FILE);
+        final File targetFile = new File(commanderFolder + OsConstants.getOsSlash() + AppConstants.USER_PREFERENCES_FILE);
         final File parent = targetFile.getParentFile();
         if (!parent.exists() && !parent.mkdirs()) {
             throw new IllegalStateException("Couldn't create dir: " + parent);
@@ -72,9 +72,9 @@ public class UserPreferencesService {
                 .debounce(1000, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
                 .subscribe(newValue -> {
-                    try (final OutputStream output = new FileOutputStream(commanderFolder + OsConstants.OS_SLASH + AppConstants.USER_TEMP_PREFERENCES_FILE)) {
+                    try (final OutputStream output = new FileOutputStream(commanderFolder + OsConstants.getOsSlash() + AppConstants.USER_TEMP_PREFERENCES_FILE)) {
                         prop.store(output, null);
-                        Files.copy(Path.of(commanderFolder + OsConstants.OS_SLASH + AppConstants.USER_TEMP_PREFERENCES_FILE), Path.of(commanderFolder + OsConstants.OS_SLASH + AppConstants.USER_PREFERENCES_FILE), StandardCopyOption.REPLACE_EXISTING);
+                        Files.copy(Path.of(commanderFolder + OsConstants.getOsSlash() + AppConstants.USER_TEMP_PREFERENCES_FILE), Path.of(commanderFolder + OsConstants.getOsSlash() + AppConstants.USER_PREFERENCES_FILE), StandardCopyOption.REPLACE_EXISTING);
                     } catch (final IOException e) {
                         log.error("Error writing preferences", e);
                     }

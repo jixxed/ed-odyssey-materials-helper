@@ -62,6 +62,7 @@ public class CompletionSlider extends DestroyableHBox implements DestroyableTemp
 
     @Override
     public void destroyInternal() {
+        super.destroyInternal();
         if (subscribe != null) {
             subscribe.dispose();
         }

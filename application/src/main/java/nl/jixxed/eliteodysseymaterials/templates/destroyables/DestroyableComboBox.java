@@ -19,5 +19,13 @@ public class DestroyableComboBox<T> extends ComboBox<T> implements DestroyableCo
 
     public void clear() {
         getItems().stream().map(DestroyableMenuItem.class::cast).forEach(DestroyableMenuItem::destroy);
+        getItems().clear();
+    }
+
+    @Override
+    public void destroyInternal() {
+        DestroyableComponent.super.destroyInternal();
+        this.setCellFactory(null);
+//        this.getItems().clear();
     }
 }

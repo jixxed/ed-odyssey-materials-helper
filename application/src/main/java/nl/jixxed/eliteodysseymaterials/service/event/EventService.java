@@ -14,8 +14,16 @@ import java.util.function.Consumer;
 @Slf4j
 public class EventService {
     private static final Map<Class<? extends Event>, List<WeakReference<EventListener<? extends Event>>>> LISTENERS_MAP = new HashMap<>();
+    static boolean isInit = false;
 
     public static <T extends Event> void publish(final T event) {
+        if (event instanceof JournalInitEvent jie) {
+            isInit = jie.isInitialised();
+        }
+        if (isInit) {
+            log.debug("Publishing event {}", event);
+            log.debug(Thread.currentThread().getStackTrace()[2].toString());
+        }
         //clean up null references
         LISTENERS_MAP.getOrDefault(event.getClass(), Collections.emptyList()).removeIf(ref -> ref.get() == null);
         LISTENERS_MAP.getOrDefault(event.getClass(), Collections.emptyList()).stream()
@@ -107,6 +115,8 @@ public class EventService {
     public static void removeListener(final EventListener<? extends Event> eventListener) {
         logListener(null, eventListener, "deregister");
         LISTENERS_MAP.computeIfPresent(eventListener.getEventClass(), (aClass, eventListeners) -> {
+            eventListener.setDisabled(true);
+            eventListener.consumer = null;
             eventListeners.removeIf(ref -> ref.get() == eventListener);
             return eventListeners;
         });
@@ -120,6 +130,8 @@ public class EventService {
             }
             final boolean remove = ref.get() instanceof NonStaticEventListener nonStaticEventListener && nonStaticEventListener.hasOwner(owner);
             if (remove) {
+                ref.get().setDisabled(true);
+                ref.get().consumer = null;
                 logListener(owner, ref.get(), "deregister");
             }
             return remove;
@@ -137,6 +149,11 @@ public class EventService {
 //        log.debug("listener size: " + (Integer) LISTENERS_MAP.values().stream().mapToInt(List::size).sum());
     }
 
+    @SuppressWarnings("java:S125")
+    public static void logListenerSizePublic() {
+        log.debug("listener size: " + (Integer) LISTENERS_MAP.values().stream().mapToInt(List::size).sum());
+    }
+
     public static void shutdown() {
         LISTENERS_MAP.clear();
     }
@@ -146,11 +163,11 @@ public class EventService {
                 .flatMap(Collection::stream)
                 .filter(EventService::isTemplateListener)
                 .forEach(ref -> {
-                    if(ref.get() != null && ref.get() instanceof NonStaticEventListener nonStaticEventListener && nonStaticEventListener.eventClass.equals(TerminateApplicationEvent.class)) {
-                        ((EventListener<TerminateApplicationEvent>)ref.get()).handleEvent(new TerminateApplicationEvent());
+                    if (ref.get() != null && ref.get() instanceof NonStaticEventListener nonStaticEventListener && nonStaticEventListener.eventClass.equals(TerminateApplicationEvent.class)) {
+                        ((EventListener<TerminateApplicationEvent>) ref.get()).handleEvent(new TerminateApplicationEvent());
                     }
                 });
-        LISTENERS_MAP.values().forEach( value -> value.removeIf(EventService::isTemplateListener));
+        LISTENERS_MAP.values().forEach(value -> value.removeIf(EventService::isTemplateListener));
     }
 
     private static boolean isTemplateListener(WeakReference<EventListener<? extends Event>> ref) {

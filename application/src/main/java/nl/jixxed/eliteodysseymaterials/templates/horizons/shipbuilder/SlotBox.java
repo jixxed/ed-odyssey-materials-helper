@@ -672,7 +672,10 @@ class SlotBox extends DestroyableStackPane {
                 this.mountingUp.setVisible(hardpointModule.findHigherMounting().isPresent());
                 this.mountingDown.setVisible(hardpointModule.findLowerMounting().isPresent());
             }
-            this.mountingLabel.setGraphic(createIconWithoutTooltip("/images/ships/icons/" + hardpointModule.getMounting().name().toLowerCase() + ".png", "shipbuilder-slots-slotbox-icon"));
+            //todo memory leak? destroy old graphic if exists
+            var graphic = createIconWithoutTooltip("/images/ships/icons/" + hardpointModule.getMounting().name().toLowerCase() + ".png", "shipbuilder-slots-slotbox-icon");
+            this.mountingLabel.setGraphic(graphic);
+            this.mountingLabel.register(graphic);
         }
     }
 
@@ -720,8 +723,10 @@ class SlotBox extends DestroyableStackPane {
 
     private void updatePower(ShipModule shipModule) {
         if (shipModule != null) {
+            //todo memory leak? destroy old graphic if exists
             this.power = createIconWithTooltip("/images/ships/icons/" + (shipModule.isPowered() ? "powered" : "unpowered") + shipModule.getPowerGroup() + ".png", shipModule.getPowerGroup(), "shipbuilder-slots-slotbox-button-icon");
             this.powerButton.setGraphic(this.power);
+            this.powerButton.register(this.power);
             final boolean hasPowerToggle = shipModule.hasPowerToggle();
             this.power.setVisible(hasPowerToggle);
             if (!isCurrentShip()) {
@@ -1286,6 +1291,7 @@ class SlotBox extends DestroyableStackPane {
 
     @Override
     public void destroyInternal() {
+        super.destroyInternal();
         if (subscribe != null) {
             subscribe.dispose();
         }

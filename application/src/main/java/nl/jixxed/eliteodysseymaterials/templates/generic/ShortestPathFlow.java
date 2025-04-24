@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.templates.generic;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.PathItem;
 import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.Expansion;
@@ -12,9 +13,10 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplat
 import java.util.List;
 import java.util.stream.IntStream;
 
+@Slf4j
 public class ShortestPathFlow<T extends BlueprintName<T>> extends DestroyableFlowPane implements DestroyableTemplate {
     @Getter
-    private final ObservableList<ShortestPathItem<T>> items = FXCollections.observableArrayList();
+    private ObservableList<ShortestPathItem<T>> items = FXCollections.observableArrayList();
     private final Expansion expansion;
 
     public ShortestPathFlow(final Expansion expansion) {
@@ -32,5 +34,11 @@ public class ShortestPathFlow<T extends BlueprintName<T>> extends DestroyableFlo
         this.items.clear();
         this.items.addAll(IntStream.range(0, pathItems.size()).mapToObj(index -> new ShortestPathItem<>(pathItems.get(index), index + 1, this.expansion)).toList());
         this.getNodes().addAll(this.items);
+    }
+
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        items.clear();
     }
 }

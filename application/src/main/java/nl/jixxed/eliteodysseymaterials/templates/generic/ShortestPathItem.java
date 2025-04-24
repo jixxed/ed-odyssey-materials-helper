@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.generic;
 
 import javafx.beans.binding.StringBinding;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
@@ -21,13 +22,13 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
-class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBox implements DestroyableTemplate {
-    private static final String SHORTEST_PATH_ITEM_LABEL_STYLE_CLASS = "shortest-path-item-label";
+public class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBox implements DestroyableTemplate {
+    @Getter
     private final PathItem<T> pathItem;
     private final int index;
     private final Expansion expansion;
 
-    ShortestPathItem(final PathItem<T> pathItem, final int index, final Expansion expansion) {
+    public ShortestPathItem(final PathItem<T> pathItem, final int index, final Expansion expansion) {
         this.pathItem = pathItem;
         this.index = index;
         this.expansion = expansion;
@@ -37,30 +38,15 @@ class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBox imple
     @Override
     public void initComponents() {
         this.getStyleClass().add("shortest-path-item");
-        DestroyableLabel distanceLabel = LabelBuilder.builder()
-                .withStyleClass("distance-title")
-                .withText("tab.wishlist.travel.path.column.distance")
-                .build();
         DestroyableLabel blueprintsLabel = LabelBuilder.builder()
                 .withStyleClass("blueprints-title")
                 .withText("tab.wishlist.travel.path.column.blueprints")
-                .build();
-        DestroyableLabel distance = LabelBuilder.builder()
-                .withStyleClass("distance")
-                .withText(((this.index > 1) ? "tab.wishlist.distance.plus" : "tab.wishlist.distance"), Formatters.NUMBER_FORMAT_2.format(this.pathItem.getDistance()))
                 .build();
         DestroyableLabel engineer = LabelBuilder.builder()
                 .withStyleClass("engineer")
                 .withText(this.pathItem.getEngineer().getLocalizationKey())
                 .build();
         List<DestroyableLabel> blueprints = new ArrayList<>(this.pathItem.getRecipes().entrySet().stream()
-//                .map(bp -> (bp instanceof HorizonsBlueprint horizonsBlueprint)
-//                        ? HorizonsBlueprintConstants.getRecipe(horizonsBlueprint.getBlueprintName(), horizonsBlueprint.getHorizonsBlueprintType(), HorizonsBlueprintGrade.GRADE_1)
-//                        : bp).distinct())
-//                .collect(Collectors.groupingBy(
-//                        recipe -> recipe,
-//                        Collectors.summingInt(value -> 1))
-//                ).entrySet().stream()
                 .sorted(Comparator.comparing((Map.Entry o) -> o.getKey() instanceof HorizonsExperimentalEffectBlueprint)
                         .thenComparing((Map.Entry o) -> LocaleService.getLocalizedStringForCurrentLocale(((Blueprint) o.getKey()).getBlueprintName().getLocalizationKey())))
                 .map(entry ->
@@ -79,7 +65,7 @@ class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBox imple
                             }
                             return LabelBuilder.builder()
                                     .withStyleClasses("blueprint")
-                                    .withOnMouseClicked(event -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsBlueprintClickEvent(entry.getKey()) : new BlueprintClickEvent(entry.getKey().getBlueprintName())))
+                                    .withOnMouseClicked(_ -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsBlueprintClickEvent(entry.getKey()) : new BlueprintClickEvent(entry.getKey().getBlueprintName())))
                                     .withText(stringBinding
                                     )
                                     .build();
@@ -100,6 +86,14 @@ class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBox imple
             if (!Engineer.REMOTE_WORKSHOP.equals(this.pathItem.getEngineer())) {
                 final CopyableLocation copyableLocation = new CopyableLocation(this.pathItem.getEngineer().getStarSystem(), this.pathItem.getEngineer().getSettlement().getSettlementName());
 
+                DestroyableLabel distanceLabel = LabelBuilder.builder()
+                        .withStyleClass("distance-title")
+                        .withText("tab.wishlist.travel.path.column.distance")
+                        .build();
+                DestroyableLabel distance = LabelBuilder.builder()
+                        .withStyleClass("distance")
+                        .withText(((this.index > 1) ? "tab.wishlist.distance.plus" : "tab.wishlist.distance"), Formatters.NUMBER_FORMAT_2.format(this.pathItem.getDistance()))
+                        .build();
                 final DestroyableHBox distanceBox = BoxBuilder.builder()
                         .withStyleClass("distance-line")
                         .withNodes(distanceLabel, distance)

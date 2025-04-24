@@ -1,6 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.binding.IntegerBinding;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ShortestPathFlowBuilder;
@@ -17,6 +19,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTe
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 import nl.jixxed.eliteodysseymaterials.templates.generic.ShortestPathFlow;
+import nl.jixxed.eliteodysseymaterials.templates.generic.ShortestPathItem;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,14 +44,17 @@ public class HorizonsWishlistShortestPath extends DestroyableVBox implements Des
                 .withExpansion(Expansion.HORIZONS)
                 .withPathItems(pathItems)
                 .build();
-        this.shortestPathFlow.addBinding(this.shortestPathFlow.visibleProperty(), Bindings.greaterThan(Bindings.size(this.shortestPathFlow.getItems()), 0));
-        this.shortestPathFlow.addBinding(this.shortestPathFlow.managedProperty(), Bindings.greaterThan(Bindings.size(this.shortestPathFlow.getItems()), 0));
+        IntegerBinding size = Bindings.size(this.shortestPathFlow.getItems());
+        final BooleanBinding listNotEmptyBinding = Bindings.greaterThan(size, 0);
+
+        this.shortestPathFlow.addBinding(this.shortestPathFlow.visibleProperty(), listNotEmptyBinding);
+        this.shortestPathFlow.addBinding(this.shortestPathFlow.managedProperty(), listNotEmptyBinding);
 
         DestroyableLabel travelPathLabel = LabelBuilder.builder()
                 .withStyleClass("title")
                 .withText("tab.wishlist.travel.path")
-                .withVisibilityProperty(Bindings.greaterThan(Bindings.size(this.shortestPathFlow.getItems()), 0))
-                .withManagedProperty(Bindings.greaterThan(Bindings.size(this.shortestPathFlow.getItems()), 0))
+                .withVisibilityProperty(listNotEmptyBinding)
+                .withManagedProperty(listNotEmptyBinding)
                 .build();
 
         this.getNodes().addAll(travelPathLabel, this.shortestPathFlow);
@@ -65,8 +71,10 @@ public class HorizonsWishlistShortestPath extends DestroyableVBox implements Des
 
     private void update() {
         final List<PathItem<HorizonsBlueprintName>> pathItems = getPathItems();
-        this.shortestPathFlow.setItems(pathItems);
-        EventService.publish(new HorizonsShortestPathChangedEvent(pathItems));
+        if (this.shortestPathFlow.getItems().size() != pathItems.size() || !this.shortestPathFlow.getItems().stream().map(ShortestPathItem::getPathItem).allMatch(pathItems::contains)) {
+            this.shortestPathFlow.setItems(pathItems);
+            EventService.publish(new HorizonsShortestPathChangedEvent(pathItems));
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -77,4 +85,5 @@ public class HorizonsWishlistShortestPath extends DestroyableVBox implements Des
                 .map(wishlist -> PathService.calculateHorizonsShortestPath((List<HorizonsWishlistBlueprint>) (List<?>) wishlist.getItems()))
                 .orElse(Collections.emptyList());
     }
+
 }

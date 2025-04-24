@@ -33,7 +33,7 @@ public class FileSyncService {
     public static final String BROKERS_TRADERS_URL = "https://d3a17kxijdwucd.cloudfront.net/traders_brokers.zip";
 
     static {
-        SYNC_ITEMS.add(new SyncItem(BROKERS_TRADERS_URL, Duration.ofDays(1), OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + "traders_brokers.zip", FileSyncService::extractZipFiles));
+        SYNC_ITEMS.add(new SyncItem(BROKERS_TRADERS_URL, Duration.ofDays(1), OsConstants.getConfigDirectory() + OsConstants.getOsSlash() + "traders_brokers.zip", FileSyncService::extractZipFiles));
     }
 
     private static void extractZipFiles(String zipFilePath) {
@@ -43,7 +43,7 @@ public class FileSyncService {
             while ((entry = zis.getNextEntry()) != null) {
                 String entryName = entry.getName();
                 if (entryName.equals("traders.jsonl") || entryName.equals("brokers.jsonl")) {
-                    File outputFile = new File(OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + entryName);
+                    File outputFile = new File(OsConstants.getConfigDirectory() + OsConstants.getOsSlash() + entryName);
                     try (FileOutputStream fos = new FileOutputStream(outputFile)) {
                         int len;
                         while ((len = zis.read(buffer)) > 0) {
