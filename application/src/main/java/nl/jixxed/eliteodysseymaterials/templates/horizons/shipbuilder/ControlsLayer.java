@@ -290,13 +290,14 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
         register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> applyFontSizingHack(fontSizeEvent.getFontSize())));
         register(EventService.addListener(true, this, 9, ShipLoadoutEvent.class, _ -> EventService.publish(new HorizonsShipSelectedEvent(this.shipSelect.getSelectionModel().getSelectedItem().getUuid()))));
         register(EventService.addListener(true, this, HorizonsShipChangedEvent.class, horizonsShipChangedEvent -> this.activeShipUUID = horizonsShipChangedEvent.getShipUUID()));
+
         register(EventService.addListener(true, this, 0, HorizonsShipSelectedEvent.class, _ -> {
             APPLICATION_STATE.getPreferredCommander()
                     .flatMap(commander -> ShipService.getShipConfigurations(commander).getSelectedShipConfiguration())
                     .ifPresent(configuration -> APPLICATION_STATE.setShip(ShipMapper.toShip(configuration)));
-            refreshShipSelect();
             EventService.publish(new HorizonsShipChangedEvent(this.activeShipUUID));
         }));
+
         register(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
             final Optional<ShipConfiguration> shipConfiguration = ShipService.getShipConfigurations(commanderSelectedEvent.getCommander()).getSelectedShipConfiguration();
             this.activeShipUUID = shipConfiguration.map(ShipConfiguration::getUuid).orElse(null);

@@ -984,7 +984,8 @@ class SlotBox extends DestroyableStackPane {
         restore = ButtonBuilder.builder()
                 .withText("ship.module.restore")
                 .withOnAction(event -> {
-                    this.slot.setShipModule(this.slot.getOldShipModule() == null ? null : this.slot.getOldShipModule().Clone());
+                    final ShipModule shipModule = getShipModuleToRestore();
+                    this.slot.setShipModule(shipModule);
                     refresh();
                     notifyChanged();
                     close();
@@ -1003,7 +1004,20 @@ class SlotBox extends DestroyableStackPane {
         clear = ButtonBuilder.builder()
                 .withText("ship.module.clear")
                 .withOnAction(event -> {
-                    this.slot.setOldShipModule(null);
+                    //restore to default module for core modules, since they are not allowed to be removed
+                    switch (this.slot.getSlotType()) {
+                        case CORE_ARMOUR, CORE_FRAME_SHIFT_DRIVE, CORE_FUEL_TANK, CORE_LIFE_SUPPORT,
+                             CORE_POWER_DISTRIBUTION,
+                             CORE_POWER_PLANT, CORE_SENSORS, CORE_THRUSTERS -> {
+                            final ShipModule coreShipModule = getBaseShip().getCoreSlots().stream()
+                                    .filter(baseShipSlot -> baseShipSlot.getSlotType().equals(this.slot.getSlotType()))
+                                    .findFirst()
+                                    .map(baseShipSlot -> baseShipSlot.getShipModule().Clone())
+                                    .orElseThrow(IllegalArgumentException::new);
+                            this.slot.setOldShipModule(coreShipModule);
+                        }
+                        default -> this.slot.setOldShipModule(null);
+                    }
                     refresh();
                     close();
                 })
@@ -1014,6 +1028,34 @@ class SlotBox extends DestroyableStackPane {
                 .withStyleClass("ships-modules-item")
                 .withNodes(label, new GrowingRegion(), restore, save, clear).buildHBox();
         content.getNodes().add(box);
+    }
+
+    private ShipModule getShipModuleToRestore() {
+        final ShipModule shipModule = this.slot.getOldShipModule() == null ? null : this.slot.getOldShipModule().Clone();
+        if (shipModule == null) {
+            //restore to default module for core modules, since they are not allowed to be removed
+            return switch (this.slot.getSlotType()) {
+                case CORE_ARMOUR, CORE_FRAME_SHIFT_DRIVE, CORE_FUEL_TANK, CORE_LIFE_SUPPORT, CORE_POWER_DISTRIBUTION,
+                     CORE_POWER_PLANT, CORE_SENSORS, CORE_THRUSTERS -> {
+                    final ShipModule coreShipModule = getBaseShip().getCoreSlots().stream()
+                            .filter(baseShipSlot -> baseShipSlot.getSlotType().equals(this.slot.getSlotType()))
+                            .findFirst()
+                            .map(baseShipSlot -> baseShipSlot.getShipModule().Clone())
+                            .orElseThrow(IllegalArgumentException::new);
+                    this.slot.setOldShipModule(coreShipModule);
+                    yield coreShipModule;
+                }
+                default -> null;
+            };
+        }
+        return shipModule;
+    }
+
+    private Ship getBaseShip() {
+        return Ship.ALL.stream()
+                .filter(ship -> ship.getShipType().equals(APPLICATION_STATE.getShip().getShipType()))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
     }
 
     private void setChangedButtonsState() {

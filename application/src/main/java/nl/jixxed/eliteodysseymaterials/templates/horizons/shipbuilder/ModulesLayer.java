@@ -226,6 +226,7 @@ public class ModulesLayer extends DestroyableAnchorPane implements DestroyableEv
 
     void drawHardpointLine(final int index) {
         lastIndex = index;
+        if (APPLICATION_STATE.getShip() == null) return;//can happen directly after selecting a ship in the list
         final ImageSlot imageSlot = APPLICATION_STATE.getShip().getHardpointSlots().get(index);
         shipImage.setImage(ImageService.getImage("/images/ships/ship/" + APPLICATION_STATE.getShip().getShipType().name().toLowerCase() + "." + imageSlot.getImageIndex() + ".png"));
         final double x = this.shipImage.getWidth() / 1920D * imageSlot.getX();
