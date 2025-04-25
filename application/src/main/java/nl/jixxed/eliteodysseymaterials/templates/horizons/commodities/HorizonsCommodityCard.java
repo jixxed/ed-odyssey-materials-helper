@@ -61,10 +61,6 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
         if (GameVersion.LIVE.equals(this.commodity.getGameVersion())) {
             this.pseudoClassStateChanged(PseudoClass.getPseudoClass("live"), true);
         }
-        DestroyableResizableImageView rareImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("rare-image")
-                .withImage("/images/material/stock/rare.png")
-                .build();
         DestroyableResizableImageView typeImage = ResizableImageViewBuilder.builder()
                 .withStyleClass("image")
                 .withImage(this.commodity.getCommodityType().getImagePath())
@@ -163,11 +159,15 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
                 .withStyleClass("content")
                 .withNodes(firstLine, new GrowingRegion(), secondLine).buildVBox();
         if (this.commodity instanceof RareCommodity) {
+            DestroyableResizableImageView rareImage = ResizableImageViewBuilder.builder()
+                    .withStyleClass("rare-image")
+                    .withImage("/images/material/stock/rare.png")
+                    .build();
             this.getNodes().add(rareImage);
+            StackPane.setAlignment(rareImage, Pos.TOP_RIGHT);
         }
         this.getNodes().add(content);
         this.getNodes().add(this.market);
-        StackPane.setAlignment(rareImage, Pos.TOP_RIGHT);
         StackPane.setAlignment(market, Pos.BOTTOM_CENTER);
         updateStyle();
         this.setOnMouseEntered(event -> log.info("Mouse entered"));

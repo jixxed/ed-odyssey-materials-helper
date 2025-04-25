@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.commodities;
 
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
@@ -29,6 +30,7 @@ public class HorizonsCommoditiesOverview extends DestroyableVBox implements Dest
     private HorizonsCommodityCard[] commodityCards;
     private CommoditiesSearch currentSearch = new CommoditiesSearch("", HorizonsCommoditiesSort.ALPHABETICAL, HorizonsCommoditiesShow.ALL);
     private List<DestroyableFlowPane> flows = new ArrayList<>();
+    private Disposable subscribe;
 
     HorizonsCommoditiesOverview() {
         final HorizonsCommoditiesSort materialSort = HorizonsCommoditiesSort.valueOf(PreferencesService.getPreference("search.commodities.sort", "ALPHABETICAL"));
@@ -105,7 +107,7 @@ public class HorizonsCommoditiesOverview extends DestroyableVBox implements Dest
     @Override
     public void initEventHandling() {
 
-        Observable
+        subscribe = Observable
                 .create(emitter -> register(EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
                     if (StoragePool.SHIP.equals(storageEvent.getStoragePool()) || StoragePool.FLEETCARRIER.equals(storageEvent.getStoragePool())) {
                         emitter.onNext(storageEvent);
@@ -122,5 +124,11 @@ public class HorizonsCommoditiesOverview extends DestroyableVBox implements Dest
 //        register(EventService.addListener(true, this, MarketUpdatedEvent.class, marketUpdatedEvent -> {
 //            Platform.runLater(this::update);
 //        }));
+    }
+
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        subscribe.dispose();
     }
 }

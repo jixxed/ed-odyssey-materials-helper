@@ -6,7 +6,6 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import lombok.extern.slf4j.Slf4j;
@@ -91,7 +90,7 @@ class HorizonsWishlistSearchBar extends DestroyableHBox implements DestroyableEv
     }
 
     private void initSearchTextFilter() {
-        final Tooltip groupMaterialsTooltip = TooltipBuilder.builder()
+        final DestroyableTooltip groupMaterialsTooltip = TooltipBuilder.builder()
                 .withText("search.grouping.placeholder")
                 .build();
         this.groupMaterialsComboBox = ComboBoxBuilder.builder(WishlistMaterialGrouping.class)

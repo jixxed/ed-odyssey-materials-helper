@@ -47,6 +47,15 @@ public class PowerBar extends DestroyableHBox implements DestroyableEventTemplat
     }
 
     public void initComponents() {
+        final Map<Integer, Double> retractedPower = calculateRetractedPower();
+        this.groupP = new TypeSegment(Math.max(0D, retractedPower.get(-1)), SegmentType.POWER_GROUP_P);
+        this.group1 = new TypeSegment(Math.max(0D, retractedPower.get(1)), SegmentType.POWER_GROUP_1);
+        this.group2 = new TypeSegment(Math.max(0D, retractedPower.get(2)), SegmentType.POWER_GROUP_2);
+        this.group3 = new TypeSegment(Math.max(0D, retractedPower.get(3)), SegmentType.POWER_GROUP_3);
+        this.group4 = new TypeSegment(Math.max(0D, retractedPower.get(4)), SegmentType.POWER_GROUP_4);
+        this.group5 = new TypeSegment(Math.max(0D, retractedPower.get(5)), SegmentType.POWER_GROUP_5);
+        this.groupOverPower = new TypeSegment(0D, SegmentType.POWER_OVERPOWER);
+        this.groupAvailable = new TypeSegment(Math.max(0D, retractedPower.get(0) - retractedPower.get(-1) - retractedPower.get(1) - retractedPower.get(2) - retractedPower.get(3) - retractedPower.get(4) - retractedPower.get(5)), SegmentType.POWER_GROUP_NONE);
         this.segmentedBar = SegmentedBarBuilder.builder(TypeSegment.class)
                 .withStyleClass("power-progressbar")
                 .withOrientation(Orientation.HORIZONTAL)
@@ -92,17 +101,9 @@ public class PowerBar extends DestroyableHBox implements DestroyableEventTemplat
                         SegmentType.POWER_GROUP_5, POWER_GROUP_5_COLOR,
                         SegmentType.POWER_GROUP_NONE, Color.rgb(128, 128, 128),
                         SegmentType.POWER_OVERPOWER, Color.rgb(240, 20, 20)), false))
+                .withSegments(groupP, group1, group2, group3, group4, group5, groupAvailable, groupOverPower)
                 .build();
-        final Map<Integer, Double> power = calculateRetractedPower();
-        this.groupP = new TypeSegment(Math.max(0D, power.get(-1)), SegmentType.POWER_GROUP_P);
-        this.group1 = new TypeSegment(Math.max(0D, power.get(1)), SegmentType.POWER_GROUP_1);
-        this.group2 = new TypeSegment(Math.max(0D, power.get(2)), SegmentType.POWER_GROUP_2);
-        this.group3 = new TypeSegment(Math.max(0D, power.get(3)), SegmentType.POWER_GROUP_3);
-        this.group4 = new TypeSegment(Math.max(0D, power.get(4)), SegmentType.POWER_GROUP_4);
-        this.group5 = new TypeSegment(Math.max(0D, power.get(5)), SegmentType.POWER_GROUP_5);
-        this.groupOverPower = new TypeSegment(0D, SegmentType.POWER_OVERPOWER);
-        this.groupAvailable = new TypeSegment(Math.max(0D, power.get(0) - power.get(-1) - power.get(1) - power.get(2) - power.get(3) - power.get(4) - power.get(5)), SegmentType.POWER_GROUP_NONE);
-        this.segmentedBar.getSegments().addAll(groupP, group1, group2, group3, group4, group5, groupAvailable, groupOverPower);
+
         final DestroyableLine lineDestroyedAndMalfunction = createLine(0.2);
         final DestroyableLine lineMalfunction = createLine(0.4);
         final DestroyableLine lineDestroyed = createLine(0.5);

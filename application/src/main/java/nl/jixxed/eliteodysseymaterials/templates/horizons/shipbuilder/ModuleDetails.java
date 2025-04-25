@@ -7,10 +7,8 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.*;
@@ -62,13 +60,15 @@ public class ModuleDetails extends DestroyableVBox implements DestroyableEventTe
                 .withStyleClass("module-details-save-legacy")
                 .withText("module.details.save.legacy")
                 .withMnemonicParsing(false)
+                .withVisibility(false)
+                .withManaged(false)
                 .withOnMouseClicked(mouseEvent -> {
                     if (mouseEvent.isAltDown()) {
                         legacySaveButton.getOnAction().handle(new ActionEvent());
                     }
                 })
                 .build();
-
+        this.getNodes().add(legacySaveButton);
         moduleName = LabelBuilder.builder()
                 .withStyleClass("module-details-title")
                 .withNonLocalizedText("")
@@ -177,7 +177,8 @@ public class ModuleDetails extends DestroyableVBox implements DestroyableEventTe
 
     private void update() {
         properties.getNodes().clear();
-        this.getNodes().remove(legacySaveButton);
+        legacySaveButton.setVisible(false);
+        legacySaveButton.setManaged(false);
         attributes.getNodes().clear();
         final boolean modulePresent = shipModule != null;
         hasModule.set(false);
@@ -206,7 +207,8 @@ public class ModuleDetails extends DestroyableVBox implements DestroyableEventTe
                     LegacyModuleService.saveLegacyModule(shipModule);
                     EventService.publish(new LegacyModuleSavedEvent());
                 });
-                this.getNodes().addFirst(legacySaveButton);
+                legacySaveButton.setVisible(true);
+                legacySaveButton.setManaged(true);
             }
         }
         executorService.schedule(() -> Platform.runLater(() -> hasModule.set(modulePresent)), 50, java.util.concurrent.TimeUnit.MILLISECONDS);
@@ -225,8 +227,6 @@ public class ModuleDetails extends DestroyableVBox implements DestroyableEventTe
         final Object estimatedValue = shipModule.getAttributeValue(horizonsModifier);
         final DestroyableHBox valuesLine = BoxBuilder.builder()
                 .withNodes().buildHBox();
-        final DestroyableVBox attribute = BoxBuilder.builder()
-                .withNodes().buildVBox();
 
         if (originalAttributeValue instanceof Boolean) {
             booleanLine(horizonsModifier, valuesLine, estimatedValue);
@@ -235,38 +235,27 @@ public class ModuleDetails extends DestroyableVBox implements DestroyableEventTe
                     .withStyleClass("module-details-label-title")
                     .withText(horizonsModifier.getLocalizationKey())
                     .build();
+            final DestroyableFlowPane flowPane = getFlowPane(title, valuesLine);
+            final DestroyableVBox attribute = BoxBuilder.builder()
+                    .withNodes(flowPane)
+                    .buildVBox();
             if (isModifiedAttribute(originalAttributeValue, maxValue)) {
                 if (shipModule.getModifiers().containsKey(horizonsModifier)) {
                     doubleLineWithActualValue(horizonsModifier, shipModule, valuesLine, (Double) originalAttributeValue);
                 } else {
                     doubleLIneWithEstimatedValue(horizonsModifier, shipModule, valuesLine, (Double) originalAttributeValue, (Double) estimatedValue);
                 }
-                final DestroyableFlowPane flowPane = getFlowPane(title, valuesLine);
-                this.attributes.addBinding(this.attributes.visibleProperty(), flowPane.needsLayoutProperty().not());
-
-                attribute.getNodes().add(
-                        flowPane
-                );
                 if (!shipModule.getModifications().isEmpty()) {
                     addTooltip(horizonsModifier, shipModule, (Double) originalAttributeValue, (Double) minValue, (Double) maxValue, (Double) estimatedValue, attribute);
                 }
-                attributes.getNodes().add(attribute);
-                attributes.getNodes().add(getSeparator());
             } else {
                 valuesLine.getNodes().add(LabelBuilder.builder()
                         .withStyleClass("module-details-label")
                         .withNonLocalizedText(horizonsModifier.format(originalAttributeValue))
                         .build());
-
-                final DestroyableFlowPane flowPane = getFlowPane(title, valuesLine);
-                this.attributes.addBinding(this.attributes.visibleProperty(), flowPane.needsLayoutProperty().not());
-
-                attribute.getNodes().add(
-                        flowPane
-                );
-                attributes.getNodes().add(attribute);
-                attributes.getNodes().add(getSeparator());
             }
+            attributes.getNodes().add(attribute);
+            attributes.getNodes().add(getSeparator());
         }
     }
 
@@ -278,7 +267,8 @@ public class ModuleDetails extends DestroyableVBox implements DestroyableEventTe
                 .build();
         flowPane.addBinding(flowPane.maxHeightProperty(), title.heightProperty().add(valuesLine.heightProperty()));
         flowPane.addBinding(flowPane.prefWidthProperty(), this.widthProperty());
-        flowPane.needsLayoutProperty().addListener(((observable, oldValue, newValue) -> {
+        flowPane.addBinding(this.attributes.visibleProperty(), flowPane.needsLayoutProperty().not());
+        flowPane.addChangeListener(flowPane.needsLayoutProperty(), ((observable, oldValue, newValue) -> {
             final double itemsWidth = flowPane.getChildren().stream().map(Region.class::cast).mapToDouble(Region::getWidth).sum();
             final double parentWidth = this.getWidth();
             if (parentWidth >= itemsWidth + ScalingHelper.getPixelDoubleFromEm(0.8)) {
@@ -294,7 +284,7 @@ public class ModuleDetails extends DestroyableVBox implements DestroyableEventTe
         return flowPane;
     }
 
-    private static void addTooltip(HorizonsModifier horizonsModifier, ShipModule shipModule, Double originalAttributeValue, Double minValue, Double maxValue, Double estimatedValue, VBox attribute) {
+    private static void addTooltip(HorizonsModifier horizonsModifier, ShipModule shipModule, Double originalAttributeValue, Double minValue, Double maxValue, Double estimatedValue, DestroyableVBox attribute) {
         final BigDecimal estimated = !Objects.equals(minValue, maxValue) && (estimatedValue > originalAttributeValue && horizonsModifier.isHigherBetter() || estimatedValue < originalAttributeValue && !horizonsModifier.isHigherBetter())
                 ? shipModule.getModifications().getFirst().getModificationCompleteness().orElse(BigDecimal.ZERO).multiply(BigDecimal.valueOf(100))
                 : BigDecimal.valueOf(100);
@@ -310,11 +300,11 @@ public class ModuleDetails extends DestroyableVBox implements DestroyableEventTe
         StringBinding text = hasActualValue
                 ? LocaleService.getStringBinding("tab.ships.details.tooltip.actual", minValueText, estValueText, actValueText, maxValueText)
                 : LocaleService.getStringBinding("tab.ships.details.tooltip.estimated", minValueText, estValueText, maxValueText);
-        final Tooltip tooltip = TooltipBuilder.builder()
+        final DestroyableTooltip tooltip = TooltipBuilder.builder()
                 .withShowDelay(Duration.ZERO)
                 .withText(text)
                 .build();
-        Tooltip.install(attribute, tooltip);
+        tooltip.install(attribute);
     }
 
     private static void doubleLIneWithEstimatedValue(HorizonsModifier horizonsModifier, ShipModule shipModule, DestroyableHBox valuesLine, double originalAttributeValue, double estimatedValue) {
@@ -392,5 +382,6 @@ public class ModuleDetails extends DestroyableVBox implements DestroyableEventTe
     public void destroyInternal() {
         super.destroyInternal();
         executorService.shutdownNow();
+        this.layer = null;
     }
 }

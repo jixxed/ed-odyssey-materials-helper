@@ -55,14 +55,6 @@ public class PowerplayCard extends DestroyableVBox implements DestroyableEventTe
         this.getStyleClass().add("powerplay-card");
         this.image = getPowerImage();
         this.name = getPowerName();
-        rankLabel = LabelBuilder.builder()
-                .withStyleClass("rank")
-                .withText("tab.powerplay.rank", ApplicationState.getInstance().getPowerRank())
-                .build();
-        meritsLabel = LabelBuilder.builder()
-                .withStyleClass("merits")
-                .withText("tab.powerplay.merits", ApplicationState.getInstance().getPowerMerits(), Power.getMeritsRequiredForRank(ApplicationState.getInstance().getPowerRank() + 1))
-                .build();
         DestroyableVBox textBox = BoxBuilder.builder()
                 .withStyleClass("text-box")
                 .withNodes(this.name)
@@ -73,6 +65,14 @@ public class PowerplayCard extends DestroyableVBox implements DestroyableEventTe
         );
         if (!Power.ALL.equals(this.power)) {
             this.location = new CopyableLocation(power.getStarSystem());
+            rankLabel = LabelBuilder.builder()
+                    .withStyleClass("rank")
+                    .withText("tab.powerplay.rank", ApplicationState.getInstance().getPowerRank())
+                    .build();
+            meritsLabel = LabelBuilder.builder()
+                    .withStyleClass("merits")
+                    .withText("tab.powerplay.merits", ApplicationState.getInstance().getPowerMerits(), Power.getMeritsRequiredForRank(ApplicationState.getInstance().getPowerRank() + 1))
+                    .build();
             rankAndMeritsBox = BoxBuilder.builder()
                     .withNodes(rankLabel, new GrowingRegion(), meritsLabel)
                     .buildHBox();

@@ -67,14 +67,16 @@ public class ShieldStats extends Stats implements DestroyableEventTemplate {
         final DestroyableLabel rebuild = LabelBuilder.builder()
                 .withText("ship.stats.shield.rebuild")
                 .build();
-        regen.setTooltip(TooltipBuilder.builder()
+        final DestroyableTooltip regenTooltip = TooltipBuilder.builder()
                 .withShowDelay(Duration.ZERO)
                 .withText("ship.stats.shield.regen.tooltip")
-                .build());
-        rebuild.setTooltip(TooltipBuilder.builder()
+                .build();
+        regenTooltip.install(regen);
+        final DestroyableTooltip rebuildTooltip = TooltipBuilder.builder()
                 .withShowDelay(Duration.ZERO)
                 .withText("ship.stats.shield.rebuild.tooltip")
-                .build());
+                .build();
+        rebuildTooltip.install(rebuild);
         scbRestoration = LabelBuilder.builder()
                 .withStyleClass("ship-stats-shield-label")
                 .withText("ship.stats.armour.scb.restoration.unit", 0, 0)

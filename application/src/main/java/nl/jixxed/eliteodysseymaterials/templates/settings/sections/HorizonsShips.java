@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -25,7 +26,6 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.ships.LegacyModuleService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
@@ -51,32 +51,36 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
     private final IntegerProperty maxGrade = new SimpleIntegerProperty(0);
     private DestroyableVBox blueprints;
     private DestroyableVBox effects;
-    private DestroyableLabel blueprintLabel;
-    private DestroyableLabel effectLabel;
+    //    private DestroyableLabel blueprintLabel;
+//    private DestroyableLabel effectLabel;
+    private BooleanBinding selectedNull;
 
-    private static final Callback<ListView<ShipLegacyModule>, ListCell<ShipLegacyModule>> legacyModulesCellFactory = _ -> new DestroyableListCell<>() {
-
-        @SuppressWarnings("java:S1068")
-        private final EventListener<EngineerEvent> engineerEventListener = register(EventService.addListener(true, this, EngineerEvent.class, _ -> {
-            updateText(getItem(), this.emptyProperty().get());
-        }));
-
-        @Override
-        protected void updateItem(final ShipLegacyModule item, final boolean empty) {
-            super.updateItem(item, empty);
-            updateText(item, empty);
-        }
-
-        private void updateText(final ShipLegacyModule item, final boolean empty) {
-            if (empty || item == null) {
-                setText(null);
-                setGraphic(null);
-            } else {
-                setText(item.getName());
+    private Callback<ListView<ShipLegacyModule>, ListCell<ShipLegacyModule>> createDestroyableCellFactory(Destroyable destroyable) {
+        return listView -> new DestroyableListCell<>() {
+            {
+                destroyable.register(this);
+                register(EventService.addListener(true, listView, EngineerEvent.class, _ -> {
+                    updateText(getItem(), this.emptyProperty().get());
+                }));
             }
-        }
 
-    };
+            @Override
+            protected void updateItem(final ShipLegacyModule item, final boolean empty) {
+                super.updateItem(item, empty);
+                updateText(item, empty);
+            }
+
+            private void updateText(final ShipLegacyModule item, final boolean empty) {
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    setText(item.getName());
+                }
+            }
+
+        };
+    }
 
     public HorizonsShips() {
         this.initComponents();
@@ -135,8 +139,8 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
                 .build();
         this.modulesList = ListViewBuilder.builder(ShipLegacyModule.class)
                 .withStyleClass("settings-legacy-modules-list")
-                .withCellFactory(legacyModulesCellFactory)
                 .build();
+        this.modulesList.setCellFactory(createDestroyableCellFactory(this.modulesList));
         DestroyableButton removeButton = ButtonBuilder.builder()
                 .withStyleClass(SETTINGS_LEGACY_MODULE_BUTTON_STYLE_CLASS)
                 .withText("tab.settings.ships.legacy.modules.remove")
@@ -148,43 +152,36 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
                 })
                 .build();
 
-        removeButton.addBinding(removeButton.disableProperty(), this.modulesList.getSelectionModel().selectedItemProperty().isNull());
+        selectedNull = this.modulesList.getSelectionModel().selectedItemProperty().isNull();
+        removeButton.addBinding(removeButton.disableProperty(), selectedNull);
         saveButton = ButtonBuilder.builder()
                 .withStyleClass(SETTINGS_LEGACY_MODULE_BUTTON_STYLE_CLASS)
                 .withText("tab.settings.ships.legacy.modules.save")
                 .build();
-        saveButton.addBinding(saveButton.disableProperty(), this.modulesList.getSelectionModel().selectedItemProperty().isNull());
+        saveButton.addBinding(saveButton.disableProperty(), selectedNull);
         this.modulesList.addChangeListener(this.modulesList.getSelectionModel().selectedItemProperty(), (_, _, newValue) -> update(newValue));
         updateModules();
 //
         DestroyableLabel nameTitle = LabelBuilder.builder()
                 .withText("tab.settings.ships.legacy.modules.name")
-                .withVisibilityProperty(modulesList.getSelectionModel().selectedItemProperty().isNotNull())
+                .withVisibilityProperty(selectedNull)
                 .build();
         nameValue = TextFieldBuilder.builder()
                 .withStyleClass(SETTINGS_LEGACY_MODULE_CB_STYLE_CLASS)
-                .withVisibilityProperty(modulesList.getSelectionModel().selectedItemProperty().isNotNull())
+                .withVisibilityProperty(selectedNull)
                 .build();
         DestroyableLabel typeTitle = LabelBuilder.builder()
                 .withStyleClass(SETTINGS_LEGACY_MODULE_LABEL_STYLE_CLASS)
                 .withText("tab.settings.ships.legacy.modules.type")
-                .withVisibilityProperty(modulesList.getSelectionModel().selectedItemProperty().isNotNull())
+                .withVisibilityProperty(selectedNull)
                 .build();
         typeValue = LabelBuilder.builder()
                 .withStyleClass(SETTINGS_LEGACY_MODULE_LABEL_STYLE_CLASS)
-                .withVisibilityProperty(modulesList.getSelectionModel().selectedItemProperty().isNotNull())
-                .build();
-        blueprintLabel = LabelBuilder.builder()
-                .withStyleClass(SETTINGS_LEGACY_MODULE_LABEL_STYLE_CLASS)
-                .withText("tab.settings.ships.legacy.modules.blueprint")
+                .withVisibilityProperty(selectedNull)
                 .build();
         blueprints = BoxBuilder.builder()
                 .withStyleClass(SETTINGS_LEGACY_MODULE_CB_STYLE_CLASS)
                 .buildVBox();
-        effectLabel = LabelBuilder.builder()
-                .withStyleClass(SETTINGS_LEGACY_MODULE_LABEL_STYLE_CLASS)
-                .withText("tab.settings.ships.legacy.modules.effect")
-                .build();
         effects = BoxBuilder.builder()
                 .withStyleClass(SETTINGS_LEGACY_MODULE_CB_STYLE_CLASS)
                 .buildVBox();
@@ -277,9 +274,14 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
                         .sorted(Comparator.comparing(horizonsBlueprintType -> LocaleService.getLocalizedStringForCurrentLocale(horizonsBlueprintType.getLocalizationKey(true))))
                         .map(horizonsBlueprintType -> createBlueprintButton(shipLegacyModule, shipModule, experimental, horizonsBlueprintType, toggleGroup))
                         .toList();
+                DestroyableLabel title = LabelBuilder.builder()
+                        .withStyleClass(SETTINGS_LEGACY_MODULE_LABEL_STYLE_CLASS)
+                        .withText((experimental) ? "tab.settings.ships.legacy.modules.effect" : "tab.settings.ships.legacy.modules.blueprint")
+                        .build();
+
                 final DestroyableVBox vBox = BoxBuilder.builder()
                         .withStyleClass(SETTINGS_LEGACY_MODULE_CB_STYLE_CLASS)
-                        .withNode((experimental ? effectLabel : blueprintLabel))
+                        .withNode(title)
                         .withNodes(toggleButtons)
                         .buildVBox();
                 addGradeSelection(experimental, shipLegacyModule, shipModule, toggleGroup, vBox);
@@ -408,4 +410,10 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
         return toggleButton;
     }
 
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        selectedNull.dispose();
+        maxGrade.unbind();
+    }
 }

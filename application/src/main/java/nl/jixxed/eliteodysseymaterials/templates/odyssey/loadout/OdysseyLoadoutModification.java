@@ -38,7 +38,6 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
     private final int position;
     private DestroyablePopOver popOver;
 
-    private DestroyableStackPane stackPane;
     private DestroyableLabel setEquiped;
     private DestroyableLabel changeMod;
 
@@ -87,7 +86,7 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
                     .buildVBox();
             VBox.setVgrow(setEquiped, Priority.ALWAYS);
             VBox.setVgrow(changeMod, Priority.ALWAYS);
-            stackPane = StackPaneBuilder.builder()
+            DestroyableStackPane stackPane = StackPaneBuilder.builder()
                     .withStyleClass("layers")
                     .withNodes(this.imageView, controls)
                     .build();
@@ -120,6 +119,7 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
                     .withArrowIndent(0)
                     .withArrowSize(0)
                     .withCornerRadius(0)
+                    .withDestroyOnHide(true)
                     .build();
             final Rectangle2D currentScreen = Screen.getScreensForRectangle(event.getScreenX(), event.getScreenY(), 1, 1).getFirst().getBounds();
             final double mouseXOnScreen = event.getScreenX() - currentScreen.getMinX();

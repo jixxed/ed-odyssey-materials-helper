@@ -1,6 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.builder;
 
-import javafx.scene.control.ToggleButton;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableSegmentedButton;
@@ -12,7 +11,7 @@ import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SegmentedButtonBuilder extends AbstractControlBuilder<SegmentedButtonBuilder> {
-    List<ToggleButton> buttons = new ArrayList<>();
+    List<DestroyableToggleButton> buttons = new ArrayList<>();
 
     public static SegmentedButtonBuilder builder() {
         return new SegmentedButtonBuilder();
@@ -33,7 +32,7 @@ public class SegmentedButtonBuilder extends AbstractControlBuilder<SegmentedButt
         DestroyableSegmentedButton segmentedButton = new DestroyableSegmentedButton();
         super.build(segmentedButton);
         segmentedButton.getButtons().addAll(this.buttons);
-
+        segmentedButton.registerAll(this.buttons);
         return segmentedButton;
     }
 }

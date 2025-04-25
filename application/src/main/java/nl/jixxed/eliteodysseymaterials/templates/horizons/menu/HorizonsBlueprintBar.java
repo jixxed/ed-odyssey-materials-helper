@@ -4,7 +4,6 @@ import javafx.scene.Node;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TitledPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -21,7 +20,6 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.helper.BlueprintHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.menu.About;
 
@@ -35,46 +33,43 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
     private static final String BLUEPRINT_TITLED_PANE_CONTENT_STYLE_CLASS = "blueprint-titled-pane-content";
     private static final String BLUEPRINT_LIST_STYLE_CLASS = "blueprint-list";
 
-    private static final Callback<ListView<HorizonsBlueprintName>, ListCell<HorizonsBlueprintName>> cellFactory = _ -> new DestroyableListCell<>() {
-
-        @SuppressWarnings("java:S1068")
-        private final nl.jixxed.eliteodysseymaterials.service.event.EventListener<StorageEvent> storageEventListener = register(EventService.addListener(true, this, StorageEvent.class, _ -> {
-            updateStyle(getItem());
-            updateText(getItem(), this.emptyProperty().get());
-        }));
-
-        @SuppressWarnings("java:S1068")
-        private final EventListener<EngineerEvent> engineerEventListener = register(EventService.addListener(true, this, EngineerEvent.class, _ -> {
-            updateStyle(getItem());
-            updateText(getItem(), this.emptyProperty().get());
-        }));
-
-
-        @Override
-        protected void updateItem(final HorizonsBlueprintName item, final boolean empty) {
-            super.updateItem(item, empty);
-            updateText(item, empty);
-            updateStyle(item);
-        }
-
-        private void updateText(final HorizonsBlueprintName item, final boolean empty) {
-            if (empty || item == null) {
-                setText(null);
-                setGraphic(null);
-            } else {
-                setText(item + (BlueprintHelper.isCompletedEngineerRecipe(item) ? " " + UTF8Constants.CHECK_TRUE : ""));
+    private Callback<ListView<HorizonsBlueprintName>, ListCell<HorizonsBlueprintName>> createDestroyableCellFactory(Destroyable destroyable) {
+        return _ -> new DestroyableListCell<>() {
+            {
+                destroyable.register(this);
+                register(EventService.addListener(true, destroyable, StorageEvent.class, _ -> {
+                    updateText(getItem(), this.emptyProperty().get());
+                }));
+                register(EventService.addListener(true, destroyable, EngineerEvent.class, _ -> {
+                    updateText(getItem(), this.emptyProperty().get());
+                }));
             }
-        }
 
-        private void updateStyle(final HorizonsBlueprintName item) {
-            if (item != null && BlueprintHelper.isCompletedEngineerRecipe(item)) {
-                this.setStyle("-fx-text-fill: #89d07f;");
-            } else {
-                this.setStyle("-fx-text-fill: white;");
+            @Override
+            protected void updateItem(final HorizonsBlueprintName item, final boolean empty) {
+                super.updateItem(item, empty);
+                updateText(item, empty);
+                updateStyle(item);
             }
-        }
 
-    };
+            private void updateText(final HorizonsBlueprintName item, final boolean empty) {
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    setText(item + (BlueprintHelper.isCompletedEngineerRecipe(item) ? " " + UTF8Constants.CHECK_TRUE : ""));
+                }
+            }
+
+            private void updateStyle(final HorizonsBlueprintName item) {
+                if (item != null && BlueprintHelper.isCompletedEngineerRecipe(item)) {
+                    this.setStyle("-fx-text-fill: #89d07f;");
+                } else {
+                    this.setStyle("-fx-text-fill: white;");
+                }
+            }
+        };
+    }
 
     public HorizonsBlueprintBar() {
         initComponents();
@@ -84,16 +79,16 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
     public void initComponents() {
         this.getStyleClass().add("blueprint-menu");
 //        this.getStyleClass().add("blueprint-bar");
-        TitledPane[] categoryTitledPanes = HorizonsBlueprintConstants.RECIPES.entrySet().stream()
+        DestroyableTitledPane[] categoryTitledPanes = HorizonsBlueprintConstants.RECIPES.entrySet().stream()
                 .sorted(Comparator.comparing(recipeCategoryMapEntry -> recipeCategoryMapEntry.getKey().getOrder()))
                 .map(this::createBlueprintCategoryTitledPane)
-                .toArray(TitledPane[]::new);
+                .toArray(DestroyableTitledPane[]::new);
 
-        final DestroyableTitledPane categoryTitledPaneEngineers = createCategoryTitledPaneEngineers(HorizonsBlueprintConstants.getEngineerUnlockRequirements());
-        final DestroyableTitledPane categoryTitledPaneExperimental = createExperimentalEffectsCategoryTitledPane(HorizonsBlueprintConstants.getExperimentalEffects());
-        final DestroyableTitledPane categoryTitledPaneSynthesis = createSynthesisCategoryTitledPane(HorizonsBlueprintConstants.getSynthesis());
-        final DestroyableTitledPane categoryTitledPaneTechBroker = createTechbrokerCategoryTitledPane(HorizonsBlueprintConstants.getTechbrokerUnlocks());
-        final DestroyableTitledPane aboutTitledPane = createAboutTitledPane();
+        final DestroyableTitledPane categoryTitledPaneEngineers = register(createCategoryTitledPaneEngineers(HorizonsBlueprintConstants.getEngineerUnlockRequirements()));
+        final DestroyableTitledPane categoryTitledPaneExperimental = register(createExperimentalEffectsCategoryTitledPane(HorizonsBlueprintConstants.getExperimentalEffects()));
+        final DestroyableTitledPane categoryTitledPaneSynthesis = register(createSynthesisCategoryTitledPane(HorizonsBlueprintConstants.getSynthesis()));
+        final DestroyableTitledPane categoryTitledPaneTechBroker = register(createTechbrokerCategoryTitledPane(HorizonsBlueprintConstants.getTechbrokerUnlocks()));
+        final DestroyableTitledPane aboutTitledPane = register(createAboutTitledPane());
         this.getPanes().addAll(categoryTitledPaneEngineers);
         this.getPanes().addAll(categoryTitledPanes);
         this.getPanes().addAll(categoryTitledPaneExperimental);
@@ -101,6 +96,7 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
         this.getPanes().addAll(categoryTitledPaneTechBroker);
         this.getPanes().add(aboutTitledPane);
         this.setExpandedPane(aboutTitledPane);
+
     }
 
     @Override
@@ -147,7 +143,7 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
                 .withStyleClass(BLUEPRINT_TITLED_PANE_CONTENT_STYLE_CLASS)
                 .withNodes(hBoxBlueprints, hBoxTypes, scroll)
                 .buildVBox();
-        categoryTitledPane.setContent(content);
+        categoryTitledPane.setContentNode(content);
         VBox.setVgrow(scroll, Priority.ALWAYS);
         register(EventService.addListener(true, this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
             if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName
@@ -211,11 +207,11 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
 
         //auto select first option
         blueprints.getSelectionModel().select(0);
-        final VBox content = BoxBuilder.builder()
+        final DestroyableVBox content = BoxBuilder.builder()
                 .withStyleClass(BLUEPRINT_TITLED_PANE_CONTENT_STYLE_CLASS)
                 .withNodes(hBoxBlueprints, hBoxTypes, scroll)
                 .buildVBox();
-        categoryTitledPane.setContent(content);
+        categoryTitledPane.setContentNode(content);
         VBox.setVgrow(scroll, Priority.ALWAYS);
         return categoryTitledPane;
     }
@@ -255,12 +251,12 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
                 .withStyleClass(BLUEPRINT_TITLED_PANE_CONTENT_STYLE_CLASS)
                 .withNodes(hBoxBlueprints, gradeButtons, scroll)
                 .buildVBox();
-        categoryTitledPane.setContent(content);
+        categoryTitledPane.setContentNode(content);
         VBox.setVgrow(scroll, Priority.ALWAYS);
         return categoryTitledPane;
     }
 
-    private TitledPane createBlueprintCategoryTitledPane(final Map.Entry<BlueprintCategory, Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>>> recipesEntry) {
+    private DestroyableTitledPane createBlueprintCategoryTitledPane(final Map.Entry<BlueprintCategory, Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>>> recipesEntry) {
         final DestroyableScrollPane scroll = createScrollPane();
 
         final DestroyableComboBox<HorizonsBlueprintType> types = ComboBoxBuilder.builder(HorizonsBlueprintType.class)
@@ -321,7 +317,7 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
                 .withStyleClass(BLUEPRINT_TITLED_PANE_CONTENT_STYLE_CLASS)
                 .withNodes(hBoxBlueprints, hBoxTypes, gradeButtons, scroll)
                 .buildVBox();
-        categoryTitledPane.setContent(content);
+        categoryTitledPane.setContentNode(content);
         VBox.setVgrow(scroll, Priority.ALWAYS);
         return categoryTitledPane;
     }
@@ -343,10 +339,10 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
     }
 
     private DestroyableTitledPane createTitledPane(final String localizationKey) {
-        return TitledPaneBuilder.builder()
+        return register(TitledPaneBuilder.builder()
                 .withStyleClass("category-title-pane")
                 .withText(localizationKey)
-                .build();
+                .build());
     }
 
     private DestroyableComboBox<HorizonsBlueprintName> createBlueprintsComboboxForSynthesis(final DestroyableScrollPane scroll, final List<DestroyableToggleButton> toggleButtons, final Set<HorizonsBlueprintName> horizonsBlueprintNames, final HorizonsBlueprintType type, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> recipeEntry) {
@@ -424,13 +420,11 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
     private DestroyableToggleButton getToggleButton(final DestroyableScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final HorizonsBlueprintGrade grade, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> recipeEntry) {
         final DestroyableToggleButton toggleButton = ToggleButtonBuilder.builder()
                 .withStyleClass("blueprint-grade-togglebutton")
+                .withGraphic(ResizableImageViewBuilder.builder()
+                        .withImage("/images/ships/engineers/ranks/" + grade.getGrade() + ".png")
+                        .withStyleClasses("blueprint-grade-image")
+                        .build())
                 .build();
-        var graphic = ResizableImageViewBuilder.builder()
-                .withImage("/images/ships/engineers/ranks/" + grade.getGrade() + ".png")
-                .withStyleClasses("blueprint-grade-image")
-                .build();
-        toggleButton.setGraphic(graphic);
-        toggleButton.register(graphic);
         toggleButton.addChangeListener(toggleButton.selectedProperty(), (_, _, newValue) ->
         {
             if (Boolean.TRUE.equals(newValue)) {
@@ -468,8 +462,7 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
                     scroll.deregister(destroyableContent);
                     destroyableContent.destroyTemplate();
                 }
-                scroll.setContent(content);
-                scroll.register(content);
+                scroll.setContentNode(content);
             } catch (final NullPointerException ex) {
                 log.error("NPE", ex);
             }
@@ -520,11 +513,15 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
                 this.setExpandedPane(categoryTitledPane);
             }
         }));
-        blueprints.setCellFactory(cellFactory);
+        var destroyableCellFactory = createDestroyableCellFactory(blueprints);
+        blueprints.setCellFactory(destroyableCellFactory);
         blueprints.getSelectionModel().select(blueprints.getItems().getFirst());
-        blueprints.setButtonCell(cellFactory.call(null));
+        blueprints.setButtonCell(destroyableCellFactory.call(null));
         return categoryTitledPane;
     }
 
-
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+    }
 }

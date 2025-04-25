@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.destroyables;
 
 import javafx.beans.binding.StringBinding;
+import javafx.util.Subscription;
 import lombok.Getter;
 import lombok.Setter;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -16,13 +17,14 @@ public class DestroyableHighlightTextFlow extends DestroyableTextFlow {
     @Getter
     private final List<String> highlightStyleClasses = new ArrayList<>();
 
+    private final Subscription subscription;
     StringBinding stringBinding;
 
     public DestroyableHighlightTextFlow(StringBinding stringBinding, Object[] parameters) {
         super();
         this.parameters = parameters;
         this.stringBinding = stringBinding;
-        stringBinding.subscribe(_ -> populateTextFlow());
+        subscription = stringBinding.subscribe(_ -> populateTextFlow());
     }
 
     public void populateTextFlow() {
@@ -61,5 +63,11 @@ public class DestroyableHighlightTextFlow extends DestroyableTextFlow {
             text.getStyleClass().addAll(this.getStyleClass());
             this.getNodes().add(text);
         }
+    }
+
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        subscription.unsubscribe();
     }
 }

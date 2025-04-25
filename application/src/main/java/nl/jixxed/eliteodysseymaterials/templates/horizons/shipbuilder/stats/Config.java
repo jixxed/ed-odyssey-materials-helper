@@ -1,7 +1,11 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import javafx.application.Platform;
 import javafx.geometry.Orientation;
-import javafx.scene.control.Tooltip;
 import javafx.util.Duration;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
@@ -9,6 +13,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ShipConfig;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
+import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
@@ -19,6 +24,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.math.BigDecimal;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 public class Config extends Stats implements DestroyableEventTemplate {
 
@@ -37,6 +43,7 @@ public class Config extends Stats implements DestroyableEventTemplate {
     private DestroyableHBox powerBox;
     private DestroyableLabel cargoLabel;
     private DestroyableLabel fuelLabel;
+    private Disposable subscribe;
 
     public Config() {
         super();
@@ -144,13 +151,18 @@ public class Config extends Stats implements DestroyableEventTemplate {
                 EventService.publish(new ShipBuilderEvent());
             }
         });
-        fuelreserve.addChangeListener(fuelreserve.valueProperty(), (_, _, newValue) -> {
-            this.getShip().ifPresent(ship -> ship.setCurrentFuelReserve(newValue.doubleValue()));
-            EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.WEIGHT));
-            if (Boolean.FALSE.equals(isCurrentShip())) {
-                EventService.publish(new ShipBuilderEvent());
-            }
-        });
+        subscribe = Observable
+                .create((ObservableEmitter<Number> emitter) -> fuelreserve.addChangeListener(fuelreserve.valueProperty(), (_, _, newValue) -> emitter.onNext(newValue)))
+                .debounce(100, TimeUnit.MILLISECONDS)
+                .observeOn(Schedulers.io())
+                .subscribe(newValue -> Platform.runLater(() -> {
+                    this.getShip().ifPresent(ship -> ship.setCurrentFuelReserve(newValue.doubleValue()));
+                    EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.WEIGHT));
+                    if (Boolean.FALSE.equals(isCurrentShip())) {
+                        EventService.publish(new ShipBuilderEvent());
+                    }
+                }));
+
         this.live.addChangeListener(live.selectedProperty(), (_, _, newValue) -> {
             if (Boolean.TRUE.equals(newValue)) {
                 final Optional<ShipConfig> shipConfigOptional = ApplicationState.getInstance().getShipConfig();
@@ -171,18 +183,6 @@ public class Config extends Stats implements DestroyableEventTemplate {
     }
 
     private void powerBox() {
-        this.power = createIcon("shipbuilder-slots-slotbox-button-icon", "/images/ships/icons/powered1.png", 1);
-        this.powerButton = ButtonBuilder.builder()
-                .withStyleClass("shipbuilder-slots-slotbox-button")
-                .withOnAction(event -> {
-                    this.getShip().ifPresent(ship -> {
-                        ship.getCargoHatch().getShipModule().togglePower();
-                        notifyChanged();
-                        updatePower(ship.getCargoHatch().getShipModule());
-                    });
-                })
-                .withGraphic(this.power)
-                .build();
         initPowerBox();
         this.getShip().ifPresent(ship -> {
             updatePower(ship.getCargoHatch().getShipModule());
@@ -191,7 +191,19 @@ public class Config extends Stats implements DestroyableEventTemplate {
 
     private void initPowerBox() {
         this.powerBox.getNodes().clear();
+        this.power = createIcon("shipbuilder-slots-slotbox-button-icon", "/images/ships/icons/powered1.png", 1);
         if (!isCurrentShip()) {
+            this.powerButton = ButtonBuilder.builder()
+                    .withStyleClass("shipbuilder-slots-slotbox-button")
+                    .withOnAction(event -> {
+                        this.getShip().ifPresent(ship -> {
+                            ship.getCargoHatch().getShipModule().togglePower();
+                            notifyChanged();
+                            updatePower(ship.getCargoHatch().getShipModule());
+                        });
+                    })
+                    .withGraphic(this.power)
+                    .build();
             powerUp = ButtonBuilder.builder()
                     .withStyleClass("shipbuilder-slots-slotbox-button")
                     .withOnAction(event -> {
@@ -225,30 +237,35 @@ public class Config extends Stats implements DestroyableEventTemplate {
 
     private void updatePower(ShipModule shipModule) {
         if (shipModule != null) {
-            //todo memory leak? destroy old graphic if exists
-            this.power = createIcon("shipbuilder-slots-slotbox-button-icon", "/images/ships/icons/" + (shipModule.isPowered() ? "powered" : "unpowered") + shipModule.getPowerGroup() + ".png", shipModule.getPowerGroup());
-            this.powerButton.setGraphic(this.power);
-            this.powerButton.register(this.power);
+
+            this.power.setImage(ImageService.getImage("/images/ships/icons/" + (shipModule.isPowered() ? "powered" : "unpowered") + shipModule.getPowerGroup() + ".png"));
+
+            if (!isCurrentShip()) {
+                this.powerButton.setGraphic(this.power);
+                this.powerButton.register(this.power);
+            }
+
             final boolean hasPowerToggle = shipModule.hasPowerToggle();
-            this.power.setVisible(hasPowerToggle);
             if (!isCurrentShip()) {
                 final int powerGroup = shipModule.getPowerGroup();
                 this.powerUp.setVisible(hasPowerToggle && powerGroup > 1);
                 this.powerDown.setVisible(hasPowerToggle && powerGroup < 5);
                 this.powerButton.setVisible(hasPowerToggle);
             } else {
-                this.powerBox.getNodes().clear();
-                this.powerBox.getNodes().addAll(new GrowingRegion(), this.power, new GrowingRegion());
+                this.power.setVisible(hasPowerToggle);
+//                this.powerBox.getNodes().clear();
+//                this.powerBox.getNodes().addAll(new GrowingRegion(), this.power, new GrowingRegion());
             }
         }
     }
 
     private static DestroyableResizableImageView createIcon(String styleClass, String imageResource, Integer powerGroup) {
         final DestroyableResizableImageView icon = createIcon(styleClass, imageResource);
-        Tooltip.install(icon, TooltipBuilder.builder()
+        final DestroyableTooltip tooltip = TooltipBuilder.builder()
                 .withShowDelay(Duration.seconds(0.1))
                 .withText("ship.stats.config.power.group", powerGroup)
-                .build());
+                .build();
+        tooltip.install(icon);
         return icon;
     }
 
@@ -318,5 +335,14 @@ public class Config extends Stats implements DestroyableEventTemplate {
         cargo.setMaxValue(maxCargo + maxPassenger);
         cargoLabel.addBinding(cargoLabel.textProperty(), LocaleService.getStringBinding("ship.stats.config.cargo", maxCargo, maxPassenger));
 
+    }
+
+
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        if (subscribe != null) {
+            subscribe.dispose();
+        }
     }
 }

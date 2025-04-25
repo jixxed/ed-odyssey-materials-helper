@@ -36,6 +36,9 @@ public class SliderPopupSkin implements Skin<SliderPopup>, Destroyable {
 
     @Override
     public void dispose() {
+        valueText.destroy();
+        skinnable = null;
         this.destroy();
+
     }
 }

@@ -60,7 +60,13 @@
 
     .wishlist-button {
       -fx-fit-to-width: true;
+
+      &:hidden-menu > .arrow-button,
+      &:hidden-menu > .arrow-button > .arrow {
+        -fx-padding: 0;
+      }
     }
+
 
     //titles
     .title {

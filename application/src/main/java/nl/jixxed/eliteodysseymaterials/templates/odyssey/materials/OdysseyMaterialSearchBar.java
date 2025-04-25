@@ -6,7 +6,6 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import lombok.extern.slf4j.Slf4j;
@@ -22,10 +21,7 @@ import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComboBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTextField;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.concurrent.TimeUnit;
 
@@ -71,7 +67,7 @@ class OdysseyMaterialSearchBar extends DestroyableHBox implements DestroyableEve
     }
 
     private void initSearchTextSort() {
-        final Tooltip sortMaterialsTooltip = TooltipBuilder.builder()
+        final DestroyableTooltip sortMaterialsTooltip = TooltipBuilder.builder()
                 .withText("search.sort.placeholder")
                 .build();
         this.sortMaterialsComboBox = ComboBoxBuilder.builder(OdysseyMaterialSort.class)
@@ -91,7 +87,7 @@ class OdysseyMaterialSearchBar extends DestroyableHBox implements DestroyableEve
     }
 
     private void initSearchTextFilter() {
-        final Tooltip showMaterialsTooltip = TooltipBuilder.builder()
+        final DestroyableTooltip showMaterialsTooltip = TooltipBuilder.builder()
                 .withText("search.filter.placeholder")
                 .build();
         this.showMaterialsComboBox = ComboBoxBuilder.builder(OdysseyMaterialShow.class)

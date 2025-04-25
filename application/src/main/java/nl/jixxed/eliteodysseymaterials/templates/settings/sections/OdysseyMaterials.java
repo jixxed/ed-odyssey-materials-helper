@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.ListBinding;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
@@ -28,15 +29,15 @@ public class OdysseyMaterials extends DestroyableVBox implements DestroyableEven
 
     private DestroyableComboBox<MaterialOrientation> readingDirectionSelect;
     private DestroyableComboBox<OdysseyMaterial> overrideSelect;
-    private DestroyableButton overrideAddButton;
     private DestroyableListView<OdysseyMaterial> overrideListView;
 
-    private static final Callback<ListView<OdysseyMaterial>, ListCell<OdysseyMaterial>> cellFactory = _ -> new DestroyableListCell<>() {
-
-        @SuppressWarnings("java:S1068")
-        private final EventListener<EngineerEvent> engineerEventListener = register(EventService.addListener(true, this, EngineerEvent.class, _ -> {
-            updateText(getItem(), this.emptyProperty().get());
-        }));
+    private static final Callback<ListView<OdysseyMaterial>, ListCell<OdysseyMaterial>> cellFactory = listView -> new DestroyableListCell<>() {
+        {
+            ((DestroyableListView) listView).register(this);
+            register(EventService.addListener(true, listView, EngineerEvent.class, _ -> {
+                updateText(getItem(), this.emptyProperty().get());
+            }));
+        }
 
         @Override
         protected void updateItem(final OdysseyMaterial item, final boolean empty) {
@@ -54,6 +55,7 @@ public class OdysseyMaterials extends DestroyableVBox implements DestroyableEven
         }
 
     };
+    private BooleanBinding listContainsSelectedBinding;
 
     public OdysseyMaterials() {
         this.initComponents();
@@ -129,7 +131,8 @@ public class OdysseyMaterials extends DestroyableVBox implements DestroyableEven
                 .asLocalized()
                 .build();
 
-        this.overrideAddButton = ButtonBuilder.builder()
+        listContainsSelectedBinding = Bindings.createBooleanBinding(() -> this.overrideListView.getItems().contains(this.overrideSelect.getSelectionModel().getSelectedItem()), this.overrideSelect.getSelectionModel().selectedItemProperty(), new SimpleListProperty<>(this.overrideListView.getItems()).sizeProperty());
+        DestroyableButton overrideAddButton = ButtonBuilder.builder()
                 .withStyleClass(SETTINGS_BUTTON_STYLE_CLASS)
                 .withText("tab.settings.material.override.add")
                 .withOnAction(e -> {
@@ -142,12 +145,12 @@ public class OdysseyMaterials extends DestroyableVBox implements DestroyableEven
                         EventService.publish(new IrrelevantMaterialOverrideEvent());
                     }
                 })
-                .withDisableProperty(Bindings.createBooleanBinding(() -> this.overrideListView.getItems().contains(this.overrideSelect.getSelectionModel().getSelectedItem()), this.overrideSelect.getSelectionModel().selectedItemProperty(), new SimpleListProperty<>(this.overrideListView.getItems()).sizeProperty()))
+                .withDisableProperty(listContainsSelectedBinding)
                 .build();
 
         return BoxBuilder.builder()
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)
-                .withNodes(overrideLabel, this.overrideSelect, this.overrideAddButton)
+                .withNodes(overrideLabel, this.overrideSelect, overrideAddButton)
                 .buildHBox();
     }
 
@@ -218,5 +221,11 @@ public class OdysseyMaterials extends DestroyableVBox implements DestroyableEven
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(soloModeLabel, soloModeCheckBox, soloModeExplainLabel)
                 .buildHBox();
+    }
+
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        listContainsSelectedBinding.dispose();
     }
 }

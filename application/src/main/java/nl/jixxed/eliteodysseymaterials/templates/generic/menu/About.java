@@ -1,6 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.templates.generic.menu;
 
-import javafx.scene.control.Tooltip;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.FXApplication;
@@ -110,8 +109,8 @@ class About extends DestroyableVBox implements DestroyableTemplate {
                 .withShowDelay(Duration.ZERO)
                 .withText("menu.about.commission")
                 .build();
-        commissionPP.setTooltip(tooltipPP);
-        commissionGH.setTooltip(tooltipGH);
+        tooltipPP.install(commissionPP);
+        tooltipGH.install(commissionGH);
         return BoxBuilder.builder()
                 .withStyleClass("about-donate")
                 .withNodes(
@@ -161,7 +160,7 @@ class About extends DestroyableVBox implements DestroyableTemplate {
     @Override
     public void destroyInternal() {
         super.destroyInternal();
-        Tooltip.uninstall(commissionPP, tooltipPP);
-        Tooltip.uninstall(commissionGH, tooltipGH);
+//        Tooltip.uninstall(commissionPP, tooltipPP);
+//        Tooltip.uninstall(commissionGH, tooltipGH);
     }
 }

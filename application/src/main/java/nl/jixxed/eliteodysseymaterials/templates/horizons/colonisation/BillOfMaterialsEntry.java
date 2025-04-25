@@ -28,8 +28,6 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
     private Commodity commodity;
     private Integer requiredAmount;
     private DestroyableLabel commodityLabel;
-    private DestroyableLabel amountLabel;
-    private IntField amountField;
     private DestroyableLabel fleetCarrierLabel;
     private DestroyableLabel shipLabel;
     private DestroyableLabel marketLabel;
@@ -59,26 +57,7 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
                 .withStyleClass("name")
                 .withText(commodity.getLocalizationKey())
                 .build();
-        amountLabel = LabelBuilder.builder()
-                .withStyleClass("amount-left")
-                .withNonLocalizedText(requiredAmount.toString())
-                .build();
-        amountField = IntFieldBuilder.builder()
-                .withStyleClass("amount-sum")
-                .withMinValue(0)
-                .withMaxValue(999999)
-                .withInitialValue(requiredAmount)
-                .build();
-        amountField.addChangeListener(amountField.valueProperty(), (observable, oldValue, newValue) -> {
-            ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
-                final ColonisationItems colonisationItems = ColonisationService.getColonisationItems(commander);
-                colonisationItems.getColonisationItem(colonisationItem.getUuid()).updateAmount(commodity, newValue.intValue());
-                ColonisationService.saveColonisationItems(commander, colonisationItems);
-            });
-            colonisationItem.updateAmount(commodity, newValue.intValue());
-        });
-        this.register(amountLabel);
-        this.register(amountField);
+
         fleetCarrierLabel = LabelBuilder.builder()
                 .withStyleClass("amount-right")
                 .withNonLocalizedText("0")
@@ -126,7 +105,7 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
                 .withNodes(commodityImage, commodityLabel).buildHBox();
         final DestroyableHBox left = BoxBuilder.builder()
                 .withStyleClass("values-sub")
-                .withNodes(sumImage, colonisationItem == ColonisationItem.ALL ? amountLabel : amountField, new GrowingRegion(), fleetCarrierLabel, fleetCarrierImage).buildHBox();
+                .withNodes(sumImage, colonisationItem == ColonisationItem.ALL ? getAmountLabel() : getAmountField(), new GrowingRegion(), fleetCarrierLabel, fleetCarrierImage).buildHBox();
         final DestroyableHBox right = BoxBuilder.builder()
                 .withStyleClass("values-sub")
                 .withNodes(shipImage, shipLabel, new GrowingRegion(), bracket1Image, BoxBuilder.builder()
@@ -138,6 +117,31 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
         this.getNodes().addAll(title, values);
         MaterialService.addMaterialInfoPopOver(this, this.commodity, false);
         update();
+    }
+
+    private IntField getAmountField() {
+        IntField amountField = IntFieldBuilder.builder()
+                .withStyleClass("amount-sum")
+                .withMinValue(0)
+                .withMaxValue(999999)
+                .withInitialValue(requiredAmount)
+                .build();
+        amountField.addChangeListener(amountField.valueProperty(), (_, _, newValue) -> {
+            ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
+                final ColonisationItems colonisationItems = ColonisationService.getColonisationItems(commander);
+                colonisationItems.getColonisationItem(colonisationItem.getUuid()).updateAmount(commodity, newValue.intValue());
+                ColonisationService.saveColonisationItems(commander, colonisationItems);
+            });
+            colonisationItem.updateAmount(commodity, newValue.intValue());
+        });
+        return amountField;
+    }
+
+    private DestroyableLabel getAmountLabel() {
+        return LabelBuilder.builder()
+                .withStyleClass("amount-left")
+                .withNonLocalizedText(requiredAmount.toString())
+                .build();
     }
 
     @Override

@@ -2,7 +2,6 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.powerplay;
 
 import javafx.beans.binding.StringBinding;
 import javafx.geometry.Orientation;
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import lombok.Getter;
@@ -37,7 +36,7 @@ public class PowerplayPerk extends DestroyableVBox implements DestroyableEventTe
     @Getter
     private List<RankReward> rewards;
     private DestroyableLabel currentProgress;
-    private static final Callback<TypeSegment, Node> segmentViewFactory = segment -> new TypeSegmentView(segment,
+    private static final Callback<TypeSegment, TypeSegmentView> segmentViewFactory = segment -> new TypeSegmentView(segment,
             Map.of(
                     SegmentType.RANK_COMPLETE, Color.rgb(222, 222, 222),
                     SegmentType.RANK_NOT_COMPLETE, Color.rgb(128, 128, 128),

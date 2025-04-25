@@ -1,7 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 
 import javafx.css.PseudoClass;
-import javafx.scene.control.Tooltip;
 import javafx.util.Duration;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.*;
@@ -116,8 +115,8 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
                 .withText(LocaleService.getToolTipStringBinding((HorizonsEngineeringBlueprint) HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), HorizonsBlueprintGrade.GRADE_1), "tab.wishlist.blueprint.tooltip"))
                 .withShowDelay(Duration.millis(100))
                 .build();
-        Tooltip.install(wishlistRecipeName, tooltip);
-        register(this.tooltip);
+        tooltip.install(wishlistRecipeName);
+//        register(this.tooltip);
 
         this.canCraft();
     }
@@ -138,7 +137,6 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
                             this.canCraft();
                         };
                         CompletionSlider completionSlider = new CompletionSlider(0D, 100D, this.wishlistBlueprint.getPercentageToComplete().getOrDefault(grade, 0D) * 100D, function);
-//                        sliders.add(completionSlider);
 
                         final DestroyableLabel label = LabelBuilder.builder()
                                 .withStyleClass("grade")
@@ -258,7 +256,7 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
     @Override
     public void destroyInternal() {
         super.destroyInternal();
-        Tooltip.uninstall(this.wishlistRecipeName, this.tooltip);
+//        Tooltip.uninstall(this.wishlistRecipeName, this.tooltip);
     }
 //        if (popOverRef.get() != null) {
 //            popOverRef.get().hide();

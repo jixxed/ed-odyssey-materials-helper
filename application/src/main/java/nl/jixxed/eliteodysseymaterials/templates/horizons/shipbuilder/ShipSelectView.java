@@ -16,7 +16,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.HorizonsShipSelectedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.HorizonsShipChoiceEvent;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
@@ -34,7 +34,6 @@ import java.util.stream.Collectors;
 
 public class ShipSelectView extends DestroyableVBox implements DestroyableTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private HorizonsShipBuilderTab tab;
     private Table<Ship, String, Supplier<Object>> table;
 
     private String sortKey = "ship.view.header.ship.name";
@@ -43,8 +42,7 @@ public class ShipSelectView extends DestroyableVBox implements DestroyableTempla
     private Map<Map<String, Supplier<Object>>, DestroyableHBox> rows;
 
 
-    public ShipSelectView(HorizonsShipBuilderTab tab) {
-        this.tab = tab;
+    public ShipSelectView() {
         initComponents();
     }
 
@@ -101,34 +99,33 @@ public class ShipSelectView extends DestroyableVBox implements DestroyableTempla
                                 .orElseThrow(IllegalArgumentException::new)
                 ).buildHBox();
         rows = new HashMap<>();
-        table.backingMap.entrySet().forEach(rowEntry ->
-                rows.put(rowEntry.getValue(), BoxBuilder.builder()
+        table.backingMap.forEach((key, value) -> rows.put(value,
+                BoxBuilder.builder()
                         .withStyleClass("row")
                         .withNodes(
-                                rowEntry.getValue().entrySet().stream()
+                                value.entrySet().stream()
                                         .map(entry -> LabelBuilder.builder()
                                                 .withStyleClasses("cell", entry.getKey().replace("ship.view.header", "col").replace(".", "-"))
                                                 .withText(getStringBinding(entry.getValue()))
                                                 .build())
                                         .toArray(DestroyableLabel[]::new))
-                        .withOnMouseClicked(event -> {
-                            APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                                        final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
-                                        shipConfigurations.getSelectedShipConfiguration().ifPresent(configuration -> {
-                                            final Ship ship = new Ship(rowEntry.getKey());
-                                            //set all old slot modules
-                                            ship.getHardpointSlots().forEach(slot -> slot.setOldShipModule(slot.getShipModule()));
-                                            ship.getCoreSlots().forEach(slot -> slot.setOldShipModule(slot.getShipModule()));
-                                            ship.getOptionalSlots().forEach(slot -> slot.setOldShipModule(slot.getShipModule()));
-                                            ship.getUtilitySlots().forEach(slot -> slot.setOldShipModule(slot.getShipModule()));
-                                            APPLICATION_STATE.setShip(ship);
-                                            ShipMapper.toShipConfiguration(APPLICATION_STATE.getShip(), configuration, tab.getControlsLayer().getShipSelect().getSelectionModel().getSelectedItem().getName());
-                                            ShipService.saveShipConfigurations(commander, shipConfigurations);
-                                            EventService.publish(new HorizonsShipSelectedEvent(configuration.getUuid()));
-                                        });
-                                    }
-                            );
-                        }).buildHBox()));
+                        .withOnMouseClicked(_ ->
+                                APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+                                    final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
+                                    shipConfigurations.getSelectedShipConfiguration().ifPresent(configuration -> {
+                                        final Ship ship = new Ship(key);
+                                        //set all old slot modules
+                                        ship.getHardpointSlots().forEach(slot -> slot.setOldShipModule(slot.getShipModule()));
+                                        ship.getCoreSlots().forEach(slot -> slot.setOldShipModule(slot.getShipModule()));
+                                        ship.getOptionalSlots().forEach(slot -> slot.setOldShipModule(slot.getShipModule()));
+                                        ship.getUtilitySlots().forEach(slot -> slot.setOldShipModule(slot.getShipModule()));
+                                        APPLICATION_STATE.setShip(ship);
+                                        ShipMapper.toShipConfiguration(APPLICATION_STATE.getShip(), configuration, configuration.getName());
+                                        ShipService.saveShipConfigurations(commander, shipConfigurations);
+                                        EventService.publish(new HorizonsShipChoiceEvent(configuration.getUuid()));
+                                    });
+                                }))
+                        .buildHBox()));
         update();
     }
 
@@ -143,10 +140,9 @@ public class ShipSelectView extends DestroyableVBox implements DestroyableTempla
     }
 
     private void update() {
-        this.getNodes().clear();
-
-        this.getNodes().add(header);
-        this.getNodes().addAll(rows.entrySet().stream().sorted(getComparator()).map(Map.Entry::getValue).toArray(DestroyableHBox[]::new));
+        this.getChildren().clear();
+        this.getChildren().add(header);
+        this.getChildren().addAll(rows.entrySet().stream().sorted(getComparator()).map(Map.Entry::getValue).toArray(DestroyableHBox[]::new));
     }
 
     private Comparator<Map.Entry<Map<String, Supplier<Object>>, DestroyableHBox>> getComparator() {
@@ -156,13 +152,6 @@ public class ShipSelectView extends DestroyableVBox implements DestroyableTempla
         }
         return entryComparator.reversed();
     }
-
-//    private Comparator<Map.Entry<Comparable, HBox>> getComparator(Map.Entry<Comparable, HBox> entry) {
-//        if (sortAscending) {
-//            return Comparator.comparing(entry.getKey());
-//        }
-//        return  Map.Entry.comparingByKey().reversed();
-//    }
 
     private Comparable<Object> getObjectComparable(Map.Entry<Map<String, Supplier<Object>>, DestroyableHBox> x) {
         final Object o = x.getKey().get(sortKey).get();
@@ -187,20 +176,6 @@ public class ShipSelectView extends DestroyableVBox implements DestroyableTempla
             return LocaleService.getStringBinding((Supplier<String>) (Supplier<?>) valueSupplier);
         throw new IllegalArgumentException("unsupported format");
     }
-
-//    private static <T extends ObservableValue> void addColumn(TableView<Ship> table, String styleClass, String titleLocaleKey, Function<TableColumn.CellDataFeatures<Ship, T>, T> function) {
-//        TableColumn<Ship, T> column = new TableColumn<>();
-//        column.addBinding(column.textProperty(),LocaleService.getStringBinding(titleLocaleKey));
-//        column.setCellValueFactory(function::apply);
-//        column.setSortType(TableColumn.SortType.ASCENDING);
-//        column.getStyleClass().addAll("shipbuilder-ship-col", styleClass);
-//        column.setResizable(false);
-//        column.setSortNode(null);
-//        column.setGraphic(null);
-//        table.getSortOrder().add(column);
-//        table.getColumns().add(column);
-//    }
-
 
     public double calculateJumpRangeMax(Ship ship) {
         final double fuel = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.MAX_FUEL_PER_JUMP, 1D)).orElse(1D);

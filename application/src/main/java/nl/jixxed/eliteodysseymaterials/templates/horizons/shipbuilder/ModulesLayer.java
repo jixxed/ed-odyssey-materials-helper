@@ -21,21 +21,18 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 public class ModulesLayer extends DestroyableAnchorPane implements DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
-    private DestroyableScrollPane scrollPane;
     private DestroyableVBox hardpointsVbox;
     private DestroyableVBox coreVbox;
     private DestroyableVBox optionalVBox;
     private DestroyableVBox utilityVbox;
-    private DestroyableHBox slotColumns;
     private DestroyableCircle circleStart;
     private DestroyableCircle circleEnd;
     private DestroyableLine line;
     private DestroyableLine line2;
     private DestroyableGroup overlayLine;
-    private DestroyablePane pane;
-    private DestroyableResizableImageView shipImage;
     private DestroyableStackPane imageLayer;
     private HorizonsShipBuilderTab tab;
+    private DestroyableResizableImageView shipImage;
     private DestroyableResizableImageView gridImage;
     private int lastIndex;
 
@@ -93,7 +90,7 @@ public class ModulesLayer extends DestroyableAnchorPane implements DestroyableEv
         final DestroyableRegion regionRight = new DestroyableRegion();
         regionRight.addBinding(regionRight.minWidthProperty(), this.tab.getDetailsLayer().getModuleDetails().widthProperty());
         regionRight.addBinding(regionRight.maxWidthProperty(), this.tab.getDetailsLayer().getModuleDetails().widthProperty());
-        this.slotColumns = BoxBuilder.builder()
+        DestroyableHBox slotColumns = BoxBuilder.builder()
                 .withNodes(this.hardpointsVbox, this.coreVbox, this.optionalVBox, this.utilityVbox, regionRight)
                 .buildHBox();
         gridImage = ResizableImageViewBuilder.builder()
@@ -114,7 +111,7 @@ public class ModulesLayer extends DestroyableAnchorPane implements DestroyableEv
         region.addBinding(region.minHeightProperty(), this.tab.getStatsLayer().getStats().heightProperty());
         region.addBinding(region.maxHeightProperty(), this.tab.getStatsLayer().getStats().heightProperty());
         final DestroyableVBox modulesLayer = BoxBuilder.builder()
-                .withNodes(this.slotColumns, region)
+                .withNodes(slotColumns, region)
                 .withStyleClass("shipbuilder-slots-hbox").buildVBox();
         final DestroyableAnchorPane anchorPane = AnchorPaneBuilder.builder()
                 .withNodes(this.imageLayer)
@@ -130,7 +127,7 @@ public class ModulesLayer extends DestroyableAnchorPane implements DestroyableEv
         content.getStyleClass().add("shipbuilder-slots-content");
         AnchorPane.setTopAnchor(this.imageLayer, 0D);
         AnchorPane.setRightAnchor(this.imageLayer, 0D);
-        this.scrollPane = ScrollPaneBuilder.builder()
+        DestroyableScrollPane scrollPane = ScrollPaneBuilder.builder()
                 .withContent(content)
                 .withStyleClass("shipbuilder-modules-scrollpane")
                 .build();
@@ -139,22 +136,22 @@ public class ModulesLayer extends DestroyableAnchorPane implements DestroyableEv
         this.circleEnd = new DestroyableCircle();
         this.line = new DestroyableLine();
         this.line2 = new DestroyableLine();
-        this.pane = PaneBuilder.builder()
+        DestroyablePane pane = PaneBuilder.builder()
                 .withNodes(this.circleStart, this.line, this.circleEnd, this.line2)
                 .build();
-        this.pane.getStyleClass().add("shipbuilder-overlay");
-        this.overlayLine = new DestroyableGroup(this.pane);
+        pane.getStyleClass().add("shipbuilder-overlay");
+        this.overlayLine = new DestroyableGroup(pane);
 //        this.overlayLine.getStyleClass().add("shipbuilder-overlay");
         this.imageLayer.getNodes().add(this.overlayLine);
 //        StackPane.setAlignment(this.overlayLine, Pos.TOP_LEFT);
 //        StackPane.setAlignment(gridImage, Pos.TOP_LEFT);
 //        StackPane.setAlignment(shipImage, Pos.TOP_LEFT);
 
-        this.getNodes().add(this.scrollPane);
-        AnchorPane.setTopAnchor(this.scrollPane, -1D);
-        AnchorPane.setRightAnchor(this.scrollPane, 0D);
-        AnchorPane.setBottomAnchor(this.scrollPane, -1D);
-        AnchorPane.setLeftAnchor(this.scrollPane, 0D);
+        this.getNodes().add(scrollPane);
+        AnchorPane.setTopAnchor(scrollPane, -1D);
+        AnchorPane.setRightAnchor(scrollPane, 0D);
+        AnchorPane.setBottomAnchor(scrollPane, -1D);
+        AnchorPane.setLeftAnchor(scrollPane, 0D);
     }
 
     public void initShipSlots() {

@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.menu;
 
 import javafx.collections.ListChangeListener;
+import javafx.css.PseudoClass;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import nl.jixxed.eliteodysseymaterials.builder.MenuItemBuilder;
@@ -24,6 +25,8 @@ import java.util.List;
 
 public class AddToWishlistMenuButton extends DestroyableMenuButton implements DestroyableEventTemplate {
 
+    private ListChangeListener<MenuItem> menuItemListChangeListener;
+
     public AddToWishlistMenuButton() {
         initComponents();
         initEventHandling();
@@ -31,18 +34,12 @@ public class AddToWishlistMenuButton extends DestroyableMenuButton implements De
 
     @Override
     public void initComponents() {
-        this.getStyleClass().add("recipe-wishlist-button");
+        this.getStyleClass().add("wishlist-button");
         this.addBinding(this.textProperty(), LocaleService.getStringBinding("blueprint.add.to.wishlist"));
         this.getItems().addAll(new ArrayList<>());
-        this.getItems().addListener((ListChangeListener<MenuItem>) c -> {
-            if (c.getList().size() <= 1) {
-                if (!this.getStyleClass().contains("hidden-menu-button")) {
-                    this.getStyleClass().add("hidden-menu-button");
-                }
-            } else {
-                this.getStyleClass().remove("hidden-menu-button");
-            }
-        });
+        menuItemListChangeListener = c ->
+                this.pseudoClassStateChanged(PseudoClass.getPseudoClass("hidden-menu"), c.getList().size() <= 1);
+        this.getItems().addListener(menuItemListChangeListener);
         this.addEventBinding(this.onMouseClickedProperty(), event -> {
             if (this.getItems().size() == 1) {
                 this.getItems().getFirst().fire();
@@ -78,5 +75,11 @@ public class AddToWishlistMenuButton extends DestroyableMenuButton implements De
                         .build())
                 .toList();
         this.addAll(menuItems);
+    }
+
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        this.getItems().removeListener(menuItemListChangeListener);
     }
 }

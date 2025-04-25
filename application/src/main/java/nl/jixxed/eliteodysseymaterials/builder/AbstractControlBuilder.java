@@ -1,18 +1,18 @@
 package nl.jixxed.eliteodysseymaterials.builder;
 
 import javafx.scene.control.Control;
-import javafx.scene.control.Tooltip;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTooltip;
 
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public abstract class AbstractControlBuilder<T extends AbstractControlBuilder<T>> extends AbstractNodeBuilder<T> {
 
-    private Tooltip tooltip;
+    private DestroyableTooltip tooltip;
     private Boolean focusTraversable;
 
-    public T withToolTip(final Tooltip tooltip) {
+    public T withToolTip(final DestroyableTooltip tooltip) {
         this.tooltip = tooltip;
         return (T) this;
     }
@@ -26,7 +26,7 @@ public abstract class AbstractControlBuilder<T extends AbstractControlBuilder<T>
         super.build(control);
 
         if (this.tooltip != null) {
-            control.setTooltip(this.tooltip);
+            this.tooltip.install(control);
         }
         if (this.focusTraversable != null) {
             control.setFocusTraversable(this.focusTraversable);

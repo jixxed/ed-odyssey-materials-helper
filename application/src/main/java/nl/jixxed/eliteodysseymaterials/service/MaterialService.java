@@ -2,7 +2,6 @@ package nl.jixxed.eliteodysseymaterials.service;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.stage.Screen;
@@ -16,18 +15,19 @@ import nl.jixxed.eliteodysseymaterials.constants.*;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
-import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.helper.POIHelper;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsBlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.jixxed.eliteodysseymaterials.templates.generic.CopyableLocation;
 import org.controlsfx.control.PopOver;
 
 import java.math.BigInteger;
 import java.text.NumberFormat;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -43,7 +43,7 @@ public class MaterialService {
     private static final String STYLECLASS_MATERIAL_TOOLTIP_LOCATION_LINE = "material-tooltip-location-line";
     private static final String STYLECLASS_MATERIAL_TOOLTIP_TITLE = "material-tooltip-title";
     private static final String STYLECLASS_MATERIAL_TOOLTIP_DESCRIPTION = "material-tooltip-description";
-    private static final Map<Node, PopOver> POPOVERS = new HashMap<>();
+    private static final Map<Node, DestroyablePopOver> POPOVERS = new HashMap<>();
 
     static {
         NUMBER_FORMAT.setMaximumFractionDigits(2);
@@ -52,9 +52,6 @@ public class MaterialService {
     private static DestroyableVBox getMaterialPopOverContent(final HorizonsMaterial horizonsMaterial, final boolean wishlist) {
         final DestroyableVBox vBox = BoxBuilder.builder()
                 .withStyleClass("material-popover-content").buildVBox();
-        LabelBuilder.builder()
-                .withText(LocaleService.getStringBinding(horizonsMaterial.getLocalizationKey()))
-                .build();
         if (horizonsMaterial.isUnknown()) {
             vBox.getNodes().add(LabelBuilder.builder()
                     .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_TITLE)
@@ -79,7 +76,7 @@ public class MaterialService {
                 vBox.getNodes().add(LabelBuilder.builder()
                         .build());
                 if (horizonsMaterial instanceof RareCommodity rareCommodity) {
-                    vBox.getNodes().add(getMarketLocation(rareCommodity));
+                    vBox.getNodes().add(new CopyableLocation(rareCommodity.getStarSystem(), rareCommodity.getStation()));
                 }
                 vBox.getNodes().add(
                         LabelBuilder.builder()
@@ -153,46 +150,6 @@ public class MaterialService {
             }
         });
 
-    }
-
-    private static DestroyableFlowPane getMarketLocation(RareCommodity rareCommodity) {
-        var engineerLocation = LabelBuilder.builder()
-                .withStyleClass("market-location")
-                .withNonLocalizedText(rareCommodity.getStation() + " | " + rareCommodity.getStarSystem().getName())
-                .build();
-        String distance = "(" + Formatters.NUMBER_FORMAT_2.format(
-                rareCommodity.getStarSystem().getDistance(
-                        LocationService.getCurrentStarSystem()
-                )
-        ) + "Ly)";
-        var distanceLabel = LabelBuilder.builder()
-                .withStyleClass("market-distance")
-                .withNonLocalizedText(distance)
-                .build();
-
-        final DestroyableResizableImageView copyIcon = ResizableImageViewBuilder.builder()
-                .withStyleClass("market-copy-icon")
-                .withImage("/images/other/copy.png")
-                .build();
-
-        final DestroyableStackPane copyIconStackPane = StackPaneBuilder.builder()
-                .withNodes(copyIcon)
-                .build();
-
-        return FlowPaneBuilder.builder()
-                .withStyleClass("market-location-line")
-                .withOnMouseClicked(event -> {
-                    copyLocationToClipboard(rareCommodity.getStarSystem());
-                    NotificationService.showInformation(NotificationType.COPY, LocaleService.LocaleString.of("notification.clipboard.title"), LocaleService.LocaleString.of("notification.clipboard.system.copied.text"));
-                })
-                .withNodes(engineerLocation, copyIconStackPane, distanceLabel)
-                .build();
-
-    }
-
-
-    private static void copyLocationToClipboard(StarSystem starSystem) {
-        ClipboardHelper.copyToClipboard(starSystem.getName());
     }
 
     private static void addRefinableToTooltip(Commodity commodity, DestroyableVBox vBox) {
@@ -369,63 +326,64 @@ public class MaterialService {
             if (POPOVERS.containsKey(hoverableNode)) {
                 return;
             }
-            final Node contentNode = switch (material) {
-                case HorizonsMaterial horizonsMaterial -> getMaterialPopOverContent(horizonsMaterial, wishlist);
-                case OdysseyMaterial odysseyMaterial -> getMaterialPopOverContent(odysseyMaterial);
-            };
-            contentNode.getStyleClass().add("material-popover");
-            final DestroyablePopOver popOver = PopOverBuilder.builder()
-                    .withStyleClass("popover-menubutton-layout")
-                    .withContent((Node & Destroyable) contentNode)
-                    .withArrowIndent(0)
-                    .withArrowSize(0)
-                    .withCornerRadius(0)
-                    .withDetachable(false)
-                    .withHeaderAlwaysVisible(false)
-                    .build();
-            POPOVERS.put(hoverableNode, popOver);
             try {
-                final Rectangle2D currentScreen = Screen.getScreensForRectangle(mouseEvent.getScreenX(), mouseEvent.getScreenY(), 1, 1).getFirst().getBounds();
-                final double mouseXOnScreen = mouseEvent.getScreenX() - currentScreen.getMinX();
-                final double mouseYOnScreen = mouseEvent.getScreenY() - currentScreen.getMinY();
-                if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {
-                    popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_TOP);
-                } else if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen > currentScreen.getHeight() / 2) {
-                    popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_BOTTOM);
-                } else if (mouseXOnScreen > currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {
-                    popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_TOP);
-                } else {
-                    popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_BOTTOM);
-                }
+
                 final Timeline timelineShow = new Timeline();
                 final Timeline timelineHide = new Timeline();
-
+                final AtomicReference<DestroyableVBox> contentNode = new AtomicReference<>();
                 timelineShow.getKeyFrames().add(new KeyFrame(Duration.millis(500)));
                 timelineShow.setOnFinished(_ -> {
-                    if (hoverableNode.isHover() || (contentNode.isHover())) {
+                    contentNode.set(switch (material) {
+                        case HorizonsMaterial horizonsMaterial -> getMaterialPopOverContent(horizonsMaterial, wishlist);
+                        case OdysseyMaterial odysseyMaterial -> getMaterialPopOverContent(odysseyMaterial);
+                    });
+                    contentNode.get().getStyleClass().add("material-popover");
+                    if (!POPOVERS.containsKey(hoverableNode) && (hoverableNode.isHover() || contentNode.get().isHover())) {
+                        final DestroyablePopOver popOver = PopOverBuilder.builder()
+                                .withStyleClass("popover-menubutton-layout")
+                                .withContent((Node & Destroyable) contentNode.get())
+                                .withArrowIndent(0)
+                                .withArrowSize(0)
+                                .withCornerRadius(0)
+                                .withDetachable(false)
+                                .withHeaderAlwaysVisible(false)
+                                .withDestroyOnHide(true)
+                                .build();
+                        POPOVERS.put(hoverableNode, popOver);
+                        final Rectangle2D currentScreen = Screen.getScreensForRectangle(mouseEvent.getScreenX(), mouseEvent.getScreenY(), 1, 1).getFirst().getBounds();
+                        final double mouseXOnScreen = mouseEvent.getScreenX() - currentScreen.getMinX();
+                        final double mouseYOnScreen = mouseEvent.getScreenY() - currentScreen.getMinY();
+                        if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {
+                            popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_TOP);
+                        } else if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen > currentScreen.getHeight() / 2) {
+                            popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_BOTTOM);
+                        } else if (mouseXOnScreen > currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {
+                            popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_TOP);
+                        } else {
+                            popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_BOTTOM);
+                        }
                         if (popOver.getContentNode() != null) {
                             popOver.show(hoverableNode);
                         }
+                        timelineHide.play();
                     } else {
-                        popOver.destroy();
-                        POPOVERS.remove(hoverableNode);
+                        contentNode.get().destroy();
                     }
                 });
                 timelineHide.getKeyFrames().add(new KeyFrame(Duration.millis(100)));
                 timelineHide.setOnFinished(_ -> {
-                    if (hoverableNode.isHover() || contentNode.isHover()) {
+                    if (hoverableNode.isHover() || (contentNode.get() != null && contentNode.get().isHover())) {
                         timelineHide.play();
                     } else {
-                        popOver.hide(Duration.ZERO);
-                        if (popOver.getContentNode() != null) {
-                            popOver.setContentNode(null);
+                        if (POPOVERS.containsKey(hoverableNode)) {
+                            POPOVERS.get(hoverableNode).hide(Duration.ZERO);
+                            POPOVERS.get(hoverableNode).destroy();
+                            POPOVERS.remove(hoverableNode);
                         }
-                        popOver.destroy();
-                        POPOVERS.remove(hoverableNode);
                         timelineHide.stop();
                     }
                 });
-                hoverableNode.addEventBinding(hoverableNode.onMouseExitedProperty(), _ -> Platform.runLater(timelineHide::play));
+//                hoverableNode.addEventBinding(hoverableNode.onMouseExitedProperty(), _ -> Platform.runLater(timelineHide::play));
                 timelineShow.play();
             } catch (IndexOutOfBoundsException ex) {
                 log.warn("Unable to determine screen to show material info on.");
@@ -576,7 +534,7 @@ public class MaterialService {
                             .build();
                     final DestroyableTitledPane titledPane = TitledPaneBuilder.builder().build();
                     titledPane.addBinding(titledPane.textProperty(), LocaleService.getStringBinding(odysseyBlueprintListing.category().getLocalizationKey()));
-                    titledPane.setContent(catBox);
+                    titledPane.setContentNode(catBox);
                     titledPane.setExpanded(PreferencesService.getPreference(PreferenceConstants.TOOLTIP_BLUEPRINT_EXPANDED, Boolean.FALSE));
                     vBox.getNodes().add(titledPane);
                     final String[] classes = new String[]{"blueprint-listing-label"};
@@ -640,7 +598,7 @@ public class MaterialService {
                             .build();
                     final DestroyableTitledPane titledPane = TitledPaneBuilder.builder().build();
                     titledPane.addBinding(titledPane.textProperty(), LocaleService.getStringBinding(horizonsBlueprintListing.category().getLocalizationKey()));
-                    titledPane.setContent(catBox);
+                    titledPane.setContentNode(catBox);
                     titledPane.setExpanded(PreferencesService.getPreference(PreferenceConstants.TOOLTIP_BLUEPRINT_EXPANDED, Boolean.FALSE));
                     vBox.getNodes().add(titledPane);
                     final String[] classes = (horizonsBlueprintListing.type().isExperimental()) ? new String[]{"blueprint-listing-label", "blueprint-listing-label-experimental"} : new String[]{"blueprint-listing-label"};
@@ -650,6 +608,7 @@ public class MaterialService {
                             .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(horizonsBlueprintListing.name(), horizonsBlueprintListing.type(), horizonsBlueprintListing.gradeGroups().get(0).getKey()))))
                             .build();
                     catBox.getNodes().add(build);
+                    catBox.addBinding(catBox.prefWrapLengthProperty(), ScalingHelper.getPixelDoubleBindingFromEm(23.33 * 2));
                 } else {
                     //append
                     final String[] classes = (horizonsBlueprintListing.type().isExperimental()) ? new String[]{"blueprint-listing-label", "blueprint-listing-label-experimental"} : new String[]{"blueprint-listing-label"};
@@ -659,7 +618,6 @@ public class MaterialService {
                             .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(horizonsBlueprintListing.name(), horizonsBlueprintListing.type(), horizonsBlueprintListing.gradeGroups().get(0).getKey()))))
                             .build();
                     catBox.getNodes().add(build);
-                    catBox.addBinding(catBox.prefWrapLengthProperty(), ScalingHelper.getPixelDoubleBindingFromEm(23.33 * 2));
                 }
             }
         }

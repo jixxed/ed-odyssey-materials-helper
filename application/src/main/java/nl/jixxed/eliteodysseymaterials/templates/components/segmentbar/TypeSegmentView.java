@@ -12,13 +12,12 @@ public class TypeSegmentView extends DestroyableStackPane {
 
     public TypeSegmentView(final TypeSegment segment, final Map<SegmentType, Color> colorMap, final boolean withLabel) {
         this.getStyleClass().add(getStyleClassName(segment));
-        final DestroyableLabel label;
         final Color color = colorMap.get(segment.getSegmentType());
         this.setStyle("-fx-background-color: " + toHexString(color) + ";");
         this.setPadding(new Insets(5.0));
         this.setPrefHeight(30.0);
         if (withLabel) {
-            label = LabelBuilder.builder()
+            final DestroyableLabel label = LabelBuilder.builder()
                     .withStyleClass("horizons-materialcard-amount")//horizons-materialcard-amount
                     .withVisibilityProperty(segment.textProperty().isNotEqualTo("0"))
                     .build();
@@ -29,9 +28,8 @@ public class TypeSegmentView extends DestroyableStackPane {
 
     public TypeSegmentView(final TypeSegment segment, final boolean withLabel) {
         this.getStyleClass().add(getStyleClassName(segment));
-        final DestroyableLabel label;
         if (withLabel) {
-            label = LabelBuilder.builder()
+            DestroyableLabel label = LabelBuilder.builder()
                     .withStyleClass("horizons-materialcard-amount")//horizons-materialcard-amount
                     .withVisibilityProperty(segment.textProperty().isNotEqualTo("0"))
                     .build();

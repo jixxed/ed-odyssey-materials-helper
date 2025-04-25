@@ -3,7 +3,7 @@
   -fx-border-color: #2b2b2b;
   -fx-border-width: 0.1em;
 
-  .blueprint-title-pane {
+  .blueprint-title-pane2 {
     @include fixedWidth(36em);
   }
 
@@ -33,6 +33,11 @@
 
     .wishlist-button {
       -fx-fit-to-width: true;
+
+      &:hidden-menu > .arrow-button,
+      &:hidden-menu > .arrow-button > .arrow {
+        -fx-padding: 0;
+      }
     }
 
     //titles

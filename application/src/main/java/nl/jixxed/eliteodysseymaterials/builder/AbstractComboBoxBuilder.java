@@ -5,7 +5,6 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Tooltip;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
@@ -15,7 +14,6 @@ public abstract class AbstractComboBoxBuilder<T, V extends AbstractComboBoxBuild
     private ObservableList<T> items;
     private ChangeListener<T> listener;
     private StringBinding promptTextBinding;
-    private Tooltip tooltip;
     private boolean localized = false;
     private T selected;
 
@@ -59,7 +57,7 @@ public abstract class AbstractComboBoxBuilder<T, V extends AbstractComboBoxBuild
         }
         if (this.localized) {
             //this sets the old value back after a locale change, instead of blanking it
-            comboBox.addChangeListener(comboBox.valueProperty(), (observable, oldValue, newValue) -> {
+            comboBox.addChangeListener(comboBox.valueProperty(), (_, oldValue, newValue) -> {
                 if (newValue == null && oldValue != null) {
                     comboBox.selectionModelProperty().getValue().select((T) oldValue);
                 }
@@ -67,10 +65,6 @@ public abstract class AbstractComboBoxBuilder<T, V extends AbstractComboBoxBuild
         }
         if (this.promptTextBinding != null) {
             comboBox.addBinding(comboBox.promptTextProperty(), this.promptTextBinding);
-        }
-
-        if (this.tooltip != null) {
-            comboBox.setTooltip(this.tooltip);
         }
         return comboBox;
     }

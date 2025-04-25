@@ -12,7 +12,6 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Orientation;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.Tooltip;
 import javafx.scene.input.*;
 import javafx.util.Duration;
 import lombok.Getter;
@@ -26,6 +25,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HardpointGroup;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
+import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ModuleHighlightEvent;
@@ -49,7 +49,7 @@ class SlotBox extends DestroyableStackPane {
     @Getter
     private final Slot slot;
     @Getter
-    private final ModulesLayer modulesLayer;
+    private ModulesLayer modulesLayer;
     private final DestroyableLabel emptyLabel;
     private final DestroyableLabel module;
     private final BlueprintsTextFlow blueprints;
@@ -61,7 +61,7 @@ class SlotBox extends DestroyableStackPane {
     private final DestroyableHBox iconBox;
     private final DestroyableHBox layer1;
     private final DestroyableStackPane layer2;
-    private final DestroyableLabel hardpointGroupLabel;
+    private DestroyableLabel hardpointGroupLabel;
     private DestroyableResizableImageView power;
     private DestroyableResizableImageView changedImage;
     private final DestroyableVBox powerBox;
@@ -90,6 +90,8 @@ class SlotBox extends DestroyableStackPane {
     private DestroyableButton save;
     private DestroyableButton clear;
     private Disposable subscribe;
+    private DestroyableVBox blueprintSection;
+    private DestroyableVBox experintalEffectsSection;
 
     SlotBox(final ModulesLayer modulesLayer, final Slot slot) {
         this.setFocusTraversable(true);
@@ -166,14 +168,14 @@ class SlotBox extends DestroyableStackPane {
                     .buildVBox();
             layer1.getNodes().add(vBox);
         } else {
-            hardpointGroupLabel = LabelBuilder.builder()
-                    .build();
+//            hardpointGroupLabel = LabelBuilder.builder()
+//                    .build();
             final DestroyableVBox vBox = BoxBuilder.builder()
                     .withNodes(this.size, pane)
                     .buildVBox();
             layer1.getNodes().add(vBox);
         }
-        layer1.getNodes().addAll(new DestroyableSeparator(Orientation.VERTICAL), sizeBox, (this.getSlot().getSlotType().equals(SlotType.HARDPOINT)) ? mountingBox : classBox, this.texts, powerBox);
+        layer1.getNodes().addAll(new DestroyableSeparator(Orientation.VERTICAL), this.emptyLabel, sizeBox, mountingBox, classBox, this.texts, powerBox);
 
         maxGrade.set(Optional.ofNullable(slot.getShipModule())
                 .map(shipModule -> shipModule.getModifications().stream()
@@ -439,7 +441,7 @@ class SlotBox extends DestroyableStackPane {
         return true;
     }
 
-    private static Boolean isCurrentShip() {
+    private static boolean isCurrentShip() {
         return APPLICATION_STATE.getPreferredCommander()
                 .flatMap(commander -> ShipService.getShipConfigurations(commander).getSelectedShipConfiguration())
                 .map(shipConfiguration -> ShipConfiguration.CURRENT == shipConfiguration)
@@ -480,16 +482,16 @@ class SlotBox extends DestroyableStackPane {
 
     private void powerBox() {
         this.power = createIconWithTooltip("/images/ships/icons/powered1.png", 1, "shipbuilder-slots-slotbox-button-icon");
-        this.powerButton = ButtonBuilder.builder()
-                .withStyleClass("shipbuilder-slots-slotbox-button")
-                .withOnAction(event -> {
-                    this.getSlot().getShipModule().togglePower();
-                    notifyChanged();
-                    refresh();
-                })
-                .withGraphic(this.power)
-                .build();
         if (!isCurrentShip()) {
+            this.powerButton = ButtonBuilder.builder()
+                    .withStyleClass("shipbuilder-slots-slotbox-button")
+                    .withOnAction(event -> {
+                        this.getSlot().getShipModule().togglePower();
+                        notifyChanged();
+                        refresh();
+                    })
+                    .withGraphic(this.power)
+                    .build();
             powerUp = ButtonBuilder.builder()
                     .withStyleClass("shipbuilder-slots-slotbox-button")
                     .withOnAction(event -> {
@@ -672,7 +674,9 @@ class SlotBox extends DestroyableStackPane {
                 this.mountingUp.setVisible(hardpointModule.findHigherMounting().isPresent());
                 this.mountingDown.setVisible(hardpointModule.findLowerMounting().isPresent());
             }
-            //todo memory leak? destroy old graphic if exists
+            if (this.mountingLabel.getGraphic() != null) {
+                ((Destroyable) this.mountingLabel.getGraphic()).destroy();
+            }
             var graphic = createIconWithoutTooltip("/images/ships/icons/" + hardpointModule.getMounting().name().toLowerCase() + ".png", "shipbuilder-slots-slotbox-icon");
             this.mountingLabel.setGraphic(graphic);
             this.mountingLabel.register(graphic);
@@ -723,20 +727,22 @@ class SlotBox extends DestroyableStackPane {
 
     private void updatePower(ShipModule shipModule) {
         if (shipModule != null) {
-            //todo memory leak? destroy old graphic if exists
-            this.power = createIconWithTooltip("/images/ships/icons/" + (shipModule.isPowered() ? "powered" : "unpowered") + shipModule.getPowerGroup() + ".png", shipModule.getPowerGroup(), "shipbuilder-slots-slotbox-button-icon");
-            this.powerButton.setGraphic(this.power);
-            this.powerButton.register(this.power);
+            this.power.setImage(ImageService.getImage("/images/ships/icons/" + (shipModule.isPowered() ? "powered" : "unpowered") + shipModule.getPowerGroup() + ".png"));
+
+            if (!isCurrentShip()) {
+                this.powerButton.setGraphic(this.power);
+                this.powerButton.register(this.power);
+            }
             final boolean hasPowerToggle = shipModule.hasPowerToggle();
-            this.power.setVisible(hasPowerToggle);
             if (!isCurrentShip()) {
                 final int powerGroup = shipModule.getPowerGroup();
                 this.powerUp.setVisible(hasPowerToggle && powerGroup < 5);
                 this.powerDown.setVisible(hasPowerToggle && powerGroup > 1);
                 this.powerButton.setVisible(hasPowerToggle);
             } else {
-                this.powerBox.getNodes().clear();
-                this.powerBox.getNodes().addAll(new GrowingRegion(), this.power, new GrowingRegion());
+                this.power.setVisible(hasPowerToggle);
+//                this.powerBox.getNodes().clear();
+//                this.powerBox.getNodes().addAll(new GrowingRegion(), this.power, new GrowingRegion());
             }
         }
     }
@@ -842,19 +848,21 @@ class SlotBox extends DestroyableStackPane {
 
     private static DestroyableResizableImageView createIconWithTooltip(String imageResource, String tooltipKey, String... styleClasses) {
         final DestroyableResizableImageView icon = createIconWithoutTooltip(imageResource, styleClasses);
-        Tooltip.install(icon, TooltipBuilder.builder()
+        final DestroyableTooltip tooltip = TooltipBuilder.builder()
                 .withShowDelay(Duration.seconds(0.1))
                 .withText(tooltipKey)
-                .build());
+                .build();
+        tooltip.install(icon);
         return icon;
     }
 
     private static DestroyableResizableImageView createIconWithTooltip(String imageResource, Integer powerGroup, String... styleClasses) {
         final DestroyableResizableImageView icon = createIconWithoutTooltip(imageResource, styleClasses);
-        Tooltip.install(icon, TooltipBuilder.builder()
+        final DestroyableTooltip tooltip = TooltipBuilder.builder()
                 .withShowDelay(Duration.seconds(0.1))
                 .withText("ship.stats.config.power.group", powerGroup)
-                .build());
+                .build();
+        tooltip.install(icon);
         return icon;
     }
 
@@ -866,30 +874,48 @@ class SlotBox extends DestroyableStackPane {
     }
 
     private void hideContents() {
-        layer1.getNodes().remove(this.sizeBox);
-        layer1.getNodes().remove(this.classBox);
-        layer1.getNodes().remove(this.mountingBox);
-        layer1.getNodes().remove(this.texts);
-        layer1.getNodes().remove(this.powerBox);
-        if (!layer1.getNodes().contains(this.emptyLabel)) {
-            layer1.getNodes().add(2, this.emptyLabel);
-        }
+
+        this.sizeBox.setVisible(false);
+        this.classBox.setVisible(false);
+        this.mountingBox.setVisible(false);
+        this.texts.setVisible(false);
+        this.powerBox.setVisible(false);
+        this.sizeBox.setManaged(false);
+        this.classBox.setManaged(false);
+        this.mountingBox.setManaged(false);
+        this.texts.setManaged(false);
+        this.powerBox.setManaged(false);
+
+        this.emptyLabel.setVisible(true);
+        this.emptyLabel.setManaged(true);
         layer2.setVisible(false);
     }
 
     private void showContents(ShipModule shipModule, ShipModule oldShipModule) {
         if (shipModule != null) {
-            layer1.getNodes().remove(this.emptyLabel);
-            if (!layer1.getNodes().contains(this.sizeBox)) {
-                layer1.getNodes().add(2, this.sizeBox);
-                if (shipModule instanceof HardpointModule) {
-                    layer1.getNodes().add(3, this.mountingBox);
-                } else {
-                    layer1.getNodes().add(3, this.classBox);
-                }
-                layer1.getNodes().add(4, this.texts);
-                layer1.getNodes().add(5, this.powerBox);
+
+            this.emptyLabel.setVisible(false);
+            this.emptyLabel.setManaged(false);
+
+            this.sizeBox.setVisible(true);
+            this.sizeBox.setManaged(true);
+            if (shipModule instanceof HardpointModule) {
+                this.mountingBox.setVisible(true);
+                this.mountingBox.setManaged(true);
+                this.classBox.setVisible(false);
+                this.classBox.setManaged(false);
+            } else {
+                this.mountingBox.setVisible(false);
+                this.mountingBox.setManaged(false);
+                this.classBox.setVisible(true);
+                this.classBox.setManaged(true);
             }
+            this.texts.setVisible(true);
+            this.texts.setManaged(true);
+
+            this.powerBox.setVisible(true);
+            this.powerBox.setManaged(true);
+
         }
         if (shipModule instanceof HardpointModule) {
             updateMounting(shipModule);
@@ -911,7 +937,8 @@ class SlotBox extends DestroyableStackPane {
         final List<SlotBoxEntry> entries = ShipModule.getModules(this.slot.getSlotType()).stream()
                 .filter(module -> module.isAllowed(ApplicationState.getInstance().getShip().getShipType()))
                 .collect(Collectors.groupingBy(ShipModule::getClass))
-                .values().stream().map(list -> new SlotBoxEntry(this, list))
+                .values().stream()
+                .map(list -> new SlotBoxEntry(this, list))
                 .sorted(Comparator.comparing(slotBoxEntry -> slotBoxEntry.name.getText()))
                 .toList();
         if (entries.size() > 1) {
@@ -932,7 +959,7 @@ class SlotBox extends DestroyableStackPane {
                 .withStyleClass("shipbuilder-slots-slotbox-popover-content")
                 .build();
 
-        final DestroyablePopOver popOver = PopOverBuilder.builder()
+        final DestroyablePopOver moduleMenu = PopOverBuilder.builder()
                 .withStyleClass("shipbuilder-slots-slotbox-popover")
                 .withContent(scrollPane)
                 .withDetachable(false)
@@ -940,8 +967,14 @@ class SlotBox extends DestroyableStackPane {
                 .withArrowIndent(0)
                 .withArrowSize(0)
                 .withCornerRadius(0)
+                .withDestroyOnHide(true)
                 .build();
-        return popOver;
+        moduleMenu.addChangeListener(moduleMenu.showingProperty(), (_, _, newValue) -> {
+            if (Boolean.FALSE.equals(newValue)) {
+                Platform.runLater(this::close);
+            }
+        });
+        return moduleMenu;
     }
 
     private void addHardpointGroupButtons(DestroyableVBox content) {
@@ -950,24 +983,21 @@ class SlotBox extends DestroyableStackPane {
                 .withText("ship.module.hardpoint.group.label")
                 .build();
         final ToggleGroup toggleGroup = new ToggleGroup();
-        DestroyableToggleButton[] buttons = Arrays.stream(HardpointGroup.values()).map(group -> {
-            final DestroyableToggleButton groupButton = ToggleButtonBuilder.builder()
-                    .withStyleClass("toggle-button-blueprints")
-                    .withNonLocalizedText(group.name())
-                    .withOnAction(event -> {
-                        this.slot.setHardpointGroup(group);
-                        refresh();
-                        notifyChanged();
-                        close();
-                    })
-                    .build();
-            groupButton.setToggleGroup(toggleGroup);
-            if (group.equals(this.slot.getHardpointGroup())) {
-                groupButton.setSelected(true);
-            }
-            groupButton.setFocusTraversable(false);
-            return groupButton;
-        }).toArray(DestroyableToggleButton[]::new);
+        DestroyableToggleButton[] buttons = Arrays.stream(HardpointGroup.values())
+                .map(group -> ToggleButtonBuilder.builder()
+                        .withStyleClass("toggle-button-blueprints")
+                        .withNonLocalizedText(group.name())
+                        .withFocusTraversable(false)
+                        .withToggleGroup(toggleGroup)
+                        .withSelected(group.equals(this.slot.getHardpointGroup()))
+                        .withOnAction(event -> {
+                            this.slot.setHardpointGroup(group);
+                            refresh();
+                            notifyChanged();
+                            close();
+                        })
+                        .build())
+                .toArray(DestroyableToggleButton[]::new);
 
         DestroyableHBox box = BoxBuilder.builder()
                 .withNodes(buttons).buildHBox();
@@ -1070,37 +1100,40 @@ class SlotBox extends DestroyableStackPane {
                 .build();
 
         textField.addChangeListener(textField.textProperty(), (_, _, newValue) -> {
-            content.getNodes().remove(1, content.getNodes().size());
+            content.getChildren().subList(1, content.getNodes().size()).forEach(node -> {
+                node.setManaged(false);
+                node.setVisible(false);
+            });
             if (Objects.equals(newValue, "")) {
                 //add engineering
                 if (this.slot.isOccupied() && !this.slot.getShipModule().isLegacy()) {
-                    addEngineering(content);
-                    addExperimentalEffects(content);
+                    final ShipModule shipModule = getSlot().getShipModule();
+                    if (shipModule != null && !shipModule.getAllowedBlueprints().isEmpty()) {
+                        blueprintSection.setVisible(true);
+                        blueprintSection.setManaged(true);
+                    }
+
+                    if (shipModule != null && !shipModule.getAllowedExperimentalEffects().isEmpty()) {
+                        experintalEffectsSection.setVisible(true);
+                        experintalEffectsSection.setManaged(true);
+                    }
                 }
             }
-            boolean isCG = "community goal".contains(newValue) || "cg".contains(newValue);
-            boolean isPreEngineered = "pre engineered".contains(newValue) || "pre-engineered".contains(newValue);
-            boolean isLegacy = "legacy".contains(newValue);
-            boolean isPowerplay = "powerplay".contains(newValue);
-            content.getNodes().addAll(entries.stream().filter(entry ->
-                    entry.name.getText().toLowerCase().contains(newValue.toLowerCase())
-                            || entry.options.stream().anyMatch(box -> box.getChildren().stream().map(button -> ((ShipModuleButton) button).getShipModule()).anyMatch(shipModule ->
-                                    LocaleService.getLocalizedStringForCurrentLocale(shipModule.getName().getLocalizationKey()).toLowerCase().contains(newValue.toLowerCase())
-                                            || (isCG && shipModule.isCGExclusive())
-                                            || (isPreEngineered && shipModule.isPreEngineered())
-                                            || (isLegacy && shipModule.isLegacy())
-                                            || (isPowerplay && shipModule.getOrigin().equals(Origin.POWERPLAY))
-                            )
-                    )
-            ).toList());
+            entries.stream()
+                    .filter(entry -> entry.matches(newValue))
+                    .forEach(e -> {
+                        e.setVisible(true);
+                        e.setManaged(true);
+                    });
         });
         content.getNodes().add(textField);
     }
 
+
     private void addEngineering(final DestroyableVBox content) {
         final ShipModule shipModule = getSlot().getShipModule();
         if (shipModule != null && !shipModule.getAllowedBlueprints().isEmpty()) {
-            addBlueprintSection(content, "tabs.ships.blueprints", false);
+            this.blueprintSection = addBlueprintSection(content, "tabs.ships.blueprints", false);
         }
 
     }
@@ -1109,12 +1142,12 @@ class SlotBox extends DestroyableStackPane {
         final ShipModule shipModule = getSlot().getShipModule();
 
         if (shipModule != null && !shipModule.getAllowedExperimentalEffects().isEmpty()) {
-            addBlueprintSection(content, "tabs.ships.experimental.effects", true);
+            this.experintalEffectsSection = addBlueprintSection(content, "tabs.ships.experimental.effects", true);
         }
 
     }
 
-    private void addBlueprintSection(final DestroyableVBox content, final String sectionLabelKey, final boolean experimental) {
+    private DestroyableVBox addBlueprintSection(final DestroyableVBox content, final String sectionLabelKey, final boolean experimental) {
         final ShipModule shipModule = getSlot().getShipModule();
         final List<HorizonsBlueprintType> allowedBlueprints = experimental ? shipModule.getAllowedExperimentalEffects() : shipModule.getAllowedBlueprints();
         if (shipModule != null && !allowedBlueprints.isEmpty()) {
@@ -1194,18 +1227,19 @@ class SlotBox extends DestroyableStackPane {
 
                     ).toList();
 
-            final DestroyableVBox vBox = BoxBuilder.builder()
+            DestroyableVBox blueprintSection = BoxBuilder.builder()
                     .withStyleClass("ships-modules-item")
                     .withNodes(BoxBuilder.builder()
                             .withNodes(new GrowingRegion(), LabelBuilder.builder()
                                     .withStyleClass("ships-modules-title")
                                     .withText(sectionLabelKey)
                                     .build(), new GrowingRegion()).buildHBox()).buildVBox();
-            vBox.getNodes().addAll(toggleButtons);
-            addGradeSelection(experimental, shipModule, toggleGroup, vBox);
-            content.getNodes().add(vBox);
+            blueprintSection.getNodes().addAll(toggleButtons);
+            addGradeSelection(experimental, shipModule, toggleGroup, blueprintSection);
+            content.getNodes().add(blueprintSection);
+            return blueprintSection;
         }
-
+        return null;
     }
 
     private void addGradeSelection(boolean experimental, ShipModule shipModule, ToggleGroup toggleGroup, DestroyableVBox vBox) {
@@ -1320,10 +1354,16 @@ class SlotBox extends DestroyableStackPane {
     }
 
     public void close() {
-        if (this.popOver != null && this.popOver.isShowing()) {
+        if (this.popOver != null) {
+            log.debug("destroying popover");
             this.popOver.hide();
             this.popOver = null;
         }
+        restore = null;
+        save = null;
+        clear = null;
+        this.blueprintSection = null;
+        this.experintalEffectsSection = null;
     }
 
     private void notifyChanged() {
@@ -1337,5 +1377,6 @@ class SlotBox extends DestroyableStackPane {
         if (subscribe != null) {
             subscribe.dispose();
         }
+        this.modulesLayer = null;
     }
 }

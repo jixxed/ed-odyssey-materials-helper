@@ -14,6 +14,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ShipLegacyModules;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Origin;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.Armour;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipBuilderEvent;
 import nl.jixxed.eliteodysseymaterials.service.ships.LegacyModuleService;
@@ -37,7 +38,7 @@ public class SlotBoxEntry extends DestroyableVBox {
     public SlotBoxEntry(final SlotBox slotBox, final List<ShipModule> shipModulesList) {
         this.getStyleClass().add("ships-modules");
         //add ship modules
-        final ShipModule firstModule = shipModulesList.get(0);
+        final ShipModule firstModule = shipModulesList.getFirst();
         final List<ShipModule> shipModules = (firstModule instanceof Armour)
                 ? shipModulesList.stream().filter(shipModule -> ((Armour) shipModule).getShipType().equals(ApplicationState.getInstance().getShip().getShipType())).filter(ShipModule::isSelectable).toList()
                 : shipModulesList.stream().filter(ShipModule::isSelectable).toList();
@@ -60,7 +61,7 @@ public class SlotBoxEntry extends DestroyableVBox {
                                 .map(shipModule -> createShipModuleButton(slotBox, shipModule))
                                 .toArray(ShipModuleButton[]::new))
                 .map(this::toButtonRow)
-                .toList();
+                .collect(Collectors.toList());
         final DestroyableVBox vBox = BoxBuilder.builder()
                 .withStyleClass("ships-modules-item")
                 .withNodes(BoxBuilder.builder()
@@ -151,5 +152,28 @@ public class SlotBoxEntry extends DestroyableVBox {
 
     private void notifyChanged() {
         EventService.publish(new ShipBuilderEvent());
+    }
+
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        options.clear();
+    }
+
+    public boolean matches(String search) {
+        boolean isCG = "community goal".contains(search) || "cg".contains(search);
+        boolean isPreEngineered = "pre engineered".contains(search) || "pre-engineered".contains(search);
+        boolean isLegacy = "legacy".contains(search);
+        boolean isPowerplay = "powerplay".contains(search);
+        return name.getText().toLowerCase().contains(search.toLowerCase())
+                || options.stream()
+                .anyMatch(box -> box.getChildren().stream()
+                        .map(button -> ((ShipModuleButton) button).getShipModule())
+                        .anyMatch(shipModule ->
+                                LocaleService.getLocalizedStringForCurrentLocale(shipModule.getName().getLocalizationKey()).toLowerCase().contains(search.toLowerCase())
+                                        || (isCG && shipModule.isCGExclusive())
+                                        || (isPreEngineered && shipModule.isPreEngineered())
+                                        || (isLegacy && shipModule.isLegacy())
+                                        || (isPowerplay && shipModule.getOrigin().equals(Origin.POWERPLAY))));
     }
 }

@@ -9,6 +9,9 @@
   //  -fx-stroke-width: 0.05em !important;
   //  -fx-fill: #0f0f0f !important;
   //}
+  .copyable-location {
+    @include copyable-location;
+  }
 }
 
 .material-popover .label {

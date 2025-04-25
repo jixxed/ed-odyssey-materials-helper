@@ -6,7 +6,6 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import lombok.extern.slf4j.Slf4j;
@@ -96,7 +95,7 @@ public class HorizonsCommoditiesSearchBar extends DestroyableHBox implements Des
     }
 
     private void initSearchTextFilter() {
-        final Tooltip showMaterialsTooltip = TooltipBuilder.builder()
+        final DestroyableTooltip showMaterialsTooltip = TooltipBuilder.builder()
                 .withText("search.filter.placeholder")
                 .build();
         this.showMaterialsComboBox = ComboBoxBuilder.builder(HorizonsCommoditiesShow.class)

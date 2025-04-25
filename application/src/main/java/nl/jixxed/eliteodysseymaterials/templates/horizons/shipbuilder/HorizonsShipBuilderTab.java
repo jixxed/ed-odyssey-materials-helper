@@ -1,6 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
-import javafx.scene.layout.StackPane;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.StackPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
@@ -13,8 +12,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableStackPane;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsTab;
 
 import java.util.Optional;
@@ -25,10 +23,6 @@ public class HorizonsShipBuilderTab extends HorizonsTab implements DestroyableEv
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String SHIP_CONTENT_STYLE_CLASS = "ships-content";
 
-    private DestroyableLabel noShip;
-    private DestroyableVBox content;
-    private DestroyableVBox contentChild;
-    private DestroyableVBox shipView;
     @Getter
     private ControlsLayer controlsLayer;
     @Getter
@@ -42,8 +36,6 @@ public class HorizonsShipBuilderTab extends HorizonsTab implements DestroyableEv
     @Getter
     private ShipSelectionLayer shipSelectionLayer;
     private NoShipLayer noShipLayer;
-//    private Region filler;
-//    private VBox right;
 
 
     @Override
@@ -70,7 +62,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab implements DestroyableEv
         statsBGLayer = new StatsBGLayer(statsLayer);
         detailsLayer = new DetailsLayer();
         modulesLayer = new ModulesLayer(this);
-        shipSelectionLayer = new ShipSelectionLayer(this);
+        shipSelectionLayer = new ShipSelectionLayer();
         noShipLayer = new NoShipLayer();
         controlsLayer.setVisible(false);
         statsLayer.setVisible(false);
@@ -83,10 +75,18 @@ public class HorizonsShipBuilderTab extends HorizonsTab implements DestroyableEv
         statsLayer.setPickOnBounds(false);
         statsBGLayer.setPickOnBounds(false);
         detailsLayer.setPickOnBounds(false);
-        final StackPane stackPane = register(StackPaneBuilder.builder()
+        final DestroyableStackPane stackPane = register(StackPaneBuilder.builder()
                 .withStyleClass("shipbuilder-tab-content")
                 .withStyleClass(SHIP_CONTENT_STYLE_CLASS)//TODO remove
-                .withNodes(noShipLayer, shipSelectionLayer, modulesLayer, statsBGLayer, controlsLayer, detailsLayer, statsLayer)
+                .withNodes(
+                        noShipLayer,
+                        shipSelectionLayer,
+                        modulesLayer,
+                        statsBGLayer,
+                        controlsLayer,
+                        detailsLayer,
+                        statsLayer
+                )
                 .build());
         this.setContent(stackPane);
         refreshContent();
@@ -174,12 +174,16 @@ public class HorizonsShipBuilderTab extends HorizonsTab implements DestroyableEv
 
         register(EventService.addListener(true, this, 9, ShipLoadoutEvent.class, event -> {
 
-            if (this.controlsLayer.getShipSelect().getSelectionModel().getSelectedItem().equals(ShipConfiguration.CURRENT)) {
-                refreshContent();
-            }
+//            if (this.controlsLayer.getShipSelect().getSelectionModel().getSelectedItem().equals(ShipConfiguration.CURRENT)) {
+//                refreshContent();
+//            }
         }));
 
     }
 
-
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        this.modulesLayer = null;
+    }
 }

@@ -103,14 +103,16 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
                 .withText("horizons.wishlist.coriolis")
                 .withOnAction(_ -> FXApplication.getInstance().getHostServices().showDocument("https://coriolis.io"))
                 .build();
-        edsyButton.setTooltip(TooltipBuilder.builder()
+        final DestroyableTooltip edsyTooltip = TooltipBuilder.builder()
                 .withShowDelay(Duration.millis(100D))
                 .withText("horizons.wishlist.edsy.tooltip")
-                .build());
-        coriolisButton.setTooltip(TooltipBuilder.builder()
+                .build();
+        edsyTooltip.install(edsyButton);
+        final DestroyableTooltip coriolisTooltip = TooltipBuilder.builder()
                 .withShowDelay(Duration.millis(100D))
                 .withText("horizons.wishlist.coriolis.tooltip")
-                .build());
+                .build();
+        coriolisTooltip.install(coriolisButton);
 
         this.getNodes().addAll(this.wishlistSelect, this.menuButton, shipBuilderButton, edsyButton, coriolisButton);
     }

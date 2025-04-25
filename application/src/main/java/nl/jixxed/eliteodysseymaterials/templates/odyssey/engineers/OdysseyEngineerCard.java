@@ -5,7 +5,6 @@ import javafx.geometry.Orientation;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.StackPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
@@ -104,10 +103,6 @@ class OdysseyEngineerCard extends EngineerCard implements DestroyableEventTempla
         final DestroyableResizableImageView specialisationIcon = ResizableImageViewBuilder.builder()
                 .withStyleClass("spec-image")
                 .withImage("/images/engineer/specialisation/" + this.engineer.getSpecialisation().name().toLowerCase() + ".png")
-                .build();
-
-        final DestroyableStackPane specialisationIconStackPane = StackPaneBuilder.builder()
-                .withNodes(specialisationIcon)
                 .build();
 
         final DestroyableHBox specialisationLine = BoxBuilder.builder()

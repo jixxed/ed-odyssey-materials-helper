@@ -2,7 +2,6 @@ package nl.jixxed.eliteodysseymaterials.templates.generic;
 
 import javafx.css.PseudoClass;
 import javafx.event.EventHandler;
-import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
@@ -17,10 +16,7 @@ import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PinnedBlueprintService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 public class EngineerBlueprintLabel extends DestroyableHBox implements DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
@@ -36,7 +32,6 @@ public class EngineerBlueprintLabel extends DestroyableHBox implements Destroyab
     private DestroyableResizableImageView pinnedImage;
     private Integer currentEngineerRank = 0;
     private boolean dragFlag = false;
-    private Tooltip tooltip;
 
     public EngineerBlueprintLabel(final Engineer engineer) {
         this(engineer, false, 0);
@@ -67,10 +62,10 @@ public class EngineerBlueprintLabel extends DestroyableHBox implements Destroyab
             addGradeImage();
             addPinnedImage();
             if (this.horizonsBlueprint instanceof HorizonsModuleBlueprint) {
-                tooltip = TooltipBuilder.builder()
+                DestroyableTooltip tooltip = TooltipBuilder.builder()
                         .withText(LocaleService.getStringBinding("blueprint.engineer.pinnable.tooltip"))
                         .build();
-                Tooltip.install(this, tooltip);
+                tooltip.install(this);
                 this.getStyleClass().add("pinnable");
 
             }
@@ -212,8 +207,8 @@ public class EngineerBlueprintLabel extends DestroyableHBox implements Destroyab
     @Override
     public void destroyInternal() {
         super.destroyInternal();
-        if (tooltip != null) {
-            Tooltip.uninstall(this, tooltip);
-        }
+//        if (tooltip != null) {
+//            Tooltip.uninstall(this, tooltip);
+//        }
     }
 }

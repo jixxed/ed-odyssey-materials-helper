@@ -48,4 +48,10 @@ public class StatsBGLayer extends DestroyableAnchorPane implements DestroyableEv
     public void initEventHandling() {
         register(EventService.addListener(true, this, HorizonsShipSelectedEvent.class, _ -> stats.requestLayout()));
     }
+
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        statsLayer = null;
+    }
 }

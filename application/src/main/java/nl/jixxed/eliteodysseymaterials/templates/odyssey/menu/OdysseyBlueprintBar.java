@@ -1,10 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.menu;
 
-import javafx.scene.Node;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TitledPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -22,7 +20,10 @@ import nl.jixxed.eliteodysseymaterials.enums.Craftability;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 import nl.jixxed.eliteodysseymaterials.helper.BlueprintHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.menu.About;
 
@@ -32,51 +33,48 @@ import java.util.Map;
 @Slf4j
 public class OdysseyBlueprintBar extends DestroyableAccordion implements DestroyableEventTemplate {
     private About about;
-    private TitledPane[] categoryTitledPanes;
-    private TitledPane aboutTitledPane;
+    private DestroyableTitledPane[] categoryTitledPanes;
+    private DestroyableTitledPane aboutTitledPane;
 
-
-    private Callback<ListView<OdysseyBlueprintName>, ListCell<OdysseyBlueprintName>> cellFactory = _ -> new ListCell<>() {
-
-        @SuppressWarnings("java:S1068")
-        private final EventListener<StorageEvent> storageEventEventListener = EventService.addListener(true, OdysseyBlueprintBar.this, StorageEvent.class, event -> {
-            updateStyle(getItem());
-            updateText(getItem(), this.emptyProperty().get());
-        });
-        @SuppressWarnings("java:S1068")
-        private final EventListener<EngineerEvent> engineerEventEventListener = EventService.addListener(true, OdysseyBlueprintBar.this, EngineerEvent.class, event -> {
-            updateStyle(getItem());
-            updateText(getItem(), this.emptyProperty().get());
-        });
-
-
-        @Override
-        protected void updateItem(final OdysseyBlueprintName item, final boolean empty) {
-            super.updateItem(item, empty);
-            updateText(item, empty);
-            updateStyle(item);
-        }
-
-        private void updateText(final OdysseyBlueprintName item, final boolean empty) {
-            if (empty || item == null) {
-                setText(null);
-                setGraphic(null);
-            } else {
-                setText(item + (BlueprintHelper.isCompletedEngineerRecipe(item) ? " " + UTF8Constants.CHECK_TRUE : ""));
+    private Callback<ListView<OdysseyBlueprintName>, ListCell<OdysseyBlueprintName>> createDestroyableCellFactory(Destroyable destroyable) {
+        return _ -> new DestroyableListCell<>() {
+            {
+                destroyable.register(this);
+                register(EventService.addListener(true, destroyable, StorageEvent.class, _ -> {
+                    updateText(getItem(), this.emptyProperty().get());
+                }));
+                register(EventService.addListener(true, destroyable, EngineerEvent.class, _ -> {
+                    updateText(getItem(), this.emptyProperty().get());
+                }));
             }
-        }
 
-        private void updateStyle(final OdysseyBlueprintName item) {
-            if (BlueprintHelper.isCompletedEngineerRecipe(item) || BlueprintHelper.getCraftabilityForModuleOrUpgradeRecipe(item).equals(Craftability.CRAFTABLE)) {
-                this.setStyle("-fx-text-fill: #89d07f;");
-            } else if (BlueprintHelper.getCraftabilityForModuleOrUpgradeRecipe(item).equals(Craftability.CRAFTABLE_WITH_TRADE)) {
-                this.setStyle("-fx-text-fill: #dcc030;");
-            } else {
-                this.setStyle("-fx-text-fill: white;");
+            @Override
+            protected void updateItem(final OdysseyBlueprintName item, final boolean empty) {
+                super.updateItem(item, empty);
+                updateText(item, empty);
+                updateStyle(item);
             }
-        }
 
-    };
+            private void updateText(final OdysseyBlueprintName item, final boolean empty) {
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    setText(item + (BlueprintHelper.isCompletedEngineerRecipe(item) ? " " + UTF8Constants.CHECK_TRUE : ""));
+                }
+            }
+
+            private void updateStyle(final OdysseyBlueprintName item) {
+                if (BlueprintHelper.isCompletedEngineerRecipe(item) || BlueprintHelper.getCraftabilityForModuleOrUpgradeRecipe(item).equals(Craftability.CRAFTABLE)) {
+                    this.setStyle("-fx-text-fill: #89d07f;");
+                } else if (BlueprintHelper.getCraftabilityForModuleOrUpgradeRecipe(item).equals(Craftability.CRAFTABLE_WITH_TRADE)) {
+                    this.setStyle("-fx-text-fill: #dcc030;");
+                } else {
+                    this.setStyle("-fx-text-fill: white;");
+                }
+            }
+        };
+    }
 
     public OdysseyBlueprintBar() {
         super();
@@ -92,7 +90,7 @@ public class OdysseyBlueprintBar extends DestroyableAccordion implements Destroy
                 .toArray(DestroyableTitledPane[]::new);
         initAboutTitledPane();
         this.getPanes().addAll(this.categoryTitledPanes);
-        this.getPanes().add(this.aboutTitledPane);
+        this.getPanes().add(register(this.aboutTitledPane));
         this.setExpandedPane(this.aboutTitledPane);
     }
 
@@ -115,17 +113,17 @@ public class OdysseyBlueprintBar extends DestroyableAccordion implements Destroy
                 .withVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER)
                 .build();
 
-        final DestroyableComboBox<OdysseyBlueprintName> recipes = ComboBoxBuilder.builder(OdysseyBlueprintName.class)
+        final DestroyableComboBox<OdysseyBlueprintName> blueprints = ComboBoxBuilder.builder(OdysseyBlueprintName.class)
                 .withStyleClass("blueprint-list")
                 .withItemsProperty(LocaleService.getListBinding(recipesEntry.getValue().keySet().stream().sorted(Comparator.comparing(recipeName -> LocaleService.getLocalizedStringForCurrentLocale(recipeName.getLocalizationKey()))).toArray(OdysseyBlueprintName[]::new)))
                 .asLocalized()
                 .build();
-        recipes.setVisibleRowCount(recipes.getItems().size());
+        blueprints.setVisibleRowCount(blueprints.getItems().size());
 
         final DestroyableHBox hBox = BoxBuilder.builder()
-                .withNode(recipes)
+                .withNode(blueprints)
                 .buildHBox();
-        HBox.setHgrow(recipes, Priority.ALWAYS);
+        HBox.setHgrow(blueprints, Priority.ALWAYS);
 
         final DestroyableVBox content = BoxBuilder.builder()
                 .withStyleClass("blueprint-titled-pane-content")
@@ -133,27 +131,28 @@ public class OdysseyBlueprintBar extends DestroyableAccordion implements Destroy
                 .buildVBox();
         VBox.setVgrow(scroll, Priority.ALWAYS);
 
-        final DestroyableTitledPane categoryTitledPane = TitledPaneBuilder.builder()
-                .withStyleClass("blueprint-title-pane")
+        final DestroyableTitledPane categoryTitledPane = register(TitledPaneBuilder.builder()
+                .withStyleClass("blueprint-title-pane2")
                 .withText(recipesEntry.getKey().getLocalizationKey())
                 .withContent(content)
-                .build();
+                .build());
 
-        recipes.addChangeListener(recipes.valueProperty(), (_, _, newValue) -> {
+        blueprints.addChangeListener(blueprints.valueProperty(), (_, _, newValue) -> {
             if (scroll.getContent() instanceof DestroyableTemplate destroyableContent) {
                 scroll.deregister(destroyableContent);
                 destroyableContent.destroyTemplate();
             }
-            scroll.setContent(createRecipeContent(OdysseyBlueprintConstants.getRecipe(newValue)));
-            scroll.register(content);
+            final OdysseyBlueprintContent recipeContent = createRecipeContent(OdysseyBlueprintConstants.getRecipe(newValue));
+            scroll.setContentNode(recipeContent);
         });
-        recipes.setCellFactory(cellFactory);
-        recipes.getSelectionModel().select(recipes.getItems().get(0));
-        recipes.setButtonCell(cellFactory.call(null));
+        var destroyableCellFactory = createDestroyableCellFactory(blueprints);
+        blueprints.setCellFactory(destroyableCellFactory);
+        blueprints.getSelectionModel().select(blueprints.getItems().getFirst());
+        blueprints.setButtonCell(destroyableCellFactory.call(null));
 
         register(EventService.addListener(true, this, BlueprintClickEvent.class, blueprintClickEvent -> {
-            if (blueprintClickEvent.getBlueprintName() instanceof OdysseyBlueprintName odysseyBlueprintName && recipes.getItems().contains(odysseyBlueprintName)) {
-                recipes.getSelectionModel().select(odysseyBlueprintName);
+            if (blueprintClickEvent.getBlueprintName() instanceof OdysseyBlueprintName odysseyBlueprintName && blueprints.getItems().contains(odysseyBlueprintName)) {
+                blueprints.getSelectionModel().select(odysseyBlueprintName);
                 this.setExpandedPane(categoryTitledPane);
             }
         }));
@@ -161,7 +160,7 @@ public class OdysseyBlueprintBar extends DestroyableAccordion implements Destroy
         return categoryTitledPane;
     }
 
-    private Node createRecipeContent(OdysseyBlueprint odysseyBlueprint) {
+    private OdysseyBlueprintContent createRecipeContent(OdysseyBlueprint odysseyBlueprint) {
         return new OdysseyBlueprintContent(odysseyBlueprint);
     }
 }

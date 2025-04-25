@@ -3,7 +3,6 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 import javafx.css.PseudoClass;
-import javafx.scene.control.Tooltip;
 import javafx.util.Duration;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
@@ -105,8 +104,8 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
                     .withText(LocaleService.getToolTipStringBinding(moduleRecipe, "tab.wishlist.blueprint.tooltip"))
                     .withShowDelay(Duration.millis(100))
                     .build();
-            Tooltip.install(wishlistRecipeName, tooltip);
-            register(this.tooltip);
+            tooltip.install(wishlistRecipeName);
+//            register(this.tooltip);
         }
         this.updateStyle();
         this.getNodes().addAll(visibilityButton, wishlistRecipeName, removeBlueprint);
@@ -181,6 +180,6 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
     @Override
     public void destroyInternal() {
         super.destroyInternal();
-        Tooltip.uninstall(this.wishlistRecipeName, this.tooltip);
+//        Tooltip.uninstall(this.wishlistRecipeName, this.tooltip);
     }
 }

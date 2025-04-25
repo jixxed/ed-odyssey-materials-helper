@@ -2,6 +2,8 @@ package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
 import javafx.application.HostServices;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Node;
 import javafx.scene.input.Clipboard;
 import javafx.stage.DirectoryChooser;
@@ -43,6 +45,8 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
     private DestroyableComboBox<ApplicationLocale> languageSelect;
     private DestroyableButton urlSchemeLinkingButton;
     private DestroyableLabel urlSchemeLinkingActiveLabel;
+
+    public final BooleanProperty registered = new SimpleBooleanProperty(RegistryService.isRegistered());
 
     public General() {
         this.initComponents();
@@ -284,7 +288,8 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
             }
             final boolean finalIsRegisteredNow = isRegisteredNow;
             Platform.runLater(() -> {
-                REGISTERED.set(finalIsRegisteredNow);
+                registered.set(finalIsRegisteredNow);
+                EventService.publish(new ApplicationRegisteredEvent(finalIsRegisteredNow));
                 this.urlSchemeLinkingButton.addBinding(this.urlSchemeLinkingButton.textProperty(), LocaleService.getStringBinding(finalIsRegisteredNow ? "tab.settings.url.scheme.button.unregister" : "tab.settings.url.scheme.button.register"));
                 this.urlSchemeLinkingActiveLabel.addBinding(this.urlSchemeLinkingActiveLabel.textProperty(), LocaleService.getStringBinding(finalIsRegisteredNow ? "tab.settings.url.scheme.registered" : "tab.settings.url.scheme.unregistered"));
                 this.urlSchemeLinkingButton.setDisable(false);
@@ -388,5 +393,6 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
     public void destroyInternal() {
         super.destroyInternal();
         executorService.shutdownNow();
+        registered.unbind();
     }
 }

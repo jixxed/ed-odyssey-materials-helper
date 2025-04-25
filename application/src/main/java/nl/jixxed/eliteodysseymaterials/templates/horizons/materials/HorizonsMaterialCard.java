@@ -3,12 +3,10 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.materials;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.css.PseudoClass;
 import javafx.geometry.Orientation;
-import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.util.Callback;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
@@ -41,9 +39,6 @@ public class HorizonsMaterialCard extends DestroyableVBox implements Destroyable
     private final HorizonsMaterial material;
     private TypeSegment present;
     private TypeSegment notPresent;
-    private static final Callback<TypeSegment, Node> segmentViewFactory = segment ->
-            new TypeSegmentView(segment, Map.of(SegmentType.PRESENT, Color.web("#89d07f"), SegmentType.NOT_PRESENT, Color.web("#ff7c7c")), true);
-
 
     HorizonsMaterialCard(final HorizonsMaterial material) {
         this.material = material;
@@ -83,9 +78,9 @@ public class HorizonsMaterialCard extends DestroyableVBox implements Destroyable
                 .withSegments(this.present, this.notPresent)
                 .withOrientation(Orientation.HORIZONTAL)
                 .withInfoNodeFactory(_ -> null)
-                .withSegmentViewFactory(segmentViewFactory)
                 .build();
-
+        segmentedBar.setSegmentViewFactory(segment ->
+                new TypeSegmentView(segment, Map.of(SegmentType.PRESENT, Color.web("#89d07f"), SegmentType.NOT_PRESENT, Color.web("#ff7c7c")), true));
         final DestroyableHBox hBox = BoxBuilder.builder()
                 .withStyleClass("text-line")
                 .withNodes(this.gradeImage, this.nameLabel).buildHBox();

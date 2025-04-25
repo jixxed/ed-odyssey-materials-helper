@@ -41,6 +41,10 @@ public class SliderSkin extends javafx.scene.control.skin.SliderSkin {
     @Override
     public void dispose() {
         super.dispose();
+        if (popup != null && popup.getSkin() != null) {
+            popup.getSkin().dispose();
+        }
+        fill.destroy();
         popup = null;
         getChildren().forEach(child -> {
             if (child instanceof DestroyableTemplate template) {

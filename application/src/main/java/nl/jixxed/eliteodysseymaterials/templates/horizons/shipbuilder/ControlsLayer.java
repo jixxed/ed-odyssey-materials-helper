@@ -63,11 +63,7 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
                 .withItemsProperty(FXCollections.observableArrayList(items.stream().sorted(Comparator.comparing(ShipConfiguration::getName)).toList()))
                 .withValueChangeListener((_, _, newValue) -> {
                     if (newValue != null) {
-                        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                            this.activeShipUUID = newValue.getUuid();
-                            ShipService.selectShipConfiguration(this.activeShipUUID, commander);
-                            EventService.publish(new HorizonsShipSelectedEvent(this.activeShipUUID));
-                        });
+                        selectShipConfiguration(newValue);
                     }
                 })
                 .build();
@@ -134,6 +130,14 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
         APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
     }
 
+    private void selectShipConfiguration(ShipConfiguration newValue) {
+        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+            this.activeShipUUID = newValue.getUuid();
+            ShipService.selectShipConfiguration(this.activeShipUUID, commander);
+            EventService.publish(new HorizonsShipSelectedEvent(this.activeShipUUID));
+        });
+    }
+
     private void showHelp(MouseEvent event) {
         DestroyableHBox dragDropHint = getHint("dragdrop");
         DestroyableHBox lockModeHint = getHint("lockmode");
@@ -191,7 +195,7 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
                         final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
                         shipConfigurations.resetShipConfiguration(this.activeShipUUID);
                         ShipService.saveShipConfigurations(commander, shipConfigurations);
-                        EventService.publish(new HorizonsShipSelectedEvent(this.activeShipUUID));
+                        EventService.publish(new HorizonsShipChoiceEvent(this.activeShipUUID));
                         refreshShipSelect();
                     });
                 }
@@ -287,15 +291,27 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
     public void initEventHandling() {
         register(EventService.addListener(true, this, HorizonsWishlistSelectedEvent.class, _ ->
                 APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists)));
-        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> applyFontSizingHack(fontSizeEvent.getFontSize())));
-        register(EventService.addListener(true, this, 9, ShipLoadoutEvent.class, _ -> EventService.publish(new HorizonsShipSelectedEvent(this.shipSelect.getSelectionModel().getSelectedItem().getUuid()))));
-        register(EventService.addListener(true, this, HorizonsShipChangedEvent.class, horizonsShipChangedEvent -> this.activeShipUUID = horizonsShipChangedEvent.getShipUUID()));
+        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class,
+                fontSizeEvent -> applyFontSizingHack(fontSizeEvent.getFontSize())));
+        register(EventService.addListener(true, this, 9, ShipLoadoutEvent.class, _ ->
+                EventService.publish(new HorizonsShipSelectedEvent(this.shipSelect.getSelectionModel().getSelectedItem().getUuid()))));
+        register(EventService.addListener(true, this, HorizonsShipChangedEvent.class, horizonsShipChangedEvent ->
+                this.activeShipUUID = horizonsShipChangedEvent.getShipUUID()));
 
         register(EventService.addListener(true, this, 0, HorizonsShipSelectedEvent.class, _ -> {
             APPLICATION_STATE.getPreferredCommander()
                     .flatMap(commander -> ShipService.getShipConfigurations(commander).getSelectedShipConfiguration())
                     .ifPresent(configuration -> APPLICATION_STATE.setShip(ShipMapper.toShip(configuration)));
             EventService.publish(new HorizonsShipChangedEvent(this.activeShipUUID));
+
+        }));
+        register(EventService.addListener(true, this, 0, HorizonsShipChoiceEvent.class, _ -> {
+            APPLICATION_STATE.getPreferredCommander()
+                    .flatMap(commander -> ShipService.getShipConfigurations(commander).getSelectedShipConfiguration())
+                    .ifPresent(configuration -> APPLICATION_STATE.setShip(ShipMapper.toShip(configuration)));
+            refreshShipSelect();
+            EventService.publish(new HorizonsShipChangedEvent(this.activeShipUUID));
+
         }));
 
         register(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
@@ -311,7 +327,8 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
         }));
 
         register(EventService.addListener(true, this, ImportResultEvent.class, importResultEvent -> {
-            if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_SHIP) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_SLEF)) {
+            if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_SHIP)
+                    || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_SLEF)) {
                 refreshShipSelect();
                 EventService.publish(new HorizonsShipChangedEvent(this.activeShipUUID));
             }
@@ -334,7 +351,6 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
             shipConfigurations.getSelectedShipConfiguration().ifPresent(configuration -> this.shipSelect.getSelectionModel().select(configuration));
         });
     }
-
 
     private void copyShipToClipboard() {
         ClipboardHelper.copyToClipboard(ClipboardHelper.createClipboardShipConfiguration());

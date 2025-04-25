@@ -8,17 +8,15 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplat
 
 public class ShipSelectionLayer extends DestroyableAnchorPane implements DestroyableTemplate {
 
-    private HorizonsShipBuilderTab tab;
 
-    public ShipSelectionLayer(HorizonsShipBuilderTab tab) {
-        this.tab = tab;
+    public ShipSelectionLayer() {
         initComponents();
     }
 
     @Override
     public void initComponents() {
         this.getStyleClass().add("ship-selection");
-        ShipSelectView shipSelectView = new ShipSelectView(this.tab);
+        ShipSelectView shipSelectView = new ShipSelectView();
 
         DestroyableScrollPane scrollPane = ScrollPaneBuilder.builder()
                 .withContent(shipSelectView)

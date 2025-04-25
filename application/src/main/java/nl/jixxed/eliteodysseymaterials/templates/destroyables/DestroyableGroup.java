@@ -10,11 +10,13 @@ public class DestroyableGroup extends Group implements DestroyableComponent {
         super();
     }
 
-    public DestroyableGroup(Node... children) {
+    public <E extends Node & DestroyableComponent> DestroyableGroup(E... children) {
         super(children);
+        registerAll(children);
     }
 
-    public DestroyableGroup(Collection<Node> children) {
-        super(children);
+    public <E extends Node & DestroyableComponent> DestroyableGroup(Collection<E> children) {
+        super((Collection<Node>) (Collection<?>) children);
+        registerAll(children);
     }
 }

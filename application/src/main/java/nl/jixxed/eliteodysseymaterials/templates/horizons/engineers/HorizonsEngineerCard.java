@@ -2,7 +2,6 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.engineers;
 
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
@@ -38,7 +37,7 @@ class HorizonsEngineerCard extends EngineerCard implements DestroyableEventTempl
 
     private TypeSegment present;
     private TypeSegment notPresent;
-    private static final Callback<TypeSegment, Node> segmentViewFactory = segment -> new TypeSegmentView(segment, Map.of(
+    private static final Callback<TypeSegment, TypeSegmentView> segmentViewFactory = segment -> new TypeSegmentView(segment, Map.of(
             SegmentType.PRESENT, Color.rgb(255, 255, 255),
             SegmentType.NOT_PRESENT, Color.rgb(128, 128, 128)
     ), false);

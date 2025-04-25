@@ -94,8 +94,8 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableHBox
                     .withText(LocaleService.getToolTipStringBinding(moduleRecipe, "tab.wishlist.blueprint.tooltip"))
                     .withShowDelay(Duration.millis(100))
                     .build();
-            Tooltip.install(wishlistRecipeName, tooltip);
-            register(this.tooltip);
+            tooltip.install(wishlistRecipeName);
+//            register(this.tooltip);
         }
         this.updateStyle();
         this.getNodes().addAll(visibilityButton, wishlistRecipeName, removeBlueprint);

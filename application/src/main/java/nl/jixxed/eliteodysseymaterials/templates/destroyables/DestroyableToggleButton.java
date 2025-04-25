@@ -5,5 +5,9 @@ import lombok.Getter;
 
 @Getter
 public class DestroyableToggleButton extends ToggleButton implements DestroyableComponent {
-
+    @Override
+    public void destroyInternal() {
+        DestroyableComponent.super.destroyInternal();
+        this.toggleGroupProperty().set(null);
+    }
 }

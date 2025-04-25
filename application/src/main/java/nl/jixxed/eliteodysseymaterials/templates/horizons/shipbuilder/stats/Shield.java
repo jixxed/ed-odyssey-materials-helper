@@ -72,10 +72,7 @@ public class Shield extends DestroyableStackPane implements DestroyableEventTemp
                         .buildHBox(), new GrowingRegion())
                 .buildVBox();
         this.getNodes().add(titleBox);
-        DestroyableLabel rawTitleLabel = LabelBuilder.builder()
-                .withStyleClass("shield-label-" + color)
-                .withText("ship.stats.shield.raw")
-                .build();
+
         DestroyableLabel kineticTitleLabel = LabelBuilder.builder()
                 .withStyleClass("shield-label-" + color)
                 .withText("ship.stats.shield.kinetic")
@@ -92,9 +89,7 @@ public class Shield extends DestroyableStackPane implements DestroyableEventTemp
                 .withStyleClass("shield-label-" + color)
                 .withText("ship.stats.shield.explosive")
                 .build();
-        rawLabel = LabelBuilder.builder()
-                .withNonLocalizedText("0")
-                .build();
+
         kineticLabel = LabelBuilder.builder()
                 .withNonLocalizedText("0")
                 .build();
@@ -128,7 +123,13 @@ public class Shield extends DestroyableStackPane implements DestroyableEventTemp
                     .buildVBox();
             this.getNodes().add(valuesBox);
         } else {
-
+            DestroyableLabel rawTitleLabel = LabelBuilder.builder()
+                    .withStyleClass("shield-label-" + color)
+                    .withText("ship.stats.shield.raw")
+                    .build();
+            rawLabel = LabelBuilder.builder()
+                    .withNonLocalizedText("0")
+                    .build();
             final DestroyableVBox valuesBox = BoxBuilder.builder()
                     .withStyleClass("shield-values")
                     .withNodes(
@@ -172,7 +173,9 @@ public class Shield extends DestroyableStackPane implements DestroyableEventTemp
     }
 
     public void update() {
-        rawLabel.setText(NUMBER_FORMAT_2.format(raw));
+        if (!this.color.equals("blue")) {
+            rawLabel.setText(NUMBER_FORMAT_2.format(raw));
+        }
         kineticLabel.setText(NUMBER_FORMAT_2.format(kinetic));
         thermalLabel.setText(NUMBER_FORMAT_2.format(thermal));
         causticLabel.setText(NUMBER_FORMAT_2.format(caustic));

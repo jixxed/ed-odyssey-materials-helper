@@ -58,10 +58,11 @@ public class ArmourStats extends Stats implements DestroyableTemplate {
         final DestroyableLabel mrp = LabelBuilder.builder()
                 .withText("ship.stats.armour.mrp.short")
                 .build();
-        mrp.setTooltip(TooltipBuilder.builder()
+        final DestroyableTooltip tooltip = TooltipBuilder.builder()
                 .withShowDelay(Duration.ZERO)
                 .withText("ship.stats.armour.mrp")
-                .build());
+                .build();
+        tooltip.install(mrp);
         final DestroyableVBox rebuild = BoxBuilder.builder()
                 .withNodes(new GrowingRegion(),
                         BoxBuilder.builder()
