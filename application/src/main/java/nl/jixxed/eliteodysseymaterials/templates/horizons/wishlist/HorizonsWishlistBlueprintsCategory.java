@@ -41,7 +41,6 @@ public class HorizonsWishlistBlueprintsCategory extends DestroyableHBox implemen
     @Override
     public void initComponents() {
         this.getStyleClass().add("category");
-        log.debug("init");
         final List<WishlistBlueprintTemplate<HorizonsBlueprintName>> blueprintTemplates = createBlueprintTemplates();
 
         this.blueprints = FlowPaneBuilder.builder()

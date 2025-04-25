@@ -21,9 +21,6 @@ public class DestroyableTooltip extends Tooltip implements DestroyableComponent 
         if (node != null) {
             Tooltip.uninstall(node, this);
             node.deregister(this);
-            log.info("Tooltip uninstalled");
-        } else {
-            log.error("Attempted to uninstall Tooltip with null node");
         }
     }
 
