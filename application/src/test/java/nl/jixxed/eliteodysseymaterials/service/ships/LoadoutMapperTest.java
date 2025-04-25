@@ -40,8 +40,9 @@ import java.util.stream.Stream;
 class LoadoutMapperTest {
     @BeforeEach
     public void setUp() {
-         List modules =  ShipModule.getBasicModules();
+        List modules = ShipModule.getBasicModules();
     }
+
     @Test
     public void getShipSlotIndexes() {
         final Ship ship = ShipService.createBlankShip(ShipType.FEDERATION_CORVETTE);
@@ -127,7 +128,8 @@ class LoadoutMapperTest {
                 () -> Assertions.assertEquals(1, LoadoutMapper.getShipSlot(ship, "Slot11_Size1").getSlotSize())
         );
     }
-//    private static Stream<Arguments> preEngineeredModules() {
+
+    //    private static Stream<Arguments> preEngineeredModules() {
 //        return Stream.of(
 //                Arguments.of("gauss_pre_1.json",SlotType.HARDPOINT),
 //                Arguments.of("gauss_pre_2.json",SlotType.HARDPOINT),
@@ -153,7 +155,7 @@ class LoadoutMapperTest {
 //        );
 //    }
     private static Stream<Arguments> preEngineeredModules() {
-        List modules =  ShipModule.getBasicModules();
+        List modules = ShipModule.getBasicModules();
         return Stream.of(
 
                 Arguments.of("ABRASION_BLASTER_1_D_F_PRE.json", AbrasionBlaster.ABRASION_BLASTER_1_D_F_PRE, SlotType.HARDPOINT),
@@ -194,24 +196,27 @@ class LoadoutMapperTest {
                 Arguments.of("DETAILED_SURFACE_SCANNER_1_I_V1_PRE.json", DetailedSurfaceScanner.DETAILED_SURFACE_SCANNER_1_I_V1_PRE, SlotType.OPTIONAL),
                 Arguments.of("SHIELD_GENERATOR_3_A_PRE.json", ShieldGenerator.SHIELD_GENERATOR_3_A_PRE, SlotType.OPTIONAL),
                 Arguments.of("KILL_WARRANT_SCANNER_0_A_PRE.json", KillWarrantScanner.KILL_WARRANT_SCANNER_0_A_PRE, SlotType.UTILITY),
+                Arguments.of("KILL_WARRANT_SCANNER_0_C_PRE.json", KillWarrantScanner.KILL_WARRANT_SCANNER_0_C_PRE, SlotType.UTILITY),
                 Arguments.of("POINT_DEFENCE_0_I_PRE.json", PointDefence.POINT_DEFENCE_0_I_PRE, SlotType.UTILITY),
                 Arguments.of("HEAT_SINK_LAUNCHER_0_I_PRE.json", SinkLauncher.HEAT_SINK_LAUNCHER_0_I_PRE, SlotType.UTILITY)//,
 
         );
     }
-        private static Stream<Arguments> preEngineeredModules2() {
-            List modules =  ShipModule.getBasicModules();
-            return Stream.of(
 
-                    Arguments.of("SHIELD_GENERATOR_3_A_PRE.json", ShieldGenerator.SHIELD_GENERATOR_3_A_PRE, SlotType.OPTIONAL)
+    private static Stream<Arguments> preEngineeredModules2() {
+        List modules = ShipModule.getBasicModules();
+        return Stream.of(
 
-            );
+                Arguments.of("SHIELD_GENERATOR_3_A_PRE.json", ShieldGenerator.SHIELD_GENERATOR_3_A_PRE, SlotType.OPTIONAL)
+
+        );
     }
+
     @ParameterizedTest
     @MethodSource("preEngineeredModules")
-    public void testIsPreEngineered(String filename, ShipModule shipModule, SlotType slotType){
+    public void testIsPreEngineered(String filename, ShipModule shipModule, SlotType slotType) {
         String line = "";
-        try(InputStream resourceAsStream = LoadoutMapperTest.class.getResourceAsStream("/ships/preengineered/" + filename)){
+        try (InputStream resourceAsStream = LoadoutMapperTest.class.getResourceAsStream("/ships/preengineered/" + filename)) {
             Assertions.assertTrue(resourceAsStream.available() > 0, "File is empty");
             ShipModule.ALL_MODULES.stream().flatMap(Collection::stream).filter(ShipModule::isPreEngineered).map(ShipModule::getId).forEach(log::info);
             ShipModule.getBasicModules();
@@ -225,12 +230,13 @@ class LoadoutMapperTest {
             Assertions.assertEquals(shipModule.getId(), first.get().getId());
 
 
-        }catch (Exception e){
-            log.error("error",e);
+        } catch (Exception e) {
+            log.error("error", e);
             log.info(line);
             Assertions.assertFalse(true);
         }
     }
+
     @Test
     void testIsPreEngineeredWithEffect_FSD_V1() throws JsonProcessingException {
         Engineering engineering = new ObjectMapper().readValue("""
@@ -282,7 +288,7 @@ class LoadoutMapperTest {
                 		}
                 	]
                 }
-                             """, Engineering.class);
+                """, Engineering.class);
         final boolean preEngineered = LoadoutMapper.isPreEngineered(List.of(FrameShiftDrive.FRAME_SHIFT_DRIVE_5_A_V1_PRE, FrameShiftDrive.FRAME_SHIFT_DRIVE_5_A), engineering);
         Assertions.assertTrue(preEngineered);
     }
@@ -336,7 +342,7 @@ class LoadoutMapperTest {
                 		}
                 	]
                 }
-                             """, Engineering.class);
+                """, Engineering.class);
         final boolean preEngineered = LoadoutMapper.isPreEngineered(List.of(FrameShiftDrive.FRAME_SHIFT_DRIVE_5_A_V1_PRE, FrameShiftDrive.FRAME_SHIFT_DRIVE_5_A), engineering);
         Assertions.assertTrue(preEngineered);
     }
@@ -380,7 +386,7 @@ class LoadoutMapperTest {
                 		}
                 	]
                 }
-                             """, Engineering.class);
+                """, Engineering.class);
         final boolean preEngineered = LoadoutMapper.isPreEngineered(List.of(FrameShiftDrive.FRAME_SHIFT_DRIVE_5_A_V1_PRE, FrameShiftDrive.FRAME_SHIFT_DRIVE_5_A), engineering);
         Assertions.assertFalse(preEngineered);
     }
@@ -410,10 +416,11 @@ class LoadoutMapperTest {
                 		}
                 	]
                 }
-                             """, Engineering.class);
+                """, Engineering.class);
         final boolean preEngineered = LoadoutMapper.isPreEngineered(List.of(DetailedSurfaceScanner.DETAILED_SURFACE_SCANNER_1_I, DetailedSurfaceScanner.DETAILED_SURFACE_SCANNER_1_I_V1_PRE), engineering);
         Assertions.assertTrue(preEngineered);
     }
+
     @Test
     void testIsPreEngineeredModifiedMiningLaser() throws JsonProcessingException {
         Engineering engineering = new ObjectMapper().readValue("""
@@ -480,6 +487,7 @@ class LoadoutMapperTest {
         final boolean preEngineered = LoadoutMapper.isPreEngineered(MiningLaser.MINING_LASERS, engineering);
         Assertions.assertTrue(preEngineered);
     }
+
     @Test
     void testIsPreEngineeredHeatSinkLauncher() throws JsonProcessingException {
         Engineering engineering = new ObjectMapper().readValue("""
@@ -534,7 +542,7 @@ class LoadoutMapperTest {
                 		}
                 	]
                 }
-                             """, Engineering.class);
+                """, Engineering.class);
         final boolean preEngineered = LoadoutMapper.isPreEngineered(List.of(DetailedSurfaceScanner.DETAILED_SURFACE_SCANNER_1_I, DetailedSurfaceScanner.DETAILED_SURFACE_SCANNER_1_I_V1_PRE), engineering);
         Assertions.assertFalse(preEngineered);
     }
@@ -572,39 +580,43 @@ class LoadoutMapperTest {
         final boolean preEngineered = LoadoutMapper.isPreEngineered(List.of(GuardianGaussCannon.GUARDIAN_GAUSS_CANNON_1_D_F, GuardianGaussCannon.GUARDIAN_GAUSS_CANNON_1_D_F_PRE), engineering);
         Assertions.assertFalse(preEngineered);
     }
+
     private final ObjectMapper objectMapper = new ObjectMapper();
+
     {
         this.objectMapper.setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
         this.objectMapper.registerModule(new JavaTimeModule());
         this.objectMapper.registerModule(new Jdk8Module().configureAbsentsAsNulls(true));
     }
+
     @Test
-    public void testLoadoutMapping(){
+    public void testLoadoutMapping() {
 //        final InputStream resourceAsStream = LoadoutMapperTest.class.getResourceAsStream("ships/loadout.json");
         String line = "";
-        try(InputStream resourceAsStream = LoadoutMapperTest.class.getResourceAsStream("/ships/loadout.json")){
+        try (InputStream resourceAsStream = LoadoutMapperTest.class.getResourceAsStream("/ships/loadout.json")) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(resourceAsStream));
-            while(reader.ready()) {
+            while (reader.ready()) {
                 line = reader.readLine();
                 final Loadout loadout = objectMapper.readValue(line, Loadout.class);
                 LoadoutMapper.toShip(loadout);
                 Assertions.assertTrue(true);
             }
 
-        }catch (Exception e){
-            log.error("error",e);
+        } catch (Exception e) {
+            log.error("error", e);
             log.info(line);
             Assertions.assertFalse(true);
         }
     }
+
     @Test
-    public void listBlueprintIDs(){
+    public void listBlueprintIDs() {
 //        final InputStream resourceAsStream = LoadoutMapperTest.class.getResourceAsStream("ships/loadout.json");
         String line = "";
         Set<String> modules = new HashSet<>();
-        try(InputStream resourceAsStream = LoadoutMapperTest.class.getResourceAsStream("/ships/loadout.json")){
+        try (InputStream resourceAsStream = LoadoutMapperTest.class.getResourceAsStream("/ships/loadout.json")) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(resourceAsStream));
-            while(reader.ready()) {
+            while (reader.ready()) {
                 line = reader.readLine();
                 final Loadout loadout = objectMapper.readValue(line, Loadout.class);
                 loadout.getModules().stream().forEach(module -> module.getEngineering().ifPresent(engineering -> {
@@ -613,30 +625,31 @@ class LoadoutMapperTest {
 
             }
             modules.stream().sorted().forEach(System.out::println);
-        }catch (Exception e){
-            log.error("error",e);
+        } catch (Exception e) {
+            log.error("error", e);
             log.info(line);
             Assertions.assertFalse(true);
         }
     }
+
     @Test
     @Disabled
-    public void rebuy(){
+    public void rebuy() {
 //        "HullValue": 6136672,
 //        "ModulesValue": 38003650,
 //        "Rebuy": 2207018,
         String line = "";
-        try(InputStream resourceAsStream = LoadoutMapperTest.class.getResourceAsStream("/ships/loadout/rebuy.json")){
+        try (InputStream resourceAsStream = LoadoutMapperTest.class.getResourceAsStream("/ships/loadout/rebuy.json")) {
             ShipModule.getBasicModules();
-                final Loadout loadout = objectMapper.readValue(resourceAsStream, Loadout.class);
-                final Ship ship = LoadoutMapper.toShip(loadout);
-                Assertions.assertAll(
-                        () -> Assertions.assertEquals(2207018, ship.getRebuy()),
-                        () -> Assertions.assertEquals(38003650, ship.getModulesValue()),
-                        () -> Assertions.assertEquals(6136672, ship.getHullValue())
-);
-        }catch (Exception e){
-            log.error("error",e);
+            final Loadout loadout = objectMapper.readValue(resourceAsStream, Loadout.class);
+            final Ship ship = LoadoutMapper.toShip(loadout);
+            Assertions.assertAll(
+                    () -> Assertions.assertEquals(2207018, ship.getRebuy()),
+                    () -> Assertions.assertEquals(38003650, ship.getModulesValue()),
+                    () -> Assertions.assertEquals(6136672, ship.getHullValue())
+            );
+        } catch (Exception e) {
+            log.error("error", e);
             log.info(line);
             Assertions.assertFalse(true);
         }
