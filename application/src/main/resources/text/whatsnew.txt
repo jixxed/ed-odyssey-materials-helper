@@ -1,3 +1,36 @@
+Version 2.157
+-------------
+UI rework
+- The UI has been completely reworked for better maintainability and performance
+- You shouldn't see too much of the rework, everything mostly looks like it did before, except a bit more uniform
+- The progress bar on the loading screen will now indicate the progress of loading the journal
+- The loading screen will be shown when switching commander and the UI is fully rebuild afterwards.
+- Switching commander should be faster and more responsive now
+- The UI has been profiled for memory leaks and *should* not contain any leaks
+- Almost every text is localizable now, so translators can get to work!
+- The Ship Editor still needs some work, but it is on the list
+- There may still be some styling and layout issues, feel free to report anything you notice or think is wrong.
+
+Other notable changes:
+Loadout tab now shows options for modules to set the module as equipped or unequipped(previously double click)
+Material requirement cards now include fleetcarrier amounts
+In the menu the cards show ranges for the required materials based on engineer ranks
+Remove WIP from Corsair
+Corrected armour mass values for Type-8 and Corsair. These were changed after the initial release of the ship.
+Added price for Corsair
+Added a 250ms delay when highlighting blueprints on the wishlist to make it a bit less flashing
+Added missing rank reward Salvage profits 100% at rank 100 to Felicia Winters
+Handle leaving a power in the UI
+
+Future plans:
+Finish Ship Editor UI rework
+With the UI rework almost done, it will become easier to adapt existing components in the UI.
+Like the module buttons in the loadout tab, I want to make the app more verbose. There are other hidden features
+that many people likely don't know about.
+Update the Colonisation tab to show the current progress of your projects automatically.
+Rework the blueprints on the wishlist to support quantities
+Rework the Ship Editor to support smaller screen sizes
+
 Version 2.156
 -------------
 Updated corsair ship images and weapon slot locations
