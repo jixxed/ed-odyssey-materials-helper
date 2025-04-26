@@ -7,7 +7,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "org.gradlex:extra-java-module-info:1.11"
+        classpath "org.gradlex:extra-java-module-info:1.12"
         classpath("net.jsign:jsign-gradle-plugin:7.1")
     }
 }
