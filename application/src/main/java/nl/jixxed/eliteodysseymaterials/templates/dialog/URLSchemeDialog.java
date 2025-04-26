@@ -29,17 +29,17 @@ public class URLSchemeDialog extends DestroyableVBox implements DestroyableTempl
 
         //labels
         final DestroyableLabel explain = LabelBuilder.builder()
-                .withStyleClass("urlscheme-dialog-text")
+                .withStyleClass("explain-text")
                 .withText(LocaleService.getStringBinding("url.scheme.registration.text"))
                 .build();
         final DestroyableLabel explain2 = LabelBuilder.builder()
-                .withStyleClass("urlscheme-dialog-text")
+                .withStyleClass("explain-text")
                 .withText(LocaleService.getStringBinding("url.scheme.registration.text2"))
                 .build();
 
         //buttons
         final DestroyableHBox buttons = BoxBuilder.builder()
-                .withStyleClass("urlscheme-dialog-buttons")
+                .withStyleClass("buttons")
                 .withNodes(new GrowingRegion(), registerButton(), noThanksButton())
                 .buildHBox();
 
@@ -48,14 +48,14 @@ public class URLSchemeDialog extends DestroyableVBox implements DestroyableTempl
 
     private DestroyableButton noThanksButton() {
         return ButtonBuilder.builder()
-                .withNonLocalizedText("dialog.urlscheme.nothanks")
+                .withText("dialog.urlscheme.nothanks")
                 .withOnAction(event -> this.stage.close())
                 .build();
     }
 
     private DestroyableButton registerButton() {
         return ButtonBuilder.builder()
-                .withNonLocalizedText("dialog.urlscheme.register")
+                .withText("dialog.urlscheme.register")
                 .withOnAction(event -> {
                     RegistryService.registerApplication();
                     this.stage.close();

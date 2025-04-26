@@ -57,7 +57,7 @@ public class FileService {
 
     public static void unsubscribe(final FileListener fileListener) {
         WATCHPATH_LISTENERS.values().forEach(fileListeners -> fileListeners.remove(fileListener));
-//        stopWatchers();
+        stopWatchers();
 //        startWatchers();
     }
 
@@ -89,12 +89,17 @@ public class FileService {
     }
 
     private static void notifyListeners(final WatchPath watchPath, final FileEvent fileEvent) {
-        if (fileEvent.getKind() == ENTRY_CREATE) {
-            WATCHPATH_LISTENERS.get(watchPath).forEach(fileListener -> fileListener.onCreated(fileEvent));
-        } else if (fileEvent.getKind() == ENTRY_MODIFY) {
-            WATCHPATH_LISTENERS.get(watchPath).forEach(fileListener -> fileListener.onModified(fileEvent));
-        } else if (fileEvent.getKind() == ENTRY_DELETE) {
-            WATCHPATH_LISTENERS.get(watchPath).forEach(fileListener -> fileListener.onDeleted(fileEvent));
+        try {
+            if (fileEvent.getKind() == ENTRY_CREATE) {
+                WATCHPATH_LISTENERS.get(watchPath).forEach(fileListener -> fileListener.onCreated(fileEvent));
+            } else if (fileEvent.getKind() == ENTRY_MODIFY) {
+                WATCHPATH_LISTENERS.get(watchPath).forEach(fileListener -> fileListener.onModified(fileEvent));
+            } else if (fileEvent.getKind() == ENTRY_DELETE) {
+                WATCHPATH_LISTENERS.get(watchPath).forEach(fileListener -> fileListener.onDeleted(fileEvent));
+            }
+
+        } catch (RuntimeException e) {
+            log.error("failed to notify listeners for file event: {}, {}", fileEvent, e.getMessage());
         }
     }
 

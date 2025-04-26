@@ -55,7 +55,7 @@ public class ARService {
 
     private static final double MATCHING_THRESHOLD = 0.75;
     private static final double BARTENDER_MATCHING_THRESHOLD = 0.65;
-    private static final String STYLESHEET = "/nl/jixxed/eliteodysseymaterials/style/ar.css";
+    private static final String STYLESHEET = "/css/ar.css";
     private static final String ELITE_DANGEROUS_CLIENT_WINDOW_NAME = "Elite - Dangerous (CLIENT)";
     private static AROverlay arOverlay;
     private static Scene arScene;

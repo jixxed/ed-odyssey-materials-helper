@@ -14,16 +14,16 @@ import java.util.function.Consumer;
 @Slf4j
 public class EventService {
     private static final Map<Class<? extends Event>, List<WeakReference<EventListener<? extends Event>>>> LISTENERS_MAP = new HashMap<>();
-    static boolean isInit = false;
+//    static boolean isInit = false;
 
     public static <T extends Event> void publish(final T event) {
-        if (event instanceof JournalInitEvent jie) {
-            isInit = jie.isInitialised();
-        }
-        if (isInit) {
-            log.debug("Publishing event {}", event);
-            log.debug(Thread.currentThread().getStackTrace()[2].toString());
-        }
+//        if (event instanceof JournalInitEvent jie) {
+//            isInit = jie.isInitialised();
+//        }
+//        if (isInit) {
+//            log.debug("Publishing event {}", event);
+//            log.debug(Thread.currentThread().getStackTrace()[2].toString());
+//        }
         //clean up null references
         LISTENERS_MAP.getOrDefault(event.getClass(), Collections.emptyList()).removeIf(ref -> ref.get() == null);
         LISTENERS_MAP.getOrDefault(event.getClass(), Collections.emptyList()).stream()

@@ -64,7 +64,7 @@ import static nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper.deeplinkCons
 public class FXApplication extends Application {
 
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private static final String MAIN_STYLESHEET = "/nl/jixxed/eliteodysseymaterials/style/style.css";
+    private static final String MAIN_STYLESHEET = "/css/sass/main.css";
 
     private ApplicationScreen applicationScreen;
     private TimeStampedGameStateWatcher timeStampedCargoWatcher;

@@ -6,7 +6,6 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
@@ -27,37 +26,35 @@ public class EDDNDialog extends DestroyableVBox implements DestroyableTemplate {
 
     @Override
     public void initComponents() {
+        this.getStyleClass().add("eddn-dialog");
         PreferencesService.setPreference(PreferenceConstants.EDDN_ASKED, true);
 
         //labels
         final DestroyableLabel explain = LabelBuilder.builder()
-                .withStyleClass("eddn-dialog-text")
+                .withStyleClass("explain-text")
                 .withText(LocaleService.getStringBinding("eddn.registration.text"))
                 .build();
         final DestroyableLabel explain2 = LabelBuilder.builder()
-                .withStyleClass("eddn-dialog-text")
+                .withStyleClass("explain-text")
                 .withText(LocaleService.getStringBinding("eddn.registration.text2"))
                 .build();
 
         //buttons
-        final GrowingRegion region = new GrowingRegion();
-        final GrowingRegion regionV = new GrowingRegion();
         final DestroyableHBox buttons = BoxBuilder.builder()
-                .withNodes(region,
+                .withStyleClass("buttons")
+                .withNodes(new GrowingRegion(),
                         ButtonBuilder.builder()
-                                .withText(LocaleService.getStringBinding("eddn.registration.yes"))
+                                .withText("eddn.registration.yes")
                                 .withOnAction(event -> {
                                     PreferencesService.setPreference(PreferenceConstants.EDDN_ENABLED, true);
                                     this.stage.close();
                                 })
                                 .build(),
                         ButtonBuilder.builder()
-                                .withText(LocaleService.getStringBinding("eddn.registration.no"))
+                                .withText("eddn.registration.no")
                                 .withOnAction(event -> this.stage.close())
                                 .build()
                 ).buildHBox();
-        buttons.addBinding(buttons.spacingProperty(), ScalingHelper.getPixelDoubleBindingFromEm(0.25));
-        this.getStyleClass().add("urlscheme-dialog");
-        this.getNodes().addAll(explain, explain2, regionV, buttons);
+        this.getNodes().addAll(explain, explain2, new GrowingRegion(), buttons);
     }
 }

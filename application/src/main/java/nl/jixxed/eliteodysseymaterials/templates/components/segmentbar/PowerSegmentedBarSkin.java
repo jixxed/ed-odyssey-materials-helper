@@ -8,9 +8,9 @@ import javafx.scene.control.SkinBase;
 import javafx.util.Callback;
 import nl.jixxed.eliteodysseymaterials.builder.PopOverBuilder;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableParent;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyablePopOver;
-import org.controlsfx.control.PopOver.ArrowLocation;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableSegmentedBar;
 import org.controlsfx.control.SegmentedBar;
 
 import java.util.HashMap;
@@ -18,41 +18,36 @@ import java.util.List;
 import java.util.Map;
 import java.util.OptionalDouble;
 
-public class SegmentedBarSkin<T extends SegmentedBar.Segment> extends SkinBase<SegmentedBar<T>> {
+public class PowerSegmentedBarSkin<T extends SegmentedBar.Segment> extends SkinBase<SegmentedBar<T>> {
     private Map<T, Node> segmentNodes = new HashMap();
-    private InvalidationListener buildListener = (it) -> this.buildSegments();
+    private InvalidationListener buildListener = (it) -> {
+        this.buildSegments();
+    };
     private WeakInvalidationListener weakBuildListener;
     private InvalidationListener layoutListener;
     private WeakInvalidationListener weakLayoutListener;
-    private DestroyablePopOver popOver;
+    private Map<SegmentedBar.Segment, DestroyablePopOver> popOvers = new HashMap<>();
 
-    public SegmentedBarSkin(SegmentedBar<T> bar) {
+    public PowerSegmentedBarSkin(SegmentedBar<T> bar) {
         super(bar);
         this.weakBuildListener = new WeakInvalidationListener(this.buildListener);
-        this.layoutListener = (it) -> ((SegmentedBar) this.getSkinnable()).requestLayout();
+        this.layoutListener = (it) -> {
+            ((SegmentedBar) this.getSkinnable()).requestLayout();
+        };
         this.weakLayoutListener = new WeakInvalidationListener(this.layoutListener);
         bar.segmentViewFactoryProperty().addListener(this.weakBuildListener);
         bar.getSegments().addListener(this.weakBuildListener);
         bar.orientationProperty().addListener(this.weakLayoutListener);
         bar.totalProperty().addListener(this.weakBuildListener);
-        bar.orientationProperty().addListener((it) -> {
-            if (this.popOver != null) {
-                switch (bar.getOrientation()) {
-                    case HORIZONTAL:
-                        this.popOver.setArrowLocation(ArrowLocation.BOTTOM_CENTER);
-                        break;
-                    case VERTICAL:
-                        this.popOver.setArrowLocation(ArrowLocation.RIGHT_CENTER);
-                }
 
-            }
-        });
         this.buildSegments();
     }
 
     protected double computePrefHeight(double width, double topInset, double rightInset, double bottomInset, double leftInset) {
         if (((SegmentedBar) this.getSkinnable()).getOrientation().equals(Orientation.HORIZONTAL)) {
-            OptionalDouble maxHeight = this.getChildren().stream().mapToDouble((node) -> node.prefHeight((double) -1.0F)).max();
+            OptionalDouble maxHeight = this.getChildren().stream().mapToDouble((node) -> {
+                return node.prefHeight(-1.0);
+            }).max();
             if (maxHeight.isPresent()) {
                 return maxHeight.getAsDouble();
             }
@@ -63,7 +58,9 @@ public class SegmentedBarSkin<T extends SegmentedBar.Segment> extends SkinBase<S
 
     protected double computePrefWidth(double height, double topInset, double rightInset, double bottomInset, double leftInset) {
         if (((SegmentedBar) this.getSkinnable()).getOrientation().equals(Orientation.VERTICAL)) {
-            OptionalDouble maxWidth = this.getChildren().stream().mapToDouble((node) -> node.prefWidth(height)).max();
+            OptionalDouble maxWidth = this.getChildren().stream().mapToDouble((node) -> {
+                return node.prefWidth(height);
+            }).max();
             if (maxWidth.isPresent()) {
                 return maxWidth.getAsDouble();
             }
@@ -73,11 +70,11 @@ public class SegmentedBarSkin<T extends SegmentedBar.Segment> extends SkinBase<S
     }
 
     protected double computeMinHeight(double width, double topInset, double rightInset, double bottomInset, double leftInset) {
-        return ((SegmentedBar) this.getSkinnable()).getOrientation().equals(Orientation.HORIZONTAL) ? this.computePrefHeight(width, topInset, rightInset, bottomInset, leftInset) : (double) 0.0F;
+        return ((SegmentedBar) this.getSkinnable()).getOrientation().equals(Orientation.HORIZONTAL) ? this.computePrefHeight(width, topInset, rightInset, bottomInset, leftInset) : 0.0;
     }
 
     protected double computeMinWidth(double height, double topInset, double rightInset, double bottomInset, double leftInset) {
-        return ((SegmentedBar) this.getSkinnable()).getOrientation().equals(Orientation.VERTICAL) ? this.computePrefWidth(height, topInset, rightInset, bottomInset, leftInset) : (double) 0.0F;
+        return ((SegmentedBar) this.getSkinnable()).getOrientation().equals(Orientation.VERTICAL) ? this.computePrefWidth(height, topInset, rightInset, bottomInset, leftInset) : 0.0;
     }
 
     protected double computeMaxHeight(double width, double topInset, double rightInset, double bottomInset, double leftInset) {
@@ -89,9 +86,7 @@ public class SegmentedBarSkin<T extends SegmentedBar.Segment> extends SkinBase<S
     }
 
     private <E extends Node & Destroyable> void buildSegments() {
-        this.segmentNodes.values().stream()
-                .map(DestroyableParent.class::cast)
-                .forEach(DestroyableParent::destroy);
+        this.segmentNodes.values().stream().map(Destroyable.class::cast).forEach(Destroyable::destroy);
         this.segmentNodes.clear();
         this.getChildren().clear();
         List<T> segments = ((SegmentedBar) this.getSkinnable()).getSegments();
@@ -117,43 +112,47 @@ public class SegmentedBarSkin<T extends SegmentedBar.Segment> extends SkinBase<S
             }
 
             segmentNode.addEventBinding(segmentNode.onMouseEnteredProperty(), (evt) -> this.showPopOver(segmentNode, segment));
-            segmentNode.addEventBinding(segmentNode.onMouseExitedProperty(), (evt) -> this.hidePopOver());
+            segmentNode.addEventBinding(segmentNode.onMouseExitedProperty(), (evt) -> this.hidePopOver(segment));
+            segmentNode.setOnMouseEntered((evt) -> {
+                this.showPopOver(segmentNode, segment);
+            });
+            segmentNode.setOnMouseExited((evt) -> {
+                this.hidePopOver(segment);
+            });
         }
 
         ((SegmentedBar) this.getSkinnable()).requestLayout();
     }
 
     private <E extends Node & Destroyable> void showPopOver(Node owner, T segment) {
-        Callback<T, E> infoNodeFactory = ((SegmentedBar) this.getSkinnable()).getInfoNodeFactory();
+        Callback<T, E> infoNodeFactory = ((DestroyableSegmentedBar) this.getSkinnable()).getInfoNodeFactory();
         E infoNode = null;
         if (infoNodeFactory != null) {
             infoNode = infoNodeFactory.call(segment);
         }
-
-        if (infoNode != null) {
-            this.popOver = PopOverBuilder.builder()
-                    .withContent(infoNode)
-                    .withArrowLocation(ArrowLocation.BOTTOM_CENTER)
+        if (infoNode != null && this.popOvers.get(segment) == null) {
+            DestroyablePopOver popOver = PopOverBuilder.builder()
                     .withDetachable(false)
-                    .withArrowSize(6)
-                    .withCornerRadius(3)
-                    .withAutoHide(true)
-                    .withAnimated(false)
-                    .withAutoFix(false)
+                    .withHeaderAlwaysVisible(false)
+                    .withStyleClass("power-progressbar-popover")
+                    .withArrowIndent(0)
+                    .withArrowSize(0)
+                    .withCornerRadius(0)
+                    .withContent(infoNode)
                     .withDestroyOnHide(true)
                     .build();
-
-            this.popOver.show(owner, -2D);
+            this.popOvers.put(segment, popOver);
+            popOver.show(owner, -2D);
         }
 
     }
 
-    private void hidePopOver() {
-        if (this.popOver != null && this.popOver.isShowing()) {
-            this.popOver.hide();
-            this.popOver = null;
+    private void hidePopOver(T segment) {
+        final DestroyablePopOver popOver = this.popOvers.get(segment);
+        if (popOver != null && popOver.isShowing()) {
+            popOver.hide();
+            this.popOvers.put(segment, null);
         }
-
     }
 
     protected void layoutChildren(double contentX, double contentY, double contentWidth, double contentHeight) {
@@ -167,14 +166,15 @@ public class SegmentedBarSkin<T extends SegmentedBar.Segment> extends SkinBase<S
             SegmentedBar.Segment segment = (SegmentedBar.Segment) segments.get(i);
             Node segmentNode = (Node) this.segmentNodes.get(segment);
             double segmentValue = segment.getValue();
+            double segmentWidth;
             if (((SegmentedBar) this.getSkinnable()).getOrientation().equals(Orientation.HORIZONTAL)) {
-                double segmentWidth = segmentValue / total * contentWidth;
+                segmentWidth = segmentValue / total * contentWidth;
                 segmentNode.resizeRelocate(x, contentY, segmentWidth, contentHeight);
                 x += segmentWidth;
             } else {
-                double segmentHeight = segmentValue / total * contentHeight;
-                segmentNode.resizeRelocate(contentX, y - segmentHeight, contentWidth, segmentHeight);
-                y -= segmentHeight;
+                segmentWidth = segmentValue / total * contentHeight;
+                segmentNode.resizeRelocate(contentX, y - segmentWidth, contentWidth, segmentWidth);
+                y -= segmentWidth;
             }
         }
 
@@ -183,13 +183,7 @@ public class SegmentedBarSkin<T extends SegmentedBar.Segment> extends SkinBase<S
     @Override
     public void dispose() {
         super.dispose();
-        if (this.popOver != null) {
-            popOver.destroy();
-        }
-        this.segmentNodes.values().stream()
-                .map(DestroyableParent.class::cast)
-                .forEach(DestroyableParent::destroy);
-        this.segmentNodes.clear();
-        this.getChildren().clear();
+        this.popOvers.values().forEach(DestroyableComponent::destroy);
+        this.segmentNodes.values().stream().map(Destroyable.class::cast).forEach(Destroyable::destroy);
     }
 }

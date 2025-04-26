@@ -39,19 +39,19 @@ public class StartDialog extends DestroyableVBox implements DestroyableTemplate 
         PreferencesService.setPreference(PreferenceConstants.WHATS_NEW_VERSION, PreferencesService.getPreference(PreferenceConstants.APP_SETTINGS_VERSION, "0"));
         //what new
         final DestroyableLabel whatsNewTitle = LabelBuilder.builder()
-                .withStyleClass("start-dialog-title")
+                .withStyleClass("title")
                 .withText("dialog.start.whatsnew")
                 .build();
         final DestroyableTextArea whatsNewContent = getTextFromFile("/text/whatsnew.txt");
         //policy
         final DestroyableLabel policyTitle = LabelBuilder.builder()
-                .withStyleClass("start-dialog-title")
+                .withStyleClass("title")
                 .withText("dialog.start.privacypolicy")
                 .build();
         final DestroyableTextArea policyContent = getTextFromFile("/text/privacy.txt");
         //buttons
         final DestroyableHBox buttonsBox = BoxBuilder.builder()
-                .withStyleClass("start-dialog-buttons")
+                .withStyleClass("buttons")
                 .withNodes(createButtons())
                 .buildHBox();
         this.getNodes().addAll(whatsNewTitle, whatsNewContent, policyTitle, policyContent, buttonsBox);
@@ -72,7 +72,7 @@ public class StartDialog extends DestroyableVBox implements DestroyableTemplate 
             whatsnew = "";
         }
         final DestroyableTextArea whatsNewContent = TextAreaBuilder.builder()
-                .withStyleClass("start-dialog-content")
+                .withStyleClass("text-content")
                 .withNonLocalizedText(whatsnew)
                 .withFocusTraversable(false)
                 .withEditable(false)

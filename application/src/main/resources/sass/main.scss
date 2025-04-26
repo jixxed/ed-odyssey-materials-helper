@@ -11,15 +11,15 @@
   -fx-pref-width: 800px;
 
   @import "application-screen/application-screen";
-  @import "loading-screen";
+  @import "loading-screen/loading-screen";
   @import "common/tooltips";
-  @import "common/dialog";
 }
 
-label {
-  -fx-wrap-text: true;
-}
+//label {
+//  -fx-wrap-text: true;
+//}
 
+@import "common/dialog";
 @import "common/notifications";
 
 //@import "old";

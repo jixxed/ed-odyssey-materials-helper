@@ -22,6 +22,9 @@ public class PopOverBuilder {
     private Integer cornerRadius;
     private Node contentNode;
     private PopOver.ArrowLocation arrowLocation;
+    private Boolean autoFix;
+    private Boolean autoHide;
+    private Boolean animated;
 
     public static PopOverBuilder builder() {
         return new PopOverBuilder();
@@ -45,6 +48,21 @@ public class PopOverBuilder {
 
     public PopOverBuilder withDetachable(boolean detachable) {
         this.detachable = detachable;
+        return this;
+    }
+
+    public PopOverBuilder withAutoHide(boolean autoHide) {
+        this.autoHide = autoHide;
+        return this;
+    }
+
+    public PopOverBuilder withAnimated(boolean animated) {
+        this.animated = animated;
+        return this;
+    }
+
+    public PopOverBuilder withAutoFix(boolean autoFix) {
+        this.autoFix = autoFix;
         return this;
     }
 
@@ -85,6 +103,15 @@ public class PopOverBuilder {
         if (this.detachable != null) {
             popOver.setDetachable(this.detachable);
         }
+        if (this.autoHide != null) {
+            popOver.setAutoHide(this.autoHide);
+        }
+        if (this.animated != null) {
+            popOver.setAnimated(this.animated);
+        }
+        if (this.autoFix != null) {
+            popOver.setAutoFix(this.autoFix);
+        }
         if (this.headerAlwaysVisible != null) {
             popOver.setHeaderAlwaysVisible(this.headerAlwaysVisible);
         }
@@ -112,4 +139,5 @@ public class PopOverBuilder {
         }
         return popOver;
     }
+
 }

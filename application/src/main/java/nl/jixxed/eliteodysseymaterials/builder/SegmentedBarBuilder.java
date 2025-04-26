@@ -47,10 +47,10 @@ public class SegmentedBarBuilder<T extends SegmentedBar.Segment & Destroyable> e
         super.build(segmentedBar);
 
         if (infoNodeFactory != null) {
-            segmentedBar.setInfoNodeFactory((T t) -> segmentedBar.register((Node & Destroyable) infoNodeFactory.call(t)));
+            segmentedBar.setInfoNodeFactory(infoNodeFactory);
         }
         if (segmentViewFactory != null) {
-            segmentedBar.setSegmentViewFactory((T t) -> segmentedBar.register((Node & Destroyable) segmentViewFactory.call(t)));
+            segmentedBar.setSegmentViewFactory(segmentViewFactory);
         }
 
         if (segments != null) {
