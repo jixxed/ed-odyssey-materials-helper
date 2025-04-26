@@ -132,7 +132,7 @@ ext {
     version_tess4j = "5.2.9"
     version_jai_imageio = "1.4.0"
     version_mockito_inline = "5.2.0"
-    version_guava = "33.4.0-jre"
+    version_guava = "33.4.8-jre"
     version_j2objc_annotations = "3.0.0"
     version_mockito = "5.16.1"
     version_sentry = "8.8.0"
