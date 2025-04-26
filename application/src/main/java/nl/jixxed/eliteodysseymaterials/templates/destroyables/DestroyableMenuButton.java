@@ -1,25 +1,37 @@
 package nl.jixxed.eliteodysseymaterials.templates.destroyables;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.MenuButton;
+import lombok.Getter;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-@SuppressWarnings("java:S3740")
+@Getter
 public class DestroyableMenuButton extends MenuButton implements DestroyableComponent {
-    private final HashMap<ObservableValue, List<ChangeListener>> listenersMap = new HashMap<>();
 
-    @Override
-    public Map<ObservableValue, List<ChangeListener>> getListenersMap() {
-        return this.listenersMap;
+    public void addAll(List<DestroyableMenuItem> menuItems) {
+        registerAll(menuItems);
+        this.getItems().addAll(menuItems);
+    }
+
+    public void add(DestroyableMenuItem menuItem) {
+        this.getItems().addAll(register(menuItem));
+    }
+
+    public void clear() {
+        getItems().forEach(item -> deregister((Destroyable) item));
+        getItems().stream()
+                .map(DestroyableMenuItem.class::cast)
+                .forEach(DestroyableMenuItem::destroy);
+        this.getItems().clear();
     }
 
     @Override
     public void destroyInternal() {
-        this.textProperty().unbind();
+        DestroyableComponent.super.destroyInternal();
+        getItems().forEach(item -> deregister((Destroyable) item));
+        getItems().stream()
+                .map(DestroyableMenuItem.class::cast)
+                .forEach(DestroyableMenuItem::destroy);
+        this.getItems().clear();
     }
-
 }

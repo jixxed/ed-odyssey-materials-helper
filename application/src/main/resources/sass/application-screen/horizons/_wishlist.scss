@@ -1,0 +1,503 @@
+.wishlist-tab {
+  @include tab;
+}
+
+.wishlist-tab-content {
+  @include scroll-pane-content;
+
+  .wishlist-content {
+    -fx-spacing: 0.25em;
+
+    .wishlist-menu {
+      -fx-spacing: 0.25em;
+
+      .wishlist-select {
+        @include fixedWidth(35em);
+      }
+
+      .wishlist-newname {
+        -fx-min-width: 20em;
+        -fx-border-color: $border-color-black;
+      }
+    }
+
+    .blueprints {
+      .wishlist-blueprints {
+        -fx-spacing: 0.5em;
+
+      }
+
+      .title-bar {
+        @include fixedHeight(3em);
+        -fx-spacing: 0.5em;
+        -fx-alignment: center-left;
+
+        .title {
+          -fx-font-size: 1.35em;
+          -fx-font-weight: bold;
+          -fx-text-alignment: center;
+        }
+
+        .help-image {
+          @include fixedHeight(2em);
+          @include fixedWidth(2em);
+          -fx-cursor: hand;
+        }
+
+        @at-root {
+          .horizons-wishlist-blueprints-help-popover {
+            @include popover-style;
+
+            .help-popover {
+              .hint-line {
+                -fx-spacing: 0.5em;
+              }
+
+              .wishlist-hint-explain {
+                -fx-text-fill: $text-color-white;
+                -fx-max-width: 30em;
+                -fx-wrap-text: true;
+                -fx-font-style: italic;
+              }
+
+              .wishlist-hint-white {
+                -fx-text-fill: $text-color-white;
+                -fx-min-width: 5em;
+                -fx-font-style: italic;
+              }
+
+              .wishlist-hint-yellow {
+                -fx-text-fill: $text-color-yellow;
+                -fx-min-width: 5em;
+                -fx-font-style: italic;
+              }
+
+              .wishlist-hint-green {
+                -fx-text-fill: $text-color-green;
+                -fx-min-width: 5em;
+                -fx-font-style: italic;
+              }
+            }
+          }
+        }
+      }
+
+      .category {
+        .category-title {
+          -fx-min-height: 2em;
+          -fx-min-width: 20em;
+        }
+
+        .list {
+          @include hvGap(0.25em);
+
+          .blueprint {
+            -fx-background-color: $background-color-dark;
+
+            &:filled {
+              .name {
+                -fx-text-fill: $text-color-green;
+              }
+            }
+
+            &:partial {
+              .name {
+                -fx-text-fill: $text-color-yellow;
+              }
+            }
+
+            .visible-image {
+              @include fixedWidth(1.8em);
+              @include fixedHeight(1.8em);
+              -fx-fit-to-height: true;
+              -fx-fit-to-width: true;
+              -fx-alignment: center;
+            }
+
+            .visible-button {
+              @include fixedWidth(2em);
+              @include fixedHeight(2em);
+              -fx-background-color: $background-color-dark;
+              -fx-cursor: hand;
+              -fx-background-insets: 0 0 0 0;
+              -fx-padding: 2;
+              -fx-border-color: $border-color-black;
+              -fx-border-width: 0;
+
+              &:armed,
+              &:pressed,
+              &:selected,
+              &:visited,
+              &:selected:focused,
+              &:focused {
+                @include fixedWidth(2em);
+                @include fixedHeight(2em);
+                -fx-background-color: $background-color-dark;
+                -fx-cursor: hand;
+                -fx-background-insets: 0 0 0 0;
+                -fx-padding: 1;
+                -fx-border-color: $border-color-black;
+                -fx-border-width: 0;
+              }
+
+              &:hover {
+                -fx-background-color: #303235;
+              }
+            }
+
+            .name {
+              -fx-label-padding: 5;
+              -fx-text-fill: white;
+              -fx-cursor: hand;
+              -fx-alignment: center;
+              -fx-text-alignment: center;
+            }
+
+            .tooltip {
+              @include tooltip;
+            }
+
+            .remove, .config {
+              @include fixedWidth(2em);
+              -fx-background-insets: 0 0 0 0;
+              -fx-border-width: 0;
+              -fx-cursor: hand;
+              -fx-max-height: 2em;
+              -fx-padding: 2;
+              -fx-focus-traversable: false;
+
+
+              &:hover {
+                -fx-background-color: $background-color-white;
+                -fx-text-fill: $text-color-black;
+              }
+
+              &:armed,
+              &:pressed,
+              &:selected,
+              &:visited,
+              &:selected:focused,
+              &:focused {
+                -fx-background-color: $background-color-dark;
+                -fx-background-insets: 0 0 0 0;
+                -fx-border-color: $border-color-black;
+                -fx-text-fill: $text-color-white;
+                -fx-border-width: 0;
+                -fx-cursor: hand;
+              }
+
+              &:focused {
+                -fx-background-color: $text-color-blue;
+              }
+
+              &:pressed {
+                -fx-background-color: black;
+              }
+            }
+
+            @at-root {
+              .horizons-wishlist-blueprints-module-popover {
+
+                @include popover-style;
+
+                .content {
+                  -fx-padding: 0.25em;
+                  -fx-spacing: 0.25em;
+                  -fx-max-width: 22em;
+
+                  .title {
+                    -fx-font-size: 1.3em;
+                    -fx-max-width: 21.5em;
+                    -fx-wrap-text: true;
+                  }
+
+                  .explain {
+                    -fx-font-style: italic;
+                    -fx-max-width: 21.5em;
+                    -fx-wrap-text: true;
+                  }
+
+                  .grade-selects {
+                    -fx-spacing: 0.25em;
+
+                    .grade-select {
+                      -fx-spacing: 0.25em;
+
+                      .grade {
+                        @include fixedWidth(1em);
+                        @include fixedHeight(2em);
+                        -fx-alignment: center;
+                      }
+
+                      .completion-slider {
+                        -fx-spacing: 0.75em;
+
+                        .slider {
+                          -fx-fit-to-width: true;
+                          @include fixedWidth(15em);
+                        }
+
+                        .value {
+                          @include fixedWidth(4.5em);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .materials {
+
+      .title-bar {
+        @include fixedHeight(3em);
+        -fx-spacing: 0.5em;
+        -fx-alignment: center-left;
+
+        .title {
+          -fx-font-size: 1.35em;
+          -fx-font-weight: bold;
+          -fx-text-alignment: center;
+        }
+
+        .help-image {
+          @include fixedHeight(2em);
+          @include fixedWidth(2em);
+          -fx-cursor: hand;
+        }
+
+        @at-root {
+          .horizons-wishlist-materials-help-popover {
+            @include popover-style;
+
+            .help-popover {
+              .hint-line {
+                -fx-spacing: 0.5em;
+              }
+
+              .wishlist-hint-explain {
+                -fx-text-fill: $text-color-white;
+                -fx-max-width: 30em;
+                -fx-wrap-text: true;
+                -fx-font-style: italic;
+              }
+
+              .wishlist-hint-red {
+                -fx-text-fill: $text-color-red;
+                -fx-min-width: 5em;
+                -fx-font-style: italic;
+              }
+
+              .wishlist-hint-yellow {
+                -fx-min-width: 5em;
+                -fx-text-fill: $text-color-yellow;
+                -fx-font-style: italic;
+              }
+
+              .wishlist-hint-green {
+                -fx-min-width: 5em;
+                -fx-text-fill: $text-color-green;
+                -fx-font-style: italic;
+              }
+            }
+          }
+        }
+      }
+
+      .flows {
+        -fx-spacing: 0.5em;
+
+        .materials-flow {
+          @include hvGap(0.25em);
+
+          .material {
+            @include fixedWidth(21em);
+            -fx-background-color: $background-color-dark;
+            -fx-border-color: $border-color-black;
+            -fx-min-height: 2.5em;
+            -fx-alignment: center-left;
+
+            &:filled {
+              .ingredient-progressbar {
+                .present-ship {
+                  -fx-background-color: $progress-bar-color-green;
+                }
+              }
+
+              .amount-line {
+                .quantity, .required, .remaining, .available {
+                  -fx-text-fill: $text-color-green;
+                }
+              }
+            }
+
+            &:partial {
+              .ingredient-progressbar {
+                .present-ship {
+                  -fx-background-color: $progress-bar-color-green;
+                }
+              }
+
+              .amount-line {
+                .quantity, .required, .remaining, .available {
+                  -fx-text-fill: $text-color-yellow;
+                }
+              }
+            }
+
+            &:search {
+              -fx-border-color: $border-color-yellow;
+            }
+
+            &:filter {
+              -fx-background-color: $background-color-light;
+
+              .title-line {
+                .name {
+                  -fx-text-fill: $text-color-black;
+                }
+
+                .image {
+                  -fx-opacity: 0.5;
+                }
+              }
+
+              .amount-line {
+                .quantity {
+                  -fx-text-fill: $text-color-black;
+                }
+
+                .required, .remaining, .available {
+                  -fx-text-fill: $text-color-black;
+                }
+              }
+            }
+
+            .ingredient-progressbar {
+              @include segmented-bar-straight;
+              @include fixedHeight(0.5em);
+
+              .present-ship {
+                -fx-background-color: $progress-bar-color-red;
+              }
+
+              .present-fleet-carrier {
+                -fx-background-color: $progress-bar-color-yellow;
+              }
+
+              .missing-for-minimum {
+                -fx-background-color: $progress-bar-color-grey;
+              }
+
+              .missing-for-required {
+                -fx-background-color: $progress-bar-color-light-grey;
+              }
+
+              .missing-for-maximum {
+                -fx-background-color: $progress-bar-color-white;
+              }
+            }
+
+            .title-line {
+              -fx-spacing: 0.25em;
+
+              .image {
+                @include fixedWidth(2em);
+                @include fixedHeight(2em);
+                -fx-fit-to-height: true;
+                -fx-fit-to-width: true;
+              }
+
+              .name {
+                //@include fixedHeight(2em);
+                -fx-font-weight: bold;
+                -fx-alignment: center-left;
+                -fx-wrap-text: true;
+                -fx-padding: 0.25em 0 0 0;
+              }
+            }
+
+            .text-lines {
+              -fx-padding: 0.25em;
+
+            }
+
+            .amount-line {
+              -fx-spacing: 0.25em;
+
+              .quantity {
+                -fx-font-weight: bold;
+                -fx-text-fill: $text-color-red;
+              }
+
+              .required, .remaining, .available {
+                -fx-text-alignment: right;
+                -fx-text-fill: $text-color-red;
+              }
+            }
+          }
+        }
+      }
+
+    }
+
+    .shortest-path {
+      .title {
+        -fx-font-size: 1.35em;
+        -fx-min-height: 2em;
+        -fx-font-weight: bold;
+      }
+
+      .shortest-path-flow {
+        -fx-hgap: 0.25em;
+        -fx-vgap: 0.25em;
+
+        .shortest-path-item {
+          -fx-background-color: $background-color-dark;
+          -fx-padding: 0.25em;
+
+          .distance-title, .blueprints-title {
+            -fx-font-size: 1em;
+            -fx-font-weight: bold;
+          }
+
+          .copyable-location {
+            @include copyable-location;
+          }
+
+          .distance-line {
+            -fx-padding: 0 0 1em 0;
+            -fx-spacing: 0.25em;
+
+            .distance {
+            }
+          }
+
+          .title-line {
+            .engineer, .index {
+              -fx-font-size: 2em;
+            }
+          }
+
+          .blueprint {
+            -fx-text-fill: $text-color-blue;
+
+            &:hover {
+              -fx-text-fill: lighten($text-color-blue, 10%);
+              -fx-cursor: hand;
+            }
+          }
+
+          .buttons {
+            -fx-padding: 1em 0 0 0;
+            -fx-spacing: 0.25em;
+          }
+        }
+      }
+    }
+  }
+}

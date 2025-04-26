@@ -1,0 +1,75 @@
+
+.start-dialog {
+  -fx-background-color: $background-color-dark;
+
+  .title {
+    -fx-font-size: 2em;
+    -fx-padding: 0.25em;
+  }
+
+  .text-content {
+    -fx-wrap-text: true;
+    -fx-background-color: $background-color-light;
+    -fx-text-fill: $text-color-white;
+
+    .content {
+      -fx-background-color: $background-color-light;
+      -fx-text-fill: $text-color-white;
+    }
+  }
+
+  .buttons {
+    -fx-spacing: 0.25em;
+  }
+}
+
+.version-dialog {
+  -fx-background-color: $background-color-dark;
+
+  .buttons {
+    -fx-spacing: 0.25em;
+  }
+
+  .explain-text {
+    -fx-font-size: 1.2em;
+    -fx-padding: 0.25em;
+    -fx-wrap-text: true;
+  }
+
+  .download-link {
+    -fx-font-size: 1.2em;
+    -fx-padding: 0.25em;
+    -fx-wrap-text: true;
+  }
+}
+
+
+.urlscheme-dialog {
+  -fx-background-color: $background-color-dark;
+
+  .buttons {
+    -fx-spacing: 0.25em;
+  }
+
+  .explain-text {
+    -fx-font-size: 1.2em;
+    -fx-padding: 0.25em;
+    -fx-wrap-text: true;
+  }
+}
+
+
+.eddn-dialog {
+  -fx-background-color: $background-color-dark;
+
+  .buttons {
+    -fx-spacing: 0.25em;
+  }
+
+  .explain-text {
+    -fx-font-size: 1.2em;
+    -fx-padding: 0.25em;
+    -fx-wrap-text: true;
+  }
+}
+

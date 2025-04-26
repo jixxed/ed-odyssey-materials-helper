@@ -14,11 +14,13 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfig;
 import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
+import nl.jixxed.eliteodysseymaterials.enums.LoadingStage;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Event;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Status.Status;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.ReportService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,6 +34,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.ZonedDateTime;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
@@ -40,8 +45,13 @@ public class FileProcessor {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final ObjectMapper OBJECT_MAPPER2 = new ObjectMapper();
+    private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
 
     static {
+        EVENT_LISTENERS.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
+            executorService.shutdownNow();
+        }));
         OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         OBJECT_MAPPER.registerModule(new JavaTimeModule());
         OBJECT_MAPPER2.registerModule(new JavaTimeModule());
@@ -61,65 +71,105 @@ public class FileProcessor {
 
     @SuppressWarnings("java:S2674")
     private static synchronized void processJournalFast(final File file) {
-        Platform.runLater(() -> EventService.publish(new JournalInitEvent(false)));
-        try (final CountingInputStream is = new CountingInputStream(Files.newInputStream(Paths.get(file.toURI()), StandardOpenOption.READ))) {
-            final List<String> messages = new ArrayList<>();
-            if (file.length() >= position) {
-                // Skip over already processed bytes.
-                is.skip(position);
+        log.debug("processJournalFast");
+        executorService.execute(() -> {
+//            Platform.runLater(() -> EventService.removeUIListeners());
+            Semaphore semaphore = new Semaphore(0);
+            EventService.publish(new LoadingEvent(LoadingStage.EVENTS));
+            EventService.publish(new JournalInitEvent(false));
+            log.debug("JournalInitEvent false");
+            Platform.runLater(semaphore::release);
+            try {
+                semaphore.acquire();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
-            final InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
-            final BufferedReader lineReader = new BufferedReader(reader);
-
-            // Process all lines.
-            String line;
-            while ((line = lineReader.readLine()) != null) {
-                //try to read line as json, if exception occurs we get JsonProcessingException and can try to read again later
-                JsonNode jsonNode = OBJECT_MAPPER.readTree(line);
-                if (jsonNode.get(EVENT) != null) {
-                    final String newLine = removeBugs(jsonNode);
-                    testAndReport(newLine, JournalEventTypes.EVENT_TYPES.get(jsonNode.get(EVENT).asText()));
-                    final JournalEventType journalEventType = JournalEventType.forName(jsonNode.get(EVENT).asText());
-                    messages.add(newLine);
+            log.debug("start events processing");
+            try (final CountingInputStream is = new CountingInputStream(Files.newInputStream(Paths.get(file.toURI()), StandardOpenOption.READ))) {
+                final List<String> messages = new ArrayList<>();
+                if (file.length() >= position) {
+                    // Skip over already processed bytes.
+                    is.skip(position);
                 }
-                position = is.getCount();
-            }
+                final InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
+                final BufferedReader lineReader = new BufferedReader(reader);
 
-            AtomicInteger index = new AtomicInteger(1);
-            Integer total = messages.size();
-            messages.stream()
-                    .sorted(Comparator.comparing(event -> {
-                        try {
-                            final JsonNode jsonNode = OBJECT_MAPPER.readTree(event);
-                            //force fileheader to be first because timestamp is local time vs server time and can be ahead
-                            if (jsonNode.get("event").asText().equals(JournalEventType.FILEHEADER.friendlyName())) {
-                                return "0";
+                // Process all lines.
+                String line;
+                while ((line = lineReader.readLine()) != null) {
+                    //try to read line as json, if exception occurs we get JsonProcessingException and can try to read again later
+                    JsonNode jsonNode = OBJECT_MAPPER.readTree(line);
+                    if (jsonNode.get(EVENT) != null) {
+                        final String newLine = removeBugs(jsonNode);
+                        testAndReport(newLine, JournalEventTypes.EVENT_TYPES.get(jsonNode.get(EVENT).asText()));
+                        final JournalEventType journalEventType = JournalEventType.forName(jsonNode.get(EVENT).asText());
+                        messages.add(newLine);
+                    }
+                    position = is.getCount();
+                }
+
+                AtomicInteger index = new AtomicInteger(1);
+                Integer total = messages.size();
+                Semaphore semaphore2 = new Semaphore(Math.max(1, total / 25));
+                messages.stream()
+                        .sorted(Comparator.comparing(event -> {
+                            try {
+                                final JsonNode jsonNode = OBJECT_MAPPER.readTree(event);
+                                //force fileheader to be first because timestamp is local time vs server time and can be ahead
+                                if (jsonNode.get("event").asText().equals(JournalEventType.FILEHEADER.friendlyName())) {
+                                    return "0";
+                                }
+                                return jsonNode.get("timestamp").asText();
+                            } catch (final JsonProcessingException e) {
+                                log.error("Failed to read timestamp for event", e);
                             }
-                            return jsonNode.get("timestamp").asText();
-                        } catch (final JsonProcessingException e) {
-                            log.error("Failed to read timestamp for event", e);
-                        }
-                        return "";
-                    }))
-                    .filter(event -> {
-                        try {
-                            return
-                                    (!OBJECT_MAPPER.readTree(event).get(EVENT).asText().equalsIgnoreCase(JournalEventType.BACKPACKCHANGE.name()) && !OBJECT_MAPPER.readTree(event).get(EVENT).asText().equalsIgnoreCase(JournalEventType.BACKPACK.name()) || backpackAfterShiplocker(messages, event));
-                        } catch (final JsonProcessingException e) {
-                            return false;
-                        }
-                    })
-                    .forEach(message -> {
-                        Platform.runLater(() -> MessageHandler.handleMessage(message, file));
-                        Platform.runLater(() -> EventService.publish(new EventProcessedEvent(index.getAndIncrement(), total)));
-                    });
+                            return "";
+                        }))
+                        .filter(event -> {
+                            try {
+                                return
+                                        (!OBJECT_MAPPER.readTree(event).get(EVENT).asText().equalsIgnoreCase(JournalEventType.BACKPACKCHANGE.name()) && !OBJECT_MAPPER.readTree(event).get(EVENT).asText().equalsIgnoreCase(JournalEventType.BACKPACK.name()) || backpackAfterShiplocker(messages, event));
+                            } catch (final JsonProcessingException e) {
+                                return false;
+                            }
+                        })
+                        .forEach(message -> {
+                            MessageHandler.handleMessage(message, file);
+                            Platform.runLater(() -> semaphore2.release());
+                            try {
+                                semaphore2.acquire();
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                            log.debug("Processed event {} of {}", index.get(), total);
+                            EventService.publish(new EventProcessedEvent(index.getAndIncrement(), total));
+//                            Platform.runLater(() -> ));
+                        });
+            } catch (final JsonProcessingException e) {
+                log.error("Read error", e);
+            } catch (final IOException e) {
+                log.error("Error processing journal", e);
+            }
+            log.debug("JournalInitEvent true");
+            EventService.publish(new LoadingEvent(LoadingStage.UI));
+            Platform.runLater(semaphore::release);
+            try {
+                semaphore.acquire();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            TimerTask timerTask;
+            Timer timer;
+            timer = new Timer("init-report-task", true);
+            timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    Platform.runLater(() -> EventService.publish(new JournalInitEvent(true)));
+                }
+            };
+            timer.schedule(timerTask, 100L);
 
-        } catch (final JsonProcessingException e) {
-            log.error("Read error", e);
-        } catch (final IOException e) {
-            log.error("Error processing journal", e);
-        }
-        Platform.runLater(() -> EventService.publish(new JournalInitEvent(true)));
+        });
     }
 
     public static String removeBugs(JsonNode jsonNode) {

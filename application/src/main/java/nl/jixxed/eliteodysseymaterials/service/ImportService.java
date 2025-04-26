@@ -82,15 +82,15 @@ public class ImportService {
                     final Ship ship = LoadoutMapper.toShip(slef.getData());
                     APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                         final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
-                        final String name = LocaleService.getLocalizedStringForCurrentLocale(ship.getShipType().getLocalizationKey()) + "(SLEF)";
+                        final String name = LocaleService.getLocalizedStringForCurrentLocale(ship.getShipType().getLocalizationKey()) + LocaleService.LocaleString.of("imported.slef.partial.name");
                         final ShipConfiguration shipConfiguration = shipConfigurations.createShipConfiguration(name);
-                        ShipMapper.toShipConfiguration(ship,shipConfiguration, name);
+                        ShipMapper.toShipConfiguration(ship, shipConfiguration, name);
                         ShipService.saveShipConfigurations(commander, shipConfigurations);
-                        results.add(new ImportResult(ImportResult.ResultType.SUCCESS_SLEF, name));
+                        results.add(new ImportResult(ImportResult.ResultType.SUCCESS_SLEF, LocaleService.LocaleString.of("notification.imported.success.slef.text", name)));
                     });
                 } catch (Exception e) {
                     log.error("Failed to import slef", e);
-                    results.add(new ImportResult(ImportResult.ResultType.ERROR_SLEF, LocaleService.getLocalizedStringForCurrentLocale("notification.import.slef.error.text")));
+                    results.add(new ImportResult(ImportResult.ResultType.ERROR_SLEF, LocaleService.LocaleString.of("notification.imported.slef.error.text")));
                 }
 
             });
@@ -111,21 +111,20 @@ public class ImportService {
             if (Objects.equals(clipboardShip.getVersion(), 1)) {
                 ShipConfiguration shipConfiguration = clipboardShip.getShipConfiguration();
                 shipConfiguration.setUuid(UUID.randomUUID().toString());
-                shipConfiguration.setName(shipConfiguration.getName() + " - Imported");
+                shipConfiguration.setName(shipConfiguration.getName() + LocaleService.getLocalizedStringForCurrentLocale("imported.partial.name"));
                 final Commander commander = APPLICATION_STATE.getPreferredCommander().orElseThrow(IllegalArgumentException::new);
                 final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
                 shipConfigurations.addShipConfiguration(shipConfiguration);
                 shipConfigurations.setSelectedShipConfigurationUUID(shipConfiguration.getUuid());
                 ShipService.saveShipConfigurations(commander, shipConfigurations);
-                return new ImportResult(ImportResult.ResultType.SUCCESS_HORIZONS_SHIP, shipConfiguration.getName());
-//                return new ImportResult(ImportResult.ResultType.SUCCESS_EDSY_WISHLIST, name);
+                return new ImportResult(ImportResult.ResultType.SUCCESS_HORIZONS_SHIP, LocaleService.LocaleString.of("notification.imported.success.ship.text", shipConfiguration.getName()));
             } else {
-                throw new ShipDeeplinkException("The ship could not be imported because the link was made with a newer version of the app.");
+                throw new ShipDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.", "notification.imported.exception.newer.version");
             }
 
         } catch (final RuntimeException | JsonProcessingException ex) {
             log.error("Failed to import ship", ex);
-            throw new ShipDeeplinkException("Failed to parse deeplink");
+            throw new ShipDeeplinkException("Failed to parse deeplink", "notification.imported.exception.failed.parse");
         }
     }
 
@@ -140,11 +139,11 @@ public class ImportService {
             if (Objects.equals(edsyWishlist.getVersion(), 1)) {
 
                 final HorizonsWishlist wishlist = new HorizonsWishlist();
-                final String name = (edsyWishlist.getName() != null && !edsyWishlist.getName().isBlank()) ? edsyWishlist.getName() : "ED Shipyard - Imported";
+                final String name = (edsyWishlist.getName() != null && !edsyWishlist.getName().isBlank()) ? edsyWishlist.getName() : LocaleService.getLocalizedStringForCurrentLocale("tab.wishlist.import.edsy.name");
                 wishlist.setName(name);
                 final List<WishlistBlueprint<HorizonsBlueprintName>> wishlistBlueprintList = edsyWishlist.getItems().stream().map(edsyWishlistItem -> {
                     try {
-                        final HorizonsBlueprintGrade horizonsBlueprintGrade = edsyWishlistItem.getGrade() != null ? HorizonsBlueprintGrade.valueOf("GRADE_" + edsyWishlistItem.getGrade().toString()) : null;
+                        final HorizonsBlueprintGrade horizonsBlueprintGrade = edsyWishlistItem.getGrade() != null ? HorizonsBlueprintGrade.valueOf("GRADE_" + edsyWishlistItem.getGrade()) : null;
                         final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipeByInternalName(edsyWishlistItem.getItem(), edsyWishlistItem.getBlueprint(), horizonsBlueprintGrade);
                         final HorizonsWishlistBlueprint bp;
                         if (blueprint instanceof HorizonsModuleBlueprint horizonsModuleBlueprint) {
@@ -152,14 +151,14 @@ public class ImportService {
                         } else if (blueprint instanceof HorizonsExperimentalEffectBlueprint horizonsExperimentalEffectBlueprint) {
                             bp = new HorizonsExperimentalWishlistBlueprint(horizonsExperimentalEffectBlueprint.getHorizonsBlueprintType());
                         } else {
-                            throw new EdsyDeeplinkException("Failed to parse deeplink");
+                            throw new EdsyDeeplinkException("Failed to parse deeplink", "notification.imported.exception.failed.parse");
                         }
                         bp.setRecipeName((blueprint.getBlueprintName()));
                         bp.setVisible(true);
                         return (WishlistBlueprint<HorizonsBlueprintName>) bp;
                     } catch (final IllegalArgumentException ex) {
                         log.error(ex.getMessage());
-                        NotificationService.showWarning(NotificationType.IMPORT, "Unknown item", String.join(":\n", ex.getMessage().split(": ")), true);
+                        NotificationService.showWarning(NotificationType.IMPORT, LocaleService.LocaleString.of("notification.imported.edsy.error.title"), LocaleService.LocaleString.of("notification.imported.edsy.error.text", String.join(":\n", ex.getMessage().split(": "))), true);
                         return null;
                     }
                 }).filter(Objects::nonNull).toList();
@@ -170,14 +169,14 @@ public class ImportService {
                 wishlists.addWishlist(wishlist);
                 wishlists.setSelectedWishlistUUID(wishlist.getUuid());
                 WishlistService.saveHorizonsWishlists(commander, wishlists);
-                return new ImportResult(ImportResult.ResultType.SUCCESS_EDSY_WISHLIST, name);
+                return new ImportResult(ImportResult.ResultType.SUCCESS_EDSY_WISHLIST, LocaleService.LocaleString.of("notification.imported.success.edsy.text", name));
             } else {
-                throw new EdsyDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.");
+                throw new EdsyDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.", "notification.imported.exception.newer.version");
             }
 
         } catch (final RuntimeException | JsonProcessingException ex) {
             log.error("Failed to import ED shipyard wishlist", ex);
-            throw new EdsyDeeplinkException("Failed to parse deeplink");
+            throw new EdsyDeeplinkException("Failed to parse deeplink", "notification.imported.edsy.exception.failed.parse");
         }
 
     }
@@ -193,7 +192,7 @@ public class ImportService {
             if (Objects.equals(coriolisWishlist.getVersion(), 1)) {
 
                 final HorizonsWishlist wishlist = new HorizonsWishlist();
-                final String name = (coriolisWishlist.getName() != null && !coriolisWishlist.getName().isBlank()) ? coriolisWishlist.getName() : "Coriolis - Imported";
+                final String name = (coriolisWishlist.getName() != null && !coriolisWishlist.getName().isBlank()) ? coriolisWishlist.getName() : LocaleService.getLocalizedStringForCurrentLocale("tab.wishlist.import.coriolis.name");
                 wishlist.setName(name);
                 final List<WishlistBlueprint<HorizonsBlueprintName>> wishlistBlueprintList = coriolisWishlist.getItems().stream().map(coriolisWishlistItem -> {
                     try {
@@ -205,14 +204,14 @@ public class ImportService {
                         } else if (blueprint instanceof HorizonsExperimentalEffectBlueprint horizonsExperimentalEffectBlueprint) {
                             bp = new HorizonsExperimentalWishlistBlueprint(horizonsExperimentalEffectBlueprint.getHorizonsBlueprintType());
                         } else {
-                            throw new CoriolisDeeplinkException("Failed to parse deeplink");
+                            throw new CoriolisDeeplinkException("Failed to parse deeplink", "notification.imported.exception.failed.parse");
                         }
                         bp.setRecipeName((blueprint.getBlueprintName()));
                         bp.setVisible(true);
                         return (WishlistBlueprint<HorizonsBlueprintName>) bp;
                     } catch (final IllegalArgumentException ex) {
                         log.error(ex.getMessage());
-                        NotificationService.showWarning(NotificationType.IMPORT, "Unknown item", ex.getMessage(), true);
+                        NotificationService.showWarning(NotificationType.IMPORT, LocaleService.LocaleString.of("notification.imported.coriolis.error.title"), LocaleService.LocaleString.of("notification.imported.coriolis.error.text", String.join(":\n", ex.getMessage().split(": "))), true);
                         return null;
                     }
                 }).filter(Objects::nonNull).toList();
@@ -223,14 +222,14 @@ public class ImportService {
                 wishlists.addWishlist(wishlist);
                 wishlists.setSelectedWishlistUUID(wishlist.getUuid());
                 WishlistService.saveHorizonsWishlists(commander, wishlists);
-                return new ImportResult(ImportResult.ResultType.SUCCESS_CORIOLIS_WISHLIST, name);
+                return new ImportResult(ImportResult.ResultType.SUCCESS_CORIOLIS_WISHLIST, LocaleService.LocaleString.of("notification.imported.success.coriolis.text", name));
             } else {
-                throw new CoriolisDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.");
+                throw new CoriolisDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.", "notification.imported.exception.newer.version");
             }
 
         } catch (final RuntimeException | JsonProcessingException ex) {
             log.error("Failed to import Coriolis wishlist", ex);
-            throw new CoriolisDeeplinkException("Failed to parse deeplink");
+            throw new CoriolisDeeplinkException("Failed to parse deeplink", "notification.imported.exception.failed.parse");
         }
 
     }
@@ -257,62 +256,62 @@ public class ImportService {
                 final Commander commander = APPLICATION_STATE.getPreferredCommander().orElseThrow(IllegalArgumentException::new);
                 final LoadoutSetList loadoutSetList = LoadoutService.getLoadoutSetList(commander);
                 final LoadoutSet loadoutSet = clipboardLoadout.getLoadoutSet();
-                final String loadoutSetName = loadoutSet.getName() + " - Imported";
+                final String loadoutSetName = loadoutSet.getName() + LocaleService.getLocalizedStringForCurrentLocale("imported.partial.name");
                 loadoutSet.setName(loadoutSetName);
                 loadoutSetList.addLoadoutSet(loadoutSet);
                 loadoutSetList.setSelectedLoadoutSetUUID(loadoutSet.getUuid());
                 LoadoutService.saveLoadoutSetList(commander, loadoutSetList);
-                return new ImportResult(ImportResult.ResultType.SUCCESS_LOADOUT, loadoutSetName);
+                return new ImportResult(ImportResult.ResultType.SUCCESS_LOADOUT, LocaleService.LocaleString.of("notification.imported.success.loadout.text", loadoutSetName));
 
             } else {
-                throw new LoadoutDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.");
+                throw new LoadoutDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.", "notification.imported.exception.newer.version");
             }
         } catch (final RuntimeException | JsonProcessingException ex) {
             log.error("Failed to import loadout", ex);
-            throw new LoadoutDeeplinkException("Failed to parse deeplink");
+            throw new LoadoutDeeplinkException("Failed to parse deeplink", "notification.imported.exception.failed.parse");
         }
     }
 
     private static ImportResult importOdysseyWishlist(final String decoded) {
 
         if (decoded.isEmpty()) {
-            throw new OdysseyWishlistDeeplinkException(ERROR_IMPORT_STRING_NOT_DECODED);
+            throw new OdysseyWishlistDeeplinkException(ERROR_IMPORT_STRING_NOT_DECODED, "notification.imported.exception.failed.decode");
         }
         try {
             final ClipboardWishlist clipboardWishlist = OBJECT_MAPPER.readValue(decoded, ClipboardWishlist.class);
             if (Objects.equals(clipboardWishlist.getVersion(), 1)) {
 
                 final Wishlist wishlist = new Wishlist();
-                final String name = clipboardWishlist.getWishlist().getName() + " - Imported";
+                final String name = clipboardWishlist.getWishlist().getName() + LocaleService.getLocalizedStringForCurrentLocale("imported.partial.name");
                 wishlist.setName(name);
                 wishlist.setItems(clipboardWishlist.getWishlist().getItems());
 
                 final Commander commander = APPLICATION_STATE.getPreferredCommander().orElseThrow(IllegalArgumentException::new);
-                final Wishlists wishlists = WishlistService.getWishlists(commander);
+                final Wishlists wishlists = WishlistService.getOdysseyWishlists(commander);
                 wishlists.addWishlist(wishlist);
                 wishlists.setSelectedWishlistUUID(wishlist.getUuid());
-                WishlistService.saveWishlists(commander, wishlists);
-                return new ImportResult(ImportResult.ResultType.SUCCESS_ODYSSEY_WISHLIST, name);
+                WishlistService.saveOdysseyWishlists(commander, wishlists);
+                return new ImportResult(ImportResult.ResultType.SUCCESS_ODYSSEY_WISHLIST, LocaleService.LocaleString.of("notification.imported.success.wishlist.text", name));
             } else {
-                throw new OdysseyWishlistDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.");
+                throw new OdysseyWishlistDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.", "notification.imported.exception.newer.version");
             }
         } catch (final RuntimeException | JsonProcessingException ex) {
             log.error("Failed to import wishlist", ex);
-            throw new OdysseyWishlistDeeplinkException("Failed to parse deeplink");
+            throw new OdysseyWishlistDeeplinkException("Failed to parse deeplink", "notification.imported.exception.failed.parse");
         }
     }
 
     private static ImportResult importHorizonsWishlist(final String decoded) {
 
         if (decoded.isEmpty()) {
-            throw new OdysseyWishlistDeeplinkException(ERROR_IMPORT_STRING_NOT_DECODED);
+            throw new OdysseyWishlistDeeplinkException(ERROR_IMPORT_STRING_NOT_DECODED, "notification.imported.exception.failed.decode");
         }
         try {
             final ClipboardHorizonsWishlist clipboardWishlist = OBJECT_MAPPER.readValue(decoded, ClipboardHorizonsWishlist.class);
             if (Objects.equals(clipboardWishlist.getVersion(), 1)) {
 
                 final HorizonsWishlist wishlist = new HorizonsWishlist();
-                final String name = clipboardWishlist.getWishlist().getName() + " - Imported";
+                final String name = clipboardWishlist.getWishlist().getName() + LocaleService.getLocalizedStringForCurrentLocale("imported.partial.name");
                 wishlist.setName(name);
                 wishlist.setItems(clipboardWishlist.getWishlist().getItems());
 
@@ -321,13 +320,13 @@ public class ImportService {
                 wishlists.addWishlist(wishlist);
                 wishlists.setSelectedWishlistUUID(wishlist.getUuid());
                 WishlistService.saveHorizonsWishlists(commander, wishlists);
-                return new ImportResult(ImportResult.ResultType.SUCCESS_HORIZONS_WISHLIST, name);
+                return new ImportResult(ImportResult.ResultType.SUCCESS_HORIZONS_WISHLIST, LocaleService.LocaleString.of("notification.imported.success.wishlist.text", name));
             } else {
-                throw new OdysseyWishlistDeeplinkException("The horizons wishlist could not be imported because the link was made with a newer version of the app.");
+                throw new OdysseyWishlistDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.", "notification.imported.exception.newer.version");
             }
         } catch (final RuntimeException | JsonProcessingException ex) {
             log.error("Failed to import horizons wishlist", ex);
-            throw new HorizonsWishlistDeeplinkException("Failed to parse deeplink");
+            throw new HorizonsWishlistDeeplinkException("Failed to parse deeplink", "notification.imported.exception.failed.parse");
         }
     }
 

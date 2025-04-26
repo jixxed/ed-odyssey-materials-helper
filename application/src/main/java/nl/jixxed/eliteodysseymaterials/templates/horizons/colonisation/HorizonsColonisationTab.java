@@ -1,36 +1,29 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation;
 
-import javafx.scene.control.ScrollPane;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableScrollPane;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsTab;
 
-public class HorizonsColonisationTab extends HorizonsTab implements Template {
-    private ScrollPane scrollPane;
-    private ColonisationView colonisationView;
+public class HorizonsColonisationTab extends HorizonsTab implements DestroyableTemplate {
 
     public HorizonsColonisationTab() {
         initComponents();
-        initEventHandling();
     }
 
     @Override
     public void initComponents() {
-        this.colonisationView = new ColonisationView();
-        this.textProperty().bind(LocaleService.getStringBinding("tabs.horizons.colonisation"));
+        this.getStyleClass().add("colonisation-tab");
+        ColonisationView colonisationView = new ColonisationView();
+        this.addBinding(this.textProperty(), LocaleService.getStringBinding("tabs.horizons.colonisation"));
         this.setClosable(false);
-        this.scrollPane = ScrollPaneBuilder.builder()
-                .withContent(this.colonisationView)
-                .build();
-        this.setContent(this.scrollPane);
-
-    }
-
-    @Override
-    public void initEventHandling() {
-        //NOOP
+        DestroyableScrollPane scrollPane = register(ScrollPaneBuilder.builder()
+                .withStyleClass("colonisation-tab-content")
+                .withContent(colonisationView)
+                .build());
+        this.setContent(scrollPane);
     }
 
     @Override

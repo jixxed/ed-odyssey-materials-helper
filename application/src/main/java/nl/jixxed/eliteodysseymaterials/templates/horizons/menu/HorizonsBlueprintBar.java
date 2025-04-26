@@ -1,9 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.menu;
 
-import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -11,6 +11,7 @@ import javafx.util.Callback;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.UTF8Constants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.BlueprintCategory;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
@@ -18,83 +19,133 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.helper.BlueprintHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComboBox;
-import nl.jixxed.eliteodysseymaterials.templates.generic.About;
-import org.controlsfx.control.SegmentedButton;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.jixxed.eliteodysseymaterials.templates.generic.menu.About;
 
 import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
-public
-class HorizonsBlueprintBar extends Accordion {
+public class HorizonsBlueprintBar extends DestroyableAccordion implements DestroyableEventTemplate {
     private static final String BLUEPRINT_TITLED_PANE_CONTENT_STYLE_CLASS = "blueprint-titled-pane-content";
     private static final String BLUEPRINT_LIST_STYLE_CLASS = "blueprint-list";
-    private About about;
-    private TitledPane[] categoryTitledPanes;
-    private TitledPane aboutTitledPane;
-    private final Application application;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
-    public HorizonsBlueprintBar(final Application application) {
-        this.application = application;
-        initComponents();
+    private Callback<ListView<HorizonsBlueprintName>, ListCell<HorizonsBlueprintName>> createDestroyableCellFactory(Destroyable destroyable) {
+        return _ -> new DestroyableListCell<>() {
+            {
+                destroyable.register(this);
+                register(EventService.addListener(true, destroyable, StorageEvent.class, _ -> {
+                    updateText(getItem(), this.emptyProperty().get());
+                }));
+                register(EventService.addListener(true, destroyable, EngineerEvent.class, _ -> {
+                    updateText(getItem(), this.emptyProperty().get());
+                }));
+            }
 
+            @Override
+            protected void updateItem(final HorizonsBlueprintName item, final boolean empty) {
+                super.updateItem(item, empty);
+                updateText(item, empty);
+                updateStyle(item);
+            }
+
+            private void updateText(final HorizonsBlueprintName item, final boolean empty) {
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    setText(item + (BlueprintHelper.isCompletedEngineerRecipe(item) ? " " + UTF8Constants.CHECK_TRUE : ""));
+                }
+            }
+
+            private void updateStyle(final HorizonsBlueprintName item) {
+                if (item != null && BlueprintHelper.isCompletedEngineerRecipe(item)) {
+                    this.setStyle("-fx-text-fill: #89d07f;");
+                } else {
+                    this.setStyle("-fx-text-fill: white;");
+                }
+            }
+        };
     }
 
-    private void initComponents() {
-        this.getStyleClass().add("blueprint-bar");
-        this.categoryTitledPanes = HorizonsBlueprintConstants.RECIPES.entrySet().stream()
+    public HorizonsBlueprintBar() {
+        initComponents();
+        initEventHandling();
+    }
+
+    public void initComponents() {
+        this.getStyleClass().add("blueprint-menu");
+//        this.getStyleClass().add("blueprint-bar");
+        DestroyableTitledPane[] categoryTitledPanes = HorizonsBlueprintConstants.RECIPES.entrySet().stream()
                 .sorted(Comparator.comparing(recipeCategoryMapEntry -> recipeCategoryMapEntry.getKey().getOrder()))
                 .map(this::createBlueprintCategoryTitledPane)
-                .toArray(TitledPane[]::new);
+                .toArray(DestroyableTitledPane[]::new);
 
-        final TitledPane categoryTitledPaneEngineers = createCategoryTitledPaneEngineers(HorizonsBlueprintConstants.getEngineerUnlockRequirements());
-        final TitledPane categoryTitledPaneExperimental = createExperimentalEffectsCategoryTitledPane(HorizonsBlueprintConstants.getExperimentalEffects());
-        final TitledPane categoryTitledPaneSynthesis = createSynthesisCategoryTitledPane(HorizonsBlueprintConstants.getSynthesis());
-        final TitledPane categoryTitledPaneTechBroker = createTechbrokerCategoryTitledPane(HorizonsBlueprintConstants.getTechbrokerUnlocks());
-        initAboutTitledPane();
+        final DestroyableTitledPane categoryTitledPaneEngineers = register(createCategoryTitledPaneEngineers(HorizonsBlueprintConstants.getEngineerUnlockRequirements()));
+        final DestroyableTitledPane categoryTitledPaneExperimental = register(createExperimentalEffectsCategoryTitledPane(HorizonsBlueprintConstants.getExperimentalEffects()));
+        final DestroyableTitledPane categoryTitledPaneSynthesis = register(createSynthesisCategoryTitledPane(HorizonsBlueprintConstants.getSynthesis()));
+        final DestroyableTitledPane categoryTitledPaneTechBroker = register(createTechbrokerCategoryTitledPane(HorizonsBlueprintConstants.getTechbrokerUnlocks()));
+        final DestroyableTitledPane aboutTitledPane = register(createAboutTitledPane());
         this.getPanes().addAll(categoryTitledPaneEngineers);
-        this.getPanes().addAll(this.categoryTitledPanes);
+        this.getPanes().addAll(categoryTitledPanes);
         this.getPanes().addAll(categoryTitledPaneExperimental);
         this.getPanes().addAll(categoryTitledPaneSynthesis);
         this.getPanes().addAll(categoryTitledPaneTechBroker);
-        this.getPanes().add(this.aboutTitledPane);
-        this.setExpandedPane(this.aboutTitledPane);
+        this.getPanes().add(aboutTitledPane);
+        this.setExpandedPane(aboutTitledPane);
+
     }
 
-    private void initAboutTitledPane() {
-        this.about = new About(this.application);
-        this.aboutTitledPane = TitledPaneBuilder.builder().withContent(this.about).withText(LocaleService.getStringBinding("menu.about")).build();
+    @Override
+    public void initEventHandling() {
+
     }
 
-    private TitledPane createTechbrokerCategoryTitledPane(final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, HorizonsBlueprint>> recipesEntry) {
-        final ScrollPane scroll = createScrollPane();
+    private DestroyableTitledPane createAboutTitledPane() {
+        About about = new About();
+        return TitledPaneBuilder.builder()
+                .withContent(about)
+                .withText("menu.about")
+                .build();
+    }
+
+    private DestroyableTitledPane createTechbrokerCategoryTitledPane(final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, HorizonsBlueprint>> recipesEntry) {
+        final DestroyableScrollPane scroll = createScrollPane();
 
         final DestroyableComboBox<HorizonsBlueprintType> types = ComboBoxBuilder.builder(HorizonsBlueprintType.class)
                 .withStyleClass(BLUEPRINT_LIST_STYLE_CLASS)
                 .asLocalized()
                 .build();
-        final DestroyableComboBox<HorizonsBlueprintName> blueprints = createBlueprintsComboboxForTypes(types, recipesEntry.keySet(), recipesEntry.entrySet().stream().map(horizonsBlueprintNameMapEntry -> Map.entry(horizonsBlueprintNameMapEntry.getKey(), horizonsBlueprintNameMapEntry.getValue().keySet())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
 
-        final TitledPane categoryTitledPane = createTitledPane(BlueprintCategory.TECHBROKER.getLocalizationKey());
+        DestroyableComboBox<HorizonsBlueprintName> blueprints = createBlueprintsComboboxForTypes(types, recipesEntry.keySet(), recipesEntry.entrySet().stream().map(horizonsBlueprintNameMapEntry -> Map.entry(horizonsBlueprintNameMapEntry.getKey(), horizonsBlueprintNameMapEntry.getValue().keySet())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+        DestroyableTitledPane categoryTitledPane = createTitledPane(BlueprintCategory.TECHBROKER.getLocalizationKey());
 
-        types.addChangeListener(types.valueProperty(), (ChangeListener<HorizonsBlueprintType>) (observable, oldValue, newValue) -> {
+        types.addChangeListener(types.valueProperty(), (_, _, newValue) -> {
             if (newValue != null) {
                 setContent(scroll, blueprints.getSelectionModel().getSelectedItem(), types.getSelectionModel().getSelectedItem(), true,
                         generateContent(recipesEntry.getOrDefault(blueprints.getSelectionModel().getSelectedItem(), Collections.emptyMap()).get(types.getSelectionModel().getSelectedItem())));
             }
             types.setVisibleRowCount(types.getItems().size());
         });
-        final HBox hBoxBlueprints = BoxBuilder.builder().withNode(blueprints).buildHBox();
-        final HBox hBoxTypes = BoxBuilder.builder().withNode(types).buildHBox();
+        final DestroyableHBox hBoxBlueprints = BoxBuilder.builder()
+                .withNode(blueprints).buildHBox();
+        final DestroyableHBox hBoxTypes = BoxBuilder.builder()
+                .withNode(types).buildHBox();
         HBox.setHgrow(blueprints, Priority.ALWAYS);
         HBox.setHgrow(types, Priority.ALWAYS);
-        this.eventListeners.add(EventService.addListener(true, this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
+
+        //auto select first option
+        blueprints.getSelectionModel().select(0);
+        final DestroyableVBox content = BoxBuilder.builder()
+                .withStyleClass(BLUEPRINT_TITLED_PANE_CONTENT_STYLE_CLASS)
+                .withNodes(hBoxBlueprints, hBoxTypes, scroll)
+                .buildVBox();
+        categoryTitledPane.setContentNode(content);
+        VBox.setVgrow(scroll, Priority.ALWAYS);
+        register(EventService.addListener(true, this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
             if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName
                     && BlueprintCategory.TECHBROKER.equals(blueprintName.getBlueprintCategory())
                     && HorizonsBlueprintConstants.getTechbrokerUnlocks().get(blueprintName).containsKey(((HorizonsTechBrokerBlueprint) blueprintClickEvent.getBlueprint()).getHorizonsBlueprintType())) {
@@ -102,17 +153,7 @@ class HorizonsBlueprintBar extends Accordion {
                 types.getSelectionModel().select(getBlueprintType(blueprintClickEvent.getBlueprint()));
                 this.setExpandedPane(categoryTitledPane);
             }
-
         }));
-
-        //auto select first option
-        blueprints.getSelectionModel().select(0);
-        final VBox content = BoxBuilder.builder()
-                .withStyleClass(BLUEPRINT_TITLED_PANE_CONTENT_STYLE_CLASS)
-                .withNodes(hBoxBlueprints, hBoxTypes, scroll)
-                .buildVBox();
-        categoryTitledPane.setContent(content);
-        VBox.setVgrow(scroll, Priority.ALWAYS);
         return categoryTitledPane;
     }
 
@@ -130,8 +171,8 @@ class HorizonsBlueprintBar extends Accordion {
         return null;
     }
 
-    private TitledPane createExperimentalEffectsCategoryTitledPane(final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, HorizonsBlueprint>> recipesEntry) {
-        final ScrollPane scroll = createScrollPane();
+    private DestroyableTitledPane createExperimentalEffectsCategoryTitledPane(final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, HorizonsBlueprint>> recipesEntry) {
+        final DestroyableScrollPane scroll = createScrollPane();
 
         final DestroyableComboBox<HorizonsBlueprintType> types = ComboBoxBuilder.builder(HorizonsBlueprintType.class)
                 .withStyleClass(BLUEPRINT_LIST_STYLE_CLASS)
@@ -139,20 +180,22 @@ class HorizonsBlueprintBar extends Accordion {
                 .build();
         final DestroyableComboBox<HorizonsBlueprintName> blueprints = createBlueprintsComboboxForTypes(types, recipesEntry.keySet(), recipesEntry.entrySet().stream().map(horizonsBlueprintNameMapEntry -> Map.entry(horizonsBlueprintNameMapEntry.getKey(), horizonsBlueprintNameMapEntry.getValue().keySet())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
 
-        final TitledPane categoryTitledPane = createTitledPane(BlueprintCategory.EXPERIMENTAL_EFFECTS.getLocalizationKey());
+        final DestroyableTitledPane categoryTitledPane = createTitledPane(BlueprintCategory.EXPERIMENTAL_EFFECTS.getLocalizationKey());
 
-        types.addChangeListener(types.valueProperty(), (ChangeListener<HorizonsBlueprintType>) (observable, oldValue, newValue) -> {
+        types.addChangeListener(types.valueProperty(), (_, _, newValue) -> {
             if (newValue != null) {
                 setContent(scroll, blueprints.getSelectionModel().getSelectedItem(), types.getSelectionModel().getSelectedItem(), true,
                         generateContent(recipesEntry.getOrDefault(blueprints.getSelectionModel().getSelectedItem(), Collections.emptyMap()).get(types.getSelectionModel().getSelectedItem())));
             }
             types.setVisibleRowCount(types.getItems().size());
         });
-        final HBox hBoxBlueprints = BoxBuilder.builder().withNode(blueprints).buildHBox();
-        final HBox hBoxTypes = BoxBuilder.builder().withNode(types).buildHBox();
+        final DestroyableHBox hBoxBlueprints = BoxBuilder.builder()
+                .withNode(blueprints).buildHBox();
+        final DestroyableHBox hBoxTypes = BoxBuilder.builder()
+                .withNode(types).buildHBox();
         HBox.setHgrow(blueprints, Priority.ALWAYS);
         HBox.setHgrow(types, Priority.ALWAYS);
-        this.eventListeners.add(EventService.addListener(true, this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
+        register(EventService.addListener(true, this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
             if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName && blueprintClickEvent.isExperimental()) {
                 blueprints.getSelectionModel().select(blueprintName);
                 if (blueprintClickEvent.getBlueprint() instanceof HorizonsExperimentalEffectBlueprint) {
@@ -164,29 +207,30 @@ class HorizonsBlueprintBar extends Accordion {
 
         //auto select first option
         blueprints.getSelectionModel().select(0);
-        final VBox content = BoxBuilder.builder()
+        final DestroyableVBox content = BoxBuilder.builder()
                 .withStyleClass(BLUEPRINT_TITLED_PANE_CONTENT_STYLE_CLASS)
                 .withNodes(hBoxBlueprints, hBoxTypes, scroll)
                 .buildVBox();
-        categoryTitledPane.setContent(content);
+        categoryTitledPane.setContentNode(content);
         VBox.setVgrow(scroll, Priority.ALWAYS);
         return categoryTitledPane;
     }
 
-    private TitledPane createSynthesisCategoryTitledPane(final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> recipesEntry) {
-        final ScrollPane scroll = createScrollPane();
-        final List<ToggleButton> toggleButtons = new ArrayList<>();
+    private DestroyableTitledPane createSynthesisCategoryTitledPane(final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> recipesEntry) {
+        final DestroyableScrollPane scroll = createScrollPane();
+        final List<DestroyableToggleButton> toggleButtons = new ArrayList<>();
         final DestroyableComboBox<HorizonsBlueprintName> blueprints = createBlueprintsComboboxForSynthesis(scroll, toggleButtons, recipesEntry.keySet(), HorizonsBlueprintType.SYNTHESIS, recipesEntry);
 
-        final TitledPane categoryTitledPane = createTitledPane(BlueprintCategory.SYNTHESIS.getLocalizationKey());
+        final DestroyableTitledPane categoryTitledPane = createTitledPane(BlueprintCategory.SYNTHESIS.getLocalizationKey());
 
         toggleButtons.addAll(getSynthesisToggleButtons(scroll, () -> HorizonsBlueprintType.SYNTHESIS, () -> blueprints.getSelectionModel().getSelectedItem(), recipesEntry));
-        final SegmentedButton gradeButtons = createGradeSegmentedButton(toggleButtons);
+        final DestroyableSegmentedButton gradeButtons = createGradeSegmentedButton(toggleButtons);
 
 
-        final HBox hBoxBlueprints = BoxBuilder.builder().withNode(blueprints).buildHBox();
+        final DestroyableHBox hBoxBlueprints = BoxBuilder.builder()
+                .withNode(blueprints).buildHBox();
         HBox.setHgrow(blueprints, Priority.ALWAYS);
-        this.eventListeners.add(EventService.addListener(true, this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
+        register(EventService.addListener(true, this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
             if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName && BlueprintCategory.SYNTHESIS.equals(blueprintName.getBlueprintCategory())) {
                 blueprints.getSelectionModel().select(blueprintName);
                 final HorizonsBlueprintGrade horizonsBlueprintGrade = ((HorizonsBlueprint) blueprintClickEvent.getBlueprint()).getHorizonsBlueprintGrade();
@@ -203,17 +247,17 @@ class HorizonsBlueprintBar extends Accordion {
 
         //auto select first option
         blueprints.getSelectionModel().select(0);
-        final VBox content = BoxBuilder.builder()
+        final DestroyableVBox content = BoxBuilder.builder()
                 .withStyleClass(BLUEPRINT_TITLED_PANE_CONTENT_STYLE_CLASS)
                 .withNodes(hBoxBlueprints, gradeButtons, scroll)
                 .buildVBox();
-        categoryTitledPane.setContent(content);
+        categoryTitledPane.setContentNode(content);
         VBox.setVgrow(scroll, Priority.ALWAYS);
         return categoryTitledPane;
     }
 
-    private TitledPane createBlueprintCategoryTitledPane(final Map.Entry<BlueprintCategory, Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>>> recipesEntry) {
-        final ScrollPane scroll = createScrollPane();
+    private DestroyableTitledPane createBlueprintCategoryTitledPane(final Map.Entry<BlueprintCategory, Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>>> recipesEntry) {
+        final DestroyableScrollPane scroll = createScrollPane();
 
         final DestroyableComboBox<HorizonsBlueprintType> types = ComboBoxBuilder.builder(HorizonsBlueprintType.class)
                 .withStyleClass(BLUEPRINT_LIST_STYLE_CLASS)
@@ -227,11 +271,11 @@ class HorizonsBlueprintBar extends Accordion {
                         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
         );
 
-        final TitledPane categoryTitledPane = createTitledPane(recipesEntry.getKey().getLocalizationKey());
-        final List<ToggleButton> toggleButtons = getGradeToggleButtons(scroll, () -> types.getSelectionModel().getSelectedItem(), () -> blueprints.getSelectionModel().getSelectedItem(), recipesEntry.getValue());
-        final SegmentedButton gradeButtons = createGradeSegmentedButton(toggleButtons);
+        final DestroyableTitledPane categoryTitledPane = createTitledPane(recipesEntry.getKey().getLocalizationKey());
+        final List<DestroyableToggleButton> toggleButtons = getGradeToggleButtons(scroll, () -> types.getSelectionModel().getSelectedItem(), () -> blueprints.getSelectionModel().getSelectedItem(), recipesEntry.getValue());
+        final DestroyableSegmentedButton gradeButtons = createGradeSegmentedButton(toggleButtons);
 
-        types.addChangeListener(types.valueProperty(), (ChangeListener<HorizonsBlueprintType>) (observable, oldValue, newValue) -> {
+        types.addChangeListener(types.valueProperty(), (_, _, newValue) -> {
             if (newValue != null) {
                 final Set<HorizonsBlueprintGrade> blueprintGrades = HorizonsBlueprintConstants.getBlueprintGrades(blueprints.getSelectionModel().getSelectedItem(), newValue);
                 configureToggleButtonsState(toggleButtons, blueprints.getSelectionModel().getSelectedItem(), blueprintGrades);
@@ -241,7 +285,7 @@ class HorizonsBlueprintBar extends Accordion {
                 }
             }
         });
-        this.eventListeners.add(EventService.addListener(true, this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
+        register(EventService.addListener(true, this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
             if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName && sameCategory(recipesEntry.getKey(), blueprintName.getBlueprintCategory()) && !blueprintClickEvent.isExperimental()) {
                 blueprints.getSelectionModel().select(blueprintName);
                 if (blueprintClickEvent.getBlueprint() instanceof HorizonsModuleBlueprint) {
@@ -259,19 +303,21 @@ class HorizonsBlueprintBar extends Accordion {
                 this.setExpandedPane(categoryTitledPane);
             }
         }));
-        final HBox hBoxBlueprints = BoxBuilder.builder().withNode(blueprints).buildHBox();
-        final HBox hBoxTypes = BoxBuilder.builder().withNode(types).buildHBox();
+        final DestroyableHBox hBoxBlueprints = BoxBuilder.builder()
+                .withNode(blueprints).buildHBox();
+        final DestroyableHBox hBoxTypes = BoxBuilder.builder()
+                .withNode(types).buildHBox();
         HBox.setHgrow(blueprints, Priority.ALWAYS);
         HBox.setHgrow(types, Priority.ALWAYS);
 
 
         //auto select first option
         blueprints.getSelectionModel().select(0);
-        final VBox content = BoxBuilder.builder()
+        final DestroyableVBox content = BoxBuilder.builder()
                 .withStyleClass(BLUEPRINT_TITLED_PANE_CONTENT_STYLE_CLASS)
                 .withNodes(hBoxBlueprints, hBoxTypes, gradeButtons, scroll)
                 .buildVBox();
-        categoryTitledPane.setContent(content);
+        categoryTitledPane.setContentNode(content);
         VBox.setVgrow(scroll, Priority.ALWAYS);
         return categoryTitledPane;
     }
@@ -283,25 +329,27 @@ class HorizonsBlueprintBar extends Accordion {
         return menuCategory.equals(blueprintCategory);
     }
 
-    private SegmentedButton createGradeSegmentedButton(final List<ToggleButton> toggleButtons) {
-        final SegmentedButton segmentedButton = new SegmentedButton(toggleButtons.toArray(ToggleButton[]::new));
-        segmentedButton.getStyleClass().add(BLUEPRINT_LIST_STYLE_CLASS);
+    private DestroyableSegmentedButton createGradeSegmentedButton(final List<DestroyableToggleButton> toggleButtons) {
+        final DestroyableSegmentedButton segmentedButton = SegmentedButtonBuilder.builder()
+                .withStyleClass(BLUEPRINT_LIST_STYLE_CLASS)
+                .withButtons(toggleButtons)
+                .build();
         HBox.setHgrow(segmentedButton, Priority.ALWAYS);
         return segmentedButton;
     }
 
-    private TitledPane createTitledPane(final String localizationKey) {
-        return TitledPaneBuilder.builder()
+    private DestroyableTitledPane createTitledPane(final String localizationKey) {
+        return register(TitledPaneBuilder.builder()
                 .withStyleClass("category-title-pane")
-                .withText(LocaleService.getStringBinding(localizationKey))
-                .build();
+                .withText(localizationKey)
+                .build());
     }
 
-    private DestroyableComboBox<HorizonsBlueprintName> createBlueprintsComboboxForSynthesis(final ScrollPane scroll, final List<ToggleButton> toggleButtons, final Set<HorizonsBlueprintName> horizonsBlueprintNames, final HorizonsBlueprintType type, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> recipeEntry) {
+    private DestroyableComboBox<HorizonsBlueprintName> createBlueprintsComboboxForSynthesis(final DestroyableScrollPane scroll, final List<DestroyableToggleButton> toggleButtons, final Set<HorizonsBlueprintName> horizonsBlueprintNames, final HorizonsBlueprintType type, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> recipeEntry) {
         final DestroyableComboBox<HorizonsBlueprintName> blueprints = ComboBoxBuilder.builder(HorizonsBlueprintName.class)
                 .withStyleClass(BLUEPRINT_LIST_STYLE_CLASS)
                 .withItemsProperty(LocaleService.getListBinding(horizonsBlueprintNames.stream().sorted(Comparator.comparing(recipeName -> LocaleService.getLocalizedStringForCurrentLocale(recipeName.getLocalizationKey()))).toArray(HorizonsBlueprintName[]::new)))
-                .withValueChangeListener((observable, oldValue, newValue) -> {
+                .withValueChangeListener((_, _, newValue) -> {
                     if (newValue != null) {
                         final Set<HorizonsBlueprintGrade> blueprintGrades = HorizonsBlueprintConstants.getSynthesisBlueprintGrades(newValue);
                         configureToggleButtonsState(toggleButtons, newValue, blueprintGrades);
@@ -314,7 +362,7 @@ class HorizonsBlueprintBar extends Accordion {
         return blueprints;
     }
 
-    private void configureToggleButtonsState(final List<ToggleButton> toggleButtons, final HorizonsBlueprintName newValue, final Set<HorizonsBlueprintGrade> blueprintGrades) {
+    private void configureToggleButtonsState(final List<DestroyableToggleButton> toggleButtons, final HorizonsBlueprintName newValue, final Set<HorizonsBlueprintGrade> blueprintGrades) {
         toggleButtons.forEach(toggleButton -> toggleButton.setDisable(true));
         blueprintGrades.forEach(blueprintGrade -> {
             switch (blueprintGrade) {
@@ -335,9 +383,9 @@ class HorizonsBlueprintBar extends Accordion {
         final DestroyableComboBox<HorizonsBlueprintName> blueprints = ComboBoxBuilder.builder(HorizonsBlueprintName.class)
                 .withStyleClass(BLUEPRINT_LIST_STYLE_CLASS)
                 .withItemsProperty(LocaleService.getListBinding(horizonsBlueprintNames.stream().sorted(Comparator.comparing(recipeName -> LocaleService.getLocalizedStringForCurrentLocale(recipeName.getLocalizationKey()))).toArray(HorizonsBlueprintName[]::new)))
-                .withValueChangeListener((observable, oldValue, newValue) -> {
+                .withValueChangeListener((_, _, newValue) -> {
                     if (newValue != null) {
-                        types.itemsProperty().bind(LocaleService.getListBinding(typesMap.get(newValue).stream().sorted(Comparator.comparing(type -> LocaleService.getLocalizedStringForCurrentLocale(type.getLocalizationKey()))).toArray(HorizonsBlueprintType[]::new)));
+                        types.addBinding(types.itemsProperty(), LocaleService.getListBinding(typesMap.get(newValue).stream().sorted(Comparator.comparing(type -> LocaleService.getLocalizedStringForCurrentLocale(type.getLocalizationKey()))).toArray(HorizonsBlueprintType[]::new)));
                         types.getSelectionModel().select(0);
                     }
                 })
@@ -347,8 +395,8 @@ class HorizonsBlueprintBar extends Accordion {
         return blueprints;
     }
 
-    private ScrollPane createScrollPane() {
-        final ScrollPane scroll = new ScrollPane();
+    private DestroyableScrollPane createScrollPane() {
+        final DestroyableScrollPane scroll = ScrollPaneBuilder.builder().build();
         scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scroll.setPannable(true);
@@ -357,26 +405,27 @@ class HorizonsBlueprintBar extends Accordion {
         return scroll;
     }
 
-    private List<ToggleButton> getGradeToggleButtons(final ScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> recipeEntry) {
-        final ToggleButton toggleButton1 = getToggleButton(scroll, selectedType, selectedBlueprint, HorizonsBlueprintGrade.GRADE_1, recipeEntry);
-        final ToggleButton toggleButton2 = getToggleButton(scroll, selectedType, selectedBlueprint, HorizonsBlueprintGrade.GRADE_2, recipeEntry);
-        final ToggleButton toggleButton3 = getToggleButton(scroll, selectedType, selectedBlueprint, HorizonsBlueprintGrade.GRADE_3, recipeEntry);
-        final ToggleButton toggleButton4 = getToggleButton(scroll, selectedType, selectedBlueprint, HorizonsBlueprintGrade.GRADE_4, recipeEntry);
-        final ToggleButton toggleButton5 = getToggleButton(scroll, selectedType, selectedBlueprint, HorizonsBlueprintGrade.GRADE_5, recipeEntry);
-        return List.of(toggleButton1, toggleButton2, toggleButton3, toggleButton4, toggleButton5);
+    private List<DestroyableToggleButton> getGradeToggleButtons(final DestroyableScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> recipeEntry) {
+        return Stream.of(HorizonsBlueprintGrade.GRADE_1, HorizonsBlueprintGrade.GRADE_2, HorizonsBlueprintGrade.GRADE_3, HorizonsBlueprintGrade.GRADE_4, HorizonsBlueprintGrade.GRADE_5)
+                .map(grade -> getToggleButton(scroll, selectedType, selectedBlueprint, grade, recipeEntry))
+                .toList();
     }
 
-    private List<ToggleButton> getSynthesisToggleButtons(final ScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> recipesEntry) {
-        final ToggleButton toggleButton1 = getSynthesisToggleButton(scroll, selectedType, selectedBlueprint, HorizonsBlueprintGrade.GRADE_1, recipesEntry);
-        final ToggleButton toggleButton2 = getSynthesisToggleButton(scroll, selectedType, selectedBlueprint, HorizonsBlueprintGrade.GRADE_2, recipesEntry);
-        final ToggleButton toggleButton3 = getSynthesisToggleButton(scroll, selectedType, selectedBlueprint, HorizonsBlueprintGrade.GRADE_3, recipesEntry);
-        return List.of(toggleButton1, toggleButton2, toggleButton3);
+    private List<DestroyableToggleButton> getSynthesisToggleButtons(final DestroyableScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> recipesEntry) {
+        return Stream.of(HorizonsBlueprintGrade.GRADE_1, HorizonsBlueprintGrade.GRADE_2, HorizonsBlueprintGrade.GRADE_3)
+                .map(grade -> getSynthesisToggleButton(scroll, selectedType, selectedBlueprint, grade, recipesEntry))
+                .toList();
     }
 
-    private ToggleButton getToggleButton(final ScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final HorizonsBlueprintGrade grade, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> recipeEntry) {
-        final ToggleButton toggleButton = ToggleButtonBuilder.builder().withStyleClass("recipe-grade-togglebutton").build();
-        toggleButton.setGraphic(ResizableImageViewBuilder.builder().withImage("/images/ships/engineers/ranks/" + grade.getGrade() + ".png").withStyleClasses("blueprint-grade-image").build());
-        toggleButton.selectedProperty().addListener((observable, oldValue, newValue) ->
+    private DestroyableToggleButton getToggleButton(final DestroyableScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final HorizonsBlueprintGrade grade, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> recipeEntry) {
+        final DestroyableToggleButton toggleButton = ToggleButtonBuilder.builder()
+                .withStyleClass("blueprint-grade-togglebutton")
+                .withGraphic(ResizableImageViewBuilder.builder()
+                        .withImage("/images/ships/engineers/ranks/" + grade.getGrade() + ".png")
+                        .withStyleClasses("blueprint-grade-image")
+                        .build())
+                .build();
+        toggleButton.addChangeListener(toggleButton.selectedProperty(), (_, _, newValue) ->
         {
             if (Boolean.TRUE.equals(newValue)) {
                 setContent(scroll, selectedBlueprint.get(), selectedType.get(), newValue, generateContent(recipeEntry.getOrDefault(selectedBlueprint.get(), Collections.emptyMap()).getOrDefault(selectedType.get(), Collections.emptyMap()).get(grade)));
@@ -385,9 +434,12 @@ class HorizonsBlueprintBar extends Accordion {
         return toggleButton;
     }
 
-    private ToggleButton getSynthesisToggleButton(final ScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final HorizonsBlueprintGrade grade, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> recipesEntry) {
-        final ToggleButton toggleButton = ToggleButtonBuilder.builder().withText(LocaleService.getStringBinding("blueprint.synthesis.grade" + grade.getGrade())).withStyleClass("recipe-synthesis-togglebutton").build();
-        toggleButton.selectedProperty().addListener((observable, oldValue, newValue) ->
+    private DestroyableToggleButton getSynthesisToggleButton(final DestroyableScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final HorizonsBlueprintGrade grade, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> recipesEntry) {
+        final DestroyableToggleButton toggleButton = ToggleButtonBuilder.builder()
+                .withText("blueprint.synthesis.grade" + grade.getGrade())
+                .withStyleClass("blueprint-synthesis-togglebutton")
+                .build();
+        toggleButton.addChangeListener(toggleButton.selectedProperty(), (_, _, newValue) ->
         {
             if (Boolean.TRUE.equals(newValue)) {
                 setContent(scroll, selectedBlueprint.get(), selectedType.get(), newValue, generateContent(recipesEntry.getOrDefault(selectedBlueprint.get(), Collections.emptyMap()).get(grade)));
@@ -396,171 +448,80 @@ class HorizonsBlueprintBar extends Accordion {
         return toggleButton;
     }
 
-    private Node generateContent(final HorizonsBlueprint horizonsBlueprint) {
+    private <E extends Node & Destroyable> E generateContent(final HorizonsBlueprint horizonsBlueprint) {
         if (horizonsBlueprint != null) {
-            return new HorizonsBlueprintContent(horizonsBlueprint);
+            return (E) new HorizonsBlueprintContent(horizonsBlueprint);
         }
         return null;
     }
 
-    private void setContent(final ScrollPane scroll, final HorizonsBlueprintName name, final HorizonsBlueprintType type, final Boolean isSelected, final Node content) {
+    private <E extends Node & Destroyable> void setContent(final DestroyableScrollPane scroll, final HorizonsBlueprintName name, final HorizonsBlueprintType type, final Boolean isSelected, final E content) {
         if (Objects.equals(true, isSelected) && type != null && name != null) {
             try {
-                if (scroll.getContent() instanceof Destroyable destroyableContent) {
-                    log.debug("destroy existing content" + destroyableContent);
-                    destroyableContent.destroy();
+                if (scroll.getContent() instanceof DestroyableTemplate destroyableContent) {
+                    scroll.deregister(destroyableContent);
+                    destroyableContent.destroyTemplate();
                 }
-                log.debug("set content" + content);
-                scroll.setContent(content);
+                scroll.setContentNode(content);
             } catch (final NullPointerException ex) {
                 log.error("NPE", ex);
             }
         } else {
-            if (content instanceof Destroyable destroyableContent) {
-                log.debug("set provided content" + destroyableContent);
-                destroyableContent.destroy();
+            if (content instanceof DestroyableTemplate destroyableContent) {
+                destroyableContent.destroyTemplate();
             }
         }
     }
 
-    private TitledPane createCategoryTitledPaneEngineers(final Map<HorizonsBlueprintName, ? extends HorizonsEngineerBlueprint> recipesEngineers) {
-        final ScrollPane scroll = createScrollPane();
+    private DestroyableTitledPane createCategoryTitledPaneEngineers(final Map<HorizonsBlueprintName, ? extends HorizonsEngineerBlueprint> recipesEngineers) {
+        final DestroyableScrollPane scroll = createScrollPane();
 
-        final ComboBox<HorizonsBlueprintName> blueprints = ComboBoxBuilder.builder(HorizonsBlueprintName.class)
+        final DestroyableComboBox<HorizonsBlueprintName> blueprints = ComboBoxBuilder.builder(HorizonsBlueprintName.class)
                 .withStyleClass(BLUEPRINT_LIST_STYLE_CLASS)
                 .withItemsProperty(LocaleService.getListBinding(recipesEngineers.keySet().stream().sorted(Comparator.comparing(HorizonsBlueprintName::getLocalizationKey)).toArray(HorizonsBlueprintName[]::new)))
                 .asLocalized()
                 .build();
         blueprints.setVisibleRowCount(blueprints.getItems().size());
 
-        final HBox hBox = BoxBuilder.builder().withNode(blueprints).buildHBox();
+        final DestroyableHBox hBox = BoxBuilder.builder()
+                .withNode(blueprints).buildHBox();
         HBox.setHgrow(blueprints, Priority.ALWAYS);
 
-        final VBox content = BoxBuilder.builder()
+        final DestroyableVBox content = BoxBuilder.builder()
                 .withStyleClass(BLUEPRINT_TITLED_PANE_CONTENT_STYLE_CLASS)
                 .withNodes(hBox, scroll)
                 .buildVBox();
         VBox.setVgrow(scroll, Priority.ALWAYS);
 
-        final TitledPane categoryTitledPane = TitledPaneBuilder.builder()
+        final DestroyableTitledPane categoryTitledPane = TitledPaneBuilder.builder()
                 .withStyleClass("category-title-pane")
-                .withText(LocaleService.getStringBinding(BlueprintCategory.ENGINEER_UNLOCKS.getLocalizationKey()))
+                .withText(BlueprintCategory.ENGINEER_UNLOCKS.getLocalizationKey())
                 .withContent(content)
                 .build();
 
-        blueprints.valueProperty().addListener((obs, oldValue, newValue) -> {
-            setContent(scroll, newValue, HorizonsBlueprintType.ENGINEER, true, generateContent(recipesEngineers.get(newValue)));
-        });
-        this.eventListeners.add(EventService.addListener(true, this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
+        blueprints.addChangeListener(blueprints.valueProperty(), (_, _, newValue) ->
+                setContent(scroll, newValue, HorizonsBlueprintType.ENGINEER, true, generateContent(recipesEngineers.get(newValue))));
+        register(EventService.addListener(true, this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
             if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName && BlueprintCategory.ENGINEER_UNLOCKS.equals(blueprintName.getBlueprintCategory())) {
                 blueprints.getSelectionModel().select(blueprintName);
                 this.setExpandedPane(categoryTitledPane);
             }
         }));
-        this.eventListeners.add(EventService.addListener(true, this, BlueprintClickEvent.class, blueprintClickEvent -> {
+        register(EventService.addListener(true, this, BlueprintClickEvent.class, blueprintClickEvent -> {
             if (blueprintClickEvent.getBlueprintName() instanceof HorizonsBlueprintName blueprintName && BlueprintCategory.ENGINEER_UNLOCKS.equals(blueprintName.getBlueprintCategory())) {
                 blueprints.getSelectionModel().select(blueprintName);
                 this.setExpandedPane(categoryTitledPane);
             }
         }));
-        blueprints.setCellFactory(getCellFactory());
-        blueprints.getSelectionModel().select(blueprints.getItems().get(0));
-        blueprints.setButtonCell(new ListCell<>() {
-            @SuppressWarnings("java:S1068")
-            private final nl.jixxed.eliteodysseymaterials.service.event.EventListener<StorageEvent> storageEventEventListener = EventService.addListener(true, HorizonsBlueprintBar.this, StorageEvent.class, event -> {
-                updateStyle(getItem());
-                updateText(getItem(), this.emptyProperty().get());
-            });
-            @SuppressWarnings("java:S1068")
-            private final nl.jixxed.eliteodysseymaterials.service.event.EventListener<EngineerEvent> engineerEventEventListener = EventService.addListener(true, HorizonsBlueprintBar.this, EngineerEvent.class, event -> {
-                updateStyle(getItem());
-                updateText(getItem(), this.emptyProperty().get());
-            });
-
-            @Override
-            protected void updateItem(final HorizonsBlueprintName item, final boolean empty) {
-                super.updateItem(item, empty);
-                updateText(item, empty);
-                updateStyle(item);
-            }
-
-
-            private void updateText(final HorizonsBlueprintName item, final boolean empty) {
-                if (empty || item == null) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    setText(item.toString() + (BlueprintHelper.isCompletedEngineerRecipe(item) ? " \u2714" : ""));
-                }
-            }
-
-
-            private void updateStyle(final HorizonsBlueprintName item) {
-                if (item != null && BlueprintHelper.isCompletedEngineerRecipe(item)) {
-                    this.setStyle("-fx-text-fill: #89d07f;");
-                } else {
-                    this.setStyle("-fx-text-fill: white;");
-                }
-            }
-
-        });
+        var destroyableCellFactory = createDestroyableCellFactory(blueprints);
+        blueprints.setCellFactory(destroyableCellFactory);
+        blueprints.getSelectionModel().select(blueprints.getItems().getFirst());
+        blueprints.setButtonCell(destroyableCellFactory.call(null));
         return categoryTitledPane;
     }
 
-    private Callback<ListView<HorizonsBlueprintName>, ListCell<HorizonsBlueprintName>> getCellFactory() {
-        return listView -> new ListCell<>() {
-
-            @SuppressWarnings("java:S1068")
-            private final nl.jixxed.eliteodysseymaterials.service.event.EventListener<StorageEvent> storageEventEventListener = EventService.addListener(true, HorizonsBlueprintBar.this, StorageEvent.class, event -> {
-                updateStyle(getItem());
-                updateText(getItem(), this.emptyProperty().get());
-            });
-            @SuppressWarnings("java:S1068")
-            private final EventListener<EngineerEvent> engineerEventEventListener = EventService.addListener(true, HorizonsBlueprintBar.this, EngineerEvent.class, event -> {
-                updateStyle(getItem());
-                updateText(getItem(), this.emptyProperty().get());
-            });
-
-
-            @Override
-            protected void updateItem(final HorizonsBlueprintName item, final boolean empty) {
-                super.updateItem(item, empty);
-                updateText(item, empty);
-                updateStyle(item);
-            }
-
-            private void updateText(final HorizonsBlueprintName item, final boolean empty) {
-                if (empty || item == null) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    setText(item + (BlueprintHelper.isCompletedEngineerRecipe(item) ? " \u2714" : ""));
-                }
-            }
-
-            private void updateStyle(final HorizonsBlueprintName item) {
-                if (item != null && BlueprintHelper.isCompletedEngineerRecipe(item)) {
-                    this.setStyle("-fx-text-fill: #89d07f;");
-                } else {
-                    this.setStyle("-fx-text-fill: white;");
-                }
-            }
-
-        };
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
     }
-
-//    private Map<HorizonsBlueprintName, Node> createRecipeContentEngineers(final Map<HorizonsBlueprintName, ? extends HorizonsEngineerBlueprint> recipesEntry, final ComboBox<HorizonsBlueprintName> comboBox, final TitledPane categoryTitledPane) {
-//        final Map<HorizonsBlueprintName, Node> contents = new EnumMap<>(HorizonsBlueprintName.class);
-//        recipesEntry.forEach((key, value) -> {
-//            eventListeners.add(EventService.addListener(true, this, BlueprintClickEvent.class, blueprintClickEvent -> {
-//                if (blueprintClickEvent.getBlueprintName().equals(key)) {
-//                    comboBox.getSelectionModel().select(key);
-//                    this.setExpandedPane(categoryTitledPane);
-//                }
-//            });
-//            final HorizonsBlueprintContent horizonsBlueprintContent = new HorizonsBlueprintContent(value);
-//            contents.put(key, horizonsBlueprintContent);
-//        });
-//        return contents;
-//    }
 }

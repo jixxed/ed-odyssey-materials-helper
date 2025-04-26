@@ -1,0 +1,92 @@
+.colonisation-tab {
+  @include tab;
+}
+
+.colonisation-tab-content {
+  @include scroll-pane-content;
+
+  .colonisation-view {
+    -fx-spacing: 0.25em;
+
+    .buttons {
+      @include hvGap(0.25em);
+    }
+
+    .projects {
+      @include hvGap(0.25em);
+    }
+
+    .bill-of-materials {
+      @include hvGap(0.25em);
+
+      .bom-entry {
+        @include fixedWidth(32em);
+        -fx-background-color: $background-color-dark;
+        -fx-border-color: $border-color-black;
+        -fx-padding: 0.25em;
+        -fx-spacing: 0.25em;
+
+        &:available {
+          -fx-border-color: $border-color-yellow;
+        }
+
+
+        .values {
+          -fx-hgap: 0.5em;
+          -fx-spacing: 0.5em;
+          @include fixedWidth(31.6em);
+        }
+
+        .values-sub {
+          -fx-hgap: 0.5em;
+          -fx-spacing: 0.5em;
+          @include fixedWidth(15.28em);
+        }
+
+        .values-market {
+          -fx-hgap: 0.2em;
+          -fx-spacing: 0.2em;
+        }
+
+        .name {
+          @include fixedWidth(30em);
+          -fx-alignment: center-left;
+          -fx-min-height: 2.5em;
+        }
+
+        .amount-left {
+          -fx-min-height: 2em;
+          -fx-alignment: center-left;
+          -fx-text-alignment: left;
+        }
+
+        .amount-sum {
+          @include fixedWidth(5.5em);
+          -fx-min-height: 2em;
+          -fx-alignment: center-left;
+          -fx-text-alignment: left;
+        }
+
+        .amount-right {
+          -fx-min-height: 2em;
+          -fx-alignment: center-right;
+          -fx-text-alignment: right;
+        }
+
+        .material-image {
+          @include fixedWidth(2.5em);
+          @include fixedHeight(2.5em);
+          -fx-fit-to-height: true;
+          -fx-fit-to-width: true;
+        }
+
+        .storage-image {
+          @include fixedWidth(2em);
+          @include fixedHeight(2em);
+        }
+      }
+    }
+  }
+
+
+}

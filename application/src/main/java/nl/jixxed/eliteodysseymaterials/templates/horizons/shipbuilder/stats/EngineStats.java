@@ -1,7 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
 import javafx.geometry.Orientation;
-import javafx.scene.control.Separator;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
@@ -11,13 +10,14 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableSeparator;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.util.Optional;
 
 @Slf4j
-public class EngineStats extends Stats implements Template {
+public class EngineStats extends Stats implements DestroyableTemplate {
     private RangeIndicator speedIndicator;
     private RangeIndicator boostIndicator;
     private RechargeRangeIndicator rechargeIndicator;
@@ -34,16 +34,17 @@ public class EngineStats extends Stats implements Template {
         boostIndicator = new RangeIndicator(0D,0D,0D, "ship.stats.engine.boost", "ship.stats.engine.boost.value");
         rechargeIndicator = new RechargeRangeIndicator(0D,0D,0D, 0D, "ship.stats.engine.recharge", "ship.stats.engine.recharge.value");
 
-        this.getChildren().add(BoxBuilder.builder().withNodes(new GrowingRegion(), createTitle("ship.stats.engine"), new GrowingRegion()).buildHBox());
-        this.getChildren().add(new Separator(Orientation.HORIZONTAL));
-        this.getChildren().add(speedIndicator);
-        this.getChildren().add(boostIndicator);
-        this.getChildren().add(rechargeIndicator);
+        this.getNodes().add(BoxBuilder.builder()
+.withNodes(new GrowingRegion(), createTitle("ship.stats.engine"), new GrowingRegion()).buildHBox());
+        this.getNodes().add(new DestroyableSeparator(Orientation.HORIZONTAL));
+        this.getNodes().add(speedIndicator);
+        this.getNodes().add(boostIndicator);
+        this.getNodes().add(rechargeIndicator);
     }
 
     @Override
     public void initEventHandling() {
-        eventListeners.add(EventService.addListener(true, this, ShipConfigEvent.class, event -> update()));
+        register(EventService.addListener(true, this, ShipConfigEvent.class, event -> update()));
     }
 
     private double calculateMinRecharge(double boostCost, double engineRecharge) {

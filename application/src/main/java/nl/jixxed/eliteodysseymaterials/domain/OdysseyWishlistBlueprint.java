@@ -8,7 +8,7 @@ import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class OdysseyWishlistBlueprint implements WishlistBlueprint<OdysseyBlueprintName> {
+public final class OdysseyWishlistBlueprint implements WishlistBlueprint<OdysseyBlueprintName> {
     private OdysseyBlueprintName recipeName;
     @ClipboardJsonIgnore
     private boolean visible = true;

@@ -12,8 +12,8 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Fileheader.Fileheader;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -281,9 +281,9 @@ public class ApplicationState {
     @SuppressWarnings("java:S2095")
     public boolean isLocked() {
         try {
-            final File configDir = new File(OsConstants.CONFIG_DIRECTORY);
+            final File configDir = new File(OsConstants.getConfigDirectory());
             configDir.mkdirs();
-            fileLock = new FileOutputStream(OsConstants.LOCK).getChannel().tryLock();
+            fileLock = new FileOutputStream(OsConstants.getLock()).getChannel().tryLock();
         } catch (final IOException exception) {
             log.error("error acquiring lock", exception);
             return true;

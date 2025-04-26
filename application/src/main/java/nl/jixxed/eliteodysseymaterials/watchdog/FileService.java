@@ -45,7 +45,10 @@ public class FileService {
     }
 
     public static void subscribe(final String path, final boolean allowPolling, final FileListener fileListener) {
-        final WatchPath watchPath = WatchPath.builder().path(Paths.get(path).normalize().toString()).allowPolling(allowPolling).build();
+        final WatchPath watchPath = WatchPath.builder()
+                .path(Paths.get(path).normalize().toString())
+                .allowPolling(allowPolling)
+                .build();
         final List<FileListener> listeners = WATCHPATH_LISTENERS.getOrDefault(watchPath, new ArrayList<>());
         listeners.add(fileListener);
         WATCHPATH_LISTENERS.put(watchPath, listeners);
@@ -55,7 +58,7 @@ public class FileService {
     public static void unsubscribe(final FileListener fileListener) {
         WATCHPATH_LISTENERS.values().forEach(fileListeners -> fileListeners.remove(fileListener));
         stopWatchers();
-        startWatchers();
+//        startWatchers();
     }
 
     private static void stopWatchers() {
@@ -68,28 +71,35 @@ public class FileService {
 
     private static void startWatchers() {
         final Boolean polling = PreferencesService.getPreference(PreferenceConstants.POLLING_FILE_MODE, false);
-        WATCHPATH_LISTENERS.entrySet().stream().filter(entry-> entry.getValue() != null && !entry.getValue().isEmpty()).map(Map.Entry::getKey).forEach(watchPath -> WATCHPATH_FOLDERWATCHERS.computeIfAbsent(watchPath, key -> {
-            log.info("Registered folder watch for " + key.getPath());
-            if (polling && key.getAllowPolling()) {
-                if (OsCheck.isWindows()) {
-                    //optimized poller for windows using JNA
-                    return new JNAWindowsPollingFolderWatch(watchPath.path, fileEvent -> notifyListeners(watchPath, fileEvent));
-                } else {
-                    return new PollingFolderWatch(watchPath.path, fileEvent -> notifyListeners(watchPath, fileEvent));
-                }
-            } else {
-                return new WatchServiceFolderWatch(watchPath.path, fileEvent -> notifyListeners(watchPath, fileEvent));
-            }
-        }));
+        WATCHPATH_LISTENERS.entrySet().stream()
+                .filter(entry -> entry.getValue() != null && !entry.getValue().isEmpty()).map(Map.Entry::getKey)
+                .forEach(watchPath -> WATCHPATH_FOLDERWATCHERS.computeIfAbsent(watchPath, key -> {
+                    log.info("Registered folder watch for " + key.getPath());
+                    if (polling && key.getAllowPolling()) {
+                        if (OsCheck.isWindows()) {
+                            //optimized poller for windows using JNA
+                            return new JNAWindowsPollingFolderWatch(watchPath.path, fileEvent -> notifyListeners(watchPath, fileEvent));
+                        } else {
+                            return new PollingFolderWatch(watchPath.path, fileEvent -> notifyListeners(watchPath, fileEvent));
+                        }
+                    } else {
+                        return new WatchServiceFolderWatch(watchPath.path, fileEvent -> notifyListeners(watchPath, fileEvent));
+                    }
+                }));
     }
 
     private static void notifyListeners(final WatchPath watchPath, final FileEvent fileEvent) {
-        if (fileEvent.getKind() == ENTRY_CREATE) {
-            WATCHPATH_LISTENERS.get(watchPath).forEach(fileListener -> fileListener.onCreated(fileEvent));
-        } else if (fileEvent.getKind() == ENTRY_MODIFY) {
-            WATCHPATH_LISTENERS.get(watchPath).forEach(fileListener -> fileListener.onModified(fileEvent));
-        } else if (fileEvent.getKind() == ENTRY_DELETE) {
-            WATCHPATH_LISTENERS.get(watchPath).forEach(fileListener -> fileListener.onDeleted(fileEvent));
+        try {
+            if (fileEvent.getKind() == ENTRY_CREATE) {
+                WATCHPATH_LISTENERS.get(watchPath).forEach(fileListener -> fileListener.onCreated(fileEvent));
+            } else if (fileEvent.getKind() == ENTRY_MODIFY) {
+                WATCHPATH_LISTENERS.get(watchPath).forEach(fileListener -> fileListener.onModified(fileEvent));
+            } else if (fileEvent.getKind() == ENTRY_DELETE) {
+                WATCHPATH_LISTENERS.get(watchPath).forEach(fileListener -> fileListener.onDeleted(fileEvent));
+            }
+
+        } catch (RuntimeException e) {
+            log.error("failed to notify listeners for file event: {}, {}", fileEvent, e.getMessage());
         }
     }
 

@@ -1,23 +1,20 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.powerplay;
 
-import javafx.scene.layout.HBox;
+import javafx.css.PseudoClass;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.enums.Power;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.PowerplayEvent;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
+import nl.jixxed.eliteodysseymaterials.service.event.PowerplayLeaveEvent;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
-import java.util.ArrayList;
-import java.util.List;
+public class PowerplayUnlockableModule extends DestroyableHBox implements DestroyableEventTemplate {
 
-public class PowerplayUnlockableModule extends HBox implements Template {
 
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
     private Integer unlockRank;
     private ShipModule unlockable;
     private Power power;
@@ -32,32 +29,30 @@ public class PowerplayUnlockableModule extends HBox implements Template {
 
     @Override
     public void initComponents() {
+        this.getStyleClass().addAll("powerplay-unlockable");
         final DestroyableLabel rank = LabelBuilder.builder()
-                .withStyleClass("power-rank")
+                .withStyleClass("rank")
                 .withNonLocalizedText(unlockRank.toString())
                 .build();
         final DestroyableLabel module = LabelBuilder.builder()
-                .withStyleClass("power-module")
-                .withText(LocaleService.getStringBinding(unlockable.getName().getLocalizationKey()))
+                .withStyleClass("module")
+                .withText(unlockable.getName().getLocalizationKey())
                 .build();
-        this.getChildren().addAll(rank, module);
+        this.getNodes().addAll(rank, module);
         update(ApplicationState.getInstance().getPower(), ApplicationState.getInstance().getPowerRank());
     }
 
     @Override
     public void initEventHandling() {
-
-        this.eventListeners.add(EventService.addListener(true, this, PowerplayEvent.class, powerplayEvent ->
+        register(EventService.addListener(true, this, PowerplayEvent.class, powerplayEvent ->
                 powerplayEvent.getRank().ifPresent(rank ->
                         this.update(powerplayEvent.getPower(), rank))));
+
+        register(EventService.addListener(true, this, PowerplayLeaveEvent.class, powerplayLeaveEvent ->
+                this.update(powerplayLeaveEvent.getPower(), 0L)));
     }
 
     public void update(Power power, long rank) {
-        this.getChildren().forEach(node -> node.getStyleClass().remove("power-rank-unlocked"));
-
-        if (this.power.equals(power) && unlockRank <= rank) {
-            this.getChildren().forEach(node -> node.getStyleClass().add("power-rank-unlocked"));
-        }
-
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("unlocked"), this.power.equals(power) && unlockRank <= rank);
     }
 }

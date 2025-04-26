@@ -1,15 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.templates.generic;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.css.PseudoClass;
 import javafx.event.EventHandler;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import lombok.Getter;
-import lombok.Setter;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
@@ -22,73 +16,123 @@ import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PinnedBlueprintService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
-
-public class EngineerBlueprintLabel extends HBox implements DestroyableComponent {
+public class EngineerBlueprintLabel extends DestroyableHBox implements DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+    public static final String LOWGRADE = "lowgrade";
+    public static final String UNLOCKED = "unlocked";
+
     private final Engineer engineer;
-    private final int rank;
+    private final int blueprintGrade;
     private final boolean exact;
     private final HorizonsBlueprint horizonsBlueprint;
-    @Getter
-    private Label label;
-    private DestroyableResizableImageView image;
-    private DestroyableResizableImageView pinned;
+    private DestroyableLabel engineerName;
+    private DestroyableResizableImageView gradeImage;
+    private DestroyableResizableImageView pinnedImage;
     private Integer currentEngineerRank = 0;
-    @Setter
-    private Consumer<JournalLineProcessedEvent> journalProcessedEventConsumer;
     private boolean dragFlag = false;
 
     public EngineerBlueprintLabel(final Engineer engineer) {
         this(engineer, false, 0);
     }
 
-    public EngineerBlueprintLabel(final Engineer engineer, final boolean exact, final int rank) {
-        this(engineer, null, exact, rank);
+    public EngineerBlueprintLabel(final Engineer engineer, final boolean exact, final int blueprintGrade) {
+        this(engineer, null, exact, blueprintGrade);
     }
 
-    public EngineerBlueprintLabel(final Engineer engineer, final HorizonsBlueprint horizonsBlueprint, final boolean exact, final int rank) {
+    public EngineerBlueprintLabel(final Engineer engineer, final HorizonsBlueprint horizonsBlueprint, final boolean exact, final int blueprintGrade) {
         this.horizonsBlueprint = horizonsBlueprint;
         this.engineer = engineer;
-        this.rank = rank;
+        this.blueprintGrade = blueprintGrade;
         this.exact = exact;
-        this.journalProcessedEventConsumer = event -> {
-            if (exact) {
-                this.updateStyle(APPLICATION_STATE.isEngineerUnlockedExact(this.engineer), APPLICATION_STATE.getEngineerRank(this.engineer));
-            } else {
-                this.updateStyle(APPLICATION_STATE.isEngineerUnlocked(this.engineer), APPLICATION_STATE.getEngineerRank(this.engineer));
-            }
 
-        };
         initComponents();
         initEventHandling();
 
     }
 
+    public void initComponents() {
+        this.getStyleClass().add("engineer");
+        this.engineerName = LabelBuilder.builder()
+                .withStyleClass("name")
+                .withText(LocaleService.getStringBinding(this.engineer.getLocalizationKey()))
+                .build();
+        if (this.engineer.isHorizons()) {
+            addGradeImage();
+            addPinnedImage();
+            if (this.horizonsBlueprint instanceof HorizonsModuleBlueprint) {
+                DestroyableTooltip tooltip = TooltipBuilder.builder()
+                        .withText(LocaleService.getStringBinding("blueprint.engineer.pinnable.tooltip"))
+                        .build();
+                tooltip.install(this);
+                this.getStyleClass().add("pinnable");
 
-    private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, EngineerEvent.class, event -> {
-            update();
-        }));
-        this.eventListeners.add(EventService.addListener(true, this, EngineerPinEvent.class, event -> {
+            }
+        }
+        this.getNodes().add(this.engineerName);
+        if (this.engineer.isHorizons() && this.horizonsBlueprint != null) {
+            final int engineerMaxGrade = HorizonsBlueprintConstants.getEngineerMaxGrade(this.horizonsBlueprint, this.engineer);
+            if (engineerMaxGrade > 0) {
+                this.getNodes().add(LabelBuilder.builder()
+                        .withStyleClass("maxgrade")
+                        .withNonLocalizedText("\u2191" + engineerMaxGrade)
+                        .build());
+            }
+        }
+        if (this.horizonsBlueprint instanceof HorizonsModuleBlueprint) {
+            this.addEventBinding(this.onMouseClickedProperty(), getClickMouseEventHandler());
+            this.addEventBinding(this.onMouseDraggedProperty(), getDragMouseEventHandler());
+        }
+
+        update();
+    }
+
+    private EventHandler<MouseEvent> getDragMouseEventHandler() {
+        return event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                this.dragFlag = true;
+            }
+        };
+    }
+
+    private EventHandler<MouseEvent> getClickMouseEventHandler() {
+        return event -> {
+            if (event.getButton().equals(MouseButton.SECONDARY)) {
+                return;
+            }
+            if (!this.dragFlag && event.getClickCount() > 1) {
+                processMultiClick();
+            }
+
+            this.dragFlag = false;
+        };
+    }
+
+    private void addPinnedImage() {
+        this.pinnedImage = ResizableImageViewBuilder.builder()
+                .withStyleClasses("pinned-image")
+                .withImage("/images/ships/engineers/pinned.png")
+                .build();
+        this.getNodes().add(this.pinnedImage);
+    }
+
+    private void addGradeImage() {
+        this.gradeImage = ResizableImageViewBuilder.builder()
+                .withStyleClasses("grade-image")
+                .build();
+        this.getNodes().add(this.gradeImage);
+    }
+
+    public void initEventHandling() {
+        register(EventService.addListener(true, this, EngineerEvent.class, event -> update()));
+        register(EventService.addListener(true, this, EngineerPinEvent.class, event -> {
             if (this.engineer.equals(event.getEngineer()) && !this.horizonsBlueprint.equals(event.getHorizonsBlueprint())) {
                 update();
             }
         }));
-        this.eventListeners.add(EventService.addListener(true, this, CommanderSelectedEvent.class, event -> {
-            update();
-        }));
-        this.eventListeners.add(EventService.addStaticListener(true, 0, JournalInitEvent.class, event -> {
-            update();
-        }));
+        register(EventService.addListener(true, this, CommanderSelectedEvent.class, event -> update()));
+        register(EventService.addListener(true, this, 0, JournalInitEvent.class, event -> update()));
     }
 
     private void update() {
@@ -101,19 +145,16 @@ public class EngineerBlueprintLabel extends HBox implements DestroyableComponent
             final Integer engineerRank = APPLICATION_STATE.getEngineerRank(this.engineer);
             if (!this.currentEngineerRank.equals(engineerRank)) {//only update if image has changed
                 final String imageString = getEngineerRankImage(engineerRank);
-                this.image.setImage(ImageService.getImage("/images/ships/engineers/ranks/" + imageString + ".png"));
+                this.gradeImage.setImage(ImageService.getImage("/images/ships/engineers/ranks/" + imageString + ".png"));
                 this.currentEngineerRank = engineerRank;
             }
-            if (PinnedBlueprintService.isPinned(this.engineer, this.horizonsBlueprint)) {
-                if (!this.getChildren().contains(this.pinned)) {
-                    this.pinned.setImage(ImageService.getImage("/images/ships/engineers/pinned.png"));
-                    this.getChildren().add(this.pinned);
-                }
-            } else {
-                this.pinned.setImage(null);
-                this.getChildren().remove(this.pinned);
-            }
+            setPinnedVisibility(PinnedBlueprintService.isPinned(this.engineer, this.horizonsBlueprint));
         }
+    }
+
+    private void setPinnedVisibility(boolean visible) {
+        this.pinnedImage.setVisible(visible);
+        this.pinnedImage.setManaged(visible);
     }
 
 
@@ -131,60 +172,13 @@ public class EngineerBlueprintLabel extends HBox implements DestroyableComponent
         return imageString;
     }
 
-    private void initComponents() {
-        this.label = LabelBuilder.builder().withText(LocaleService.getStringBinding(this.engineer.getLocalizationKey())).build();
-        this.getStyleClass().add("engineer-label");
-        if (this.engineer.isHorizons()) {
-            this.image = ResizableImageViewBuilder.builder().withStyleClasses("engineer-grade-image").build();
-            this.getChildren().add(this.image);
-            this.pinned = ResizableImageViewBuilder.builder().withStyleClasses("engineer-grade-image").build();
-            this.getStyleClass().add("engineer-label-big");
-        }
-        this.getChildren().add(this.label);
-        if (this.engineer.isHorizons() && this.horizonsBlueprint != null) {
-            final int engineerMaxGrade = HorizonsBlueprintConstants.getEngineerMaxGrade(this.horizonsBlueprint, this.engineer);
-            if (engineerMaxGrade > 0) {
-                this.getChildren().add(LabelBuilder.builder().withNonLocalizedText("\u2191" + engineerMaxGrade).build());
-            }
-        }
-        update();
-
-        if (this.horizonsBlueprint instanceof HorizonsModuleBlueprint) {
-            final EventHandler<MouseEvent> imageDragMouseEventHandler = event -> {
-                if (event.getButton().equals(MouseButton.PRIMARY)) {
-                    this.dragFlag = true;
-                }
-            };
-
-            final EventHandler<MouseEvent> imageClickMouseEventHandler = event -> {
-
-                if (event.getButton().equals(MouseButton.SECONDARY)) {
-                    return;
-                }
-                if (!this.dragFlag) {
-                    if (event.getClickCount() == 1) {
-                    } else if (event.getClickCount() > 1) {
-                        processMultiClick();
-                    }
-                }
-                this.dragFlag = false;
-
-            };
-
-            this.addEventHandler(MouseEvent.MOUSE_CLICKED, imageClickMouseEventHandler);
-            this.addEventHandler(MouseEvent.MOUSE_DRAGGED, imageDragMouseEventHandler);
-
-        }
-    }
 
     private void processMultiClick() {
         if (PinnedBlueprintService.isPinned(this.engineer, this.horizonsBlueprint)) {
             PinnedBlueprintService.unpinBlueprint(this.engineer);
-//            PreferencesService.setPreference("blueprint.pinned." + this.engineer.name(), "");
             EventService.publish(new EngineerPinEvent(this.engineer, this.horizonsBlueprint, false));
         } else if (this.currentEngineerRank >= this.horizonsBlueprint.getHorizonsBlueprintGrade().getGrade()) {
             PinnedBlueprintService.pinBlueprint(this.engineer, this.horizonsBlueprint);
-//            PreferencesService.setPreference("blueprint.pinned." + this.engineer.name(), this.horizonsBlueprint.getHorizonsBlueprintName().name() + ":" + this.horizonsBlueprint.getHorizonsBlueprintType().name() + ":" + this.horizonsBlueprint.getHorizonsBlueprintGrade().getGrade());
             EventService.publish(new EngineerPinEvent(this.engineer, this.horizonsBlueprint, true));
         }
         update();
@@ -192,30 +186,29 @@ public class EngineerBlueprintLabel extends HBox implements DestroyableComponent
 
 
     private void updateStyle(final boolean unlocked, final Integer currentEngineerRank) {
-        this.label.getStyleClass().removeAll("engineer-unlocked", "engineer-locked");
-        final String styleClass;
-        if (unlocked && currentEngineerRank >= this.rank) {
-            styleClass = "engineer-unlocked";
-            if(this.horizonsBlueprint instanceof HorizonsModuleBlueprint){
-                final Tooltip tooltip = TooltipBuilder.builder().withText(LocaleService.getStringBinding("blueprint.engineer.pinnable.tooltip")).build();
-                Tooltip.install(this, tooltip);
-                this.getStyleClass().add("engineer-label-pinnable");
-            }
+        if (unlocked && currentEngineerRank >= this.blueprintGrade) {
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(UNLOCKED), true);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(LOWGRADE), false);
+
         } else if (unlocked) {
-            styleClass = "engineer-lowgrade";
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(UNLOCKED), true);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(LOWGRADE), true);
         } else {
-            styleClass = "engineer-locked";
+
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(UNLOCKED), false);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(LOWGRADE), false);
         }
-        this.label.getStyleClass().add(styleClass);
+    }
+
+    public String getEngineerName() {
+        return this.engineerName.getText();
     }
 
     @Override
     public void destroyInternal() {
-        EventService.removeListener(this);
-    }
-
-    @Override
-    public Map<ObservableValue, List<ChangeListener>> getListenersMap() {
-        return Collections.emptyMap();
+        super.destroyInternal();
+//        if (tooltip != null) {
+//            Tooltip.uninstall(this, tooltip);
+//        }
     }
 }

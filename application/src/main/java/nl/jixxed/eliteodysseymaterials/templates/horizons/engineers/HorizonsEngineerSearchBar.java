@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.engineers;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.application.Platform;
 import javafx.scene.control.TextField;
@@ -14,35 +15,44 @@ import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsEngineerSearchEvent;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTextField;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public
-class HorizonsEngineerSearchBar extends HBox {
+public class HorizonsEngineerSearchBar extends DestroyableHBox implements DestroyableEventTemplate {
 
     private static final String FX_FONT_SIZE_DPX = "-fx-font-size: %dpx";
-    private TextField textField;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+    private DestroyableTextField textField;
+    private Disposable subscribe;
+
 
     public HorizonsEngineerSearchBar() {
         initComponents();
         initEventHandling();
     }
 
-    private void initComponents() {
+    public void initComponents() {
         this.getStyleClass().add("root");
         initSearchTextField();
         applyFontSizingHack();
 
         HBox.setHgrow(this.textField, Priority.ALWAYS);
 
-        this.getChildren().addAll(this.textField);
+        this.getNodes().addAll(this.textField);
+    }
+
+    public void initEventHandling() {
+        //hack for component resizing on other fontsizes
+        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+            final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
+            this.styleProperty().set(fontStyle);
+            this.textField.styleProperty().set(fontStyle);
+        }));
     }
 
     private void applyFontSizingHack() {
@@ -53,27 +63,17 @@ class HorizonsEngineerSearchBar extends HBox {
         this.textField.styleProperty().set(fontStyle);
     }
 
-
     private void initSearchTextField() {
         this.textField = TextFieldBuilder.builder()
                 .withStyleClasses("root", "search-input")
                 .withPromptTextProperty(LocaleService.getStringBinding("search.text.placeholder"))
                 .withFocusTraversable(false)
                 .build();
-        Observable.create((ObservableEmitter<String> emitter) -> this.textField.textProperty().addListener((observable, oldValue, newValue) -> emitter.onNext(newValue)))
+        subscribe = Observable
+                .create((ObservableEmitter<String> emitter) -> this.textField.textProperty().addListener((_, _, newValue) -> emitter.onNext(newValue)))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
                 .subscribe(newValue -> Platform.runLater(() -> EventService.publish(new HorizonsEngineerSearchEvent(newValue))));
-    }
-
-
-    private void initEventHandling() {
-        //hack for component resizing on other fontsizes
-        this.eventListeners.add(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
-            final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
-            this.styleProperty().set(fontStyle);
-            this.textField.styleProperty().set(fontStyle);
-        }));
     }
 
     @SuppressWarnings("java:S1144")
@@ -81,5 +81,11 @@ class HorizonsEngineerSearchBar extends HBox {
         return (textField.getText() != null) ? textField.getText() : "";
     }
 
-
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        if (subscribe != null) {
+            subscribe.dispose();
+        }
+    }
 }

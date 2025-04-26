@@ -1,12 +1,12 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 
-import javafx.animation.FadeTransition;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
-import javafx.scene.layout.HBox;
+import javafx.css.PseudoClass;
 import javafx.util.Duration;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
@@ -18,199 +18,151 @@ import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
-import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTemplate;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-public class HorizonsWishlistBlueprintTemplate extends HBox implements WishlistBlueprintTemplate<HorizonsBlueprintName> {
+public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBox implements WishlistBlueprintTemplate<HorizonsBlueprintName>, DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private static final String VISIBLE_STYLE_CLASS = "visible";
-    private static final String WISHLIST_VISIBLE_ICON_STYLE_CLASS = "wishlist-visible-icon";
     private static int counter = 0;
 
     private boolean visible;
     private final Integer sequenceID;
     private final HorizonsWishlistBlueprint wishlistBlueprint;
-    private final BlueprintCategory blueprintCategory;
     private final HorizonsBlueprint blueprint;
-    @Getter
     private final String wishlistUUID;
 
-    private Button visibilityButton;
     private DestroyableResizableImageView visibilityImage;
-    private Label wishlistRecipeName;
-    private Button removeBlueprint;
-    private final Set<HorizonsWishlistIngredient> wishlistIngredients = new HashSet<>();
-    private final Set<HorizonsWishlistIngredient> otherIngredients = new HashSet<>();
-    private EventListener<StorageEvent> storageEventEventListener;
-    private Tooltip tooltip;
+
+    @Getter
+    private boolean deleted = false;
+    private DestroyableTooltip tooltip;
+    private DestroyableLabel wishlistRecipeName;
+    private Disposable subsciption;
 
     HorizonsWishlistBlueprintTemplate(final String wishlistUUID, final WishlistBlueprint<HorizonsBlueprintName> wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
         this.wishlistBlueprint = (HorizonsWishlistBlueprint) wishlistBlueprint;
         this.sequenceID = counter++;
-        this.blueprintCategory = HorizonsBlueprintConstants.getRecipeCategory(wishlistBlueprint.getRecipeName(), wishlistBlueprint instanceof HorizonsExperimentalWishlistBlueprint);
         this.blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), getBlueprintGrade());
         initComponents();
         initEventHandling();
     }
 
-    private void initComponents() {
-        if (!this.wishlistUUID.equals(Wishlist.ALL.getUuid())) {
-            this.visibilityImage = ResizableImageViewBuilder.builder()
-                    .withStyleClass("wishlist-visible-image")
-                    .withImage("/images/other/visible_blue.png")
-                    .build();
-            this.visibilityButton = ButtonBuilder.builder()
-                    .withStyleClasses(WISHLIST_VISIBLE_ICON_STYLE_CLASS, VISIBLE_STYLE_CLASS)
-                    .withOnAction(event -> setVisibility(!this.visible))
-                    .withGraphic(this.visibilityImage)
-                    .build();
-            setVisibility(this.wishlistBlueprint.isVisible());
-            this.getChildren().addAll(this.visibilityButton);
+    public void initComponents() {
+        this.getStyleClass().add("blueprint");
+        this.visibilityImage = ResizableImageViewBuilder.builder()
+                .withStyleClass("visible-image")
+                .withImage("/images/other/visible_blue.png")
+                .build();
+        DestroyableButton visibilityButton = ButtonBuilder.builder()
+                .withStyleClass("visible-button")
+                .withOnAction(_ -> setVisibility(!this.visible))
+                .withGraphic(this.visibilityImage)
+                .build();
+        if (Wishlist.ALL.getUuid().equals(this.wishlistUUID)) {
+            this.visible = true;
+            this.wishlistBlueprint.setVisible(true);
+            this.visibilityImage.setImage(ImageService.getImage("/images/other/visible_blue.png"));
+            visibilityButton.setVisible(false);
+            visibilityButton.setManaged(false);
         } else {
-            setVisibility(true);
+            this.visible = this.wishlistBlueprint.isVisible();
+            this.wishlistBlueprint.setVisible(this.visible);
+            this.visibilityImage.setImage(ImageService.getImage(this.visible ? "/images/other/visible_blue.png" : "/images/other/invisible_gray.png"));
         }
-        final StringBinding titleStringBinding;
-        if (this.wishlistBlueprint instanceof HorizonsSynthesisWishlistBlueprint wbp) {
-            titleStringBinding = LocaleService.getStringBinding("wishlist.blueprint.horizons.title.synthesis", LocaleService.LocalizationKey.of(wbp.getRecipeName().getLocalizationKey()), LocaleService.LocalizationKey.of("blueprint.synthesis.grade" + wbp.getBlueprintGrade().getGrade()));
+        final StringBinding titleStringBinding = switch (this.wishlistBlueprint) {
+            case HorizonsSynthesisWishlistBlueprint wbp ->
+                    LocaleService.getStringBinding("wishlist.blueprint.horizons.title.synthesis", LocaleService.LocalizationKey.of(wbp.getRecipeName().getLocalizationKey()), LocaleService.LocalizationKey.of("blueprint.synthesis.grade" + wbp.getBlueprintGrade().getGrade()));
+            case HorizonsTechBrokerWishlistBlueprint wbp ->
+                    LocaleService.getStringBinding("wishlist.blueprint.horizons.title.techbroker", LocaleService.LocalizationKey.of(wbp.getRecipeName().getLocalizationKey()), LocaleService.LocalizationKey.of(wbp.getBlueprintType().getLocalizationKey()));
+            case HorizonsExperimentalWishlistBlueprint wbp ->
+                    LocaleService.getStringBinding("wishlist.blueprint.horizons.title.experimental", LocaleService.LocalizationKey.of(wbp.getRecipeName().getLocalizationKey()), LocaleService.LocalizationKey.of(wbp.getBlueprintType().getLocalizationKey()));
+            case null, default ->
+                    LocaleService.getStringBinding("wishlist.blueprint.horizons.title.engineer", LocaleService.LocalizationKey.of(this.wishlistBlueprint.getRecipeName().getLocalizationKey()));
+        };
 
-        } else if (this.wishlistBlueprint instanceof HorizonsTechBrokerWishlistBlueprint wbp) {
-            titleStringBinding = LocaleService.getStringBinding("wishlist.blueprint.horizons.title.techbroker", LocaleService.LocalizationKey.of(wbp.getRecipeName().getLocalizationKey()), LocaleService.LocalizationKey.of(wbp.getBlueprintType().getLocalizationKey()));
+        subsciption = Observable.create((ObservableEmitter<HorizonsWishlistHighlightEvent> emitter) -> {
+                    wishlistRecipeName = LabelBuilder.builder()
+                            .withStyleClass("name")
+                            .withText(Bindings.createStringBinding(() -> titleStringBinding.get().trim(), titleStringBinding))
+                            .withOnMouseClicked(_ -> EventService.publish(new HorizonsBlueprintClickEvent(this.blueprint)))
+                            .withHoverProperty((_, _, newValue) -> {
+                                if (newValue) {
+                                    emitter.onNext(new HorizonsWishlistHighlightEvent(this.wishlistBlueprint, newValue));
+                                } else {
+                                    EventService.publish(new HorizonsWishlistHighlightEvent(this.wishlistBlueprint, newValue));
+                                }
+                            })
+                            .build();
+                })
+                .delay(250, TimeUnit.MILLISECONDS)
+                .observeOn(Schedulers.io())
+                .subscribe(event -> {
+                    if (this.wishlistRecipeName.isHover()) {
+                        EventService.publish(event);
+                    }
+                });
 
-        } else if (this.wishlistBlueprint instanceof HorizonsExperimentalWishlistBlueprint wbp) {
-            titleStringBinding = LocaleService.getStringBinding("wishlist.blueprint.horizons.title.experimental", LocaleService.LocalizationKey.of(wbp.getRecipeName().getLocalizationKey()), LocaleService.LocalizationKey.of(wbp.getBlueprintType().getLocalizationKey()));
-
-        } else {
-            titleStringBinding = LocaleService.getStringBinding("wishlist.blueprint.horizons.title.engineer", LocaleService.LocalizationKey.of(this.wishlistBlueprint.getRecipeName().getLocalizationKey()));
-        }
-        this.wishlistRecipeName = LabelBuilder.builder()
-                .withStyleClass("wishlist-label")
-                .withText(Bindings.createStringBinding(() -> titleStringBinding.get().trim(), titleStringBinding))
-                .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(this.blueprint)))
-                .withHoverProperty((observable, oldValue, newValue) -> {
-                    this.wishlistIngredients.forEach(wishlistIngredient -> {
-                        final Integer requiredAmount = this.blueprint.getRequiredAmount(wishlistIngredient.getHorizonsMaterial(), null);
-                        final Integer minimumAmount = this.blueprint.getMinimumAmount(wishlistIngredient.getHorizonsMaterial());
-                        final Integer maximumAmount = this.blueprint.getMaximumAmount(wishlistIngredient.getHorizonsMaterial());
-
-                        wishlistIngredient.highlight(newValue, new WishlistMaterial(minimumAmount,requiredAmount,maximumAmount));
-                    });
-                    this.otherIngredients.forEach(wishlistIngredient -> wishlistIngredient.lowlight(newValue));
-                    this.highlight(newValue);
+        DestroyableButton removeBlueprint = ButtonBuilder.builder()
+                .withStyleClass("remove")
+                .withNonLocalizedText("X")
+                .withManaged(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()))
+                .withVisibility(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()))
+                .withOnAction(_ -> {
+                    //deleted by parent category
+                    this.deleted = true;
+                    APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new HorizonsWishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.wishlistBlueprint), Action.REMOVED)));
                 })
                 .build();
-        this.getChildren().addAll(this.wishlistRecipeName);
-        if (!this.wishlistUUID.equals(Wishlist.ALL.getUuid())) {
-            this.removeBlueprint = ButtonBuilder.builder()
-                    .withStyleClass("wishlist-item-button").withNonLocalizedText("X")
-                    .withOnAction(event -> remove())
-                    .build();
-            this.getChildren().add(this.removeBlueprint);
-        }
-        this.getStyleClass().add("wishlist-item");
 
 
         if (this.blueprint instanceof HorizonsExperimentalEffectBlueprint moduleRecipe) {
-            this.tooltip = TooltipBuilder.builder()
+            tooltip = TooltipBuilder.builder()
                     .withText(LocaleService.getToolTipStringBinding(moduleRecipe, "tab.wishlist.blueprint.tooltip"))
                     .withShowDelay(Duration.millis(100))
                     .build();
-            Tooltip.install(this.wishlistRecipeName, this.tooltip);
+            tooltip.install(wishlistRecipeName);
+//            register(this.tooltip);
         }
-        initFadeTransition();
-        final Craftability craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), getBlueprintGrade());
-        this.canCraft(craftability);
+        this.updateStyle();
+        this.getNodes().addAll(visibilityButton, wishlistRecipeName, removeBlueprint);
     }
 
-    @Override
-    public void remove() {
-        EventService.removeListener(this.storageEventEventListener);
-        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new HorizonsWishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.wishlistBlueprint), Action.REMOVED)));
+    public void initEventHandling() {
+        register(EventService.addListener(true, this, StorageEvent.class, _ -> {
+            this.update();
+        }));
     }
 
-    private void initFadeTransition() {
-        final FadeTransition fadeTransition = new FadeTransition(Duration.millis(2000));
-        fadeTransition.setNode(this);
-        fadeTransition.setFromValue(0.3);
-        fadeTransition.setToValue(1.0);
-        fadeTransition.play();
+    private void update() {
+        updateStyle();
     }
 
-    private void initEventHandling() {
-        this.storageEventEventListener = EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
-            final Craftability craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), getBlueprintGrade());
-            this.canCraft(craftability);
-        });
-    }
-
-    private void highlight(final boolean enable) {
-        if (enable) {
-            this.getStyleClass().add("wishlist-highlight");
-        } else {
-            this.getStyleClass().removeAll("wishlist-highlight");
-        }
-    }
-
-    private void canCraft(final Craftability craftability) {
-        this.wishlistRecipeName.getStyleClass().removeAll("wishlist-craftable", "wishlist-craftable-with-trade");
-        if (Craftability.CRAFTABLE.equals(craftability)) {
-            this.wishlistRecipeName.getStyleClass().add("wishlist-craftable");
-            if (this.blueprint instanceof HorizonsModuleBlueprint moduleRecipe) {
-                this.tooltip.textProperty().bind(LocaleService.getToolTipStringBinding(moduleRecipe, "tab.wishlist.blueprint.tooltip"));
-            }
-        } else if (Craftability.CRAFTABLE_WITH_TRADE.equals(craftability)) {
-            this.wishlistRecipeName.getStyleClass().add("wishlist-craftable-with-trade");
-            if (this.blueprint instanceof HorizonsModuleBlueprint moduleRecipe) {
-                this.tooltip.textProperty().bind(LocaleService.getToolTipStringBinding(moduleRecipe, "tab.wishlist.blueprint.tooltip.craftable"));
-            }
-        }
-    }
-
-    @Override
-    public void addWishlistIngredients(final List<Ingredient> wishlistIngredients) {
-        this.wishlistIngredients.clear();
-        this.otherIngredients.clear();
-        this.wishlistIngredients.addAll(wishlistIngredients.stream().map(HorizonsWishlistIngredient.class::cast).filter(wishlistIngredient -> this.blueprint.hasIngredient(wishlistIngredient.getHorizonsMaterial())).collect(Collectors.toSet()));
-        this.otherIngredients.addAll(wishlistIngredients.stream().map(HorizonsWishlistIngredient.class::cast).filter(wishlistIngredient -> !this.blueprint.hasIngredient(wishlistIngredient.getHorizonsMaterial())).collect(Collectors.toSet()));
+    private void updateStyle() {
+        var craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), getBlueprintGrade());
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("filled"), Craftability.CRAFTABLE.equals(craftability));
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("partial"), Craftability.CRAFTABLE_WITH_TRADE.equals(craftability));
     }
 
     @Override
     public void setVisibility(final boolean visible) {
         this.visible = visible;
         this.wishlistBlueprint.setVisible(this.visible);
-        if (this.visibilityButton != null) {
-            this.visibilityImage.setImage(ImageService.getImage(this.visible ? "/images/other/visible_blue.png" : "/images/other/invisible_gray.png"));
-            if (this.visible) {
-                this.visibilityButton.getStyleClass().add(VISIBLE_STYLE_CLASS);
-            } else {
-                this.visibilityButton.getStyleClass().remove(VISIBLE_STYLE_CLASS);
-            }
-        }
-        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new HorizonsWishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.wishlistBlueprint), Action.VISIBILITY_CHANGED)));
+        this.visibilityImage.setImage(ImageService.getImage(this.visible ? "/images/other/visible_blue.png" : "/images/other/invisible_gray.png"));
+        APPLICATION_STATE.getPreferredCommander().ifPresent(commander ->
+                EventService.publish(new HorizonsWishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.wishlistBlueprint), Action.VISIBILITY_CHANGED)));
     }
 
-    @Override
-    public Map<Blueprint<HorizonsBlueprintName>, Double> getRecipe() {
-        return (this.blueprint == null) ? Collections.emptyMap() : Map.of(this.blueprint, 1D);
-    }
-
-    @Override
-    public HorizonsBlueprint getPrimaryRecipe() {
-        return this.blueprint;
-    }
-
-    @Override
     public HorizonsBlueprintName getRecipeName() {
         return this.wishlistBlueprint.getRecipeName();
     }
 
     private HorizonsBlueprintGrade getBlueprintGrade() {
+        //this is not used for modules and only synthesis has grades
         if (this.wishlistBlueprint instanceof HorizonsSynthesisWishlistBlueprint horizonsSynthesisWishlistBlueprint) {
             return horizonsSynthesisWishlistBlueprint.getBlueprintGrade();
         }
@@ -231,11 +183,6 @@ public class HorizonsWishlistBlueprintTemplate extends HBox implements WishlistB
     }
 
     @Override
-    public BlueprintCategory getRecipeCategory() {
-        return this.blueprintCategory;
-    }
-
-    @Override
     public Integer getSequenceID() {
         return this.sequenceID;
     }
@@ -250,13 +197,11 @@ public class HorizonsWishlistBlueprintTemplate extends HBox implements WishlistB
         return this.wishlistBlueprint;
     }
 
-    @Override
-    public void onDestroy() {
-        EventService.removeListener(this.storageEventEventListener);
-    }
 
     @Override
-    public void setEngineer(Engineer engineer) {
-        //not needed
+    public void destroyInternal() {
+        super.destroyInternal();
+        subsciption.dispose();
+//        Tooltip.uninstall(this.wishlistRecipeName, this.tooltip);
     }
 }

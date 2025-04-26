@@ -2593,8 +2593,8 @@ public class Ship {
 
     public static final Ship CORSAIR = new Ship(
             ShipType.CORSAIR,
-            0,
-            0,
+            79304748,
+            76884160,
             Map.ofEntries(
                     Map.entry(HorizonsModifier.TOP_SPEED, 280.0),//unittest
                     Map.entry(HorizonsModifier.BOOST_SPEED, 356.0),//unittest

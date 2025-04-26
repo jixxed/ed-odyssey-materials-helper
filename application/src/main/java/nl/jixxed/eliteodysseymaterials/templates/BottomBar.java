@@ -3,12 +3,6 @@ package nl.jixxed.eliteodysseymaterials.templates;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.geometry.Orientation;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import jfxtras.styles.jmetro.JMetroStyleClass;
 import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
@@ -18,46 +12,42 @@ import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
-import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
 import nl.jixxed.eliteodysseymaterials.helper.POIHelper;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.io.File;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-class BottomBar extends HBox {
+class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
 
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     private String system = "";
     private String body = "";
     private String station = "";
 
-    private Label gameModeLabel;
-    private Label apiLabel;
-    private Label watchedFileLabel;
-    private Label eddnQueueLabel;
-    private Label login;
-    private Label commanderLabel;
-    private Label locationLabel;
-    private Region region;
-    private ComboBox<Commander> commanderSelect;
+    private DestroyableLabel gameModeLabel;
+    private DestroyableLabel apiLabel;
+    private DestroyableLabel watchedFileLabel;
+    private DestroyableLabel eddnQueueLabel;
+    private DestroyableLabel login;
+    private DestroyableLabel commanderLabel;
+    private DestroyableLabel locationLabel;
+    private DestroyableComboBox<Commander> commanderSelect;
     private Double latitude;
     private Double longitude;
-    private Separator apiLabelSeparator;
+    private DestroyableSeparator apiLabelSeparator;
     private AtomicBoolean eddnTransmitting = new AtomicBoolean(false);
     private ScheduledExecutorService executorService;
 
@@ -67,19 +57,25 @@ class BottomBar extends HBox {
         initEventHandling();
     }
 
-    private void initComponents() {
+    public void initComponents() {
         this.getStyleClass().add("bottombar");
         this.getStyleClass().add(JMetroStyleClass.BACKGROUND);
-        this.region = new Region();
-        HBox.setHgrow(this.region, Priority.ALWAYS);
-        this.locationLabel = LabelBuilder.builder().build();
-        this.apiLabel = LabelBuilder.builder().build();
+        this.locationLabel = LabelBuilder.builder()
+                .build();
+        this.apiLabel = LabelBuilder.builder()
+                .build();
         updateApiLabel();
-        this.eddnQueueLabel = LabelBuilder.builder().build();
-        this.gameModeLabel = LabelBuilder.builder().build();
-        this.commanderLabel = LabelBuilder.builder().withText(LocaleService.getStringBinding("tab.settings.commander")).build();
-        this.login = LabelBuilder.builder().withText(LocaleService.getStringBinding("statusbar.login")).build();
-        if(ApplicationState.getInstance().isEngineerProcessed()){
+        this.eddnQueueLabel = LabelBuilder.builder()
+                .build();
+        this.gameModeLabel = LabelBuilder.builder()
+                .build();
+        this.commanderLabel = LabelBuilder.builder()
+                .withText(LocaleService.getStringBinding("tab.settings.commander"))
+                .build();
+        this.login = LabelBuilder.builder()
+                .withText(LocaleService.getStringBinding("statusbar.login"))
+                .build();
+        if (ApplicationState.getInstance().isEngineerProcessed()) {
             hideLoginRequest();
         }
         this.commanderSelect = ComboBoxBuilder.builder(Commander.class)
@@ -97,17 +93,21 @@ class BottomBar extends HBox {
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> this.commanderSelect.getSelectionModel().select(commander));
         this.commanderSelect.setFocusTraversable(false);
         this.commanderSelect.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
-        final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER));
+        final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.getDefaultWatchedFolder()));
         final String watchedFile = ApplicationState.getInstance().getWatchedFile();
         if (!watchedFile.isBlank()) {
-            this.watchedFileLabel = LabelBuilder.builder().withText(LocaleService.getStringBinding("statusbar.watching", watchedFile)).build();
+            this.watchedFileLabel = LabelBuilder.builder()
+                    .withText(LocaleService.getStringBinding("statusbar.watching", watchedFile))
+                    .build();
         } else {
-            this.watchedFileLabel = LabelBuilder.builder().withText(LocaleService.getStringBinding("statusbar.watching.none", watchedFolder.getAbsolutePath())).build();
+            this.watchedFileLabel = LabelBuilder.builder()
+                    .withText(LocaleService.getStringBinding("statusbar.watching.none", watchedFolder.getAbsolutePath()))
+                    .build();
         }
-        this.apiLabelSeparator = new Separator(Orientation.VERTICAL);
-        this.apiLabelSeparator.visibleProperty().bind(CAPIService.getInstance().getActive().or(ApplicationState.getInstance().getFcMaterials()));
-        this.apiLabel.visibleProperty().bind(CAPIService.getInstance().getActive().or(ApplicationState.getInstance().getFcMaterials()));
-        this.getChildren().addAll(this.watchedFileLabel, new Separator(Orientation.VERTICAL), this.gameModeLabel, this.apiLabelSeparator, this.apiLabel, this.login, this.eddnQueueLabel, this.region, this.locationLabel, new Separator(Orientation.VERTICAL), this.commanderLabel, this.commanderSelect);
+        this.apiLabelSeparator = new DestroyableSeparator(Orientation.VERTICAL);
+        this.apiLabelSeparator.addBinding(this.apiLabelSeparator.visibleProperty(), CAPIService.getInstance().getActive().or(ApplicationState.getInstance().getFcMaterials()));
+        this.apiLabel.addBinding(this.apiLabel.visibleProperty(), CAPIService.getInstance().getActive().or(ApplicationState.getInstance().getFcMaterials()));
+        this.getNodes().addAll(this.watchedFileLabel, new DestroyableSeparator(Orientation.VERTICAL), this.gameModeLabel, this.apiLabelSeparator, this.apiLabel, this.login, this.eddnQueueLabel, new GrowingRegion(), this.locationLabel, new DestroyableSeparator(Orientation.VERTICAL), this.commanderLabel, this.commanderSelect);
 
         executorService.scheduleAtFixedRate(() -> {
             if (eddnTransmitting.get()) {
@@ -127,20 +127,20 @@ class BottomBar extends HBox {
         });
     }
 
-    private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, 0, WatchedFolderChangedEvent.class, this::resetAfterWatchedFolderChanged));
-        this.eventListeners.add(EventService.addListener(true, this, LocationChangedEvent.class, this::updateLocationLabel));
-        this.eventListeners.add(EventService.addListener(true, this, JournalLineProcessedEvent.class, this::updateWatchedFileLabel));
-        this.eventListeners.add(EventService.addListener(true, this, EngineerEvent.class, event -> hideLoginRequest()));
-        this.eventListeners.add(EventService.addListener(true, this, CommanderAddedEvent.class, this::handleAddedCommander));
-        this.eventListeners.add(EventService.addListener(true, this, 0, CommanderAllListedEvent.class, event -> afterAllCommandersListed()));
-        this.eventListeners.add(EventService.addListener(true, this, 0, CommanderResetEvent.class, event -> this.commanderSelect.getItems().clear()));
-        this.eventListeners.add(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> this.commanderSelect.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px")));
-        this.eventListeners.add(EventService.addListener(true, this, LoadGameEvent.class, this::handleLoadGame));
-        this.eventListeners.add(EventService.addListener(true, this, JournalInitEvent.class, event -> updateApiLabel()));
-        this.eventListeners.add(EventService.addListener(true, this, CapiFleetCarrierEvent.class, event -> updateApiLabel()));
-        this.eventListeners.add(EventService.addListener(true, this, EDDNQueueEvent.class, event -> eddnTransmitting.set(true)));
-        this.eventListeners.add(EventService.addListener(true, this, TerminateApplicationEvent.class, event -> executorService.shutdown()));
+    public void initEventHandling() {
+        register(EventService.addListener(true, this, 0, WatchedFolderChangedEvent.class, this::resetAfterWatchedFolderChanged));
+        register(EventService.addListener(true, this, LocationChangedEvent.class, this::updateLocationLabel));
+        register(EventService.addListener(true, this, JournalLineProcessedEvent.class, this::updateWatchedFileLabel));
+        register(EventService.addListener(true, this, EngineerEvent.class, event -> hideLoginRequest()));
+        register(EventService.addListener(true, this, CommanderAddedEvent.class, this::handleAddedCommander));
+        register(EventService.addListener(true, this, 0, CommanderAllListedEvent.class, event -> afterAllCommandersListed()));
+        register(EventService.addListener(true, this, 0, CommanderResetEvent.class, event -> this.commanderSelect.getItems().clear()));
+        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> this.commanderSelect.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px")));
+        register(EventService.addListener(true, this, LoadGameEvent.class, this::handleLoadGame));
+        register(EventService.addListener(true, this, JournalInitEvent.class, event -> updateApiLabel()));
+        register(EventService.addListener(true, this, CapiFleetCarrierEvent.class, event -> updateApiLabel()));
+        register(EventService.addListener(true, this, EDDNQueueEvent.class, event -> eddnTransmitting.set(true)));
+        register(EventService.addListener(true, this, TerminateApplicationEvent.class, event -> executorService.shutdown()));
     }
 
     private void updateEDDNLabel() {
@@ -184,7 +184,7 @@ class BottomBar extends HBox {
     }
 
     private void handleLoadGame(final LoadGameEvent loadGameEvent) {
-        this.gameModeLabel.textProperty().bind(LocaleService.getStringBinding(loadGameEvent.getExpansion().getLocalizationKey()));
+        this.gameModeLabel.addBinding(this.gameModeLabel.textProperty(), LocaleService.getStringBinding(loadGameEvent.getExpansion().getLocalizationKey()));
     }
 
     private void hideLoginRequest() {
@@ -196,33 +196,33 @@ class BottomBar extends HBox {
 
     private void resetAfterWatchedFolderChanged(final WatchedFolderChangedEvent watchedFolderChangedEvent) {
         this.commanderSelect.getItems().clear();
-        this.watchedFileLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.watching.none", watchedFolderChangedEvent.getPath()));
+        this.watchedFileLabel.addBinding(this.watchedFileLabel.textProperty(), LocaleService.getStringBinding("statusbar.watching.none", watchedFolderChangedEvent.getPath()));
     }
 
     private void updateWatchedFileLabel(final JournalLineProcessedEvent journalLineProcessedEvent) {
         if (journalLineProcessedEvent.getFile().getName().endsWith("log")) {
-            Platform.runLater(() -> this.watchedFileLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.watching", journalLineProcessedEvent.getFile().getName())));
+            Platform.runLater(() -> this.watchedFileLabel.addBinding(this.watchedFileLabel.textProperty(), LocaleService.getStringBinding("statusbar.watching", journalLineProcessedEvent.getFile().getName())));
         }
     }
 
     private void updateApiLabel() {
 
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-            final String pathname = OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + commander.getFid().toLowerCase(Locale.ENGLISH) + (commander.getGameVersion().equals(GameVersion.LEGACY) ? ".legacy" : "");
+            final String pathname = commander.getCommanderFolder();
             final File fleetCarrierFileDir = new File(pathname);
             fleetCarrierFileDir.mkdirs();
-            final File fleetCarrierFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.FLEETCARRIER_FILE);
+            final File fleetCarrierFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.FLEETCARRIER_FILE);
             if (fleetCarrierFile.exists()) {
                 if (CAPIService.getInstance().getActive().getValue().equals(false)) {
-                    this.apiLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.api.stale"));
+                    this.apiLabel.addBinding(this.apiLabel.textProperty(), LocaleService.getStringBinding("statusbar.api.stale"));
 
                 } else {
                     final ZonedDateTime lastModified = ZonedDateTime.ofInstant(Instant.ofEpochMilli(fleetCarrierFile.lastModified()), ZoneId.systemDefault());
-                    this.apiLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.api.last.update", lastModified.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))));
+                    this.apiLabel.addBinding(this.apiLabel.textProperty(), LocaleService.getStringBinding("statusbar.api.last.update", lastModified.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))));
 
                 }
-            }else{
-                this.apiLabel.textProperty().bind(LocaleService.getStringBinding("blank"));
+            } else {
+                this.apiLabel.addBinding(this.apiLabel.textProperty(), LocaleService.getStringBinding("blank"));
             }
         });
     }
@@ -238,5 +238,11 @@ class BottomBar extends HBox {
                 (this.station.isBlank() || this.station.equals(this.body) ? "" : " | " + POIHelper.map(this.station)) +
                 (this.latitude != null && !this.latitude.equals(999.9) ? " (" + this.latitude + ", " + this.longitude + ")" : "")
         ));
+    }
+
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        executorService.shutdownNow();
     }
 }

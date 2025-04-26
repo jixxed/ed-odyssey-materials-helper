@@ -17,3 +17,5 @@ storage.type.name.good,Goods,Goods,Waren,Bienes,Marchandises,Bens,Товары
 storage.type.name.other,Other,Other,Andere,Otro,Autre,Outro,Прочее
 storage.type.name.trade,Trade,Trade,Handel,Comercio,Commerce,Comércio,Торговля
 total.type.name.powerplay,Powerplay,,,,,,
+tab.trader.distance,"({0}Ly)",,,,,,
+tab.trader.distance.in.system,"({0}Ls ±{1}Ls)",,,,,,

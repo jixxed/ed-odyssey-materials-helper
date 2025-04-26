@@ -28,61 +28,62 @@ public class DeeplinkWatcher {
             }
         });
         this.watchedFile.ifPresent(File::delete);
-        this.fileWatcher = new FileWatcher().withListener(new FileAdapter() {
-            @Override
-            public void onCreated(final FileEvent event) {
-                if (filename.equals(event.getFile().getName())) {
-                    log.debug("Created: " + event.getFile().toString());
-                }
-                handleFile(event, fileProcessor);
+        this.fileWatcher = new FileWatcher()
+                .withListener(new FileAdapter() {
+                    @Override
+                    public void onCreated(final FileEvent event) {
+                        if (filename.equals(event.getFile().getName())) {
+                            log.debug("Created: " + event.getFile().toString());
+                        }
+                        handleFile(event, fileProcessor);
 
-            }
-
-            @Override
-            public void onModified(final FileEvent event) {
-                if (filename.equals(event.getFile().getName())) {
-                    log.debug("Modified: " + event.getFile().toString());
-                }
-                handleFile(event, fileProcessor);
-
-            }
-
-            @Override
-            public void onDeleted(final FileEvent event) {
-                if (filename.equals(event.getFile().getName())) {
-                    log.debug("Deleted: " + event.getFile().toString());
-                }
-            }
-
-            private void handleFile(final FileEvent event, final Consumer<String> fileProcessor) {
-                try {
-                    if (event.getFile().isFile() && event.getFile().getName().equals(filename) && event.getFile().exists() && !Files.readString(event.getFile().getAbsoluteFile().toPath()).isEmpty()) {
-                        final File file = event.getFile();
-                        DeeplinkWatcher.this.watchedFile = Optional.of(file);
-                        final File procFile = new File(OsConstants.DEEPLINK + ".proc");
-                        final Path procPath = procFile.toPath();
-                        Files.move(Path.of(OsConstants.DEEPLINK), procPath, StandardCopyOption.REPLACE_EXISTING);
-                        final String content = Files.readString(procFile.getAbsoluteFile().toPath());
-                        log.debug(content);
-                        Platform.runLater(() -> {
-                            fileProcessor.accept(content);
-                            try {
-                                Files.delete(procFile.getAbsoluteFile().toPath());
-                            } catch (final IOException e) {
-                                log.error(e.getMessage(), e);
-                            }
-                        });
                     }
-                } catch (final IOException e) {
-                    log.error(e.getMessage(), e);
-                }
-            }
-        }).watch(folder);
+
+                    @Override
+                    public void onModified(final FileEvent event) {
+                        if (filename.equals(event.getFile().getName())) {
+                            log.debug("Modified: " + event.getFile().toString());
+                        }
+                        handleFile(event, fileProcessor);
+
+                    }
+
+                    @Override
+                    public void onDeleted(final FileEvent event) {
+                        if (filename.equals(event.getFile().getName())) {
+                            log.debug("Deleted: " + event.getFile().toString());
+                        }
+                    }
+
+                    private void handleFile(final FileEvent event, final Consumer<String> fileProcessor) {
+                        try {
+                            if (event.getFile().isFile() && event.getFile().getName().equals(filename) && event.getFile().exists() && !Files.readString(event.getFile().getAbsoluteFile().toPath()).isEmpty()) {
+                                final File file = event.getFile();
+                                DeeplinkWatcher.this.watchedFile = Optional.of(file);
+                                final File procFile = new File(OsConstants.getDeeplink() + ".proc");
+                                final Path procPath = procFile.toPath();
+                                Files.move(Path.of(OsConstants.getDeeplink()), procPath, StandardCopyOption.REPLACE_EXISTING);
+                                final String content = Files.readString(procFile.getAbsoluteFile().toPath());
+                                log.debug(content);
+                                Platform.runLater(() -> {
+                                    fileProcessor.accept(content);
+                                    try {
+                                        Files.delete(procFile.getAbsoluteFile().toPath());
+                                    } catch (final IOException e) {
+                                        log.error(e.getMessage(), e);
+                                    }
+                                });
+                            }
+                        } catch (final IOException e) {
+                            log.error(e.getMessage(), e);
+                        }
+                    }
+                }).watch(folder);
     }
 
     private void findLatestFile(final File folder, final String filename) {
         try {
-            this.watchedFile =  FileService.listFiles(folder, false).stream()
+            this.watchedFile = FileService.listFiles(folder, false).stream()
                     .filter(file -> file.getName().equals(filename))
                     .findFirst();
             log.info("Registered watched file: " + this.watchedFile.map(File::getName).orElse(filename + " not found"));

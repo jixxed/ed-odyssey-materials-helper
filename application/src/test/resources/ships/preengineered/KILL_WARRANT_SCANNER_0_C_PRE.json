@@ -1,0 +1,46 @@
+{
+  "Slot": "TinyHardpoint8",
+  "Item": "hpt_crimescanner_size0_class3",
+  "On": true,
+  "Priority": 0,
+  "Health": 1.0,
+  "Engineering": {
+    "EngineerID": 399999,
+    "BlueprintID": 129034966,
+    "BlueprintName": "Sensor_FastScan",
+    "Level": 5,
+    "Quality": 1.0,
+    "Modifiers": [
+      {
+        "Label": "Integrity",
+        "Value": 20.0,
+        "OriginalValue": 40.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "PowerDraw",
+        "Value": 1.2,
+        "OriginalValue": 0.8,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "ScannerRange",
+        "Value": 4950.0,
+        "OriginalValue": 3000.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "MaxAngle",
+        "Value": 10.5,
+        "OriginalValue": 15.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "ScannerTimeToScan",
+        "Value": 2.0,
+        "OriginalValue": 10.0,
+        "LessIsGood": 1
+      }
+    ]
+  }
+}

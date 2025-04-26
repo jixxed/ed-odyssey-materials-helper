@@ -4,33 +4,27 @@ import javafx.scene.control.ScrollPane;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsTab;
 
-public class HorizonsCommoditiesOverviewTab extends HorizonsTab implements Template {
-    private ScrollPane scrollPane;
-    private HorizonsCommoditiesOverview commoditiesOverview;
+public class HorizonsCommoditiesOverviewTab extends HorizonsTab implements DestroyableTemplate {
 
     public HorizonsCommoditiesOverviewTab() {
         initComponents();
-        initEventHandling();
     }
 
     @Override
     public void initComponents() {
-        this.commoditiesOverview = new HorizonsCommoditiesOverview();
-        this.textProperty().bind(LocaleService.getStringBinding("tabs.horizons.commodities"));
+        this.getStyleClass().add("commodities-tab");
+        HorizonsCommoditiesOverview commoditiesOverview = new HorizonsCommoditiesOverview();
+        this.addBinding(this.textProperty(), LocaleService.getStringBinding("tabs.horizons.commodities"));
         this.setClosable(false);
-        this.scrollPane = ScrollPaneBuilder.builder()
-                .withContent(this.commoditiesOverview)
-                .build();
-        this.setContent(this.scrollPane);
+        ScrollPane scrollPane = register(ScrollPaneBuilder.builder()
+                .withStyleClass("commodities-tab-content")
+                .withContent(commoditiesOverview)
+                .build());
+        this.setContent(scrollPane);
 
-    }
-
-    @Override
-    public void initEventHandling() {
-        //NOOP
     }
 
     @Override

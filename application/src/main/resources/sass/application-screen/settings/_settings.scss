@@ -1,0 +1,151 @@
+.settings-tab {
+  @include tab;
+}
+
+.settings-tab-content {
+  @include scroll-pane-content;
+
+  .settings-vbox {
+    //-fx-padding: 0 0.75em 0.75em 0.75em;
+    -fx-spacing: 0.25em;
+
+    .settingsblock {
+      -fx-background-color: #0f0f0f;
+      -fx-padding: 0.25em;
+    }
+
+    .settings-header {
+      -fx-font-size: 1.35em;
+      -fx-font-weight: bold;
+      //-fx-label-padding: 5;
+    }
+
+    .settings-label {
+      -fx-label-padding: 0.2em;
+      -fx-min-height: 1.6em;
+      -fx-min-width: 25em;
+      -fx-alignment: center-left;
+      -fx-wrap-text: true;
+    }
+
+    .color-picker {
+      -fx-min-height: 2.5em;
+    }
+
+    .settings-link {
+      //-fx-label-padding: 0.2em;
+      -fx-min-height: 1.6em;
+      -fx-min-width: 25em;
+      -fx-text-alignment: center;
+    }
+
+    .override-list {
+      -fx-min-height: 10em;
+      -fx-min-width: 20em;
+    }
+
+    .settings-journal-line {
+      -fx-alignment: center-left;
+    }
+
+    .settings-spacing-10 {
+      -fx-spacing: 0.75em;
+    }
+
+
+    .settings-dropdown {
+      -fx-min-width: 17em;
+      -fx-max-height: 2.5em;
+      -fx-min-height: 2.5em;
+      -fx-pref-height: 2.5em;
+    }
+
+    .settings-button {
+      -fx-min-width: 17em;
+      -fx-max-height: 2.5em;
+      -fx-min-height: 2.5em;
+      -fx-pref-height: 2.5em;
+    }
+
+    .settings-legacy-modules-list {
+      -fx-min-width: 20em;
+      -fx-max-width: 20em;
+    }
+
+    .settings-legacy-modules-buttons {
+      -fx-spacing: 0.2em;
+    }
+
+    .settings-legacy-modules-attributes-grid {
+      -fx-hgap: 0.5em;
+      -fx-vgap: 0.2em;
+    }
+
+    .settings-legacy-module-details-label-title {
+      /*-fx-padding: 0em 0em 0em 0.2em;*/
+      -fx-min-height: 1.4em;
+      -fx-alignment: center-left;
+    }
+
+    .settings-legacy-module-details-label-values {
+      -fx-min-height: 1.4em;
+      -fx-alignment: center-left;
+    }
+
+    .settings-legacy-module-details-label {
+      -fx-padding: 0em 0.2em 0em 0.2em;
+      -fx-border-radius: 0.5em;
+      -fx-border-color: #2e92df;
+      -fx-border-width: 0.1em;
+      -fx-alignment: center-left;
+    }
+
+    .settings-legacy-module-details-label-green {
+      -fx-text-fill: #89d07f;
+      -fx-border-color: #89d07f;
+    }
+
+    .settings-legacy-module-details-label-red {
+      -fx-text-fill: #ff7c7c;
+      -fx-border-color: #ff7c7c;
+    }
+
+    .settings-legacy-module-valid {
+      -fx-background-color: #89d07f, text_input_background_color;
+    }
+
+    .settings-legacy-module-invalid {
+      -fx-background-color: #ff7c7c, text_input_background_color;
+    }
+
+    .settings-legacy-module-label {
+      -fx-min-height: 1.6em;
+      -fx-min-width: 20em;
+      -fx-max-width: 20em;
+    }
+
+    .settings-legacy-module-cb {
+      -fx-min-width: 20em;
+      -fx-max-width: 20em;
+      -fx-spacing: 0.1em;
+      -fx-vgap: 0.1em;
+      -fx-hgap: 0.125em;
+    }
+
+    .settings-legacy-module-grades {
+      -fx-min-width: 20em;
+      -fx-max-width: 20em;
+    }
+
+    .settings-legacy-module-button {
+      -fx-min-width: 20em;
+      -fx-max-width: 20em;
+    }
+
+    .settings-legacy-module-button-grade {
+      -fx-min-width: 4em;
+      -fx-max-width: 4em;
+    }
+
+  }
+}

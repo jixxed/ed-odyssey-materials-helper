@@ -1,0 +1,328 @@
+@mixin fixedWidth($width) {
+  -fx-min-width: $width;
+  -fx-pref-width: $width;
+  -fx-max-width: $width;
+}
+
+@mixin fixedHeight($height) {
+  -fx-min-height: $height;
+  -fx-pref-height: $height;
+  -fx-max-height: $height;
+}
+
+@mixin hvGap($gapSize) {
+  -fx-hgap: $gapSize;
+  -fx-vgap: $gapSize;
+}
+
+
+@mixin tab {
+  -fx-background-insets: 0 0 0 0;
+  -fx-effect: none;
+  -fx-font-size: 1.35em;
+}
+
+@mixin tabpane {
+  -fx-background-insets: 0;
+
+  &:left {
+    > .tab-header-area {
+      -fx-padding: 1em 0 0 0;
+      -fx-pref-height: 3.5em;
+
+      > .tab-header-background {
+        -fx-background-insets: 0;
+        -fx-background-color: #111111;
+        -fx-effect: none;
+      }
+
+      > .headers-region > .tab {
+        -fx-border-width: 1px;
+        -fx-border-color: black;
+
+        &:armed,
+        &:selected,
+        &:focused {
+          -fx-background-color: #252525;
+          -fx-border-width: 0;
+        }
+      }
+    }
+  }
+}
+
+@mixin searchbar {
+  .filter-and-sort {
+    @include fixedHeight(2.5em);
+    -fx-background-insets: 1px;
+    -fx-background-radius: 0, 0;
+    -fx-border-width: 1px;
+    -fx-border-color: $border-color-grey;
+  }
+
+  .search-input {
+    @include fixedHeight(2.5em);
+    -fx-background-insets: 1px;
+    -fx-background-radius: 0, 0;
+    -fx-border-width: 1px;
+    -fx-border-color: $border-color-grey;
+  }
+
+  .menubutton {
+    @include fixedWidth(3.5em);
+    @include fixedHeight(2.5em);
+    -fx-background-insets: 0;
+    -fx-background-color: $background-color-input;
+    -fx-text-fill: $text-color-white;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-border-color: $border-color-grey;
+    -fx-border-insets: 0;
+    -fx-padding: 0;
+
+    > .text {
+      -fx-font-size: 1em;
+    }
+
+    &:hover,
+    &:armed,
+    &:selected {
+      -fx-background-color: $background-color-white;
+      -fx-text-fill: $text-color-black;
+    }
+  }
+}
+
+@mixin scroll-pane-content {
+  -fx-fit-to-width: true;
+  -fx-fit-to-height: true;
+  .scroll-pane-content {
+    -fx-padding: 0.25em;
+  }
+}
+
+@mixin about {
+  -fx-spacing: 0.5em;
+  .about-version {
+    -fx-alignment: center;
+  }
+
+  .about-download-link {
+    -fx-alignment: center;
+  }
+
+  .about-disclaimer1 {
+    -fx-alignment: center;
+  }
+
+  .about-disclaimer2 {
+    -fx-alignment: center;
+  }
+
+  .about-donate {
+    -fx-alignment: center;
+  }
+
+  .about-discord {
+    -fx-alignment: center;
+  }
+
+  .about-discord-image {
+    @include fixedWidth(16.6em);
+    @include fixedHeight(5.333em);
+  }
+
+  .about-bugs {
+    -fx-pref-width: 45em;
+    -fx-alignment: center;
+  }
+
+  .about-donate-button {
+    @include fixedWidth(8.33em);
+    @include fixedHeight(8.33em);
+  }
+
+  .about-donate-image {
+    @include fixedWidth(8.33em);
+    @include fixedHeight(8.33em);
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
+  }
+
+  .about-donate-commission {
+    @include fixedWidth(8.33em);
+    -fx-text-alignment: center;
+    -fx-alignment: baseline-center;
+  }
+}
+
+@mixin menu-modifier {
+  -fx-background-color: #0f0f0f;
+  -fx-border-color: black;
+
+  .name {
+    -fx-label-padding: 0.3em;
+    -fx-min-height: 2em;
+    -fx-text-fill: #2e92df;
+  }
+
+  .value {
+    -fx-text-fill: #2e92df;
+    -fx-label-padding: 0.3em;
+    -fx-min-height: 2em;
+    -fx-alignment: center-right;
+    -fx-max-width: 1000;
+  }
+}
+
+@mixin copyable-location {
+
+  -fx-font-weight: normal;
+  -fx-hgap: 0.25em;
+
+  &:hover {
+    -fx-cursor: hand;
+
+    .location {
+      -fx-text-fill: lighten($text-color-blue, 10%);
+    }
+  }
+
+  .location {
+    -fx-text-fill: $text-color-blue;
+  }
+
+  .copy-icon {
+    @include fixedWidth(1em);
+    @include fixedHeight(1em);
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
+    //-fx-background-color: $text-color-white;
+  }
+
+  .distance {
+    -fx-text-fill: $text-color-grey;
+  }
+}
+
+@mixin engineer-card {
+  @include fixedWidth(21em);
+  -fx-background-color: #0f0f0f;
+  //-fx-padding: 0 0 1em 0;
+
+  .separator {
+    .line {
+      -fx-border-width: 0.1em;
+      -fx-border-insets: 0.25em 0 0.25em 0;
+    }
+  }
+
+
+  .image {
+    @include fixedWidth(21em);
+    -fx-pref-height: 15.47em;
+  }
+
+  .text-box {
+    -fx-padding: 0.25em;
+    -fx-spacing: 0.1em;
+  }
+
+  .name {
+    -fx-text-fill: white;
+    -fx-font-size: 1.2em;
+    //-fx-label-padding: 5px;
+    -fx-cursor: hand;
+
+    &:hover {
+      -fx-text-fill: lighten($text-color-blue, 10%);
+    }
+  }
+
+  .category {
+    -fx-text-fill: white;
+    -fx-font-size: 1.1em;
+  }
+
+  .blueprint {
+    -fx-text-fill: $text-color-blue;
+    -fx-max-width: 19.6em;
+    -fx-wrap-text: true;
+
+    &:hover {
+      -fx-text-fill: lighten($text-color-blue, 10%);
+      -fx-cursor: hand;
+    }
+  }
+
+  .bullet {
+    -fx-text-fill: $text-color-blue;
+    -fx-text-alignment: center;
+    -fx-min-width: 1.3em;
+    -fx-max-width: 1.3em;
+  }
+
+  .prerequisite {
+    -fx-text-fill: $text-color-blue;
+    -fx-max-width: 19.6em;
+    -fx-wrap-text: true;
+
+    &:hover {
+      -fx-text-fill: lighten($text-color-blue, 10%);
+      -fx-cursor: hand;
+    }
+  }
+
+  .copyable-location {
+    @include copyable-location;
+  }
+}
+
+@mixin segmented-bar-straight {
+  &:horizontal > .only-segment {
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+  }
+
+  &:horizontal > .first-segment {
+    -fx-background-insets: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+  }
+
+  &:horizontal > .middle-segment {
+    -fx-background-insets: 0 0 0 0;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+  }
+
+  &:horizontal > .last-segment {
+    -fx-background-radius: 0 0 0 0;
+    -fx-border-radius: 0 0 0 0;
+  }
+  -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentedBarSkin";
+}
+
+@mixin popover-style {
+  -fx-background-color: transparent !important;
+  -fx-border-width: 0;
+
+  & > .border {
+    -fx-stroke: #fff !important;
+    -fx-stroke-width: 0.1em !important;
+    -fx-fill: #0f0f0f !important;
+  }
+}
+
+@mixin tooltip {
+  -fx-background: #1e1e1e;
+  -fx-text-fill: white;
+  -fx-background-color: #1e1e1e;
+  -fx-background-radius: 0px;
+  -fx-background-insets: 0;
+  -fx-padding: 0.667em 0.75em 0.667em 0.75em;
+  /* 10px */
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 10, 0, 0, 3);
+  -fx-font-size: 0.85em;
+  -fx-font-weight: normal;
+  -fx-font-style: normal;
+}

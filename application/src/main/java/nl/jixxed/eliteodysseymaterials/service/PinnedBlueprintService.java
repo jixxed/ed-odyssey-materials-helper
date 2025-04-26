@@ -79,7 +79,7 @@ public class PinnedBlueprintService {
                 final String pathname = commander.getCommanderFolder();
                 final File commanderFolder = new File(pathname);
                 commanderFolder.mkdirs();
-                final File pinnedBlueprintsFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.HORIZONS_PINNED_BLUEPRINTS_FILE);
+                final File pinnedBlueprintsFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.HORIZONS_PINNED_BLUEPRINTS_FILE);
                 try (final FileOutputStream fileOutputStream = new FileOutputStream(pinnedBlueprintsFile)) {
                     fileOutputStream.write(wishlistsJson.getBytes(StandardCharsets.UTF_8));
                 }
@@ -96,7 +96,7 @@ public class PinnedBlueprintService {
         final String pathname = commander.getCommanderFolder();
         final File commanderFolder = new File(pathname);
         commanderFolder.mkdirs();
-        final File pinnedBlueprintsFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.HORIZONS_PINNED_BLUEPRINTS_FILE);
+        final File pinnedBlueprintsFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.HORIZONS_PINNED_BLUEPRINTS_FILE);
         try {
             if (pinnedBlueprintsFile.exists()) {
                 final TypeReference<HashMap<Engineer, HorizonsBlueprintJson>> typeRef = new TypeReference<HashMap<Engineer, HorizonsBlueprintJson>>() {
@@ -124,7 +124,7 @@ public class PinnedBlueprintService {
 
     public static boolean isPinned(final Engineer engineer, final HorizonsBlueprint blueprint) {
         final HorizonsBlueprint horizonsModuleBlueprint = pinnedBlueprints.get(engineer);
-        if(blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.CAUSTIC_SINK_LAUNCHER)
+        if (blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.CAUSTIC_SINK_LAUNCHER)
                 || blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.HEAT_SINK_LAUNCHER)
                 || (blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.POWER_PLANT) && blueprint.getHorizonsBlueprintType().equals(HorizonsBlueprintType.ANTI_GUARDIAN_ZONE_RESISTANCE))
                 || (blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.POWER_DISTRIBUTOR) && blueprint.getHorizonsBlueprintType().equals(HorizonsBlueprintType.ANTI_GUARDIAN_ZONE_RESISTANCE))
@@ -135,7 +135,7 @@ public class PinnedBlueprintService {
                 || blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.GUARDIAN_PLASMA_CHARGER)
                 || blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.GUARDIAN_SHARD_CANNON)
                 || blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_BOOSTER)
-        ){
+        ) {
             return typeMatch(blueprint, horizonsModuleBlueprint);
         }
         return exactMatch(blueprint, horizonsModuleBlueprint);

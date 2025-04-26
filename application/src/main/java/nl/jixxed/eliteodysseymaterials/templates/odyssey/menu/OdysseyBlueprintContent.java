@@ -1,26 +1,21 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.menu;
 
-import javafx.collections.ListChangeListener;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.TextBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.EngineerBlueprintLabel;
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
 import nl.jixxed.eliteodysseymaterials.templates.generic.MissionIngredient;
+import nl.jixxed.eliteodysseymaterials.templates.generic.menu.Modifier;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyMaterialIngredient;
 
 import java.util.ArrayList;
@@ -30,15 +25,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-class OdysseyBlueprintContent extends VBox {
-    private static final String RECIPE_TITLE_LABEL_STYLE_CLASS = "recipe-title-label";
+class OdysseyBlueprintContent extends DestroyableVBox implements DestroyableEventTemplate {
+    private static final String TITLE_STYLE_CLASS = "title";
+    public static final String SPACING = "spacing";
     private final List<Ingredient> ingredients = new ArrayList<>();
     private final OdysseyBlueprint blueprint;
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private Label countLabel;
-    private HBox recipeHeader;
-    private MenuButton addToWishlist;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+    private DestroyableLabel countLabel;
+    private DestroyableHBox recipeHeader;
+    private AddToWishlistMenuButton addToWishlist;
+
 
     OdysseyBlueprintContent(final OdysseyBlueprint blueprint) {
         this.blueprint = blueprint;
@@ -46,9 +42,10 @@ class OdysseyBlueprintContent extends VBox {
         initEventHandling();
     }
 
-    private void initComponents() {
-        this.getStyleClass().add("recipe-content");
+    public void initComponents() {
+        this.getStyleClass().add("blueprint-content");
         loadIngredients();
+        initHeader();
         initDescription();
 
         if (!(this.blueprint instanceof EngineerBlueprint) || this.ingredients.stream().noneMatch(ingredient -> OdysseyStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
@@ -61,7 +58,7 @@ class OdysseyBlueprintContent extends VBox {
 
             initTips(engineerBlueprint);
             if (engineerBlueprint.getBlueprintName().equals(OdysseyBlueprintName.ENGINEER_D3)) {
-                initSteps();
+                initReferrals();
             }
         }
         if (this.blueprint instanceof ModuleBlueprint) {
@@ -70,18 +67,43 @@ class OdysseyBlueprintContent extends VBox {
         initModifiers();
     }
 
-    private void initSteps() {
-        final Label referralLabelHeader = LabelBuilder.builder()
-                .withStyleClass(RECIPE_TITLE_LABEL_STYLE_CLASS)
-                .withText(LocaleService.getStringBinding("blueprint.label.completed.referrals"))
+    private void initHeader() {
+        final DestroyableRegion headerRegion = new DestroyableRegion();
+        HBox.setHgrow(headerRegion, Priority.ALWAYS);
+        this.recipeHeader = BoxBuilder.builder()
+                .withNodes(headerRegion).buildHBox();
+        this.getNodes().addAll(this.recipeHeader);
+    }
+
+    private void initDescription() {
+        final DestroyableLabel descriptionTitle = LabelBuilder.builder()
+                .withStyleClass(TITLE_STYLE_CLASS)
+                .withText("blueprint.label.description")
                 .build();
-        this.getChildren().add(referralLabelHeader);
-        final HBox[] engineerLabels = Stream.of(Engineer.BALTANOS, Engineer.ROSA_DAYETTE, Engineer.ELEANOR_BRESA)
+
+        final DestroyableLabel description = LabelBuilder.builder()
+                .withStyleClass("description")
+                .withText(this.blueprint.getBlueprintName().getDescriptionLocalizationKey())
+                .build();
+
+        this.getNodes().addAll(descriptionTitle, description);
+    }
+
+
+    private void initReferrals() {
+        final DestroyableLabel referralLabelHeader = LabelBuilder.builder()
+                .withStyleClass(TITLE_STYLE_CLASS)
+                .withText("blueprint.label.completed.referrals")
+                .build();
+        final DestroyableHBox[] engineerLabels = Stream.of(Engineer.BALTANOS, Engineer.ROSA_DAYETTE, Engineer.ELEANOR_BRESA)
                 .map(engineer -> new EngineerBlueprintLabel(engineer, true, 0))
-                .sorted(Comparator.comparing(engineerBlueprintLabel -> engineerBlueprintLabel.getLabel().getText()))
-                .toArray(HBox[]::new);
-        final FlowPane flowPane = FlowPaneBuilder.builder().withStyleClass("recipe-engineer-flow").withNodes(engineerLabels).build();
-        this.getChildren().add(flowPane);
+                .sorted(Comparator.comparing(EngineerBlueprintLabel::getEngineerName))
+                .toArray(DestroyableHBox[]::new);
+        final DestroyableFlowPane flowPane = FlowPaneBuilder.builder()
+                .withStyleClass("engineer-flow")
+                .withNodes(engineerLabels)
+                .build();
+        this.getNodes().addAll(referralLabelHeader, flowPane);
     }
 
     private void loadIngredients() {
@@ -90,207 +112,159 @@ class OdysseyBlueprintContent extends VBox {
         this.ingredients.addAll(getRecipeIngredients(Data.class, OdysseyStorageType.DATA));
         if (this.blueprint instanceof EngineerBlueprint engineerRecipe) {
             this.ingredients.addAll(engineerRecipe.getOther().stream()
+                    .sorted(Comparator.comparing(LocaleService::getLocalizedStringForCurrentLocale))
                     .map(text -> new MissionIngredient(text, OdysseyStorageType.OTHER))
-                    .sorted(Comparator.comparing(MissionIngredient::getName))
                     .collect(Collectors.toCollection(ArrayList::new)));
         }
     }
 
     private void initIngredients() {
-        final FlowPane ingredientFlow = FlowPaneBuilder.builder().withStyleClass("recipe-ingredient-flow").withNodes(this.ingredients).build();
-        this.getChildren().add(ingredientFlow);
-    }
-
-    private void initDescription() {
-        final Label descriptionTitle = LabelBuilder.builder()
-                .withStyleClass(RECIPE_TITLE_LABEL_STYLE_CLASS)
-                .withText(LocaleService.getStringBinding("blueprint.label.description"))
+        final DestroyableFlowPane ingredientFlow = FlowPaneBuilder.builder()
+                .withStyleClass("ingredient-flow")
+                .withNodes(this.ingredients)
                 .build();
-
-        final Region descriptionRegion = new Region();
-        HBox.setHgrow(descriptionRegion, Priority.ALWAYS);
-
-        this.recipeHeader = BoxBuilder.builder().withNodes(descriptionTitle, descriptionRegion).buildHBox();
-        final Text description = TextBuilder.builder()
-                .withStyleClass("blueprint-description-text")
-                .withText(LocaleService.getStringBinding(this.blueprint.getBlueprintName().getDescriptionLocalizationKey()))
-                .build();
-        description.wrappingWidthProperty().bind(this.widthProperty().subtract(35));
-        final TextFlow textFlow = new TextFlow(description);
-        textFlow.getStyleClass().add("blueprint-description");
-        this.getChildren().addAll(this.recipeHeader, textFlow);
+        this.getNodes().add(ingredientFlow);
     }
 
     private void initTips(final EngineerBlueprint engineerBlueprint) {
-        final Label tipsTitle = LabelBuilder.builder()
-                .withStyleClass(RECIPE_TITLE_LABEL_STYLE_CLASS)
-                .withText(LocaleService.getStringBinding("blueprint.label.tips"))
+        final DestroyableLabel tipsTitle = LabelBuilder.builder()
+                .withStyleClasses(TITLE_STYLE_CLASS, SPACING)
+                .withText("blueprint.label.tips")
                 .build();
 
-        final Text tips = TextBuilder.builder()
-                .withStyleClass("blueprint-description-text")
-                .withText(LocaleService.getStringBinding(engineerBlueprint.getTipsLocalizationKey()))
+        final DestroyableLabel description = LabelBuilder.builder()
+                .withStyleClass("description")
+                .withText(engineerBlueprint.getTipsLocalizationKey())
                 .build();
-        tips.wrappingWidthProperty().bind(this.widthProperty().subtract(35));
-        final TextFlow textFlow = new TextFlow(tips);
-        textFlow.getStyleClass().add("blueprint-description");
-        this.getChildren().addAll(tipsTitle, textFlow);
+        this.getNodes().addAll(tipsTitle, description);
     }
 
     @SuppressWarnings("java:S1192")
     private void initAsRecipe() {
-        this.addToWishlist = new MenuButton();
-        this.addToWishlist.getStyleClass().add("recipe-wishlist-button");
-        this.addToWishlist.textProperty().bind(LocaleService.getStringBinding("blueprint.add.to.wishlist"));
-        this.addToWishlist.getItems().addAll(new ArrayList<>());
-        this.addToWishlist.getItems().addListener((ListChangeListener<MenuItem>) c -> {
-            if (c.getList().size() <= 1) {
-                if (!this.addToWishlist.getStyleClass().contains("hidden-menu-button")) {
-                    this.addToWishlist.getStyleClass().add("hidden-menu-button");
-                }
-            } else {
-                this.addToWishlist.getStyleClass().remove("hidden-menu-button");
-            }
-        });
-        this.addToWishlist.setOnMouseClicked(event -> {
-            if (this.addToWishlist.getItems().size() == 1) {
-                this.addToWishlist.getItems().get(0).fire();
-                event.consume();
-            }
-        });
-        this.addToWishlist.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
-            if (this.addToWishlist.getItems().size() == 1) {
-                event.consume();
-            }
-        });
-        this.addToWishlist.addEventFilter(MouseEvent.MOUSE_RELEASED, event -> {
-            if (this.addToWishlist.getItems().size() == 1) {
-                event.consume();
-            }
-        });
-        this.countLabel = LabelBuilder.builder().withStyleClass("recipe-wishlist-count").build();
-        this.countLabel.textProperty().bind(LocaleService.getStringBinding("blueprint.on.wishlist", 0));
+        this.addToWishlist = new AddToWishlistMenuButton();
+        this.countLabel = LabelBuilder.builder()
+                .withStyleClass("wishlist-count")
+                .build();
+        this.countLabel.addBinding(this.countLabel.textProperty(), LocaleService.getStringBinding("blueprint.on.wishlist", 0));
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-            final Wishlists wishlists = loadCommanderWishlists(commander);
-            loadInitialCount(wishlists);
+            updateWishlistsAndCount(commander);
         });
-        final HBox box = BoxBuilder.builder()
-                .withStyleClass("recipe-wishlist-count-box")
+        final DestroyableHBox box = BoxBuilder.builder()
+                .withStyleClass("wishlist-count-box")
                 .withNodes(this.countLabel, this.addToWishlist)
                 .buildHBox();
         HBox.setHgrow(this.addToWishlist, Priority.ALWAYS);
-        this.recipeHeader.getChildren().add(box);
-        final Label materialHeader = LabelBuilder.builder()
-                .withStyleClass(RECIPE_TITLE_LABEL_STYLE_CLASS)
-                .withText(LocaleService.getStringBinding("blueprint.header.material"))
+        this.recipeHeader.getNodes().add(box);
+        final DestroyableLabel materialsTitle = LabelBuilder.builder()
+                .withStyleClasses(TITLE_STYLE_CLASS, SPACING)
+                .withText("blueprint.header.material")
                 .build();
-        this.getChildren().add(materialHeader);
+        this.getNodes().add(materialsTitle);
     }
 
-    private void loadInitialCount(final Wishlists wishlists) {
-        final long count = wishlists.getSelectedWishlist().getItems().stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(this.blueprint.getBlueprintName())).count();
-        if (count > 0L) {
-            this.countLabel.textProperty().bind(LocaleService.getStringBinding("blueprint.on.wishlist", count));
-        } else {
-            this.countLabel.textProperty().bind(LocaleService.getStringBinding(() -> ""));
-        }
-    }
-
-    private Wishlists loadCommanderWishlists(final Commander commander) {
-        final Wishlists wishlists = WishlistService.getWishlists(commander);
-        this.addToWishlist.getItems().clear();
-        final List<MenuItem> menuItems = wishlists.getAllWishlists().stream().filter(wishlist -> wishlist != Wishlist.ALL).sorted(Comparator.comparing(Wishlist::getName)).map(wishlist -> {
-            final MenuItem menuItem = new MenuItem();
-            menuItem.setOnAction(event -> EventService.publish(new WishlistBlueprintEvent(commander, wishlist.getUuid(), List.of(new OdysseyWishlistBlueprint((OdysseyBlueprintName) this.blueprint.getBlueprintName(), true)), Action.ADDED)));
-            menuItem.setText(wishlist.getName());
-            return menuItem;
-        }).toList();
-        this.addToWishlist.getItems().addAll(menuItems);
-        return wishlists;
+    private void loadCommanderWishlists(final Commander commander) {
+        this.addToWishlist.loadCommanderWishlists(commander, (OdysseyBlueprintName) this.blueprint.getBlueprintName());
     }
 
     private void initAsEngineerMission() {
-        final Label materialHeader = LabelBuilder.builder()
-                .withStyleClass(RECIPE_TITLE_LABEL_STYLE_CLASS)
-                .withText(LocaleService.getStringBinding("blueprint.header.objective"))
+        final DestroyableLabel objectivesTitle = LabelBuilder.builder()
+                .withStyleClasses(TITLE_STYLE_CLASS, SPACING)
+                .withText("blueprint.header.objective")
                 .build();
-        this.getChildren().add(materialHeader);
+        this.getNodes().add(objectivesTitle);
     }
 
     private void initEngineers() {
-        final Label engineerLabelHeader = LabelBuilder.builder()
-                .withStyleClass(RECIPE_TITLE_LABEL_STYLE_CLASS)
-                .withText(LocaleService.getStringBinding("blueprint.label.engineers"))
+        final DestroyableLabel engineersTitle = LabelBuilder.builder()
+                .withStyleClasses(TITLE_STYLE_CLASS, SPACING)
+                .withText("blueprint.label.engineers")
                 .build();
-        this.getChildren().add(engineerLabelHeader);
-        final HBox[] engineerLabels = ((ModuleBlueprint) this.blueprint).getEngineers().stream()
+        this.getNodes().add(engineersTitle);
+        final DestroyableHBox[] engineerLabels = ((ModuleBlueprint) this.blueprint).getEngineers().stream()
                 .map(EngineerBlueprintLabel::new)
-                .sorted(Comparator.comparing(engineerBlueprintLabel -> engineerBlueprintLabel.getLabel().getText()))
-                .toArray(HBox[]::new);
-        final FlowPane flowPane = FlowPaneBuilder.builder().withStyleClass("recipe-engineer-flow").withNodes(engineerLabels).build();
-        this.getChildren().add(flowPane);
+                .sorted(Comparator.comparing(EngineerBlueprintLabel::getEngineerName))
+                .toArray(DestroyableHBox[]::new);
+        final DestroyableFlowPane flowPane = FlowPaneBuilder.builder()
+                .withStyleClass("engineer-flow")
+                .withNodes(engineerLabels)
+                .build();
+        this.getNodes().add(flowPane);
 
     }
 
     private void initModifiers() {
         final Map<OdysseyModifier, String> modifierMap = this.blueprint.getModifiers();
         if (!modifierMap.isEmpty()) {
-            final Label modifierTitle = LabelBuilder.builder().withStyleClass(RECIPE_TITLE_LABEL_STYLE_CLASS).withText(LocaleService.getStringBinding("blueprint.label.modifiers")).build();
-            this.getChildren().add(modifierTitle);
+            final DestroyableLabel modifierTitle = LabelBuilder.builder()
+                    .withStyleClasses(TITLE_STYLE_CLASS, SPACING)
+                    .withText("blueprint.label.modifiers")
+                    .build();
+            this.getNodes().add(modifierTitle);
 
-            final List<HBox> modifiers = modifierMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(modifierStringEntry -> {
-                        final Label modifier = LabelBuilder.builder().withStyleClass("recipe-modifier-name").withText(LocaleService.getStringBinding(modifierStringEntry.getKey().getLocalizationKey())).build();
-                        final Label value = LabelBuilder.builder().withStyleClass("recipe-modifier-value").withNonLocalizedText(modifierStringEntry.getValue()).build();
-                        final HBox modifierBox = BoxBuilder.builder().withStyleClass("recipe-modifier").withNodes(modifier, value).buildHBox();
-                        HBox.setHgrow(value, Priority.ALWAYS);
-                        return modifierBox;
-                    })
+            final List<DestroyableHBox> modifiers = modifierMap.entrySet().stream()
+                    .sorted(Map.Entry.comparingByKey())
+                    .map(entry ->
+                            new Modifier(entry.getKey().getLocalizationKey(), entry.getValue(), true)
+                    )
                     .collect(Collectors.toCollection(ArrayList::new));
 
-            final FlowPane modifiersFlowPane = FlowPaneBuilder.builder().withStyleClass("recipe-modifier-flow").withNodes(modifiers).build();
-            this.getChildren().addAll(modifiersFlowPane);
+            final DestroyableFlowPane modifiersFlowPane = FlowPaneBuilder.builder()
+                    .withStyleClass("modifier-flow")
+                    .withNodes(modifiers)
+                    .build();
+            this.getNodes().addAll(modifiersFlowPane);
         }
     }
 
-    private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, WishlistSelectedEvent.class, wishlistSelectedEvent -> {
+    public void initEventHandling() {
+        register(EventService.addListener(true, this, OdysseyWishlistSelectedEvent.class, wishlistSelectedEvent -> {
             if (!(this.blueprint instanceof EngineerBlueprint) || this.ingredients.stream().noneMatch(ingredient -> OdysseyStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
-                APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                    final Wishlists wishlists = loadCommanderWishlists(commander);
-                    loadInitialCount(wishlists);
-                });
+                APPLICATION_STATE.getPreferredCommander().ifPresent(this::updateWishlistsAndCount);
             }
         }));
-        this.eventListeners.add(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
+        register(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
             if (!(this.blueprint instanceof EngineerBlueprint) || this.ingredients.stream().noneMatch(ingredient -> OdysseyStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
-                final Wishlists wishlists = loadCommanderWishlists(commanderSelectedEvent.getCommander());
-                loadInitialCount(wishlists);
+                updateWishlistsAndCount(commanderSelectedEvent.getCommander());
             }
         }));
-        this.eventListeners.add(EventService.addListener(true, this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
+        register(EventService.addListener(true, this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
             if (!(this.blueprint instanceof EngineerBlueprint) || this.ingredients.stream().noneMatch(ingredient -> OdysseyStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
-                APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                    final Wishlists wishlists = loadCommanderWishlists(commander);
-                    loadInitialCount(wishlists);
-                });
+                APPLICATION_STATE.getPreferredCommander().ifPresent(this::updateWishlistsAndCount);
             }
         }));
-        this.eventListeners.add(EventService.addListener(true, this, WishlistChangedEvent.class, wishlistEvent -> {
+        register(EventService.addListener(true, this, OdysseyWishlistChangedEvent.class, wishlistEvent -> {
             if (this.countLabel != null) {
-                final long count = APPLICATION_STATE.getPreferredCommander().map(commander -> WishlistService.getWishlists(commander).getSelectedWishlist().getItems().stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(this.blueprint.getBlueprintName())).count()).orElse(0L);
-                if (count > 0L) {
-                    this.countLabel.textProperty().bind(LocaleService.getStringBinding("blueprint.on.wishlist", count));
-                } else {
-                    this.countLabel.textProperty().bind(LocaleService.getStringBinding(() -> ""));
-                }
+                final long count = APPLICATION_STATE.getPreferredCommander()
+                        .map(commander -> WishlistService.getOdysseyWishlists(commander).getSelectedWishlist().getItems().stream()
+                                .filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(this.blueprint.getBlueprintName()))
+                                .count())
+                        .orElse(0L);
+                updateCount(count);
             }
         }));
+    }
+
+    private void updateWishlistsAndCount(Commander commander) {
+        loadCommanderWishlists(commander);
+        updateCount(getBlueprintCountForCurrentWishtlist(commander, (OdysseyBlueprintName) this.blueprint.getBlueprintName()));
+    }
+
+    public long getBlueprintCountForCurrentWishtlist(final Commander commander, OdysseyBlueprintName odysseyBlueprintName) {
+        return WishlistService.getOdysseyWishlists(commander).getSelectedWishlist().getItems().stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(odysseyBlueprintName)).count();
+    }
+
+    private void updateCount(final long count) {
+        if (count > 0L) {
+            this.countLabel.addBinding(this.countLabel.textProperty(), LocaleService.getStringBinding("blueprint.on.wishlist", count));
+        } else {
+            this.countLabel.addBinding(this.countLabel.textProperty(), LocaleService.getStringBinding(() -> ""));
+        }
     }
 
     private List<OdysseyMaterialIngredient> getRecipeIngredients(final Class<? extends OdysseyMaterial> materialClass, final OdysseyStorageType storageType) {
         return this.blueprint.getMaterialCollection(materialClass).entrySet().stream()
-                .map(material -> new OdysseyMaterialIngredient(storageType, material.getKey(), material.getValue(), StorageService.getMaterialCount(material.getKey(),AmountType.TOTAL)))
-                .sorted(Comparator.comparing(OdysseyMaterialIngredient::getName))
+                .sorted(Comparator.comparing(entry -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getLocalizationKey())))
+                .map(material -> new OdysseyMaterialIngredient(storageType, material.getKey(), material.getValue(), StorageService.getMaterialCount(material.getKey(), AmountType.TOTAL)))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 

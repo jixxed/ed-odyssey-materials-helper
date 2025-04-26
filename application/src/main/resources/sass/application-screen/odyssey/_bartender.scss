@@ -1,0 +1,194 @@
+.bartender-tab {
+  @include tab;
+}
+
+
+.bartender-tab-content {
+
+  @include scroll-pane-content;
+
+
+  .bartender-layout {
+    //-fx-spacing: 0.25em;
+
+    .left-section {
+
+      -fx-spacing: 1.25em;
+
+      .title-section {
+
+        .title {
+          -fx-font-size: 1.35em;
+          -fx-min-height: 2em;
+          -fx-font-weight: bold;
+        }
+
+        -fx-spacing: 0.25em;
+      }
+
+      .top-section {
+        -fx-spacing: 0.25em;
+      }
+
+      .bottom-section {
+        -fx-spacing: 0.25em;
+
+        .bartender-flow {
+          @include hvGap(0.25em);
+          @include fixedWidth(50em);
+        }
+      }
+
+
+      .bartender-material {
+        @include fixedWidth(50em);
+        @include fixedHeight(4.5em);
+        -fx-alignment: center-left;
+        -fx-background-color: $background-color-dark;
+        -fx-border-color: $background-color-dark;
+        -fx-padding: 0.25em;
+
+        &:default:hover {
+          -fx-background-color: $background-color-lighter;
+          -fx-cursor: hand;
+        }
+
+        .left-middle-section {
+          @include fixedHeight(4em);
+          -fx-alignment: center-left;
+        }
+
+        left-middle-bottom-section,
+        .middle-top-section,
+        .middle-bottom-section,
+        .right-top-section,
+        .right-bottom-section {
+          @include fixedHeight(2em);
+          -fx-alignment: center-left;
+        }
+
+        .material-image {
+          @include fixedWidth(2em);
+          @include fixedHeight(2em);
+          -fx-fit-to-height: true;
+          -fx-fit-to-width: true;
+        }
+
+        .storage-image {
+          @include fixedHeight(2em);
+          -fx-alignment: top-left;
+        }
+
+        .selected-label {
+          -fx-font-weight: bold;
+        }
+
+        .selected-value {
+          -fx-label-padding: 0 1em 0 0;
+          -fx-font-weight: bold;
+        }
+
+        .buy-value, .sell-value {
+          @include fixedHeight(2em);
+          @include fixedWidth(13em);
+          -fx-label-padding: 0 0 0 0.25em;
+          -fx-alignment: baseline-left;
+          -fx-font-style: italic;
+
+          &:disabled {
+            -fx-text-fill: $text-color-grey;
+          }
+        }
+
+        .name {
+          @include fixedHeight(2em);
+          -fx-alignment: baseline-left;
+          -fx-label-padding: 0 0 0 0.25em;
+          -fx-font-weight: bold;
+
+          &:lowamount {
+            -fx-text-fill: $text-color-red;
+          }
+        }
+
+        .storage-value {
+          -fx-alignment: center;
+          -fx-text-alignment: center;
+          @include fixedWidth(3em);
+        }
+
+        .trade-button {
+          @include fixedWidth(2em);
+          -fx-border-color: $background-color-dark;
+          -fx-background-color: $background-color-lighter;
+          -fx-alignment: center;
+          -fx-text-alignment: center;
+
+          &:hover {
+            -fx-background-color: lighten($background-color-lighter, 10%);
+            -fx-cursor: hand;
+          }
+        }
+
+        .amount {
+          @include fixedWidth(3em);
+          -fx-alignment: center;
+          -fx-text-alignment: center;
+        }
+
+      }
+
+    }
+
+    .right-section {
+      -fx-spacing: 0.25em;
+
+      .bartender-result {
+        -fx-background-color: $background-color-dark;
+        -fx-border-color: $background-color-dark;
+
+        .line {
+          -fx-background-color: $background-color-dark;
+          @include fixedWidth(34.32em);
+
+          .title {
+            -fx-font-size: 1.2em;
+            -fx-label-padding: 0.5em;
+          }
+
+          .value {
+            -fx-font-size: 1.2em;
+            -fx-alignment: center-right;
+            -fx-text-alignment: right;
+            @include fixedWidth(5em);
+            -fx-label-padding: 0.5em;
+          }
+        }
+
+      }
+
+
+      .bartender-blueprints {
+        -fx-background-color: $background-color-dark;
+        -fx-border-color: $background-color-dark;
+
+        .title {
+          @include fixedWidth(28.6em);
+          -fx-font-size: 1.2em;
+          -fx-label-padding: 0.5em;
+        }
+
+        .blueprint {
+          -fx-font-size: 1em;
+          @include fixedWidth(34.32em);
+          -fx-label-padding: 0.2em 0 1em 1em;
+        }
+
+      }
+
+    }
+
+  }
+
+
+}

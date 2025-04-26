@@ -26,7 +26,7 @@ public class LegacyModuleService {
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
 
-    public static void saveLegacyModule(ShipModule shipModule){
+    public static void saveLegacyModule(ShipModule shipModule) {
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
             ShipLegacyModule shipLegacyModule = new ShipLegacyModule(shipModule);
             final ShipLegacyModules shipLegacyModules = loadModules(commander);
@@ -34,10 +34,11 @@ public class LegacyModuleService {
             saveModules(commander, shipLegacyModules);
         });
     }
-    public static void updateLegacyModule(String uuid, String name, ShipModule shipModule){
+
+    public static void updateLegacyModule(String uuid, String name, ShipModule shipModule) {
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
             final ShipLegacyModules shipLegacyModules = loadModules(commander);
-            ShipLegacyModule shipLegacyModule = shipLegacyModules.getLegacyModules().stream().filter(module->module.getUuid().equals(uuid)).findFirst().orElseThrow(IllegalArgumentException::new);
+            ShipLegacyModule shipLegacyModule = shipLegacyModules.getLegacyModules().stream().filter(module -> module.getUuid().equals(uuid)).findFirst().orElseThrow(IllegalArgumentException::new);
             var modifiers = shipModule.getModifiers().entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
             var modifications = shipModule.getModifications().stream().map(modification -> new ShipConfigurationModification(modification.getModification(), modification.getGrade(), modification.getModificationCompleteness().orElse(BigDecimal.ZERO))).toList();
             var effects = shipModule.getExperimentalEffects().stream().map(ShipConfigurationExperimentalEffect::new).toList();
@@ -49,19 +50,21 @@ public class LegacyModuleService {
             saveModules(commander, shipLegacyModules);
         });
     }
-    public static void deleteLegacyModule(String uuid){
+
+    public static void deleteLegacyModule(String uuid) {
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
             final ShipLegacyModules shipLegacyModules = loadModules(commander);
-            shipLegacyModules.getLegacyModules().removeIf(module->module.getUuid().equals(uuid));
+            shipLegacyModules.getLegacyModules().removeIf(module -> module.getUuid().equals(uuid));
             saveModules(commander, shipLegacyModules);
         });
     }
-    public static ShipLegacyModules loadModules(final Commander commander){
+
+    public static ShipLegacyModules loadModules(final Commander commander) {
         try {
             final String pathname = commander.getCommanderFolder();
             final File commanderFolder = new File(pathname);
             commanderFolder.mkdirs();
-            final File shipLegacyModulesFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.SHIP_LEGACY_MODULES_FILE);
+            final File shipLegacyModulesFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.SHIP_LEGACY_MODULES_FILE);
             String shipLegacyModulesFileContents;
             if (shipLegacyModulesFile.exists()) {//load from file if exists
                 shipLegacyModulesFileContents = Files.readString(shipLegacyModulesFile.toPath());
@@ -98,7 +101,7 @@ public class LegacyModuleService {
             final String pathname = commander.getCommanderFolder();
             final File commanderFolder = new File(pathname);
             commanderFolder.mkdirs();
-            final File shipConfigurationsFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.SHIP_LEGACY_MODULES_FILE);
+            final File shipConfigurationsFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.SHIP_LEGACY_MODULES_FILE);
             try (final FileOutputStream fileOutputStream = new FileOutputStream(shipConfigurationsFile)) {
                 fileOutputStream.write(shipLegacyModulesJson.getBytes(StandardCharsets.UTF_8));
             }

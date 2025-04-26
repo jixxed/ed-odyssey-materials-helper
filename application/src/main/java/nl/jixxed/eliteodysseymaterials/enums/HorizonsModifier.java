@@ -2,10 +2,10 @@ package nl.jixxed.eliteodysseymaterials.enums;
 
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.constants.UTF8Constants;
+import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.math.BigDecimal;
-import java.text.NumberFormat;
 import java.util.Arrays;
 
 public enum HorizonsModifier {
@@ -84,10 +84,10 @@ public enum HorizonsModifier {
     SCAN_TIME(71, false, "ScannerTimeToScan"),
     HULL_BOOST(72, "DefenceModifierHealthMultiplier"),
     SHIELD_BOOST(73, "DefenceModifierShieldMultiplier"),
-    KINETIC_RESISTANCE(74, BigDecimal.valueOf(100),"KineticResistance"),
-    THERMAL_RESISTANCE(75, BigDecimal.valueOf(100),"ThermicResistance"),
-    EXPLOSIVE_RESISTANCE(76,BigDecimal.valueOf(100), "ExplosiveResistance"),
-    CAUSTIC_RESISTANCE(77, BigDecimal.valueOf(100),"CausticResistance"),
+    KINETIC_RESISTANCE(74, BigDecimal.valueOf(100), "KineticResistance"),
+    THERMAL_RESISTANCE(75, BigDecimal.valueOf(100), "ThermicResistance"),
+    EXPLOSIVE_RESISTANCE(76, BigDecimal.valueOf(100), "ExplosiveResistance"),
+    CAUSTIC_RESISTANCE(77, BigDecimal.valueOf(100), "CausticResistance"),
     POWER_CAPACITY(78, "PowerCapacity"),
     HEAT_EFFICIENCY(79, false, "HeatEfficiency"),
     MAX_FUEL_PER_JUMP(80, "MaxFuelPerJump"),
@@ -241,27 +241,20 @@ public enum HorizonsModifier {
         this.internalNames = internalNames;
         this.order = order;
     }
+
     HorizonsModifier(int order, boolean higherBetter, String... internalNames) {
-        this(order,internalNames);
+        this(order, internalNames);
         this.higherBetter = higherBetter;
     }
+
     HorizonsModifier(int order, BigDecimal multiplier, String... internalNames) {
-        this(order,internalNames);
+        this(order, internalNames);
         this.multiplier = multiplier;
     }
+
     HorizonsModifier(int order, boolean higherBetter, BigDecimal multiplier, String... internalNames) {
-        this(order,higherBetter,internalNames);
+        this(order, higherBetter, internalNames);
         this.multiplier = multiplier;
-    }
-
-    private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
-    private static final NumberFormat NUMBER_FORMAT_1 = NumberFormat.getNumberInstance();
-    private static final NumberFormat NUMBER_FORMAT_2 = NumberFormat.getNumberInstance();
-
-    static {
-        NUMBER_FORMAT.setMaximumFractionDigits(0);
-        NUMBER_FORMAT_1.setMaximumFractionDigits(1);
-        NUMBER_FORMAT_2.setMaximumFractionDigits(2);
     }
 
     public static HorizonsModifier forName(final String name) {
@@ -274,7 +267,7 @@ public enum HorizonsModifier {
 
     public static HorizonsModifier forInternalName(String internalName) {
         return Arrays.stream(HorizonsModifier.values())
-                .filter(horizonsModifier -> Arrays.stream(horizonsModifier.internalNames).anyMatch(name-> name.equalsIgnoreCase(internalName)))
+                .filter(horizonsModifier -> Arrays.stream(horizonsModifier.internalNames).anyMatch(name -> name.equalsIgnoreCase(internalName)))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(internalName + " unknown"));
     }
@@ -287,9 +280,9 @@ public enum HorizonsModifier {
         final String formatString = getFormatString();
         if (value instanceof Double d) {
             if (formatString.endsWith("%")) {
-                return String.format(formatString, NUMBER_FORMAT_1.format(d * 100));
+                return String.format(formatString, Formatters.NUMBER_FORMAT_1.format(d * 100));
             }
-            return String.format(formatString, NUMBER_FORMAT_2.format(d));
+            return String.format(formatString, Formatters.NUMBER_FORMAT_2.format(d));
         }
         if (value instanceof Boolean b) {
             return UTF8Constants.forBool(b);
@@ -305,34 +298,34 @@ public enum HorizonsModifier {
     public double scale(double value) {
         return switch (this) {
             case ABSOLUTE_DAMAGE_RATIO,
-                    ANTI_XENO_DAMAGE_RATIO,
-                    ARMOUR_HARDNESS,
-                    CAUSTIC_DAMAGE_RATIO,
-                    CAUSTIC_RESISTANCE,
-                    DAMAGE_BOOST,
-                    DSS_PATCH_RADIUS,
-                    EXPLOSIVE_DAMAGE_RATIO,
-                    EXPLOSIVE_RESISTANCE,
-                    FUEL_EFFICIENCY,
-                    HULL_BOOST,
-                    KINETIC_DAMAGE_RATIO,
-                    KINETIC_RESISTANCE,
-                    MAX_BREACH_CHANCE,
-                    MIN_BREACH_CHANCE,
-                    MODULE_DEFENCE_ABSORPTION,
-                    REFILL,
-                    SHIELD_BOOST,
-                    SHIELDGEN_MAXIMUM_STRENGTH,
-                    SHIELDGEN_MINIMUM_STRENGTH,
-                    SHIELDGEN_OPTIMAL_STRENGTH,
-                    THERMAL_DAMAGE_RATIO,
-                    THERMAL_RESISTANCE -> value / 100;
+                 ANTI_XENO_DAMAGE_RATIO,
+                 ARMOUR_HARDNESS,
+                 CAUSTIC_DAMAGE_RATIO,
+                 CAUSTIC_RESISTANCE,
+                 DAMAGE_BOOST,
+                 DSS_PATCH_RADIUS,
+                 EXPLOSIVE_DAMAGE_RATIO,
+                 EXPLOSIVE_RESISTANCE,
+                 FUEL_EFFICIENCY,
+                 HULL_BOOST,
+                 KINETIC_DAMAGE_RATIO,
+                 KINETIC_RESISTANCE,
+                 MAX_BREACH_CHANCE,
+                 MIN_BREACH_CHANCE,
+                 MODULE_DEFENCE_ABSORPTION,
+                 REFILL,
+                 SHIELD_BOOST,
+                 SHIELDGEN_MAXIMUM_STRENGTH,
+                 SHIELDGEN_MINIMUM_STRENGTH,
+                 SHIELDGEN_OPTIMAL_STRENGTH,
+                 THERMAL_DAMAGE_RATIO,
+                 THERMAL_RESISTANCE -> value / 100;
             default -> value;
         };
     }
 
     public int getOrder() {
-        if(order == 9999)
+        if (order == 9999)
             return order + ordinal();
         return order;
     }

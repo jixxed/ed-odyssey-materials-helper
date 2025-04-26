@@ -3,11 +3,12 @@ package nl.jixxed.eliteodysseymaterials.builder;
 import javafx.beans.binding.StringBinding;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.OverrunStyle;
-import javafx.scene.control.Tooltip;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTooltip;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +41,16 @@ public class TooltipBuilder {
         return this;
     }
 
+    public TooltipBuilder withText(final String localeKey, Object... parameters) {
+        this.stringBinding = LocaleService.getStringBinding(localeKey, parameters);
+        return this;
+    }
+
+    public TooltipBuilder withNonLocalizedText(final String nonLocalizedText) {
+        this.nonLocalizedText = nonLocalizedText;
+        return this;
+    }
+
     public TooltipBuilder withShowDelay(final Duration showDelay) {
         this.showDelay = showDelay;
         return this;
@@ -50,12 +61,12 @@ public class TooltipBuilder {
         return this;
     }
 
-    public Tooltip build() {
-        final Tooltip tooltip = new Tooltip();
+    public DestroyableTooltip build() {
+        final DestroyableTooltip tooltip = new DestroyableTooltip();
         tooltip.getStyleClass().addAll(this.styleClasses);
         if (this.stringBinding != null) {
-            tooltip.textProperty().bind(this.stringBinding);
-        }else if (this.nonLocalizedText != null) {
+            tooltip.addBinding(tooltip.textProperty(), this.stringBinding);
+        } else if (this.nonLocalizedText != null) {
             tooltip.setText(this.nonLocalizedText);
         }
         if (this.showDelay != null) {
@@ -69,10 +80,5 @@ public class TooltipBuilder {
         tooltip.setContentDisplay(ContentDisplay.LEFT);
         tooltip.setTextOverrun(OverrunStyle.CLIP);
         return tooltip;
-    }
-
-    public TooltipBuilder withNonLocalizedText(final String nonLocalizedText) {
-            this.nonLocalizedText = nonLocalizedText;
-            return this;
     }
 }

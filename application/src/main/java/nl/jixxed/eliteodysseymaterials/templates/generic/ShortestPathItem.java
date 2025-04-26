@@ -1,74 +1,52 @@
 package nl.jixxed.eliteodysseymaterials.templates.generic;
 
 import javafx.beans.binding.StringBinding;
-import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.NotificationService;
+import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Slf4j
-class ShortestPathItem<T extends BlueprintName<T>> extends VBox implements Template {
-    private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
-    private static final String SHORTEST_PATH_ITEM_LABEL_STYLE_CLASS = "shortest-path-item-label";
+public class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBox implements DestroyableTemplate {
+    @Getter
     private final PathItem<T> pathItem;
     private final int index;
     private final Expansion expansion;
-    private Button removeButton;
-    private Button hideButton;
-    private Label engineer;
-    private Label distanceLabel;
-    private Label distance;
-    private Label blueprintsLabel;
-    private final List<Label> blueprints = new ArrayList<>();
 
-    static {
-        NUMBER_FORMAT.setMaximumFractionDigits(2);
-    }
-
-    ShortestPathItem(final PathItem<T> pathItem, final int index, final Expansion expansion) {
+    public ShortestPathItem(final PathItem<T> pathItem, final int index, final Expansion expansion) {
         this.pathItem = pathItem;
         this.index = index;
         this.expansion = expansion;
         initComponents();
-        initEventHandling();
     }
 
     @Override
     public void initComponents() {
-        this.distanceLabel = LabelBuilder.builder().withStyleClass(SHORTEST_PATH_ITEM_LABEL_STYLE_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.distance")).build();
-        this.blueprintsLabel = LabelBuilder.builder().withStyleClass(SHORTEST_PATH_ITEM_LABEL_STYLE_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.blueprints")).build();
-        this.distance = LabelBuilder.builder().withNonLocalizedText(" " + ((this.index > 1) ? "+" : "") + NUMBER_FORMAT.format(this.pathItem.getDistance()) + "Ly").build();
-        this.engineer = LabelBuilder.builder().withStyleClass("shortest-path-item-label-big").withText(LocaleService.getStringBinding(() -> " " + LocaleService.getLocalizedStringForCurrentLocale(this.pathItem.getEngineer().getLocalizationKey()))).build();
-        this.blueprints.addAll(this.pathItem.getBlueprints().stream().flatMap(temp -> temp.getRecipe().keySet().stream().map(bp -> (bp instanceof HorizonsBlueprint horizonsBlueprint)
-                        ? HorizonsBlueprintConstants.getRecipe(horizonsBlueprint.getBlueprintName(), horizonsBlueprint.getHorizonsBlueprintType(), HorizonsBlueprintGrade.GRADE_1)
-                        : bp).distinct())
-                .collect(Collectors.groupingBy(
-                        recipe -> recipe,
-                        Collectors.summingInt(value -> 1))
-                ).entrySet().stream()
+        this.getStyleClass().add("shortest-path-item");
+        DestroyableLabel blueprintsLabel = LabelBuilder.builder()
+                .withStyleClass("blueprints-title")
+                .withText("tab.wishlist.travel.path.column.blueprints")
+                .build();
+        DestroyableLabel engineer = LabelBuilder.builder()
+                .withStyleClass("engineer")
+                .withText(this.pathItem.getEngineer().getLocalizationKey())
+                .build();
+        List<DestroyableLabel> blueprints = new ArrayList<>(this.pathItem.getRecipes().entrySet().stream()
                 .sorted(Comparator.comparing((Map.Entry o) -> o.getKey() instanceof HorizonsExperimentalEffectBlueprint)
                         .thenComparing((Map.Entry o) -> LocaleService.getLocalizedStringForCurrentLocale(((Blueprint) o.getKey()).getBlueprintName().getLocalizationKey())))
                 .map(entry ->
@@ -86,38 +64,62 @@ class ShortestPathItem<T extends BlueprintName<T>> extends VBox implements Templ
                                 stringBinding = LocaleService.getStringBinding("tab.wishlist.travel.path.column.blueprints.blueprint.odyssey", LocaleService.LocalizationKey.of(entry.getKey().getBlueprintName().getLocalizationKey()), entry.getValue());
                             }
                             return LabelBuilder.builder()
-                                    .withStyleClasses("shortest-path-item-label-value", "shortest-path-item-label-blueprint")
-                                    .withOnMouseClicked(event -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsBlueprintClickEvent(entry.getKey()) : new BlueprintClickEvent(entry.getKey().getBlueprintName())))
+                                    .withStyleClasses("blueprint")
+                                    .withOnMouseClicked(_ -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsBlueprintClickEvent(entry.getKey()) : new BlueprintClickEvent(entry.getKey().getBlueprintName())))
                                     .withText(stringBinding
                                     )
                                     .build();
                         }
-                ).toList()
-        );
+                ).toList());
 
-        this.getStyleClass().add("shortest-path-item");
         if (!Engineer.UNKNOWN.equals(this.pathItem.getEngineer())) {
-            this.getChildren().addAll(BoxBuilder.builder().withNodes(this.engineer, new GrowingRegion(), LabelBuilder.builder().withStyleClass("shortest-path-item-label-big").withNonLocalizedText("  " + this.index).build()).buildHBox());
+            final DestroyableLabel indexLabel = LabelBuilder.builder()
+                    .withStyleClass("index")
+                    .withNonLocalizedText(String.valueOf(this.index))
+                    .build();
+            final DestroyableHBox titleBox = BoxBuilder.builder()
+                    .withStyleClass("title-line")
+                    .withNodes(engineer, new GrowingRegion(), indexLabel)
+                    .buildHBox();
+            this.getNodes().addAll(titleBox);
 
             if (!Engineer.REMOTE_WORKSHOP.equals(this.pathItem.getEngineer())) {
-                addLocation(this.pathItem.getEngineer());
-                this.getChildren().addAll(BoxBuilder.builder().withNodes(this.distanceLabel, this.distance).buildHBox());
-                this.getChildren().addAll(new Label());
+                final CopyableLocation copyableLocation = new CopyableLocation(this.pathItem.getEngineer().getStarSystem(), this.pathItem.getEngineer().getSettlement().getSettlementName());
+
+                DestroyableLabel distanceLabel = LabelBuilder.builder()
+                        .withStyleClass("distance-title")
+                        .withText("tab.wishlist.travel.path.column.distance")
+                        .build();
+                DestroyableLabel distance = LabelBuilder.builder()
+                        .withStyleClass("distance")
+                        .withText(((this.index > 1) ? "tab.wishlist.distance.plus" : "tab.wishlist.distance"), Formatters.NUMBER_FORMAT_2.format(this.pathItem.getDistance()))
+                        .build();
+                final DestroyableHBox distanceBox = BoxBuilder.builder()
+                        .withStyleClass("distance-line")
+                        .withNodes(distanceLabel, distance)
+                        .buildHBox();
+                this.getNodes().addAll(copyableLocation, distanceBox);
             }
         } else {
-            this.getChildren().addAll(this.engineer);
+            this.getNodes().add(engineer);
         }
-        this.getChildren().addAll(this.blueprintsLabel);
-        this.getChildren().addAll(this.blueprints);
-        this.getChildren().addAll(new GrowingRegion("shortest-path-item-spacer"));
-        final String wishlistUUID = this.pathItem.getBlueprints().stream().findFirst().map(WishlistBlueprintTemplate::getWishlistUUID).orElse("");
-        if (!wishlistUUID.equals(Wishlist.ALL.getUuid())) {
-            this.removeButton = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions.remove")).build();
-            this.hideButton = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions.hide")).build();
-
-            this.removeButton.setOnAction((ActionEvent event) -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsRemoveWishlistShortestPathItemEvent((PathItem<HorizonsBlueprintName>) this.pathItem) : new RemoveWishlistShortestPathItemEvent((PathItem<OdysseyBlueprintName>) this.pathItem)));
-            this.hideButton.setOnAction((ActionEvent event) -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsHideWishlistShortestPathItemEvent((PathItem<HorizonsBlueprintName>) this.pathItem) : new HideWishlistShortestPathItemEvent((PathItem<OdysseyBlueprintName>) this.pathItem)));
-            this.getChildren().addAll(BoxBuilder.builder().withStyleClass("shortest-path-item-button").withNodes(this.hideButton, new GrowingRegion(), this.removeButton).buildHBox());
+        this.getNodes().add(blueprintsLabel);
+        this.getNodes().addAll(blueprints);
+        this.getNodes().add(new GrowingRegion());
+        if (!ApplicationState.getInstance().getPreferredCommander()
+                .map(commander -> WishlistService.getHorizonsWishlists(commander).getSelectedWishlistUUID().equals(Wishlist.ALL.getUuid()))
+                .orElse(false)) {
+            DestroyableButton removeButton = ButtonBuilder.builder()
+                    .withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions.remove"))
+                    .withOnAction(_ -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsRemoveWishlistShortestPathItemEvent((PathItem<HorizonsBlueprintName>) this.pathItem) : new RemoveWishlistShortestPathItemEvent((PathItem<OdysseyBlueprintName>) this.pathItem)))
+                    .build();
+            DestroyableButton hideButton = ButtonBuilder.builder()
+                    .withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions.hide"))
+                    .withOnAction(_ -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsHideWishlistShortestPathItemEvent((PathItem<HorizonsBlueprintName>) this.pathItem) : new HideWishlistShortestPathItemEvent((PathItem<OdysseyBlueprintName>) this.pathItem)))
+                    .build();
+            this.getNodes().addAll(BoxBuilder.builder()
+                    .withStyleClass("buttons")
+                    .withNodes(hideButton, new GrowingRegion(), removeButton).buildHBox());
         }
     }
 
@@ -126,31 +128,5 @@ class ShortestPathItem<T extends BlueprintName<T>> extends VBox implements Templ
             return horizonsModuleWishlistBlueprint.getHorizonsBlueprintType();
         }
         return null;
-    }
-
-    private static final String STYLECLASS_MATERIAL_TOOLTIP_LOCATION_LINE = "material-tooltip-location-line";
-
-    private void addLocation(final Engineer engineer) {
-        final Label label = LabelBuilder.builder().withStyleClass("shortest-path-item-label-value").withNonLocalizedText(engineer.getSettlement().getSettlementName() + " | " + engineer.getStarSystem().getName() + " ").build();
-        this.getChildren().add(BoxBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_LOCATION_LINE)
-                .withOnMouseClicked(event -> {
-                    copyLocationToClipboard(engineer.getStarSystem().getName());
-                    NotificationService.showInformation(NotificationType.COPY, "Clipboard", "System name copied.");
-                }).withNodes(label, new StackPane(ResizableImageViewBuilder.builder()
-                        .withStyleClass("material-tooltip-copy-icon")
-                        .withImage("/images/other/copy.png")
-                        .build())).buildHBox());
-    }
-
-    private static void copyLocationToClipboard(final String text) {
-        final Clipboard clipboard = Clipboard.getSystemClipboard();
-        final ClipboardContent content = new ClipboardContent();
-        content.putString(text);
-        clipboard.setContent(content);
-    }
-
-    @Override
-    public void initEventHandling() {
-        //NOOP
     }
 }

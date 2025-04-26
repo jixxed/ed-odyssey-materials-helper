@@ -1,0 +1,8 @@
+.bottombar {
+  -fx-alignment: center-left;
+  -fx-spacing: 10;
+  -fx-padding: 0 0 0 10;
+  -fx-border-width: 1;
+  -fx-border-color: $background-color-lighter;
+  @include fixedHeight(2em);
+}

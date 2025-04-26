@@ -1,0 +1,246 @@
+.blueprint-menu {
+  @include fixedWidth(36.2em);
+  -fx-border-color: #2b2b2b;
+  -fx-border-width: 0.1em;
+
+  .blueprint-title-pane {
+    @include fixedWidth(36em);
+  }
+
+  //combobox
+  .blueprint-list {
+    @include fixedWidth(36em);
+  }
+
+  .blueprint-grade-togglebutton {
+    -fx-min-width: 7.2em;
+    -fx-max-height: 2em;
+  }
+
+  .blueprint-grade-togglebutton .blueprint-grade-image {
+    @include fixedWidth(2em);
+    @include fixedHeight(2em);
+    -fx-preserve-ratio: true;
+  }
+
+  .blueprint-synthesis-togglebutton {
+    -fx-min-width: 12em;
+    -fx-max-height: 2em;
+  }
+
+
+  .blueprint-content {
+    -fx-padding: 0.25em;
+    -fx-max-height: 9999;
+    @include fixedWidth(35.75em);
+
+    //controls
+
+    .switch {
+      @include fixedWidth(35.20em);
+      -fx-spacing: 0 0 1em 0;
+    }
+
+    .switch-spacer {
+      @include fixedHeight(0.25em);
+    }
+
+    .wishlist-count-box {
+      -fx-spacing: 10;
+      -fx-alignment: top-right;
+    }
+
+    .wishlist-count {
+      -fx-background-radius: 1.2em;
+      -fx-background-color: $background-color-white;
+      -fx-label-padding: 0.4em;
+      -fx-font-weight: bold;
+      -fx-text-fill: $text-color-black;
+    }
+
+    .wishlist-button {
+      -fx-fit-to-width: true;
+
+      &:hidden-menu > .arrow-button,
+      &:hidden-menu > .arrow-button > .arrow {
+        -fx-padding: 0;
+      }
+    }
+
+
+    //titles
+    .title {
+      -fx-font-size: 1.1em;
+      -fx-max-width: 35.5em;
+      -fx-wrap-text: true;
+      -fx-font-weight: bold;
+      -fx-alignment: bottom-left;
+
+      &.spacing {
+        @include fixedHeight(2em);
+        -fx-label-padding: 0 0 0.2em 0;
+      }
+    }
+
+    //description
+
+    .live {
+      -fx-font-weight: normal;
+      -fx-max-width: 35.5em;
+      -fx-underline: true;
+    }
+
+    .description {
+      -fx-max-width: 35.5em;
+      -fx-wrap-text: true;
+      -fx-font-weight: normal;
+      -fx-text-fill: $text-color-white;
+    }
+
+    //ingredients
+    .ingredient-flowz, .ingredient-flow {
+      @include hvGap(0.25em);
+      @include fixedWidth(35.5em);
+
+      .ingredient {
+        @include fixedWidth(17.5em);
+        -fx-padding: 0.25em;
+        -fx-border-color: $border-color-black;
+        -fx-background-color: $background-color-dark;
+
+
+        .name {
+          -fx-text-fill: $text-color-white;
+          -fx-label-padding: 0.25em;
+          -fx-wrap-text: true;
+          -fx-font-weight: bold;
+          -fx-max-width: 15em;
+        }
+
+
+        .quantity {
+          -fx-font-weight: bold;
+          //-fx-padding: 0.25em;
+        }
+
+        .quantity-section {
+          -fx-spacing: 0.25em;
+        }
+
+        .required, .available, .quantity {
+          -fx-text-fill: $text-color-red;
+        }
+
+        &:filled .required, &:filled .available, &:filled .quantity {
+          -fx-text-fill: $text-color-green;
+        }
+
+        .ingredient-image {
+          @include fixedWidth(2em);
+          @include fixedHeight(2em);
+          -fx-fit-to-height: true;
+          -fx-fit-to-width: true;
+        }
+
+        &:partial .required, &:partial .available, &:partial .quantity {
+          -fx-text-fill: $text-color-yellow;
+        }
+      }
+
+      .mission {
+        @include fixedWidth(35.25em);
+
+        .name {
+          -fx-max-width: 34.75em;
+        }
+      }
+    }
+
+    //engineers
+    .engineer-flow {
+      @include hvGap(0.25em);
+      @include fixedWidth(35.5em);
+    }
+
+    .engineer {
+      -fx-padding: 0.25em;
+      -fx-cursor: hand;
+      -fx-background-color: $background-color-dark;
+      -fx-border-color: $border-color-black;
+
+      &.pinnable:hover {
+        -fx-background-color: #2e2e2e;
+      }
+
+      .name {
+        @include fixedHeight(2em);
+        -fx-padding: 0.25em;
+        -fx-text-fill: $text-color-red;
+      }
+
+      .maxgrade {
+        @include fixedHeight(2em);
+        -fx-padding: 0.25em;
+
+      }
+
+      .grade-image {
+        @include fixedHeight(2em);
+      }
+
+      .pinned-image {
+        @include fixedHeight(2em);
+      }
+
+
+      &:unlocked .name {
+        -fx-text-fill: $text-color-green;
+      }
+
+      &:lowgrade .name {
+        -fx-text-fill: $text-color-yellow;
+      }
+    }
+
+    //modifiers
+    .modifier {
+      @include menu-modifier;
+    }
+
+    .modifier-flow {
+      @include hvGap(0.25em);
+      @include fixedWidth(35.5em);
+    }
+
+    .nearest-broker {
+      @include fixedWidth(35.25em);
+      -fx-background-color: $background-color-dark;
+      -fx-border-color: $border-color-black;
+      -fx-padding: 0.25em;
+
+      &:hidden {
+        -fx-opacity: 0;
+      }
+
+      .title {
+        -fx-text-fill: white;
+        -fx-font-size: 1.2em;
+        -fx-font-weight: normal;
+      }
+
+      .copyable-location {
+        @include copyable-location;
+      }
+    }
+  }
+
+  .about-title-pane {
+    @include fixedWidth(36em);
+    -fx-fill-width: true;
+    -fx-padding: 0;
+  }
+
+  .about {
+    @include about;
+  }
+}

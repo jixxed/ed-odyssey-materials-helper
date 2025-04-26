@@ -17,13 +17,18 @@ import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+import nl.jixxed.eliteodysseymaterials.builder.StackPaneBuilder;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableStackPane;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class SliderSkin extends javafx.scene.control.skin.SliderSkin {
-    private StackPane fill = new StackPane();
+    private DestroyableStackPane fill = StackPaneBuilder.builder()
+            .build();
 
     private StackPane thumb, track;
 
@@ -32,6 +37,23 @@ public class SliderSkin extends javafx.scene.control.skin.SliderSkin {
     private SliderPopup popup = new SliderPopup();
     private static final int POPUP_DISTANCE_FROM_THUMB = 50;
     private static final Duration POPUP_FADE_DURATION = Duration.millis(200);
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        if (popup != null && popup.getSkin() != null) {
+            popup.getSkin().dispose();
+        }
+        fill.destroy();
+        popup = null;
+        getChildren().forEach(child -> {
+            if (child instanceof DestroyableTemplate template) {
+                template.destroyTemplate();
+            } else if (child instanceof Destroyable destroyable) {
+                destroyable.destroy();
+            }
+        });
+    }
 
     public SliderSkin(Slider control) {
         super(control);
@@ -105,7 +127,7 @@ public class SliderSkin extends javafx.scene.control.skin.SliderSkin {
         if (orientation.equals(Orientation.HORIZONTAL)) {
             popup.show(thumb, thumbScreenPos.getX() + thumb.getWidth() / 2, thumbScreenPos.getY() - POPUP_DISTANCE_FROM_THUMB);
             popup.setX(popup.getX() - popup.getWidth() / 2); /* We only know the Popup's bounds after we show it */
-        } else if (orientation.equals(Orientation.VERTICAL)){
+        } else if (orientation.equals(Orientation.VERTICAL)) {
             popup.show(thumb, thumbScreenPos.getX() - POPUP_DISTANCE_FROM_THUMB, thumbScreenPos.getY() + thumb.getHeight() / 2);
             popup.setY(popup.getY() - popup.getHeight() / 2); /* We only know the Popup's bounds after we show it */
         }
@@ -154,7 +176,7 @@ public class SliderSkin extends javafx.scene.control.skin.SliderSkin {
 
         Slider control = getSkinnable();
 
-        boolean showTickMarks = control.isShowTickMarks() ||control.isShowTickLabels();
+        boolean showTickMarks = control.isShowTickMarks() || control.isShowTickLabels();
 
         double thumbWidth = snapSizeX(thumb.prefWidth(-1));
         double thumbHeight = snapSizeY(thumb.prefHeight(-1));
@@ -166,31 +188,31 @@ public class SliderSkin extends javafx.scene.control.skin.SliderSkin {
         NumberAxis tickLine = (NumberAxis) control.lookup("NumberAxis");
 
         if (getSkinnable().getOrientation() == Orientation.HORIZONTAL) {
-            double tickLineHeight =  (showTickMarks) ? tickLine.prefHeight(-1) : 0;
+            double tickLineHeight = (showTickMarks) ? tickLine.prefHeight(-1) : 0;
             double trackHeight = snapSizeY(track.prefHeight(-1));
-            double trackAreaHeight = Math.max(trackHeight,thumbHeight);
-            double totalHeightNeeded = trackAreaHeight  + ((showTickMarks) ? trackToTickGap+tickLineHeight : 0);
-            double startY = y + ((h - totalHeightNeeded)/2); // center slider in available height vertically
+            double trackAreaHeight = Math.max(trackHeight, thumbHeight);
+            double totalHeightNeeded = trackAreaHeight + ((showTickMarks) ? trackToTickGap + tickLineHeight : 0);
+            double startY = y + ((h - totalHeightNeeded) / 2); // center slider in available height vertically
 
-            double trackStart = snapPositionX(x + (thumbWidth/2));
-            double trackTop = (int)(startY + ((trackAreaHeight-trackHeight)/2));
+            double trackStart = snapPositionX(x + (thumbWidth / 2));
+            double trackTop = (int) (startY + ((trackAreaHeight - trackHeight) / 2));
 
-            fill.resizeRelocate((int)(trackStart - trackRadius),
-                    trackTop ,
-                    ((int)trackStart - trackRadius) + thumb.getLayoutX(),
+            fill.resizeRelocate((int) (trackStart - trackRadius),
+                    trackTop,
+                    ((int) trackStart - trackRadius) + thumb.getLayoutX(),
                     trackHeight);
         } else {  // VERTICAL
             double tickLineWidth = (showTickMarks) ? tickLine.prefWidth(-1) : 0;
             double trackWidth = snapSizeX(track.prefWidth(-1));
-            double trackAreaWidth = Math.max(trackWidth,thumbWidth);
-            double totalWidthNeeded = trackAreaWidth  + ((showTickMarks) ? trackToTickGap+tickLineWidth : 0) ;
-            double startX = x + ((w - totalWidthNeeded)/2); // center slider in available width horizontally
+            double trackAreaWidth = Math.max(trackWidth, thumbWidth);
+            double totalWidthNeeded = trackAreaWidth + ((showTickMarks) ? trackToTickGap + tickLineWidth : 0);
+            double startX = x + ((w - totalWidthNeeded) / 2); // center slider in available width horizontally
             double trackLength = snapSizeY(h - thumbHeight);
-            double trackStart = snapPositionY(y + (thumbHeight/2));
-            double trackLeft = (int)(startX + ((trackAreaWidth-trackWidth)/2));
+            double trackStart = snapPositionY(y + (thumbHeight / 2));
+            double trackLeft = (int) (startX + ((trackAreaWidth - trackWidth) / 2));
 
             fill.resizeRelocate(trackLeft,
-                    ((int)trackStart - trackRadius) + thumb.getLayoutY(),
+                    ((int) trackStart - trackRadius) + thumb.getLayoutY(),
                     trackWidth,
                     trackLength - thumb.getLayoutY());
         }
@@ -217,9 +239,13 @@ public class SliderSkin extends javafx.scene.control.skin.SliderSkin {
 
     private BooleanProperty showValueOnInteraction = new SimpleStyleableBooleanProperty(SHOW_VALUE_ON_INTERACTION_META_DATA, true);
 
-    private BooleanProperty showValueOnInteractionProperty() { return showValueOnInteraction; }
+    private BooleanProperty showValueOnInteractionProperty() {
+        return showValueOnInteraction;
+    }
 
-    private boolean isShowValueOnInteraction() { return showValueOnInteraction.get(); }
+    private boolean isShowValueOnInteraction() {
+        return showValueOnInteraction.get();
+    }
 
 
     /* Setup styleables for this Skin */

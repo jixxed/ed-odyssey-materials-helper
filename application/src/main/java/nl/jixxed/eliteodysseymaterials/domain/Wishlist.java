@@ -43,7 +43,7 @@ public class Wishlist {
     public List<OdysseyWishlistBlueprint> getItems() {
         if (this == ALL) {
             return APPLICATION_STATE.getPreferredCommander()
-                    .map(commander -> WishlistService.getWishlists(commander).getAllWishlists().stream()
+                    .map(commander -> WishlistService.getOdysseyWishlists(commander).getAllWishlists().stream()
                             .filter(wishlist -> wishlist != ALL)
                             .flatMap(wishlist -> wishlist.getItems().stream())
                             .toList())

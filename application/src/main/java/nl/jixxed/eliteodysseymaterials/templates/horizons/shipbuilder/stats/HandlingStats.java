@@ -1,7 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
 import javafx.geometry.Orientation;
-import javafx.scene.control.Separator;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
@@ -11,13 +10,14 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableSeparator;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.util.Optional;
 
 @Slf4j
-public class HandlingStats extends Stats implements Template {
+public class HandlingStats extends Stats implements DestroyableTemplate {
     private RangeIndicator pitchIndicator;
     private RangeIndicator rollIndicator;
     private RangeIndicator yawIndicator;
@@ -28,11 +28,11 @@ public class HandlingStats extends Stats implements Template {
         initEventHandling();
 
         pitchIndicator = new RangeIndicator(0D, 0D, 0D, "ship.stats.handling.pitch", "ship.stats.handling.pitch.value");
-        this.getChildren().add(pitchIndicator);
+        this.getNodes().add(pitchIndicator);
         rollIndicator = new RangeIndicator(0D, 0D, 0D, "ship.stats.handling.roll", "ship.stats.handling.roll.value");
-        this.getChildren().add(rollIndicator);
+        this.getNodes().add(rollIndicator);
         yawIndicator = new RangeIndicator(0D, 0D, 0D, "ship.stats.handling.yaw", "ship.stats.handling.yaw.value");
-        this.getChildren().add(yawIndicator);
+        this.getNodes().add(yawIndicator);
     }
 
     private double calculatePitchCurrent(Ship ship, double pitchSpeed, ModuleProfile moduleProfile) {
@@ -73,14 +73,16 @@ public class HandlingStats extends Stats implements Template {
 
     @Override
     public void initComponents() {
-        this.getChildren().add(BoxBuilder.builder().withNodes(new GrowingRegion(), createTitle("ship.stats.handling"), new GrowingRegion()).buildHBox());
-        this.getChildren().add(new Separator(Orientation.HORIZONTAL));
+        this.getNodes().add(BoxBuilder.builder()
+                .withNodes(new GrowingRegion(), createTitle("ship.stats.handling"), new GrowingRegion())
+                .buildHBox());
+        this.getNodes().add(new DestroyableSeparator(Orientation.HORIZONTAL));
 
     }
 
     @Override
     public void initEventHandling() {
-        eventListeners.add(EventService.addListener(true, this, ShipConfigEvent.class, event -> update()));
+        register(EventService.addListener(true, this, ShipConfigEvent.class, event -> update()));
     }
 
     private static Double getMaximumMultiplier(Optional<Slot> thrusters) {

@@ -1,32 +1,21 @@
 package nl.jixxed.eliteodysseymaterials.builder;
 
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
-
-import java.util.*;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableImageView;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ImageViewBuilder {
-    private final List<String> styleClasses = new ArrayList<>();
+public class ImageViewBuilder extends AbstractNodeBuilder<ImageViewBuilder> {
     private Image image;
     private boolean preserveRatio = true;
-    private final Map<EventType<MouseEvent>, EventHandler<? super MouseEvent>> eventHandlers = new HashMap<>();
-    private ObservableValue<? extends Number> fitHeightBinding;
+    private ObservableValue<Number> fitHeightBinding;
+    private ObservableValue<Number> fitWidthBinding;
 
     public static ImageViewBuilder builder() {
         return new ImageViewBuilder();
-    }
-
-    public ImageViewBuilder withStyleClass(final String styleClass) {
-        this.styleClasses.add(styleClass);
-        return this;
     }
 
     public ImageViewBuilder withPreserveRatio(final boolean preserveRatio) {
@@ -44,33 +33,28 @@ public class ImageViewBuilder {
         return this;
     }
 
-    public ImageViewBuilder withFitHeightBinding(final ObservableValue<? extends Number> fitHeightBinding) {
+    public ImageViewBuilder withFitHeightBinding(final ObservableValue<Number> fitHeightBinding) {
         this.fitHeightBinding = fitHeightBinding;
         return this;
     }
 
-    public ImageViewBuilder withStyleClasses(final String... styleClasses) {
-        this.styleClasses.addAll(Arrays.asList(styleClasses));
+    public ImageViewBuilder withFitWidthBinding(final ObservableValue<Number> fitWidthBinding) {
+        this.fitWidthBinding = fitWidthBinding;
         return this;
     }
 
-    public ImageViewBuilder addEventHandler(final EventType<MouseEvent> mouseEvent, final EventHandler<MouseEvent> eventHandler) {
-        this.eventHandlers.put(mouseEvent, eventHandler);
-        return this;
-    }
+    public DestroyableImageView build() {
+        final DestroyableImageView imageView = new DestroyableImageView();
+        super.build(imageView);
 
-    public ImageView build() {
-        final ImageView imageView = new ImageView();
-        imageView.getStyleClass().addAll(this.styleClasses);
         imageView.setImage(this.image);
         imageView.setPreserveRatio(this.preserveRatio);
         if (this.fitHeightBinding != null) {
-            imageView.fitHeightProperty().bind(this.fitHeightBinding);
+            imageView.addBinding(imageView.fitHeightProperty(), this.fitHeightBinding);
         }
-        if (!this.eventHandlers.isEmpty()) {
-            this.eventHandlers.forEach(imageView::addEventHandler);
-
-        }
+//        if (this.fitWidthBinding != null) {
+//            imageView.addBinding(imageView.fitWidthProperty(), this.fitWidthBinding);
+//        }
         return imageView;
     }
 }

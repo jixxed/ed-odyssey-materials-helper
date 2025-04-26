@@ -1,0 +1,148 @@
+.commodities-tab {
+  @include tab;
+}
+
+.commodities-tab-content {
+
+  @include scroll-pane-content;
+
+  .horizons-commodities-overview {
+    -fx-spacing: 0.5em;
+
+    .category-row {
+      -fx-spacing: 0.25em;
+    }
+
+    .material-card-flow-pane {
+      @include hvGap(0.25em);
+    }
+
+    .row-name {
+      @include fixedWidth(10em);
+      @include fixedHeight(3em);
+      -fx-font-weight: bold;
+      -fx-font-size: 1.2em;
+      -fx-text-alignment: left;
+      -fx-alignment: center-left;
+      -fx-wrap-text: true;
+    }
+
+    .commodity-card {
+      -fx-background-color: $background-color-dark;
+      -fx-border-color: $border-color-black;
+
+      &:live {
+        -fx-background-color: linear-gradient(from 0 0 to 0.5em 0.5em, repeat, $background-color-dark 0%, lighten($background-color-dark, 6.25%) 25%, $background-color-dark 50%, lighten($background-color-dark, 6.25%) 75%, $background-color-dark 100%);
+      }
+
+      &:buys {
+        -fx-border-color: #89d07f;
+      }
+
+      &:sells {
+        -fx-border-color: #dcc030;
+      }
+
+      &:buys:sells {
+        -fx-border-color: #2e92df;
+      }
+
+      .rare-image {
+        -fx-pref-height: 100%;
+        -fx-opacity: 0.3;
+      }
+
+      .content {
+        -fx-padding: 0.25em;
+        -fx-spacing: 0.25em;
+        -fx-alignment: center-left;
+        @include fixedWidth(32.9em);
+
+        .name-line {
+          @include fixedHeight(2.5em);
+
+          .image {
+            @include fixedWidth(2.5em);
+            @include fixedHeight(2.5em);
+            -fx-alignment: center-left;
+          }
+
+          .name {
+            @include fixedWidth(28em);
+            -fx-label-padding: 0.5em, 0, 0, 0;
+            -fx-alignment: center-left;
+            -fx-wrap-text: true;
+          }
+        }
+
+        .quantity-line {
+
+          .image {
+            @include fixedWidth(2em);
+            @include fixedHeight(2em);
+          }
+
+          .ingredient-quantity-section {
+            -fx-spacing: 1em;
+          }
+
+          .fleetcarrier-amount {
+            -fx-pref-width: 6.5em;
+            -fx-padding: 0, 0, 0, 1em;
+            -fx-min-height: 2em;
+            -fx-alignment: center-left;
+            -fx-text-alignment: left;
+          }
+
+          .ship-amount {
+            -fx-pref-width: 6.5em;
+            -fx-padding: 0, 1em, 0, 0;
+            -fx-min-height: 2em;
+            -fx-alignment: center-right;
+            -fx-text-alignment: right;
+          }
+        }
+
+
+      }
+
+      .market {
+        @include fixedWidth(32.8em);
+        -fx-pref-height: 100%;
+        -fx-alignment: bottom-center;
+        -fx-padding: 0 0em 0.5em 0;
+
+        .station-box {
+          @include fixedWidth(12em);
+          -fx-pref-height: 100%;
+          -fx-alignment: bottom-center;
+        }
+
+        .station-arrow {
+          -fx-padding: 0 0.25em 0.45em 0.25em;
+          @include fixedWidth(2em);
+          -fx-pref-height: 100%;
+          -fx-alignment: bottom-center;
+        }
+
+        .station-amount-sell, .station-amount-buy {
+          -fx-padding: 0 0em 0.45em 0.25em;
+          -fx-min-height: 2em;
+        }
+
+        .station-amount-buy {
+          -fx-alignment: bottom-right;
+          -fx-text-alignment: right;
+        }
+
+        .station-amount-sell {
+          -fx-alignment: bottom-left;
+          -fx-text-alignment: left;
+        }
+      }
+
+    }
+
+
+  }
+}

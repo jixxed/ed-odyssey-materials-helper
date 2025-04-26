@@ -1,28 +1,47 @@
 package nl.jixxed.eliteodysseymaterials.templates.components.segmentbar;
 
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableStackPane;
 
 import java.util.Map;
 
-public class TypeSegmentView extends StackPane {
+public class TypeSegmentView extends DestroyableStackPane {
 
     public TypeSegmentView(final TypeSegment segment, final Map<SegmentType, Color> colorMap, final boolean withLabel) {
-        final Label label;
+        this.getStyleClass().add(getStyleClassName(segment));
         final Color color = colorMap.get(segment.getSegmentType());
         this.setStyle("-fx-background-color: " + toHexString(color) + ";");
         this.setPadding(new Insets(5.0));
         this.setPrefHeight(30.0);
         if (withLabel) {
-            label = LabelBuilder.builder().build();
-            label.textProperty().bind(segment.textProperty());
-            label.getStyleClass().add("horizons-materialcard-amount");
-            this.getChildren().add(label);
-            label.visibleProperty().bind(segment.textProperty().isNotEqualTo("0"));
+            final DestroyableLabel label = LabelBuilder.builder()
+                    .withStyleClass("horizons-materialcard-amount")//horizons-materialcard-amount
+                    .withVisibilityProperty(segment.textProperty().isNotEqualTo("0"))
+                    .build();
+            label.addBinding(label.textProperty(), segment.textProperty());
+            this.getNodes().add(label);
         }
+    }
+
+    public TypeSegmentView(final TypeSegment segment, final boolean withLabel) {
+        this.getStyleClass().add(getStyleClassName(segment));
+        if (withLabel) {
+            DestroyableLabel label = LabelBuilder.builder()
+                    .withStyleClass("horizons-materialcard-amount")//horizons-materialcard-amount
+                    .withVisibilityProperty(segment.textProperty().isNotEqualTo("0"))
+                    .build();
+            label.addBinding(label.textProperty(), segment.textProperty());
+            this.getNodes().add(label);
+        }
+    }
+
+    private static String getStyleClassName(TypeSegment segment) {
+        return segment.segmentType.name()
+                .toLowerCase()
+                .replace("_", "-");
     }
 
     private String format(final double val) {

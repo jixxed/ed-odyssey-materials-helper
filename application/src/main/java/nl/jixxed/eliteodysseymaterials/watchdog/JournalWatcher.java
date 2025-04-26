@@ -10,6 +10,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.CommanderAllListedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -39,55 +40,57 @@ public class JournalWatcher {
     private final Pattern journalPatternDate = Pattern.compile("Journal\\.(\\d{4})-(\\d{2})-(\\d{2})T(\\d{6})\\.(\\d{2})\\.log");
 
     public void watch(final File folder, final Consumer<File> fileModifiedProcessor, final Consumer<File> fileSwitchedProcessor) {
-        Platform.runLater(() -> {
-            try {
-                this.watchedFolder = folder;
-                if (!folder.exists()) {
-                    EventService.publish(new JournalInitEvent(true));
-                    return;
-                }
-                listCommanders(folder);
-                findLatestFile(folder);
-                if (this.currentlyWatchedFile.isEmpty()) {
-                    EventService.publish(new JournalInitEvent(true));
-                    return;
-                }
-                this.currentlyWatchedFile.ifPresent(fileSwitchedProcessor);
-                this.fileWatcher = new FileWatcher(true).withListener(new FileAdapter() {
-                    @Override
-                    public void onModified(final FileEvent event) {
-                        final File file = event.getFile();
-                        final String currentFilePath = getCurrentFilePath();
-                        final boolean isSameFile = currentFilePath.equals(file.getAbsolutePath());
-                        if (isSameFile || isValidOdysseyJournal(file)) {
-                            if (isSameFile) {
-                                fileModifiedProcessor.accept(file);
-                            } else if (isNewerJournal(file)) {
-                                setCurrentlyWatchedFile(file);
-                                fileSwitchedProcessor.accept(file);
-                                log.info("Switched to journal: " + file.getAbsolutePath());
-                            } else {
-                                log.info("Rejected journal: " + file.getAbsolutePath());
-                            }
+//        Platform.runLater(() -> {
+        try {
+            this.watchedFolder = folder;
+            if (!folder.exists()) {
+                EventService.publish(new JournalInitEvent(true));
+                return;
+            }
+            listCommanders(folder);
+            findLatestFile(folder);
+            if (this.currentlyWatchedFile.isEmpty()) {
+                EventService.publish(new JournalInitEvent(true));
+                return;
+            }
+            this.currentlyWatchedFile.ifPresent(fileSwitchedProcessor);
+            this.fileWatcher = new FileWatcher(true).withListener(new FileAdapter() {
+                @Override
+                public void onModified(final FileEvent event) {
+                    final File file = event.getFile();
+                    final String currentFilePath = getCurrentFilePath();
+                    final boolean isSameFile = currentFilePath.equals(file.getAbsolutePath());
+                    if (isSameFile || isValidOdysseyJournal(file)) {
+                        if (isSameFile) {
+                            fileModifiedProcessor.accept(file);
+                        } else if (isNewerJournal(file)) {
+                            setCurrentlyWatchedFile(file);
+                            fileSwitchedProcessor.accept(file);
+                            log.info("Switched to journal: " + file.getAbsolutePath());
+                        } else {
+                            log.info("Rejected journal: " + file.getAbsolutePath());
                         }
                     }
+                }
 
-                    private boolean isValidOdysseyJournal(final File file) {
-                        return file.isFile()
-                                && file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX)
-                                && file.getName().endsWith(AppConstants.JOURNAL_FILE_SUFFIX)
-                                && isNewerThanTwoYears(file)
-                                && hasFileHeader(file)
-                                && hasCommanderHeader(file)
-                                && isSelectedCommander(file);
-                    }
-                }).watch(folder);
-            } catch (Exception ex) {
-                log.error("failed to initialize journal", ex);
-                NotificationService.showError(NotificationType.ERROR,"Error initializing", "Check logs for errors and contact the developer for support");
-                EventService.publish(new JournalInitEvent(true));
-            }
-        });
+                private boolean isValidOdysseyJournal(final File file) {
+                    return file.isFile()
+                            && file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX)
+                            && file.getName().endsWith(AppConstants.JOURNAL_FILE_SUFFIX)
+                            && isNewerThanTwoYears(file)
+                            && hasFileHeader(file)
+                            && hasCommanderHeader(file)
+                            && isSelectedCommander(file);
+                }
+            }).watch(folder);
+        } catch (Exception ex) {
+            log.error("failed to initialize journal", ex);
+            Platform.runLater(() -> {
+                NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.journal.init.error.title"), LocaleService.LocaleString.of("notification.journal.init.error.text"));
+            });
+            EventService.publish(new JournalInitEvent(true));
+        }
+//        });
     }
 
     private synchronized String getCurrentFilePath() {

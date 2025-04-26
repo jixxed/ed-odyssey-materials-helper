@@ -1,0 +1,25 @@
+@import "variables";
+@import "mixins";
+
+.root {
+  fx-font-size: 12px;
+}
+
+// ApplicationLayout
+.app {
+  -fx-pref-height: 600px;
+  -fx-pref-width: 800px;
+
+  @import "application-screen/application-screen";
+  @import "loading-screen/loading-screen";
+  @import "common/tooltips";
+}
+
+//label {
+//  -fx-wrap-text: true;
+//}
+
+@import "common/dialog";
+@import "common/notifications";
+
+//@import "old";

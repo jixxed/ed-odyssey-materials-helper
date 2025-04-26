@@ -1,20 +1,14 @@
 package nl.jixxed.eliteodysseymaterials.templates.destroyables;
 
-import nl.jixxed.eliteodysseymaterials.templates.Template;
-
-import java.util.List;
-
 public interface DestroyableTemplate extends Template, Destroyable {
-    default void addDestroyableNode(final DestroyableComponent destroyable) {
-        getDestroyablesList().add(destroyable);
+    default void destroyTemplate() {
+        //clean up more
+        if (this instanceof DestroyableParent destroyableParent) {
+            destroyableParent.destroy();
+        } else if (this instanceof DestroyableComponent destroyableComponent) {
+            destroyableComponent.destroy();
+        } else {
+            Destroyable.super.destroy();
+        }
     }
-
-    @Override
-    default void destroy() {
-        getDestroyablesList().forEach(Destroyable::destroy);
-        getDestroyablesList().clear();
-        destroyInternal();
-    }
-
-    List<Destroyable> getDestroyablesList();
 }

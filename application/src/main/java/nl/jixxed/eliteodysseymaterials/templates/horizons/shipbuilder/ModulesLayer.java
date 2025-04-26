@@ -2,49 +2,37 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
 import javafx.application.Platform;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ImageSlot;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsShipSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ModulesLayer extends AnchorPane implements Template {
+public class ModulesLayer extends DestroyableAnchorPane implements DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
-    private ScrollPane scrollPane;
-    private VBox hardpointsVbox;
-    private VBox coreVbox;
-    private VBox optionalVBox;
-    private VBox utilityVbox;
-    private HBox slotColumns;
-    private Circle circleStart;
-    private Circle circleEnd;
-    private Line line;
-    private Line line2;
-    private Group overlayLine;
-    private Pane pane;
-    private DestroyableResizableImageView shipImage;
-    private StackPane imageLayer;
+
+    private DestroyableVBox hardpointsVbox;
+    private DestroyableVBox coreVbox;
+    private DestroyableVBox optionalVBox;
+    private DestroyableVBox utilityVbox;
+    private DestroyableCircle circleStart;
+    private DestroyableCircle circleEnd;
+    private DestroyableLine line;
+    private DestroyableLine line2;
+    private DestroyableGroup overlayLine;
+    private DestroyableStackPane imageLayer;
     private HorizonsShipBuilderTab tab;
+    private DestroyableResizableImageView shipImage;
     private DestroyableResizableImageView gridImage;
     private int lastIndex;
 
@@ -56,23 +44,23 @@ public class ModulesLayer extends AnchorPane implements Template {
 
     @Override
     public void initComponents() {
-        this.getStyleClass().add("shipbuilder-modules-layer");
+        this.getStyleClass().add("modules");
         initShipLayout();
 
     }
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, 0, HorizonsShipSelectedEvent.class, horizonsShipSelectedEvent -> {
+        register(EventService.addListener(true, this, 0, HorizonsShipSelectedEvent.class, horizonsShipSelectedEvent -> {
             APPLICATION_STATE.getPreferredCommander()
                     .flatMap(commander -> ShipService.getShipConfigurations(commander).getSelectedShipConfiguration())
                     .ifPresent(configuration -> APPLICATION_STATE.setShip(ShipMapper.toShip(configuration)));
             initShipSlots();
         }));
 
-        this.eventListeners.add(EventService.addListener(true, this, 9, AfterFontSizeSetEvent.class, fontSizeEvent -> {
-            if(this.imageLayer.isVisible()){
-                if(this.hardpointsVbox.isVisible()){
+        register(EventService.addListener(true, this, 9, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+            if (this.imageLayer.isVisible()) {
+                if (this.hardpointsVbox.isVisible()) {
                     drawHardpointLine(lastIndex);
                 } else {
                     drawUtilityLine(lastIndex);
@@ -82,74 +70,100 @@ public class ModulesLayer extends AnchorPane implements Template {
     }
 
     public void initShipLayout() {
-        this.hardpointsVbox = BoxBuilder.builder().withStyleClass("shipbuilder-slots-vbox").buildVBox();
-        this.coreVbox = BoxBuilder.builder().withStyleClass("shipbuilder-slots-vbox").buildVBox();
-        this.optionalVBox = BoxBuilder.builder().withStyleClass("shipbuilder-slots-vbox").buildVBox();
-        this.utilityVbox = BoxBuilder.builder().withStyleClass("shipbuilder-slots-vbox").buildVBox();
+        this.hardpointsVbox = BoxBuilder.builder()
+                .withStyleClass("shipbuilder-slots-vbox")
+                .buildVBox();
+        this.coreVbox = BoxBuilder.builder()
+                .withStyleClass("shipbuilder-slots-vbox")
+                .buildVBox();
+        this.optionalVBox = BoxBuilder.builder()
+                .withStyleClass("shipbuilder-slots-vbox")
+                .buildVBox();
+        this.utilityVbox = BoxBuilder.builder()
+                .withStyleClass("shipbuilder-slots-vbox")
+                .buildVBox();
 //        this.hardpointsVbox = BoxBuilder.builder().withStyleClass("shipbuilder-slots-vbox").withNodes(this.ship.getHardpointSlots().stream().map(slot -> new SlotBox(this, slot)).toArray(SlotBox[]::new)).buildVBox();
 //        this.coreVbox = BoxBuilder.builder().withStyleClass("shipbuilder-slots-vbox").withNodes(this.ship.getCoreSlots().stream().map(slot -> new SlotBox(this, slot)).toArray(SlotBox[]::new)).buildVBox();
 //        this.optionalVBox = BoxBuilder.builder().withStyleClass("shipbuilder-slots-vbox").withNodes(this.ship.getOptionalSlots().stream().map(slot -> new SlotBox(this, slot)).toArray(SlotBox[]::new)).buildVBox();
 //        this.utilityVbox = BoxBuilder.builder().withStyleClass("shipbuilder-slots-vbox").withNodes(this.ship.getUtilitySlots().stream().map(slot -> new SlotBox(this, slot)).toArray(SlotBox[]::new)).buildVBox();
         initShipSlots();
-        final Region regionRight = new Region();
-        regionRight.minWidthProperty().bind(this.tab.getDetailsLayer().getModuleDetails().widthProperty());
-        regionRight.maxWidthProperty().bind(this.tab.getDetailsLayer().getModuleDetails().widthProperty());
-        this.slotColumns = BoxBuilder.builder().withNodes(this.hardpointsVbox, this.coreVbox, this.optionalVBox, this.utilityVbox, regionRight).buildHBox();
-        gridImage = ResizableImageViewBuilder.builder().withStyleClass("shipbuilder-ship-image").withImage("/images/ships/ship/grid.png").build();
-        shipImage = ResizableImageViewBuilder.builder().withStyleClass("shipbuilder-ship-image").withImage("/images/ships/ship/grid.png").build();
-        this.imageLayer = new StackPane(gridImage, shipImage);
-        this.imageLayer.getStyleClass().add("shipbuilder-stackpane");
-        this.imageLayer.setVisible(false);
-        this.imageLayer.setPickOnBounds(false);
-        final Region region = new Region();
-        region.minHeightProperty().bind(this.tab.getStatsLayer().getStats().heightProperty());
-        region.maxHeightProperty().bind(this.tab.getStatsLayer().getStats().heightProperty());
-        final VBox modulesLayer = BoxBuilder.builder().withNodes(this.slotColumns, region).withStyleClass("shipbuilder-slots-hbox").buildVBox();
-        final AnchorPane anchorPane = new AnchorPane(this.imageLayer);
+        final DestroyableRegion regionRight = new DestroyableRegion();
+        regionRight.addBinding(regionRight.minWidthProperty(), this.tab.getDetailsLayer().getModuleDetails().widthProperty());
+        regionRight.addBinding(regionRight.maxWidthProperty(), this.tab.getDetailsLayer().getModuleDetails().widthProperty());
+        DestroyableHBox slotColumns = BoxBuilder.builder()
+                .withNodes(this.hardpointsVbox, this.coreVbox, this.optionalVBox, this.utilityVbox, regionRight)
+                .buildHBox();
+        gridImage = ResizableImageViewBuilder.builder()
+                .withStyleClass("shipbuilder-ship-image")
+                .withImage("/images/ships/ship/grid.png")
+                .build();
+        shipImage = ResizableImageViewBuilder.builder()
+                .withStyleClass("shipbuilder-ship-image")
+                .withImage("/images/ships/ship/grid.png")
+                .build();
+        this.imageLayer = StackPaneBuilder.builder()
+                .withStyleClass("shipbuilder-stackpane")
+                .withNodes(gridImage, shipImage)
+                .withVisibility(false)
+                .withPickOnBounds(false)
+                .build();
+        final DestroyableRegion region = new DestroyableRegion();
+        region.addBinding(region.minHeightProperty(), this.tab.getStatsLayer().getStats().heightProperty());
+        region.addBinding(region.maxHeightProperty(), this.tab.getStatsLayer().getStats().heightProperty());
+        final DestroyableVBox modulesLayer = BoxBuilder.builder()
+                .withNodes(slotColumns, region)
+                .withStyleClass("shipbuilder-slots-hbox").buildVBox();
+        final DestroyableAnchorPane anchorPane = AnchorPaneBuilder.builder()
+                .withNodes(this.imageLayer)
+                .build();
         anchorPane.setPickOnBounds(false);
         StackPane.setAlignment(anchorPane, Pos.TOP_LEFT);
-//        anchorPane.minWidthProperty().bind(this.slotColumns.widthProperty());
-//        anchorPane.maxWidthProperty().bind(this.slotColumns.widthProperty());
+//        anchorPane.addBinding(//        anchorPane.minWidthProperty(),this.slotColumns.widthProperty());
+//        anchorPane.addBinding(//        anchorPane.maxWidthProperty(),this.slotColumns.widthProperty());
         anchorPane.getStyleClass().add("shipbuilder-stackpane-anchor");
-        final StackPane content = new StackPane(modulesLayer, anchorPane);
+        final DestroyableStackPane content = StackPaneBuilder.builder()
+                .withNodes(modulesLayer, anchorPane)
+                .build();
         content.getStyleClass().add("shipbuilder-slots-content");
         AnchorPane.setTopAnchor(this.imageLayer, 0D);
         AnchorPane.setRightAnchor(this.imageLayer, 0D);
-        this.scrollPane = ScrollPaneBuilder.builder()
+        DestroyableScrollPane scrollPane = ScrollPaneBuilder.builder()
                 .withContent(content)
                 .withStyleClass("shipbuilder-modules-scrollpane")
                 .build();
         //Drawing a Circle
-        this.circleStart = new Circle();
-        this.circleEnd = new Circle();
-        this.line = new Line();
-        this.line2 = new Line();
-        this.pane = new Pane(this.circleStart, this.line, this.circleEnd, this.line2);
-        this.pane.getStyleClass().add("shipbuilder-overlay");
-        this.overlayLine = new Group(this.pane);
+        this.circleStart = new DestroyableCircle();
+        this.circleEnd = new DestroyableCircle();
+        this.line = new DestroyableLine();
+        this.line2 = new DestroyableLine();
+        DestroyablePane pane = PaneBuilder.builder()
+                .withNodes(this.circleStart, this.line, this.circleEnd, this.line2)
+                .build();
+        pane.getStyleClass().add("shipbuilder-overlay");
+        this.overlayLine = new DestroyableGroup(pane);
 //        this.overlayLine.getStyleClass().add("shipbuilder-overlay");
-        this.imageLayer.getChildren().add(this.overlayLine);
+        this.imageLayer.getNodes().add(this.overlayLine);
 //        StackPane.setAlignment(this.overlayLine, Pos.TOP_LEFT);
 //        StackPane.setAlignment(gridImage, Pos.TOP_LEFT);
 //        StackPane.setAlignment(shipImage, Pos.TOP_LEFT);
 
-        this.getChildren().add(this.scrollPane);
-        AnchorPane.setTopAnchor(this.scrollPane, -1D);
-        AnchorPane.setRightAnchor(this.scrollPane, 0D);
-        AnchorPane.setBottomAnchor(this.scrollPane, -1D);
-        AnchorPane.setLeftAnchor(this.scrollPane, 0D);
+        this.getNodes().add(scrollPane);
+        AnchorPane.setTopAnchor(scrollPane, -1D);
+        AnchorPane.setRightAnchor(scrollPane, 0D);
+        AnchorPane.setBottomAnchor(scrollPane, -1D);
+        AnchorPane.setLeftAnchor(scrollPane, 0D);
     }
 
     public void initShipSlots() {
-        this.hardpointsVbox.getChildren().clear();
-        this.coreVbox.getChildren().clear();
-        this.optionalVBox.getChildren().clear();
-        this.utilityVbox.getChildren().clear();
+        this.hardpointsVbox.getNodes().clear();
+        this.coreVbox.getNodes().clear();
+        this.optionalVBox.getNodes().clear();
+        this.utilityVbox.getNodes().clear();
         if (APPLICATION_STATE.getShip() != null) {
-            this.hardpointsVbox.getChildren().addAll(APPLICATION_STATE.getShip().getHardpointSlots().stream().map(slot -> new SlotBox(this, slot)).toArray(SlotBox[]::new));
-            this.coreVbox.getChildren().addAll(APPLICATION_STATE.getShip().getCoreSlots().stream().map(slot -> new SlotBox(this, slot)).toArray(SlotBox[]::new));
-            this.optionalVBox.getChildren().addAll(APPLICATION_STATE.getShip().getOptionalSlots().stream().map(slot -> new SlotBox(this, slot)).toArray(SlotBox[]::new));
-            this.utilityVbox.getChildren().addAll(APPLICATION_STATE.getShip().getUtilitySlots().stream().map(slot -> new SlotBox(this, slot)).toArray(SlotBox[]::new));
+            this.hardpointsVbox.getNodes().addAll(APPLICATION_STATE.getShip().getHardpointSlots().stream().map(slot -> new SlotBox(this, slot)).toArray(SlotBox[]::new));
+            this.coreVbox.getNodes().addAll(APPLICATION_STATE.getShip().getCoreSlots().stream().map(slot -> new SlotBox(this, slot)).toArray(SlotBox[]::new));
+            this.optionalVBox.getNodes().addAll(APPLICATION_STATE.getShip().getOptionalSlots().stream().map(slot -> new SlotBox(this, slot)).toArray(SlotBox[]::new));
+            this.utilityVbox.getNodes().addAll(APPLICATION_STATE.getShip().getUtilitySlots().stream().map(slot -> new SlotBox(this, slot)).toArray(SlotBox[]::new));
         }
     }
 
@@ -167,14 +181,14 @@ public class ModulesLayer extends AnchorPane implements Template {
         this.optionalVBox.setVisible(!imageVisible);
         this.utilityVbox.setVisible(!imageVisible);
 //        if (imageVisible) {
-//            if (this.slotColumns.getChildren().contains(this.coreVbox)) {
-//                this.slotColumns.getChildren().removeAll(this.coreVbox, this.optionalVBox, this.utilityVbox);
-//                this.slotColumns.getChildren().add(this.imageLayer);
+//            if (this.slotColumns.getNodes().contains(this.coreVbox)) {
+//                this.slotColumns.getNodes().removeAll(this.coreVbox, this.optionalVBox, this.utilityVbox);
+//                this.slotColumns.getNodes().add(this.imageLayer);
 //            }
 //        } else {
-//            if (this.slotColumns.getChildren().contains(this.imageLayer)) {
-//                this.slotColumns.getChildren().remove(this.imageLayer);
-//                this.slotColumns.getChildren().addAll(this.coreVbox, this.optionalVBox, this.utilityVbox);
+//            if (this.slotColumns.getNodes().contains(this.imageLayer)) {
+//                this.slotColumns.getNodes().remove(this.imageLayer);
+//                this.slotColumns.getNodes().addAll(this.coreVbox, this.optionalVBox, this.utilityVbox);
 //            }
 //        }
     }
@@ -193,22 +207,23 @@ public class ModulesLayer extends AnchorPane implements Template {
         this.optionalVBox.setVisible(!imageVisible);
         this.utilityVbox.setVisible(true);
 //        if (imageVisible) {
-//            if (this.slotColumns.getChildren().contains(this.coreVbox)) {
-//                this.slotColumns.getChildren().removeAll(this.coreVbox, this.optionalVBox, this.hardpointsVbox);
-//                this.slotColumns.getChildren().add(0, this.imageLayer);
+//            if (this.slotColumns.getNodes().contains(this.coreVbox)) {
+//                this.slotColumns.getNodes().removeAll(this.coreVbox, this.optionalVBox, this.hardpointsVbox);
+//                this.slotColumns.getNodes().add(0, this.imageLayer);
 //            }
 //        } else {
-//            if (this.slotColumns.getChildren().contains(this.imageLayer)) {
-//                this.slotColumns.getChildren().remove(this.imageLayer);
-//                this.slotColumns.getChildren().add(0, this.hardpointsVbox);
-//                this.slotColumns.getChildren().add(1, this.coreVbox);
-//                this.slotColumns.getChildren().add(2, this.optionalVBox);
+//            if (this.slotColumns.getNodes().contains(this.imageLayer)) {
+//                this.slotColumns.getNodes().remove(this.imageLayer);
+//                this.slotColumns.getNodes().add(0, this.hardpointsVbox);
+//                this.slotColumns.getNodes().add(1, this.coreVbox);
+//                this.slotColumns.getNodes().add(2, this.optionalVBox);
 //            }
 //        }
     }
 
     void drawHardpointLine(final int index) {
         lastIndex = index;
+        if (APPLICATION_STATE.getShip() == null) return;//can happen directly after selecting a ship in the list
         final ImageSlot imageSlot = APPLICATION_STATE.getShip().getHardpointSlots().get(index);
         shipImage.setImage(ImageService.getImage("/images/ships/ship/" + APPLICATION_STATE.getShip().getShipType().name().toLowerCase() + "." + imageSlot.getImageIndex() + ".png"));
         final double x = this.shipImage.getWidth() / 1920D * imageSlot.getX();
@@ -291,5 +306,11 @@ public class ModulesLayer extends AnchorPane implements Template {
         line.setEndY(endY);
         line.setStrokeWidth(ScalingHelper.getPixelDoubleFromEm(0.1D));
         line.setStroke(Color.valueOf("#89D07F"));
+    }
+
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        this.tab = null;
     }
 }

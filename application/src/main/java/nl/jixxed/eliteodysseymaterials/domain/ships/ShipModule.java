@@ -103,6 +103,7 @@ public abstract class ShipModule implements Serializable {
             RepairLimpetController.REPAIR_LIMPET_CONTROLLERS,
             ResearchLimpetController.RESEARCH_LIMPET_CONTROLLERS,
             ShieldGenerator.SHIELD_GENERATORS,
+            DiscoveryScanner.DISCOVERY_SCANNERS,
             //utility
             ChaffLauncher.CHAFF_LAUNCHERS,
             ElectronicCountermeasure.ELECTRONIC_COUNTERMEASURES,
@@ -218,12 +219,13 @@ public abstract class ShipModule implements Serializable {
             return moduleClass.isAssignableFrom(aClass);
         }).toList();
     }
+
     public static List<ShipModule> getBasicModules() {
         return SHIP_MODULES.stream().filter(not(ShipModule::isPreEngineered).and(not(CargoHatch.class::isInstance))).toList();
     }
 
     public static ShipModule getModule(String id) {
-      return SHIP_MODULES.stream().filter(module->module.getId().equals(id)).findFirst().orElseThrow(IllegalArgumentException::new);
+        return SHIP_MODULES.stream().filter(module -> module.getId().equals(id)).findFirst().orElseThrow(IllegalArgumentException::new);
     }
 
     public void applyModification(final HorizonsBlueprintType modification, final HorizonsBlueprintGrade grade, final BigDecimal modificationCompleteness) {
@@ -279,14 +281,14 @@ public abstract class ShipModule implements Serializable {
     }
 
     public Object getAttributeValue(final HorizonsModifier moduleAttribute) {
-        if(HorizonsModifier.DAMAGE_PER_SECOND.equals(moduleAttribute) && this.attributes.containsKey(HorizonsModifier.DAMAGE) && !this.attributes.containsKey(HorizonsModifier.DAMAGE_PER_SECOND)){
-            return (double)getAttributeValue(HorizonsModifier.DAMAGE, null) * (double)getAttributeValue(HorizonsModifier.RATE_OF_FIRE, null);
+        if (HorizonsModifier.DAMAGE_PER_SECOND.equals(moduleAttribute) && this.attributes.containsKey(HorizonsModifier.DAMAGE) && !this.attributes.containsKey(HorizonsModifier.DAMAGE_PER_SECOND)) {
+            return (double) getAttributeValue(HorizonsModifier.DAMAGE, null) * (double) getAttributeValue(HorizonsModifier.RATE_OF_FIRE, null);
         }
         return getAttributeValue(moduleAttribute, null);
     }
 
     public BigDecimal getAttributeCompleteness(final HorizonsModifier moduleAttribute) {
-        Object currentValue =  this.modifiers.get(moduleAttribute);
+        Object currentValue = this.modifiers.get(moduleAttribute);
         if (currentValue != null) {
             double minValue = (double) getAttributeValue(moduleAttribute, 0.0);
             double maxValue = (double) getAttributeValue(moduleAttribute, 1.0);
@@ -312,10 +314,10 @@ public abstract class ShipModule implements Serializable {
             throw new IllegalArgumentException("Unknown Module Attribute: " + moduleAttribute + " for module: " + this.name);
         }
         if (modifiers.containsKey(moduleAttribute) && (completeness == null || isLegacy())) {
-            if(modifiers.get(moduleAttribute) instanceof Boolean){
+            if (modifiers.get(moduleAttribute) instanceof Boolean) {
                 return modifiers.get(moduleAttribute);
             }
-            return  Double.parseDouble(modifiers.get(moduleAttribute).toString());
+            return Double.parseDouble(modifiers.get(moduleAttribute).toString());
         }
         final Object baseAttributeValue = this.attributes.get(moduleAttribute);
         if (baseAttributeValue instanceof Double) {
@@ -356,7 +358,7 @@ public abstract class ShipModule implements Serializable {
                 log.error("Error modifying value", t);
             }
         }
-        if(!this.modifications.isEmpty()) {
+        if (!this.modifications.isEmpty()) {
             this.experimentalEffects.forEach(modification -> {
                 final HorizonsBlueprint experimentalEffectBlueprint = HorizonsBlueprintConstants.getExperimentalEffects().get(this.name.getPrimary()).get(modification);
                 final HorizonsModifierValue experimentalEffectModifier = experimentalEffectBlueprint.getModifiers().get(moduleAttribute);
@@ -390,14 +392,17 @@ public abstract class ShipModule implements Serializable {
     /**
      * returns the button row for the module. 0 means no grouping.
      * if 1 module of a type has a grouping, all modules of that type should have a grouping.
+     *
      * @return number of the group
      */
     public int getGrouping() {
         return 0;
     }
+
     public boolean hasGrouping() {
         return getGrouping() > 0;
     }
+
     public String getNonSortingClarifier() {
         return "";
     }
@@ -409,6 +414,7 @@ public abstract class ShipModule implements Serializable {
     public boolean isPreEngineered() {
         return false;
     }
+
     public boolean isStoreExclusive() {
         return false;
     }
@@ -416,6 +422,7 @@ public abstract class ShipModule implements Serializable {
     public boolean isAdvanced() {
         return false;
     }
+
     public boolean isEnhanced() {
         return false;
     }
@@ -473,6 +480,7 @@ public abstract class ShipModule implements Serializable {
                 .sorted(Comparator.comparing(ShipModule::getModuleSize).reversed())
                 .findFirst();
     }
+
     public Optional<ShipModule> findLowerSize(int maxSize) {
         return SHIP_MODULES.stream()
                 .filter(shipModule -> shipModule.getName().equals(this.getName()) &&
@@ -518,27 +526,30 @@ public abstract class ShipModule implements Serializable {
             powerGroup--;
         }
     }
+
     // whether the module has a power toggle
     public boolean hasPowerToggle() {
         return powerToggle;
     }
 
     // whether the module consumes power when not deployed
-    public boolean isPassivePower(){
+    public boolean isPassivePower() {
         return false;
     }
+
     // whether the module consumes power when not deployed
-    public boolean isPassivePowerWithoutToggle(){
+    public boolean isPassivePowerWithoutToggle() {
         return isPassivePower() && !hasPowerToggle();
     }
 
-    public boolean isHiddenStat(HorizonsModifier modifier){
+    public boolean isHiddenStat(HorizonsModifier modifier) {
         return false;
     }
 
-    public MatchType getPreEngineeredMatchType(){
+    public MatchType getPreEngineeredMatchType() {
         return MatchType.STATS;
     }
+
     public boolean isSelectable() {
         return true;
     }
@@ -548,8 +559,8 @@ public abstract class ShipModule implements Serializable {
         return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey()) + " " + getModuleSize().intValue() + getModuleClass().name();
     }
 
-    public boolean isSame(ShipModule other){
-        if(other == null){
+    public boolean isSame(ShipModule other) {
+        if (other == null) {
             return false;
         }
         //compare this module name, size, class, modifications, experimental effects
@@ -563,13 +574,16 @@ public abstract class ShipModule implements Serializable {
     public boolean isSameSize(ShipModule other) {
         return other != null && this.getModuleSize() == other.getModuleSize();
     }
+
     public boolean isSameClass(ShipModule other) {
         return other != null && this.getModuleClass() == other.getModuleClass();
     }
+
     public boolean isSameModifications(ShipModule other) {
         return other != null && this.modifications.size() == other.getModifications().size()
                 && new HashSet<>(this.getModifications()).containsAll(other.getModifications());
     }
+
     public boolean isSameExperimentalEffects(ShipModule other) {
         return other != null && this.experimentalEffects.size() == other.getExperimentalEffects().size()
                 && new HashSet<>(this.getExperimentalEffects()).containsAll(other.getExperimentalEffects());

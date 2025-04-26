@@ -24,8 +24,7 @@ public enum OdysseyWishlistMaterialSort {
         return switch (search.getWishlistMaterialSort()) {
             case ALPHABETICAL ->
                     Comparator.comparing((OdysseyWishlistIngredient o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getOdysseyMaterial().getLocalizationKey()));
-            case QUANTITY_REQUIRED ->
-                    Comparator.comparing((OdysseyWishlistIngredient o) -> o.getLeftAmount()).reversed();
+            case QUANTITY_REQUIRED -> Comparator.comparing((OdysseyWishlistIngredient o) -> o.getRequired()).reversed();
         };
     }
 }

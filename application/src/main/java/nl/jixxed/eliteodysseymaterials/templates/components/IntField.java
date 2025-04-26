@@ -3,14 +3,12 @@ package nl.jixxed.eliteodysseymaterials.templates.components;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTextField;
 
 @Slf4j
-public class IntField extends TextField {
+public class IntField extends DestroyableTextField {
     private final IntegerProperty value;
     @Getter
     private int minValue;
@@ -46,7 +44,7 @@ public class IntField extends TextField {
     }
 
     private void addMouseClickBehavior() {
-        this.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> {
+        this.addEventBinding(this.onMousePressedProperty(), e -> {
             if (this.getSelectedText().equals(this.getText())) {
                 this.deselect();
             } else if (this.getSelectedText().isEmpty() && !this.isFocused()) {
@@ -56,7 +54,7 @@ public class IntField extends TextField {
     }
 
     private void addValueListener() {
-        value.addListener((observable, oldValue, newValue) -> {
+        addChangeListener(value, (observable, oldValue, newValue) -> {
             if (isUpdating) return;
 
             isUpdating = true;
@@ -66,7 +64,7 @@ public class IntField extends TextField {
     }
 
     private void addTextListener(int minValue, int maxValue) {
-        textProperty().addListener((observable, oldValue, newValue) -> {
+        addChangeListener(textProperty(), (observable, oldValue, newValue) -> {
             if (isUpdating) return;
 
             if (newValue == null || newValue.isEmpty() || !isValidInt(newValue)) {
@@ -85,7 +83,7 @@ public class IntField extends TextField {
     }
 
     private void restrictInputToNumerals() {
-        this.addEventFilter(KeyEvent.KEY_TYPED, keyEvent -> {
+        this.addEventBinding(this.onKeyTypedProperty(), keyEvent -> {
             if (this.getMinValue() < 0) {
                 if (!"-0123456789".contains(keyEvent.getCharacter())) {
                     keyEvent.consume();

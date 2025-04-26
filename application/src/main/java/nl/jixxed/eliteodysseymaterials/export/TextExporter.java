@@ -41,15 +41,18 @@ public class TextExporter {
                         .forEach(item -> {
                             textBuilder.append(String.format(materialColumnWidth, LocaleService.getLocalizedStringForCurrentLocale(item.getKey().getLocalizationKey())));
                             final Integer ship = switch (item.getKey().getStorageType()) {
-                                case GOOD, DATA, ASSET -> StorageService.getMaterialCount(item.getKey(), AmountType.AVAILABLE);
+                                case GOOD, DATA, ASSET ->
+                                        StorageService.getMaterialCount(item.getKey(), AmountType.AVAILABLE);
                                 case CONSUMABLE, OTHER -> 0;
                             };
                             final Integer fc = switch (item.getKey().getStorageType()) {
-                                case GOOD, DATA, ASSET -> StorageService.getMaterialCount(item.getKey(), AmountType.FLEETCARRIER);
+                                case GOOD, DATA, ASSET ->
+                                        StorageService.getMaterialCount(item.getKey(), AmountType.FLEETCARRIER);
                                 case CONSUMABLE, OTHER -> 0;
                             };
                             final Integer total = switch (item.getKey().getStorageType()) {
-                                case GOOD, DATA, ASSET -> StorageService.getMaterialCount(item.getKey(), AmountType.TOTAL);
+                                case GOOD, DATA, ASSET ->
+                                        StorageService.getMaterialCount(item.getKey(), AmountType.TOTAL);
                                 case CONSUMABLE, OTHER -> 0;
                             };
                             textBuilder.append(String.format("%18s", ship));
@@ -83,7 +86,9 @@ public class TextExporter {
         textBuilder.append(String.format("%18s", "Available S"));
         textBuilder.append(String.format("%18s", "Available FC"));
         textBuilder.append(String.format("%18s", "Available Total"));
-        textBuilder.append(String.format("%12s", "Required"));
+        textBuilder.append(String.format("%12s", "Required min"));
+        textBuilder.append(String.format("%12s", "Required cur"));
+        textBuilder.append(String.format("%12s", "Required max"));
         textBuilder.append(String.format("%12s", "Need"));
         textBuilder.append("\n\n");
         ((List<Map<HorizonsMaterial, WishlistMaterial>>) (List<?>) List.of(wishlistNeededRaw, wishlistNeededEncoded, wishlistNeededManufactured, wishlistNeededCommodity)).forEach(wishlistNeededMaterials ->
@@ -107,7 +112,9 @@ public class TextExporter {
                             textBuilder.append(String.format("%18s", ship));
                             textBuilder.append(String.format("%18s", fc));
                             textBuilder.append(String.format("%18s", total));
-                            textBuilder.append(String.format("%12s", item.getValue()));
+                            textBuilder.append(String.format("%12s", item.getValue().getMinimum()));
+                            textBuilder.append(String.format("%12s", item.getValue().getRequired()));
+                            textBuilder.append(String.format("%12s", item.getValue().getMaximum()));
                             textBuilder.append(String.format("%12s", Math.max(0, item.getValue().getRequired() - ship)));
                             textBuilder.append("\n");
                         })

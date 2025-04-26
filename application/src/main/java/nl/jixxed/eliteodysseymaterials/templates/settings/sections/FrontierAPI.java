@@ -1,9 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
@@ -11,81 +9,101 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.service.CAPIService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.RegistryService;
+import nl.jixxed.eliteodysseymaterials.service.event.ApplicationRegisteredEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.CommanderSelectedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab;
-
-import java.util.ArrayList;
-import java.util.List;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 
-public class FrontierAPI extends VBox implements Template {
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+public class FrontierAPI extends DestroyableVBox implements DestroyableEventTemplate {
+
     private DestroyableLabel capiStatusLabel;
-    private Button capiConnectButton;
-    private Button capiDisconnectButton;
+    private DestroyableButton capiConnectButton;
+    private DestroyableButton capiDisconnectButton;
+
+    public final BooleanProperty registered = new SimpleBooleanProperty(RegistryService.isRegistered());
+
     public FrontierAPI() {
         this.initComponents();
         this.initEventHandling();
     }
+
     @Override
     public void initComponents() {
-        final Label capiLabel = LabelBuilder.builder()
+        final DestroyableLabel capiLabel = LabelBuilder.builder()
                 .withStyleClass("settings-header")
-                .withText(LocaleService.getStringBinding("tab.settings.title.capi"))
+                .withText("tab.settings.title.capi")
                 .build();
-        final Label capiExplainLabel = LabelBuilder.builder()
+        final DestroyableLabel capiExplainLabel = LabelBuilder.builder()
                 .withStyleClass(SETTINGS_LABEL_CLASS)
-                .withText(LocaleService.getStringBinding("tab.settings.capi.explain"))
+                .withText("tab.settings.capi.explain")
                 .build();
-        final HBox capiConnectSetting = createCapiConnectSetting();
+        final DestroyableHBox capiConnectSetting = createCapiConnectSetting();
 
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
-        this.getChildren().addAll(capiLabel, capiExplainLabel, capiConnectSetting);
+        this.getNodes().addAll(capiLabel, capiExplainLabel, capiConnectSetting);
     }
 
     @Override
     public void initEventHandling() {
 
-        this.eventListeners.add(EventService.addStaticListener(true, CommanderSelectedEvent.class, event ->{
-            this.capiConnectButton.textProperty().bind(LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("tab.settings.capi.connect", ApplicationState.getInstance().getPreferredCommander().map(Commander::getName).orElse(""))));
-            this.capiDisconnectButton.textProperty().bind(LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("tab.settings.capi.disconnect", ApplicationState.getInstance().getPreferredCommander().map(Commander::getName).orElse(""))));
+        register(EventService.addListener(true, this, CommanderSelectedEvent.class, _ -> {
+            this.capiConnectButton.addBinding(this.capiConnectButton.textProperty(), LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("tab.settings.capi.connect", ApplicationState.getInstance().getPreferredCommander().map(Commander::getName).orElse(""))));
+            this.capiDisconnectButton.addBinding(this.capiDisconnectButton.textProperty(), LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("tab.settings.capi.disconnect", ApplicationState.getInstance().getPreferredCommander().map(Commander::getName).orElse(""))));
+        }));
+        register(EventService.addListener(true, this, ApplicationRegisteredEvent.class, event -> {
+            this.registered.set(event.isRegistered());
         }));
     }
-    private HBox createCapiConnectSetting() {
-        DestroyableLabel capiConnectLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.capi.link.account")).build();
+
+    private DestroyableHBox createCapiConnectSetting() {
+        DestroyableLabel capiConnectLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.capi.link.account")
+                .build();
         this.capiConnectButton = ButtonBuilder.builder()
-                .withText(LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("tab.settings.capi.connect", ApplicationState.getInstance().getPreferredCommander().map(Commander::getName).orElse(""))))
-                .withOnAction(event -> CAPIService.getInstance().authenticate())
+                .withText("tab.settings.capi.connect", ApplicationState.getInstance().getPreferredCommander().map(Commander::getName).orElse(""))
+                .withOnAction(_ -> CAPIService.getInstance().authenticate())
                 .build();
         this.capiDisconnectButton = ButtonBuilder.builder()
-                .withText(LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("tab.settings.capi.disconnect", ApplicationState.getInstance().getPreferredCommander().map(Commander::getName).orElse(""))))
-//                .withText(LocaleService.getStringBinding("tab.settings.capi.disconnect", ApplicationState.getInstance().getPreferredCommander().map(Commander::getName).orElse("")))
-                .withOnAction(event -> CAPIService.getInstance().deauthenticate())
+                .withText("tab.settings.capi.disconnect", ApplicationState.getInstance().getPreferredCommander().map(Commander::getName).orElse(""))
+                .withOnAction(_ -> CAPIService.getInstance().deauthenticate())
                 .build();
-        this.capiConnectButton.disableProperty().bind(CAPIService.getInstance().getActive().or(SettingsTab.REGISTERED.not()));
-        this.capiDisconnectButton.disableProperty().bind(CAPIService.getInstance().getActive().not());
-        if (SettingsTab.REGISTERED.get()) {
-            this.capiStatusLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withVisibilityProperty(CAPIService.getInstance().getActive()).withText(LocaleService.getStringBinding("tab.settings.capi.connected")).build();
+        this.capiConnectButton.addBinding(this.capiConnectButton.disableProperty(), CAPIService.getInstance().getActive().or(registered.not()));
+        this.capiDisconnectButton.addBinding(this.capiDisconnectButton.disableProperty(), CAPIService.getInstance().getActive().not());
+        if (registered.get()) {
+            this.capiStatusLabel = LabelBuilder.builder()
+                    .withStyleClass(SETTINGS_LABEL_CLASS)
+                    .withVisibilityProperty(CAPIService.getInstance().getActive())
+                    .withText("tab.settings.capi.connected")
+                    .build();
         } else {
-            this.capiStatusLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withVisibilityProperty(SettingsTab.REGISTERED.not().and(CAPIService.getInstance().getActive().not())).withText(LocaleService.getStringBinding("tab.settings.capi.needs.registration")).build();
+            this.capiStatusLabel = LabelBuilder.builder()
+                    .withStyleClass(SETTINGS_LABEL_CLASS)
+                    .withVisibilityProperty(registered.not().and(CAPIService.getInstance().getActive().not()))
+                    .withText("tab.settings.capi.needs.registration")
+                    .build();
         }
-        SettingsTab.REGISTERED.addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                this.capiStatusLabel.textProperty().bind(LocaleService.getStringBinding("tab.settings.capi.connected"));
-                this.capiStatusLabel.visibleProperty().bind(CAPIService.getInstance().getActive());
+        registered.addListener((_, _, newValue) -> {
+            if (Boolean.TRUE.equals(newValue)) {
+                this.capiStatusLabel.addBinding(this.capiStatusLabel.textProperty(), LocaleService.getStringBinding("tab.settings.capi.connected"));
+                this.capiStatusLabel.addBinding(this.capiStatusLabel.visibleProperty(), CAPIService.getInstance().getActive());
             } else {
-                this.capiStatusLabel.textProperty().bind(LocaleService.getStringBinding("tab.settings.capi.needs.registration"));
-                this.capiStatusLabel.visibleProperty().bind(SettingsTab.REGISTERED.not());
+                this.capiStatusLabel.addBinding(this.capiStatusLabel.textProperty(), LocaleService.getStringBinding("tab.settings.capi.needs.registration"));
+                this.capiStatusLabel.addBinding(this.capiStatusLabel.visibleProperty(), registered.not());
             }
         });
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(capiConnectLabel, this.capiConnectButton, this.capiDisconnectButton, this.capiStatusLabel)
                 .buildHBox();
+    }
+
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        registered.unbind();
     }
 }

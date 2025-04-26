@@ -1,9 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import lombok.Getter;
+import nl.jixxed.eliteodysseymaterials.builder.StackPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfigurations;
@@ -13,22 +11,18 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableStackPane;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsTab;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent.Type.NONE;
 
-public class HorizonsShipBuilderTab extends HorizonsTab {
+public class HorizonsShipBuilderTab extends HorizonsTab implements DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String SHIP_CONTENT_STYLE_CLASS = "ships-content";
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
-    private Label noShip;
-    private VBox content;
-    private VBox contentChild;
-    private VBox shipView;
+
     @Getter
     private ControlsLayer controlsLayer;
     @Getter
@@ -42,8 +36,6 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
     @Getter
     private ShipSelectionLayer shipSelectionLayer;
     private NoShipLayer noShipLayer;
-//    private Region filler;
-//    private VBox right;
 
 
     @Override
@@ -57,8 +49,9 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
 
     }
 
-    private void initComponents() {
-        this.textProperty().bind(LocaleService.getStringBinding("tabs.shipeditor"));
+    public void initComponents() {
+        this.getStyleClass().add("shipbuilder-tab");
+        this.addBinding(this.textProperty(), LocaleService.getStringBinding("tabs.shipeditor"));
 
 
         APPLICATION_STATE.getPreferredCommander()
@@ -69,7 +62,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
         statsBGLayer = new StatsBGLayer(statsLayer);
         detailsLayer = new DetailsLayer();
         modulesLayer = new ModulesLayer(this);
-        shipSelectionLayer = new ShipSelectionLayer(this);
+        shipSelectionLayer = new ShipSelectionLayer();
         noShipLayer = new NoShipLayer();
         controlsLayer.setVisible(false);
         statsLayer.setVisible(false);
@@ -82,22 +75,22 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
         statsLayer.setPickOnBounds(false);
         statsBGLayer.setPickOnBounds(false);
         detailsLayer.setPickOnBounds(false);
-        final StackPane stackPane = new StackPane(noShipLayer, shipSelectionLayer, modulesLayer, statsBGLayer, controlsLayer, detailsLayer, statsLayer);
-        stackPane.getStyleClass().add(SHIP_CONTENT_STYLE_CLASS);
+        final DestroyableStackPane stackPane = register(StackPaneBuilder.builder()
+                .withStyleClass("shipbuilder-tab-content")
+                .withStyleClass(SHIP_CONTENT_STYLE_CLASS)//TODO remove
+                .withNodes(
+                        noShipLayer,
+                        shipSelectionLayer,
+                        modulesLayer,
+                        statsBGLayer,
+                        controlsLayer,
+                        detailsLayer,
+                        statsLayer
+                )
+                .build());
         this.setContent(stackPane);
         refreshContent();
         EventService.publish(new ShipConfigEvent(NONE));
-////        initShipSelectView();
-//        initShipLayout();
-//        this.noShip = LabelBuilder.builder().withNonLocalizedText("").build();
-//        this.contentChild = BoxBuilder.builder().withStyleClass(SHIP_CONTENT_STYLE_CLASS).withNodes(this.shipSelect.getSelectionModel().getSelectedItem() == null || (this.shipSelect.getSelectionModel().getSelectedItem().getShipType() == null && this.shipSelect.getSelectionModel().getSelectedItem() != ShipConfiguration.CURRENT) ? this.shipSelectView : this.shipView).buildVBox();
-//        this.content = BoxBuilder.builder().withStyleClass(SHIP_CONTENT_STYLE_CLASS).withNodes(hBoxShips, this.shipSelect.getItems().isEmpty() || this.shipSelect.getSelectionModel().getSelectedItem() == ShipConfiguration.CURRENT ? this.noShip : this.contentChild).buildVBox();
-////        this.scrollPane = ScrollPaneBuilder.builder()
-////                .withContent(this.content)
-////                .build();
-//
-//        final HBox layout = BoxBuilder.builder().withNodes(this.content, new GrowingRegion(), this.right).buildHBox();
-
     }
 
 
@@ -149,23 +142,23 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
 
     }
 
-    private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, 0, HorizonsShipSelectedEvent.class, horizonsShipSelectedEvent -> {
+    public void initEventHandling() {
+        register(EventService.addListener(true, this, 0, HorizonsShipSelectedEvent.class, horizonsShipSelectedEvent -> {
             APPLICATION_STATE.getPreferredCommander()
                     .flatMap(commander -> ShipService.getShipConfigurations(commander).getSelectedShipConfiguration())
                     .ifPresent(configuration -> APPLICATION_STATE.setShip(ShipMapper.toShip(configuration)));
             refreshContent();
         }));
 
-        this.eventListeners.add(EventService.addListener(true, this, CommanderSelectedEvent.class, _ -> refreshContent()));
-        this.eventListeners.add(EventService.addListener(true, this, CommanderAllListedEvent.class, _ -> refreshContent()));
-        this.eventListeners.add(EventService.addListener(true, this, ImportResultEvent.class, importResultEvent -> {
+        register(EventService.addListener(true, this, CommanderSelectedEvent.class, _ -> refreshContent()));
+        register(EventService.addListener(true, this, CommanderAllListedEvent.class, _ -> refreshContent()));
+        register(EventService.addListener(true, this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_SHIP) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_SLEF)) {
                 refreshContent();
             }
         }));
 
-        this.eventListeners.add(EventService.addListener(true, this, ShipBuilderEvent.class, _ ->
+        register(EventService.addListener(true, this, ShipBuilderEvent.class, _ ->
         {
             if (APPLICATION_STATE.getShip() != null) {
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
@@ -179,14 +172,18 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
             }
         }));
 
-        this.eventListeners.add(EventService.addListener(true, this, 9, ShipLoadoutEvent.class, event -> {
+        register(EventService.addListener(true, this, 9, ShipLoadoutEvent.class, event -> {
 
-            if (this.controlsLayer.getShipSelect().getSelectionModel().getSelectedItem().equals(ShipConfiguration.CURRENT)) {
-                refreshContent();
-            }
+//            if (this.controlsLayer.getShipSelect().getSelectionModel().getSelectedItem().equals(ShipConfiguration.CURRENT)) {
+//                refreshContent();
+//            }
         }));
 
     }
 
-
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        this.modulesLayer = null;
+    }
 }

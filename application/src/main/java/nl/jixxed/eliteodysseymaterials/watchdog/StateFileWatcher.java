@@ -14,36 +14,37 @@ public class StateFileWatcher {
     public StateFileWatcher(final File folder, final Consumer<File> fileProcessor, final String filename) {
         findFile(folder, filename);
         this.watchedFile.ifPresent(fileProcessor);
-        this.fileWatcher = new FileWatcher(true).withListener(new FileListener() {
-            @Override
-            public void onCreated(final FileEvent event) {
-                handleFile(event, fileProcessor);
-            }
+        this.fileWatcher = new FileWatcher(true)
+                .withListener(new FileListener() {
+                    @Override
+                    public void onCreated(final FileEvent event) {
+                        handleFile(event, fileProcessor);
+                    }
 
-            @Override
-            public void onModified(final FileEvent event) {
-                handleFile(event, fileProcessor);
-            }
+                    @Override
+                    public void onModified(final FileEvent event) {
+                        handleFile(event, fileProcessor);
+                    }
 
-            private void handleFile(final FileEvent event, final Consumer<File> fileProcessor) {
-                final File file = event.getFile();
-                if (file.isFile() && file.getName().equals(filename)) {
-                    StateFileWatcher.this.watchedFile = Optional.of(file);
-                    fileProcessor.accept(file);
-                }
+                    private void handleFile(final FileEvent event, final Consumer<File> fileProcessor) {
+                        final File file = event.getFile();
+                        if (file.isFile() && file.getName().equals(filename)) {
+                            StateFileWatcher.this.watchedFile = Optional.of(file);
+                            fileProcessor.accept(file);
+                        }
 
-            }
+                    }
 
-            @Override
-            public void onDeleted(final FileEvent event) {
+                    @Override
+                    public void onDeleted(final FileEvent event) {
 
-            }
-        }).watch(folder);
+                    }
+                }).watch(folder);
     }
 
     private void findFile(final File folder, final String filename) {
         try {
-            this.watchedFile =  FileService.listFiles(folder, true).stream()
+            this.watchedFile = FileService.listFiles(folder, true).stream()
                     .filter(file -> file.getName().equals(filename))
                     .findFirst();
             log.info("Registered watched file: " + this.watchedFile.map(File::getName).orElse(filename + " not found"));

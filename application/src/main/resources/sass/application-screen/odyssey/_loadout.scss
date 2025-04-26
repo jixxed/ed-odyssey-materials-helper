@@ -1,0 +1,285 @@
+.loadout-tab {
+  @include tab;
+}
+
+.loadout-tab-content {
+  @include scroll-pane-content;
+
+  .contents {
+    -fx-spacing: 0.25em;
+
+    .loadout-menu {
+      -fx-spacing: 0.25em;
+
+      .loadout-wishlist-create-new {
+        -fx-font-style: italic;
+      }
+
+      .loadout-select {
+        @include fixedWidth(35em);
+      }
+
+      .loadout-newname {
+        -fx-min-width: 20em;
+        -fx-border-color: $border-color-black;
+      }
+    }
+
+    .loadouts {
+      @include hvGap(0.25em);
+
+      .loadout-item {
+        @include fixedWidth(31em);
+        -fx-padding: 0.25em;
+        -fx-spacing: 0.25em;
+        -fx-background-color: $background-color-dark;
+
+        .navbar {
+
+          &:hover {
+            .arrow, .delete {
+              -fx-opacity: 0.45;
+            }
+          }
+
+          .arrow, .delete {
+            -fx-opacity: 0.2;
+            -fx-label-padding: 0.25em 1em 0.25em 1em;
+
+            &:hover {
+              -fx-opacity: 1.0;
+              -fx-cursor: hand;
+            }
+          }
+        }
+
+        .loadout-image {
+          @include fixedWidth(29.5em);
+          @include fixedHeight(21.1em);
+        }
+
+        .title {
+          -fx-font-size: 1.4em;
+        }
+
+        .config {
+          -fx-spacing: 0.25em;
+
+          .title {
+
+            -fx-font-size: 1.2em;
+          }
+
+          .modification {
+            @include fixedWidth(7.25em);
+
+            .layers {
+              @include fixedWidth(7.25em);
+              @include fixedHeight(6.07em);
+            }
+
+            .controls {
+              @include fixedWidth(7.25em);
+              @include fixedHeight(6.07em);
+              -fx-background-color: rgba($background-color-lighter, .8);
+              -fx-opacity: 0;
+              -fx-alignment: center;
+
+              .control {
+                @include fixedWidth(7.25em);
+                -fx-max-height: 10em;
+                -fx-text-alignment: center;
+                -fx-alignment: center;
+                -fx-opacity: 0.5;
+                -fx-wrap-text: true;
+
+                &:hover {
+                  -fx-opacity: 1;
+                  -fx-background-color: rgba($background-color-dark, .8);
+                  -fx-cursor: hand;
+                  -fx-text-fill: $text-color-blue;
+                }
+              }
+
+              &:hover {
+                -fx-opacity: 1;
+
+              }
+            }
+
+            .mod-image {
+              @include fixedWidth(7.25em);
+              -fx-max-height: 6.07em;
+              -fx-opacity: 0.8;
+
+              &:modifiable:hover {
+                -fx-cursor: hand;
+                -fx-opacity: 1;
+              }
+
+              &:consumed, &:consumed:hover {
+                -fx-cursor: default;
+                -fx-opacity: 0.2;
+              }
+            }
+
+            .name {
+              -fx-wrap-text: true;
+              -fx-min-width: 7.25em;
+              -fx-max-width: 7.25em;
+              -fx-text-alignment: center;
+              -fx-alignment: center;
+            }
+
+            @at-root .loadout-modification-popover {
+              > .border {
+                -fx-stroke: $border-color-white !important;
+                -fx-stroke-width: 0.1em !important;
+                -fx-fill: $background-color-dark !important;
+              }
+
+              .grid {
+                -fx-background-color: $background-color-dark;
+                -fx-padding: 0.25em;
+                @include hvGap(0.25em);
+              }
+
+              .name {
+                -fx-wrap-text: true;
+                @include fixedWidth(7.25em);
+                -fx-text-alignment: center;
+                -fx-alignment: center;
+              }
+            }
+          }
+        }
+
+        .stats {
+          .title {
+
+            -fx-font-size: 1.2em;
+          }
+
+          .header {
+
+            .value {
+              -fx-wrap-text: true;
+              @include fixedWidth(5.1em);
+              -fx-alignment: center-right;
+              -fx-text-alignment: right;
+            }
+          }
+
+
+          .separator {
+            .line {
+              -fx-border-width: 0.1em;
+              -fx-border-insets: 0.25em 0 0.25em 0;
+            }
+          }
+
+          .stats-group {
+
+            .group-name {
+              -fx-font-size: 1.1em;
+            }
+
+
+            .static-stat {
+              &:hover {
+                -fx-background-color: $background-color-light;
+              }
+
+              .name {
+                -fx-wrap-text: true;
+                @include fixedWidth(14.9em);
+
+                &:wide {
+                  -fx-pref-width: 25em;
+                }
+              }
+
+              .value {
+                -fx-wrap-text: true;
+                @include fixedWidth(5.1em);
+                -fx-alignment: center;
+                -fx-text-alignment: center;
+              }
+
+              .value-box {
+
+                @include fixedWidth(15.3em);
+
+                .separator {
+                  -fx-padding: 0.4em 0 0 0;
+
+                  .line {
+                    -fx-border-width: 0.05em;
+                    -fx-border-insets: 0.25em 0 0.25em 0;
+                  }
+                }
+
+              }
+            }
+
+            .dynamic-stat {
+
+              &:hover {
+                -fx-background-color: $background-color-light;
+              }
+
+              .name {
+                -fx-wrap-text: true;
+                -fx-pref-width: 14.9em;
+
+                &:wide {
+                  -fx-pref-width: 25em;
+                }
+              }
+
+              .value {
+                @include fixedWidth(5.1em);
+                -fx-wrap-text: true;
+                -fx-alignment: center-right;
+                -fx-text-alignment: right;
+
+                &:changed {
+                  -fx-text-fill: $text-color-blue;
+                }
+
+                &:modded {
+                  -fx-font-weight: bold;
+                }
+              }
+
+              .value-box {
+                @include fixedWidth(15.3em);
+              }
+            }
+          }
+        }
+
+        .wishlist-button {
+          -fx-wrap-text: true;
+          @include fixedWidth(30.5em);
+        }
+
+        .wishlist-create-new {
+          -fx-font-style: italic;
+        }
+
+        .warning {
+          @include fixedWidth(30.5em);
+          -fx-wrap-text: true;
+          -fx-text-fill: $text-color-red;
+          -fx-alignment: center-right;
+          -fx-text-alignment: right;
+        }
+
+      }
+
+    }
+  }
+
+
+}

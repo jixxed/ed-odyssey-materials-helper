@@ -136,3 +136,18 @@ notification.type.ship_wishlist_pickup,Ship Wishlist Pickup,,,Recogída de Lista
 search.filter.sold_at_station,Sold at current market,,,Vendido en mercado actual,,,Продано на данном рынке
 search.filter.bought_at_station,Bought at current market,,,Comprado en mercado actual,,,Куплено на данном рынке
 tabs.horizons.colonisation,Colonisation (WIP),,,Colonización (WIP),,,Колонизация (в разработке)
+dialog.start.whatsnew,What’s new?,,,,,,
+dialog.start.privacypolicy,Privacy policy,,,,,,
+dialog.start.accept,Accept & continue,,,,,,
+dialog.start.close,Close application,,,,,,
+dialog.start.continue,Continue,,,,,,
+dialog.urlscheme.register,Register,,,,,,
+dialog.urlscheme.nothanks,No thanks,,,,,,
+imported.partial.name," - Imported",,,,,,
+imported.slef.partial.name,"(SLEF)",,,,,,
+loading.screen.text,LOADING,,,,,,
+segment.type.present_ship,Ship,,,,,,
+segment.type.present_fleet_carrier,Fleetcarrier,,,,,,
+segment.type.missing_for_minimum,Missing to minimum,,,,,,
+segment.type.missing_for_required,Missing to required,,,,,,
+segment.type.missing_for_maximum,Missing to maximum,,,,,,

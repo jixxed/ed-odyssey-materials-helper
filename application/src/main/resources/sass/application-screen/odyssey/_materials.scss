@@ -1,0 +1,119 @@
+.materials-tab {
+  @include tab;
+}
+
+.materials-tab-content {
+
+  @include scroll-pane-content;
+
+  .material-overview {
+    -fx-spacing: 0.5em;
+
+    .material-card-flow-pane {
+      @include hvGap(0.25em);
+    }
+
+    //total
+    .totals-flow-pane {
+      @include hvGap(0.25em);
+
+      .material-total {
+        -fx-border-width: 1px;
+        -fx-border-color: $border-color-black;
+        -fx-background-color: $background-color-dark;
+        -fx-padding: 5px;
+        @include fixedWidth(32em);
+
+        .separator *.line {
+          -fx-border-style: solid;
+          -fx-border-width: 1px;
+          -fx-border-color: $text-color-white;
+        }
+
+        .text {
+          -fx-text-fill: $text-color-white;
+        }
+
+        .material-total-name {
+          -fx-font-size: 1.2em;
+          -fx-font-weight: bold;
+          -fx-text-fill: $text-color-white;
+        }
+
+        .material-total-total-row {
+          -fx-font-weight: bold;
+          -fx-text-fill: $text-color-white;
+        }
+
+        .material-total-value-row {
+          -fx-text-fill: $text-color-white;
+          -fx-label-padding: 2px;
+        }
+
+        .material-total-value-irrelevant-row {
+          -fx-text-fill: $text-color-blue;
+          -fx-label-padding: 2px;
+        }
+
+        .material-total-value-powerplay-row {
+          -fx-text-fill: $text-color-purple;
+          -fx-label-padding: 2px;
+        }
+      }
+
+    }
+
+    //material card
+
+    .material-card {
+      @include fixedHeight(2em);
+      @include fixedWidth(32em);
+      -fx-background-color: $background-color-dark;
+      -fx-border-color: $border-color-black;
+      -fx-alignment: center-left;
+
+
+      &:hover {
+        -fx-cursor: hand;
+        -fx-background-color: $background-color-light;
+      }
+
+      .name {
+        -fx-padding: 0.25em;
+      }
+
+      .material-image, .fleetcarrier-image, .wishlist-image, .backpack-image, .ship-image {
+        @include fixedWidth(2em);
+      }
+
+      .fleetcarrier-amount, .wishlist-amount, .backpack-amount, .ship-amount, .total-amount {
+        @include fixedWidth(3em);
+        -fx-padding: 0.25em;
+        -fx-text-alignment: right;
+      }
+
+      &:relevant {
+        .name, .fleetcarrier-amount, .wishlist-amount, .backpack-amount, .ship-amount, .total-amount {
+          -fx-font-weight: bold;
+          -fx-text-fill: $text-color-white;
+        }
+      }
+
+      &:irrelevant {
+        .name, .fleetcarrier-amount, .wishlist-amount, .backpack-amount, .ship-amount, .total-amount {
+          -fx-font-weight: normal;
+          -fx-text-fill: $text-color-blue;
+        }
+      }
+
+      &:powerplay {
+        .name, .fleetcarrier-amount, .wishlist-amount, .backpack-amount, .ship-amount, .total-amount {
+          -fx-font-weight: normal;
+          -fx-text-fill: $text-color-purple;
+        }
+      }
+    }
+  }
+
+
+}

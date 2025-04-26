@@ -1,129 +1,145 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons;
 
-import javafx.beans.binding.StringBinding;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.Label;
+import javafx.css.PseudoClass;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.Setter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.Blueprint;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.*;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
+import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
+import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
-import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishlistIngredient;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.Comparator;
+import java.util.Objects;
 
-@EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
-public class HorizonsMaterialIngredient extends Ingredient implements DestroyableComponent {
-    private static final String INGREDIENT_WITH_AMOUNT_CLASS = "ingredient-with-amount";
-    private static final String INGREDIENT_FILLED_CLASS = "ingredient-filled";
-    private static final String INGREDIENT_UNFILLED_CLASS = "ingredient-unfilled";
-    private static final String INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS = "ingredient-filled-partial";
-    @EqualsAndHashCode.Include
+//@EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
+public class HorizonsMaterialIngredient extends Ingredient implements DestroyableComponent, DestroyableEventTemplate {
+    public static final String FILLED = "filled";
+    public static final String PARTIAL = "partial";
+    //    @EqualsAndHashCode.Include
     private final HorizonsStorageType storageType;
-    @EqualsAndHashCode.Include
+    @Getter
+//    @EqualsAndHashCode.Include
     private final HorizonsMaterial horizonsMaterial;
+    private final HorizonsBlueprint horizonsBlueprint;
+    @Getter
     @Setter
-    private Integer leftAmount;
-    private Integer rightAmount;
+    private Integer minRequired;
+    private Integer maxRequired;
+    private Integer available;
 
-    private Label nameLabel;
+    private DestroyableLabel nameLabel;
     private DestroyableResizableImageView image;
-    private Label leftAmountLabel;
-    private Label rightAmountLabel;
-    private Label leftDescriptionLabel;
-    private Label rightDescriptionLabel;
-    private HBox leftHBox;
-    private HBox rightHBox;
-    private HBox firstLine;
-    private Region region;
-    private HBox secondLine;
-    private Region region2;
+    private DestroyableLabel requiredLabel;
+    private DestroyableLabel availableLabel;
+    private DestroyableLabel availableTitle;
 
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
-
-    public List<EventListener<?>> getEventListeners() {
-        return this.eventListeners;
-    }
-
-    public HorizonsMaterialIngredient(final HorizonsStorageType storageType, final HorizonsMaterial horizonsMaterial, final Integer leftAmount, final Integer rightAmount) {
+    public HorizonsMaterialIngredient(final HorizonsBlueprint horizonsBlueprint, final HorizonsStorageType storageType, final HorizonsMaterial horizonsMaterial, final Integer required, final Integer available) {
         if (storageType.equals(HorizonsStorageType.OTHER)) {
             throw new IllegalArgumentException("StorageType Other must use MissionIngredient class");
         }
+        this.horizonsBlueprint = horizonsBlueprint;
         this.storageType = storageType;
-        this.leftAmount = leftAmount;
+        if (horizonsBlueprint instanceof HorizonsModuleBlueprint) {
+            this.minRequired = horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getBestEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintType());
+            this.maxRequired = horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getWorstEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintType());
+        } else {
+            this.minRequired = required;
+            this.maxRequired = required;
+        }
         this.horizonsMaterial = horizonsMaterial;
-        this.rightAmount = rightAmount;
+        this.available = available;
         initComponents();
         initEventHandling();
     }
 
-    private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, JournalLineProcessedEvent.class, journalProcessedEvent -> this.update()));
-        this.eventListeners.add(EventService.addListener(true, this, StorageEvent.class, evt -> {
+    public void initEventHandling() {
+        register(EventService.addListener(true, this, JournalLineProcessedEvent.class, journalProcessedEvent -> this.update()));
+        register(EventService.addListener(true, this, StorageEvent.class, evt -> {
             if (evt.getStoragePool().equals(StoragePool.SHIP)) {
                 this.update();
             }
         }));
+        register(EventService.addListener(true, this, EngineerEvent.class, _ -> {
+            if (horizonsBlueprint instanceof HorizonsModuleBlueprint) {
+                this.minRequired = horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getBestEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintType());
+                this.maxRequired = horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getWorstEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintType());
+            }
+            String required = Objects.equals(minRequired, maxRequired) ? minRequired.toString() : minRequired + " - " + maxRequired;
+            this.requiredLabel.setText(required);
+        }));
     }
 
-    private void initComponents() {
-        this.nameLabel = LabelBuilder.builder().withStyleClass("ingredient-name").withText(LocaleService.getStringBinding(this.horizonsMaterial.getLocalizationKey())).build();
+    public void initComponents() {
+        this.getStyleClass().add("ingredient");
+        this.nameLabel = LabelBuilder.builder()
+                .withStyleClass("name")
+                .withText(this.horizonsMaterial.getLocalizationKey())
+                .build();
+        VBox.setVgrow(this.nameLabel, Priority.ALWAYS);
+        HBox.setHgrow(this.nameLabel, Priority.ALWAYS);
         initImage();
 
-        final Boolean showRemaining = PreferencesService.getPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_HORIZONS, Boolean.FALSE);
-        this.leftAmountLabel = LabelBuilder.builder().withStyleClass("ingredient-required").build();
-        this.rightAmountLabel = LabelBuilder.builder().withStyleClass("ingredient-available").build();
-        this.leftDescriptionLabel = LabelBuilder.builder().withStyleClass("ingredient-quantity-label").withText(LocaleService.getStringBinding("blueprint.header.required")).build();
-        this.rightDescriptionLabel = LabelBuilder.builder().withStyleClass("ingredient-quantity-label").withText(Boolean.TRUE.equals(showRemaining && this instanceof HorizonsWishlistIngredient)?LocaleService.getStringBinding("blueprint.header.remaining"):LocaleService.getStringBinding("blueprint.header.available")).build();
+        this.requiredLabel = LabelBuilder.builder()
+                .withStyleClass("quantity")
+                .build();
+        this.availableLabel = LabelBuilder.builder()
+                .withStyleClass("quantity")
+                .build();
+        DestroyableLabel requiredTitle = LabelBuilder.builder()
+                .withStyleClass("required")
+                .withText("blueprint.header.required")
+                .build();
+        this.availableTitle = LabelBuilder.builder()
+                .withStyleClass("available")
+                .withText("blueprint.header.available")
+                .build();
 
-        this.leftHBox = BoxBuilder.builder().withNodes(this.leftDescriptionLabel, this.leftAmountLabel).withStyleClass("ingredient-quantity-section").buildHBox();
-        this.rightHBox = BoxBuilder.builder().withNodes(this.rightAmountLabel, this.rightDescriptionLabel).withStyleClass("ingredient-quantity-section").buildHBox();
-        this.leftAmountLabel.setText(getLeftAmountString());
-        HBox.setHgrow(this.leftAmountLabel, Priority.ALWAYS);
-        this.rightAmountLabel.setText(getRightAmountString());
-        this.region = new Region();
-        HBox.setHgrow(this.region, Priority.ALWAYS);
-        this.region2 = new Region();
-        VBox.setVgrow(this.region2, Priority.ALWAYS);
+        DestroyableHBox leftHBox = BoxBuilder.builder()
+                .withNodes(requiredTitle, this.requiredLabel)
+                .withStyleClass("quantity-section").buildHBox();
+        DestroyableHBox rightHBox = BoxBuilder.builder()
+                .withNodes(this.availableLabel, this.availableTitle)
+                .withStyleClass("quantity-section").buildHBox();
+        String required = Objects.equals(minRequired, maxRequired) ? minRequired.toString() : minRequired + " - " + maxRequired;
+        this.requiredLabel.setText(required);
+        HBox.setHgrow(this.requiredLabel, Priority.ALWAYS);
+        this.availableLabel.setText(this.available.toString());
 
-        this.firstLine = BoxBuilder.builder().withNodes(this.image, this.nameLabel).buildHBox();
-        this.firstLine.prefHeightProperty().bind(this.nameLabel.heightProperty());
-        this.secondLine = new HBox(this.leftHBox, this.region, this.rightHBox);
-        this.getChildren().addAll(this.firstLine, this.region2, this.secondLine);
+        DestroyableHBox firstLine = BoxBuilder.builder()
+                .withStyleClass("first-line")
+                .withNodes(this.image, this.nameLabel)
+                .buildHBox();
+//        this.firstLine.addBinding(this.firstLine.prefHeightProperty(), this.nameLabel.heightProperty());
+        DestroyableHBox secondLine = BoxBuilder.builder()
+                .withStyleClass("second-line")
+                .withNodes(leftHBox, new GrowingRegion(), rightHBox)
+                .buildHBox();
+        this.getNodes().addAll(firstLine, new GrowingRegion(), secondLine);
 
         installPopOver();
-        this.getStyleClass().add("ingredient");
-
+        this.hoverProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                minRequired = 1;
+            }
+        });
         update();
-    }
-
-    protected String getRightAmountString() {
-        return this.rightAmount.toString();
-    }
-
-    protected String getLeftAmountString() {
-        return this.leftAmount.toString();
+        this.requestLayout();
     }
 
     protected void installPopOver() {
@@ -133,14 +149,20 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
     @SuppressWarnings("java:S6205")
     private void initImage() {
         if (this.horizonsMaterial instanceof Commodity commodity) {
-            this.image = ResizableImageViewBuilder.builder().withStyleClass("horizons-materialcard-image").withImage(commodity.getCommodityType().getImagePath()).build();
+            this.image = ResizableImageViewBuilder.builder()
+                    .withStyleClass("ingredient-image")
+                    .withImage(commodity.getCommodityType().getImagePath())
+                    .build();
         } else {
-            this.image = ResizableImageViewBuilder.builder().withStyleClass("horizons-materialcard-image").withImage(this.horizonsMaterial.getRarity().getImagePath()).build();
+            this.image = ResizableImageViewBuilder.builder()
+                    .withStyleClass("ingredient-image")
+                    .withImage(this.horizonsMaterial.getRarity().getImagePath())
+                    .build();
         }
     }
 
-    protected void setRightAmount(final Integer rightAmount) {
-        this.rightAmount = rightAmount;
+    protected void setAvailable(final Integer available) {
+        this.available = available;
     }
 
 
@@ -154,15 +176,17 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
             materialCountBoth = StorageService.getMaterialCount(this.horizonsMaterial);
             materialCountShip = materialCountBoth;
         }
-        setRightAmount(materialCountBoth);
-        this.rightAmountLabel.setText(getRightAmountString());
-        this.getStyleClass().removeAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS, INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS);
-        if (materialCountBoth >= this.leftAmount && materialCountShip < this.leftAmount) {
-            this.getStyleClass().addAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS);
-        } else if (materialCountBoth >= this.leftAmount) {
-            this.getStyleClass().addAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_FILLED_CLASS);
+        setAvailable(materialCountBoth);
+        this.availableLabel.setText(this.available.toString());
+        if (materialCountBoth >= this.minRequired && materialCountShip < this.minRequired) {
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(FILLED), true);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(PARTIAL), true);
+        } else if (materialCountBoth >= this.minRequired) {
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(FILLED), true);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(PARTIAL), false);
         } else {
-            this.getStyleClass().addAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_UNFILLED_CLASS);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(FILLED), false);
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass(PARTIAL), false);
         }
     }
 
@@ -171,57 +195,23 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
         return this.storageType;
     }
 
-    @Override
-    public String getName() {
-        return this.nameLabel.getText();
+    private Engineer getWorstEngineer(Blueprint<HorizonsBlueprintName> recipe) {
+        if (!(recipe instanceof HorizonsModuleBlueprint)) {
+            return null;
+        }
+        return ((HorizonsModuleBlueprint) recipe).getEngineers().stream()
+                .min(Comparator.comparingInt(eng -> ApplicationState.getInstance().getEngineerRank(eng)))
+                .orElse(null);
+
     }
 
-    public HorizonsMaterial getHorizonsMaterial() {
-        return this.horizonsMaterial;
+    private Engineer getBestEngineer(Blueprint<HorizonsBlueprintName> recipe) {
+        if (!(recipe instanceof HorizonsModuleBlueprint)) {
+            return null;
+        }
+        return ((HorizonsModuleBlueprint) recipe).getEngineers().stream()
+                .max(Comparator.comparingInt(eng -> ApplicationState.getInstance().getEngineerRank(eng)))
+                .orElse(null);
+
     }
-
-    protected Label getLeftAmountLabel() {
-        return this.leftAmountLabel;
-    }
-
-    public Integer getLeftAmount() {
-        return this.leftAmount;
-    }
-
-    protected Integer getRightAmount() {
-        return this.rightAmount;
-    }
-
-    protected Label getRightAmountLabel() {
-        return this.rightAmountLabel;
-    }
-
-
-    void setLeftDescriptionLabel(final StringBinding leftDescriptionLabel) {
-        this.leftDescriptionLabel.textProperty().bind(leftDescriptionLabel);
-    }
-
-    protected void setRightDescriptionLabel(final StringBinding rightDescriptionLabel) {
-        this.rightDescriptionLabel.textProperty().bind(rightDescriptionLabel);
-    }
-
-    Label getLeftDescriptionLabel() {
-        return this.leftDescriptionLabel;
-    }
-
-    Label getRightDescriptionLabel() {
-        return this.rightDescriptionLabel;
-    }
-
-    @Override
-    public void destroyInternal() {
-        this.eventListeners.forEach(EventService::removeListener);
-    }
-
-    @Override
-    public Map<ObservableValue, List<ChangeListener>> getListenersMap() {
-        return Collections.emptyMap();
-    }
-
-
 }

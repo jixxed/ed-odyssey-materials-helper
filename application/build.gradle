@@ -8,20 +8,36 @@ buildscript {
     }
     dependencies {
         classpath "org.beryx:badass-jlink-plugin:3.1.1"
-        classpath "io.freefair.gradle:lombok-plugin:8.13"
-        classpath "org.gradlex:extra-java-module-info:1.11"
         classpath 'org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:1.2.2'
         classpath "net.rdrei.android.buildtimetracker:gradle-plugin:0.11.1"
+        classpath("io.freefair.jsass-java:io.freefair.jsass-java.gradle.plugin:6.5.0.2")
     }
 }
-apply plugin: "io.freefair.lombok"
-apply plugin: 'idea' // optional (to generate IntelliJ IDEA project files)
-apply plugin: "java"
-apply plugin: "application"
-apply plugin: "org.beryx.jlink"
-apply plugin: "org.gradlex.extra-java-module-info"
-apply plugin: 'jsonschema2pojo'
-apply plugin: "build-time-tracker"
+
+plugins {
+    id 'java'
+    id("io.freefair.jsass-java") version "6.5.0.2"
+    id 'io.freefair.lombok' version '8.12.2.1'
+    id 'idea' // optional (to generate IntelliJ IDEA project files)
+    id 'application'
+    id 'org.beryx.jlink' version '3.1.1'
+    id 'org.gradlex.extra-java-module-info'
+    id 'org.jsonschema2pojo' version '1.2.2'
+    id 'net.rdrei.android.buildtimetracker' version '0.11.0'
+}
+
+compileSass {
+    destinationDir = file("src/main/resources/css")
+    indent = "  "
+    linefeed = System.lineSeparator();
+    omitSourceMapUrl = false
+    outputStyle = "NESTED";
+    precision = 8
+    sourceComments = false
+    sourceMapContents = false
+    sourceMapEmbed = false
+    sourceMapEnabled = true
+}
 
 tasks.register('wrapper', Wrapper) {
     gradleVersion "8.10.2"
@@ -67,11 +83,11 @@ jlink {
         excludeProvides servicePattern: 'reactor.blockhound.*'
 //        excludeProvides servicePattern: "jakarta.servlet.*"
     }
-    jpackage{
+    jpackage {
         skipInstaller = true
-        if(OperatingSystem.current().isLinux()){
+        if (OperatingSystem.current().isLinux()) {
             imageOptions += ['--icon', 'src/main/resources/images/application/rocket.png']
-        }else{
+        } else {
             imageOptions += ['--icon', 'src/main/resources/images/application/rocket.ico']
         }
     }
@@ -215,7 +231,6 @@ jpackage {
 
 
 extraJavaModuleInfo {
-
     deriveAutomaticModuleNamesFromFileNames.set(true)
     module("scribejava-java8-${project.getProperties().version_scribejava}.jar", "scribejava.java8", "${project.getProperties().version_scribejava}") {
         exports("com.github.scribejava.java8.base64")
@@ -310,13 +325,12 @@ run {
     //, '-Xmx1G', '-XX:+UseCompressedOops', '-XX:+PrintGCDetails', '-XX:SoftRefLRUPolicyMSPerMB=100'
 }
 test {
-    useJUnitPlatform ()
+    useJUnitPlatform()
 }
 // Each configuration is set to the default value
 jsonSchema2Pojo {
-
     // Location of the JSON Schema file(s). This may refer to a single file or a directory of files.
-    source = Set.of(file("${sourceSets.main.output.resourcesDir}/schemas/"))
+    source = files("${sourceSets.main.output.resourcesDir}/schemas/")
 
     // Target directory for generated Java source files. The plugin will add this directory to the
     // java source set so the compiler will find and compile the newly generated source files.
@@ -610,3 +624,6 @@ afterEvaluate {
 //    dependsOn(tasks.named('generateJsonSchema2Pojo'))
 //    // or alternatively use inputs.files or mustRunAfter as shown above.
 //}
+
+// Ensure Sass compiles before Java compilation
+compileJava.dependsOn compileSass

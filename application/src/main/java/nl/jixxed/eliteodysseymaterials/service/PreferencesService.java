@@ -26,7 +26,7 @@ public class PreferencesService {
 
     static {
         //create folder if not exists
-        final File targetFile = new File(OsConstants.PREFERENCES);
+        final File targetFile = new File(OsConstants.getPreferences());
         final File parent = targetFile.getParentFile();
         if (!parent.exists() && !parent.mkdirs()) {
             throw new IllegalStateException("Couldn't create dir: " + parent);
@@ -54,9 +54,9 @@ public class PreferencesService {
                 .debounce(1000, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
                 .subscribe(newValue -> {
-                    try (final OutputStream output = new FileOutputStream(OsConstants.PREFERENCES_TEMP)) {
+                    try (final OutputStream output = new FileOutputStream(OsConstants.getPreferencesTemp())) {
                         prop.store(output, null);
-                        Files.copy(Path.of(OsConstants.PREFERENCES_TEMP), Path.of(OsConstants.PREFERENCES), StandardCopyOption.REPLACE_EXISTING);
+                        Files.copy(Path.of(OsConstants.getPreferencesTemp()), Path.of(OsConstants.getPreferences()), StandardCopyOption.REPLACE_EXISTING);
                     } catch (final IOException e) {
                         log.error("Error writing preferences", e);
                     }
