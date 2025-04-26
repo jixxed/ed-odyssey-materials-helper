@@ -158,7 +158,17 @@ public class FileProcessor {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            Platform.runLater(() -> EventService.publish(new JournalInitEvent(true)));
+            TimerTask timerTask;
+            Timer timer;
+            timer = new Timer("init-report-task", true);
+            timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    Platform.runLater(() -> EventService.publish(new JournalInitEvent(true)));
+                }
+            };
+            timer.schedule(timerTask, 100L);
+
         });
     }
 
