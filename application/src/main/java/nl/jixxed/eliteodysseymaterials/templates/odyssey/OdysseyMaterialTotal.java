@@ -9,9 +9,7 @@ import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.SoloModeEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
@@ -53,6 +51,8 @@ class OdysseyMaterialTotal extends DestroyableVBox implements DestroyableEventTe
     public void initEventHandling() {
         register(EventService.addListener(true, this, JournalLineProcessedEvent.class, _ -> updateTotals()));
         register(EventService.addListener(true, this, SoloModeEvent.class, _ -> updateTotals()));
+        register(EventService.addListener(true, this, PowerplayEvent.class, _ -> updateTotals()));
+        register(EventService.addListener(true, this, PowerplayLeaveEvent.class, _ -> updateTotals()));
     }
 
     private void initSubTotal() {

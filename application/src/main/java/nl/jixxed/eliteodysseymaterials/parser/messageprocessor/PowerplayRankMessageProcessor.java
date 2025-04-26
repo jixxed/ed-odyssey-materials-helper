@@ -10,10 +10,13 @@ public class PowerplayRankMessageProcessor implements MessageProcessor<Powerplay
 
     @Override
     public void process(final PowerplayRank event) {
-        Power power = Power.forName(event.getPower());
-        ApplicationState.getInstance().setPower(power);
+        final String powerValue = event.getPower();
+        if (!powerValue.isBlank()) {
+            Power power = Power.forName(powerValue);
+            ApplicationState.getInstance().setPower(power);
+        }
         ApplicationState.getInstance().setPowerRank(event.getRank().longValue());
-        EventService.publish(new PowerplayEvent(power, event.getRank().longValue()));
+        EventService.publish(new PowerplayEvent(ApplicationState.getInstance().getPower(), event.getRank().longValue()));
     }
 
     @Override

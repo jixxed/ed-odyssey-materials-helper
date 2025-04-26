@@ -268,8 +268,11 @@ public class FXApplication extends Application {
         }));
         this.primaryStage.setOnCloseRequest(event -> {
             try {
+                applicationScreen.destroyTemplate();
                 BackupService.createConfigBackup();
-                subscribe.dispose();
+                if (subscribe != null) {
+                    subscribe.dispose();
+                }
                 EventService.publish(new TerminateApplicationEvent());
                 EventService.shutdown();
 //                NativeLibrary.disposeAll();

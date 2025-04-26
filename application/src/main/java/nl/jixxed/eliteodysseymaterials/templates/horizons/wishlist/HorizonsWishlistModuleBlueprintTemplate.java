@@ -49,7 +49,7 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
     private boolean deleted = false;
     private DestroyableButton visibilityButton;
     private DestroyableButton removeBlueprint;
-    private Disposable subsciption;
+    private Disposable subscribe;
 
     HorizonsWishlistModuleBlueprintTemplate(final String wishlistUUID, final HorizonsModuleWishlistBlueprint wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
@@ -82,7 +82,7 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
             this.visibilityImage.setImage(ImageService.getImage(this.visible ? "/images/other/visible_blue.png" : "/images/other/invisible_gray.png"));
         }
         final String gradeList = this.wishlistBlueprint.getPercentageToComplete().keySet().stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(HorizonsBlueprintGrade::getGrade).map(String::valueOf).collect(Collectors.joining(","));
-        subsciption = Observable.create((ObservableEmitter<HorizonsWishlistHighlightEvent> emitter) -> {
+        subscribe = Observable.create((ObservableEmitter<HorizonsWishlistHighlightEvent> emitter) -> {
                     this.wishlistRecipeName = LabelBuilder.builder()
                             .withStyleClass("name")
                             .withText("wishlist.blueprint.horizons.title.module",
@@ -274,7 +274,7 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
     @Override
     public void destroyInternal() {
         super.destroyInternal();
-        subsciption.dispose();
+        subscribe.dispose();
     }
 
 }

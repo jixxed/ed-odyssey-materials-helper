@@ -1,6 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist;
 
-import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -42,7 +41,7 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableHBox
     private boolean deleted = false;
     private DestroyableLabel wishlistRecipeName;
     private DestroyableTooltip tooltip;
-    private @NonNull Disposable subsciption;
+    private Disposable subscribe;
 
     OdysseyWishlistBlueprintTemplate(final String wishlistUUID, final WishlistBlueprint<OdysseyBlueprintName> wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
@@ -75,7 +74,7 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableHBox
             this.wishlistBlueprint.setVisible(this.visible);
             this.visibilityImage.setImage(ImageService.getImage(this.visible ? "/images/other/visible_blue.png" : "/images/other/invisible_gray.png"));
         }
-        subsciption = Observable.create((ObservableEmitter<OdysseyWishlistHighlightEvent> emitter) -> {
+        subscribe = Observable.create((ObservableEmitter<OdysseyWishlistHighlightEvent> emitter) -> {
                     wishlistRecipeName = LabelBuilder.builder()
                             .withStyleClass("name")
                             .withText(this.wishlistBlueprint.getRecipeName().getLocalizationKey())
@@ -166,7 +165,7 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableHBox
     @Override
     public void destroyInternal() {
         super.destroyInternal();
-        subsciption.dispose();
+        subscribe.dispose();
         Tooltip.uninstall(this.wishlistRecipeName, this.tooltip);
     }
 }

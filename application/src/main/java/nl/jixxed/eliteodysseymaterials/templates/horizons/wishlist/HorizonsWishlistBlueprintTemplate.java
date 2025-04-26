@@ -41,7 +41,7 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
     private boolean deleted = false;
     private DestroyableTooltip tooltip;
     private DestroyableLabel wishlistRecipeName;
-    private Disposable subsciption;
+    private Disposable subscribe;
 
     HorizonsWishlistBlueprintTemplate(final String wishlistUUID, final WishlistBlueprint<HorizonsBlueprintName> wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
@@ -85,7 +85,7 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
                     LocaleService.getStringBinding("wishlist.blueprint.horizons.title.engineer", LocaleService.LocalizationKey.of(this.wishlistBlueprint.getRecipeName().getLocalizationKey()));
         };
 
-        subsciption = Observable.create((ObservableEmitter<HorizonsWishlistHighlightEvent> emitter) -> {
+        subscribe = Observable.create((ObservableEmitter<HorizonsWishlistHighlightEvent> emitter) -> {
                     wishlistRecipeName = LabelBuilder.builder()
                             .withStyleClass("name")
                             .withText(Bindings.createStringBinding(() -> titleStringBinding.get().trim(), titleStringBinding))
@@ -201,7 +201,7 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
     @Override
     public void destroyInternal() {
         super.destroyInternal();
-        subsciption.dispose();
+        subscribe.dispose();
 //        Tooltip.uninstall(this.wishlistRecipeName, this.tooltip);
     }
 }

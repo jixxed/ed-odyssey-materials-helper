@@ -12,6 +12,9 @@ import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.TerminateApplicationEvent;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -19,6 +22,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -33,7 +37,14 @@ import java.util.stream.Collectors;
 public class UserPreferencesService {
 
     private static Properties prop;
-    private static Disposable writeSubscribable;
+    private static Disposable subscribe;
+    private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
+
+    static {
+        EVENT_LISTENERS.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
+            subscribe.dispose();
+        }));
+    }
 
     public static void loadUserPreferences(final Commander commander) {
         if (prop != null) {
@@ -57,10 +68,10 @@ public class UserPreferencesService {
                 throw new IllegalStateException("Couldn't create pref file: " + targetFile);
             }
         }
-        if (writeSubscribable != null) {
-            writeSubscribable.dispose();
+        if (subscribe != null) {
+            subscribe.dispose();
         }
-        writeSubscribable = Observable
+        subscribe = Observable
                 .create(emitter -> prop = new Properties() {
                     @Override
                     public synchronized Object setProperty(final String key, final String value) {

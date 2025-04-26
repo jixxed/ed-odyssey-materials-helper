@@ -10,10 +10,13 @@ public class PowerplayMeritsMessageProcessor implements MessageProcessor<Powerpl
 
     @Override
     public void process(final PowerplayMerits event) {
-        Power power = Power.forName(event.getPower());
-        ApplicationState.getInstance().setPower(power);
+        final String powerValue = event.getPower();
+        if (!powerValue.isBlank()) {
+            Power power = Power.forName(powerValue);
+            ApplicationState.getInstance().setPower(power);
+        }
         ApplicationState.getInstance().setPowerMerits(event.getTotalMerits().longValue());
-        EventService.publish(new PowerplayEvent(event.getTotalMerits().longValue(), power));
+        EventService.publish(new PowerplayEvent(event.getTotalMerits().longValue(), ApplicationState.getInstance().getPower()));
     }
 
     @Override
