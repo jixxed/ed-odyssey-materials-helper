@@ -15,6 +15,7 @@ import nl.jixxed.eliteodysseymaterials.enums.RankReward;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.PowerplayEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.PowerplayLeaveEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegmentView;
@@ -69,16 +70,16 @@ public class PowerplayPerk extends DestroyableVBox implements DestroyableEventTe
         final StringBinding currentProgressBinding = (PowerPerk.RANK_DECAL.equals(this.perk))
                 ? LocaleService.getStringBinding(getRankRewardStringBinding(reward))
                 : LocaleService.getStringBinding("tab.powerplay.current.reward", reward);
-        currentProgress = LabelBuilder.builder()
+        currentProgress = register(LabelBuilder.builder()
                 .withStyleClass("progress")
                 .withText(currentProgressBinding)
-                .build();
-        segmentedBar = createSegmentedBar();
+                .build());
+//        segmentedBar = createSegmentedBar();
         this.getNodes().add(new DestroyableSeparator(Orientation.HORIZONTAL));
         this.getNodes().add(category);
         this.getNodes().add(subtitle);
-        this.getNodes().add(segmentedBar);
-        this.getNodes().add(currentProgress);
+//        this.getNodes().add(segmentedBar);
+//        this.getNodes().add(currentProgress);
         update();
     }
 
@@ -90,14 +91,18 @@ public class PowerplayPerk extends DestroyableVBox implements DestroyableEventTe
     public void initEventHandling() {
         register(EventService.addListener(true, this, PowerplayEvent.class, _ ->
                 this.update()));
+
+        register(EventService.addListener(true, this, PowerplayLeaveEvent.class, powerplayLeaveEvent ->
+                this.update()));
     }
 
     public void update() {
-        this.getChildren().remove(segmentedBar);
+        this.getNodes().remove(segmentedBar);
+        segmentedBar = null;
         this.getChildren().remove(currentProgress);
         if ((Power.ALL.equals(this.power) && !Power.NONE.equals(ApplicationState.getInstance().getPower())) || this.power.equals(ApplicationState.getInstance().getPower())) {
             segmentedBar = createSegmentedBar();
-            this.getChildren().add(segmentedBar);
+            this.getNodes().add(segmentedBar);
             final Integer reward = this.rewards.stream().filter(rankReward -> rankReward.rank() <= ApplicationState.getInstance().getPowerRank()).max(Comparator.comparing(RankReward::rank)).map(RankReward::reward).orElse(0);
             final StringBinding currentProgressBinding = (PowerPerk.RANK_DECAL.equals(this.perk))
                     ? LocaleService.getStringBinding(getRankRewardStringBinding(reward))

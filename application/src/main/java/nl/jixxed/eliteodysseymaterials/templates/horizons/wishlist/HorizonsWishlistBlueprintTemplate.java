@@ -1,5 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 import javafx.css.PseudoClass;
@@ -19,6 +23,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTemplate;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBox implements WishlistBlueprintTemplate<HorizonsBlueprintName>, DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
@@ -36,6 +41,7 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
     private boolean deleted = false;
     private DestroyableTooltip tooltip;
     private DestroyableLabel wishlistRecipeName;
+    private Disposable subsciption;
 
     HorizonsWishlistBlueprintTemplate(final String wishlistUUID, final WishlistBlueprint<HorizonsBlueprintName> wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
@@ -78,14 +84,29 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
             case null, default ->
                     LocaleService.getStringBinding("wishlist.blueprint.horizons.title.engineer", LocaleService.LocalizationKey.of(this.wishlistBlueprint.getRecipeName().getLocalizationKey()));
         };
-        wishlistRecipeName = LabelBuilder.builder()
-                .withStyleClass("name")
-                .withText(Bindings.createStringBinding(() -> titleStringBinding.get().trim(), titleStringBinding))
-                .withOnMouseClicked(_ -> EventService.publish(new HorizonsBlueprintClickEvent(this.blueprint)))
-                .withHoverProperty((_, _, newValue) -> {
-                    EventService.publish(new HorizonsWishlistHighlightEvent(this.wishlistBlueprint, newValue));
+
+        subsciption = Observable.create((ObservableEmitter<HorizonsWishlistHighlightEvent> emitter) -> {
+                    wishlistRecipeName = LabelBuilder.builder()
+                            .withStyleClass("name")
+                            .withText(Bindings.createStringBinding(() -> titleStringBinding.get().trim(), titleStringBinding))
+                            .withOnMouseClicked(_ -> EventService.publish(new HorizonsBlueprintClickEvent(this.blueprint)))
+                            .withHoverProperty((_, _, newValue) -> {
+                                if (newValue) {
+                                    emitter.onNext(new HorizonsWishlistHighlightEvent(this.wishlistBlueprint, newValue));
+                                } else {
+                                    EventService.publish(new HorizonsWishlistHighlightEvent(this.wishlistBlueprint, newValue));
+                                }
+                            })
+                            .build();
                 })
-                .build();
+                .delay(250, TimeUnit.MILLISECONDS)
+                .observeOn(Schedulers.io())
+                .subscribe(event -> {
+                    if (this.wishlistRecipeName.isHover()) {
+                        EventService.publish(event);
+                    }
+                });
+
         DestroyableButton removeBlueprint = ButtonBuilder.builder()
                 .withStyleClass("remove")
                 .withNonLocalizedText("X")
@@ -180,6 +201,7 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
     @Override
     public void destroyInternal() {
         super.destroyInternal();
+        subsciption.dispose();
 //        Tooltip.uninstall(this.wishlistRecipeName, this.tooltip);
     }
 }

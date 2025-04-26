@@ -8,6 +8,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.ShieldGen
 
 import java.util.List;
 import java.util.Map;
+
 @Getter
 public enum Power {
     ZEMINA_TORVAL(
@@ -70,7 +71,8 @@ public enum Power {
                             new RankReward(55, 60),
                             new RankReward(67, 70),
                             new RankReward(73, 80),
-                            new RankReward(86, 90)
+                            new RankReward(86, 90),
+                            new RankReward(100, 100)
                     ),
                     PowerPerk.INCREASE_MINOR_FACTION_REPUTATION, List.of(
                             new RankReward(24, 20),

@@ -109,6 +109,7 @@ class MessageHandler {
             Map.entry(JournalEventType.SHUTDOWN, new ShutdownMessageProcessor()),
             Map.entry(JournalEventType.STARTJUMP, new StartJumpMessageProcessor()),
             Map.entry(JournalEventType.POWERPLAY, new PowerplayMessageProcessor()),
+            Map.entry(JournalEventType.POWERPLAYLEAVE, new PowerplayLeaveMessageProcessor()),
             Map.entry(JournalEventType.POWERPLAYRANK, new PowerplayRankMessageProcessor()),
             Map.entry(JournalEventType.POWERPLAYMERITS, new PowerplayMeritsMessageProcessor()),
             Map.entry(JournalEventType.MUSIC, new MusicMessageProcessor()),

@@ -1,5 +1,10 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist;
 
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.css.PseudoClass;
 import javafx.scene.control.Tooltip;
 import javafx.util.Duration;
@@ -20,6 +25,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTemplate;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableHBox implements WishlistBlueprintTemplate<OdysseyBlueprintName>, DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
@@ -36,6 +42,7 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableHBox
     private boolean deleted = false;
     private DestroyableLabel wishlistRecipeName;
     private DestroyableTooltip tooltip;
+    private @NonNull Disposable subsciption;
 
     OdysseyWishlistBlueprintTemplate(final String wishlistUUID, final WishlistBlueprint<OdysseyBlueprintName> wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
@@ -68,14 +75,27 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableHBox
             this.wishlistBlueprint.setVisible(this.visible);
             this.visibilityImage.setImage(ImageService.getImage(this.visible ? "/images/other/visible_blue.png" : "/images/other/invisible_gray.png"));
         }
-        wishlistRecipeName = LabelBuilder.builder()
-                .withStyleClass("name")
-                .withText(this.wishlistBlueprint.getRecipeName().getLocalizationKey())
-                .withOnMouseClicked(_ -> EventService.publish(new BlueprintClickEvent(this.blueprint.getBlueprintName())))
-                .withHoverProperty((_, _, newValue) -> {
-                    EventService.publish(new OdysseyWishlistHighlightEvent(this.wishlistBlueprint, newValue));
+        subsciption = Observable.create((ObservableEmitter<OdysseyWishlistHighlightEvent> emitter) -> {
+                    wishlistRecipeName = LabelBuilder.builder()
+                            .withStyleClass("name")
+                            .withText(this.wishlistBlueprint.getRecipeName().getLocalizationKey())
+                            .withOnMouseClicked(_ -> EventService.publish(new BlueprintClickEvent(this.blueprint.getBlueprintName())))
+                            .withHoverProperty((_, _, newValue) -> {
+                                if (newValue) {
+                                    emitter.onNext(new OdysseyWishlistHighlightEvent(this.wishlistBlueprint, newValue));
+                                } else {
+                                    EventService.publish(new OdysseyWishlistHighlightEvent(this.wishlistBlueprint, newValue));
+                                }
+                            })
+                            .build();
                 })
-                .build();
+                .delay(250, TimeUnit.MILLISECONDS)
+                .observeOn(Schedulers.io())
+                .subscribe(event -> {
+                    if (this.wishlistRecipeName.isHover()) {
+                        EventService.publish(event);
+                    }
+                });
         DestroyableButton removeBlueprint = ButtonBuilder.builder()
                 .withStyleClass("remove")
                 .withNonLocalizedText("X")
@@ -146,6 +166,7 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableHBox
     @Override
     public void destroyInternal() {
         super.destroyInternal();
+        subsciption.dispose();
         Tooltip.uninstall(this.wishlistRecipeName, this.tooltip);
     }
 }

@@ -15,6 +15,7 @@ import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.PowerplayEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.PowerplayLeaveEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.CopyableLocation;
@@ -102,6 +103,8 @@ public class PowerplayCard extends DestroyableVBox implements DestroyableEventTe
     public void initEventHandling() {
         register(EventService.addListener(true, this, PowerplayEvent.class, powerplayEvent ->
                 this.update(powerplayEvent.getPower(), powerplayEvent.getMerits(), powerplayEvent.getRank())));
+        register(EventService.addListener(true, this, PowerplayLeaveEvent.class, powerplayLeaveEvent ->
+                this.update(powerplayLeaveEvent.getPower(), Optional.empty(), Optional.empty())));
 
     }
 

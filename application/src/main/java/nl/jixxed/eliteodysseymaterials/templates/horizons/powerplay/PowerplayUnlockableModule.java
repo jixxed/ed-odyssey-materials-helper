@@ -7,6 +7,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.enums.Power;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.PowerplayEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.PowerplayLeaveEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
@@ -46,6 +47,9 @@ public class PowerplayUnlockableModule extends DestroyableHBox implements Destro
         register(EventService.addListener(true, this, PowerplayEvent.class, powerplayEvent ->
                 powerplayEvent.getRank().ifPresent(rank ->
                         this.update(powerplayEvent.getPower(), rank))));
+
+        register(EventService.addListener(true, this, PowerplayLeaveEvent.class, powerplayLeaveEvent ->
+                this.update(powerplayLeaveEvent.getPower(), 0L)));
     }
 
     public void update(Power power, long rank) {

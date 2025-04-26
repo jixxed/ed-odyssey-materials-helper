@@ -1,5 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.css.PseudoClass;
 import javafx.util.Duration;
 import lombok.Getter;
@@ -21,6 +25,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.DoubleConsumer;
 import java.util.stream.Collectors;
@@ -45,6 +50,7 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
     private boolean deleted = false;
     private DestroyableButton visibilityButton;
     private DestroyableButton removeBlueprint;
+    private Disposable subsciption;
 
     HorizonsWishlistModuleBlueprintTemplate(final String wishlistUUID, final HorizonsModuleWishlistBlueprint wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
@@ -77,17 +83,30 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
             this.visibilityImage.setImage(ImageService.getImage(this.visible ? "/images/other/visible_blue.png" : "/images/other/invisible_gray.png"));
         }
         final String gradeList = this.wishlistBlueprint.getPercentageToComplete().keySet().stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(HorizonsBlueprintGrade::getGrade).map(String::valueOf).collect(Collectors.joining(","));
-        this.wishlistRecipeName = LabelBuilder.builder()
-                .withStyleClass("name")
-                .withText("wishlist.blueprint.horizons.title.module",
-                        LocaleService.LocalizationKey.of(this.wishlistBlueprint.getRecipeName().getLocalizationKey()),
-                        LocaleService.LocalizationKey.of(this.wishlistBlueprint.getBlueprintType().getLocalizationKey()),
-                        gradeList.isEmpty() ? "?" : gradeList)
-                .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getPercentageToComplete().keySet().stream().findFirst().orElse(HorizonsBlueprintGrade.GRADE_1)))))
-                .withHoverProperty((_, _, newValue) -> {
-                    EventService.publish(new HorizonsWishlistHighlightEvent(this.wishlistBlueprint, newValue));
+        subsciption = Observable.create((ObservableEmitter<HorizonsWishlistHighlightEvent> emitter) -> {
+                    this.wishlistRecipeName = LabelBuilder.builder()
+                            .withStyleClass("name")
+                            .withText("wishlist.blueprint.horizons.title.module",
+                                    LocaleService.LocalizationKey.of(this.wishlistBlueprint.getRecipeName().getLocalizationKey()),
+                                    LocaleService.LocalizationKey.of(this.wishlistBlueprint.getBlueprintType().getLocalizationKey()),
+                                    gradeList.isEmpty() ? "?" : gradeList)
+                            .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getPercentageToComplete().keySet().stream().findFirst().orElse(HorizonsBlueprintGrade.GRADE_1)))))
+                            .withHoverProperty((_, _, newValue) -> {
+                                if (newValue) {
+                                    emitter.onNext(new HorizonsWishlistHighlightEvent(this.wishlistBlueprint, newValue));
+                                } else {
+                                    EventService.publish(new HorizonsWishlistHighlightEvent(this.wishlistBlueprint, newValue));
+                                }
+                            })
+                            .build();
                 })
-                .build();
+                .delay(250, TimeUnit.MILLISECONDS)
+                .observeOn(Schedulers.io())
+                .subscribe(event -> {
+                    if (this.wishlistRecipeName.isHover()) {
+                        EventService.publish(event);
+                    }
+                });
         removeBlueprint = ButtonBuilder.builder()
                 .withStyleClass("remove")
                 .withNonLocalizedText("X")
@@ -256,41 +275,7 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
     @Override
     public void destroyInternal() {
         super.destroyInternal();
-//        Tooltip.uninstall(this.wishlistRecipeName, this.tooltip);
+        subsciption.dispose();
     }
-//        if (popOverRef.get() != null) {
-//            popOverRef.get().hide();
-//            popOverRef.set(null);
-//        }
-//        toggleControls.getSkin().dispose();
-//        visibilityButton.getSkin().dispose();
-//        removeBlueprint.getSkin().dispose();
-//        wishlistRecipeName.getSkin().dispose();
-//        tooltip.getSkin().dispose();
-//        visibilityImage.setImage(null);
-//        visibilityButton = null;
-//        removeBlueprint = null;
-//        visibilityImage = null;
-//        wishlistRecipeName = null;
-//        toggleControls = null;
-//        tooltip = null;
-//        popOverRef = null;
-//    }
-//
-//    @Override
-//    public void destroy() {
-//        log.info("Destroy called on module blueprint");
-//        super.destroy();
-//
-//    }
-//
-//    @Override
-//    public void destroyTemplate() {
-////        for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
-////            System.out.println(ste);
-////        }
-//        log.info("destroyTemplate called on module blueprint");
-//        DestroyableEventTemplate.super.destroyTemplate();
-//
-//    }
+
 }
