@@ -30,7 +30,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.DoubleConsumer;
 import java.util.stream.Collectors;
 
-//@Slf4j
 public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHBox implements WishlistBlueprintTemplate<HorizonsBlueprintName>, DestroyableEventTemplate {
     private static int counter = 0;
 

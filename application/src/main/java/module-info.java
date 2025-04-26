@@ -5,7 +5,6 @@ module nl.jixxed.eliteodysseymaterials {
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.datatype.jdk8;
     requires com.fasterxml.jackson.datatype.jsr310;
-    requires com.google.code.findbugs.jsr305;
     requires com.google.common;
     requires com.google.j2objc.annotations;
     requires com.ibm.icu;
@@ -28,7 +27,6 @@ module nl.jixxed.eliteodysseymaterials {
     requires org.apache.poi.ooxml;
     requires org.apache.poi.poi;
     requires org.apache.xmlbeans;
-    requires org.checkerframework.checker.qual;
     requires org.controlsfx.controls;
     requires org.jfxtras.styles.jmetro;
     requires org.leadpony.justify;

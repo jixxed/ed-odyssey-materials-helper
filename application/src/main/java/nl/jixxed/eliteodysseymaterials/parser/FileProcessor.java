@@ -47,22 +47,24 @@ public class FileProcessor {
     private static final ObjectMapper OBJECT_MAPPER2 = new ObjectMapper();
     private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
+    private static TimerTask timerTask;
+    private static Timer timer;
+    private static final String EVENT = "event";
+    private static long position = 0L;
 
     static {
+        timer = new Timer("init-report-task", true);
         EVENT_LISTENERS.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
             executorService.shutdownNow();
+            if (timer != null) {
+                timer.cancel();
+            }
         }));
         OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         OBJECT_MAPPER.registerModule(new JavaTimeModule());
         OBJECT_MAPPER2.registerModule(new JavaTimeModule());
     }
 
-    private static final String EVENT = "event";
-    private static long position = 0L;
-
-    static {
-        OBJECT_MAPPER.registerModule(new JavaTimeModule());
-    }
 
     public static synchronized void resetAndProcessJournal(final File file) {
         position = 0L;
@@ -158,9 +160,7 @@ public class FileProcessor {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            TimerTask timerTask;
-            Timer timer;
-            timer = new Timer("init-report-task", true);
+
             timerTask = new TimerTask() {
                 @Override
                 public void run() {

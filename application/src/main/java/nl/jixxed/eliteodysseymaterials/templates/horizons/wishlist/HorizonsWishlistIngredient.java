@@ -215,11 +215,10 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
         this.presentShip.setValue(Math.max(0, progressShip));
         this.presentFleetCarrier.setValue(Math.max(0, progressFleetCarrier));
         this.missingForMinimum.setValue(Math.max(0, minimum - progressTotal));
-        this.missingForRequired.setValue(Math.max(0, required - Math.max(minimum, progressTotal)));
+        this.missingForRequired.setValue(Math.max(required == 0 ? 1 : 0, required - Math.max(minimum, progressTotal)));// required == 0 ? 1 : 0 to prevent div/0 resulting in high CPU load
         this.missingForMaximum.setValue(Math.max(0, maximum - Math.max(required, progressTotal)));
 
         updateStyle();
-
     }
 
     private void updateStyle() {
