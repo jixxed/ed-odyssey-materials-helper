@@ -12,9 +12,4 @@ public class DestroyableTitledPane extends TitledPane implements DestroyableComp
         setContent(value);
     }
 
-    @Override
-    public void destroyInternal() {
-        this.setContent(null);
-        DestroyableComponent.super.destroyInternal();
-    }
 }
