@@ -1,3 +1,7 @@
+Version 2.159
+-------------
+Some more bugfixes
+
 Version 2.158
 -------------
 Bugfixes for the previous release
