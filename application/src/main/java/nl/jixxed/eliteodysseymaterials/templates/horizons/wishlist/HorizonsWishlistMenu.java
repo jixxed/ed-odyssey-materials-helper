@@ -278,7 +278,7 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
     }
 
     private Optional<Engineer> getCurrentEngineerForRecipe(Blueprint<HorizonsBlueprintName> blueprint) {
-        if (blueprint == null) {
+        if (blueprint == null || shortestPath == null) {
             return Optional.empty();
         }
         return shortestPath.stream()

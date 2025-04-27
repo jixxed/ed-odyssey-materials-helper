@@ -35,7 +35,6 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
     private DestroyableComboBox<Wishlist> wishlistSelect;
     private DestroyableMenuButton menuButton;
     private String activeWishlistUUID;
-    private List<PathItem<OdysseyBlueprintName>> shortestPath;
     private OdysseyWishlistMaterialSearch currentSearch = new OdysseyWishlistMaterialSearch("", OdysseyWishlistMaterialSort.ALPHABETICAL, WishlistMaterialGrouping.CATEGORY);
 
     public OdysseyWishlistMenu() {
@@ -222,8 +221,6 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
         register(EventService.addListener(true, this, OdysseyWishlistCreatedEvent.class, _ -> refreshWishlistSelect()));
         register(EventService.addListener(true, this, OdysseyWishlistSearchEvent.class, odysseyWishlistSearchEvent ->
                 this.currentSearch = odysseyWishlistSearchEvent.getSearch()));//intended for export sorting
-        register(EventService.addListener(true, this, OdysseyShortestPathChangedEvent.class, shortestPathChangedEvent ->
-                this.shortestPath = shortestPathChangedEvent.getPathItems()));
     }
 
     private void refreshWishlistSelect() {
