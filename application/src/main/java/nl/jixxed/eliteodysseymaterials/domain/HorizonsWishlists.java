@@ -2,7 +2,9 @@ package nl.jixxed.eliteodysseymaterials.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.reactivex.rxjava3.annotations.Nullable;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Collections;
@@ -15,6 +17,7 @@ import java.util.UUID;
 public class HorizonsWishlists {
     @SuppressWarnings("java:S1700")
     private Set<HorizonsWishlist> wishlists = new HashSet<>();
+    @Getter(AccessLevel.PRIVATE)
     private @Nullable String selectedWishlistUUID;
 
     @JsonIgnore

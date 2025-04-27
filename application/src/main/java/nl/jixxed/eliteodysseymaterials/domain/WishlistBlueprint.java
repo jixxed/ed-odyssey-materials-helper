@@ -38,19 +38,23 @@ public sealed interface WishlistBlueprint<E extends BlueprintName<E>> permits Ho
     @JsonIgnore
     @SuppressWarnings("unchecked")
     default Blueprint<E> getBlueprint() {
-        return (Blueprint<E>) switch (this) {
-            case HorizonsModuleWishlistBlueprint bp ->
-                    HorizonsBlueprintConstants.getRecipe(bp.getRecipeName(), bp.getBlueprintType(), getHighestGrade(bp));
-            case HorizonsExperimentalWishlistBlueprint bp ->
-                    HorizonsBlueprintConstants.getRecipe(bp.getRecipeName(), bp.getBlueprintType(), null);
-            case HorizonsSynthesisWishlistBlueprint bp ->
-                    HorizonsBlueprintConstants.getRecipe(bp.getRecipeName(), null, bp.getBlueprintGrade());
-            case HorizonsTechBrokerWishlistBlueprint bp ->
-                    HorizonsBlueprintConstants.getRecipe(bp.getRecipeName(), bp.getBlueprintType(), null);
-            case HorizonsEngineerWishlistBlueprint bp ->
-                    HorizonsBlueprintConstants.getRecipe(bp.getRecipeName(), null, null);
-            case OdysseyWishlistBlueprint bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName());
-        };
+        try {
+            return (Blueprint<E>) switch (this) {
+                case HorizonsModuleWishlistBlueprint bp ->
+                        HorizonsBlueprintConstants.getRecipe(bp.getRecipeName(), bp.getBlueprintType(), getHighestGrade(bp));
+                case HorizonsExperimentalWishlistBlueprint bp ->
+                        HorizonsBlueprintConstants.getRecipe(bp.getRecipeName(), bp.getBlueprintType(), null);
+                case HorizonsSynthesisWishlistBlueprint bp ->
+                        HorizonsBlueprintConstants.getRecipe(bp.getRecipeName(), null, bp.getBlueprintGrade());
+                case HorizonsTechBrokerWishlistBlueprint bp ->
+                        HorizonsBlueprintConstants.getRecipe(bp.getRecipeName(), bp.getBlueprintType(), null);
+                case HorizonsEngineerWishlistBlueprint bp ->
+                        HorizonsBlueprintConstants.getRecipe(bp.getRecipeName(), null, null);
+                case OdysseyWishlistBlueprint bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName());
+            };
+        } catch (IllegalArgumentException ex) {
+            return null;
+        }
     }
 
     @JsonIgnore

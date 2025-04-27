@@ -67,13 +67,13 @@ public class HorizonsWishlistBlueprintsCategory extends DestroyableHBox implemen
         register(EventService.addListener(true, this, HorizonsWishlistSelectedEvent.class, _ -> refreshBlueprints()));
         register(EventService.addListener(true, this, HorizonsWishlistBlueprintEvent.class, wishlistEvent ->
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                    final String selectedWishlistUUID = WishlistService.getHorizonsWishlists(commander).getSelectedWishlistUUID();
+                    final String selectedWishlistUUID = WishlistService.getHorizonsWishlists(commander).getSelectedWishlist().getUuid();
                     if (Objects.equals(wishlistEvent.getWishlistUUID(), selectedWishlistUUID)) {
                         if (Action.REMOVED.equals(wishlistEvent.getAction())) {
-                            log.debug("Action.REMOVED");
+//                            log.debug("Action.REMOVED");
                             remove();
                         } else if (Action.ADDED.equals(wishlistEvent.getAction())) {
-                            log.debug("Action.ADDED");
+//                            log.debug("Action.ADDED");
                             add(wishlistEvent.getWishlistBlueprints(), wishlistEvent.getWishlistUUID());
                         }
                     }
@@ -93,7 +93,7 @@ public class HorizonsWishlistBlueprintsCategory extends DestroyableHBox implemen
         wishlistBlueprints.stream()
                 .filter(blueprint -> this.blueprintCategory.equals(getBlueprintCategory(blueprint)))
                 .forEach(wishlistRecipe -> {
-                    log.debug("add");
+//                    log.debug("add");
                     final WishlistBlueprintTemplate<HorizonsBlueprintName> wishlistBlueprint = createWishListBlueprintTemplate(wishlistRecipe, wishlistUUID);
                     addBluePrint(wishlistBlueprint);
                 });

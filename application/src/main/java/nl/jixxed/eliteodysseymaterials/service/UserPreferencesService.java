@@ -49,6 +49,7 @@ public class UserPreferencesService {
     }
 
     public static void loadUserPreferences(final Commander commander) {
+        log.info("Loading user preferences for " + commander.getFid());
         if (prop != null) {
             prop.clear();
         }

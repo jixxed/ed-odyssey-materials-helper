@@ -107,7 +107,7 @@ public class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBo
         this.getNodes().addAll(blueprints);
         this.getNodes().add(new GrowingRegion());
         if (!ApplicationState.getInstance().getPreferredCommander()
-                .map(commander -> Wishlist.ALL.getUuid().equals(WishlistService.getHorizonsWishlists(commander).getSelectedWishlistUUID()))
+                .map(commander -> Wishlist.ALL.getUuid().equals(WishlistService.getHorizonsWishlists(commander).getSelectedWishlist().getUuid()))
                 .orElse(false)) {
             DestroyableButton removeButton = ButtonBuilder.builder()
                     .withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions.remove"))

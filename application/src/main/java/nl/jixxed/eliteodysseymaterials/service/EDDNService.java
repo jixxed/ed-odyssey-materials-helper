@@ -94,8 +94,10 @@ public class EDDNService {
         OBJECT_MAPPER.registerModule(new Jdk8Module().configureAbsentsAsNulls(true));
         JSON_VALIDATION_SERVICE.createProblemPrinter(log::error);
         EVENT_LISTENERS.add(EventService.addStaticListener(JournalInitEvent.class, journalInitEvent -> {
+            log.info("update EDDN last timestamp " + journalInitEvent.isInitialised());
             if (!journalInitEvent.isInitialised()) {
                 final LocalDateTime lastTimestamp = UserPreferencesService.getPreference(PreferenceConstants.USER_LATEST_EVENT, MIN_DATETIME);
+                log.info("update EDDN last timestamp " + lastTimestamp);
                 UserPreferencesService.setPreference(PreferenceConstants.USER_LATEST_EVENT, lastTimestamp.plusSeconds(1));
             }
         }));

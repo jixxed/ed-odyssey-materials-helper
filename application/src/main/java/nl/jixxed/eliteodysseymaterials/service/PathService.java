@@ -337,7 +337,7 @@ public class PathService {
                 .filter(bp -> getEngineers(bp.getBlueprint()).contains(engineer))
                 .filter(bp -> pathItems.stream().noneMatch(pathItem -> pathItem.getRecipes().containsKey(bp.getBlueprint())))
                 .filter(bp -> engineer.equals(Engineer.REMOTE_WORKSHOP) || !(getEngineers((EngineeringBlueprint<?>) bp.getBlueprint()).contains(Engineer.REMOTE_WORKSHOP)))
-                .filter(bp -> (wishlistBlueprints.stream().filter(WishlistBlueprint::isVisible).noneMatch(
+                .filter(bp -> (wishlistBlueprints.stream().filter(wb -> wb.getBlueprint() != null).filter(WishlistBlueprint::isVisible).noneMatch(
                                 wbp -> (wbp instanceof HorizonsModuleWishlistBlueprint hmwbp)
                                         && hmwbp.getBlueprint().getBlueprintName().equals(bp.getBlueprint().getBlueprintName())
                                         && !hmwbp.getPercentageToComplete().keySet().stream().allMatch(grade -> ((HorizonsModuleBlueprint) HorizonsBlueprintConstants.getRecipe(hmwbp.getRecipeName(), hmwbp.getBlueprintType(), grade)).getEngineers().contains(engineer)))

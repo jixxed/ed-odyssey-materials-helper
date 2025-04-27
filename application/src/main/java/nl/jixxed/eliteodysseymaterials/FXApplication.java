@@ -254,7 +254,7 @@ public class FXApplication extends Application {
         this.eventListeners.add(EventService.addListener(this, CommanderAllListedEvent.class, event -> {
             this.initialized = true;
         }));
-        this.eventListeners.add(EventService.addListener(true, this, JournalInitEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(true, this, 0, JournalInitEvent.class, event -> {//highest priority
             ApplicationState.getInstance().getPreferredCommander().ifPresent(UserPreferencesService::loadUserPreferences);
         }));
         this.eventListeners.add(EventService.addListener(this, FontSizeEvent.class, fontSizeEvent -> {
@@ -471,7 +471,7 @@ public class FXApplication extends Application {
                             scene.getStylesheets().remove(cssFile);
                             scene.getStylesheets().add(cssFile);
                         }));
-                FileService.subscribe(currentWorkingDirectory + "\\src\\main\\resources\\css\\sass", false, fileListenerRef.get());
+                FileService.subscribe(currentWorkingDirectory + "\\src\\main\\resources\\css\\compiled\\sass", false, fileListenerRef.get());
             } catch (final IOException e) {
                 log.error("Error loading stylesheet", e);
             }
