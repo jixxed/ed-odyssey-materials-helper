@@ -21,10 +21,20 @@ public enum OdysseyWishlistMaterialSort {
 
     @SuppressWarnings("java:S1452")
     public static Comparator<OdysseyWishlistIngredient> getSort(final OdysseyWishlistMaterialSearch search) {
-        return switch (search.getWishlistMaterialSort()) {
+        return getSort(search.getWishlistMaterialSort());
+    }
+
+    @SuppressWarnings("java:S1452")
+    public Comparator<OdysseyWishlistIngredient> getSort() {
+        return getSort(this);
+    }
+
+    private static Comparator<OdysseyWishlistIngredient> getSort(OdysseyWishlistMaterialSort sort) {
+        return switch (sort) {
             case ALPHABETICAL ->
                     Comparator.comparing((OdysseyWishlistIngredient o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getOdysseyMaterial().getLocalizationKey()));
-            case QUANTITY_REQUIRED -> Comparator.comparing((OdysseyWishlistIngredient o) -> o.getRequired()).reversed();
+            case QUANTITY_REQUIRED -> Comparator.comparing(OdysseyWishlistIngredient::getRequired).reversed()
+                    .thenComparing((OdysseyWishlistIngredient o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getOdysseyMaterial().getLocalizationKey()));
         };
     }
 }

@@ -11,7 +11,6 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTe
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -95,9 +94,13 @@ public class HorizonsWishlistMaterialsCategory extends DestroyableFlowPane imple
         this.getNodes().clear();
     }
 
-    @SuppressWarnings("unchecked")
     private void sort(HorizonsWishlistMaterialSort sort) {
-        this.getChildren().sort((Comparator<Node>) (Comparator<?>) sort.getSort());
+        final var cards = this.getChildren().stream()
+                .map(HorizonsWishlistIngredient.class::cast)
+                .sorted(sort.getSort())
+                .toList();
+        this.getChildren().clear();
+        this.getChildren().addAll(cards);
     }
 
     private void group(WishlistMaterialGrouping grouping) {

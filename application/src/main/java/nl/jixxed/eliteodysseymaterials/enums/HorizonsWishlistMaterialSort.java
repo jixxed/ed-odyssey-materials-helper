@@ -36,9 +36,12 @@ public enum HorizonsWishlistMaterialSort {
             case ALPHABETICAL ->
                     Comparator.comparing((HorizonsWishlistIngredient o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getHorizonsMaterial().getLocalizationKey()));
             case GRADE ->
-                    Comparator.comparing((HorizonsWishlistIngredient o) -> o.getHorizonsMaterial().getRarity().getLevel()).reversed();
-            case QUANTITY_REQUIRED ->
-                    Comparator.comparing((HorizonsWishlistIngredient o) -> o.getRequired()).reversed();
+                    Comparator.comparing((HorizonsWishlistIngredient o) -> o.getHorizonsMaterial().getRarity().getLevel())
+                            .reversed()
+                            .thenComparing((HorizonsWishlistIngredient o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getHorizonsMaterial().getLocalizationKey()));
+            case QUANTITY_REQUIRED -> Comparator.comparing(HorizonsWishlistIngredient::getRequired)
+                    .reversed()
+                    .thenComparing((HorizonsWishlistIngredient o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getHorizonsMaterial().getLocalizationKey()));
         };
     }
 }
