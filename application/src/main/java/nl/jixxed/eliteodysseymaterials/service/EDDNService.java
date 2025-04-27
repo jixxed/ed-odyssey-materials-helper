@@ -273,14 +273,14 @@ public class EDDNService {
                 .noneMatch(event::equalsIgnoreCase);
     }
 
-    public static void fsssignaldiscovered(final FSSSignalDiscovered fsssignaldiscovered) {
+    public static synchronized void fsssignaldiscovered(final FSSSignalDiscovered fsssignaldiscovered) {
         if (fsssignaldiscovered.getUSSType().isEmpty() || fsssignaldiscovered.getUSSType().stream().noneMatch(ussType -> ussType.equalsIgnoreCase("$USS_Type_MissionTarget;"))) {
             log.info("Buffer FSSSignalDiscovered event");
             fssSignalDiscoveredList.add(fsssignaldiscovered);
         }
     }
 
-    public static void anyEvent(final JournalEventType journalEventType, final LocalDateTime timestamp) {
+    public static synchronized void anyEvent(final JournalEventType journalEventType, final LocalDateTime timestamp) {
         if (EDDNService.isFlushTriggerEvent(journalEventType.friendlyName())) {
             if (!fssSignalDiscoveredList.isEmpty() && fssSignalDiscoveredList.stream().anyMatch(fssSignalDiscovered -> fssSignalDiscovered.getSystemAddress().equals(LocationService.getCurrentSystemAddress()))) {
                 log.info("Flushing FSSSignalDiscovered events");
