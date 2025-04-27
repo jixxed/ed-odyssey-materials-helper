@@ -24,6 +24,7 @@ import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTempla
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 public class HorizonsWishlistBlueprintsCategory extends DestroyableHBox implements DestroyableEventTemplate {
@@ -67,7 +68,7 @@ public class HorizonsWishlistBlueprintsCategory extends DestroyableHBox implemen
         register(EventService.addListener(true, this, HorizonsWishlistBlueprintEvent.class, wishlistEvent ->
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                     final String selectedWishlistUUID = WishlistService.getHorizonsWishlists(commander).getSelectedWishlistUUID();
-                    if (selectedWishlistUUID.equals(wishlistEvent.getWishlistUUID())) {
+                    if (Objects.equals(wishlistEvent.getWishlistUUID(), selectedWishlistUUID)) {
                         if (Action.REMOVED.equals(wishlistEvent.getAction())) {
                             log.debug("Action.REMOVED");
                             remove();

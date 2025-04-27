@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.reactivex.rxjava3.annotations.Nullable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,7 +15,7 @@ import java.util.UUID;
 public class HorizonsWishlists {
     @SuppressWarnings("java:S1700")
     private Set<HorizonsWishlist> wishlists = new HashSet<>();
-    private String selectedWishlistUUID;
+    private @Nullable String selectedWishlistUUID;
 
     @JsonIgnore
     public Set<HorizonsWishlist> getAllWishlists() {
@@ -73,7 +74,7 @@ public class HorizonsWishlists {
     public void renameWishlist(final String uuid, final String name) {
         if (name != null && !name.isEmpty()) {
             final HorizonsWishlist wishlist = getWishlist(uuid);
-            if(wishlist != null) {
+            if (wishlist != null) {
                 wishlist.setName((name.length() > 50) ? name.substring(0, 50) : name);
             }
         }
