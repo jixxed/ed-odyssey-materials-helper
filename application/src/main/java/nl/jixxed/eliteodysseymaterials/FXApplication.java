@@ -245,7 +245,7 @@ public class FXApplication extends Application {
     private void initEventHandling() {
         this.eventListeners.add(EventService.addListener(this, WatchedFolderChangedEvent.class, event -> resetWatchedFolder(new File(event.getPath()))));
         this.eventListeners.add(EventService.addListener(this, CommanderSelectedEvent.class, event -> {
-            UserPreferencesService.loadUserPreferences(event.getCommander());
+//            UserPreferencesService.loadUserPreferences(event.getCommander());
             log.debug("CommanderSelectedEvent " + this.initialized);
             if (this.initialized) {
                 reset(this.journalWatcher.getWatchedFolder());
@@ -255,10 +255,7 @@ public class FXApplication extends Application {
             this.initialized = true;
         }));
         this.eventListeners.add(EventService.addListener(true, this, JournalInitEvent.class, event -> {
-//            if (event.isInitialised()) {
-//                Platform.runLater(() -> setupFleetCarrierWatcher(this.journalWatcher.getWatchedFolder(), APPLICATION_STATE.getPreferredCommander().orElse(null)));
-//                Platform.runLater(() -> this.content.getChildren().remove(this.loadingScreen));
-//            }
+            ApplicationState.getInstance().getPreferredCommander().ifPresent(UserPreferencesService::loadUserPreferences);
         }));
         this.eventListeners.add(EventService.addListener(this, FontSizeEvent.class, fontSizeEvent -> {
             if (getApplicationScreen() != null) {

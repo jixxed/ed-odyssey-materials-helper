@@ -42,7 +42,9 @@ public class UserPreferencesService {
 
     static {
         EVENT_LISTENERS.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
-            subscribe.dispose();
+            if (subscribe != null) {
+                subscribe.dispose();
+            }
         }));
     }
 
