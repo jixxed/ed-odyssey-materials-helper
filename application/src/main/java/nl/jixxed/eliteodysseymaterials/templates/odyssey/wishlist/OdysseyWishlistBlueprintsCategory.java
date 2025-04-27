@@ -69,7 +69,7 @@ public class OdysseyWishlistBlueprintsCategory extends DestroyableHBox implement
         register(EventService.addListener(true, this, OdysseyWishlistSelectedEvent.class, _ -> refreshBlueprints()));
         register(EventService.addListener(true, this, OdysseyWishlistBlueprintEvent.class, wishlistEvent ->
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                    final String selectedWishlistUUID = WishlistService.getOdysseyWishlists(commander).getSelectedWishlistUUID();
+                    final String selectedWishlistUUID = WishlistService.getOdysseyWishlists(commander).getSelectedWishlist().getUuid();
                     if (selectedWishlistUUID.equals(wishlistEvent.getWishlistUUID())) {
                         if (Action.REMOVED.equals(wishlistEvent.getAction())) {
                             remove();

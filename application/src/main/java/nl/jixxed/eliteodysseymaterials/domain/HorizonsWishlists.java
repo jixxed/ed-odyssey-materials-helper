@@ -17,7 +17,7 @@ import java.util.UUID;
 public class HorizonsWishlists {
     @SuppressWarnings("java:S1700")
     private Set<HorizonsWishlist> wishlists = new HashSet<>();
-    @Getter(AccessLevel.PRIVATE)
+    @Getter(AccessLevel.PRIVATE)// access through getSelectedWishlist().getUuid()
     private @Nullable String selectedWishlistUUID;
 
     @JsonIgnore

@@ -1,3 +1,7 @@
+Version 2.160
+-------------
+bugfix for Odyssey wishlists
+
 Version 2.159
 -------------
 Some more bugfixes
