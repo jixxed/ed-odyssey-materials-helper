@@ -41,7 +41,6 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
     @Getter
     private DestroyableComboBox<ShipConfiguration> shipSelect;
     private DestroyableMenuButton menuButton;
-    private String activeShipUUID;
     private DestroyableMenuButton addAllToWishlist;
     private DestroyableMenuButton addChangedToWishlist;
     private DestroyableResizableImageView shipsHelp;
@@ -132,9 +131,8 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
 
     private void selectShipConfiguration(ShipConfiguration newValue) {
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-            this.activeShipUUID = newValue.getUuid();
-            ShipService.selectShipConfiguration(this.activeShipUUID, commander);
-            EventService.publish(new HorizonsShipSelectedEvent(this.activeShipUUID));
+            ShipService.selectShipConfiguration(this.shipSelect.getSelectionModel().getSelectedItem().getUuid(), commander);
+            EventService.publish(new HorizonsShipSelectedEvent(this.shipSelect.getSelectionModel().getSelectedItem().getUuid()));
         });
     }
 
@@ -193,9 +191,9 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
                 if (buttonType == ButtonType.OK) {
                     APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                         final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
-                        shipConfigurations.resetShipConfiguration(this.activeShipUUID);
+                        shipConfigurations.resetShipConfiguration(this.shipSelect.getSelectionModel().getSelectedItem().getUuid());
                         ShipService.saveShipConfigurations(commander, shipConfigurations);
-                        EventService.publish(new HorizonsShipChoiceEvent(this.activeShipUUID));
+                        EventService.publish(new HorizonsShipChoiceEvent(this.shipSelect.getSelectionModel().getSelectedItem().getUuid()));
                         refreshShipSelect();
                     });
                 }
@@ -214,7 +212,7 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
             result.ifPresent(buttonType -> {
                 if (buttonType == ButtonType.OK) {
                     APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                        ShipService.deleteShipConfiguration(this.activeShipUUID, commander);
+                        ShipService.deleteShipConfiguration(this.shipSelect.getSelectionModel().getSelectedItem().getUuid(), commander);
                         Platform.runLater(this::refreshShipSelect);
                     });
                 }
@@ -226,7 +224,7 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
         return _ -> showInputPopOver("tab.ships.rename", "tab.ships.rename.prompt",
                 (commander, input) -> {
                     final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
-                    shipConfigurations.renameShipConfiguration(this.activeShipUUID, input);
+                    shipConfigurations.renameShipConfiguration(this.shipSelect.getSelectionModel().getSelectedItem().getUuid(), input);
                     ShipService.saveShipConfigurations(commander, shipConfigurations);
                 });
     }
@@ -295,14 +293,14 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
                 fontSizeEvent -> applyFontSizingHack(fontSizeEvent.getFontSize())));
         register(EventService.addListener(true, this, 9, ShipLoadoutEvent.class, _ ->
                 EventService.publish(new HorizonsShipSelectedEvent(this.shipSelect.getSelectionModel().getSelectedItem().getUuid()))));
-        register(EventService.addListener(true, this, HorizonsShipChangedEvent.class, horizonsShipChangedEvent ->
-                this.activeShipUUID = horizonsShipChangedEvent.getShipUUID()));
+//        register(EventService.addListener(true, this, HorizonsShipChangedEvent.class, horizonsShipChangedEvent ->
+//                this.activeShipUUID = horizonsShipChangedEvent.getShipUUID()));
 
         register(EventService.addListener(true, this, 0, HorizonsShipSelectedEvent.class, _ -> {
             APPLICATION_STATE.getPreferredCommander()
                     .flatMap(commander -> ShipService.getShipConfigurations(commander).getSelectedShipConfiguration())
                     .ifPresent(configuration -> APPLICATION_STATE.setShip(ShipMapper.toShip(configuration)));
-            EventService.publish(new HorizonsShipChangedEvent(this.activeShipUUID));
+            EventService.publish(new HorizonsShipChangedEvent(this.shipSelect.getSelectionModel().getSelectedItem().getUuid()));
 
         }));
         register(EventService.addListener(true, this, 0, HorizonsShipChoiceEvent.class, _ -> {
@@ -310,16 +308,16 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
                     .flatMap(commander -> ShipService.getShipConfigurations(commander).getSelectedShipConfiguration())
                     .ifPresent(configuration -> APPLICATION_STATE.setShip(ShipMapper.toShip(configuration)));
             refreshShipSelect();
-            EventService.publish(new HorizonsShipChangedEvent(this.activeShipUUID));
+            EventService.publish(new HorizonsShipChangedEvent(this.shipSelect.getSelectionModel().getSelectedItem().getUuid()));
 
         }));
 
         register(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
-            final Optional<ShipConfiguration> shipConfiguration = ShipService.getShipConfigurations(commanderSelectedEvent.getCommander()).getSelectedShipConfiguration();
-            this.activeShipUUID = shipConfiguration.map(ShipConfiguration::getUuid).orElse(null);
+//            final Optional<ShipConfiguration> shipConfiguration = ShipService.getShipConfigurations(commanderSelectedEvent.getCommander()).getSelectedShipConfiguration();
+//            this.activeShipUUID = shipConfiguration.map(ShipConfiguration::getUuid).orElse(null);
             refreshShipSelect();
             loadCommanderWishlists(commanderSelectedEvent.getCommander());
-            EventService.publish(new HorizonsShipChangedEvent(this.activeShipUUID));
+            EventService.publish(new HorizonsShipChangedEvent(this.shipSelect.getSelectionModel().getSelectedItem().getUuid()));
         }));
         register(EventService.addListener(true, this, CommanderAllListedEvent.class, _ -> {
             refreshShipSelect();
@@ -330,7 +328,7 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
             if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_SHIP)
                     || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_SLEF)) {
                 refreshShipSelect();
-                EventService.publish(new HorizonsShipChangedEvent(this.activeShipUUID));
+                EventService.publish(new HorizonsShipChangedEvent(this.shipSelect.getSelectionModel().getSelectedItem().getUuid()));
             }
         }));
 

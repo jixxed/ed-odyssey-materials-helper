@@ -29,7 +29,6 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
 
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
-    private String activeLoadoutSetUUID;
     private DestroyableComboBox<LoadoutSet> loadoutSetSelect;
     private DestroyableMenuButton menuButton;
     private DestroyableMenuButton addToWishlist;
@@ -131,7 +130,7 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
             final Optional<ButtonType> result = alert.showAndWait();
             if (result.map(type -> type == ButtonType.OK).orElse(false)) {
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                    LoadoutService.deleteLoadoutSet(this.activeLoadoutSetUUID, commander);
+                    LoadoutService.deleteLoadoutSet(this.loadoutSetSelect.getSelectionModel().getSelectedItem().getUuid(), commander);
                     Platform.runLater(this::refreshLoadoutSetSelect);
                 });
             }
@@ -142,7 +141,7 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
         return _ -> showInputPopOver("tab.loadout.rename", "tab.loadout.rename.prompt",
                 (commander, input) -> {
                     final LoadoutSetList loadoutSetList = LoadoutService.getLoadoutSetList(commander);
-                    loadoutSetList.renameLoadoutSet(this.activeLoadoutSetUUID, input);
+                    loadoutSetList.renameLoadoutSet(this.loadoutSetSelect.getSelectionModel().getSelectedItem().getUuid(), input);
                     LoadoutService.saveLoadoutSetList(commander, loadoutSetList);
                 });
     }
@@ -234,9 +233,8 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
                 .withValueChangeListener((_, _, newValue) -> {
                     if (newValue != null) {
                         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                            this.activeLoadoutSetUUID = newValue.getUuid();
-                            LoadoutService.selectLoadoutSet(this.activeLoadoutSetUUID, commander);
-                            EventService.publish(new LoadoutSetSelectedEvent(this.activeLoadoutSetUUID));
+                            LoadoutService.selectLoadoutSet(this.loadoutSetSelect.getSelectionModel().getSelectedItem().getUuid(), commander);
+                            EventService.publish(new LoadoutSetSelectedEvent(this.loadoutSetSelect.getSelectionModel().getSelectedItem().getUuid()));
                         });
                     }
                 })
