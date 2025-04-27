@@ -97,7 +97,12 @@ public class CAPIService {
             });
             requestFleetCarrierData();
         }));
-        EVENT_LISTENERS.add(EventService.addListener(this, TerminateApplicationEvent.class, terminateApplicationEvent -> this.executor.shutdownNow()));
+        EVENT_LISTENERS.add(EventService.addListener(this, TerminateApplicationEvent.class, event -> {
+            if (this.timer != null) {
+                this.timer.cancel();
+            }
+            this.executor.shutdownNow();
+        }));
         EVENT_LISTENERS.add(EventService.addListener(this, JournalInitEvent.class, event -> {
             if (event.isInitialised()) {
                 Platform.runLater(() -> {
@@ -124,12 +129,6 @@ public class CAPIService {
                 );
 
             }
-        }));
-        EVENT_LISTENERS.add(EventService.addListener(this, TerminateApplicationEvent.class, event -> {
-            if (this.timer != null) {
-                this.timer.cancel();
-            }
-            this.executor.shutdownNow();
         }));
     }
 
