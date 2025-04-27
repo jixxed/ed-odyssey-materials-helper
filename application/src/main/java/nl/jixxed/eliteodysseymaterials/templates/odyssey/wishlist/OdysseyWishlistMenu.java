@@ -216,9 +216,13 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
     @Override
     public void initEventHandling() {
         register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> applyFontSizingHack(fontSizeEvent.getFontSize())));
-        register(EventService.addListener(true, this, CommanderSelectedEvent.class, _ -> refreshWishlistSelect()));
         register(EventService.addListener(true, this, LanguageChangedEvent.class, _ -> refreshWishlistSelect()));
         register(EventService.addListener(true, this, OdysseyWishlistCreatedEvent.class, _ -> refreshWishlistSelect()));
+        register(EventService.addListener(true, this, OdysseyWishlistChangedEvent.class, event ->
+                this.wishlistSelect.getItems().stream()
+                        .filter(wl -> wl.getUuid().equals(event.getWishlistUUID()))
+                        .findFirst()
+                        .ifPresent(wl -> this.wishlistSelect.getSelectionModel().select(wl))));
         register(EventService.addListener(true, this, OdysseyWishlistSearchEvent.class, odysseyWishlistSearchEvent ->
                 this.currentSearch = odysseyWishlistSearchEvent.getSearch()));//intended for export sorting
     }

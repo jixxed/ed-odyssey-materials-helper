@@ -203,6 +203,9 @@ public class OdysseyWishlistIngredient extends DestroyableVBox implements Destro
                 hideCompleted.set(event.getHideCompleted());
             }
         }));
+        register(EventService.addListener(true, this, OdysseyWishlistChangedEvent.class, event -> {
+            update();
+        }));
     }
 
     protected void update() {

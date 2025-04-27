@@ -304,6 +304,12 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
         register(EventService.addListener(true, this, CommanderSelectedEvent.class, _ -> refreshWishlistSelect()));
         register(EventService.addListener(true, this, LanguageChangedEvent.class, _ -> refreshWishlistSelect()));
         register(EventService.addListener(true, this, HorizonsWishlistCreatedEvent.class, _ -> refreshWishlistSelect()));
+        register(EventService.addListener(true, this, HorizonsWishlistChangedEvent.class, event ->
+                this.wishlistSelect.getItems().stream()
+                        .filter(wl -> wl.getUuid().equals(event.getWishlistUUID()))
+                        .findFirst()
+                        .ifPresent(wl -> this.wishlistSelect.getSelectionModel().select(wl))));
+
         register(EventService.addListener(true, this, HorizonsWishlistSearchEvent.class, horizonsWishlistSearchEvent ->
                 this.currentSearch = horizonsWishlistSearchEvent.getSearch()));//intended for export sorting
         register(EventService.addListener(true, this, HorizonsShortestPathChangedEvent.class, shortestPathChangedEvent -> this.shortestPath = shortestPathChangedEvent.getPathItems()));

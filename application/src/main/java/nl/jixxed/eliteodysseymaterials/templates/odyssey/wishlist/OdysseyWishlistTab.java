@@ -64,7 +64,7 @@ public class OdysseyWishlistTab extends OdysseyTab implements DestroyableEventTe
                 .withContent(content)
                 .build());
         this.setContent(scrollPane);
-
+        update();
     }
 
     @SuppressWarnings("unchecked")

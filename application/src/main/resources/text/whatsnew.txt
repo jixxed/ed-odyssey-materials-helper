@@ -1,3 +1,7 @@
+Version 2.161
+-------------
+fix wishlists not being shown consistently
+
 Version 2.160
 -------------
 bugfix for Odyssey wishlists

@@ -70,6 +70,7 @@ public class OdysseyWishlistMaterialsCategory extends DestroyableFlowPane implem
 
     private void refreshContent() {
         createCards();
+        group(this.currentSearch.getWishlistMaterialGrouping());
     }
 
     private void createCards() {

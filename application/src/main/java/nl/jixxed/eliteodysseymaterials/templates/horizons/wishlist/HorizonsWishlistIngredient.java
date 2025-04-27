@@ -200,6 +200,10 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
                 hideCompleted.set(event.getHideCompleted());
             }
         }));
+        register(EventService.addListener(true, this, HorizonsWishlistChangedEvent.class, event -> {
+            update();
+        }));
+
     }
 
     protected void update() {

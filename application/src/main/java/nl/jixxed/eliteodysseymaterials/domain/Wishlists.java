@@ -1,9 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Collections;
@@ -16,7 +14,6 @@ import java.util.UUID;
 public class Wishlists {
     @SuppressWarnings("java:S1700")
     private Set<Wishlist> wishlists = new HashSet<>();
-    @Getter(AccessLevel.PRIVATE) // access through getSelectedWishlist().getUuid()
     private String selectedWishlistUUID;
 
     @JsonIgnore

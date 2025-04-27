@@ -67,6 +67,7 @@ public class HorizonsWishlistMaterialsCategory extends DestroyableFlowPane imple
 
     private void refreshContent() {
         createCards();
+        group(this.currentSearch.getWishlistMaterialGrouping());
     }
 
     private void createCards() {

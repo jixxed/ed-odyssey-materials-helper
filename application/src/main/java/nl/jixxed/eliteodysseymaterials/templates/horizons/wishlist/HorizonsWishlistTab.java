@@ -61,6 +61,7 @@ public class HorizonsWishlistTab extends HorizonsTab implements DestroyableEvent
                 .build());
         this.setContent(scrollPane);
 
+        update();
     }
 
     @SuppressWarnings("unchecked")
