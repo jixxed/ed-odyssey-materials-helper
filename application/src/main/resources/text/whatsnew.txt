@@ -1,10 +1,17 @@
+Version 2.162
+-------------
+Fix material hiding on wishlist
+Fix wishlist rename/delete
+Split hide completed preferences for ships/on foot
+Only highlight for visible blueprints
+
 Version 2.161
 -------------
-fix wishlists not being shown consistently
+Fix wishlists not being shown consistently
 
 Version 2.160
 -------------
-bugfix for Odyssey wishlists
+Bugfix for Odyssey wishlists
 
 Version 2.159
 -------------
