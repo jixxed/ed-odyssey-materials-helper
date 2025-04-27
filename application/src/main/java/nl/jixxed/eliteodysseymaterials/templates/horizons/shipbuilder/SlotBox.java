@@ -270,7 +270,7 @@ class SlotBox extends DestroyableStackPane {
                     modulesLayer.drawUtilityLine(slot.getIndex());
                 }
                 //drag from outside the application
-                if (((SlotBox) event.getGestureSource()) != null) {
+                if (((SlotBox) event.getGestureSource()) != null && event.getDragboard() != null) {
                     /* data is dragged over the target */
                     /* accept it only if it is not dragged from the same node
                      * and if it has a string data */
@@ -353,7 +353,7 @@ class SlotBox extends DestroyableStackPane {
                 layer1.getStyleClass().removeAll("shipbuilder-slots-slotbox-hover-bad", "shipbuilder-slots-slotbox-hover-good");
                 /* data dropped */
                 /* if there is a string data on dragboard, read it and use it */
-                if (((SlotBox) event.getGestureSource()) != null) {
+                if (((SlotBox) event.getGestureSource()) != null && event.getDragboard() != null) {
                     final Dragboard db = event.getDragboard();
                     boolean success = false;
                     if (db.hasContent(customFormat)
@@ -385,7 +385,7 @@ class SlotBox extends DestroyableStackPane {
 //                log.debug("setOnDragDone " + this.slot.getIndex());
                 /* the drag and drop gesture ended */
                 /* if the data was successfully moved, clear it */
-                if (event.getTransferMode() == TransferMode.MOVE) {
+                if (event.getTransferMode() == TransferMode.MOVE && event.getDragboard() != null) {
                     final Object content = event.getDragboard().getContent(customFormat);
                     if (!(content instanceof String)
                             && this.slot.getSlotType().getModuleClass().isAssignableFrom(((DragboardContent) event.getDragboard().getContent(customFormat)).shipModule().getClass())) {
@@ -414,8 +414,8 @@ class SlotBox extends DestroyableStackPane {
             layer1.getStyleClass().add("shipbuilder-slots-slotbox-hover-good");
         } else {
             final Slot sourceSlot = ((SlotBox) event.getGestureSource()).slot;
-            if (/*event.getGestureSource() != this
-                    &&*/ event.getDragboard().hasContent(customFormat)
+            if (event.getDragboard() != null
+                    && event.getDragboard().hasContent(customFormat)
                     && this.slot.getSlotType().getModuleClass().isAssignableFrom(((DragboardContent) event.getDragboard().getContent(customFormat)).shipModule().getClass())
                     && (event.getTransferMode() == TransferMode.COPY || (!this.slot.isOccupied() || sourceSlot.getSlotType().getModuleClass().isAssignableFrom(this.slot.getShipModule().getClass())))
                     && moduleCouldFit(this.slot, ((DragboardContent) event.getDragboard().getContent(customFormat)).shipModule())
