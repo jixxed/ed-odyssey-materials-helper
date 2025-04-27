@@ -1,3 +1,7 @@
+Version 2.158
+-------------
+Bugfixes for the previous release
+
 Version 2.157
 -------------
 UI rework
