@@ -271,7 +271,7 @@ public class CAPIService {
                     final String scope = tokenJson.get("scope").asText();
                     final String rawResponse = tokenJson.get("rawResponse").asText();
                     this.oAuth2AccessToken = new OAuth2AccessToken(accessToken, tokenType, expiresIn, refreshToken, scope, rawResponse);
-                } catch (final IOException e) {
+                } catch (final IOException | NullPointerException e) {
                     log.error("Failed to process CAPI token file", e);
                     return false;
                 }
