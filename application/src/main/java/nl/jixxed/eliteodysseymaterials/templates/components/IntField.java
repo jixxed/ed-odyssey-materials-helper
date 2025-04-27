@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.templates.components;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.input.MouseEvent;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTextField;
@@ -44,7 +45,7 @@ public class IntField extends DestroyableTextField {
     }
 
     private void addMouseClickBehavior() {
-        this.addEventBinding(this.onMousePressedProperty(), e -> {
+        this.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
             if (this.getSelectedText().equals(this.getText())) {
                 this.deselect();
             } else if (this.getSelectedText().isEmpty() && !this.isFocused()) {
