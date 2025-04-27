@@ -13,10 +13,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyablePopOver
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableSegmentedBar;
 import org.controlsfx.control.SegmentedBar;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.OptionalDouble;
+import java.util.*;
 
 public class PowerSegmentedBarSkin<T extends SegmentedBar.Segment> extends SkinBase<SegmentedBar<T>> {
     private Map<T, Node> segmentNodes = new HashMap();
@@ -183,7 +180,7 @@ public class PowerSegmentedBarSkin<T extends SegmentedBar.Segment> extends SkinB
     @Override
     public void dispose() {
         super.dispose();
-        this.popOvers.values().forEach(DestroyableComponent::destroy);
-        this.segmentNodes.values().stream().map(Destroyable.class::cast).forEach(Destroyable::destroy);
+        this.popOvers.values().stream().filter(Objects::nonNull).forEach(DestroyableComponent::destroy);
+        this.segmentNodes.values().stream().filter(Objects::nonNull).map(Destroyable.class::cast).forEach(Destroyable::destroy);
     }
 }
