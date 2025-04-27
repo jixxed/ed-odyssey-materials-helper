@@ -64,7 +64,7 @@ import static nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper.deeplinkCons
 public class FXApplication extends Application {
 
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private static final String MAIN_STYLESHEET = "/css/sass/main.css";
+    private static final String MAIN_STYLESHEET = "/css/compiled/sass/main.css";
 
     private ApplicationScreen applicationScreen;
     private TimeStampedGameStateWatcher timeStampedCargoWatcher;
@@ -439,7 +439,7 @@ public class FXApplication extends Application {
         if (VersionService.getBuildVersion() == null) {//dev mode for hotswap css
             try {
                 final String currentWorkingDirectory = new File(".").getCanonicalPath();
-                final File compiledCss = new File(currentWorkingDirectory + "\\src\\main\\resources\\css\\sass\\main.css");
+                final File compiledCss = new File(currentWorkingDirectory + "\\src\\main\\resources\\css\\compiled\\sass\\main.css");
                 scene.getStylesheets().add(compiledCss.toURI().toURL().toExternalForm());
 
                 AtomicReference<FileListener> fileListenerRef = new AtomicReference<>();

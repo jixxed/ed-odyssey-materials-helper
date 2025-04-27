@@ -26,17 +26,24 @@ plugins {
     id 'net.rdrei.android.buildtimetracker' version '0.11.0'
 }
 
+//compileSass.configure {
+//    options.compilerArgs += ['-Xdoclint:none', '-Xlint:none', '-nowarn']
+//}
 compileSass {
-    destinationDir = file("src/main/resources/css")
+    def skipProvider = providers.gradleProperty("skipSass")
+    onlyIf("there is no property skipHello") {
+        !skipProvider.present
+    }
+    destinationDir = file("src/main/resources/css/compiled")
     indent = "  "
-    linefeed = System.lineSeparator();
+    linefeed = "\n";
     omitSourceMapUrl = false
     outputStyle = "NESTED";
     precision = 8
     sourceComments = false
     sourceMapContents = false
     sourceMapEmbed = false
-    sourceMapEnabled = true
+    sourceMapEnabled = false
 }
 
 tasks.register('wrapper', Wrapper) {

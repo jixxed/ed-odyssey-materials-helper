@@ -3,7 +3,7 @@ name: Gradle Package
 on:
   push:
     tags:
-    - '*'
+      - '*'
 
 jobs:
   build-ubuntu:
@@ -29,9 +29,9 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
       - name: Build release with Gradle
-        run: ./gradlew createReleaseLinux -DpackageType=deb
+        run: ./gradlew createReleaseLinux -DpackageType=deb -PskipSass
       - name: Build rpm Gradle
-        run: ./gradlew createReleaseLinuxRpm -DpackageType=rpm
+        run: ./gradlew createReleaseLinuxRpm -DpackageType=rpm -PskipSass
       - name: Create Release
         uses: ncipollo/release-action@v1.14.0
         with:
@@ -40,13 +40,13 @@ jobs:
           bodyFile: ".github/releasenotes.txt"
           artifacts: "output/*.*"
           name: "Elite Dangerous Odyssey Materials Helper ${{ steps.tagName.outputs.tag }}"
-#      - name: VirusTotal Scan
-#        uses: crazy-max/ghaction-virustotal@v4
-#        with:
-#          vt_api_key: ${{ secrets.VIRUS_TOTAL_API_KEY }}
-#          update_release_body: true
-#          files: |
-#            output/*.*
+  #      - name: VirusTotal Scan
+  #        uses: crazy-max/ghaction-virustotal@v4
+  #        with:
+  #          vt_api_key: ${{ secrets.VIRUS_TOTAL_API_KEY }}
+  #          update_release_body: true
+  #          files: |
+  #            output/*.*
 
   build-windows:
     runs-on: windows-latest
@@ -69,7 +69,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
       - name: Build with Gradle
-        run: ./gradlew createReleaseSigned -DpackageType=msi -Dpfx_alias="${{secrets.CODE_SIGN_CERT_ALIAS}}" -Dpfx_password='"${{secrets.CODE_SIGN_PASSWORD}}"' -Dbase64_pfx="${{secrets.CODE_SIGN_BASE64}}"
+        run: ./gradlew createReleaseSigned -DpackageType=msi -Dpfx_alias="${{secrets.CODE_SIGN_CERT_ALIAS}}" -Dpfx_password='"${{secrets.CODE_SIGN_PASSWORD}}"' -Dbase64_pfx="${{secrets.CODE_SIGN_BASE64}}" -PskipSass
       - name: Create Release
         uses: ncipollo/release-action@v1.14.0
         with:
@@ -88,7 +88,7 @@ jobs:
 
   publish-release:
     runs-on: ubuntu-latest
-    needs: [build-windows, build-ubuntu]
+    needs: [ build-windows, build-ubuntu ]
     permissions:
       contents: write
     steps:
@@ -103,7 +103,7 @@ jobs:
 
   sentry-release:
     runs-on: ubuntu-latest
-    needs: [build-windows, build-ubuntu]
+    needs: [ build-windows, build-ubuntu ]
     permissions:
       contents: write
     steps:
