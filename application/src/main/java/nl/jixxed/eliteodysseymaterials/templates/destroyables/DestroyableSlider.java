@@ -12,6 +12,8 @@ public class DestroyableSlider extends Slider implements DestroyableComponent {
     @Override
     public void destroyInternal() {
         DestroyableComponent.super.destroyInternal();
-        this.getSkin().dispose();
+        if (this.getSkin() != null) {
+            this.getSkin().dispose();
+        }
     }
 }
