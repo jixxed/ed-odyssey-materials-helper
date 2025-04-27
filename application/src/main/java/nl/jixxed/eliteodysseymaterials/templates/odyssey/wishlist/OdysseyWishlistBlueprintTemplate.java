@@ -80,10 +80,12 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableHBox
                             .withText(this.wishlistBlueprint.getRecipeName().getLocalizationKey())
                             .withOnMouseClicked(_ -> EventService.publish(new BlueprintClickEvent(this.blueprint.getBlueprintName())))
                             .withHoverProperty((_, _, newValue) -> {
-                                if (newValue) {
-                                    emitter.onNext(new OdysseyWishlistHighlightEvent(this.wishlistBlueprint, newValue));
-                                } else {
-                                    EventService.publish(new OdysseyWishlistHighlightEvent(this.wishlistBlueprint, newValue));
+                                if (this.visible) {
+                                    if (newValue) {
+                                        emitter.onNext(new OdysseyWishlistHighlightEvent(this.wishlistBlueprint, newValue));
+                                    } else {
+                                        EventService.publish(new OdysseyWishlistHighlightEvent(this.wishlistBlueprint, newValue));
+                                    }
                                 }
                             })
                             .build();

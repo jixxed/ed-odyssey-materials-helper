@@ -34,7 +34,6 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private DestroyableComboBox<Wishlist> wishlistSelect;
     private DestroyableMenuButton menuButton;
-    private String activeWishlistUUID;
     private OdysseyWishlistMaterialSearch currentSearch = new OdysseyWishlistMaterialSearch("", OdysseyWishlistMaterialSort.ALPHABETICAL, WishlistMaterialGrouping.CATEGORY);
 
     public OdysseyWishlistMenu() {
@@ -61,9 +60,8 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
                 .withValueChangeListener((_, _, newValue) -> {
                     if (newValue != null) {
                         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                            this.activeWishlistUUID = newValue.getUuid();
-                            WishlistService.selectOdysseyWishlist(this.activeWishlistUUID, commander);
-                            EventService.publish(new OdysseyWishlistSelectedEvent(this.activeWishlistUUID));
+                            WishlistService.selectOdysseyWishlist(newValue.getUuid(), commander);
+                            EventService.publish(new OdysseyWishlistSelectedEvent(newValue.getUuid()));
                         });
                     }
                 })
@@ -121,7 +119,7 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
             final Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                    WishlistService.deleteOdysseyWishlist(this.activeWishlistUUID, commander);
+                    WishlistService.deleteOdysseyWishlist(this.wishlistSelect.getSelectionModel().getSelectedItem().getUuid(), commander);
                     Platform.runLater(this::refreshWishlistSelect);
                 });
             }
@@ -132,7 +130,7 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
         return _ -> showInputPopOver("tab.wishlist.rename", "tab.wishlist.rename.prompt",
                 (commander, input) -> {
                     final Wishlists wishlists = WishlistService.getOdysseyWishlists(commander);
-                    wishlists.renameWishlist(this.activeWishlistUUID, input);
+                    wishlists.renameWishlist(this.wishlistSelect.getSelectionModel().getSelectedItem().getUuid(), input);
                     WishlistService.saveOdysseyWishlists(commander, wishlists);
                 });
     }

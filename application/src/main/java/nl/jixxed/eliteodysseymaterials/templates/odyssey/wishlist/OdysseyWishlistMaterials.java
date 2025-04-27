@@ -28,10 +28,10 @@ public class OdysseyWishlistMaterials extends DestroyableVBox implements Destroy
         DestroyableCheckBox hideCompletedCheckBox = CheckBoxBuilder.builder()
                 .withStyleClass("wishlist-checkbox")
                 .withText("tab.wishlist.hide.completed")
-                .withSelected(PreferencesService.getPreference("blueprint.hide.completed", false))
+                .withSelected(PreferencesService.getPreference("blueprint.odyssey.hide.completed", false))
                 .withSelectedProperty((observable, oldValue, newValue) ->
                 {
-                    PreferencesService.setPreference("blueprint.hide.completed", newValue);
+                    PreferencesService.setPreference("blueprint.odyssey.hide.completed", newValue);
                     EventService.publish(new WishlistHideCompletedEvent(Expansion.ODYSSEY, newValue));
                 })
                 .build();

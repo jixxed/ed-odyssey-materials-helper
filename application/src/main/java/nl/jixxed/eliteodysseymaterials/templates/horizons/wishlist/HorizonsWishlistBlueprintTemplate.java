@@ -91,10 +91,12 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
                             .withText(Bindings.createStringBinding(() -> titleStringBinding.get().trim(), titleStringBinding))
                             .withOnMouseClicked(_ -> EventService.publish(new HorizonsBlueprintClickEvent(this.blueprint)))
                             .withHoverProperty((_, _, newValue) -> {
-                                if (newValue) {
-                                    emitter.onNext(new HorizonsWishlistHighlightEvent(this.wishlistBlueprint, newValue));
-                                } else {
-                                    EventService.publish(new HorizonsWishlistHighlightEvent(this.wishlistBlueprint, newValue));
+                                if (this.visible) {
+                                    if (newValue) {
+                                        emitter.onNext(new HorizonsWishlistHighlightEvent(this.wishlistBlueprint, newValue));
+                                    } else {
+                                        EventService.publish(new HorizonsWishlistHighlightEvent(this.wishlistBlueprint, newValue));
+                                    }
                                 }
                             })
                             .build();

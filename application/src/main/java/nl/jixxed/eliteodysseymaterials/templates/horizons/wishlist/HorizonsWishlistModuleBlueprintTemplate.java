@@ -91,10 +91,12 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
                                     gradeList.isEmpty() ? "?" : gradeList)
                             .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getPercentageToComplete().keySet().stream().findFirst().orElse(HorizonsBlueprintGrade.GRADE_1)))))
                             .withHoverProperty((_, _, newValue) -> {
-                                if (newValue) {
-                                    emitter.onNext(new HorizonsWishlistHighlightEvent(this.wishlistBlueprint, newValue));
-                                } else {
-                                    EventService.publish(new HorizonsWishlistHighlightEvent(this.wishlistBlueprint, newValue));
+                                if (this.visible) {
+                                    if (newValue) {
+                                        emitter.onNext(new HorizonsWishlistHighlightEvent(this.wishlistBlueprint, newValue));
+                                    } else {
+                                        EventService.publish(new HorizonsWishlistHighlightEvent(this.wishlistBlueprint, newValue));
+                                    }
                                 }
                             })
                             .build();

@@ -29,10 +29,10 @@ public class HorizonsWishlistMaterials extends DestroyableVBox implements Destro
         DestroyableCheckBox hideCompletedCheckBox = CheckBoxBuilder.builder()
                 .withStyleClass("wishlist-checkbox")
                 .withText("tab.wishlist.hide.completed")
-                .withSelected(PreferencesService.getPreference("blueprint.hide.completed", false))
+                .withSelected(PreferencesService.getPreference("blueprint.horizons.hide.completed", false))
                 .withSelectedProperty((observable, oldValue, newValue) ->
                 {
-                    PreferencesService.setPreference("blueprint.hide.completed", newValue);
+                    PreferencesService.setPreference("blueprint.horizons.hide.completed", newValue);
                     EventService.publish(new WishlistHideCompletedEvent(Expansion.HORIZONS, newValue));
                 })
                 .build();

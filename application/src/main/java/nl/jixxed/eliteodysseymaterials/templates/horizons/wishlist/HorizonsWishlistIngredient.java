@@ -1,7 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.*;
 import javafx.css.PseudoClass;
 import javafx.geometry.Orientation;
 import javafx.scene.layout.HBox;
@@ -48,7 +48,8 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
     private TypeSegment missingForMaximum;
     private Integer minimum = 0;
     @Getter
-    private Integer required = 0;
+    private IntegerProperty required = new SimpleIntegerProperty(0);
+    private IntegerProperty requiredFull = new SimpleIntegerProperty(0);
     private Integer maximum = 0;
     private Integer availableShip = 0;
     private Integer availableFleetCarrier = 0;
@@ -60,11 +61,11 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
     final BooleanProperty hideCompleted;
     final BooleanProperty completed = new SimpleBooleanProperty(false);
     private String currentSearchQuery = "";
-    private HorizonsWishlistBlueprint blueprint;
+    ObjectProperty<HorizonsWishlistBlueprint> blueprint = new SimpleObjectProperty<>();
 
     HorizonsWishlistIngredient(final HorizonsMaterial horizonsMaterial) {
         this.horizonsMaterial = horizonsMaterial;
-        this.hideCompleted = new SimpleBooleanProperty(PreferencesService.getPreference("blueprint.hide.completed", false));
+        this.hideCompleted = new SimpleBooleanProperty(PreferencesService.getPreference("blueprint.horizons.hide.completed", false));
         this.showRemaining = new SimpleBooleanProperty(PreferencesService.getPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_HORIZONS, Boolean.FALSE));
         calculate();
 
@@ -77,16 +78,19 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
     public void initComponents() {
         this.getStyleClass().add("wishlist-ingredient");
         this.getStyleClass().add("material");
-        this.visibleProperty().bind(hideCompleted.and(completed).not());
-        this.managedProperty().bind(hideCompleted.and(completed).not());
+        BooleanBinding hideWhenHideCompleted = hideCompleted.and(completed);
+        BooleanBinding hideWhenHighlighting = blueprint.isNotNull().and(requiredFull.isEqualTo(0));
+        BooleanBinding hideWhenHidden = blueprint.isNull().and(required.isEqualTo(0));
+        this.visibleProperty().bind(hideWhenHighlighting.or(hideWhenHideCompleted).or(hideWhenHidden).not());
+        this.managedProperty().bind(hideWhenHighlighting.or(hideWhenHideCompleted).or(hideWhenHidden).not());
         final int progressShip = Math.min(availableShip, this.maximum);
         final int progressFleetCarrier = Math.min(availableFleetCarrier, this.maximum - progressShip);
         final int progressTotal = Math.min(progressShip + progressFleetCarrier, this.maximum);
         this.presentShip = new TypeSegment(Math.max(0, progressShip), SegmentType.PRESENT_SHIP);
         this.presentFleetCarrier = new TypeSegment(Math.max(0, progressFleetCarrier), SegmentType.PRESENT_FLEET_CARRIER);
         this.missingForMinimum = new TypeSegment(Math.max(0, minimum - progressTotal), SegmentType.MISSING_FOR_MINIMUM);
-        this.missingForRequired = new TypeSegment(Math.max(0, required - Math.max(minimum, progressTotal)), SegmentType.MISSING_FOR_REQUIRED);
-        this.missingForMaximum = new TypeSegment(Math.max(0, maximum - Math.max(required, progressTotal)), SegmentType.MISSING_FOR_MAXIMUM);
+        this.missingForRequired = new TypeSegment(Math.max(0, required.get() - Math.max(minimum, progressTotal)), SegmentType.MISSING_FOR_REQUIRED);
+        this.missingForMaximum = new TypeSegment(Math.max(0, maximum - Math.max(required.get(), progressTotal)), SegmentType.MISSING_FOR_MAXIMUM);
         DestroyableSegmentedBar<TypeSegment> progressbar = SegmentedBarBuilder.builder(TypeSegment.class)
                 .withStyleClass("ingredient-progressbar")
                 .withOrientation(Orientation.HORIZONTAL)
@@ -105,7 +109,7 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
 
         this.requiredAmountLabel = LabelBuilder.builder()
                 .withStyleClass("quantity")
-                .withNonLocalizedText(maximum.equals(minimum) ? required.toString() : required + " (" + minimum + " - " + maximum + ")")
+                .withNonLocalizedText(maximum.equals(minimum) ? String.valueOf(required.get()) : required.get() + " (" + minimum + " - " + maximum + ")")
                 .build();
         this.remainingAmountLabel = LabelBuilder.builder()
                 .withStyleClass("quantity")
@@ -183,9 +187,9 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
         //when we highlight a specific blueprint
         register(EventService.addListener(true, this, HorizonsWishlistHighlightEvent.class, event -> {
             if (event.isActive()) {
-                this.blueprint = event.getBlueprint();
+                this.blueprint.set(event.getBlueprint());
             } else {
-                this.blueprint = null;
+                this.blueprint.set(null);
             }
             this.update();
         }));
@@ -209,7 +213,7 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
     protected void update() {
         this.calculate();
 
-        requiredAmountLabel.setText(maximum.equals(minimum) ? required.toString() : required + " (" + minimum + " - " + maximum + ")");
+        requiredAmountLabel.setText(maximum.equals(minimum) ? String.valueOf(required.get()) : required.get() + " (" + minimum + " - " + maximum + ")");
         availableAmountLabel.setText(availableFleetCarrier > 0 ? availableShip + " + " + availableFleetCarrier : availableShip.toString());
         remainingAmountLabel.setText(remaining.toString());
         //progressbar
@@ -219,17 +223,17 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
         this.presentShip.setValue(Math.max(0, progressShip));
         this.presentFleetCarrier.setValue(Math.max(0, progressFleetCarrier));
         this.missingForMinimum.setValue(Math.max(0, minimum - progressTotal));
-        this.missingForRequired.setValue(Math.max(required == 0 ? 1 : 0, required - Math.max(minimum, progressTotal)));// required == 0 ? 1 : 0 to prevent div/0 resulting in high CPU load
-        this.missingForMaximum.setValue(Math.max(0, maximum - Math.max(required, progressTotal)));
+        this.missingForRequired.setValue(Math.max(required.get() == 0 ? 1 : 0, required.get() - Math.max(minimum, progressTotal)));// required == 0 ? 1 : 0 to prevent div/0 resulting in high CPU load
+        this.missingForMaximum.setValue(Math.max(0, maximum - Math.max(required.get(), progressTotal)));
 
         updateStyle();
     }
 
     private void updateStyle() {
-        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("filled"), availableShip >= required);
-        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("partial"), availableShip < required && availableShip + availableFleetCarrier >= required);
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("filled"), availableShip >= required.get());
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("partial"), availableShip < required.get() && availableShip + availableFleetCarrier >= required.get());
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("search"), matchesSearch());
-        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("filter"), this.blueprint != null && required == 0);
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("filter"), this.blueprint.get() != null && required.get() == 0);
     }
 
     private boolean matchesSearch() {
@@ -261,17 +265,18 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
         pathItems = horizonsWishlist
                 .map(wishlist -> PathService.calculateHorizonsShortestPath((List<HorizonsWishlistBlueprint>) (List<?>) wishlist.getItems()))
                 .orElse(Collections.emptyList());
-        if (blueprint == null) {
+        if (blueprint.get() == null) {
             horizonsWishlist.ifPresent(wishlist ->
                     wishlist.getItems().stream()
                             .map(HorizonsWishlistBlueprint.class::cast)
                             .filter(HorizonsWishlistBlueprint::isVisible)
                             .forEach(this::count));
         } else {
-            count(blueprint);
+            count(blueprint.get());
         }
-        remaining = Math.max(0, required - availableShip);
-        if (blueprint == null) {
+        remaining = Math.max(0, required.get() - availableShip);
+        if (blueprint.get() == null) {
+            requiredFull.set(required.get());
             remainingFull = remaining;
         }
         completed.set(remainingFull.equals(0));
@@ -279,7 +284,7 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
 
     private void defaults() {
         minimum = 0;
-        required = 0;
+        required.set(0);
         maximum = 0;
         if (this.horizonsMaterial instanceof Commodity commodity) {
             availableShip = StorageService.getCommodityCount(commodity, StoragePool.SHIP);
@@ -320,11 +325,11 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
 
             final Engineer engineer = getCurrentEngineerForBlueprint(blueprint, pathItems).orElseGet(() -> getWorstEngineer(blueprint));
             minimum += (int) Math.ceil(amount * percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(maxRank, moduleBlueprint.getHorizonsBlueprintType()));
-            required += (int) Math.ceil(amount * percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(engineer, moduleBlueprint.getHorizonsBlueprintType()));
+            required.set(required.get() + (int) Math.ceil(amount * percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(engineer, moduleBlueprint.getHorizonsBlueprintType())));
             maximum += (int) Math.ceil(amount * percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(minRank, moduleBlueprint.getHorizonsBlueprintType()));
         } else {
             minimum += amount;
-            required += amount;
+            required.set(required.get() + amount);
             maximum += amount;
         }
 

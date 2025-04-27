@@ -39,7 +39,7 @@ public enum HorizonsWishlistMaterialSort {
                     Comparator.comparing((HorizonsWishlistIngredient o) -> o.getHorizonsMaterial().getRarity().getLevel())
                             .reversed()
                             .thenComparing((HorizonsWishlistIngredient o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getHorizonsMaterial().getLocalizationKey()));
-            case QUANTITY_REQUIRED -> Comparator.comparing(HorizonsWishlistIngredient::getRequired)
+            case QUANTITY_REQUIRED -> Comparator.comparing((HorizonsWishlistIngredient o) -> o.getRequired().get())
                     .reversed()
                     .thenComparing((HorizonsWishlistIngredient o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getHorizonsMaterial().getLocalizationKey()));
         };

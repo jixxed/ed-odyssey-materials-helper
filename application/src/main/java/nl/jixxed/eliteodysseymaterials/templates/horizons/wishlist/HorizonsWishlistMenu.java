@@ -38,7 +38,6 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private DestroyableComboBox<HorizonsWishlist> wishlistSelect;
     private DestroyableMenuButton menuButton;
-    private String activeWishlistUUID;
     private List<PathItem<HorizonsBlueprintName>> shortestPath;
     private HorizonsWishlistMaterialSearch currentSearch = new HorizonsWishlistMaterialSearch("", HorizonsWishlistMaterialSort.ALPHABETICAL, WishlistMaterialGrouping.CATEGORY);
 
@@ -66,9 +65,8 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
                 .withValueChangeListener((_, _, newValue) -> {
                     if (newValue != null) {
                         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                            this.activeWishlistUUID = newValue.getUuid();
-                            WishlistService.selectHorizonsWishlist(this.activeWishlistUUID, commander);
-                            EventService.publish(new HorizonsWishlistSelectedEvent(this.activeWishlistUUID));
+                            WishlistService.selectHorizonsWishlist(newValue.getUuid(), commander);
+                            EventService.publish(new HorizonsWishlistSelectedEvent(newValue.getUuid()));
                         });
                     }
                 })
@@ -143,7 +141,7 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
             final Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                    WishlistService.deleteHorizonsWishlist(this.activeWishlistUUID, commander);
+                    WishlistService.deleteHorizonsWishlist(this.wishlistSelect.getSelectionModel().getSelectedItem().getUuid(), commander);
                     Platform.runLater(this::refreshWishlistSelect);
                 });
             }
@@ -154,7 +152,7 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
         return _ -> showInputPopOver("tab.wishlist.rename", "tab.wishlist.rename.prompt",
                 (commander, input) -> {
                     final HorizonsWishlists wishlists = WishlistService.getHorizonsWishlists(commander);
-                    wishlists.renameWishlist(this.activeWishlistUUID, input);
+                    wishlists.renameWishlist(this.wishlistSelect.getSelectionModel().getSelectedItem().getUuid(), input);
                     WishlistService.saveHorizonsWishlists(commander, wishlists);
                 });
     }
