@@ -339,6 +339,11 @@ public class MaterialService {
                     });
                     contentNode.get().getStyleClass().add("material-popover");
                     if (!POPOVERS.containsKey(hoverableNode) && (hoverableNode.isHover() || contentNode.get().isHover())) {
+                        final Screen screen = Screen.getScreensForRectangle(mouseEvent.getScreenX(), mouseEvent.getScreenY(), 1, 1).getFirst();
+                        if (screen == null) {
+                            contentNode.get().destroy();
+                            return;
+                        }
                         final DestroyablePopOver popOver = PopOverBuilder.builder()
                                 .withStyleClass("popover-menubutton-layout")
                                 .withContent((Node & Destroyable) contentNode.get())
@@ -350,7 +355,8 @@ public class MaterialService {
                                 .withDestroyOnHide(true)
                                 .build();
                         POPOVERS.put(hoverableNode, popOver);
-                        final Rectangle2D currentScreen = Screen.getScreensForRectangle(mouseEvent.getScreenX(), mouseEvent.getScreenY(), 1, 1).getFirst().getBounds();
+
+                        final Rectangle2D currentScreen = screen.getBounds();
                         final double mouseXOnScreen = mouseEvent.getScreenX() - currentScreen.getMinX();
                         final double mouseYOnScreen = mouseEvent.getScreenY() - currentScreen.getMinY();
                         if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {

@@ -111,6 +111,10 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
             if (!event.getButton().equals(MouseButton.PRIMARY)) {
                 return;
             }
+            final Screen screen = Screen.getScreensForRectangle(event.getScreenX(), event.getScreenY(), 1, 1).getFirst();
+            if (screen == null) {
+                return;
+            }
             this.popOver = PopOverBuilder.builder()
                     .withStyleClass("loadout-modification-popover")
                     .withContent(createModificationOptionsGrid())
@@ -121,7 +125,7 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
                     .withCornerRadius(0)
                     .withDestroyOnHide(true)
                     .build();
-            final Rectangle2D currentScreen = Screen.getScreensForRectangle(event.getScreenX(), event.getScreenY(), 1, 1).getFirst().getBounds();
+            final Rectangle2D currentScreen = screen.getBounds();
             final double mouseXOnScreen = event.getScreenX() - currentScreen.getMinX();
             final double mouseYOnScreen = event.getScreenY() - currentScreen.getMinY();
             if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {
