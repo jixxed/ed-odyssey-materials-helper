@@ -1,3 +1,10 @@
+Version 2.163
+-------------
+Updated colonisation to use tracking instead of manual input
+bugfix for renaming and deleting ships/loadouts
+Don't show Ls on copyable locations if value is unknown
+Updated engineer images
+
 Version 2.162
 -------------
 Fix material hiding on wishlist
