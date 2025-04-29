@@ -115,7 +115,7 @@ jlink {
         ]
         if (os.isWindows()) {
             jvmArgs += [
-                    '-Djavafx.cachedir=javafx-cache'
+                    '-Djavafx.cachedir=javafx-cache-program'
             ]
         }
     }
