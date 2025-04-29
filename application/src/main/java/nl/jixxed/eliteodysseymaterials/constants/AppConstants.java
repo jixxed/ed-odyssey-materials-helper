@@ -21,7 +21,7 @@ public class AppConstants {
     public static final String ODYSSEY_LOADOUTS_FILE = "odyssey_loadouts.json";
     public static final String ODYSSEY_WISHLIST_FILE = "odyssey_wishlist.json";
     public static final String HORIZONS_WISHLIST_FILE = "horizons_wishlist.json";
-    public static final String HORIZONS_COLONISATION_FILE = "horizons_colonisation.json";
+    public static final String HORIZONS_COLONISATION_FILE = "horizons_colonisation_v2.json";
     public static final String SHIP_CONFIGURATION_FILE = "horizons_ships.json";
     public static final String SHIP_LEGACY_MODULES_FILE = "horizons_ships_legacy_modules.json";
     public static final String HORIZONS_PINNED_BLUEPRINTS_FILE = "horizons_pinned_blueprints.json";

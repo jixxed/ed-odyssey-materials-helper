@@ -249,11 +249,6 @@ public class OdysseyBartenderMaterial extends DestroyableHBox implements Destroy
                 updateStyle();
             });
         }));
-        register(EventService.addListener(true, this, 9, CommanderSelectedEvent.class, event -> {
-            this.wishlistLabel.setText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.asset)).mapToInt(Integer::intValue).sum()));
-            setLayoutMode(LayoutMode.DEFAULT);
-            updateStyle();
-        }));
     }
 
     void setLayoutMode(final LayoutMode mode) {

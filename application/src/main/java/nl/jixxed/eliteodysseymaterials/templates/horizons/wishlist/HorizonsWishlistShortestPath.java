@@ -62,7 +62,6 @@ public class HorizonsWishlistShortestPath extends DestroyableVBox implements Des
 
     @Override
     public void initEventHandling() {
-        register(EventService.addListener(true, this, CommanderSelectedEvent.class, _ -> update()));
         register(EventService.addListener(true, this, HorizonsWishlistSelectedEvent.class, _ -> update()));
         register(EventService.addListener(true, this, HorizonsWishlistChangedEvent.class, _ -> update()));
         register(EventService.addListener(true, this, LocationChangedEvent.class, _ -> update()));

@@ -15,7 +15,10 @@ import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PinnedBlueprintService;
-import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EngineerPinEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 public class EngineerBlueprintLabel extends DestroyableHBox implements DestroyableEventTemplate {
@@ -131,7 +134,6 @@ public class EngineerBlueprintLabel extends DestroyableHBox implements Destroyab
                 update();
             }
         }));
-        register(EventService.addListener(true, this, CommanderSelectedEvent.class, event -> update()));
         register(EventService.addListener(true, this, 0, JournalInitEvent.class, event -> update()));
     }
 

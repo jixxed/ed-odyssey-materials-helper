@@ -150,8 +150,6 @@ public class HorizonsShipBuilderTab extends HorizonsTab implements DestroyableEv
             refreshContent();
         }));
 
-        register(EventService.addListener(true, this, CommanderSelectedEvent.class, _ -> refreshContent()));
-        register(EventService.addListener(true, this, CommanderAllListedEvent.class, _ -> refreshContent()));
         register(EventService.addListener(true, this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_SHIP) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_SLEF)) {
                 refreshContent();

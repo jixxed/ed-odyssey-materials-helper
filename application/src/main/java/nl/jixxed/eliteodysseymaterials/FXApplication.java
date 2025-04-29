@@ -109,6 +109,7 @@ public class FXApplication extends Application {
         PinnedBlueprintService.init();
         ScalingHelper.init();
         FileSyncService.init();
+        ColonisationService.init();
         if (Boolean.FALSE.equals(PreferencesService.getPreference(PreferenceConstants.TRACKING_OPT_OUT, false))) {
 //            HighGradeEmissionService.initialize();
         }

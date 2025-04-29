@@ -25,7 +25,9 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.LegacyModuleSavedEvent;
 import nl.jixxed.eliteodysseymaterials.service.ships.LegacyModuleService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
@@ -103,8 +105,6 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
     @Override
     public void initEventHandling() {
         register(EventService.addListener(true, this, 0, LegacyModuleSavedEvent.class, _ -> updateModules()));
-        register(EventService.addListener(true, this, 0, CommanderSelectedEvent.class, _ -> updateModules()));
-        register(EventService.addListener(true, this, 0, CommanderAllListedEvent.class, _ -> updateModules()));
     }
 
     private DestroyableHBox createHorizonsShipsCreateModule() {

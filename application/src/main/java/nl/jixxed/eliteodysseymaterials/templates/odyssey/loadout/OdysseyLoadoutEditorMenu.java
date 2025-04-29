@@ -52,15 +52,6 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
 
         register(EventService.addListener(true, this, OdysseyWishlistSelectedEvent.class, _ ->
                 APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists)));
-        register(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent ->
-        {
-            refreshLoadoutSetSelect();
-            loadCommanderWishlists(commanderSelectedEvent.getCommander());
-        }));
-        register(EventService.addListener(true, this, CommanderAllListedEvent.class, _ -> {
-            refreshLoadoutSetSelect();
-            APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
-        }));
         register(EventService.addListener(true, this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_LOADOUT)) {
                 refreshLoadoutSetSelect();

@@ -11,7 +11,6 @@ import nl.jixxed.eliteodysseymaterials.service.CAPIService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.RegistryService;
 import nl.jixxed.eliteodysseymaterials.service.event.ApplicationRegisteredEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.CommanderSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
@@ -48,11 +47,6 @@ public class FrontierAPI extends DestroyableVBox implements DestroyableEventTemp
 
     @Override
     public void initEventHandling() {
-
-        register(EventService.addListener(true, this, CommanderSelectedEvent.class, _ -> {
-            this.capiConnectButton.addBinding(this.capiConnectButton.textProperty(), LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("tab.settings.capi.connect", ApplicationState.getInstance().getPreferredCommander().map(Commander::getName).orElse(""))));
-            this.capiDisconnectButton.addBinding(this.capiDisconnectButton.textProperty(), LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("tab.settings.capi.disconnect", ApplicationState.getInstance().getPreferredCommander().map(Commander::getName).orElse(""))));
-        }));
         register(EventService.addListener(true, this, ApplicationRegisteredEvent.class, event -> {
             this.registered.set(event.isRegistered());
         }));

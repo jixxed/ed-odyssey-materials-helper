@@ -57,7 +57,6 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements DestroyableEv
         register(EventService.addListener(true, this, LoadoutRemovedEvent.class, _ -> refreshContent()));
         register(EventService.addListener(true, this, LoadoutAddedEvent.class, _ -> refreshContent()));
         register(EventService.addListener(true, this, LoadoutMovedEvent.class, _ -> refreshContent()));
-        register(EventService.addListener(true, this, 9, CommanderSelectedEvent.class, _ -> refreshContent()));
         register(EventService.addListener(true, this, 9, LoadoutEvent.class, event -> {
             if (LoadoutSet.CURRENT.equals(event.getLoadoutSet())) refreshContent();
         }));

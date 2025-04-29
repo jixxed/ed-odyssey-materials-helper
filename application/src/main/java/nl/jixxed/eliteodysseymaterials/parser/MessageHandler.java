@@ -114,6 +114,7 @@ class MessageHandler {
             Map.entry(JournalEventType.POWERPLAYMERITS, new PowerplayMeritsMessageProcessor()),
             Map.entry(JournalEventType.MUSIC, new MusicMessageProcessor()),
             Map.entry(JournalEventType.DELIVERPOWERMICRORESOURCES, new DeliverPowerMicroResourcesMessageProcessor()),
+            Map.entry(JournalEventType.COLONISATIONCONSTRUCTIONDEPOT, new ColonisationConstructionDepotMessageProcessor()),
 
             Map.entry(JournalEventType.LOADGAME, new LoadGameMessageProcessor())
     );

@@ -1,17 +1,16 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation;
 
 import javafx.css.PseudoClass;
+import javafx.geometry.Orientation;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.IntFieldBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.builder.SegmentedBarBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ColonisationItem;
-import nl.jixxed.eliteodysseymaterials.domain.ColonisationItems;
+import nl.jixxed.eliteodysseymaterials.domain.ConstructionProgress;
 import nl.jixxed.eliteodysseymaterials.domain.MarketItem;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
-import nl.jixxed.eliteodysseymaterials.service.ColonisationService;
 import nl.jixxed.eliteodysseymaterials.service.MarketService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
@@ -19,14 +18,16 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.MarketUpdatedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.components.IntField;
+import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
+import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
+import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegmentView;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.math.BigInteger;
 
 public class BillOfMaterialsEntry extends DestroyableVBox implements DestroyableEventTemplate {
     private Commodity commodity;
-    private Integer requiredAmount;
+    private ConstructionProgress progress;
     private DestroyableLabel commodityLabel;
     private DestroyableLabel fleetCarrierLabel;
     private DestroyableLabel shipLabel;
@@ -40,12 +41,18 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
     private DestroyableResizableImageView bracket1Image;
     private DestroyableResizableImageView bracket3Image;
     ColonisationItem colonisationItem;
+    private TypeSegment presentShip;
+    private TypeSegment presentFleetCarrier;
+    private TypeSegment delivered;
+    private TypeSegment missingForCompletion;
+    private Integer availableShip;
+    private Integer availableFleetCarrier;
 
 
-    public BillOfMaterialsEntry(ColonisationItem colonisationItem, Commodity commodity, Integer requiredAmount) {
+    public BillOfMaterialsEntry(ColonisationItem colonisationItem, Commodity commodity, ConstructionProgress progress) {
         this.colonisationItem = colonisationItem;
         this.commodity = commodity;
-        this.requiredAmount = requiredAmount;
+        this.progress = progress;
         initComponents();
         initEventHandling();
     }
@@ -105,7 +112,7 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
                 .withNodes(commodityImage, commodityLabel).buildHBox();
         final DestroyableHBox left = BoxBuilder.builder()
                 .withStyleClass("values-sub")
-                .withNodes(sumImage, colonisationItem == ColonisationItem.ALL ? getAmountLabel() : getAmountField(), new GrowingRegion(), fleetCarrierLabel, fleetCarrierImage).buildHBox();
+                .withNodes(sumImage, getAmountLabel(), new GrowingRegion(), fleetCarrierLabel, fleetCarrierImage).buildHBox();
         final DestroyableHBox right = BoxBuilder.builder()
                 .withStyleClass("values-sub")
                 .withNodes(shipImage, shipLabel, new GrowingRegion(), bracket1Image, BoxBuilder.builder()
@@ -114,33 +121,53 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
         final DestroyableHBox values = BoxBuilder.builder()
                 .withStyleClass("values")
                 .withNodes(left, right).buildHBox();
-        this.getNodes().addAll(title, values);
+
+        availableShip = StorageService.getCommodityCount(commodity, StoragePool.SHIP);
+        availableFleetCarrier = StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER);
+        var remaining = progress.required() - progress.provided();
+        this.delivered = new TypeSegment(Math.max(0, progress.provided()), SegmentType.PRESENT);
+        this.presentShip = new TypeSegment(Math.min(remaining, availableShip), SegmentType.PRESENT_SHIP);
+        this.presentFleetCarrier = new TypeSegment(Math.min(remaining - Math.min(remaining, availableShip), availableFleetCarrier), SegmentType.PRESENT_FLEET_CARRIER);
+        this.missingForCompletion = new TypeSegment(Math.max(0, remaining - availableShip - availableFleetCarrier), SegmentType.NOT_PRESENT);
+        DestroyableSegmentedBar<TypeSegment> progressbar = SegmentedBarBuilder.builder(TypeSegment.class)
+                .withStyleClass("bom-entry-progressbar")
+                .withOrientation(Orientation.HORIZONTAL)
+                .withInfoNodeFactory(_ -> null)
+                .withSegmentViewFactory(segment -> new TypeSegmentView(segment, false))
+                .withSegments(delivered, presentShip, presentFleetCarrier, missingForCompletion)
+                .build();
+
+        final DestroyableVBox content = BoxBuilder.builder()
+                .withStyleClass("bom-entry-content")
+                .withNodes(title, values)
+                .buildVBox();
+        this.getNodes().addAll(content, progressbar);
         MaterialService.addMaterialInfoPopOver(this, this.commodity, false);
         update();
     }
-
-    private IntField getAmountField() {
-        IntField amountField = IntFieldBuilder.builder()
-                .withStyleClass("amount-sum")
-                .withMinValue(0)
-                .withMaxValue(999999)
-                .withInitialValue(requiredAmount)
-                .build();
-        amountField.addChangeListener(amountField.valueProperty(), (_, _, newValue) -> {
-            ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
-                final ColonisationItems colonisationItems = ColonisationService.getColonisationItems(commander);
-                colonisationItems.getColonisationItem(colonisationItem.getUuid()).updateAmount(commodity, newValue.intValue());
-                ColonisationService.saveColonisationItems(commander, colonisationItems);
-            });
-            colonisationItem.updateAmount(commodity, newValue.intValue());
-        });
-        return amountField;
-    }
+//
+//    private IntField getAmountField() {
+//        IntField amountField = IntFieldBuilder.builder()
+//                .withStyleClass("amount-sum")
+//                .withMinValue(0)
+//                .withMaxValue(999999)
+//                .withInitialValue(requiredAmount)
+//                .build();
+//        amountField.addChangeListener(amountField.valueProperty(), (_, _, newValue) -> {
+//            ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
+//                final ColonisationItems colonisationItems = ColonisationService.getColonisationItems(commander);
+//                colonisationItems.getColonisationItem(colonisationItem.getUuid()).updateAmount(commodity, newValue.intValue());
+//                ColonisationService.saveColonisationItems(commander, colonisationItems);
+//            });
+//            colonisationItem.updateAmount(commodity, newValue.intValue());
+//        });
+//        return amountField;
+//    }
 
     private DestroyableLabel getAmountLabel() {
         return LabelBuilder.builder()
                 .withStyleClass("amount-left")
-                .withNonLocalizedText(requiredAmount.toString())
+                .withNonLocalizedText(progress.provided() + "/" + progress.required())
                 .build();
     }
 
@@ -157,9 +184,21 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
     }
 
     private void update() {
-        fleetCarrierLabel.setText(StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER).toString());
-        shipLabel.setText(StorageService.getCommodityCount(commodity, StoragePool.SHIP).toString());
+        availableShip = StorageService.getCommodityCount(commodity, StoragePool.SHIP);
+        availableFleetCarrier = StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER);
+
+        fleetCarrierLabel.setText(availableFleetCarrier.toString());
+        shipLabel.setText(availableShip.toString());
         marketLabel.setText(MarketService.isFleetCarrier() ? "0" : MarketService.getMarketItem(commodity).map(MarketItem::stock).orElse(BigInteger.ZERO).toString());
+
+        availableShip = StorageService.getCommodityCount(commodity, StoragePool.SHIP);
+        availableFleetCarrier = StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER);
+        var remaining = progress.required() - progress.provided();
+        this.delivered.setValue(Math.max(0, progress.provided()));
+        this.presentShip.setValue(Math.min(remaining, availableShip));
+        this.presentFleetCarrier.setValue(Math.min(remaining - Math.min(remaining, availableShip), availableFleetCarrier));
+        this.missingForCompletion.setValue(Math.max(0, remaining - availableShip - availableFleetCarrier));
+
         updateStyle();
     }
 

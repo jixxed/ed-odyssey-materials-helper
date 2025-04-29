@@ -15,7 +15,6 @@ import nl.jixxed.eliteodysseymaterials.enums.BlueprintCategory;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
-import nl.jixxed.eliteodysseymaterials.service.event.CommanderSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyWishlistBlueprintEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyWishlistSelectedEvent;
@@ -65,7 +64,6 @@ public class OdysseyWishlistBlueprintsCategory extends DestroyableHBox implement
 
     @Override
     public void initEventHandling() {
-        register(EventService.addListener(true, this, CommanderSelectedEvent.class, _ -> refreshBlueprints()));
         register(EventService.addListener(true, this, OdysseyWishlistSelectedEvent.class, _ -> refreshBlueprints()));
         register(EventService.addListener(true, this, OdysseyWishlistBlueprintEvent.class, wishlistEvent ->
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {

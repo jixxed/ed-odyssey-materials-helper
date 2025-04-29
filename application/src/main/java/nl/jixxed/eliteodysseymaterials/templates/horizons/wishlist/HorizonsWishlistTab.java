@@ -10,7 +10,6 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
-import nl.jixxed.eliteodysseymaterials.service.event.CommanderSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsWishlistChangedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsWishlistSelectedEvent;
@@ -84,7 +83,6 @@ public class HorizonsWishlistTab extends HorizonsTab implements DestroyableEvent
     public void initEventHandling() {
         register(EventService.addListener(true, this, HorizonsWishlistSelectedEvent.class, _ -> update()));
         register(EventService.addListener(true, this, HorizonsWishlistChangedEvent.class, _ -> update()));
-        register(EventService.addListener(true, this, CommanderSelectedEvent.class, _ -> update()));
     }
 
     @Override

@@ -299,7 +299,6 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
     @Override
     public void initEventHandling() {
         register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> applyFontSizingHack(fontSizeEvent.getFontSize())));
-        register(EventService.addListener(true, this, CommanderSelectedEvent.class, _ -> refreshWishlistSelect()));
         register(EventService.addListener(true, this, LanguageChangedEvent.class, _ -> refreshWishlistSelect()));
         register(EventService.addListener(true, this, HorizonsWishlistCreatedEvent.class, _ -> refreshWishlistSelect()));
         register(EventService.addListener(true, this, HorizonsWishlistChangedEvent.class, event ->

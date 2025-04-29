@@ -163,13 +163,6 @@ public class OdysseyMaterialCard extends DestroyableVBox implements DestroyableE
 
     @Override
     public void initEventHandling() {
-        register(EventService.addListener(true, this, CommanderSelectedEvent.class, _ -> {
-            this.fleetCarrierAmount.setText(String.valueOf(0));
-            this.backpackAmount.setText(String.valueOf(0));
-            this.shiplockerAmount.setText(String.valueOf(0));
-            this.wishlistAmount.setText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.odysseyMaterial)).mapToInt(Integer::intValue).sum()));
-            this.totalAmount.setText(String.valueOf(0));
-        }));
         register(EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
             if (StoragePool.FLEETCARRIER.equals(storageEvent.getStoragePool())) {
                 this.fleetCarrierAmount.setText(String.valueOf(this.amounts.getFleetCarrierValue()));
@@ -194,9 +187,6 @@ public class OdysseyMaterialCard extends DestroyableVBox implements DestroyableE
             Platform.runLater(() -> this.wishlistAmount.setText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.odysseyMaterial)).mapToInt(Integer::intValue).sum())));
             Platform.runLater(this::updateStyle);
         }));
-        register(EventService.addListener(true, this, CommanderSelectedEvent.class, _ ->
-                Platform.runLater(this::updateMaterialCardStyle)
-        ));
     }
 
     private void updateStyle() {

@@ -13,7 +13,10 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
-import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.HorizonsBlueprintClickEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.HorizonsWishlistChangedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.HorizonsWishlistSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.EngineerBlueprintLabel;
@@ -292,16 +295,6 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
     @Override
     public void initEventHandling() {
         register(EventService.addListener(true, this, HorizonsWishlistSelectedEvent.class, wishlistSelectedEvent -> {
-            if (!(this.blueprint instanceof HorizonsEngineerBlueprint) || !this.ingredients.stream().allMatch(ingredient -> HorizonsStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
-                APPLICATION_STATE.getPreferredCommander().ifPresent(this::updateWishlistsAndCount);
-            }
-        }));
-        register(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
-            if (!(this.blueprint instanceof HorizonsEngineerBlueprint) || !this.ingredients.stream().allMatch(ingredient -> HorizonsStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
-                updateWishlistsAndCount(commanderSelectedEvent.getCommander());
-            }
-        }));
-        register(EventService.addListener(true, this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
             if (!(this.blueprint instanceof HorizonsEngineerBlueprint) || !this.ingredients.stream().allMatch(ingredient -> HorizonsStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
                 APPLICATION_STATE.getPreferredCommander().ifPresent(this::updateWishlistsAndCount);
             }

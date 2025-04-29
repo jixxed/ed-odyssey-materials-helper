@@ -3,8 +3,6 @@ package nl.jixxed.eliteodysseymaterials.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.enums.ColonisationBuildable;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -23,6 +21,9 @@ public class ColonisationItems {
     public Set<ColonisationItem> getAllColonisationItems() {
         final Set<ColonisationItem> wishlists1 = new HashSet<>(this.colonisationItems);
         wishlists1.add(ColonisationItem.ALL);
+        if (ColonisationItem.getCurrent() != null) {
+            wishlists1.add(ColonisationItem.getCurrent());
+        }
         return Collections.unmodifiableSet(wishlists1);
     }
 
@@ -62,10 +63,10 @@ public class ColonisationItems {
         }
     }
 
-    public ColonisationItem createColonisationItem(final ColonisationBuildable colonisationBuildable) {
-        final ColonisationItem colonisationItem = new ColonisationItem(LocaleService.getLocalizedStringForCurrentLocale(colonisationBuildable.getColonisationCategory().getLocalizationKey()) + " - " + LocaleService.getLocalizedStringForCurrentLocale(colonisationBuildable.getLocalizationKey()), colonisationBuildable, colonisationBuildable.getBlueprintCost());
-        this.addColonisationItem(colonisationItem);
-        this.selectedColonisationItemUUID = colonisationItem.getUuid();
-        return colonisationItem;
-    }
+//    public ColonisationItem createColonisationItem(final ColonisationBuildable colonisationBuildable) {
+//        final ColonisationItem colonisationItem = new ColonisationItem(LocaleService.getLocalizedStringForCurrentLocale(colonisationBuildable.getColonisationCategory().getLocalizationKey()) + " - " + LocaleService.getLocalizedStringForCurrentLocale(colonisationBuildable.getLocalizationKey()), colonisationBuildable, colonisationBuildable.getBlueprintCost());
+//        this.addColonisationItem(colonisationItem);
+//        this.selectedColonisationItemUUID = colonisationItem.getUuid();
+//        return colonisationItem;
+//    }
 }

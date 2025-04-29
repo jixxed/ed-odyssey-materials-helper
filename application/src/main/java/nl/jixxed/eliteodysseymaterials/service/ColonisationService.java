@@ -3,22 +3,51 @@ package nl.jixxed.eliteodysseymaterials.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.ColonisationItem;
 import nl.jixxed.eliteodysseymaterials.domain.ColonisationItems;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
+import nl.jixxed.eliteodysseymaterials.enums.ColonisationBuildable;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
+import nl.jixxed.eliteodysseymaterials.service.event.ColonisationConstructionDepotEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Slf4j
 public class ColonisationService {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
+
+    public static void init() {
+        EVENT_LISTENERS.add(EventService.addStaticListener(0, ColonisationConstructionDepotEvent.class, event -> {
+            ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
+                final ColonisationItems colonisationItems = getColonisationItems(commander);
+                colonisationItems.getAllColonisationItems().stream()
+                        .filter(colonisationItem -> Objects.equals(event.getMarketID().toString(), colonisationItem.getMarketID()))
+                        .findFirst()
+                        .ifPresent(colonisationItem -> {
+                            colonisationItem.setConstructionRequirements(event.getResourcesRequired());
+                            saveColonisationItems(commander, colonisationItems);
+                        });
+                ColonisationItem.setCurrent(new ColonisationItem("1", "Current", event.getMarketID().toString(), ColonisationBuildable.UNKNOWN, event.getResourcesRequired()));
+            });
+        }));
+    }
 
     static {
         SimpleModule simpleModule = new SimpleModule();

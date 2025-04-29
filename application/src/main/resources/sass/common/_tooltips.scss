@@ -235,3 +235,21 @@
   -fx-background-color: #2e92df;
   /*-fx-text-fill: #2e92df !important;*/
 }
+
+.horizons-tradetype1 {
+  -fx-text-fill: #89d07f !important;
+}
+
+.horizons-tradetype2 {
+  -fx-text-fill: #dcc030 !important;
+}
+
+.horizons-tradetype3, .horizons-tradetype4, .horizons-tradetype5 {
+  -fx-text-fill: #ff7c7c !important;
+}
+
+.trade-suggestion-bullet {
+  -fx-text-alignment: center;
+  -fx-min-width: 1em;
+  -fx-max-width: 1em;
+}

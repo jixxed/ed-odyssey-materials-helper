@@ -57,7 +57,6 @@ public class OdysseyWishlistShortestPath extends DestroyableVBox implements Dest
 
     @Override
     public void initEventHandling() {
-        register(EventService.addListener(true, this, CommanderSelectedEvent.class, _ -> update()));
         register(EventService.addListener(true, this, OdysseyWishlistSelectedEvent.class, _ -> update()));
         register(EventService.addListener(true, this, OdysseyWishlistChangedEvent.class, _ -> update()));
         register(EventService.addListener(true, this, LocationChangedEvent.class, _ -> update()));

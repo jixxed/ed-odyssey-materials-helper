@@ -10,7 +10,6 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
-import nl.jixxed.eliteodysseymaterials.service.event.CommanderSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyWishlistChangedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyWishlistSelectedEvent;
@@ -88,7 +87,6 @@ public class OdysseyWishlistTab extends OdysseyTab implements DestroyableEventTe
     public void initEventHandling() {
         register(EventService.addListener(true, this, OdysseyWishlistSelectedEvent.class, _ -> update()));
         register(EventService.addListener(true, this, OdysseyWishlistChangedEvent.class, _ -> update()));
-        register(EventService.addListener(true, this, CommanderSelectedEvent.class, _ -> update()));
     }
 
     @Override

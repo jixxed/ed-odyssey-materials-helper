@@ -10,7 +10,6 @@ import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.AssetType;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.CommanderSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyBartenderMaterialSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
@@ -140,7 +139,6 @@ public class OdysseyBartenderTab extends OdysseyTab implements DestroyableEventT
             selectedMaterialToTrade(odysseyBartenderMaterialSelectedEvent.getOdysseyBartenderMaterial());
             Platform.runLater(() -> ((ScrollPaneSkin) this.scrollPane.getSkin()).getVerticalScrollBar().setValue(0D));
         }));
-        register(EventService.addListener(true, this, 9, CommanderSelectedEvent.class, _ -> selectView()));
     }
 
     private void selectedMaterialToTrade(OdysseyBartenderMaterial odysseyBartenderMaterial) {

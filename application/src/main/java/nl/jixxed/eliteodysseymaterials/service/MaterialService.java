@@ -230,7 +230,12 @@ public class MaterialService {
                     .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE)
                     .withText(LocaleService.getStringBinding("material.tooltip.downtrade"))
                     .build());
-            final List<HorizonsMaterial> otherMaterialsInCategory = HorizonsMaterial.getAllMaterials().stream().filter(material -> material.getMaterialType() == horizonsMaterial.getMaterialType() && material != horizonsMaterial && material.getRarity().getLevel() > horizonsMaterial.getRarity().getLevel()).sorted(Comparator.comparing(HorizonsMaterial::getRarity)).toList();
+            final List<HorizonsMaterial> otherMaterialsInCategory = HorizonsMaterial.getAllMaterials().stream()
+                    .filter(material -> material.getMaterialType() == horizonsMaterial.getMaterialType()
+                            && material != horizonsMaterial
+                            && material.getRarity().getLevel() > horizonsMaterial.getRarity().getLevel())
+                    .sorted(Comparator.comparing(HorizonsMaterial::getRarity))
+                    .toList();
             if (!otherMaterialsInCategory.isEmpty()) {
                 otherMaterialsInCategory.forEach(material -> {
                     final int materialCount = StorageService.getMaterialCount(material);

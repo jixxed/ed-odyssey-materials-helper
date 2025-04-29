@@ -75,7 +75,8 @@ public enum JournalEventType {
     POWERPLAYLEAVE("PowerplayLeave"),
     POWERPLAYRANK("PowerplayRank"),
     POWERPLAYMERITS("PowerplayMerits"),
-    SCIENTIFICRESEARCH("ScientificResearch");
+    SCIENTIFICRESEARCH("ScientificResearch"),
+    COLONISATIONCONSTRUCTIONDEPOT("ColonisationConstructionDepot");
     private final String name;
 
     public static JournalEventType forName(final String name) {

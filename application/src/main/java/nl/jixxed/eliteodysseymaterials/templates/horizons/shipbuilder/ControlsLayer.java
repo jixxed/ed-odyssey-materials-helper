@@ -312,18 +312,6 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
 
         }));
 
-        register(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
-//            final Optional<ShipConfiguration> shipConfiguration = ShipService.getShipConfigurations(commanderSelectedEvent.getCommander()).getSelectedShipConfiguration();
-//            this.activeShipUUID = shipConfiguration.map(ShipConfiguration::getUuid).orElse(null);
-            refreshShipSelect();
-            loadCommanderWishlists(commanderSelectedEvent.getCommander());
-            EventService.publish(new HorizonsShipChangedEvent(this.shipSelect.getSelectionModel().getSelectedItem().getUuid()));
-        }));
-        register(EventService.addListener(true, this, CommanderAllListedEvent.class, _ -> {
-            refreshShipSelect();
-            APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
-        }));
-
         register(EventService.addListener(true, this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_SHIP)
                     || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_SLEF)) {

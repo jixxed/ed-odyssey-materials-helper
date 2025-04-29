@@ -64,7 +64,8 @@ public enum ColonisationBuildable {
     HUB_MILITARY(2, ColonisationCategory.HUB, ColonisationLocation.SURFACE, List.of(ColonisationLayout.ALALA, ColonisationLayout.ARES), Economy.NONE, Economy.MILITARY, 0, 0, 0, 0, 0, 0, 0),
     HUB_REFINERY(2, ColonisationCategory.HUB, ColonisationLocation.SURFACE, List.of(ColonisationLayout.SILENUS), Economy.NONE, Economy.REFINERY, 0, 0, 3, 5, -2, 7, 0),
     HUB_HIGH_TECH(2, ColonisationCategory.HUB, ColonisationLocation.SURFACE, List.of(ColonisationLayout.JANUS), Economy.NONE, Economy.HIGHTECH, 0, 0, 10, -2, 0, 0, 0),
-    HUB_INDUSTRIAL(2, ColonisationCategory.HUB, ColonisationLocation.SURFACE, List.of(ColonisationLayout.MOLAE, ColonisationLayout.TELLUS, ColonisationLayout.EUNOSTUS), Economy.NONE, Economy.INDUSTRIAL, 0, 0, 3, 5, -4, 2, 0);
+    HUB_INDUSTRIAL(2, ColonisationCategory.HUB, ColonisationLocation.SURFACE, List.of(ColonisationLayout.MOLAE, ColonisationLayout.TELLUS, ColonisationLayout.EUNOSTUS), Economy.NONE, Economy.INDUSTRIAL, 0, 0, 3, 5, -4, 2, 0),
+    UNKNOWN(1, ColonisationCategory.HUB, ColonisationLocation.ORBITAL, List.of(), Economy.NONE, Economy.NONE, 0, 0, 0, 0, 0, 0, 0);
     private final int tier;
     private final ColonisationCategory colonisationCategory;
     private final ColonisationLocation colonisationLocation;
@@ -105,6 +106,7 @@ public enum ColonisationBuildable {
 
     public Map<Commodity, Integer> getBlueprintCost() {
         return switch (this) {
+            case UNKNOWN -> Collections.emptyMap();
             case STAR_PORT_CORIOLIS, STAR_PORT_ASTEROID_BASE -> Map.ofEntries(
                     Map.entry(RegularCommodity.LIQUIDOXYGEN, 3781),
                     Map.entry(RegularCommodity.WATER, 1609),
@@ -125,7 +127,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.NONLETHALWEAPONS, 25),
                     Map.entry(RegularCommodity.POWERGENERATORS, 65),
                     Map.entry(RegularCommodity.WATERPURIFIERS, 105)
-                    );
+            );
             case STAR_PORT_OCELLUS, STAR_PORT_ORBIS -> Map.ofEntries(
                     Map.entry(RegularCommodity.LIQUIDOXYGEN, 15124),
                     Map.entry(RegularCommodity.WATER, 6436),
@@ -146,7 +148,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.NONLETHALWEAPONS, 50),
                     Map.entry(RegularCommodity.POWERGENERATORS, 130),
                     Map.entry(RegularCommodity.WATERPURIFIERS, 210)
-                    );
+            );
             case OUTPOST_COMMERCIAL, OUTPOST_INDUSTRIAL, OUTPOST_CRIMINAL, OUTPOST_CIVILIAN, OUTPOST_SCIENTIFIC,
                  OUTPOST_MILITARY -> Map.ofEntries(
                     Map.entry(RegularCommodity.LIQUIDOXYGEN, 1553),
@@ -168,7 +170,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.NONLETHALWEAPONS, 13),
                     Map.entry(RegularCommodity.POWERGENERATORS, 19),
                     Map.entry(RegularCommodity.WATERPURIFIERS, 38)
-                    );
+            );
             case INSTALLATION_SATELLITE, INSTALLATION_COMMUNICATION_STATION -> Map.ofEntries(
                     Map.entry(RegularCommodity.LIQUIDOXYGEN, 678),
                     Map.entry(RegularCommodity.WATER, 22),
@@ -187,7 +189,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.POWERGENERATORS, 9),
                     Map.entry(RegularCommodity.WATERPURIFIERS, 13),
                     Map.entry(RegularCommodity.MICROCONTROLLERS, 13)
-                    );
+            );
             case INSTALLATION_SPACE_FARM -> Map.ofEntries(
                     Map.entry(RegularCommodity.LIQUIDOXYGEN, 1071),
                     Map.entry(RegularCommodity.WATER, 173),
@@ -208,7 +210,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.AGRICULTURALMEDICINES, 115),
                     Map.entry(RegularCommodity.CROPHARVESTERS, 77),
                     Map.entry(RegularCommodity.BIOWASTE, 153)
-                    );
+            );
             case INSTALLATION_PIRATE_BASE -> Map.ofEntries(
                     Map.entry(RegularCommodity.LIQUIDOXYGEN, 911),
                     Map.entry(RegularCommodity.WATER, 65),
@@ -228,7 +230,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.LIQUOR, 228),
                     Map.entry(RegularCommodity.BATTLEWEAPONS, 23),
                     Map.entry(RegularCommodity.REACTIVEARMOUR, 23)
-                    );
+            );
             case INSTALLATION_MINING_OUTPOST -> Map.ofEntries(
                     Map.entry(RegularCommodity.LIQUIDOXYGEN, 1028),
                     Map.entry(RegularCommodity.WATER, 73),
@@ -250,7 +252,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.BIOREDUCINGLICHEN, 172),
                     Map.entry(RegularCommodity.GEOLOGICALEQUIPMENT, 26),
                     Map.entry(RegularCommodity.MUTOMIMAGER, 43)
-                    );
+            );
             case INSTALLATION_RELAY_STATION -> Map.ofEntries(
                     Map.entry(RegularCommodity.LIQUIDOXYGEN, 780),
                     Map.entry(RegularCommodity.WATER, 25),
@@ -268,7 +270,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.FRUITANDVEGETABLES, 10),
                     Map.entry(RegularCommodity.POWERGENERATORS, 10),
                     Map.entry(RegularCommodity.WATERPURIFIERS, 15)
-                    );
+            );
             case INSTALLATION_MILITARY -> Map.ofEntries(
                     Map.entry(RegularCommodity.LIQUIDOXYGEN, 1424),
                     Map.entry(RegularCommodity.WATER, 238),
@@ -291,7 +293,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.BASICMEDICINES, 24),
                     Map.entry(RegularCommodity.COMBATSTABILISERS, 48),
                     Map.entry(RegularCommodity.MILITARYGRADEFABRICS, 36)
-                    );
+            );
             case INSTALLATION_SECURITY_STATION -> Map.ofEntries(
                     Map.entry(RegularCommodity.LIQUIDOXYGEN, 1458),
                     Map.entry(RegularCommodity.WATER, 31),
@@ -311,7 +313,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.BATTLEWEAPONS, 19),
                     Map.entry(RegularCommodity.COMBATSTABILISERS, 25),
                     Map.entry(RegularCommodity.MILITARYGRADEFABRICS, 19)
-                    );
+            );
             case INSTALLATION_GOVERNMENT -> Map.ofEntries(
                     Map.entry(RegularCommodity.LIQUIDOXYGEN, 1479),
                     Map.entry(RegularCommodity.WATER, 154),
@@ -328,7 +330,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.NONLETHALWEAPONS, 13),
                     Map.entry(RegularCommodity.POWERGENERATORS, 13),
                     Map.entry(RegularCommodity.WATERPURIFIERS, 31)
-                    );
+            );
             case INSTALLATION_MEDICAL -> Map.ofEntries(
                     Map.entry(RegularCommodity.LIQUIDOXYGEN, 1727),
                     Map.entry(RegularCommodity.WATER, 278),
@@ -348,7 +350,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.HAZARDOUSENVIRONMENTSUITS, 25),
                     Map.entry(RegularCommodity.BASICMEDICINES, 50),
                     Map.entry(RegularCommodity.COMBATSTABILISERS, 19)
-                    );
+            );
             case INSTALLATION_RESEARCH_STATION -> Map.ofEntries(
                     Map.entry(RegularCommodity.LIQUIDOXYGEN, 1506),
                     Map.entry(RegularCommodity.WATER, 157),
@@ -373,7 +375,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.MUTOMIMAGER, 38),
                     Map.entry(RegularCommodity.BASICMEDICINES, 13),
                     Map.entry(RegularCommodity.ADVANCEDCATALYSERS, 44)
-                    );
+            );
             case INSTALLATION_TOURIST -> Map.ofEntries(
                     Map.entry(RegularCommodity.LIQUIDOXYGEN, 1813),
                     Map.entry(RegularCommodity.WATER, 324),
@@ -395,7 +397,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.FISH, 39),
                     Map.entry(RegularCommodity.TEA, 259),
                     Map.entry(RegularCommodity.COFFEE, 130)
-                    );
+            );
             case INSTALLATION_SPACE_BAR -> Map.ofEntries(
                     Map.entry(RegularCommodity.LIQUIDOXYGEN, 1738),
                     Map.entry(RegularCommodity.WATER, 311),
@@ -417,7 +419,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.FISH, 19),
                     Map.entry(RegularCommodity.TEA, 178),
                     Map.entry(RegularCommodity.COFFEE, 63)
-                    );
+            );
             case PLANETARY_PORT_CIVILIAN_TIER_1, PLANETARY_PORT_INDUSTRIAL, PLANETARY_PORT_SCIENTIFIC -> Map.ofEntries(
                     Map.entry(RegularCommodity.LIQUIDOXYGEN, 2372),
                     Map.entry(RegularCommodity.CERAMICCOMPOSITES, 814),
@@ -442,7 +444,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.EVACUATIONSHELTER, 204),
                     Map.entry(RegularCommodity.EMERGENCYPOWERCELLS, 68),
                     Map.entry(RegularCommodity.SURVIVALEQUIPMENT, 55)
-                    );
+            );
             case PLANETARY_PORT_CIVILIAN_TIER_3 -> Map.ofEntries(
                     Map.entry(RegularCommodity.LIQUIDOXYGEN, 14232),
                     Map.entry(RegularCommodity.CERAMICCOMPOSITES, 4884),
@@ -467,7 +469,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.EVACUATIONSHELTER, 816),
                     Map.entry(RegularCommodity.EMERGENCYPOWERCELLS, 272),
                     Map.entry(RegularCommodity.SURVIVALEQUIPMENT, 220)
-                    );
+            );
             case SETTLEMENT_AGRICULTURE_TIER_1_SMALL -> Map.ofEntries(
                     Map.entry(RegularCommodity.LIQUIDOXYGEN, 224),
                     Map.entry(RegularCommodity.CERAMICCOMPOSITES, 28),
@@ -489,14 +491,14 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.PESTICIDES, 126),
                     Map.entry(RegularCommodity.CROPHARVESTERS, 210),
                     Map.entry(RegularCommodity.BIOWASTE, 280)
-                    );
-            case SETTLEMENT_AGRICULTURE_TIER_1_MEDIUM ->{
-                Map<Commodity,Integer> map = new HashMap<>(SETTLEMENT_AGRICULTURE_TIER_1_SMALL.getBlueprintCost());
+            );
+            case SETTLEMENT_AGRICULTURE_TIER_1_MEDIUM -> {
+                Map<Commodity, Integer> map = new HashMap<>(SETTLEMENT_AGRICULTURE_TIER_1_SMALL.getBlueprintCost());
                 map.replaceAll((commodity, integer) -> integer * 2);
                 yield map;
             }
-            case SETTLEMENT_AGRICULTURE_TIER_2_LARGE ->{
-                Map<Commodity,Integer> map = new HashMap<>(SETTLEMENT_AGRICULTURE_TIER_1_SMALL.getBlueprintCost());
+            case SETTLEMENT_AGRICULTURE_TIER_2_LARGE -> {
+                Map<Commodity, Integer> map = new HashMap<>(SETTLEMENT_AGRICULTURE_TIER_1_SMALL.getBlueprintCost());
                 map.replaceAll((commodity, integer) -> integer * 3);
                 yield map;
             }
@@ -521,14 +523,14 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.BIOREDUCINGLICHEN, 162),
                     Map.entry(RegularCommodity.GEOLOGICALEQUIPMENT, 52),
                     Map.entry(RegularCommodity.MUTOMIMAGER, 45)
-                    );
-            case SETTLEMENT_EXTRACTION_TIER_1_MEDIUM ->{
-                Map<Commodity,Integer> map = new HashMap<>(SETTLEMENT_EXTRACTION_TIER_1_SMALL.getBlueprintCost());
+            );
+            case SETTLEMENT_EXTRACTION_TIER_1_MEDIUM -> {
+                Map<Commodity, Integer> map = new HashMap<>(SETTLEMENT_EXTRACTION_TIER_1_SMALL.getBlueprintCost());
                 map.replaceAll((commodity, integer) -> integer * 2);
                 yield map;
             }
-            case SETTLEMENT_EXTRACTION_TIER_2_LARGE ->{
-                Map<Commodity,Integer> map = new HashMap<>(SETTLEMENT_EXTRACTION_TIER_1_SMALL.getBlueprintCost());
+            case SETTLEMENT_EXTRACTION_TIER_2_LARGE -> {
+                Map<Commodity, Integer> map = new HashMap<>(SETTLEMENT_EXTRACTION_TIER_1_SMALL.getBlueprintCost());
                 map.replaceAll((commodity, integer) -> integer * 3);
                 yield map;
             }
@@ -555,14 +557,14 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.ROBOTICS, 110),
                     Map.entry(RegularCommodity.RESONATINGSEPARATORS, 28),
                     Map.entry(RegularCommodity.ADVANCEDCATALYSERS, 82)
-                    );
-            case SETTLEMENT_INDUSTRIAL_TIER_1_MEDIUM ->{
-                Map<Commodity,Integer> map = new HashMap<>(SETTLEMENT_INDUSTRIAL_TIER_1_SMALL.getBlueprintCost());
+            );
+            case SETTLEMENT_INDUSTRIAL_TIER_1_MEDIUM -> {
+                Map<Commodity, Integer> map = new HashMap<>(SETTLEMENT_INDUSTRIAL_TIER_1_SMALL.getBlueprintCost());
                 map.replaceAll((commodity, integer) -> integer * 2);
                 yield map;
             }
-            case SETTLEMENT_INDUSTRIAL_TIER_2_LARGE ->{
-                Map<Commodity,Integer> map = new HashMap<>(SETTLEMENT_INDUSTRIAL_TIER_1_SMALL.getBlueprintCost());
+            case SETTLEMENT_INDUSTRIAL_TIER_2_LARGE -> {
+                Map<Commodity, Integer> map = new HashMap<>(SETTLEMENT_INDUSTRIAL_TIER_1_SMALL.getBlueprintCost());
                 map.replaceAll((commodity, integer) -> integer * 3);
                 yield map;
             }
@@ -589,14 +591,14 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.BASICMEDICINES, 36),
                     Map.entry(RegularCommodity.COMBATSTABILISERS, 36),
                     Map.entry(RegularCommodity.MILITARYGRADEFABRICS, 24)
-                    );
-            case SETTLEMENT_MILITARY_TIER_1_MEDIUM ->{
-                Map<Commodity,Integer> map = new HashMap<>(SETTLEMENT_MILITARY_TIER_1_SMALL.getBlueprintCost());
+            );
+            case SETTLEMENT_MILITARY_TIER_1_MEDIUM -> {
+                Map<Commodity, Integer> map = new HashMap<>(SETTLEMENT_MILITARY_TIER_1_SMALL.getBlueprintCost());
                 map.replaceAll((commodity, integer) -> integer * 2);
                 yield map;
             }
-            case SETTLEMENT_MILITARY_TIER_2_LARGE ->{
-                Map<Commodity,Integer> map = new HashMap<>(SETTLEMENT_MILITARY_TIER_1_SMALL.getBlueprintCost());
+            case SETTLEMENT_MILITARY_TIER_2_LARGE -> {
+                Map<Commodity, Integer> map = new HashMap<>(SETTLEMENT_MILITARY_TIER_1_SMALL.getBlueprintCost());
                 map.replaceAll((commodity, integer) -> integer * 3);
                 yield map;
             }
@@ -625,14 +627,14 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.MUTOMIMAGER, 95),
                     Map.entry(RegularCommodity.BASICMEDICINES, 14),
                     Map.entry(RegularCommodity.ADVANCEDCATALYSERS, 95)
-                    );
-            case SETTLEMENT_RESEARCH_BIO_TIER_1_MEDIUM ->{
-                Map<Commodity,Integer> map = new HashMap<>(SETTLEMENT_RESEARCH_BIO_TIER_1_SMALL.getBlueprintCost());
+            );
+            case SETTLEMENT_RESEARCH_BIO_TIER_1_MEDIUM -> {
+                Map<Commodity, Integer> map = new HashMap<>(SETTLEMENT_RESEARCH_BIO_TIER_1_SMALL.getBlueprintCost());
                 map.replaceAll((commodity, integer) -> integer * 2);
                 yield map;
             }
-            case SETTLEMENT_RESEARCH_BIO_TIER_2_LARGE ->{
-                Map<Commodity,Integer> map = new HashMap<>(SETTLEMENT_RESEARCH_BIO_TIER_1_SMALL.getBlueprintCost());
+            case SETTLEMENT_RESEARCH_BIO_TIER_2_LARGE -> {
+                Map<Commodity, Integer> map = new HashMap<>(SETTLEMENT_RESEARCH_BIO_TIER_1_SMALL.getBlueprintCost());
                 map.replaceAll((commodity, integer) -> integer * 3);
                 yield map;
             }
@@ -658,14 +660,14 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.FISH, 36),
                     Map.entry(RegularCommodity.TEA, 170),
                     Map.entry(RegularCommodity.COFFEE, 71)
-                    );
+            );
             case SETTLEMENT_TOURISM_TIER_1_MEDIUM -> {
-                Map<Commodity,Integer> map = new HashMap<>(SETTLEMENT_TOURISM_TIER_1_SMALL.getBlueprintCost());
+                Map<Commodity, Integer> map = new HashMap<>(SETTLEMENT_TOURISM_TIER_1_SMALL.getBlueprintCost());
                 map.replaceAll((commodity, integer) -> integer * 2);
                 yield map;
             }
-            case SETTLEMENT_TOURISM_TIER_2_LARGE ->{
-                Map<Commodity,Integer> map = new HashMap<>(SETTLEMENT_TOURISM_TIER_1_SMALL.getBlueprintCost());
+            case SETTLEMENT_TOURISM_TIER_2_LARGE -> {
+                Map<Commodity, Integer> map = new HashMap<>(SETTLEMENT_TOURISM_TIER_1_SMALL.getBlueprintCost());
                 map.replaceAll((commodity, integer) -> integer * 3);
                 yield map;
             }
@@ -689,7 +691,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.BIOREDUCINGLICHEN, 714),
                     Map.entry(RegularCommodity.GEOLOGICALEQUIPMENT, 210),
                     Map.entry(RegularCommodity.MUTOMIMAGER, 160)
-                    );
+            );
             case HUB_CIVILIAN -> Map.ofEntries(
                     Map.entry(RegularCommodity.CERAMICCOMPOSITES, 126),
                     Map.entry(RegularCommodity.POLYMERS, 630),
@@ -709,7 +711,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.AGRICULTURALMEDICINES, 235),
                     Map.entry(RegularCommodity.CROPHARVESTERS, 210),
                     Map.entry(RegularCommodity.BIOWASTE, 630)
-                    );
+            );
             case HUB_EXPLORATION -> Map.ofEntries(
                     Map.entry(RegularCommodity.CERAMICCOMPOSITES, 134),
                     Map.entry(RegularCommodity.POLYMERS, 666),
@@ -728,7 +730,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.SURVIVALEQUIPMENT, 18),
                     Map.entry(RegularCommodity.HAZARDOUSENVIRONMENTSUITS, 249),
                     Map.entry(RegularCommodity.GEOLOGICALEQUIPMENT, 621)
-                    );
+            );
             case HUB_OUTPOST -> Map.ofEntries(
                     Map.entry(RegularCommodity.CERAMICCOMPOSITES, 145),
                     Map.entry(RegularCommodity.ALUMINIUM, 2797),
@@ -744,7 +746,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.EVACUATIONSHELTER, 49),
                     Map.entry(RegularCommodity.EMERGENCYPOWERCELLS, 49),
                     Map.entry(RegularCommodity.SURVIVALEQUIPMENT, 29)
-                    );
+            );
             case HUB_SCIENTIFIC -> Map.ofEntries(
                     Map.entry(RegularCommodity.CERAMICCOMPOSITES, 223),
                     Map.entry(RegularCommodity.POLYMERS, 712),
@@ -770,7 +772,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.MUTOMIMAGER, 107),
                     Map.entry(RegularCommodity.BASICMEDICINES, 72),
                     Map.entry(RegularCommodity.ADVANCEDCATALYSERS, 170)
-                    );
+            );
             case HUB_MILITARY -> Map.ofEntries(
                     Map.entry(RegularCommodity.CERAMICCOMPOSITES, 375),
                     Map.entry(RegularCommodity.CMMCOMPOSITE, 333),
@@ -794,7 +796,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.BASICMEDICINES, 109),
                     Map.entry(RegularCommodity.COMBATSTABILISERS, 25),
                     Map.entry(RegularCommodity.MILITARYGRADEFABRICS, 42)
-                    );
+            );
             case HUB_REFINERY -> Map.ofEntries(
                     Map.entry(RegularCommodity.CERAMICCOMPOSITES, 279),
                     Map.entry(RegularCommodity.POLYMERS, 744),
@@ -816,7 +818,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.ROBOTICS, 419),
                     Map.entry(RegularCommodity.RESONATINGSEPARATORS, 84),
                     Map.entry(RegularCommodity.ADVANCEDCATALYSERS, 112)
-                    );
+            );
             case HUB_HIGH_TECH -> Map.ofEntries(
                     Map.entry(RegularCommodity.CERAMICCOMPOSITES, 225),
                     Map.entry(RegularCommodity.CMMCOMPOSITE, 270),
@@ -839,7 +841,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.MICROCONTROLLERS, 90),
                     Map.entry(RegularCommodity.THERMALCOOLINGUNITS, 211),
                     Map.entry(RegularCommodity.ROBOTICS, 449)
-                    );
+            );
             case HUB_INDUSTRIAL -> Map.ofEntries(
                     Map.entry(RegularCommodity.CERAMICCOMPOSITES, 249),
                     Map.entry(RegularCommodity.POLYMERS, 664),
@@ -864,7 +866,7 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.MINERALEXTRACTORS, 415),
                     Map.entry(RegularCommodity.HAZARDOUSENVIRONMENTSUITS, 83),
                     Map.entry(RegularCommodity.ROBOTICS, 332)
-                    );
+            );
         };
     }
 

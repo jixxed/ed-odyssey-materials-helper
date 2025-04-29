@@ -58,15 +58,6 @@ public class OdysseyLoadoutItem extends DestroyableVBox implements DestroyableEv
                     APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
                 }
             }));
-            register(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent ->
-                    loadCommanderWishlists(commanderSelectedEvent.getCommander())
-            ));
-            register(EventService.addListener(true, this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
-                        if (this.loadout != null && Suit.FLIGHTSUIT != this.loadout.getEquipment()) {
-                            APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
-                        }
-                    }
-            ));
             register(EventService.addListener(true, this, ModificationChangedEvent.class, modificationChangedEvent -> {
                 if (modificationChangedEvent.getLoadout() == this.loadout) {
                     handleModificationChange(modificationChangedEvent.getModificationChange());
