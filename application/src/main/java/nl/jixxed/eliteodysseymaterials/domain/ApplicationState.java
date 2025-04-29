@@ -2,7 +2,9 @@ package nl.jixxed.eliteodysseymaterials.domain;
 
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +34,7 @@ public class ApplicationState {
     private Fileheader fileheader;
     private static FileLock fileLock;
     private static ApplicationState applicationState;
-    private final Set<Commander> commanders = new HashSet<>();
+    private final ObjectProperty<Set<Commander>> commanders = new SimpleObjectProperty<>(new HashSet<>());
     private final List<EventListener<?>> eventListeners = new ArrayList<>();
     private final Map<Engineer, EngineerStatus> engineerStates = new EnumMap<>(Map.ofEntries(
             Map.entry(Engineer.DOMINO_GREEN, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
@@ -228,6 +230,10 @@ public class ApplicationState {
 
 
     public Set<Commander> getCommanders() {
+        return this.commanders.get();
+    }
+
+    public ObjectProperty<Set<Commander>> getCommandersProperty() {
         return this.commanders;
     }
 
@@ -238,11 +244,11 @@ public class ApplicationState {
             final String name = commanderFidVersion[0];
             final String version = (commanderFidVersion.length > 2) ? commanderFidVersion[2] : "LIVE";
             final String fid = (commanderFidVersion.length > 2) ? commanderFidVersion[1] : "0";
-            if (this.commanders.stream().anyMatch(commander -> commander.getName().equals(name) && commander.getFid().equals(fid) && commander.getGameVersion().name().equals(version))) {
-                return this.commanders.stream().filter(commander -> commander.getName().equals(name) && commander.getFid().equals(fid) && commander.getGameVersion().name().equals(version)).findFirst();
+            if (this.commanders.get().stream().anyMatch(commander -> commander.getName().equals(name) && commander.getFid().equals(fid) && commander.getGameVersion().name().equals(version))) {
+                return this.commanders.get().stream().filter(commander -> commander.getName().equals(name) && commander.getFid().equals(fid) && commander.getGameVersion().name().equals(version)).findFirst();
             }
         }
-        final Iterator<Commander> commanderIterator = this.commanders.iterator();
+        final Iterator<Commander> commanderIterator = this.commanders.get().iterator();
         if (commanderIterator.hasNext()) {
             final Commander commander = commanderIterator.next();
             PreferencesService.setPreference(PreferenceConstants.COMMANDER, commander.getName() + ":" + commander.getFid() + ":" + commander.getGameVersion().name());
@@ -252,12 +258,13 @@ public class ApplicationState {
     }
 
     public void addCommander(final String name, final String fid, final GameVersion gameVersion) {
-        if (this.commanders.stream().noneMatch(commander -> commander.getName().equals(name) && commander.getFid().equals(fid) && commander.getGameVersion().equals(gameVersion))) {
+        if (this.commanders.get().stream().noneMatch(commander -> commander.getName().equals(name) && commander.getFid().equals(fid) && commander.getGameVersion().equals(gameVersion))) {
             final Commander commander = new Commander(name, fid, gameVersion);
-            final boolean existingName = this.commanders.stream().anyMatch(commander1 -> commander1.getName().equals(name) && commander1.getGameVersion().equals(gameVersion));
-            this.commanders.add(commander);
+            final boolean existingName = this.commanders.get().stream().anyMatch(commander1 -> commander1.getName().equals(name) && commander1.getGameVersion().equals(gameVersion));
+            this.commanders.get().add(commander);
+            this.commanders.setValue(this.commanders.get());
             if (existingName) {
-                this.commanders.stream()
+                this.commanders.get().stream()
                         .filter(commander1 -> commander1.getName().equals(name) && commander1.getGameVersion().equals(gameVersion))
                         .forEach(commander1 -> commander1.setDuplicateName(true));
             }
@@ -271,7 +278,8 @@ public class ApplicationState {
     }
 
     public void resetCommanders() {
-        this.commanders.clear();
+        this.commanders.get().clear();
+        this.commanders.setValue(this.commanders.get());
     }
 
     public String getMarketPlaceToken() {

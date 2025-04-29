@@ -78,7 +78,7 @@ public class FileProcessor {
 //            Platform.runLater(() -> EventService.removeUIListeners());
             Semaphore semaphore = new Semaphore(0);
             EventService.publish(new LoadingEvent(LoadingStage.EVENTS));
-            EventService.publish(new JournalInitEvent(false));
+//            EventService.publish(new JournalInitEvent(false));
             log.debug("JournalInitEvent false");
             Platform.runLater(semaphore::release);
             try {

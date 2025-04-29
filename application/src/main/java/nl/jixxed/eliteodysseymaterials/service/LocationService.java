@@ -17,7 +17,7 @@ public class LocationService {
     private static final Double DEFAULT_LATITUDE = 999.9;
     private static final Double DEFAULT_LONGITUDE = 999.9;
     @Getter
-    private static StarSystem currentStarSystem = new StarSystem("Sol", 0, 0, 0);
+    private static StarSystem currentStarSystem = new StarSystem("", 0, 0, 0);
     @Getter
     private static BigInteger currentSystemAddress = new BigInteger("0");
     private static String body = "";
@@ -123,6 +123,22 @@ public class LocationService {
             longitude = DEFAULT_LONGITUDE;
             notifyListeners();
         }));
+        EVENT_LISTENERS.add(EventService.addStaticListener(JournalInitEvent.class, event -> {//Always player controlled
+            if (!event.isInitialised()) {
+                reset();
+            }
+        }));
+    }
+
+    private static void reset() {
+        currentStarSystem = new StarSystem("", 0, 0, 0);
+        currentSystemAddress = new BigInteger("0");
+        body = "";
+        station = "";
+        marketID = BigInteger.ZERO;//default to 0 when no
+        latitude = DEFAULT_LATITUDE;
+        longitude = DEFAULT_LONGITUDE;
+        bodyID = null;
     }
 
     public static void init() {

@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.builder;
 
 import javafx.beans.binding.StringBinding;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ public class TabBuilder {
     private StringBinding stringBinding;
     private String nonLocalizedText;
     private DestroyableResizableImageView graphic;
+    private ObservableValue<Boolean> disableObservable;
 
     public static TabBuilder builder() {
         return new TabBuilder();
@@ -66,6 +68,12 @@ public class TabBuilder {
         return this;
     }
 
+    public TabBuilder withDisableProperty(final ObservableValue<Boolean> disableObservable) {
+        this.disableObservable = disableObservable;
+        return this;
+    }
+
+
     public DestroyableTab build() {
         final DestroyableTab tab = new DestroyableTab();
 
@@ -83,6 +91,9 @@ public class TabBuilder {
         if (content != null) {
             tab.setContent(content);
             tab.register((Node & Destroyable) content);
+        }
+        if (this.disableObservable != null) {
+            tab.addBinding(tab.disableProperty(), this.disableObservable);
         }
         return tab;
     }

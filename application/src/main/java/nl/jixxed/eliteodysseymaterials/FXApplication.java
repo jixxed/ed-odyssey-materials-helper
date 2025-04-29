@@ -162,7 +162,7 @@ public class FXApplication extends Application {
                     this.content.getChildren().remove(this.loadingScreen);
 //                    );
 
-                } else {
+                } else if (!event.isInitialised()) {
                     this.content.getChildren().remove(this.applicationScreen);
                     if (!this.content.getChildren().contains(this.loadingScreen)) {
                         this.content.getChildren().add(this.loadingScreen);
@@ -589,6 +589,15 @@ public class FXApplication extends Application {
     }
 
     private void reset(final File watchedFolder) {
+//        Semaphore semaphore = new Semaphore(0);
+        EventService.publish(new JournalInitEvent(false));
+        log.debug("JournalInitEvent false");
+//        Platform.runLater(semaphore::release);
+//        try {
+//            semaphore.acquire();
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
         log.debug("resetting");
         APPLICATION_STATE.resetEngineerStates();
         APPLICATION_STATE.resetPowerplay();

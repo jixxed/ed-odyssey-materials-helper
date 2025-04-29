@@ -85,7 +85,7 @@ public class EDDNService {
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
     private static final ThreadPoolExecutor EXECUTOR_SERVICE = new ThreadPoolExecutor(1, 1,
             0L, TimeUnit.MILLISECONDS,
-            new LinkedBlockingQueue<Runnable>());
+            new LinkedBlockingQueue<>());
     public static final String SOFTWARE_NAME = "EDO Materials Helper";
 
     public static void init() {
@@ -94,7 +94,6 @@ public class EDDNService {
         OBJECT_MAPPER.registerModule(new Jdk8Module().configureAbsentsAsNulls(true));
         JSON_VALIDATION_SERVICE.createProblemPrinter(log::error);
         EVENT_LISTENERS.add(EventService.addStaticListener(JournalInitEvent.class, journalInitEvent -> {
-            log.info("update EDDN last timestamp " + journalInitEvent.isInitialised());
             if (!journalInitEvent.isInitialised()) {
                 final LocalDateTime lastTimestamp = UserPreferencesService.getPreference(PreferenceConstants.USER_LATEST_EVENT, MIN_DATETIME);
                 log.info("update EDDN last timestamp " + lastTimestamp);

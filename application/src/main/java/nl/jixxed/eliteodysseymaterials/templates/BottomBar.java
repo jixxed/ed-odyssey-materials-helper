@@ -137,7 +137,10 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
         register(EventService.addListener(true, this, 0, CommanderResetEvent.class, event -> this.commanderSelect.getItems().clear()));
         register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> this.commanderSelect.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px")));
         register(EventService.addListener(true, this, LoadGameEvent.class, this::handleLoadGame));
-        register(EventService.addListener(true, this, JournalInitEvent.class, event -> updateApiLabel()));
+        register(EventService.addListener(true, this, JournalInitEvent.class, event -> {
+            updateApiLabel();
+            this.locationLabel.setText("");
+        }));
         register(EventService.addListener(true, this, CapiFleetCarrierEvent.class, event -> updateApiLabel()));
         register(EventService.addListener(true, this, EDDNQueueEvent.class, event -> eddnTransmitting.set(true)));
         register(EventService.addListener(true, this, TerminateApplicationEvent.class, event -> executorService.shutdown()));
