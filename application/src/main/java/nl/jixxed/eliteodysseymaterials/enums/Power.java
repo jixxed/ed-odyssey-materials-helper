@@ -367,8 +367,10 @@ public enum Power {
                     ),
                     PowerPerk.INCREASE_ORGANICS_DATA_SALES, List.of(
                             new RankReward(24, 10),
-                            new RankReward(42, 20),
-                            new RankReward(52, 30)
+                            new RankReward(42, 15),
+                            new RankReward(52, 20),
+                            new RankReward(78, 25),
+                            new RankReward(94, 30)
                     ),
                     PowerPerk.INCREASE_TECHNOLOGY_COMMODITY_PROFIT, List.of(
                             new RankReward(55, 10),
