@@ -1,4 +1,4 @@
-messageKey,,en,de,es,fr,pt,ru
-colonisation.all.projects,All colonisation projects,,,Todos los proyectos de colonización,,,Все проекты колонизации
-tab.colonisation.project.market.id,Market ID,,,,,,ID рынка
-tab.colonisation.project.name,Name,,,,,,Имя
+messageKey,,en,de,es,fr,pt,ru,zh
+colonisation.all.projects,All colonisation projects,,,Todos los proyectos de colonización,,,Все проекты колонизации,
+tab.colonisation.project.market.id,Market ID,,,,,,ID рынка,
+tab.colonisation.project.name,Name,,,,,,Имя,
