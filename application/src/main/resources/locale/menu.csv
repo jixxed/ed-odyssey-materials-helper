@@ -20,8 +20,8 @@ menu.legend.good.engineer.only,Item used only for unlocking engineers,Item used 
 menu.legend.good.unused,Unused item,Unused item,Unbenutzter Gegenstand,Elemento no utilizado,Élément inutilisé,Item não utilizado,Неиспользованный предмет
 menu.legend,Legend,Legend,Legende,Leyenda,Légende,Legenda,Легенда
 menu.about.tutorial,Official video howto guide,Official video howto guide,Offizielles Video Howto Guide,Guía oficial del cómo en video,Tutoriel vidéo officiel,Guia oficial de vídeo como,Официальное видео руководство
-menu.about.commission,Commission,,,,,,
-menu.broker.distance,"({0}Ly)",,,,,,
-menu.broker.distance.in.system,"({0}Ls ±{1}Ls)",,,,,,
-system.copy.distance,"({0}Ly)",,,,,,
-system.copy.distance.in.system,"({0}Ls ±{1}Ls)",,,,,,
+menu.about.commission,Commission,,,,,,Комиссия
+menu.broker.distance,"({0}Ly)",,,,,,"({0}Св.л.)"
+menu.broker.distance.in.system,"({0}Ls ±{1}Ls)",,,,,,"({0}Св.с ±{1}Св.с)"
+system.copy.distance,"({0}Ly)",,,,,,"({0}Св.л.)"
+system.copy.distance.in.system,"({0}Ls ±{1}Ls)",,,,,,"({0}Св.с ±{1}Св.с)"
