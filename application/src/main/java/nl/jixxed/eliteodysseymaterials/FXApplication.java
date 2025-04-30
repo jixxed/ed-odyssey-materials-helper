@@ -33,6 +33,7 @@ import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
+import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
 import nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper;
@@ -655,8 +656,8 @@ public class FXApplication extends Application {
 
     static void launchFx(final String[] args) {
         Locale.setDefault(Locale.ENGLISH);
-        LocaleService.setCurrentLocale(LocaleService.getCurrentLocale());
-
+        final ApplicationLocale applicationLocale = ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.LANGUAGE, "ENGLISH"));
+        LocaleService.setCurrentLocale(applicationLocale.getLocale());
         launch(args);
     }
 }
