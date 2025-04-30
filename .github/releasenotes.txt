@@ -6,7 +6,7 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Updated colonisation to use tracking instead of manual input
-bugfix for renaming and deleting ships/loadouts
-Don't show Ls on copyable locations if value is unknown
-Updated engineer images
+Fix Pranav Antal rewards
+Improvements to colonisation tab
+Updated RU translations
+Some bugfixes

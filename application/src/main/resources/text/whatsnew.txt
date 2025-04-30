@@ -1,3 +1,10 @@
+Version 2.164
+-------------
+Fix Pranav Antal rewards
+Improvements to colonisation tab
+Updated RU translations
+Some bugfixes
+
 Version 2.163
 -------------
 Updated colonisation to use tracking instead of manual input
