@@ -1,3 +1,8 @@
+Version 2.165
+-------------
+Fix issue with always starting in English
+Handle empty power field in PowerplayLeave events
+
 Version 2.164
 -------------
 Fix Pranav Antal rewards
