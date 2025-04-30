@@ -1303,6 +1303,7 @@ class SlotBox extends DestroyableStackPane {
                     }))
                     .debounce(500, TimeUnit.MILLISECONDS)
                     .observeOn(Schedulers.io())
+                    .onErrorComplete()
                     .subscribe(newValue -> {
                         Platform.runLater(() -> {
                                     shipModule.getModifications().stream()

@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import static java.nio.file.StandardWatchEventKinds.*;
+
 @Slf4j
 public class PollingFolderWatch implements Runnable, FolderWatch {
     @Getter
@@ -21,11 +22,12 @@ public class PollingFolderWatch implements Runnable, FolderWatch {
     private final ScheduledExecutorService executor;
     private final Map<String, Long> previousFilesModifiedDates = new HashMap<>();
     private boolean initialized = false;
+    private boolean terminated = false;
 
     public PollingFolderWatch(final String folder, final Consumer<FileEvent> changeConsumer) {
         this.folder = folder;
         this.changeConsumer = changeConsumer;
-        this.executor = Executors.newScheduledThreadPool(1, r -> new Thread(r,"PollingFolderWatch(" + folder + ")"));
+        this.executor = Executors.newScheduledThreadPool(1, r -> new Thread(r, "PollingFolderWatch(" + folder + ")"));
         this.executor.scheduleAtFixedRate(this, 0, 2, TimeUnit.SECONDS);
         log.info("Started PollingFolderWatch(" + folder + ")");
     }
@@ -34,6 +36,12 @@ public class PollingFolderWatch implements Runnable, FolderWatch {
     public void terminate() {
         log.info("Terminating PollingFolderWatch " + this.folder);
         this.executor.shutdownNow();
+        terminated = true;
+    }
+
+    @Override
+    public boolean isTerminated() {
+        return terminated;
     }
 
     @Override
@@ -99,6 +107,6 @@ public class PollingFolderWatch implements Runnable, FolderWatch {
     }
 
     public static List<FilenameWithLastModifiedDate> getFilesInDirectory(final String directoryPath) {
-       return Arrays.stream(Objects.requireNonNull(new File(directoryPath).listFiles())).map(file -> new FilenameWithLastModifiedDate(file.getAbsolutePath(),FileTime.fromMillis(file.lastModified()))).toList();
+        return Arrays.stream(Objects.requireNonNull(new File(directoryPath).listFiles())).map(file -> new FilenameWithLastModifiedDate(file.getAbsolutePath(), FileTime.fromMillis(file.lastModified()))).toList();
     }
 }

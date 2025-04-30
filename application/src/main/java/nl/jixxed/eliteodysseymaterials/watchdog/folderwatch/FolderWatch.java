@@ -4,4 +4,6 @@ public interface FolderWatch {
     void terminate();
 
     public String getFolder();
+
+    boolean isTerminated();
 }

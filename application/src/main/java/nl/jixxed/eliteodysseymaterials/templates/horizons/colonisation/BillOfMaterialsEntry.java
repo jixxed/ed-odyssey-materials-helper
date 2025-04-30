@@ -9,6 +9,8 @@ import nl.jixxed.eliteodysseymaterials.builder.SegmentedBarBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ColonisationItem;
 import nl.jixxed.eliteodysseymaterials.domain.ConstructionProgress;
 import nl.jixxed.eliteodysseymaterials.domain.MarketItem;
+import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
+import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.service.MarketService;
@@ -16,7 +18,9 @@ import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.MarketUpdatedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.ShipLoadoutEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
+import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
@@ -24,6 +28,8 @@ import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegme
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.math.BigInteger;
+import java.text.MessageFormat;
+import java.util.Objects;
 
 public class BillOfMaterialsEntry extends DestroyableVBox implements DestroyableEventTemplate {
     private Commodity commodity;
@@ -35,7 +41,6 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
 
     private DestroyableResizableImageView fleetCarrierImage;
     private DestroyableResizableImageView shipImage;
-    private DestroyableResizableImageView sumImage;
     private DestroyableResizableImageView coriolisImage;
     private DestroyableResizableImageView commodityImage;
     private DestroyableResizableImageView bracket1Image;
@@ -47,6 +52,10 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
     private TypeSegment missingForCompletion;
     private Integer availableShip;
     private Integer availableFleetCarrier;
+    private DestroyableLabel requiredLabel;
+    private DestroyableLabel deliveredLabel;
+    private DestroyableLabel collectLabel;
+    private DestroyableLabel deliverLabel;
 
 
     public BillOfMaterialsEntry(ColonisationItem colonisationItem, Commodity commodity, ConstructionProgress progress) {
@@ -66,15 +75,15 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
                 .build();
 
         fleetCarrierLabel = LabelBuilder.builder()
-                .withStyleClass("amount-right")
+                .withStyleClasses("amount-left", "amount-fleetcarrier")
                 .withNonLocalizedText("0")
                 .build();
         shipLabel = LabelBuilder.builder()
-                .withStyleClass("amount-left")
+                .withStyleClasses("amount-left", "amount-ship")
                 .withNonLocalizedText("0")
                 .build();
         marketLabel = LabelBuilder.builder()
-                .withStyleClass("amount-right")
+                .withStyleClasses("amount-right", "amount-market")
                 .withNonLocalizedText("0")
                 .build();
         this.commodityImage = ResizableImageViewBuilder.builder()
@@ -88,10 +97,6 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
         this.shipImage = ResizableImageViewBuilder.builder()
                 .withStyleClass("storage-image")
                 .withImage("/images/material/ship.png")
-                .build();
-        this.sumImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("storage-image")
-                .withImage("/images/material/sum.png")
                 .build();
         this.coriolisImage = ResizableImageViewBuilder.builder()
                 .withStyleClass("storage-image")
@@ -111,17 +116,55 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
                 .withStyleClass("values")
                 .withNodes(commodityImage, commodityLabel).buildHBox();
         final DestroyableHBox left = BoxBuilder.builder()
-                .withStyleClass("values-sub")
-                .withNodes(sumImage, getAmountLabel(), new GrowingRegion(), fleetCarrierLabel, fleetCarrierImage).buildHBox();
+                .withStyleClass("values-sub-1")
+                .withNodes(shipImage, shipLabel, new GrowingRegion()).buildHBox();
         final DestroyableHBox right = BoxBuilder.builder()
-                .withStyleClass("values-sub")
-                .withNodes(shipImage, shipLabel, new GrowingRegion(), bracket1Image, BoxBuilder.builder()
+                .withStyleClass("values-sub-2")
+                .withNodes(fleetCarrierImage, fleetCarrierLabel, new GrowingRegion(), bracket1Image, BoxBuilder.builder()
                         .withStyleClass("values-market")
                         .withNodes(bracket3Image, marketLabel).buildHBox(), coriolisImage).buildHBox();
         final DestroyableHBox values = BoxBuilder.builder()
                 .withStyleClass("values")
                 .withNodes(left, right).buildHBox();
+        deliveredLabel = LabelBuilder.builder()
+                .withStyleClass("amount-delivered")
+                .withNonLocalizedText("0")
+                .build();
+        requiredLabel = LabelBuilder.builder()
+                .withStyleClass("amount")
+                .withNonLocalizedText("0")
+                .build();
+        collectLabel = LabelBuilder.builder()
+                .withStyleClass("amount")
+                .withNonLocalizedText("0")
+                .build();
+        deliverLabel = LabelBuilder.builder()
+                .withStyleClass("amount")
+                .withNonLocalizedText("0")
+                .build();
+        final DestroyableLabel collectTitleLabel = LabelBuilder.builder()
+                .withStyleClass("title-amount")
+                .withNonLocalizedText("To collect")
+                .build();
+        final DestroyableLabel requiredTitleLabel = LabelBuilder.builder()
+                .withStyleClass("title-amount")
+                .withNonLocalizedText("Required")
+                .build();
+        final DestroyableLabel deliverTitleLabel = LabelBuilder.builder()
+                .withStyleClass("title-amount")
+                .withNonLocalizedText("To deliver")
+                .build();
+        final DestroyableLabel deliveredTitleLabel = LabelBuilder.builder()
+                .withStyleClass("title-amount-delivered")
+                .withNonLocalizedText("Delivered")
+                .build();
+        final DestroyableHBox values2 = BoxBuilder.builder()
+                .withStyleClass("values2")
+                .withNodes(requiredTitleLabel, requiredLabel, new GrowingRegion(), collectLabel, collectTitleLabel).buildHBox();
 
+        final DestroyableHBox values3 = BoxBuilder.builder()
+                .withStyleClass("values2")
+                .withNodes(deliveredTitleLabel, deliveredLabel, new GrowingRegion(), deliverLabel, deliverTitleLabel).buildHBox();
         availableShip = StorageService.getCommodityCount(commodity, StoragePool.SHIP);
         availableFleetCarrier = StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER);
         var remaining = progress.required() - progress.provided();
@@ -139,7 +182,7 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
 
         final DestroyableVBox content = BoxBuilder.builder()
                 .withStyleClass("bom-entry-content")
-                .withNodes(title, values)
+                .withNodes(title, values, values2, values3)
                 .buildVBox();
         this.getNodes().addAll(content, progressbar);
         MaterialService.addMaterialInfoPopOver(this, this.commodity, false);
@@ -164,13 +207,6 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
 //        return amountField;
 //    }
 
-    private DestroyableLabel getAmountLabel() {
-        return LabelBuilder.builder()
-                .withStyleClass("amount-left")
-                .withNonLocalizedText(progress.provided() + "/" + progress.required())
-                .build();
-    }
-
     @Override
     public void initEventHandling() {
         register(EventService.addListener(this, StorageEvent.class, storageEvent -> {
@@ -181,6 +217,10 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
         register(EventService.addListener(this, MarketUpdatedEvent.class, event -> {
             update();
         }));
+        register(EventService.addListener(this, ShipLoadoutEvent.class, event -> {
+            update();
+        }));
+
     }
 
     private void update() {
@@ -199,10 +239,31 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
         this.presentFleetCarrier.setValue(Math.min(remaining - Math.min(remaining, availableShip), availableFleetCarrier));
         this.missingForCompletion.setValue(Math.max(0, remaining - availableShip - availableFleetCarrier));
 
+        String cargoDeliver = getCargoString(remaining);
+        deliverLabel.setText(MessageFormat.format("({0}) {1}", cargoDeliver, remaining));
+        final int collectValue = Math.max(0, remaining - availableShip - availableFleetCarrier);
+        String cargoCollect = getCargoString(collectValue);
+        collectLabel.setText(MessageFormat.format("({0}) {1}", cargoCollect, collectValue));
+        deliveredLabel.setText(String.valueOf(progress.provided()));
+        requiredLabel.setText(String.valueOf(progress.required()));
         updateStyle();
     }
 
+    private static String getCargoString(int quantity) {
+        final Ship ship = ShipMapper.toShip(ShipConfiguration.CURRENT);
+        if (quantity == 0 || ship == null)
+            return "0";
+        final int currentCargo = (int) ship.getMaxCargo();
+        if (currentCargo == 0D)
+            return String.valueOf(Double.POSITIVE_INFINITY);
+
+        return String.valueOf(1 + (quantity / currentCargo)) + " x " + currentCargo + "T";
+    }
+
     private void updateStyle() {
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("ship"), this.presentShip.getValue() > 0D);
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("fleetcarrier"), this.presentFleetCarrier.getValue() > 0D);
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("completed"), Objects.equals(progress.provided(), progress.required()));
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("available"), !"0".equals(marketLabel.getText()));
         MarketService.getMarketItem(commodity).ifPresentOrElse(marketItem -> {
             this.bracket1Image.setVisible(marketItem.stockBracket().equals(BigInteger.ONE));

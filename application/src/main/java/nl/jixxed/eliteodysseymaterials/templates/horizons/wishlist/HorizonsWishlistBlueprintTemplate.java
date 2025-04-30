@@ -103,6 +103,7 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
                 })
                 .delay(250, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
+                .onErrorComplete()
                 .subscribe(event -> {
                     if (this.wishlistRecipeName.isHover()) {
                         EventService.publish(event);

@@ -51,6 +51,16 @@
             -fx-border-color: black; }
             .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry:available {
               -fx-border-color: #dcc030; }
+            .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry:completed .bom-entry-content .amount-delivered {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry:completed .bom-entry-content .title-amount-delivered {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry:completed .bom-entry-progressbar .present {
+              -fx-background-color: #89d07f; }
+            .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry:ship .bom-entry-content .amount-ship {
+              -fx-text-fill: #dcc030; }
+            .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry:fleetcarrier .bom-entry-content .amount-fleetcarrier {
+              -fx-text-fill: #2e92df; }
             .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content {
               -fx-padding: 0.25em;
               -fx-spacing: 0.25em; }
@@ -60,12 +70,35 @@
                 -fx-min-width: 31.6em;
                 -fx-pref-width: 31.6em;
                 -fx-max-width: 31.6em; }
-              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .values-sub {
+              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .values2 {
                 -fx-hgap: 0.5em;
                 -fx-spacing: 0.5em;
-                -fx-min-width: 15.28em;
-                -fx-pref-width: 15.28em;
-                -fx-max-width: 15.28em; }
+                -fx-min-width: 31.35em;
+                -fx-pref-width: 31.35em;
+                -fx-max-width: 31.35em; }
+              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .amount, .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .amount-market {
+                -fx-font-weight: bold; }
+              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .amount-delivered {
+                -fx-font-weight: bold;
+                -fx-text-fill: #ff7c7c; }
+              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .amount-ship {
+                -fx-font-weight: bold; }
+              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .amount-fleetcarrier {
+                -fx-font-weight: bold; }
+              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .title-amount-delivered {
+                -fx-text-fill: #ff7c7c; }
+              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .values-sub-1 {
+                -fx-hgap: 0.5em;
+                -fx-spacing: 0.5em;
+                -fx-min-width: 13.28em;
+                -fx-pref-width: 13.28em;
+                -fx-max-width: 13.28em; }
+              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .values-sub-2 {
+                -fx-hgap: 0.5em;
+                -fx-spacing: 0.5em;
+                -fx-min-width: 17.28em;
+                -fx-pref-width: 17.28em;
+                -fx-max-width: 17.28em; }
               .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .values-market {
                 -fx-hgap: 0.2em;
                 -fx-spacing: 0.2em; }
@@ -125,7 +158,7 @@
                 -fx-background-radius: 0 0 0 0;
                 -fx-border-radius: 0 0 0 0; }
               .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-progressbar .present {
-                -fx-background-color: #89d07f; }
+                -fx-background-color: #ff7c7c; }
               .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-progressbar .present-ship {
                 -fx-background-color: #2e92df; }
               .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-progressbar .present-fleetcarrier {

@@ -46,6 +46,43 @@
           -fx-border-color: $border-color-yellow;
         }
 
+        &:completed {
+          .bom-entry-content {
+
+            .amount-delivered {
+              -fx-text-fill: $text-color-green;
+            }
+
+            .title-amount-delivered {
+              -fx-text-fill: $text-color-green;
+            }
+
+          }
+
+          .bom-entry-progressbar {
+
+            .present {
+              -fx-background-color: $progress-bar-color-green;
+            }
+          }
+        }
+
+        &:ship {
+          .bom-entry-content {
+            .amount-ship {
+              -fx-text-fill: $text-color-yellow;
+            }
+          }
+        }
+
+        &:fleetcarrier {
+          .bom-entry-content {
+            .amount-fleetcarrier {
+              -fx-text-fill: $text-color-blue;
+            }
+          }
+        }
+
         .bom-entry-content {
 
           -fx-padding: 0.25em;
@@ -57,10 +94,43 @@
             @include fixedWidth(31.6em);
           }
 
-          .values-sub {
+          .values2 {
             -fx-hgap: 0.5em;
             -fx-spacing: 0.5em;
-            @include fixedWidth(15.28em);
+            @include fixedWidth(31.35em);
+          }
+
+          .amount, .amount-market {
+            -fx-font-weight: bold;
+          }
+
+          .amount-delivered {
+            -fx-font-weight: bold;
+            -fx-text-fill: $text-color-red;
+          }
+
+          .amount-ship {
+            -fx-font-weight: bold;
+          }
+
+          .amount-fleetcarrier {
+            -fx-font-weight: bold;
+          }
+
+          .title-amount-delivered {
+            -fx-text-fill: $text-color-red;
+          }
+
+          .values-sub-1 {
+            -fx-hgap: 0.5em;
+            -fx-spacing: 0.5em;
+            @include fixedWidth(13.28em);
+          }
+
+          .values-sub-2 {
+            -fx-hgap: 0.5em;
+            -fx-spacing: 0.5em;
+            @include fixedWidth(17.28em);
           }
 
           .values-market {
@@ -111,7 +181,7 @@
           @include fixedHeight(0.5em);
 
           .present {
-            -fx-background-color: $progress-bar-color-green;
+            -fx-background-color: $progress-bar-color-red;
           }
 
           .present-ship {
@@ -129,6 +199,5 @@
       }
     }
   }
-
 
 }

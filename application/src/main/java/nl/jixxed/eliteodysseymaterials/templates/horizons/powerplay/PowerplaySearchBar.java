@@ -74,6 +74,7 @@ class PowerplaySearchBar extends DestroyableHBox implements DestroyableEventTemp
         subscribe = Observable.create((ObservableEmitter<String> emitter) -> this.textField.textProperty().addListener((_, _, newValue) -> emitter.onNext(newValue)))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
+                .onErrorComplete()
                 .subscribe(newValue -> Platform.runLater(() -> EventService.publish(new PowerSearchEvent(newValue))));
     }
 

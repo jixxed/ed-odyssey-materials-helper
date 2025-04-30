@@ -29,11 +29,12 @@ public class JNAWindowsPollingFolderWatch implements Runnable, FolderWatch {
     private final ScheduledExecutorService executor;
     private final Map<String, Long> previousFilesModifiedDates = new HashMap<>();
     private boolean initialized = false;
+    private boolean terminated = false;
 
     public JNAWindowsPollingFolderWatch(final String folder, final Consumer<FileEvent> changeConsumer) {
         this.folder = folder;
         this.changeConsumer = changeConsumer;
-        this.executor = Executors.newScheduledThreadPool(1, r -> new Thread(r,"JNAWindowsPollingFolderWatch(" + folder + ")"));
+        this.executor = Executors.newScheduledThreadPool(1, r -> new Thread(r, "JNAWindowsPollingFolderWatch(" + folder + ")"));
         this.executor.scheduleAtFixedRate(this, 0, 2, TimeUnit.SECONDS);
         log.info("Started JNAWindowsPollingFolderWatch(" + folder + ")");
     }
@@ -42,6 +43,12 @@ public class JNAWindowsPollingFolderWatch implements Runnable, FolderWatch {
     public void terminate() {
         log.info("Terminating JNAWindowsPollingFolderWatch(" + this.folder + ")");
         this.executor.shutdownNow();
+        terminated = true;
+    }
+
+    @Override
+    public boolean isTerminated() {
+        return terminated;
     }
 
     @Override
@@ -65,7 +72,7 @@ public class JNAWindowsPollingFolderWatch implements Runnable, FolderWatch {
                 .filter(path -> {
                     final Long date = this.previousFilesModifiedDates.get(path.fileName());
                     final boolean modified = date == null || date < path.fileTime().toMillis();
-                    if(modified){
+                    if (modified) {
                         log.info("File modification detected: " + path.fileName());
                     }
                     return modified;

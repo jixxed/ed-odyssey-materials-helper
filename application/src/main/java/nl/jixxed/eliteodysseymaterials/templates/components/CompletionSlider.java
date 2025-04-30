@@ -54,6 +54,7 @@ public class CompletionSlider extends DestroyableHBox implements DestroyableTemp
         subscribe = Observable.create((ObservableEmitter<Number> emitter) -> addChangeListener(progressSlider.valueProperty(), (_, _, newValue) -> emitter.onNext(newValue)))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
+                .onErrorComplete()
                 .subscribe(newValue -> Platform.runLater(() -> onChange.accept(newValue.doubleValue())));
 
 

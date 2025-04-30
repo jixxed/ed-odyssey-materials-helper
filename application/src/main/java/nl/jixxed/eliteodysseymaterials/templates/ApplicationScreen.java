@@ -93,12 +93,12 @@ public class ApplicationScreen extends DestroyableAnchorPane implements Destroya
     public void destroyInternal() {
         super.destroyInternal();
 
-        this.tabsMain.getTabs().clear();
-        this.horizons.setContent(null);
-        this.odyssey.setContent(null);
-        this.fontSize = null;
-        this.tabsMain = null;
-        this.horizons = null;
-        this.odyssey = null;
+//        this.tabsMain.getTabs().clear();
+//        this.horizons.setContent(null);
+//        this.odyssey.setContent(null);
+//        this.fontSize = null;
+//        this.tabsMain = null;
+//        this.horizons = null;
+//        this.odyssey = null;
     }
 }

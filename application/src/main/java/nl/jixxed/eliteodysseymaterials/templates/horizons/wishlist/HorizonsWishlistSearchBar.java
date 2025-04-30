@@ -119,6 +119,7 @@ class HorizonsWishlistSearchBar extends DestroyableHBox implements DestroyableEv
         subscribe = Observable.create((ObservableEmitter<String> emitter) -> this.textField.addChangeListener(this.textField.textProperty(), (_, _, newValue) -> emitter.onNext(newValue)))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
+                .onErrorComplete()
                 .subscribe(_ -> EventService.publish(new HorizonsWishlistSearchEvent(new HorizonsWishlistMaterialSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.groupMaterialsComboBox)))));
     }
 

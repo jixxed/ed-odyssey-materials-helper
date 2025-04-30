@@ -57,8 +57,21 @@ public class FileService {
 
     public static void unsubscribe(final FileListener fileListener) {
         WATCHPATH_LISTENERS.values().forEach(fileListeners -> fileListeners.remove(fileListener));
-        stopWatchers();
+        stopEmptyWatchers();
+        WATCHPATH_LISTENERS.entrySet().removeIf(entry -> entry.getValue().isEmpty());
 //        startWatchers();
+    }
+
+    private static void stopEmptyWatchers() {
+        WATCHPATH_LISTENERS.entrySet().stream().filter(entry -> entry.getValue().isEmpty()).forEach(entry -> {
+            final FolderWatch folderWatch = WATCHPATH_FOLDERWATCHERS.get(entry.getKey());
+            if (folderWatch == null) {
+                return;
+            }
+            log.info("Unregistered folder watch for " + folderWatch.getFolder());
+            folderWatch.terminate();
+        });
+        WATCHPATH_FOLDERWATCHERS.entrySet().removeIf(entry -> entry.getValue().isTerminated());
     }
 
     private static void stopWatchers() {

@@ -115,6 +115,7 @@ class OdysseyWishlistSearchBar extends DestroyableHBox implements DestroyableEve
         subscribe = Observable.create((ObservableEmitter<String> emitter) -> this.textField.addChangeListener(this.textField.textProperty(), (_, _, newValue) -> emitter.onNext(newValue)))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
+                .onErrorComplete()
                 .subscribe(_ -> EventService.publish(new OdysseyWishlistSearchEvent(new OdysseyWishlistMaterialSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.groupMaterialsComboBox)))));
     }
 
