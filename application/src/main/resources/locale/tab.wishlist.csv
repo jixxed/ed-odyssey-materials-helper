@@ -58,8 +58,8 @@ tab.colonisation.delete.confirm.content,Do you wish to continue?,,,¿Desea conti
 tab.colonisation.delete.confirm.header,You are about to delete your colonisation project,,,Estás a punto de borrar tu proyecto de colonización,,,Вы собираетесь удалить проект колонизации
 tab.colonisation.delete.confirm.title,Confirm deletion,,,Confirmar borrado,,,Подтвердить удаление
 tab.colonisation.delete,Delete colonisation project,,,Borrar proyecto de colonización,,,Удалить проект колонизации
-tab.wishlist.distance,{0}Ly,,,,,,{0}Св.л.
-tab.wishlist.distance.plus,+{0}Ly,,,,,,+{0}Св.л.
-tab.wishlist.import.edsy.name,ED Shipyard - Imported,,,,,,ED Shipyard - Импортировано
-tab.wishlist.import.coriolis.name,Coriolis - Imported,,,,,,Coriolis - Импортировано
-tab.wishlist.create.prompt,Name (max. 50 characters),,,,,,Имя (50 символов макс.)
+tab.wishlist.distance,{0}Ly,,,{0}Al,,,{0}Св.л.
+tab.wishlist.distance.plus,+{0}Ly,,,+{0}Al,,,+{0}Св.л.
+tab.wishlist.import.edsy.name,ED Shipyard - Imported,,,ED Shipyard - Importado,,,ED Shipyard - Импортировано
+tab.wishlist.import.coriolis.name,Coriolis - Imported,,,Coriolis - Importado,,,Coriolis - Импортировано
+tab.wishlist.create.prompt,Name (max. 50 characters),,,Nombre (max. 50 carácteres),,,Имя (50 символов макс.)
