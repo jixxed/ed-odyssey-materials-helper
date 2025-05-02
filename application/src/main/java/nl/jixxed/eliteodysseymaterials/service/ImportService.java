@@ -176,7 +176,7 @@ public class ImportService {
 
         } catch (final RuntimeException | JsonProcessingException ex) {
             log.error("Failed to import ED shipyard wishlist", ex);
-            throw new EdsyDeeplinkException("Failed to parse deeplink", "notification.imported.edsy.exception.failed.parse");
+            throw new EdsyDeeplinkException("Failed to parse deeplink", "notification.imported.exception.failed.parse");
         }
 
     }
