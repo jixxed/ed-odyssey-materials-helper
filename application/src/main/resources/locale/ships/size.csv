@@ -1,4 +1,4 @@
 messageKey,,en,de,es,fr,pt,ru
-ships.size.s,S,,,,,P,
-ships.size.m,M,,,,,M,
-ships.size.l,L,,,,,G,
+ships.size.s,S,,,P,,P,
+ships.size.m,M,,,M,,M,
+ships.size.l,L,,,G,,G,

@@ -23,52 +23,52 @@ notification.hge.title,High Grade Emissions Scanned,,,Señal de Alta Calidad Esc
 notification.hge.common.text,System allegiance: {0}\nFaction state: {1}\nExpected materials:\n{2},,,Lealtad del Sistema: {0}\nEstado de facción: {1}\nMateriales esperados:\n{2},,Filiação do Sistema: {0}\nEstado da Facção: {1}\nMateriais Esperados:\n{2},Принадлежность системы: {0}\nсостояние фракции: {1}\nОжидаемые материалы:\n{2}
 notification.imported.slef.error.text,Failed to import slef,,,Fallo al importar SLEF,,Falha na importação do SLEF,Не получается импортировать slef
 notification.collected.powerplay.material.title,Collected powerplay material,,,Material de Powerplay recogido,,,Взят материал Powerplay
-notification.capi.title,"Frontier API",,,,,,
+notification.capi.title,"Frontier API",,,API de Frontier,,,
 notification.capi.message.auth.fail,"Failed to authenticate. Try to re-authenticate to the API under Settings.",,,"Error al autenticar. Intente re-autenticar la API en Ajustes",,,"Не удалось аутентифицироваться. Попробуйте повторно аутентифицироваться в API в разделе Настройки."
 notification.capi.message.auth.success,"Account linked! You may close the browser window.",,,"Cuenta enlazada! Puedes cerrar la ventana del navegador.",,,"Аккаунт привязан! Вы можете закрыть окно браузера."
 notification.capi.message.400,"The API reports you do not own Elite: Dangerous. This is common for the Epic gamestore.",,,"La API reporta que no posees Elite: Dangerous. Este es común para la tienda de Epic Games.",,,"API сообщает, что у вас нет Elite: Dangerous. Это обычное дело для игрового магазина Epic."
-notification.clipboard.title,"Clipboard",,,,,,"Буфер обмена"
-notification.clipboard.system.copied.text,"System name copied has been copied to your clipboard",,,,,,"Имя системы скопировано было скопировано в буфер обмена"
-notification.clipboard.loadout.copied.text,"The loadout has been copied to your clipboard",,,,,,"Загрузка была скопирована в ваш буфер обмена"
-notification.clipboard.ship.copied.text,"The ship has been copied to your clipboard",,,,,,"Корабль скопирован в ваш буфер обмена"
-notification.clipboard.wishlist.copied.text,"The wishlist has been copied to your clipboard",,,,,,"Список желаний был скопирован в ваш буфер обмена"
-notification.clipboard.url.length.text,"Due to the length, the URL might not work in browsers and must be directly imported inside the app.",,,,,,"Из-за длины URL-адрес может не работать в браузерах и должен быть напрямую импортирован в приложение."
-notification.test.title,"Test",,,,,,"Тест"
-notification.test.text,"This is a test notification",,,,,,"Это тестовое уведомление"
-notification.ar.download.complete.title,"Download complete",,,,,,"Загрузка завершена"
-notification.ar.download.complete.text,"Download of OCR languagedata complete",,,,,,"Загрузка языковых данных OCR завершена"
-notification.ar.download.failed.title,"Download failed",,,,,,"Загрузка не удалась"
-notification.ar.download.failed.text,"Failed downloading OCR languagedata",,,,,,"Не удалось загрузить языковые данные OCR"
-notification.wishlist.cannot.add.title,"Can’t add to wishlist",,,,,,"Невозможно добавить в список желаний"
-notification.wishlist.cannot.add.text,"No items to add",,,,,,"Нет элементов для добавления"
-notification.wishlist.cannot.create.title,"Can’t create wishlist",,,,,,"Невозможно создать список желаний"
-notification.wishlist.cannot.create.text,"No items to add",,,,,,"Нет элементов для добавления"
-notification.imported.edsy.error.title,"Unknown item",,,,,,"Неизвестный элемент"
+notification.clipboard.title,"Clipboard",,,Portapapeles,,,"Буфер обмена"
+notification.clipboard.system.copied.text,"System name copied has been copied to your clipboard",,,El nombre del sistema ha sido copiado a tu portapapeles,,,"Имя системы скопировано было скопировано в буфер обмена"
+notification.clipboard.loadout.copied.text,"The loadout has been copied to your clipboard",,,El equipamiento ha sido copiado a tu portapapeles,,,"Загрузка была скопирована в ваш буфер обмена"
+notification.clipboard.ship.copied.text,"The ship has been copied to your clipboard",,,La nave ha sido copiada a tu portapapeles,,,"Корабль скопирован в ваш буфер обмена"
+notification.clipboard.wishlist.copied.text,"The wishlist has been copied to your clipboard",,,La lista de deseos ha sido copiada a tu portapapeles,,,"Список желаний был скопирован в ваш буфер обмена"
+notification.clipboard.url.length.text,"Due to the length, the URL might not work in browsers and must be directly imported inside the app.",,,"Debido a su longitud, es posible que la URL no funcione en el navegador y debe ser importada directamente dentro de la app.",,,"Из-за длины URL-адрес может не работать в браузерах и должен быть напрямую импортирован в приложение."
+notification.test.title,"Test",,,Prueba,,,"Тест"
+notification.test.text,"This is a test notification",,,Esta es una notificación de prueba,,,"Это тестовое уведомление"
+notification.ar.download.complete.title,"Download complete",,,Descarga completa,,,"Загрузка завершена"
+notification.ar.download.complete.text,"Download of OCR languagedata complete",,,Descarga de datos de lenguage OCR completada,,,"Загрузка языковых данных OCR завершена"
+notification.ar.download.failed.title,"Download failed",,,Descarga fallida,,,"Загрузка не удалась"
+notification.ar.download.failed.text,"Failed downloading OCR languagedata",,,Descarga de datis de lenguage OCR fallida,,,"Не удалось загрузить языковые данные OCR"
+notification.wishlist.cannot.add.title,"Can’t add to wishlist",,,No se puede agregar a la lista de deseos,,,"Невозможно добавить в список желаний"
+notification.wishlist.cannot.add.text,"No items to add",,,No hay elementos que agregar,,,"Нет элементов для добавления"
+notification.wishlist.cannot.create.title,"Can’t create wishlist",,,No se puede crear lista de deseos,,,"Невозможно создать список желаний"
+notification.wishlist.cannot.create.text,"No items to add",,,No hay elementos que agregar,,,"Нет элементов для добавления"
+notification.imported.edsy.error.title,"Unknown item",,,Elemento desconocido,,,"Неизвестный элемент"
 notification.imported.edsy.error.text,{0},,,,,,
-notification.imported.coriolis.error.title,"Unknown item",,,,,,"Неизвестный элемент"
+notification.imported.coriolis.error.title,"Unknown item",,,Elemento desconocido,,,"Неизвестный элемент"
 notification.imported.coriolis.error.text,{0},,,,,,
-notification.imported.exception.failed.parse,Failed to parse deeplink,,,,,,Не удалось парсировать глубокую ссылку
-notification.imported.exception.newer.version,The wishlist could not be imported because the link was made with a newer version of the app.,,,,,,Список желаний не удалось импортировать, так как ссылка была сделана с помощью более новой версии приложения.
-notification.imported.exception.failed.decode,String could not be decoded,,,,,,Строка не может быть декодирована
-notification.imported.failed.loadout,Failed to import loadout,,,,,,Не удалось импортировать снаряжение
-notification.imported.failed.odyssey.wishlist,Failed to import Odyssey wishlist,,,,,,Не удалось импортировать список желаний Odyssey
-notification.imported.failed.horizons.wishlist,Failed to import Horizons wishlist,,,,,,Не удалось импортировать список желаний Horizons
-notification.imported.failed.edsy,Failed to import EDSY wishlist,,,,,,Не удалось импортировать список желаний EDSY
-notification.imported.failed.ship,Failed to import ship,,,,,,Не удалось импортировать корабль
-notification.imported.failed.coriolis,Failed to import Coriolis wishlist,,,,,,Не удалось импортировать список желаний Coriolis
-notification.imported.failed.generic,Failed to import,,,,,,Не удалось импортировать
+notification.imported.exception.failed.parse,Failed to parse deeplink,,,Análisis de deeplink fallido,,,Не удалось парсировать глубокую ссылку
+notification.imported.exception.newer.version,The wishlist could not be imported because the link was made with a newer version of the app.,,,La lista de deseos no pudo ser importada porque el enlace fue hecho con una versión mas reciente de la app.,,,"Список желаний не удалось импортировать, так как ссылка была сделана с помощью более новой версии приложения."
+notification.imported.exception.failed.decode,String could not be decoded,,,La cadena no pudo ser descodificada,,,Строка не может быть декодирована
+notification.imported.failed.loadout,Failed to import loadout,,,Importación de equipamiento fallida,,,Не удалось импортировать снаряжение
+notification.imported.failed.odyssey.wishlist,Failed to import Odyssey wishlist,,,Importación de lista de deseos de Odyssey fallida,,,Не удалось импортировать список желаний Odyssey
+notification.imported.failed.horizons.wishlist,Failed to import Horizons wishlist,,,Importación de lista de deseos de Horizons fallida,,,Не удалось импортировать список желаний Horizons
+notification.imported.failed.edsy,Failed to import EDSY wishlist,,,Importación de lista de deseos de EDSY fallida,,,Не удалось импортировать список желаний EDSY
+notification.imported.failed.ship,Failed to import ship,,,Importación de nave fallida,,,Не удалось импортировать корабль
+notification.imported.failed.coriolis,Failed to import Coriolis wishlist,,,Importación de lista de deseos de Coriolis fallida,,,Не удалось импортировать список желаний Coriolis
+notification.imported.failed.generic,Failed to import,,,Importación fallida,,,Не удалось импортировать
 notification.imported.failed.generic.text,{0},,,,,,
-notification.imported.failed.unknown.type.title,Failed to import,,,,,,Не удалось импортировать
-notification.imported.failed.unknown.type.text,Unknown type,,,,,,Неизвестный тип
-notification.journal.init.error.title,Error initializing,,,,,,Ошибка инициализации
-notification.journal.init.error.text,Check logs for errors and contact the developer for support,,,,,,Проверьте журналы на наличие ошибок и обратитесь за поддержкой к разработчику
-notification.imported.success.loadout.title,Imported loadout,,,,,,Импортированное loadout
-notification.imported.success.wishlist.title,Imported wishlist,,,,,,Импортированный список желаний
-notification.imported.success.edsy.title,Imported EDSY wishlist,,,,,,Импортированный список желаний EDSY
-notification.imported.success.coriolis.title,Imported Coriolis wishlist,,,,,,Импортированный список желаний Coriolis
-notification.imported.success.ship.title,Imported Ship,,,,,,Импортированный корабль
-notification.imported.success.slef.title,Imported Ship (SLEF),,,,,,Импортированный корабль (SLEF)
-notification.imported.error.slef.title,Failed to import ship (SLEF),,,,,,Не удалось импортировать корабль (SLEF)
+notification.imported.failed.unknown.type.title,Failed to import,,,Importación fallida,,,Не удалось импортировать
+notification.imported.failed.unknown.type.text,Unknown type,,,Tipo desconocido,,,Неизвестный тип
+notification.journal.init.error.title,Error initializing,,,Error al inicializar,,,Ошибка инициализации
+notification.journal.init.error.text,Check logs for errors and contact the developer for support,,,Revise el registro de depuracion para errores y contacte al desarrollador para soporte,,,Проверьте журналы на наличие ошибок и обратитесь за поддержкой к разработчику
+notification.imported.success.loadout.title,Imported loadout,,,Equipamiento cargado,,,Импортированное loadout
+notification.imported.success.wishlist.title,Imported wishlist,,,Lista de deseos cargada,,,Импортированный список желаний
+notification.imported.success.edsy.title,Imported EDSY wishlist,,,Lista de deseos de EDSY cargada,,,Импортированный список желаний EDSY
+notification.imported.success.coriolis.title,Imported Coriolis wishlist,,,Lista de deseos de Coriolis cargada,,,Импортированный список желаний Coriolis
+notification.imported.success.ship.title,Imported Ship,,,Nave importada,,,Импортированный корабль
+notification.imported.success.slef.title,Imported Ship (SLEF),,,Nave importada (SLEF),,,Импортированный корабль (SLEF)
+notification.imported.error.slef.title,Failed to import ship (SLEF),,,Importación de nave (SLEF) fallida,,,Не удалось импортировать корабль (SLEF)
 notification.imported.success.loadout.text,{0},,,,,,
 notification.imported.success.wishlist.text,{0},,,,,,
 notification.imported.success.edsy.text,{0},,,,,,
@@ -76,9 +76,9 @@ notification.imported.success.coriolis.text,{0},,,,,,
 notification.imported.success.ship.text,{0},,,,,,
 notification.imported.success.slef.text,{0},,,,,,
 notification.imported.error.slef.text,{0},,,,,,
-notification.material.information.title,Material information,,,,,,Информация о материале
-notification.material.information.wishlist.text,{0}({1}) - Wishlist - {2}{3}/{4},,,,,,{0}({1}) - Список желаний - {2}{3}/{4}
-notification.material.information.relevant.text,{0}({1}) - Engineer/Blueprint - {2}{3},,,,,,{0}({1}) - Инжинеринг/Чертеж - {2}{3}
-notification.material.information.irrelevant.text,{0}({1}) - Irrelevant,,,,,,{0}({1}) - Не требуемое
-notification.shipbuilder.error.wishlist.title,Can’t create wishlist,,,,,,Невозможно создать список желаний
-notification.shipbuilder.error.wishlist.text,No items to add,,,,,,Нет элементов для добавления
+notification.material.information.title,Material information,,,Imformación de material,,,Информация о материале
+notification.material.information.wishlist.text,{0}({1}) - Wishlist - {2}{3}/{4},,,{0}({1}) - Lista de deseos - {2}{3}/{4},,,{0}({1}) - Список желаний - {2}{3}/{4}
+notification.material.information.relevant.text,{0}({1}) - Engineer/Blueprint - {2}{3},,,{0}({1}) - Ingeniero/Plano - {2}{3},,,{0}({1}) - Инжинеринг/Чертеж - {2}{3}
+notification.material.information.irrelevant.text,{0}({1}) - Irrelevant,,,{0}({1}) - Irrelevante,,,{0}({1}) - Не требуемое
+notification.shipbuilder.error.wishlist.title,Can’t create wishlist,,,No se puede crear lista de deseos,,,Невозможно создать список желаний
+notification.shipbuilder.error.wishlist.text,No items to add,,,No hay elementos que añadir,,,Нет элементов для добавления
