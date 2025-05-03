@@ -1,10 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation;
 
 import javafx.collections.FXCollections;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.CheckBoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
+import javafx.scene.Node;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ColonisationItem;
 import nl.jixxed.eliteodysseymaterials.domain.ColonisationItems;
@@ -25,6 +23,8 @@ public class ColonisationView extends DestroyableVBox implements DestroyableEven
     private ColonisationProjectStatistics colonisationProjectStatistics;
 
     private DestroyableComboBox<ColonisationItem> colonisationSelect;
+    private DestroyableFlowPane projectInfo;
+    private DestroyableLabel hint;
 
     public ColonisationView() {
         initComponents();
@@ -34,7 +34,10 @@ public class ColonisationView extends DestroyableVBox implements DestroyableEven
     @Override
     public void initComponents() {
         this.getStyleClass().add("colonisation-view");
-
+        hint = LabelBuilder.builder()
+                .withStyleClass("hint")
+                .withText("tab.colonisation.hint")
+                .build();
         final Optional<ColonisationItems> wishlists = APPLICATION_STATE.getPreferredCommander().map(ColonisationService::getColonisationItems);
         final Set<ColonisationItem> items = wishlists.map(ColonisationItems::getAllColonisationItems)
                 .orElse(Collections.emptySet());
@@ -66,7 +69,7 @@ public class ColonisationView extends DestroyableVBox implements DestroyableEven
                 .build();
         colonisationProjectView = new ColonisationProjectView();
         colonisationProjectStatistics = new ColonisationProjectStatistics();
-        final DestroyableFlowPane projectInfo = FlowPaneBuilder.builder()
+        projectInfo = FlowPaneBuilder.builder()
                 .withStyleClass("project-info")
                 .withNodes(colonisationProjectView, colonisationProjectStatistics)
                 .build();
@@ -74,13 +77,22 @@ public class ColonisationView extends DestroyableVBox implements DestroyableEven
         billOfMaterials = new BillOfMaterials();
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
             final ColonisationItems colonisationItems = ColonisationService.getColonisationItems(commander);
+
+            if (colonisationItems.getAllColonisationItems().size() <= 1) {
+                setVisibility(projectInfo, false);
+                setVisibility(hint, true);
+            } else {
+                setVisibility(projectInfo, true);
+                setVisibility(hint, false);
+            }
             billOfMaterials.setBuildable(colonisationItems.getSelectedColonisationItem());
         });
         final DestroyableHBox menu = BoxBuilder.builder()
                 .withStyleClass("colonisation-menu")
                 .withNodes(colonisationSelect, hideCompletedCheckBox)
                 .buildHBox();
-        this.getNodes().addAll(menu, projectInfo, billOfMaterials);
+        this.getNodes().addAll(menu, hint, projectInfo, billOfMaterials);
+
     }
 
     private void refreshProjects() {
@@ -113,7 +125,16 @@ public class ColonisationView extends DestroyableVBox implements DestroyableEven
     private void update() {
         refreshProjects();
         APPLICATION_STATE.getPreferredCommander().ifPresentOrElse(commander -> {
-                    final ColonisationItem selectedColonisationItem = ColonisationService.getColonisationItems(commander).getSelectedColonisationItem();
+                    final ColonisationItems colonisationItems = ColonisationService.getColonisationItems(commander);
+
+                    if (colonisationItems.getAllColonisationItems().size() <= 1) {
+                        setVisibility(projectInfo, false);
+                        setVisibility(hint, true);
+                    } else {
+                        setVisibility(projectInfo, true);
+                        setVisibility(hint, false);
+                    }
+                    final ColonisationItem selectedColonisationItem = colonisationItems.getSelectedColonisationItem();
                     billOfMaterials.setBuildable(selectedColonisationItem);
                     colonisationProjectView.setBuildable(selectedColonisationItem);
                 },
@@ -121,5 +142,10 @@ public class ColonisationView extends DestroyableVBox implements DestroyableEven
                     billOfMaterials.clear();
                     colonisationProjectView.clear();
                 });
+    }
+
+    private void setVisibility(Node node, boolean visible) {
+        node.setVisible(visible);
+        node.setManaged(visible);
     }
 }
