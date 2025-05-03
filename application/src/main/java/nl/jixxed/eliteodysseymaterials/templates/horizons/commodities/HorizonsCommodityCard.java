@@ -1,6 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.commodities;
 
-import javafx.application.Platform;
 import javafx.css.PseudoClass;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
@@ -15,10 +14,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.CommoditiesSearch;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.MarketService;
-import nl.jixxed.eliteodysseymaterials.service.MaterialService;
-import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsCommoditiesSearchEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.MarketUpdatedEvent;
@@ -172,13 +168,15 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
         updateStyle();
         this.setOnMouseEntered(event -> log.info("Mouse entered"));
         MaterialService.addMaterialInfoPopOver(this, this.commodity, false);
-
+        final HorizonsCommoditiesSort materialSort = HorizonsCommoditiesSort.valueOf(PreferencesService.getPreference("search.commodities.sort", "ALPHABETICAL"));
+        final HorizonsCommoditiesShow filter = HorizonsCommoditiesShow.valueOf(PreferencesService.getPreference("search.commodities.filter", "ALL"));
+        update(new CommoditiesSearch("", materialSort, filter));
     }
 
     @Override
     public void initEventHandling() {
         register(EventService.addListener(true, this, HorizonsCommoditiesSearchEvent.class, horizonsCommoditiesSearchEvent -> {
-            Platform.runLater(() -> this.update(horizonsCommoditiesSearchEvent.getSearch()));
+            this.update(horizonsCommoditiesSearchEvent.getSearch());
         }));
 
         register(EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
