@@ -135,7 +135,6 @@ notification.type.powerplay_pickup,Powerplay Pickup,,,Recogída de Powerplay,Col
 notification.type.ship_wishlist_pickup,Ship Wishlist Pickup,,,Recogída de Lista de Deseos de Naves,Collecte liste de souhaits du vaisseau,,Взятие материала для корабля
 search.filter.sold_at_station,Sold at current market,,,Vendido en mercado actual,,,Продано на данном рынке
 search.filter.bought_at_station,Bought at current market,,,Comprado en mercado actual,,,Куплено на данном рынке
-tabs.horizons.colonisation,Colonisation (WIP),,,Colonización (WIP),,,Колонизация (в разработке)
 dialog.start.whatsnew,What’s new?,,,¿Que hay de nuevo?,,,Что нового
 dialog.start.privacypolicy,Privacy policy,,,Política de privacidad,,,Политика конфиденциальности
 dialog.start.accept,Accept & continue,,,Acceptar y continuar,,,Принять и продолжить
@@ -151,3 +150,4 @@ segment.type.present_fleet_carrier,Fleetcarrier,,,Portanaves,,,Флотонос�
 segment.type.missing_for_minimum,Missing to minimum,,,Faltante para mínimo,,,Отсутствует по минимуму
 segment.type.missing_for_required,Missing to required,,,Faltante para requerido,,,Отсутствует для требуемого
 segment.type.missing_for_maximum,Missing to maximum,,,Faltante para máximo,,,Отсутствует по максимуму
+tabs.horizons.colonisation,Colonisation,,,Colonización,,,Колонизация

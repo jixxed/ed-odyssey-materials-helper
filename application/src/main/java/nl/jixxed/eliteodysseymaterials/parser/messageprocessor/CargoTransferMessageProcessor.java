@@ -6,6 +6,8 @@ import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.CargoTransfer.CargoTransfer;
 import nl.jixxed.eliteodysseymaterials.service.ReportService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 
 public class CargoTransferMessageProcessor implements MessageProcessor<CargoTransfer> {
     @Override
@@ -19,16 +21,23 @@ public class CargoTransferMessageProcessor implements MessageProcessor<CargoTran
                 if ("tocarrier".equals(transfer.getDirection())) {
                     StorageService.removeCommodity(commodity, StoragePool.SHIP, transfer.getCount().intValue());
                     StorageService.addCommodity(commodity, StoragePool.FLEETCARRIER, transfer.getCount().intValue());
+                    EventService.publish(new StorageEvent(StoragePool.SHIP));
+                    EventService.publish(new StorageEvent(StoragePool.FLEETCARRIER));
                 } else if ("tosrv".equals(transfer.getDirection())) {
                     StorageService.removeCommodity(commodity, StoragePool.SHIP, transfer.getCount().intValue());
                     StorageService.addCommodity(commodity, StoragePool.SRV, transfer.getCount().intValue());
+                    EventService.publish(new StorageEvent(StoragePool.SHIP));
+                    EventService.publish(new StorageEvent(StoragePool.SRV));
                 } else if ("toship".equals(transfer.getDirection())) {
                     if (ApplicationState.getInstance().playerInSrv()) {
                         StorageService.removeCommodity(commodity, StoragePool.SRV, transfer.getCount().intValue());
+                        EventService.publish(new StorageEvent(StoragePool.SRV));
                     } else {
                         StorageService.removeCommodity(commodity, StoragePool.FLEETCARRIER, transfer.getCount().intValue());
+                        EventService.publish(new StorageEvent(StoragePool.FLEETCARRIER));
                     }
                     StorageService.addCommodity(commodity, StoragePool.SHIP, transfer.getCount().intValue());
+                    EventService.publish(new StorageEvent(StoragePool.SHIP));
                 }
             }
         });

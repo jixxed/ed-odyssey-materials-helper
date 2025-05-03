@@ -70,8 +70,8 @@ public class HorizonsMaterialSearchBar extends DestroyableHBox implements Destro
         subscribe = Observable.create((ObservableEmitter<String> emitter) -> this.textField.textProperty().addListener((_, _, newValue) -> emitter.onNext(newValue)))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
-                .onErrorComplete()
-                .subscribe(newValue -> Platform.runLater(() -> EventService.publish(new HorizonsMaterialSearchEvent(new HorizonsMaterialsSearch(newValue, getShowOrDefault(this.showMaterialsComboBox))))));
+                .subscribe(newValue -> Platform.runLater(() -> EventService.publish(new HorizonsMaterialSearchEvent(new HorizonsMaterialsSearch(newValue, getShowOrDefault(this.showMaterialsComboBox))))),
+                        t -> log.error(t.getMessage(), t));
     }
 
     private void initSearchTextFilter() {

@@ -13,13 +13,12 @@ import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
+import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.MarketService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
+import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.MarketUpdatedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.ShipLoadoutEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
@@ -144,19 +143,19 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
                 .build();
         final DestroyableLabel collectTitleLabel = LabelBuilder.builder()
                 .withStyleClass("title-amount")
-                .withNonLocalizedText("To collect")
+                .withText("tab.colonisation.material.tocollect")
                 .build();
         final DestroyableLabel requiredTitleLabel = LabelBuilder.builder()
                 .withStyleClass("title-amount")
-                .withNonLocalizedText("Required")
+                .withText("tab.colonisation.material.required")
                 .build();
         final DestroyableLabel deliverTitleLabel = LabelBuilder.builder()
                 .withStyleClass("title-amount")
-                .withNonLocalizedText("To deliver")
+                .withText("tab.colonisation.material.todeliver")
                 .build();
         final DestroyableLabel deliveredTitleLabel = LabelBuilder.builder()
                 .withStyleClass("title-amount-delivered")
-                .withNonLocalizedText("Delivered")
+                .withText("tab.colonisation.material.delivered")
                 .build();
         final DestroyableHBox values2 = BoxBuilder.builder()
                 .withStyleClass("values2")
@@ -209,17 +208,21 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
 
     @Override
     public void initEventHandling() {
-        register(EventService.addListener(this, StorageEvent.class, storageEvent -> {
+        register(EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
             if (StoragePool.FLEETCARRIER.equals(storageEvent.getStoragePool()) || StoragePool.SHIP.equals(storageEvent.getStoragePool())) {
                 update();
             }
         }));
-        register(EventService.addListener(this, MarketUpdatedEvent.class, event -> {
+        register(EventService.addListener(true, this, MarketUpdatedEvent.class, event -> {
             update();
         }));
-        register(EventService.addListener(this, ShipLoadoutEvent.class, event -> {
+        register(EventService.addListener(true, this, ShipLoadoutEvent.class, event -> {
             update();
         }));
+        register(EventService.addListener(true, this, ColonisationHideCompletedEvent.class, event -> {
+            updateStyle();
+        }));
+
 
     }
 
@@ -227,8 +230,8 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
         availableShip = StorageService.getCommodityCount(commodity, StoragePool.SHIP);
         availableFleetCarrier = StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER);
 
-        fleetCarrierLabel.setText(availableFleetCarrier.toString());
-        shipLabel.setText(availableShip.toString());
+        fleetCarrierLabel.setText(Formatters.NUMBER_FORMAT_0.format(availableFleetCarrier));
+        shipLabel.setText(Formatters.NUMBER_FORMAT_0.format(availableShip));
         marketLabel.setText(MarketService.isFleetCarrier() ? "0" : MarketService.getMarketItem(commodity).map(MarketItem::stock).orElse(BigInteger.ZERO).toString());
 
         availableShip = StorageService.getCommodityCount(commodity, StoragePool.SHIP);
@@ -240,12 +243,20 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
         this.missingForCompletion.setValue(Math.max(0, remaining - availableShip - availableFleetCarrier));
 
         String cargoDeliver = getCargoString(remaining);
-        deliverLabel.setText(MessageFormat.format("({0}) {1}", cargoDeliver, remaining));
+        if (!Objects.equals(cargoDeliver, "0")) {
+            deliverLabel.setText(MessageFormat.format("({0}) {1}", cargoDeliver, remaining));
+        } else {
+            deliverLabel.setText(MessageFormat.format("{0}", remaining));
+        }
         final int collectValue = Math.max(0, remaining - availableShip - availableFleetCarrier);
         String cargoCollect = getCargoString(collectValue);
-        collectLabel.setText(MessageFormat.format("({0}) {1}", cargoCollect, collectValue));
-        deliveredLabel.setText(String.valueOf(progress.provided()));
-        requiredLabel.setText(String.valueOf(progress.required()));
+        if (!Objects.equals(cargoCollect, "0")) {
+            collectLabel.setText(MessageFormat.format("({0}) {1}", cargoCollect, collectValue));
+        } else {
+            collectLabel.setText(MessageFormat.format("{0}", collectValue));
+        }
+        deliveredLabel.setText(Formatters.NUMBER_FORMAT_0.format(progress.provided()));
+        requiredLabel.setText(Formatters.NUMBER_FORMAT_0.format(progress.required()));
         updateStyle();
     }
 
@@ -255,12 +266,17 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
             return "0";
         final int currentCargo = (int) ship.getMaxCargo();
         if (currentCargo == 0D)
-            return String.valueOf(Double.POSITIVE_INFINITY);
+            return Formatters.NUMBER_FORMAT_0.format(Double.POSITIVE_INFINITY);
 
-        return String.valueOf(1 + (quantity / currentCargo)) + " x " + currentCargo + "T";
+        return Formatters.NUMBER_FORMAT_0.format(1 + (quantity / currentCargo)) + " x " + Formatters.NUMBER_FORMAT_0.format(currentCargo) + "T";
     }
 
     private void updateStyle() {
+        final boolean visible = !Objects.equals(progress.provided(), progress.required())
+                || !PreferencesService.getPreference("colonisation.horizons.hide.completed", false);
+        this.setVisible(visible);
+        this.setManaged(visible);
+
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("ship"), this.presentShip.getValue() > 0D);
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("fleetcarrier"), this.presentFleetCarrier.getValue() > 0D);
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("completed"), Objects.equals(progress.provided(), progress.required()));

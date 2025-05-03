@@ -2,3 +2,16 @@ messageKey,,en,de,es,fr,pt,ru
 colonisation.all.projects,All colonisation projects,,,Todos los proyectos de colonización,,,Все проекты колонизации
 tab.colonisation.project.market.id,Market ID,,,ID del mercado,,,ID рынка
 tab.colonisation.project.name,Name,,,Nombre,,,Имя
+colonisation.current.project,Current colonisation project,,,,,,
+tab.colonisation.project.type,Type,,,,,,
+tab.colonisation.project.layout,Layout,,,,,,
+tab.colonisation.material.required,Required,,,,,,
+tab.colonisation.material.delivered,Delivered,,,,,,
+tab.colonisation.material.tocollect,To collect,,,,,,
+tab.colonisation.material.todeliver,To deliver,,,,,,
+tab.colonisation.material.total.required,Total required,,,,,,
+tab.colonisation.material.total.delivered,Total delivered,,,,,,
+tab.colonisation.material.total.tocollect,Total to collect,,,,,,
+tab.colonisation.material.total.todeliver,Total to deliver,,,,,,
+tab.colonisation.material.stats,Statistics,,,,,,
+tab.colonisation.hide.completed,Hide completed,,,,,,

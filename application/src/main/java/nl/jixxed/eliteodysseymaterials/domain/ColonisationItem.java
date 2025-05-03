@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.enums.ColonisationBuildable;
+import nl.jixxed.eliteodysseymaterials.enums.ColonisationLayout;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.service.ColonisationService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -23,7 +24,7 @@ public class ColonisationItem {
     @JsonIgnore
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     @JsonIgnore
-    public static final ColonisationItem ALL = new ColonisationItem("0", "All colonisation projects", "-1", null, new HashMap<>());
+    public static final ColonisationItem ALL = new ColonisationItem("0", "All colonisation projects", "-1", null, null, new HashMap<>());
     @JsonIgnore
     private static ColonisationItem current;
     @EqualsAndHashCode.Include
@@ -31,17 +32,19 @@ public class ColonisationItem {
     private String name;
     private String marketID;
     private ColonisationBuildable colonisationBuildable;
+    private ColonisationLayout colonisationLayout;
     private Map<Commodity, ConstructionProgress> constructionRequirements;
 
-    public ColonisationItem(String name, String marketID, ColonisationBuildable colonisationBuildable, Map<Commodity, ConstructionProgress> constructionRequirements) {
+    public ColonisationItem(String name, String marketID, ColonisationBuildable colonisationBuildable, ColonisationLayout colonisationLayout, Map<Commodity, ConstructionProgress> constructionRequirements) {
         this.name = name;
         this.marketID = marketID;
         this.colonisationBuildable = colonisationBuildable;
+        this.colonisationLayout = colonisationLayout;
         this.constructionRequirements = new HashMap<>(constructionRequirements);
     }
 
     public ColonisationItem(ColonisationItem other) {
-        this(LocaleService.getLocalizedStringForCurrentLocale("tab.colonisation.project.name"), other.getMarketID(), other.getColonisationBuildable(), other.getConstructionRequirements());
+        this(LocaleService.getLocalizedStringForCurrentLocale("tab.colonisation.project.name"), other.getMarketID(), other.getColonisationBuildable(), other.getColonisationLayout(), other.getConstructionRequirements());
     }
 
 
@@ -81,5 +84,16 @@ public class ColonisationItem {
     @JsonIgnore
     public boolean isAll() {
         return this == ALL;
+    }
+
+    @Override
+    public String toString() {
+        if (isAll()) {
+            return LocaleService.getLocalizedStringForCurrentLocale("colonisation.all.projects");
+        }
+        if (isCurrent()) {
+            return LocaleService.getLocalizedStringForCurrentLocale("colonisation.current.project");
+        }
+        return name + ((colonisationBuildable == null || ColonisationBuildable.UNKNOWN.equals(colonisationBuildable)) ? "" : " - " + colonisationBuildable.toString()) + " - " + marketID;
     }
 }

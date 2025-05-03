@@ -1303,18 +1303,18 @@ class SlotBox extends DestroyableStackPane {
                     }))
                     .debounce(500, TimeUnit.MILLISECONDS)
                     .observeOn(Schedulers.io())
-                    .onErrorComplete()
                     .subscribe(newValue -> {
-                        Platform.runLater(() -> {
-                                    shipModule.getModifications().stream()
-                                            .findFirst()
-                                            .ifPresent(modification -> modification.setModificationCompleteness(BigDecimal.valueOf(newValue.doubleValue()).divide(BigDecimal.valueOf(100D))));
-                                    shipModule.getModifiers().clear();
-                                    notifyChanged();
-                                    refresh();
-                                }
-                        );
-                    });
+                                Platform.runLater(() -> {
+                                            shipModule.getModifications().stream()
+                                                    .findFirst()
+                                                    .ifPresent(modification -> modification.setModificationCompleteness(BigDecimal.valueOf(newValue.doubleValue()).divide(BigDecimal.valueOf(100D))));
+                                            shipModule.getModifiers().clear();
+                                            notifyChanged();
+                                            refresh();
+                                        }
+                                );
+                            },
+                            t -> log.error(t.getMessage(), t));
             progressSlider.setStyle("-fx-fit-to-width: true;-fx-max-width: 40em;-fx-pref-width: 40em;");
             progressSlider.addBinding(progressSlider.disableProperty(), toggleGroup.selectedToggleProperty().isNull());
             final DestroyableTextField textvalue = TextFieldBuilder.builder()

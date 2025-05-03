@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -872,5 +873,10 @@ public enum ColonisationBuildable {
 
     public String getLocalizationKey() {
         return "colonisation.buildable." + this.name().toLowerCase();
+    }
+
+    @Override
+    public String toString() {
+        return colonisationCategory.toString() + " - " + LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
     }
 }

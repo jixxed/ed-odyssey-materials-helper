@@ -74,8 +74,8 @@ class OdysseyEngineerSearchBar extends DestroyableHBox implements DestroyableEve
         subscribe = Observable.create((ObservableEmitter<String> emitter) -> this.textField.textProperty().addListener((observable, oldValue, newValue) -> emitter.onNext(newValue)))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
-                .onErrorComplete()
-                .subscribe(newValue -> Platform.runLater(() -> EventService.publish(new OdysseyEngineerSearchEvent(newValue))));
+                .subscribe(newValue -> Platform.runLater(() -> EventService.publish(new OdysseyEngineerSearchEvent(newValue))),
+                        t -> log.error(t.getMessage(), t));
     }
 
 
