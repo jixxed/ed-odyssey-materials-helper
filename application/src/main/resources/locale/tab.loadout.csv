@@ -23,5 +23,5 @@ tab.loadout.rename,Rename loadout,Rename loadout,Loadout umbenennen,Cambiar nomb
 loadout.create.new.wishlist,Create new,Create new,Erstelle neu,Crear nuevo,Créer un nouveau,Crie um novo,Создать новый,
 tab.loadout.clone,Clone loadout,Clone loadout,Klonlast,Clonar equipamiento,Chargement de clone,Clonar configuração,Клонировать сборку,
 blueprint.add.all.to.wishlist,Add all to wishlist,Add all to wishlist,Fügen Sie alle zur Wunschliste hinzu,Agregar todo a la lista de deseos,Ajouter tout à WishList,Adicione tudo à lista de desejos,Добавьте все в список желаний,
-tab.loadout.create.prompt,Name (max. 50 characters),,,,,,Имя (50 символов макс.),
-tab.loadout.delete.item,Delete,,,,,,Удалить,
+tab.loadout.create.prompt,Name (max. 50 characters),,,Nombre (max. 50 carácteres),,,Имя (50 символов макс.),
+tab.loadout.delete.item,Delete,,,Borrar,,,Удалить,

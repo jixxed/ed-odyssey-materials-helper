@@ -16,6 +16,7 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsCommoditiesSearchEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.MarketUpdatedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
@@ -119,11 +120,10 @@ public class HorizonsCommoditiesOverview extends DestroyableVBox implements Dest
 
         register(EventService.addListener(true, this, HorizonsCommoditiesSearchEvent.class, horizonsCommoditiesSearchEvent -> {
             this.currentSearch = horizonsCommoditiesSearchEvent.getSearch();
-            Platform.runLater(this::update);
+            this.update();
         }));
-//        register(EventService.addListener(true, this, MarketUpdatedEvent.class, marketUpdatedEvent -> {
-//            Platform.runLater(this::update);
-//        }));
+        register(EventService.addListener(true, this, MarketUpdatedEvent.class, _ -> this.update()));
+        register(EventService.addListener(true, this, StorageEvent.class, _ -> this.update()));
     }
 
     @Override

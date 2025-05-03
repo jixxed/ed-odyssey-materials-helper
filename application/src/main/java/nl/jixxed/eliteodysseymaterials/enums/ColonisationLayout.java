@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+
 public enum ColonisationLayout {
 
     NO_TRUSS,
@@ -107,12 +109,16 @@ public enum ColonisationLayout {
     SILENUS,
     JANUS,
     MOLAE,
-//    TELLUS,duplicate???
+    //    TELLUS,duplicate???
     EUNOSTUS;
 
     public String getLocalizationKey() {
         return "colonisation.layout." + this.name().toLowerCase();
     }
 
+    @Override
+    public String toString() {
+        return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
+    }
 
 }

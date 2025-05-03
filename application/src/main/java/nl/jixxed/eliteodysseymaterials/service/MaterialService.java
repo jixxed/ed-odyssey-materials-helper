@@ -344,39 +344,40 @@ public class MaterialService {
                     });
                     contentNode.get().getStyleClass().add("material-popover");
                     if (!POPOVERS.containsKey(hoverableNode) && (hoverableNode.isHover() || contentNode.get().isHover())) {
-                        final Screen screen = Screen.getScreensForRectangle(mouseEvent.getScreenX(), mouseEvent.getScreenY(), 1, 1).getFirst();
-                        if (screen == null) {
-                            contentNode.get().destroy();
-                            return;
-                        }
-                        final DestroyablePopOver popOver = PopOverBuilder.builder()
-                                .withStyleClass("popover-menubutton-layout")
-                                .withContent((Node & Destroyable) contentNode.get())
-                                .withArrowIndent(0)
-                                .withArrowSize(0)
-                                .withCornerRadius(0)
-                                .withDetachable(false)
-                                .withHeaderAlwaysVisible(false)
-                                .withDestroyOnHide(true)
-                                .build();
-                        POPOVERS.put(hoverableNode, popOver);
+                        try {
+                            final Screen screen = Screen.getScreensForRectangle(mouseEvent.getScreenX(), mouseEvent.getScreenY(), 1, 1).getFirst();
+                            final DestroyablePopOver popOver = PopOverBuilder.builder()
+                                    .withStyleClass("popover-menubutton-layout")
+                                    .withContent((Node & Destroyable) contentNode.get())
+                                    .withArrowIndent(0)
+                                    .withArrowSize(0)
+                                    .withCornerRadius(0)
+                                    .withDetachable(false)
+                                    .withHeaderAlwaysVisible(false)
+                                    .withDestroyOnHide(true)
+                                    .build();
+                            POPOVERS.put(hoverableNode, popOver);
 
-                        final Rectangle2D currentScreen = screen.getBounds();
-                        final double mouseXOnScreen = mouseEvent.getScreenX() - currentScreen.getMinX();
-                        final double mouseYOnScreen = mouseEvent.getScreenY() - currentScreen.getMinY();
-                        if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {
-                            popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_TOP);
-                        } else if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen > currentScreen.getHeight() / 2) {
-                            popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_BOTTOM);
-                        } else if (mouseXOnScreen > currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {
-                            popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_TOP);
-                        } else {
-                            popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_BOTTOM);
+                            final Rectangle2D currentScreen = screen.getBounds();
+                            final double mouseXOnScreen = mouseEvent.getScreenX() - currentScreen.getMinX();
+                            final double mouseYOnScreen = mouseEvent.getScreenY() - currentScreen.getMinY();
+                            if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {
+                                popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_TOP);
+                            } else if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen > currentScreen.getHeight() / 2) {
+                                popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_BOTTOM);
+                            } else if (mouseXOnScreen > currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {
+                                popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_TOP);
+                            } else {
+                                popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_BOTTOM);
+                            }
+                            if (popOver.getContentNode() != null) {
+                                popOver.show(hoverableNode);
+                            }
+                            timelineHide.play();
+                        } catch (NoSuchElementException ex) {
+                            log.error(ex.getMessage(), ex);
+                            contentNode.get().destroy();
                         }
-                        if (popOver.getContentNode() != null) {
-                            popOver.show(hoverableNode);
-                        }
-                        timelineHide.play();
                     } else {
                         contentNode.get().destroy();
                     }

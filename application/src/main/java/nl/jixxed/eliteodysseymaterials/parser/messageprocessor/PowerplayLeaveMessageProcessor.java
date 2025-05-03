@@ -10,7 +10,7 @@ public class PowerplayLeaveMessageProcessor implements MessageProcessor<Powerpla
 
     @Override
     public void process(final PowerplayLeave event) {
-        Power power = Power.forName(event.getPower());
+        Power power = ApplicationState.getInstance().getPower();
         ApplicationState.getInstance().resetPowerplay();
         EventService.publish(new PowerplayLeaveEvent(power));
     }

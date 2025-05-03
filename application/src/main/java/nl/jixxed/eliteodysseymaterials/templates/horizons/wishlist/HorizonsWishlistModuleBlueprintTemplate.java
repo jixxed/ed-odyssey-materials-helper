@@ -7,6 +7,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.css.PseudoClass;
 import javafx.util.Duration;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
@@ -30,6 +31,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.DoubleConsumer;
 import java.util.stream.Collectors;
 
+@Slf4j
 public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHBox implements WishlistBlueprintTemplate<HorizonsBlueprintName>, DestroyableEventTemplate {
     private static int counter = 0;
 
@@ -103,12 +105,11 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
                 })
                 .delay(250, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
-                .onErrorComplete()
                 .subscribe(event -> {
                     if (this.wishlistRecipeName.isHover()) {
                         EventService.publish(event);
                     }
-                });
+                }, t -> log.error(t.getMessage(), t));
         removeBlueprint = ButtonBuilder.builder()
                 .withStyleClass("remove")
                 .withNonLocalizedText("X")

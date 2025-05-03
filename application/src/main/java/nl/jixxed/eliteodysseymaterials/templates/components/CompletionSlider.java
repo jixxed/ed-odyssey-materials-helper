@@ -5,6 +5,7 @@ import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.application.Platform;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.SliderBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TextFieldBuilder;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
@@ -16,6 +17,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTextFie
 import java.util.concurrent.TimeUnit;
 import java.util.function.DoubleConsumer;
 
+@Slf4j
 public class CompletionSlider extends DestroyableHBox implements DestroyableTemplate {
 
     private Double min;
@@ -54,8 +56,8 @@ public class CompletionSlider extends DestroyableHBox implements DestroyableTemp
         subscribe = Observable.create((ObservableEmitter<Number> emitter) -> addChangeListener(progressSlider.valueProperty(), (_, _, newValue) -> emitter.onNext(newValue)))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
-                .onErrorComplete()
-                .subscribe(newValue -> Platform.runLater(() -> onChange.accept(newValue.doubleValue())));
+                .subscribe(newValue -> Platform.runLater(() -> onChange.accept(newValue.doubleValue())),
+                        t -> log.error(t.getMessage(), t));
 
 
         this.getNodes().addAll(progressSlider, textValue);

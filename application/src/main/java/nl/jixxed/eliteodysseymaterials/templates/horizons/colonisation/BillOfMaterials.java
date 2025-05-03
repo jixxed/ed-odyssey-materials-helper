@@ -2,18 +2,21 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation;
 
 import nl.jixxed.eliteodysseymaterials.domain.ColonisationItem;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.event.ColonisationSelectedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.util.Comparator;
 
-public class BillOfMaterials extends DestroyableFlowPane implements DestroyableTemplate, DestroyableComponent {
+public class BillOfMaterials extends DestroyableFlowPane implements DestroyableEventTemplate, DestroyableComponent {
 
-    ColonisationItem colonisationItem ;
+    ColonisationItem colonisationItem;
 
     public BillOfMaterials() {
         initComponents();
+        initEventHandling();
     }
 
     @Override
@@ -21,11 +24,19 @@ public class BillOfMaterials extends DestroyableFlowPane implements DestroyableT
         this.getStyleClass().add("bill-of-materials");
     }
 
-    public void setBuildable(ColonisationItem colonisationItem ) {
+    @Override
+    public void initEventHandling() {
+        register(EventService.addListener(true, this, ColonisationSelectedEvent.class, event -> {
+            setBuildable(event.getColonisationItem());
+        }));
+    }
+
+    public void setBuildable(ColonisationItem colonisationItem) {
         this.colonisationItem = colonisationItem;
         update();
 
     }
+
 
     private void update() {
         clear();

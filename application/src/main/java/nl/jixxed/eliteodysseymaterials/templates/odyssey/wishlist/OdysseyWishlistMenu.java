@@ -223,6 +223,12 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
                         .ifPresent(wl -> this.wishlistSelect.getSelectionModel().select(wl))));
         register(EventService.addListener(true, this, OdysseyWishlistSearchEvent.class, odysseyWishlistSearchEvent ->
                 this.currentSearch = odysseyWishlistSearchEvent.getSearch()));//intended for export sorting
+
+        register(EventService.addListener(true, this, ImportResultEvent.class, importResultEvent -> {
+            if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_ODYSSEY_WISHLIST)) {
+                refreshWishlistSelect();
+            }
+        }));
     }
 
     private void refreshWishlistSelect() {

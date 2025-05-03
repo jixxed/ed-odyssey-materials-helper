@@ -146,8 +146,8 @@ public class HorizonsCommoditiesSearchBar extends DestroyableHBox implements Des
         subscribe = Observable.create((ObservableEmitter<String> emitter) -> addChangeListener(this.textField.textProperty(), (_, _, newValue) -> emitter.onNext(newValue)))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
-                .onErrorComplete()
-                .subscribe(_ -> EventService.publish(new HorizonsCommoditiesSearchEvent(new CommoditiesSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.showMaterialsComboBox)))));
+                .subscribe(_ -> EventService.publish(new HorizonsCommoditiesSearchEvent(new CommoditiesSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.showMaterialsComboBox)))),
+                        t -> log.error(t.getMessage(), t));
     }
 
 

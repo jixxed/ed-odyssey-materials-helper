@@ -56,7 +56,7 @@
         }
 
         .material-total-value-powerplay-row {
-          -fx-text-fill: $text-color-purple;
+          -fx-text-fill: $text-color-orange;
           -fx-label-padding: 2px;
         }
       }
@@ -109,7 +109,7 @@
       &:powerplay {
         .name, .fleetcarrier-amount, .wishlist-amount, .backpack-amount, .ship-amount, .total-amount {
           -fx-font-weight: normal;
-          -fx-text-fill: $text-color-purple;
+          -fx-text-fill: $text-color-orange;
         }
       }
     }

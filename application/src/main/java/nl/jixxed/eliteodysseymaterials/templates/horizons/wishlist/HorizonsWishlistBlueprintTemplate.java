@@ -9,6 +9,7 @@ import javafx.beans.binding.StringBinding;
 import javafx.css.PseudoClass;
 import javafx.util.Duration;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
@@ -25,6 +26,7 @@ import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTempla
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBox implements WishlistBlueprintTemplate<HorizonsBlueprintName>, DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static int counter = 0;
@@ -103,12 +105,12 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableHBo
                 })
                 .delay(250, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
-                .onErrorComplete()
                 .subscribe(event -> {
-                    if (this.wishlistRecipeName.isHover()) {
-                        EventService.publish(event);
-                    }
-                });
+                            if (this.wishlistRecipeName.isHover()) {
+                                EventService.publish(event);
+                            }
+                        },
+                        t -> log.error(t.getMessage(), t));
 
         DestroyableButton removeBlueprint = ButtonBuilder.builder()
                 .withStyleClass("remove")

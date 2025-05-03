@@ -67,6 +67,7 @@ public class HorizonsMaterialOverview extends DestroyableVBox implements Destroy
         manufacturedLine = new DestroyableSeparator(Orientation.HORIZONTAL);
 
         initCards();
+        update();
     }
 
     @Override
@@ -100,27 +101,22 @@ public class HorizonsMaterialOverview extends DestroyableVBox implements Destroy
         this.getNodes().add(this.nearestTraders);
         this.getNodes().add(rawLine);
         Arrays.stream(HorizonsMaterialType.getRawTypes()).forEach(type -> {
-            if (Arrays.stream(Raw.materialsForType(type)).anyMatch(this::searchForMaterial)) {
-                final HorizonsMaterialCard[] array = Arrays.stream(Raw.values())
-                        .filter(material -> material.getMaterialType().equals(type))
-                        .map(HorizonsMaterialCard::new)
-                        .sorted(Comparator.comparing(card -> card.getMaterial().getRarity()))
-                        .toArray(HorizonsMaterialCard[]::new);
-                rawFlowPanes.add(createMaterialCardRow(type, array));
-            }
+            final HorizonsMaterialCard[] array = Arrays.stream(Raw.values())
+                    .filter(material -> material.getMaterialType().equals(type))
+                    .map(HorizonsMaterialCard::new)
+                    .sorted(Comparator.comparing(card -> card.getMaterial().getRarity()))
+                    .toArray(HorizonsMaterialCard[]::new);
+            rawFlowPanes.add(createMaterialCardRow(type, array));
         });
 
         this.getNodes().add(encodedLine);
         Arrays.stream(HorizonsMaterialType.getEncodedTypes()).forEach(type -> {
-            if (Arrays.stream(Encoded.materialsForType(type)).anyMatch(this::searchForMaterial)) {
-                final HorizonsMaterialCard[] array = Arrays.stream(Encoded.values())
-                        .filter(material -> material.getMaterialType().equals(type))
-                        .map(HorizonsMaterialCard::new)
-                        .sorted(Comparator.comparing(card -> card.getMaterial().getRarity()))
-                        .toArray(HorizonsMaterialCard[]::new);
-                encodedFlowPanes.add(createMaterialCardRow(type, array));
-
-            }
+            final HorizonsMaterialCard[] array = Arrays.stream(Encoded.values())
+                    .filter(material -> material.getMaterialType().equals(type))
+                    .map(HorizonsMaterialCard::new)
+                    .sorted(Comparator.comparing(card -> card.getMaterial().getRarity()))
+                    .toArray(HorizonsMaterialCard[]::new);
+            encodedFlowPanes.add(createMaterialCardRow(type, array));
         });
 
         this.getNodes().add(manufacturedLine);

@@ -12,7 +12,6 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ColonisationItem;
 import nl.jixxed.eliteodysseymaterials.domain.ColonisationItems;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
-import nl.jixxed.eliteodysseymaterials.enums.ColonisationBuildable;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.service.event.ColonisationConstructionDepotEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
@@ -44,7 +43,7 @@ public class ColonisationService {
                             colonisationItem.setConstructionRequirements(event.getResourcesRequired());
                             saveColonisationItems(commander, colonisationItems);
                         });
-                ColonisationItem.setCurrent(new ColonisationItem("1", "Current", event.getMarketID().toString(), ColonisationBuildable.UNKNOWN, event.getResourcesRequired()));
+                ColonisationItem.setCurrent(new ColonisationItem("1", "Current", event.getMarketID().toString(), null, null, event.getResourcesRequired()));
             });
         }));
     }

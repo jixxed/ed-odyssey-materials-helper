@@ -8,23 +8,68 @@
   .colonisation-view {
     -fx-spacing: 0.25em;
 
-    .buttons {
-      @include hvGap(0.25em);
+    .colonisation-menu {
+      -fx-spacing: 0.25em;
+      -fx-alignment: center-left;
+
+      .colonisation-select {
+        @include fixedWidth(35em);
+      }
+
+      .colonisation-checkbox {
+      }
     }
 
-    .projects {
+    .project-info {
       @include hvGap(0.25em);
-    }
 
-    .project-view {
-      @include fixedWidth(32em);
-      -fx-padding: 0.25em;
-      -fx-background-color: $background-color-dark;
-      -fx-border-color: $border-color-black;
+      .project-view {
+        @include fixedWidth(32em);
+        -fx-padding: 0.25em;
+        -fx-background-color: $background-color-dark;
+        -fx-border-color: $border-color-black;
 
-      .contents {
-        //@include hvGap(0.5em);
-        -fx-spacing: 0.5em;
+        .contents {
+          //@include hvGap(0.5em);
+          -fx-spacing: 0.25em;
+
+          .title {
+            //-fx-text-fill: $text-color-white;
+            //-fx-font-size: 1.2em;
+            //-fx-font-weight: bold;
+          }
+
+          .colonisation-select {
+            @include fixedWidth(20em);
+          }
+
+          .name-input {
+            @include fixedWidth(20em);
+          }
+
+          .market-id {
+            -fx-font-weight: bold;
+          }
+        }
+
+        .buttons-contents {
+          -fx-alignment: top-right;
+        }
+      }
+
+      .project-stats {
+        @include fixedWidth(32em);
+        -fx-padding: 0.25em;
+        -fx-background-color: $background-color-dark;
+        -fx-border-color: $border-color-black;
+
+        .title-amount {
+
+        }
+
+        .amount {
+          -fx-font-weight: bold;
+        }
 
         .title {
           -fx-text-fill: $text-color-white;

@@ -21,22 +21,47 @@
         -fx-padding: 0.25em; }
       .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view {
         -fx-spacing: 0.25em; }
-        .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .buttons {
+        .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .colonisation-menu {
+          -fx-spacing: 0.25em;
+          -fx-alignment: center-left; }
+          .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .colonisation-menu .colonisation-select {
+            -fx-min-width: 35em;
+            -fx-pref-width: 35em;
+            -fx-max-width: 35em; }
+        .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info {
           -fx-hgap: 0.25em;
           -fx-vgap: 0.25em; }
-        .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .projects {
-          -fx-hgap: 0.25em;
-          -fx-vgap: 0.25em; }
-        .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-view {
-          -fx-min-width: 32em;
-          -fx-pref-width: 32em;
-          -fx-max-width: 32em;
-          -fx-padding: 0.25em;
-          -fx-background-color: #0f0f0f;
-          -fx-border-color: black; }
-          .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-view .contents {
-            -fx-spacing: 0.5em; }
-            .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-view .contents .title {
+          .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .project-view {
+            -fx-min-width: 32em;
+            -fx-pref-width: 32em;
+            -fx-max-width: 32em;
+            -fx-padding: 0.25em;
+            -fx-background-color: #0f0f0f;
+            -fx-border-color: black; }
+            .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .project-view .contents {
+              -fx-spacing: 0.25em; }
+              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .project-view .contents .colonisation-select {
+                -fx-min-width: 20em;
+                -fx-pref-width: 20em;
+                -fx-max-width: 20em; }
+              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .project-view .contents .name-input {
+                -fx-min-width: 20em;
+                -fx-pref-width: 20em;
+                -fx-max-width: 20em; }
+              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .project-view .contents .market-id {
+                -fx-font-weight: bold; }
+            .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .project-view .buttons-contents {
+              -fx-alignment: top-right; }
+          .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .project-stats {
+            -fx-min-width: 32em;
+            -fx-pref-width: 32em;
+            -fx-max-width: 32em;
+            -fx-padding: 0.25em;
+            -fx-background-color: #0f0f0f;
+            -fx-border-color: black; }
+            .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .project-stats .amount {
+              -fx-font-weight: bold; }
+            .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .project-stats .title {
               -fx-text-fill: white;
               -fx-font-size: 1.2em;
               -fx-font-weight: bold; }
@@ -2696,7 +2721,7 @@
               -fx-text-fill: #2e92df;
               -fx-label-padding: 2px; }
             .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .totals-flow-pane .material-total .material-total-value-powerplay-row {
-              -fx-text-fill: #6d3da8;
+              -fx-text-fill: orange;
               -fx-label-padding: 2px; }
         .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card {
           -fx-min-height: 2em;
@@ -2731,7 +2756,7 @@
             -fx-text-fill: #2e92df; }
           .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card:powerplay .name, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card:powerplay .fleetcarrier-amount, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card:powerplay .wishlist-amount, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card:powerplay .backpack-amount, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card:powerplay .ship-amount, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card:powerplay .total-amount {
             -fx-font-weight: normal;
-            -fx-text-fill: #6d3da8; }
+            -fx-text-fill: orange; }
     .app .application-screen .odyssey-tab-content .blueprint-menu {
       -fx-min-width: 36.2em;
       -fx-pref-width: 36.2em;
@@ -2996,7 +3021,7 @@
               -fx-text-fill: #2e92df;
               -fx-label-padding: 2px; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .totals-flow-pane .material-total .material-total-value-powerplay-row {
-              -fx-text-fill: #6d3da8;
+              -fx-text-fill: orange;
               -fx-label-padding: 2px; }
         .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .wishlist-blueprints {
           -fx-spacing: 0.5em; }

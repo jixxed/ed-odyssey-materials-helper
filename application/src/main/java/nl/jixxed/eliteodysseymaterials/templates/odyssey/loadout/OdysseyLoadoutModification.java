@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.Loadout;
 import nl.jixxed.eliteodysseymaterials.domain.LoadoutSet;
@@ -26,7 +27,9 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import org.controlsfx.control.PopOver;
 
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
+@Slf4j
 class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableTemplate {
     private static final String LOADOUT_MODIFICATION_STYLE_CLASS = "modification";
     private static final String LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS = "mod-image";
@@ -111,33 +114,34 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
             if (!event.getButton().equals(MouseButton.PRIMARY)) {
                 return;
             }
-            final Screen screen = Screen.getScreensForRectangle(event.getScreenX(), event.getScreenY(), 1, 1).getFirst();
-            if (screen == null) {
-                return;
+            try {
+                final Screen screen = Screen.getScreensForRectangle(event.getScreenX(), event.getScreenY(), 1, 1).getFirst();
+                this.popOver = PopOverBuilder.builder()
+                        .withStyleClass("loadout-modification-popover")
+                        .withContent(createModificationOptionsGrid())
+                        .withDetachable(false)
+                        .withHeaderAlwaysVisible(false)
+                        .withArrowIndent(0)
+                        .withArrowSize(0)
+                        .withCornerRadius(0)
+                        .withDestroyOnHide(true)
+                        .build();
+                final Rectangle2D currentScreen = screen.getBounds();
+                final double mouseXOnScreen = event.getScreenX() - currentScreen.getMinX();
+                final double mouseYOnScreen = event.getScreenY() - currentScreen.getMinY();
+                if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {
+                    popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_TOP);
+                } else if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen > currentScreen.getHeight() / 2) {
+                    popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_BOTTOM);
+                } else if (mouseXOnScreen > currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {
+                    popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_TOP);
+                } else {
+                    popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_BOTTOM);
+                }
+                this.popOver.show(this, event.getScreenX(), event.getScreenY());
+            } catch (NoSuchElementException ex) {
+                log.error(ex.getMessage(), ex);
             }
-            this.popOver = PopOverBuilder.builder()
-                    .withStyleClass("loadout-modification-popover")
-                    .withContent(createModificationOptionsGrid())
-                    .withDetachable(false)
-                    .withHeaderAlwaysVisible(false)
-                    .withArrowIndent(0)
-                    .withArrowSize(0)
-                    .withCornerRadius(0)
-                    .withDestroyOnHide(true)
-                    .build();
-            final Rectangle2D currentScreen = screen.getBounds();
-            final double mouseXOnScreen = event.getScreenX() - currentScreen.getMinX();
-            final double mouseYOnScreen = event.getScreenY() - currentScreen.getMinY();
-            if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {
-                popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_TOP);
-            } else if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen > currentScreen.getHeight() / 2) {
-                popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_BOTTOM);
-            } else if (mouseXOnScreen > currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {
-                popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_TOP);
-            } else {
-                popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_BOTTOM);
-            }
-            this.popOver.show(this, event.getScreenX(), event.getScreenY());
         });
     }
 
