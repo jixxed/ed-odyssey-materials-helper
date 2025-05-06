@@ -2,17 +2,17 @@ messageKey,,en,de,es,fr,pt,ru
 colonisation.all.projects,All colonisation projects,,,Todos los proyectos de colonización,,,Все проекты колонизации
 tab.colonisation.project.market.id,Market ID,,,ID del mercado,,,ID рынка
 tab.colonisation.project.name,Name,,,Nombre,,,Имя
-colonisation.current.project,Current colonisation project,,,,,,
-tab.colonisation.project.type,Type,,,,,,
-tab.colonisation.project.layout,Layout,,,,,,
-tab.colonisation.material.required,Required,,,,,,
-tab.colonisation.material.delivered,Delivered,,,,,,
-tab.colonisation.material.tocollect,To collect,,,,,,
-tab.colonisation.material.todeliver,To deliver,,,,,,
-tab.colonisation.material.total.required,Total required,,,,,,
-tab.colonisation.material.total.delivered,Total delivered,,,,,,
-tab.colonisation.material.total.tocollect,Total to collect,,,,,,
-tab.colonisation.material.total.todeliver,Total to deliver,,,,,,
-tab.colonisation.material.stats,Statistics,,,,,,
-tab.colonisation.hide.completed,Hide completed,,,,,,
-tab.colonisation.hint,Dock at a depot and track the current project to add projects to the list,,,,,,
+colonisation.current.project,Current colonisation project,,,,,,Текущий проект колонизации
+tab.colonisation.project.type,Type,,,,,,Тип
+tab.colonisation.project.layout,Layout,,,,,,Планировка
+tab.colonisation.material.required,Required,,,,,,Требуется
+tab.colonisation.material.delivered,Delivered,,,,,,Доставлено
+tab.colonisation.material.tocollect,To collect,,,,,,Собрать
+tab.colonisation.material.todeliver,To deliver,,,,,,Доставить
+tab.colonisation.material.total.required,Total required,,,,,,Требуется всего
+tab.colonisation.material.total.delivered,Total delivered,,,,,,Доставлено всего
+tab.colonisation.material.total.tocollect,Total to collect,,,,,,Собрать всего
+tab.colonisation.material.total.todeliver,Total to deliver,,,,,,Доставить всего
+tab.colonisation.material.stats,Statistics,,,,,,Статистика
+tab.colonisation.hide.completed,Hide completed,,,,,,Скрыть завершенное
+tab.colonisation.hint,Dock at a depot and track the current project to add projects to the list,,,,,,Припаркуйтесь на складе и отслеживайте текущий проект, чтобы добавить проекты в список
