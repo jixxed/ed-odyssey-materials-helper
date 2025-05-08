@@ -1,19 +1,19 @@
-messageKey,,en,de,es,fr,pt,ru,zh
-economy.agri,Agriculture,,,Agricultura,,Agricultura,Сельское хозяйство,
-economy.colony,Colony,,,Colonia,,Colônia,Колония,
-economy.extraction,Extraction,,,Extracción,,Extração,Добыча ископаемых,
-economy.hightech,High Tech,,,Alta Tecnología,,Alta Tecnología,Высокие технологии,
-economy.industrial,Industrial,,,Industrial,,Industrial,Промышленность,
-economy.military,Military,,,Militar,,Militar,Военная,
-economy.refinery,Refinery,,,Refineria,,Refinaria,Переработка,
-economy.service,Service,,,Servicios,,Serviços,Сфера услуг,
-economy.terraforming,Terraforming,,,Terraformación,,Terraformação,Терраформирование,
-economy.tourism,Tourism,,,Turismo,,Turismo,Туризм,
-economy.prison,Prison,,,Prisión,,Prisão,Тюрьма,
-economy.damaged,Damaged,,,Dañado,,Denificado,Поврежденная,
-economy.rescue,Rescue,,,Rescate,,Resgate,Спасательный корабль,
-economy.repair,Repair,,,Reparación,,Reparo,Ремонт,
-economy.carrier,Private Enterprise,,,Empresa Privada,,Empresa Privada,Частное предприятие,
-economy.engineer,Engineering,,,Ingeniería,,Engenharia,Инженерное дело,
-economy.none,None,,,Ninguna,,Nenhuma,Нет,
-economy.unknown,Unknown,,,Desconocida,,Desconhecida,Неизвестно,
+"messageKey","","en","de","es","fr","pt","ru","zh"
+"economy.agri","Agriculture","","","Agricultura","","Agricultura","Сельское хозяйство",""
+"economy.colony","Colony","","","Colonia","","Colônia","Колония",""
+"economy.extraction","Extraction","","","Extracción","","Extração","Добыча ископаемых",""
+"economy.hightech","High Tech","","","Alta Tecnología","","Alta Tecnología","Высокие технологии",""
+"economy.industrial","Industrial","","","","","","Промышленность",""
+"economy.military","Military","","","Militar","","Militar","Военная",""
+"economy.refinery","Refinery","","","Refineria","","Refinaria","Переработка",""
+"economy.service","Service","","","Servicios","","Serviços","Сфера услуг",""
+"economy.terraforming","Terraforming","","","Terraformación","","Terraformação","Терраформирование",""
+"economy.tourism","Tourism","","","Turismo","","Turismo","Туризм",""
+"economy.prison","Prison","","","Prisión","","Prisão","Тюрьма",""
+"economy.damaged","Damaged","","","Dañado","","Denificado","Поврежденная",""
+"economy.rescue","Rescue","","","Rescate","","Resgate","Спасательный корабль",""
+"economy.repair","Repair","","","Reparación","","Reparo","Ремонт",""
+"economy.carrier","Private Enterprise","","","Empresa Privada","","Empresa Privada","Частное предприятие",""
+"economy.engineer","Engineering","","","Ingeniería","","Engenharia","Инженерное дело",""
+"economy.none","None","","","Ninguna","","Nenhuma","Нет",""
+"economy.unknown","Unknown","","","Desconocida","","Desconhecida","Неизвестно",""

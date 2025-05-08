@@ -1,35 +1,35 @@
-messageKey,,en,de,es,fr,pt,ru,zh
-material.asset.aerogel,Aerogel,Aerogel,Aerogel,Aerogel,Aérogel,Aerogel,Аэрогель,
-material.asset.carbonfibreplating,Carbon Fibre Plating,Carbon Fibre Plating,Carbonfaserplatten,Placa de fibra de carbono,Plaques en fibres de carbone,Revestimento de fibra de carbono,Углеволоконная пластина,
-material.asset.chemicalcatalyst,Chemical Catalyst,Chemical Catalyst,Chemischer Katalysator,Catalizador químico,Catalyseur chimique,Catalisador químico,Химический катализатор,
-material.asset.chemicalsuperbase,Chemical Superbase,Chemical Superbase,Chemische Superbase,Superbase química,Superbase chimique,Superbase química,Химическое супероснование,
-material.asset.circuitboard,Circuit Board,Circuit Board,Schaltplatte,Placa base,Circuit imprimé,Placa de circuitos,Электроплата,
-material.asset.circuitswitch,Circuit Switch,Circuit Switch,Elektroschalter,Conmutador,Commutateur,Chave de circuito,Переключатель цепи,
-material.asset.electricalfuse,Electrical Fuse,Electrical Fuse,Elektrosicherung,Fusible,Fusible électrique,Fusível elétrico,Предохранитель,
-material.asset.electricalwiring,Electrical Wiring,Electrical Wiring,Elektroverkabelung,Cables eléctricos,Câblage électrique,Fio elétrico,Электропроводка,
-material.asset.electromagnet,Electromagnet,Electromagnet,Elektromagnet,Electroimán,Électroaimant,Eletroímã,Электромагнит,
-material.asset.encryptedmemorychip,Encrypted Memory Chip,Encrypted Memory Chip,Verschlüsselter Speicherchip,Chip de memoria cifrado,Puce mémoire cryptée,Chip de memória criptografado,Зашифрованная плата памяти,
-material.asset.epinephrine,Epinephrine,Epinephrine,Epinephrin,Epinefrina,Épinéphrine,Epinefrina,Эпинефрин,
-material.asset.epoxyadhesive,Epoxy Adhesive,Epoxy Adhesive,Epoxy-Klebstoff,Resina epoxi,Colle époxy,Adesivo de epóxi,Эпоксидный клей,
-material.asset.graphene,Graphene,Graphene,Graphen,Grafeno,Graphène,Grafeno,Графен,
-material.asset.ionbattery,Ion Battery,Ion Battery,Ionen-Batterie,Batería de iones,Batterie ionique,Bateria iônica,Ионная батарея,
-material.asset.memorychip,Memory Chip,Memory Chip,Speicherchip,Chip de memoria,Puce mémoire,Chip de memória,Плата памяти,
-material.asset.metalcoil,Metal Coil,Metal Coil,Metallspule,Bobina de metal,Bobine métallique,Mola de metal,Металлическая катушка,
-material.asset.microelectrode,Microelectrode,Microelectrode,Mikroelektrode,Microelectrodo,Microélectrode,Microeletrodo,Микроэлектрод,
-material.asset.microhydraulics,Micro Hydraulics,Micro Hydraulics,Mikrohydraulikgeräte,Microhidráulica,Micro hydraulique,Micro-hidráulica,Микрогидравлика,
-material.asset.microsupercapacitor,Micro Supercapacitor,Micro Supercapacitor,Mikro-Superkondensatoren,Microsupercondensador,Microsupercondensateur,Microsupercapacitor,Микросуперконденсаторы,
-material.asset.microthrusters,Micro Thrusters,Micro Thrusters,Mikro-Schubdüsen,Microimpulsores,Micropropulseurs,Micropropulsores,Маневровые микродвигатели,
-material.asset.microtransformer,Micro Transformer,Micro Transformer,Mikro-Transformator,Microtransformador,Microtransformateur,Microtransformador,Микротрансформатор,
-material.asset.motor,Motor,Motor,Motor,Motor,Moteur,Motor,Мотор,
-material.asset.opticalfibre,Optical Fibre,Optical Fibre,Glasfaser,Fibra óptica,Fibre optique,Fibra ótica,Оптоволокно,
-material.asset.opticallens,Optical Lens,Optical Lens,Optische Linse,Lente óptica,Lentille optique,Lente ótica,Оптические линзы,
-material.asset.oxygenicbacteria,Oxygenic Bacteria,Oxygenic Bacteria,Sauerstoffbakterien,Bacterias oxigénicas,Bactérie oxygénique,Bactérias oxigênicas,Кислородные бактерии,
-material.asset.phneutraliser,pH Neutraliser,pH Neutraliser,pH-Neutralisator,Neutralizador de pH,Neutralisateur de pH,Neutralizador de pH,Нейтрализатор pH,
-material.asset.rdx,RDX,RDX,Hexogen,RDX,RDX,RDX,Гексоген,
-material.asset.scrambler,Scrambler,Scrambler,Störsender,Desmodulador,Brouilleur,Embaralhador,Шифратор,
-material.asset.titaniumplating,Titanium Plating,Titanium Plating,Titanplatten,Placa de titanio,Plaques en titane,Revestimento de titânio,Титановая пластина,
-material.asset.transmitter,Transmitter,Transmitter,Sender,Transmisor,Transmetteur,Transmissor,Передатчик,
-material.asset.tungstencarbide,Tungsten Carbide,Tungsten Carbide,Wolframcarbid,Carburo de tungsteno,Carbure de tungstène,Carboneto de tungstênio,Карбид вольфрама,
-material.asset.unknown,UNKNOWN,UNKNOWN,UNBEKANNT,DESCONOCIDO,INCONNU,DESCONHECIDO,НЕИЗВЕСТНЫЙ,
-material.asset.viscoelasticpolymer,Viscoelastic Polymer,Viscoelastic Polymer,Viskoelastisches Polymer,Polímetro viscoelástico,Polymère viscoélastique,Polímero viscoelástico,Вязкоэластичный полимер,
-material.asset.weaponcomponent,Weapon Component,Weapon Component,Waffenkomponente,Componente de arma,Composant d’arme,Componente de armas,Компонент оружия,
+"messageKey","","en","de","es","fr","pt","ru","zh"
+"material.asset.aerogel","Aerogel","Aerogel","","","Aérogel","","Аэрогель",""
+"material.asset.carbonfibreplating","Carbon Fibre Plating","Carbon Fibre Plating","Carbonfaserplatten","Placa de fibra de carbono","Plaques en fibres de carbone","Revestimento de fibra de carbono","Углеволоконная пластина",""
+"material.asset.chemicalcatalyst","Chemical Catalyst","Chemical Catalyst","Chemischer Katalysator","Catalizador químico","Catalyseur chimique","Catalisador químico","Химический катализатор",""
+"material.asset.chemicalsuperbase","Chemical Superbase","Chemical Superbase","Chemische Superbase","Superbase química","Superbase chimique","Superbase química","Химическое супероснование",""
+"material.asset.circuitboard","Circuit Board","Circuit Board","Schaltplatte","Placa base","Circuit imprimé","Placa de circuitos","Электроплата",""
+"material.asset.circuitswitch","Circuit Switch","Circuit Switch","Elektroschalter","Conmutador","Commutateur","Chave de circuito","Переключатель цепи",""
+"material.asset.electricalfuse","Electrical Fuse","Electrical Fuse","Elektrosicherung","Fusible","Fusible électrique","Fusível elétrico","Предохранитель",""
+"material.asset.electricalwiring","Electrical Wiring","Electrical Wiring","Elektroverkabelung","Cables eléctricos","Câblage électrique","Fio elétrico","Электропроводка",""
+"material.asset.electromagnet","Electromagnet","Electromagnet","Elektromagnet","Electroimán","Électroaimant","Eletroímã","Электромагнит",""
+"material.asset.encryptedmemorychip","Encrypted Memory Chip","Encrypted Memory Chip","Verschlüsselter Speicherchip","Chip de memoria cifrado","Puce mémoire cryptée","Chip de memória criptografado","Зашифрованная плата памяти",""
+"material.asset.epinephrine","Epinephrine","Epinephrine","Epinephrin","Epinefrina","Épinéphrine","Epinefrina","Эпинефрин",""
+"material.asset.epoxyadhesive","Epoxy Adhesive","Epoxy Adhesive","Epoxy-Klebstoff","Resina epoxi","Colle époxy","Adesivo de epóxi","Эпоксидный клей",""
+"material.asset.graphene","Graphene","Graphene","Graphen","Grafeno","Graphène","Grafeno","Графен",""
+"material.asset.ionbattery","Ion Battery","Ion Battery","Ionen-Batterie","Batería de iones","Batterie ionique","Bateria iônica","Ионная батарея",""
+"material.asset.memorychip","Memory Chip","Memory Chip","Speicherchip","Chip de memoria","Puce mémoire","Chip de memória","Плата памяти",""
+"material.asset.metalcoil","Metal Coil","Metal Coil","Metallspule","Bobina de metal","Bobine métallique","Mola de metal","Металлическая катушка",""
+"material.asset.microelectrode","Microelectrode","Microelectrode","Mikroelektrode","Microelectrodo","Microélectrode","Microeletrodo","Микроэлектрод",""
+"material.asset.microhydraulics","Micro Hydraulics","Micro Hydraulics","Mikrohydraulikgeräte","Microhidráulica","Micro hydraulique","Micro-hidráulica","Микрогидравлика",""
+"material.asset.microsupercapacitor","Micro Supercapacitor","Micro Supercapacitor","Mikro-Superkondensatoren","Microsupercondensador","Microsupercondensateur","Microsupercapacitor","Микросуперконденсаторы",""
+"material.asset.microthrusters","Micro Thrusters","Micro Thrusters","Mikro-Schubdüsen","Microimpulsores","Micropropulseurs","Micropropulsores","Маневровые микродвигатели",""
+"material.asset.microtransformer","Micro Transformer","Micro Transformer","Mikro-Transformator","Microtransformador","Microtransformateur","Microtransformador","Микротрансформатор",""
+"material.asset.motor","Motor","Motor","","","Moteur","","Мотор",""
+"material.asset.opticalfibre","Optical Fibre","Optical Fibre","Glasfaser","Fibra óptica","Fibre optique","Fibra ótica","Оптоволокно",""
+"material.asset.opticallens","Optical Lens","Optical Lens","Optische Linse","Lente óptica","Lentille optique","Lente ótica","Оптические линзы",""
+"material.asset.oxygenicbacteria","Oxygenic Bacteria","Oxygenic Bacteria","Sauerstoffbakterien","Bacterias oxigénicas","Bactérie oxygénique","Bactérias oxigênicas","Кислородные бактерии",""
+"material.asset.phneutraliser","pH Neutraliser","pH Neutraliser","pH-Neutralisator","Neutralizador de pH","Neutralisateur de pH","Neutralizador de pH","Нейтрализатор pH",""
+"material.asset.rdx","RDX","RDX","Hexogen","","","","Гексоген",""
+"material.asset.scrambler","Scrambler","Scrambler","Störsender","Desmodulador","Brouilleur","Embaralhador","Шифратор",""
+"material.asset.titaniumplating","Titanium Plating","Titanium Plating","Titanplatten","Placa de titanio","Plaques en titane","Revestimento de titânio","Титановая пластина",""
+"material.asset.transmitter","Transmitter","Transmitter","Sender","Transmisor","Transmetteur","Transmissor","Передатчик",""
+"material.asset.tungstencarbide","Tungsten Carbide","Tungsten Carbide","Wolframcarbid","Carburo de tungsteno","Carbure de tungstène","Carboneto de tungstênio","Карбид вольфрама",""
+"material.asset.unknown","UNKNOWN","UNKNOWN","UNBEKANNT","DESCONOCIDO","INCONNU","DESCONHECIDO","НЕИЗВЕСТНЫЙ",""
+"material.asset.viscoelasticpolymer","Viscoelastic Polymer","Viscoelastic Polymer","Viskoelastisches Polymer","Polímetro viscoelástico","Polymère viscoélastique","Polímero viscoelástico","Вязкоэластичный полимер",""
+"material.asset.weaponcomponent","Weapon Component","Weapon Component","Waffenkomponente","Componente de arma","Composant d’arme","Componente de armas","Компонент оружия",""

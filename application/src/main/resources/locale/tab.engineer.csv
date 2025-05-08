@@ -1,10 +1,10 @@
-messageKey,,en,de,es,fr,pt,ru,zh
-tab.engineer.core.internal,Core Internals,Core Internals,Kernintern,Internos Principales,Noyau internes,Internos Principais,Основное оборудование,
-tab.engineer.hardpoint,Hardpoints,Hardpoints,Hardpoints,Anclajes,Points durs,Encaixes,Гнёзда,
-tab.engineer.optional.internal,Optional Internals,Optional Internals,Optionale Interna,Internos opcionales,Internes facultatifs,Internos opcionais,Доп. Оборудование,
-tab.engineer.suit.modules,Suit Modules,Suit Modules,Anzugmodule,Módulos de trajes,Modules de combinaison,Módulos de traje,Модули для костюма,
-tab.engineer.unlock.prerequisites,Unlock Prerequisites,Unlock Prerequisites,Voraussetzungen zum Freischalten,Requisitos de desbloqueo,Déverrouiller les prérequis,Pré-requisitos de desbloqueio,Требования для разблокировки,
-tab.engineer.utility.mount,Utility Mounts,Utility Mounts,Versorgungsrettungen,Anclajes de Utilidad,Supports de services publics,Encaixes de Apoio,Внешнее оборудование,
-tab.engineer.weapon.modules,Weapon Modules,Weapon Modules,Waffenmodule,Módulos de armas,Modules d’arme,Módulos de arma,Модули для оружия,
-tab.engineer.pinned.blueprint,Pinned Blueprint,Pinned Blueprint,Pastete Blaupause,Plano anclado,Blueprint épinglé,Projeto fixado,Закрепленный чертеж,
-tab.engineer.distance,"({0}Ly)",,,"({0}Al)",,,,
+"messageKey","","en","de","es","fr","pt","ru","zh"
+"tab.engineer.core.internal","Core Internals","Core Internals","Kernintern","Internos Principales","Noyau internes","Internos Principais","Основное оборудование",""
+"tab.engineer.hardpoint","Hardpoints","Hardpoints","","Anclajes","Points durs","Encaixes","Гнёзда",""
+"tab.engineer.optional.internal","Optional Internals","Optional Internals","Optionale Interna","Internos opcionales","Internes facultatifs","Internos opcionais","Доп. Оборудование",""
+"tab.engineer.suit.modules","Suit Modules","Suit Modules","Anzugmodule","Módulos de trajes","Modules de combinaison","Módulos de traje","Модули для костюма",""
+"tab.engineer.unlock.prerequisites","Unlock Prerequisites","Unlock Prerequisites","Voraussetzungen zum Freischalten","Requisitos de desbloqueo","Déverrouiller les prérequis","Pré-requisitos de desbloqueio","Требования для разблокировки",""
+"tab.engineer.utility.mount","Utility Mounts","Utility Mounts","Versorgungsrettungen","Anclajes de Utilidad","Supports de services publics","Encaixes de Apoio","Внешнее оборудование",""
+"tab.engineer.weapon.modules","Weapon Modules","Weapon Modules","Waffenmodule","Módulos de armas","Modules d’arme","Módulos de arma","Модули для оружия",""
+"tab.engineer.pinned.blueprint","Pinned Blueprint","Pinned Blueprint","Pastete Blaupause","Plano anclado","Blueprint épinglé","Projeto fixado","Закрепленный чертеж",""
+"tab.engineer.distance","({0}Ly)","","","({0}Al)","","","",""

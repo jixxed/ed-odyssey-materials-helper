@@ -1,16 +1,16 @@
-messageKey,,en,de,es,fr,pt,ru,zh
-blueprint.category.name.blueprints,Blueprints,Blueprints,Bauplan,Planos,Plans,Projetos,Чертежи,
-blueprint.category.name.core_internal,Core Internals,Core Internals,Intern (Basis),Internos Principales,Interne - Primordiaux,Internos Principais,Основное оборудование,
-blueprint.category.name.engineer_unlocks,Engineer Unlocks,Engineer Unlocks,Ingenieur-Freischaltungen,Desbloqueo del ingeniero,Déverrouillage des ingénieurs,Engenheiros,Разблокировка инженеров,
-blueprint.category.name.experimental_effects,Experimental Effects,Experimental Effects,Experimentelle Effekte,Efectos experimentales,Effets expérimentaux,Efeitos Experimentais,Экспериментальные эффекты,
-blueprint.category.name.hardpoint,Hardpoints,Hardpoints,Waffenaufhängungen,Anclajes,Points d’emport,Encaixes,Гнёзда,
-blueprint.category.name.optional_internal,Optional Internals,Optional Internals,Intern (Optional),Internos Opcionales,Interne - Optionels,Internos Opcionais,Доп. Оборудование,
-blueprint.category.name.suit_grades,Suit Grades,Suit Grades,Anzugstufen,Grados del traje,Niveaux de combinaison,Graus de Traje,Уровни костюма,
-blueprint.category.name.suit_modules,Suit Modules,Suit Modules,Anzug Modifikationen,Módulos de trajes,Modules de combinaison,Módulos de Traje,Модули для костюма,
-blueprint.category.name.synthesis,Synthesis,Synthesis,"Synthese ",Síntesis,Synthèse,Síntese,Синтез,
-blueprint.category.name.techbroker,Techbroker Blueprints,Techbroker Blueprints,Technologie Händler Bauplan,Planos de Broker de Tecnología,Plans de courtier en technologie,Mediador de Tecnologia,Чертежи техноброкеров,
-blueprint.category.name.utility_mount,Utility Mounts,Utility Mounts,Werkzeug Aufhängungen,Anclajes de Utilidad,Supports utilitaires,Encaixes de Apoio,Внешнее оборудование,
-blueprint.category.name.weapon_grades,Weapon Grades,Weapon Grades,Waffenstufen,Grados de armas,Niveaux d’armes,Níveis de Armas,Уровни оружия,
-blueprint.category.name.weapon_modules,Weapon Modules,Weapon Modules,Waffen Modifikationen,Módulos de armas,Modules d’armes,Módulos de Arma,Модули для оружия,
-blueprint.category.name.optional_military,Optional Military,,,Militares Opcionales,Militaire - Optionels,Militares Opcionais,Доп. военное оборудование,
-blueprint.category.name.cargo_hatch,Cargo Hatch,,,Escotilla de Carga,Écoutille de soute,Escotilha de Carga,Грузовой люк,
+"messageKey","","en","de","es","fr","pt","ru","zh"
+"blueprint.category.name.blueprints","Blueprints","Blueprints","Bauplan","Planos","Plans","Projetos","Чертежи",""
+"blueprint.category.name.core_internal","Core Internals","Core Internals","Intern (Basis)","Internos Principales","Interne - Primordiaux","Internos Principais","Основное оборудование",""
+"blueprint.category.name.engineer_unlocks","Engineer Unlocks","Engineer Unlocks","Ingenieur-Freischaltungen","Desbloqueo del ingeniero","Déverrouillage des ingénieurs","Engenheiros","Разблокировка инженеров",""
+"blueprint.category.name.experimental_effects","Experimental Effects","Experimental Effects","Experimentelle Effekte","Efectos experimentales","Effets expérimentaux","Efeitos Experimentais","Экспериментальные эффекты",""
+"blueprint.category.name.hardpoint","Hardpoints","Hardpoints","Waffenaufhängungen","Anclajes","Points d’emport","Encaixes","Гнёзда",""
+"blueprint.category.name.optional_internal","Optional Internals","Optional Internals","Intern (Optional)","Internos Opcionales","Interne - Optionels","Internos Opcionais","Доп. Оборудование",""
+"blueprint.category.name.suit_grades","Suit Grades","Suit Grades","Anzugstufen","Grados del traje","Niveaux de combinaison","Graus de Traje","Уровни костюма",""
+"blueprint.category.name.suit_modules","Suit Modules","Suit Modules","Anzug Modifikationen","Módulos de trajes","Modules de combinaison","Módulos de Traje","Модули для костюма",""
+"blueprint.category.name.synthesis","Synthesis","Synthesis","Synthese ","Síntesis","Synthèse","Síntese","Синтез",""
+"blueprint.category.name.techbroker","Techbroker Blueprints","Techbroker Blueprints","Technologie Händler Bauplan","Planos de Broker de Tecnología","Plans de courtier en technologie","Mediador de Tecnologia","Чертежи техноброкеров",""
+"blueprint.category.name.utility_mount","Utility Mounts","Utility Mounts","Werkzeug Aufhängungen","Anclajes de Utilidad","Supports utilitaires","Encaixes de Apoio","Внешнее оборудование",""
+"blueprint.category.name.weapon_grades","Weapon Grades","Weapon Grades","Waffenstufen","Grados de armas","Niveaux d’armes","Níveis de Armas","Уровни оружия",""
+"blueprint.category.name.weapon_modules","Weapon Modules","Weapon Modules","Waffen Modifikationen","Módulos de armas","Modules d’armes","Módulos de Arma","Модули для оружия",""
+"blueprint.category.name.optional_military","Optional Military","","","Militares Opcionales","Militaire - Optionels","Militares Opcionais","Доп. военное оборудование",""
+"blueprint.category.name.cargo_hatch","Cargo Hatch","","","Escotilla de Carga","Écoutille de soute","Escotilha de Carga","Грузовой люк",""
