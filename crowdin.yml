@@ -12,8 +12,8 @@ files:
     languages_mapping:
       locale:
         de: de
-        es: es
+        es-ES: es
         fr: fr
-        pt: pt
+        pt-PT: pt
         ru: ru
         zh-CN: zh
