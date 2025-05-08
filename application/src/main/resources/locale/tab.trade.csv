@@ -1,51 +1,51 @@
-messageKey,,en,de,es,fr,pt,ru,zh
-create.trade.offer.button,Create trade offer,Create trade offer,Handelsangebot erstellen,Crear oferta comercial,Créer une offre commerciale,Criar oferta comercial,Начать торговлю,
-tab.trade.button.connect,connect,connect,connect,conectar,connect,conectar,Присоединиться,
-tab.trade.button.disconnect,disconnect,disconnect,trennen,desconectar,déconnecter,desconectar,Отключиться,
-tab.trade.my.trades,My trade offers,My trade offers,Meine Handelsangebote,Mis ofertas comerciales,Mes offres commerciales,Minhas ofertas comerciais,Мои предложения на продажу,
-tab.trade.new.trade,New trade offer,New trade offer,Neues Handelsangebot,Nueva oferta comercial,Nouvelle offre commerciale,Nova oferta comercial,Новое предложение на продажу,
-tab.trade.other.trades,Available trade requests,Available trade requests,Verfügbare Handelsanfragen,Solicitudes comerciales disponibles,Demandes d’échange disponibles,Pedidos de negociação disponíveis,Доступные торговые запросы,
-tab.trade.pagination.OFFER,My trade offers,My trade offers,Meine Handelsangebote,Mis ofertas comerciales,Mes offres commerciales,Minhas ofertas comerciais,Мои торговые предложения,
-tab.trade.pagination.REQUEST,Available trade requests,Available trade requests,Verfügbare Handelsanfragen,Solicitudes comerciales disponibles,Demandes d’échange disponibles,Pedidos de troca disponíveis,Доступные торговые запросы,
-tab.trade.pagination.updates,{0} updates,{0} updates,{0} Updates,{0} actualizaciones,{0} mises à jour,{0} atualizações,{0} обновлений,
-tab.trade.status.connected,Connected,Connected,Verbunden,Conectado,Connecté,Conectado,Подключено,
-tab.trade.status.connecting,Connecting...,Connecting...,Verbindung wird hergestellt...,Conectando...,Connexion...,Conectando...,Подключение...,
-tab.trade.status.not.connected,not connected,not connected,nicht verbunden,no conectado,non connecté,não conectado,не подключен,
-trade.button.chat,Chat,Chat,Chat,Chat,Chat,Chat,Чат,
-trade.buttons.accept,Accept,Accept,Akzeptieren,Aceptar,Accepter,Aceitar,Принять,
-trade.buttons.reject,Reject,Reject,Ablehnen,Rechazar,Rejeter,Rejeitar,Отклонить,
-trade.chat.title,Trade chat: {0}({1}) <> {2}({3}),Trade chat: {0}({1}) <> {2}({3}),Handelschat: {0}({1}) <> {2}({3}),Chat de comercio: {0} ({1}) <> {2} ({3}),Chat d’échange: {0}({1}) <> {2}({3}),Bate-papo comercial: {0} ({1}) <> {2} ({3}),Торговый чат: {0} ({1}) <> {2} ({3}),
-trade.create.amount,Amount,Amount,Betrag,Cantidad,Montant,Quantia,Сумма,
-trade.create.in.exchange.for,In exchange for,In exchange for,Im Austausch für,A cambio de,En échange de,Em troca de,В обмен на,
-trade.create.invalid.duplicate,Please do not select the same materials to offer and receive,Please do not select the same materials to offer and receive,"Bitte wählen Sie nicht dieselben Materialien aus, um sie anzubieten und zu erhalten",Por favor no seleccionar los mismos materiales para ofrecer y recibir,Veuillez ne pas sélectionner les mêmes matériaux à offrir et à recevoir,"Por favor, não selecione os mesmos materiais para oferecer e receber","Пожалуйста, не выбирайте одни и те же материалы для предложения и получения",
-trade.create.invalid.materials,Please enter valid materials for offer and receive,Please enter valid materials for offer and receive,Bitte geben Sie gültige Materialien für das Angebot ein und erhalten Sie,Ingrese materiales válidos para la ofrecer y recibir,Veuillez entrer des matériaux valides pour l’offre et recevoir,"Por favor, insira materiais válidos para oferta e receba","Пожалуйста, введите действительные материалы для предложения и получите",
-trade.create.invalid.offer,Invalid offer,Invalid offer,Ungültiges Angebot,Oferta no válida,Offre invalide,Oferta inválida,Недействительное предложение,
-trade.create.max,Max. {0},Max. {0},Max. {0},Máx. {0},Max. {0},Máx. {0},Макс. {0},
-trade.create.offer,Offer,Offer,Angebot,Oferta,Offre,Oferta,Предложение,
-trade.message.chat.send,Send,Send,Senden,Enviar,Envoyer,Enviar,послать,
-trade.offer.button.remove,Remove Offer,Remove Offer,Angebot entfernen,Eliminar oferta,Supprimer l’offre,Remover oferta,Удалить предложение,
-trade.request.button.request.cancel,Cancel trade,Cancel trade,Handel abbrechen,Cancelar intercambio,Annuler l’échange,Cancelar negociação,Отменить сделку,
-trade.request.button.request.trade,Request to trade,Request to trade,Anfrage zum Handeln,Solicitud de intercambio,Demande d’échange,Pedido de troca,Запрос на торговлю,
-trade.request.distance,Location: {0} ({1}Ly),Location: {0} ({1}Ly),Standort: {0} ({1}Ly),Ubicación: {0} ({1} Ly),Emplacement: {0} ({1}Ly),Local: {0} ({1} Ly),Местоположение: {0} ({1} Ly),
-trade.request.status.accepted,Status: Accepted,Status: Accepted,Status: Akzeptiert,Estado: Aceptado,Statut: Accepté,Status: Aceito,Статус: Принято,
-trade.request.status.available,Status: Available,Status: Available,Status: Verfügbar,Estado: Disponible,Statut: Disponible,Status: Disponível,Статус: Доступен,
-trade.request.status.cancelled,Status: Cancelled,Status: Cancelled,Status: Abgebrochen,Estado: Cancelado,Statut: Annulé,Status: Cancelado,Статус: Отменено,
-trade.request.status.offline,Status: Offline,Status: Offline,Status: Offline,Estado: Fuera de línea,Statut: Hors ligne,Status: Offline,Статус: Не в сети,
-trade.request.status.refused,Status: Refused,Status: Refused,Status: Abgelehnt,Estado: Rechazado,Statut: Refusé,Status: Recusado,Статус: отказано,
-trade.request.status.removed,Status: Removed,Status: Removed,Status: Entfernt,Estado: Eliminado,Statut: Supprimé,Status: Removido,Статус: Удалено,
-trade.request.status.unavailable,Status: Unavailable,Status: Unavailable,Status: Nicht verfügbar,Estado: No disponible,Statut: Non disponible,Status: Indisponível,Статус: недоступен,
-trade.request.status.waiting.for.a.response,Status: Waiting for a response...,Status: Waiting for a response...,Status: Warte auf Antwort...,Estado: Esperando una respuesta...,Statut: En attente d’une réponse...,Status: Aguardando uma resposta...,Статус: Ожидание ответа...,
-trade.search.filter.active,Active trades,Active trades,Aktive Trades,Intercambios activos,Commerces actifs,Negociações ativas,Активные торги,
-trade.search.filter.all,All (default),All (default),Alle (Standard),Todo (predeterminado),Tous (par défaut),All (padrão),Все (по умолчанию),
-trade.search.filter.can_trade,Can trade,Can trade,Kann handeln,Puede comerciar,Peut commercer,Pode negociar,Можно торговать,
-trade.search.filter.placeholder,Show trades,Show trades,Trades anzeigen,Mostrar intercambios,Afficher les transactions,Mostrar negociações,Показать сделки,
-trade.search.sort.name_offer,Name material given(default),Name material given(default),Namensmaterial angegeben (Standard),Nombre del material proporcionado (predeterminado),Nom du matériel donné (par défaut),Nome do material fornecido (padrão),Указано название материала (по умолчанию),
-trade.search.sort.name_receive,Name material receive,Name material receive,Namensmaterial empfangen,Nombre del material recibido,Nom du matériel reçu,Nome material recebido,Получение именного материала,
-trade.search.sort.placeholder,Sort trades,Sort trades,Trades sortieren,Ordenar intercambios,Trier les transactions,Classificar negociações,Сортировка сделок,
-trade.search.sort.quantity_offer,Quantity material given,Quantity material given,Angegebene Materialmenge,Cantidad de material proporcionado,Quantité de matériel donnée,Quantidade de material fornecida,Количество предоставленного материала,
-trade.search.sort.quantity_receive,Quantity material received,Quantity material received,Menge erhaltenes Material,Cantidad de material recibido,Quantité de matériel reçu,Quantidade de material recebido,Количество полученного материала,
-trade.search.text.placeholder,Search,Search,Suche,Buscar,Rechercher,Pesquisa,Поиск,
-trade.status.bid.accepted,Status: Bid accepted,Status: Bid accepted,Status: Gebot angenommen,Estado: Oferta aceptada,Statut: offre acceptée,Status: Lance aceito,Статус: Ставка принята,
-trade.status.received.a.bid,Status: Received a bid,Status: Received a bid,Status: Gebot erhalten,Estado: Recibió una oferta,Statut: a reçu une offre,Status: Recebeu um lance,Статус: Получено предложение,
-trade.status.waiting.for.bids,Status: Waiting for bids...,Status: Waiting for bids...,Status: Warte auf Gebote...,Estado: Esperando ofertas...,Statut: En attente des offres...,Status: Aguardando lances...,Статус: Ожидание ставок...,
-notification.trade.your.bid.is.placed,Your bid is placed. (Auto rejects in 1 minute),Your bid is placed. (Auto rejects in 1 minute),Ihr Gebot ist abgegeben. (Auto lehnt in 1 Minute ab),Su oferta se realiza. (Auto rechaza en 1 minuto),Votre offre est placée. (Auto rejette en 1 minute),Sua oferta é feita. (Rejeita automaticamente em 1 minuto),Ваша ставка размещена. (Автоотмена через 1 минуту),
+"messageKey","","en","","","","","",""
+"create.trade.offer.button","Create trade offer","Create trade offer","Handelsangebot erstellen","Crear oferta comercial","Créer une offre commerciale","Criar oferta comercial","Начать торговлю",""
+"tab.trade.button.connect","connect","connect","","conectar","","conectar","Присоединиться",""
+"tab.trade.button.disconnect","disconnect","disconnect","trennen","desconectar","déconnecter","desconectar","Отключиться",""
+"tab.trade.my.trades","My trade offers","My trade offers","Meine Handelsangebote","Mis ofertas comerciales","Mes offres commerciales","Minhas ofertas comerciais","Мои предложения на продажу",""
+"tab.trade.new.trade","New trade offer","New trade offer","Neues Handelsangebot","Nueva oferta comercial","Nouvelle offre commerciale","Nova oferta comercial","Новое предложение на продажу",""
+"tab.trade.other.trades","Available trade requests","Available trade requests","Verfügbare Handelsanfragen","Solicitudes comerciales disponibles","Demandes d’échange disponibles","Pedidos de negociação disponíveis","Доступные торговые запросы",""
+"tab.trade.pagination.OFFER","My trade offers","My trade offers","Meine Handelsangebote","Mis ofertas comerciales","Mes offres commerciales","Minhas ofertas comerciais","Мои торговые предложения",""
+"tab.trade.pagination.REQUEST","Available trade requests","Available trade requests","Verfügbare Handelsanfragen","Solicitudes comerciales disponibles","Demandes d’échange disponibles","Pedidos de troca disponíveis","Доступные торговые запросы",""
+"tab.trade.pagination.updates","{0} updates","{0} updates","{0} Updates","{0} actualizaciones","{0} mises à jour","{0} atualizações","{0} обновлений",""
+"tab.trade.status.connected","Connected","Connected","Verbunden","Conectado","Connecté","Conectado","Подключено",""
+"tab.trade.status.connecting","Connecting...","Connecting...","Verbindung wird hergestellt...","Conectando...","Connexion...","Conectando...","Подключение...",""
+"tab.trade.status.not.connected","not connected","not connected","nicht verbunden","no conectado","non connecté","não conectado","не подключен",""
+"trade.button.chat","Chat","Chat","","","","","Чат",""
+"trade.buttons.accept","Accept","Accept","Akzeptieren","Aceptar","Accepter","Aceitar","Принять",""
+"trade.buttons.reject","Reject","Reject","Ablehnen","Rechazar","Rejeter","Rejeitar","Отклонить",""
+"trade.chat.title","Trade chat: {0}({1}) <> {2}({3})","Trade chat: {0}({1}) <> {2}({3})","Handelschat: {0}({1}) <> {2}({3})","Chat de comercio: {0} ({1}) <> {2} ({3})","Chat d’échange: {0}({1}) <> {2}({3})","Bate-papo comercial: {0} ({1}) <> {2} ({3})","Торговый чат: {0} ({1}) <> {2} ({3})",""
+"trade.create.amount","Amount","Amount","Betrag","Cantidad","Montant","Quantia","Сумма",""
+"trade.create.in.exchange.for","In exchange for","In exchange for","Im Austausch für","A cambio de","En échange de","Em troca de","В обмен на",""
+"trade.create.invalid.duplicate","Please do not select the same materials to offer and receive","Please do not select the same materials to offer and receive","Bitte wählen Sie nicht dieselben Materialien aus, um sie anzubieten und zu erhalten","Por favor no seleccionar los mismos materiales para ofrecer y recibir","Veuillez ne pas sélectionner les mêmes matériaux à offrir et à recevoir","Por favor, não selecione os mesmos materiais para oferecer e receber","Пожалуйста, не выбирайте одни и те же материалы для предложения и получения",""
+"trade.create.invalid.materials","Please enter valid materials for offer and receive","Please enter valid materials for offer and receive","Bitte geben Sie gültige Materialien für das Angebot ein und erhalten Sie","Ingrese materiales válidos para la ofrecer y recibir","Veuillez entrer des matériaux valides pour l’offre et recevoir","Por favor, insira materiais válidos para oferta e receba","Пожалуйста, введите действительные материалы для предложения и получите",""
+"trade.create.invalid.offer","Invalid offer","Invalid offer","Ungültiges Angebot","Oferta no válida","Offre invalide","Oferta inválida","Недействительное предложение",""
+"trade.create.max","Max. {0}","Max. {0}","","Máx. {0}","","Máx. {0}","Макс. {0}",""
+"trade.create.offer","Offer","Offer","Angebot","Oferta","Offre","Oferta","Предложение",""
+"trade.message.chat.send","Send","Send","Senden","Enviar","Envoyer","Enviar","послать",""
+"trade.offer.button.remove","Remove Offer","Remove Offer","Angebot entfernen","Eliminar oferta","Supprimer l’offre","Remover oferta","Удалить предложение",""
+"trade.request.button.request.cancel","Cancel trade","Cancel trade","Handel abbrechen","Cancelar intercambio","Annuler l’échange","Cancelar negociação","Отменить сделку",""
+"trade.request.button.request.trade","Request to trade","Request to trade","Anfrage zum Handeln","Solicitud de intercambio","Demande d’échange","Pedido de troca","Запрос на торговлю",""
+"trade.request.distance","Location: {0} ({1}Ly)","Location: {0} ({1}Ly)","Standort: {0} ({1}Ly)","Ubicación: {0} ({1} Ly)","Emplacement: {0} ({1}Ly)","Local: {0} ({1} Ly)","Местоположение: {0} ({1} Ly)",""
+"trade.request.status.accepted","Status: Accepted","Status: Accepted","Status: Akzeptiert","Estado: Aceptado","Statut: Accepté","Status: Aceito","Статус: Принято",""
+"trade.request.status.available","Status: Available","Status: Available","Status: Verfügbar","Estado: Disponible","Statut: Disponible","Status: Disponível","Статус: Доступен",""
+"trade.request.status.cancelled","Status: Cancelled","Status: Cancelled","Status: Abgebrochen","Estado: Cancelado","Statut: Annulé","Status: Cancelado","Статус: Отменено",""
+"trade.request.status.offline","Status: Offline","Status: Offline","","Estado: Fuera de línea","Statut: Hors ligne","","Статус: Не в сети",""
+"trade.request.status.refused","Status: Refused","Status: Refused","Status: Abgelehnt","Estado: Rechazado","Statut: Refusé","Status: Recusado","Статус: отказано",""
+"trade.request.status.removed","Status: Removed","Status: Removed","Status: Entfernt","Estado: Eliminado","Statut: Supprimé","Status: Removido","Статус: Удалено",""
+"trade.request.status.unavailable","Status: Unavailable","Status: Unavailable","Status: Nicht verfügbar","Estado: No disponible","Statut: Non disponible","Status: Indisponível","Статус: недоступен",""
+"trade.request.status.waiting.for.a.response","Status: Waiting for a response...","Status: Waiting for a response...","Status: Warte auf Antwort...","Estado: Esperando una respuesta...","Statut: En attente d’une réponse...","Status: Aguardando uma resposta...","Статус: Ожидание ответа...",""
+"trade.search.filter.active","Active trades","Active trades","Aktive Trades","Intercambios activos","Commerces actifs","Negociações ativas","Активные торги",""
+"trade.search.filter.all","All (default)","All (default)","Alle (Standard)","Todo (predeterminado)","Tous (par défaut)","All (padrão)","Все (по умолчанию)",""
+"trade.search.filter.can_trade","Can trade","Can trade","Kann handeln","Puede comerciar","Peut commercer","Pode negociar","Можно торговать",""
+"trade.search.filter.placeholder","Show trades","Show trades","Trades anzeigen","Mostrar intercambios","Afficher les transactions","Mostrar negociações","Показать сделки",""
+"trade.search.sort.name_offer","Name material given(default)","Name material given(default)","Namensmaterial angegeben (Standard)","Nombre del material proporcionado (predeterminado)","Nom du matériel donné (par défaut)","Nome do material fornecido (padrão)","Указано название материала (по умолчанию)",""
+"trade.search.sort.name_receive","Name material receive","Name material receive","Namensmaterial empfangen","Nombre del material recibido","Nom du matériel reçu","Nome material recebido","Получение именного материала",""
+"trade.search.sort.placeholder","Sort trades","Sort trades","Trades sortieren","Ordenar intercambios","Trier les transactions","Classificar negociações","Сортировка сделок",""
+"trade.search.sort.quantity_offer","Quantity material given","Quantity material given","Angegebene Materialmenge","Cantidad de material proporcionado","Quantité de matériel donnée","Quantidade de material fornecida","Количество предоставленного материала",""
+"trade.search.sort.quantity_receive","Quantity material received","Quantity material received","Menge erhaltenes Material","Cantidad de material recibido","Quantité de matériel reçu","Quantidade de material recebido","Количество полученного материала",""
+"trade.search.text.placeholder","Search","Search","Suche","Buscar","Rechercher","Pesquisa","Поиск",""
+"trade.status.bid.accepted","Status: Bid accepted","Status: Bid accepted","Status: Gebot angenommen","Estado: Oferta aceptada","Statut: offre acceptée","Status: Lance aceito","Статус: Ставка принята",""
+"trade.status.received.a.bid","Status: Received a bid","Status: Received a bid","Status: Gebot erhalten","Estado: Recibió una oferta","Statut: a reçu une offre","Status: Recebeu um lance","Статус: Получено предложение",""
+"trade.status.waiting.for.bids","Status: Waiting for bids...","Status: Waiting for bids...","Status: Warte auf Gebote...","Estado: Esperando ofertas...","Statut: En attente des offres...","Status: Aguardando lances...","Статус: Ожидание ставок...",""
+"notification.trade.your.bid.is.placed","Your bid is placed. (Auto rejects in 1 minute)","Your bid is placed. (Auto rejects in 1 minute)","Ihr Gebot ist abgegeben. (Auto lehnt in 1 Minute ab)","Su oferta se realiza. (Auto rechaza en 1 minuto)","Votre offre est placée. (Auto rejette en 1 minute)","Sua oferta é feita. (Rejeita automaticamente em 1 minuto)","Ваша ставка размещена. (Автоотмена через 1 минуту)",""

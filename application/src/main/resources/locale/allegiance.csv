@@ -1,7 +1,7 @@
-messageKey,,en,de,es,fr,pt,ru,zh
-allegiance.federation,Federation,,,Federación,Fédération,Federação,Федерация,
-allegiance.empire,Empire,,,Imperio,Empire,Império,Империя,
-allegiance.alliance,Alliance,,,Alianza,Alliance,Aliança,Альянс,
-allegiance.independent,Independent,,,Independiente,Indépendant,Independente,Независимые,
-allegiance.pilotsfederation,Pilots Federation,,,Federación de Pilotos,Cercle des pilotes,Federação de Pilotos,Федерация Пилотов,
-allegiance.none,None,,,Ninguna,Aucune,Nenhuma,Нет,
+"messageKey","","en","","","","","",""
+"allegiance.federation","Federation","","Föderation","Federación","Fédération","Federação","Федерация",""
+"allegiance.empire","Empire","","","Imperio","","Império","Империя",""
+"allegiance.alliance","Alliance","","","Alianza","","Aliança","Альянс",""
+"allegiance.independent","Independent","","","Independiente","Indépendant","Independente","Независимые",""
+"allegiance.pilotsfederation","Pilots Federation","","","Federación de Pilotos","Cercle des pilotes","Federação de Pilotos","Федерация Пилотов",""
+"allegiance.none","None","","","Ninguna","Aucune","Nenhuma","Нет",""

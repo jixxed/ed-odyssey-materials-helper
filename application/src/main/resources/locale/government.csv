@@ -1,17 +1,17 @@
-messageKey,,en,de,es,fr,pt,ru,zh
-government.anarchy,Anarchy,,,Anarquía,,Anarquía,Анархия,
-government.communism,Communism,,,Comunismo,,Comunismo,Коммунизм,
-government.confederacy,Confederacy,,,Confederación,,Confederação,Конфедерация,
-government.cooperative,Cooperative,,,Cooperativa,,Cooperativa,Кооперация,
-government.corporate,Corporate,,,Corporación,,Corporativo,Корпоративная,
-government.democracy,Democracy,,,Democracia,,Democracia,Демократия,
-government.dictatorship,Dictatorship,,,Dictadura,,Ditadura,Диктатура,
-government.feudal,Feudal,,,Feudal,,Feudal,Феодализм,
-government.imperial,Imperial,,,Imperial,,Imperial,Имперская,
-government.none,None,,,Ninguna,,Nenhum,Нет,
-government.patronage,Patronage,,,Patronazgo,,Patronagem,Патронаж,
-government.prisoncolony,Prison Colony,,,Colonia Penal,,Colônia Penal,Тюремная колония,
-government.theocracy,Theocracy,,,Teocracia,,Teocracia,Теократия,
-government.engineer,Engineer,,,Ingeniería,,Engenharia,Мастерская,
-government.privateownership,Private Ownership,,,Propiedad Privada,,Propriedade Privada,Частная собственность,
-government.unknown,Unknown,,,Desconocida,,Desconhecida,Неизвестно,
+"messageKey","","en","","","","","",""
+"government.anarchy","Anarchy","","","Anarquía","","Anarquía","Анархия",""
+"government.communism","Communism","","","Comunismo","","Comunismo","Коммунизм",""
+"government.confederacy","Confederacy","","","Confederación","","Confederação","Конфедерация",""
+"government.cooperative","Cooperative","","","Cooperativa","","Cooperativa","Кооперация",""
+"government.corporate","Corporate","","","Corporación","","Corporativo","Корпоративная",""
+"government.democracy","Democracy","","","Democracia","","Democracia","Демократия",""
+"government.dictatorship","Dictatorship","","","Dictadura","","Ditadura","Диктатура",""
+"government.feudal","Feudal","","","","","","Феодализм",""
+"government.imperial","Imperial","","","","","","Имперская",""
+"government.none","None","","","Ninguna","","Nenhum","Нет",""
+"government.patronage","Patronage","","","Patronazgo","","Patronagem","Патронаж",""
+"government.prisoncolony","Prison Colony","","","Colonia Penal","","Colônia Penal","Тюремная колония",""
+"government.theocracy","Theocracy","","","Teocracia","","Teocracia","Теократия",""
+"government.engineer","Engineer","","","Ingeniería","","Engenharia","Мастерская",""
+"government.privateownership","Private Ownership","","","Propiedad Privada","","Propriedade Privada","Частная собственность",""
+"government.unknown","Unknown","","","Desconocida","","Desconhecida","Неизвестно",""

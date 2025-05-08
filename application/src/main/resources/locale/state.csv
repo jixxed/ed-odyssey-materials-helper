@@ -1,29 +1,29 @@
-messageKey,,en,de,es,fr,pt,ru,zh
-state.unknown,Unknown,,,Desconocido,,Desconhecido,Неизвестно,
-state.none,None,,,Ninguno,,Nenhum,Нет,
-state.boom,Boom,,,Auge,,Auge,Бум,
-state.bust,Bust,,,Quiebra,,Quebra,Спад,
-state.civilunrest,Civil Unrest,,,Disturbios,,Distúrbios,Гражданские беспорядки,
-state.civilwar,Civil War,,,Guerra Civil,,Guerra Civil,Гражданская война,
-state.election,Election,,,Elecciones,,Eleições,Выборы,
-state.expansion,Expansion,,,Expansión,,Expansão,Экспансия,
-state.famine,Famine,,,Hambruna,,Fome,Голод,
-state.investment,Investment,,,Inversión,,Investimento,Инвестирование,
-state.lockdown,Lockdown,,,Bloqueo,,Quarentena,Изоляция,
-state.outbreak,Outbreak,,,Epidemia,,Epidemia,Эпидемия,
-state.retreat,Retreat,,,Retirada,,Retirada,Отступление,
-state.war,War,,,Guerra,,Guerra,Война,
-state.civilliberty,Civil Liberty,,,Libertad,,Liberdade Civil,Гражданская свобода,
-state.pirateattack,Pirate Attack,,,Ataque pirata,,Ataque pirata,Атака пиратов,
-state.blight,Blight,,,Plaga,,Praga,Неурожай,
-state.drought,Drought,,,Sequía,,Seca,Засуха,
-state.infrastructurefailure,Infrastructure Failure,,,Fallo de Infraestructuras,,Falha de Infra-estrutura,Сбой инфраструктуры,
-state.naturaldisaster,Natural Disaster,,,Desastre Natural,,Desastre Natural,Стихийные бедствия,
-state.publicholiday,Public Holiday,,,Día Festivo,,Feriado,Официальные праздники,
-state.terrorism,Terrorist Attack,,,Ataque terrorista,,Ataque terrorista,Атака террористов,
-state.coldwar,Cold War,,,Guerra Fria,,Guerra Fria,Холодная война,
-state.colonisation,Colonisation,,,Colonización,,Colonização,Колонизация,
-state.historicevent,Historic Event,,,Evento Historico,,Evento Histórico,Историческое событие,
-state.revolution,Revolution,,,Revolución,,Revolução,Революция,
-state.technologicalleap,Technological Leap,,,Salto Tecnológico,,Salto Tecnológico,Технологический скачок,
-state.tradewar,Trade War,,,Guerra comercial,,Guerra comercial,Торговая война,
+"messageKey","","en","","","","","",""
+"state.unknown","Unknown","","","Desconocido","","Desconhecido","Неизвестно",""
+"state.none","None","","","Ninguno","","Nenhum","Нет",""
+"state.boom","Boom","","","Auge","","Auge","Бум",""
+"state.bust","Bust","","","Quiebra","","Quebra","Спад",""
+"state.civilunrest","Civil Unrest","","","Disturbios","","Distúrbios","Гражданские беспорядки",""
+"state.civilwar","Civil War","","","Guerra Civil","","Guerra Civil","Гражданская война",""
+"state.election","Election","","","Elecciones","","Eleições","Выборы",""
+"state.expansion","Expansion","","","Expansión","","Expansão","Экспансия",""
+"state.famine","Famine","","","Hambruna","","Fome","Голод",""
+"state.investment","Investment","","","Inversión","","Investimento","Инвестирование",""
+"state.lockdown","Lockdown","","","Bloqueo","","Quarentena","Изоляция",""
+"state.outbreak","Outbreak","","","Epidemia","","Epidemia","Эпидемия",""
+"state.retreat","Retreat","","","Retirada","","Retirada","Отступление",""
+"state.war","War","","","Guerra","","Guerra","Война",""
+"state.civilliberty","Civil Liberty","","","Libertad","","Liberdade Civil","Гражданская свобода",""
+"state.pirateattack","Pirate Attack","","","Ataque pirata","","Ataque pirata","Атака пиратов",""
+"state.blight","Blight","","","Plaga","","Praga","Неурожай",""
+"state.drought","Drought","","","Sequía","","Seca","Засуха",""
+"state.infrastructurefailure","Infrastructure Failure","","","Fallo de Infraestructuras","","Falha de Infra-estrutura","Сбой инфраструктуры",""
+"state.naturaldisaster","Natural Disaster","","","Desastre Natural","","Desastre Natural","Стихийные бедствия",""
+"state.publicholiday","Public Holiday","","","Día Festivo","","Feriado","Официальные праздники",""
+"state.terrorism","Terrorist Attack","","","Ataque terrorista","","Ataque terrorista","Атака террористов",""
+"state.coldwar","Cold War","","","Guerra Fria","","Guerra Fria","Холодная война",""
+"state.colonisation","Colonisation","","","Colonización","","Colonização","Колонизация",""
+"state.historicevent","Historic Event","","","Evento Historico","","Evento Histórico","Историческое событие",""
+"state.revolution","Revolution","","","Revolución","","Revolução","Революция",""
+"state.technologicalleap","Technological Leap","","","Salto Tecnológico","","Salto Tecnológico","Технологический скачок",""
+"state.tradewar","Trade War","","","Guerra comercial","","Guerra comercial","Торговая война",""
