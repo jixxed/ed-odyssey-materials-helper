@@ -25,6 +25,7 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Arrays;
 
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 
@@ -148,7 +149,7 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableEven
 
         DestroyableComboBox<ApplicationLocale> arLocaleSelect = ComboBoxBuilder.builder(ApplicationLocale.class)
                 .withStyleClass(SETTINGS_DROPDOWN_CLASS)
-                .withItemsProperty(LocaleService.getListBinding(ApplicationLocale.values()))
+                .withItemsProperty(LocaleService.getListBinding(Arrays.stream(ApplicationLocale.values()).filter(ApplicationLocale::isAr).toArray(ApplicationLocale[]::new)))
                 .withSelected(ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")))
                 .withValueChangeListener((_, _, newValue) -> {
                     if (newValue != null) {

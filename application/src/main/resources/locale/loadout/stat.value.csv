@@ -1,16 +1,16 @@
-messageKey,,en,de,es,fr,pt,ru
-loadout.stat.value.class.carbine,Carbine,Carbine,Karabiner,Carabina,Carabine,Carbine,Карабин
-loadout.stat.value.class.launcher,Launcher,Launcher,Launcher,Lanzador,Lanceur,Launcher,Ракетница
-loadout.stat.value.class.pistol,Pistol,Pistol,Pistol,Pistola,Pistolet,Pistol,Пистолет
-loadout.stat.value.class.rifle,Rifle,Rifle,Rifle,Rifle,Fusil,Rifle,Винтовка
-loadout.stat.value.class.shotgun,Shotgun,Shotgun,Shotgun,Escopeta,Fusil de chasse,Shotgun,Дробовик
-loadout.stat.value.class.sniper,Sniper,Sniper,Scharfschütze,Francotirador,Tireur d’élite,Sniper,Снайперская винтовка
-loadout.stat.value.damage_type.explosive,Explosive,Explosive,Explosiv,Explosivo,Explosif,Explosivo,Взрывной
-loadout.stat.value.damage_type.kinetic,Kinetic,Kinetic,Kinetic,Cinética,Cinétique,Cinético,Кинетический
-loadout.stat.value.damage_type.plasma,Plasma,Plasma,Plasma,Plasma,Plasma,Plasma,Плазма
-loadout.stat.value.damage_type.thermal,Thermal,Thermal,Thermal,Térmico,Thermique,Térmica,Тепловой
-loadout.stat.value.fire_mode.automatic,Automatic,Automatic,Automatisch,Automático,Automatique,Automático,Автоматический
-loadout.stat.value.fire_mode.burst,Burst,Burst,Burst,Ráfaga,Rafale,Burst,Взрывной
-loadout.stat.value.fire_mode.semi-automatic,Semi-automatic,Semi-automatic,Halbautomatisch,Semiautomático,Semi-automatique,Semiautomático,Полуавтоматический
-loadout.stat.value.type.primary,Primary,Primary,Primary,Primario,Primaire,Primário,Основное
-loadout.stat.value.type.secondary,Secondary,Secondary,Secondary,Secundario,Secondaire,Secundário,Дополнительное
+messageKey,,en,de,es,fr,pt,ru,zh
+loadout.stat.value.class.carbine,Carbine,Carbine,Karabiner,Carabina,Carabine,Carbine,Карабин,
+loadout.stat.value.class.launcher,Launcher,Launcher,Launcher,Lanzador,Lanceur,Launcher,Ракетница,
+loadout.stat.value.class.pistol,Pistol,Pistol,Pistol,Pistola,Pistolet,Pistol,Пистолет,
+loadout.stat.value.class.rifle,Rifle,Rifle,Rifle,Rifle,Fusil,Rifle,Винтовка,
+loadout.stat.value.class.shotgun,Shotgun,Shotgun,Shotgun,Escopeta,Fusil de chasse,Shotgun,Дробовик,
+loadout.stat.value.class.sniper,Sniper,Sniper,Scharfschütze,Francotirador,Tireur d’élite,Sniper,Снайперская винтовка,
+loadout.stat.value.damage_type.explosive,Explosive,Explosive,Explosiv,Explosivo,Explosif,Explosivo,Взрывной,
+loadout.stat.value.damage_type.kinetic,Kinetic,Kinetic,Kinetic,Cinética,Cinétique,Cinético,Кинетический,
+loadout.stat.value.damage_type.plasma,Plasma,Plasma,Plasma,Plasma,Plasma,Plasma,Плазма,
+loadout.stat.value.damage_type.thermal,Thermal,Thermal,Thermal,Térmico,Thermique,Térmica,Тепловой,
+loadout.stat.value.fire_mode.automatic,Automatic,Automatic,Automatisch,Automático,Automatique,Automático,Автоматический,
+loadout.stat.value.fire_mode.burst,Burst,Burst,Burst,Ráfaga,Rafale,Burst,Взрывной,
+loadout.stat.value.fire_mode.semi-automatic,Semi-automatic,Semi-automatic,Halbautomatisch,Semiautomático,Semi-automatique,Semiautomático,Полуавтоматический,
+loadout.stat.value.type.primary,Primary,Primary,Primary,Primario,Primaire,Primário,Основное,
+loadout.stat.value.type.secondary,Secondary,Secondary,Secondary,Secundario,Secondaire,Secundário,Дополнительное,
