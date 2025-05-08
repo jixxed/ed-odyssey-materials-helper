@@ -20,7 +20,6 @@ jobs:
           upload_sources: false
           upload_translations: false
           download_translations: true
-          localization_branch_name: crowdin_translations
 
           create_pull_request: true
           pull_request_title: 'New Crowdin translations'
