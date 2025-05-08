@@ -1,21 +1,21 @@
-messageKey,,en,de,es,fr,pt,ru,zh
-hge.most.recently.found,Most recently found in:,,,Recientemente encontrado en:,,Encontrado mais recentemente em:,Недавно найдено в:,
-hge.card.system,System,,,Sistema,,Sistema,Система,
-hge.card.faction,Faction,,,Facción,,Facção,Фракция,
-hge.card.materials.expected,Potential materials,,,Materiales potenciales,,Materiais potenciais,Вероятные материалы,
-hge.card.materials.found,Collected materials,,,Materiales recogidos,,Materiais coletados,Собранные материалы,
-hge.card.state,State,,,Estado,,Estado,Состояние,
-hge.card.states,States,,,Estados,,Estados,Состояния,
-hge.card.allegiance,Allegiance,,,lealtad,,Lealdade,Принадлежность,
-hge.card.population,Population,,,Población,,População,Население,
-hge.card.economy,Economies,,,Economias,,Economias,Экономика,
-hge.card.fss.timer,This HGE will despawn when the timer expires.,,,Este HGE desaparecerá cuando el temporizador expire,,Este HGE desaparecerá quando o cronômetro expirar.,Этот сигнал исчезнет по истечению таймера,
-hge.card.uss.timer,It is unknown when this HGE despawns.\nThis message is removed after a timer of 10 minutes.,,,No se conoce cuando desaparecerá este HGE.\nEste mensaje sera removido transcurridos 10 minutos.,,Não se sabe quando este HGE desaparecerá.\nEsta mensagem é removida após um cronômetro de 10 minutos.,Время исчезновения сигнала неизвестно.\nЭто сообщение будет удалено через 10 минут.,
-hge.explain,My scanned and visited High Grade Emissions,,,Mis Emisiones de Alto Grado visitadas y escaneadas,,Minhas Emissões de Alto Grau escaneadas e visitadas,Мои отсканированные и посещенные Высокоуровневые сигналы,
-hge.tracking.disabled,Material tracking is disabled. Disable the tracking opt-out under Settings > Tracking.,,,El seguimiento de materiales esta deshabilitado. Deshabilite la exclusion de seguimiento en Ajustes > Seguimiento.,,O rastreamento de materiais está desabilitado. Desabilite a opção de desativar o rastreamento em Configurações > Rastreamento.,Отслеживание материалов отключено. включить - Настройки > Отслеживание,
-hge.unknown,Unknown,,,Desconocido,,Desconhecido,Неизвестно,
-hge.fss,FSS Scanned,,,ECS Escaneado,,FSS escaneado,Сканировано через FSS,
-hge.uss,Visited,,,Visitado,,Visitado,Посещено,
-population.million,{0} Million,,,{0} Millones,,{0} Milhões,Миллион,
-population.billion,{0} Billion,,,{0} Mil Millones,,{0} Bilhões,Миллиард,
-population.trillion,{0} Trillion,,,{0} Billones,,{0} Trilhões,Триллион,
+"messageKey","","en","de","es","fr","pt","ru","zh"
+"hge.most.recently.found","Most recently found in:","","","Recientemente encontrado en:","","Encontrado mais recentemente em:","Недавно найдено в:",""
+"hge.card.system","System","","","Sistema","","Sistema","Система",""
+"hge.card.faction","Faction","","","Facción","","Facção","Фракция",""
+"hge.card.materials.expected","Potential materials","","","Materiales potenciales","","Materiais potenciais","Вероятные материалы",""
+"hge.card.materials.found","Collected materials","","","Materiales recogidos","","Materiais coletados","Собранные материалы",""
+"hge.card.state","State","","","Estado","","Estado","Состояние",""
+"hge.card.states","States","","","Estados","","Estados","Состояния",""
+"hge.card.allegiance","Allegiance","","","lealtad","","Lealdade","Принадлежность",""
+"hge.card.population","Population","","","Población","","População","Население",""
+"hge.card.economy","Economies","","","Economias","","Economias","Экономика",""
+"hge.card.fss.timer","This HGE will despawn when the timer expires.","","","Este HGE desaparecerá cuando el temporizador expire","","Este HGE desaparecerá quando o cronômetro expirar.","Этот сигнал исчезнет по истечению таймера",""
+"hge.card.uss.timer","It is unknown when this HGE despawns.\nThis message is removed after a timer of 10 minutes.","","","No se conoce cuando desaparecerá este HGE.\nEste mensaje sera removido transcurridos 10 minutos.","","Não se sabe quando este HGE desaparecerá.\nEsta mensagem é removida após um cronômetro de 10 minutos.","Время исчезновения сигнала неизвестно.\nЭто сообщение будет удалено через 10 минут.",""
+"hge.explain","My scanned and visited High Grade Emissions","","","Mis Emisiones de Alto Grado visitadas y escaneadas","","Minhas Emissões de Alto Grau escaneadas e visitadas","Мои отсканированные и посещенные Высокоуровневые сигналы",""
+"hge.tracking.disabled","Material tracking is disabled. Disable the tracking opt-out under Settings > Tracking.","","","El seguimiento de materiales esta deshabilitado. Deshabilite la exclusion de seguimiento en Ajustes > Seguimiento.","","O rastreamento de materiais está desabilitado. Desabilite a opção de desativar o rastreamento em Configurações > Rastreamento.","Отслеживание материалов отключено. включить - Настройки > Отслеживание",""
+"hge.unknown","Unknown","","","Desconocido","","Desconhecido","Неизвестно",""
+"hge.fss","FSS Scanned","","","ECS Escaneado","","FSS escaneado","Сканировано через FSS",""
+"hge.uss","Visited","","","Visitado","","Visitado","Посещено",""
+"population.million","{0} Million","","","{0} Millones","","{0} Milhões","Миллион",""
+"population.billion","{0} Billion","","","{0} Mil Millones","","{0} Bilhões","Миллиард",""
+"population.trillion","{0} Trillion","","","{0} Billones","","{0} Trilhões","Триллион",""

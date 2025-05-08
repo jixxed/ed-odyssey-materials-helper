@@ -1,5 +1,5 @@
-messageKey,,en,de,es,fr,pt,ru,zh
-ships.mounting.fixed,F,,,,,,,
-ships.mounting.gimballed,G,,,,,,,
-ships.mounting.turreted,T,,,,,,,
-ships.mounting.na,-,,,,,,,
+"messageKey","","en","de","es","fr","pt","ru","zh"
+"ships.mounting.fixed","F","","","","","","",""
+"ships.mounting.gimballed","G","","","","","","",""
+"ships.mounting.turreted","T","","","","","","",""
+"ships.mounting.na","-","","","","","","",""

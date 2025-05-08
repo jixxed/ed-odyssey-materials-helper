@@ -1,8 +1,8 @@
-messageKey,,en,de,es,fr,pt,ru,zh
-tab.powerplay.unlockables,Modules,,,Módulos,,,Модули,
-tab.powerplay.current.reward,Current reward {0}%,,,Recompensa actual {0}%,,,Награда {0}%,
-tab.powerplay.current.reward.unlocked,Unlocked,,,Desbloqueado,,,Разблокировано,
-tab.powerplay.current.reward.locked,Locked,,,Bloqueado,,,Заблокировано,
-tab.powerplay.rank,Rank {0},,,Rango {0},,,Ранг {0},
-tab.powerplay.merits,{0}/{1} Merits,,,{0}/{1} Méritos,,,{0}/{1} Поощрений,
-tab.powerplay.distance,"({0}Ly)",,,"({0}Al)",,,,
+"messageKey","","en","de","es","fr","pt","ru","zh"
+"tab.powerplay.unlockables","Modules","","","Módulos","","","Модули",""
+"tab.powerplay.current.reward","Current reward {0}%","","","Recompensa actual {0}%","","","Награда {0}%",""
+"tab.powerplay.current.reward.unlocked","Unlocked","","","Desbloqueado","","","Разблокировано",""
+"tab.powerplay.current.reward.locked","Locked","","","Bloqueado","","","Заблокировано",""
+"tab.powerplay.rank","Rank {0}","","","Rango {0}","","","Ранг {0}",""
+"tab.powerplay.merits","{0}/{1} Merits","","","{0}/{1} Méritos","","","{0}/{1} Поощрений",""
+"tab.powerplay.distance","({0}Ly)","","","({0}Al)","","","",""

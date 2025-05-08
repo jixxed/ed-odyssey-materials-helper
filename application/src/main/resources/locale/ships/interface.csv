@@ -1,125 +1,125 @@
-messageKey,,en,de,es,fr,pt,ru,zh
-ship.stats.config,Configuration,,,Ajustes,,Configuração,Конфигурация,
-ship.stats.config.live,Live,,,,,ao Vivo,,
-ship.stats.config.fuelreserve,Fuel reserve,,,Reserva de Combustible,,Reservas de Combustível,Резерв топлива,
-ship.stats.config.fuel,Fuel (Max. {0}),,,Combustible (Max. {0}),,Comb (Max. {0}),Топливо (Макс. {0}),
-ship.stats.config.cargo,Cargo (Max. {0}+{1}),,,Capacidad de Carga (Max. {0}+{1}),,Carga (Max. {0}+{1}),Груз (Макс. {0}+{1}),
-ship.stats.config.system,System,,,Sistemas,,Sistema,СИС,
-ship.stats.config.engine,Engine,,,Motores,,Motores,ДВГ,
-ship.stats.config.weapon,Weapon,,,Armas,,Armas,ОРУ,
-ship.stats.config.cargo_hatch,Cargo hatch,,,Escotilla de Carga,,Escotilha de Carga,Грузовой ковш,
-ship.stats.thermalpower,Thermals & power,,,Energía y Calor,,Térmicos e Energia,Нагрев и Мощность,
-ship.stats.thermal,Thermals,,,Temperatura,,Térmicos,Нагрев,
-ship.stats.power,Power,,,Energía,,Energia,Мощность,
-ship.stats.thermal.idle.thermals,Idle heat,,,Temperatura en Reposo,,Calor estático,В покое,
-ship.stats.thermal.thruster.thermals,Full thrust heat,,,Temperatura a Máxima Aceleración,,Calor em velocidade máxima,В движении,
-ship.stats.thermal.fsd.thermals,FSD charging heat,,,Temperatura Cargando MDD,,Calor de carregamento de MDD,При зарядке FSD,
-ship.stats.thermal.idle.thermals.value,{0}%,,,,,,,
-ship.stats.thermal.thruster.thermals.value,{0}%,,,,,,,
-ship.stats.thermal.fsd.thermals.value,{0}%,,,,,,,
-ship.stats.thermal.thermals.value.percentage,{0}%,,,,,,,
-ship.stats.thermal.thermals.value.time,{0},,,,,,,
-ship.stats.thermal.thermals.value.error,N/A,,,,,,Н/Д,
-ship.stats.power.retracted.power,Retracted,,,Replegado,,Recolhido,Убрано,
-ship.stats.power.deployed.power,Deployed,,,Desplegado,,Extendido,Выпущено,
-ship.stats.power.retracted.power.value,{0}/{1} MW,,,,,,{0}/{1} МВт,
-ship.stats.power.deployed.power.value,{0}/{1} MW,,,,,,{0}/{1} МВт,
-ship.stats.jumprange,Jump range,,,Rango de Salto,,,Дальность прыжка,
-ship.stats.jumprange.value,{0} Ly,,,{0} AL,,{0} Al,{0} с.л.,
-ship.stats.jumprange.min,Minimum range,,,Salto Mínimo,,Salto Mínimo,Минимальна дальность,
-ship.stats.jumprange.current,Current range,,,Salto Actual,,Salto Atual,Текущая дальность,
-ship.stats.jumprange.maxfueled,Maximum range (full fuel),,,Máximo Salto (Combustible lleno),,Alcance Máximo (Combustível pleno),Максимальная дальность (полный бак),
-ship.stats.jumprange.max,Maximum range (minimal fuel),,,Máximo Salto (Combustible Mínimo),,Alcance Máximo (Combustível mínimo),Максимальная дальность (минимум топлива),
-ship.stats.engine,Engine,,,Motor,,Motor,Двигатель,
-ship.stats.engine.speed,Speed,,,Velocidad,,Velocidade,Скорость,
-ship.stats.engine.boost,Boost,,,Postquemador,,Impulso,Ускорение,
-ship.stats.engine.recharge,Recharge,,,Recarga,,Recarga,Перезарядка,
-ship.stats.engine.speed.value,{0} m/s,,,,,,{0} м/с,
-ship.stats.engine.boost.value,{0} m/s,,,,,,{0} м/с,
-ship.stats.engine.recharge.value,{0} s,,,,,,{0} с,
-ship.stats.engine.currentspeed,Current speed,,,Velocidad Actual,,Velocidade Atual,Текущая скорость,
-ship.stats.engine.currentboost,Current boost,,,Postquemador Actual,,Impulso Atual,Текущее ускорение,
-ship.stats.engine.currentrecharge,Current recharge,,,Recarga Actual,,Recarga Atual,Текущая перезарядка,
-ship.stats.engine.minspeed,Minimum speed(Full Cargo),,,Velocidad Mínima(Carga Completa),,Velocidade Mínima (Carga Plena),Минимальная скорость (полный трюм),
-ship.stats.engine.minboost,Minimum boost(Full Cargo),,,Postquemador Mínimo(Carga Completa),,Impulso Máximo (Carga Plena),Минимальное ускорение (полный трюм),
-ship.stats.engine.minrecharge,Minimum recharge(Full Cargo),,,Recarga Mínima(Carga Completa),,Recarga Mínima (Carga Plena),Минимальная перезарядка (полный трюм),
-ship.stats.engine.maxspeed,Maximum speed(No Cargo),,,Velocidad Máxima(Sin Carga),,Velocidade Máxima (Sem Carga),Максимальная скорость (нет груза),
-ship.stats.engine.maxboost,Maximum boost(No Cargo),,,Postquemador Máximo(Sin Carga),,Impulso Máximo (Sem Carga),Максимальное ускорение (нет груза),
-ship.stats.engine.maxrecharge,Maximum recharge(No Cargo),,,Máxima Recarga(Sin Carga),,Recarga Máxima (Sem Carga),Максимальная перезарядка (нет груза),
-ship.stats.handling,Handling,,,Manejo,,Manobrabilidade,Управление,
-ship.stats.handling.pitch,Pitch,,,Cabeceo,,Arfagem,Тангаж,
-ship.stats.handling.roll,Roll,,,Alabeo,,Rolamento,Крен,
-ship.stats.handling.yaw,Yaw,,,Guiñada,,Guinada,Рыскание,
-ship.stats.handling.pitch.value,{0} °/s,,,,,,{0} °/с,
-ship.stats.handling.roll.value,{0} °/s,,,,,,{0} °/с,
-ship.stats.handling.yaw.value,{0} °/s,,,,,,{0} °/с,
-ship.stats.handling.currentpitch,Current Pitch,,,Cabeceo Actual,,Arfagem Atual,Текущий тангаж,
-ship.stats.handling.currentroll,Current Roll,,,Alabeo Actual,,Rolamento Atual,Текущий крен,
-ship.stats.handling.currentyaw,Current Yaw,,,Guiñada Actual,,Guinada Atual,Текущее рыскание,
-ship.stats.handling.minimumpitch,Minimum Pitch,,,Cabeceo Mínimo,,Arfagem Mínima,Минимальный тангаж,
-ship.stats.handling.minimumroll,Minimum Roll,,,Alabeo Mínimo,,Rolamento Mínima,Минимальный крен,
-ship.stats.handling.minimumyaw,Minimum Yaw,,,Guiñada Mínima,,Guinada Mínima,Минимальное рыскание,
-ship.stats.handling.maximumpitch,Maximum Pitch,,,Cabeceo Máximo,,Arfagem Máxima,Максимальный тангаж,
-ship.stats.handling.maximumroll,Maximum Roll,,,Alabeo Máximo,,Rolamento Máxima,Максимальный крен,
-ship.stats.handling.maximumyaw,Maximum Yaw,,,Guiñada Máxima,,Guinada Máxima,Максимальное рыскание,
-ship.stats.armour,Armour,,,Blindaje,,Blindagem,Броня,
-ship.stats.armour.resistanceraw,Resistance Raw,,,Resistencia Básica,,Resistência Total,Чистое сопротивление,
-ship.stats.armour.resistancekinetic,Resistance Kinetic,,,Resistencia Cinética,,Resistência Cinética,Кинетическое сопротивление,
-ship.stats.armour.resistancethermal,Resistance Thermal,,,Resistencia Térmica,,Resistência Térmica,Термальное сопротивление,
-ship.stats.armour.resistanceexplosive,Resistance Explosive,,,Resistencia Explosiva,,Resistência a Explosão,Взрывное сопротивление,
-ship.stats.armour.resistancecaustic,Resistance Caustic,,,Resistencia Caústica,,Resistência Cáustica,Едкое сопротивление,
-ship.stats.armour.integrityraw,Integrity Raw,,,Integridad Básica,,Integridade Básica,Чистая целостность,
-ship.stats.armour.integritykinetic,Integrity Kinetic,,,Integridad Cinética,,Integridade Cinética,Кинетическая целостность,
-ship.stats.armour.integritythermal,Integrity Thermal,,,Integridad Térmica,,Integridade Térmica,Термальная целостность,
-ship.stats.armour.integrityexplosive,Integrity Explosive,,,Integridad Explosiva,,Integridade Explosiva,Взрывная целостность,
-ship.stats.armour.integritycaustic,Integrity Caustic,,,Integridad Caústica,,Integridade Cáustica,Едкая целостность,
-ship.stats.shield,Shield,,,Escudos,,Escudos,Щиты,
-ship.stats.shield.resistancekinetic,Resistance Kinetic,,,Resistencia Cinética,,Resistência Cinética,Кинетическое сопротивление,
-ship.stats.shield.resistancethermal,Resistance Thermal,,,Resistencia Térmica,,Resistência Térmica,Термальное сопротивление,
-ship.stats.shield.resistanceexplosive,Resistance Explosive,,,Resistencia Explosiva,,Resistência Explosiva,Взрывное сопротивление,
-ship.stats.shield.resistancecaustic,Resistance Caustic,,,Resistencia Caústica,,Resistência Caústica,Едкое сопротивление,
-ship.stats.shield.strengthraw,Strength Raw,,,Fuerza Básica,,Força Básica,Чистая мощность,
-ship.stats.shield.strengthkinetic,Strength Kinetic,,,Fuerza Cinética,,Força Cinética,Кинетическая мощность,
-ship.stats.shield.strengththermal,Strength Thermal,,,Fuerza Térmica,,Força Térmica,Термальная мощность,
-ship.stats.shield.strengthexplosive,Strength Explosive,,,Fuerza Explosiva,,Força Explosiva,Взрывная мощность,
-ship.stats.shield.strengthcaustic,Strength Caustic,,,Fuerza Caústica,,Força Caústica,Едкая мощность,
-ship.stats.shield.raw,Raw,,,Básico,,Básico,Абсолют,
-ship.stats.shield.kinetic,Kinetic,,,Cinético,,Cinético,Кинетика,
-ship.stats.shield.thermal,Thermal,,,Térmico,,Térmico,Термал,
-ship.stats.shield.explosive,Explosive,,,Explosivo,,Explosivo,Взрыв,
-ship.stats.shield.caustic,Caustic,,,Caústico,,Caústico,Едкое,
-ship.stats.weapon,Weapon,,,Armas,,Armas,Оружие,
-ship.stats.weapon.rawdamage,Raw Damage,,,Daño Básico,,Dano básico,Общий урон,
-ship.stats.weapon.absolutepercentage,Absolute,,,Absoluto,,Absoluto,Абсолют.,
-ship.stats.weapon.kineticpercentage,Kinetic,,,Cinético,,Cinético,Кинетич.,
-ship.stats.weapon.thermalpercentage,Thermal,,,Térmico,,Térmico,Термал.,
-ship.stats.weapon.explosivepercentage,Explosive,,,Explosivo,,Explosivo,Взрыв.,
-ship.stats.weapon.causticpercentage,Caustic,,,Caústico,,Caústico,Едкий,
-ship.stats.weapon.antixenopercentage,Anti-Xeno,,,Anti-Xeno,,Anti-Xeno,АИ,
-ship.stats.weapon.burstduration,Burst duration,,,Duración de la Ráfaga,,Duração de Pico,Время очереди,
-ship.stats.weapon.ammoduration,Ammo duration,,,Duración de la Munición,,Duração de Munição,Время магазина,
-ship.stats.weapon.rawdamage.value,{0} dps,,,,,,{0} УвС,
-ship.stats.weapon.value,{0}%,,,,,,,
-ship.stats.weapon.burstduration.value,{0} s,,,,,,{0} с,
-ship.stats.weapon.ammoduration.value,{0} s,,,,,,{0} с,
-ship.stats.price,Price,,,Precio,,Preço,Цена,
-ship.stats.price.price.value,{0} Cr,,,,,,{0} Кр,
-ship.stats.price.rebuy.value,{0} Cr,,,,,,{0} Кр,
-ship.stats.price.price,Price,,,Precio,,Preço,Цена,
-ship.stats.price.rebuy,Rebuy,,,Recompra,,Recompra,Страховка,
-ship.stats.shield.regen,Regenerate,,,Regeneración,,Regeneração,Регенерация,
-ship.stats.shield.rebuild,Rebuild,,,Reconstrucción,,Reconstrução,Восстановление,
-ship.stats.shield.regen.tooltip,"Time to regenerate shields from 50% to 100%, no Systems charge",,,"Tiempo para regenerar escudos del 50% al 100%, Sin carga en Sistemas",,"Tempo para regenerar escudos de 50% a 100%, sem carga de sistemas",Время на регенерацию щита с 50% до 100% без СИС,
-ship.stats.shield.rebuild.tooltip,"Time to rebuild from 0% to 50%, including 16s delay, full Systems charge",,,"Tiempo para reconstruir escudos de 0% al 50%, incluyendo 16s de retraso, Carga de Sistemas completa",,"Tempo para reconstruir de 0% a 50%, incluindo atraso de 16s, carga total de sistemas",Время восстановления щита с 0% до 50% с полным СИС,
-ship.stats.shield.build.unit,{0} s,,,,,,{0} с,
-ship.stats.armour.mrp.integrity.unit,{0},,,,,,,
-ship.stats.armour.mrp.protection.unit,{0}%,,,,,,,
-ship.stats.armour.scb.restoration.unit,{0}x{1}%,,,,,,,
-ship.stats.armour.mrp,Module Reinforcement Packages,,,Refuerzos de Módulo,,Pacotes de Reforço de Módulo,Набор для усиления модуля,
-ship.stats.armour.mrp.short,MRP,,,,,,НУМ,
-ship.stats.armour.mrp.integrity,Integrity,,,Integridad,,Integridade,Целостность,
-ship.stats.armour.mrp.protection,Protection,,,Protección,,Proteção,Защита,
-ship.stats.armour.scb.restoration,Cell Bank,,,Banco de Células,,Banco de Células,Щитонакопитель,
-ship.stats.config.power.group,Power group {0},,,Prioridad Energética {0},,Prioridade Energética {0},Огневая группа {0},
-ship.stats.totaljumprange,Total jump range,,,,,,Макс. расстояние за бак,
-ship.stats.totaljumprange.value,{0} Ly,,,{0} AL,,{0} Al,{0} с.л.,
+"messageKey","","en","de","es","fr","pt","ru","zh"
+"ship.stats.config","Configuration","","","Ajustes","","Configuração","Конфигурация",""
+"ship.stats.config.live","Live","","","","","ao Vivo","",""
+"ship.stats.config.fuelreserve","Fuel reserve","","","Reserva de Combustible","","Reservas de Combustível","Резерв топлива",""
+"ship.stats.config.fuel","Fuel (Max. {0})","","","Combustible (Max. {0})","","Comb (Max. {0})","Топливо (Макс. {0})",""
+"ship.stats.config.cargo","Cargo (Max. {0}+{1})","","","Capacidad de Carga (Max. {0}+{1})","","Carga (Max. {0}+{1})","Груз (Макс. {0}+{1})",""
+"ship.stats.config.system","System","","","Sistemas","","Sistema","СИС",""
+"ship.stats.config.engine","Engine","","","Motores","","Motores","ДВГ",""
+"ship.stats.config.weapon","Weapon","","","Armas","","Armas","ОРУ",""
+"ship.stats.config.cargo_hatch","Cargo hatch","","","Escotilla de Carga","","Escotilha de Carga","Грузовой ковш",""
+"ship.stats.thermalpower","Thermals & power","","","Energía y Calor","","Térmicos e Energia","Нагрев и Мощность",""
+"ship.stats.thermal","Thermals","","","Temperatura","","Térmicos","Нагрев",""
+"ship.stats.power","Power","","","Energía","","Energia","Мощность",""
+"ship.stats.thermal.idle.thermals","Idle heat","","","Temperatura en Reposo","","Calor estático","В покое",""
+"ship.stats.thermal.thruster.thermals","Full thrust heat","","","Temperatura a Máxima Aceleración","","Calor em velocidade máxima","В движении",""
+"ship.stats.thermal.fsd.thermals","FSD charging heat","","","Temperatura Cargando MDD","","Calor de carregamento de MDD","При зарядке FSD",""
+"ship.stats.thermal.idle.thermals.value","{0}%","","","","","","",""
+"ship.stats.thermal.thruster.thermals.value","{0}%","","","","","","",""
+"ship.stats.thermal.fsd.thermals.value","{0}%","","","","","","",""
+"ship.stats.thermal.thermals.value.percentage","{0}%","","","","","","",""
+"ship.stats.thermal.thermals.value.time","{0}","","","","","","",""
+"ship.stats.thermal.thermals.value.error","N/A","","","","","","Н/Д",""
+"ship.stats.power.retracted.power","Retracted","","","Replegado","","Recolhido","Убрано",""
+"ship.stats.power.deployed.power","Deployed","","","Desplegado","","Extendido","Выпущено",""
+"ship.stats.power.retracted.power.value","{0}/{1} MW","","","","","","{0}/{1} МВт",""
+"ship.stats.power.deployed.power.value","{0}/{1} MW","","","","","","{0}/{1} МВт",""
+"ship.stats.jumprange","Jump range","","","Rango de Salto","","","Дальность прыжка",""
+"ship.stats.jumprange.value","{0} Ly","","","{0} AL","","{0} Al","{0} с.л.",""
+"ship.stats.jumprange.min","Minimum range","","","Salto Mínimo","","Salto Mínimo","Минимальна дальность",""
+"ship.stats.jumprange.current","Current range","","","Salto Actual","","Salto Atual","Текущая дальность",""
+"ship.stats.jumprange.maxfueled","Maximum range (full fuel)","","","Máximo Salto (Combustible lleno)","","Alcance Máximo (Combustível pleno)","Максимальная дальность (полный бак)",""
+"ship.stats.jumprange.max","Maximum range (minimal fuel)","","","Máximo Salto (Combustible Mínimo)","","Alcance Máximo (Combustível mínimo)","Максимальная дальность (минимум топлива)",""
+"ship.stats.engine","Engine","","","Motor","","Motor","Двигатель",""
+"ship.stats.engine.speed","Speed","","","Velocidad","","Velocidade","Скорость",""
+"ship.stats.engine.boost","Boost","","","Postquemador","","Impulso","Ускорение",""
+"ship.stats.engine.recharge","Recharge","","","Recarga","","Recarga","Перезарядка",""
+"ship.stats.engine.speed.value","{0} m/s","","","","","","{0} м/с",""
+"ship.stats.engine.boost.value","{0} m/s","","","","","","{0} м/с",""
+"ship.stats.engine.recharge.value","{0} s","","","","","","{0} с",""
+"ship.stats.engine.currentspeed","Current speed","","","Velocidad Actual","","Velocidade Atual","Текущая скорость",""
+"ship.stats.engine.currentboost","Current boost","","","Postquemador Actual","","Impulso Atual","Текущее ускорение",""
+"ship.stats.engine.currentrecharge","Current recharge","","","Recarga Actual","","Recarga Atual","Текущая перезарядка",""
+"ship.stats.engine.minspeed","Minimum speed(Full Cargo)","","","Velocidad Mínima(Carga Completa)","","Velocidade Mínima (Carga Plena)","Минимальная скорость (полный трюм)",""
+"ship.stats.engine.minboost","Minimum boost(Full Cargo)","","","Postquemador Mínimo(Carga Completa)","","Impulso Máximo (Carga Plena)","Минимальное ускорение (полный трюм)",""
+"ship.stats.engine.minrecharge","Minimum recharge(Full Cargo)","","","Recarga Mínima(Carga Completa)","","Recarga Mínima (Carga Plena)","Минимальная перезарядка (полный трюм)",""
+"ship.stats.engine.maxspeed","Maximum speed(No Cargo)","","","Velocidad Máxima(Sin Carga)","","Velocidade Máxima (Sem Carga)","Максимальная скорость (нет груза)",""
+"ship.stats.engine.maxboost","Maximum boost(No Cargo)","","","Postquemador Máximo(Sin Carga)","","Impulso Máximo (Sem Carga)","Максимальное ускорение (нет груза)",""
+"ship.stats.engine.maxrecharge","Maximum recharge(No Cargo)","","","Máxima Recarga(Sin Carga)","","Recarga Máxima (Sem Carga)","Максимальная перезарядка (нет груза)",""
+"ship.stats.handling","Handling","","","Manejo","","Manobrabilidade","Управление",""
+"ship.stats.handling.pitch","Pitch","","","Cabeceo","","Arfagem","Тангаж",""
+"ship.stats.handling.roll","Roll","","","Alabeo","","Rolamento","Крен",""
+"ship.stats.handling.yaw","Yaw","","","Guiñada","","Guinada","Рыскание",""
+"ship.stats.handling.pitch.value","{0} °/s","","","","","","{0} °/с",""
+"ship.stats.handling.roll.value","{0} °/s","","","","","","{0} °/с",""
+"ship.stats.handling.yaw.value","{0} °/s","","","","","","{0} °/с",""
+"ship.stats.handling.currentpitch","Current Pitch","","","Cabeceo Actual","","Arfagem Atual","Текущий тангаж",""
+"ship.stats.handling.currentroll","Current Roll","","","Alabeo Actual","","Rolamento Atual","Текущий крен",""
+"ship.stats.handling.currentyaw","Current Yaw","","","Guiñada Actual","","Guinada Atual","Текущее рыскание",""
+"ship.stats.handling.minimumpitch","Minimum Pitch","","","Cabeceo Mínimo","","Arfagem Mínima","Минимальный тангаж",""
+"ship.stats.handling.minimumroll","Minimum Roll","","","Alabeo Mínimo","","Rolamento Mínima","Минимальный крен",""
+"ship.stats.handling.minimumyaw","Minimum Yaw","","","Guiñada Mínima","","Guinada Mínima","Минимальное рыскание",""
+"ship.stats.handling.maximumpitch","Maximum Pitch","","","Cabeceo Máximo","","Arfagem Máxima","Максимальный тангаж",""
+"ship.stats.handling.maximumroll","Maximum Roll","","","Alabeo Máximo","","Rolamento Máxima","Максимальный крен",""
+"ship.stats.handling.maximumyaw","Maximum Yaw","","","Guiñada Máxima","","Guinada Máxima","Максимальное рыскание",""
+"ship.stats.armour","Armour","","","Blindaje","","Blindagem","Броня",""
+"ship.stats.armour.resistanceraw","Resistance Raw","","","Resistencia Básica","","Resistência Total","Чистое сопротивление",""
+"ship.stats.armour.resistancekinetic","Resistance Kinetic","","","Resistencia Cinética","","Resistência Cinética","Кинетическое сопротивление",""
+"ship.stats.armour.resistancethermal","Resistance Thermal","","","Resistencia Térmica","","Resistência Térmica","Термальное сопротивление",""
+"ship.stats.armour.resistanceexplosive","Resistance Explosive","","","Resistencia Explosiva","","Resistência a Explosão","Взрывное сопротивление",""
+"ship.stats.armour.resistancecaustic","Resistance Caustic","","","Resistencia Caústica","","Resistência Cáustica","Едкое сопротивление",""
+"ship.stats.armour.integrityraw","Integrity Raw","","","Integridad Básica","","Integridade Básica","Чистая целостность",""
+"ship.stats.armour.integritykinetic","Integrity Kinetic","","","Integridad Cinética","","Integridade Cinética","Кинетическая целостность",""
+"ship.stats.armour.integritythermal","Integrity Thermal","","","Integridad Térmica","","Integridade Térmica","Термальная целостность",""
+"ship.stats.armour.integrityexplosive","Integrity Explosive","","","Integridad Explosiva","","Integridade Explosiva","Взрывная целостность",""
+"ship.stats.armour.integritycaustic","Integrity Caustic","","","Integridad Caústica","","Integridade Cáustica","Едкая целостность",""
+"ship.stats.shield","Shield","","","Escudos","","Escudos","Щиты",""
+"ship.stats.shield.resistancekinetic","Resistance Kinetic","","","Resistencia Cinética","","Resistência Cinética","Кинетическое сопротивление",""
+"ship.stats.shield.resistancethermal","Resistance Thermal","","","Resistencia Térmica","","Resistência Térmica","Термальное сопротивление",""
+"ship.stats.shield.resistanceexplosive","Resistance Explosive","","","Resistencia Explosiva","","Resistência Explosiva","Взрывное сопротивление",""
+"ship.stats.shield.resistancecaustic","Resistance Caustic","","","Resistencia Caústica","","Resistência Caústica","Едкое сопротивление",""
+"ship.stats.shield.strengthraw","Strength Raw","","","Fuerza Básica","","Força Básica","Чистая мощность",""
+"ship.stats.shield.strengthkinetic","Strength Kinetic","","","Fuerza Cinética","","Força Cinética","Кинетическая мощность",""
+"ship.stats.shield.strengththermal","Strength Thermal","","","Fuerza Térmica","","Força Térmica","Термальная мощность",""
+"ship.stats.shield.strengthexplosive","Strength Explosive","","","Fuerza Explosiva","","Força Explosiva","Взрывная мощность",""
+"ship.stats.shield.strengthcaustic","Strength Caustic","","","Fuerza Caústica","","Força Caústica","Едкая мощность",""
+"ship.stats.shield.raw","Raw","","","Básico","","Básico","Абсолют",""
+"ship.stats.shield.kinetic","Kinetic","","","Cinético","","Cinético","Кинетика",""
+"ship.stats.shield.thermal","Thermal","","","Térmico","","Térmico","Термал",""
+"ship.stats.shield.explosive","Explosive","","","Explosivo","","Explosivo","Взрыв",""
+"ship.stats.shield.caustic","Caustic","","","Caústico","","Caústico","Едкое",""
+"ship.stats.weapon","Weapon","","","Armas","","Armas","Оружие",""
+"ship.stats.weapon.rawdamage","Raw Damage","","","Daño Básico","","Dano básico","Общий урон",""
+"ship.stats.weapon.absolutepercentage","Absolute","","","Absoluto","","Absoluto","Абсолют.",""
+"ship.stats.weapon.kineticpercentage","Kinetic","","","Cinético","","Cinético","Кинетич.",""
+"ship.stats.weapon.thermalpercentage","Thermal","","","Térmico","","Térmico","Термал.",""
+"ship.stats.weapon.explosivepercentage","Explosive","","","Explosivo","","Explosivo","Взрыв.",""
+"ship.stats.weapon.causticpercentage","Caustic","","","Caústico","","Caústico","Едкий",""
+"ship.stats.weapon.antixenopercentage","Anti-Xeno","","","","","","АИ",""
+"ship.stats.weapon.burstduration","Burst duration","","","Duración de la Ráfaga","","Duração de Pico","Время очереди",""
+"ship.stats.weapon.ammoduration","Ammo duration","","","Duración de la Munición","","Duração de Munição","Время магазина",""
+"ship.stats.weapon.rawdamage.value","{0} dps","","","","","","{0} УвС",""
+"ship.stats.weapon.value","{0}%","","","","","","",""
+"ship.stats.weapon.burstduration.value","{0} s","","","","","","{0} с",""
+"ship.stats.weapon.ammoduration.value","{0} s","","","","","","{0} с",""
+"ship.stats.price","Price","","","Precio","","Preço","Цена",""
+"ship.stats.price.price.value","{0} Cr","","","","","","{0} Кр",""
+"ship.stats.price.rebuy.value","{0} Cr","","","","","","{0} Кр",""
+"ship.stats.price.price","Price","","","Precio","","Preço","Цена",""
+"ship.stats.price.rebuy","Rebuy","","","Recompra","","Recompra","Страховка",""
+"ship.stats.shield.regen","Regenerate","","","Regeneración","","Regeneração","Регенерация",""
+"ship.stats.shield.rebuild","Rebuild","","","Reconstrucción","","Reconstrução","Восстановление",""
+"ship.stats.shield.regen.tooltip","Time to regenerate shields from 50% to 100%, no Systems charge","","","Tiempo para regenerar escudos del 50% al 100%, Sin carga en Sistemas","","Tempo para regenerar escudos de 50% a 100%, sem carga de sistemas","Время на регенерацию щита с 50% до 100% без СИС",""
+"ship.stats.shield.rebuild.tooltip","Time to rebuild from 0% to 50%, including 16s delay, full Systems charge","","","Tiempo para reconstruir escudos de 0% al 50%, incluyendo 16s de retraso, Carga de Sistemas completa","","Tempo para reconstruir de 0% a 50%, incluindo atraso de 16s, carga total de sistemas","Время восстановления щита с 0% до 50% с полным СИС",""
+"ship.stats.shield.build.unit","{0} s","","","","","","{0} с",""
+"ship.stats.armour.mrp.integrity.unit","{0}","","","","","","",""
+"ship.stats.armour.mrp.protection.unit","{0}%","","","","","","",""
+"ship.stats.armour.scb.restoration.unit","{0}x{1}%","","","","","","",""
+"ship.stats.armour.mrp","Module Reinforcement Packages","","","Refuerzos de Módulo","","Pacotes de Reforço de Módulo","Набор для усиления модуля",""
+"ship.stats.armour.mrp.short","MRP","","","","","","НУМ",""
+"ship.stats.armour.mrp.integrity","Integrity","","","Integridad","","Integridade","Целостность",""
+"ship.stats.armour.mrp.protection","Protection","","","Protección","","Proteção","Защита",""
+"ship.stats.armour.scb.restoration","Cell Bank","","","Banco de Células","","Banco de Células","Щитонакопитель",""
+"ship.stats.config.power.group","Power group {0}","","","Prioridad Energética {0}","","Prioridade Energética {0}","Огневая группа {0}",""
+"ship.stats.totaljumprange","Total jump range","","","","","","Макс. расстояние за бак",""
+"ship.stats.totaljumprange.value","{0} Ly","","","{0} AL","","{0} Al","{0} с.л.",""

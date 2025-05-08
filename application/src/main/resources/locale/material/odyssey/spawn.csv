@@ -1,44 +1,44 @@
-messageKey,,en,de,es,fr,pt,ru,zh
-spawn.location.type.closedlocker,Sealed lockers,Sealed lockers,Versiegelte Schließfächer,Casilleros sellados,Casiers verrouillés,Armários lacrados,Запечатанные шкафчики,
-spawn.location.type.dataport,Settlement data ports,Settlement data ports,Ansiedlungsdatenports,Puertos de datos del asentamiento,Ports de données de l’installation,Portas de dados de liquidação,Порты данных поселения,
-spawn.location.type.device.bio,Bio containment unit,Bio containment unit,Bio-Containment-Einheit,Unidad de biocontención,Unité de confinement bio,Unidade de bio contenção,Блок биологического содержания,
-spawn.location.type.device.env,Environmental regulation unit,Environmental regulation unit,Umweltregulierungseinheit,Unidad de regulación medioambiental,Unité de régulation environnementale,Unidade de regulação ambiental,Блок регулирования окружающей среды,
-spawn.location.type.device.pwr,Power reactor,Power reactor,Leistungsreaktor,Reactor de energía,Réacteur de puissance,Reator de energia,Энергетический реактор,
-spawn.location.type.device.sam,Sample containment unit,Sample containment unit,Probe-Containment-Einheit,Unidad de contención de muestra,Exemple d’unité de confinement,Unidade de contenção de amostra,Образец блока содержания,
-spawn.location.type.device.srv,SRV,SRV,SRV,VRS,SRV,SRV,ТРП,
-spawn.location.type.device.syn,Synthesis regulation unit,Synthesis regulation unit,Synthese-Regulierungs-Einheit,Unidad de regulación de síntesis,Unité de régulation de synthèse,Unidade de regulação de síntese,Блок регулирования синтеза,
-spawn.location.type.device,Devices,Devices,Geräte,Dispositivos,Périphériques,Dispositivos,Устройства,
-spawn.location.type.locker.agr,Agricultural,Agricultural,Landwirtschaftlich,Agrícola,Agriculture,Agrícola,Сельское хозяйство,
-spawn.location.type.locker.cmd,Command,Command,Befehl,Comando,Commande,Comando,Коммандный пункт,
-spawn.location.type.locker.dorm,Dormitory,Dormitory,Schlafsaal,Dormitorio,Dortoir,Dormitório,Общежитие,
-spawn.location.type.locker.ext,Extraction,Extraction,Extraktion,Extracción,Extraction,Extração,Извлечение,
-spawn.location.type.locker.hab,Habitat,Habitat,Lebensraum,Hábitat,Habitat,Habitat,Среда обитания,
-spawn.location.type.locker.ind,Industrial,Industrial,Industriell,Industrial,Industriel,Industrial,Промышленное,
-spawn.location.type.locker.lab,Laboratory,Laboratory,Labor,Laboratorio,Laboratoire,Laboratório,Лаборатория,
-spawn.location.type.locker.med,Medical,Medical,Medizinisch,Médico,Médical,Médico,Медицинский,
-spawn.location.type.locker.opr,Operations,Operations,Operationen,Operaciones,Opérations,Operações,Операции,
-spawn.location.type.locker.out,Containers outside,Containers outside,Container außerhalb,Contenedores fuera,Conteneurs à l’extérieur,Contêineres externos,Контейнеры снаружи,
-spawn.location.type.locker.proc,Processing,Processing,Verarbeitung,Procesando,Traitement,Processando,Обработка,
-spawn.location.type.locker.pwr,Power,Power,Energie,Poder,Puissance,Poder,Реактор,
-spawn.location.type.locker.sec,Security,Security,Sicherheit,Seguridad,Sécurité,Segurança,Безопасность,
-spawn.location.type.locker.sto,Storage,Storage,Speicher,Almacenamiento,Stockage,Armazenamento,Хранилище,
-spawn.location.type.openlocker,Open lockers,Open lockers,Öffne Schließfächer,Taquillas abiertas,Casiers déverrouillés,Abrir armários,Открытые шкафчики,
-spawn.location.type.other.mission_objective,Mission objective,Mission objective,Missionsziel,Objetivo de la misión,Objectif de mission,Objetivo da missão,Цель миссии,
-spawn.location.type.other.mission_reward,Mission reward,Mission reward,Missionsbelohnung,Recompensa de la misión,Récompense de mission,Recompensa da missão,Награда за миссию,
-spawn.location.type.other,Other Locations,Other Locations,Andere Standorte,Otras ubicaciones,Autres emplacements,Outros locais,Другие локации,
-spawn.location.type.planetary.crashed,Crashed ship(Crash site),Crashed ship(Crash site),Abgestürztes Schiff (Absturzstelle),Nave estrellada (lugar del accidente),Navire écrasé (site du crash),Navio quebrou (local de acidente),Разбитый корабль (Место крушения),
-spawn.location.type.planetary.large_sat,Large satellite(Impact site 2),Large satellite(Impact site 2),Großer Satellit (Einschlagsstelle 2),Satélite grande (lugar de impacto 2),Grand satellite (site d’impact 2),Grande satélite (local de impacto 2),Большой спутник (место падения 2),
-spawn.location.type.planetary.skimmer,Skimmer(Irregular marker),Skimmer(Irregular marker),Skimmer (Unregelmäßige Markierung),Skimmer (marcador irregular),Skimmer (marqueur irrégulier),Skimmer (marcador irregular),Беспилотник (Нестандартные метки),
-spawn.location.type.planetary.small_sat,Small satellite(Impact site 1 & 3),Small satellite(Impact site 1 & 3),Kleiner Satellit (Einschlagsstelle 1 & 3),Pequeño satélite (lugar de impacto 1 & 3),Petit satellite (site d’impact 1 & 3),Pequeno satélite (local de impacto 1 & 3),Маленький спутник (место падения 1 & 3),
-spawn.location.type.planetary.srv,SRV(Irregular marker),SRV(Irregular marker),SRV(Unregelmäßige Markierung),VRS (Marcador Irregular),SRV(Marqueur irrégulier),SRV (marcador irregular),SRV (Нестандартные метки),
-spawn.location.type.planetary,Planetary signal sources,Planetary signal sources,Planetäre Signalquellen,Fuentes de señales planetarias,Sources de signaux planétaires,Fontes de sinais planetários,Источники планетных сигналов,
-spawn.location.type.dataport.agr,Agricultural Data Port,Agricultural Data Port,Landwirtschaftlich,Agrícola,Agriculture,Agrícola,Порт данных в здании Сельскохозяйственного производства,
-spawn.location.type.dataport.cmd,Command Data Port,Command Data Port,Befehl,Comando,Commande,Comando,Порт данных в здании Командного центра,
-spawn.location.type.dataport.ext,Extraction Data Port,Extraction Data Port,Extraktion,Extracción,Extraction,Extração,Порт данных в здании Добывающей установки,
-spawn.location.type.dataport.hab,Habitat Data Port,Habitat Data Port,Lebensraum,Hábitat,Habitat,Habitat,Порт данных в здании Жилого модуля,
-spawn.location.type.dataport.ind,Industrial Data Port,Industrial Data Port,Industriell,Industrial,Industriel,Industrial,Порт данных в здании Производства,
-spawn.location.type.dataport.lab,Laboratory Data Port,Laboratory Data Port,Labor,Laboratorio,Laboratoire,Laboratório,Порт данных в здании Биологической лаборатории,
-spawn.location.type.dataport.med,Medical Data Port,Medical Data Port,Medizinisch,Médico,Médical,Médico,Порт данных в комнате Медотсека,
-spawn.location.type.dataport.pwr,Power Data Port,Power Data Port,Energie,Poder,Alimentation,Power,Порт данных в здании Энергетического центра,
-spawn.location.type.dataport.sec,Security Data Port,Security Data Port,Sicherheit,Seguridad,Sécurité,Segurança,Порт данных в комнате Безопасности,
-spawn.location.type.dataport.poi,Data Port,Data Port,Datenschnittstelle,Puerto de datos,Port de données,Porta de dados,Порт данных,
+"messageKey","","en","de","es","fr","pt","ru","zh"
+"spawn.location.type.closedlocker","Sealed lockers","Sealed lockers","Versiegelte Schließfächer","Casilleros sellados","Casiers verrouillés","Armários lacrados","Запечатанные шкафчики",""
+"spawn.location.type.dataport","Settlement data ports","Settlement data ports","Ansiedlungsdatenports","Puertos de datos del asentamiento","Ports de données de l’installation","Portas de dados de liquidação","Порты данных поселения",""
+"spawn.location.type.device.bio","Bio containment unit","Bio containment unit","Bio-Containment-Einheit","Unidad de biocontención","Unité de confinement bio","Unidade de bio contenção","Блок биологического содержания",""
+"spawn.location.type.device.env","Environmental regulation unit","Environmental regulation unit","Umweltregulierungseinheit","Unidad de regulación medioambiental","Unité de régulation environnementale","Unidade de regulação ambiental","Блок регулирования окружающей среды",""
+"spawn.location.type.device.pwr","Power reactor","Power reactor","Leistungsreaktor","Reactor de energía","Réacteur de puissance","Reator de energia","Энергетический реактор",""
+"spawn.location.type.device.sam","Sample containment unit","Sample containment unit","Probe-Containment-Einheit","Unidad de contención de muestra","Exemple d’unité de confinement","Unidade de contenção de amostra","Образец блока содержания",""
+"spawn.location.type.device.srv","SRV","SRV","","VRS","","","ТРП",""
+"spawn.location.type.device.syn","Synthesis regulation unit","Synthesis regulation unit","Synthese-Regulierungs-Einheit","Unidad de regulación de síntesis","Unité de régulation de synthèse","Unidade de regulação de síntese","Блок регулирования синтеза",""
+"spawn.location.type.device","Devices","Devices","Geräte","Dispositivos","Périphériques","Dispositivos","Устройства",""
+"spawn.location.type.locker.agr","Agricultural","Agricultural","Landwirtschaftlich","Agrícola","Agriculture","Agrícola","Сельское хозяйство",""
+"spawn.location.type.locker.cmd","Command","Command","Befehl","Comando","Commande","Comando","Коммандный пункт",""
+"spawn.location.type.locker.dorm","Dormitory","Dormitory","Schlafsaal","Dormitorio","Dortoir","Dormitório","Общежитие",""
+"spawn.location.type.locker.ext","Extraction","Extraction","Extraktion","Extracción","","Extração","Извлечение",""
+"spawn.location.type.locker.hab","Habitat","Habitat","Lebensraum","Hábitat","","","Среда обитания",""
+"spawn.location.type.locker.ind","Industrial","Industrial","Industriell","","Industriel","","Промышленное",""
+"spawn.location.type.locker.lab","Laboratory","Laboratory","Labor","Laboratorio","Laboratoire","Laboratório","Лаборатория",""
+"spawn.location.type.locker.med","Medical","Medical","Medizinisch","Médico","Médical","Médico","Медицинский",""
+"spawn.location.type.locker.opr","Operations","Operations","Operationen","Operaciones","Opérations","Operações","Операции",""
+"spawn.location.type.locker.out","Containers outside","Containers outside","Container außerhalb","Contenedores fuera","Conteneurs à l’extérieur","Contêineres externos","Контейнеры снаружи",""
+"spawn.location.type.locker.proc","Processing","Processing","Verarbeitung","Procesando","Traitement","Processando","Обработка",""
+"spawn.location.type.locker.pwr","Power","Power","Energie","Poder","Puissance","Poder","Реактор",""
+"spawn.location.type.locker.sec","Security","Security","Sicherheit","Seguridad","Sécurité","Segurança","Безопасность",""
+"spawn.location.type.locker.sto","Storage","Storage","Speicher","Almacenamiento","Stockage","Armazenamento","Хранилище",""
+"spawn.location.type.openlocker","Open lockers","Open lockers","Öffne Schließfächer","Taquillas abiertas","Casiers déverrouillés","Abrir armários","Открытые шкафчики",""
+"spawn.location.type.other.mission_objective","Mission objective","Mission objective","Missionsziel","Objetivo de la misión","Objectif de mission","Objetivo da missão","Цель миссии",""
+"spawn.location.type.other.mission_reward","Mission reward","Mission reward","Missionsbelohnung","Recompensa de la misión","Récompense de mission","Recompensa da missão","Награда за миссию",""
+"spawn.location.type.other","Other Locations","Other Locations","Andere Standorte","Otras ubicaciones","Autres emplacements","Outros locais","Другие локации",""
+"spawn.location.type.planetary.crashed","Crashed ship(Crash site)","Crashed ship(Crash site)","Abgestürztes Schiff (Absturzstelle)","Nave estrellada (lugar del accidente)","Navire écrasé (site du crash)","Navio quebrou (local de acidente)","Разбитый корабль (Место крушения)",""
+"spawn.location.type.planetary.large_sat","Large satellite(Impact site 2)","Large satellite(Impact site 2)","Großer Satellit (Einschlagsstelle 2)","Satélite grande (lugar de impacto 2)","Grand satellite (site d’impact 2)","Grande satélite (local de impacto 2)","Большой спутник (место падения 2)",""
+"spawn.location.type.planetary.skimmer","Skimmer(Irregular marker)","Skimmer(Irregular marker)","Skimmer (Unregelmäßige Markierung)","Skimmer (marcador irregular)","Skimmer (marqueur irrégulier)","Skimmer (marcador irregular)","Беспилотник (Нестандартные метки)",""
+"spawn.location.type.planetary.small_sat","Small satellite(Impact site 1 & 3)","Small satellite(Impact site 1 & 3)","Kleiner Satellit (Einschlagsstelle 1 & 3)","Pequeño satélite (lugar de impacto 1 & 3)","Petit satellite (site d’impact 1 & 3)","Pequeno satélite (local de impacto 1 & 3)","Маленький спутник (место падения 1 & 3)",""
+"spawn.location.type.planetary.srv","SRV(Irregular marker)","SRV(Irregular marker)","SRV(Unregelmäßige Markierung)","VRS (Marcador Irregular)","SRV(Marqueur irrégulier)","SRV (marcador irregular)","SRV (Нестандартные метки)",""
+"spawn.location.type.planetary","Planetary signal sources","Planetary signal sources","Planetäre Signalquellen","Fuentes de señales planetarias","Sources de signaux planétaires","Fontes de sinais planetários","Источники планетных сигналов",""
+"spawn.location.type.dataport.agr","Agricultural Data Port","Agricultural Data Port","Landwirtschaftlich","Agrícola","Agriculture","Agrícola","Порт данных в здании Сельскохозяйственного производства",""
+"spawn.location.type.dataport.cmd","Command Data Port","Command Data Port","Befehl","Comando","Commande","Comando","Порт данных в здании Командного центра",""
+"spawn.location.type.dataport.ext","Extraction Data Port","Extraction Data Port","Extraktion","Extracción","Extraction","Extração","Порт данных в здании Добывающей установки",""
+"spawn.location.type.dataport.hab","Habitat Data Port","Habitat Data Port","Lebensraum","Hábitat","Habitat","Habitat","Порт данных в здании Жилого модуля",""
+"spawn.location.type.dataport.ind","Industrial Data Port","Industrial Data Port","Industriell","Industrial","Industriel","Industrial","Порт данных в здании Производства",""
+"spawn.location.type.dataport.lab","Laboratory Data Port","Laboratory Data Port","Labor","Laboratorio","Laboratoire","Laboratório","Порт данных в здании Биологической лаборатории",""
+"spawn.location.type.dataport.med","Medical Data Port","Medical Data Port","Medizinisch","Médico","Médical","Médico","Порт данных в комнате Медотсека",""
+"spawn.location.type.dataport.pwr","Power Data Port","Power Data Port","Energie","Poder","Alimentation","Power","Порт данных в здании Энергетического центра",""
+"spawn.location.type.dataport.sec","Security Data Port","Security Data Port","Sicherheit","Seguridad","Sécurité","Segurança","Порт данных в комнате Безопасности",""
+"spawn.location.type.dataport.poi","Data Port","Data Port","Datenschnittstelle","Puerto de datos","Port de données","Porta de dados","Порт данных",""
