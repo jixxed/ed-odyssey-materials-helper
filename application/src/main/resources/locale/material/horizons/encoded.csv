@@ -1,49 +1,49 @@
-messageKey,,en,de,es,fr,pt,ru,zh
-material.encoded.adaptiveencryptors,Adaptive Encryptors Capture,Adaptive Encryptors Capture,Adaptive Verschlüsselungserfassung,Captura de encriptadores adaptativos,Capture de cryptage évolutif,Encriptadores adaptativos capturados,Захват адаптивного шифровальщика,
-material.encoded.archivedemissiondata,Irregular Emission Data,Irregular Emission Data,Irreguläre Emissionsdaten,Datos de emisión irregulares,Données d’émissions aberrantes,Dados de emissão irregulares,Нестандартные данные об излучении,
-material.encoded.bulkscandata,Anomalous Bulk Scan Data,Anomalous Bulk Scan Data,Anormale Massen-Scan-Daten,Datos de escáner en bruto anómalos,Fichier volumineux de données d’analyse anormal,Dados brutos de escâner anômalos,Аномальный массив данных сканирования,
-material.encoded.classifiedscandata,Classified Scan Fragment,Classified Scan Fragment,Geheimes Scan-Fragment,Fragmento de escáner clasificado,Données d’analyse classifiées parcellaires,Fragmentos de escaneamentos confidenciais,Засекреченные фрагменты данных сканирования,
-material.encoded.compactemissionsdata,Abnormal Compact Emissions Data,Abnormal Compact Emissions Data,Anormale kompakte Emissionsdaten,Compresión de datos de transmisiones anormal,Données d’émissions compactes anormales,Dados de emissão compactos anormais,Аномальные компактные данные об излучении,
-material.encoded.consumerfirmware,Modified Consumer Firmware,Modified Consumer Firmware,Modifizierte Consumer-Firmware,Firmware de consumo modificado,Micrologiciel consommateur modifié,Firmware de consumo modificado,Измененные пользовательские микропрограммы,
-material.encoded.dataminedwake,Datamined Wake Exceptions,Datamined Wake Exceptions,FSA-Daten-Cache-Ausnahmen,Excepciones en análisis de estelas,Explorations de données de sillages anormales,Exceções de dados processados de rastros,Исключения из глубинного анализа данных следа,
-material.encoded.decodedemissiondata,Decoded Emission Data,Decoded Emission Data,Entschlüsselte Emissionsdaten,Datos de emisión descodificados,Données d’émissions décodées,Dados de emissão decodificados,Расшифрованные данные об излучении,
-material.encoded.disruptedwakeechoes,Atypical Disrupted Wake Echoes,Atypical Disrupted Wake Echoes,Atypische FSA-Stör-Aufzeichnungen,Ecos de estelas interrumpidas atípicos,Échos de sillages perturbés atypiques,Interferência atípica no eco de rastros,Атипичное эхо поврежденного следа,
-material.encoded.embeddedfirmware,Modified Embedded Firmware,Modified Embedded Firmware,Modifizierte integrierte Firmware,Firmware integrado modificado,Micrologiciel intégré modifié,Firmware embutido modificado,Измененные встроенные микропрограммы,
-material.encoded.emissiondata,Unexpected Emission Data,Unexpected Emission Data,Unerwartete Emissionsdaten,Datos de emisión inesperados,Données d’émissions inattendues,Dados de emissão inesperados,Неожиданные данные об излучении,
-material.encoded.encodedscandata,Divergent Scan Data,Divergent Scan Data,Divergente Scandaten,Datos de escáner divergentes,Données d’analyse divergentes,Dados escaneados divergentes,Неформатные данные сканирования,
-material.encoded.encryptedfiles,Unusual Encrypted Files,Unusual Encrypted Files,Ungewöhnliche verschlüsselte Files,Ficheros encriptados inusuales,Fichiers cryptés inhabituels,Arquivos criptografados incomuns,Особые зашифрованные файлы,
-material.encoded.encryptionarchives,Atypical Encryption Archives,Atypical Encryption Archives,Atypische Verschlüsselungsarchive,Archivos encriptados atípicos,Archives cryptées atypiques,Arquivos de encriptação atípicos,Нетипичные архивы шифрования,
-material.encoded.encryptioncodes,Tagged Encryption Codes,Tagged Encryption Codes,Getaggte Verschlüsselungscodes,Códigos de encriptación marcados,Clés de cryptage balisées,Códigos de encriptação rotulados,Меченые шифровальные коды,
-material.encoded.fsdtelemetry,Anomalous FSD Telemetry,Anomalous FSD Telemetry,Anormale FSA-Telemetrie,Telemetría de MDD anómala,Télémétrie FSD anormale,Telemetria anômala de MDD,Аномальная телеметрия FSD,
-material.encoded.guardian_moduleblueprint,Guardian Module Blueprint Fragment,Guardian Module Blueprint Fragment,Guardian-Modulbauplansegment,Segmento de plano de módulo de guardián,Fragment de plan de module - Guardians,Segmento de diagrama de módulo Guardian,Фрагмент чертежа модуля Стражей,
-material.encoded.guardian_vesselblueprint,Guardian Vessel Blueprint Fragment,Guardian Vessel Blueprint Fragment,Guardian-Schiffsbauplansegment,Segmento de plano de nave de guardián,Fragment de plan de vaisseau - Guardians,Segmento de diagrama de nave Guardian,Фрагмент чертежа судна Стражей,
-material.encoded.guardian_weaponblueprint,Guardian Weapon Blueprint Fragment,Guardian Weapon Blueprint Fragment,Guardian-Waffenbauplansegment,Segmento de plano de armamento de guardián,Fragment de plan d’arme - Guardians,Segmento de diagrama de arma Guardian,Фрагмент чертежа оружия Стражей,
-material.encoded.hyperspacetrajectories,Eccentric Hyperspace Trajectories,Eccentric Hyperspace Trajectories,Exzentrische Hyperraum-Routen,Trayectorias de hiperespacio excéntricas,Trajectoires d’hyperespace excentriques,Trajetórias excêntricas de hiperespaço,Аномальные траектории в гиперпространстве,
-material.encoded.industrialfirmware,Cracked Industrial Firmware,Cracked Industrial Firmware,Gecrackte Industrie-Firmware,Firmware industrial pirateado,Micrologiciel industriel piraté,Firmware industrial quebrado,Взломанные промышленные микропрограммы,
-material.encoded.legacyfirmware,Specialised Legacy Firmware,Specialised Legacy Firmware,Spezial-Legacy-Firmware,Firmware heredado especializado,Micrologiciel spécialisé périmé,Firmware especializado antigo,Специальные микропрограммы предыдущего поколения,
-material.encoded.scanarchives,Unidentified Scan Archives,Unidentified Scan Archives,Unidentifizierte Scan-Archive,Archivos de escáner no identificados,Données d’analyse archivées non identifiées,Arquivos de escaneamento não identificados,Неопознанные архивы сканирования,
-material.encoded.scandatabanks,Classified Scan Databanks,Classified Scan Databanks,Scan-Datenbanken unter Verschluss,Datos de escáner clasificados,Banques de données d’analyse classifiées,Banco de dados de escaneamento confidenciais,Засекреченные базы данных сканирования,
-material.encoded.scrambledemissiondata,Exceptional Scrambled Emission Data,Exceptional Scrambled Emission Data,Außergewöhnliche verschlüsselte Emissionsdaten,Datos de transmisiones codificadas excepcionales,Données d’émissions brouillées exceptionnelles,Exceção nos dados de emissão embaralhados,Исключительные зашифрованные данные об излучении,
-material.encoded.securityfirmware,Security Firmware Patch,Security Firmware Patch,Sicherheits-Firmware-Patch,Parche de firmware de seguridad,Mise à jour de micrologiciel de sécurité,Atualização de firmware de segurança,Обновление для защитной микропрограммы,
-material.encoded.shieldcyclerecordings,Distorted Shield Cycle Recordings,Distorted Shield Cycle Recordings,Gestörte Schildzyklus-Aufzeichnungen,Registros de ciclo de escudo distorsionados,Enregistrements de cycles de bouclier déformés,Registros distorcidos de ciclos de escudo,Поврежденные цикличные записи щита,
-material.encoded.shielddensityreports,Untypical Shield Scans,Untypical Shield Scans,Untypische Schildscans,Escáner de escudos atípico,Analyses de bouclier atypiques,Escaneamentos de escudo atípicos,Нетипичные данные сканирования щитов,
-material.encoded.shieldfrequencydata,Peculiar Shield Frequency Data,Peculiar Shield Frequency Data,Verdächtige Schildfrequenz-Daten,Datos de frecuencias de escudo peculiares,Données de fréquences de bouclier singulières,Dados da frequência de escudos peculiares,Специфические данные о частоте щитов,
-material.encoded.shieldpatternanalysis,Aberrant Shield Pattern Analysis,Aberrant Shield Pattern Analysis,Abweichende Schildeinsatz-Analysen,Análisis de patrones de escudo aberrantes,Analyse de modèle de bouclier aberrante,Análise de padrão de escudos aberrante,Анализ аномального поведения щита,
-material.encoded.shieldsoakanalysis,Inconsistent Shield Soak Analysis,Inconsistent Shield Soak Analysis,Inkonsistente Schildleistungsanalysen,Análisis de absorción de escudos inconsistente,Analyse d’absorption de bouclier incohérente,Análise inconsistente de escudo atingidos,Неполный анализ поглощения щита,
-material.encoded.symmetrickeys,Open Symmetric Keys,Open Symmetric Keys,Offene symmetrische Schlüssel,Claves simétricas abiertas,Clés symétriques ouvertes,Chaves simétricas abertas,Открытые симметричные ключи,
-material.encoded.tg_compositiondata,Thargoid Material Composition Data,Thargoid Material Composition Data,Materialzusammensetzungsdaten der Thargoiden,Datos de composición material Thargoide,Données de composition de matériau thargoid,Dados de Composição de Material Thargoid,Данные о составе таргоидских материалов,
-material.encoded.tg_residuedata,Thargoid Residue Data,Thargoid Residue Data,Thargoiden-Rückstandsdaten,Datos residuales Thargoides,Données de résidu thargoid,Dados de Resíduos Thargoid,Данных об осадке таргоидского происхождения,
-material.encoded.tg_structuraldata,Thargoid Structural Data,Thargoid Structural Data,Thargoiden-Strukturdaten,Datos estructurales Thargoides,Données de structure thargoid,Dados de Estrutura Thargoid,Данные о структуре таргоидского объекта,
-material.encoded.unknown,Unknown,Unknown,Unbekannt,Desconocido,Inconnu,Desconhecido,Неизвестно,
-material.encoded.unknownshipsignature,Thargoid Ship Signature,Thargoid Ship Signature,Thargoiden-Schiffssignatur,Firma térmica de nave Thargoide,Signature de vaisseau thargoid,Assinatura de Nave Thargoid,Сигнатура таргоидского корабля,
-material.encoded.unknownwakedata,Thargoid Wake Data,Thargoid Wake Data,Thargoiden-Sogwolkendaten,Datos de estela Thargoide,Données de sillage thargoid,Dados de Rastro Thargoid,Данные следа таргоидского корабля,
-material.encoded.wakesolutions,Strange Wake Solutions,Strange Wake Solutions,Seltsame FSA-Zielorte,Extrañas soluciones de estelas,Solutions de sillage anormales,Soluções de rastro estranhas,Странные расчеты следа,
-material.encoded.tg_shipflightdata,Ship Flight Data (Thargoid),Ship Flight Data (Thargoid),Schiffsflugdaten,Datos de vuelos de nave,Données de vol de vaisseau,Dados de Voo da Nave,Полетные данные корабля,
-material.encoded.tg_shipsystemsdata,Ship Systems Data (Thargoid),Ship Systems Data (Thargoid),Schiffssysteme-Daten,Datos de sistemas de nave,Données de systèmes de vaisseau,Dados do Sistema da Nave,Данные бортовых систем корабля,
-material.encoded.ancientbiologicaldata,Pattern Alpha Obelisk Data (Guardian),Pattern Alpha Obelisk Data (Guardian),Alpha-Muster-Obeliskendaten,Datos de obelisco de patrón alfa,Données d’obélisque de type alpha,Dados de Obelisco de Padrão Alfa,Данные с обелиска «Альфа»,
-material.encoded.ancientculturaldata,Pattern Beta Obelisk Data (Guardian),Pattern Beta Obelisk Data (Guardian),Beta-Muster-Obeliskendaten,Datos de obelisco de patrón beta,Données d’obélisque de type bêta,Dados de Obelisco de Padrão Beta,Данные с обелиска «Бета»,
-material.encoded.ancienthistoricaldata,Pattern Gamma Obelisk Data (Guardian),Pattern Gamma Obelisk Data (Guardian),Gamma-Muster-Obeliskendaten,Datos de obelisco de patrón gamma,Données d’obélisque de type gamma,Dados de Obelisco de Padrão Gama,Данные с обелиска «Гамма»,
-material.encoded.ancientlanguagedata,Pattern Delta Obelisk Data (Guardian),Pattern Delta Obelisk Data (Guardian),Delta-Muster-Obeliskendaten,Datos de obelisco de patrón delta,Données d’obélisque de type delta,Dados de Obelisco de Padrão Delta,Данные с обелиска «Дельта»,
-material.encoded.ancienttechnologicaldata,Pattern Epsilon Obelisk Data (Guardian),Pattern Epsilon Obelisk Data (Guardian),Epsilon-Muster-Obeliskendaten,Datos de obelisco de patrón epsilon,Données d’obélisque de type epsilon,Dados de Obelisco de Padrão Epsilon,Данные с обелиска «Эпсилон»,
-material.encoded.tg_interdictiondata,Thargoid Interdiction Telemetry (Thargoid),Thargoid Interdiction Telemetry (Thargoid),,Telemetría de Interdicción Thargoide,,,Телеметрия перехвата таргоидами,
-material.encoded.tg_shutdowndata,Massive Energy Surge Analytics (Thargoid),Massive Energy Surge Analytics (Thargoid),,Análisis de Sobrecarga de Energía Masiva(Thargoide),,,Параметры сильного энергетического импульса,
+"messageKey","","en","de","es","fr","pt","ru","zh"
+"material.encoded.adaptiveencryptors","Adaptive Encryptors Capture","Adaptive Encryptors Capture","","","","","",""
+"material.encoded.archivedemissiondata","Irregular Emission Data","Irregular Emission Data","","","","","",""
+"material.encoded.bulkscandata","Anomalous Bulk Scan Data","Anomalous Bulk Scan Data","","","","","",""
+"material.encoded.classifiedscandata","Classified Scan Fragment","Classified Scan Fragment","","","","","",""
+"material.encoded.compactemissionsdata","Abnormal Compact Emissions Data","Abnormal Compact Emissions Data","","","","","",""
+"material.encoded.consumerfirmware","Modified Consumer Firmware","Modified Consumer Firmware","","","","","",""
+"material.encoded.dataminedwake","Datamined Wake Exceptions","Datamined Wake Exceptions","","","","","",""
+"material.encoded.decodedemissiondata","Decoded Emission Data","Decoded Emission Data","","","","","",""
+"material.encoded.disruptedwakeechoes","Atypical Disrupted Wake Echoes","Atypical Disrupted Wake Echoes","","","","","",""
+"material.encoded.embeddedfirmware","Modified Embedded Firmware","Modified Embedded Firmware","","","","","",""
+"material.encoded.emissiondata","Unexpected Emission Data","Unexpected Emission Data","","","","","",""
+"material.encoded.encodedscandata","Divergent Scan Data","Divergent Scan Data","","","","","",""
+"material.encoded.encryptedfiles","Unusual Encrypted Files","Unusual Encrypted Files","","","","","",""
+"material.encoded.encryptionarchives","Atypical Encryption Archives","Atypical Encryption Archives","","","","","",""
+"material.encoded.encryptioncodes","Tagged Encryption Codes","Tagged Encryption Codes","","","","","",""
+"material.encoded.fsdtelemetry","Anomalous FSD Telemetry","Anomalous FSD Telemetry","","","","","",""
+"material.encoded.guardian_moduleblueprint","Guardian Module Blueprint Fragment","Guardian Module Blueprint Fragment","","","","","",""
+"material.encoded.guardian_vesselblueprint","Guardian Vessel Blueprint Fragment","Guardian Vessel Blueprint Fragment","","","","","",""
+"material.encoded.guardian_weaponblueprint","Guardian Weapon Blueprint Fragment","Guardian Weapon Blueprint Fragment","","","","","",""
+"material.encoded.hyperspacetrajectories","Eccentric Hyperspace Trajectories","Eccentric Hyperspace Trajectories","","","","","",""
+"material.encoded.industrialfirmware","Cracked Industrial Firmware","Cracked Industrial Firmware","","","","","",""
+"material.encoded.legacyfirmware","Specialised Legacy Firmware","Specialised Legacy Firmware","","","","","",""
+"material.encoded.scanarchives","Unidentified Scan Archives","Unidentified Scan Archives","","","","","",""
+"material.encoded.scandatabanks","Classified Scan Databanks","Classified Scan Databanks","","","","","",""
+"material.encoded.scrambledemissiondata","Exceptional Scrambled Emission Data","Exceptional Scrambled Emission Data","","","","","",""
+"material.encoded.securityfirmware","Security Firmware Patch","Security Firmware Patch","","","","","",""
+"material.encoded.shieldcyclerecordings","Distorted Shield Cycle Recordings","Distorted Shield Cycle Recordings","","","","","",""
+"material.encoded.shielddensityreports","Untypical Shield Scans","Untypical Shield Scans","","","","","",""
+"material.encoded.shieldfrequencydata","Peculiar Shield Frequency Data","Peculiar Shield Frequency Data","","","","","",""
+"material.encoded.shieldpatternanalysis","Aberrant Shield Pattern Analysis","Aberrant Shield Pattern Analysis","","","","","",""
+"material.encoded.shieldsoakanalysis","Inconsistent Shield Soak Analysis","Inconsistent Shield Soak Analysis","","","","","",""
+"material.encoded.symmetrickeys","Open Symmetric Keys","Open Symmetric Keys","","","","","",""
+"material.encoded.tg_compositiondata","Thargoid Material Composition Data","Thargoid Material Composition Data","","","","","",""
+"material.encoded.tg_residuedata","Thargoid Residue Data","Thargoid Residue Data","","","","","",""
+"material.encoded.tg_structuraldata","Thargoid Structural Data","Thargoid Structural Data","","","","","",""
+"material.encoded.unknown","Unknown","Unknown","","","","","",""
+"material.encoded.unknownshipsignature","Thargoid Ship Signature","Thargoid Ship Signature","","","","","",""
+"material.encoded.unknownwakedata","Thargoid Wake Data","Thargoid Wake Data","","","","","",""
+"material.encoded.wakesolutions","Strange Wake Solutions","Strange Wake Solutions","","","","","",""
+"material.encoded.tg_shipflightdata","Ship Flight Data (Thargoid)","Ship Flight Data (Thargoid)","","","","","",""
+"material.encoded.tg_shipsystemsdata","Ship Systems Data (Thargoid)","Ship Systems Data (Thargoid)","","","","","",""
+"material.encoded.ancientbiologicaldata","Pattern Alpha Obelisk Data (Guardian)","Pattern Alpha Obelisk Data (Guardian)","","","","","",""
+"material.encoded.ancientculturaldata","Pattern Beta Obelisk Data (Guardian)","Pattern Beta Obelisk Data (Guardian)","","","","","",""
+"material.encoded.ancienthistoricaldata","Pattern Gamma Obelisk Data (Guardian)","Pattern Gamma Obelisk Data (Guardian)","","","","","",""
+"material.encoded.ancientlanguagedata","Pattern Delta Obelisk Data (Guardian)","Pattern Delta Obelisk Data (Guardian)","","","","","",""
+"material.encoded.ancienttechnologicaldata","Pattern Epsilon Obelisk Data (Guardian)","Pattern Epsilon Obelisk Data (Guardian)","","","","","",""
+"material.encoded.tg_interdictiondata","Thargoid Interdiction Telemetry (Thargoid)","Thargoid Interdiction Telemetry (Thargoid)","","","","","",""
+"material.encoded.tg_shutdowndata","Massive Energy Surge Analytics (Thargoid)","Massive Energy Surge Analytics (Thargoid)","","","","","",""

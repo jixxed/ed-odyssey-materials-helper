@@ -1,8 +1,8 @@
-messageKey,,en,de,es,fr,pt,ru,zh
-material.consumable.amm_grenade_emp,Shield Disruptor,Shield Disruptor,Schildunterbrecher,Supresor de escudo,Neutralisateur de bouclier,Disruptor de escudo,Разрушитель щитов,
-material.consumable.amm_grenade_frag,Frag Grenade,Frag Grenade,Splittergranate,Granada de fragmentación,Grenade à fragmentation,Granada de fragmentação,Осколочная граната,
-material.consumable.amm_grenade_shield,Shield Projector,Shield Projector,Schildgenerator,Proyector de escudo,Générateur de bouclier,Projetor de escudo,Проектор щита,
-material.consumable.bypass,E-Breach,E-Breach,E-Breach,Fisura,Omnipasse,Brecha,Взломщик,
-material.consumable.energycell,Energy Cell,Energy Cell,Energiezelle,Célula de energía,Cellule d’énergie,Célula de energia,Энергоячейка,
-material.consumable.healthpack,Medkit,Medkit,Medikit,Botiquín,Médikit,Kit médico,Аптечка,
-material.consumable.unknown,UNKNOWN,UNKNOWN,UNBEKANNT,DESCONOCIDO,INCONNU,DESCONHECIDO,НЕИЗВЕСТНЫЙ,
+"messageKey","","en","de","es","fr","pt","ru","zh"
+"material.consumable.amm_grenade_emp","Shield Disruptor","Shield Disruptor","","","","","",""
+"material.consumable.amm_grenade_frag","Frag Grenade","Frag Grenade","","","","","",""
+"material.consumable.amm_grenade_shield","Shield Projector","Shield Projector","","","","","",""
+"material.consumable.bypass","E-Breach","E-Breach","","","","","",""
+"material.consumable.energycell","Energy Cell","Energy Cell","","","","","",""
+"material.consumable.healthpack","Medkit","Medkit","","","","","",""
+"material.consumable.unknown","UNKNOWN","UNKNOWN","","","","","",""

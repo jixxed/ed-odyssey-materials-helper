@@ -1,56 +1,56 @@
-messageKey,,en,de,es,fr,pt,ru,zh
-colonisation.buildable.star_port_coriolis,Coriolis (medium),,,Coriolis (mediano),,,Кориолис (средний),
-colonisation.buildable.star_port_asteroid_base,Asteroid base (medium),,,Base de Asteroide (mediano),,,База на астероиде (средняя),
-colonisation.buildable.star_port_ocellus,Ocellus (large),,,Ocellus (grande),,,Оцеллус (большой),
-colonisation.buildable.star_port_orbis,Orbis (large),,,Orbis (Grande),,,Орбис (большой),
-colonisation.buildable.outpost_commercial,Commercial (small),,,Comercial (pequeño),,,Коммерческая (малая),
-colonisation.buildable.outpost_industrial,Industrial (small),,,Industrial (pequeño),,,Промышленная (малая),
-colonisation.buildable.outpost_criminal,Criminal (small),,,Criminal (pequeño),,,Криминальная (малая),
-colonisation.buildable.outpost_civilian,Civilian (small),,,Civil (pequeño),,,Гражданская (малая),
-colonisation.buildable.outpost_scientific,Scientific (small),,,Científica (pequeño),,,Научная (малая),
-colonisation.buildable.outpost_military,Military (small),,,Militar (pequeño),,,Военный аванпост (малый),
-colonisation.buildable.installation_satellite,Satellite (small),,,Satélite (pequeño),,,Спутник (малый),
-colonisation.buildable.installation_communication_station,Communication station (small),,,Estación de Comunicaciones (pequeño),,,Станция связи (малая),
-colonisation.buildable.installation_space_farm,Space farm (small),,,Granja Espacial (pequeño),,,Космическая ферма (малая),
-colonisation.buildable.installation_pirate_base,Pirate base (small),,,Base Pirata (pequeño),,,База пиратов (малая),
-colonisation.buildable.installation_mining_outpost,Mining outpost (small),,,Base Espacial Minería (pequeño),,,Шахтерская станция (малая),
-colonisation.buildable.installation_relay_station,Relay station (small),,,Estación de Relés (pequeño),,,Ретрансляторная станция (малая),
-colonisation.buildable.installation_military,Military (medium),,,Militar (mediano),,,Военная (средняя),
-colonisation.buildable.installation_security_station,Security station (medium),,,Estación de Seguridad (mediano),,,Станция службы безопасности (средняя),
-colonisation.buildable.installation_government,Government (medium),,,Gobierno (mediano),,,Правительственная (средняя),
-colonisation.buildable.installation_medical,Medical (medium),,,Médico (mediano),,,Медицинская (средняя),
-colonisation.buildable.installation_research_station,Research station (medium),,,Estación de Investigación (mediano),,,Исследовательская станция (средняя),
-colonisation.buildable.installation_tourist,Tourist (medium),,,Turístico (mediano),,,Туристическая (средняя),
-colonisation.buildable.installation_space_bar,Space bar (medium),,,Bar (mediano),,,Бар (средний),
-colonisation.buildable.planetary_port_civilian_tier_1,Civilian (small),,,Civil (pequeño),,,Гражданская станция (малая),
-colonisation.buildable.planetary_port_industrial,Industrial (small),,,Industrial (pequeño),,,Промышленная станция (малая),
-colonisation.buildable.planetary_port_scientific,Scientific (small),,,Científica (pequeño),,,Научная станция (малая),
-colonisation.buildable.planetary_port_civilian_tier_3,Civilian (large),,,Civil (grande),,,Планетарный порт (большой),
-colonisation.buildable.settlement_agriculture_tier_1_small,Agriculture (small),,,Agricultura (pequeño),,, Сельское хозяйство (малое),
-colonisation.buildable.settlement_agriculture_tier_1_medium,Agriculture (medium),,,Agricultura (mediano),,,Сельское хозяйство (среднее),
-colonisation.buildable.settlement_agriculture_tier_2_large,Agriculture (large),,,Agricultura (grande),,,Сельское хозяйство (большое),
-colonisation.buildable.settlement_extraction_tier_1_small,Extraction (small),,,Minería (pequeño),,,Добыча ископаемых (малое),
-colonisation.buildable.settlement_extraction_tier_1_medium,Extraction (medium),,,Minería (mediano),,,Добыча ископаемых (среднее),
-colonisation.buildable.settlement_extraction_tier_2_large,Extraction (large),,,Minería (grande),,,Добыча ископаемых (большое),
-colonisation.buildable.settlement_industrial_tier_1_small,Industrial (small),,,Industrial (pequeño),,,Промышленность (малое),
-colonisation.buildable.settlement_industrial_tier_1_medium,Industrial (medium),,,Industrial (mediano),,,Промышленность (среднее),
-colonisation.buildable.settlement_industrial_tier_2_large,Industrial (large),,,Industrial (grande),,,Промышленность (большое),
-colonisation.buildable.settlement_military_tier_1_small,Military (small),,,Militar (pequeño),,,Военное дело (малое),
-colonisation.buildable.settlement_military_tier_1_medium,Military (medium),,,Militar (mediano),,,Военное дело (среднее),
-colonisation.buildable.settlement_military_tier_2_large,Military (large),,,Militar (grande),,,Военное дело (большое),
-colonisation.buildable.settlement_research_bio_tier_1_small,Research bio (small),,,Investigación Biológica (pequeño),,,Биоисследования (малое),
-colonisation.buildable.settlement_research_bio_tier_1_medium,Research bio (medium),,,Investigación Biológica (mediano),,,Биоисследования (среднее),
-colonisation.buildable.settlement_research_bio_tier_2_large,Research bio (large),,,Investigación Biológica (grande),,,Биоисследования (большое),
-colonisation.buildable.settlement_tourism_tier_1_small,Tourism (small),,,Turismo (pequeño),,,Туризм (малое),
-colonisation.buildable.settlement_tourism_tier_1_medium,Tourism (medium),,,Turismo (mediano),,,Туризм (среднее),
-colonisation.buildable.settlement_tourism_tier_2_large,Tourism (large),,,Turismo (grande),,,Туризм (большое),
-colonisation.buildable.hub_extraction,Extraction (medium),,,Minería (mediano),,,Добыча ископаемых (средний),
-colonisation.buildable.hub_civilian,Civilian (medium),,,Civil (mediano),,,Гражданские (средний),
-colonisation.buildable.hub_exploration,Exploration (medium),,,Exploración (mediano),,,Исследование (средний),
-colonisation.buildable.hub_outpost,Outpost (medium),,,Base Espacial (mediano),,,Станция (средний),
-colonisation.buildable.hub_scientific,Scientific (medium),,,Científico (mediano),,,Научные (средний),
-colonisation.buildable.hub_military,Military (medium),,,Militar (mediano),,,Военное дело (средний),
-colonisation.buildable.hub_refinery,Refinery (medium),,,Refinería (mediano),,,Очиститель (средний),
-colonisation.buildable.hub_high_tech,High tech (medium),,,Alta Tecnología (mediano),,,Технологии (средний),
-colonisation.buildable.hub_industrial,Industrial (medium),,,Industrial (mediano),,,Промышленность (средний),
-colonisation.buildable.unknown,Unknown,,,,,,,
+"messageKey","","en","de","es","fr","pt","ru","zh"
+"colonisation.buildable.star_port_coriolis","Coriolis (medium)","","","","","","",""
+"colonisation.buildable.star_port_asteroid_base","Asteroid base (medium)","","","","","","",""
+"colonisation.buildable.star_port_ocellus","Ocellus (large)","","","","","","",""
+"colonisation.buildable.star_port_orbis","Orbis (large)","","","","","","",""
+"colonisation.buildable.outpost_commercial","Commercial (small)","","","","","","",""
+"colonisation.buildable.outpost_industrial","Industrial (small)","","","","","","",""
+"colonisation.buildable.outpost_criminal","Criminal (small)","","","","","","",""
+"colonisation.buildable.outpost_civilian","Civilian (small)","","","","","","",""
+"colonisation.buildable.outpost_scientific","Scientific (small)","","","","","","",""
+"colonisation.buildable.outpost_military","Military (small)","","","","","","",""
+"colonisation.buildable.installation_satellite","Satellite (small)","","","","","","",""
+"colonisation.buildable.installation_communication_station","Communication station (small)","","","","","","",""
+"colonisation.buildable.installation_space_farm","Space farm (small)","","","","","","",""
+"colonisation.buildable.installation_pirate_base","Pirate base (small)","","","","","","",""
+"colonisation.buildable.installation_mining_outpost","Mining outpost (small)","","","","","","",""
+"colonisation.buildable.installation_relay_station","Relay station (small)","","","","","","",""
+"colonisation.buildable.installation_military","Military (medium)","","","","","","",""
+"colonisation.buildable.installation_security_station","Security station (medium)","","","","","","",""
+"colonisation.buildable.installation_government","Government (medium)","","","","","","",""
+"colonisation.buildable.installation_medical","Medical (medium)","","","","","","",""
+"colonisation.buildable.installation_research_station","Research station (medium)","","","","","","",""
+"colonisation.buildable.installation_tourist","Tourist (medium)","","","","","","",""
+"colonisation.buildable.installation_space_bar","Space bar (medium)","","","","","","",""
+"colonisation.buildable.planetary_port_civilian_tier_1","Civilian (small)","","","","","","",""
+"colonisation.buildable.planetary_port_industrial","Industrial (small)","","","","","","",""
+"colonisation.buildable.planetary_port_scientific","Scientific (small)","","","","","","",""
+"colonisation.buildable.planetary_port_civilian_tier_3","Civilian (large)","","","","","","",""
+"colonisation.buildable.settlement_agriculture_tier_1_small","Agriculture (small)","","","","","","",""
+"colonisation.buildable.settlement_agriculture_tier_1_medium","Agriculture (medium)","","","","","","",""
+"colonisation.buildable.settlement_agriculture_tier_2_large","Agriculture (large)","","","","","","",""
+"colonisation.buildable.settlement_extraction_tier_1_small","Extraction (small)","","","","","","",""
+"colonisation.buildable.settlement_extraction_tier_1_medium","Extraction (medium)","","","","","","",""
+"colonisation.buildable.settlement_extraction_tier_2_large","Extraction (large)","","","","","","",""
+"colonisation.buildable.settlement_industrial_tier_1_small","Industrial (small)","","","","","","",""
+"colonisation.buildable.settlement_industrial_tier_1_medium","Industrial (medium)","","","","","","",""
+"colonisation.buildable.settlement_industrial_tier_2_large","Industrial (large)","","","","","","",""
+"colonisation.buildable.settlement_military_tier_1_small","Military (small)","","","","","","",""
+"colonisation.buildable.settlement_military_tier_1_medium","Military (medium)","","","","","","",""
+"colonisation.buildable.settlement_military_tier_2_large","Military (large)","","","","","","",""
+"colonisation.buildable.settlement_research_bio_tier_1_small","Research bio (small)","","","","","","",""
+"colonisation.buildable.settlement_research_bio_tier_1_medium","Research bio (medium)","","","","","","",""
+"colonisation.buildable.settlement_research_bio_tier_2_large","Research bio (large)","","","","","","",""
+"colonisation.buildable.settlement_tourism_tier_1_small","Tourism (small)","","","","","","",""
+"colonisation.buildable.settlement_tourism_tier_1_medium","Tourism (medium)","","","","","","",""
+"colonisation.buildable.settlement_tourism_tier_2_large","Tourism (large)","","","","","","",""
+"colonisation.buildable.hub_extraction","Extraction (medium)","","","","","","",""
+"colonisation.buildable.hub_civilian","Civilian (medium)","","","","","","",""
+"colonisation.buildable.hub_exploration","Exploration (medium)","","","","","","",""
+"colonisation.buildable.hub_outpost","Outpost (medium)","","","","","","",""
+"colonisation.buildable.hub_scientific","Scientific (medium)","","","","","","",""
+"colonisation.buildable.hub_military","Military (medium)","","","","","","",""
+"colonisation.buildable.hub_refinery","Refinery (medium)","","","","","","",""
+"colonisation.buildable.hub_high_tech","High tech (medium)","","","","","","",""
+"colonisation.buildable.hub_industrial","Industrial (medium)","","","","","","",""
+"colonisation.buildable.unknown","Unknown","","","","","","",""

@@ -1,15 +1,15 @@
-messageKey,,en,de,es,fr,pt,ru,zh
-tabs.bartender,Bartender,Bartender,Barmann,Camarero,Barman,Bartender,Бармен,
-tabs.bartender.select.material,Select the material you want,Select the material you want,Wählen Sie das gewünschte Material aus,Seleccione el material que desee,Sélectionnez le matériel que vous souhaitez,Selecione o material que você deseja,Выберите нужный материал,
-tabs.bartender.select.material.trade,Select materials to trade,Select materials to trade,Wählen Sie Materialien zum Handel aus,Seleccionar materiales para comerciar,Sélectionner des matériaux à échanger,Selecione materiais para negociar,Выберите материалы для торговли,
-tab.bartender.total.reset,Reset,Reset,Zurücksetzen,Reiniciar,Réinitialiser,Redefinir,Перезагрузить,
-tab.bartender.total.cost,Cost per unit,Cost per unit,Kosten pro Einheit,Costo por unidad,Coût par unité,Custo por unidade,Стоимость за единицу,
-tab.bartender.total.offered,Amount offered,Amount offered,Betrag angeboten,Monto ofrecido,Montant offert,Valor oferecido,Сумма предлагается,
-tab.bartender.total.wasted,Amount wasted,Amount wasted,Menge verschwendet,Cantidad desperdiciada,Montant gaspillé,Quantidade desperdiçada,Сумма потрачена впустую,
-tab.bartender.total.receive,Units to receive,Units to receive,Einheiten zu erhalten,Unidades para recibir,Unités à recevoir,Unidades a serem recebidas,Единицы для получения,
-bartender.buy.value,Buy value: {0},Buy value: {0},Wert kaufen: {0},Valor de compra: {0},Valeur d’achat: {0},Valor de compra: {0},Стоимость покупки: {0},
-bartender.sell.value,Sell value: {0},Sell value: {0},Wert verkaufen: {0},Valor de venta: {0},Valeur de vente: {0},Valor de venda: {0},Стоимость продажи: {0},
-tab.bartender.used.in,Used in recipes:,Used in recipes:,In Rezepten verwendet:,Usado en recetas:,Utilisé dans les recettes:,Usado nos Projetos:,Используется в чертежах:,
-tab.bartender.total.add.all,Add all,Add all,Füge alle Hinzu,Añadir todo,Tout ajouter,Adicione tudo,Добавить все,
-tab.bartender.entry,{0} ({1}),,,,,,,
-bartender.material.sell,Sell,,,Vender,,,Продать,
+"messageKey","","en","de","es","fr","pt","ru","zh"
+"tabs.bartender","Bartender","Bartender","","","","","",""
+"tabs.bartender.select.material","Select the material you want","Select the material you want","","","","","",""
+"tabs.bartender.select.material.trade","Select materials to trade","Select materials to trade","","","","","",""
+"tab.bartender.total.reset","Reset","Reset","","","","","",""
+"tab.bartender.total.cost","Cost per unit","Cost per unit","","","","","",""
+"tab.bartender.total.offered","Amount offered","Amount offered","","","","","",""
+"tab.bartender.total.wasted","Amount wasted","Amount wasted","","","","","",""
+"tab.bartender.total.receive","Units to receive","Units to receive","","","","","",""
+"bartender.buy.value","Buy value: {0}","Buy value: {0}","","","","","",""
+"bartender.sell.value","Sell value: {0}","Sell value: {0}","","","","","",""
+"tab.bartender.used.in","Used in recipes:","Used in recipes:","","","","","",""
+"tab.bartender.total.add.all","Add all","Add all","","","","","",""
+"tab.bartender.entry","{0} ({1})","","","","","","",""
+"bartender.material.sell","Sell","","","","","","",""

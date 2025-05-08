@@ -1,73 +1,73 @@
-messageKey,,en,de,es,fr,pt,ru,zh
-material.manufactured.basicconductors,Basic Conductors,Basic Conductors,Einfache Leiter,Conductores básicos,Conducteurs simples,Condutores básicos,Простые проводники,
-material.manufactured.biotechconductors,Biotech Conductors,Biotech Conductors,Biotech-Leiter,Conductores biotecnológicos,Conducteurs biotechniques,Condutores biotecnológicos,Биотехнические проводники,
-material.manufactured.chemicaldistillery,Chemical Distillery,Chemical Distillery,Chemiedestillerie,Destilería química,Distillerie chimique,Destilaria química,Оборудование для перегонки химикатов,
-material.manufactured.chemicalmanipulators,Chemical Manipulators,Chemical Manipulators,Chemische Manipulatoren,Manipuladores químicos,Manipulateurs chimiques,Manipuladores químicos,Манипуляторы для работы с химикатами,
-material.manufactured.chemicalprocessors,Chemical Processors,Chemical Processors,Chemische Prozessoren,Procesadores químicos,Processeurs chimiques,Processadores químicos,Оборудование для химобработки,
-material.manufactured.chemicalstorageunits,Chemical Storage Units,Chemical Storage Units,Lagerungseinheiten für Chemiestoffe,Unidades de almacenamiento químico,Unités de stockage chimique,Unidades de armazenamento químico,Контейнеры для химикатов,
-material.manufactured.compactcomposites,Compact Composites,Compact Composites,Kompaktkomposite,Compuestos compactos,Composites compacts,Compostos compactos,Спрессованные композиты,
-material.manufactured.compoundshielding,Compound Shielding,Compound Shielding,Verbundschilde,Escudos compuestos,Protection composite,Proteção composta,Многоступенчатая защита,
-material.manufactured.conductiveceramics,Conductive Ceramics,Conductive Ceramics,Elektrokeramiken,Cerámicas conductivas,Conducteurs en céramique,Cerâmicas condutoras,Проводящая керамика,
-material.manufactured.conductivecomponents,Conductive Components,Conductive Components,Leitfähige Komponenten,Componentes conductivos,Composants conducteurs,Componentes condutores,Проводящие компоненты,
-material.manufactured.conductivepolymers,Conductive Polymers,Conductive Polymers,Leitfähige Polymere,Polímeros conductivos,Conducteurs en polymères,Polímeros condutores,Проводящие полимеры,
-material.manufactured.configurablecomponents,Configurable Components,Configurable Components,Konfigurierbare Komponenten,Componentes configurables,Composants paramétrables,Componentes configuráveis,Настраиваемые компоненты,
-material.manufactured.crystalshards,Crystal Shards,Crystal Shards,Kristallscherben,Piedras de cristal,Éclats de cristal,Fragmentos de cristais,Осколки кристаллов,
-material.manufactured.electrochemicalarrays,Electrochemical Arrays,Electrochemical Arrays,Elektrochemische Detektoren,Matriz electroquímica,Réseaux électrochimiques,Matrizes eletroquímicas,Электрохимические массивы,
-material.manufactured.exquisitefocuscrystals,Exquisite Focus Crystals,Exquisite Focus Crystals,Erlesene Laserkristalle,Cristales de enfoque exquisitos,Cristaux de focalisation sans défaut,Cristais de focalização fino,Отборные фокусировочные кристаллы,
-material.manufactured.fedcorecomposites,Core Dynamics Composites,Core Dynamics Composites,Core Dynamics Kompositwerkstoffe,Compuestos de Core Dynamics,Composites Core Dynamics,Compostos da Core Dynamics,Композиты Core Dynamics,
-material.manufactured.fedproprietarycomposites,Proprietary Composites,Proprietary Composites,Kompositwerkstoffe,Compuestos con patente,Composites brevetés,Compostos proprietários,Патентованные композиты,
-material.manufactured.filamentcomposites,Filament Composites,Filament Composites,Filament-Komposite,Compuestos de filamentos,Composites filamentaires,Compostos filamentares,Волокнистые композиты,
-material.manufactured.focuscrystals,Focus Crystals,Focus Crystals,Laserkristalle,Cristales de enfoque,Cristaux de focalisation,Cristais de focalização,Фокусировочные кристаллы,
-material.manufactured.galvanisingalloys,Galvanising Alloys,Galvanising Alloys,Galvanisierende Legierungen,Aleaciones galvanizadas,Alliages galvaniques,Ligas galvanizadas,Сплавы для гальванизации,
-material.manufactured.gridresistors,Grid Resistors,Grid Resistors,Gitterwiderstände,Red resistiva,Résistance à grille,Resistores de grade,Наборные резисторы,
-material.manufactured.guardian_powercell,Guardian Power Cell,Guardian Power Cell,Guardian-Energiezelle,Célula de energía de guardián,Cellule d’énergie - Guardians,Bateria Guardian,Энергоячейка Стражей,
-material.manufactured.guardian_powerconduit,Guardian Power Conduit,Guardian Power Conduit,Guardian-Energieleiter,Conducto de energía de guardián,Conduit d’énergie - Guardians,Condutores de potência Guardian,Энергопроводники Стражей,
-material.manufactured.guardian_sentinel_weaponparts,Guardian Sentinel Weapon Parts,Guardian Sentinel Weapon Parts,Guardian-Wache-Waffenteile,Piezas de armamento de centinela guardián,Pièce d’armement de sentinelle - Guardians,Peças de armas Sentinela Guardian,Детали вооружения часовых Стражей,
-material.manufactured.guardian_sentinel_wreckagecomponents,Guardian Wreckage Components,Guardian Wreckage Components,Guardian-Wache-Wrackteilkomponenten,Restos de accidentes de centinela guardián,Débris de sentinelle - Guardians,Componentes de destroços Sentinela Guardian,Обломки кораблекрушения Стражей,
-material.manufactured.guardian_techcomponent,Guardian Technology Component,Guardian Technology Component,Guardian-Technologiekomponenten,Componente tecnológico de guardián,Composant technologique - Guardians,Componente de tecnologia Guardian,Компоненты технологий Стражей,
-material.manufactured.heatconductionwiring,Heat Conduction Wiring,Heat Conduction Wiring,Wärmeleitungsverdrahtung,Cableado de conducción calorífica,Câblage de conduction thermique,Fiação de condução térmica,Теплопроводящие провода,
-material.manufactured.heatdispersionplate,Heat Dispersion Plate,Heat Dispersion Plate,Wärmeverteilungsplatte,Placa de dispersión de calor,Plaque de dissipation thermique,Placa de dispersão térmica,Теплорассеивающая пластина,
-material.manufactured.heatexchangers,Heat Exchangers,Heat Exchangers,Wärmeaustauscher,Intercambiadores de calor,Échangeurs de chaleur,Trocadores térmicos,Теплообменные агрегаты,
-material.manufactured.heatresistantceramics,Heat Resistant Ceramics,Heat Resistant Ceramics,Hitzefeste Keramik,Cerámicas resistentes al calor,Céramiques résistantes à la chaleur,Cerâmicas termoresistentes,Жаропрочная керамика,
-material.manufactured.heatvanes,Heat Vanes,Heat Vanes,Wärmeleitbleche,Palas térmicas,Vannes thermiques,Ventoinha térmica,Тепловые заслонки,
-material.manufactured.highdensitycomposites,High Density Composites,High Density Composites,Komposite hoher Dichte,Compuestos de alta densidad,Composites à haute densité,Compostos de alta densidade,Высокоплотностные композиты,
-material.manufactured.hybridcapacitors,Hybrid Capacitors,Hybrid Capacitors,Hybridkondensatoren,Capacitadores híbridos,Condensateurs hybrides,Capacitores híbridos,Гибридные конденсаторы,
-material.manufactured.imperialshielding,Imperial Shielding,Imperial Shielding,Imperiale Schilde,Escudos imperiales,Protection impériale,Proteção imperial,Имперская защита,
-material.manufactured.improvisedcomponents,Improvised Components,Improvised Components,Behelfskomponenten,Componentes improvisados,Composants improvisés,Componentes improvisados,Кустарные компоненты,
-material.manufactured.mechanicalcomponents,Mechanical Components,Mechanical Components,Mechanische Komponenten,Componentes mecánicos,Composants mécaniques,Componentes mecânicos,Механические компоненты,
-material.manufactured.mechanicalequipment,Mechanical Equipment,Mechanical Equipment,Mechanisches Equipment,Equipamiento mecánico,Équipement mécanique,Equipamento mecânico,Механическое оборудование,
-material.manufactured.mechanicalscrap,Mechanical Scrap,Mechanical Scrap,Mechanischer Schrott,Chatarra mecánica,Ferraille mécanique,Sucata mecânica,Механические отходы,
-material.manufactured.militarygradealloys,Military Grade Alloys,Military Grade Alloys,Militärqualitätslegierungen,Aleaciones de grado militar,Alliages militaires,Ligas nível militar,Сплавы военного класса,
-material.manufactured.militarysupercapacitors,Military Supercapacitors,Military Supercapacitors,Militärische Superkondensatoren,Supercapacitadores militares,Supercondensateurs militaires,Supercapacitores militares,Военные суперконденсаторы,
-material.manufactured.pharmaceuticalisolators,Pharmaceutical Isolators,Pharmaceutical Isolators,Pharmazeutische Isolatoren,Aislantes farmacéuticos,Isolants pharmaceutiques,Isolantes farmacêuticos,Фармацевтические изоляционные материалы,
-material.manufactured.phasealloys,Phase Alloys,Phase Alloys,Phasenlegierungen,Aleaciones de fase,Alliages de phase,Ligas de fase,Фазовые сплавы,
-material.manufactured.polymercapacitors,Polymer Capacitors,Polymer Capacitors,Polymerkondensatoren,Capacitadores de polímeros,Condensateurs en polymères,Capacitores de polímeros,Полимерные конденсаторы,
-material.manufactured.precipitatedalloys,Precipitated Alloys,Precipitated Alloys,Gehärtete Legierungen,Aleaciones de precipitación,Alliages précipités,Ligas precipitadas,Осажденные сплавы,
-material.manufactured.protoheatradiators,Proto Heat Radiators,Proto Heat Radiators,Proto-Wärmestrahler,Protorradiadores térmicos,Proto-radiateurs,Proto radiadores térmicos,Прототипы теплоизлучателей,
-material.manufactured.protolightalloys,Proto Light Alloys,Proto Light Alloys,Leichte Legierungen (Proto),Protoaleaciones ligeras,Proto-alliages légers,Proto ligas leves,Опытные легкие сплавы,
-material.manufactured.protoradiolicalloys,Proto Radiolic Alloys,Proto Radiolic Alloys,Radiologische Legierungen (Proto),Aleaciones protorradiadas,Proto-alliages radiologiques,Proto ligas radiólicas,Сплавы для изготовления зондов,
-material.manufactured.refinedfocuscrystals,Refined Focus Crystals,Refined Focus Crystals,Raffinierte Laserkristalle,Cristales de enfoque refinados,Cristaux de focalisation raffinés,Cristais de focalização refinado,Обработанные фокусировочные кристаллы,
-material.manufactured.salvagedalloys,Salvaged Alloys,Salvaged Alloys,Geborgene Legierungen,Aleaciones recuperadas,Alliages récupérés,Ligas recuperadas,Захваченные сплавы,
-material.manufactured.shieldemitters,Shield Emitters,Shield Emitters,Schildemitter,Emisor de escudos,Émetteurs de bouclier,Emissores de escudo,Щитоизлучатели,
-material.manufactured.shieldingsensors,Shielding Sensors,Shielding Sensors,Schildsensoren,Sensores de escudo,Capteurs de bouclier,Sensores para proteção,Сенсоры системы экранирования,
-material.manufactured.temperedalloys,Tempered Alloys,Tempered Alloys,Vergütete Legierungen,Aleaciones templadas,Alliages trempés,Ligas temperadas,Закаленные сплавы,
-material.manufactured.thermicalloys,Thermic Alloys,Thermic Alloys,Thermische Legierungen,Aleaciones térmicas,Alliages thermiques,Ligas térmicas,Термические сплавы,
-material.manufactured.uncutfocuscrystals,Flawed Focus Crystals,Flawed Focus Crystals,Fehlerhafte Fokuskristalle,Cristales de convergencia imperfectos,Cristaux de focalisation imparfaits,Cristais de focalização falhos,Поврежденные фокусировочные кристаллы,
-material.manufactured.unknown,Unknown,Unknown,Unbekannt,Desconocido,Inconnu,Desconhecido,Неизвестно,
-material.manufactured.unknowncarapace,Thargoid Carapace,Thargoid Carapace,Thargoiden-Krustenschale,Caparazón Thargoide,Carapace thargoid,Carapaça Thargoid,Таргоидский панцирь,
-material.manufactured.unknownenergycell,Thargoid Energy Cell,Thargoid Energy Cell,Thargoiden-Energiezelle,Célula de energía Thargoide,Cellule d’énergie thargoid,Célula de Energia Thargoid,Таргоидская энергоячейка,
-material.manufactured.unknownenergysource,Sensor Fragment,Sensor Fragment,Sensorenfragment,Fragmento de sensor,Fragment de capteur,Fragmento de sensor,Обломок сенсора,
-material.manufactured.unknownorganiccircuitry,Thargoid Organic Circuitry,Thargoid Organic Circuitry,Organischer Schaltkreis der Thargoiden,Circuitería orgánica Thargoide,Circuits organiques thargoids,Circuito Orgânico Thargoid,Таргоидская органическая схема,
-material.manufactured.unknowntechnologycomponents,Thargoid Technological Components,Thargoid Technological Components,Technologiekomponenten der Thargoiden,Componentes tecnológicos Thargoides,Composants technologiques thargoids,Componentes Tecnológicos Thargoid,Компоненты таргоидской техники,
-material.manufactured.wornshieldemitters,Worn Shield Emitters,Worn Shield Emitters,Gebrauchte Schildemitter,Emisor de escudos desgastado,Émetteurs de bouclier usés,Emissores de escudo usado,Изношенные щитоизлучатели,
-material.manufactured.tg_biomechanicalconduits,Bio-Mechanical Conduits (Thargoid),Bio-Mechanical Conduits (Thargoid),Biomechanische Leiter,Conductos biomecánicos,Conduits biomécaniques,Condutor Biomecânico,Биомеханические энергопроводники,
-material.manufactured.tg_propulsionelement,Propulsion Elements (Thargoid),Propulsion Elements (Thargoid),Schubantriebelemente,Elementos de propulsión,Éléments de propulsion,Elementos de Propulsão,Реактивные элементы,
-material.manufactured.tg_weaponparts,Weapon Parts (Thargoid),Weapon Parts (Thargoid),Waffenteile,Piezas de armamento,Pièces d’armement,Peças de Arma,Детали вооружения,
-material.manufactured.tg_wreckagecomponents,Wreckage Components (Thargoid),Wreckage Components (Thargoid),Wrackteilkomponenten,Restos de accidentes,Débris d’épave,Restos de componentes,Обломки кораблекрушений,
-material.manufactured.tg_causticgeneratorparts,Corrosive Mechanisms (Thargoid),Corrosive Mechanisms (Thargoid),,Mecanismos Corrosivos,,,Разъедающие механизмы,
-material.manufactured.tg_causticshard,Caustic Shard (Thargoid),Caustic Shard (Thargoid),,Fragmento Caústico,,,Едкий осколок,
-material.manufactured.tg_causticcrystal,Caustic Crystal (Thargoid),Caustic Crystal (Thargoid),,Cristal Caústico,,,Едкий кристалл,
-material.manufactured.tg_abrasion01,Heat Exposure Specimen,Heat Exposure Specimen,,Especimen de Exposición Térmica,Spécimen exposé à la chaleur,Espécime de exposição ao calor,Образец теплового воздействия,
-material.manufactured.tg_abrasion02,Phasing Membrane Residue,Phasing Membrane Residue,Phasenmembranreste,Residuo de Membrana Fásica,,Resíduo de membrana faseada,Остаток фазирующей мембраны,
-material.manufactured.tg_abrasion03,Hardened Surface Fragments,Hardened Surface Fragments,,Fragmentos de superficie endurecida,Fragments superficiels durcis,Fragmentos de superfície endurecida,Окаменелые фрагменты поверхности,
-material.manufactured.unknowncorechip,Tactical Core Chip,Tactical Core Chip,,Chip de núcleo táctico,Puce tactique principale,,Чип тактического ядра,
+"messageKey","","en","de","es","fr","pt","ru","zh"
+"material.manufactured.basicconductors","Basic Conductors","Basic Conductors","","","","","",""
+"material.manufactured.biotechconductors","Biotech Conductors","Biotech Conductors","","","","","",""
+"material.manufactured.chemicaldistillery","Chemical Distillery","Chemical Distillery","","","","","",""
+"material.manufactured.chemicalmanipulators","Chemical Manipulators","Chemical Manipulators","","","","","",""
+"material.manufactured.chemicalprocessors","Chemical Processors","Chemical Processors","","","","","",""
+"material.manufactured.chemicalstorageunits","Chemical Storage Units","Chemical Storage Units","","","","","",""
+"material.manufactured.compactcomposites","Compact Composites","Compact Composites","","","","","",""
+"material.manufactured.compoundshielding","Compound Shielding","Compound Shielding","","","","","",""
+"material.manufactured.conductiveceramics","Conductive Ceramics","Conductive Ceramics","","","","","",""
+"material.manufactured.conductivecomponents","Conductive Components","Conductive Components","","","","","",""
+"material.manufactured.conductivepolymers","Conductive Polymers","Conductive Polymers","","","","","",""
+"material.manufactured.configurablecomponents","Configurable Components","Configurable Components","","","","","",""
+"material.manufactured.crystalshards","Crystal Shards","Crystal Shards","","","","","",""
+"material.manufactured.electrochemicalarrays","Electrochemical Arrays","Electrochemical Arrays","","","","","",""
+"material.manufactured.exquisitefocuscrystals","Exquisite Focus Crystals","Exquisite Focus Crystals","","","","","",""
+"material.manufactured.fedcorecomposites","Core Dynamics Composites","Core Dynamics Composites","","","","","",""
+"material.manufactured.fedproprietarycomposites","Proprietary Composites","Proprietary Composites","","","","","",""
+"material.manufactured.filamentcomposites","Filament Composites","Filament Composites","","","","","",""
+"material.manufactured.focuscrystals","Focus Crystals","Focus Crystals","","","","","",""
+"material.manufactured.galvanisingalloys","Galvanising Alloys","Galvanising Alloys","","","","","",""
+"material.manufactured.gridresistors","Grid Resistors","Grid Resistors","","","","","",""
+"material.manufactured.guardian_powercell","Guardian Power Cell","Guardian Power Cell","","","","","",""
+"material.manufactured.guardian_powerconduit","Guardian Power Conduit","Guardian Power Conduit","","","","","",""
+"material.manufactured.guardian_sentinel_weaponparts","Guardian Sentinel Weapon Parts","Guardian Sentinel Weapon Parts","","","","","",""
+"material.manufactured.guardian_sentinel_wreckagecomponents","Guardian Wreckage Components","Guardian Wreckage Components","","","","","",""
+"material.manufactured.guardian_techcomponent","Guardian Technology Component","Guardian Technology Component","","","","","",""
+"material.manufactured.heatconductionwiring","Heat Conduction Wiring","Heat Conduction Wiring","","","","","",""
+"material.manufactured.heatdispersionplate","Heat Dispersion Plate","Heat Dispersion Plate","","","","","",""
+"material.manufactured.heatexchangers","Heat Exchangers","Heat Exchangers","","","","","",""
+"material.manufactured.heatresistantceramics","Heat Resistant Ceramics","Heat Resistant Ceramics","","","","","",""
+"material.manufactured.heatvanes","Heat Vanes","Heat Vanes","","","","","",""
+"material.manufactured.highdensitycomposites","High Density Composites","High Density Composites","","","","","",""
+"material.manufactured.hybridcapacitors","Hybrid Capacitors","Hybrid Capacitors","","","","","",""
+"material.manufactured.imperialshielding","Imperial Shielding","Imperial Shielding","","","","","",""
+"material.manufactured.improvisedcomponents","Improvised Components","Improvised Components","","","","","",""
+"material.manufactured.mechanicalcomponents","Mechanical Components","Mechanical Components","","","","","",""
+"material.manufactured.mechanicalequipment","Mechanical Equipment","Mechanical Equipment","","","","","",""
+"material.manufactured.mechanicalscrap","Mechanical Scrap","Mechanical Scrap","","","","","",""
+"material.manufactured.militarygradealloys","Military Grade Alloys","Military Grade Alloys","","","","","",""
+"material.manufactured.militarysupercapacitors","Military Supercapacitors","Military Supercapacitors","","","","","",""
+"material.manufactured.pharmaceuticalisolators","Pharmaceutical Isolators","Pharmaceutical Isolators","","","","","",""
+"material.manufactured.phasealloys","Phase Alloys","Phase Alloys","","","","","",""
+"material.manufactured.polymercapacitors","Polymer Capacitors","Polymer Capacitors","","","","","",""
+"material.manufactured.precipitatedalloys","Precipitated Alloys","Precipitated Alloys","","","","","",""
+"material.manufactured.protoheatradiators","Proto Heat Radiators","Proto Heat Radiators","","","","","",""
+"material.manufactured.protolightalloys","Proto Light Alloys","Proto Light Alloys","","","","","",""
+"material.manufactured.protoradiolicalloys","Proto Radiolic Alloys","Proto Radiolic Alloys","","","","","",""
+"material.manufactured.refinedfocuscrystals","Refined Focus Crystals","Refined Focus Crystals","","","","","",""
+"material.manufactured.salvagedalloys","Salvaged Alloys","Salvaged Alloys","","","","","",""
+"material.manufactured.shieldemitters","Shield Emitters","Shield Emitters","","","","","",""
+"material.manufactured.shieldingsensors","Shielding Sensors","Shielding Sensors","","","","","",""
+"material.manufactured.temperedalloys","Tempered Alloys","Tempered Alloys","","","","","",""
+"material.manufactured.thermicalloys","Thermic Alloys","Thermic Alloys","","","","","",""
+"material.manufactured.uncutfocuscrystals","Flawed Focus Crystals","Flawed Focus Crystals","","","","","",""
+"material.manufactured.unknown","Unknown","Unknown","","","","","",""
+"material.manufactured.unknowncarapace","Thargoid Carapace","Thargoid Carapace","","","","","",""
+"material.manufactured.unknownenergycell","Thargoid Energy Cell","Thargoid Energy Cell","","","","","",""
+"material.manufactured.unknownenergysource","Sensor Fragment","Sensor Fragment","","","","","",""
+"material.manufactured.unknownorganiccircuitry","Thargoid Organic Circuitry","Thargoid Organic Circuitry","","","","","",""
+"material.manufactured.unknowntechnologycomponents","Thargoid Technological Components","Thargoid Technological Components","","","","","",""
+"material.manufactured.wornshieldemitters","Worn Shield Emitters","Worn Shield Emitters","","","","","",""
+"material.manufactured.tg_biomechanicalconduits","Bio-Mechanical Conduits (Thargoid)","Bio-Mechanical Conduits (Thargoid)","","","","","",""
+"material.manufactured.tg_propulsionelement","Propulsion Elements (Thargoid)","Propulsion Elements (Thargoid)","","","","","",""
+"material.manufactured.tg_weaponparts","Weapon Parts (Thargoid)","Weapon Parts (Thargoid)","","","","","",""
+"material.manufactured.tg_wreckagecomponents","Wreckage Components (Thargoid)","Wreckage Components (Thargoid)","","","","","",""
+"material.manufactured.tg_causticgeneratorparts","Corrosive Mechanisms (Thargoid)","Corrosive Mechanisms (Thargoid)","","","","","",""
+"material.manufactured.tg_causticshard","Caustic Shard (Thargoid)","Caustic Shard (Thargoid)","","","","","",""
+"material.manufactured.tg_causticcrystal","Caustic Crystal (Thargoid)","Caustic Crystal (Thargoid)","","","","","",""
+"material.manufactured.tg_abrasion01","Heat Exposure Specimen","Heat Exposure Specimen","","","","","",""
+"material.manufactured.tg_abrasion02","Phasing Membrane Residue","Phasing Membrane Residue","","","","","",""
+"material.manufactured.tg_abrasion03","Hardened Surface Fragments","Hardened Surface Fragments","","","","","",""
+"material.manufactured.unknowncorechip","Tactical Core Chip","Tactical Core Chip","","","","","",""

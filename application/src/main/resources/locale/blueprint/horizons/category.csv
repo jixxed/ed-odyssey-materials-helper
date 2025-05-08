@@ -1,9 +1,9 @@
-messageKey,,en,de,es,fr,pt,ru,zh
-blueprint.category.name.core_internal,Core Internals,Core Internals,Intern (Basis),Internos principales,Interne - Primordiaux,Internos Principais,Основное оборудование,
-blueprint.category.name.engineer_unlocks,Engineer Unlocks,Engineer Unlocks,Ingenieur-Freischaltungen,Desbloqueo del ingeniero,Déverrouillage des ingénieurs,Desbloqueios do engenheiro,Разблокировка инженеров,
-blueprint.category.name.experimental_effects,Experimental Effects,Experimental Effects,Experimentelle Effekte,Efectos experimentales,Effets expérimentaux,Efeitos experimentais,Экспериментальные эффекты,
-blueprint.category.name.hardpoint,Hardpoints,Hardpoints,Waffenaufhängungen,Anclajes,Points d’emport,Encaixes,Гнёзда,
-blueprint.category.name.optional_internal,Optional Internals,Optional Internals,Intern (Optional),Internos opcionales,Internes - Optionnels,Internos opcionais,Доп. Оборудование,
-blueprint.category.name.synthesis,Synthesis,Synthesis,"Synthese ",Síntesis,Synthèse,Síntese,Синтез,
-blueprint.category.name.techbroker,Techbroker Blueprints,Techbroker Blueprints,Technologie Händler Bauplan,Planos de Bróker de Tecnología,Plans de courtier en technologie,Mediador de Tecnologia,Чертежи техноброкеров,
-blueprint.category.name.utility_mount,Utility Mounts,Utility Mounts,Werkzeug Aufhängungen,Anclajes de Apoyo,Supports utilitaires,Encaixes de Apoio,Внешнее оборудование,
+"messageKey","","en","de","es","fr","pt","ru","zh"
+"blueprint.category.name.core_internal","Core Internals","Core Internals","","","","","",""
+"blueprint.category.name.engineer_unlocks","Engineer Unlocks","Engineer Unlocks","","","","","",""
+"blueprint.category.name.experimental_effects","Experimental Effects","Experimental Effects","","","","","",""
+"blueprint.category.name.hardpoint","Hardpoints","Hardpoints","","","","","",""
+"blueprint.category.name.optional_internal","Optional Internals","Optional Internals","","","","","",""
+"blueprint.category.name.synthesis","Synthesis","Synthesis","","","","","",""
+"blueprint.category.name.techbroker","Techbroker Blueprints","Techbroker Blueprints","","","","","",""
+"blueprint.category.name.utility_mount","Utility Mounts","Utility Mounts","","","","","",""

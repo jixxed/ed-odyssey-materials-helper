@@ -1,28 +1,28 @@
-messageKey,,en,de,es,fr,pt,ru,zh
-material.category.alloys,Alloys,Alloys,Legierungen,Aleaciones,Alliages,Ligas,Сплавы,
-material.category.capacitors,Capacitors,Capacitors,Kondensatoren,Capacitadores,Condensateurs,Capacitores,Конденсаторы,
-material.category.chemical,Chemical,Chemical,Chemikalie,Químico,Chimique,Químico,Химикаты,
-material.category.commodity,Commodities,Commodities,Waren,Mercancías,Marchandises,Mercadorias,Товары,
-material.category.composite,Composite,Composite,Zusammengesetzt,Compuestos,Composite,Composto,Композиты,
-material.category.conductive,Conductive,Conductive,Leitfähig,Conductivo,Conducteur,Condutores,Проводящие,
-material.category.crystals,Crystals,Crystals,Kristalle,Cristales,Cristaux,Cristais,Кристаллы,
-material.category.data_archives,Data Archives,Data Archives,Datenarchive,Archivos de datos,Archives de données,Arquivos de Dados,Архивы данных,
-material.category.emission_data,Emission Data,Emission Data,Emissionsdaten,Datos de emisión,Données d’émission,Dados de Emissão,Данные об излучении,
-material.category.encoded_firmware,Encoded Firmware,Encoded Firmware,Kodierte Firmware,Firmware codificado,Firmware encodé,Firmware codificado,Зашифрованная микропрограмма,
-material.category.encryption_files,Encryption Files,Encryption Files,Verschlüsselungsdateien,Ficheros encriptados,Fichiers de chiffrement,Arquivos Criptográficos,Файлы шифрования,
-material.category.guardian,Guardian,Guardian,Guardian,Guardian,Guardian,Guardian,Стражи,
-material.category.heat,Heat,Heat,Hitze,Calor,Chaleur,Calor,Тепло,
-material.category.mechanical_components,Mechanical Components,Mechanical Components,Mechanische Komponenten,Componentes mecánicos,Composants mécaniques,Componentes Mecânicos,Механические компоненты,
-material.category.raw_1,Raw Category 1,Raw Category 1,Rohmaterialien 1,Elemento 1,Matériaux bruts 1,Material bruto 1,Сырьё 1 категории,
-material.category.raw_2,Raw Category 2,Raw Category 2,Rohmaterialien 2,Elemento 2,Matériaux bruts 2,Material bruto 2,Сырьё 2 категории,
-material.category.raw_3,Raw Category 3,Raw Category 3,Rohmaterialien 3,Elemento 3,Matériaux bruts 3,Material bruto 3,Сырьё 3 категории,
-material.category.raw_4,Raw Category 4,Raw Category 4,Rohmaterialien 4,Elemento 4,Matériaux bruts 4,Material bruto 4,Сырьё 4 категории,
-material.category.raw_5,Raw Category 5,Raw Category 5,Rohmaterialien 5,Elemento 5,Matériaux bruts 5,Material bruto 5,Сырьё 5 категории,
-material.category.raw_6,Raw Category 6,Raw Category 6,Rohmaterialien 6,Elemento 6,Matériaux bruts 6,Material bruto 6,Сырьё 6 категории,
-material.category.raw_7,Raw Category 7,Raw Category 7,Rohmaterialien 7,Elemento 7,Matériaux bruts 7,Material bruto 7,Сырьё 7 категории,
-material.category.shield_data,Shield Data,Shield Data,Schilddaten,Datos de escudos,Données de bouclier,Dados do escudo,Данные о щите,
-material.category.shielding,Shielding,Shielding,Abschirmung,Escudos,Blindage,Blindagem,Защита,
-material.category.thargoid,Thargoid,Thargoid,Thargoid,Thargoide,Thargoid,Thargoid,Таргоиды,
-material.category.thermic,Thermic,Thermic,Thermisch,Térmico,Thermique,Térmico,Термические компоненты,
-material.category.unknown,Unknown,Unknown,Unbekannt,Desconocido,Inconnu,Desconhecido,Неизвестно,
-material.category.wake_scans,Wake Scans,Wake Scans,Wake-Scans,Escáneres de estela,Analyses de réveil,Despertar Varreduras,Следовые сканы,
+"messageKey","","en","de","es","fr","pt","ru","zh"
+"material.category.alloys","Alloys","Alloys","","","","","",""
+"material.category.capacitors","Capacitors","Capacitors","","","","","",""
+"material.category.chemical","Chemical","Chemical","","","","","",""
+"material.category.commodity","Commodities","Commodities","","","","","",""
+"material.category.composite","Composite","Composite","","","","","",""
+"material.category.conductive","Conductive","Conductive","","","","","",""
+"material.category.crystals","Crystals","Crystals","","","","","",""
+"material.category.data_archives","Data Archives","Data Archives","","","","","",""
+"material.category.emission_data","Emission Data","Emission Data","","","","","",""
+"material.category.encoded_firmware","Encoded Firmware","Encoded Firmware","","","","","",""
+"material.category.encryption_files","Encryption Files","Encryption Files","","","","","",""
+"material.category.guardian","Guardian","Guardian","","","","","",""
+"material.category.heat","Heat","Heat","","","","","",""
+"material.category.mechanical_components","Mechanical Components","Mechanical Components","","","","","",""
+"material.category.raw_1","Raw Category 1","Raw Category 1","","","","","",""
+"material.category.raw_2","Raw Category 2","Raw Category 2","","","","","",""
+"material.category.raw_3","Raw Category 3","Raw Category 3","","","","","",""
+"material.category.raw_4","Raw Category 4","Raw Category 4","","","","","",""
+"material.category.raw_5","Raw Category 5","Raw Category 5","","","","","",""
+"material.category.raw_6","Raw Category 6","Raw Category 6","","","","","",""
+"material.category.raw_7","Raw Category 7","Raw Category 7","","","","","",""
+"material.category.shield_data","Shield Data","Shield Data","","","","","",""
+"material.category.shielding","Shielding","Shielding","","","","","",""
+"material.category.thargoid","Thargoid","Thargoid","","","","","",""
+"material.category.thermic","Thermic","Thermic","","","","","",""
+"material.category.unknown","Unknown","Unknown","","","","","",""
+"material.category.wake_scans","Wake Scans","Wake Scans","","","","","",""

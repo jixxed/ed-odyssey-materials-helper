@@ -1,6 +1,6 @@
-messageKey,,en,de,es,fr,pt,ru,zh
-ships.slot.size.u,U,,,,,,,
-ships.slot.size.s,S,,,P,,P,,
-ships.slot.size.m,M,,,M,,M,,
-ships.slot.size.l,L,,,G,,G,,
-ships.slot.size.h,H,,,E,,E,,
+"messageKey","","en","de","es","fr","pt","ru","zh"
+"ships.slot.size.u","U","","","","","","",""
+"ships.slot.size.s","S","","","","","","",""
+"ships.slot.size.m","M","","","","","","",""
+"ships.slot.size.l","L","","","","","","",""
+"ships.slot.size.h","H","","","","","","",""
