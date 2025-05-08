@@ -5,7 +5,7 @@ base_path: "."
 base_url: "https://api.crowdin.com"
 
 files:
-  - source: "/application/src/main/resources/locale/**.csv"
+  - source: "/application/src/main/resources/locale/**/*.csv"
     translation: "/application/src/main/resources/locale/%original_file_name%"
     type: csv
     scheme: identifier,source_phrase,,de,es,fr,pt,ru,zh
