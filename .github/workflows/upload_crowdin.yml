@@ -5,7 +5,7 @@ on:
   push:
     paths:
       - application/src/main/resources/locale/**
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   crowdin:
