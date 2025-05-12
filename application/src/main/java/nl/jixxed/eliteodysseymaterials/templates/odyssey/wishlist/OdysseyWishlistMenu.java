@@ -194,6 +194,7 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
                 () -> TextExporter.createTextWishlist(datas, goods, assets));
     }
 
+    @SuppressWarnings("java:S1640")
     private <T> Supplier<T> getExporter(TriFunction<Map<Data, Integer>, Map<Good, Integer>, Map<Asset, Integer>, Supplier<T>> exporter) {
         final Map<Data, Integer> wishlistNeededDatas = new EnumMap<>(Data.class);
         final Map<Good, Integer> wishlistNeededGoods = new EnumMap<>(Good.class);

@@ -223,16 +223,16 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
         final Map<Manufactured, WishlistMaterial> wishlistNeededManufactured = new HashMap<>();
         final Map<Commodity, WishlistMaterial> wishlistNeededCommodity = new HashMap<>();
         APPLICATION_STATE.getPreferredCommander().ifPresent(_ -> {
-            Arrays.stream(Raw.values()).forEach(raw ->
+            Arrays.stream(Raw.values()).filter(mat -> getCurrentWishlistCount(mat) > 0).forEach(raw ->
                     wishlistNeededRaw.compute(raw, getMaterialCompute(raw))
             );
-            Arrays.stream(Encoded.values()).forEach(encoded ->
+            Arrays.stream(Encoded.values()).filter(mat -> getCurrentWishlistCount(mat) > 0).forEach(encoded ->
                     wishlistNeededEncoded.compute(encoded, getMaterialCompute(encoded))
             );
-            Arrays.stream(Manufactured.values()).forEach(manufactured ->
+            Arrays.stream(Manufactured.values()).filter(mat -> getCurrentWishlistCount(mat) > 0).forEach(manufactured ->
                     wishlistNeededManufactured.compute(manufactured, getMaterialCompute(manufactured))
             );
-            Stream.concat(Arrays.stream(RareCommodity.values()), Arrays.stream(RegularCommodity.values())).forEach(commodity ->
+            Stream.concat(Arrays.stream(RareCommodity.values()), Arrays.stream(RegularCommodity.values())).filter(mat -> getCurrentWishlistCount(mat) > 0).forEach(commodity ->
                     wishlistNeededCommodity.compute(commodity, getMaterialCompute(commodity))
             );
         });
