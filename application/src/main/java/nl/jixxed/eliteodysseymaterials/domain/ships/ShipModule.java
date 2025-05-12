@@ -439,6 +439,10 @@ public abstract class ShipModule implements Serializable {
         return false;
     }
 
+    public int getModuleLimit() {
+        return 999;
+    }
+
     public void setLegacy(boolean legacy) {
         this.legacy = legacy;
     }

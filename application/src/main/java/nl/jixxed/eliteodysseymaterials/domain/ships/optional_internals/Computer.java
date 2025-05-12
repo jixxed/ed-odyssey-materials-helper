@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Computer extends OptionalModule {
-    public static final Computer STANDARD_DOCKING_COMPUTER = new Computer("STANDARD_DOCKING_COMPUTER", HorizonsBlueprintName.STANDARD_DOCKING_COMPUTER, ModuleSize.SIZE_1, ModuleClass.E,  4500, "Int_DockingComputer_Standard", Map.ofEntries(Map.entry(HorizonsModifier.INTEGRITY,  10.00), Map.entry(HorizonsModifier.POWER_DRAW,0.39), Map.entry(HorizonsModifier.BOOT_TIME, 3.0)));
-    public static final Computer ADVANCED_DOCKING_COMPUTER = new Computer("ADVANCED_DOCKING_COMPUTER", HorizonsBlueprintName.ADVANCED_DOCKING_COMPUTER, ModuleSize.SIZE_1, ModuleClass.E, 13510, "Int_DockingComputer_Advanced", Map.ofEntries(Map.entry(HorizonsModifier.INTEGRITY,  10.00), Map.entry(HorizonsModifier.POWER_DRAW,0.45), Map.entry(HorizonsModifier.BOOT_TIME, 3.0)));
-    public static final Computer SUPERCRUISE_ASSIST        = new Computer("SUPERCRUISE_ASSIST", HorizonsBlueprintName.SUPERCRUISE_ASSIST       , ModuleSize.SIZE_1, ModuleClass.E,  9120, "Int_SuperCruiseAssist",        Map.ofEntries(Map.entry(HorizonsModifier.INTEGRITY,  10.00), Map.entry(HorizonsModifier.POWER_DRAW,0.30), Map.entry(HorizonsModifier.BOOT_TIME, 3.0)));
+    public static final Computer STANDARD_DOCKING_COMPUTER = new Computer("STANDARD_DOCKING_COMPUTER", HorizonsBlueprintName.STANDARD_DOCKING_COMPUTER, ModuleSize.SIZE_1, ModuleClass.E, 4500, "Int_DockingComputer_Standard", Map.ofEntries(Map.entry(HorizonsModifier.INTEGRITY, 10.00), Map.entry(HorizonsModifier.POWER_DRAW, 0.39), Map.entry(HorizonsModifier.BOOT_TIME, 3.0)));
+    public static final Computer ADVANCED_DOCKING_COMPUTER = new Computer("ADVANCED_DOCKING_COMPUTER", HorizonsBlueprintName.ADVANCED_DOCKING_COMPUTER, ModuleSize.SIZE_1, ModuleClass.E, 13510, "Int_DockingComputer_Advanced", Map.ofEntries(Map.entry(HorizonsModifier.INTEGRITY, 10.00), Map.entry(HorizonsModifier.POWER_DRAW, 0.45), Map.entry(HorizonsModifier.BOOT_TIME, 3.0)));
+    public static final Computer SUPERCRUISE_ASSIST = new Computer("SUPERCRUISE_ASSIST", HorizonsBlueprintName.SUPERCRUISE_ASSIST, ModuleSize.SIZE_1, ModuleClass.E, 9120, "Int_SuperCruiseAssist", Map.ofEntries(Map.entry(HorizonsModifier.INTEGRITY, 10.00), Map.entry(HorizonsModifier.POWER_DRAW, 0.30), Map.entry(HorizonsModifier.BOOT_TIME, 3.0)));
     public static final List<Computer> COMPUTERS = List.of(
             STANDARD_DOCKING_COMPUTER,
             ADVANCED_DOCKING_COMPUTER,
@@ -54,6 +54,7 @@ public class Computer extends OptionalModule {
     public String getClarifier() {
         return " " + LocaleService.getLocalizedStringForCurrentLocale(this.getName().getLocalizationKey());
     }
+
     @Override
     public int getGrouping() {
         return switch (getName()) {
@@ -62,5 +63,10 @@ public class Computer extends OptionalModule {
             case SUPERCRUISE_ASSIST -> 3;
             default -> 0;
         };
+    }
+
+    @Override
+    public int getModuleLimit() {
+        return 1;
     }
 }

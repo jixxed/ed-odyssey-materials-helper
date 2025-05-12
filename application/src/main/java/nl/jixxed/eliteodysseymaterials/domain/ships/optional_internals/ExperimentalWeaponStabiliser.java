@@ -13,13 +13,14 @@ import java.util.List;
 import java.util.Map;
 
 public class ExperimentalWeaponStabiliser extends OptionalModule {
-    public static final ExperimentalWeaponStabiliser EXPERIMENTAL_WEAPON_STABILISER_3_F = new ExperimentalWeaponStabiliser("EXPERIMENTAL_WEAPON_STABILISER_3_F", HorizonsBlueprintName.EXPERIMENTAL_WEAPON_STABILISER, ModuleSize.SIZE_3, ModuleClass.F, false, 2000000, "Int_ExpModuleStabiliser_Size3_Class3", Map.ofEntries(Map.entry(HorizonsModifier.MASS,  8.0), Map.entry(HorizonsModifier.POWER_DRAW,  0.0)));
-    public static final ExperimentalWeaponStabiliser EXPERIMENTAL_WEAPON_STABILISER_5_F = new ExperimentalWeaponStabiliser("EXPERIMENTAL_WEAPON_STABILISER_5_F", HorizonsBlueprintName.EXPERIMENTAL_WEAPON_STABILISER, ModuleSize.SIZE_5, ModuleClass.F, false, 4000000, "Int_ExpModuleStabiliser_Size5_Class3", Map.ofEntries(Map.entry(HorizonsModifier.MASS,  20.0), Map.entry(HorizonsModifier.POWER_DRAW,  0.0)));
+    public static final ExperimentalWeaponStabiliser EXPERIMENTAL_WEAPON_STABILISER_3_F = new ExperimentalWeaponStabiliser("EXPERIMENTAL_WEAPON_STABILISER_3_F", HorizonsBlueprintName.EXPERIMENTAL_WEAPON_STABILISER, ModuleSize.SIZE_3, ModuleClass.F, false, 2000000, "Int_ExpModuleStabiliser_Size3_Class3", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 8.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.0)));
+    public static final ExperimentalWeaponStabiliser EXPERIMENTAL_WEAPON_STABILISER_5_F = new ExperimentalWeaponStabiliser("EXPERIMENTAL_WEAPON_STABILISER_5_F", HorizonsBlueprintName.EXPERIMENTAL_WEAPON_STABILISER, ModuleSize.SIZE_5, ModuleClass.F, false, 4000000, "Int_ExpModuleStabiliser_Size5_Class3", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 20.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.0)));
 
     public static final List<ExperimentalWeaponStabiliser> EXPERIMENTAL_WEAPON_STABILISERS = List.of(
             EXPERIMENTAL_WEAPON_STABILISER_3_F,
             EXPERIMENTAL_WEAPON_STABILISER_5_F
     );
+
     public ExperimentalWeaponStabiliser(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, multiCrew, basePrice, internalName, attributes);
     }
@@ -59,6 +60,11 @@ public class ExperimentalWeaponStabiliser extends OptionalModule {
 
     @Override
     public int getGrouping() {
+        return 1;
+    }
+
+    @Override
+    public int getModuleLimit() {
         return 1;
     }
 }

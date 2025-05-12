@@ -90,4 +90,9 @@ public class KillWarrantScanner extends UtilityModule {
     public int getGrouping() {
         return isPreEngineered() ? 2 : 1;
     }
+
+    @Override
+    public int getModuleLimit() {
+        return 1;
+    }
 }

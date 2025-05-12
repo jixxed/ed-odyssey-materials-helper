@@ -81,4 +81,9 @@ public class MultiLimpetController extends OptionalModule {
             default -> 0;
         };
     }
+
+    @Override
+    public int getModuleLimit() {
+        return 1;
+    }
 }
