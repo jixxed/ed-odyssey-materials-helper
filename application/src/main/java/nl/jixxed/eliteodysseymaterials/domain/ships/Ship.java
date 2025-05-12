@@ -2417,7 +2417,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.MASS, 400.0),
                     Map.entry(HorizonsModifier.MINIMUM_THRUST, 45.0),
                     Map.entry(HorizonsModifier.BOOST_INTERVAL, 6.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 9.0),
+                    Map.entry(HorizonsModifier.BOOST_COST, 10.0),
                     Map.entry(HorizonsModifier.PITCH_SPEED, 28.0),
                     Map.entry(HorizonsModifier.YAW_SPEED, 18.0),
                     Map.entry(HorizonsModifier.ROLL_SPEED, 60.0),
