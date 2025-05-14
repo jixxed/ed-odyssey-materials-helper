@@ -126,7 +126,9 @@ public class CAPIService {
                                 this.timerTask = new TimerTask() {
                                     @Override
                                     public void run() {
-                                        requestFleetCarrierData();
+                                        if (!PreferencesService.getPreference("colonisation.horizons.pause.capi", false)) {
+                                            requestFleetCarrierData();
+                                        }
                                     }
                                 };
                                 this.timer.scheduleAtFixedRate(this.timerTask, calculateDelay(fleetCarrierFile), 300L * 1000L);
