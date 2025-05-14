@@ -26,6 +26,7 @@ import java.math.BigInteger;
 
 @Slf4j
 public class HorizonsCommodityCard extends DestroyableStackPane implements DestroyableEventTemplate {
+    private CommoditiesSearch commoditiesSearch;
     @Getter
     private Integer fleetcarrierAmount;
     @Getter
@@ -47,6 +48,9 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
 
     HorizonsCommodityCard(final Commodity commodity) {
         this.commodity = commodity;
+        final HorizonsCommoditiesSort materialSort = HorizonsCommoditiesSort.valueOf(PreferencesService.getPreference("search.commodities.sort", "ALPHABETICAL"));
+        final HorizonsCommoditiesShow filter = HorizonsCommoditiesShow.valueOf(PreferencesService.getPreference("search.commodities.filter", "ALL"));
+        commoditiesSearch = new CommoditiesSearch("", materialSort, filter);
         initComponents();
         initEventHandling();
     }
@@ -168,20 +172,20 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
         updateStyle();
         this.setOnMouseEntered(event -> log.info("Mouse entered"));
         MaterialService.addMaterialInfoPopOver(this, this.commodity, false);
-        final HorizonsCommoditiesSort materialSort = HorizonsCommoditiesSort.valueOf(PreferencesService.getPreference("search.commodities.sort", "ALPHABETICAL"));
-        final HorizonsCommoditiesShow filter = HorizonsCommoditiesShow.valueOf(PreferencesService.getPreference("search.commodities.filter", "ALL"));
-        update(new CommoditiesSearch("", materialSort, filter));
+        update();
     }
 
     @Override
     public void initEventHandling() {
         register(EventService.addListener(true, this, HorizonsCommoditiesSearchEvent.class, horizonsCommoditiesSearchEvent -> {
-            this.update(horizonsCommoditiesSearchEvent.getSearch());
+            commoditiesSearch = horizonsCommoditiesSearchEvent.getSearch();
+            this.update();
         }));
 
         register(EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
             if (storageEvent.getStoragePool().equals(StoragePool.FLEETCARRIER) || storageEvent.getStoragePool().equals(StoragePool.SHIP)) {
                 updateQuantity();
+                this.update();
             }
         }));
 
@@ -191,11 +195,11 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
         }));
     }
 
-    private void update(CommoditiesSearch search) {
-        boolean visible = HorizonsCommoditiesShow.getFilter(search).test(this) &&
-                (search.getQuery().isBlank()
-                        || LocaleService.getLocalizedStringForCurrentLocale(commodity.getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(search.getQuery().toLowerCase(LocaleService.getCurrentLocale()))
-                        || LocaleService.getLocalizedStringForCurrentLocale(commodity.getCommodityType().getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(search.getQuery().toLowerCase(LocaleService.getCurrentLocale())));
+    private void update() {
+        boolean visible = HorizonsCommoditiesShow.getFilter(commoditiesSearch).test(this) &&
+                (commoditiesSearch.getQuery().isBlank()
+                        || LocaleService.getLocalizedStringForCurrentLocale(commodity.getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(commoditiesSearch.getQuery().toLowerCase(LocaleService.getCurrentLocale()))
+                        || LocaleService.getLocalizedStringForCurrentLocale(commodity.getCommodityType().getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(commoditiesSearch.getQuery().toLowerCase(LocaleService.getCurrentLocale())));
         this.setVisible(visible);
         this.setManaged(visible);
     }
