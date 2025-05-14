@@ -7,7 +7,7 @@
 "loadout.stat.value.class.sniper","Sniper","Sniper","Scharfschütze","Francotirador","Tireur d’élite","","Снайперская винтовка",""
 "loadout.stat.value.damage_type.explosive","Explosive","Explosive","Explosiv","Explosivo","Explosif","Explosivo","Взрывной",""
 "loadout.stat.value.damage_type.kinetic","Kinetic","Kinetic","","Cinética","Cinétique","Cinético","Кинетический",""
-"loadout.stat.value.damage_type.plasma","Plasma","Plasma","","","","","Плазма",""
+"loadout.stat.value.damage_type.plasma","Plasma","Plasma","","","Plasma","","Плазма",""
 "loadout.stat.value.damage_type.thermal","Thermal","Thermal","","Térmico","Thermique","Térmica","Тепловой",""
 "loadout.stat.value.fire_mode.automatic","Automatic","Automatic","Automatisch","Automático","Automatique","Automático","Автоматический",""
 "loadout.stat.value.fire_mode.burst","Burst","Burst","","Ráfaga","Rafale","","Взрывной",""

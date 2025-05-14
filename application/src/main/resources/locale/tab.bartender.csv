@@ -11,5 +11,5 @@
 "bartender.sell.value","Sell value: {0}","Sell value: {0}","Wert verkaufen: {0}","Valor de venta: {0}","Valeur de vente: {0}","Valor de venda: {0}","Стоимость продажи: {0}",""
 "tab.bartender.used.in","Used in recipes:","Used in recipes:","In Rezepten verwendet:","Usado en recetas:","Utilisé dans les recettes:","Usado nos Projetos:","Используется в чертежах:",""
 "tab.bartender.total.add.all","Add all","Add all","Füge alle Hinzu","Añadir todo","Tout ajouter","Adicione tudo","Добавить все",""
-"tab.bartender.entry","{0} ({1})","","","","","","",""
+"tab.bartender.entry","{0} ({1})","","","","","","{0} ({1})",""
 "bartender.material.sell","Sell","","","Vender","","","Продать",""
