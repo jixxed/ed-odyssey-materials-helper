@@ -1,5 +1,9 @@
 **Elite Dangerous Odyssey Materials Helper**
 
+Support the project by providing translations on [Crowdin](https://crowdin.com/project/edomh)
+
+[![Crowdin](https://badges.crowdin.net/edomh/localized.svg)](https://crowdin.com/project/edomh)
+
 [![Image](discord_button.png)](https://discord.gg/M8Rgz4AmmA)
 
 This application reads the journal files to track which materials you have and make it instantly visible. It shows which
