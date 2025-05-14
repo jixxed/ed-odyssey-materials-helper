@@ -107,6 +107,11 @@
       }
 
       .market {
+        .image {
+          @include fixedWidth(2em);
+          @include fixedHeight(2em);
+        }
+
         @include fixedWidth(32.8em);
         -fx-pref-height: 100%;
         -fx-alignment: bottom-center;

@@ -71,11 +71,11 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
         this.rightAmountLabel = LabelBuilder.builder()
                 .withStyleClass("ship-amount")
                 .build();
-        DestroyableResizableImageView leftImage = ResizableImageViewBuilder.builder()
+        DestroyableResizableImageView fleetCarrierImage = ResizableImageViewBuilder.builder()
                 .withStyleClass("image")
                 .withImage("/images/material/fleetcarrier.png")
                 .build();
-        DestroyableResizableImageView rightImage = ResizableImageViewBuilder.builder()
+        DestroyableResizableImageView shipImage = ResizableImageViewBuilder.builder()
                 .withStyleClass("image")
                 .withImage("/images/material/ship.png")
                 .build();
@@ -132,17 +132,17 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
                 .withNodes(new GrowingRegion(), buy, stationBuyArrow, coriolisImage, stationSellArrow, sell, new GrowingRegion())
                 .buildHBox();
         DestroyableHBox leftHBox = BoxBuilder.builder()
-                .withNodes(leftImage, this.leftAmountLabel)
+                .withNodes(fleetCarrierImage, this.leftAmountLabel)
                 .withStyleClass("ingredient-quantity-section")
                 .buildHBox();
         DestroyableHBox rightHBox = BoxBuilder.builder()
-                .withNodes(this.rightAmountLabel, rightImage)
+                .withNodes(this.rightAmountLabel, shipImage)
                 .withStyleClass("ingredient-quantity-section")
                 .buildHBox();
         updateQuantity();
         HBox.setHgrow(this.leftAmountLabel, Priority.ALWAYS);
         this.leftAmountLabel.addBinding(this.leftAmountLabel.visibleProperty(), ApplicationState.getInstance().getFcMaterials());
-        leftImage.addBinding(leftImage.visibleProperty(), ApplicationState.getInstance().getFcMaterials());
+        fleetCarrierImage.addBinding(fleetCarrierImage.visibleProperty(), ApplicationState.getInstance().getFcMaterials());
         DestroyableHBox firstLine = BoxBuilder.builder()
                 .withStyleClass("name-line")
                 .withNodes(typeImage, nameLabel).buildHBox();
