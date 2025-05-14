@@ -1,7 +1,5 @@
 "messageKey","","en","de","es","fr","pt","ru","zh"
 "notification.value.text","{0}","","","","","","{0}",""
-"notification.abc.title","","","","","","","",""
-"notification.abc.text","","","","","","","",""
 "notification.collected.irrelevant.material.title","Collected irrelevant material","Collected irrelevant material","Irrrelevantes Material gesammelt","Material irrelevante recogido","Matériel non pertinent collecté","Coletou material irrelevante","Собран нерелевантный материал",""
 "notification.collected.wishlist.material.title","Collected wishlist material","Collected wishlist material","Gesammelte Wunschlistematerial","Material de lista de deseos recogido","Matériel de liste de souhaits collecté","Coletou material da lista de desejos","Собран материал из списка желаний",""
 "notification.trade.a.bid.was.pulled","A bid was pulled.","A bid was pulled.","Ein Gebot wurde gezogen.","Se retiró una oferta.","Une offre a été retirée.","Um lance foi retirado.","Ставка была снята.",""
