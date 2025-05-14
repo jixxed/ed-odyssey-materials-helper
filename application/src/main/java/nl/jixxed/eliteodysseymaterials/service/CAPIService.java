@@ -10,12 +10,12 @@ import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.AccessTokenRequestParams;
 import com.github.scribejava.core.oauth.AuthorizationUrlBuilder;
 import com.github.scribejava.core.oauth.OAuth20Service;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.FXApplication;
 import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
@@ -47,7 +47,6 @@ public class CAPIService {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    private final Application application;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private final OAuth20Service service;
     private OAuth2AccessToken oAuth2AccessToken;
@@ -59,8 +58,7 @@ public class CAPIService {
     private TimerTask timerTask;
     private Timer timer;
 
-    private CAPIService(final Application application) {
-        this.application = application;
+    private CAPIService() {
         this.service = new ServiceBuilder(CapiOAuth20Service.CLIENT_ID)
                 .defaultScope("auth capi")
                 .callback("edomh://capi/")
@@ -79,12 +77,20 @@ public class CAPIService {
                             .scope("capi")
                             .addExtraParameter("client_id", CapiOAuth20Service.CLIENT_ID);
                     this.oAuth2AccessToken = this.service.getAccessToken(accessTokenRequestParams);
-                    log.info("save access token");
-                    saveToken(this.oAuth2AccessToken);
-                    Platform.runLater(() -> {
-                        NotificationService.showInformation(NotificationType.SUCCESS, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.auth.success"));
-                        this.active.set(true);
-                    });
+//                    https://companion.orerve.net/profile
+                    if (validCommander()) {
+                        log.info("save access token");
+                        saveToken(this.oAuth2AccessToken);
+                        Platform.runLater(() -> {
+                            NotificationService.showInformation(NotificationType.SUCCESS, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.auth.success"));
+                            this.active.set(true);
+                        });
+                    } else {
+                        Platform.runLater(() -> {
+                            NotificationService.showInformation(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.auth.bad.account"));
+                            this.active.set(true);
+                        });
+                    }
                 } catch (final InterruptedException e) {
                     log.error("InterruptedException", e);
                 } catch (final ExecutionException e) {
@@ -132,6 +138,32 @@ public class CAPIService {
         }));
     }
 
+    private boolean validCommander() {
+        return APPLICATION_STATE.getPreferredCommander().map(commander -> {
+            final String url = GameVersion.LEGACY.equals(commander.getGameVersion()) ? "https://legacy-companion.orerve.net/profile" : "https://companion.orerve.net/profile";
+            final OAuthRequest oAuthRequest = new OAuthRequest(Verb.GET, url);
+            this.service.signRequest(this.oAuth2AccessToken, oAuthRequest);
+            try {
+                Response response = this.service.execute(oAuthRequest);
+                if (response.getCode() == 200) {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    final JsonNode jsonNode = objectMapper.readTree(response.getBody());
+                    final String name = jsonNode.get("commander").get("name").asText();
+                    return commander.getName().equalsIgnoreCase(name);
+                }
+            } catch (final InterruptedException e) {
+                log.error("InterruptedException", e);
+            } catch (final ExecutionException e) {
+                log.error("ExecutionException", e);
+            } catch (final IOException e) {
+                log.error("IOException", e);
+            } catch (final Exception e) {
+                log.error("Exception", e);
+            }
+            return false;
+        }).orElse(false);
+    }
+
     private static long calculateDelay(final File fleetCarrierFile) {
         if (!fleetCarrierFile.exists()) {
             return 0;
@@ -149,14 +181,7 @@ public class CAPIService {
 
     public static CAPIService getInstance() {
         if (capiService == null) {
-            throw new UnsupportedOperationException("CapiService not initialized!");
-        }
-        return capiService;
-    }
-
-    public static CAPIService getInstance(final Application application) {
-        if (capiService == null) {
-            capiService = new CAPIService(application);
+            capiService = new CAPIService();
         }
         return capiService;
     }
@@ -165,7 +190,7 @@ public class CAPIService {
         this.authorizationUrlBuilder = ((CapiOAuth20Service) this.service).getAuthorizationUrlBuilder();
         final String build = this.authorizationUrlBuilder.build();
         log.debug(build);
-        Platform.runLater(() -> this.application.getHostServices().showDocument(build));
+        Platform.runLater(() -> FXApplication.getInstance().getHostServices().showDocument(build));
     }
 
     private void requestFleetCarrierData() {
@@ -305,6 +330,7 @@ public class CAPIService {
                 Platform.runLater(() -> this.active.set(false));
                 final String pathname = commander.getLiveCommanderFolder();
                 Files.delete(Path.of(pathname, AppConstants.CAPI_FILE));
+                Files.delete(Path.of(pathname, AppConstants.FLEETCARRIER_FILE));
             } catch (final IOException e) {
                 log.error("Failed to delete CAPI token file", e);
             }

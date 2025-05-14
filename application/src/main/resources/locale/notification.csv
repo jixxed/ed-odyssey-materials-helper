@@ -82,3 +82,4 @@
 "notification.material.information.irrelevant.text","{0}({1}) - Irrelevant","","","{0}({1}) - Irrelevante","","","{0}({1}) - Не требуемое",""
 "notification.shipbuilder.error.wishlist.title","Can’t create wishlist","","","No se puede crear lista de deseos","","","Невозможно создать список желаний",""
 "notification.shipbuilder.error.wishlist.text","No items to add","","","No hay elementos que añadir","","","Нет элементов для добавления",""
+"notification.capi.message.auth.bad.account","Account mismatch detected! Account will not be linked.","","","","","","",""

@@ -132,7 +132,7 @@ public class FXApplication extends Application {
             versionPopup();
             MaterialTrackingService.initialize();
 //            HighGradeEmissionService.initialize();
-            CAPIService.getInstance(this);
+            CAPIService.getInstance();
             this.loadingScreen = new LoadingScreen();
             eventListeners.add(EventService.addListener(true, this, JournalInitEvent.class, event -> {
 
@@ -356,7 +356,11 @@ public class FXApplication extends Application {
 
             this.fleetCarrierWatcher = new GameStateWatcher();
             ApplicationState.getInstance().getFcMaterials().set(false);
-            this.fleetCarrierWatcher.watch(watchedFolderFleetCarrier, file -> FileProcessor.processCapiFile(file, JournalEventType.CAPIFLEETCARRIER), AppConstants.FLEETCARRIER_FILE, false, JournalEventType.CAPIFLEETCARRIER);
+            this.fleetCarrierWatcher.watch(watchedFolderFleetCarrier, file -> {
+                if (CAPIService.getInstance().getActive().get()) {
+                    FileProcessor.processCapiFile(file, JournalEventType.CAPIFLEETCARRIER);
+                }
+            }, AppConstants.FLEETCARRIER_FILE, false, JournalEventType.CAPIFLEETCARRIER);
         }
 
     }
