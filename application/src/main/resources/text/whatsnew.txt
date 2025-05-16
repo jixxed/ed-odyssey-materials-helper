@@ -1,3 +1,13 @@
+Version 2.167
+-------------
+Added crowdin integration in project. Translations can now be supplied by the community on https://crowdin.com/project/edomh
+Added mining information to ring mineables
+Added option to pause Frontier API updates
+Fixed ship cargo sometimes not processing, potentially causing impossible cargo numbers
+Fixed T8 Boost cost
+Added commander name validation to API registration to prevent linking with the wrong account
+Fixed bug with exporting wishlists to XLS
+
 Version 2.166
 -------------
 Updated Colonisation tab

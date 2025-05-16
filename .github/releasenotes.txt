@@ -6,18 +6,10 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Updated Colonisation tab
-- remove WIP tag
-- Added statistics section with total numbers
-- Added buildable type and layout selections
-- Updated all number formatting
-- Added option to hide completed commodities
-- Changed buttons to dropdown
-- Added hint to dock at depot to track
-Updated powerplay material color for better contrast
-Fix Mandalay default template FSD 5C -> 5E
-Fix refreshing wishlists list when importing wishlist
-Fix initializing horizons materials when filter is present
-Fix initializing horizons commodities when filter is present
-Fix synthesis blueprints for Sub Surface Displacement Munitions and Seismic Charge Munitions adding SRV Refuel instead
-Some other bugfixes
+Added crowdin integration in project. Translations can now be supplied by the community on https://crowdin.com/project/edomh
+Added mining information to ring mineables
+Added option to pause Frontier API updates
+Fixed ship cargo sometimes not processing, potentially causing impossible cargo numbers
+Fixed T8 Boost cost
+Added commander name validation to API registration to prevent linking with the wrong account
+Fixed bug with exporting wishlists to XLS
