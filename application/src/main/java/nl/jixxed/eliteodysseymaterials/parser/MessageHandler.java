@@ -115,6 +115,9 @@ class MessageHandler {
             Map.entry(JournalEventType.MUSIC, new MusicMessageProcessor()),
             Map.entry(JournalEventType.DELIVERPOWERMICRORESOURCES, new DeliverPowerMicroResourcesMessageProcessor()),
             Map.entry(JournalEventType.COLONISATIONCONSTRUCTIONDEPOT, new ColonisationConstructionDepotMessageProcessor()),
+            Map.entry(JournalEventType.SUPERCRUISEDESTINATIONDROP, new SupercruiseDestinationDropMessageProcessor()),
+            Map.entry(JournalEventType.SUPERCRUISEEXIT, new SupercruiseExitMessageProcessor()),
+            Map.entry(JournalEventType.PROSPECTEDASTEROID, new ProspectedAsteroidMessageProcessor()),
 
             Map.entry(JournalEventType.LOADGAME, new LoadGameMessageProcessor())
     );

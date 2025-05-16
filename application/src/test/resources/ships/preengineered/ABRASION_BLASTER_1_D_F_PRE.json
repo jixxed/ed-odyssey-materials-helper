@@ -1,8 +1,10 @@
 {
-  "Slot": "LargeHardpoint1",
+  "Slot": "MediumHardpoint2",
   "Item": "hpt_mining_abrblstr_fixed_small",
   "On": true,
   "Priority": 0,
+  "Health": 1.0,
+  "Value": 8512,
   "Engineering": {
     "Engineer": "Selene Jean",
     "EngineerID": 300210,

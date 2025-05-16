@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
 import nl.jixxed.eliteodysseymaterials.schemas.journal.SupercruiseEntry.SupercruiseEntry;
+import nl.jixxed.eliteodysseymaterials.service.MiningService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.SupercruiseEntryJournalEvent;
 
@@ -8,7 +9,9 @@ public class SupercruiseEntryMessageProcessor implements MessageProcessor<Superc
     @Override
     public void process(final SupercruiseEntry event) {
         EventService.publish(new SupercruiseEntryJournalEvent(event));
+        MiningService.sendMiningEventAndReset();
     }
+
     @Override
     public Class<SupercruiseEntry> getMessageClass() {
         return SupercruiseEntry.class;

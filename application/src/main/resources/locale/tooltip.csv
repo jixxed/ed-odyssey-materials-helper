@@ -37,3 +37,5 @@
 "material.tooltip.market","Market","","","Mercado","","","Рынок",""
 "material.tooltip.market.sells","The current market sells this commodity for {0}CR/T and has a stock of {1}T","","","El mercado actual vende esta mercancía por {0}Cr/t y tiene una oferta de {1}t","","","Здешний рынок продает этот товар по цене {0}КР/T и предлагает {1}T на продажу",""
 "material.tooltip.market.buys","The current market buys this commodity for {0}CR/T and has a demand of {1}T","","","El mercado actual compra esta mercancía por {0}Cr/t y tiene una demanda de {1}t","","","Здешний рынок покупает этот товар по цене {0}КР/T и запрашивает {1}T",""
+"material.tooltip.mining","Mining","","","","","","",""
+"material.tooltip.mining.locations","This material can be mined in the following locations:","","","","","","",""

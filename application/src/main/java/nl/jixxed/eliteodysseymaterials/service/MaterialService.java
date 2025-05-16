@@ -87,6 +87,7 @@ public class MaterialService {
                                 .withText(ObservableResourceFactory.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("material.tooltip.is.rare") + " " + LocaleService.getLocalizedStringForCurrentLocale(commodity instanceof RareCommodity ? "material.tooltip.text.yes" : "material.tooltip.text.no")))
                                 .build());
                 addMarketToTooltip(commodity, vBox);
+                addMineableToTooltip(commodity, vBox);
                 addRefinableToTooltip(commodity, vBox);
                 addFleetCarrierOrdersToTooltip(commodity, vBox);
             } else if (horizonsMaterial instanceof Raw) {
@@ -115,6 +116,23 @@ public class MaterialService {
         return vBox;
 
 
+    }
+
+    private static void addMineableToTooltip(Commodity commodity, DestroyableVBox vBox) {
+        Mineable.getMineable(commodity).ifPresent(mineable -> {
+            vBox.getNodes().add(LabelBuilder.builder()
+                    .build());
+            vBox.getNodes().add(LabelBuilder.builder()
+                    .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE)
+                    .withText("material.tooltip.mining")
+                    .build());
+            vBox.getNodes().add(LabelBuilder.builder()
+                    .withText("material.tooltip.mining.locations")
+                    .build());
+            vBox.getNodes().addAll(mineable.getLocations().stream().map(mineableLocation -> LabelBuilder.builder()
+                    .withText(mineableLocation.getLocalizationKey())
+                    .build()).toList());
+        });
     }
 
     private static void addMarketToTooltip(Commodity commodity, DestroyableVBox vBox) {

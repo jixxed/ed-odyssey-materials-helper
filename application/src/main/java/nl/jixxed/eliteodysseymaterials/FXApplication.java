@@ -111,6 +111,7 @@ public class FXApplication extends Application {
         ScalingHelper.init();
         FileSyncService.init();
         ColonisationService.init();
+        MiningService.init();
         if (Boolean.FALSE.equals(PreferencesService.getPreference(PreferenceConstants.TRACKING_OPT_OUT, false))) {
 //            HighGradeEmissionService.initialize();
         }

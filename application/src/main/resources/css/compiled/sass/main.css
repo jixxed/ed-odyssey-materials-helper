@@ -185,9 +185,9 @@
               .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-progressbar .present {
                 -fx-background-color: #ff7c7c; }
               .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-progressbar .present-ship {
-                -fx-background-color: #2e92df; }
-              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-progressbar .present-fleetcarrier {
                 -fx-background-color: #dcc030; }
+              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-progressbar .present-fleetcarrier {
+                -fx-background-color: #2e92df; }
               .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-progressbar .not-present {
                 -fx-background-color: gray; }
     .app .application-screen .horizons-tab-content .commodities-tab {
