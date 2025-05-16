@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,10 +45,11 @@ public class TimeStampedGameStateWatcher {
             }
         }
     }
+
     private <T extends TimestampedEvent> void addConsumer(final JournalEventType eventType, final Class<T> type) {
         Consumer<? extends TimestampedEvent> consumer = (Consumer<T>) this::handleEvent;
         this.eventConsumers.put(eventType, consumer);
-        this.eventListeners.add(EventService.addListener(this, type, (Consumer<T>)consumer));
+        this.eventListeners.add(EventService.addListener(this, type, (Consumer<T>) consumer));
     }
 
     private <T extends TimestampedEvent> void handleEvent(T event) {

@@ -60,7 +60,7 @@ public class WatchServiceFolderWatch extends AbstractFolderWatch implements Runn
 //            this.changeConsumer.accept(new FileEvent(path.resolve((Path) event.context()).toFile(), event.kind()));
             Path filePath = path.resolve((Path) event.context());
             FileEvent fileEvent = new FileEvent(filePath.toFile(), event.kind());
-            if (event.kind() == ENTRY_MODIFY) {
+            if (event.kind() == ENTRY_MODIFY && fileEvent.getFile().getName().contains("Journal.")) {
                 // Debounce ENTRY_MODIFY events
                 modifyEventSubject.onNext(fileEvent);
             } else {
