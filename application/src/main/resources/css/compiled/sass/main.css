@@ -285,7 +285,7 @@
             -fx-max-width: 32.8em;
             -fx-pref-height: 100%;
             -fx-alignment: bottom-center;
-            -fx-padding: 0 0em 0.5em 0; }
+            -fx-padding: 0 0em 0.25em 0; }
             .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .image {
               -fx-min-width: 2em;
               -fx-pref-width: 2em;

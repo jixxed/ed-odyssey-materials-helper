@@ -115,7 +115,7 @@
         @include fixedWidth(32.8em);
         -fx-pref-height: 100%;
         -fx-alignment: bottom-center;
-        -fx-padding: 0 0em 0.5em 0;
+        -fx-padding: 0 0em 0.25em 0;
 
         .station-box {
           @include fixedWidth(12em);
