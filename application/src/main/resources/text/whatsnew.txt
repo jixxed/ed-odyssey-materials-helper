@@ -1,3 +1,7 @@
+Version 2.169
+-------------
+Handle fleetcarrier api null value for market
+
 Version 2.168
 -------------
 Handle fleetcarrier market buy/sell actions to update fleetcarrier storage values

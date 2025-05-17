@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.enums.Expansion;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.parser.*;
@@ -10,6 +11,7 @@ import nl.jixxed.eliteodysseymaterials.service.UserPreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 
+@Slf4j
 public class CapiFleetCarrierMessageProcessor implements CapiMessageProcessor {
     private static final FleetCarrierAssetParser ASSET_PARSER = new FleetCarrierAssetParser();
     private static final FleetCarrierDataParser DATA_PARSER = new FleetCarrierDataParser();
@@ -41,8 +43,13 @@ public class CapiFleetCarrierMessageProcessor implements CapiMessageProcessor {
         if (cargo != null) {
             COMMODITY_PARSER.parse(cargo.elements());
         }
-
-        UserPreferencesService.setPreference("fleetcarrier.carrier.id", fleetCarrierMessage.get("market").get("id").asText());
+        try {
+            final JsonNode market = fleetCarrierMessage.get("market");
+            final JsonNode marketId = market.get("id");
+            UserPreferencesService.setPreference("fleetcarrier.carrier.id", marketId.asText());
+        } catch (NullPointerException e) {
+            log.error("Fleet carrier market id not found in CAPI message", e);
+        }
         EventService.publish(new StorageEvent(StoragePool.FLEETCARRIER));
 
     }
