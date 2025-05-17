@@ -1,0 +1,1066 @@
+{
+  "$schema": "http://json-schema.org/draft-12/schema#",
+  "title": "CapiFleetcarrier",
+  "type": "object",
+  "definitions": {
+    "crewMember": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "string"
+        },
+        "faction": {
+          "type": "string"
+        },
+        "salary": {
+          "type": "number"
+        },
+        "hiringPrice": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "lastEdit": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "gender",
+        "enabled",
+        "faction",
+        "salary",
+        "hiringPrice",
+        "lastEdit"
+      ]
+    },
+    "invoicesWeekToDate": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "wages": {
+            "type": "number"
+          },
+          "from": {
+            "type": "string"
+          },
+          "until": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "wages",
+          "from",
+          "until",
+          "type"
+        ]
+      }
+    },
+    "crewService": {
+      "type": "object",
+      "properties": {
+        "crewMember": {
+          "$ref": "#/definitions/crewMember"
+        },
+        "invoicesWeekToDate": {
+          "$ref": "#/definitions/invoicesWeekToDate"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "crewMember",
+        "invoicesWeekToDate",
+        "status"
+      ]
+    }
+  },
+  "properties": {
+    "name": {
+      "type": "object",
+      "properties": {
+        "callsign": {
+          "type": "string"
+        },
+        "vanityName": {
+          "type": "string"
+        },
+        "filteredVanityName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "callsign",
+        "vanityName",
+        "filteredVanityName"
+      ]
+    },
+    "currentStarSystem": {
+      "type": "string"
+    },
+    "balance": {
+      "type": "string"
+    },
+    "fuel": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "theme": {
+      "type": "string"
+    },
+    "dockingAccess": {
+      "type": "string"
+    },
+    "notoriousAccess": {
+      "type": "boolean"
+    },
+    "capacity": {
+      "type": "object",
+      "properties": {
+        "shipPacks": {
+          "type": "number"
+        },
+        "modulePacks": {
+          "type": "number"
+        },
+        "cargoForSale": {
+          "type": "number"
+        },
+        "cargoNotForSale": {
+          "type": "number"
+        },
+        "cargoSpaceReserved": {
+          "type": "number"
+        },
+        "crew": {
+          "type": "number"
+        },
+        "freeSpace": {
+          "type": "number"
+        },
+        "microresourceCapacityTotal": {
+          "type": "number"
+        },
+        "microresourceCapacityFree": {
+          "type": "number"
+        },
+        "microresourceCapacityUsed": {
+          "type": "number"
+        },
+        "microresourceCapacityReserved": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "shipPacks",
+        "modulePacks",
+        "cargoForSale",
+        "cargoNotForSale",
+        "cargoSpaceReserved",
+        "crew",
+        "freeSpace",
+        "microresourceCapacityTotal",
+        "microresourceCapacityFree",
+        "microresourceCapacityUsed",
+        "microresourceCapacityReserved"
+      ]
+    },
+    "itinerary": {
+      "type": "object",
+      "properties": {
+        "completed": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "departureTime": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "arrivalTime": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "visitDurationSeconds": {
+                "type": "number"
+              },
+              "starsystem": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "arrivalTime",
+              "state",
+              "visitDurationSeconds",
+              "starsystem"
+            ]
+          }
+        },
+        "totalDistanceJumpedLY": {
+          "type": "number"
+        },
+        "currentJump": {}
+      },
+      "required": [
+        "completed",
+        "totalDistanceJumpedLY",
+        "currentJump"
+      ]
+    },
+    "marketFinances": {
+      "type": "object",
+      "properties": {
+        "cargoTotalValue": {
+          "type": "number"
+        },
+        "allTimeProfit": {
+          "type": "number"
+        },
+        "numCommodsForSale": {
+          "type": "number"
+        },
+        "numCommodsPurchaseOrders": {
+          "type": "number"
+        },
+        "balanceAllocForPurchaseOrders": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "cargoTotalValue",
+        "allTimeProfit",
+        "numCommodsForSale",
+        "numCommodsPurchaseOrders",
+        "balanceAllocForPurchaseOrders"
+      ]
+    },
+    "blackmarketFinances": {
+      "type": "object",
+      "properties": {
+        "cargoTotalValue": {
+          "type": "number"
+        },
+        "allTimeProfit": {
+          "type": "number"
+        },
+        "numCommodsForSale": {
+          "type": "number"
+        },
+        "numCommodsPurchaseOrders": {
+          "type": "number"
+        },
+        "balanceAllocForPurchaseOrders": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "cargoTotalValue",
+        "allTimeProfit",
+        "numCommodsForSale",
+        "numCommodsPurchaseOrders",
+        "balanceAllocForPurchaseOrders"
+      ]
+    },
+    "finance": {
+      "type": "object",
+      "properties": {
+        "bankBalance": {
+          "type": "number"
+        },
+        "bankReservedBalance": {
+          "type": "number"
+        },
+        "taxation": {
+          "type": "number"
+        },
+        "service_taxation": {
+          "type": "object",
+          "properties": {
+            "bartender": {
+              "type": "number"
+            },
+            "pioneersupplies": {
+              "type": "number"
+            },
+            "rearm": {
+              "type": "number"
+            },
+            "refuel": {
+              "type": "number"
+            },
+            "repair": {
+              "type": "number"
+            },
+            "shipyard": {
+              "type": "number"
+            },
+            "outfitting": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "bartender",
+            "pioneersupplies",
+            "rearm",
+            "refuel",
+            "repair",
+            "shipyard",
+            "outfitting"
+          ]
+        },
+        "numServices": {
+          "type": "number"
+        },
+        "numOptionalServices": {
+          "type": "number"
+        },
+        "debtThreshold": {
+          "type": "number"
+        },
+        "maintenance": {
+          "type": "number"
+        },
+        "maintenanceToDate": {
+          "type": "number"
+        },
+        "coreCost": {
+          "type": "number"
+        },
+        "servicesCost": {
+          "type": "number"
+        },
+        "servicesCostToDate": {
+          "type": "number"
+        },
+        "jumpsCost": {
+          "type": "number"
+        },
+        "numJumps": {
+          "type": "number"
+        },
+        "bartender": {
+          "type": "object",
+          "properties": {
+            "microresourcesTotalValue": {
+              "type": "number"
+            },
+            "allTimeProfit": {
+              "type": "number"
+            },
+            "microresourcesForSale": {
+              "type": "number"
+            },
+            "microresourcesPurchaseOrders": {
+              "type": "number"
+            },
+            "balanceAllocForPurchaseOrders": {
+              "type": "number"
+            },
+            "profitHistory": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          },
+          "required": [
+            "microresourcesTotalValue",
+            "allTimeProfit",
+            "microresourcesForSale",
+            "microresourcesPurchaseOrders",
+            "balanceAllocForPurchaseOrders",
+            "profitHistory"
+          ]
+        }
+      },
+      "required": [
+        "bankBalance",
+        "bankReservedBalance",
+        "taxation",
+        "service_taxation",
+        "numServices",
+        "numOptionalServices",
+        "debtThreshold",
+        "maintenance",
+        "maintenanceToDate",
+        "coreCost",
+        "servicesCost",
+        "servicesCostToDate",
+        "jumpsCost",
+        "numJumps",
+        "bartender"
+      ]
+    },
+    "servicesCrew": {
+      "type": "object",
+      "properties": {
+        "refuel": {
+          "$ref": "#/definitions/crewService"
+        },
+        "repair": {
+          "$ref": "#/definitions/crewService"
+        },
+        "rearm": {
+          "$ref": "#/definitions/crewService"
+        },
+        "shipyard": {
+          "$ref": "#/definitions/crewService"
+        },
+        "outfitting": {
+          "$ref": "#/definitions/crewService"
+        },
+        "blackmarket": {
+          "$ref": "#/definitions/crewService"
+        },
+        "voucherredemption": {
+          "$ref": "#/definitions/crewService"
+        },
+        "exploration": {
+          "$ref": "#/definitions/crewService"
+        },
+        "bartender": {
+          "$ref": "#/definitions/crewService"
+        },
+        "vistagenomics": {
+          "$ref": "#/definitions/crewService"
+        },
+        "pioneersupplies": {
+          "$ref": "#/definitions/crewService"
+        }
+      },
+      "required": [
+      ]
+    },
+    "cargo": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "commodity": {
+            "type": "string"
+          },
+          "originSystem": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "mission": {
+            "type": "boolean"
+          },
+          "qty": {
+            "type": "number"
+          },
+          "value": {
+            "type": "number"
+          },
+          "stolen": {
+            "type": "boolean"
+          },
+          "locName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "commodity",
+          "mission",
+          "qty",
+          "value",
+          "stolen",
+          "locName"
+        ]
+      }
+    },
+    "orders": {
+      "type": "object",
+      "properties": {
+        "commodities": {
+          "type": "object",
+          "properties": {
+            "sales": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "stock": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "string"
+                  },
+                  "blackmarket": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "name",
+                  "stock",
+                  "price",
+                  "blackmarket"
+                ]
+              }
+            },
+            "purchases": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "total": {
+                    "type": "number"
+                  },
+                  "outstanding": {
+                    "type": "number"
+                  },
+                  "price": {
+                    "type": "number"
+                  },
+                  "blackmarket": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "name",
+                  "total",
+                  "outstanding",
+                  "price",
+                  "blackmarket"
+                ]
+              }
+            }
+          },
+          "required": [
+            "sales",
+            "purchases"
+          ]
+        },
+        "onfootmicroresources": {
+          "type": "object",
+          "properties": {
+            "sales": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "locName": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "number"
+                  },
+                  "stock": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "locName",
+                  "price",
+                  "stock"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "purchases": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "locName": {
+                    "type": "string"
+                  },
+                  "total": {
+                    "type": "number"
+                  },
+                  "outstanding": {
+                    "type": "number"
+                  },
+                  "price": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "name",
+                  "locName",
+                  "total",
+                  "outstanding",
+                  "price"
+                ]
+              }
+            }
+          },
+          "required": [
+            "sales",
+            "purchases"
+          ]
+        }
+      },
+      "required": [
+        "commodities",
+        "onfootmicroresources"
+      ]
+    },
+    "carrierLocker": {
+      "type": "object",
+      "properties": {
+        "assets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "quantity": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string"
+              },
+              "locName": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "quantity",
+              "name",
+              "locName"
+            ]
+          }
+        },
+        "goods": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "quantity": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string"
+              },
+              "locName": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "quantity",
+              "name",
+              "locName"
+            ]
+          }
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "quantity": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string"
+              },
+              "locName": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "quantity",
+              "name",
+              "locName"
+            ]
+          }
+        }
+      },
+      "required": [
+        "assets",
+        "goods",
+        "data"
+      ]
+    },
+    "reputation": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "majorFaction": {
+            "type": "string"
+          },
+          "score": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "majorFaction",
+          "score"
+        ]
+      }
+    },
+    "market": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        },
+        "outpostType": {
+          "type": "string"
+        },
+        "imported": {
+          "type": "array",
+          "items": {}
+        },
+        "exported": {
+          "type": "array",
+          "items": {}
+        },
+        "services": {
+          "type": "object",
+          "properties": {
+            "commodities": {
+              "type": "string"
+            },
+            "carrierfuel": {
+              "type": "string"
+            },
+            "socialspace": {
+              "type": "string"
+            },
+            "refuel": {
+              "type": "string"
+            },
+            "repair": {
+              "type": "string"
+            },
+            "rearm": {
+              "type": "string"
+            },
+            "shipyard": {
+              "type": "string"
+            },
+            "outfitting": {
+              "type": "string"
+            },
+            "blackmarket": {
+              "type": "string"
+            },
+            "voucherredemption": {
+              "type": "string"
+            },
+            "exploration": {
+              "type": "string"
+            },
+            "bartender": {
+              "type": "string"
+            },
+            "vistagenomics": {
+              "type": "string"
+            },
+            "pioneersupplies": {
+              "type": "string"
+            },
+            "carriermanagement": {
+              "type": "string"
+            },
+            "stationmenu": {
+              "type": "string"
+            },
+            "dock": {
+              "type": "string"
+            },
+            "crewlounge": {
+              "type": "string"
+            },
+            "engineer": {
+              "type": "string"
+            },
+            "contacts": {
+              "type": "string"
+            },
+            "registeringcolonisation": {
+              "type": "string"
+            },
+            "livery": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "commodities",
+            "carrierfuel",
+            "socialspace",
+            "refuel",
+            "repair",
+            "rearm",
+            "shipyard",
+            "outfitting",
+            "blackmarket",
+            "voucherredemption",
+            "exploration",
+            "bartender",
+            "vistagenomics",
+            "pioneersupplies",
+            "carriermanagement",
+            "stationmenu",
+            "dock",
+            "crewlounge",
+            "engineer",
+            "contacts",
+            "livery"
+          ]
+        },
+        "economies": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "proportion": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "name",
+              "proportion"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "prohibited": {
+          "type": [
+            "object",
+            "array"
+          ],
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "commodities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "categoryname": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "stock": {
+                "type": "number"
+              },
+              "buyPrice": {
+                "type": "number"
+              },
+              "sellPrice": {
+                "type": "number"
+              },
+              "demand": {
+                "type": "number"
+              },
+              "legality": {
+                "type": "string"
+              },
+              "meanPrice": {
+                "type": "number"
+              },
+              "demandBracket": {
+                "type": "number"
+              },
+              "stockBracket": {
+                "type": [
+                  "number",
+                  "string"
+                ]
+              },
+              "locName": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "categoryname",
+              "name",
+              "stock",
+              "buyPrice",
+              "sellPrice",
+              "demand",
+              "legality",
+              "meanPrice",
+              "demandBracket",
+              "stockBracket",
+              "locName"
+            ]
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "outpostType",
+        "imported",
+        "exported",
+        "services",
+        "economies",
+        "prohibited",
+        "commodities"
+      ]
+    },
+    "ships": {
+      "type": "object",
+      "properties": {
+        "shipyard_list": {
+          "type": [
+            "object",
+            "array"
+          ],
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "basevalue": {
+                "type": "number"
+              },
+              "sku": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "basevalue",
+              "sku"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "discount_list": {
+          "type": "array",
+          "items": {}
+        }
+      },
+      "required": [
+        "shipyard_list"
+      ],
+      "additionalProperties": false
+    },
+    "modules": {
+      "type": [
+        "object",
+        "array"
+      ],
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "category": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "cost": {
+            "type": "number"
+          },
+          "sku": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "stock": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "category",
+          "name",
+          "cost",
+          "sku",
+          "stock"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "name",
+    "currentStarSystem",
+    "balance",
+    "fuel",
+    "state",
+    "theme",
+    "dockingAccess",
+    "notoriousAccess",
+    "capacity",
+    "itinerary",
+    "marketFinances",
+    "blackmarketFinances",
+    "finance",
+    "servicesCrew",
+    "cargo",
+    "orders",
+    "carrierLocker",
+    "reputation",
+    "market",
+    "ships",
+    "modules"
+  ]
+}

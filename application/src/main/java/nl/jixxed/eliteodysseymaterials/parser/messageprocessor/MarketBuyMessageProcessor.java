@@ -6,8 +6,11 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.MarketBuy.MarketBuy;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.UserPreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
+
+import java.math.BigInteger;
 
 @Slf4j
 public class MarketBuyMessageProcessor implements MessageProcessor<MarketBuy> {
@@ -18,10 +21,14 @@ public class MarketBuyMessageProcessor implements MessageProcessor<MarketBuy> {
             if (!horizonsMaterial.isUnknown()) {
                 StorageService.addCommodity((Commodity) horizonsMaterial, StoragePool.SHIP, event.getCount().intValue());
                 EventService.publish(new StorageEvent(StoragePool.SHIP));
+                //if bought from carrier, decrease storage
+                if (event.getMarketID().equals(new BigInteger(UserPreferencesService.getPreference("fleetcarrier.carrier.id", "0")))) {
+                    StorageService.removeCommodity((Commodity) horizonsMaterial, StoragePool.FLEETCARRIER, event.getCount().intValue());
+                    EventService.publish(new StorageEvent(StoragePool.FLEETCARRIER));
+                }
             }
         } catch (final IllegalArgumentException e) {
             log.error(e.getMessage());
-            //NotificationService.showWarning(NotificationType.ERROR, "Unknown Commodity Detected", event.getType() + "\nPlease report!");
         }
     }
 

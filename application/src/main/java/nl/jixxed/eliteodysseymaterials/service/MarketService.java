@@ -9,6 +9,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.Market.Market;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.MarketUpdatedEvent;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -22,7 +23,7 @@ public class MarketService {
 
     public static void updateMarket(Market event) {
         MARKET_ITEMS.clear();
-        fleetCarrier = "FleetCarrier".equals(event.getStationType());
+        fleetCarrier = "FleetCarrier".equals(event.getStationType()) && event.getMarketID().equals(new BigInteger(UserPreferencesService.getPreference("fleetcarrier.carrier.id", "0")));
         event.getItems().ifPresent(items -> items.forEach(item -> {
             final String name = item.getName().substring(1, item.getName().length() - 6);
             try {

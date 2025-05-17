@@ -79,7 +79,8 @@ public enum JournalEventType {
     COLONISATIONCONSTRUCTIONDEPOT("ColonisationConstructionDepot"),
     SUPERCRUISEDESTINATIONDROP("SupercruiseDestinationDrop"),
     SUPERCRUISEEXIT("SupercruiseExit"),
-    PROSPECTEDASTEROID("ProspectedAsteroid");
+    PROSPECTEDASTEROID("ProspectedAsteroid"),
+    CARRIERLOCATION("CarrierLocation");
     private final String name;
 
     public static JournalEventType forName(final String name) {

@@ -56,10 +56,10 @@ public class WindowsRegistrationHandler implements RegistrationHandler {
     public boolean isRegistered() {
         if (!IS_JAVA) {
             final String registryValue = getRegistryValue();
-            final String expectedValue = "\"" + CURRENT_DIR_SINGLE_SLASHED + "Elite Dangerous Odyssey Materials Helper.exe\" \"%1\"";
+            final String expectedValue = "Elite Dangerous Odyssey Materials Helper.exe\" \"%1\"";
             log.info("Registry value: {}", registryValue);
             log.info("Expected value: {}", expectedValue);
-            final boolean equals = registryValue.equals(expectedValue);
+            final boolean equals = registryValue.endsWith(expectedValue);
             log.info("Registry equals expected: {}", equals);
             return equals;
         }

@@ -31,6 +31,8 @@ public class LocationService {
     @Setter
     private static Optional<String> statusBodyName;
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
+    @Getter
+    private static Optional<String> carrierLocation = Optional.empty();
 
 
     private LocationService() {
@@ -187,5 +189,9 @@ public class LocationService {
             return currentStarSystem.getName();
         }
         return null;
+    }
+
+    public static void setCarrierLocation(String starSystem) {
+        carrierLocation = Optional.of(starSystem);
     }
 }

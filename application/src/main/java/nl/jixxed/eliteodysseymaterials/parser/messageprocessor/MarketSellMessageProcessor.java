@@ -6,8 +6,11 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.MarketSell.MarketSell;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.UserPreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
+
+import java.math.BigInteger;
 
 @Slf4j
 public class MarketSellMessageProcessor implements MessageProcessor<MarketSell> {
@@ -18,6 +21,11 @@ public class MarketSellMessageProcessor implements MessageProcessor<MarketSell> 
             if (!horizonsMaterial.isUnknown()) {
                 StorageService.removeCommodity((Commodity) horizonsMaterial, StoragePool.SHIP, event.getCount().intValue());
                 EventService.publish(new StorageEvent(StoragePool.SHIP));
+                //if sold to carrier, increase storage
+                if (event.getMarketID().equals(new BigInteger(UserPreferencesService.getPreference("fleetcarrier.carrier.id", "0")))) {
+                    StorageService.addCommodity((Commodity) horizonsMaterial, StoragePool.FLEETCARRIER, event.getCount().intValue());
+                    EventService.publish(new StorageEvent(StoragePool.FLEETCARRIER));
+                }
             }
         } catch (final IllegalArgumentException e) {
             log.error(e.getMessage());

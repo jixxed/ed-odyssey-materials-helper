@@ -117,6 +117,7 @@ public class FXApplication extends Application {
         }
         EDDNService.init();
         TraderBrokerService.init();
+        initEventHandling();
         try {
             try {
                 final GraphicsEnvironment ge =
@@ -176,8 +177,23 @@ public class FXApplication extends Application {
             this.primaryStage = primaryStage;
             primaryStage.setTitle(AppConstants.APP_TITLE);
             primaryStage.getIcons().add(new Image(FXApplication.class.getResourceAsStream(AppConstants.APP_ICON_PATH)));
+            this.primaryStage.setOnCloseRequest(event -> {
+                try {
+                    applicationScreen.destroyTemplate();
+                    BackupService.createConfigBackup();
+                    if (subscribe != null) {
+                        subscribe.dispose();
+                    }
+                    EventService.publish(new TerminateApplicationEvent());
+                    EventService.shutdown();
+//                NativeLibrary.disposeAll();
+                    APPLICATION_STATE.releaseLock();
+                    Platform.exit();
+                } catch (final Exception ex) {
+                    //don't care
+                }
+            });
             createApplicationScene();
-            initEventHandling();
             setupDeeplinkWatcher();
             setupWatchers();
 
@@ -266,22 +282,7 @@ public class FXApplication extends Application {
             }
             EventService.publish(new AfterFontSizeSetEvent(fontSizeEvent.getFontSize()));
         }));
-        this.primaryStage.setOnCloseRequest(event -> {
-            try {
-                applicationScreen.destroyTemplate();
-                BackupService.createConfigBackup();
-                if (subscribe != null) {
-                    subscribe.dispose();
-                }
-                EventService.publish(new TerminateApplicationEvent());
-                EventService.shutdown();
-//                NativeLibrary.disposeAll();
-                APPLICATION_STATE.releaseLock();
-                Platform.exit();
-            } catch (final Exception ex) {
-                //don't care
-            }
-        });
+
         this.eventListeners.add(EventService.addListener(this, SaveWishlistEvent.class, event -> {
             final FileChooser fileChooser = new FileChooser();
             //Set extension filter for text files

@@ -88,7 +88,7 @@ public class CAPIService {
                     } else {
                         Platform.runLater(() -> {
                             NotificationService.showInformation(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.auth.bad.account"));
-                            this.active.set(true);
+                            this.active.set(false);
                         });
                     }
                 } catch (final InterruptedException e) {
@@ -151,7 +151,16 @@ public class CAPIService {
                     ObjectMapper objectMapper = new ObjectMapper();
                     final JsonNode jsonNode = objectMapper.readTree(response.getBody());
                     final String name = jsonNode.get("commander").get("name").asText();
+
+                    log.info("Test equals: " + commander.getName() + " <> " + name);
                     return commander.getName().equalsIgnoreCase(name);
+                }
+                if (response.getCode() == 400) {
+                    log.info(this.oAuth2AccessToken.getAccessToken());
+                    Platform.runLater(() -> {
+                        this.fcEnabled.set(false);
+                        NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.400"));
+                    });
                 }
             } catch (final InterruptedException e) {
                 log.error("InterruptedException", e);

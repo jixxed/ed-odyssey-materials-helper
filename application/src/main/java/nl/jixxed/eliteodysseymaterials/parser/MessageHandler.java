@@ -13,9 +13,11 @@ import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.*;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiFleetCarrierMessageProcessor;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiMessageProcessor;
+import nl.jixxed.eliteodysseymaterials.schemas.capi.CapiFleetcarrier;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Event;
 import nl.jixxed.eliteodysseymaterials.service.EDDNService;
 import nl.jixxed.eliteodysseymaterials.service.OrderService;
+import nl.jixxed.eliteodysseymaterials.service.ReportService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
@@ -118,6 +120,7 @@ class MessageHandler {
             Map.entry(JournalEventType.SUPERCRUISEDESTINATIONDROP, new SupercruiseDestinationDropMessageProcessor()),
             Map.entry(JournalEventType.SUPERCRUISEEXIT, new SupercruiseExitMessageProcessor()),
             Map.entry(JournalEventType.PROSPECTEDASTEROID, new ProspectedAsteroidMessageProcessor()),
+            Map.entry(JournalEventType.CARRIERLOCATION, new CarrierLocationMessageProcessor()),
 
             Map.entry(JournalEventType.LOADGAME, new LoadGameMessageProcessor())
     );
@@ -211,6 +214,7 @@ class MessageHandler {
     static void handleCapiMessage(final File file, final JournalEventType journalEventType) {
         try {
             final String message = Files.readString(file.toPath());
+            testAndReport(message);
             final JsonNode jsonNode = OBJECT_MAPPER.readTree(message);
             log.info("event: " + journalEventType);
             final CapiMessageProcessor messageProcessor = capiMessageProcessors.get(journalEventType);
@@ -222,6 +226,15 @@ class MessageHandler {
             log.error("Error processing json message", e);
         } catch (final IOException e) {
             log.error("Error processing CAPI", e);
+        }
+    }
+
+    private static void testAndReport(String message) {
+        try {
+            OBJECT_MAPPER2.readValue(message, CapiFleetcarrier.class);
+        } catch (final Exception e) {
+            //report
+            ReportService.reportJournal("journal", message, "unknown fc capi event: " + e.getMessage());
         }
     }
 

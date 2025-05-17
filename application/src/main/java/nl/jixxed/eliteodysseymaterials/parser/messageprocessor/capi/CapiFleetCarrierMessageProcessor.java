@@ -6,6 +6,7 @@ import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.parser.*;
 import nl.jixxed.eliteodysseymaterials.service.OrderService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.UserPreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 
@@ -40,6 +41,8 @@ public class CapiFleetCarrierMessageProcessor implements CapiMessageProcessor {
         if (cargo != null) {
             COMMODITY_PARSER.parse(cargo.elements());
         }
+
+        UserPreferencesService.setPreference("fleetcarrier.carrier.id", fleetCarrierMessage.get("market").get("id").asText());
         EventService.publish(new StorageEvent(StoragePool.FLEETCARRIER));
 
     }
