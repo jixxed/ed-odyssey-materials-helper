@@ -231,10 +231,13 @@ class MessageHandler {
 
     private static void testAndReport(String message) {
         try {
+            if (message.isEmpty()) {
+                return;
+            }
             OBJECT_MAPPER2.readValue(message, CapiFleetcarrier.class);
         } catch (final Exception e) {
             //report
-            ReportService.reportJournal("journal", message, "unknown fc capi event: " + e.getMessage());
+            ReportService.reportJournal("capi", message, "unknown fc capi event: " + e.getMessage());
         }
     }
 
