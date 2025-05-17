@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation;
 
 import javafx.css.PseudoClass;
 import javafx.geometry.Orientation;
+import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
@@ -14,10 +15,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
-import nl.jixxed.eliteodysseymaterials.service.MarketService;
-import nl.jixxed.eliteodysseymaterials.service.MaterialService;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
@@ -31,7 +29,9 @@ import java.text.MessageFormat;
 import java.util.Objects;
 
 public class BillOfMaterialsEntry extends DestroyableVBox implements DestroyableEventTemplate {
+    @Getter
     private Commodity commodity;
+    @Getter
     private ConstructionProgress progress;
     private DestroyableLabel commodityLabel;
     private DestroyableLabel fleetCarrierLabel;
@@ -55,6 +55,7 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
     private DestroyableLabel deliveredLabel;
     private DestroyableLabel collectLabel;
     private DestroyableLabel deliverLabel;
+    private DestroyableLabel commodityCategoryLabel;
 
 
     public BillOfMaterialsEntry(ColonisationItem colonisationItem, Commodity commodity, ConstructionProgress progress) {
@@ -71,6 +72,10 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
         commodityLabel = LabelBuilder.builder()
                 .withStyleClass("name")
                 .withText(commodity.getLocalizationKey())
+                .build();
+        commodityCategoryLabel = LabelBuilder.builder()
+                .withStyleClass("category")
+                .withText(commodity.getCommodityType().getLocalizationKey())
                 .build();
 
         fleetCarrierLabel = LabelBuilder.builder()
@@ -111,9 +116,12 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
                 .build();
         addBinding(this.bracket1Image.managedProperty(), this.bracket1Image.visibleProperty());
         addBinding(this.bracket3Image.managedProperty(), this.bracket3Image.visibleProperty());
+        final DestroyableVBox nameAndCategory = BoxBuilder.builder()
+                .withStyleClass("name-category")
+                .withNodes(commodityLabel, commodityCategoryLabel).buildVBox();
         final DestroyableHBox title = BoxBuilder.builder()
                 .withStyleClass("values")
-                .withNodes(commodityImage, commodityLabel).buildHBox();
+                .withNodes(commodityImage, nameAndCategory).buildHBox();
         final DestroyableHBox left = BoxBuilder.builder()
                 .withStyleClass("values-sub-1")
                 .withNodes(shipImage, shipLabel, new GrowingRegion()).buildHBox();
@@ -222,13 +230,17 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
         register(EventService.addListener(true, this, ColonisationHideCompletedEvent.class, event -> {
             updateStyle();
         }));
+        register(EventService.addListener(true, this, HorizonsColonisationSearchEvent.class, event -> {
+            final boolean isSearched = !event.getSearch().getQuery().isEmpty()
+                    && (LocaleService.getLocalizedStringForCurrentLocale(commodity.getLocalizationKey()).toLowerCase().contains(event.getSearch().getQuery().toLowerCase())
+                    || LocaleService.getLocalizedStringForCurrentLocale(commodity.getCommodityType().getLocalizationKey()).toLowerCase().contains(event.getSearch().getQuery().toLowerCase()));
+            this.pseudoClassStateChanged(PseudoClass.getPseudoClass("search"), isSearched);
+        }));
 
 
     }
 
     private void update() {
-        availableShip = StorageService.getCommodityCount(commodity, StoragePool.SHIP);
-        availableFleetCarrier = StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER);
 
         fleetCarrierLabel.setText(Formatters.NUMBER_FORMAT_0.format(availableFleetCarrier));
         shipLabel.setText(Formatters.NUMBER_FORMAT_0.format(availableShip));

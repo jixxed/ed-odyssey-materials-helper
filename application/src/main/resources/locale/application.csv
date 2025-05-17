@@ -152,3 +152,8 @@
 "application.language.russian","Русский","","","","","","Русский",""
 "application.language.spanish","Español","","","","","","Español",""
 "application.language.chinese","简体中文","","","","","","简体中文",""
+"search.sort.category","Category","","","","","","",""
+"search.sort.required","Required","","","","","","",""
+"search.sort.delivered","Delivered","","","","","","",""
+"search.sort.to_collect","To collect","","","","","","",""
+"search.sort.to_deliver","To deliver","","","","","","",""

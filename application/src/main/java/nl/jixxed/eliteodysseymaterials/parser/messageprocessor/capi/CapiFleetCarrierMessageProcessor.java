@@ -22,6 +22,9 @@ public class CapiFleetCarrierMessageProcessor implements CapiMessageProcessor {
 
     @Override
     public void process(final JsonNode fleetCarrierMessage) {
+        if (fleetCarrierMessage.isNull() || fleetCarrierMessage.isEmpty()) {
+            return;
+        }
         final JsonNode carrierLocker = fleetCarrierMessage.get("carrierLocker");
         final JsonNode orders = fleetCarrierMessage.get("orders");
         final JsonNode cargo = fleetCarrierMessage.get("cargo");

@@ -87,6 +87,14 @@
         -fx-background-color: $background-color-dark;
         -fx-border-color: $border-color-black;
 
+        &:search {
+          -fx-border-color: $border-color-yellow;
+
+          .name {
+            -fx-text-fill: $text-color-yellow;
+          }
+        }
+
         &:available {
           -fx-border-color: $border-color-yellow;
         }
@@ -186,7 +194,19 @@
           .name {
             @include fixedWidth(30em);
             -fx-alignment: center-left;
-            -fx-min-height: 2.5em;
+            -fx-min-height: 1.25em;
+          }
+
+          .category {
+            @include fixedWidth(30em);
+            -fx-alignment: center-left;
+            -fx-min-height: 1.25em;
+            -fx-text-fill: $text-color-grey;
+          }
+
+          .name-category {
+            -fx-spacing: 0.25em;
+            @include fixedWidth(30em);
           }
 
           .amount-left {

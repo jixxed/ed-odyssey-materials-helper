@@ -13,6 +13,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableButton;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
+import nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation.HorizonsColonisationSearchBar;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.commodities.HorizonsCommoditiesSearchBar;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.engineers.HorizonsEngineerSearchBar;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.materials.HorizonsMaterialSearchBar;
@@ -29,7 +30,7 @@ class HorizonsSearchBar extends DestroyableHBox implements DestroyableEventTempl
     private HorizonsWishlistSearchBar horizonsWishlistSearchBar;
     private HorizonsEngineerSearchBar horizonsEngineerSearchBar;
     private PowerplaySearchBar powerplaySearchBar;
-
+    private HorizonsColonisationSearchBar horizonsColonisationSearchBar;
 
     HorizonsSearchBar() {
         initComponents();
@@ -45,6 +46,7 @@ class HorizonsSearchBar extends DestroyableHBox implements DestroyableEventTempl
         this.horizonsWishlistSearchBar = register(new HorizonsWishlistSearchBar());
         this.horizonsEngineerSearchBar = register(new HorizonsEngineerSearchBar());
         this.powerplaySearchBar = register(new PowerplaySearchBar());
+        this.horizonsColonisationSearchBar = register(new HorizonsColonisationSearchBar());
 
         applyFontSizingHack();
 
@@ -53,6 +55,7 @@ class HorizonsSearchBar extends DestroyableHBox implements DestroyableEventTempl
         HBox.setHgrow(this.horizonsWishlistSearchBar, Priority.ALWAYS);
         HBox.setHgrow(this.horizonsEngineerSearchBar, Priority.ALWAYS);
         HBox.setHgrow(this.powerplaySearchBar, Priority.ALWAYS);
+        HBox.setHgrow(this.horizonsColonisationSearchBar, Priority.ALWAYS);
         this.getNodes().addAll(this.button, this.materialSearchBar);
     }
 
@@ -89,7 +92,7 @@ class HorizonsSearchBar extends DestroyableHBox implements DestroyableEventTempl
     }
 
     private void switchTab(HorizonsTabs selectedTab) {
-        this.getChildren().removeAll(this.materialSearchBar, this.commoditiesSearchBar, this.horizonsWishlistSearchBar, this.horizonsEngineerSearchBar, this.powerplaySearchBar);
+        this.getChildren().removeAll(this.materialSearchBar, this.commoditiesSearchBar, this.horizonsWishlistSearchBar, this.horizonsEngineerSearchBar, this.powerplaySearchBar, this.horizonsColonisationSearchBar);
         if (HorizonsTabs.COMMODITIES.equals(selectedTab)) {
             this.getChildren().add(this.commoditiesSearchBar);
         } else if (HorizonsTabs.WISHLIST.equals(selectedTab)) {
@@ -98,6 +101,8 @@ class HorizonsSearchBar extends DestroyableHBox implements DestroyableEventTempl
             this.getChildren().add(this.horizonsEngineerSearchBar);
         } else if (HorizonsTabs.POWERPLAY.equals(selectedTab)) {
             this.getChildren().add(this.powerplaySearchBar);
+        } else if (HorizonsTabs.COLONISATION.equals(selectedTab)) {
+            this.getChildren().add(this.horizonsColonisationSearchBar);
         } else {
             this.getChildren().add(this.materialSearchBar);
         }

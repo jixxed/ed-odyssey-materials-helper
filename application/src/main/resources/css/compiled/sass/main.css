@@ -74,6 +74,10 @@
             -fx-max-width: 32em;
             -fx-background-color: #0f0f0f;
             -fx-border-color: black; }
+            .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry:search {
+              -fx-border-color: #dcc030; }
+              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry:search .name {
+                -fx-text-fill: #dcc030; }
             .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry:available {
               -fx-border-color: #dcc030; }
             .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry:completed .bom-entry-content .amount-delivered {
@@ -132,7 +136,19 @@
                 -fx-pref-width: 30em;
                 -fx-max-width: 30em;
                 -fx-alignment: center-left;
-                -fx-min-height: 2.5em; }
+                -fx-min-height: 1.25em; }
+              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .category {
+                -fx-min-width: 30em;
+                -fx-pref-width: 30em;
+                -fx-max-width: 30em;
+                -fx-alignment: center-left;
+                -fx-min-height: 1.25em;
+                -fx-text-fill: #707070; }
+              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .name-category {
+                -fx-spacing: 0.25em;
+                -fx-min-width: 30em;
+                -fx-pref-width: 30em;
+                -fx-max-width: 30em; }
               .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .amount-left {
                 -fx-min-height: 2em;
                 -fx-alignment: center-left;
