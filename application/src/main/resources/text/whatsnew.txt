@@ -1,3 +1,8 @@
+Version 2.170
+-------------
+Added search and sort to colonisation tab
+Added category to colonisation material cards
+
 Version 2.169
 -------------
 Handle fleetcarrier api null value for market
