@@ -6,10 +6,4 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Added crowdin integration in project. Translations can now be supplied by the community on https://crowdin.com/project/edomh
-Added mining information to ring mineables
-Added option to pause Frontier API updates
-Fixed ship cargo sometimes not processing, potentially causing impossible cargo numbers
-Fixed T8 Boost cost
-Added commander name validation to API registration to prevent linking with the wrong account
-Fixed bug with exporting wishlists to XLS
+Handle fleetcarrier market buy/sell actions to update fleetcarrier storage values
