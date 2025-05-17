@@ -56,14 +56,17 @@ public class WindowsRegistrationHandler implements RegistrationHandler {
     public boolean isRegistered() {
         if (!IS_JAVA) {
             final String registryValue = getRegistryValue();
-            final String expectedValue = "Elite Dangerous Odyssey Materials Helper.exe\" \"%1\"";
+            final String expectedValue = "\"" + CURRENT_DIR_SINGLE_SLASHED + "Elite Dangerous Odyssey Materials Helper.exe\" \"%1\"";
+            final String expectedValueAlt = "\"%USERPROFILE%\\AppData\\Local\\Elite Dangerous Odyssey Materials Helper Launcher\\program\\Elite Dangerous Odyssey Materials Helper.exe\" \"%1\"";
             log.info("Registry value: {}", registryValue);
             log.info("Expected value: {}", expectedValue);
-            final boolean equals = registryValue.endsWith(expectedValue);
-            log.info("Registry equals expected: {}", equals);
-            return equals;
+            final boolean equals = registryValue.equals(expectedValue);
+            log.info("Expected alt value: {}", expectedValueAlt);
+            final boolean altEquals = registryValue.equals(expectedValueAlt);
+            log.info("Registry equals expected: {}", equals || altEquals);
+            return equals || altEquals;
         }
-        return false;
+        return true;
     }
 
     private static void writeRegFile(final File file) {
