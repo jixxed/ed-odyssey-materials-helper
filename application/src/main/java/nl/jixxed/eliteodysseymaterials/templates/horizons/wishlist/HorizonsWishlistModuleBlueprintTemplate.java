@@ -148,7 +148,7 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHB
             final DestroyableHBox[] gradeControls = HorizonsBlueprintConstants.getBlueprintGrades(this.wishlistBlueprint.getRecipeName(), this.wishlistBlueprint.getBlueprintType()).stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(grade ->
                     {
                         DoubleConsumer function = percentage -> {
-                            this.wishlistBlueprint.setBlueprintGradePercentageToComplete(grade, percentage / 100D);
+                            this.wishlistBlueprint.setBlueprintGradePercentageToComplete(grade, Math.round(percentage * 10.0) / 1000.0);
                             modify();
                             EventService.publish(new HorizonsWishlistBlueprintAlteredEvent(this.wishlistUUID));
                             final String gradeList2 = this.wishlistBlueprint.getPercentageToComplete().keySet().stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(HorizonsBlueprintGrade::getGrade).map(String::valueOf).collect(Collectors.joining(","));

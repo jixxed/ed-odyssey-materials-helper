@@ -300,7 +300,7 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
         if (wishlistItem instanceof HorizonsModuleWishlistBlueprint moduleWishlistBlueprint) {
             moduleWishlistBlueprint.getPercentageToComplete().forEach((grade, percentage) -> {
                 final HorizonsBlueprint bp = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(moduleWishlistBlueprint.getRecipeName(), moduleWishlistBlueprint.getBlueprintType(), grade);
-                add(bp, percentage);
+                add(bp, percentage, hasHigherGradeConfigured(grade, moduleWishlistBlueprint.getPercentageToComplete()));
             });
         } else {
             final HorizonsBlueprint bp = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(wishlistItem.getRecipeName(), WishlistService.getBlueprintType(wishlistItem), WishlistService.getBlueprintGrade(wishlistItem));
@@ -308,9 +308,16 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
         }
     }
 
-    private void add(HorizonsBlueprint blueprint, Double percentage) {
+    private boolean hasHigherGradeConfigured(final HorizonsBlueprintGrade grade, final Map<HorizonsBlueprintGrade, Double> percentageToComplete) {
+        return percentageToComplete.entrySet().stream()
+                .filter(e -> e.getKey().getGrade() > grade.getGrade())
+                .anyMatch(e -> e.getValue() > 0D);
+    }
+
+    private void add(HorizonsBlueprint blueprint, Double percentage, boolean hasHigherGradeOrIsMaxGrade) {
         Map<HorizonsMaterial, Integer> materials = blueprint.getMaterialCollection(this.horizonsMaterial.getClass());
-        if (materials.isEmpty() || percentage < 0.2 || !materials.containsKey(this.horizonsMaterial)) return;
+        if (materials.isEmpty() || (percentage <= 0.2 && hasHigherGradeOrIsMaxGrade) || !materials.containsKey(this.horizonsMaterial))
+            return;
 
         final Integer amount = materials.get(this.horizonsMaterial);
         if (blueprint instanceof HorizonsModuleBlueprint moduleBlueprint) {
@@ -336,7 +343,7 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
     }
 
     private void add(HorizonsBlueprint blueprint) {
-        add(blueprint, 1D);
+        add(blueprint, 1D, false);
     }
 
     private Optional<Engineer> getCurrentEngineerForBlueprint(Blueprint<HorizonsBlueprintName> recipe, List<PathItem<HorizonsBlueprintName>> pathItems) {
