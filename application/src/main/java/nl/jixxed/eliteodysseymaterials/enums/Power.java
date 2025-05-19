@@ -21,7 +21,7 @@ public enum Power {
                             new RankReward(48, 30),
                             new RankReward(55, 35),
                             new RankReward(67, 40),
-                            new RankReward(73, 43)
+                            new RankReward(73, 45)
                     ),
                     PowerPerk.INCREASE_IMPERIAL_SLAVES_COMMODITY_PAYOUT, List.of(
                             new RankReward(24, 10),
@@ -65,7 +65,7 @@ public enum Power {
                     PowerPerk.INCREASE_SALVAGE_PROFIT, List.of(
                             new RankReward(5, 10),
                             new RankReward(14, 20),
-                            new RankReward(22, 33),
+                            new RankReward(22, 30),
                             new RankReward(32, 40),
                             new RankReward(48, 50),
                             new RankReward(55, 60),
@@ -168,20 +168,21 @@ public enum Power {
                     PowerPerk.REDUCED_BOUNTY_VALUE_IN_OWN_TERRITORY, List.of(
                             new RankReward(5, -10),
                             new RankReward(14, -20),
-                            new RankReward(22, -33),
+                            new RankReward(22, -30),
                             new RankReward(32, -40),
                             new RankReward(48, -50),
                             new RankReward(55, -60),
                             new RankReward(67, -70),
                             new RankReward(73, -80),
-                            new RankReward(86, -80),
+                            new RankReward(86, -90),
                             new RankReward(100, -100)
                     ),
                     PowerPerk.INCREASE_BLACK_MARKET_PROFITS, List.of(
                             new RankReward(24, 10),
                             new RankReward(42, 15),
                             new RankReward(52, 20),
-                            new RankReward(78, 25)
+                            new RankReward(78, 25),
+                            new RankReward(94, 30)
                     )
             ),
             Map.ofEntries(
