@@ -136,6 +136,14 @@ public enum Power {
                     PowerPerk.REDUCED_REARM_PRICES_IN_OWN_TERRITORY, List.of(
                             new RankReward(86, -50),
                             new RankReward(100, -100)
+                    ),
+                    PowerPerk.REDUCED_REFUEL_PRICES_IN_OWN_TERRITORY, List.of(
+                            new RankReward(86, -50),
+                            new RankReward(100, -100)
+                    ),
+                    PowerPerk.REDUCED_REPAIR_PRICES_IN_OWN_TERRITORY, List.of(
+                            new RankReward(86, -50),
+                            new RankReward(100, -100)
                     )
 
             ),
