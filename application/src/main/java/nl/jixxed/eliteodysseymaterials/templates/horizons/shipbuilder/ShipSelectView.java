@@ -67,7 +67,7 @@ public class ShipSelectView extends DestroyableVBox implements DestroyableTempla
             values.put("ship.view.header.armor", () -> new FormattedDouble((Double) ship.getAttributes().get(HorizonsModifier.ARMOUR)));
             values.put("ship.view.header.hardness", () -> new FormattedDouble((Double) ship.getAttributes().get(HorizonsModifier.ARMOUR_HARDNESS)));
             values.put("ship.view.header.fuel", () -> new FormattedDouble(ship.getMaxFuel()));
-            values.put("ship.view.header.cargo", () -> new FormattedDouble(ship.getMaxCargo()));
+            values.put("ship.view.header.cargo", () -> new FormattedDouble(ship.getMaxPotentialCargo()));
             values.put("ship.view.header.passenger", () -> new FormattedDouble(ship.getMaxPassenger()));
             values.put("ship.view.header.slot.hardpoints", () -> ship.getHardpointSlots().stream().map(Slot::getSlotSizeName).collect(Collectors.joining(" ")));
             values.put("ship.view.header.slot.utility", () -> new FormattedLong(ship.getUtilitySlots().size()));

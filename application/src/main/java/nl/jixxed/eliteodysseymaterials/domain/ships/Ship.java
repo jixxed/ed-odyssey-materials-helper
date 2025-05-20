@@ -2778,6 +2778,13 @@ public class Ship {
                 .sum();
     }
 
+    public double getMaxPotentialCargo() {
+        return this.getOptionalSlots().stream()
+                .filter(slot -> slot.getSlotType().equals(SlotType.OPTIONAL))
+                .mapToDouble(slot -> Math.pow(2, slot.getSlotSize()))
+                .sum();
+    }
+
     public double getMaxPassenger() {
         return this.getOptionalSlots().stream()
                 .filter(slot -> slot.getShipModule() instanceof PassengerCabin)
