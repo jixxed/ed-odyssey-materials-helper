@@ -79,36 +79,36 @@ public class MiningService {
 
     public static void sendMiningEventAndReset() {
         final String buildVersion = VersionService.getBuildVersion();
-//        if (buildVersion != null) {
-        if (!prospectedAsteroids.isEmpty()) {
-            try {
-                final String data = OBJECT_MAPPER.writeValueAsString(new Report(/*buildVersion*/ "2.166", ApplicationState.getInstance().getFileheader(), new MiningEvent(LocationService.getCurrentStarSystem(), supercruiseDestinationDrop, supercruiseExit, prospectedAsteroids)));
-                final Runnable run = () -> {
-                    try (final HttpClient httpClient = HttpClient.newHttpClient()) {
-                        log.info(data);
-                        final String domainName = DnsHelper.resolveCname("edmattracking.jixxed.nl");
-                        final HttpRequest request = HttpRequest.newBuilder()
-                                .uri(URI.create("https://" + domainName + "/Prod/v2/submit-mining-event"))
-                                .POST(HttpRequest.BodyPublishers.ofString(data))
-                                .build();
-                        final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-                        log.info(send.body());
-                    } catch (final InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    } catch (final Exception e) {
-                        log.error("publish prospect error", e);
-                    }
-                };
-                EXECUTOR_SERVICE.submit(run);
-            } catch (Exception e) {
-                log.error("publish prospect error", e);
-            } finally {
-                reset();
+        if (buildVersion != null) {
+            if (!prospectedAsteroids.isEmpty()) {
+                try {
+                    final String data = OBJECT_MAPPER.writeValueAsString(new Report(buildVersion, ApplicationState.getInstance().getFileheader(), new MiningEvent(LocationService.getCurrentStarSystem(), supercruiseDestinationDrop, supercruiseExit, prospectedAsteroids)));
+                    final Runnable run = () -> {
+                        try (final HttpClient httpClient = HttpClient.newHttpClient()) {
+                            log.info(data);
+                            final String domainName = DnsHelper.resolveCname("edmattracking.jixxed.nl");
+                            final HttpRequest request = HttpRequest.newBuilder()
+                                    .uri(URI.create("https://" + domainName + "/Prod/v2/submit-mining-event"))
+                                    .POST(HttpRequest.BodyPublishers.ofString(data))
+                                    .build();
+                            final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+                            log.info(send.body());
+                        } catch (final InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        } catch (final Exception e) {
+                            log.error("publish prospect error", e);
+                        }
+                    };
+                    EXECUTOR_SERVICE.submit(run);
+                } catch (Exception e) {
+                    log.error("publish prospect error", e);
+                } finally {
+                    reset();
+                }
             }
+        } else {
+            reset();
         }
-//        } else {
-//            reset();
-//        }
     }
 
     @Data
