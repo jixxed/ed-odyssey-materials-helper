@@ -1106,9 +1106,9 @@
         -fx-pref-width: 4em;
         -fx-max-width: 4em; }
       .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-passenger {
-        -fx-min-width: 6em;
-        -fx-pref-width: 6em;
-        -fx-max-width: 6em; }
+        -fx-min-width: 8em;
+        -fx-pref-width: 8em;
+        -fx-max-width: 8em; }
       .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-slot-hardpoints {
         -fx-min-width: 9em;
         -fx-pref-width: 9em;

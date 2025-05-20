@@ -9,6 +9,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.special.CargoHatch;
 import nl.jixxed.eliteodysseymaterials.domain.ships.special.FuelTank;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.enums.PassengerCabinType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -2782,6 +2783,16 @@ public class Ship {
         return this.getOptionalSlots().stream()
                 .filter(slot -> slot.getSlotType().equals(SlotType.OPTIONAL))
                 .mapToDouble(slot -> Math.pow(2, slot.getSlotSize()))
+                .sum();
+    }
+
+    public int getMaxPotentialPassenger(PassengerCabinType cabinType) {
+        if (cabinType.equals(PassengerCabinType.LUXURY) && !(this == BELUGA_LINER || this == DOLPHIN || this == ORCA)) {
+            return 0;
+        }
+        return this.getOptionalSlots().stream()
+                .filter(slot -> slot.getSlotSize() >= cabinType.getMinSize() && slot.getSlotSize() <= cabinType.getMaxSize())
+                .mapToInt(slot -> cabinType.getPassengerCount(slot.getSlotSize()))
                 .sum();
     }
 

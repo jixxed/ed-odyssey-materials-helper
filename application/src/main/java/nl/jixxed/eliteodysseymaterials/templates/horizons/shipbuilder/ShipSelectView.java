@@ -13,6 +13,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
 import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.FrameShiftDriveBooster;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.enums.PassengerCabinType;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -25,10 +26,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplat
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
 import java.text.NumberFormat;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -68,7 +66,7 @@ public class ShipSelectView extends DestroyableVBox implements DestroyableTempla
             values.put("ship.view.header.hardness", () -> new FormattedDouble((Double) ship.getAttributes().get(HorizonsModifier.ARMOUR_HARDNESS)));
             values.put("ship.view.header.fuel", () -> new FormattedDouble(ship.getMaxFuel()));
             values.put("ship.view.header.cargo", () -> new FormattedDouble(ship.getMaxPotentialCargo()));
-            values.put("ship.view.header.passenger", () -> new FormattedDouble(ship.getMaxPassenger()));
+            values.put("ship.view.header.passenger", () -> new FormattedMultiLongValue(new Long[]{(long) ship.getMaxPotentialPassenger(PassengerCabinType.ECONOMY), (long) ship.getMaxPotentialPassenger(PassengerCabinType.BUSINESS), (long) ship.getMaxPotentialPassenger(PassengerCabinType.FIRSTCLASS), (long) ship.getMaxPotentialPassenger(PassengerCabinType.LUXURY)}));
             values.put("ship.view.header.slot.hardpoints", () -> ship.getHardpointSlots().stream().map(Slot::getSlotSizeName).collect(Collectors.joining(" ")));
             values.put("ship.view.header.slot.utility", () -> new FormattedLong(ship.getUtilitySlots().size()));
             values.put("ship.view.header.slot.powerplant", () -> Formatters.NUMBER_FORMAT_0.format(ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_PLANT)).findFirst().map(Slot::getSlotSize).orElse(0)));
@@ -170,6 +168,8 @@ public class ShipSelectView extends DestroyableVBox implements DestroyableTempla
             return LocaleService.getStringBinding(fmt::toString);
         if (value instanceof FormattedDouble fmt)
             return LocaleService.getStringBinding(fmt::toString);
+        if (value instanceof FormattedMultiLongValue fmt)
+            return LocaleService.getStringBinding(fmt::toString);
         if (value instanceof FormattedBoolean fmt)
             return LocaleService.getStringBinding(fmt::toString);
         if (value instanceof String)
@@ -248,4 +248,24 @@ public class ShipSelectView extends DestroyableVBox implements DestroyableTempla
         }
     }
 
+    @AllArgsConstructor
+    @RequiredArgsConstructor
+    @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+    class FormattedMultiLongValue implements Comparable<FormattedMultiLongValue> {
+        @EqualsAndHashCode.Include
+        final Long[] values;
+        NumberFormat formatter = Formatters.NUMBER_FORMAT_0;
+
+        @Override
+        public String toString() {
+            return Arrays.stream(values)
+                    .map(String::valueOf)
+                    .collect(Collectors.joining("/"));
+        }
+
+        public int compareTo(FormattedMultiLongValue anotherMultiLong) {
+            return Long.compare(this.values[0], anotherMultiLong.values[0]);
+        }
+
+    }
 }
