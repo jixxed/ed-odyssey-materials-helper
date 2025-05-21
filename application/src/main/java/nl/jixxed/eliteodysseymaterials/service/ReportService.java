@@ -61,7 +61,7 @@ public class ReportService {
                     final HttpClient httpClient = HttpClient.newHttpClient();
                     final String domainName = DnsHelper.resolveCname("edmattracking.jixxed.nl");
                     final HttpRequest request = HttpRequest.newBuilder()
-                            .uri(URI.create("https://" + domainName + "/Prod/v2/submit-unknown-journal"))
+                            .uri(URI.create("https://" + domainName + "/Prod/v2/submit-unknown-journal-2-175"))
                             .POST(HttpRequest.BodyPublishers.ofString(data))
                             .build();
                     final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
