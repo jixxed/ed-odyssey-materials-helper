@@ -9,6 +9,7 @@ import javafx.scene.shape.Line;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ImageSlot;
+import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
@@ -223,9 +224,12 @@ public class ModulesLayer extends DestroyableAnchorPane implements DestroyableEv
 
     void drawHardpointLine(final int index) {
         lastIndex = index;
-        if (APPLICATION_STATE.getShip() == null) return;//can happen directly after selecting a ship in the list
-        final ImageSlot imageSlot = APPLICATION_STATE.getShip().getHardpointSlots().get(index);
-        shipImage.setImage(ImageService.getImage("/images/ships/ship/" + APPLICATION_STATE.getShip().getShipType().name().toLowerCase() + "." + imageSlot.getImageIndex() + ".png"));
+        final Ship ship = APPLICATION_STATE.getShip();
+        if (ship == null) {//can happen directly after selecting a ship in the list
+            return;
+        }
+        final ImageSlot imageSlot = ship.getHardpointSlots().get(index);
+        shipImage.setImage(ImageService.getImage("/images/ships/ship/" + ship.getShipType().name().toLowerCase() + "." + imageSlot.getImageIndex() + ".png"));
         final double x = this.shipImage.getWidth() / 1920D * imageSlot.getX();
         final double y = this.shipImage.getHeight() / 1090D * imageSlot.getY();
         Platform.runLater(() -> {
@@ -264,8 +268,12 @@ public class ModulesLayer extends DestroyableAnchorPane implements DestroyableEv
 
     void drawUtilityLine(final int index) {
         lastIndex = index;
-        final ImageSlot imageSlot = APPLICATION_STATE.getShip().getUtilitySlots().get(index);
-        shipImage.setImage(ImageService.getImage("/images/ships/ship/" + APPLICATION_STATE.getShip().getShipType().name().toLowerCase() + "." + imageSlot.getImageIndex() + ".png"));
+        final Ship ship = APPLICATION_STATE.getShip();
+        if (ship == null) {//can happen directly after selecting a ship in the list
+            return;
+        }
+        final ImageSlot imageSlot = ship.getUtilitySlots().get(index);
+        shipImage.setImage(ImageService.getImage("/images/ships/ship/" + ship.getShipType().name().toLowerCase() + "." + imageSlot.getImageIndex() + ".png"));
         final double x = this.shipImage.getWidth() / 1920D * (double) imageSlot.getX();
         final double y = this.shipImage.getHeight() / 1090D * (double) imageSlot.getY();
         Platform.runLater(() -> {
