@@ -55,6 +55,8 @@ public class OdysseyWishlistMaterialsCategory extends DestroyableFlowPane implem
         register(EventService.addListener(true, this, OdysseyWishlistSelectedEvent.class, _ -> refreshContent()));
 //        register(EventService.addListener(true, this, OdysseyWishlistBlueprintAlteredEvent.class, _ -> refreshContent()));
         register(EventService.addListener(true, this, OdysseyWishlistChangedEvent.class, _ -> refreshContent()));
+        register(EventService.addListener(true, this, RemoveWishlistShortestPathItemEvent.class, _ -> refreshContent()));
+        register(EventService.addListener(true, this, HideWishlistShortestPathItemEvent.class, _ -> refreshContent()));
 
         register(EventService.addListener(true, this, 9, WishlistHideCompletedEvent.class, event -> {
             if (Expansion.ODYSSEY.equals(event.getExpansion())) {

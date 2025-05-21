@@ -344,26 +344,29 @@ public class ApplicationState {
 
 //Flags2 bits:
 //Bit   value   hex         meaning
-//0     1       0001        OnFoot
-//1     2       0002        InTaxi (or dropship/shuttle)
-//2     4       0004        InMulticrew (ie in someone else’s ship)
-//3     8       0008        OnFootInStation
-//4     16      0010        OnFootOnPlanet
-//5     32      0020        AimDownSight
-//6     64      0040        LowOxygen
-//7     128     0080        LowHealth
-//8     256     0100        Cold
-//9     512     0200        Hot
-//10    1024    0400        VeryCold
-//11    2048    0800        VeryHot
-//12    4096    1000        Glide Mode
-//13    8192    2000        OnFootInHangar
-//14    16384   4000        OnFootSocialSpace
-//15    32768   8000        OnFootExterior
+//0     1       0000 0001   OnFoot
+//1     2       0000 0002   InTaxi (or dropship/shuttle)
+//2     4       0000 0004   InMulticrew (ie in someone else’s ship)
+//3     8       0000 0008   OnFootInStation
+//4     16      0000 0010   OnFootOnPlanet
+//5     32      0000 0020   AimDownSight
+//6     64      0000 0040   LowOxygen
+//7     128     0000 0080   LowHealth
+//8     256     0000 0100   Cold
+//9     512     0000 0200   Hot
+//10    1024    0000 0400   VeryCold
+//11    2048    0000 0800   VeryHot
+//12    4096    0000 1000   Glide Mode
+//13    8192    0000 2000   OnFootInHangar
+//14    16384   0000 4000   OnFootSocialSpace
+//15    32768   0000 8000   OnFootExterior
 //16    65536   0001 0001   BreathableAtmosphere
 //17    131072  0002 0000   Telepresence Multicrew
 //18    262144  0004 0000   Physical Multicrew
 //19    524288  0008 0000   Fsd hyperdrive charging
+//20    1048576 0010 0000   Supercruise Overcharge
+//21    2097152 0020 0000   Supercruise Assist
+//22    4194304 0040 0000   NPC Crew Active
 
     public void updateWithFlags(final int flags, final int flags2) {
         this.flags = flags;

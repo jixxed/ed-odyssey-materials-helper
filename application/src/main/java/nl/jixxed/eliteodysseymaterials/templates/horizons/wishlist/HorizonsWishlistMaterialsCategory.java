@@ -50,6 +50,8 @@ public class HorizonsWishlistMaterialsCategory extends DestroyableFlowPane imple
             this.currentSearch = event.getSearch();
         }));
         register(EventService.addListener(true, this, HorizonsWishlistSelectedEvent.class, _ -> refreshContent()));
+        register(EventService.addListener(true, this, HorizonsRemoveWishlistShortestPathItemEvent.class, _ -> refreshContent()));
+        register(EventService.addListener(true, this, HorizonsHideWishlistShortestPathItemEvent.class, _ -> refreshContent()));
         register(EventService.addListener(true, this, HorizonsWishlistBlueprintAlteredEvent.class, _ -> refreshContent()));
         register(EventService.addListener(true, this, HorizonsWishlistChangedEvent.class, _ -> refreshContent()));
 

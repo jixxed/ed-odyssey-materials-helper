@@ -15,9 +15,7 @@ import nl.jixxed.eliteodysseymaterials.enums.BlueprintCategory;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.OdysseyWishlistBlueprintEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.OdysseyWishlistSelectedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
@@ -76,6 +74,8 @@ public class OdysseyWishlistBlueprintsCategory extends DestroyableHBox implement
                         }
                     }
                 })));
+        register(EventService.addListener(true, this, RemoveWishlistShortestPathItemEvent.class, _ -> refreshBlueprints()));
+        register(EventService.addListener(true, this, HideWishlistShortestPathItemEvent.class, _ -> refreshBlueprints()));
     }
 
     private List<WishlistBlueprintTemplate<OdysseyBlueprintName>> createBlueprintTemplates() {

@@ -10,9 +10,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.OdysseyWishlistChangedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.OdysseyWishlistSelectedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
@@ -87,6 +85,8 @@ public class OdysseyWishlistTab extends OdysseyTab implements DestroyableEventTe
     public void initEventHandling() {
         register(EventService.addListener(true, this, OdysseyWishlistSelectedEvent.class, _ -> update()));
         register(EventService.addListener(true, this, OdysseyWishlistChangedEvent.class, _ -> update()));
+        register(EventService.addListener(true, this, RemoveWishlistShortestPathItemEvent.class, _ -> update()));
+        register(EventService.addListener(true, this, HideWishlistShortestPathItemEvent.class, _ -> update()));
     }
 
     @Override

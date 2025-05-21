@@ -14,9 +14,7 @@ import nl.jixxed.eliteodysseymaterials.enums.BlueprintCategory;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.HorizonsWishlistBlueprintEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.HorizonsWishlistSelectedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTemplate;
 
@@ -63,6 +61,8 @@ public class HorizonsWishlistBlueprintsCategory extends DestroyableHBox implemen
     @Override
     public void initEventHandling() {
         register(EventService.addListener(true, this, HorizonsWishlistSelectedEvent.class, _ -> refreshBlueprints()));
+        register(EventService.addListener(true, this, HorizonsRemoveWishlistShortestPathItemEvent.class, _ -> refreshBlueprints()));
+        register(EventService.addListener(true, this, HorizonsHideWishlistShortestPathItemEvent.class, _ -> refreshBlueprints()));
         register(EventService.addListener(true, this, HorizonsWishlistBlueprintEvent.class, wishlistEvent ->
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                     final String selectedWishlistUUID = WishlistService.getHorizonsWishlists(commander).getSelectedWishlist().getUuid();

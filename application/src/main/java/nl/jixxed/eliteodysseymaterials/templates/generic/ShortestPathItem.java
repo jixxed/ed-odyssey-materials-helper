@@ -111,15 +111,61 @@ public class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBo
                 .orElse(false)) {
             DestroyableButton removeButton = ButtonBuilder.builder()
                     .withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions.remove"))
-                    .withOnAction(_ -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsRemoveWishlistShortestPathItemEvent((PathItem<HorizonsBlueprintName>) this.pathItem) : new RemoveWishlistShortestPathItemEvent((PathItem<OdysseyBlueprintName>) this.pathItem)))
+                    .withOnAction(_ -> {
+                        removeBlueprints();
+                        EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsRemoveWishlistShortestPathItemEvent((PathItem<HorizonsBlueprintName>) this.pathItem) : new RemoveWishlistShortestPathItemEvent((PathItem<OdysseyBlueprintName>) this.pathItem));
+                    })
                     .build();
             DestroyableButton hideButton = ButtonBuilder.builder()
                     .withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions.hide"))
-                    .withOnAction(_ -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsHideWishlistShortestPathItemEvent((PathItem<HorizonsBlueprintName>) this.pathItem) : new HideWishlistShortestPathItemEvent((PathItem<OdysseyBlueprintName>) this.pathItem)))
+                    .withOnAction(_ -> {
+                        hideBlueprints();
+                        EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsHideWishlistShortestPathItemEvent((PathItem<HorizonsBlueprintName>) this.pathItem) : new HideWishlistShortestPathItemEvent((PathItem<OdysseyBlueprintName>) this.pathItem));
+                    })
                     .build();
             this.getNodes().addAll(BoxBuilder.builder()
                     .withStyleClass("buttons")
                     .withNodes(hideButton, new GrowingRegion(), removeButton).buildHBox());
+        }
+    }
+
+    private void hideBlueprints() {
+        if (Expansion.HORIZONS.equals(this.expansion)) {
+            ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
+                final HorizonsWishlists horizonsWishlists = WishlistService.getHorizonsWishlists(commander);
+                final HorizonsWishlist selectedWishlist = horizonsWishlists.getSelectedWishlist();
+                selectedWishlist.getItems().stream().filter(bp -> this.pathItem.getRecipes().containsKey(bp.getBlueprint())).forEach(bp -> {
+                    bp.setVisible(false);
+                });
+                WishlistService.saveHorizonsWishlists(commander, horizonsWishlists);
+            });
+        } else {
+            ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
+                final Wishlists odysseyWishlists = WishlistService.getOdysseyWishlists(commander);
+                final Wishlist selectedWishlist = odysseyWishlists.getSelectedWishlist();
+                selectedWishlist.getItems().stream().filter(bp -> this.pathItem.getRecipes().containsKey(bp.getBlueprint())).forEach(bp -> {
+                    bp.setVisible(false);
+                });
+                WishlistService.saveOdysseyWishlists(commander, odysseyWishlists);
+            });
+        }
+    }
+
+    private void removeBlueprints() {
+        if (Expansion.HORIZONS.equals(this.expansion)) {
+            ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
+                final HorizonsWishlists horizonsWishlists = WishlistService.getHorizonsWishlists(commander);
+                final HorizonsWishlist selectedWishlist = horizonsWishlists.getSelectedWishlist();
+                selectedWishlist.getItems().removeIf(bp -> this.pathItem.getRecipes().containsKey(bp.getBlueprint()));
+                WishlistService.saveHorizonsWishlists(commander, horizonsWishlists);
+            });
+        } else {
+            ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
+                final Wishlists odysseyWishlists = WishlistService.getOdysseyWishlists(commander);
+                final Wishlist selectedWishlist = odysseyWishlists.getSelectedWishlist();
+                selectedWishlist.getItems().removeIf(bp -> this.pathItem.getRecipes().containsKey(bp.getBlueprint()));
+                WishlistService.saveOdysseyWishlists(commander, odysseyWishlists);
+            });
         }
     }
 
