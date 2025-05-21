@@ -6,7 +6,5 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Fix perks for Zemina Torval, Li Yong Rui, Archon Delaine and Felicia Winters
-Show max cargo and passengers in ship selection list
-Fix hide/remove buttons on wishlist shortest path items
-Fix wishlist material counts percentage rounding and checking next grade presence
+Added SCO indicator to pre-engineered SCO drives buttons in ship editor
+Minor bug fixes

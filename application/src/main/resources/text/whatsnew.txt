@@ -1,3 +1,8 @@
+Version 2.172
+-------------
+Added SCO indicator to pre-engineered SCO drives buttons in ship editor
+Minor bug fixes
+
 Version 2.171
 -------------
 Fix perks for Zemina Torval, Li Yong Rui, Archon Delaine and Felicia Winters
