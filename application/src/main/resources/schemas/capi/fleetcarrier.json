@@ -561,7 +561,10 @@
           "type": "object",
           "properties": {
             "sales": {
-              "type": "object",
+              "type": [
+                "object",
+                "array"
+              ],
               "additionalProperties": {
                 "type": "object",
                 "properties": {
@@ -592,7 +595,10 @@
               }
             },
             "purchases": {
-              "type": "array",
+              "type": [
+                "object",
+                "array"
+              ],
               "items": {
                 "type": "object",
                 "properties": {
@@ -854,7 +860,10 @@
           ]
         },
         "economies": {
-          "type": "object",
+          "type": [
+            "object",
+            "array"
+          ],
           "additionalProperties": {
             "type": "object",
             "properties": {

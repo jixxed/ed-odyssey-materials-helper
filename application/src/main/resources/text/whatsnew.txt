@@ -1,3 +1,7 @@
+Version 2.173
+-------------
+Fix capi response deserilization issue
+
 Version 2.172
 -------------
 Added SCO indicator to pre-engineered SCO drives buttons in ship editor
