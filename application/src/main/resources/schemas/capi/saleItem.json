@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-12/schema#",
+  "title": "SaleItem",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "locName": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number"
+    },
+    "stock": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "price",
+    "stock"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-12/schema#",
+  "title": "Economy",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "proportion": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "name",
+    "proportion"
+  ]
+}

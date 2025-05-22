@@ -1,3 +1,7 @@
+Version 2.176
+-------------
+Fix capi deserialization issue
+
 Version 2.175
 -------------
 Check for capi updates every 5 seconds instead of 5 minutes. Still updates at most once every 5 minutes.

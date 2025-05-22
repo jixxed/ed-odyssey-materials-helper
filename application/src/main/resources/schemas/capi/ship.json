@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-12/schema#",
+  "title": "Ship",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "basevalue": {
+      "type": "number"
+    },
+    "sku": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "basevalue",
+    "sku"
+  ]
+}

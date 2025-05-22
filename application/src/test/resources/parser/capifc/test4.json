@@ -1,0 +1,1342 @@
+{
+  "name": {
+    "callsign": "123",
+    "vanityName": "123",
+    "filteredVanityName": "123"
+  },
+  "currentStarSystem": "Col 285 Sector XZ-P c5-5",
+  "balance": "2510337451",
+  "fuel": "758",
+  "state": "normalOperation",
+  "theme": "Trader",
+  "dockingAccess": "friends",
+  "notoriousAccess": false,
+  "capacity": {
+    "shipPacks": 0,
+    "modulePacks": 0,
+    "cargoForSale": 20210,
+    "cargoNotForSale": 0,
+    "cargoSpaceReserved": 0,
+    "crew": 1180,
+    "freeSpace": 3610,
+    "microresourceCapacityTotal": 1000,
+    "microresourceCapacityFree": 0,
+    "microresourceCapacityUsed": 1000,
+    "microresourceCapacityReserved": 0
+  },
+  "itinerary": {
+    "completed": [
+      {
+        "departureTime": "2025-05-06 02:22:00",
+        "arrivalTime": "2025-04-27 18:54:00",
+        "state": "success",
+        "visitDurationSeconds": 718080,
+        "starsystem": "HIP 3502"
+      },
+      {
+        "departureTime": "2025-05-07 08:07:00",
+        "arrivalTime": "2025-05-06 02:22:00",
+        "state": "success",
+        "visitDurationSeconds": 107100,
+        "starsystem": "HIP 3502"
+      },
+      {
+        "departureTime": "2025-05-07 08:52:00",
+        "arrivalTime": "2025-05-07 08:07:00",
+        "state": "success",
+        "visitDurationSeconds": 2700,
+        "starsystem": "HIP 1550"
+      },
+      {
+        "departureTime": "2025-05-08 23:12:00",
+        "arrivalTime": "2025-05-07 08:52:00",
+        "state": "success",
+        "visitDurationSeconds": 138000,
+        "starsystem": "HIP 1550"
+      },
+      {
+        "departureTime": "2025-05-08 23:42:00",
+        "arrivalTime": "2025-05-08 23:12:00",
+        "state": "success",
+        "visitDurationSeconds": 1800,
+        "starsystem": "Glesting"
+      },
+      {
+        "departureTime": "2025-05-09 10:25:00",
+        "arrivalTime": "2025-05-08 23:42:00",
+        "state": "success",
+        "visitDurationSeconds": 38580,
+        "starsystem": "Alchita"
+      },
+      {
+        "departureTime": "2025-05-09 12:33:00",
+        "arrivalTime": "2025-05-09 10:25:00",
+        "state": "success",
+        "visitDurationSeconds": 7680,
+        "starsystem": "HIP 3502"
+      },
+      {
+        "departureTime": "2025-05-10 07:43:00",
+        "arrivalTime": "2025-05-09 12:33:00",
+        "state": "success",
+        "visitDurationSeconds": 69000,
+        "starsystem": "HIP 4809"
+      },
+      {
+        "departureTime": "2025-05-10 08:50:00",
+        "arrivalTime": "2025-05-10 07:43:00",
+        "state": "success",
+        "visitDurationSeconds": 4020,
+        "starsystem": "1 i Centauri"
+      },
+      {
+        "departureTime": "2025-05-10 18:20:00",
+        "arrivalTime": "2025-05-10 08:50:00",
+        "state": "success",
+        "visitDurationSeconds": 34200,
+        "starsystem": "HIP 4809"
+      },
+      {
+        "departureTime": "2025-05-11 12:32:00",
+        "arrivalTime": "2025-05-10 18:20:00",
+        "state": "success",
+        "visitDurationSeconds": 65520,
+        "starsystem": "Crucis Sector GR-W c1-18"
+      },
+      {
+        "departureTime": "2025-05-13 15:37:00",
+        "arrivalTime": "2025-05-11 12:32:00",
+        "state": "success",
+        "visitDurationSeconds": 183900,
+        "starsystem": "HIP 3502"
+      },
+      {
+        "departureTime": "2025-05-14 17:19:00",
+        "arrivalTime": "2025-05-13 15:37:00",
+        "state": "success",
+        "visitDurationSeconds": 92520,
+        "starsystem": "HIP 25456"
+      },
+      {
+        "departureTime": "2025-05-14 19:39:00",
+        "arrivalTime": "2025-05-14 17:19:00",
+        "state": "success",
+        "visitDurationSeconds": 8400,
+        "starsystem": "Synuefai CW-A b19-0"
+      },
+      {
+        "departureTime": "2025-05-15 06:39:00",
+        "arrivalTime": "2025-05-14 19:39:00",
+        "state": "success",
+        "visitDurationSeconds": 39600,
+        "starsystem": "California Sector GB-X c1-3"
+      },
+      {
+        "departureTime": "2025-05-15 14:23:00",
+        "arrivalTime": "2025-05-15 06:39:00",
+        "state": "success",
+        "visitDurationSeconds": 27840,
+        "starsystem": "California Sector MC-V c2-9"
+      },
+      {
+        "departureTime": "2025-05-16 04:56:00",
+        "arrivalTime": "2025-05-15 14:23:00",
+        "state": "success",
+        "visitDurationSeconds": 52380,
+        "starsystem": "California Sector GB-X c1-3"
+      },
+      {
+        "departureTime": "2025-05-16 07:24:00",
+        "arrivalTime": "2025-05-16 04:56:00",
+        "state": "success",
+        "visitDurationSeconds": 8880,
+        "starsystem": "California Sector MC-V c2-9"
+      },
+      {
+        "departureTime": "2025-05-16 14:38:00",
+        "arrivalTime": "2025-05-16 07:24:00",
+        "state": "success",
+        "visitDurationSeconds": 26040,
+        "starsystem": "California Sector GB-X c1-3"
+      },
+      {
+        "departureTime": "2025-05-16 16:37:00",
+        "arrivalTime": "2025-05-16 14:38:00",
+        "state": "success",
+        "visitDurationSeconds": 7140,
+        "starsystem": "California Sector MC-V c2-9"
+      },
+      {
+        "departureTime": "2025-05-20 00:07:00",
+        "arrivalTime": "2025-05-16 16:37:00",
+        "state": "success",
+        "visitDurationSeconds": 286200,
+        "starsystem": "California Sector GB-X c1-3"
+      },
+      {
+        "departureTime": "2025-05-20 06:56:00",
+        "arrivalTime": "2025-05-20 00:07:00",
+        "state": "success",
+        "visitDurationSeconds": 24540,
+        "starsystem": "Mel 22 Sector JO-P b6-1"
+      },
+      {
+        "departureTime": "2025-05-20 13:56:00",
+        "arrivalTime": "2025-05-20 06:56:00",
+        "state": "success",
+        "visitDurationSeconds": 25200,
+        "starsystem": "Tastis"
+      },
+      {
+        "departureTime": "2025-05-21 12:30:00",
+        "arrivalTime": "2025-05-20 13:56:00",
+        "state": "success",
+        "visitDurationSeconds": 81240,
+        "starsystem": "HIP 3502"
+      },
+      {
+        "departureTime": null,
+        "arrivalTime": "2025-05-21 12:30:00",
+        "state": "success",
+        "visitDurationSeconds": 2842,
+        "starsystem": "Col 285 Sector XZ-P c5-5"
+      }
+    ],
+    "totalDistanceJumpedLY": 5043,
+    "currentJump": null
+  },
+  "marketFinances": {
+    "cargoTotalValue": 270699763,
+    "allTimeProfit": 1292383179,
+    "numCommodsForSale": 36,
+    "numCommodsPurchaseOrders": 0,
+    "balanceAllocForPurchaseOrders": 0
+  },
+  "blackmarketFinances": {
+    "cargoTotalValue": 0,
+    "allTimeProfit": 0,
+    "numCommodsForSale": 0,
+    "numCommodsPurchaseOrders": 0,
+    "balanceAllocForPurchaseOrders": 0
+  },
+  "finance": {
+    "bankBalance": 2510337451,
+    "bankReservedBalance": 1393645744,
+    "taxation": 0,
+    "service_taxation": {
+      "bartender": 0,
+      "pioneersupplies": 0,
+      "rearm": 5,
+      "refuel": 5,
+      "repair": 5,
+      "shipyard": 0,
+      "outfitting": 0
+    },
+    "numServices": 9,
+    "numOptionalServices": 0,
+    "debtThreshold": -300000000,
+    "maintenance": 13975867,
+    "maintenanceToDate": 13121951,
+    "coreCost": 5000000,
+    "servicesCost": 8075867,
+    "servicesCostToDate": 7221951,
+    "jumpsCost": 900000,
+    "numJumps": 9,
+    "bartender": {
+      "microresourcesTotalValue": 479400,
+      "allTimeProfit": 0,
+      "microresourcesForSale": 0,
+      "microresourcesPurchaseOrders": 5,
+      "balanceAllocForPurchaseOrders": 0,
+      "profitHistory": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "servicesCrew": {
+    "refuel": {
+      "crewMember": {
+        "name": "Jarrod Collins",
+        "gender": "M",
+        "enabled": "YES",
+        "faction": "federation",
+        "salary": 1500000,
+        "hiringPrice": 40000000,
+        "lastEdit": "2025-05-15 07:30:02"
+      },
+      "invoicesWeekToDate": [
+        {
+          "wages": 1337398,
+          "from": "2025-05-15 07:30:02",
+          "until": "2025-05-21 13:17:21",
+          "type": "current"
+        },
+        {
+          "wages": 1495530,
+          "from": "2025-05-21 13:17:21",
+          "until": "2025-05-22 07:00:00",
+          "type": "expected"
+        }
+      ],
+      "status": "ok"
+    },
+    "repair": {
+      "crewMember": {
+        "name": "Stan Tran",
+        "gender": "M",
+        "enabled": "YES",
+        "faction": "federation",
+        "salary": 1500000,
+        "hiringPrice": 50000000,
+        "lastEdit": "2025-05-15 07:30:02"
+      },
+      "invoicesWeekToDate": [
+        {
+          "wages": 1337398,
+          "from": "2025-05-15 07:30:02",
+          "until": "2025-05-21 13:17:21",
+          "type": "current"
+        },
+        {
+          "wages": 1495530,
+          "from": "2025-05-21 13:17:21",
+          "until": "2025-05-22 07:00:00",
+          "type": "expected"
+        }
+      ],
+      "status": "ok"
+    },
+    "rearm": {
+      "crewMember": {
+        "name": "Ramon Beach",
+        "gender": "M",
+        "enabled": "YES",
+        "faction": "federation",
+        "salary": 1500000,
+        "hiringPrice": 95000000,
+        "lastEdit": "2025-05-15 07:30:02"
+      },
+      "invoicesWeekToDate": [
+        {
+          "wages": 1337398,
+          "from": "2025-05-15 07:30:02",
+          "until": "2025-05-21 13:17:21",
+          "type": "current"
+        },
+        {
+          "wages": 1495530,
+          "from": "2025-05-21 13:17:21",
+          "until": "2025-05-22 07:00:00",
+          "type": "expected"
+        }
+      ],
+      "status": "ok"
+    },
+    "voucherredemption": {
+      "crewMember": {
+        "name": "Nina Benjamin",
+        "gender": "F",
+        "enabled": "YES",
+        "faction": "none",
+        "salary": 1850000,
+        "hiringPrice": 150000000,
+        "lastEdit": "2025-05-15 07:30:02"
+      },
+      "invoicesWeekToDate": [
+        {
+          "wages": 1649457,
+          "from": "2025-05-15 07:30:02",
+          "until": "2025-05-21 13:17:21",
+          "type": "current"
+        },
+        {
+          "wages": 1844487,
+          "from": "2025-05-21 13:17:21",
+          "until": "2025-05-22 07:00:00",
+          "type": "expected"
+        }
+      ],
+      "status": "ok"
+    },
+    "bartender": {
+      "crewMember": {
+        "name": "Meera Trujillo",
+        "gender": "F",
+        "enabled": "YES",
+        "faction": "none",
+        "salary": 1750000,
+        "hiringPrice": 200000000,
+        "lastEdit": "2025-05-15 07:30:02"
+      },
+      "invoicesWeekToDate": [
+        {
+          "wages": 1560298,
+          "from": "2025-05-15 07:30:02",
+          "until": "2025-05-21 13:17:21",
+          "type": "current"
+        },
+        {
+          "wages": 1744785,
+          "from": "2025-05-21 13:17:21",
+          "until": "2025-05-22 07:00:00",
+          "type": "expected"
+        }
+      ],
+      "status": "ok"
+    }
+  },
+  "cargo": [
+    {
+      "commodity": "Hazardousenvironmentsuits",
+      "originSystem": null,
+      "mission": false,
+      "qty": 22,
+      "value": 5918,
+      "stolen": false,
+      "locName": "H.E. Suits"
+    },
+    {
+      "commodity": "Emergencypowercells",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 1967,
+      "stolen": false,
+      "locName": "Emergency Power Cells"
+    },
+    {
+      "commodity": "Insulatingmembrane",
+      "originSystem": null,
+      "mission": false,
+      "qty": 350,
+      "value": 3413900,
+      "stolen": false,
+      "locName": "Insulating Membrane"
+    },
+    {
+      "commodity": "Insulatingmembrane",
+      "originSystem": null,
+      "mission": false,
+      "qty": 200,
+      "value": 1950800,
+      "stolen": false,
+      "locName": "Insulating Membrane"
+    },
+    {
+      "commodity": "Gallite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 74,
+      "value": 855218,
+      "stolen": false,
+      "locName": "Gallite"
+    },
+    {
+      "commodity": "Gallite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 370,
+      "value": 4276090,
+      "stolen": false,
+      "locName": "Gallite"
+    },
+    {
+      "commodity": "Gallite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 370,
+      "value": 4276090,
+      "stolen": false,
+      "locName": "Gallite"
+    },
+    {
+      "commodity": "Gallite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 370,
+      "value": 4276090,
+      "stolen": false,
+      "locName": "Gallite"
+    },
+    {
+      "commodity": "Bertrandite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 32,
+      "value": 582720,
+      "stolen": false,
+      "locName": "Bertrandite"
+    },
+    {
+      "commodity": "Gallite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 718,
+      "value": 8297926,
+      "stolen": false,
+      "locName": "Gallite"
+    },
+    {
+      "commodity": "Bertrandite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 744,
+      "value": 13548240,
+      "stolen": false,
+      "locName": "Bertrandite"
+    },
+    {
+      "commodity": "Gallite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 718,
+      "value": 8297926,
+      "stolen": false,
+      "locName": "Gallite"
+    },
+    {
+      "commodity": "Gallite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 718,
+      "value": 8297926,
+      "stolen": false,
+      "locName": "Gallite"
+    },
+    {
+      "commodity": "Bertrandite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 744,
+      "value": 13548240,
+      "stolen": false,
+      "locName": "Bertrandite"
+    },
+    {
+      "commodity": "Gallite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 718,
+      "value": 8297926,
+      "stolen": false,
+      "locName": "Gallite"
+    },
+    {
+      "commodity": "Gallite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 718,
+      "value": 8297926,
+      "stolen": false,
+      "locName": "Gallite"
+    },
+    {
+      "commodity": "Bertrandite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 744,
+      "value": 13548240,
+      "stolen": false,
+      "locName": "Bertrandite"
+    },
+    {
+      "commodity": "Gallite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 718,
+      "value": 8297926,
+      "stolen": false,
+      "locName": "Gallite"
+    },
+    {
+      "commodity": "Gallite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 718,
+      "value": 8297926,
+      "stolen": false,
+      "locName": "Gallite"
+    },
+    {
+      "commodity": "Bertrandite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 744,
+      "value": 13548240,
+      "stolen": false,
+      "locName": "Bertrandite"
+    },
+    {
+      "commodity": "Gallite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 718,
+      "value": 8297926,
+      "stolen": false,
+      "locName": "Gallite"
+    },
+    {
+      "commodity": "Bertrandite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 744,
+      "value": 13548240,
+      "stolen": false,
+      "locName": "Bertrandite"
+    },
+    {
+      "commodity": "Indite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 744,
+      "value": 8216736,
+      "stolen": false,
+      "locName": "Indite"
+    },
+    {
+      "commodity": "Indite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 718,
+      "value": 7929592,
+      "stolen": false,
+      "locName": "Indite"
+    },
+    {
+      "commodity": "Indite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 744,
+      "value": 8216736,
+      "stolen": false,
+      "locName": "Indite"
+    },
+    {
+      "commodity": "Indite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 718,
+      "value": 7929592,
+      "stolen": false,
+      "locName": "Indite"
+    },
+    {
+      "commodity": "Indite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 718,
+      "value": 7929592,
+      "stolen": false,
+      "locName": "Indite"
+    },
+    {
+      "commodity": "Indite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 363,
+      "value": 4008972,
+      "stolen": false,
+      "locName": "Indite"
+    },
+    {
+      "commodity": "Bertrandite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 381,
+      "value": 6938010,
+      "stolen": false,
+      "locName": "Bertrandite"
+    },
+    {
+      "commodity": "Gallite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 370,
+      "value": 4276090,
+      "stolen": false,
+      "locName": "Gallite"
+    },
+    {
+      "commodity": "Gallite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 744,
+      "value": 8598408,
+      "stolen": false,
+      "locName": "Gallite"
+    },
+    {
+      "commodity": "Gallite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 744,
+      "value": 8598408,
+      "stolen": false,
+      "locName": "Gallite"
+    },
+    {
+      "commodity": "Bertrandite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 744,
+      "value": 13548240,
+      "stolen": false,
+      "locName": "Bertrandite"
+    },
+    {
+      "commodity": "Gallite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 744,
+      "value": 8598408,
+      "stolen": false,
+      "locName": "Gallite"
+    },
+    {
+      "commodity": "Bertrandite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 744,
+      "value": 13548240,
+      "stolen": false,
+      "locName": "Bertrandite"
+    },
+    {
+      "commodity": "Gallite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 24,
+      "value": 277368,
+      "stolen": false,
+      "locName": "Gallite"
+    },
+    {
+      "commodity": "Bertrandite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 457,
+      "value": 8321970,
+      "stolen": false,
+      "locName": "Bertrandite"
+    }
+  ],
+  "orders": {
+    "commodities": {
+      "sales": [
+        {
+          "name": "bertrandite",
+          "stock": "6078",
+          "price": "18210",
+          "blackmarket": false
+        },
+        {
+          "name": "indite",
+          "stock": "4005",
+          "price": "11044",
+          "blackmarket": false
+        },
+        {
+          "name": "gallite",
+          "stock": "9554",
+          "price": "11557",
+          "blackmarket": false
+        },
+        {
+          "name": "water",
+          "stock": "0",
+          "price": "260",
+          "blackmarket": false
+        },
+        {
+          "name": "titanium",
+          "stock": "0",
+          "price": "4446",
+          "blackmarket": false
+        },
+        {
+          "name": "copper",
+          "stock": "0",
+          "price": "631",
+          "blackmarket": false
+        },
+        {
+          "name": "fruitandvegetables",
+          "stock": "0",
+          "price": "483",
+          "blackmarket": false
+        },
+        {
+          "name": "foodcartridges",
+          "stock": "0",
+          "price": "252",
+          "blackmarket": false
+        },
+        {
+          "name": "polymers",
+          "stock": "0",
+          "price": "306",
+          "blackmarket": false
+        },
+        {
+          "name": "semiconductors",
+          "stock": "0",
+          "price": "1084",
+          "blackmarket": false
+        },
+        {
+          "name": "superconductors",
+          "stock": "0",
+          "price": "6551",
+          "blackmarket": false
+        },
+        {
+          "name": "pesticides",
+          "stock": "0",
+          "price": "412",
+          "blackmarket": false
+        },
+        {
+          "name": "agriculturalmedicines",
+          "stock": "0",
+          "price": "1197",
+          "blackmarket": false
+        },
+        {
+          "name": "powergenerators",
+          "stock": "0",
+          "price": "2388",
+          "blackmarket": false
+        },
+        {
+          "name": "waterpurifiers",
+          "stock": "0",
+          "price": "447",
+          "blackmarket": false
+        },
+        {
+          "name": "heliostaticfurnaces",
+          "stock": "0",
+          "price": "418",
+          "blackmarket": false
+        },
+        {
+          "name": "computercomponents",
+          "stock": "0",
+          "price": "708",
+          "blackmarket": false
+        },
+        {
+          "name": "hazardousenvironmentsuits",
+          "stock": "22",
+          "price": "518",
+          "blackmarket": false
+        },
+        {
+          "name": "robotics",
+          "stock": "0",
+          "price": "1915",
+          "blackmarket": false
+        },
+        {
+          "name": "advancedcatalysers",
+          "stock": "0",
+          "price": "2863",
+          "blackmarket": false
+        },
+        {
+          "name": "nonlethalweapons",
+          "stock": "0",
+          "price": "1848",
+          "blackmarket": false
+        },
+        {
+          "name": "resonatingseparators",
+          "stock": "0",
+          "price": "5692",
+          "blackmarket": false
+        },
+        {
+          "name": "bioreducinglichen",
+          "stock": "0",
+          "price": "1178",
+          "blackmarket": false
+        },
+        {
+          "name": "ceramiccomposites",
+          "stock": "0",
+          "price": "402",
+          "blackmarket": false
+        },
+        {
+          "name": "buildingfabricators",
+          "stock": "0",
+          "price": "2224",
+          "blackmarket": false
+        },
+        {
+          "name": "structuralregulators",
+          "stock": "0",
+          "price": "1909",
+          "blackmarket": false
+        },
+        {
+          "name": "evacuationshelter",
+          "stock": "0",
+          "price": "500",
+          "blackmarket": false
+        },
+        {
+          "name": "liquidoxygen",
+          "stock": "0",
+          "price": "1375",
+          "blackmarket": false
+        },
+        {
+          "name": "insulatingmembrane",
+          "stock": "550",
+          "price": "10605",
+          "blackmarket": false
+        },
+        {
+          "name": "cmmcomposite",
+          "stock": "0",
+          "price": "5972",
+          "blackmarket": false
+        },
+        {
+          "name": "emergencypowercells",
+          "stock": "1",
+          "price": "2308",
+          "blackmarket": false
+        },
+        {
+          "name": "microcontrollers",
+          "stock": "0",
+          "price": "5404",
+          "blackmarket": false
+        },
+        {
+          "name": "medicaldiagnosticequipment",
+          "stock": "0",
+          "price": "2944",
+          "blackmarket": false
+        },
+        {
+          "name": "survivalequipment",
+          "stock": "0",
+          "price": "666",
+          "blackmarket": false
+        },
+        {
+          "name": "tritium",
+          "stock": "0",
+          "price": "51294",
+          "blackmarket": false
+        },
+        {
+          "name": "steel",
+          "stock": "0",
+          "price": "4179",
+          "blackmarket": false
+        }
+      ],
+      "purchases": []
+    },
+    "onfootmicroresources": {
+      "sales": {
+        "128961529": {
+          "id": 128961529,
+          "name": "circuitboard",
+          "locName": "Circuit Board",
+          "price": 580,
+          "stock": 57
+        },
+        "128961530": {
+          "id": 128961530,
+          "name": "circuitswitch",
+          "locName": "Circuit Switch",
+          "price": 260,
+          "stock": 73
+        },
+        "128961532": {
+          "id": 128961532,
+          "name": "electricalwiring",
+          "locName": "Electrical Wiring",
+          "price": 550,
+          "stock": 53
+        },
+        "128961544": {
+          "id": 128961544,
+          "name": "opticalfibre",
+          "locName": "Optical Fibre",
+          "price": 720,
+          "stock": 84
+        },
+        "128964025": {
+          "id": 128964025,
+          "name": "microelectrode",
+          "locName": "Microelectrode",
+          "price": 1008,
+          "stock": 92
+        }
+      },
+      "purchases": []
+    }
+  },
+  "carrierLocker": {
+    "assets": [
+      {
+        "id": 128064021,
+        "quantity": 29,
+        "name": "graphene",
+        "locName": "Graphene"
+      },
+      {
+        "id": 128961524,
+        "quantity": 7,
+        "name": "aerogel",
+        "locName": "Aerogel"
+      },
+      {
+        "id": 128961526,
+        "quantity": 7,
+        "name": "carbonfibreplating",
+        "locName": "Carbon Fibre Plating"
+      },
+      {
+        "id": 128961528,
+        "quantity": 19,
+        "name": "chemicalsuperbase",
+        "locName": "Chemical Superbase"
+      },
+      {
+        "id": 128961529,
+        "quantity": 57,
+        "name": "circuitboard",
+        "locName": "Circuit Board"
+      },
+      {
+        "id": 128961530,
+        "quantity": 73,
+        "name": "circuitswitch",
+        "locName": "Circuit Switch"
+      },
+      {
+        "id": 128961531,
+        "quantity": 41,
+        "name": "electricalfuse",
+        "locName": "Electrical Fuse"
+      },
+      {
+        "id": 128961532,
+        "quantity": 53,
+        "name": "electricalwiring",
+        "locName": "Electrical Wiring"
+      },
+      {
+        "id": 128961533,
+        "quantity": 49,
+        "name": "encryptedmemorychip",
+        "locName": "Encrypted Memory Chip"
+      },
+      {
+        "id": 128961534,
+        "quantity": 42,
+        "name": "epoxyadhesive",
+        "locName": "Epoxy Adhesive"
+      },
+      {
+        "id": 128961537,
+        "quantity": 42,
+        "name": "memorychip",
+        "locName": "Memory Chip"
+      },
+      {
+        "id": 128961538,
+        "quantity": 49,
+        "name": "metalcoil",
+        "locName": "Metal Coil"
+      },
+      {
+        "id": 128961539,
+        "quantity": 8,
+        "name": "microhydraulics",
+        "locName": "Micro Hydraulics"
+      },
+      {
+        "id": 128961540,
+        "quantity": 52,
+        "name": "microsupercapacitor",
+        "locName": "Micro Supercapacitor"
+      },
+      {
+        "id": 128961541,
+        "quantity": 2,
+        "name": "microthrusters",
+        "locName": "Micro Thrusters"
+      },
+      {
+        "id": 128961542,
+        "quantity": 52,
+        "name": "microtransformer",
+        "locName": "Micro Transformer"
+      },
+      {
+        "id": 128961543,
+        "quantity": 52,
+        "name": "motor",
+        "locName": "Motor"
+      },
+      {
+        "id": 128961544,
+        "quantity": 84,
+        "name": "opticalfibre",
+        "locName": "Optical Fibre"
+      },
+      {
+        "id": 128961545,
+        "quantity": 32,
+        "name": "opticallens",
+        "locName": "Optical Lens"
+      },
+      {
+        "id": 128961547,
+        "quantity": 7,
+        "name": "scrambler",
+        "locName": "Scrambler"
+      },
+      {
+        "id": 128961549,
+        "quantity": 9,
+        "name": "titaniumplating",
+        "locName": "Titanium Plating"
+      },
+      {
+        "id": 128961550,
+        "quantity": 5,
+        "name": "transmitter",
+        "locName": "Transmitter"
+      },
+      {
+        "id": 128961551,
+        "quantity": 8,
+        "name": "tungstencarbide",
+        "locName": "Tungsten Carbide"
+      },
+      {
+        "id": 128961552,
+        "quantity": 2,
+        "name": "viscoelasticpolymer",
+        "locName": "Viscoelastic Polymer"
+      },
+      {
+        "id": 128962572,
+        "quantity": 12,
+        "name": "rdx",
+        "locName": "RDX"
+      },
+      {
+        "id": 128962573,
+        "quantity": 48,
+        "name": "electromagnet",
+        "locName": "Electromagnet"
+      },
+      {
+        "id": 128962574,
+        "quantity": 10,
+        "name": "oxygenicbacteria",
+        "locName": "Oxygenic Bacteria"
+      },
+      {
+        "id": 128964025,
+        "quantity": 92,
+        "name": "microelectrode",
+        "locName": "Microelectrode"
+      },
+      {
+        "id": 128965844,
+        "quantity": 43,
+        "name": "ionbattery",
+        "locName": "Ion Battery"
+      },
+      {
+        "id": 128965845,
+        "quantity": 14,
+        "name": "weaponcomponent",
+        "locName": "Weapon Component"
+      }
+    ],
+    "goods": [],
+    "data": []
+  },
+  "reputation": [
+    {
+      "majorFaction": "empire",
+      "score": 100
+    },
+    {
+      "majorFaction": "federation",
+      "score": 100
+    },
+    {
+      "majorFaction": "independent",
+      "score": 100
+    },
+    {
+      "majorFaction": "alliance",
+      "score": 100
+    }
+  ],
+  "market": {
+    "id": 123,
+    "name": "123",
+    "outpostType": "fleetcarrier",
+    "imported": [],
+    "exported": [],
+    "services": {
+      "commodities": "ok",
+      "carrierfuel": "ok",
+      "socialspace": "ok",
+      "refuel": "ok",
+      "repair": "ok",
+      "rearm": "ok",
+      "shipyard": "private",
+      "outfitting": "private",
+      "blackmarket": "unavailable",
+      "voucherredemption": "ok",
+      "exploration": "unavailable",
+      "bartender": "ok",
+      "vistagenomics": "unavailable",
+      "pioneersupplies": "unavailable",
+      "carriermanagement": "ok",
+      "stationmenu": "ok",
+      "dock": "ok",
+      "crewlounge": "ok",
+      "engineer": "ok",
+      "contacts": "ok",
+      "registeringcolonisation": "faction",
+      "livery": "private"
+    },
+    "economies": {
+      "136": {
+        "name": "Carrier",
+        "proportion": 1
+      }
+    },
+    "prohibited": [],
+    "commodities": [
+      {
+        "id": 128673855,
+        "categoryname": "Industrial Materials",
+        "name": "InsulatingMembrane",
+        "stock": 550,
+        "buyPrice": 10605,
+        "sellPrice": 0,
+        "demand": 0,
+        "legality": "",
+        "meanPrice": 0,
+        "demandBracket": "",
+        "stockBracket": 2,
+        "locName": "Insulating Membrane"
+      },
+      {
+        "id": 128673861,
+        "categoryname": "Machinery",
+        "name": "EmergencyPowerCells",
+        "stock": 1,
+        "buyPrice": 2308,
+        "sellPrice": 0,
+        "demand": 0,
+        "legality": "",
+        "meanPrice": 0,
+        "demandBracket": "",
+        "stockBracket": 2,
+        "locName": "Emergency Power Cells"
+      },
+      {
+        "id": 128049156,
+        "categoryname": "Minerals",
+        "name": "Bertrandite",
+        "stock": 6078,
+        "buyPrice": 18210,
+        "sellPrice": 0,
+        "demand": 0,
+        "legality": "",
+        "meanPrice": 0,
+        "demandBracket": "",
+        "stockBracket": 2,
+        "locName": "Bertrandite"
+      },
+      {
+        "id": 128049158,
+        "categoryname": "Minerals",
+        "name": "Gallite",
+        "stock": 9554,
+        "buyPrice": 11557,
+        "sellPrice": 0,
+        "demand": 0,
+        "legality": "",
+        "meanPrice": 0,
+        "demandBracket": "",
+        "stockBracket": 2,
+        "locName": "Gallite"
+      },
+      {
+        "id": 128049157,
+        "categoryname": "Minerals",
+        "name": "Indite",
+        "stock": 4005,
+        "buyPrice": 11044,
+        "sellPrice": 0,
+        "demand": 0,
+        "legality": "",
+        "meanPrice": 0,
+        "demandBracket": "",
+        "stockBracket": 2,
+        "locName": "Indite"
+      },
+      {
+        "id": 128066403,
+        "categoryname": "NonMarketable",
+        "name": "Drones",
+        "stock": 999999,
+        "buyPrice": 95,
+        "sellPrice": 95,
+        "demand": 9999999,
+        "legality": "",
+        "meanPrice": 95,
+        "demandBracket": 2,
+        "stockBracket": 2,
+        "locName": "Limpet"
+      },
+      {
+        "id": 128049226,
+        "categoryname": "Technology",
+        "name": "HazardousEnvironmentSuits",
+        "stock": 22,
+        "buyPrice": 518,
+        "sellPrice": 0,
+        "demand": 0,
+        "legality": "",
+        "meanPrice": 0,
+        "demandBracket": "",
+        "stockBracket": 2,
+        "locName": "H.E. Suits"
+      }
+    ]
+  },
+  "ships": {
+    "shipyard_list": [],
+    "discount_list": {
+      "architect": 0.97
+    }
+  },
+  "modules": []
+}

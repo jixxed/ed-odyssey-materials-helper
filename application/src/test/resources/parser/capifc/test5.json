@@ -1,0 +1,753 @@
+{
+  "name": {
+    "callsign": "123",
+    "vanityName": "123",
+    "filteredVanityName": "123"
+  },
+  "currentStarSystem": "Ngobe",
+  "balance": "1173127555",
+  "fuel": "1000",
+  "state": "normalOperation",
+  "theme": "Trader",
+  "dockingAccess": "squadron",
+  "notoriousAccess": true,
+  "capacity": {
+    "shipPacks": 0,
+    "modulePacks": 0,
+    "cargoForSale": 126,
+    "cargoNotForSale": 0,
+    "cargoSpaceReserved": 0,
+    "crew": 0,
+    "freeSpace": 24874,
+    "microresourceCapacityTotal": 1000,
+    "microresourceCapacityFree": 1000,
+    "microresourceCapacityUsed": 0,
+    "microresourceCapacityReserved": 0
+  },
+  "itinerary": {
+    "completed": [
+      {
+        "departureTime": "2025-05-03 11:00:00",
+        "arrivalTime": "2025-05-03 10:10:36",
+        "state": "success",
+        "visitDurationSeconds": 2964,
+        "starsystem": "L 190-21"
+      },
+      {
+        "departureTime": "2025-05-03 11:21:00",
+        "arrivalTime": "2025-05-03 11:00:00",
+        "state": "success",
+        "visitDurationSeconds": 1260,
+        "starsystem": "BD+31 2373"
+      },
+      {
+        "departureTime": "2025-05-03 13:28:00",
+        "arrivalTime": "2025-05-03 11:21:00",
+        "state": "success",
+        "visitDurationSeconds": 7620,
+        "starsystem": "BD+31 2373"
+      },
+      {
+        "departureTime": "2025-05-03 14:35:06",
+        "arrivalTime": "2025-05-03 13:28:00",
+        "state": "success",
+        "visitDurationSeconds": 4026,
+        "starsystem": "9 Rho-2 Eridani"
+      },
+      {
+        "departureTime": "2025-05-03 20:10:00",
+        "arrivalTime": "2025-05-03 14:35:06",
+        "state": "success",
+        "visitDurationSeconds": 20094,
+        "starsystem": "Ngobe"
+      },
+      {
+        "departureTime": "2025-05-04 16:15:06",
+        "arrivalTime": "2025-05-03 20:10:00",
+        "state": "success",
+        "visitDurationSeconds": 72306,
+        "starsystem": "9 Rho-2 Eridani"
+      },
+      {
+        "departureTime": "2025-05-04 18:33:00",
+        "arrivalTime": "2025-05-04 16:15:06",
+        "state": "success",
+        "visitDurationSeconds": 8274,
+        "starsystem": "Ngobe"
+      },
+      {
+        "departureTime": "2025-05-05 16:29:00",
+        "arrivalTime": "2025-05-04 18:33:00",
+        "state": "success",
+        "visitDurationSeconds": 78960,
+        "starsystem": "9 Rho-2 Eridani"
+      },
+      {
+        "departureTime": "2025-05-05 18:25:00",
+        "arrivalTime": "2025-05-05 16:29:00",
+        "state": "success",
+        "visitDurationSeconds": 6960,
+        "starsystem": "Ngobe"
+      },
+      {
+        "departureTime": "2025-05-05 20:51:00",
+        "arrivalTime": "2025-05-05 18:25:00",
+        "state": "success",
+        "visitDurationSeconds": 8760,
+        "starsystem": "9 Rho-2 Eridani"
+      },
+      {
+        "departureTime": "2025-05-06 18:10:00",
+        "arrivalTime": "2025-05-05 20:51:00",
+        "state": "success",
+        "visitDurationSeconds": 76740,
+        "starsystem": "Ngobe"
+      },
+      {
+        "departureTime": "2025-05-06 20:48:00",
+        "arrivalTime": "2025-05-06 18:10:00",
+        "state": "success",
+        "visitDurationSeconds": 9480,
+        "starsystem": "9 Rho-2 Eridani"
+      },
+      {
+        "departureTime": "2025-05-07 17:16:00",
+        "arrivalTime": "2025-05-06 20:48:00",
+        "state": "success",
+        "visitDurationSeconds": 73680,
+        "starsystem": "Ngobe"
+      },
+      {
+        "departureTime": "2025-05-07 18:47:00",
+        "arrivalTime": "2025-05-07 17:16:00",
+        "state": "success",
+        "visitDurationSeconds": 5460,
+        "starsystem": "9 Rho-2 Eridani"
+      },
+      {
+        "departureTime": "2025-05-07 21:08:00",
+        "arrivalTime": "2025-05-07 18:47:00",
+        "state": "success",
+        "visitDurationSeconds": 8460,
+        "starsystem": "Ngobe"
+      },
+      {
+        "departureTime": "2025-05-07 22:31:00",
+        "arrivalTime": "2025-05-07 21:08:00",
+        "state": "success",
+        "visitDurationSeconds": 4980,
+        "starsystem": "9 Rho-2 Eridani"
+      },
+      {
+        "departureTime": "2025-05-08 12:56:00",
+        "arrivalTime": "2025-05-07 22:31:00",
+        "state": "success",
+        "visitDurationSeconds": 51900,
+        "starsystem": "9 Rho-2 Eridani"
+      },
+      {
+        "departureTime": "2025-05-08 16:43:00",
+        "arrivalTime": "2025-05-08 12:56:00",
+        "state": "success",
+        "visitDurationSeconds": 13620,
+        "starsystem": "Hyades Sector LC-V c2-9"
+      },
+      {
+        "departureTime": "2025-05-08 20:12:00",
+        "arrivalTime": "2025-05-08 16:43:00",
+        "state": "success",
+        "visitDurationSeconds": 12540,
+        "starsystem": "9 Rho-2 Eridani"
+      },
+      {
+        "departureTime": "2025-05-09 21:13:00",
+        "arrivalTime": "2025-05-08 20:12:00",
+        "state": "success",
+        "visitDurationSeconds": 90060,
+        "starsystem": "Hyades Sector LC-V c2-9"
+      },
+      {
+        "departureTime": "2025-05-10 14:52:00",
+        "arrivalTime": "2025-05-09 21:13:00",
+        "state": "success",
+        "visitDurationSeconds": 63540,
+        "starsystem": "9 Rho-2 Eridani"
+      },
+      {
+        "departureTime": "2025-05-10 19:08:00",
+        "arrivalTime": "2025-05-10 14:52:00",
+        "state": "success",
+        "visitDurationSeconds": 15360,
+        "starsystem": "Ngobe"
+      },
+      {
+        "departureTime": "2025-05-11 09:32:00",
+        "arrivalTime": "2025-05-10 19:08:00",
+        "state": "success",
+        "visitDurationSeconds": 51840,
+        "starsystem": "Hyades Sector LC-V c2-9"
+      },
+      {
+        "departureTime": "2025-05-11 16:41:00",
+        "arrivalTime": "2025-05-11 09:32:00",
+        "state": "success",
+        "visitDurationSeconds": 25740,
+        "starsystem": "9 Rho-2 Eridani"
+      },
+      {
+        "departureTime": "2025-05-11 18:47:00",
+        "arrivalTime": "2025-05-11 16:41:00",
+        "state": "success",
+        "visitDurationSeconds": 7560,
+        "starsystem": "9 Rho-2 Eridani"
+      },
+      {
+        "departureTime": "2025-05-12 12:26:00",
+        "arrivalTime": "2025-05-11 18:47:00",
+        "state": "success",
+        "visitDurationSeconds": 63540,
+        "starsystem": "Ngobe"
+      },
+      {
+        "departureTime": "2025-05-12 14:14:00",
+        "arrivalTime": "2025-05-12 12:26:00",
+        "state": "success",
+        "visitDurationSeconds": 6480,
+        "starsystem": "Ngobe"
+      },
+      {
+        "departureTime": "2025-05-12 16:17:00",
+        "arrivalTime": "2025-05-12 14:14:00",
+        "state": "success",
+        "visitDurationSeconds": 7380,
+        "starsystem": "9 Rho-2 Eridani"
+      },
+      {
+        "departureTime": "2025-05-13 10:38:00",
+        "arrivalTime": "2025-05-12 16:17:00",
+        "state": "success",
+        "visitDurationSeconds": 66060,
+        "starsystem": "Ngobe"
+      },
+      {
+        "departureTime": "2025-05-13 11:17:00",
+        "arrivalTime": "2025-05-13 10:38:00",
+        "state": "success",
+        "visitDurationSeconds": 2340,
+        "starsystem": "9 Rho-2 Eridani"
+      },
+      {
+        "departureTime": "2025-05-13 14:16:00",
+        "arrivalTime": "2025-05-13 11:17:00",
+        "state": "success",
+        "visitDurationSeconds": 10740,
+        "starsystem": "HIP 20485"
+      },
+      {
+        "departureTime": "2025-05-13 14:37:00",
+        "arrivalTime": "2025-05-13 14:16:00",
+        "state": "success",
+        "visitDurationSeconds": 1260,
+        "starsystem": "Hyades Sector LC-V c2-9"
+      },
+      {
+        "departureTime": "2025-05-13 16:54:00",
+        "arrivalTime": "2025-05-13 14:37:00",
+        "state": "success",
+        "visitDurationSeconds": 8220,
+        "starsystem": "Hyades Sector LC-V c2-9"
+      },
+      {
+        "departureTime": "2025-05-13 21:07:00",
+        "arrivalTime": "2025-05-13 16:54:00",
+        "state": "success",
+        "visitDurationSeconds": 15180,
+        "starsystem": "9 Rho-2 Eridani"
+      },
+      {
+        "departureTime": "2025-05-15 19:57:00",
+        "arrivalTime": "2025-05-13 21:07:00",
+        "state": "success",
+        "visitDurationSeconds": 168600,
+        "starsystem": "Hyades Sector LC-V c2-9"
+      },
+      {
+        "departureTime": "2025-05-16 20:11:00",
+        "arrivalTime": "2025-05-15 19:57:00",
+        "state": "success",
+        "visitDurationSeconds": 87240,
+        "starsystem": "9 Rho-2 Eridani"
+      },
+      {
+        "departureTime": "2025-05-17 21:53:00",
+        "arrivalTime": "2025-05-16 20:11:00",
+        "state": "success",
+        "visitDurationSeconds": 92520,
+        "starsystem": "Ngobe"
+      },
+      {
+        "departureTime": "2025-05-18 11:18:00",
+        "arrivalTime": "2025-05-17 21:53:00",
+        "state": "success",
+        "visitDurationSeconds": 48300,
+        "starsystem": "9 Rho-2 Eridani"
+      },
+      {
+        "departureTime": "2025-05-18 18:48:00",
+        "arrivalTime": "2025-05-18 11:18:00",
+        "state": "success",
+        "visitDurationSeconds": 27000,
+        "starsystem": "Hyades Sector LC-V c2-9"
+      },
+      {
+        "departureTime": "2025-05-18 19:10:06",
+        "arrivalTime": "2025-05-18 18:48:00",
+        "state": "success",
+        "visitDurationSeconds": 1326,
+        "starsystem": "Ngobe"
+      },
+      {
+        "departureTime": "2025-05-20 15:48:00",
+        "arrivalTime": "2025-05-18 19:10:06",
+        "state": "success",
+        "visitDurationSeconds": 160674,
+        "starsystem": "Ngobe"
+      },
+      {
+        "departureTime": "2025-05-20 19:49:00",
+        "arrivalTime": "2025-05-20 15:48:00",
+        "state": "success",
+        "visitDurationSeconds": 14460,
+        "starsystem": "9 Rho-2 Eridani"
+      },
+      {
+        "departureTime": null,
+        "arrivalTime": "2025-05-20 19:49:00",
+        "state": "success",
+        "visitDurationSeconds": 74910,
+        "starsystem": "Ngobe"
+      }
+    ],
+    "totalDistanceJumpedLY": 3304,
+    "currentJump": null
+  },
+  "marketFinances": {
+    "cargoTotalValue": 6463044,
+    "allTimeProfit": 525805287,
+    "numCommodsForSale": 36,
+    "numCommodsPurchaseOrders": 0,
+    "balanceAllocForPurchaseOrders": 0
+  },
+  "blackmarketFinances": {
+    "cargoTotalValue": 0,
+    "allTimeProfit": 0,
+    "numCommodsForSale": 0,
+    "numCommodsPurchaseOrders": 0,
+    "balanceAllocForPurchaseOrders": 0
+  },
+  "finance": {
+    "bankBalance": 1173127555,
+    "bankReservedBalance": 0,
+    "taxation": 0,
+    "service_taxation": {
+      "bartender": 0,
+      "pioneersupplies": 0,
+      "rearm": 0,
+      "refuel": 0,
+      "repair": 0,
+      "shipyard": 0,
+      "outfitting": 0
+    },
+    "numServices": 4,
+    "numOptionalServices": 0,
+    "debtThreshold": -300000000,
+    "maintenance": 5800000,
+    "maintenanceToDate": 5800000,
+    "coreCost": 5000000,
+    "servicesCost": 0,
+    "servicesCostToDate": 0,
+    "jumpsCost": 800000,
+    "numJumps": 8,
+    "bartender": {
+      "microresourcesTotalValue": 0,
+      "allTimeProfit": 0,
+      "microresourcesForSale": 0,
+      "microresourcesPurchaseOrders": 0,
+      "balanceAllocForPurchaseOrders": 0,
+      "profitHistory": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "servicesCrew": [],
+  "cargo": [
+    {
+      "commodity": "Tritium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 83,
+      "value": 4257402,
+      "stolen": false,
+      "locName": "Tritium"
+    },
+    {
+      "commodity": "Tritium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 33,
+      "value": 1692702,
+      "stolen": false,
+      "locName": "Tritium"
+    },
+    {
+      "commodity": "Tritium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 10,
+      "value": 512940,
+      "stolen": false,
+      "locName": "Tritium"
+    }
+  ],
+  "orders": {
+    "commodities": {
+      "sales": [
+        {
+          "name": "water",
+          "stock": "0",
+          "price": "260",
+          "blackmarket": false
+        },
+        {
+          "name": "titanium",
+          "stock": "0",
+          "price": "4446",
+          "blackmarket": false
+        },
+        {
+          "name": "copper",
+          "stock": "0",
+          "price": "631",
+          "blackmarket": false
+        },
+        {
+          "name": "aluminium",
+          "stock": "0",
+          "price": "2540",
+          "blackmarket": false
+        },
+        {
+          "name": "fruitandvegetables",
+          "stock": "0",
+          "price": "483",
+          "blackmarket": false
+        },
+        {
+          "name": "foodcartridges",
+          "stock": "0",
+          "price": "252",
+          "blackmarket": false
+        },
+        {
+          "name": "polymers",
+          "stock": "0",
+          "price": "306",
+          "blackmarket": false
+        },
+        {
+          "name": "semiconductors",
+          "stock": "0",
+          "price": "1084",
+          "blackmarket": false
+        },
+        {
+          "name": "superconductors",
+          "stock": "0",
+          "price": "6551",
+          "blackmarket": false
+        },
+        {
+          "name": "basicmedicines",
+          "stock": "0",
+          "price": "489",
+          "blackmarket": false
+        },
+        {
+          "name": "powergenerators",
+          "stock": "0",
+          "price": "2388",
+          "blackmarket": false
+        },
+        {
+          "name": "waterpurifiers",
+          "stock": "0",
+          "price": "447",
+          "blackmarket": false
+        },
+        {
+          "name": "computercomponents",
+          "stock": "0",
+          "price": "708",
+          "blackmarket": false
+        },
+        {
+          "name": "hazardousenvironmentsuits",
+          "stock": "0",
+          "price": "518",
+          "blackmarket": false
+        },
+        {
+          "name": "advancedcatalysers",
+          "stock": "0",
+          "price": "2863",
+          "blackmarket": false
+        },
+        {
+          "name": "battleweapons",
+          "stock": "0",
+          "price": "7137",
+          "blackmarket": false
+        },
+        {
+          "name": "reactivearmour",
+          "stock": "0",
+          "price": "2102",
+          "blackmarket": false
+        },
+        {
+          "name": "nonlethalweapons",
+          "stock": "0",
+          "price": "1848",
+          "blackmarket": false
+        },
+        {
+          "name": "combatstabilisers",
+          "stock": "0",
+          "price": "3392",
+          "blackmarket": false
+        },
+        {
+          "name": "ceramiccomposites",
+          "stock": "0",
+          "price": "402",
+          "blackmarket": false
+        },
+        {
+          "name": "surfacestabilisers",
+          "stock": "0",
+          "price": "668",
+          "blackmarket": false
+        },
+        {
+          "name": "geologicalequipment",
+          "stock": "0",
+          "price": "1830",
+          "blackmarket": false
+        },
+        {
+          "name": "buildingfabricators",
+          "stock": "0",
+          "price": "2224",
+          "blackmarket": false
+        },
+        {
+          "name": "mutomimager",
+          "stock": "0",
+          "price": "6166",
+          "blackmarket": false
+        },
+        {
+          "name": "structuralregulators",
+          "stock": "0",
+          "price": "1909",
+          "blackmarket": false
+        },
+        {
+          "name": "evacuationshelter",
+          "stock": "0",
+          "price": "500",
+          "blackmarket": false
+        },
+        {
+          "name": "liquidoxygen",
+          "stock": "0",
+          "price": "1375",
+          "blackmarket": false
+        },
+        {
+          "name": "insulatingmembrane",
+          "stock": "0",
+          "price": "10605",
+          "blackmarket": false
+        },
+        {
+          "name": "cmmcomposite",
+          "stock": "0",
+          "price": "5972",
+          "blackmarket": false
+        },
+        {
+          "name": "emergencypowercells",
+          "stock": "0",
+          "price": "2308",
+          "blackmarket": false
+        },
+        {
+          "name": "microcontrollers",
+          "stock": "0",
+          "price": "5404",
+          "blackmarket": false
+        },
+        {
+          "name": "militarygradefabrics",
+          "stock": "0",
+          "price": "899",
+          "blackmarket": false
+        },
+        {
+          "name": "medicaldiagnosticequipment",
+          "stock": "0",
+          "price": "2944",
+          "blackmarket": false
+        },
+        {
+          "name": "survivalequipment",
+          "stock": "0",
+          "price": "666",
+          "blackmarket": false
+        },
+        {
+          "name": "tritium",
+          "stock": "126",
+          "price": "51294",
+          "blackmarket": false
+        },
+        {
+          "name": "steel",
+          "stock": "0",
+          "price": "4179",
+          "blackmarket": false
+        }
+      ],
+      "purchases": []
+    },
+    "onfootmicroresources": {
+      "sales": [],
+      "purchases": []
+    }
+  },
+  "carrierLocker": {
+    "assets": [],
+    "goods": [],
+    "data": []
+  },
+  "reputation": [
+    {
+      "majorFaction": "empire",
+      "score": 100
+    },
+    {
+      "majorFaction": "federation",
+      "score": 100
+    },
+    {
+      "majorFaction": "independent",
+      "score": 100
+    },
+    {
+      "majorFaction": "alliance",
+      "score": 100
+    }
+  ],
+  "market": {
+    "id": 123,
+    "name": "123",
+    "outpostType": "fleetcarrier",
+    "imported": [],
+    "exported": [],
+    "services": {
+      "commodities": "ok",
+      "carrierfuel": "ok",
+      "socialspace": "ok",
+      "refuel": "unavailable",
+      "repair": "unavailable",
+      "rearm": "unavailable",
+      "shipyard": "private",
+      "outfitting": "private",
+      "blackmarket": "unavailable",
+      "voucherredemption": "unavailable",
+      "exploration": "unavailable",
+      "bartender": "unavailable",
+      "vistagenomics": "unavailable",
+      "pioneersupplies": "unavailable",
+      "carriermanagement": "ok",
+      "stationmenu": "ok",
+      "dock": "ok",
+      "crewlounge": "ok",
+      "engineer": "ok",
+      "contacts": "ok",
+      "registeringcolonisation": "faction",
+      "livery": "private"
+    },
+    "economies": {
+      "136": {
+        "name": "Carrier",
+        "proportion": 1
+      }
+    },
+    "prohibited": {
+      "128049212": "BasicNarcotics",
+      "128049213": "Tobacco",
+      "128049214": "Beer",
+      "128049215": "Wine",
+      "128049216": "Liquor",
+      "128667728": "ImperialSlaves",
+      "128672306": "BootlegLiquor",
+      "128958679": "ApaVietii"
+    },
+    "commodities": [
+      {
+        "id": 128961249,
+        "categoryname": "Chemicals",
+        "name": "Tritium",
+        "stock": 126,
+        "buyPrice": 51294,
+        "sellPrice": 0,
+        "demand": 0,
+        "legality": "",
+        "meanPrice": 0,
+        "demandBracket": "",
+        "stockBracket": 2,
+        "locName": "Tritium"
+      },
+      {
+        "id": 128066403,
+        "categoryname": "NonMarketable",
+        "name": "Drones",
+        "stock": 999999,
+        "buyPrice": 95,
+        "sellPrice": 95,
+        "demand": 9999999,
+        "legality": "",
+        "meanPrice": 95,
+        "demandBracket": 2,
+        "stockBracket": 2,
+        "locName": "Limpet"
+      }
+    ]
+  },
+  "ships": {
+    "shipyard_list": [],
+    "discount_list": {
+      "architect": 0.97
+    }
+  },
+  "modules": []
+}

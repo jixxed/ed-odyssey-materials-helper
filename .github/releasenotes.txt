@@ -6,5 +6,4 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Check for capi updates every 5 seconds instead of 5 minutes. Still updates at most once every 5 minutes.
-This should allow for an update by toggling the setting on the Colonisation tab
+Fix capi deserialization issue

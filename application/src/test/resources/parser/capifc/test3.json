@@ -1,0 +1,626 @@
+{
+  "name": {
+    "callsign": "123",
+    "vanityName": "123",
+    "filteredVanityName": "123"
+  },
+  "currentStarSystem": "Col 285 Sector FK-J b24-2",
+  "balance": "50804605369",
+  "fuel": "936",
+  "state": "normalOperation",
+  "theme": "Miner",
+  "dockingAccess": "all",
+  "notoriousAccess": true,
+  "capacity": {
+    "shipPacks": 0,
+    "modulePacks": 0,
+    "cargoForSale": 0,
+    "cargoNotForSale": 6127,
+    "cargoSpaceReserved": 0,
+    "crew": 930,
+    "freeSpace": 17943,
+    "microresourceCapacityTotal": 1000,
+    "microresourceCapacityFree": 1000,
+    "microresourceCapacityUsed": 0,
+    "microresourceCapacityReserved": 0
+  },
+  "itinerary": {
+    "completed": [
+      {
+        "departureTime": "2025-05-02 12:40:00",
+        "arrivalTime": "2025-04-26 23:18:00",
+        "state": "success",
+        "visitDurationSeconds": 480120,
+        "starsystem": "Helheim"
+      },
+      {
+        "departureTime": "2025-05-02 20:24:00",
+        "arrivalTime": "2025-05-02 12:40:00",
+        "state": "success",
+        "visitDurationSeconds": 27840,
+        "starsystem": "HIP 81748"
+      },
+      {
+        "departureTime": "2025-05-02 20:54:00",
+        "arrivalTime": "2025-05-02 20:24:00",
+        "state": "success",
+        "visitDurationSeconds": 1800,
+        "starsystem": "Helheim"
+      },
+      {
+        "departureTime": "2025-05-03 20:04:00",
+        "arrivalTime": "2025-05-02 20:54:00",
+        "state": "success",
+        "visitDurationSeconds": 83400,
+        "starsystem": "Helheim"
+      },
+      {
+        "departureTime": "2025-05-04 19:58:00",
+        "arrivalTime": "2025-05-03 20:04:00",
+        "state": "success",
+        "visitDurationSeconds": 86040,
+        "starsystem": "Col 285 Sector FK-J b24-2"
+      },
+      {
+        "departureTime": "2025-05-04 21:27:00",
+        "arrivalTime": "2025-05-04 19:58:00",
+        "state": "success",
+        "visitDurationSeconds": 5340,
+        "starsystem": "Col 285 Sector UZ-P d5-90"
+      },
+      {
+        "departureTime": "2025-05-05 08:51:00",
+        "arrivalTime": "2025-05-04 21:27:00",
+        "state": "success",
+        "visitDurationSeconds": 41040,
+        "starsystem": "Zang Tangma"
+      },
+      {
+        "departureTime": "2025-05-05 18:08:00",
+        "arrivalTime": "2025-05-05 08:51:00",
+        "state": "success",
+        "visitDurationSeconds": 33420,
+        "starsystem": "Col 285 Sector FK-J b24-2"
+      },
+      {
+        "departureTime": "2025-05-05 20:32:00",
+        "arrivalTime": "2025-05-05 18:08:00",
+        "state": "success",
+        "visitDurationSeconds": 8640,
+        "starsystem": "Rindrani"
+      },
+      {
+        "departureTime": "2025-05-06 05:26:00",
+        "arrivalTime": "2025-05-05 20:32:00",
+        "state": "success",
+        "visitDurationSeconds": 32040,
+        "starsystem": "1 i Centauri"
+      },
+      {
+        "departureTime": "2025-05-07 11:10:00",
+        "arrivalTime": "2025-05-06 05:26:00",
+        "state": "success",
+        "visitDurationSeconds": 107040,
+        "starsystem": "Rindrani"
+      },
+      {
+        "departureTime": "2025-05-07 12:13:00",
+        "arrivalTime": "2025-05-07 11:10:00",
+        "state": "success",
+        "visitDurationSeconds": 3780,
+        "starsystem": "1 i Centauri"
+      },
+      {
+        "departureTime": "2025-05-07 13:53:00",
+        "arrivalTime": "2025-05-07 12:13:00",
+        "state": "success",
+        "visitDurationSeconds": 6000,
+        "starsystem": "Rindrani"
+      },
+      {
+        "departureTime": "2025-05-07 14:29:00",
+        "arrivalTime": "2025-05-07 13:53:00",
+        "state": "success",
+        "visitDurationSeconds": 2160,
+        "starsystem": "1 i Centauri"
+      },
+      {
+        "departureTime": "2025-05-07 17:39:00",
+        "arrivalTime": "2025-05-07 14:29:00",
+        "state": "success",
+        "visitDurationSeconds": 11400,
+        "starsystem": "Col 285 Sector FK-J b24-2"
+      },
+      {
+        "departureTime": "2025-05-07 20:09:00",
+        "arrivalTime": "2025-05-07 17:39:00",
+        "state": "success",
+        "visitDurationSeconds": 9000,
+        "starsystem": "HIP 90578"
+      },
+      {
+        "departureTime": "2025-05-08 21:44:00",
+        "arrivalTime": "2025-05-07 20:09:00",
+        "state": "success",
+        "visitDurationSeconds": 92100,
+        "starsystem": "Col 285 Sector FK-J b24-2"
+      },
+      {
+        "departureTime": null,
+        "arrivalTime": "2025-05-08 21:44:00",
+        "state": "success",
+        "visitDurationSeconds": 1075613,
+        "starsystem": "Col 285 Sector FK-J b24-2"
+      }
+    ],
+    "totalDistanceJumpedLY": 2413,
+    "currentJump": null
+  },
+  "marketFinances": {
+    "cargoTotalValue": 18692991,
+    "allTimeProfit": 68884489,
+    "numCommodsForSale": 6,
+    "numCommodsPurchaseOrders": 0,
+    "balanceAllocForPurchaseOrders": 0
+  },
+  "blackmarketFinances": {
+    "cargoTotalValue": 0,
+    "allTimeProfit": 0,
+    "numCommodsForSale": 0,
+    "numCommodsPurchaseOrders": 0,
+    "balanceAllocForPurchaseOrders": 0
+  },
+  "finance": {
+    "bankBalance": 50804605369,
+    "bankReservedBalance": 45634096873,
+    "taxation": 0,
+    "service_taxation": {
+      "bartender": 0,
+      "pioneersupplies": 0,
+      "rearm": 100,
+      "refuel": 100,
+      "repair": 100,
+      "shipyard": 0,
+      "outfitting": 0
+    },
+    "numServices": 7,
+    "numOptionalServices": 0,
+    "debtThreshold": -300000000,
+    "maintenance": 9486593,
+    "maintenanceToDate": 8884301,
+    "coreCost": 5000000,
+    "servicesCost": 4486593,
+    "servicesCostToDate": 3884301,
+    "jumpsCost": 0,
+    "numJumps": 0,
+    "bartender": {
+      "microresourcesTotalValue": 0,
+      "allTimeProfit": 0,
+      "microresourcesForSale": 0,
+      "microresourcesPurchaseOrders": 0,
+      "balanceAllocForPurchaseOrders": 0,
+      "profitHistory": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "servicesCrew": {
+    "refuel": {
+      "crewMember": {
+        "name": "Christy King",
+        "gender": "F",
+        "enabled": "YES",
+        "faction": "independent",
+        "salary": 1500000,
+        "hiringPrice": 40000000,
+        "lastEdit": "2025-05-15 07:30:02"
+      },
+      "invoicesWeekToDate": [
+        {
+          "wages": 1294769,
+          "from": "2025-05-15 07:30:02",
+          "until": "2025-05-21 08:30:52",
+          "type": "current"
+        },
+        {
+          "wages": 1495530,
+          "from": "2025-05-21 08:30:52",
+          "until": "2025-05-22 07:00:00",
+          "type": "expected"
+        }
+      ],
+      "status": "ok"
+    },
+    "repair": {
+      "crewMember": {
+        "name": "Carmella Burns",
+        "gender": "F",
+        "enabled": "YES",
+        "faction": "independent",
+        "salary": 1500000,
+        "hiringPrice": 50000000,
+        "lastEdit": "2025-05-15 07:30:02"
+      },
+      "invoicesWeekToDate": [
+        {
+          "wages": 1294769,
+          "from": "2025-05-15 07:30:02",
+          "until": "2025-05-21 08:30:52",
+          "type": "current"
+        },
+        {
+          "wages": 1495530,
+          "from": "2025-05-21 08:30:52",
+          "until": "2025-05-22 07:00:00",
+          "type": "expected"
+        }
+      ],
+      "status": "ok"
+    },
+    "rearm": {
+      "crewMember": {
+        "name": "Nichole Skinner",
+        "gender": "F",
+        "enabled": "YES",
+        "faction": "independent",
+        "salary": 1500000,
+        "hiringPrice": 95000000,
+        "lastEdit": "2025-05-15 07:30:02"
+      },
+      "invoicesWeekToDate": [
+        {
+          "wages": 1294769,
+          "from": "2025-05-15 07:30:02",
+          "until": "2025-05-21 08:30:52",
+          "type": "current"
+        },
+        {
+          "wages": 1495530,
+          "from": "2025-05-21 08:30:52",
+          "until": "2025-05-22 07:00:00",
+          "type": "expected"
+        }
+      ],
+      "status": "ok"
+    }
+  },
+  "cargo": [
+    {
+      "commodity": "Metaalloys",
+      "originSystem": 908351935162,
+      "mission": false,
+      "qty": 3,
+      "value": 29319,
+      "stolen": false,
+      "locName": "Meta-Legierungen"
+    },
+    {
+      "commodity": "Thargoidtitandrivecomponent",
+      "originSystem": 10477373803,
+      "mission": false,
+      "qty": 3,
+      "value": 46266,
+      "stolen": false,
+      "locName": "Titan-Antriebskomponente"
+    },
+    {
+      "commodity": "Thargoidtitandrivecomponent",
+      "originSystem": 10477373803,
+      "mission": false,
+      "qty": 4,
+      "value": 61688,
+      "stolen": false,
+      "locName": "Titan-Antriebskomponente"
+    },
+    {
+      "commodity": "Thargoidtitandrivecomponent",
+      "originSystem": 10477373803,
+      "mission": false,
+      "qty": 2,
+      "value": 30844,
+      "stolen": false,
+      "locName": "Titan-Antriebskomponente"
+    },
+    {
+      "commodity": "Thargoidtitandrivecomponent",
+      "originSystem": 10477373803,
+      "mission": false,
+      "qty": 1,
+      "value": 308421,
+      "stolen": false,
+      "locName": "Titan-Antriebskomponente"
+    },
+    {
+      "commodity": "Tritium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 53,
+      "value": 137058,
+      "stolen": false,
+      "locName": "Tritium"
+    },
+    {
+      "commodity": "Tritium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 792,
+      "value": 2048112,
+      "stolen": false,
+      "locName": "Tritium"
+    },
+    {
+      "commodity": "Tritium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 792,
+      "value": 2048112,
+      "stolen": false,
+      "locName": "Tritium"
+    },
+    {
+      "commodity": "Tritium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 792,
+      "value": 2048112,
+      "stolen": false,
+      "locName": "Tritium"
+    },
+    {
+      "commodity": "Tritium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 792,
+      "value": 2048112,
+      "stolen": false,
+      "locName": "Tritium"
+    },
+    {
+      "commodity": "Tritium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 359,
+      "value": 928374,
+      "stolen": false,
+      "locName": "Tritium"
+    },
+    {
+      "commodity": "Tritium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 691,
+      "value": 1786926,
+      "stolen": false,
+      "locName": "Tritium"
+    },
+    {
+      "commodity": "Tritium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 792,
+      "value": 2048112,
+      "stolen": false,
+      "locName": "Tritium"
+    },
+    {
+      "commodity": "Tritium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 409,
+      "value": 2048112,
+      "stolen": false,
+      "locName": "Tritium"
+    },
+    {
+      "commodity": "Tritium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 383,
+      "value": 2047901,
+      "stolen": false,
+      "locName": "Tritium"
+    },
+    {
+      "commodity": "Tritium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 153,
+      "value": 395658,
+      "stolen": false,
+      "locName": "Tritium"
+    },
+    {
+      "commodity": "Gold",
+      "originSystem": null,
+      "mission": false,
+      "qty": 8,
+      "value": 393952,
+      "stolen": false,
+      "locName": "Gold"
+    },
+    {
+      "commodity": "Thargoidtitandrivecomponent",
+      "originSystem": 10477373803,
+      "mission": false,
+      "qty": 2,
+      "value": 0,
+      "stolen": false,
+      "locName": "Titan-Antriebskomponente"
+    },
+    {
+      "commodity": "Metaalloys",
+      "originSystem": 10477373803,
+      "mission": false,
+      "qty": 4,
+      "value": 0,
+      "stolen": false,
+      "locName": "Meta-Legierungen"
+    },
+    {
+      "commodity": "Tritium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 92,
+      "value": 237912,
+      "stolen": false,
+      "locName": "Tritium"
+    }
+  ],
+  "orders": {
+    "commodities": {
+      "sales": [
+        {
+          "name": "painite",
+          "stock": "0",
+          "price": "2417",
+          "blackmarket": false
+        },
+        {
+          "name": "bromellite",
+          "stock": "0",
+          "price": "1525",
+          "blackmarket": false
+        },
+        {
+          "name": "methanolmonohydratecrystals",
+          "stock": "0",
+          "price": "125",
+          "blackmarket": false
+        },
+        {
+          "name": "methaneclathrate",
+          "stock": "0",
+          "price": "81",
+          "blackmarket": false
+        },
+        {
+          "name": "cmmcomposite",
+          "stock": "0",
+          "price": "299",
+          "blackmarket": false
+        },
+        {
+          "name": "thargoidtissuesampletype9a",
+          "stock": "0",
+          "price": "24927",
+          "blackmarket": false
+        }
+      ],
+      "purchases": []
+    },
+    "onfootmicroresources": {
+      "sales": [],
+      "purchases": []
+    }
+  },
+  "carrierLocker": {
+    "assets": [
+      {
+        "id": 128064021,
+        "quantity": 0,
+        "name": "graphene",
+        "locName": "Graphen"
+      },
+      {
+        "id": 128964025,
+        "quantity": 0,
+        "name": "microelectrode",
+        "locName": "Mikroelektrode"
+      },
+      {
+        "id": 128965845,
+        "quantity": 0,
+        "name": "weaponcomponent",
+        "locName": "Waffenkomponente"
+      }
+    ],
+    "goods": [],
+    "data": []
+  },
+  "reputation": [
+    {
+      "majorFaction": "empire",
+      "score": 100
+    },
+    {
+      "majorFaction": "federation",
+      "score": 100
+    },
+    {
+      "majorFaction": "independent",
+      "score": 100
+    },
+    {
+      "majorFaction": "alliance",
+      "score": 100
+    }
+  ],
+  "market": {
+    "id": 123,
+    "name": "123",
+    "outpostType": "fleetcarrier",
+    "imported": [],
+    "exported": [],
+    "services": {
+      "commodities": "ok",
+      "carrierfuel": "ok",
+      "socialspace": "ok",
+      "refuel": "ok",
+      "repair": "ok",
+      "rearm": "ok",
+      "shipyard": "private",
+      "outfitting": "private",
+      "blackmarket": "unavailable",
+      "voucherredemption": "unavailable",
+      "exploration": "unavailable",
+      "bartender": "unavailable",
+      "vistagenomics": "unavailable",
+      "pioneersupplies": "unavailable",
+      "carriermanagement": "ok",
+      "stationmenu": "ok",
+      "dock": "ok",
+      "crewlounge": "ok",
+      "engineer": "ok",
+      "contacts": "ok",
+      "registeringcolonisation": "faction",
+      "livery": "private"
+    },
+    "economies": {
+      "136": {
+        "name": "Carrier",
+        "proportion": 1
+      }
+    },
+    "prohibited": [],
+    "commodities": [
+      {
+        "id": 128066403,
+        "categoryname": "NonMarketable",
+        "name": "Drones",
+        "stock": 999999,
+        "buyPrice": 95,
+        "sellPrice": 95,
+        "demand": 9999999,
+        "legality": "",
+        "meanPrice": 95,
+        "demandBracket": 2,
+        "stockBracket": 2,
+        "locName": "Drohne"
+      }
+    ]
+  },
+  "ships": {
+    "shipyard_list": [],
+    "discount_list": {
+      "architect": 0.97
+    }
+  },
+  "modules": []
+}

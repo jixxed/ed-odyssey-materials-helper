@@ -1,0 +1,492 @@
+{
+  "name": {
+    "callsign": "123",
+    "vanityName": "123",
+    "filteredVanityName": "123"
+  },
+  "currentStarSystem": "Calarum",
+  "balance": "5170719970",
+  "fuel": "801",
+  "state": "normalOperation",
+  "theme": "Salvage",
+  "dockingAccess": "none",
+  "notoriousAccess": true,
+  "capacity": {
+    "shipPacks": 0,
+    "modulePacks": 0,
+    "cargoForSale": 0,
+    "cargoNotForSale": 16,
+    "cargoSpaceReserved": 0,
+    "crew": 0,
+    "freeSpace": 24984,
+    "microresourceCapacityTotal": 1000,
+    "microresourceCapacityFree": 563,
+    "microresourceCapacityUsed": 437,
+    "microresourceCapacityReserved": 0
+  },
+  "itinerary": {
+    "completed": [
+      {
+        "departureTime": null,
+        "arrivalTime": "2025-03-06 23:01:00",
+        "state": "success",
+        "visitDurationSeconds": 6626070,
+        "starsystem": "Calarum"
+      }
+    ],
+    "totalDistanceJumpedLY": 0,
+    "currentJump": null
+  },
+  "marketFinances": {
+    "cargoTotalValue": 0,
+    "allTimeProfit": 0,
+    "numCommodsForSale": 0,
+    "numCommodsPurchaseOrders": 0,
+    "balanceAllocForPurchaseOrders": 0
+  },
+  "blackmarketFinances": {
+    "cargoTotalValue": 0,
+    "allTimeProfit": 0,
+    "numCommodsForSale": 0,
+    "numCommodsPurchaseOrders": 0,
+    "balanceAllocForPurchaseOrders": 0
+  },
+  "finance": {
+    "bankBalance": 5170719970,
+    "bankReservedBalance": 0,
+    "taxation": 0,
+    "service_taxation": {
+      "bartender": 0,
+      "pioneersupplies": 0,
+      "rearm": 0,
+      "refuel": 0,
+      "repair": 0,
+      "shipyard": 0,
+      "outfitting": 0
+    },
+    "numServices": 4,
+    "numOptionalServices": 0,
+    "debtThreshold": -300000000,
+    "maintenance": 5000000,
+    "maintenanceToDate": 5000000,
+    "coreCost": 5000000,
+    "servicesCost": 0,
+    "servicesCostToDate": 0,
+    "jumpsCost": 0,
+    "numJumps": 0,
+    "bartender": {
+      "microresourcesTotalValue": 355600,
+      "allTimeProfit": 0,
+      "microresourcesForSale": 0,
+      "microresourcesPurchaseOrders": 0,
+      "balanceAllocForPurchaseOrders": 0,
+      "profitHistory": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "servicesCrew": [],
+  "cargo": [
+    {
+      "commodity": "Unknownresin",
+      "originSystem": 1458443260610,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Resin"
+    },
+    {
+      "commodity": "Metaalloys",
+      "originSystem": 1458443260610,
+      "mission": false,
+      "qty": 4,
+      "value": 0,
+      "stolen": false,
+      "locName": "Meta-Alloys"
+    },
+    {
+      "commodity": "Unknownsack",
+      "originSystem": 1458443260610,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Protective Membrane Scrap"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype5",
+      "originSystem": 1458443260610,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Orthrus Tissue Sample"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype6",
+      "originSystem": 1458443260610,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Glaive Tissue Sample"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype7",
+      "originSystem": 1458443260610,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Scythe Tissue Sample"
+    },
+    {
+      "commodity": "Thargoidheart",
+      "originSystem": 1458443260610,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Heart"
+    },
+    {
+      "commodity": "Thargoidgeneratortissuesample",
+      "originSystem": 1458443260610,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Caustic Tissue Sample"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype9a",
+      "originSystem": 1458443260610,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Titan Deep Tissue Sample"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype9b",
+      "originSystem": 1458443260610,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Titan Tissue Sample"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype9c",
+      "originSystem": 1458443260610,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Titan Partial Tissue Sample"
+    },
+    {
+      "commodity": "Thargoidtitandrivecomponent",
+      "originSystem": 1458443260610,
+      "mission": false,
+      "qty": 2,
+      "value": 0,
+      "stolen": false,
+      "locName": "Titan Drive Component"
+    }
+  ],
+  "orders": {
+    "commodities": {
+      "sales": [],
+      "purchases": []
+    },
+    "onfootmicroresources": {
+      "sales": [],
+      "purchases": []
+    }
+  },
+  "carrierLocker": {
+    "assets": [
+      {
+        "id": 128961524,
+        "quantity": 30,
+        "name": "aerogel",
+        "locName": "Aerogel"
+      },
+      {
+        "id": 128961526,
+        "quantity": 20,
+        "name": "carbonfibreplating",
+        "locName": "Carbon Fibre Plating"
+      },
+      {
+        "id": 128961527,
+        "quantity": 4,
+        "name": "chemicalcatalyst",
+        "locName": "Chemical Catalyst"
+      },
+      {
+        "id": 128961528,
+        "quantity": 20,
+        "name": "chemicalsuperbase",
+        "locName": "Chemical Superbase"
+      },
+      {
+        "id": 128961529,
+        "quantity": 20,
+        "name": "circuitboard",
+        "locName": "Circuit Board"
+      },
+      {
+        "id": 128961530,
+        "quantity": 5,
+        "name": "circuitswitch",
+        "locName": "Circuit Switch"
+      },
+      {
+        "id": 128961531,
+        "quantity": 20,
+        "name": "electricalfuse",
+        "locName": "Electrical Fuse"
+      },
+      {
+        "id": 128961532,
+        "quantity": 20,
+        "name": "electricalwiring",
+        "locName": "Electrical Wiring"
+      },
+      {
+        "id": 128961533,
+        "quantity": 10,
+        "name": "encryptedmemorychip",
+        "locName": "Encrypted Memory Chip"
+      },
+      {
+        "id": 128961534,
+        "quantity": 20,
+        "name": "epoxyadhesive",
+        "locName": "Epoxy Adhesive"
+      },
+      {
+        "id": 128961537,
+        "quantity": 20,
+        "name": "memorychip",
+        "locName": "Memory Chip"
+      },
+      {
+        "id": 128961538,
+        "quantity": 10,
+        "name": "metalcoil",
+        "locName": "Metal Coil"
+      },
+      {
+        "id": 128961540,
+        "quantity": 20,
+        "name": "microsupercapacitor",
+        "locName": "Micro Supercapacitor"
+      },
+      {
+        "id": 128961541,
+        "quantity": 10,
+        "name": "microthrusters",
+        "locName": "Micro Thrusters"
+      },
+      {
+        "id": 128961542,
+        "quantity": 10,
+        "name": "microtransformer",
+        "locName": "Micro Transformer"
+      },
+      {
+        "id": 128961543,
+        "quantity": 10,
+        "name": "motor",
+        "locName": "Motor"
+      },
+      {
+        "id": 128961544,
+        "quantity": 10,
+        "name": "opticalfibre",
+        "locName": "Optical Fibre"
+      },
+      {
+        "id": 128961545,
+        "quantity": 10,
+        "name": "opticallens",
+        "locName": "Optical Lens"
+      },
+      {
+        "id": 128961547,
+        "quantity": 10,
+        "name": "scrambler",
+        "locName": "Scrambler"
+      },
+      {
+        "id": 128961549,
+        "quantity": 5,
+        "name": "titaniumplating",
+        "locName": "Titanium Plating"
+      },
+      {
+        "id": 128961550,
+        "quantity": 20,
+        "name": "transmitter",
+        "locName": "Transmitter"
+      },
+      {
+        "id": 128961551,
+        "quantity": 10,
+        "name": "tungstencarbide",
+        "locName": "Tungsten Carbide"
+      },
+      {
+        "id": 128961552,
+        "quantity": 10,
+        "name": "viscoelasticpolymer",
+        "locName": "Viscoelastic Polymer"
+      },
+      {
+        "id": 128962572,
+        "quantity": 10,
+        "name": "rdx",
+        "locName": "RDX"
+      },
+      {
+        "id": 128962573,
+        "quantity": 10,
+        "name": "electromagnet",
+        "locName": "Electromagnet"
+      },
+      {
+        "id": 128962574,
+        "quantity": 10,
+        "name": "oxygenicbacteria",
+        "locName": "Oxygenic Bacteria"
+      },
+      {
+        "id": 128962575,
+        "quantity": 10,
+        "name": "epinephrine",
+        "locName": "Epinephrine"
+      },
+      {
+        "id": 128962576,
+        "quantity": 10,
+        "name": "phneutraliser",
+        "locName": "pH Neutraliser"
+      },
+      {
+        "id": 128964025,
+        "quantity": 10,
+        "name": "microelectrode",
+        "locName": "Microelectrode"
+      },
+      {
+        "id": 128965844,
+        "quantity": 10,
+        "name": "ionbattery",
+        "locName": "Ion Battery"
+      },
+      {
+        "id": 128965845,
+        "quantity": 40,
+        "name": "weaponcomponent",
+        "locName": "Weapon Component"
+      }
+    ],
+    "goods": [
+      {
+        "id": 128965842,
+        "quantity": 3,
+        "name": "largecapacitypowerregulator",
+        "locName": "Power Regulator"
+      }
+    ],
+    "data": []
+  },
+  "reputation": [
+    {
+      "majorFaction": "empire",
+      "score": 100
+    },
+    {
+      "majorFaction": "federation",
+      "score": 100
+    },
+    {
+      "majorFaction": "independent",
+      "score": 100
+    },
+    {
+      "majorFaction": "alliance",
+      "score": 100
+    }
+  ],
+  "market": {
+    "id": 123,
+    "name": "123",
+    "outpostType": "fleetcarrier",
+    "imported": [],
+    "exported": [],
+    "services": {
+      "commodities": "ok",
+      "carrierfuel": "ok",
+      "socialspace": "ok",
+      "refuel": "unavailable",
+      "repair": "unavailable",
+      "rearm": "unavailable",
+      "shipyard": "private",
+      "outfitting": "private",
+      "blackmarket": "unavailable",
+      "voucherredemption": "unavailable",
+      "exploration": "unavailable",
+      "bartender": "unavailable",
+      "vistagenomics": "unavailable",
+      "pioneersupplies": "unavailable",
+      "carriermanagement": "ok",
+      "stationmenu": "ok",
+      "dock": "ok",
+      "crewlounge": "ok",
+      "engineer": "ok",
+      "contacts": "ok",
+      "registeringcolonisation": "faction",
+      "livery": "private"
+    },
+    "economies": {
+      "136": {
+        "name": "Carrier",
+        "proportion": 1
+      }
+    },
+    "prohibited": [],
+    "commodities": [
+      {
+        "id": 128066403,
+        "categoryname": "NonMarketable",
+        "name": "Drones",
+        "stock": 999999,
+        "buyPrice": 95,
+        "sellPrice": 95,
+        "demand": 9999999,
+        "legality": "",
+        "meanPrice": 95,
+        "demandBracket": 2,
+        "stockBracket": 2,
+        "locName": "Limpet"
+      }
+    ]
+  },
+  "ships": {
+    "shipyard_list": [],
+    "discount_list": []
+  },
+  "modules": []
+}

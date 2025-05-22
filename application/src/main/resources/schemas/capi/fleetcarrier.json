@@ -410,10 +410,7 @@
       ]
     },
     "servicesCrew": {
-      "type": [
-        "object",
-        "array"
-      ],
+      "type": "object",
       "properties": {
         "refuel": {
           "$ref": "#/definitions/crewService"
@@ -564,44 +561,11 @@
           "type": "object",
           "properties": {
             "sales": {
-              "type": [
-                "object",
-                "array"
-              ],
-              "additionalProperties": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "integer"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "locName": {
-                    "type": "string"
-                  },
-                  "price": {
-                    "type": "number"
-                  },
-                  "stock": {
-                    "type": "integer"
-                  }
-                },
-                "required": [
-                  "id",
-                  "name",
-                  "locName",
-                  "price",
-                  "stock"
-                ],
-                "additionalProperties": false
-              }
+              "type": "object",
+              "existingJavaType": "java.util.Map<String,SaleItem>"
             },
             "purchases": {
-              "type": [
-                "object",
-                "array"
-              ],
+              "type": "array",
               "items": {
                 "type": "object",
                 "properties": {
@@ -863,35 +827,12 @@
           ]
         },
         "economies": {
-          "type": [
-            "object",
-            "array"
-          ],
-          "additionalProperties": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "proportion": {
-                "type": "number"
-              }
-            },
-            "required": [
-              "name",
-              "proportion"
-            ],
-            "additionalProperties": false
-          }
+          "type": "object",
+          "existingJavaType": "java.util.Map<String,Economy>"
         },
         "prohibited": {
-          "type": [
-            "object",
-            "array"
-          ],
-          "additionalProperties": {
-            "type": "string"
-          }
+          "type": "object",
+          "existingJavaType": "java.util.Map<String,String>"
         },
         "commodities": {
           "type": "array",
@@ -974,91 +915,21 @@
       "type": "object",
       "properties": {
         "shipyard_list": {
-          "type": [
-            "object",
-            "array"
-          ],
-          "additionalProperties": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "integer"
-              },
-              "name": {
-                "type": "string"
-              },
-              "basevalue": {
-                "type": "number"
-              },
-              "sku": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "id",
-              "name",
-              "basevalue",
-              "sku"
-            ],
-            "additionalProperties": false
-          }
+          "type": "object",
+          "existingJavaType": "java.util.Map<String,Ship>"
         },
         "discount_list": {
-          "type": [
-            "object",
-            "array"
-          ],
-          "additionalProperties": {
-            "type": "number",
-            "additionalProperties": false
-          }
+          "type": "object",
+          "existingJavaType": "java.util.Map<String,java.math.BigDecimal>"
         }
       },
       "required": [
         "shipyard_list"
-      ],
-      "additionalProperties": false
+      ]
     },
     "modules": {
-      "type": [
-        "object",
-        "array"
-      ],
-      "additionalProperties": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "category": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "cost": {
-            "type": "number"
-          },
-          "sku": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "stock": {
-            "type": "integer"
-          }
-        },
-        "required": [
-          "id",
-          "category",
-          "name",
-          "cost",
-          "sku",
-          "stock"
-        ],
-        "additionalProperties": false
-      }
+      "type": "object",
+      "existingJavaType": "java.util.Map<String,Module>"
     }
   },
   "required": [

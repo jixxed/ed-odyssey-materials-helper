@@ -1,0 +1,2737 @@
+{
+  "name": {
+    "callsign": "123",
+    "vanityName": "123",
+    "filteredVanityName": "123"
+  },
+  "currentStarSystem": "HIP 42970",
+  "balance": "1592432589",
+  "fuel": "106",
+  "state": "normalOperation",
+  "theme": "Trader",
+  "dockingAccess": "squadronfriends",
+  "notoriousAccess": true,
+  "capacity": {
+    "shipPacks": 4950,
+    "modulePacks": 105,
+    "cargoForSale": 10498,
+    "cargoNotForSale": 2826,
+    "cargoSpaceReserved": 1,
+    "crew": 6620,
+    "freeSpace": 0,
+    "microresourceCapacityTotal": 1000,
+    "microresourceCapacityFree": 207,
+    "microresourceCapacityUsed": 793,
+    "microresourceCapacityReserved": 1
+  },
+  "itinerary": {
+    "completed": [
+      {
+        "departureTime": "2025-05-06 11:03:00",
+        "arrivalTime": "2025-04-12 18:55:00",
+        "state": "success",
+        "visitDurationSeconds": 2045280,
+        "starsystem": "Col 285 Sector PI-R b18-1"
+      },
+      {
+        "departureTime": "2025-05-06 11:38:00",
+        "arrivalTime": "2025-05-06 11:03:00",
+        "state": "success",
+        "visitDurationSeconds": 2100,
+        "starsystem": "Puppis Sector FB-X b1-2"
+      },
+      {
+        "departureTime": "2025-05-11 16:40:00",
+        "arrivalTime": "2025-05-06 11:38:00",
+        "state": "success",
+        "visitDurationSeconds": 450120,
+        "starsystem": "LP 911-13"
+      },
+      {
+        "departureTime": "2025-05-12 16:34:00",
+        "arrivalTime": "2025-05-11 16:40:00",
+        "state": "success",
+        "visitDurationSeconds": 86040,
+        "starsystem": "LHS 3388"
+      },
+      {
+        "departureTime": "2025-05-13 11:21:00",
+        "arrivalTime": "2025-05-12 16:34:00",
+        "state": "success",
+        "visitDurationSeconds": 67620,
+        "starsystem": "LHS 3388"
+      },
+      {
+        "departureTime": "2025-05-13 13:16:00",
+        "arrivalTime": "2025-05-13 11:21:00",
+        "state": "success",
+        "visitDurationSeconds": 6900,
+        "starsystem": "Kipsigines"
+      },
+      {
+        "departureTime": "2025-05-13 23:12:00",
+        "arrivalTime": "2025-05-13 13:16:00",
+        "state": "success",
+        "visitDurationSeconds": 35760,
+        "starsystem": "LHS 3388"
+      },
+      {
+        "departureTime": "2025-05-14 11:07:00",
+        "arrivalTime": "2025-05-13 23:12:00",
+        "state": "success",
+        "visitDurationSeconds": 42900,
+        "starsystem": "Kipsigines"
+      },
+      {
+        "departureTime": "2025-05-14 19:30:00",
+        "arrivalTime": "2025-05-14 11:07:00",
+        "state": "success",
+        "visitDurationSeconds": 30180,
+        "starsystem": "LHS 3388"
+      },
+      {
+        "departureTime": "2025-05-15 19:30:00",
+        "arrivalTime": "2025-05-14 19:30:00",
+        "state": "success",
+        "visitDurationSeconds": 86400,
+        "starsystem": "Kipsigines"
+      },
+      {
+        "departureTime": "2025-05-15 21:53:00",
+        "arrivalTime": "2025-05-15 19:30:00",
+        "state": "success",
+        "visitDurationSeconds": 8580,
+        "starsystem": "Harow"
+      },
+      {
+        "departureTime": "2025-05-16 17:53:00",
+        "arrivalTime": "2025-05-15 21:53:00",
+        "state": "success",
+        "visitDurationSeconds": 72000,
+        "starsystem": "HIP 42970"
+      },
+      {
+        "departureTime": "2025-05-16 18:45:00",
+        "arrivalTime": "2025-05-16 17:53:00",
+        "state": "success",
+        "visitDurationSeconds": 3120,
+        "starsystem": "Bletii"
+      },
+      {
+        "departureTime": "2025-05-16 19:51:00",
+        "arrivalTime": "2025-05-16 18:45:00",
+        "state": "success",
+        "visitDurationSeconds": 3960,
+        "starsystem": "Minerva"
+      },
+      {
+        "departureTime": "2025-05-17 10:23:00",
+        "arrivalTime": "2025-05-16 19:51:00",
+        "state": "success",
+        "visitDurationSeconds": 52320,
+        "starsystem": "Bletii"
+      },
+      {
+        "departureTime": "2025-05-17 10:44:00",
+        "arrivalTime": "2025-05-17 10:23:00",
+        "state": "success",
+        "visitDurationSeconds": 1260,
+        "starsystem": "HIP 42970"
+      },
+      {
+        "departureTime": null,
+        "arrivalTime": "2025-05-17 10:44:00",
+        "state": "success",
+        "visitDurationSeconds": 11981,
+        "starsystem": "HIP 42970"
+      }
+    ],
+    "totalDistanceJumpedLY": 1946,
+    "currentJump": null
+  },
+  "marketFinances": {
+    "cargoTotalValue": 257039238,
+    "allTimeProfit": 5473226419,
+    "numCommodsForSale": 22,
+    "numCommodsPurchaseOrders": 1,
+    "balanceAllocForPurchaseOrders": 8134
+  },
+  "blackmarketFinances": {
+    "cargoTotalValue": 0,
+    "allTimeProfit": 0,
+    "numCommodsForSale": 0,
+    "numCommodsPurchaseOrders": 0,
+    "balanceAllocForPurchaseOrders": 0
+  },
+  "finance": {
+    "bankBalance": 1592432589,
+    "bankReservedBalance": 497600702,
+    "taxation": 0,
+    "service_taxation": {
+      "bartender": 0,
+      "pioneersupplies": 100,
+      "rearm": 100,
+      "refuel": 100,
+      "repair": 100,
+      "shipyard": 100,
+      "outfitting": 100
+    },
+    "numServices": 14,
+    "numOptionalServices": 3,
+    "debtThreshold": -300000000,
+    "maintenance": 35560765,
+    "maintenanceToDate": 15426768,
+    "coreCost": 5000000,
+    "servicesCost": 29860765,
+    "servicesCostToDate": 9726768,
+    "jumpsCost": 700000,
+    "numJumps": 7,
+    "bartender": {
+      "microresourcesTotalValue": 7362000,
+      "allTimeProfit": 0,
+      "microresourcesForSale": 1,
+      "microresourcesPurchaseOrders": 2,
+      "balanceAllocForPurchaseOrders": 8000,
+      "profitHistory": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "servicesCrew": {
+    "refuel": {
+      "crewMember": {
+        "name": "Abby Stanley",
+        "gender": "F",
+        "enabled": "YES",
+        "faction": "independent",
+        "salary": 1500000,
+        "hiringPrice": null,
+        "lastEdit": "2025-05-15 07:30:02"
+      },
+      "invoicesWeekToDate": [
+        {
+          "wages": 487150,
+          "from": "2025-05-15 07:30:02",
+          "until": "2025-05-17 14:03:40",
+          "type": "current"
+        },
+        {
+          "wages": 1495530,
+          "from": "2025-05-17 14:03:40",
+          "until": "2025-05-22 07:00:00",
+          "type": "expected"
+        }
+      ],
+      "status": "ok"
+    },
+    "repair": {
+      "crewMember": {
+        "name": "Dalary Sanchez",
+        "gender": "F",
+        "enabled": "YES",
+        "faction": "independent",
+        "salary": 1500000,
+        "hiringPrice": null,
+        "lastEdit": "2025-05-15 07:30:02"
+      },
+      "invoicesWeekToDate": [
+        {
+          "wages": 487150,
+          "from": "2025-05-15 07:30:02",
+          "until": "2025-05-17 14:03:40",
+          "type": "current"
+        },
+        {
+          "wages": 1495530,
+          "from": "2025-05-17 14:03:40",
+          "until": "2025-05-22 07:00:00",
+          "type": "expected"
+        }
+      ],
+      "status": "ok"
+    },
+    "rearm": {
+      "crewMember": {
+        "name": "Ernest Burch",
+        "gender": "M",
+        "enabled": "YES",
+        "faction": "independent",
+        "salary": 1500000,
+        "hiringPrice": null,
+        "lastEdit": "2025-05-15 07:30:02"
+      },
+      "invoicesWeekToDate": [
+        {
+          "wages": 487150,
+          "from": "2025-05-15 07:30:02",
+          "until": "2025-05-17 14:03:40",
+          "type": "current"
+        },
+        {
+          "wages": 1495530,
+          "from": "2025-05-17 14:03:40",
+          "until": "2025-05-22 07:00:00",
+          "type": "expected"
+        }
+      ],
+      "status": "ok"
+    },
+    "shipyard": {
+      "crewMember": {
+        "name": "Jacques Mcclure",
+        "gender": "M",
+        "enabled": "YES",
+        "faction": "independent",
+        "salary": 6500000,
+        "hiringPrice": 250000000,
+        "lastEdit": "2025-05-15 07:30:02"
+      },
+      "invoicesWeekToDate": [
+        {
+          "wages": 2110984,
+          "from": "2025-05-15 07:30:02",
+          "until": "2025-05-17 14:03:40",
+          "type": "current"
+        },
+        {
+          "wages": 6480633,
+          "from": "2025-05-17 14:03:40",
+          "until": "2025-05-22 07:00:00",
+          "type": "expected"
+        }
+      ],
+      "status": "ok"
+    },
+    "outfitting": {
+      "crewMember": {
+        "name": "Damon Hess",
+        "gender": "M",
+        "enabled": "YES",
+        "faction": "independent",
+        "salary": 5000000,
+        "hiringPrice": 250000000,
+        "lastEdit": "2025-05-15 07:30:02"
+      },
+      "invoicesWeekToDate": [
+        {
+          "wages": 1623834,
+          "from": "2025-05-15 07:30:02",
+          "until": "2025-05-17 14:03:40",
+          "type": "current"
+        },
+        {
+          "wages": 4985102,
+          "from": "2025-05-17 14:03:40",
+          "until": "2025-05-22 07:00:00",
+          "type": "expected"
+        }
+      ],
+      "status": "ok"
+    },
+    "blackmarket": {
+      "crewMember": {
+        "name": "Casey Jimenez",
+        "gender": "M",
+        "enabled": "YES",
+        "faction": "independent",
+        "salary": 2000000,
+        "hiringPrice": 165000000,
+        "lastEdit": "2025-05-15 07:30:02"
+      },
+      "invoicesWeekToDate": [
+        {
+          "wages": 649533,
+          "from": "2025-05-15 07:30:02",
+          "until": "2025-05-17 14:03:40",
+          "type": "current"
+        },
+        {
+          "wages": 1994041,
+          "from": "2025-05-17 14:03:40",
+          "until": "2025-05-22 07:00:00",
+          "type": "expected"
+        }
+      ],
+      "status": "ok"
+    },
+    "voucherredemption": {
+      "crewMember": {
+        "name": "Lilia Kent",
+        "gender": "F",
+        "enabled": "YES",
+        "faction": "independent",
+        "salary": 1850000,
+        "hiringPrice": 150000000,
+        "lastEdit": "2025-05-15 07:30:02"
+      },
+      "invoicesWeekToDate": [
+        {
+          "wages": 600818,
+          "from": "2025-05-15 07:30:02",
+          "until": "2025-05-17 14:03:40",
+          "type": "current"
+        },
+        {
+          "wages": 1844487,
+          "from": "2025-05-17 14:03:40",
+          "until": "2025-05-22 07:00:00",
+          "type": "expected"
+        }
+      ],
+      "status": "ok"
+    },
+    "exploration": {
+      "crewMember": {
+        "name": "Analiyah Paul",
+        "gender": "F",
+        "enabled": "YES",
+        "faction": "independent",
+        "salary": 1850000,
+        "hiringPrice": 150000000,
+        "lastEdit": "2025-05-15 07:30:02"
+      },
+      "invoicesWeekToDate": [
+        {
+          "wages": 600818,
+          "from": "2025-05-15 07:30:02",
+          "until": "2025-05-17 14:03:40",
+          "type": "current"
+        },
+        {
+          "wages": 1844487,
+          "from": "2025-05-17 14:03:40",
+          "until": "2025-05-22 07:00:00",
+          "type": "expected"
+        }
+      ],
+      "status": "ok"
+    },
+    "bartender": {
+      "crewMember": {
+        "name": "Kendall Rutledge",
+        "gender": "F",
+        "enabled": "YES",
+        "faction": "independent",
+        "salary": 1750000,
+        "hiringPrice": 200000000,
+        "lastEdit": "2025-05-15 07:30:02"
+      },
+      "invoicesWeekToDate": [
+        {
+          "wages": 568342,
+          "from": "2025-05-15 07:30:02",
+          "until": "2025-05-17 14:03:40",
+          "type": "current"
+        },
+        {
+          "wages": 1744785,
+          "from": "2025-05-17 14:03:40",
+          "until": "2025-05-22 07:00:00",
+          "type": "expected"
+        }
+      ],
+      "status": "ok"
+    },
+    "vistagenomics": {
+      "crewMember": {
+        "name": "Paloma Bailey",
+        "gender": "F",
+        "enabled": "YES",
+        "faction": "independent",
+        "salary": 1500000,
+        "hiringPrice": 150000000,
+        "lastEdit": "2025-05-15 07:30:02"
+      },
+      "invoicesWeekToDate": [
+        {
+          "wages": 487150,
+          "from": "2025-05-15 07:30:02",
+          "until": "2025-05-17 14:03:40",
+          "type": "current"
+        },
+        {
+          "wages": 1495530,
+          "from": "2025-05-17 14:03:40",
+          "until": "2025-05-22 07:00:00",
+          "type": "expected"
+        }
+      ],
+      "status": "ok"
+    },
+    "pioneersupplies": {
+      "crewMember": {
+        "name": "Emil Dominguez",
+        "gender": "M",
+        "enabled": "YES",
+        "faction": "independent",
+        "salary": 5000000,
+        "hiringPrice": 250000000,
+        "lastEdit": "2025-05-15 07:30:02"
+      },
+      "invoicesWeekToDate": [
+        {
+          "wages": 1623834,
+          "from": "2025-05-15 07:30:02",
+          "until": "2025-05-17 14:03:40",
+          "type": "current"
+        },
+        {
+          "wages": 4985102,
+          "from": "2025-05-17 14:03:40",
+          "until": "2025-05-22 07:00:00",
+          "type": "expected"
+        }
+      ],
+      "status": "ok"
+    }
+  },
+  "cargo": [
+    {
+      "commodity": "Ancientkey",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Ancient Key"
+    },
+    {
+      "commodity": "Ancientkey",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Ancient Key"
+    },
+    {
+      "commodity": "Ancientkey",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Ancient Key"
+    },
+    {
+      "commodity": "Ancientkey",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Ancient Key"
+    },
+    {
+      "commodity": "Ancientcasket",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Guardian Casket"
+    },
+    {
+      "commodity": "Ancientcasket",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Guardian Casket"
+    },
+    {
+      "commodity": "Ancienttablet",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Guardian Tablet"
+    },
+    {
+      "commodity": "Ancientorb",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Guardian Orb"
+    },
+    {
+      "commodity": "Ancientorb",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Guardian Orb"
+    },
+    {
+      "commodity": "Ancienturn",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Guardian Urn"
+    },
+    {
+      "commodity": "Ancienttotem",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Guardian Totem"
+    },
+    {
+      "commodity": "Thargoidheart",
+      "originSystem": null,
+      "mission": false,
+      "qty": 3,
+      "value": 4199250,
+      "stolen": false,
+      "locName": "Thargoid Heart"
+    },
+    {
+      "commodity": "Thermalcoolingunits",
+      "originSystem": null,
+      "mission": false,
+      "qty": 3,
+      "value": 9375,
+      "stolen": false,
+      "locName": "Thermal Cooling Units"
+    },
+    {
+      "commodity": "Thermalcoolingunits",
+      "originSystem": null,
+      "mission": false,
+      "qty": 2,
+      "value": 6250,
+      "stolen": false,
+      "locName": "Thermal Cooling Units"
+    },
+    {
+      "commodity": "Hnshockmount",
+      "originSystem": null,
+      "mission": false,
+      "qty": 11,
+      "value": 16060,
+      "stolen": false,
+      "locName": "HN Shock Mount"
+    },
+    {
+      "commodity": "Metaalloys",
+      "originSystem": null,
+      "mission": false,
+      "qty": 19,
+      "value": 28415070,
+      "stolen": false,
+      "locName": "Meta-Alloys"
+    },
+    {
+      "commodity": "Metaalloys",
+      "originSystem": null,
+      "mission": false,
+      "qty": 24,
+      "value": 35892720,
+      "stolen": false,
+      "locName": "Meta-Alloys"
+    },
+    {
+      "commodity": "Metaalloys",
+      "originSystem": null,
+      "mission": false,
+      "qty": 9,
+      "value": 13459770,
+      "stolen": false,
+      "locName": "Meta-Alloys"
+    },
+    {
+      "commodity": "Neofabricinsulation",
+      "originSystem": null,
+      "mission": false,
+      "qty": 2,
+      "value": 119500,
+      "stolen": false,
+      "locName": "Neofabric Insulation"
+    },
+    {
+      "commodity": "Neofabricinsulation",
+      "originSystem": null,
+      "mission": false,
+      "qty": 2,
+      "value": 119500,
+      "stolen": false,
+      "locName": "Neofabric Insulation"
+    },
+    {
+      "commodity": "Neofabricinsulation",
+      "originSystem": null,
+      "mission": false,
+      "qty": 32,
+      "value": 1912000,
+      "stolen": false,
+      "locName": "Neofabric Insulation"
+    },
+    {
+      "commodity": "Neofabricinsulation",
+      "originSystem": null,
+      "mission": false,
+      "qty": 37,
+      "value": 2210750,
+      "stolen": false,
+      "locName": "Neofabric Insulation"
+    },
+    {
+      "commodity": "Radiationbaffle",
+      "originSystem": null,
+      "mission": false,
+      "qty": 24,
+      "value": 383760,
+      "stolen": false,
+      "locName": "Radiation Baffle"
+    },
+    {
+      "commodity": "Radiationbaffle",
+      "originSystem": null,
+      "mission": false,
+      "qty": 76,
+      "value": 1215240,
+      "stolen": false,
+      "locName": "Radiation Baffle"
+    },
+    {
+      "commodity": "Thermalcoolingunits",
+      "originSystem": null,
+      "mission": false,
+      "qty": 29,
+      "value": 434710,
+      "stolen": false,
+      "locName": "Thermal Cooling Units"
+    },
+    {
+      "commodity": "Coolinghoses",
+      "originSystem": null,
+      "mission": false,
+      "qty": 7,
+      "value": 131950,
+      "stolen": false,
+      "locName": "Micro-weave Cooling Hoses"
+    },
+    {
+      "commodity": "Powergridassembly",
+      "originSystem": null,
+      "mission": false,
+      "qty": 29,
+      "value": 192821,
+      "stolen": false,
+      "locName": "Energy Grid Assembly"
+    },
+    {
+      "commodity": "Diagnosticsensor",
+      "originSystem": null,
+      "mission": false,
+      "qty": 29,
+      "value": 487983,
+      "stolen": false,
+      "locName": "Hardware Diagnostic Sensor"
+    },
+    {
+      "commodity": "Microcontrollers",
+      "originSystem": null,
+      "mission": false,
+      "qty": 57,
+      "value": 797430,
+      "stolen": false,
+      "locName": "Micro Controllers"
+    },
+    {
+      "commodity": "Iondistributor",
+      "originSystem": null,
+      "mission": false,
+      "qty": 8,
+      "value": 56824,
+      "stolen": false,
+      "locName": "Ion Distributor"
+    },
+    {
+      "commodity": "Powerconverter",
+      "originSystem": null,
+      "mission": false,
+      "qty": 51,
+      "value": 183243,
+      "stolen": false,
+      "locName": "Power Converter"
+    },
+    {
+      "commodity": "Reinforcedmountingplate",
+      "originSystem": null,
+      "mission": false,
+      "qty": 29,
+      "value": 231826,
+      "stolen": false,
+      "locName": "Reinforced Mounting Plate"
+    },
+    {
+      "commodity": "Radiationbaffle",
+      "originSystem": null,
+      "mission": false,
+      "qty": 50,
+      "value": 268850,
+      "stolen": false,
+      "locName": "Radiation Baffle"
+    },
+    {
+      "commodity": "Heatsinkinterlink",
+      "originSystem": null,
+      "mission": false,
+      "qty": 28,
+      "value": 147560,
+      "stolen": false,
+      "locName": "Heatsink Interlink"
+    },
+    {
+      "commodity": "Magneticemittercoil",
+      "originSystem": null,
+      "mission": false,
+      "qty": 23,
+      "value": 93771,
+      "stolen": false,
+      "locName": "Magnetic Emitter Coil"
+    },
+    {
+      "commodity": "Hnshockmount",
+      "originSystem": null,
+      "mission": false,
+      "qty": 26,
+      "value": 125372,
+      "stolen": false,
+      "locName": "HN Shock Mount"
+    },
+    {
+      "commodity": "Hnshockmount",
+      "originSystem": null,
+      "mission": false,
+      "qty": 24,
+      "value": 115728,
+      "stolen": false,
+      "locName": "HN Shock Mount"
+    },
+    {
+      "commodity": "Powerconverter",
+      "originSystem": null,
+      "mission": false,
+      "qty": 12,
+      "value": 43116,
+      "stolen": false,
+      "locName": "Power Converter"
+    },
+    {
+      "commodity": "Reinforcedmountingplate",
+      "originSystem": null,
+      "mission": false,
+      "qty": 3,
+      "value": 23982,
+      "stolen": false,
+      "locName": "Reinforced Mounting Plate"
+    },
+    {
+      "commodity": "Thermalcoolingunits",
+      "originSystem": null,
+      "mission": false,
+      "qty": 6,
+      "value": 18750,
+      "stolen": false,
+      "locName": "Thermal Cooling Units"
+    },
+    {
+      "commodity": "Metaalloys",
+      "originSystem": null,
+      "mission": false,
+      "qty": 10,
+      "value": 14955300,
+      "stolen": false,
+      "locName": "Meta-Alloys"
+    },
+    {
+      "commodity": "Metaalloys",
+      "originSystem": null,
+      "mission": false,
+      "qty": 4,
+      "value": 5982120,
+      "stolen": false,
+      "locName": "Meta-Alloys"
+    },
+    {
+      "commodity": "Powertransferconduits",
+      "originSystem": null,
+      "mission": false,
+      "qty": 47,
+      "value": 312174,
+      "stolen": false,
+      "locName": "Power Transfer Bus"
+    },
+    {
+      "commodity": "Powertransferconduits",
+      "originSystem": null,
+      "mission": false,
+      "qty": 16,
+      "value": 106272,
+      "stolen": false,
+      "locName": "Power Transfer Bus"
+    },
+    {
+      "commodity": "Microcontrollers",
+      "originSystem": null,
+      "mission": false,
+      "qty": 12,
+      "value": 167880,
+      "stolen": false,
+      "locName": "Micro Controllers"
+    },
+    {
+      "commodity": "Iondistributor",
+      "originSystem": null,
+      "mission": false,
+      "qty": 50,
+      "value": 355150,
+      "stolen": false,
+      "locName": "Ion Distributor"
+    },
+    {
+      "commodity": "Powerconverter",
+      "originSystem": null,
+      "mission": false,
+      "qty": 14,
+      "value": 50302,
+      "stolen": false,
+      "locName": "Power Converter"
+    },
+    {
+      "commodity": "Reinforcedmountingplate",
+      "originSystem": null,
+      "mission": false,
+      "qty": 46,
+      "value": 367724,
+      "stolen": false,
+      "locName": "Reinforced Mounting Plate"
+    },
+    {
+      "commodity": "Articulationmotors",
+      "originSystem": null,
+      "mission": false,
+      "qty": 6,
+      "value": 414000,
+      "stolen": false,
+      "locName": "Articulation Motors"
+    },
+    {
+      "commodity": "Articulationmotors",
+      "originSystem": null,
+      "mission": false,
+      "qty": 6,
+      "value": 414000,
+      "stolen": false,
+      "locName": "Articulation Motors"
+    },
+    {
+      "commodity": "Metaalloys",
+      "originSystem": null,
+      "mission": false,
+      "qty": 2,
+      "value": 0,
+      "stolen": false,
+      "locName": "Meta-Alloys"
+    },
+    {
+      "commodity": "Metaalloys",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 1495530,
+      "stolen": false,
+      "locName": "Meta-Alloys"
+    },
+    {
+      "commodity": "Metaalloys",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 1495530,
+      "stolen": false,
+      "locName": "Meta-Alloys"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype2",
+      "originSystem": null,
+      "mission": false,
+      "qty": 4,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Basilisk Tissue Sample"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype3",
+      "originSystem": null,
+      "mission": false,
+      "qty": 7,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Medusa Tissue Sample"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype1",
+      "originSystem": null,
+      "mission": false,
+      "qty": 6,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Cyclops Tissue Sample"
+    },
+    {
+      "commodity": "Unknownartifact",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Sensor"
+    },
+    {
+      "commodity": "Unknownartifact",
+      "originSystem": null,
+      "mission": false,
+      "qty": 2,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Sensor"
+    },
+    {
+      "commodity": "Thargoidscouttissuesample",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 237310,
+      "stolen": false,
+      "locName": "Thargoid Scout Tissue Sample"
+    },
+    {
+      "commodity": "Unknownartifact3",
+      "originSystem": null,
+      "mission": false,
+      "qty": 14,
+      "value": 7268800,
+      "stolen": false,
+      "locName": "Thargoid Link"
+    },
+    {
+      "commodity": "Unknowntechnologysamples",
+      "originSystem": null,
+      "mission": false,
+      "qty": 5,
+      "value": 1996500,
+      "stolen": false,
+      "locName": "Thargoid Technology Samples"
+    },
+    {
+      "commodity": "Unknownartifact",
+      "originSystem": null,
+      "mission": false,
+      "qty": 3,
+      "value": 9187560,
+      "stolen": false,
+      "locName": "Thargoid Sensor"
+    },
+    {
+      "commodity": "Unknownresin",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Resin"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype1",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 632720,
+      "stolen": false,
+      "locName": "Thargoid Cyclops Tissue Sample"
+    },
+    {
+      "commodity": "Thargoidscouttissuesample",
+      "originSystem": null,
+      "mission": false,
+      "qty": 2,
+      "value": 474620,
+      "stolen": false,
+      "locName": "Thargoid Scout Tissue Sample"
+    },
+    {
+      "commodity": "Unknownresin",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Resin"
+    },
+    {
+      "commodity": "Metaalloys",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 1495530,
+      "stolen": false,
+      "locName": "Meta-Alloys"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype1",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Cyclops Tissue Sample"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype2",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Basilisk Tissue Sample"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype3",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Medusa Tissue Sample"
+    },
+    {
+      "commodity": "Thargoidscouttissuesample",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 237310,
+      "stolen": false,
+      "locName": "Thargoid Scout Tissue Sample"
+    },
+    {
+      "commodity": "Thargoidheart",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 1399750,
+      "stolen": false,
+      "locName": "Thargoid Heart"
+    },
+    {
+      "commodity": "Unknownbiologicalmatter",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Biological Matter"
+    },
+    {
+      "commodity": "Thargoidgeneratortissuesample",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Caustic Tissue Sample"
+    },
+    {
+      "commodity": "Unknownartifact2",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 910192,
+      "stolen": false,
+      "locName": "Thargoid Probe"
+    },
+    {
+      "commodity": "Unknownartifact3",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 519200,
+      "stolen": false,
+      "locName": "Thargoid Link"
+    },
+    {
+      "commodity": "Unknownartifact",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Sensor"
+    },
+    {
+      "commodity": "Unknowntechnologysamples",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Technology Samples"
+    },
+    {
+      "commodity": "Unknownartifact2",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Probe"
+    },
+    {
+      "commodity": "Unknownartifact",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": true,
+      "locName": "Thargoid Sensor"
+    },
+    {
+      "commodity": "Unknownartifact3",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 519200,
+      "stolen": false,
+      "locName": "Thargoid Link"
+    },
+    {
+      "commodity": "Tritium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 631,
+      "value": 31447778,
+      "stolen": false,
+      "locName": "Tritium"
+    },
+    {
+      "commodity": "Tritium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 784,
+      "value": 39072992,
+      "stolen": false,
+      "locName": "Tritium"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype10b",
+      "originSystem": 5031923290818,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Titan Maw Tissue Sample"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype10c",
+      "originSystem": 5031923290818,
+      "mission": false,
+      "qty": 4,
+      "value": 0,
+      "stolen": false,
+      "locName": "Titan Maw Partial Tissue Sample"
+    },
+    {
+      "commodity": "Unknownresin",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Resin"
+    },
+    {
+      "commodity": "Metaalloys",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 5,
+      "value": 0,
+      "stolen": false,
+      "locName": "Meta-Alloys"
+    },
+    {
+      "commodity": "Thargoidpod",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 2,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Bio-storage Capsule"
+    },
+    {
+      "commodity": "Thargoidheart",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Heart"
+    },
+    {
+      "commodity": "Thargoidgeneratortissuesample",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 2,
+      "value": 0,
+      "stolen": false,
+      "locName": "Caustic Tissue Sample"
+    },
+    {
+      "commodity": "Metaalloys",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 2,
+      "value": 0,
+      "stolen": false,
+      "locName": "Meta-Alloys"
+    },
+    {
+      "commodity": "Unknownsack",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Protective Membrane Scrap"
+    },
+    {
+      "commodity": "Thargoidpod",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 2,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Bio-storage Capsule"
+    },
+    {
+      "commodity": "Thargoidorgansample",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 4,
+      "value": 0,
+      "stolen": false,
+      "locName": "Organ Sample"
+    },
+    {
+      "commodity": "Thargoidbonefragments",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Bone Fragments"
+    },
+    {
+      "commodity": "Thargoidcystspecimen",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 8,
+      "value": 0,
+      "stolen": false,
+      "locName": "Cyst Specimen"
+    },
+    {
+      "commodity": "Unknownresin",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 2,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Resin"
+    },
+    {
+      "commodity": "Metaalloys",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 4,
+      "value": 0,
+      "stolen": false,
+      "locName": "Meta-Alloys"
+    },
+    {
+      "commodity": "Unknownsack",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Protective Membrane Scrap"
+    },
+    {
+      "commodity": "Thargoidpod",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 3,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Bio-storage Capsule"
+    },
+    {
+      "commodity": "Thargoidgeneratortissuesample",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Caustic Tissue Sample"
+    },
+    {
+      "commodity": "Unknownartifact",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Sensor"
+    },
+    {
+      "commodity": "Unknownresin",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Resin"
+    },
+    {
+      "commodity": "Metaalloys",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 5,
+      "value": 0,
+      "stolen": false,
+      "locName": "Meta-Alloys"
+    },
+    {
+      "commodity": "Thargoidpod",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Bio-storage Capsule"
+    },
+    {
+      "commodity": "Thargoidheart",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Heart"
+    },
+    {
+      "commodity": "Thargoidtitandrivecomponent",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Titan Drive Component"
+    },
+    {
+      "commodity": "Metaalloys",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Meta-Alloys"
+    },
+    {
+      "commodity": "Thargoidpod",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 2,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Bio-storage Capsule"
+    },
+    {
+      "commodity": "Thargoidtitandrivecomponent",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Titan Drive Component"
+    },
+    {
+      "commodity": "Tritium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 49838,
+      "stolen": false,
+      "locName": "Tritium"
+    },
+    {
+      "commodity": "Copper",
+      "originSystem": null,
+      "mission": false,
+      "qty": 57,
+      "value": 35967,
+      "stolen": false,
+      "locName": "Copper"
+    },
+    {
+      "commodity": "Unknownartifact",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": true,
+      "locName": "Thargoid Sensor"
+    },
+    {
+      "commodity": "Unknownresin",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Resin"
+    },
+    {
+      "commodity": "Metaalloys",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Meta-Alloys"
+    },
+    {
+      "commodity": "Leestianeviljuice",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 595,
+      "stolen": false,
+      "locName": "Leestian Evil Juice"
+    },
+    {
+      "commodity": "Powergridassembly",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 6649,
+      "stolen": false,
+      "locName": "Energy Grid Assembly"
+    },
+    {
+      "commodity": "Ancientcasket",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Guardian Casket"
+    },
+    {
+      "commodity": "Powertransferconduits",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 6642,
+      "stolen": false,
+      "locName": "Power Transfer Bus"
+    },
+    {
+      "commodity": "Diagnosticsensor",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 16827,
+      "stolen": false,
+      "locName": "Hardware Diagnostic Sensor"
+    },
+    {
+      "commodity": "Disomacorn",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 335,
+      "stolen": false,
+      "locName": "Diso Ma Corn"
+    },
+    {
+      "commodity": "Microcontrollers",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 13990,
+      "stolen": false,
+      "locName": "Micro Controllers"
+    },
+    {
+      "commodity": "Ancientrelictg",
+      "originSystem": 2879909340529,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Unclassified Relic"
+    },
+    {
+      "commodity": "Ancientrelictg",
+      "originSystem": 1183296852610,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Unclassified Relic"
+    },
+    {
+      "commodity": "Iondistributor",
+      "originSystem": null,
+      "mission": false,
+      "qty": 2,
+      "value": 14206,
+      "stolen": false,
+      "locName": "Ion Distributor"
+    },
+    {
+      "commodity": "Ancienttablet",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Guardian Tablet"
+    },
+    {
+      "commodity": "Powerconverter",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 3593,
+      "stolen": false,
+      "locName": "Power Converter"
+    },
+    {
+      "commodity": "Neofabricinsulation",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 59750,
+      "stolen": false,
+      "locName": "Neofabric Insulation"
+    },
+    {
+      "commodity": "Galactictravelguide",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 79990,
+      "stolen": false,
+      "locName": "Galactic Travel Guide"
+    },
+    {
+      "commodity": "Usscargoprototypetech",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Prototype Tech"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype10b",
+      "originSystem": 5031923290818,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Titan Maw Tissue Sample"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype10c",
+      "originSystem": 5031923290818,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Titan Maw Partial Tissue Sample"
+    },
+    {
+      "commodity": "Unknownsack",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Protective Membrane Scrap"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype1",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Cyclops Tissue Sample"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype2",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Basilisk Tissue Sample"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype3",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Medusa Tissue Sample"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype4",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 1074950,
+      "stolen": false,
+      "locName": "Thargoid Hydra Tissue Sample"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype5",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Orthrus Tissue Sample"
+    },
+    {
+      "commodity": "Thargoidtissuesampletype7",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Scythe Tissue Sample"
+    },
+    {
+      "commodity": "Thargoidpod",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Bio-storage Capsule"
+    },
+    {
+      "commodity": "Thargoidorgansample",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Organ Sample"
+    },
+    {
+      "commodity": "Reinforcedmountingplate",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 7994,
+      "stolen": false,
+      "locName": "Reinforced Mounting Plate"
+    },
+    {
+      "commodity": "Thargoidscouttissuesample",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 237310,
+      "stolen": false,
+      "locName": "Thargoid Scout Tissue Sample"
+    },
+    {
+      "commodity": "Radiationbaffle",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 15990,
+      "stolen": false,
+      "locName": "Radiation Baffle"
+    },
+    {
+      "commodity": "Thargoidheart",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Heart"
+    },
+    {
+      "commodity": "Unknownbiologicalmatter",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Biological Matter"
+    },
+    {
+      "commodity": "Thargoidgeneratortissuesample",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Caustic Tissue Sample"
+    },
+    {
+      "commodity": "Thermalcoolingunits",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 3125,
+      "stolen": false,
+      "locName": "Thermal Cooling Units"
+    },
+    {
+      "commodity": "Bluemilk",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 4280,
+      "stolen": false,
+      "locName": "Azure Milk"
+    },
+    {
+      "commodity": "Heatsinkinterlink",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 5270,
+      "stolen": false,
+      "locName": "Heatsink Interlink"
+    },
+    {
+      "commodity": "Unknownartifact2",
+      "originSystem": 10477373803,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Probe"
+    },
+    {
+      "commodity": "Unknownartifact3",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 519200,
+      "stolen": false,
+      "locName": "Thargoid Link"
+    },
+    {
+      "commodity": "Unknownartifact",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Thargoid Sensor"
+    },
+    {
+      "commodity": "Scientificresearch",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 200010,
+      "stolen": false,
+      "locName": "Scientific Research"
+    },
+    {
+      "commodity": "Ancientkey",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Ancient Key"
+    },
+    {
+      "commodity": "Ancientorb",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Guardian Orb"
+    },
+    {
+      "commodity": "Ancienturn",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Guardian Urn"
+    },
+    {
+      "commodity": "Unknowntechnologysamples",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 399300,
+      "stolen": false,
+      "locName": "Thargoid Technology Samples"
+    },
+    {
+      "commodity": "Orrerianviciousbrew",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 630,
+      "stolen": false,
+      "locName": "Orrerian Vicious Brew"
+    },
+    {
+      "commodity": "Magneticemittercoil",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 4077,
+      "stolen": false,
+      "locName": "Magnetic Emitter Coil"
+    },
+    {
+      "commodity": "Thargoidbonefragments",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Bone Fragments"
+    },
+    {
+      "commodity": "Hnshockmount",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 1460,
+      "stolen": false,
+      "locName": "HN Shock Mount"
+    },
+    {
+      "commodity": "Ancientrelic",
+      "originSystem": 10477373803,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Guardian Relic"
+    },
+    {
+      "commodity": "Ancienttotem",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Guardian Totem"
+    },
+    {
+      "commodity": "Coolinghoses",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 18850,
+      "stolen": false,
+      "locName": "Micro-weave Cooling Hoses"
+    },
+    {
+      "commodity": "Thargoidcystspecimen",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Cyst Specimen"
+    },
+    {
+      "commodity": "Tritium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 49838,
+      "stolen": false,
+      "locName": "Tritium"
+    },
+    {
+      "commodity": "Copper",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 631,
+      "stolen": false,
+      "locName": "Copper"
+    },
+    {
+      "commodity": "Tacticaldata",
+      "originSystem": null,
+      "mission": false,
+      "qty": 1,
+      "value": 150020,
+      "stolen": false,
+      "locName": "Tactical Data"
+    },
+    {
+      "commodity": "Thargoidtitandrivecomponent",
+      "originSystem": 216618994011,
+      "mission": false,
+      "qty": 1,
+      "value": 0,
+      "stolen": false,
+      "locName": "Titan Drive Component"
+    },
+    {
+      "commodity": "Aluminium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 78,
+      "value": 198120,
+      "stolen": false,
+      "locName": "Aluminium"
+    },
+    {
+      "commodity": "Aluminium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 648,
+      "value": 1645920,
+      "stolen": false,
+      "locName": "Aluminium"
+    },
+    {
+      "commodity": "Drones",
+      "originSystem": null,
+      "mission": false,
+      "qty": 12,
+      "value": 1140,
+      "stolen": false,
+      "locName": "Limpet"
+    },
+    {
+      "commodity": "Cmmcomposite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 792,
+      "value": 4729824,
+      "stolen": false,
+      "locName": "CMM Composite"
+    },
+    {
+      "commodity": "Liquidoxygen",
+      "originSystem": null,
+      "mission": false,
+      "qty": 792,
+      "value": 1089000,
+      "stolen": false,
+      "locName": "Liquid oxygen"
+    },
+    {
+      "commodity": "Insulatingmembrane",
+      "originSystem": null,
+      "mission": false,
+      "qty": 337,
+      "value": 3573885,
+      "stolen": false,
+      "locName": "Insulating Membrane"
+    },
+    {
+      "commodity": "Polymers",
+      "originSystem": null,
+      "mission": false,
+      "qty": 447,
+      "value": 136782,
+      "stolen": false,
+      "locName": "Polymers"
+    },
+    {
+      "commodity": "Liquidoxygen",
+      "originSystem": null,
+      "mission": false,
+      "qty": 784,
+      "value": 1078000,
+      "stolen": false,
+      "locName": "Liquid oxygen"
+    },
+    {
+      "commodity": "Liquidoxygen",
+      "originSystem": null,
+      "mission": false,
+      "qty": 156,
+      "value": 214500,
+      "stolen": false,
+      "locName": "Liquid oxygen"
+    },
+    {
+      "commodity": "Steel",
+      "originSystem": null,
+      "mission": false,
+      "qty": 306,
+      "value": 1278774,
+      "stolen": false,
+      "locName": "Steel"
+    },
+    {
+      "commodity": "Titanium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 322,
+      "value": 1431612,
+      "stolen": false,
+      "locName": "Titanium"
+    },
+    {
+      "commodity": "Polymers",
+      "originSystem": null,
+      "mission": false,
+      "qty": 52,
+      "value": 15912,
+      "stolen": false,
+      "locName": "Polymers"
+    },
+    {
+      "commodity": "Steel",
+      "originSystem": null,
+      "mission": false,
+      "qty": 732,
+      "value": 3059028,
+      "stolen": false,
+      "locName": "Steel"
+    },
+    {
+      "commodity": "Cmmcomposite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 784,
+      "value": 4682048,
+      "stolen": false,
+      "locName": "CMM Composite"
+    },
+    {
+      "commodity": "Water",
+      "originSystem": null,
+      "mission": false,
+      "qty": 742,
+      "value": 192920,
+      "stolen": false,
+      "locName": "Water"
+    },
+    {
+      "commodity": "Foodcartridges",
+      "originSystem": null,
+      "mission": false,
+      "qty": 42,
+      "value": 10584,
+      "stolen": false,
+      "locName": "Food Cartridges"
+    },
+    {
+      "commodity": "Foodcartridges",
+      "originSystem": null,
+      "mission": false,
+      "qty": 50,
+      "value": 12600,
+      "stolen": false,
+      "locName": "Food Cartridges"
+    },
+    {
+      "commodity": "Fruitandvegetables",
+      "originSystem": null,
+      "mission": false,
+      "qty": 18,
+      "value": 3186,
+      "stolen": false,
+      "locName": "Fruit and Vegetables"
+    },
+    {
+      "commodity": "Ceramiccomposites",
+      "originSystem": null,
+      "mission": false,
+      "qty": 536,
+      "value": 215472,
+      "stolen": false,
+      "locName": "Ceramic Composites"
+    },
+    {
+      "commodity": "Cmmcomposite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 28,
+      "value": 167216,
+      "stolen": false,
+      "locName": "CMM Composite"
+    },
+    {
+      "commodity": "Powergenerators",
+      "originSystem": null,
+      "mission": false,
+      "qty": 18,
+      "value": 42984,
+      "stolen": false,
+      "locName": "Power Generators"
+    },
+    {
+      "commodity": "Waterpurifiers",
+      "originSystem": null,
+      "mission": false,
+      "qty": 39,
+      "value": 17433,
+      "stolen": false,
+      "locName": "Water Purifiers"
+    },
+    {
+      "commodity": "Computercomponents",
+      "originSystem": null,
+      "mission": false,
+      "qty": 64,
+      "value": 45312,
+      "stolen": false,
+      "locName": "Computer Components"
+    },
+    {
+      "commodity": "Cmmcomposite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 753,
+      "value": 4496916,
+      "stolen": false,
+      "locName": "CMM Composite"
+    },
+    {
+      "commodity": "Fruitandvegetables",
+      "originSystem": null,
+      "mission": false,
+      "qty": 31,
+      "value": 8866,
+      "stolen": false,
+      "locName": "Fruit and Vegetables"
+    },
+    {
+      "commodity": "Cmmcomposite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 554,
+      "value": 3308488,
+      "stolen": false,
+      "locName": "CMM Composite"
+    },
+    {
+      "commodity": "Steel",
+      "originSystem": null,
+      "mission": false,
+      "qty": 230,
+      "value": 961170,
+      "stolen": false,
+      "locName": "Steel"
+    },
+    {
+      "commodity": "Cmmcomposite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 784,
+      "value": 4682048,
+      "stolen": false,
+      "locName": "CMM Composite"
+    },
+    {
+      "commodity": "Cmmcomposite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 658,
+      "value": 3929576,
+      "stolen": false,
+      "locName": "CMM Composite"
+    }
+  ],
+  "orders": {
+    "commodities": {
+      "sales": [
+        {
+          "name": "bertrandite",
+          "stock": "0",
+          "price": "72021",
+          "blackmarket": false
+        },
+        {
+          "name": "indite",
+          "stock": "0",
+          "price": "64047",
+          "blackmarket": false
+        },
+        {
+          "name": "gallite",
+          "stock": "0",
+          "price": "60110",
+          "blackmarket": false
+        },
+        {
+          "name": "water",
+          "stock": "742",
+          "price": "260",
+          "blackmarket": false
+        },
+        {
+          "name": "titanium",
+          "stock": "322",
+          "price": "4446",
+          "blackmarket": false
+        },
+        {
+          "name": "copper",
+          "stock": "58",
+          "price": "631",
+          "blackmarket": false
+        },
+        {
+          "name": "aluminium",
+          "stock": "726",
+          "price": "2540",
+          "blackmarket": false
+        },
+        {
+          "name": "fruitandvegetables",
+          "stock": "49",
+          "price": "483",
+          "blackmarket": false
+        },
+        {
+          "name": "foodcartridges",
+          "stock": "92",
+          "price": "252",
+          "blackmarket": false
+        },
+        {
+          "name": "polymers",
+          "stock": "499",
+          "price": "306",
+          "blackmarket": false
+        },
+        {
+          "name": "powergenerators",
+          "stock": "18",
+          "price": "2388",
+          "blackmarket": false
+        },
+        {
+          "name": "waterpurifiers",
+          "stock": "39",
+          "price": "447",
+          "blackmarket": false
+        },
+        {
+          "name": "computercomponents",
+          "stock": "64",
+          "price": "708",
+          "blackmarket": false
+        },
+        {
+          "name": "personalweapons",
+          "stock": "0",
+          "price": "4749",
+          "blackmarket": false
+        },
+        {
+          "name": "battleweapons",
+          "stock": "0",
+          "price": "7451",
+          "blackmarket": false
+        },
+        {
+          "name": "painite",
+          "stock": "0",
+          "price": "341031",
+          "blackmarket": false
+        },
+        {
+          "name": "ceramiccomposites",
+          "stock": "536",
+          "price": "402",
+          "blackmarket": false
+        },
+        {
+          "name": "bromellite",
+          "stock": "0",
+          "price": "148230",
+          "blackmarket": false
+        },
+        {
+          "name": "liquidoxygen",
+          "stock": "1732",
+          "price": "1375",
+          "blackmarket": false
+        },
+        {
+          "name": "cmmcomposite",
+          "stock": "4353",
+          "price": "5972",
+          "blackmarket": false
+        },
+        {
+          "name": "serendibite",
+          "stock": "0",
+          "price": "2111867",
+          "blackmarket": false
+        },
+        {
+          "name": "steel",
+          "stock": "1268",
+          "price": "4179",
+          "blackmarket": false
+        }
+      ],
+      "purchases": [
+        {
+          "name": "disomacorn",
+          "total": 1,
+          "outstanding": 1,
+          "price": 8134,
+          "blackmarket": false
+        }
+      ]
+    },
+    "onfootmicroresources": {
+      "sales": {
+        "128972364": {
+          "id": 128972364,
+          "name": "settlementdefenceplans",
+          "locName": "Settlement Defence Plans",
+          "price": 1100,
+          "stock": 0
+        },
+        "128972291": {
+          "id": 128972291,
+          "name": "catmedia",
+          "locName": "Cat Media",
+          "price": 1000,
+          "stock": 1
+        }
+      },
+      "purchases": [
+        {
+          "name": "censusdata",
+          "locName": "Census Data",
+          "total": 1,
+          "outstanding": 1,
+          "price": 8000
+        }
+      ]
+    }
+  },
+  "carrierLocker": {
+    "assets": [
+      {
+        "id": 128064021,
+        "quantity": 170,
+        "name": "graphene",
+        "locName": "Graphene"
+      },
+      {
+        "id": 128964025,
+        "quantity": 340,
+        "name": "microelectrode",
+        "locName": "Microelectrode"
+      },
+      {
+        "id": 128965845,
+        "quantity": 0,
+        "name": "weaponcomponent",
+        "locName": "Weapon Component"
+      }
+    ],
+    "goods": [
+      {
+        "id": 128965842,
+        "quantity": 0,
+        "name": "largecapacitypowerregulator",
+        "locName": "Power Regulator"
+      },
+      {
+        "id": 128962597,
+        "quantity": 104,
+        "name": "buildingschematic",
+        "locName": "Building Schematic"
+      },
+      {
+        "id": 128961570,
+        "quantity": 0,
+        "name": "ionisedgas",
+        "locName": "Ionised Gas"
+      },
+      {
+        "id": 128962613,
+        "quantity": 30,
+        "name": "vehicleschematic",
+        "locName": "Vehicle Schematic"
+      },
+      {
+        "id": 128962608,
+        "quantity": 36,
+        "name": "shipschematic",
+        "locName": "Ship Schematic"
+      }
+    ],
+    "data": [
+      {
+        "id": 128972291,
+        "quantity": 1,
+        "name": "catmedia",
+        "locName": "Cat Media"
+      },
+      {
+        "id": 128972298,
+        "quantity": 16,
+        "name": "classicentertainment",
+        "locName": "Classic Entertainment"
+      },
+      {
+        "id": 128972299,
+        "quantity": 1,
+        "name": "cocktailrecipes",
+        "locName": "Cocktail Recipes"
+      },
+      {
+        "id": 128972304,
+        "quantity": 7,
+        "name": "culinaryrecipes",
+        "locName": "Culinary Recipes"
+      },
+      {
+        "id": 128972305,
+        "quantity": 52,
+        "name": "digitaldesigns",
+        "locName": "Digital Designs"
+      },
+      {
+        "id": 128972309,
+        "quantity": 6,
+        "name": "employeegeneticdata",
+        "locName": "Employee Genetic Data"
+      },
+      {
+        "id": 128972316,
+        "quantity": 4,
+        "name": "factionassociates",
+        "locName": "Faction Associates"
+      },
+      {
+        "id": 128972317,
+        "quantity": 7,
+        "name": "financialprojections",
+        "locName": "Financial Projections"
+      },
+      {
+        "id": 128972321,
+        "quantity": 11,
+        "name": "geneticresearch",
+        "locName": "Genetic Research"
+      },
+      {
+        "id": 128972331,
+        "quantity": 0,
+        "name": "manufacturinginstructions",
+        "locName": "Manufacturing Instructions"
+      },
+      {
+        "id": 128972342,
+        "quantity": 7,
+        "name": "opinionpolls",
+        "locName": "Opinion Polls"
+      },
+      {
+        "id": 128972364,
+        "quantity": 0,
+        "name": "settlementdefenceplans",
+        "locName": "Settlement Defence Plans"
+      }
+    ]
+  },
+  "reputation": [
+    {
+      "majorFaction": "empire",
+      "score": 100
+    },
+    {
+      "majorFaction": "federation",
+      "score": 100
+    },
+    {
+      "majorFaction": "independent",
+      "score": 100
+    },
+    {
+      "majorFaction": "alliance",
+      "score": 100
+    }
+  ],
+  "market": {
+    "id": 123,
+    "name": "123",
+    "outpostType": "fleetcarrier",
+    "imported": [],
+    "exported": [],
+    "services": {
+      "commodities": "ok",
+      "carrierfuel": "ok",
+      "socialspace": "ok",
+      "refuel": "ok",
+      "repair": "ok",
+      "rearm": "ok",
+      "shipyard": "ok",
+      "outfitting": "ok",
+      "blackmarket": "ok",
+      "voucherredemption": "ok",
+      "exploration": "ok",
+      "bartender": "ok",
+      "vistagenomics": "ok",
+      "pioneersupplies": "ok",
+      "carriermanagement": "ok",
+      "stationmenu": "ok",
+      "dock": "ok",
+      "crewlounge": "ok",
+      "engineer": "ok",
+      "contacts": "ok",
+      "registeringcolonisation": "faction",
+      "livery": "ok"
+    },
+    "economies": {
+      "136": {
+        "name": "Carrier",
+        "proportion": 1
+      }
+    },
+    "prohibited": [],
+    "commodities": [
+      {
+        "id": 128066403,
+        "categoryname": "NonMarketable",
+        "name": "Drones",
+        "stock": 999999,
+        "buyPrice": 95,
+        "sellPrice": 95,
+        "demand": 9999999,
+        "legality": "",
+        "meanPrice": 95,
+        "demandBracket": 2,
+        "stockBracket": 2,
+        "locName": "Limpet"
+      }
+    ]
+  },
+  "ships": {
+    "shipyard_list": {
+      "Eagle": {
+        "id": 128049255,
+        "name": "Eagle",
+        "basevalue": 44800,
+        "sku": ""
+      },
+      "Vulture": {
+        "id": 128049309,
+        "name": "Vulture",
+        "basevalue": 4925615,
+        "sku": ""
+      }
+    },
+    "discount_list": []
+  },
+  "modules": {
+    "128049525": {
+      "id": 128049525,
+      "category": "utility",
+      "name": "Hpt_MiningLaser_Fixed_Small",
+      "cost": 6800,
+      "sku": null,
+      "stock": 20
+    },
+    "128049526": {
+      "id": 128049526,
+      "category": "utility",
+      "name": "Hpt_MiningLaser_Fixed_Medium",
+      "cost": 22576,
+      "sku": null,
+      "stock": 0
+    },
+    "128740819": {
+      "id": 128740819,
+      "category": "utility",
+      "name": "Hpt_MiningLaser_Turret_Small",
+      "cost": 9400,
+      "sku": null,
+      "stock": 15
+    },
+    "128915454": {
+      "id": 128915454,
+      "category": "utility",
+      "name": "Hpt_Mining_SubSurfDispMisle_Fixed_Small",
+      "cost": 12600,
+      "sku": null,
+      "stock": 30
+    },
+    "128915455": {
+      "id": 128915455,
+      "category": "utility",
+      "name": "Hpt_Mining_SubSurfDispMisle_Turret_Small",
+      "cost": 38750,
+      "sku": null,
+      "stock": 20
+    },
+    "128915458": {
+      "id": 128915458,
+      "category": "utility",
+      "name": "Hpt_Mining_AbrBlstr_Fixed_Small",
+      "cost": 9700,
+      "sku": null,
+      "stock": 15
+    },
+    "128915459": {
+      "id": 128915459,
+      "category": "utility",
+      "name": "Hpt_Mining_AbrBlstr_Turret_Small",
+      "cost": 27480,
+      "sku": null,
+      "stock": 5
+    }
+  }
+}

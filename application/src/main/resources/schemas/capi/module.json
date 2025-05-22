@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-12/schema#",
+  "title": "Module",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "category": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "cost": {
+      "type": "number"
+    },
+    "sku": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "stock": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "id",
+    "category",
+    "name",
+    "cost",
+    "sku",
+    "stock"
+  ]
+}
