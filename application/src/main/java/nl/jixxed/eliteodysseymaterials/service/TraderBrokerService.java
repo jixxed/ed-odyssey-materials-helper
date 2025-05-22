@@ -51,25 +51,25 @@ public class TraderBrokerService {
     }
 
     public static void sendBrokerTraderEvent(BrokerTraderJournalEvent brokerTraderJournalEvent) {
-            final Runnable run = () -> {
-                try {
-                    final String data = OBJECT_MAPPER.writeValueAsString(brokerTraderJournalEvent);
-                    log.info(data);
-                    final HttpClient httpClient = HttpClient.newHttpClient();
-                    final String domainName = DnsHelper.resolveCname("edmattracking.jixxed.nl");
-                    final HttpRequest request = HttpRequest.newBuilder()
-                            .uri(URI.create("https://" + domainName + "/Prod/v2/submit-broker-trader"))
-                            .POST(HttpRequest.BodyPublishers.ofString(data))
-                            .build();
-                    final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-                    log.info(send.body());
-                } catch (final InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                } catch (final Exception e) {
-                    log.error("publish materialtrade/techbroker error", e);
-                }
-            };
-            EXECUTOR_SERVICE.submit(run);
+        final Runnable run = () -> {
+            try {
+                final String data = OBJECT_MAPPER.writeValueAsString(brokerTraderJournalEvent);
+                log.info(data);
+                final HttpClient httpClient = HttpClient.newHttpClient();
+                final String domainName = DnsHelper.resolveCname("edmattracking2.jixxed.nl");
+                final HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create("https://" + domainName + "/Prod/v2/submit-broker-trader"))
+                        .POST(HttpRequest.BodyPublishers.ofString(data))
+                        .build();
+                final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+                log.info(send.body());
+            } catch (final InterruptedException e) {
+                Thread.currentThread().interrupt();
+            } catch (final Exception e) {
+                log.error("publish materialtrade/techbroker error", e);
+            }
+        };
+        EXECUTOR_SERVICE.submit(run);
 
     }
 } 

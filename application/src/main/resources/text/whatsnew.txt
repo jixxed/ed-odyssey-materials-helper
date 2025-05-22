@@ -1,6 +1,7 @@
 Version 2.175
 -------------
-Update reporting url
+Check for capi updates every 5 seconds instead of 5 minutes. Still updates at most once every 5 minutes.
+This should allow for an update by toggling the setting on the Colonisation tab
 
 Version 2.174
 -------------

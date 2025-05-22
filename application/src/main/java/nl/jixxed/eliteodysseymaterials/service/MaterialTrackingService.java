@@ -40,7 +40,7 @@ public class MaterialTrackingService {
     static final List<BackpackChangeEvent> BACKPACK_CHANGE_EVENTS = new ArrayList<>();
     private static boolean isEnabled = false;
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
-//    private static final Map<OdysseyMaterial, MaterialStatistic> MATERIAL_STATISTICS = new ConcurrentHashMap<>();
+    //    private static final Map<OdysseyMaterial, MaterialStatistic> MATERIAL_STATISTICS = new ConcurrentHashMap<>();
     private static final Map<String, Terminal> TERMINAL_DATAS = new ConcurrentHashMap<>();
     private static Thread thread;
 
@@ -188,7 +188,7 @@ public class MaterialTrackingService {
                     final String data = OBJECT_MAPPER.writeValueAsString(new MaterialTrackingMessage(items));
                     log.info(data);
                     final HttpClient httpClient = HttpClient.newHttpClient();
-                    final String domainName = DnsHelper.resolveCname("edmattracking.jixxed.nl");
+                    final String domainName = DnsHelper.resolveCname("edmattracking2.jixxed.nl");
                     final HttpRequest request = HttpRequest.newBuilder()
                             .uri(URI.create("https://" + domainName + "/Prod/v2/submit-material-tracking"))
                             .POST(HttpRequest.BodyPublishers.ofString(data))
@@ -228,7 +228,7 @@ public class MaterialTrackingService {
                     final String datax = OBJECT_MAPPER.writeValueAsString(new DataTrackingMessage(items));
                     log.info(datax);
                     final HttpClient httpClient = HttpClient.newHttpClient();
-                    final String domainName = DnsHelper.resolveCname("edmattracking.jixxed.nl");
+                    final String domainName = DnsHelper.resolveCname("edmattracking2.jixxed.nl");
                     final HttpRequest request = HttpRequest.newBuilder()
                             .uri(URI.create("https://" + domainName + "/Prod/v2/submit-data-tracking"))
                             .POST(HttpRequest.BodyPublishers.ofString(datax))
