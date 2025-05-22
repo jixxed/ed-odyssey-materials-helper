@@ -39,6 +39,7 @@ class MessageHandler {
         OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         OBJECT_MAPPER.registerModule(new JavaTimeModule());
         OBJECT_MAPPER2.registerModule(new JavaTimeModule());
+        OBJECT_MAPPER2.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
     }
 
     private static final Map<JournalEventType, MessageProcessor<? extends Event>> messageProcessors = Map.ofEntries(
