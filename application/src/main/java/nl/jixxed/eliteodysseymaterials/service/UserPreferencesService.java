@@ -48,7 +48,7 @@ public class UserPreferencesService {
         }));
     }
 
-    public static void loadUserPreferences(final Commander commander) {
+    public static synchronized void loadUserPreferences(final Commander commander) {
         log.info("Loading user preferences for " + commander.getFid());
         if (prop != null) {
             prop.clear();
@@ -85,14 +85,7 @@ public class UserPreferencesService {
                 })
                 .debounce(1000, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
-                .subscribe(newValue -> {
-                    try (final OutputStream output = new FileOutputStream(commanderFolder + OsConstants.getOsSlash() + AppConstants.USER_TEMP_PREFERENCES_FILE)) {
-                        prop.store(output, null);
-                        Files.copy(Path.of(commanderFolder + OsConstants.getOsSlash() + AppConstants.USER_TEMP_PREFERENCES_FILE), Path.of(commanderFolder + OsConstants.getOsSlash() + AppConstants.USER_PREFERENCES_FILE), StandardCopyOption.REPLACE_EXISTING);
-                    } catch (final IOException e) {
-                        log.error("Error writing preferences", e);
-                    }
-                });
+                .subscribe(_ -> saveProperties(commanderFolder));
 
         try (final FileInputStream fis = new FileInputStream(targetFile)) {
             prop.load(fis);
@@ -103,7 +96,16 @@ public class UserPreferencesService {
 
     }
 
-    public static <T> void setPreference(final String key, final List<T> value, final Function<T, String> mapper) {
+    private static synchronized void saveProperties(String commanderFolder) {
+        try (final OutputStream output = new FileOutputStream(commanderFolder + OsConstants.getOsSlash() + AppConstants.USER_TEMP_PREFERENCES_FILE)) {
+            prop.store(output, null);
+            Files.copy(Path.of(commanderFolder + OsConstants.getOsSlash() + AppConstants.USER_TEMP_PREFERENCES_FILE), Path.of(commanderFolder + OsConstants.getOsSlash() + AppConstants.USER_PREFERENCES_FILE), StandardCopyOption.REPLACE_EXISTING);
+        } catch (final IOException e) {
+            log.error("Error writing preferences", e);
+        }
+    }
+
+    public static synchronized <T> void setPreference(final String key, final List<T> value, final Function<T, String> mapper) {
         if (prop != null) {
             if (value == null || value.isEmpty()) {
                 prop.setProperty(key, "");
@@ -113,7 +115,7 @@ public class UserPreferencesService {
         }
     }
 
-    public static void setPreference(final String key, final LocalDateTime value) {
+    public static synchronized void setPreference(final String key, final LocalDateTime value) {
         if (prop != null) {
             if (value == null) {
                 prop.setProperty(key, "");
@@ -123,7 +125,7 @@ public class UserPreferencesService {
         }
     }
 
-    public static void setPreference(final String key, final Object value) {
+    public static synchronized void setPreference(final String key, final Object value) {
         if (prop != null) {
             if (value == null) {
                 prop.setProperty(key, "");
@@ -133,7 +135,7 @@ public class UserPreferencesService {
         }
     }
 
-    public static <T> T getPreference(final String key, @NonNull final T defaultValue) {
+    public static synchronized <T> T getPreference(final String key, @NonNull final T defaultValue) {
         if (prop != null) {
             final String value = prop.getProperty(key);
             if (value == null) {
@@ -163,7 +165,7 @@ public class UserPreferencesService {
     }
 
 
-    public static void removePreference(final String key) {
+    public static synchronized void removePreference(final String key) {
         if (prop != null) {
             prop.remove(key);
         }
