@@ -126,18 +126,22 @@ public class CAPIService {
                                 this.timerTask = new TimerTask() {
                                     @Override
                                     public void run() {
-                                        if (!PreferencesService.getPreference("colonisation.horizons.pause.capi", false)) {
+                                        if (isCapiRunning() && isOutdated(fleetCarrierFile)) {
                                             requestFleetCarrierData();
                                         }
                                     }
                                 };
-                                this.timer.scheduleAtFixedRate(this.timerTask, calculateDelay(fleetCarrierFile), 300L * 1000L);
+                                this.timer.scheduleAtFixedRate(this.timerTask, 0L, 5L * 1000L);
                             });
                         }
                 );
 
             }
         }));
+    }
+
+    private static boolean isCapiRunning() {
+        return Boolean.FALSE.equals(PreferencesService.getPreference("colonisation.horizons.pause.capi", false));
     }
 
     private boolean validCommander() {
@@ -173,6 +177,17 @@ public class CAPIService {
             }
             return false;
         }).orElse(false);
+    }
+
+    private static boolean isOutdated(final File fleetCarrierFile) {
+        if (!fleetCarrierFile.exists()) {
+            return true;
+        }
+        final ZonedDateTime now = ZonedDateTime.now();
+        final ZonedDateTime fileModified = ZonedDateTime.ofInstant(Instant.ofEpochMilli(fleetCarrierFile.lastModified()), ZoneId.systemDefault());
+        final long delay = 300L * 1000L;// 5 minutes
+        final long delayed = (now.toEpochSecond() - fileModified.toEpochSecond()) * 1000;
+        return delayed > delay;
     }
 
     private static long calculateDelay(final File fleetCarrierFile) {
