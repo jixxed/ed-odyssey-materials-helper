@@ -8,6 +8,7 @@ import nl.jixxed.eliteodysseymaterials.constants.horizons.SynthesisBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.TechbrokerBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.core_internals.*;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.core_internals.preengineered.FSDPreEngineeredBlueprints;
+import nl.jixxed.eliteodysseymaterials.constants.horizons.core_internals.preengineered.PowerDistributorPreEngineeredBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.core_internals.preengineered.PowerPlantPreEngineeredBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints.*;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints.preengineered.*;
@@ -305,7 +306,7 @@ public abstract class HorizonsBlueprintConstants {
         CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.ARMOUR, ArmourBlueprints.BLUEPRINTS);
         CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, merge(FSDBlueprints.BLUEPRINTS, FSDPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
         CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.LIFE_SUPPORT, LifeSupportBlueprints.BLUEPRINTS);
-        CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.POWER_DISTRIBUTOR, merge(PowerDistributorBlueprints.GUARDIAN_BLUEPRINTS, PowerDistributorBlueprints.BLUEPRINTS));
+        CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.POWER_DISTRIBUTOR, merge(PowerDistributorBlueprints.GUARDIAN_BLUEPRINTS, PowerDistributorBlueprints.BLUEPRINTS, PowerDistributorPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
         CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.POWER_PLANT, merge(PowerPlantBlueprints.GUARDIAN_BLUEPRINTS, PowerPlantBlueprints.BLUEPRINTS, PowerPlantPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
         CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.SENSORS, SensorBlueprints.BLUEPRINTS);
         CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.THRUSTERS, ThrusterBlueprints.BLUEPRINTS);

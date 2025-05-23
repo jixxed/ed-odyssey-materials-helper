@@ -2,10 +2,8 @@ package nl.jixxed.eliteodysseymaterials.domain.ships.core_internals;
 
 import nl.jixxed.eliteodysseymaterials.constants.horizons.ExperimentalEffectBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.core_internals.PowerDistributorBlueprints;
-import nl.jixxed.eliteodysseymaterials.domain.ships.CoreModule;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleClass;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleSize;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Origin;
+import nl.jixxed.eliteodysseymaterials.domain.ships.*;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
@@ -67,6 +65,30 @@ public class PowerDistributor extends CoreModule {
     public static final PowerDistributor GUARDIAN_HYBRID_POWER_DISTRIBUTOR_7_A = new PowerDistributor("GUARDIAN_HYBRID_POWER_DISTRIBUTOR_7_A", HorizonsBlueprintName.GUARDIAN_POWER_DISTRIBUTOR, ModuleSize.SIZE_7, ModuleClass.A, Origin.GUARDIAN, 18866234, "Int_GuardianPowerDistributor_Size7", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 84.00), Map.entry(HorizonsModifier.INTEGRITY, 115.0), Map.entry(HorizonsModifier.POWER_DRAW, 1.16), Map.entry(HorizonsModifier.POWER_BOOST, 0.04), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.WEAPONS_CAPACITY, 43.00), Map.entry(HorizonsModifier.WEAPONS_RECHARGE, 8.50), Map.entry(HorizonsModifier.ENGINES_CAPACITY, 31.00), Map.entry(HorizonsModifier.ENGINES_RECHARGE, 5.20), Map.entry(HorizonsModifier.SYSTEMS_CAPACITY, 31.00), Map.entry(HorizonsModifier.SYSTEMS_RECHARGE, 5.20), Map.entry(HorizonsModifier.ANTI_GUARDIAN_ZONE_RESISTANCE, false)));
     public static final PowerDistributor GUARDIAN_HYBRID_POWER_DISTRIBUTOR_8_A = new PowerDistributor("GUARDIAN_HYBRID_POWER_DISTRIBUTOR_8_A", HorizonsBlueprintName.GUARDIAN_POWER_DISTRIBUTOR, ModuleSize.SIZE_8, ModuleClass.A, Origin.GUARDIAN, 52636792, "Int_GuardianPowerDistributor_Size8", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 168.00), Map.entry(HorizonsModifier.INTEGRITY, 132.0), Map.entry(HorizonsModifier.POWER_DRAW, 1.25), Map.entry(HorizonsModifier.POWER_BOOST, 0.04), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.WEAPONS_CAPACITY, 50.00), Map.entry(HorizonsModifier.WEAPONS_RECHARGE, 10.10), Map.entry(HorizonsModifier.ENGINES_CAPACITY, 36.00), Map.entry(HorizonsModifier.ENGINES_RECHARGE, 6.20), Map.entry(HorizonsModifier.SYSTEMS_CAPACITY, 36.00), Map.entry(HorizonsModifier.SYSTEMS_RECHARGE, 6.20), Map.entry(HorizonsModifier.ANTI_GUARDIAN_ZONE_RESISTANCE, false)));
 
+    public static final PowerDistributor POWER_DISTRIBUTOR_3_A_SYSTEM_ENGINE_FOCUSED = new PowerDistributor("POWER_DISTRIBUTOR_3_A_SYSTEM_ENGINE_FOCUSED", HorizonsBlueprintName.POWER_DISTRIBUTOR_SYSTEM_ENGINE_FOCUSED, ModuleSize.SIZE_3, ModuleClass.A, 0, "Int_PowerDistributor_Size3_Class5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 5.00), Map.entry(HorizonsModifier.INTEGRITY, 70.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.60), Map.entry(HorizonsModifier.POWER_BOOST, 0.0), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.WEAPONS_CAPACITY, 24.00), Map.entry(HorizonsModifier.WEAPONS_RECHARGE, 2.80), Map.entry(HorizonsModifier.ENGINES_CAPACITY, 18.00), Map.entry(HorizonsModifier.ENGINES_RECHARGE, 1.30), Map.entry(HorizonsModifier.SYSTEMS_CAPACITY, 18.00), Map.entry(HorizonsModifier.SYSTEMS_RECHARGE, 1.30)));
+    public static final PowerDistributor POWER_DISTRIBUTOR_3_D_SYSTEM_ENGINE_FOCUSED = new PowerDistributor("POWER_DISTRIBUTOR_3_D_SYSTEM_ENGINE_FOCUSED", HorizonsBlueprintName.POWER_DISTRIBUTOR_SYSTEM_ENGINE_FOCUSED, ModuleSize.SIZE_3, ModuleClass.D, 0, "Int_PowerDistributor_Size3_Class2", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.00), Map.entry(HorizonsModifier.INTEGRITY, 51.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.45), Map.entry(HorizonsModifier.POWER_BOOST, 0.0), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.WEAPONS_CAPACITY, 18.00), Map.entry(HorizonsModifier.WEAPONS_RECHARGE, 2.10), Map.entry(HorizonsModifier.ENGINES_CAPACITY, 14.00), Map.entry(HorizonsModifier.ENGINES_RECHARGE, 1.00), Map.entry(HorizonsModifier.SYSTEMS_CAPACITY, 14.00), Map.entry(HorizonsModifier.SYSTEMS_RECHARGE, 1.00)));
+    public static final PowerDistributor POWER_DISTRIBUTOR_4_A_SYSTEM_ENGINE_FOCUSED = new PowerDistributor("POWER_DISTRIBUTOR_4_A_SYSTEM_ENGINE_FOCUSED", HorizonsBlueprintName.POWER_DISTRIBUTOR_SYSTEM_ENGINE_FOCUSED, ModuleSize.SIZE_4, ModuleClass.A, 0, "Int_PowerDistributor_Size4_Class5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 10.00), Map.entry(HorizonsModifier.INTEGRITY, 88.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.67), Map.entry(HorizonsModifier.POWER_BOOST, 0.0), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.WEAPONS_CAPACITY, 32.00), Map.entry(HorizonsModifier.WEAPONS_RECHARGE, 3.50), Map.entry(HorizonsModifier.ENGINES_CAPACITY, 23.00), Map.entry(HorizonsModifier.ENGINES_RECHARGE, 1.90), Map.entry(HorizonsModifier.SYSTEMS_CAPACITY, 23.00), Map.entry(HorizonsModifier.SYSTEMS_RECHARGE, 1.90)));
+    public static final PowerDistributor POWER_DISTRIBUTOR_4_D_SYSTEM_ENGINE_FOCUSED = new PowerDistributor("POWER_DISTRIBUTOR_4_D_SYSTEM_ENGINE_FOCUSED", HorizonsBlueprintName.POWER_DISTRIBUTOR_SYSTEM_ENGINE_FOCUSED, ModuleSize.SIZE_4, ModuleClass.D, 0, "Int_PowerDistributor_Size4_Class2", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 4.00), Map.entry(HorizonsModifier.INTEGRITY, 64.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.50), Map.entry(HorizonsModifier.POWER_BOOST, 0.0), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.WEAPONS_CAPACITY, 24.00), Map.entry(HorizonsModifier.WEAPONS_RECHARGE, 2.60), Map.entry(HorizonsModifier.ENGINES_CAPACITY, 17.00), Map.entry(HorizonsModifier.ENGINES_RECHARGE, 1.40), Map.entry(HorizonsModifier.SYSTEMS_CAPACITY, 17.00), Map.entry(HorizonsModifier.SYSTEMS_RECHARGE, 1.40)));
+    public static final PowerDistributor POWER_DISTRIBUTOR_6_A_SYSTEM_ENGINE_FOCUSED = new PowerDistributor("POWER_DISTRIBUTOR_6_A_SYSTEM_ENGINE_FOCUSED", HorizonsBlueprintName.POWER_DISTRIBUTOR_SYSTEM_ENGINE_FOCUSED, ModuleSize.SIZE_6, ModuleClass.A, 0, "Int_PowerDistributor_Size6_Class5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 40.00), Map.entry(HorizonsModifier.INTEGRITY, 124.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.82), Map.entry(HorizonsModifier.POWER_BOOST, 0.0), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.WEAPONS_CAPACITY, 50.00), Map.entry(HorizonsModifier.WEAPONS_RECHARGE, 5.20), Map.entry(HorizonsModifier.ENGINES_CAPACITY, 35.00), Map.entry(HorizonsModifier.ENGINES_RECHARGE, 3.20), Map.entry(HorizonsModifier.SYSTEMS_CAPACITY, 35.00), Map.entry(HorizonsModifier.SYSTEMS_RECHARGE, 3.20)));
+
+    static {
+        POWER_DISTRIBUTOR_3_A_SYSTEM_ENGINE_FOCUSED.getModifications().add(
+                new Modification(HorizonsBlueprintType.SYSTEM_ENGINE_FOCUSED, 1.0, HorizonsBlueprintGrade.GRADE_5)
+        );
+        POWER_DISTRIBUTOR_3_D_SYSTEM_ENGINE_FOCUSED.getModifications().add(
+                new Modification(HorizonsBlueprintType.SYSTEM_ENGINE_FOCUSED, 1.0, HorizonsBlueprintGrade.GRADE_5)
+        );
+        POWER_DISTRIBUTOR_4_A_SYSTEM_ENGINE_FOCUSED.getModifications().add(
+                new Modification(HorizonsBlueprintType.SYSTEM_ENGINE_FOCUSED, 1.0, HorizonsBlueprintGrade.GRADE_5)
+        );
+        POWER_DISTRIBUTOR_4_D_SYSTEM_ENGINE_FOCUSED.getModifications().add(
+                new Modification(HorizonsBlueprintType.SYSTEM_ENGINE_FOCUSED, 1.0, HorizonsBlueprintGrade.GRADE_5)
+        );
+        POWER_DISTRIBUTOR_6_A_SYSTEM_ENGINE_FOCUSED.getModifications().add(
+                new Modification(HorizonsBlueprintType.SYSTEM_ENGINE_FOCUSED, 1.0, HorizonsBlueprintGrade.GRADE_5)
+        );
+    }
+
     public static final List<PowerDistributor> POWER_DISTRIBUTORS = List.of(
             POWER_DISTRIBUTOR_1_E_FREE,
             POWER_DISTRIBUTOR_1_E,
@@ -116,7 +138,12 @@ public class PowerDistributor extends CoreModule {
             GUARDIAN_HYBRID_POWER_DISTRIBUTOR_5_A,
             GUARDIAN_HYBRID_POWER_DISTRIBUTOR_6_A,
             GUARDIAN_HYBRID_POWER_DISTRIBUTOR_7_A,
-            GUARDIAN_HYBRID_POWER_DISTRIBUTOR_8_A
+            GUARDIAN_HYBRID_POWER_DISTRIBUTOR_8_A,
+            POWER_DISTRIBUTOR_3_A_SYSTEM_ENGINE_FOCUSED,
+            POWER_DISTRIBUTOR_3_D_SYSTEM_ENGINE_FOCUSED,
+            POWER_DISTRIBUTOR_4_A_SYSTEM_ENGINE_FOCUSED,
+            POWER_DISTRIBUTOR_4_D_SYSTEM_ENGINE_FOCUSED,
+            POWER_DISTRIBUTOR_6_A_SYSTEM_ENGINE_FOCUSED
     );
 
     private PowerDistributor(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
@@ -134,6 +161,9 @@ public class PowerDistributor extends CoreModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
+        if (isPreEngineered()) {
+            return Collections.emptyList();
+        }
         if (this.getOrigin() == Origin.GUARDIAN) {
             return PowerDistributorBlueprints.GUARDIAN_BLUEPRINTS.keySet().stream().toList();
         }
@@ -142,6 +172,9 @@ public class PowerDistributor extends CoreModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedExperimentalEffects() {
+        if (isPreEngineered()) {
+            return Collections.emptyList();
+        }
         if (this.getOrigin() == Origin.GUARDIAN) {
             return Collections.emptyList();
         }
@@ -154,13 +187,27 @@ public class PowerDistributor extends CoreModule {
     }
 
     @Override
+    public boolean isPreEngineered() {
+        return HorizonsBlueprintName.POWER_DISTRIBUTOR_SYSTEM_ENGINE_FOCUSED.equals(this.getName());
+    }
+
+    @Override
+    public boolean isCGExclusive() {
+        return HorizonsBlueprintName.POWER_DISTRIBUTOR_SYSTEM_ENGINE_FOCUSED.equals(this.getName());
+    }
+
+    @Override
     public String getClarifier() {
-        return this.getOrigin() == Origin.GUARDIAN ? " " + LocaleService.getLocalizedStringForCurrentLocale("blueprint.horizons.name.guardian_power_distributor") : "";
+        if (this.getOrigin() == Origin.GUARDIAN)
+            return " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey());
+        else if (isPreEngineered())
+            return " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey() + ".short");
+        return "";
     }
 
     @Override
     public int getGrouping() {
-        return getModuleSize().intValue() * 10 + (getOrigin().equals(Origin.GUARDIAN) ? 1 : 0);
+        return getModuleSize().intValue() * 10 + (getOrigin().equals(Origin.GUARDIAN) ? 1 : 0) + (isPreEngineered() ? 2 : 0);
     }
 
     public boolean isSelectable() {

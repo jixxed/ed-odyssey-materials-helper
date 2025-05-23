@@ -229,3 +229,5 @@
 "blueprint.horizons.name.frame_shift_drive_booster","Guardian Frame Shift Drive Booster","","","Potenciador de Motor de Distorsión Guardián","","Potencializador do Motor de Distorção de Fase Guardian","Ускоритель FSD Стражей",""
 "blueprint.horizons.name.concord_cannon","Concord Cannon","","","Cañón de Concordia","","","Орудие Конкорд",""
 "blueprint.horizons.name.hatch_breaker_limpet_control","Limpet Control","Limpet Control","","Lanzador de Drones","","Controlador de Drones","Контроллер дронов",""
+"blueprint.horizons.name.power_distributor_system_engine_focused","Power Distributor","Power Distributor","Energieverteiler","Distribuidor de energía","Distributeur de puissance","Distribuidor de Energia","Распределитель питания",""
+"blueprint.horizons.name.power_distributor_system_engine_focused.short","Sys+Eng","","","","","","",""

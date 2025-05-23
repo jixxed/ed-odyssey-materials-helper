@@ -205,6 +205,7 @@ public enum HorizonsBlueprintType {
     EXPANDED_PROBE_SCANNING_RADIUS_X2(false, true),
     INCREASED_FSD_RANGE_FASTER_FSD_BOOT_SEQUENCE(false, true),
     ANTI_GUARDIAN_ZONE_RESISTANCE(false, false),
+    SYSTEM_ENGINE_FOCUSED(false, true),
     NONE(false, false);
     @Getter
     private final boolean experimental;
