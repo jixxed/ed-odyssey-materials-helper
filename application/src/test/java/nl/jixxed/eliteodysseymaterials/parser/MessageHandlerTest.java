@@ -19,7 +19,7 @@ public class MessageHandlerTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"test1.json", "test2.json", "test3.json", "test4.json", "test5.json", "test6.json", "test7.json"})
+    @ValueSource(strings = {"test1.json", "test2.json", "test3.json", "test4.json", "test5.json", "test6.json", "test7.json", "test8.json"})
     public void canMapFCFile(String file) {
         final InputStream resourceAsStream = MessageHandlerTest.class.getResourceAsStream("/parser/capifc/" + file);
         if (resourceAsStream == null) {

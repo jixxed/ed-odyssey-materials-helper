@@ -1,0 +1,949 @@
+{
+  "name": {
+    "callsign": "VZY-N8Q",
+    "vanityName": "576f6e6720546f6520547275636b",
+    "filteredVanityName": "576f6e6720546f6520547275636b"
+  },
+  "currentStarSystem": "Kuwemaki",
+  "balance": "2295664158",
+  "fuel": "528",
+  "state": "normalOperation",
+  "theme": "None",
+  "dockingAccess": "all",
+  "notoriousAccess": false,
+  "capacity": {
+    "shipPacks": 0,
+    "modulePacks": 0,
+    "cargoForSale": 1966,
+    "cargoNotForSale": 200,
+    "cargoSpaceReserved": 0,
+    "crew": 680,
+    "freeSpace": 22154,
+    "microresourceCapacityTotal": 1000,
+    "microresourceCapacityFree": 1000,
+    "microresourceCapacityUsed": 0,
+    "microresourceCapacityReserved": 0
+  },
+  "itinerary": {
+    "completed": [
+      {
+        "departureTime": "2025-04-12 01:57:00",
+        "arrivalTime": "2025-04-07 07:54:00",
+        "state": "success",
+        "visitDurationSeconds": 410580,
+        "starsystem": "Col 285 Sector PS-T d3-92"
+      },
+      {
+        "departureTime": "2025-04-12 07:58:00",
+        "arrivalTime": "2025-04-12 01:57:00",
+        "state": "success",
+        "visitDurationSeconds": 21660,
+        "starsystem": "FF Andromedae"
+      },
+      {
+        "departureTime": "2025-04-13 01:35:00",
+        "arrivalTime": "2025-04-12 07:58:00",
+        "state": "success",
+        "visitDurationSeconds": 63420,
+        "starsystem": "Col 285 Sector UJ-G c11-14"
+      },
+      {
+        "departureTime": "2025-04-15 11:17:00",
+        "arrivalTime": "2025-04-13 01:35:00",
+        "state": "success",
+        "visitDurationSeconds": 207720,
+        "starsystem": "FF Andromedae"
+      },
+      {
+        "departureTime": "2025-04-15 11:38:00",
+        "arrivalTime": "2025-04-15 11:17:00",
+        "state": "success",
+        "visitDurationSeconds": 1260,
+        "starsystem": "HIP 61996"
+      },
+      {
+        "departureTime": "2025-04-15 14:58:00",
+        "arrivalTime": "2025-04-15 11:38:00",
+        "state": "success",
+        "visitDurationSeconds": 12000,
+        "starsystem": "HIP 61996"
+      },
+      {
+        "departureTime": "2025-04-19 03:52:00",
+        "arrivalTime": "2025-04-15 14:58:00",
+        "state": "success",
+        "visitDurationSeconds": 305640,
+        "starsystem": "FF Andromedae"
+      },
+      {
+        "departureTime": "2025-04-19 04:16:00",
+        "arrivalTime": "2025-04-19 03:52:00",
+        "state": "success",
+        "visitDurationSeconds": 1440,
+        "starsystem": "LBN 623 Sector UO-R c4-12"
+      },
+      {
+        "departureTime": "2025-04-19 07:43:00",
+        "arrivalTime": "2025-04-19 04:16:00",
+        "state": "success",
+        "visitDurationSeconds": 12420,
+        "starsystem": "HIP 2074"
+      },
+      {
+        "departureTime": "2025-04-19 08:09:00",
+        "arrivalTime": "2025-04-19 07:43:00",
+        "state": "success",
+        "visitDurationSeconds": 1560,
+        "starsystem": "Kolyan"
+      },
+      {
+        "departureTime": "2025-04-22 04:11:00",
+        "arrivalTime": "2025-04-19 08:09:00",
+        "state": "success",
+        "visitDurationSeconds": 244920,
+        "starsystem": "FF Andromedae"
+      },
+      {
+        "departureTime": "2025-04-22 04:32:00",
+        "arrivalTime": "2025-04-22 04:11:00",
+        "state": "success",
+        "visitDurationSeconds": 1260,
+        "starsystem": "Col 359 Sector PX-T d3-8"
+      },
+      {
+        "departureTime": "2025-04-22 06:55:00",
+        "arrivalTime": "2025-04-22 04:32:00",
+        "state": "success",
+        "visitDurationSeconds": 8580,
+        "starsystem": "Col 359 Sector NI-W b17-9"
+      },
+      {
+        "departureTime": "2025-04-22 07:17:00",
+        "arrivalTime": "2025-04-22 06:55:00",
+        "state": "success",
+        "visitDurationSeconds": 1320,
+        "starsystem": "Col 285 Sector DM-B a43-3"
+      },
+      {
+        "departureTime": "2025-04-22 12:38:00",
+        "arrivalTime": "2025-04-22 07:17:00",
+        "state": "success",
+        "visitDurationSeconds": 19260,
+        "starsystem": "FF Andromedae"
+      },
+      {
+        "departureTime": "2025-04-22 18:59:00",
+        "arrivalTime": "2025-04-22 12:38:00",
+        "state": "success",
+        "visitDurationSeconds": 22860,
+        "starsystem": "Col 359 Sector TN-R c5-26"
+      },
+      {
+        "departureTime": "2025-04-23 06:50:00",
+        "arrivalTime": "2025-04-22 18:59:00",
+        "state": "success",
+        "visitDurationSeconds": 42660,
+        "starsystem": "Col 359 Sector KN-W b17-2"
+      },
+      {
+        "departureTime": "2025-04-23 07:11:00",
+        "arrivalTime": "2025-04-23 06:50:00",
+        "state": "success",
+        "visitDurationSeconds": 1260,
+        "starsystem": "Koren"
+      },
+      {
+        "departureTime": "2025-04-24 13:06:00",
+        "arrivalTime": "2025-04-23 07:11:00",
+        "state": "success",
+        "visitDurationSeconds": 107700,
+        "starsystem": "FF Andromedae"
+      },
+      {
+        "departureTime": "2025-04-24 13:27:00",
+        "arrivalTime": "2025-04-24 13:06:00",
+        "state": "success",
+        "visitDurationSeconds": 1260,
+        "starsystem": "Col 359 Sector NW-I b11-1"
+      },
+      {
+        "departureTime": "2025-04-27 01:59:00",
+        "arrivalTime": "2025-04-24 13:27:00",
+        "state": "success",
+        "visitDurationSeconds": 217920,
+        "starsystem": "Col 359 Sector PI-S d4-18"
+      },
+      {
+        "departureTime": "2025-04-29 06:39:00",
+        "arrivalTime": "2025-04-27 01:59:00",
+        "state": "success",
+        "visitDurationSeconds": 189600,
+        "starsystem": "Col 359 Sector GX-W b17-5"
+      },
+      {
+        "departureTime": "2025-04-29 07:26:00",
+        "arrivalTime": "2025-04-29 06:39:00",
+        "state": "success",
+        "visitDurationSeconds": 2820,
+        "starsystem": "Col 285 Sector XV-C c13-9"
+      },
+      {
+        "departureTime": "2025-04-29 08:36:00",
+        "arrivalTime": "2025-04-29 07:26:00",
+        "state": "success",
+        "visitDurationSeconds": 4200,
+        "starsystem": "LFT 926"
+      },
+      {
+        "departureTime": "2025-04-29 09:39:00",
+        "arrivalTime": "2025-04-29 08:36:00",
+        "state": "success",
+        "visitDurationSeconds": 3780,
+        "starsystem": "Khun"
+      },
+      {
+        "departureTime": "2025-04-29 10:09:00",
+        "arrivalTime": "2025-04-29 09:39:00",
+        "state": "success",
+        "visitDurationSeconds": 1800,
+        "starsystem": "Arque"
+      },
+      {
+        "departureTime": "2025-04-29 10:40:00",
+        "arrivalTime": "2025-04-29 10:09:00",
+        "state": "success",
+        "visitDurationSeconds": 1860,
+        "starsystem": "Giryak"
+      },
+      {
+        "departureTime": "2025-04-29 11:09:00",
+        "arrivalTime": "2025-04-29 10:40:00",
+        "state": "success",
+        "visitDurationSeconds": 1740,
+        "starsystem": "Wyrd"
+      },
+      {
+        "departureTime": null,
+        "arrivalTime": "2025-04-29 11:09:00",
+        "state": "success",
+        "visitDurationSeconds": 1966,
+        "starsystem": "LP 131-66"
+      }
+    ],
+    "totalDistanceJumpedLY": 7122,
+    "currentJump": null
+  },
+  "marketFinances": {
+    "cargoTotalValue": 8149510,
+    "allTimeProfit": 1580791915,
+    "numCommodsForSale": 25,
+    "numCommodsPurchaseOrders": 0,
+    "balanceAllocForPurchaseOrders": 0
+  },
+  "blackmarketFinances": {
+    "cargoTotalValue": 0,
+    "allTimeProfit": 0,
+    "numCommodsForSale": 0,
+    "numCommodsPurchaseOrders": 0,
+    "balanceAllocForPurchaseOrders": 0
+  },
+  "finance": {
+    "bankBalance": 2295664158,
+    "bankReservedBalance": 0,
+    "taxation": 0,
+    "service_taxation": {
+      "bartender": 0,
+      "pioneersupplies": 0,
+      "rearm": 0,
+      "refuel": 0,
+      "repair": 0,
+      "shipyard": 0,
+      "outfitting": 0
+    },
+    "numServices": 6,
+    "numOptionalServices": 0,
+    "debtThreshold": -300000000,
+    "maintenance": 9091062,
+    "maintenanceToDate": 8317778,
+    "coreCost": 5000000,
+    "servicesCost": 2991062,
+    "servicesCostToDate": 2217778,
+    "jumpsCost": 1100000,
+    "numJumps": 11,
+    "bartender": {
+      "microresourcesTotalValue": 0,
+      "allTimeProfit": 0,
+      "microresourcesForSale": 0,
+      "microresourcesPurchaseOrders": 0,
+      "balanceAllocForPurchaseOrders": 0,
+      "profitHistory": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "servicesCrew": {
+    "refuel": {
+      "crewMember": {
+        "name": "Elia Dean",
+        "gender": "F",
+        "enabled": "YES",
+        "faction": "federation",
+        "salary": 1500000,
+        "hiringPrice": 40000000,
+        "lastEdit": "2025-04-24 07:30:02"
+      },
+      "invoicesWeekToDate": [
+        {
+          "wages": 1108888,
+          "from": "2025-04-24 07:30:02",
+          "until": "2025-04-29 11:41:45",
+          "type": "current"
+        },
+        {
+          "wages": 1495530,
+          "from": "2025-04-29 11:41:45",
+          "until": "2025-05-01 07:00:00",
+          "type": "expected"
+        }
+      ],
+      "status": "ok"
+    },
+    "repair": {
+      "crewMember": {
+        "name": "Ethan Stanton",
+        "gender": "M",
+        "enabled": "YES",
+        "faction": "federation",
+        "salary": 1500000,
+        "hiringPrice": 50000000,
+        "lastEdit": "2025-04-24 07:30:02"
+      },
+      "invoicesWeekToDate": [
+        {
+          "wages": 1108888,
+          "from": "2025-04-24 07:30:02",
+          "until": "2025-04-29 11:41:45",
+          "type": "current"
+        },
+        {
+          "wages": 1495530,
+          "from": "2025-04-29 11:41:45",
+          "until": "2025-05-01 07:00:00",
+          "type": "expected"
+        }
+      ],
+      "status": "ok"
+    }
+  },
+  "cargo": [
+    {
+      "commodity": "Tritium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 200,
+      "value": 513000,
+      "stolen": false,
+      "locName": "Tritium"
+    },
+    {
+      "commodity": "Polymers",
+      "originSystem": null,
+      "mission": false,
+      "qty": 103,
+      "value": 31518,
+      "stolen": false,
+      "locName": "Polymers"
+    },
+    {
+      "commodity": "Superconductors",
+      "originSystem": null,
+      "mission": false,
+      "qty": 18,
+      "value": 118224,
+      "stolen": false,
+      "locName": "Superconductors"
+    },
+    {
+      "commodity": "Aluminium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 165,
+      "value": 421080,
+      "stolen": false,
+      "locName": "Aluminium"
+    },
+    {
+      "commodity": "Copper",
+      "originSystem": null,
+      "mission": false,
+      "qty": 45,
+      "value": 28440,
+      "stolen": false,
+      "locName": "Copper"
+    },
+    {
+      "commodity": "Fruitandvegetables",
+      "originSystem": null,
+      "mission": false,
+      "qty": 21,
+      "value": 10185,
+      "stolen": false,
+      "locName": "Fruit and Vegetables"
+    },
+    {
+      "commodity": "Foodcartridges",
+      "originSystem": null,
+      "mission": false,
+      "qty": 28,
+      "value": 7084,
+      "stolen": false,
+      "locName": "Food Cartridges"
+    },
+    {
+      "commodity": "Powergenerators",
+      "originSystem": null,
+      "mission": false,
+      "qty": 5,
+      "value": 11985,
+      "stolen": false,
+      "locName": "Power Generators"
+    },
+    {
+      "commodity": "Waterpurifiers",
+      "originSystem": null,
+      "mission": false,
+      "qty": 14,
+      "value": 6272,
+      "stolen": false,
+      "locName": "Water Purifiers"
+    },
+    {
+      "commodity": "Computercomponents",
+      "originSystem": null,
+      "mission": false,
+      "qty": 18,
+      "value": 12744,
+      "stolen": false,
+      "locName": "Computer Components"
+    },
+    {
+      "commodity": "Medicaldiagnosticequipment",
+      "originSystem": null,
+      "mission": false,
+      "qty": 7,
+      "value": 20727,
+      "stolen": false,
+      "locName": "Medical Diagnostic Equipment"
+    },
+    {
+      "commodity": "Nonlethalweapons",
+      "originSystem": null,
+      "mission": false,
+      "qty": 7,
+      "value": 12999,
+      "stolen": false,
+      "locName": "Non-Lethal Weapons"
+    },
+    {
+      "commodity": "Steel",
+      "originSystem": null,
+      "mission": false,
+      "qty": 197,
+      "value": 824642,
+      "stolen": false,
+      "locName": "Steel"
+    },
+    {
+      "commodity": "Steel",
+      "originSystem": null,
+      "mission": false,
+      "qty": 426,
+      "value": 1783236,
+      "stolen": false,
+      "locName": "Steel"
+    },
+    {
+      "commodity": "Titanium",
+      "originSystem": null,
+      "mission": false,
+      "qty": 678,
+      "value": 3015066,
+      "stolen": false,
+      "locName": "Titanium"
+    },
+    {
+      "commodity": "Cmmcomposite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 149,
+      "value": 897278,
+      "stolen": false,
+      "locName": "CMM Composite"
+    },
+    {
+      "commodity": "Cmmcomposite",
+      "originSystem": null,
+      "mission": false,
+      "qty": 85,
+      "value": 435030,
+      "stolen": false,
+      "locName": "CMM Composite"
+    }
+  ],
+  "orders": {
+    "commodities": {
+      "sales": [
+        {
+          "name": "water",
+          "stock": "0",
+          "price": "260",
+          "blackmarket": false
+        },
+        {
+          "name": "titanium",
+          "stock": "678",
+          "price": "4446",
+          "blackmarket": false
+        },
+        {
+          "name": "copper",
+          "stock": "45",
+          "price": "631",
+          "blackmarket": false
+        },
+        {
+          "name": "aluminium",
+          "stock": "165",
+          "price": "2540",
+          "blackmarket": false
+        },
+        {
+          "name": "fruitandvegetables",
+          "stock": "21",
+          "price": "483",
+          "blackmarket": false
+        },
+        {
+          "name": "foodcartridges",
+          "stock": "28",
+          "price": "252",
+          "blackmarket": false
+        },
+        {
+          "name": "polymers",
+          "stock": "103",
+          "price": "306",
+          "blackmarket": false
+        },
+        {
+          "name": "semiconductors",
+          "stock": "0",
+          "price": "1084",
+          "blackmarket": false
+        },
+        {
+          "name": "superconductors",
+          "stock": "18",
+          "price": "6551",
+          "blackmarket": false
+        },
+        {
+          "name": "powergenerators",
+          "stock": "5",
+          "price": "2388",
+          "blackmarket": false
+        },
+        {
+          "name": "waterpurifiers",
+          "stock": "14",
+          "price": "447",
+          "blackmarket": false
+        },
+        {
+          "name": "computercomponents",
+          "stock": "18",
+          "price": "708",
+          "blackmarket": false
+        },
+        {
+          "name": "hazardousenvironmentsuits",
+          "stock": "0",
+          "price": "518",
+          "blackmarket": false
+        },
+        {
+          "name": "robotics",
+          "stock": "0",
+          "price": "1915",
+          "blackmarket": false
+        },
+        {
+          "name": "nonlethalweapons",
+          "stock": "7",
+          "price": "1848",
+          "blackmarket": false
+        },
+        {
+          "name": "resonatingseparators",
+          "stock": "0",
+          "price": "5692",
+          "blackmarket": false
+        },
+        {
+          "name": "bioreducinglichen",
+          "stock": "0",
+          "price": "1178",
+          "blackmarket": false
+        },
+        {
+          "name": "ceramiccomposites",
+          "stock": "0",
+          "price": "402",
+          "blackmarket": false
+        },
+        {
+          "name": "geologicalequipment",
+          "stock": "0",
+          "price": "1830",
+          "blackmarket": false
+        },
+        {
+          "name": "mutomimager",
+          "stock": "0",
+          "price": "6166",
+          "blackmarket": false
+        },
+        {
+          "name": "liquidoxygen",
+          "stock": "0",
+          "price": "1375",
+          "blackmarket": false
+        },
+        {
+          "name": "insulatingmembrane",
+          "stock": "0",
+          "price": "10605",
+          "blackmarket": false
+        },
+        {
+          "name": "cmmcomposite",
+          "stock": "234",
+          "price": "5972",
+          "blackmarket": false
+        },
+        {
+          "name": "medicaldiagnosticequipment",
+          "stock": "7",
+          "price": "2944",
+          "blackmarket": false
+        },
+        {
+          "name": "steel",
+          "stock": "623",
+          "price": "4179",
+          "blackmarket": false
+        }
+      ],
+      "purchases": []
+    },
+    "onfootmicroresources": {
+      "sales": [],
+      "purchases": []
+    }
+  },
+  "carrierLocker": {
+    "assets": [],
+    "goods": [],
+    "data": []
+  },
+  "reputation": [
+    {
+      "majorFaction": "empire",
+      "score": 100
+    },
+    {
+      "majorFaction": "federation",
+      "score": 100
+    },
+    {
+      "majorFaction": "independent",
+      "score": 100
+    },
+    {
+      "majorFaction": "alliance",
+      "score": 100
+    }
+  ],
+  "market": {
+    "id": 3711546880,
+    "name": "VZY-N8Q",
+    "outpostType": "fleetcarrier",
+    "imported": [],
+    "exported": [],
+    "services": {
+      "commodities": "ok",
+      "carrierfuel": "ok",
+      "socialspace": "ok",
+      "refuel": "ok",
+      "repair": "ok",
+      "rearm": "unavailable",
+      "shipyard": "private",
+      "outfitting": "private",
+      "blackmarket": "unavailable",
+      "voucherredemption": "unavailable",
+      "exploration": "unavailable",
+      "bartender": "unavailable",
+      "vistagenomics": "unavailable",
+      "pioneersupplies": "unavailable",
+      "carriermanagement": "ok",
+      "stationmenu": "ok",
+      "dock": "ok",
+      "crewlounge": "ok",
+      "engineer": "ok",
+      "contacts": "ok",
+      "registeringcolonisation": "faction",
+      "colonisationcontribution": "faction",
+      "livery": "private"
+    },
+    "economies": {
+      "136": {
+        "name": "Carrier",
+        "proportion": 1
+      }
+    },
+    "prohibited": {
+      "128049212": "BasicNarcotics",
+      "128049213": "Tobacco",
+      "128049214": "Beer",
+      "128049215": "Wine",
+      "128049216": "Liquor",
+      "128667728": "ImperialSlaves",
+      "128672306": "BootlegLiquor",
+      "128958679": "ApaVietii"
+    },
+    "commodities": [
+      {
+        "id": 128049184,
+        "categoryname": "Foods",
+        "name": "FoodCartridges",
+        "stock": 28,
+        "buyPrice": 252,
+        "sellPrice": 0,
+        "demand": 0,
+        "legality": "",
+        "meanPrice": 0,
+        "demandBracket": "",
+        "stockBracket": 2,
+        "locName": "Food Cartridges"
+      },
+      {
+        "id": 128049178,
+        "categoryname": "Foods",
+        "name": "FruitAndVegetables",
+        "stock": 21,
+        "buyPrice": 483,
+        "sellPrice": 0,
+        "demand": 0,
+        "legality": "",
+        "meanPrice": 0,
+        "demandBracket": "",
+        "stockBracket": 2,
+        "locName": "Fruit and Vegetables"
+      },
+      {
+        "id": 128673856,
+        "categoryname": "Industrial Materials",
+        "name": "CMMComposite",
+        "stock": 234,
+        "buyPrice": 5972,
+        "sellPrice": 0,
+        "demand": 0,
+        "legality": "",
+        "meanPrice": 0,
+        "demandBracket": "",
+        "stockBracket": 2,
+        "locName": "CMM Composite"
+      },
+      {
+        "id": 128049197,
+        "categoryname": "Industrial Materials",
+        "name": "Polymers",
+        "stock": 103,
+        "buyPrice": 306,
+        "sellPrice": 0,
+        "demand": 0,
+        "legality": "",
+        "meanPrice": 0,
+        "demandBracket": "",
+        "stockBracket": 2,
+        "locName": "Polymers"
+      },
+      {
+        "id": 128049200,
+        "categoryname": "Industrial Materials",
+        "name": "Superconductors",
+        "stock": 18,
+        "buyPrice": 6551,
+        "sellPrice": 0,
+        "demand": 0,
+        "legality": "",
+        "meanPrice": 0,
+        "demandBracket": "",
+        "stockBracket": 2,
+        "locName": "Superconductors"
+      },
+      {
+        "id": 128049217,
+        "categoryname": "Machinery",
+        "name": "PowerGenerators",
+        "stock": 5,
+        "buyPrice": 2388,
+        "sellPrice": 0,
+        "demand": 0,
+        "legality": "",
+        "meanPrice": 0,
+        "demandBracket": "",
+        "stockBracket": 2,
+        "locName": "Power Generators"
+      },
+      {
+        "id": 128049218,
+        "categoryname": "Machinery",
+        "name": "WaterPurifiers",
+        "stock": 14,
+        "buyPrice": 447,
+        "sellPrice": 0,
+        "demand": 0,
+        "legality": "",
+        "meanPrice": 0,
+        "demandBracket": "",
+        "stockBracket": 2,
+        "locName": "Water Purifiers"
+      },
+      {
+        "id": 128049176,
+        "categoryname": "Metals",
+        "name": "Aluminium",
+        "stock": 165,
+        "buyPrice": 2540,
+        "sellPrice": 0,
+        "demand": 0,
+        "legality": "",
+        "meanPrice": 0,
+        "demandBracket": "",
+        "stockBracket": 2,
+        "locName": "Aluminium"
+      },
+      {
+        "id": 128049175,
+        "categoryname": "Metals",
+        "name": "Copper",
+        "stock": 45,
+        "buyPrice": 631,
+        "sellPrice": 0,
+        "demand": 0,
+        "legality": "",
+        "meanPrice": 0,
+        "demandBracket": "",
+        "stockBracket": 2,
+        "locName": "Copper"
+      },
+      {
+        "id": 129031238,
+        "categoryname": "Metals",
+        "name": "Steel",
+        "stock": 623,
+        "buyPrice": 4179,
+        "sellPrice": 0,
+        "demand": 0,
+        "legality": "",
+        "meanPrice": 0,
+        "demandBracket": "",
+        "stockBracket": 2,
+        "locName": "Steel"
+      },
+      {
+        "id": 128049174,
+        "categoryname": "Metals",
+        "name": "Titanium",
+        "stock": 678,
+        "buyPrice": 4446,
+        "sellPrice": 0,
+        "demand": 0,
+        "legality": "",
+        "meanPrice": 0,
+        "demandBracket": "",
+        "stockBracket": 2,
+        "locName": "Titanium"
+      },
+      {
+        "id": 128066403,
+        "categoryname": "NonMarketable",
+        "name": "Drones",
+        "stock": 999999,
+        "buyPrice": 95,
+        "sellPrice": 95,
+        "demand": 9999999,
+        "legality": "",
+        "meanPrice": 95,
+        "demandBracket": 2,
+        "stockBracket": 2,
+        "locName": "Limpet"
+      },
+      {
+        "id": 128049225,
+        "categoryname": "Technology",
+        "name": "ComputerComponents",
+        "stock": 18,
+        "buyPrice": 708,
+        "sellPrice": 0,
+        "demand": 0,
+        "legality": "",
+        "meanPrice": 0,
+        "demandBracket": "",
+        "stockBracket": 2,
+        "locName": "Computer Components"
+      },
+      {
+        "id": 128682047,
+        "categoryname": "Technology",
+        "name": "MedicalDiagnosticEquipment",
+        "stock": 7,
+        "buyPrice": 2944,
+        "sellPrice": 0,
+        "demand": 0,
+        "legality": "",
+        "meanPrice": 0,
+        "demandBracket": "",
+        "stockBracket": 2,
+        "locName": "Medical Diagnostic Equipment"
+      },
+      {
+        "id": 128049236,
+        "categoryname": "Weapons",
+        "name": "NonLethalWeapons",
+        "stock": 7,
+        "buyPrice": 1848,
+        "sellPrice": 0,
+        "demand": 0,
+        "legality": "",
+        "meanPrice": 0,
+        "demandBracket": "",
+        "stockBracket": 2,
+        "locName": "Non-Lethal Weapons"
+      }
+    ]
+  },
+  "ships": {
+    "shipyard_list": [],
+    "discount_list": []
+  },
+  "modules": []
+}

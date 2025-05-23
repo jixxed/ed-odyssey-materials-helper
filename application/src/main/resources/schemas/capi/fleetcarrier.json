@@ -734,6 +734,7 @@
         },
         "services": {
           "type": "object",
+          "description": "Services available at the Fleet Carrier: faction, ok, unavailable, private",
           "properties": {
             "commodities": {
               "type": "string"
@@ -799,6 +800,9 @@
               "type": "string"
             },
             "livery": {
+              "type": "string"
+            },
+            "colonisationcontribution": {
               "type": "string"
             }
           },
