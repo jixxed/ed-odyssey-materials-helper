@@ -30,7 +30,7 @@ public class FileSyncService {
 
     private static final List<SyncItem> SYNC_ITEMS = new ArrayList<>();
 
-    public static final String BROKERS_TRADERS_URL = "https://d3a17kxijdwucd.cloudfront.net/traders_brokers.zip";
+    public static final String BROKERS_TRADERS_URL = "https://d1nzd8004kn2jv.cloudfront.net/traders_brokers.zip";
 
     static {
         SYNC_ITEMS.add(new SyncItem(BROKERS_TRADERS_URL, Duration.ofDays(1), OsConstants.getConfigDirectory() + OsConstants.getOsSlash() + "traders_brokers.zip", FileSyncService::extractZipFiles));
