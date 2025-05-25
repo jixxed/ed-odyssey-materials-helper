@@ -24,13 +24,14 @@ public class ColonisationItem {
     @JsonIgnore
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     @JsonIgnore
-    public static final ColonisationItem ALL = new ColonisationItem("0", "All colonisation projects", "-1", null, null, new HashMap<>());
+    public static final ColonisationItem ALL = new ColonisationItem("0", "All colonisation projects", "-1", false, null, null, new HashMap<>());
     @JsonIgnore
     private static ColonisationItem current;
     @EqualsAndHashCode.Include
     private String uuid = UUID.randomUUID().toString();
     private String name;
     private String marketID;
+    private Boolean hideFromAll = false; // Used to hide the item from the ALL list, but still show it in the current project
     private ColonisationBuildable colonisationBuildable;
     private ColonisationLayout colonisationLayout;
     private Map<Commodity, ConstructionProgress> constructionRequirements;
@@ -63,7 +64,7 @@ public class ColonisationItem {
         if (this == ALL) {
             return APPLICATION_STATE.getPreferredCommander()
                     .map(commander -> (Map<Commodity, ConstructionProgress>) ColonisationService.getColonisationItems(commander).getAllColonisationItems().stream()
-                            .filter(colonisationItem -> !colonisationItem.isAll() && !colonisationItem.isCurrent())
+                            .filter(colonisationItem -> !colonisationItem.isAll() && !colonisationItem.isCurrent() && !colonisationItem.getHideFromAll())
                             .flatMap(colonisationItem -> colonisationItem.getConstructionRequirements().entrySet().stream())
                             .collect(HashMap<Commodity, ConstructionProgress>::new, (m, v) -> m.merge(v.getKey(), v.getValue(), ConstructionProgress::sum), HashMap::putAll))
                     .orElse(constructionRequirements);

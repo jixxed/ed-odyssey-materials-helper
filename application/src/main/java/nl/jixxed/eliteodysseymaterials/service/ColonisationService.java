@@ -43,7 +43,7 @@ public class ColonisationService {
                             colonisationItem.setConstructionRequirements(event.getResourcesRequired());
                             saveColonisationItems(commander, colonisationItems);
                         });
-                ColonisationItem.setCurrent(new ColonisationItem("1", "Current", event.getMarketID().toString(), null, null, event.getResourcesRequired()));
+                ColonisationItem.setCurrent(new ColonisationItem("1", "Current", event.getMarketID().toString(), false, null, null, event.getResourcesRequired()));
             });
         }));
     }

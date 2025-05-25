@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ColonisationItem;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+@Slf4j
 public class ColonisationProjectView extends DestroyableHBox implements DestroyableEventTemplate {
 
 
@@ -36,6 +38,7 @@ public class ColonisationProjectView extends DestroyableHBox implements Destroya
     private DestroyableLabel marketID;
     private DestroyableComboBox<ColonisationBuildable> buildableSelect;
     private DestroyableComboBox<ColonisationLayout> layoutSelect;
+    private DestroyableCheckBox hideFromAll;
     private DestroyableLabel typeTitle;
     private DestroyableLabel layoutTitle;
     private DestroyableButton save;
@@ -87,6 +90,10 @@ public class ColonisationProjectView extends DestroyableHBox implements Destroya
                 .withStyleClass("title")
                 .withText("tab.colonisation.project.layout")
                 .build();
+        hideFromAll = CheckBoxBuilder.builder()
+                .withStyleClass("hide-from-all")
+                .withText("tab.colonisation.project.hide.from.all")
+                .build();
         nameTextField = TextFieldBuilder.builder()
                 .withStyleClass("name-input")
                 .withNonLocalizedText("nope")
@@ -98,6 +105,7 @@ public class ColonisationProjectView extends DestroyableHBox implements Destroya
                         final ColonisationItems colonisationItems = ColonisationService.getColonisationItems(commander);
                         final ColonisationItem selectedColonisationItem = colonisationItems.getSelectedColonisationItem();
                         selectedColonisationItem.setName(nameTextField.getText());
+                        selectedColonisationItem.setHideFromAll(hideFromAll.isSelected());
                         selectedColonisationItem.setColonisationBuildable(buildableSelect.getSelectionModel().getSelectedItem());
                         selectedColonisationItem.setColonisationLayout(layoutSelect.getSelectionModel().getSelectedItem());
                         ColonisationService.saveColonisationItems(commander, colonisationItems);
@@ -132,7 +140,7 @@ public class ColonisationProjectView extends DestroyableHBox implements Destroya
                 .build();
         final DestroyableVBox content = BoxBuilder.builder()
                 .withStyleClass("contents")
-                .withNodes(nameTitle, nameTextField, typeTitle, buildableSelect, layoutTitle, layoutSelect, marketIDTitle, marketID)
+                .withNodes(nameTitle, nameTextField, typeTitle, buildableSelect, layoutTitle, layoutSelect, hideFromAll, marketIDTitle, marketID)
                 .buildVBox();
         final DestroyableVBox buttons = BoxBuilder.builder()
                 .withStyleClass("buttons-contents")
@@ -156,8 +164,11 @@ public class ColonisationProjectView extends DestroyableHBox implements Destroya
     }
 
     public void setBuildable(ColonisationItem colonisationItem) {
-        this.colonisationItem = colonisationItem;
-        update();
+        if (this.colonisationItem == null || !this.colonisationItem.getUuid().equals(colonisationItem.getUuid())) {
+            log.info("Setting colonisation item: {}", colonisationItem);
+            this.colonisationItem = colonisationItem;
+            update();
+        }
     }
 
     private void update() {
@@ -178,6 +189,7 @@ public class ColonisationProjectView extends DestroyableHBox implements Destroya
         setVisibility(layoutSelect, !colonisationItem.isAll() && !colonisationItem.isCurrent());
         nameTextField.setText(!colonisationItem.isCurrent() ? colonisationItem.getName() : "");
         marketID.setText(colonisationItem.getMarketID());
+        hideFromAll.setSelected(colonisationItem.getHideFromAll());
         buildableSelect.getSelectionModel().select(ColonisationBuildable.UNKNOWN.equals(colonisationItem.getColonisationBuildable()) ? null : colonisationItem.getColonisationBuildable());
         layoutSelect.getSelectionModel().select(colonisationItem.getColonisationLayout());
     }
