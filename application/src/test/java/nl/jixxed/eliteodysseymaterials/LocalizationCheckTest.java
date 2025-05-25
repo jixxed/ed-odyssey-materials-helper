@@ -20,16 +20,22 @@ public class LocalizationCheckTest {
         List<Executable> resourceChecks = new ArrayList<>();
         for (Resource resource : resources) {
             // Process the resource
-            resourceChecks.add(() -> {
-                System.out.println(resource.getFilename());
-                Assertions.assertFalse(resource.getContentAsString(StandardCharsets.UTF_8).contains("'"), () -> {
-                    try {
-                        return resource.getFilename() + " contains APOSTROPHE(UTF+0027) " + resource.getContentAsString(StandardCharsets.UTF_8).codePoints().filter(ch -> ch == '\'').count() + " time(s). These need to be converted to RIGHT SINGLE QUOTATION MARK(UTF+2019).";
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+            System.out.println(resource.getFilename());
+            String[] split = resource.getContentAsString(StandardCharsets.UTF_8).split("\n");
+            for (int i = 0; i < split.length; i++) {
+                String line = split[i];
+                int lineNumber = i + 1;
+                resourceChecks.add(() -> {
+                    Assertions.assertFalse(line.contains("'"), () -> {
+                        try {
+                            final String key = line.split(",")[0];
+                            return resource.getFile().toString() + " contains APOSTROPHE(UTF+0027) " + line.codePoints().filter(ch -> ch == '\'').count() + " time(s) on line " + lineNumber + ". These need to be converted to RIGHT SINGLE QUOTATION MARK(UTF+2019). key: " + key.substring(1, key.length() - 1);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
                 });
-            });
+            }
         }
         Assertions.assertAll(resourceChecks);
     }
