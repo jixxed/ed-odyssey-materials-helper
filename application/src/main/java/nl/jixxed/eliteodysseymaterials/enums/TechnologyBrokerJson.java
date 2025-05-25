@@ -6,7 +6,7 @@ import lombok.Data;
 public class TechnologyBrokerJson {
 
     private String name;
-    private MaterialTraderCoordsJson coords;
-    private MaterialTraderStationJson station;
+    private TechnologyBrokerCoordsJson coords;
+    private TechnologyBrokerStationJson station;
 
 }

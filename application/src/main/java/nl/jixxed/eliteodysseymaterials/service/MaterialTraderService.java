@@ -27,7 +27,7 @@ public class MaterialTraderService {
         if (brokersFile.exists()) {
             update(TRADERS_FILE_PATH);
         } else {
-            final InputStream inputStream = TechnologyBrokerService.class.getResourceAsStream("/materialtrader/traders.jsonl");
+            final InputStream inputStream = MaterialTraderService.class.getResourceAsStream("/materialtrader/traders.jsonl");
             update(inputStream);
         }
     }

@@ -8,8 +8,8 @@ import lombok.Data;
 public class MaterialTraderStationJson {
 
     private String name;
-    private Double distanceToArrival;
-    private Double varianceToArrival;
+    private Double distanceToArrival = 0D;
+    private Double varianceToArrival = 0D;
     private String primaryEconomy;
     private String secondaryEconomy;
     private String type;
