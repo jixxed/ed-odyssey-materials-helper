@@ -133,11 +133,6 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
         this.getNodes().addAll(firstLine, new GrowingRegion(), secondLine);
 
         installPopOver();
-        this.hoverProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                minRequired = 1;
-            }
-        });
         update();
         this.requestLayout();
     }
