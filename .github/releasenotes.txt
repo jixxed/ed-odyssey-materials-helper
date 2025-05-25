@@ -7,3 +7,7 @@ The portable zip versions are used as update packages. You can run them standalo
 
 **Release notes for this version:**
 Fix capi deserialization issue
+Add CG power distributor modules
+Add option to colonisation projects to exclude them from the all projects overview
+Fixed a bug in the menu where materials could show wrong quantity and color
+Updated style for pinning blueprints action to be the same as the loadout editor
