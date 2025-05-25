@@ -1,12 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.templates.generic;
 
 import javafx.css.PseudoClass;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
+import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
@@ -19,9 +16,10 @@ import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerPinEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
+import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
-public class EngineerBlueprintLabel extends DestroyableHBox implements DestroyableEventTemplate {
+public class EngineerBlueprintLabel extends DestroyableStackPane implements DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     public static final String LOWGRADE = "lowgrade";
     public static final String UNLOCKED = "unlocked";
@@ -35,6 +33,8 @@ public class EngineerBlueprintLabel extends DestroyableHBox implements Destroyab
     private DestroyableResizableImageView pinnedImage;
     private Integer currentEngineerRank = 0;
     private boolean dragFlag = false;
+    private DestroyableHBox bottomLayer;
+    private DestroyableLabel button;
 
     public EngineerBlueprintLabel(final Engineer engineer) {
         this(engineer, false, 0);
@@ -57,6 +57,14 @@ public class EngineerBlueprintLabel extends DestroyableHBox implements Destroyab
 
     public void initComponents() {
         this.getStyleClass().add("engineer");
+
+        bottomLayer = BoxBuilder.builder()
+                .withStyleClass("data")
+                .buildHBox();
+
+        this.getNodes().add(bottomLayer);
+
+
         this.engineerName = LabelBuilder.builder()
                 .withStyleClass("name")
                 .withText(LocaleService.getStringBinding(this.engineer.getLocalizationKey()))
@@ -64,67 +72,48 @@ public class EngineerBlueprintLabel extends DestroyableHBox implements Destroyab
         if (this.engineer.isHorizons()) {
             addGradeImage();
             addPinnedImage();
-            if (this.horizonsBlueprint instanceof HorizonsModuleBlueprint) {
-                DestroyableTooltip tooltip = TooltipBuilder.builder()
-                        .withText(LocaleService.getStringBinding("blueprint.engineer.pinnable.tooltip"))
-                        .build();
-                tooltip.install(this);
-                this.getStyleClass().add("pinnable");
-
-            }
         }
-        this.getNodes().add(this.engineerName);
+        bottomLayer.getNodes().add(this.engineerName);
         if (this.engineer.isHorizons() && this.horizonsBlueprint != null) {
             final int engineerMaxGrade = HorizonsBlueprintConstants.getEngineerMaxGrade(this.horizonsBlueprint, this.engineer);
             if (engineerMaxGrade > 0) {
-                this.getNodes().add(LabelBuilder.builder()
+                bottomLayer.getNodes().add(LabelBuilder.builder()
                         .withStyleClass("maxgrade")
                         .withNonLocalizedText("\u2191" + engineerMaxGrade)
                         .build());
             }
         }
         if (this.horizonsBlueprint instanceof HorizonsModuleBlueprint) {
-            this.addEventBinding(this.onMouseClickedProperty(), getClickMouseEventHandler());
-            this.addEventBinding(this.onMouseDraggedProperty(), getDragMouseEventHandler());
+            button = LabelBuilder.builder()
+                    .withStyleClass("pin-button")
+                    .withText(PinnedBlueprintService.isPinned(this.engineer, this.horizonsBlueprint) ? "blueprint.engineer.unpin" : "blueprint.engineer.pin")
+                    .build();
+            DestroyableHBox topLayer = BoxBuilder.builder()
+                    .withStyleClass("button-layer")
+                    .withNodes(new GrowingRegion(), button, new GrowingRegion())
+                    .withOnMouseClicked(_ -> processMultiClick())
+                    .buildHBox();
+            topLayer.visibleProperty().bind(this.hoverProperty());
+            this.getNodes().add(topLayer);
         }
 
         update();
     }
 
-    private EventHandler<MouseEvent> getDragMouseEventHandler() {
-        return event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                this.dragFlag = true;
-            }
-        };
-    }
-
-    private EventHandler<MouseEvent> getClickMouseEventHandler() {
-        return event -> {
-            if (event.getButton().equals(MouseButton.SECONDARY)) {
-                return;
-            }
-            if (!this.dragFlag && event.getClickCount() > 1) {
-                processMultiClick();
-            }
-
-            this.dragFlag = false;
-        };
-    }
 
     private void addPinnedImage() {
         this.pinnedImage = ResizableImageViewBuilder.builder()
                 .withStyleClasses("pinned-image")
                 .withImage("/images/ships/engineers/pinned.png")
                 .build();
-        this.getNodes().add(this.pinnedImage);
+        bottomLayer.getNodes().add(this.pinnedImage);
     }
 
     private void addGradeImage() {
         this.gradeImage = ResizableImageViewBuilder.builder()
                 .withStyleClasses("grade-image")
                 .build();
-        this.getNodes().add(this.gradeImage);
+        bottomLayer.getNodes().add(this.gradeImage);
     }
 
     public void initEventHandling() {
@@ -183,6 +172,7 @@ public class EngineerBlueprintLabel extends DestroyableHBox implements Destroyab
             PinnedBlueprintService.pinBlueprint(this.engineer, this.horizonsBlueprint);
             EventService.publish(new EngineerPinEvent(this.engineer, this.horizonsBlueprint, true));
         }
+        button.textProperty().bind(LocaleService.getStringBinding(PinnedBlueprintService.isPinned(this.engineer, this.horizonsBlueprint) ? "blueprint.engineer.unpin" : "blueprint.engineer.pin"));
         update();
     }
 

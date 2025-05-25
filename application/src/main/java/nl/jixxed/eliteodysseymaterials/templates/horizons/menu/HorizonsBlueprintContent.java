@@ -257,11 +257,11 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
                 .withText("blueprint.label.engineers")
                 .build();
         this.getNodes().add(engineerLabelHeader);
-        final DestroyableHBox[] engineerLabels = this.blueprint.getEngineers().stream()
+        final EngineerBlueprintLabel[] engineerLabels = this.blueprint.getEngineers().stream()
                 .filter(Predicate.not(Engineer.REMOTE_WORKSHOP::equals))
                 .map(engineer -> new EngineerBlueprintLabel(engineer, this.blueprint, true, this.blueprint.getHorizonsBlueprintGrade().getGrade()))
                 .sorted(Comparator.comparing(EngineerBlueprintLabel::getEngineerName))
-                .toArray(DestroyableHBox[]::new);
+                .toArray(EngineerBlueprintLabel[]::new);
         final DestroyableFlowPane flowPane = FlowPaneBuilder.builder()
                 .withStyleClass("engineer-flow")
                 .withNodes(engineerLabels)

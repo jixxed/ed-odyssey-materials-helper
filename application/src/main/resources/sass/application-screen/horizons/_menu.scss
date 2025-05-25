@@ -163,43 +163,52 @@
     }
 
     .engineer {
-      -fx-padding: 0.25em;
       -fx-cursor: hand;
       -fx-background-color: $background-color-dark;
       -fx-border-color: $border-color-black;
 
-      &.pinnable:hover {
-        -fx-background-color: #2e2e2e;
-      }
-
-      .name {
-        @include fixedHeight(2em);
-        -fx-padding: 0.25em;
-        -fx-text-fill: $text-color-red;
-      }
-
-      .maxgrade {
-        @include fixedHeight(2em);
-        -fx-padding: 0.25em;
-
-      }
-
-      .grade-image {
-        @include fixedHeight(2em);
-      }
-
-      .pinned-image {
-        @include fixedHeight(2em);
-      }
-
-
-      &:unlocked .name {
+      &:unlocked .data .name {
         -fx-text-fill: $text-color-green;
       }
 
-      &:lowgrade .name {
+      &:lowgrade .data .name {
         -fx-text-fill: $text-color-yellow;
       }
+
+      .button-layer {
+        -fx-background-color: $background-color-dark;
+        -fx-opacity: 0.9;
+
+        .pin-button {
+          @include fixedHeight(2.5em);
+          -fx-text-fill: $text-color-blue;
+        }
+      }
+
+      .data {
+        -fx-padding: 0.25em;
+
+        .name {
+          @include fixedHeight(2em);
+          -fx-padding: 0.25em;
+          -fx-text-fill: $text-color-red;
+        }
+
+        .maxgrade {
+          @include fixedHeight(2em);
+          -fx-padding: 0.25em;
+
+        }
+
+        .grade-image {
+          @include fixedHeight(2em);
+        }
+
+        .pinned-image {
+          @include fixedHeight(2em);
+        }
+      }
+
     }
 
     //modifiers
