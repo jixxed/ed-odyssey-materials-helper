@@ -97,10 +97,10 @@ class OdysseyBlueprintContent extends DestroyableVBox implements DestroyableEven
                 .withStyleClass(TITLE_STYLE_CLASS)
                 .withText("blueprint.label.completed.referrals")
                 .build();
-        final DestroyableHBox[] engineerLabels = Stream.of(Engineer.BALTANOS, Engineer.ROSA_DAYETTE, Engineer.ELEANOR_BRESA)
+        final EngineerBlueprintLabel[] engineerLabels = Stream.of(Engineer.BALTANOS, Engineer.ROSA_DAYETTE, Engineer.ELEANOR_BRESA)
                 .map(engineer -> new EngineerBlueprintLabel(engineer, true, 0))
                 .sorted(Comparator.comparing(EngineerBlueprintLabel::getEngineerName))
-                .toArray(DestroyableHBox[]::new);
+                .toArray(EngineerBlueprintLabel[]::new);
         final DestroyableFlowPane flowPane = FlowPaneBuilder.builder()
                 .withStyleClass("engineer-flow")
                 .withNodes(engineerLabels)
