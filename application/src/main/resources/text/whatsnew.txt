@@ -1,3 +1,8 @@
+Version 2.179
+-------------
+Added dark mode toggle to the settings for a dark titlebar
+Fix Yi Shen blank menu page
+
 Version 2.178
 -------------
 Handle potential nullpointer in trader/broker data
