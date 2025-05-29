@@ -66,8 +66,6 @@ public class CAPIService {
                 .build(FrontierApi.instance());
 
         EVENT_LISTENERS.add(EventService.addListener(this, CapiOAuthCallbackEvent.class, event -> {
-            log.info(event.getCode());
-            log.info(event.getState());
             this.executor.submit(() -> {
                 try {
                     log.info("get access token");
@@ -160,7 +158,6 @@ public class CAPIService {
                     return commander.getName().equalsIgnoreCase(name);
                 }
                 if (response.getCode() == 400) {
-                    log.info(this.oAuth2AccessToken.getAccessToken());
                     Platform.runLater(() -> {
                         this.fcEnabled.set(false);
                         NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.400"));
@@ -215,7 +212,6 @@ public class CAPIService {
     public void authenticate() {
         this.authorizationUrlBuilder = ((CapiOAuth20Service) this.service).getAuthorizationUrlBuilder();
         final String build = this.authorizationUrlBuilder.build();
-        log.debug(build);
         Platform.runLater(() -> FXApplication.getInstance().getHostServices().showDocument(build));
     }
 
