@@ -18,6 +18,7 @@ import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.export.CsvExporter;
 import nl.jixxed.eliteodysseymaterials.export.TextExporter;
 import nl.jixxed.eliteodysseymaterials.export.XlsExporter;
+import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.RegistryService;
@@ -72,7 +73,6 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
         final DestroyableHBox customJournalFolderSetting = createCustomJournalFolderSetting();
         final DestroyableHBox pollSetting = createPollSetting();
         final DestroyableHBox urlSchemeLinkingSetting = createUrlSchemeLinkingSetting();
-        final DestroyableHBox darkModeSetting = createDarkModeSetting();
         final DestroyableHBox exportInventory = createExportInventorySetting();
         final DestroyableHBox blueprintExpandedSetting = createBlueprintExpandedSetting();
         final DestroyableHBox importFromClipboardSetting = createImportFromClipboardSetting();
@@ -85,8 +85,13 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 fontSetting,
                 customJournalFolderSetting,
                 pollSetting,
-                urlSchemeLinkingSetting,
-                darkModeSetting,
+                urlSchemeLinkingSetting
+        );
+        if (OsCheck.isWindows()) {
+            final DestroyableHBox darkModeSetting = createDarkModeSetting();
+            this.getNodes().add(darkModeSetting);
+        }
+        this.getNodes().addAll(
                 exportInventory,
                 blueprintExpandedSetting,
                 importFromClipboardSetting,

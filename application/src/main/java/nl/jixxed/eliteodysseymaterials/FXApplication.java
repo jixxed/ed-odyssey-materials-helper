@@ -211,8 +211,9 @@ public class FXApplication extends Application {
             setupStyling(scene);
             primaryStage.setScene(scene);
             primaryStage.show();
-            FXWinUtil.setDarkMode(primaryStage, PreferencesService.getPreference(PreferenceConstants.DARK_MODE, Boolean.FALSE));
-
+            if (OsCheck.isWindows() && PreferencesService.getPreference(PreferenceConstants.DARK_MODE, Boolean.FALSE)) {
+                FXWinUtil.setDarkMode(primaryStage, PreferencesService.getPreference(PreferenceConstants.DARK_MODE, Boolean.FALSE));
+            }
             if (PreferencesService.getPreference(PreferenceConstants.ENABLE_AR, false)) {
                 if (OsCheck.isWindows()) {
                     ARService.toggle();
