@@ -17,6 +17,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires java.net.http;
     requires javafx.fxml;
     requires javafx.swing;
+    requires javafx.graphics;
     requires jdk.naming.dns;
     requires nl.jixxed.lept4j;
     requires nl.jixxed.tess4j;
@@ -38,7 +39,6 @@ module nl.jixxed.eliteodysseymaterials {
     requires static lombok;
     requires transitive javafx.controls;
     requires transitive javafx.media;
-
 
     exports nl.jixxed.eliteodysseymaterials.domain.ships;
     exports nl.jixxed.eliteodysseymaterials.domain;

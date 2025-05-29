@@ -42,6 +42,7 @@ import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.parser.FileProcessor;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.window.FXWinUtil;
 import nl.jixxed.eliteodysseymaterials.templates.ApplicationScreen;
 import nl.jixxed.eliteodysseymaterials.templates.LoadingScreen;
 import nl.jixxed.eliteodysseymaterials.templates.dialog.EDDNDialog;
@@ -210,6 +211,7 @@ public class FXApplication extends Application {
             setupStyling(scene);
             primaryStage.setScene(scene);
             primaryStage.show();
+            FXWinUtil.setDarkMode(primaryStage, PreferencesService.getPreference(PreferenceConstants.DARK_MODE, Boolean.FALSE));
 
             if (PreferencesService.getPreference(PreferenceConstants.ENABLE_AR, false)) {
                 if (OsCheck.isWindows()) {

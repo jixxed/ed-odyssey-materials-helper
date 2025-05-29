@@ -23,6 +23,7 @@ import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.RegistryService;
 import nl.jixxed.eliteodysseymaterials.service.SupportService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.window.FXWinUtil;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.io.File;
@@ -71,6 +72,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
         final DestroyableHBox customJournalFolderSetting = createCustomJournalFolderSetting();
         final DestroyableHBox pollSetting = createPollSetting();
         final DestroyableHBox urlSchemeLinkingSetting = createUrlSchemeLinkingSetting();
+        final DestroyableHBox darkModeSetting = createDarkModeSetting();
         final DestroyableHBox exportInventory = createExportInventorySetting();
         final DestroyableHBox blueprintExpandedSetting = createBlueprintExpandedSetting();
         final DestroyableHBox importFromClipboardSetting = createImportFromClipboardSetting();
@@ -84,12 +86,31 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 customJournalFolderSetting,
                 pollSetting,
                 urlSchemeLinkingSetting,
+                darkModeSetting,
                 exportInventory,
                 blueprintExpandedSetting,
                 importFromClipboardSetting,
                 importSlefFromClipboardSetting,
                 supportPackageSetting
         );
+    }
+
+    private DestroyableHBox createDarkModeSetting() {
+        final DestroyableLabel darkModeLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.darkmode")
+                .build();
+        final DestroyableToggleSwitch darkModeCheckBox = ToggleSwitchBuilder.builder()
+                .withSelected(PreferencesService.getPreference(PreferenceConstants.DARK_MODE, Boolean.FALSE))
+                .withSelectedChangeListener((_, _, newValue) -> {
+                    PreferencesService.setPreference(PreferenceConstants.DARK_MODE, newValue);
+                    FXWinUtil.setDarkMode(FXApplication.getInstance().getPrimaryStage(), PreferencesService.getPreference(PreferenceConstants.DARK_MODE, Boolean.FALSE));
+                })
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(darkModeLabel, darkModeCheckBox)
+                .buildHBox();
     }
 
     @Override

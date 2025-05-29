@@ -45,7 +45,7 @@ public class PreferenceConstants {
     public static final String HORIZONS_MATERIAL_TRADER_MAX_RANGE = "horizons.material.trader.max.range";
     public static final String HORIZONS_TECHNOLOGY_BROKER_MAX_RANGE = "horizons.technology.broker.max.range";
     public static final String MARKETPLACE_TOKEN_PREFIX = "marketplace.token.";
-    public static final String ENABLE_BARTENDER_AR =  "ar.bartender.enabled";
+    public static final String ENABLE_BARTENDER_AR = "ar.bartender.enabled";
     public static final String USER_LATEST_EVENT = "latest.event";
     public static final String EDDN_ENABLED = "eddn.enabled";
     public static final String EDDN_ASKED = "eddn.asked";
@@ -55,4 +55,5 @@ public class PreferenceConstants {
     public static final String FLIP_WISHLIST_REMAINING_AVAILABLE_HORIZONS = "flip.wishlist.remaining.available.horizons";
     public static final String FLIP_WISHLIST_REMAINING_AVAILABLE_ODYSSEY = "flip.wishlist.remaining.available.odyssey";
     public static final String TOOLTIP_BLUEPRINT_EXPANDED = "tooltip.blueprint.expanded";
+    public static final String DARK_MODE = "application.dark.mode";
 }
