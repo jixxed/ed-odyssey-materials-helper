@@ -687,6 +687,7 @@
             -fx-pref-width: 35.25em;
             -fx-max-width: 35.25em; }
             .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flowz .mission .name, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .mission .name {
+              -fx-label-padding: 0em;
               -fx-max-width: 34.75em; }
         .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .engineer-flow {
           -fx-hgap: 0.25em;
@@ -2853,6 +2854,9 @@
             -fx-min-width: 35.25em;
             -fx-pref-width: 35.25em;
             -fx-max-width: 35.25em; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient.mission .name {
+              -fx-label-padding: 0em;
+              -fx-max-width: 34.75em; }
           .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .name {
             -fx-text-fill: white;
             -fx-label-padding: 0.25em;

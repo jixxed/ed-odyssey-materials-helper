@@ -151,6 +151,7 @@
         @include fixedWidth(35.25em);
 
         .name {
+          -fx-label-padding: 0em;
           -fx-max-width: 34.75em;
         }
       }
