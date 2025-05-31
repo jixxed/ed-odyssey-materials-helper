@@ -535,6 +535,10 @@ public class FXApplication extends Application {
     }
 
     private void versionPopup() {
+        if (System.getenv("DISABLE_UPDATE_CHECK") != null) {
+            log.info("Update check is disabled");
+            return;
+        }
         if (!VersionService.isBeta()) {
             final String buildVersion = VersionService.getBuildVersion();
             String latestVersion = "";
