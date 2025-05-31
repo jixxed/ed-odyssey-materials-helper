@@ -42,7 +42,6 @@ public class PreferenceConstants {
     public static final String AR_LOCALE = "ar.locale";
     public static final String AR_CHAR_WHITELIST = "ar.character.whitelist";
     public static final String POLLING_FILE_MODE = "polling.file.mode";
-    public static final String UPDATE_CHECKER_MODE = "updatecheck.mode";
     public static final String HORIZONS_MATERIAL_TRADER_MAX_RANGE = "horizons.material.trader.max.range";
     public static final String HORIZONS_TECHNOLOGY_BROKER_MAX_RANGE = "horizons.technology.broker.max.range";
     public static final String MARKETPLACE_TOKEN_PREFIX = "marketplace.token.";

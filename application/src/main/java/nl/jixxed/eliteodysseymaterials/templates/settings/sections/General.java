@@ -72,7 +72,6 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
         final DestroyableHBox fontSetting = creatFontSetting();
         final DestroyableHBox customJournalFolderSetting = createCustomJournalFolderSetting();
         final DestroyableHBox pollSetting = createPollSetting();
-        final DestroyableHBox updateCheckSetting = createUpdateCheckSetting();
         final DestroyableHBox urlSchemeLinkingSetting = createUrlSchemeLinkingSetting();
         final DestroyableHBox exportInventory = createExportInventorySetting();
         final DestroyableHBox blueprintExpandedSetting = createBlueprintExpandedSetting();
@@ -86,7 +85,6 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 fontSetting,
                 customJournalFolderSetting,
                 pollSetting,
-                updateCheckSetting,
                 urlSchemeLinkingSetting
         );
         if (OsCheck.isWindows()) {
@@ -256,36 +254,15 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 .withText("tab.settings.poll.explain")
                 .build();
         DestroyableCheckBox pollCheckBox = CheckBoxBuilder.builder()
-                .withSelected(PreferencesService.getPreference(PreferenceConstants.POLLING_FILE_MODE, Boolean.TRUE))
+                .withSelected(PreferencesService.getPreference(PreferenceConstants.POLLING_FILE_MODE, Boolean.FALSE))
                 .withSelectedProperty((_, _, newValue) -> {
                     PreferencesService.setPreference(PreferenceConstants.POLLING_FILE_MODE, newValue);
-                })
-                .build();
-        return BoxBuilder.builder()
-                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
-                .withNodes(pollLabel, pollCheckBox, pollExplainLabel)
-                .buildHBox();
-    }
-
-    private DestroyableHBox createUpdateCheckSetting() {
-        DestroyableLabel updateCheckLabel = LabelBuilder.builder()
-                .withStyleClass(SETTINGS_LABEL_CLASS)
-                .withText("tab.settings.updateCheck")
-                .build();
-        DestroyableLabel updateCheckExplainLabel = LabelBuilder.builder()
-                .withStyleClass(SETTINGS_LABEL_CLASS)
-                .withText("tab.settings.updateCheck.explain")
-                .build();
-        DestroyableCheckBox pollCheckBox = CheckBoxBuilder.builder()
-                .withSelected(PreferencesService.getPreference(PreferenceConstants.UPDATE_CHECKER_MODE, Boolean.TRUE))
-                .withSelectedProperty((_, _, newValue) -> {
-                    PreferencesService.setPreference(PreferenceConstants.UPDATE_CHECKER_MODE, newValue);
                     EventService.publish(new PollingFileModeEvent(newValue));
                 })
                 .build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
-                .withNodes(updateCheckLabel, pollCheckBox, updateCheckExplainLabel)
+                .withNodes(pollLabel, pollCheckBox, pollExplainLabel)
                 .buildHBox();
     }
 
