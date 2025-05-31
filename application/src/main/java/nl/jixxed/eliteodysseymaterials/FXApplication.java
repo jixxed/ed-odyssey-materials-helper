@@ -132,7 +132,9 @@ public class FXApplication extends Application {
             whatsnewPopup();
             urlSchemePopup();
             eddnPopup();
-            versionPopup();
+            if (PreferencesService.getPreference(PreferenceConstants.UPDATE_CHECKER_MODE, Boolean.TRUE)) {
+                versionPopup();
+            }
             MaterialTrackingService.initialize();
 //            HighGradeEmissionService.initialize();
             CAPIService.getInstance();
