@@ -6,11 +6,13 @@ bootstrap/.gradle
 bootstrap/.idea
 bootstrap/build
 bootstrap/out
+bootstrap/bin
 application/.gradle
 application/src/main/resources/simplelogger.properties
 application/.idea
 application/build
 application/out
+application/bin
 /output/
 /application/lombok.config
 /application/log/
