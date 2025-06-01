@@ -1,3 +1,8 @@
+Version 2.180
+-------------
+Changed start command for auto updater on linux. This will allow the updater to run on Arch.
+Fixed some styling issues in ships and on foot menus
+
 Version 2.179
 -------------
 Added dark mode toggle to the settings for a dark titlebar
