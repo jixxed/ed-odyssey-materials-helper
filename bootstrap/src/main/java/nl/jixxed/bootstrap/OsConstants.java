@@ -28,7 +28,7 @@ class OsConstants {
     private static void setLinux() {
         UPDATE_FILE_SUFFIX = ".portable.linux.zip";
         KILL_COMMAND = "ps aux | grep 'Elite Dangerous Odyssey Materials Helper' | grep -v 'grep' | awk '{ print $2 }' | xargs kill -SIGTERM";
-        START_COMMAND = "%s/bin/Elite Dangerous Odyssey Materials Helper";
+        START_COMMAND = "%s/lib/runtime/bin/Elite Dangerous Odyssey Materials Helper";
         VERSION_FILE = "%s/lib/app/Elite Dangerous Odyssey Materials Helper.cfg";
     }
 }
