@@ -644,34 +644,34 @@
           -fx-wrap-text: true;
           -fx-font-weight: normal;
           -fx-text-fill: white; }
-        .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flowz, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow {
+        .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow {
           -fx-hgap: 0.25em;
           -fx-vgap: 0.25em;
           -fx-min-width: 35.5em;
           -fx-pref-width: 35.5em;
           -fx-max-width: 35.5em; }
-          .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flowz .ingredient, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient {
+          .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient {
             -fx-min-width: 17.5em;
             -fx-pref-width: 17.5em;
             -fx-max-width: 17.5em;
             -fx-padding: 0.25em;
             -fx-border-color: black;
             -fx-background-color: #0f0f0f; }
-            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flowz .ingredient .name, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .name {
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .name {
               -fx-text-fill: white;
               -fx-label-padding: 0.25em;
               -fx-wrap-text: true;
               -fx-font-weight: bold;
               -fx-max-width: 15em; }
-            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flowz .ingredient .quantity, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .quantity {
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .quantity {
               -fx-font-weight: bold; }
-            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flowz .ingredient .quantity-section, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .quantity-section {
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .quantity-section {
               -fx-spacing: 0.25em; }
-            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flowz .ingredient .required, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flowz .ingredient .available, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flowz .ingredient .quantity, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .required, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .available, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .quantity {
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .required, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .available, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .quantity {
               -fx-text-fill: #ff7c7c; }
-            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flowz .ingredient:filled .required, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flowz .ingredient:filled .available, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flowz .ingredient:filled .quantity, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient:filled .required, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient:filled .available, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient:filled .quantity {
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient:filled .required, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient:filled .available, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient:filled .quantity {
               -fx-text-fill: #89d07f; }
-            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flowz .ingredient .ingredient-image, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .ingredient-image {
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .ingredient-image {
               -fx-min-width: 2em;
               -fx-pref-width: 2em;
               -fx-max-width: 2em;
@@ -680,13 +680,24 @@
               -fx-max-height: 2em;
               -fx-fit-to-height: true;
               -fx-fit-to-width: true; }
-            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flowz .ingredient:partial .required, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flowz .ingredient:partial .available, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flowz .ingredient:partial .quantity, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient:partial .required, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient:partial .available, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient:partial .quantity {
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient:partial .required, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient:partial .available, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient:partial .quantity {
               -fx-text-fill: #dcc030; }
-          .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flowz .mission, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .mission {
+          .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .mission {
             -fx-min-width: 35.25em;
             -fx-pref-width: 35.25em;
             -fx-max-width: 35.25em; }
-            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flowz .mission .name, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .mission .name {
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .mission .name {
+              -fx-label-padding: 0em;
+              -fx-max-width: 34.75em; }
+          .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .leveling {
+            -fx-min-width: 35.25em;
+            -fx-pref-width: 35.25em;
+            -fx-max-width: 35.25em;
+            -fx-padding: 0.25em;
+            -fx-border-color: black;
+            -fx-background-color: #0f0f0f; }
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .leveling .name {
+              -fx-font-weight: bold;
               -fx-label-padding: 0em;
               -fx-max-width: 34.75em; }
         .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .engineer-flow {

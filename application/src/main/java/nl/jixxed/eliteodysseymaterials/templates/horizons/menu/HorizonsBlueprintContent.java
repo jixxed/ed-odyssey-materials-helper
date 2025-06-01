@@ -136,7 +136,7 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
 
     private void initIngredients() {
         final DestroyableFlowPane ingredientFlow = FlowPaneBuilder.builder()
-                .withStyleClass("ingredient-flowz")
+                .withStyleClass("ingredient-flow")
                 .withNodes(this.ingredients.stream().filter(ingredient -> !ingredient.getType().equals(HorizonsStorageType.OTHER)).toList())
                 .build();
         this.getNodes().add(ingredientFlow);
@@ -163,7 +163,7 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
                         .map(levelingTip -> BoxBuilder.builder()
                                 .withStyleClass("leveling")
                                 .withNode(LabelBuilder.builder()
-                                        .withStyleClass("leveling-name")
+                                        .withStyleClass("name")
                                         .withText(levelingTip)
                                         .build())
                                 .buildVBox())

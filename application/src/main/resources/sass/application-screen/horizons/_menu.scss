@@ -98,7 +98,7 @@
     }
 
     //ingredients
-    .ingredient-flowz, .ingredient-flow {
+    .ingredient-flow {
       @include hvGap(0.25em);
       @include fixedWidth(35.5em);
 
@@ -151,6 +151,19 @@
         @include fixedWidth(35.25em);
 
         .name {
+          -fx-label-padding: 0em;
+          -fx-max-width: 34.75em;
+        }
+      }
+
+      .leveling {
+        @include fixedWidth(35.25em);
+        -fx-padding: 0.25em;
+        -fx-border-color: $border-color-black;
+        -fx-background-color: $background-color-dark;
+
+        .name {
+          -fx-font-weight: bold;
           -fx-label-padding: 0em;
           -fx-max-width: 34.75em;
         }
