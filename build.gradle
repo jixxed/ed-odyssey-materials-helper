@@ -21,7 +21,7 @@ java {
     modularity.inferModulePath = true
 }
 wrapper {
-    gradleVersion "8.10.2"
+    gradleVersion "8.14.1"
 }
 
 tasks.register('copyMsi', Copy) {

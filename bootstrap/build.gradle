@@ -21,7 +21,7 @@ java {
     }
 }
 tasks.register('wrapper', Wrapper) {
-    gradleVersion "8.10.2"
+    gradleVersion "8.14.1"
 }
 
 OperatingSystem os = OperatingSystem.current();
