@@ -45,5 +45,8 @@ jobs:
           distribution: 'zulu'
           architecture: x64
 
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        
       - name: Run LocalizationCheckTest
         run: ./gradlew application:test --tests nl.jixxed.eliteodysseymaterials.LocalizationCheckTest
