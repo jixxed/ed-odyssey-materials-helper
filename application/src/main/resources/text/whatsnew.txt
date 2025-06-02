@@ -1,3 +1,9 @@
+Version 2.181
+-------------
+Increased minimum space for available space quantity on horizons materials. Would otherwise sometimes show 3 dots instead of the value.
+Updated translations
+Fix registering edomh urls on linux
+
 Version 2.180
 -------------
 Changed start command for auto updater on linux. This will allow the updater to run on Arch.

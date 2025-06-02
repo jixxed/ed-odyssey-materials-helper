@@ -6,5 +6,6 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Changed start command for auto updater on linux. This will allow the updater to run on Arch.
-Fixed some styling issues in ships and on foot menus
+Increased minimum space for available space quantity on horizons materials. Would otherwise sometimes show 3 dots instead of the value.
+Updated translations
+Fix registering edomh:// urls on linux
