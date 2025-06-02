@@ -197,4 +197,4 @@
 "blueprint.horizons.type.engineered_fsd_sco_a5_v1","Engineered FSD SCO 5A V1","","","MDD SDS 5A V1 Modificado","","","Полностью оборудованный FSD (ПГР) 5A V1","预改造FSD SCO 5A V1"
 "blueprint.horizons.type.engineered_fsd_sco_a6_v1","Engineered FSD SCO 6A V1","","","MDD SDS 6A V1 Modificado","","","Полностью оборудованный FSD (ПГР) 6A V1","预改造FSD SCO 6A V1"
 "blueprint.horizons.type.engineered_fsd_sco_a7_v1","Engineered FSD SCO 7A V1","","","MDD SDS 7A V1 Modificado","","","Полностью оборудованный FSD (ПГР) 7A V1","预改造FSD SCO 7A V1"
-"blueprint.horizons.type.system_engine_focused","System + engine focused","","","","","","",""
+"blueprint.horizons.type.system_engine_focused","System + engine focused","","","","","","Распределитель питания на систему и двигатель",""
