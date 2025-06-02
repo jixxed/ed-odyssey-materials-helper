@@ -1,10 +1,11 @@
 name: Validate Localization
 
 on:
-  pull_request:
-    branches:
-      - master
-      - l10n_crowdin_action
+  workflow_run:
+    workflows:
+      - Download from Crowdin
+    types:
+      - completed
 jobs:
   validation:
     runs-on: ubuntu-latest
