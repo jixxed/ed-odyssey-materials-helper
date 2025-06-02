@@ -1,0 +1,28 @@
+name: Validate Localization
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDKS
+        uses: actions/setup-java@v4.2.1
+        with:
+          java-version: |
+            23.0.1
+            21.0.1
+          distribution: 'zulu'
+          architecture: x64
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Run LocalizationCheckTest
+        run: ./gradlew application:test --tests nl.jixxed.eliteodysseymaterials.LocalizationCheckTest
