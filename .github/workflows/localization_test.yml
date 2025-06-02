@@ -4,10 +4,13 @@ on:
   pull_request:
     branches:
       - master
-
+    types:
+      - opened
+      - synchronize
 jobs:
   validation:
     runs-on: ubuntu-latest
+    if: github.head_ref == 'l10n_crowdin_action'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
