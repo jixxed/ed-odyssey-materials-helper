@@ -27,5 +27,5 @@
 "blueprint.label.leveling.sellexploration","Sell exploration data at the station","","","Vender datos de exploración en la estación","","Vender dados de exploração na estação","Сдавать исследовательские данные на станции","在该站点售出探索数据"
 "blueprint.label.leveling.sellbounties","Hand in bounty vouchers at the station","","","Canjear recompensas en la estación","","Recolher recompensas na estação","Сдавать ваучеры на награду на станции","在该站点兑现赏金兑换券"
 "blueprint.label.leveling.sellbonds","Hand in combat bonds at the station","","","Canjear bonos de combate en la estación","","Recolher bônus de combate na estação","Сдавать боевые облигации на станции","在该站点兑换战斗债券"
-"blueprint.engineer.pin","Pin","","","","","","",""
-"blueprint.engineer.unpin","Unpin","","","","","","",""
+"blueprint.engineer.pin","Pin","","","Anclar","","","Закрепить",""
+"blueprint.engineer.unpin","Unpin","","","Desanclar","","","Открепить",""
