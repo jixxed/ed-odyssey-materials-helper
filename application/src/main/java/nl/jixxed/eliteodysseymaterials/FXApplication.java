@@ -447,7 +447,7 @@ public class FXApplication extends Application {
         if (VersionService.getBuildVersion() == null) {//dev mode for hotswap css
             try {
                 final String currentWorkingDirectory = new File(".").getCanonicalPath();
-                final File compiledCss = new File(currentWorkingDirectory + "\\src\\main\\resources\\css\\compiled\\sass\\main.css");
+                final File compiledCss = new File(currentWorkingDirectory + "/src/main/resources/css/compiled/sass/main.css");
                 scene.getStylesheets().add(compiledCss.toURI().toURL().toExternalForm());
 
                 AtomicReference<FileListener> fileListenerRef = new AtomicReference<>();
@@ -482,7 +482,7 @@ public class FXApplication extends Application {
                             scene.getStylesheets().remove(cssFile);
                             scene.getStylesheets().add(cssFile);
                         }));
-                FileService.subscribe(currentWorkingDirectory + "\\src\\main\\resources\\css\\compiled\\sass", false, fileListenerRef.get());
+                FileService.subscribe(currentWorkingDirectory + "/src/main/resources/css/compiled/sass", false, fileListenerRef.get());
             } catch (final IOException e) {
                 log.error("Error loading stylesheet", e);
             }

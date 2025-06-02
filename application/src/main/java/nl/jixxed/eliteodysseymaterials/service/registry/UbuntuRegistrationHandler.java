@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.service.registry;
 
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.service.VersionService;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -14,8 +15,7 @@ import java.nio.file.Paths;
 @Slf4j
 public class UbuntuRegistrationHandler implements RegistrationHandler {
     private static final String BIN_DIR = Paths.get(ProcessHandle.current().info().command().orElseThrow(IllegalArgumentException::new)).getParent().toString();
-    private static final boolean IS_JAVA = ProcessHandle.current().info().command().map(s -> s.endsWith("java")).orElse(false);
-    public static final String CURRENT_DIR_SINGLE_SLASHED = (BIN_DIR.trim().replace("\"", "") + "/");
+    private static final String CURRENT_DIR_SINGLE_SLASHED = (BIN_DIR.trim().replace("\"", "") + "/");
     private static final String USER_HOME = "user.home";
     private static final String DESKTOP_FILE_PATH = "/.local/share/applications/edomh.desktop";
 
@@ -33,7 +33,7 @@ public class UbuntuRegistrationHandler implements RegistrationHandler {
     @Override
     public void register() {
         try {
-            if (!IS_JAVA) {
+            if (!VersionService.isDev()) {
                 final File file = Files.createFile(Path.of(System.getProperty(USER_HOME) + DESKTOP_FILE_PATH)).toFile();
                 writeDesktopFile(file);
                 Runtime.getRuntime().exec("xdg-mime default edomh.desktop x-scheme-handler/edomh").waitFor();
@@ -47,7 +47,7 @@ public class UbuntuRegistrationHandler implements RegistrationHandler {
     @Override
     public void unregister() {
         try {
-            if (!IS_JAVA) {
+            if (!VersionService.isDev()) {
                 final File file = new File(System.getProperty(USER_HOME) + DESKTOP_FILE_PATH);
                 if (file.exists() && file.isFile()) {
                     Files.delete(file.getAbsoluteFile().toPath());
@@ -62,7 +62,7 @@ public class UbuntuRegistrationHandler implements RegistrationHandler {
 
     @Override
     public boolean isRegistered() {
-        if (!IS_JAVA) {
+        if (!VersionService.isDev()) {
             final File file = new File(System.getProperty(USER_HOME) + DESKTOP_FILE_PATH);
             return file.exists() && file.isFile();
         }

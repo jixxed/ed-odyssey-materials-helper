@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.service.registry;
 
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.service.VersionService;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -10,8 +11,7 @@ import java.nio.file.Paths;
 @Slf4j
 public class WindowsRegistrationHandler implements RegistrationHandler {
     private static final String BIN_DIR = Paths.get(ProcessHandle.current().info().command().orElseThrow(IllegalArgumentException::new)).getParent().toString();
-    private static final boolean IS_JAVA = ProcessHandle.current().info().command().map(s -> s.endsWith("java.exe")).orElse(false);
-    public static final String CURRENT_DIR_SINGLE_SLASHED = (BIN_DIR.trim().replace("\"", "") + "\\");
+    private static final String CURRENT_DIR_SINGLE_SLASHED = (BIN_DIR.trim().replace("\"", "") + "\\");
     private static final String CURRENT_DIR_DOUBLE_SLASHED = CURRENT_DIR_SINGLE_SLASHED.replace("\\", "\\\\");
     private static final String REG_KEY = """
             Windows Registry Editor Version 5.00
@@ -28,7 +28,7 @@ public class WindowsRegistrationHandler implements RegistrationHandler {
 
     @Override
     public void register() {
-        if (!IS_JAVA) {
+        if (!VersionService.isDev()) {
             try {
                 final File file = Files.createTempFile("edomh", ".reg").toFile();
                 writeRegFile(file);
@@ -44,7 +44,7 @@ public class WindowsRegistrationHandler implements RegistrationHandler {
     @Override
     public void unregister() {
         try {
-            if (!IS_JAVA) {
+            if (!VersionService.isDev()) {
                 Runtime.getRuntime().exec("powershell Start-Process \"reg\" -ArgumentList @('delete', 'HKEY_CLASSES_ROOT\\edomh', '/f') -Verb RunAs").waitFor();//
             }
         } catch (final IOException | InterruptedException e) {
@@ -54,7 +54,7 @@ public class WindowsRegistrationHandler implements RegistrationHandler {
 
     @Override
     public boolean isRegistered() {
-        if (!IS_JAVA) {
+        if (!VersionService.isDev()) {
             final String registryValue = getRegistryValue();
             final String expectedValue = "\"" + CURRENT_DIR_SINGLE_SLASHED + "Elite Dangerous Odyssey Materials Helper.exe\" \"%1\"";
             final String expectedValueAlt = "\"%USERPROFILE%\\AppData\\Local\\Elite Dangerous Odyssey Materials Helper Launcher\\program\\Elite Dangerous Odyssey Materials Helper.exe\" \"%1\"";

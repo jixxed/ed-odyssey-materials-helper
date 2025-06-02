@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
 @Slf4j
 public class VersionService {
 
@@ -18,7 +19,7 @@ public class VersionService {
     }
 
     public static String getLatestVersion() throws IOException {
-        if(getBuildVersion() == null){
+        if (getBuildVersion() == null) {
             return "dev";
         }
         final URL url = new URL("https://api.github.com/repos/jixxed/ed-odyssey-materials-helper/releases/latest");
@@ -34,7 +35,7 @@ public class VersionService {
         return System.getProperty("app.version");
     }
 
-    public static boolean isLatestVersion(){
+    public static boolean isLatestVersion() {
         final String buildVersion = VersionService.getBuildVersion();
         String latestVersion = "";
         try {
@@ -44,5 +45,9 @@ public class VersionService {
         }
 
         return (VersionService.getBuildVersion() == null || buildVersion.equals(latestVersion) || latestVersion.isBlank());
+    }
+
+    public static boolean isDev() {
+        return getBuildVersion() == null;
     }
 }
