@@ -107,10 +107,10 @@ public class HorizonsMaterialCard extends DestroyableVBox implements Destroyable
     private void update() {
         final Integer materialCount = StorageService.getMaterialCount(this.material);
         final Integer maxAmount = this.material.getMaxAmount();
-        this.present.setValue(materialCount.equals(0) ? materialCount : Math.max(materialCount, this.material.getMaxAmount() / 7));
+        this.present.setValue(materialCount.equals(0) ? materialCount : Math.max(materialCount, this.material.getMaxAmount() / 6));
         this.present.addBinding(this.present.textProperty(), new SimpleStringProperty(materialCount.toString()));
         final Integer availableStorage = maxAmount - materialCount;
-        this.notPresent.setValue(availableStorage.equals(0) ? availableStorage : Math.max(availableStorage, this.material.getMaxAmount() / 7));
+        this.notPresent.setValue(availableStorage.equals(0) ? availableStorage : Math.max(availableStorage, this.material.getMaxAmount() / 6));
         this.notPresent.addBinding(this.notPresent.textProperty(), new SimpleStringProperty(String.valueOf(availableStorage)));
     }
 
