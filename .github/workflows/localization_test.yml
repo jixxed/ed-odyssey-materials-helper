@@ -1,11 +1,12 @@
 name: Validate Localization
 
 on:
-  workflow_run:
-    workflows:
-      - Download from Crowdin
-    types:
-      - completed
+  workflow_dispatch:
+#  workflow_run:
+#    workflows:
+#      - Download from Crowdin
+#    types:
+#      - completed
 jobs:
   validation:
     runs-on: ubuntu-latest

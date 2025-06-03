@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GHA_CUSTOM_PAT }}
 
       - name: Synchronize with Crowdin
         uses: crowdin/github-action@v2
@@ -29,3 +31,26 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+  validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDKS
+        uses: actions/setup-java@v4.2.1
+        with:
+          java-version: |
+            23.0.1
+            21.0.1
+          distribution: 'zulu'
+          architecture: x64
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Run LocalizationCheckTest
+        run: ./gradlew application:test --tests nl.jixxed.eliteodysseymaterials.LocalizationCheckTest
