@@ -30,7 +30,7 @@ jobs:
           pull_request_title: 'New Crowdin translations'
           pull_request_body: 'New Crowdin pull request with translations'
           pull_request_base_branch_name: 'master'
-          pull_request_branch_name: 'crowdin-translations-${{ github.run_id }}'
+          localization_branch_name: 'crowdin-translations-${{ github.run_id }}'
           commit_message: 'Update translations from Crowdin'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -45,7 +45,7 @@ jobs:
       - name: Checkout PR branch
         uses: actions/checkout@v4
         with:
-          ref: ${{ needs.crowdin.outputs.pr_branch }}
+          ref: 'crowdin-translations-${{ github.run_id }}'
           token: ${{ secrets.GHA_CUSTOM_PAT }}
 
       - name: Set up JDKS
