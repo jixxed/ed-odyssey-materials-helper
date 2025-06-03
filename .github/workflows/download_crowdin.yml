@@ -18,24 +18,32 @@ jobs:
 
       - name: Synchronize with Crowdin
         uses: crowdin/github-action@v2
+        id: crowdin
         with:
           upload_sources: true
           upload_translations: false
           download_translations: true
-
           create_pull_request: true
           pull_request_title: 'New Crowdin translations'
           pull_request_body: 'New Crowdin pull request with translations'
           pull_request_base_branch_name: 'master'
+          pull_request_branch_name: 'crowdin-translations-${GITHUB_RUN_ID}'
+          commit_message: 'Update translations from Crowdin'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+
   validation:
+    needs: crowdin
     runs-on: ubuntu-latest
+    if: steps.crowdin.outputs.pull_request_number
     steps:
-      - name: Checkout
+      - name: Checkout PR branch
         uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.crowdin.outputs.pull_request_branch }}
+          token: ${{ secrets.GHA_CUSTOM_PAT }}
 
       - name: Set up JDKS
         uses: actions/setup-java@v4.2.1
@@ -54,3 +62,32 @@ jobs:
 
       - name: Run LocalizationCheckTest
         run: ./gradlew application:test --tests nl.jixxed.eliteodysseymaterials.LocalizationCheckTest
+
+      - name: Update PR with validation status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: ${{ steps.crowdin.outputs.pull_request_number }}
+            });
+            
+            if (pr.state === 'open') {
+              if ('${{ job.status }}' === 'success') {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: ${{ steps.crowdin.outputs.pull_request_number }},
+                  body: '✅ Localization validation passed!'
+                });
+              } else {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: ${{ steps.crowdin.outputs.pull_request_number }},
+                  body: '❌ Localization validation failed! Please check the workflow run for details.'
+                });
+              }
+            }
