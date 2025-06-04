@@ -103,6 +103,9 @@ public class MaterialService {
                         .withText(LocaleService.getStringBinding("material.tooltip.type.manufactured"))
                         .build());
             }
+            if (horizonsMaterial instanceof Raw || horizonsMaterial instanceof Encoded || horizonsMaterial instanceof Manufactured) {
+                addClosestTraderToTooltip(horizonsMaterial, vBox);
+            }
             addHorizonsSpawnLocationsToTooltip(SpawnConstants.HORIZONSMATERIAL_LOCATION.get(horizonsMaterial), vBox);
             if (!(horizonsMaterial instanceof Commodity)) {
                 if (wishlist && WishlistService.getCurrentWishlistCount(horizonsMaterial).max() - StorageService.getMaterialCount(horizonsMaterial) > 0) {
@@ -116,6 +119,17 @@ public class MaterialService {
         return vBox;
 
 
+    }
+
+    private static void addClosestTraderToTooltip(HorizonsMaterial horizonsMaterial, DestroyableVBox vBox) {
+        final MaterialTrader closest = MaterialTraderService.findClosest(LocationService.getCurrentStarSystem(), horizonsMaterial.getStorageType());
+        vBox.getNodes().add(LabelBuilder.builder()
+                .build());
+        vBox.getNodes().add(LabelBuilder.builder()
+                .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE)
+                .withText("horizons.materials.nearest.trader")
+                .build());
+        vBox.getNodes().add(new CopyableLocation(closest.getStarSystem(), closest.getName(), closest.getDistanceFromStar(), closest.getDistanceFromStarVariance()));
     }
 
     private static void addMineableToTooltip(Commodity commodity, DestroyableVBox vBox) {
