@@ -105,6 +105,7 @@ jlink {
         name = 'Elite Dangerous Odyssey Materials Helper'
         jvmArgs = [
                 '-Dapp.version=' + project.version,
+                '-Dsentry.dsn=' + System.getenv("SENTRY_DSN"),
 //                '-Dlogging.appender.console.level.sentry=ERROR',
                 '-Xmx2048M',
                 '--add-exports=java.base/jdk.internal.misc=nl.jixxed.merged.module',

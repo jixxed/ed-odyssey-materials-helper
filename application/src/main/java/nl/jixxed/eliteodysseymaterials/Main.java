@@ -44,7 +44,7 @@ public class Main {
         Sentry.init(options -> {
 
             final String buildVersion = getBuildVersion();
-            options.setDsn("https://1aacf97280717f749dfc93a1713f9551@o4507814449774592.ingest.de.sentry.io/4507814504759376");
+            options.setDsn(System.getProperty("sentry.dsn"));
             options.setEnvironment(getEnvironment(buildVersion));
             options.setRelease("edomh-app@" + buildVersion);
             options.setEnabled(!buildVersion.equals("dev"));
