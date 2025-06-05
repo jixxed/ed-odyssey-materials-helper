@@ -241,14 +241,12 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
     }
 
     private void update() {
-
-        fleetCarrierLabel.setText(Formatters.NUMBER_FORMAT_0.format(availableFleetCarrier));
-        shipLabel.setText(Formatters.NUMBER_FORMAT_0.format(availableShip));
-        marketLabel.setText(MarketService.isFleetCarrier() ? "0" : MarketService.getMarketItem(commodity).map(MarketItem::stock).orElse(BigInteger.ZERO).toString());
-
         availableShip = StorageService.getCommodityCount(commodity, StoragePool.SHIP);
         availableFleetCarrier = StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER);
         var remaining = progress.required() - progress.provided();
+        fleetCarrierLabel.setText(Formatters.NUMBER_FORMAT_0.format(availableFleetCarrier));
+        shipLabel.setText(Formatters.NUMBER_FORMAT_0.format(availableShip));
+        marketLabel.setText(MarketService.isFleetCarrier() ? "0" : MarketService.getMarketItem(commodity).map(MarketItem::stock).orElse(BigInteger.ZERO).toString());
         this.delivered.setValue(Math.max(0, progress.provided()));
         this.presentShip.setValue(Math.min(remaining, availableShip));
         this.presentFleetCarrier.setValue(Math.min(remaining - Math.min(remaining, availableShip), availableFleetCarrier));
