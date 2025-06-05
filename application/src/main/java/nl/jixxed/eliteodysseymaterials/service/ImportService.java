@@ -162,7 +162,7 @@ public class ImportService {
                         return null;
                     }
                 }).filter(Objects::nonNull).toList();
-                wishlist.setItems(wishlistBlueprintList);
+                wishlist.getItems().addAll(wishlistBlueprintList);
 
                 final Commander commander = APPLICATION_STATE.getPreferredCommander().orElseThrow(IllegalArgumentException::new);
                 final HorizonsWishlists wishlists = WishlistService.getHorizonsWishlists(commander);
@@ -215,7 +215,7 @@ public class ImportService {
                         return null;
                     }
                 }).filter(Objects::nonNull).toList();
-                wishlist.setItems(wishlistBlueprintList);
+                wishlist.getItems().addAll(wishlistBlueprintList);
 
                 final Commander commander = APPLICATION_STATE.getPreferredCommander().orElseThrow(IllegalArgumentException::new);
                 final HorizonsWishlists wishlists = WishlistService.getHorizonsWishlists(commander);
@@ -313,7 +313,7 @@ public class ImportService {
                 final HorizonsWishlist wishlist = new HorizonsWishlist();
                 final String name = clipboardWishlist.getWishlist().getName() + LocaleService.getLocalizedStringForCurrentLocale("imported.partial.name");
                 wishlist.setName(name);
-                wishlist.setItems(clipboardWishlist.getWishlist().getItems());
+                wishlist.getItems().addAll(clipboardWishlist.getWishlist().getItems());
 
                 final Commander commander = APPLICATION_STATE.getPreferredCommander().orElseThrow(IllegalArgumentException::new);
                 final HorizonsWishlists wishlists = WishlistService.getHorizonsWishlists(commander);
