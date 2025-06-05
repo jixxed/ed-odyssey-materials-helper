@@ -1,3 +1,7 @@
+Version 2.183
+-------------
+Fix bug in previous release that prevents launching the application
+
 Version 2.182
 -------------
 Fixed a bug where it was not possible to remove blueprints from a just imported wishlist

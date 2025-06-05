@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      SENTRY_DSN: "${{secrets.SENTRY_DSN}}"
 
     steps:
       - uses: olegtarasov/get-tag@v2.1.3
@@ -52,6 +54,8 @@ jobs:
     runs-on: windows-latest
     permissions:
       contents: write
+    env:
+      SENTRY_DSN: "${{secrets.SENTRY_DSN}}"
 
     steps:
       - uses: olegtarasov/get-tag@v2.1.3
