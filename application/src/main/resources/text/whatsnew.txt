@@ -1,3 +1,8 @@
+Version 2.182
+-------------
+Fixed a bug where it was not possible to remove blueprints from a just imported wishlist
+Added nearest material trader to material popup
+
 Version 2.181
 -------------
 Increased minimum space for available space quantity on horizons materials. Would otherwise sometimes show 3 dots instead of the value.
