@@ -117,6 +117,7 @@ class MessageHandler {
             Map.entry(JournalEventType.POWERPLAYMERITS, new PowerplayMeritsMessageProcessor()),
             Map.entry(JournalEventType.MUSIC, new MusicMessageProcessor()),
             Map.entry(JournalEventType.DELIVERPOWERMICRORESOURCES, new DeliverPowerMicroResourcesMessageProcessor()),
+            Map.entry(JournalEventType.COLONISATIONCONTRIBUTION, new ColonisationContributionMessageProcessor()),
             Map.entry(JournalEventType.COLONISATIONCONSTRUCTIONDEPOT, new ColonisationConstructionDepotMessageProcessor()),
             Map.entry(JournalEventType.SUPERCRUISEDESTINATIONDROP, new SupercruiseDestinationDropMessageProcessor()),
             Map.entry(JournalEventType.SUPERCRUISEEXIT, new SupercruiseExitMessageProcessor()),

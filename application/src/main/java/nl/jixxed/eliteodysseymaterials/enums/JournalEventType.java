@@ -76,6 +76,7 @@ public enum JournalEventType {
     POWERPLAYRANK("PowerplayRank"),
     POWERPLAYMERITS("PowerplayMerits"),
     SCIENTIFICRESEARCH("ScientificResearch"),
+    COLONISATIONCONTRIBUTION("ColonisationContribution"),
     COLONISATIONCONSTRUCTIONDEPOT("ColonisationConstructionDepot"),
     SUPERCRUISEDESTINATIONDROP("SupercruiseDestinationDrop"),
     SUPERCRUISEEXIT("SupercruiseExit"),
