@@ -1,6 +1,6 @@
 "messageKey","","en","de","es","fr","pt","ru","zh"
 "state.unknown","Unknown","","","Desconocido","","Desconhecido","Неизвестно","未知"
-"state.none","None","","","Ninguno","","Nenhum","Нет",""
+"state.none","None","","","Ninguno","","Nenhum","Нет","无"
 "state.boom","Boom","","","Auge","","Auge","Бум",""
 "state.bust","Bust","","","Quiebra","","Quebra","Спад",""
 "state.civilunrest","Civil Unrest","","","Disturbios","","Distúrbios","Гражданские беспорядки",""
