@@ -6,4 +6,6 @@ public interface RegistrationHandler {
     void unregister();
 
     boolean isRegistered();
+
+    boolean hasMediaServices();
 }

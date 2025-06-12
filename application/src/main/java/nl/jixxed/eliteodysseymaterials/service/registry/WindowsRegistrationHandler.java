@@ -7,6 +7,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 @Slf4j
 public class WindowsRegistrationHandler implements RegistrationHandler {
@@ -67,6 +68,11 @@ public class WindowsRegistrationHandler implements RegistrationHandler {
             return equals || altEquals;
         }
         return true;
+    }
+
+    @Override
+    public boolean hasMediaServices() {
+        return !Objects.equals(getRegistryValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Setup\\WindowsFeatures\\WindowsMediaVersion", "Version"), "");
     }
 
     private static void writeRegFile(final File file) {

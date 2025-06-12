@@ -69,6 +69,11 @@ public class UbuntuRegistrationHandler implements RegistrationHandler {
         return false;
     }
 
+    @Override
+    public boolean hasMediaServices() {
+        return true;
+    }
+
 
     private static void writeDesktopFile(final File file) throws IOException {
         try (final OutputStream output = new FileOutputStream(file)) {

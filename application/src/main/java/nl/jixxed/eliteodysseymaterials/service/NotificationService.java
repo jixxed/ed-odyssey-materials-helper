@@ -34,9 +34,11 @@ public class NotificationService {
     private static final BlockingQueue<String> soundQueue = new LinkedBlockingQueue<>();
     private static boolean isPlaying = false;
     private static MediaPlayer mediaPlayer;
+    private static boolean mediaServicesAvailable;
 
     public static void init() {
         EVENT_LISTENERS.add(EventService.addStaticListener(JournalInitEvent.class, journalInitEvent -> enabled = journalInitEvent.isInitialised()));
+        mediaServicesAvailable = RegistryService.hasMediaServices();
     }
 
     public static void showInformation(final NotificationType notificationType, final LocaleService.LocaleString title, final LocaleService.LocaleString text) {
@@ -133,6 +135,22 @@ public class NotificationService {
 
 
     private static void playSound(final NotificationType notificationType) {
+        if (!mediaServicesAvailable) {
+            final Screen screen = getScreen();
+            try {
+                if (screen != null) {
+                    Notifications.create()
+                            .darkStyle()
+                            .title(LocaleService.getLocalizedStringForCurrentLocale("notification.media.feature.pack.title"))
+                            .text(LocaleService.getLocalizedStringForCurrentLocale("notification.media.feature.pack.text"))
+                            .owner(screen)
+                            .showError();
+                }
+            } catch (NullPointerException ex) {
+                log.error("Failed to create notification", ex);
+            }
+            return;
+        }
         final boolean playSounds = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_SOUND, Boolean.TRUE);
         final double volume = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_VOLUME, 50);
         final String customSoundPath = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_SOUND_CUSTOM_FILE_PREFIX + notificationType.name(), "");

@@ -53,4 +53,8 @@ public class RegistryService {
         }
         return Optional.empty();
     }
+
+    public static boolean hasMediaServices() {
+        return getHandler().map(RegistrationHandler::hasMediaServices).orElse(false);
+    }
 }
