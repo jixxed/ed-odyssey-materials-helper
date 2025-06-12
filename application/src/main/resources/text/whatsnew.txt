@@ -1,3 +1,10 @@
+Version 2.184
+-------------
+Added colonisation project location
+Renamed Meteope to Metope for Industrial layout
+Updated the CG icon to match the CG icon in game
+Fixed an issue that caused the progress bar and value to be out of sync for colonisation material entries in some cases
+
 Version 2.183
 -------------
 Fix bug in previous release that prevents launching the application

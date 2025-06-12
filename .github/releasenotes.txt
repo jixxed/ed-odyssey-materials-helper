@@ -6,4 +6,7 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Fix bug in previous release that prevents launching the application
+Added colonisation project location
+Renamed Meteope to Metope for Industrial layout
+Updated the CG icon to match the CG icon in game
+Fixed an issue that caused the progress bar and value to be out of sync for colonisation material entries in some cases
