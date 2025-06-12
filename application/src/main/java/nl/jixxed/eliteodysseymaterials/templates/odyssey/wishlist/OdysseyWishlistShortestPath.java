@@ -57,20 +57,17 @@ public class OdysseyWishlistShortestPath extends DestroyableVBox implements Dest
 
     @Override
     public void initEventHandling() {
-        register(EventService.addListener(true, this, OdysseyWishlistSelectedEvent.class, _ -> update()));
-        register(EventService.addListener(true, this, OdysseyWishlistChangedEvent.class, _ -> update()));
-        register(EventService.addListener(true, this, RemoveWishlistShortestPathItemEvent.class, _ -> update()));
-        register(EventService.addListener(true, this, HideWishlistShortestPathItemEvent.class, _ -> update()));
-        register(EventService.addListener(true, this, LocationChangedEvent.class, _ -> update()));
-        register(EventService.addListener(true, this, EngineerPinEvent.class, _ -> update()));
+        register(EventService.addListener(true, this, OdysseyWishlistSelectedEvent.class, _ -> update(true)));
+        register(EventService.addListener(true, this, OdysseyWishlistChangedEvent.class, _ -> update(false)));
+        register(EventService.addListener(true, this, RemoveWishlistShortestPathItemEvent.class, _ -> update(false)));
+        register(EventService.addListener(true, this, HideWishlistShortestPathItemEvent.class, _ -> update(false)));
+        register(EventService.addListener(true, this, LocationChangedEvent.class, _ -> update(false)));
+        register(EventService.addListener(true, this, EngineerPinEvent.class, _ -> update(false)));
     }
 
-    private void update() {
-//        final List<PathItem<OdysseyBlueprintName>> pathItems = getPathItems();
-//        this.shortestPathFlow.setItems(pathItems);
-//        EventService.publish(new OdysseyShortestPathChangedEvent(pathItems));
+    private void update(boolean force) {
         final List<PathItem<OdysseyBlueprintName>> pathItems = getPathItems();
-        if (this.shortestPathFlow.getItems().size() != pathItems.size() || !this.shortestPathFlow.getItems().stream().map(ShortestPathItem::getPathItem).allMatch(pathItems::contains)) {
+        if (force || this.shortestPathFlow.getItems().size() != pathItems.size() || !this.shortestPathFlow.getItems().stream().map(ShortestPathItem::getPathItem).allMatch(pathItems::contains)) {
             this.shortestPathFlow.setItems(pathItems);
             EventService.publish(new OdysseyShortestPathChangedEvent(pathItems));
         }

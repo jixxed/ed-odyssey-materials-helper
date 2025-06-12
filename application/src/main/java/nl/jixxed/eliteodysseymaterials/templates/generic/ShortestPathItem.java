@@ -106,21 +106,53 @@ public class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBo
         this.getNodes().add(blueprintsLabel);
         this.getNodes().addAll(blueprints);
         this.getNodes().add(new GrowingRegion());
+        if (Expansion.HORIZONS.equals(this.expansion)) {
+            addButtonsHorizons();
+        } else {
+            addButtonsOdyssey();
+        }
+    }
+
+    private void addButtonsHorizons() {
         if (!ApplicationState.getInstance().getPreferredCommander()
-                .map(commander -> Wishlist.ALL.getUuid().equals(WishlistService.getHorizonsWishlists(commander).getSelectedWishlist().getUuid()))
+                .map(commander -> HorizonsWishlist.ALL.getUuid().equals(WishlistService.getHorizonsWishlists(commander).getSelectedWishlist().getUuid()))
                 .orElse(false)) {
             DestroyableButton removeButton = ButtonBuilder.builder()
                     .withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions.remove"))
                     .withOnAction(_ -> {
                         removeBlueprints();
-                        EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsRemoveWishlistShortestPathItemEvent((PathItem<HorizonsBlueprintName>) this.pathItem) : new RemoveWishlistShortestPathItemEvent((PathItem<OdysseyBlueprintName>) this.pathItem));
+                        EventService.publish(new HorizonsRemoveWishlistShortestPathItemEvent((PathItem<HorizonsBlueprintName>) this.pathItem));
                     })
                     .build();
             DestroyableButton hideButton = ButtonBuilder.builder()
                     .withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions.hide"))
                     .withOnAction(_ -> {
                         hideBlueprints();
-                        EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsHideWishlistShortestPathItemEvent((PathItem<HorizonsBlueprintName>) this.pathItem) : new HideWishlistShortestPathItemEvent((PathItem<OdysseyBlueprintName>) this.pathItem));
+                        EventService.publish(new HorizonsHideWishlistShortestPathItemEvent((PathItem<HorizonsBlueprintName>) this.pathItem));
+                    })
+                    .build();
+            this.getNodes().addAll(BoxBuilder.builder()
+                    .withStyleClass("buttons")
+                    .withNodes(hideButton, new GrowingRegion(), removeButton).buildHBox());
+        }
+    }
+
+    private void addButtonsOdyssey() {
+        if (!ApplicationState.getInstance().getPreferredCommander()
+                .map(commander -> Wishlist.ALL.getUuid().equals(WishlistService.getOdysseyWishlists(commander).getSelectedWishlist().getUuid()))
+                .orElse(false)) {
+            DestroyableButton removeButton = ButtonBuilder.builder()
+                    .withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions.remove"))
+                    .withOnAction(_ -> {
+                        removeBlueprints();
+                        EventService.publish(new RemoveWishlistShortestPathItemEvent((PathItem<OdysseyBlueprintName>) this.pathItem));
+                    })
+                    .build();
+            DestroyableButton hideButton = ButtonBuilder.builder()
+                    .withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions.hide"))
+                    .withOnAction(_ -> {
+                        hideBlueprints();
+                        EventService.publish(new HideWishlistShortestPathItemEvent((PathItem<OdysseyBlueprintName>) this.pathItem));
                     })
                     .build();
             this.getNodes().addAll(BoxBuilder.builder()
