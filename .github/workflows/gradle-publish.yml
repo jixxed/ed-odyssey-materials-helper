@@ -28,8 +28,8 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+      #      - name: Setup Gradle
+      #        uses: gradle/actions/setup-gradle@v3
       - name: Build release with Gradle
         run: ./gradlew createReleaseLinux -DpackageType=deb -PskipSass
       - name: Build rpm Gradle
@@ -70,8 +70,8 @@ jobs:
           distribution: 'zulu'
           architecture: x64
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+      #      - name: Setup Gradle
+      #        uses: gradle/actions/setup-gradle@v3
       - name: Build with Gradle
         run: ./gradlew createReleaseSigned -DpackageType=msi -Dpfx_alias="${{secrets.CODE_SIGN_CERT_ALIAS}}" -Dpfx_password='"${{secrets.CODE_SIGN_PASSWORD}}"' -Dbase64_pfx="${{secrets.CODE_SIGN_BASE64}}" -PskipSass
       - name: Create Release
