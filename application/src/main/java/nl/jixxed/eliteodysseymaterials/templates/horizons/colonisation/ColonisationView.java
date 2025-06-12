@@ -44,7 +44,7 @@ public class ColonisationView extends DestroyableVBox implements DestroyableEven
         this.colonisationSelect = ComboBoxBuilder.builder(ColonisationItem.class)
                 .withStyleClass("colonisation-select")
                 .withSelected(wishlists.map(ColonisationItems::getSelectedColonisationItem).orElse(null))
-                .withItemsProperty(FXCollections.observableArrayList(items.stream().sorted(Comparator.comparing(ColonisationItem::getName)).toList()))
+                .withItemsProperty(FXCollections.observableArrayList(items.stream().sorted(Comparator.comparing(ColonisationItem::isAll).thenComparing(ColonisationItem::isCurrent).reversed().thenComparing(ColonisationItem::getName)).toList()))
                 .withValueChangeListener((_, _, newValue) -> {
                     if (newValue != null) {
                         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
@@ -109,7 +109,7 @@ public class ColonisationView extends DestroyableVBox implements DestroyableEven
             final ColonisationItems colonisationItems = ColonisationService.getColonisationItems(commander);
             final Set<ColonisationItem> items = colonisationItems.getAllColonisationItems();
             this.colonisationSelect.getItems().clear();
-            this.colonisationSelect.getItems().addAll(items.stream().sorted(Comparator.comparing(ColonisationItem::getName)).toList());
+            this.colonisationSelect.getItems().addAll(items.stream().sorted(Comparator.comparing(ColonisationItem::isAll).thenComparing(ColonisationItem::isCurrent).reversed().thenComparing(ColonisationItem::getName)).toList());
             this.colonisationSelect.getSelectionModel().select(colonisationItems.getSelectedColonisationItem());
         });
     }

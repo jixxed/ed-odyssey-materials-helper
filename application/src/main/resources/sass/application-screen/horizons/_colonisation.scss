@@ -50,6 +50,11 @@
           .market-id {
             -fx-font-weight: bold;
           }
+
+          .copyable-location {
+            @include copyable-location;
+            -fx-max-width: 24em;
+          }
         }
 
         .buttons-contents {

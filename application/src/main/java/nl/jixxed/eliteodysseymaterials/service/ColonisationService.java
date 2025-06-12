@@ -8,10 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.ColonisationItem;
-import nl.jixxed.eliteodysseymaterials.domain.ColonisationItems;
-import nl.jixxed.eliteodysseymaterials.domain.Commander;
+import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.service.event.ColonisationConstructionDepotEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
@@ -43,7 +40,8 @@ public class ColonisationService {
                             colonisationItem.setConstructionRequirements(event.getResourcesRequired());
                             saveColonisationItems(commander, colonisationItems);
                         });
-                ColonisationItem.setCurrent(new ColonisationItem("1", "Current", event.getMarketID().toString(), false, null, null, event.getResourcesRequired()));
+                final Location location = LocationService.getCurrentLocation();
+                ColonisationItem.setCurrent(new ColonisationItem("1", "Current", event.getMarketID().toString(), location.getStarSystem().getName(), location.getBody(), location.getStarSystem().getX(), location.getStarSystem().getY(), location.getStarSystem().getZ(), false, null, null, event.getResourcesRequired()));
             });
         }));
     }

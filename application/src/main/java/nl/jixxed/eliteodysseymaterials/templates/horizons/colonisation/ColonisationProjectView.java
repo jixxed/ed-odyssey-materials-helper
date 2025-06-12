@@ -9,31 +9,33 @@ import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ColonisationItem;
 import nl.jixxed.eliteodysseymaterials.domain.ColonisationItems;
+import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.enums.ColonisationBuildable;
 import nl.jixxed.eliteodysseymaterials.enums.ColonisationLayout;
 import nl.jixxed.eliteodysseymaterials.service.ColonisationService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.event.ColonisationRefreshEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.ColonisationSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.jixxed.eliteodysseymaterials.templates.generic.CopyableLocation;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Predicate;
 
 @Slf4j
 public class ColonisationProjectView extends DestroyableHBox implements DestroyableEventTemplate {
 
 
-    ColonisationItem colonisationItem;
+    private ColonisationItem colonisationItem;
     private DestroyableButton trackButton;
     private DestroyableButton delete;
     private DestroyableTextField nameTextField;
     private DestroyableLabel nameTitle;
+    private DestroyableLabel systemTitle;
+    private CopyableLocation location;
     private DestroyableLabel marketIDTitle;
     private DestroyableLabel marketID;
     private DestroyableComboBox<ColonisationBuildable> buildableSelect;
@@ -82,6 +84,10 @@ public class ColonisationProjectView extends DestroyableHBox implements Destroya
                 .withStyleClass("title")
                 .withText("tab.colonisation.project.name")
                 .build();
+        systemTitle = LabelBuilder.builder()
+                .withStyleClass("title")
+                .withText("tab.colonisation.project.system")
+                .build();
         typeTitle = LabelBuilder.builder()
                 .withStyleClass("title")
                 .withText("tab.colonisation.project.type")
@@ -119,6 +125,7 @@ public class ColonisationProjectView extends DestroyableHBox implements Destroya
                         final ColonisationItems colonisationItems = ColonisationService.getColonisationItems(commander);
                         final ColonisationItem selectedColonisationItem = colonisationItems.getSelectedColonisationItem();
                         ColonisationItem newItem = new ColonisationItem(selectedColonisationItem);
+                        newItem.setName(LocationService.getCurrentLocation().getStation());
                         colonisationItems.addColonisationItem(newItem);
                         colonisationItems.setSelectedColonisationItemUUID(newItem.getUuid());
                         ColonisationService.saveColonisationItems(commander, colonisationItems);
@@ -138,9 +145,10 @@ public class ColonisationProjectView extends DestroyableHBox implements Destroya
                     layoutSelect.setItems(FXCollections.observableArrayList(colonisationLayouts));
                 })
                 .build();
+        location = new CopyableLocation(StarSystem.SOL);
         final DestroyableVBox content = BoxBuilder.builder()
                 .withStyleClass("contents")
-                .withNodes(nameTitle, nameTextField, typeTitle, buildableSelect, layoutTitle, layoutSelect, hideFromAll, marketIDTitle, marketID)
+                .withNodes(nameTitle, nameTextField, typeTitle, buildableSelect, layoutTitle, layoutSelect, hideFromAll, systemTitle, location, marketIDTitle, marketID)
                 .buildVBox();
         final DestroyableVBox buttons = BoxBuilder.builder()
                 .withStyleClass("buttons-contents")
@@ -180,6 +188,8 @@ public class ColonisationProjectView extends DestroyableHBox implements Destroya
         setVisibility(save, !colonisationItem.isAll() && !colonisationItem.isCurrent());
         setVisibility(marketIDTitle, !colonisationItem.isAll());
         setVisibility(marketID, !colonisationItem.isAll());
+        setVisibility(systemTitle, !colonisationItem.isAll() && !Objects.equals(colonisationItem.getSystemName(), "Sol") && !Objects.equals(colonisationItem.getSystemName(), null));
+        setVisibility(location, !colonisationItem.isAll() && !Objects.equals(colonisationItem.getSystemName(), "Sol") && !Objects.equals(colonisationItem.getSystemName(), null));
         setVisibility(buildableSelect, !colonisationItem.isAll() && !colonisationItem.isCurrent());
         setVisibility(layoutSelect, !colonisationItem.isAll() && !colonisationItem.isCurrent());
 
@@ -189,6 +199,12 @@ public class ColonisationProjectView extends DestroyableHBox implements Destroya
         setVisibility(layoutSelect, !colonisationItem.isAll() && !colonisationItem.isCurrent());
         nameTextField.setText(!colonisationItem.isCurrent() ? colonisationItem.getName() : "");
         marketID.setText(colonisationItem.getMarketID());
+        if (!Objects.equals(colonisationItem.getSystemName(), "Sol") && !Objects.equals(colonisationItem.getSystemName(), null)) {
+            final String body = (colonisationItem.getSystemName().length() + 1 <= colonisationItem.getBodyName().length()) ? colonisationItem.getBodyName().substring(colonisationItem.getSystemName().length() + 1) : "";
+            location.setLocation(new StarSystem(colonisationItem.getSystemName(), colonisationItem.getX(), colonisationItem.getY(), colonisationItem.getZ()), body);
+        } else {
+            location.setLocation(StarSystem.SOL);
+        }
         hideFromAll.setSelected(colonisationItem.getHideFromAll());
         buildableSelect.getSelectionModel().select(ColonisationBuildable.UNKNOWN.equals(colonisationItem.getColonisationBuildable()) ? null : colonisationItem.getColonisationBuildable());
         layoutSelect.getSelectionModel().select(colonisationItem.getColonisationLayout());

@@ -24,11 +24,12 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizab
 public class CopyableLocation extends DestroyableFlowPane implements DestroyableEventTemplate {
 
     @Getter
-    private final StarSystem starSystem;
-    private final Double distanceFromStarVariance;
+    private StarSystem starSystem;
+    private Double distanceFromStarVariance;
     private DestroyableLabel distance;
-    private final String station;
-    private final Double distanceFromStar;
+    private String station;
+    private Double distanceFromStar;
+    private DestroyableLabel location;
 
 
     public CopyableLocation(@NonNull StarSystem starSystem, @NonNull String station, double distanceFromStar, double distanceFromStarVariance) {
@@ -51,7 +52,7 @@ public class CopyableLocation extends DestroyableFlowPane implements Destroyable
     @Override
     public void initComponents() {
         this.getStyleClass().add("copyable-location");
-        DestroyableLabel location = LabelBuilder.builder()
+        location = LabelBuilder.builder()
                 .withStyleClass("location")
                 .withNonLocalizedText(this.station.isEmpty() ? starSystem.getName() : this.station + " | " + starSystem.getName())
                 .build();
@@ -82,6 +83,8 @@ public class CopyableLocation extends DestroyableFlowPane implements Destroyable
 
     private void update() {
         final Location currentLocation = LocationService.getCurrentLocation();
+
+        location.setText(this.station.isEmpty() ? starSystem.getName() : this.station + " | " + starSystem.getName());
         final Double starDistance = starSystem.getDistance(currentLocation.getStarSystem());
         if (starDistance > 0D || distanceFromStar == 0D) {
             this.distance.addBinding(this.distance.textProperty(), LocaleService.getStringBinding("system.copy.distance", Formatters.NUMBER_FORMAT_2.format(starDistance)));
@@ -92,5 +95,22 @@ public class CopyableLocation extends DestroyableFlowPane implements Destroyable
 
     private void copyLocationToClipboard() {
         ClipboardHelper.copyToClipboard(this.starSystem.getName());
+    }
+
+
+    public void setLocation(@NonNull StarSystem starSystem, @NonNull String station, double distanceFromStar, double distanceFromStarVariance) {
+        this.starSystem = starSystem;
+        this.station = station;
+        this.distanceFromStar = distanceFromStar;
+        this.distanceFromStarVariance = distanceFromStarVariance;
+        update();
+    }
+
+    public void setLocation(@NonNull StarSystem starSystem, @NonNull String station) {
+        setLocation(starSystem, station, 0D, 0D);
+    }
+
+    public void setLocation(@NonNull StarSystem starSystem) {
+        setLocation(starSystem, "", 0D, 0D);
     }
 }
