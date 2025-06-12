@@ -206,6 +206,7 @@ public enum HorizonsBlueprintType {
     INCREASED_FSD_RANGE_FASTER_FSD_BOOT_SEQUENCE(false, true),
     ANTI_GUARDIAN_ZONE_RESISTANCE(false, false),
     SYSTEM_ENGINE_FOCUSED(false, true),
+    HIGH_CAPACITY_MAGAZINE_STURDY_FSD_INTERRUPT(false, true),
     NONE(false, false);
     @Getter
     private final boolean experimental;
