@@ -89,7 +89,7 @@ public class PreferencesService {
 
     public static <T> T getPreference(final String key, @NonNull final T defaultValue) {
         final String value = prop.getProperty(key);
-        if (value == null) {
+        if (value == null || value.isEmpty() && !(defaultValue instanceof String)) {
             return defaultValue;
         }
         if (defaultValue instanceof String) {
