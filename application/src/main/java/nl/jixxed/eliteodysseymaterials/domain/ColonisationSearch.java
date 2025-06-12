@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsColonisationShow;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsColonisationSort;
 
 @AllArgsConstructor
@@ -11,5 +12,6 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsColonisationSort;
 public class ColonisationSearch {
     private String query;
     private HorizonsColonisationSort colonisationSort;
+    private HorizonsColonisationShow colonisationShow;
 
 }

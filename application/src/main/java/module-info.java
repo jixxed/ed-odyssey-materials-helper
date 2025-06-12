@@ -349,6 +349,7 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.templates.horizons.engineers;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons.materials;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
+    exports nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons;
     exports nl.jixxed.eliteodysseymaterials.templates.odyssey.engineers;
     exports nl.jixxed.eliteodysseymaterials.templates.odyssey.loadout;

@@ -2,11 +2,13 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation;
 
 import nl.jixxed.eliteodysseymaterials.domain.ColonisationItem;
 import nl.jixxed.eliteodysseymaterials.domain.ColonisationSearch;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsColonisationShow;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsColonisationSort;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.ColonisationSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsColonisationSearchEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
@@ -16,12 +18,14 @@ import java.util.List;
 public class BillOfMaterials extends DestroyableFlowPane implements DestroyableEventTemplate, DestroyableComponent {
 
     ColonisationItem colonisationItem;
-    private ColonisationSearch currentSearch = new ColonisationSearch("", HorizonsColonisationSort.ALPHABETICAL);
+    private ColonisationSearch currentSearch = new ColonisationSearch("", HorizonsColonisationSort.ALPHABETICAL, HorizonsColonisationShow.ALL);
 
 
     public BillOfMaterials() {
         final HorizonsColonisationSort materialSort = HorizonsColonisationSort.valueOf(PreferencesService.getPreference("search.colonisation.sort", "ALPHABETICAL"));
+        final HorizonsColonisationShow materialShow = HorizonsColonisationShow.valueOf(PreferencesService.getPreference("search.colonisation.filter", "ALL"));
         currentSearch.setColonisationSort(materialSort);
+        currentSearch.setColonisationShow(materialShow);
         initComponents();
         initEventHandling();
     }
@@ -38,6 +42,9 @@ public class BillOfMaterials extends DestroyableFlowPane implements DestroyableE
         }));
         register(EventService.addListener(true, this, HorizonsColonisationSearchEvent.class, event -> {
             this.currentSearch = event.getSearch();
+            update();
+        }));
+        register(EventService.addListener(true, this, StorageEvent.class, event -> {
             update();
         }));
     }

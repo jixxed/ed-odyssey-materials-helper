@@ -57,16 +57,6 @@ public class ColonisationView extends DestroyableVBox implements DestroyableEven
                 })
                 .build();
 
-        DestroyableCheckBox hideCompletedCheckBox = CheckBoxBuilder.builder()
-                .withStyleClass("colonisation-checkbox")
-                .withText("tab.colonisation.hide.completed")
-                .withSelected(PreferencesService.getPreference("colonisation.horizons.hide.completed", false))
-                .withSelectedProperty((observable, oldValue, newValue) ->
-                {
-                    PreferencesService.setPreference("colonisation.horizons.hide.completed", newValue);
-                    EventService.publish(new ColonisationHideCompletedEvent(newValue));
-                })
-                .build();
         DestroyableCheckBox pauseCapiCheckBox = CheckBoxBuilder.builder()
                 .withStyleClass("colonisation-checkbox")
                 .withText("tab.colonisation.pause.capi")
@@ -98,7 +88,7 @@ public class ColonisationView extends DestroyableVBox implements DestroyableEven
         });
         final DestroyableHBox menu = BoxBuilder.builder()
                 .withStyleClass("colonisation-menu")
-                .withNodes(colonisationSelect, hideCompletedCheckBox, pauseCapiCheckBox)
+                .withNodes(colonisationSelect, pauseCapiCheckBox)
                 .buildHBox();
         this.getNodes().addAll(menu, hint, projectInfo, billOfMaterials);
 

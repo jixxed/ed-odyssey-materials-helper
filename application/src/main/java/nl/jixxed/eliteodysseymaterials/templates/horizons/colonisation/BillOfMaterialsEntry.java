@@ -7,12 +7,11 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.SegmentedBarBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.ColonisationItem;
-import nl.jixxed.eliteodysseymaterials.domain.ConstructionProgress;
-import nl.jixxed.eliteodysseymaterials.domain.MarketItem;
-import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
+import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsColonisationShow;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsColonisationSort;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.*;
@@ -57,8 +56,13 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
     private DestroyableLabel deliverLabel;
     private DestroyableLabel commodityCategoryLabel;
 
+    private ColonisationSearch currentSearch = new ColonisationSearch("", HorizonsColonisationSort.ALPHABETICAL, HorizonsColonisationShow.ALL);
 
     public BillOfMaterialsEntry(ColonisationItem colonisationItem, Commodity commodity, ConstructionProgress progress) {
+        final HorizonsColonisationSort materialSort = HorizonsColonisationSort.valueOf(PreferencesService.getPreference("search.colonisation.sort", "ALPHABETICAL"));
+        final HorizonsColonisationShow materialShow = HorizonsColonisationShow.valueOf(PreferencesService.getPreference("search.colonisation.filter", "ALL"));
+        currentSearch.setColonisationSort(materialSort);
+        currentSearch.setColonisationShow(materialShow);
         this.colonisationItem = colonisationItem;
         this.commodity = commodity;
         this.progress = progress;
@@ -227,14 +231,12 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
         register(EventService.addListener(true, this, ShipLoadoutEvent.class, event -> {
             update();
         }));
-        register(EventService.addListener(true, this, ColonisationHideCompletedEvent.class, event -> {
-            updateStyle();
-        }));
+//        register(EventService.addListener(true, this, ColonisationHideCompletedEvent.class, event -> {
+//            updateStyle();
+//        }));
         register(EventService.addListener(true, this, HorizonsColonisationSearchEvent.class, event -> {
-            final boolean isSearched = !event.getSearch().getQuery().isEmpty()
-                    && (LocaleService.getLocalizedStringForCurrentLocale(commodity.getLocalizationKey()).toLowerCase().contains(event.getSearch().getQuery().toLowerCase())
-                    || LocaleService.getLocalizedStringForCurrentLocale(commodity.getCommodityType().getLocalizationKey()).toLowerCase().contains(event.getSearch().getQuery().toLowerCase()));
-            this.pseudoClassStateChanged(PseudoClass.getPseudoClass("search"), isSearched);
+            currentSearch = event.getSearch();
+            updateStyle();
         }));
 
 
@@ -282,8 +284,13 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
     }
 
     private void updateStyle() {
-        final boolean visible = !Objects.equals(progress.provided(), progress.required())
-                || !PreferencesService.getPreference("colonisation.horizons.hide.completed", false);
+
+        final boolean isSearched = !currentSearch.getQuery().isEmpty()
+                && (LocaleService.getLocalizedStringForCurrentLocale(commodity.getLocalizationKey()).toLowerCase().contains(currentSearch.getQuery().toLowerCase())
+                || LocaleService.getLocalizedStringForCurrentLocale(commodity.getCommodityType().getLocalizationKey()).toLowerCase().contains(currentSearch.getQuery().toLowerCase()));
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("search"), isSearched);
+
+        final boolean visible = HorizonsColonisationShow.getFilter(currentSearch).test(this);
         this.setVisible(visible);
         this.setManaged(visible);
 

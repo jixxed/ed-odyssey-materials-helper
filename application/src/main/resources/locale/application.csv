@@ -157,3 +157,6 @@
 "search.sort.delivered","Delivered","","","Entregado","","","Доставлено","已送达"
 "search.sort.to_collect","To collect","","","Por recoger","","","Собрать","待收集"
 "search.sort.to_deliver","To deliver","","","Por entregar","","","Доставить","待送达"
+"search.filter.not_collected","Not collected","","","","","","",""
+"search.filter.not_delivered","Not delivered","","","","","","",""
+"search.colonisation.filter.placeholder","Filter commodities","","","","","","",""

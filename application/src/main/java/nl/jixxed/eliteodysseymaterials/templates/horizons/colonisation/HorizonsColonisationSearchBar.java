@@ -15,6 +15,7 @@ import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ColonisationSearch;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsColonisationShow;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsColonisationSort;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
@@ -29,6 +30,7 @@ public class HorizonsColonisationSearchBar extends DestroyableHBox implements De
 
     private static final String FX_FONT_SIZE_DPX = "-fx-font-size: %dpx";
     private DestroyableTextField textField;
+    private DestroyableComboBox<HorizonsColonisationShow> showMaterialsComboBox;
     private DestroyableComboBox<HorizonsColonisationSort> sortMaterialsComboBox;
     private Disposable subscribe;
 
@@ -41,13 +43,14 @@ public class HorizonsColonisationSearchBar extends DestroyableHBox implements De
     public void initComponents() {
         this.getStyleClass().add("root");
         initSearchTextField();
+        initSearchTextFilter();
         initSearchTextSort();
 
 //        applyFontSizingHack();
 
         HBox.setHgrow(this.textField, Priority.ALWAYS);
 
-        this.getNodes().addAll(this.textField, this.sortMaterialsComboBox);
+        this.getNodes().addAll(this.textField, this.showMaterialsComboBox, this.sortMaterialsComboBox);
     }
 
     public void initEventHandling() {
@@ -88,12 +91,34 @@ public class HorizonsColonisationSearchBar extends DestroyableHBox implements De
                 .withPromptTextProperty(LocaleService.getStringBinding("search.sort.placeholder"))
                 .withValueChangeListener((options, oldValue, newValue) -> {
                     if (newValue != null) {
-                        EventService.publish(new HorizonsColonisationSearchEvent(new ColonisationSearch(getQueryOrDefault(this.textField), newValue)));
+                        EventService.publish(new HorizonsColonisationSearchEvent(new ColonisationSearch(getQueryOrDefault(this.textField), newValue, getShowOrDefault(this.showMaterialsComboBox))));
                         PreferencesService.setPreference("search.colonisation.sort", newValue.name());
                     }
                 })
                 .asLocalized()
                 .withToolTip(sortMaterialsTooltip)
+                .build();
+    }
+
+    private void initSearchTextFilter() {
+        final DestroyableTooltip showMaterialsTooltip = TooltipBuilder.builder()
+                .withText("search.filter.placeholder")
+                .build();
+        this.showMaterialsComboBox = ComboBoxBuilder.builder(HorizonsColonisationShow.class)
+                .withStyleClasses("root", "filter-and-sort")
+                .withSelected(HorizonsColonisationShow.valueOf(PreferencesService.getPreference("search.colonisation.filter", "ALL")))
+                .withItemsProperty(LocaleService.getListBinding(HorizonsColonisationShow.ALL,
+                        HorizonsColonisationShow.NOT_COLLECTED,
+                        HorizonsColonisationShow.NOT_DELIVERED))
+                .withValueChangeListener((options, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        EventService.publish(new HorizonsColonisationSearchEvent(new ColonisationSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), newValue)));
+                        PreferencesService.setPreference("search.colonisation.filter", newValue.name());
+                    }
+                })
+                .asLocalized()
+                .withPromptTextProperty(LocaleService.getStringBinding("search.colonisation.filter.placeholder"))
+                .withToolTip(showMaterialsTooltip)
                 .build();
     }
 
@@ -106,7 +131,7 @@ public class HorizonsColonisationSearchBar extends DestroyableHBox implements De
         subscribe = Observable.create((ObservableEmitter<String> emitter) -> addChangeListener(this.textField.textProperty(), (_, _, newValue) -> emitter.onNext(newValue)))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
-                .subscribe(_ -> EventService.publish(new HorizonsColonisationSearchEvent(new ColonisationSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox)))),
+                .subscribe(_ -> EventService.publish(new HorizonsColonisationSearchEvent(new ColonisationSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.showMaterialsComboBox)))),
                         t -> log.error(t.getMessage(), t));
     }
 
@@ -115,6 +140,9 @@ public class HorizonsColonisationSearchBar extends DestroyableHBox implements De
         return (textField.getText() != null) ? textField.getText() : "";
     }
 
+    private HorizonsColonisationShow getShowOrDefault(final ComboBox<HorizonsColonisationShow> showMaterialsComboBox) {
+        return (showMaterialsComboBox.getValue() != null) ? showMaterialsComboBox.getValue() : HorizonsColonisationShow.ALL;
+    }
 
     private HorizonsColonisationSort getSortOrDefault(final ComboBox<HorizonsColonisationSort> sortMaterialsComboBox) {
         return (sortMaterialsComboBox.getValue() != null) ? sortMaterialsComboBox.getValue() : HorizonsColonisationSort.ALPHABETICAL;
