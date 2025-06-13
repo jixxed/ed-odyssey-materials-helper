@@ -163,15 +163,24 @@
   .name {
     -fx-label-padding: 0.3em;
     -fx-min-height: 2em;
-    -fx-text-fill: #2e92df;
+    -fx-text-fill: $text-color-blue;
   }
 
   .value {
-    -fx-text-fill: #2e92df;
+    -fx-text-fill: $text-color-blue;
     -fx-label-padding: 0.3em;
     -fx-min-height: 2em;
     -fx-alignment: center-right;
     -fx-max-width: 1000;
+  }
+  &:negative {
+    .name {
+      -fx-text-fill: $text-color-red;
+    }
+
+    .value {
+      -fx-text-fill: $text-color-red;
+    }
   }
 }
 

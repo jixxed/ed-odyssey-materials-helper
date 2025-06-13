@@ -810,6 +810,10 @@
             -fx-min-height: 2em;
             -fx-alignment: center-right;
             -fx-max-width: 1000; }
+          .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .modifier:negative .name {
+            -fx-text-fill: #ff7c7c; }
+          .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .modifier:negative .value {
+            -fx-text-fill: #ff7c7c; }
         .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .modifier-flow {
           -fx-hgap: 0.25em;
           -fx-vgap: 0.25em;
@@ -2975,6 +2979,10 @@
             -fx-min-height: 2em;
             -fx-alignment: center-right;
             -fx-max-width: 1000; }
+          .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .modifier:negative .name {
+            -fx-text-fill: #ff7c7c; }
+          .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .modifier:negative .value {
+            -fx-text-fill: #ff7c7c; }
         .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .modifier-flow {
           -fx-hgap: 0.25em;
           -fx-vgap: 0.25em;
