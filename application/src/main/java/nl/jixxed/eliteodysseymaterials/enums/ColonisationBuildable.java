@@ -535,29 +535,33 @@ public enum ColonisationBuildable {
                 map.replaceAll((commodity, integer) -> integer * 3);
                 yield map;
             }
+
             case SETTLEMENT_INDUSTRIAL_TIER_1_SMALL -> Map.ofEntries(
-                    Map.entry(RegularCommodity.CERAMICCOMPOSITES, 110),
-                    Map.entry(RegularCommodity.POLYMERS, 109),
-                    Map.entry(RegularCommodity.SEMICONDUCTORS, 14),
-                    Map.entry(RegularCommodity.SUPERCONDUCTORS, 14),
+                    Map.entry(RegularCommodity.ADVANCEDCATALYSERS, 41),
                     Map.entry(RegularCommodity.ALUMINIUM, 585),
+                    Map.entry(RegularCommodity.BUILDINGFABRICATORS, 55),
+                    Map.entry(RegularCommodity.CERAMICCOMPOSITES, 55),
+                    Map.entry(RegularCommodity.COMPUTERCOMPONENTS, 28),
                     Map.entry(RegularCommodity.COPPER, 28),
+                    Map.entry(RegularCommodity.EMERGENCYPOWERCELLS, 28),
+                    Map.entry(RegularCommodity.EVACUATIONSHELTER, 21),
                     Map.entry(RegularCommodity.FOODCARTRIDGES, 41),
                     Map.entry(RegularCommodity.FRUITANDVEGETABLES, 28),
+                    Map.entry(RegularCommodity.HAZARDOUSENVIRONMENTSUITS, 14),
+                    Map.entry(RegularCommodity.HELIOSTATICFURNACES, 82),
+                    Map.entry(RegularCommodity.LIQUIDOXYGEN, 272),
+                    Map.entry(RegularCommodity.MICROCONTROLLERS, 14),
+                    Map.entry(RegularCommodity.MINERALEXTRACTORS, 164),
+                    Map.entry(RegularCommodity.POLYMERS, 109),
+                    Map.entry(RegularCommodity.RESONATINGSEPARATORS, 14),
+                    Map.entry(RegularCommodity.ROBOTICS, 55),
+                    Map.entry(RegularCommodity.SEMICONDUCTORS, 14),
+                    Map.entry(RegularCommodity.STEEL, 1019),
+                    Map.entry(RegularCommodity.STRUCTURALREGULATORS, 68),
+                    Map.entry(RegularCommodity.SUPERCONDUCTORS, 14),
                     Map.entry(RegularCommodity.SURFACESTABILISERS, 136),
-                    Map.entry(RegularCommodity.BUILDINGFABRICATORS, 110),
-                    Map.entry(RegularCommodity.STRUCTURALREGULATORS, 136),
-                    Map.entry(RegularCommodity.EVACUATIONSHELTER, 42),
-                    Map.entry(RegularCommodity.EMERGENCYPOWERCELLS, 56),
-                    Map.entry(RegularCommodity.SURVIVALEQUIPMENT, 28),
-                    Map.entry(RegularCommodity.MICROCONTROLLERS, 28),
-                    Map.entry(RegularCommodity.THERMALCOOLINGUNITS, 28),
-                    Map.entry(RegularCommodity.HELIOSTATICFURNACES, 164),
-                    Map.entry(RegularCommodity.MINERALEXTRACTORS, 328),
-                    Map.entry(RegularCommodity.HAZARDOUSENVIRONMENTSUITS, 28),
-                    Map.entry(RegularCommodity.ROBOTICS, 110),
-                    Map.entry(RegularCommodity.RESONATINGSEPARATORS, 28),
-                    Map.entry(RegularCommodity.ADVANCEDCATALYSERS, 82)
+                    Map.entry(RegularCommodity.SURVIVALEQUIPMENT, 14),
+                    Map.entry(RegularCommodity.THERMALCOOLINGUNITS, 14)
             );
             case SETTLEMENT_INDUSTRIAL_TIER_1_MEDIUM -> {
                 Map<Commodity, Integer> map = new HashMap<>(SETTLEMENT_INDUSTRIAL_TIER_1_SMALL.getBlueprintCost());

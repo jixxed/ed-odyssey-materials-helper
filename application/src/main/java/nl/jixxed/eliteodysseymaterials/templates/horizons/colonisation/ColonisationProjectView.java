@@ -12,6 +12,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ColonisationItems;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.enums.ColonisationBuildable;
 import nl.jixxed.eliteodysseymaterials.enums.ColonisationLayout;
+import nl.jixxed.eliteodysseymaterials.helper.ColonisationTypeHelper;
 import nl.jixxed.eliteodysseymaterials.service.ColonisationService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
@@ -180,6 +181,7 @@ public class ColonisationProjectView extends DestroyableHBox implements Destroya
     }
 
     private void update() {
+        buildableSelect.setItems(FXCollections.observableArrayList(ColonisationTypeHelper.detectBuildables(colonisationItem.getConstructionRequirements())));
         setVisibility(this, !colonisationItem.isAll());
         setVisibility(trackButton, colonisationItem.isCurrent());
         setVisibility(delete, !colonisationItem.isAll() && !colonisationItem.isCurrent());

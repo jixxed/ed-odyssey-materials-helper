@@ -62,24 +62,45 @@
         }
       }
 
-      .project-stats {
-        @include fixedWidth(32em);
-        -fx-padding: 0.25em;
-        -fx-background-color: $background-color-dark;
-        -fx-border-color: $border-color-black;
+      .stats-blazers {
+        -fx-spacing: 0.25em;
 
-        .title-amount {
+        .project-stats {
+          @include fixedWidth(32em);
+          -fx-padding: 0.25em;
+          -fx-background-color: $background-color-dark;
+          -fx-border-color: $border-color-black;
 
+          .title-amount {
+
+          }
+
+          .amount {
+            -fx-font-weight: bold;
+          }
+
+          .title {
+            -fx-text-fill: $text-color-white;
+            -fx-font-size: 1.2em;
+            -fx-font-weight: bold;
+          }
         }
 
-        .amount {
-          -fx-font-weight: bold;
-        }
+        .trailblazers {
+          @include fixedWidth(32em);
+          -fx-padding: 0.25em;
+          -fx-background-color: $background-color-dark;
+          -fx-border-color: $border-color-black;
 
-        .title {
-          -fx-text-fill: $text-color-white;
-          -fx-font-size: 1.2em;
-          -fx-font-weight: bold;
+          .title {
+            -fx-text-fill: $text-color-white;
+            -fx-font-size: 1.2em;
+            -fx-font-weight: bold;
+          }
+
+          .copyable-location {
+            @include copyable-location;
+          }
         }
       }
     }

@@ -25,6 +25,7 @@ public class ColonisationView extends DestroyableVBox implements DestroyableEven
     private DestroyableComboBox<ColonisationItem> colonisationSelect;
     private DestroyableFlowPane projectInfo;
     private DestroyableLabel hint;
+    private Trailblazers trailblazers;
 
     public ColonisationView() {
         initComponents();
@@ -68,9 +69,14 @@ public class ColonisationView extends DestroyableVBox implements DestroyableEven
                 .build();
         colonisationProjectView = new ColonisationProjectView();
         colonisationProjectStatistics = new ColonisationProjectStatistics();
+        trailblazers = new Trailblazers();
+        final DestroyableVBox statsBlazers = BoxBuilder.builder()
+                .withStyleClass("stats-blazers")
+                .withNodes(colonisationProjectStatistics, trailblazers)
+                .buildVBox();
         projectInfo = FlowPaneBuilder.builder()
                 .withStyleClass("project-info")
-                .withNodes(colonisationProjectView, colonisationProjectStatistics)
+                .withNodes(colonisationProjectView, statsBlazers)
                 .build();
         refreshProjects();
         billOfMaterials = new BillOfMaterials();
