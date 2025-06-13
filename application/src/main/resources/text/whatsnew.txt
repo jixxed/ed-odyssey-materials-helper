@@ -1,3 +1,9 @@
+Version 2.186
+-------------
+Added new CG missile racks
+Added trailblazer locations
+Prefilter colonisation types based on material requirements
+
 Version 2.185
 -------------
 Replaced colonisation hide completed checkbox with search filter

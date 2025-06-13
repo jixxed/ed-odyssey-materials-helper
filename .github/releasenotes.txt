@@ -6,6 +6,6 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Replaced colonisation hide completed checkbox with search filter
-Fixed shortest path showing or not showing remove/hide buttons when not desired
-Handle notification not being able to play sounds when dependent Media Feature Pack is not installed. Now shows an error.
+Added new CG missile racks
+Added trailblazer locations
+Prefilter colonisation types based on material requirements
