@@ -19,7 +19,7 @@ public class TrailblazerService {
                 new Trailblazer(new StarSystem("Klikis", 38.28125, 74.68750, 163.71875), "Trailblazer Promise", 951D, 0D),
                 new Trailblazer(new StarSystem("Ngobe", -7.84375, -124.09375, -164.09375), "Trailblazer Faith", 418D, 0D),
                 new Trailblazer(new StarSystem("HIP 90578", -81.75000, 7.78125, 161.06250), "Trailblazer Dream", 18D, 0D),
-                new Trailblazer(new StarSystem("Minerva", -22.06250, -64.93750, -15.12500), "Trailblazer Echo (Limited)", 1156D, 0D)
+                new Trailblazer(new StarSystem("Minerva", -22.06250, -64.93750, -15.12500), "Trailblazer Echo" + LocaleService.getLocalizedStringForCurrentLocale("tab.colonisation.trailblazers.limited"), 1156D, 0D)
         );
     }
 }
