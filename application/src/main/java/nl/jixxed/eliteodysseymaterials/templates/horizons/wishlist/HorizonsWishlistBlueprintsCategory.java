@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Slf4j
-public class HorizonsWishlistBlueprintsCategory extends DestroyableHBox implements DestroyableEventTemplate {
+public class HorizonsWishlistBlueprintsCategory extends DestroyableVBox implements DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private DestroyableFlowPane blueprints;
 

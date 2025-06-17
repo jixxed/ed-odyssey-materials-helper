@@ -372,12 +372,13 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
                 .withStyleClass("ships-wishlist-create-new")
                 .withText("ship.create.new.wishlist")
                 .withOnAction(_ -> {
-                    final List<HorizonsWishlistBlueprint> wishlistBlueprints = getRequiredWishlistRecipes(all);
+                    final List<HorizonsWishlistBlueprint> wishlistBlueprints = (List<HorizonsWishlistBlueprint>) HorizonsWishlist.aggregateTenBlueprints(getRequiredWishlistRecipes(all));
                     if (wishlistBlueprints.isEmpty()) {
                         NotificationService.showWarning(NotificationType.ERROR, LocaleService.LocaleString.of("notification.shipbuilder.error.wishlist.title"), LocaleService.LocaleString.of("notification.shipbuilder.error.wishlist.text"));
                     } else {
                         final HorizonsWishlists horizonsWishlists = WishlistService.getHorizonsWishlists(commander);
                         final HorizonsWishlist newWishlist = horizonsWishlists.createWishlist(this.shipSelect.getSelectionModel().getSelectedItem().toString().replace(" (read only)", ""));
+
                         WishlistService.saveHorizonsWishlists(commander, horizonsWishlists);
                         EventService.publish(new HorizonsWishlistCreatedEvent());
                         EventService.publish(new HorizonsWishlistBlueprintEvent(commander, newWishlist.getUuid(), wishlistBlueprints, Action.ADDED));
@@ -415,7 +416,7 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
                         .forEach(slot -> {
                             final HorizonsBlueprintName name = ShipModule.getModule(slot.getId()).getName().getPrimary();
                             wishlistBlueprints.addAll(getModuleBlueprints(all, slot, name));
-                            wishlistBlueprints.addAll(getExperimentalEffectBlueprints(all, slot, name));
+//                            wishlistBlueprints.addAll(getExperimentalEffectBlueprints(all, slot, name));
                         })));
         return wishlistBlueprints;
     }
@@ -436,19 +437,36 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
     }
 
     private static boolean hasDifferentModification(ShipConfigurationSlot slot) {
-        return slot.getOldModule().getModification().stream()
-                .noneMatch(oldMod -> slot.getModification().stream()
-                        .anyMatch(modification -> oldMod.getType().equals(modification.getType())));
+//        return slot.getOldModule().getModification().stream()
+//                .noneMatch(oldMod -> slot.getModification().stream()
+//                        .anyMatch(modification -> oldMod.getType().equals(modification.getType())));
+        return hasDifferentModification(slot, slot.getFirstModification());
     }
 
     private static boolean hasDifferentModification(ShipConfigurationSlot slot, ShipConfigurationModification modification) {
-        return slot.getOldModule().getModification().stream()
-                .noneMatch(oldMod -> modification.getType().equals(oldMod.getType()));
+        ShipConfigurationOldModule oldModule = slot.getOldModule();
+        ShipConfigurationModification oldModification = oldModule != null ? oldModule.getFirstModification() : null;
+
+        if (modification == null || oldModification == null) {
+            return modification != oldModification; // true if one is null, false if both are null
+        }
+        return !oldModification.getType().equals(modification.getType());
+    }
+
+    private static boolean hasDifferentExperimentalEffect(ShipConfigurationSlot slot) {
+//        return slot.getOldModule().getExperimentalEffect().stream()
+//                .noneMatch(oldEffect -> oldEffect.getType().equals(effect.getType()));
+        return hasDifferentExperimentalEffect(slot, slot.getFirstExperimentalEffect());
     }
 
     private static boolean hasDifferentExperimentalEffect(ShipConfigurationSlot slot, ShipConfigurationExperimentalEffect effect) {
-        return slot.getOldModule().getExperimentalEffect().stream()
-                .noneMatch(oldEffect -> oldEffect.getType().equals(effect.getType()));
+        ShipConfigurationOldModule oldModule = slot.getOldModule();
+        ShipConfigurationExperimentalEffect oldEffect = oldModule != null ? oldModule.getFirstExperimentalEffect() : null;
+
+        if (effect == null || oldEffect == null) {
+            return effect != oldEffect; // true if one is null, false if both are null
+        }
+        return !oldEffect.getType().equals(effect.getType());
     }
 
     private static List<HorizonsWishlistBlueprint> getModuleBlueprints(boolean all, ShipConfigurationSlot slot, HorizonsBlueprintName name) {
@@ -475,10 +493,23 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
                         //oldgrade is lower -> upgrade from oldgrade to new grade
                         //no oldmodule or oldgrade is higher -> upgrade from 0 to new grade
                     }
+
+                    //effect
+                    HorizonsBlueprintType effect = null;
+                    if (all || didNotHaveModule(slot) || hasDifferentExperimentalEffect(slot) || hasDifferentModification(slot)) {
+                        effect = slot.getFirstExperimentalEffect() != null ? slot.getFirstExperimentalEffect().getType() : null;
+                    }
+
                     if (!gradePercentageToComplete.values().stream().allMatch(rolls -> rolls.equals(0D))) {
                         final HorizonsModuleWishlistBlueprint bp = new HorizonsModuleWishlistBlueprint(modification.getType(), gradePercentageToComplete);
+                        bp.setExperimentalEffect(effect);
                         bp.setRecipeName(name);
                         bp.setVisible(true);
+                        wishlistBlueprints.add(bp);
+                    } else if (effect != null) {
+                        final HorizonsExperimentalWishlistBlueprint bp = new HorizonsExperimentalWishlistBlueprint(effect);
+                        bp.setVisible(true);
+                        bp.setRecipeName(name);
                         wishlistBlueprints.add(bp);
                     }
 

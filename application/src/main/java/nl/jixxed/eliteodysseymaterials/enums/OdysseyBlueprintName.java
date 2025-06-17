@@ -94,6 +94,10 @@ public enum OdysseyBlueprintName implements BlueprintName<OdysseyBlueprintName> 
         return "blueprint.name." + lcName();
     }
 
+    public String getShortLocalizationKey() {
+        return LocaleService.hasKey("blueprint.name.short." + this.name().toLowerCase()) ? "blueprint.name.short." + this.name().toLowerCase() : getLocalizationKey();
+    }
+
     @Override
     public String lcName() {
         return this.name().toLowerCase();
@@ -124,9 +128,59 @@ public enum OdysseyBlueprintName implements BlueprintName<OdysseyBlueprintName> 
         };
     }
 
+    public boolean isEngineerBlueprint() {
+        return this.name().startsWith("ENGINEER_");
+    }
+//
+//    public boolean isSuitUpgradeBlueprint() {
+//        return this.name().startsWith("MAVERICK_SUIT") || this.name().startsWith("DOMINATOR_SUIT") || this.name().startsWith("ARTEMIS_SUIT");
+//    }
+//
+//    public boolean isWeaponUpgradeBlueprint() {
+//        return this.name().startsWith("KARMA") || this.name().startsWith("TK") || this.name().startsWith("MANTICORE");
+//    }
+
+    public boolean isWeaponModuleBlueprint() {
+        return this.equals(AUDIO_MASKING) || this.equals(FASTER_HANDLING) || this.name().startsWith("GREATER_RANGE_") ||
+                this.equals(HEADSHOT_DAMAGE_KINETIC) || this.equals(HEADSHOT_DAMAGE_LASER) || this.equals(HEADSHOT_DAMAGE_PLASMA) ||
+                this.name().startsWith("HIGHER_ACCURACY_") || this.equals(MAGAZINE_SIZE) || this.equals(NOISE_SUPPRESSOR) || this.equals(RELOAD_SPEED) ||
+                this.equals(SCOPE) || this.equals(STABILITY) || this.equals(STOWED_RELOADING);
+    }
+
+    public boolean isSuitModuleBlueprint() {
+        return this.equals(ADDED_MELEE_DAMAGE) || this.equals(COMBAT_MOVEMENT_SPEED) || this.equals(DAMAGE_RESISTANCE) || this.equals(ENHANCED_TRACKING) ||
+                this.equals(EXTRA_AMMO_CAPACITY) || this.equals(EXTRA_BACKPACK_CAPACITY) || this.equals(FASTER_SHIELD_REGEN) || this.equals(IMPROVED_BATTERY_CAPACITY) ||
+                this.equals(IMPROVED_JUMP_ASSIST) || this.equals(INCREASED_AIR_RESERVES) || this.equals(INCREASED_SPRINT_DURATION) || this.equals(NIGHT_VISION) ||
+                this.equals(QUIETER_FOOTSTEPS) || this.equals(REDUCED_TOOL_BATTERY_CONSUMPTION);
+    }
+
 
     @Override
     public String toString() {
         return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
+    }
+
+    public String getTitleLocalizationKey() {
+        if (isEngineerBlueprint()) {
+            return "wishlist.blueprint.odyssey.title.engineerunlock";
+        } else if (this.name().startsWith("MAVERICK_SUIT")) {
+            return "wishlist.blueprint.odyssey.title.suit.upgrade.maverick";
+        } else if (this.name().startsWith("DOMINATOR_SUIT")) {
+            return "wishlist.blueprint.odyssey.title.suit.upgrade.dominator";
+        } else if (this.name().startsWith("ARTEMIS_SUIT")) {
+            return "wishlist.blueprint.odyssey.title.suit.upgrade.artemis";
+        } else if (this.name().startsWith("KARMA")) {
+            return "wishlist.blueprint.odyssey.title.weapon.upgrade.karma";
+        } else if (this.name().startsWith("TK")) {
+            return "wishlist.blueprint.odyssey.title.weapon.upgrade.tk";
+        } else if (this.name().startsWith("MANTICORE")) {
+            return "wishlist.blueprint.odyssey.title.weapon.upgrade.manticore";
+        } else if (isWeaponModuleBlueprint()) {
+            return "wishlist.blueprint.odyssey.title.weapon.module";
+        } else if (isSuitModuleBlueprint()) {
+            return "wishlist.blueprint.odyssey.title.suit.module";
+        } else {
+            return "blank";
+        }
     }
 }

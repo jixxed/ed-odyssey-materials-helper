@@ -63,7 +63,8 @@ public abstract class OdysseyBlueprintConstants {
                         .forEach(entry -> newMap.put(entry.getKey(), entry.getValue().getMaterialCollection(odysseyMaterial.getClass()).get(odysseyMaterial))));
         return newMap;
     }
-    public static Craftability getCraftability(final OdysseyBlueprintName odysseyBlueprintName) {
+
+    public static Craftability getCraftability(final int quantity, final OdysseyBlueprintName odysseyBlueprintName) {
         final OdysseyBlueprint blueprint = OdysseyBlueprintConstants.getRecipe(odysseyBlueprintName);
         if (blueprint instanceof EngineerBlueprint engineerBlueprint) {
             return engineerBlueprint.getCraftability();
@@ -71,9 +72,9 @@ public abstract class OdysseyBlueprintConstants {
             final AtomicBoolean hasGoods = new AtomicBoolean(true);
             final AtomicBoolean hasData = new AtomicBoolean(true);
             final AtomicBoolean hasAssets = new AtomicBoolean(true);
-            blueprint.getMaterialCollection(Good.class).forEach((material, amountRequired) -> hasGoods.set(hasGoods.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
-            blueprint.getMaterialCollection(Data.class).forEach((material, amountRequired) -> hasData.set(hasData.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
-            blueprint.getMaterialCollection(Asset.class).forEach((material, amountRequired) -> hasAssets.set(hasAssets.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
+            blueprint.getMaterialCollection(Good.class).forEach((material, amountRequired) -> hasGoods.set(hasGoods.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired * quantity) >= 0));
+            blueprint.getMaterialCollection(Data.class).forEach((material, amountRequired) -> hasData.set(hasData.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired * quantity) >= 0));
+            blueprint.getMaterialCollection(Asset.class).forEach((material, amountRequired) -> hasAssets.set(hasAssets.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired * quantity) >= 0));
             if (!hasGoods.get() || !hasData.get()) {
                 return Craftability.NOT_CRAFTABLE;
             } else if (hasGoods.get() && hasData.get() && !hasAssets.get()) {
@@ -306,7 +307,7 @@ public abstract class OdysseyBlueprintConstants {
                         Good.HEALTHMONITOR, 2,
                         Data.MANUFACTURINGINSTRUCTIONS, 2,
                         Asset.CARBONFIBREPLATING, 5,
-                        Asset.GRAPHENE,  5
+                        Asset.GRAPHENE, 5
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "2",

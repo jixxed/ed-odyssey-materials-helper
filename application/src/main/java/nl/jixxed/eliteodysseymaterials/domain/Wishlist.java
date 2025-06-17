@@ -9,9 +9,9 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -42,13 +42,36 @@ public class Wishlist {
 
     public List<OdysseyWishlistBlueprint> getItems() {
         if (this == ALL) {
-            return APPLICATION_STATE.getPreferredCommander()
+            var allItems = APPLICATION_STATE.getPreferredCommander()
                     .map(commander -> WishlistService.getOdysseyWishlists(commander).getAllWishlists().stream()
                             .filter(wishlist -> wishlist != ALL)
                             .flatMap(wishlist -> wishlist.getItems().stream())
-                            .toList())
-                    .orElse(Collections.unmodifiableList(this.items));
+                            .collect(Collectors.toList()))
+                    .orElseGet(() -> new ArrayList<>(this.items));
+            return aggregateBlueprints(allItems);
         }
         return this.items;
     }
+
+    @JsonIgnore
+    private List<OdysseyWishlistBlueprint> aggregateBlueprints(List<OdysseyWishlistBlueprint> blueprints) {
+        List<OdysseyWishlistBlueprint> aggregated = new ArrayList<>();
+
+        for (OdysseyWishlistBlueprint item : blueprints) {
+            boolean found = false;
+            for (OdysseyWishlistBlueprint existing : aggregated) {
+                if (existing.getRecipeName().equals(item.getRecipeName())) {
+                    existing.setQuantity(existing.getQuantity() + item.getQuantity());
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                aggregated.add(item);
+            }
+        }
+
+        return aggregated;
+    }
+
 }

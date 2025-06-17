@@ -62,6 +62,7 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
     final BooleanProperty completed = new SimpleBooleanProperty(false);
     private String currentSearchQuery = "";
     ObjectProperty<HorizonsWishlistBlueprint> blueprint = new SimpleObjectProperty<>();
+    private int quantityOverride = -1;
 
     HorizonsWishlistIngredient(final HorizonsMaterial horizonsMaterial) {
         this.horizonsMaterial = horizonsMaterial;
@@ -187,8 +188,10 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
         //when we highlight a specific blueprint
         register(EventService.addListener(true, this, HorizonsWishlistHighlightEvent.class, event -> {
             if (event.isActive()) {
+                this.quantityOverride = event.getQuantity();
                 this.blueprint.set(event.getBlueprint());
             } else {
+                this.quantityOverride = -1;
                 this.blueprint.set(null);
             }
             this.update();
@@ -300,11 +303,15 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
         if (wishlistItem instanceof HorizonsModuleWishlistBlueprint moduleWishlistBlueprint) {
             moduleWishlistBlueprint.getPercentageToComplete().forEach((grade, percentage) -> {
                 final HorizonsBlueprint bp = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(moduleWishlistBlueprint.getRecipeName(), moduleWishlistBlueprint.getBlueprintType(), grade);
-                add(bp, percentage, hasHigherGradeConfigured(grade, moduleWishlistBlueprint.getPercentageToComplete()));
+                add(bp, wishlistItem.getQuantity(), percentage, hasHigherGradeConfigured(grade, moduleWishlistBlueprint.getPercentageToComplete()));
             });
+            if (moduleWishlistBlueprint.getExperimentalEffect() != null) {
+                final HorizonsBlueprint bpex = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(moduleWishlistBlueprint.getRecipeName(), moduleWishlistBlueprint.getExperimentalEffect(), null);
+                add(bpex, wishlistItem.getQuantity());
+            }
         } else {
             final HorizonsBlueprint bp = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(wishlistItem.getRecipeName(), WishlistService.getBlueprintType(wishlistItem), WishlistService.getBlueprintGrade(wishlistItem));
-            add(bp);
+            add(bp, wishlistItem.getQuantity());
         }
     }
 
@@ -314,7 +321,7 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
                 .anyMatch(e -> e.getValue() > 0D);
     }
 
-    private void add(HorizonsBlueprint blueprint, Double percentage, boolean hasHigherGradeOrIsMaxGrade) {
+    private void add(HorizonsBlueprint blueprint, int quantity, Double percentage, boolean hasHigherGradeOrIsMaxGrade) {
         Map<HorizonsMaterial, Integer> materials = blueprint.getMaterialCollection(this.horizonsMaterial.getClass());
         if (materials.isEmpty() || (percentage <= 0.2 && hasHigherGradeOrIsMaxGrade) || !materials.containsKey(this.horizonsMaterial))
             return;
@@ -331,19 +338,27 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
                     .orElse(0);
 
             final Engineer engineer = getCurrentEngineerForBlueprint(blueprint, pathItems).orElseGet(() -> getWorstEngineer(blueprint));
-            minimum += (int) Math.ceil(amount * percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(maxRank, moduleBlueprint.getHorizonsBlueprintType()));
-            required.set(required.get() + (int) Math.ceil(amount * percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(engineer, moduleBlueprint.getHorizonsBlueprintType())));
-            maximum += (int) Math.ceil(amount * percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(minRank, moduleBlueprint.getHorizonsBlueprintType()));
+            minimum += (int) Math.ceil(amount * percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(maxRank, moduleBlueprint.getHorizonsBlueprintType())) * (quantityOverride == -1 ? quantity : quantityOverride);
+            required.set(required.get() + (int) Math.ceil(amount * percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(engineer, moduleBlueprint.getHorizonsBlueprintType())) * (quantityOverride == -1 ? quantity : quantityOverride));
+            maximum += (int) Math.ceil(amount * percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(minRank, moduleBlueprint.getHorizonsBlueprintType())) * (quantityOverride == -1 ? quantity : quantityOverride);
         } else {
-            minimum += amount;
-            required.set(required.get() + amount);
-            maximum += amount;
+            minimum += amount * (quantityOverride == -1 ? quantity : quantityOverride);
+            required.set(required.get() + amount * (quantityOverride == -1 ? quantity : quantityOverride));
+            maximum += amount * (quantityOverride == -1 ? quantity : quantityOverride);
         }
-
+//        if (quantityOverride == -1) {
+//            minimum *= quantity;
+//            required.set(required.get() * quantity);
+//            maximum *= quantity;
+//        } else {
+//            minimum *= quantityOverride;
+//            required.set(required.get() * quantityOverride);
+//            maximum *= quantityOverride;
+//        }
     }
 
-    private void add(HorizonsBlueprint blueprint) {
-        add(blueprint, 1D, false);
+    private void add(HorizonsBlueprint blueprint, int quantity) {
+        add(blueprint, quantity, 1D, false);
     }
 
     private Optional<Engineer> getCurrentEngineerForBlueprint(Blueprint<HorizonsBlueprintName> recipe, List<PathItem<HorizonsBlueprintName>> pathItems) {

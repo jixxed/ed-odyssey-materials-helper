@@ -7,6 +7,7 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
@@ -36,7 +37,7 @@ public class HorizonsWishlistTab extends HorizonsTab implements DestroyableEvent
         this.getStyleClass().add("wishlist-tab");
 
 
-        this.wishlistSize = APPLICATION_STATE.getPreferredCommander().map(commander -> WishlistService.getHorizonsWishlists(commander).getSelectedWishlist().getItems().size()).orElse(0);
+        this.wishlistSize = APPLICATION_STATE.getPreferredCommander().map(commander -> WishlistService.getHorizonsWishlists(commander).getSelectedWishlist().getItems().stream().mapToInt(WishlistBlueprint::getQuantity).sum()).orElse(0);
         this.addBinding(this.textProperty(), LocaleService.getSupplierStringBinding("tabs.wishlist", () -> (this.wishlistSize > 0) ? " (" + this.wishlistSize + ")" : ""));
 
         this.noBlueprint = LabelBuilder.builder()
@@ -63,7 +64,7 @@ public class HorizonsWishlistTab extends HorizonsTab implements DestroyableEvent
 
     @SuppressWarnings("unchecked")
     private void update() {
-        this.wishlistSize = APPLICATION_STATE.getPreferredCommander().map(commander -> WishlistService.getHorizonsWishlists(commander).getSelectedWishlist().getItems().size()).orElse(0);
+        this.wishlistSize = APPLICATION_STATE.getPreferredCommander().map(commander -> WishlistService.getHorizonsWishlists(commander).getSelectedWishlist().getItems().stream().mapToInt(WishlistBlueprint::getQuantity).sum()).orElse(0);
         //no need to use addBinding, since it is already registered
         this.textProperty().bind(LocaleService.getSupplierStringBinding("tabs.wishlist", () -> (this.wishlistSize > 0) ? " (" + this.wishlistSize + ")" : ""));
 

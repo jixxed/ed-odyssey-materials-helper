@@ -2002,55 +2002,127 @@
           -fx-hgap: 0.25em;
           -fx-vgap: 0.25em; }
           .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint {
-            -fx-background-color: #0f0f0f; }
-            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:filled .name {
-              -fx-text-fill: #89d07f; }
-            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial .name {
-              -fx-text-fill: #dcc030; }
-            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .visible-image {
-              -fx-min-width: 1.8em;
-              -fx-pref-width: 1.8em;
-              -fx-max-width: 1.8em;
-              -fx-min-height: 1.8em;
-              -fx-pref-height: 1.8em;
-              -fx-max-height: 1.8em;
-              -fx-fit-to-height: true;
-              -fx-fit-to-width: true;
-              -fx-alignment: center; }
-            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .visible-button {
-              -fx-min-width: 2em;
-              -fx-pref-width: 2em;
-              -fx-max-width: 2em;
-              -fx-min-height: 2em;
-              -fx-pref-height: 2em;
-              -fx-max-height: 2em;
-              -fx-background-color: #0f0f0f;
-              -fx-cursor: hand;
-              -fx-background-insets: 0 0 0 0;
-              -fx-padding: 2;
-              -fx-border-color: black;
-              -fx-border-width: 0; }
-              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .visible-button:armed, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .visible-button:pressed, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .visible-button:selected, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .visible-button:visited, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .visible-button:selected:focused, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .visible-button:focused {
-                -fx-min-width: 2em;
-                -fx-pref-width: 2em;
-                -fx-max-width: 2em;
-                -fx-min-height: 2em;
-                -fx-pref-height: 2em;
-                -fx-max-height: 2em;
-                -fx-background-color: #0f0f0f;
+            -fx-background-color: #0f0f0f;
+            -fx-border-color: black;
+            -fx-padding: 0.25em;
+            -fx-spacing: 0.25em; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select {
+              -fx-spacing: 0.1em; }
+              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .arrow {
                 -fx-cursor: hand;
-                -fx-background-insets: 0 0 0 0;
-                -fx-padding: 1;
-                -fx-border-color: black;
-                -fx-border-width: 0; }
-              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .visible-button:hover {
-                -fx-background-color: #303235; }
+                -fx-alignment: center;
+                -fx-font-size: 1.2em; }
+                .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .arrow:hover {
+                  -fx-text-fill: #2e92df; }
+                .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .arrow.left {
+                  -fx-alignment: center-left;
+                  -fx-padding: 0 0.5em 0 0; }
+                .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .arrow.right {
+                  -fx-alignment: center-right;
+                  -fx-padding: 0 0 0 0.5em; }
+              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .value {
+                -fx-font-size: 1.2em;
+                -fx-alignment: top-center;
+                -fx-text-fill: #707070; }
+                .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .value:filled {
+                  -fx-text-fill: white; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial-1 .quantity-select .value-1 {
+              -fx-text-fill: #dcc030; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:filled-1 .quantity-select .value-1 {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial-2 .quantity-select .value-2 {
+              -fx-text-fill: #dcc030; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:filled-2 .quantity-select .value-2 {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial-3 .quantity-select .value-3 {
+              -fx-text-fill: #dcc030; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:filled-3 .quantity-select .value-3 {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial-4 .quantity-select .value-4 {
+              -fx-text-fill: #dcc030; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:filled-4 .quantity-select .value-4 {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial-5 .quantity-select .value-5 {
+              -fx-text-fill: #dcc030; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:filled-5 .quantity-select .value-5 {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial-6 .quantity-select .value-6 {
+              -fx-text-fill: #dcc030; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:filled-6 .quantity-select .value-6 {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial-7 .quantity-select .value-7 {
+              -fx-text-fill: #dcc030; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:filled-7 .quantity-select .value-7 {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial-8 .quantity-select .value-8 {
+              -fx-text-fill: #dcc030; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:filled-8 .quantity-select .value-8 {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial-9 .quantity-select .value-9 {
+              -fx-text-fill: #dcc030; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:filled-9 .quantity-select .value-9 {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial-10 .quantity-select .value-10 {
+              -fx-text-fill: #dcc030; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:filled-10 .quantity-select .value-10 {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line {
+              -fx-spacing: 0.25em; }
+              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line .visible-image {
+                -fx-min-width: 1.5em;
+                -fx-pref-width: 1.5em;
+                -fx-max-width: 1.5em;
+                -fx-min-height: 1.5em;
+                -fx-pref-height: 1.5em;
+                -fx-max-height: 1.5em;
+                -fx-fit-to-height: true;
+                -fx-fit-to-width: true;
+                -fx-alignment: center; }
+              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line .visible-button {
+                -fx-min-width: 1.5em;
+                -fx-pref-width: 1.5em;
+                -fx-max-width: 1.5em;
+                -fx-min-height: 1.2em;
+                -fx-pref-height: 1.2em;
+                -fx-max-height: 1.2em;
+                -fx-cursor: hand; }
+              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line .remove {
+                -fx-cursor: hand; }
+                .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line .remove:hover {
+                  -fx-text-fill: #ff7c7c; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .blueprint-line {
+              -fx-spacing: 1em; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-text {
+              -fx-font-style: italic; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .name {
-              -fx-label-padding: 5;
-              -fx-text-fill: white;
+              -fx-text-fill: #2e92df;
               -fx-cursor: hand;
               -fx-alignment: center;
               -fx-text-alignment: center; }
+              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .name:hover {
+                -fx-text-fill: #5aa9e6; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .module {
+              -fx-text-fill: #707070; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-1 {
+              -fx-text-fill: #707070; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-2 {
+              -fx-text-fill: #707070; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-3 {
+              -fx-text-fill: #707070; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-4 {
+              -fx-text-fill: #707070; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-5 {
+              -fx-text-fill: #707070; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-6 {
+              -fx-text-fill: #707070; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-7 {
+              -fx-text-fill: #707070; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-8 {
+              -fx-text-fill: #707070; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-9 {
+              -fx-text-fill: #707070; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-10 {
+              -fx-text-fill: #707070; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .tooltip {
               -fx-background: #1e1e1e;
               -fx-text-fill: white;
@@ -2063,30 +2135,10 @@
               -fx-font-size: 0.85em;
               -fx-font-weight: normal;
               -fx-font-style: normal; }
-            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .remove, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config {
-              -fx-min-width: 2em;
-              -fx-pref-width: 2em;
-              -fx-max-width: 2em;
-              -fx-background-insets: 0 0 0 0;
-              -fx-border-width: 0;
-              -fx-cursor: hand;
-              -fx-max-height: 2em;
-              -fx-padding: 2;
-              -fx-focus-traversable: false; }
-              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .remove:hover, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config:hover {
-                -fx-background-color: white;
-                -fx-text-fill: black; }
-              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .remove:armed, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .remove:pressed, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .remove:selected, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .remove:visited, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .remove:selected:focused, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .remove:focused, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config:armed, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config:pressed, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config:selected, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config:visited, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config:selected:focused, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config:focused {
-                -fx-background-color: #0f0f0f;
-                -fx-background-insets: 0 0 0 0;
-                -fx-border-color: black;
-                -fx-text-fill: white;
-                -fx-border-width: 0;
-                -fx-cursor: hand; }
-              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .remove:focused, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config:focused {
-                -fx-background-color: #2e92df; }
-              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .remove:pressed, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config:pressed {
-                -fx-background-color: black; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config {
+              -fx-cursor: hand; }
+              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config:hover {
+                -fx-text-fill: #2e92df; }
             .horizons-wishlist-blueprints-module-popover {
               -fx-background-color: transparent !important;
               -fx-border-width: 0; }
@@ -2098,6 +2150,10 @@
                 -fx-padding: 0.25em;
                 -fx-spacing: 0.25em;
                 -fx-max-width: 22em; }
+                .horizons-wishlist-blueprints-module-popover .content .blueprint-select {
+                  -fx-min-width: 21.5em;
+                  -fx-pref-width: 21.5em;
+                  -fx-max-width: 21.5em; }
                 .horizons-wishlist-blueprints-module-popover .content .title {
                   -fx-font-size: 1.3em;
                   -fx-max-width: 21.5em;
@@ -3183,55 +3239,127 @@
           -fx-hgap: 0.25em;
           -fx-vgap: 0.25em; }
           .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint {
-            -fx-background-color: #0f0f0f; }
-            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:filled .name {
-              -fx-text-fill: #89d07f; }
-            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial .name {
-              -fx-text-fill: #dcc030; }
-            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .visible-image {
-              -fx-min-width: 1.8em;
-              -fx-pref-width: 1.8em;
-              -fx-max-width: 1.8em;
-              -fx-min-height: 1.8em;
-              -fx-pref-height: 1.8em;
-              -fx-max-height: 1.8em;
-              -fx-fit-to-height: true;
-              -fx-fit-to-width: true;
-              -fx-alignment: center; }
-            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .visible-button {
-              -fx-min-width: 2em;
-              -fx-pref-width: 2em;
-              -fx-max-width: 2em;
-              -fx-min-height: 2em;
-              -fx-pref-height: 2em;
-              -fx-max-height: 2em;
-              -fx-background-color: #0f0f0f;
-              -fx-cursor: hand;
-              -fx-background-insets: 0 0 0 0;
-              -fx-padding: 2;
-              -fx-border-color: black;
-              -fx-border-width: 0; }
-              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .visible-button:armed, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .visible-button:pressed, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .visible-button:selected, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .visible-button:visited, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .visible-button:selected:focused, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .visible-button:focused {
-                -fx-min-width: 2em;
-                -fx-pref-width: 2em;
-                -fx-max-width: 2em;
-                -fx-min-height: 2em;
-                -fx-pref-height: 2em;
-                -fx-max-height: 2em;
-                -fx-background-color: #0f0f0f;
+            -fx-background-color: #0f0f0f;
+            -fx-border-color: black;
+            -fx-padding: 0.25em;
+            -fx-spacing: 0.25em; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select {
+              -fx-spacing: 0.1em; }
+              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .arrow {
                 -fx-cursor: hand;
-                -fx-background-insets: 0 0 0 0;
-                -fx-padding: 1;
-                -fx-border-color: black;
-                -fx-border-width: 0; }
-              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .visible-button:hover {
-                -fx-background-color: #303235; }
+                -fx-alignment: center;
+                -fx-font-size: 1.2em; }
+                .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .arrow:hover {
+                  -fx-text-fill: #2e92df; }
+                .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .arrow.left {
+                  -fx-alignment: center-left;
+                  -fx-padding: 0 0.5em 0 0; }
+                .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .arrow.right {
+                  -fx-alignment: center-right;
+                  -fx-padding: 0 0 0 0.5em; }
+              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .value {
+                -fx-font-size: 1.2em;
+                -fx-alignment: top-center;
+                -fx-text-fill: #707070; }
+                .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .value:filled {
+                  -fx-text-fill: white; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial-1 .quantity-select .value-1 {
+              -fx-text-fill: #dcc030; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:filled-1 .quantity-select .value-1 {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial-2 .quantity-select .value-2 {
+              -fx-text-fill: #dcc030; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:filled-2 .quantity-select .value-2 {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial-3 .quantity-select .value-3 {
+              -fx-text-fill: #dcc030; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:filled-3 .quantity-select .value-3 {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial-4 .quantity-select .value-4 {
+              -fx-text-fill: #dcc030; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:filled-4 .quantity-select .value-4 {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial-5 .quantity-select .value-5 {
+              -fx-text-fill: #dcc030; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:filled-5 .quantity-select .value-5 {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial-6 .quantity-select .value-6 {
+              -fx-text-fill: #dcc030; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:filled-6 .quantity-select .value-6 {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial-7 .quantity-select .value-7 {
+              -fx-text-fill: #dcc030; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:filled-7 .quantity-select .value-7 {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial-8 .quantity-select .value-8 {
+              -fx-text-fill: #dcc030; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:filled-8 .quantity-select .value-8 {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial-9 .quantity-select .value-9 {
+              -fx-text-fill: #dcc030; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:filled-9 .quantity-select .value-9 {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial-10 .quantity-select .value-10 {
+              -fx-text-fill: #dcc030; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:filled-10 .quantity-select .value-10 {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line {
+              -fx-spacing: 0.25em; }
+              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line .visible-image {
+                -fx-min-width: 1.5em;
+                -fx-pref-width: 1.5em;
+                -fx-max-width: 1.5em;
+                -fx-min-height: 1.5em;
+                -fx-pref-height: 1.5em;
+                -fx-max-height: 1.5em;
+                -fx-fit-to-height: true;
+                -fx-fit-to-width: true;
+                -fx-alignment: center; }
+              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line .visible-button {
+                -fx-min-width: 1.5em;
+                -fx-pref-width: 1.5em;
+                -fx-max-width: 1.5em;
+                -fx-min-height: 1.2em;
+                -fx-pref-height: 1.2em;
+                -fx-max-height: 1.2em;
+                -fx-cursor: hand; }
+              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line .remove {
+                -fx-cursor: hand; }
+                .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line .remove:hover {
+                  -fx-text-fill: #ff7c7c; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .blueprint-line {
+              -fx-spacing: 1em; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-text {
+              -fx-font-style: italic; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .name {
-              -fx-label-padding: 5;
-              -fx-text-fill: white;
+              -fx-text-fill: #2e92df;
               -fx-cursor: hand;
               -fx-alignment: center;
               -fx-text-alignment: center; }
+              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .name:hover {
+                -fx-text-fill: #5aa9e6; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .module {
+              -fx-text-fill: #707070; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-1 {
+              -fx-text-fill: #707070; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-2 {
+              -fx-text-fill: #707070; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-3 {
+              -fx-text-fill: #707070; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-4 {
+              -fx-text-fill: #707070; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-5 {
+              -fx-text-fill: #707070; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-6 {
+              -fx-text-fill: #707070; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-7 {
+              -fx-text-fill: #707070; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-8 {
+              -fx-text-fill: #707070; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-9 {
+              -fx-text-fill: #707070; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-10 {
+              -fx-text-fill: #707070; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .tooltip {
               -fx-background: #1e1e1e;
               -fx-text-fill: white;
@@ -3244,30 +3372,6 @@
               -fx-font-size: 0.85em;
               -fx-font-weight: normal;
               -fx-font-style: normal; }
-            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .remove, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config {
-              -fx-min-width: 2em;
-              -fx-pref-width: 2em;
-              -fx-max-width: 2em;
-              -fx-background-insets: 0 0 0 0;
-              -fx-border-width: 0;
-              -fx-cursor: hand;
-              -fx-max-height: 2em;
-              -fx-padding: 2;
-              -fx-focus-traversable: false; }
-              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .remove:hover, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config:hover {
-                -fx-background-color: white;
-                -fx-text-fill: black; }
-              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .remove:armed, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .remove:pressed, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .remove:selected, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .remove:visited, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .remove:selected:focused, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .remove:focused, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config:armed, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config:pressed, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config:selected, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config:visited, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config:selected:focused, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config:focused {
-                -fx-background-color: #0f0f0f;
-                -fx-background-insets: 0 0 0 0;
-                -fx-border-color: black;
-                -fx-text-fill: white;
-                -fx-border-width: 0;
-                -fx-cursor: hand; }
-              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .remove:focused, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config:focused {
-                -fx-background-color: #2e92df; }
-              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .remove:pressed, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config:pressed {
-                -fx-background-color: black; }
             .odyssey-wishlist-blueprints-module-popover {
               -fx-background-color: transparent !important;
               -fx-border-width: 0; }

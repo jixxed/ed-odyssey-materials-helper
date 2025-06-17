@@ -298,10 +298,10 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
                     for (int level = loadout.getCurrentLevel() + 1; level <= loadout.getTargetLevel(); level++) {
                         final Object recipe = recipes.getValueForLevel(level);
                         if (!OdysseyBlueprintName.NONE.equals(recipe)) {
-                            wishlistBlueprints.add(new OdysseyWishlistBlueprint((OdysseyBlueprintName) recipe, true));
+                            wishlistBlueprints.add(new OdysseyWishlistBlueprint((OdysseyBlueprintName) recipe));
                         }
                     }
-                    wishlistBlueprints.addAll(Arrays.stream(loadout.getModifications()).filter(modification -> modification.getModification() != null && !WeaponModification.NONE.equals(modification.getModification())).filter(SelectedModification::isNotPresent).map(modification -> new OdysseyWishlistBlueprint(modification.getModification().getRecipe(), true)).toList());
+                    wishlistBlueprints.addAll(Arrays.stream(loadout.getModifications()).filter(modification -> modification.getModification() != null && !WeaponModification.NONE.equals(modification.getModification())).filter(SelectedModification::isNotPresent).map(modification -> new OdysseyWishlistBlueprint(modification.getModification().getRecipe())).toList());
                 }));
         return wishlistBlueprints;
     }

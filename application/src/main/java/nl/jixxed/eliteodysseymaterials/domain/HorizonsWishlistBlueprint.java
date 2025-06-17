@@ -13,6 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract sealed class HorizonsWishlistBlueprint implements WishlistBlueprint<HorizonsBlueprintName> permits HorizonsExperimentalWishlistBlueprint,
         HorizonsModuleWishlistBlueprint,
         HorizonsSynthesisWishlistBlueprint,
@@ -20,9 +21,12 @@ public abstract sealed class HorizonsWishlistBlueprint implements WishlistBluepr
         HorizonsEngineerWishlistBlueprint {
     @EqualsAndHashCode.Include
     private String uuid = UUID.randomUUID().toString();
+    @EqualsAndHashCode.Include
     private HorizonsBlueprintName recipeName;
     @ClipboardJsonIgnore
     private boolean visible = true;
+
+    private int quantity = 1;
 
     public HorizonsWishlistBlueprint(final HorizonsBlueprintName recipeName, final boolean visible) {
         this.recipeName = recipeName;

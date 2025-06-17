@@ -8,5 +8,6 @@ import nl.jixxed.eliteodysseymaterials.domain.OdysseyWishlistBlueprint;
 @Getter
 public class OdysseyWishlistHighlightEvent implements Event {
     private final OdysseyWishlistBlueprint blueprint;
+    private final int quantity;
     private final boolean active;
 }

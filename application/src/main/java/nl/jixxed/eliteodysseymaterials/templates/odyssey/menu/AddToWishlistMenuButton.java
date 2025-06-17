@@ -71,7 +71,7 @@ public class AddToWishlistMenuButton extends DestroyableMenuButton implements De
                 .sorted(Comparator.comparing(Wishlist::getName))
                 .map(wishlist -> MenuItemBuilder.builder()
                         .withNonLocalizedText(wishlist.getName())
-                        .withOnAction(event -> EventService.publish(new OdysseyWishlistBlueprintEvent(commander, wishlist.getUuid(), List.of(new OdysseyWishlistBlueprint(odysseyBlueprintName, true)), Action.ADDED)))
+                        .withOnAction(event -> EventService.publish(new OdysseyWishlistBlueprintEvent(commander, wishlist.getUuid(), List.of(new OdysseyWishlistBlueprint(odysseyBlueprintName)), Action.ADDED)))
                         .build())
                 .toList();
         this.addAll(menuItems);

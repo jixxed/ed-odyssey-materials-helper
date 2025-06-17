@@ -36,13 +36,14 @@ public class WishlistService {
                         wishlistEvent.getWishlistBlueprints().forEach(wishlistRecipe -> {
                             switch (wishlistEvent.getAction()) {
                                 case ADDED ->
-                                        addToOdysseyWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getCommander(), wishlistRecipe.getRecipeName());
+                                        addToOdysseyWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getCommander(), wishlistRecipe);
                                 case REMOVED ->
                                         removeFromOdysseyWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getCommander(), wishlistRecipe);
                                 case VISIBILITY_CHANGED ->
                                         changeOdysseyVisibility(wishlistEvent.getWishlistUUID(), wishlistEvent.getCommander(), wishlistRecipe);
-                                case MODIFY -> {
-                                }
+                                case MODIFY ->
+                                        modifyOdysseyBlueprint(wishlistEvent.getWishlistUUID(), wishlistEvent.getCommander(), wishlistRecipe);
+
                             }
                         }))));
 
@@ -60,6 +61,21 @@ public class WishlistService {
                                         modifyHorizonsBlueprint(wishlistEvent.getWishlistUUID(), wishlistEvent.getCommander(), horizonsWishlistBlueprint);
                             }
                         }))));
+    }
+
+    private static void modifyOdysseyBlueprint(String wishlistUUID, Commander commander, OdysseyWishlistBlueprint wishlistBlueprint) {
+        final Wishlists wishlists = getOdysseyWishlists(commander);
+        final Wishlist wishlist = wishlists.getWishlist(wishlistUUID);
+        if (wishlist != null) {
+            final Optional<OdysseyWishlistBlueprint> existingRecipe = wishlist.getItems().stream()
+                    .filter(recipe -> recipe.getUuid().equals(wishlistBlueprint.getUuid()))
+                    .findFirst();
+            existingRecipe.ifPresent(recipe -> {
+                recipe.setQuantity(wishlistBlueprint.getQuantity());
+                saveOdysseyWishlists(commander, wishlists);
+                EventService.publish(new OdysseyWishlistChangedEvent(wishlistUUID));
+            });
+        }
     }
 
     public static Integer getAllWishlistsCount(final OdysseyMaterial odysseyMaterial) {
@@ -189,28 +205,30 @@ public class WishlistService {
     }
 
 
-    private static void addToOdysseyWishList(final String wishlistUUID, final Commander commander, final BlueprintName recipe) {
+    private static void addToOdysseyWishList(final String wishlistUUID, final Commander commander, final OdysseyWishlistBlueprint blueprint) {
         final Wishlists wishlists = getOdysseyWishlists(commander);
         final Wishlist wishlist = wishlists.getWishlist(wishlistUUID);
-        wishlist.getItems().add(new OdysseyWishlistBlueprint((OdysseyBlueprintName) recipe, true));
-        saveOdysseyWishlists(commander, wishlists);
-        EventService.publish(new OdysseyWishlistChangedEvent(wishlistUUID));
+        if (wishlist != null) {
+            wishlist.getItems().add(blueprint);
+            saveOdysseyWishlists(commander, wishlists);
+            EventService.publish(new OdysseyWishlistChangedEvent(wishlistUUID));
+        }
     }
 
-    private static void addToHorizonsWishList(final String wishlistUUID, final Commander commander, final HorizonsWishlistBlueprint recipe) {
+    private static void addToHorizonsWishList(final String wishlistUUID, final Commander commander, final HorizonsWishlistBlueprint blueprint) {
         final HorizonsWishlists wishlists = getHorizonsWishlists(commander);
         final HorizonsWishlist wishlist = wishlists.getWishlist(wishlistUUID);
         if (wishlist != null) {
-            wishlist.getItems().add(recipe);
+            wishlist.getItems().add(blueprint);
             saveHorizonsWishlists(commander, wishlists);
             EventService.publish(new HorizonsWishlistChangedEvent(wishlistUUID));
         }
     }
 
-    private static void removeFromOdysseyWishList(final String wishlistUUID, final Commander commander, final OdysseyWishlistBlueprint recipe) {
+    private static void removeFromOdysseyWishList(final String wishlistUUID, final Commander commander, final OdysseyWishlistBlueprint blueprint) {
         final Wishlists wishlists = getOdysseyWishlists(commander);
         final Wishlist wishlist = wishlists.getWishlist(wishlistUUID);
-        final Optional<OdysseyWishlistBlueprint> found = wishlist.getItems().stream().filter(wishlistRecipe -> wishlistRecipe.equals(recipe)).findFirst();
+        final Optional<OdysseyWishlistBlueprint> found = wishlist.getItems().stream().filter(wishlistRecipe -> wishlistRecipe.equals(blueprint)).findFirst();
         found.ifPresent(wishlistRecipe -> wishlist.getItems().remove(wishlistRecipe));
         saveOdysseyWishlists(commander, wishlists);
         EventService.publish(new OdysseyWishlistChangedEvent(wishlistUUID));
@@ -261,10 +279,13 @@ public class WishlistService {
             existingRecipe.ifPresent(recipe -> {
                 if (recipe instanceof HorizonsModuleWishlistBlueprint moduleWishlistBlueprint) {
                     moduleWishlistBlueprint.setPercentageToComplete(((HorizonsModuleWishlistBlueprint) wishlistBlueprint).getPercentageToComplete());
+                    moduleWishlistBlueprint.setExperimentalEffect(((HorizonsModuleWishlistBlueprint) wishlistBlueprint).getExperimentalEffect());
+                    moduleWishlistBlueprint.setBlueprintType(((HorizonsModuleWishlistBlueprint) wishlistBlueprint).getBlueprintType());
                 }
+                recipe.setQuantity(wishlistBlueprint.getQuantity());
+                saveHorizonsWishlists(commander, wishlists);
+                EventService.publish(new HorizonsWishlistChangedEvent(wishlistUUID));
             });
-            saveHorizonsWishlists(commander, wishlists);
-            EventService.publish(new HorizonsWishlistChangedEvent(wishlistUUID));
         }
     }
 

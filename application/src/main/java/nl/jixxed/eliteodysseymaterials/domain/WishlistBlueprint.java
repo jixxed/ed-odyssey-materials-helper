@@ -31,6 +31,10 @@ public sealed interface WishlistBlueprint<E extends BlueprintName<E>> permits Ho
 
     void setVisible(boolean visible);
 
+    int getQuantity();
+
+    void setQuantity(int quantity);
+
     /**
      * Returns the blueprint for this wishlist blueprint.
      * In case of a HorizonsModuleWishlistBlueprint, the highest grade is used to determine the blueprint.

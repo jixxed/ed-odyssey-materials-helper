@@ -65,6 +65,7 @@ public class OdysseyWishlistIngredient extends DestroyableVBox implements Destro
     final BooleanProperty completed = new SimpleBooleanProperty(false);
     private String currentSearchQuery = "";
     ObjectProperty<OdysseyWishlistBlueprint> blueprint = new SimpleObjectProperty<>();
+    private int quantityOverride = -1;
 
     OdysseyWishlistIngredient(final OdysseyMaterial odysseyMaterial) {
         this.odysseyMaterial = odysseyMaterial;
@@ -190,8 +191,10 @@ public class OdysseyWishlistIngredient extends DestroyableVBox implements Destro
         //when we highlight a specific blueprint
         register(EventService.addListener(true, this, OdysseyWishlistHighlightEvent.class, event -> {
             if (event.isActive()) {
+                this.quantityOverride = event.getQuantity();
                 this.blueprint.set(event.getBlueprint());
             } else {
+                this.quantityOverride = -1;
                 this.blueprint.set(null);
             }
             this.update();
@@ -299,14 +302,14 @@ public class OdysseyWishlistIngredient extends DestroyableVBox implements Destro
 
     private void count(OdysseyWishlistBlueprint wishlistItem) {
         final OdysseyBlueprint bp = OdysseyBlueprintConstants.getRecipe(wishlistItem.getRecipeName());
-        add(bp);
+        add(bp, wishlistItem.getQuantity());
     }
 
-    private void add(OdysseyBlueprint blueprint) {
+    private void add(OdysseyBlueprint blueprint, int quantity) {
         Map<OdysseyMaterial, Integer> materials = blueprint.getMaterialCollection(this.odysseyMaterial.getClass());
         if (materials.isEmpty() || !materials.containsKey(this.odysseyMaterial)) return;
 
-        final Integer amount = materials.get(this.odysseyMaterial);
+        final Integer amount = materials.get(this.odysseyMaterial) * (quantityOverride == -1 ? quantity : quantityOverride);
         minimum += amount;
         required.set(required.get() + amount);
         maximum += amount;

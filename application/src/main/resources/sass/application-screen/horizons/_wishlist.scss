@@ -93,105 +93,133 @@
 
           .blueprint {
             -fx-background-color: $background-color-dark;
+            -fx-border-color: $border-color-black;
+            -fx-padding: 0.25em;
+            -fx-spacing: 0.25em;
 
-            &:filled {
-              .name {
-                -fx-text-fill: $text-color-green;
-              }
-            }
 
-            &:partial {
-              .name {
-                -fx-text-fill: $text-color-yellow;
-              }
-            }
+            .quantity-select {
+              -fx-spacing: 0.1em;
 
-            .visible-image {
-              @include fixedWidth(1.8em);
-              @include fixedHeight(1.8em);
-              -fx-fit-to-height: true;
-              -fx-fit-to-width: true;
-              -fx-alignment: center;
-            }
-
-            .visible-button {
-              @include fixedWidth(2em);
-              @include fixedHeight(2em);
-              -fx-background-color: $background-color-dark;
-              -fx-cursor: hand;
-              -fx-background-insets: 0 0 0 0;
-              -fx-padding: 2;
-              -fx-border-color: $border-color-black;
-              -fx-border-width: 0;
-
-              &:armed,
-              &:pressed,
-              &:selected,
-              &:visited,
-              &:selected:focused,
-              &:focused {
-                @include fixedWidth(2em);
-                @include fixedHeight(2em);
-                -fx-background-color: $background-color-dark;
+              .arrow {
                 -fx-cursor: hand;
-                -fx-background-insets: 0 0 0 0;
-                -fx-padding: 1;
-                -fx-border-color: $border-color-black;
-                -fx-border-width: 0;
+                -fx-alignment: center;
+                -fx-font-size: 1.2em;
+
+                &:hover {
+                  -fx-text-fill: $text-color-blue;
+                }
+
+                &.left {
+                  -fx-alignment: center-left;
+                  -fx-padding: 0 0.5em 0 0;
+                }
+
+                &.right {
+                  -fx-alignment: center-right;
+                  -fx-padding: 0 0 0 0.5em;
+                }
               }
 
-              &:hover {
-                -fx-background-color: #303235;
+              .value {
+                -fx-font-size: 1.2em;
+                -fx-alignment: top-center;
+                -fx-text-fill: $text-color-grey;
+
+                &:filled {
+                  -fx-text-fill: $text-color-white;
+                }
               }
+            }
+
+            @for $i from 1 through 10 {
+              &:partial-#{$i} {
+                .quantity-select {
+                  .value-#{$i} {
+                    -fx-text-fill: $text-color-yellow;
+                  }
+                }
+              }
+              &:filled-#{$i} {
+                .quantity-select {
+                  .value-#{$i} {
+                    -fx-text-fill: $text-color-green;
+                  }
+                }
+              }
+            }
+
+            .title-line {
+              -fx-spacing: 0.25em;
+
+              .visible-image {
+                @include fixedWidth(1.5em);
+                @include fixedHeight(1.5em);
+                -fx-fit-to-height: true;
+                -fx-fit-to-width: true;
+                -fx-alignment: center;
+              }
+
+              .visible-button {
+                @include fixedWidth(1.5em);
+                @include fixedHeight(1.2em);
+                -fx-cursor: hand;
+
+              }
+
+              .remove {
+                -fx-cursor: hand;
+
+                &:hover {
+                  -fx-text-fill: $text-color-red;
+                }
+              }
+            }
+
+            .blueprint-line {
+              -fx-spacing: 1em;
+            }
+
+            .quantity-text {
+              -fx-font-style: italic;
             }
 
             .name {
-              -fx-label-padding: 5;
-              -fx-text-fill: white;
+              -fx-text-fill: $text-color-blue;
               -fx-cursor: hand;
               -fx-alignment: center;
               -fx-text-alignment: center;
+
+              &:hover {
+                -fx-text-fill: lighten($text-color-blue, 10%);
+              }
+            }
+
+            &:hidden {
+              .module {
+                -fx-text-fill: $text-color-grey;
+              }
+
+              @for $i from 1 through 10 {
+                .quantity-select {
+                  .value-#{$i} {
+                    -fx-text-fill: $text-color-grey;
+                  }
+                }
+
+              }
             }
 
             .tooltip {
               @include tooltip;
             }
 
-            .remove, .config {
-              @include fixedWidth(2em);
-              -fx-background-insets: 0 0 0 0;
-              -fx-border-width: 0;
-              -fx-cursor: hand;
-              -fx-max-height: 2em;
-              -fx-padding: 2;
-              -fx-focus-traversable: false;
 
+            .config {
+              -fx-cursor: hand;
 
               &:hover {
-                -fx-background-color: $background-color-white;
-                -fx-text-fill: $text-color-black;
-              }
-
-              &:armed,
-              &:pressed,
-              &:selected,
-              &:visited,
-              &:selected:focused,
-              &:focused {
-                -fx-background-color: $background-color-dark;
-                -fx-background-insets: 0 0 0 0;
-                -fx-border-color: $border-color-black;
-                -fx-text-fill: $text-color-white;
-                -fx-border-width: 0;
-                -fx-cursor: hand;
-              }
-
-              &:focused {
-                -fx-background-color: $text-color-blue;
-              }
-
-              &:pressed {
-                -fx-background-color: black;
+                -fx-text-fill: $text-color-blue;
               }
             }
 
@@ -204,6 +232,11 @@
                   -fx-padding: 0.25em;
                   -fx-spacing: 0.25em;
                   -fx-max-width: 22em;
+
+                  .blueprint-select {
+                    @include fixedWidth(21.5em);
+
+                  }
 
                   .title {
                     -fx-font-size: 1.3em;

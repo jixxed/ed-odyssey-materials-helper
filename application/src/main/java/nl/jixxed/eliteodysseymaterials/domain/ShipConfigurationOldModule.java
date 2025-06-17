@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,4 +43,29 @@ public class ShipConfigurationOldModule {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<ShipConfigurationExperimentalEffect> experimentalEffect = new ArrayList<>();
 
+    /**
+     * Returns the first modification of this slot, or null if there are no modifications.
+     *
+     * @return the first modification, or null if none exist
+     */
+    @JsonIgnore
+    public ShipConfigurationModification getFirstModification() {
+        if (modification.isEmpty()) {
+            return null;
+        }
+        return modification.getFirst();
+    }
+
+    /**
+     * Returns the first experimental effect of this slot, or null if there are no experimental effects.
+     *
+     * @return the first experimental effect, or null if none exist
+     */
+    @JsonIgnore
+    public ShipConfigurationExperimentalEffect getFirstExperimentalEffect() {
+        if (experimentalEffect.isEmpty()) {
+            return null;
+        }
+        return experimentalEffect.getFirst();
+    }
 }

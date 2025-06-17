@@ -20,7 +20,7 @@ public class BlueprintHelper {
         if (!(OdysseyBlueprintConstants.getRecipe(odysseyBlueprintName) instanceof ModuleBlueprint) && !(OdysseyBlueprintConstants.getRecipe(odysseyBlueprintName) instanceof UpgradeBlueprint)) {
             return Craftability.NOT_CRAFTABLE;
         }
-        return OdysseyBlueprintConstants.getCraftability(odysseyBlueprintName);
+        return OdysseyBlueprintConstants.getCraftability(1, odysseyBlueprintName);
     }
 
     public static boolean isCompletedEngineerRecipe(final OdysseyBlueprintName odysseyBlueprintName) {

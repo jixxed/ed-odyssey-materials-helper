@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode(callSuper = true)
 public final class HorizonsModuleWishlistBlueprint extends HorizonsWishlistBlueprint {
     private HorizonsBlueprintType blueprintType;
+    private HorizonsBlueprintType experimentalEffect;
     //no longer persisting the data
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Map<HorizonsBlueprintGrade, Integer> blueprintGradeRolls;

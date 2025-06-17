@@ -199,11 +199,11 @@ public abstract class HorizonsBlueprintConstants {
         return Collections.emptyMap();
     }
 
-    public static Craftability getCraftability(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade) {
-        return getCraftability(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGrade == null ? Collections.emptyMap() : Map.of(horizonsBlueprintGrade, 1D), null);
+    public static Craftability getCraftability(final int quantity, final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade) {
+        return getCraftability(quantity, horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGrade == null ? Collections.emptyMap() : Map.of(horizonsBlueprintGrade, 1D), null);
     }
 
-    public static Craftability getCraftability(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<HorizonsBlueprintGrade, Double> horizonsBlueprintGrades, Engineer engineer) {
+    public static Craftability getCraftability(final int quantity, final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<HorizonsBlueprintGrade, Double> horizonsBlueprintGrades, Engineer engineer) {
         final List<Craftability> craftabilities = horizonsBlueprintGrades.entrySet().stream().map(gradePercentageToComplete -> {
             final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsBlueprintName, horizonsBlueprintType, gradePercentageToComplete.getKey());
             final AtomicBoolean hasRaw = new AtomicBoolean(true);
@@ -212,10 +212,10 @@ public abstract class HorizonsBlueprintConstants {
             final AtomicBoolean hasCommodity = new AtomicBoolean(true);
             final Double percentageToComplete = gradePercentageToComplete.getValue();
             int numberOfRolls = blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(engineer, horizonsBlueprintType);
-            blueprint.getMaterialCollection(Raw.class).forEach((material, amountRequired) -> hasRaw.set(hasRaw.get() && (StorageService.getMaterialCount(material) - Math.ceil(percentageToComplete * (amountRequired * numberOfRolls))) >= 0));
-            blueprint.getMaterialCollection(Encoded.class).forEach((material, amountRequired) -> hasEncoded.set(hasEncoded.get() && (StorageService.getMaterialCount(material) - Math.ceil(percentageToComplete * (amountRequired * numberOfRolls))) >= 0));
-            blueprint.getMaterialCollection(Manufactured.class).forEach((material, amountRequired) -> hasManufactured.set(hasManufactured.get() && (StorageService.getMaterialCount(material) - Math.ceil(percentageToComplete * (amountRequired * numberOfRolls))) >= 0));
-            blueprint.getMaterialCollection(Commodity.class).forEach((material, amountRequired) -> hasCommodity.set(hasCommodity.get() && (StorageService.getCommodityCount((Commodity) material, StoragePool.SHIP) - Math.ceil(percentageToComplete * (amountRequired * numberOfRolls))) >= 0));
+            blueprint.getMaterialCollection(Raw.class).forEach((material, amountRequired) -> hasRaw.set(hasRaw.get() && (StorageService.getMaterialCount(material) - Math.ceil(percentageToComplete * (amountRequired * quantity * numberOfRolls))) >= 0));
+            blueprint.getMaterialCollection(Encoded.class).forEach((material, amountRequired) -> hasEncoded.set(hasEncoded.get() && (StorageService.getMaterialCount(material) - Math.ceil(percentageToComplete * (amountRequired * quantity * numberOfRolls))) >= 0));
+            blueprint.getMaterialCollection(Manufactured.class).forEach((material, amountRequired) -> hasManufactured.set(hasManufactured.get() && (StorageService.getMaterialCount(material) - Math.ceil(percentageToComplete * (amountRequired * quantity * numberOfRolls))) >= 0));
+            blueprint.getMaterialCollection(Commodity.class).forEach((material, amountRequired) -> hasCommodity.set(hasCommodity.get() && (StorageService.getCommodityCount((Commodity) material, StoragePool.SHIP) - Math.ceil(percentageToComplete * (amountRequired * quantity * numberOfRolls))) >= 0));
             if (!hasRaw.get() || !hasEncoded.get() || !hasManufactured.get()) {
                 return Craftability.NOT_CRAFTABLE;
             } else if (hasRaw.get() && hasEncoded.get() && hasManufactured.get() && !hasCommodity.get()) {

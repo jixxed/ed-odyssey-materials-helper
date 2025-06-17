@@ -6,6 +6,8 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Added new CG missile racks
-Added trailblazer locations
-Prefilter colonisation types based on material requirements
+Redesign of wishlist blueprints
+- Blueprints now support a quantity, removing the need to have duplicates in the list
+- Shipmodule blueprints can now have an experimental effect added
+- Shipmodule blueprints' blueprint and effect can now be changed after being added to the wishlist
+Fixed negative modifiers showing in blue(positive)
