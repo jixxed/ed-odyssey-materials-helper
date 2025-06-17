@@ -1,13 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
 import nl.jixxed.eliteodysseymaterials.domain.ConstructionProgress;
-import nl.jixxed.eliteodysseymaterials.enums.ColonisationBuildable;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
-import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationConstructionDepot.ColonisationConstructionDepot;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ColonisationConstructionDepot.ResourcesRequired;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.ColonisationConstructionDepotEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -33,20 +29,20 @@ public class ColonisationConstructionDepotMessageProcessor implements MessagePro
 
     @Override
     public void process(final ColonisationConstructionDepot event) {
-        //validate buildcost
-        int x = 0;
-        for (ColonisationBuildable buildable : ColonisationBuildable.values()) {
-            final Map<Commodity, ConstructionProgress> commodityIntegerMap = event.getResourcesRequired().stream()
-                    .map(resourcesRequired -> Map.entry(getCommodity(resourcesRequired.getName()), getConstructionProgress(resourcesRequired)))
-                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, ConstructionProgress::sum));
-            var x2 = buildable.getBlueprintCost().keySet().equals(commodityIntegerMap.keySet());
-            if (x2) {
-                x++;
-            }
-        }
-        if (x < 1) {
-            NotificationService.showWarning(NotificationType.ERROR, LocaleService.LocaleString.of("notification.value.text", "No match detected"), LocaleService.LocaleString.of("notification.value.text", "Please check ColonisationBuildable: " + x));
-        }
+//        //validate buildcost
+//        int x = 0;
+//        for (ColonisationBuildable buildable : ColonisationBuildable.values()) {
+//            final Map<Commodity, ConstructionProgress> commodityIntegerMap = event.getResourcesRequired().stream()
+//                    .map(resourcesRequired -> Map.entry(getCommodity(resourcesRequired.getName()), getConstructionProgress(resourcesRequired)))
+//                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, ConstructionProgress::sum));
+//            var x2 = buildable.getBlueprintCost().keySet().equals(commodityIntegerMap.keySet());
+//            if (x2) {
+//                x++;
+//            }
+//        }
+//        if (x < 1) {
+//            NotificationService.showWarning(NotificationType.ERROR, LocaleService.LocaleString.of("notification.value.text", "No match detected"), LocaleService.LocaleString.of("notification.value.text", "Please check ColonisationBuildable: " + x));
+//        }
         //don't process if the event is the same as the previous one
         if (Objects.equals(previousEvent, event)) {
             return;

@@ -1,3 +1,7 @@
+Version 2.189
+-------------
+Remove debug notification
+
 Version 2.188
 -------------
 Fixed a bug in the shipbuilder with hardpoint locations for certain slots pointing to the wrong location
