@@ -334,6 +334,9 @@ run {
 }
 test {
     useJUnitPlatform()
+    jvmArgs += [
+            "-javaagent:${configurations.testRuntimeClasspath.find { it.name.contains('mockito-core') }}"
+    ]
 }
 // Each configuration is set to the default value
 jsonSchema2Pojo {

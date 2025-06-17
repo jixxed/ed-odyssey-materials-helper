@@ -7,6 +7,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.OdysseyWishlistBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.PathItem;
+import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.EngineerState;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
@@ -30,8 +31,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(JfxToolkitExtension.class)
 class PathServiceTest {
+
     @BeforeEach
     void setUp() {
+        List modules = ShipModule.getBasicModules();
         final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
         APPLICATION_STATE.setEngineerState(Engineer.DOMINO_GREEN, EngineerState.UNLOCKED);
         APPLICATION_STATE.setEngineerState(Engineer.HERO_FERRARI, EngineerState.UNLOCKED);
@@ -54,10 +57,10 @@ class PathServiceTest {
     void calculateShortestPath() {
         LocaleService.setCurrentLocale(Locale.ENGLISH);
         final List<OdysseyWishlistBlueprint> wishlistBlueprints = List.of(
-                new OdysseyWishlistBlueprint(OdysseyBlueprintName.GREATER_RANGE_PLASMA, true),
-                new OdysseyWishlistBlueprint(MAGAZINE_SIZE, true),
-                new OdysseyWishlistBlueprint(OdysseyBlueprintName.SCOPE, true),
-                new OdysseyWishlistBlueprint(OdysseyBlueprintName.STABILITY, true)
+                new OdysseyWishlistBlueprint(OdysseyBlueprintName.GREATER_RANGE_PLASMA),
+                new OdysseyWishlistBlueprint(MAGAZINE_SIZE),
+                new OdysseyWishlistBlueprint(OdysseyBlueprintName.SCOPE),
+                new OdysseyWishlistBlueprint(OdysseyBlueprintName.STABILITY)
         );
         LocationService.getCurrentStarSystem();
 
@@ -89,10 +92,10 @@ class PathServiceTest {
     void calculateShortestPath2() {
         LocaleService.setCurrentLocale(Locale.ENGLISH);
         final List<OdysseyWishlistBlueprint> wishlistBlueprints = List.of(
-                new OdysseyWishlistBlueprint(OdysseyBlueprintName.GREATER_RANGE_PLASMA, true),
-                new OdysseyWishlistBlueprint(MAGAZINE_SIZE, true),
-                new OdysseyWishlistBlueprint(OdysseyBlueprintName.SCOPE, true),
-                new OdysseyWishlistBlueprint(OdysseyBlueprintName.STABILITY, true)
+                new OdysseyWishlistBlueprint(OdysseyBlueprintName.GREATER_RANGE_PLASMA),
+                new OdysseyWishlistBlueprint(MAGAZINE_SIZE),
+                new OdysseyWishlistBlueprint(OdysseyBlueprintName.SCOPE),
+                new OdysseyWishlistBlueprint(OdysseyBlueprintName.STABILITY)
         );
         LocationService.getCurrentStarSystem();
 
