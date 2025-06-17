@@ -228,7 +228,7 @@ public class ModulesLayer extends DestroyableAnchorPane implements DestroyableEv
         if (ship == null) {//can happen directly after selecting a ship in the list
             return;
         }
-        final ImageSlot imageSlot = ship.getHardpointSlots().get(Math.min(index, ship.getUtilitySlots().size() - 1));
+        final ImageSlot imageSlot = ship.getHardpointSlots().get(Math.min(index, ship.getHardpointSlots().size() - 1));
         shipImage.setImage(ImageService.getImage("/images/ships/ship/" + ship.getShipType().name().toLowerCase() + "." + imageSlot.getImageIndex() + ".png"));
         final double x = this.shipImage.getWidth() / 1920D * imageSlot.getX();
         final double y = this.shipImage.getHeight() / 1090D * imageSlot.getY();
