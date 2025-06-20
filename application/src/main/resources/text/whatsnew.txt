@@ -1,3 +1,7 @@
+Version 2.191
+-------------
+Fix crash for shortest path calculations when no experimental effect was selected
+
 Version 2.190
 -------------
 Fix shortest path calculations for horizons module blueprints with effects and stack quantities

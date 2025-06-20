@@ -125,7 +125,7 @@ public class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBo
         return horizonsWishlist.getItems().stream()
                 .filter(bp -> bp.getRecipeName().equals(blueprint.getBlueprintName())
                         && (((HorizonsBlueprint) bp.getBlueprint()).getHorizonsBlueprintType().equals(((HorizonsBlueprint) blueprint).getHorizonsBlueprintType())
-                        || (bp instanceof HorizonsModuleWishlistBlueprint hmwb && hmwb.getExperimentalEffect().equals(((HorizonsBlueprint) blueprint).getHorizonsBlueprintType()))))
+                        || (bp instanceof HorizonsModuleWishlistBlueprint hmwb && hmwb.getExperimentalEffect() != null && hmwb.getExperimentalEffect().equals(((HorizonsBlueprint) blueprint).getHorizonsBlueprintType()))))
                 .mapToInt(WishlistBlueprint::getQuantity)
                 .sum();
     }
