@@ -1,3 +1,7 @@
+Version 2.190
+-------------
+Fix shortest path calculations for horizons module blueprints with effects and stack quantities
+
 Version 2.189
 -------------
 Remove debug notification
