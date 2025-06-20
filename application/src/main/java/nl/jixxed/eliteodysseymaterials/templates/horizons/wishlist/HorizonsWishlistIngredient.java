@@ -266,7 +266,7 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
         final Optional<HorizonsWishlist> horizonsWishlist = APPLICATION_STATE.getPreferredCommander()
                 .map(commander -> WishlistService.getHorizonsWishlists(commander).getSelectedWishlist());
         pathItems = horizonsWishlist
-                .map(wishlist -> PathService.calculateHorizonsShortestPath((List<HorizonsWishlistBlueprint>) (List<?>) wishlist.getItems()))
+                .map(wishlist -> PathService.calculateHorizonsShortestPath((List<HorizonsWishlistBlueprint>) (List<?>) wishlist.getItems().stream().filter(WishlistBlueprint::isVisible).toList()))
                 .orElse(Collections.emptyList());
         if (blueprint.get() == null) {
             horizonsWishlist.ifPresent(wishlist ->

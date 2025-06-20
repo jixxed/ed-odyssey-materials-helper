@@ -331,7 +331,7 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
         final Optional<HorizonsWishlist> horizonsWishlist = ApplicationState.getInstance().getPreferredCommander()
                 .map(commander -> WishlistService.getHorizonsWishlists(commander).getSelectedWishlist());
         var pathItems = horizonsWishlist
-                .map(wishlist -> PathService.calculateHorizonsShortestPath((List<HorizonsWishlistBlueprint>) (List<?>) wishlist.getItems()))
+                .map(wishlist -> PathService.calculateHorizonsShortestPath((List<HorizonsWishlistBlueprint>) (List<?>) wishlist.getItems().stream().filter(WishlistBlueprint::isVisible).toList()))
                 .orElse(Collections.emptyList());
 
         if (blueprint == null) {

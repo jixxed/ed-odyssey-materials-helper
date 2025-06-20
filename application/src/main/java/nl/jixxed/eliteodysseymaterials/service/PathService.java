@@ -38,7 +38,22 @@ public class PathService {
 //            log.info("Shortest path horizons cache hit");
             return lastHorizonsCalculation;
         }
-        final LinkedHashSet<HorizonsEngineeringBlueprint> distinctRecipes = wishlistBlueprints.stream()
+        var splittedBlueprints = new ArrayList<>(wishlistBlueprints);
+        final List<HorizonsExperimentalWishlistBlueprint> collect = wishlistBlueprints.stream()
+                .filter(HorizonsModuleWishlistBlueprint.class::isInstance)
+                .map(HorizonsModuleWishlistBlueprint.class::cast)
+                .filter(bp -> bp.getExperimentalEffect() != null)
+                .map(bp -> {
+                    final HorizonsExperimentalWishlistBlueprint blueprint = new HorizonsExperimentalWishlistBlueprint(bp.getExperimentalEffect());
+                    blueprint.setRecipeName(bp.getRecipeName());
+                    blueprint.setQuantity(bp.getQuantity());
+                    blueprint.setVisible(bp.isVisible());
+                    blueprint.setUuid("-1");
+                    return blueprint;
+                })
+                .toList();
+        splittedBlueprints.addAll(collect);
+        final LinkedHashSet<HorizonsEngineeringBlueprint> distinctRecipes = splittedBlueprints.stream()
                 .map(WishlistBlueprint::getBlueprint)
                 .filter(HorizonsEngineeringBlueprint.class::isInstance)
                 .map(HorizonsEngineeringBlueprint.class::cast)
@@ -50,7 +65,7 @@ public class PathService {
 
         lastHorizonsStarSystem = LocationService.getCurrentStarSystem();
         lastHorizonsWishlistBlueprints = wishlistBlueprints;
-        lastHorizonsCalculation = calculateShortestPath(wishlistBlueprints, distinctRecipes, false);
+        lastHorizonsCalculation = calculateShortestPath(splittedBlueprints, distinctRecipes, false);
         return lastHorizonsCalculation;
     }
 

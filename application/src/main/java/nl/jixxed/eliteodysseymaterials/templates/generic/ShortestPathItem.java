@@ -16,10 +16,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 public class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBox implements DestroyableTemplate {
@@ -46,26 +43,37 @@ public class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBo
                 .withStyleClass("engineer")
                 .withText(this.pathItem.getEngineer().getLocalizationKey())
                 .build();
+        final Optional<HorizonsWishlist> horizonsWishlist = ApplicationState.getInstance().getPreferredCommander()
+                .map(commander -> WishlistService.getHorizonsWishlists(commander).getSelectedWishlist());
+        final Optional<Wishlist> odysseyWishlist = ApplicationState.getInstance().getPreferredCommander()
+                .map(commander -> WishlistService.getOdysseyWishlists(commander).getSelectedWishlist());
         List<DestroyableLabel> blueprints = new ArrayList<>(this.pathItem.getRecipes().entrySet().stream()
                 .sorted(Comparator.comparing((Map.Entry o) -> o.getKey() instanceof HorizonsExperimentalEffectBlueprint)
                         .thenComparing((Map.Entry o) -> LocaleService.getLocalizedStringForCurrentLocale(((Blueprint) o.getKey()).getBlueprintName().getLocalizationKey())))
                 .map(entry ->
                         {
                             final StringBinding stringBinding;
+                            final Blueprint<T> blueprint = entry.getKey();
+                            final Integer amount = (Expansion.HORIZONS.equals(this.expansion))
+                                    ? horizonsWishlist.map(wl -> calculateAmount(wl, blueprint)).orElse(0)
+                                    : odysseyWishlist.map(wl -> calculateAmount(wl, blueprint)).orElse(0);
+
+                            //.orElse(Collections.emptyList());
+//                            final Integer amount = entry.getValue();
                             if (Expansion.HORIZONS.equals(this.expansion)) {
-                                final String localeKey = ((HorizonsBlueprintConstants.getRecipe(((HorizonsBlueprint) entry.getKey()).getBlueprintName(), ((HorizonsBlueprint) entry.getKey()).getHorizonsBlueprintType(), ((HorizonsBlueprint) entry.getKey()).getHorizonsBlueprintGrade())) instanceof HorizonsExperimentalEffectBlueprint)
+                                final String localeKey = ((HorizonsBlueprintConstants.getRecipe(((HorizonsBlueprint) blueprint).getBlueprintName(), ((HorizonsBlueprint) blueprint).getHorizonsBlueprintType(), ((HorizonsBlueprint) blueprint).getHorizonsBlueprintGrade())) instanceof HorizonsExperimentalEffectBlueprint)
                                         ? "tab.wishlist.travel.path.column.blueprints.blueprint.horizons.experimental"
                                         : "tab.wishlist.travel.path.column.blueprints.blueprint.horizons";
                                 stringBinding = LocaleService.getStringBinding(localeKey,
-                                        LocaleService.LocalizationKey.of(entry.getKey().getBlueprintName().getLocalizationKey()),
-                                        LocaleService.LocalizationKey.of(getBlueprintType((EngineeringBlueprint<T>) entry.getKey()).getLocalizationKey()),
-                                        entry.getValue());
+                                        LocaleService.LocalizationKey.of(blueprint.getBlueprintName().getLocalizationKey()),
+                                        LocaleService.LocalizationKey.of(getBlueprintType((EngineeringBlueprint<T>) blueprint).getLocalizationKey()),
+                                        amount);
                             } else {
-                                stringBinding = LocaleService.getStringBinding("tab.wishlist.travel.path.column.blueprints.blueprint.odyssey", LocaleService.LocalizationKey.of(entry.getKey().getBlueprintName().getLocalizationKey()), entry.getValue());
+                                stringBinding = LocaleService.getStringBinding("tab.wishlist.travel.path.column.blueprints.blueprint.odyssey", LocaleService.LocalizationKey.of(blueprint.getBlueprintName().getLocalizationKey()), amount);
                             }
                             return LabelBuilder.builder()
                                     .withStyleClasses("blueprint")
-                                    .withOnMouseClicked(_ -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsBlueprintClickEvent(entry.getKey()) : new BlueprintClickEvent(entry.getKey().getBlueprintName())))
+                                    .withOnMouseClicked(_ -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsBlueprintClickEvent(blueprint) : new BlueprintClickEvent(blueprint.getBlueprintName())))
                                     .withText(stringBinding
                                     )
                                     .build();
@@ -111,6 +119,22 @@ public class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBo
         } else {
             addButtonsOdyssey();
         }
+    }
+
+    private static <T extends BlueprintName<T>> Integer calculateAmount(HorizonsWishlist horizonsWishlist, Blueprint<T> blueprint) {
+        return horizonsWishlist.getItems().stream()
+                .filter(bp -> bp.getRecipeName().equals(blueprint.getBlueprintName())
+                        && (((HorizonsBlueprint) bp.getBlueprint()).getHorizonsBlueprintType().equals(((HorizonsBlueprint) blueprint).getHorizonsBlueprintType())
+                        || (bp instanceof HorizonsModuleWishlistBlueprint hmwb && hmwb.getExperimentalEffect().equals(((HorizonsBlueprint) blueprint).getHorizonsBlueprintType()))))
+                .mapToInt(WishlistBlueprint::getQuantity)
+                .sum();
+    }
+
+    private static <T extends BlueprintName<T>> Integer calculateAmount(Wishlist odysseyWishlist, Blueprint<T> blueprint) {
+        return odysseyWishlist.getItems().stream()
+                .filter(bp -> bp.getRecipeName().equals(blueprint.getBlueprintName()))
+                .mapToInt(WishlistBlueprint::getQuantity)
+                .sum();
     }
 
     private void addButtonsHorizons() {
@@ -188,7 +212,7 @@ public class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBo
             ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
                 final HorizonsWishlists horizonsWishlists = WishlistService.getHorizonsWishlists(commander);
                 final HorizonsWishlist selectedWishlist = horizonsWishlists.getSelectedWishlist();
-                selectedWishlist.getItems().removeIf(bp -> this.pathItem.getRecipes().containsKey(bp.getBlueprint()));
+                selectedWishlist.getItems().removeIf(bp -> !((HorizonsWishlistBlueprint) bp).getUuid().equals("-1") && this.pathItem.getRecipes().containsKey(bp.getBlueprint()));
                 WishlistService.saveHorizonsWishlists(commander, horizonsWishlists);
             });
         } else {
