@@ -35,11 +35,29 @@ public class OrderService {
 
     public static void addBuyOrder(final Material material, final Integer price, final Integer total,
                                    final Integer outstanding) {
-        BUY_ORDERS.put(material, new BuyOrder(price, total, outstanding));
+        if (price == 0 || total == 0) {
+            removeBuyOrder(material);
+        } else {
+            BUY_ORDERS.put(material, new BuyOrder(price, total, outstanding));
+        }
+        removeSellOrder(material);
     }
 
     public static void addSellOrder(final Material material, final Integer price, final Integer stock) {
-        SELL_ORDERS.put(material, new SellOrder(price, stock));
+        if (price == 0 || stock == 0) {
+            removeSellOrder(material);
+        } else {
+            SELL_ORDERS.put(material, new SellOrder(price, stock));
+        }
+        removeBuyOrder(material);
+    }
+
+    public static void removeSellOrder(Material material) {
+        SELL_ORDERS.remove(material);
+    }
+
+    public static void removeBuyOrder(Material material) {
+        BUY_ORDERS.remove(material);
     }
 
     static BuyOrder getBuyOrder(final Material material) {

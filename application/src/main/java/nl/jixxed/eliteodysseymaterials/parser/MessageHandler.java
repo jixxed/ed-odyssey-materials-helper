@@ -123,6 +123,7 @@ class MessageHandler {
             Map.entry(JournalEventType.SUPERCRUISEEXIT, new SupercruiseExitMessageProcessor()),
             Map.entry(JournalEventType.PROSPECTEDASTEROID, new ProspectedAsteroidMessageProcessor()),
             Map.entry(JournalEventType.CARRIERLOCATION, new CarrierLocationMessageProcessor()),
+            Map.entry(JournalEventType.CARRIERTRADEORDER, new CarrierTradeOrderMessageProcessor()),
 
             Map.entry(JournalEventType.LOADGAME, new LoadGameMessageProcessor())
     );

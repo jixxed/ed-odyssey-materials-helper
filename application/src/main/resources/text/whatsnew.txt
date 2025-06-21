@@ -1,6 +1,7 @@
 Version 2.192
 -------------
 Fix crash for shortest path calculations when a blueprint with no grades was configured
+Handle CarrierTradeOrder events after startup
 
 Version 2.191
 -------------
