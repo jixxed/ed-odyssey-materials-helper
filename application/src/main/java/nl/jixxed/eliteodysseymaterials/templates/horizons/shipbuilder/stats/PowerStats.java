@@ -123,9 +123,9 @@ public class PowerStats extends Stats implements DestroyableEventTemplate {
     @Override
     protected void update() {
         final Map<Integer, Double> retractedPower = calculateRetractedPower();
-        final Double retractedUsage = retractedPower.values().stream().skip(2).reduce(0D, Double::sum);
+        final Double retractedUsage = retractedPower.entrySet().stream().filter(entry -> !entry.getKey().equals(0)).mapToDouble(Map.Entry::getValue).reduce(0D, Double::sum);
         final Double powerBudget = retractedPower.get(0);
-        final Double deployedUsage = calculateDeployedPower().values().stream().skip(2).reduce(0D, Double::sum);
+        final Double deployedUsage = calculateDeployedPower().entrySet().stream().filter(entry -> !entry.getKey().equals(0)).mapToDouble(Map.Entry::getValue).reduce(0D, Double::sum);
         this.retractedPowerLabel.addBinding(this.retractedPowerLabel.textProperty(), LocaleService.getStringBinding("ship.stats.power.retracted.power.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(retractedUsage), Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(powerBudget)));
         this.deployedPowerLabel.addBinding(this.deployedPowerLabel.textProperty(), LocaleService.getStringBinding("ship.stats.power.deployed.power.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(deployedUsage), Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(powerBudget)));
         if (retractedUsage > powerBudget) {
