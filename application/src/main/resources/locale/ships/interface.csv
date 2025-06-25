@@ -3,7 +3,6 @@
 "ship.stats.config.live","Live","","","Live","","ao Vivo","Live","使用游戏内数据"
 "ship.stats.config.fuelreserve","Fuel reserve","","","Reserva de Combustible","","Reservas de Combustível","Резерв топлива","燃料储备"
 "ship.stats.config.fuel","Fuel (Max. {0})","","","Combustible (Max. {0})","","Comb (Max. {0})","Топливо (Макс. {0})","主燃料箱 (最大: {0})"
-"ship.stats.config.cargo","Cargo (Max. {0}+{1})","","","Capacidad de Carga (Max. {0}+{1})","","Carga (Max. {0}+{1})","Груз (Макс. {0}+{1})","货舱 (最大: {0}+{1})"
 "ship.stats.config.system","System","","","Sistemas","","Sistema","СИС","系统"
 "ship.stats.config.engine","Engine","","","Motores","","Motores","ДВГ","引擎"
 "ship.stats.config.weapon","Weapon","","","Armas","","Armas","ОРУ","武器"
@@ -123,3 +122,5 @@
 "ship.stats.config.power.group","Power group {0}","","","Prioridad Energética {0}","","Prioridade Energética {0}","Огневая группа {0}","电力组 {0}"
 "ship.stats.totaljumprange","Total jump range","","","Rango total de salto","","","Макс. расстояние за бак","总跃迁范围"
 "ship.stats.totaljumprange.value","{0} Ly","","","{0} AL","","{0} Al","{0} с.л.","{0} Ly"
+"ship.stats.config.cargo","Cargo (Max. {0})","","","Capacidad de Carga (Max. {0})","","Carga (Max. {0})","Груз (Макс. {0})","货舱 (最大: {0})"
+"ship.stats.config.passenger","Passenger (Max. {0})","","","","","","",""

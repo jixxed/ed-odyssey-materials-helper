@@ -58,6 +58,7 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
 
     @Override
     public void initComponents() {
+        this.getStyleClass().add("weapon-stats");
         this.getNodes().add(BoxBuilder.builder()
                 .withNodes(new GrowingRegion(), createTitle("ship.stats.weapon"), new GrowingRegion())
                 .buildHBox());

@@ -18,6 +18,7 @@ public class IntField extends DestroyableTextField {
     private boolean isUpdating = false; // Flag to prevent recursive updates
 
     public IntField(int minValue, int maxValue, int initialValue) {
+        getStyleClass().add("intfield");
         if (minValue > maxValue) {
             throw new IllegalArgumentException("IntField min value " + minValue + " greater than max value " + maxValue);
         }

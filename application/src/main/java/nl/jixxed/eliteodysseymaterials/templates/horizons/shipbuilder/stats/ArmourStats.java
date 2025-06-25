@@ -37,6 +37,7 @@ public class ArmourStats extends Stats implements DestroyableTemplate {
 
     @Override
     public void initComponents() {
+        this.getStyleClass().add("armour-stats");
         this.getNodes().add(BoxBuilder.builder()
                 .withNodes(new GrowingRegion(), createTitle("ship.stats.armour"), new GrowingRegion())
                 .buildHBox());

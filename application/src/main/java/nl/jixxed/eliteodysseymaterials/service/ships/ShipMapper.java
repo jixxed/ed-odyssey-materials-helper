@@ -6,10 +6,12 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.Modification;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class ShipMapper {
@@ -87,7 +89,7 @@ public class ShipMapper {
 
     private static void mapSlot(ShipConfigurationSlot shipConfigurationSlot, Slot slot) {
         final Optional<ShipModule> shipModule1 = ShipModule.getModules(slot.getSlotType()).stream().filter(shipModule -> shipModule.getId().equals(shipConfigurationSlot.getId())).findFirst();
-        final Optional<ShipModule> oldShipModule = Optional.ofNullable(shipConfigurationSlot.getOldModule()).map(mod->ShipModule.getModules(slot.getSlotType()).stream().filter(shipModule -> shipModule.getId().equals(mod.getId())).findFirst()).orElse(Optional.empty());
+        final Optional<ShipModule> oldShipModule = Optional.ofNullable(shipConfigurationSlot.getOldModule()).map(mod -> ShipModule.getModules(slot.getSlotType()).stream().filter(shipModule -> shipModule.getId().equals(mod.getId())).findFirst()).orElse(Optional.empty());
         shipModule1.ifPresent(shipModule2 -> {
             ShipModule shipModule = shipModule2.Clone();
             shipConfigurationSlot.getModification().forEach(shipConfigurationModification -> {
@@ -95,9 +97,12 @@ public class ShipMapper {
                     shipModule.getModifications().add(new Modification(shipConfigurationModification.getType(), shipConfigurationModification.getPercentComplete(), shipConfigurationModification.getGrade()));
                 }
             });
-            shipConfigurationSlot.getExperimentalEffect().forEach(shipConfigurationExperimentalEffect -> {
-                shipModule.getExperimentalEffects().add(shipConfigurationExperimentalEffect.getType());
-            });
+            shipConfigurationSlot.getExperimentalEffect().stream()
+                    .map(ShipConfigurationExperimentalEffect::getType)
+                    .filter(Predicate.not(HorizonsBlueprintType::isPreEngineered))
+                    .forEach(type -> {
+                        shipModule.getExperimentalEffects().add(type);
+                    });
             if (!shipConfigurationSlot.getModifiers().isEmpty()) {
                 shipModule.getModifiers().putAll(shipConfigurationSlot.getModifiers());
             }
@@ -124,11 +129,14 @@ public class ShipMapper {
                     shipModule.getModifications().add(new Modification(shipConfigurationModification.getType(), shipConfigurationModification.getPercentComplete(), shipConfigurationModification.getGrade()));
                 }
             });
-            shipConfigurationSlot.getOldModule().getExperimentalEffect().forEach(shipConfigurationExperimentalEffect -> {
-                shipModule.getExperimentalEffects().add(shipConfigurationExperimentalEffect.getType());
-            });
+            shipConfigurationSlot.getOldModule().getExperimentalEffect().stream()
+                    .map(ShipConfigurationExperimentalEffect::getType)
+                    .filter(Predicate.not(HorizonsBlueprintType::isPreEngineered))
+                    .forEach(type -> {
+                        shipModule.getExperimentalEffects().add(type);
+                    });
             shipConfigurationSlot.getOldModule().getModifiers().forEach((modifier, value) -> {
-                shipModule.getModifiers().put(modifier,value);
+                shipModule.getModifiers().put(modifier, value);
             });
             shipModule.setLegacy(Boolean.TRUE.equals(shipConfigurationSlot.getOldModule().getLegacy()));
             final Long buyPrice = shipConfigurationSlot.getOldModule().getBuyPrice();
@@ -150,8 +158,12 @@ public class ShipMapper {
         shipConfigurationSlot.setIndex(slot.getIndex());
         Optional.ofNullable(slot.getShipModule()).ifPresent(shipModule -> {
             shipConfigurationSlot.setId(shipModule.getId());
-            shipConfigurationSlot.setModification(shipModule.getModifications().stream().map(modification -> new ShipConfigurationModification(modification.getModification(), modification.getGrade(), modification.getModificationCompleteness().orElse(BigDecimal.ZERO))).toList());
-            shipConfigurationSlot.setExperimentalEffect(shipModule.getExperimentalEffects().stream().map(ShipConfigurationExperimentalEffect::new).toList());
+            shipConfigurationSlot.setModification(shipModule.getModifications().stream()
+                    .map(modification -> new ShipConfigurationModification(modification.getModification(), modification.getGrade(), modification.getModificationCompleteness().orElse(BigDecimal.ZERO)))
+                    .toList());
+            shipConfigurationSlot.setExperimentalEffect(shipModule.getExperimentalEffects().stream()
+                    .filter(Predicate.not(HorizonsBlueprintType::isPreEngineered))
+                    .map(ShipConfigurationExperimentalEffect::new).toList());
             shipConfigurationSlot.setBuyPrice(shipModule.getBuyPrice());
             if (shipModule.isLegacy()) {
                 shipConfigurationSlot.setLegacy(true);
@@ -166,14 +178,20 @@ public class ShipMapper {
         });
         Optional.ofNullable(slot.getOldShipModule()).ifPresentOrElse(shipModule -> {
             var id = shipModule.getId();
-            var modifications = shipModule.getModifications().stream().map(modification -> new ShipConfigurationModification(modification.getModification(), modification.getGrade(), modification.getModificationCompleteness().orElse(BigDecimal.ZERO))).toList();
-            var effects = shipModule.getExperimentalEffects().stream().map(ShipConfigurationExperimentalEffect::new).toList();
+            var modifications = shipModule.getModifications().stream()
+                    .map(modification -> new ShipConfigurationModification(modification.getModification(), modification.getGrade(), modification.getModificationCompleteness().orElse(BigDecimal.ZERO)))
+                    .toList();
+            var effects = shipModule.getExperimentalEffects().stream()
+                    .filter(Predicate.not(HorizonsBlueprintType::isPreEngineered))
+                    .map(ShipConfigurationExperimentalEffect::new)
+                    .toList();
             var legacy = shipModule.isLegacy();
             var powered = shipModule.isPowered();
             var powerGroup = shipModule.getPowerGroup();
             var buyPrice = shipModule.getBuyPrice();
-            var modifiers = shipModule.getModifiers().entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-            shipConfigurationSlot.setOldModule(new ShipConfigurationOldModule(id, legacy,powered,powerGroup,buyPrice, modifiers, modifications, effects));
+            var modifiers = shipModule.getModifiers().entrySet().stream()
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            shipConfigurationSlot.setOldModule(new ShipConfigurationOldModule(id, legacy, powered, powerGroup, buyPrice, modifiers, modifications, effects));
         }, () -> shipConfigurationSlot.setOldModule(null));
     }
 }

@@ -30,12 +30,13 @@ public class EngineStats extends Stats implements DestroyableTemplate {
 
     @Override
     public void initComponents() {
-        speedIndicator = new RangeIndicator(0D,0D,0D, "ship.stats.engine.speed", "ship.stats.engine.speed.value");
-        boostIndicator = new RangeIndicator(0D,0D,0D, "ship.stats.engine.boost", "ship.stats.engine.boost.value");
-        rechargeIndicator = new RechargeRangeIndicator(0D,0D,0D, 0D, "ship.stats.engine.recharge", "ship.stats.engine.recharge.value");
+        this.getStyleClass().add("engine-stats");
+        speedIndicator = new RangeIndicator(0D, 0D, 0D, "ship.stats.engine.speed", "ship.stats.engine.speed.value");
+        boostIndicator = new RangeIndicator(0D, 0D, 0D, "ship.stats.engine.boost", "ship.stats.engine.boost.value");
+        rechargeIndicator = new RechargeRangeIndicator(0D, 0D, 0D, 0D, "ship.stats.engine.recharge", "ship.stats.engine.recharge.value");
 
         this.getNodes().add(BoxBuilder.builder()
-.withNodes(new GrowingRegion(), createTitle("ship.stats.engine"), new GrowingRegion()).buildHBox());
+                .withNodes(new GrowingRegion(), createTitle("ship.stats.engine"), new GrowingRegion()).buildHBox());
         this.getNodes().add(new DestroyableSeparator(Orientation.HORIZONTAL));
         this.getNodes().add(speedIndicator);
         this.getNodes().add(boostIndicator);
@@ -56,7 +57,7 @@ public class EngineStats extends Stats implements DestroyableTemplate {
     }
 
     private double calculateMaxRecharge(double boostCost, double engineRecharge, double multiplier) {
-        return boostCost /  (engineRecharge * Math.pow(multiplier > 0 ? 1D/8D : 0D, 1.1));
+        return boostCost / (engineRecharge * Math.pow(multiplier > 0 ? 1D / 8D : 0D, 1.1));
     }
 
     private double calculateMinSpeed(Ship ship, Double speed, ModuleProfile moduleProfile) {
@@ -117,16 +118,15 @@ public class EngineStats extends Stats implements DestroyableTemplate {
             final double boostCost = (double) ship.getAttributes().getOrDefault(HorizonsModifier.BOOST_COST, 0D);
             final boolean engineCapacityEnough = engineCapacity > boostCost;
 
-            var currentSpeed = calculateCurrentSpeed(ship, topSpeed , moduleProfile, multiplier);
+            var currentSpeed = calculateCurrentSpeed(ship, topSpeed, moduleProfile, multiplier);
             var currentBoost = engineCapacityEnough ? calculateCurrentSpeed(ship, boostSpeed, moduleProfile, multiplier) : Double.NaN;
-            var currentRecharge = engineCapacityEnough ? calculateCurrentRecharge(boostCost, engineRecharge, multiplier) :Double.NaN;
+            var currentRecharge = engineCapacityEnough ? calculateCurrentRecharge(boostCost, engineRecharge, multiplier) : Double.NaN;
             var minSpeed = calculateMinSpeed(ship, topSpeed, moduleProfile);
             var minBoost = engineCapacityEnough ? calculateMinSpeed(ship, boostSpeed, moduleProfile) : Double.NaN;
             var minRecharge = engineCapacityEnough ? calculateMinRecharge(boostCost, engineRecharge) : Double.NaN;
             var maxSpeed = calculateMaxSpeed(ship, topSpeed, moduleProfile);
-            var maxBoost = engineCapacityEnough ?  calculateMaxSpeed(ship, boostSpeed, moduleProfile) : Double.NaN;
-            var maxRecharge = engineCapacityEnough ?  calculateMaxRecharge(boostCost, engineRecharge, multiplier) : Double.NaN;
-
+            var maxBoost = engineCapacityEnough ? calculateMaxSpeed(ship, boostSpeed, moduleProfile) : Double.NaN;
+            var maxRecharge = engineCapacityEnough ? calculateMaxRecharge(boostCost, engineRecharge, multiplier) : Double.NaN;
 
 
             this.speedIndicator.updateValues(minSpeed, currentSpeed, maxSpeed);

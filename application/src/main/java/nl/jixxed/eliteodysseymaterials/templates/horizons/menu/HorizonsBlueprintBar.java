@@ -25,6 +25,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.menu.About;
 
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -386,7 +387,7 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
                 .withItemsProperty(LocaleService.getListBinding(horizonsBlueprintNames.stream().sorted(Comparator.comparing(recipeName -> LocaleService.getLocalizedStringForCurrentLocale(recipeName.getLocalizationKey()))).toArray(HorizonsBlueprintName[]::new)))
                 .withValueChangeListener((_, _, newValue) -> {
                     if (newValue != null) {
-                        types.addBinding(types.itemsProperty(), LocaleService.getListBinding(typesMap.get(newValue).stream().sorted(Comparator.comparing(type -> LocaleService.getLocalizedStringForCurrentLocale(type.getLocalizationKey()))).toArray(HorizonsBlueprintType[]::new)));
+                        types.addBinding(types.itemsProperty(), LocaleService.getListBinding(typesMap.get(newValue).stream().filter(Predicate.not(HorizonsBlueprintType::isPreEngineered)).sorted(Comparator.comparing(type -> LocaleService.getLocalizedStringForCurrentLocale(type.getLocalizationKey()))).toArray(HorizonsBlueprintType[]::new)));
                         types.getSelectionModel().select(0);
                     }
                 })

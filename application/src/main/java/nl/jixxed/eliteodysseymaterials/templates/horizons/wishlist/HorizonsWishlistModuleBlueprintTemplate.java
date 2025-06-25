@@ -30,6 +30,7 @@ import org.controlsfx.control.PopOver;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.DoubleConsumer;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -280,7 +281,7 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
                     .withText("wishlist.effect.select")
                     .build();
             final Map<HorizonsBlueprintType, HorizonsBlueprint> effects = HorizonsBlueprintConstants.getExperimentalEffects().get(this.wishlistBlueprint.getRecipeName());
-            final ObservableList<HorizonsBlueprintType> items = effects != null ? FXCollections.observableList(effects.keySet().stream().filter(type -> !type.isPreEngineered()).collect(Collectors.toList())) : FXCollections.observableArrayList();
+            final ObservableList<HorizonsBlueprintType> items = effects != null ? FXCollections.observableList(effects.keySet().stream().filter(Predicate.not(HorizonsBlueprintType::isPreEngineered)).collect(Collectors.toList())) : FXCollections.observableArrayList();
             items.addFirst(null);
             final DestroyableComboBox<HorizonsBlueprintType> experimentalEffectSelect = ComboBoxBuilder.builder(HorizonsBlueprintType.class)
                     .withStyleClass("blueprint-select")

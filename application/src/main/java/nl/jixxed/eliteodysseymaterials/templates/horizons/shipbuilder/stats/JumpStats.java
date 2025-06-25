@@ -26,6 +26,7 @@ public class JumpStats extends Stats implements DestroyableTemplate {
 
     @Override
     public void initComponents() {
+        this.getStyleClass().add("jump-stats");
         this.getNodes().add(BoxBuilder.builder()
                 .withNodes(new GrowingRegion(), createTitle("ship.stats.jumprange"), new GrowingRegion())
                 .buildHBox());

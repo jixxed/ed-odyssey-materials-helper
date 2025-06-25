@@ -413,6 +413,11 @@ public abstract class HorizonsBlueprintConstants {
     }
 
     @SafeVarargs
+    private static Map<HorizonsBlueprintType, HorizonsBlueprint> mergeEffects(Map<HorizonsBlueprintType, HorizonsBlueprint>... effects) {
+        return Arrays.stream(effects).flatMap(map -> map.entrySet().stream()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    @SafeVarargs
     private static Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> merge(Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>... blueprints) {
         return Arrays.stream(blueprints).flatMap(map -> map.entrySet().stream()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }

@@ -26,6 +26,7 @@ public class PriceStats extends Stats implements DestroyableEventTemplate {
 
     @Override
     public void initComponents() {
+        this.getStyleClass().add("price-stats");
         this.getNodes().add(BoxBuilder.builder()
                 .withNodes(new GrowingRegion(), createTitle("ship.stats.price"), new GrowingRegion())
                 .buildHBox());

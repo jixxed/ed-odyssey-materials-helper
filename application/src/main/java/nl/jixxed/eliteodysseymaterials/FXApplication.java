@@ -180,6 +180,7 @@ public class FXApplication extends Application {
             primaryStage.setTitle(AppConstants.APP_TITLE);
             primaryStage.getIcons().add(new Image(FXApplication.class.getResourceAsStream(AppConstants.APP_ICON_PATH)));
             this.primaryStage.setOnCloseRequest(event -> {
+                log.debug("Application closing");
                 try {
                     applicationScreen.destroyTemplate();
                     BackupService.createConfigBackup();
@@ -193,6 +194,7 @@ public class FXApplication extends Application {
                     Platform.exit();
                 } catch (final Exception ex) {
                     //don't care
+                    log.error(ex.getMessage(), ex);
                 }
             });
             createApplicationScene();

@@ -9,7 +9,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
@@ -34,7 +33,7 @@ import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ControlsLayer extends DestroyableAnchorPane implements DestroyableEventTemplate {
+public class ControlsSection extends DestroyableHBox implements DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String FX_FONT_SIZE_DPX = "-fx-font-size: %dpx";
 
@@ -45,14 +44,15 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
     private DestroyableMenuButton addChangedToWishlist;
     private DestroyableResizableImageView shipsHelp;
 
-    public ControlsLayer() {
+    public ControlsSection() {
         initComponents();
         initEventHandling();
     }
 
     @Override
     public void initComponents() {
-        this.getStyleClass().add("controls");
+//        this.getStyleClass().add("controls");
+        this.getStyleClass().add("ships-menu");
         final Set<ShipConfiguration> items = APPLICATION_STATE.getPreferredCommander()
                 .map(commander -> ShipService.getShipConfigurations(commander).getAllShipConfigurations())
                 .orElse(Collections.emptySet());
@@ -113,19 +113,19 @@ public class ControlsLayer extends DestroyableAnchorPane implements DestroyableE
                 .withVisibilityProperty(this.shipSelect.getSelectionModel().selectedItemProperty().map(s -> s.getShipType() != null))
                 .build();
 
-        final DestroyableRegion spacer = RegionBuilder.builder()
-                .withStyleClass("spacer")
-                .build();
+//        final DestroyableRegion spacer = RegionBuilder.builder()
+//                .withStyleClass("spacer")
+//                .build();
 
-        final DestroyableHBox shipsMenu = BoxBuilder.builder()
-                .withStyleClass("ships-menu")
-                .withNodes(this.shipSelect, this.menuButton, this.addAllToWishlist, this.addChangedToWishlist, new GrowingRegion(), this.shipsHelp, spacer)
-                .buildHBox();
-        this.getNodes().add(shipsMenu);
-        shipsMenu.setPickOnBounds(false);
-
-        AnchorPane.setLeftAnchor(shipsMenu, 0D);
-        AnchorPane.setRightAnchor(shipsMenu, 0D);
+//        final DestroyableHBox shipsMenu = BoxBuilder.builder()
+//                .withStyleClass("ships-menu")
+//                .withNodes(this.shipSelect, this.menuButton, this.addAllToWishlist, this.addChangedToWishlist, new GrowingRegion(), this.shipsHelp, spacer)
+//                .buildHBox();
+        this.getNodes().addAll(this.shipSelect, this.menuButton, this.addAllToWishlist, this.addChangedToWishlist, this.shipsHelp);
+//        shipsMenu.setPickOnBounds(false);
+//
+//        AnchorPane.setLeftAnchor(shipsMenu, 0D);
+//        AnchorPane.setRightAnchor(shipsMenu, 0D);
         APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
     }
 

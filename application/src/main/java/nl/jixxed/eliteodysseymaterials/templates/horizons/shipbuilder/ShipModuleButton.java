@@ -15,7 +15,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.Thrusters;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.ShieldGenerator;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.ModuleHighlightEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.ModuleSelectHoverEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableButton;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
@@ -29,14 +29,16 @@ public class ShipModuleButton extends DestroyableButton {
     private static final double BOOST_MARGIN = 0.005;
     private final ShipModule shipModule;
 
-    public ShipModuleButton(ShipModule shipModule) {
+    public ShipModuleButton(SlotBox slotBox, ShipModule shipModule) {
         this.shipModule = shipModule;
         this.addEventBinding(this.onMouseEnteredProperty(), _ ->
-                EventService.publish(new ModuleHighlightEvent(shipModule)));
+                EventService.publish(new ModuleSelectHoverEvent(slotBox, shipModule, true)));
+        this.addEventBinding(this.onMouseExitedProperty(), _ ->
+                EventService.publish(new ModuleSelectHoverEvent(slotBox, null, false)));
         final List<DestroyableResizableImageView> icons = getIcons(shipModule);
         if (!icons.isEmpty()) {
             DestroyableHBox imagesBox = BoxBuilder.builder()
-                    .withStyleClass("ships-button-image-box")
+                    .withStyleClass("image-box")
                     .withNodes(icons.toArray(DestroyableResizableImageView[]::new))
                     .buildHBox();
             this.setGraphic(imagesBox);
@@ -109,7 +111,7 @@ public class ShipModuleButton extends DestroyableButton {
     private static DestroyableResizableImageView createImage(String imageResource) {
         return ResizableImageViewBuilder.builder()
                 .withImage(imageResource)
-                .withStyleClass("ships-button-image")
+                .withStyleClass("module-image")
                 .build();
     }
 }

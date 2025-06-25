@@ -36,6 +36,7 @@ public class ThermalStats extends Stats implements DestroyableEventTemplate {
 
     @Override
     public void initComponents() {
+        this.getStyleClass().add("thermal-stats");
         this.getNodes().add(BoxBuilder.builder()
                 .withNodes(new GrowingRegion(), createTitle("ship.stats.thermal"), new GrowingRegion()).buildHBox());
         this.getNodes().add(new DestroyableSeparator(Orientation.HORIZONTAL));

@@ -40,6 +40,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires transitive javafx.controls;
     requires transitive javafx.media;
     requires de.jensd.fx.glyphs.fontawesome;
+    requires eu.hansolo.fx.charts;
 
     exports nl.jixxed.eliteodysseymaterials.domain.ships;
     exports nl.jixxed.eliteodysseymaterials.domain;

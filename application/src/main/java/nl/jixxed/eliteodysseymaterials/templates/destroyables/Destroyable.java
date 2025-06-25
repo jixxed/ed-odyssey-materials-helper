@@ -54,19 +54,25 @@ public interface Destroyable {
         getBindings().clear();
 
         //clean destroyables
-        getDestroyables().forEach(destroyable -> {
-            if (destroyable instanceof DestroyableEventTemplate template) {
-                template.destroyTemplate();
-            } else if (destroyable instanceof DestroyableTemplate template) {
-                template.destroyTemplate();
-            } else if (destroyable instanceof DestroyableParent p) {
-                p.destroy();
-            } else if (destroyable instanceof DestroyableComponent c) {
-                c.destroy();
-            } else if (destroyable instanceof Destroyable d) {
-                d.destroy();
-            }
-        });
+        try {
+
+            getDestroyables().forEach(destroyable -> {
+                if (destroyable instanceof DestroyableEventTemplate template) {
+                    template.destroyTemplate();
+                } else if (destroyable instanceof DestroyableTemplate template) {
+                    template.destroyTemplate();
+                } else if (destroyable instanceof DestroyableParent p) {
+                    p.destroy();
+                } else if (destroyable instanceof DestroyableComponent c) {
+                    c.destroy();
+                } else if (destroyable instanceof Destroyable d) {
+                    d.destroy();
+                }
+            });
+        } catch (ConcurrentModificationException e) {
+            System.err.println("ConcurrentModificationException while destroying destroyables");
+            System.err.println(this.getClass().getName());
+        }
         getDestroyables().clear();
 
         //additional optional cleanup if required

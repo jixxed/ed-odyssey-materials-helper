@@ -45,6 +45,7 @@ public class ShieldStats extends Stats implements DestroyableEventTemplate {
 
     @Override
     public void initComponents() {
+        this.getStyleClass().add("shield-stats");
         this.getNodes().add(BoxBuilder.builder()
                 .withNodes(new GrowingRegion(), createTitle("ship.stats.shield"), new GrowingRegion())
                 .buildHBox());

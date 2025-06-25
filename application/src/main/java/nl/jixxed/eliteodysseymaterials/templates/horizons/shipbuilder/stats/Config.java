@@ -6,14 +6,14 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.application.Platform;
 import javafx.geometry.Orientation;
-import javafx.util.Duration;
-import nl.jixxed.eliteodysseymaterials.builder.*;
+import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.CheckBoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.SliderBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfig;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
-import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class Config extends Stats implements DestroyableEventTemplate {
 
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
@@ -33,15 +34,13 @@ public class Config extends Stats implements DestroyableEventTemplate {
     private PipSelect enginePipSelect;
     private PipSelect weaponPipSelect;
     private IntField cargo;
+    private IntField passenger;
     private IntField fuel;
     private DestroyableSlider fuelreserve;
     private DestroyableCheckBox live;
-    private DestroyableResizableImageView power;
-    private DestroyableButton powerButton;
-    private DestroyableButton powerUp;
-    private DestroyableButton powerDown;
-    private DestroyableHBox powerBox;
+    private ConfigPowerControl powerControl;
     private DestroyableLabel cargoLabel;
+    private DestroyableLabel passengerLabel;
     private DestroyableLabel fuelLabel;
     private Disposable subscribe;
 
@@ -53,10 +52,13 @@ public class Config extends Stats implements DestroyableEventTemplate {
 
     @Override
     public void initComponents() {
-        this.getStyleClass().add("shipbuilder-stats-configuration");
+        this.getStyleClass().add("config");
         this.getNodes().add(BoxBuilder.builder()
-                .withNodes(new GrowingRegion(), createTitle("ship.stats.config"), new GrowingRegion()).buildHBox());
-        this.getNodes().add(new DestroyableSeparator(Orientation.HORIZONTAL));
+                .withNodes(new GrowingRegion(), createTitle("ship.stats.config"), new GrowingRegion())
+                .buildHBox());
+        DestroyableSeparator separator = new DestroyableSeparator(Orientation.HORIZONTAL);
+        separator.getStyleClass().add("splitter");
+        this.getNodes().add(separator);
         systemPipSelect = new PipSelect(8);
         enginePipSelect = new PipSelect(8);
         weaponPipSelect = new PipSelect(8);
@@ -75,56 +77,59 @@ public class Config extends Stats implements DestroyableEventTemplate {
 
 
         fuel = new IntField(0, maxFuel, this.getShip().map(Ship::getCurrentFuel).orElse(0D).intValue());
-        fuel.getStyleClass().add("config-intfield");
 
         fuelreserve = SliderBuilder.builder()
-                .withStyleClass("config-fuelreserve")
+                .withStyleClass("fuelreserve")
                 .withMin(0)
                 .withMax(maxFuelReserve)
-                .withValue(this.getShip().map(Ship::getCurrentFuelReserve).orElse(0D).intValue())
+                .withValue(this.getShip().map(Ship::getCurrentFuelReserve).orElse(0D))
                 .withDisableProperty(live.selectedProperty())
                 .build();
 
         cargo = new IntField(0, maxCargo + maxPassenger, this.getShip().map(Ship::getCurrentCargo).orElse(0D).intValue());
-        cargo.getStyleClass().add("config-intfield");
+        passenger = new IntField(0, maxCargo + maxPassenger, this.getShip().map(Ship::getCurrentCargo).orElse(0D).intValue());
+        powerControl = new ConfigPowerControl();
 
-        powerBox = BoxBuilder.builder()
-                .withStyleClass("shipbuilder-slots-slotbox-power-config")
-                .buildHBox();
-        powerBox();
         fuelLabel = createLabel("ship.stats.config.fuel", String.valueOf(maxFuel));
         cargoLabel = createLabel("ship.stats.config.cargo", String.valueOf(maxCargo), String.valueOf(maxPassenger));
-
+        passengerLabel = createLabel("ship.stats.config.passenger", String.valueOf(maxPassenger));
         fuel.addBinding(fuel.disableProperty(), live.selectedProperty());
         cargo.addBinding(cargo.disableProperty(), live.selectedProperty());
+        passenger.addBinding(passenger.disableProperty(), live.selectedProperty());
         systemPipSelect.addBinding(systemPipSelect.disableProperty(), live.selectedProperty());
         enginePipSelect.addBinding(enginePipSelect.disableProperty(), live.selectedProperty());
         weaponPipSelect.addBinding(weaponPipSelect.disableProperty(), live.selectedProperty());
-
-        this.getNodes().add(BoxBuilder.builder()
+        DestroyableVBox controls = BoxBuilder.builder()
+                .withStyleClass("config-controls")
+                .buildVBox();
+        controls.getNodes().add(BoxBuilder.builder()
                 .withNodes(createLabel("ship.stats.config.live"), new GrowingRegion(), live)
                 .buildHBox());
-        this.getNodes().add(BoxBuilder.builder()
+        controls.getNodes().add(BoxBuilder.builder()
                 .withNodes(createLabel("ship.stats.config.fuelreserve"), new GrowingRegion(), fuelreserve)
                 .buildHBox());
-        this.getNodes().add(BoxBuilder.builder()
+        controls.getNodes().add(BoxBuilder.builder()
                 .withNodes(fuelLabel, new GrowingRegion(), fuel)
                 .buildHBox());
-        this.getNodes().add(BoxBuilder.builder()
+        controls.getNodes().add(BoxBuilder.builder()
                 .withNodes(cargoLabel, new GrowingRegion(), cargo)
                 .buildHBox());
-        this.getNodes().add(BoxBuilder.builder()
+        controls.getNodes().add(BoxBuilder.builder()
+                .withNodes(passengerLabel, new GrowingRegion(), passenger)
+                .buildHBox());
+        controls.getNodes().add(BoxBuilder.builder()
                 .withNodes(createLabel("ship.stats.config.system"), new GrowingRegion(), systemPipSelect)
                 .buildHBox());
-        this.getNodes().add(BoxBuilder.builder()
+        controls.getNodes().add(BoxBuilder.builder()
                 .withNodes(createLabel("ship.stats.config.engine"), new GrowingRegion(), enginePipSelect)
                 .buildHBox());
-        this.getNodes().add(BoxBuilder.builder()
+        controls.getNodes().add(BoxBuilder.builder()
                 .withNodes(createLabel("ship.stats.config.weapon"), new GrowingRegion(), weaponPipSelect)
                 .buildHBox());
-        this.getNodes().add(BoxBuilder.builder()
-                .withNodes(createLabel("ship.stats.config.cargo_hatch"), new GrowingRegion(), powerBox)
+        controls.getNodes().add(BoxBuilder.builder()
+                .withNodes(createLabel("ship.stats.config.cargo_hatch"), new GrowingRegion(), powerControl)
                 .buildHBox());
+        this.getNodes().add(controls);
         systemPipSelect.addChangeListener(systemPipSelect.valueProperty(), (_, _, newValue) -> {
             ApplicationState.getInstance().setSystemPips(newValue.intValue());
             EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.PIPS));
@@ -182,105 +187,6 @@ public class Config extends Stats implements DestroyableEventTemplate {
         weaponPipSelect.setValue(weaponPips);
     }
 
-    private void powerBox() {
-        initPowerBox();
-        this.getShip().ifPresent(ship -> {
-            updatePower(ship.getCargoHatch().getShipModule());
-        });
-    }
-
-    private void initPowerBox() {
-        this.powerBox.getNodes().clear();
-        this.power = createIcon("shipbuilder-slots-slotbox-button-icon", "/images/ships/icons/powered1.png", 1);
-        if (!isCurrentShip()) {
-            this.powerButton = ButtonBuilder.builder()
-                    .withStyleClass("shipbuilder-slots-slotbox-button")
-                    .withOnAction(event -> {
-                        this.getShip().ifPresent(ship -> {
-                            ship.getCargoHatch().getShipModule().togglePower();
-                            notifyChanged();
-                            updatePower(ship.getCargoHatch().getShipModule());
-                        });
-                    })
-                    .withGraphic(this.power)
-                    .build();
-            powerUp = ButtonBuilder.builder()
-                    .withStyleClass("shipbuilder-slots-slotbox-button")
-                    .withOnAction(event -> {
-                        this.getShip().ifPresent(ship -> {
-                            ship.getCargoHatch().getShipModule().decreasePowerGroup();
-                            notifyChanged();
-                            updatePower(ship.getCargoHatch().getShipModule());
-                        });
-                    })
-                    .withGraphic(createIcon("shipbuilder-slots-slotbox-button-icon", "/images/ships/icons/arrow_left.png"))
-                    .build();
-            powerDown = ButtonBuilder.builder()
-                    .withStyleClass("shipbuilder-slots-slotbox-button")
-                    .withOnAction(event -> {
-                        this.getShip().ifPresent(ship -> {
-                            ship.getCargoHatch().getShipModule().increasePowerGroup();
-                            notifyChanged();
-                            updatePower(ship.getCargoHatch().getShipModule());
-                        });
-                    })
-                    .withGraphic(createIcon("shipbuilder-slots-slotbox-button-icon", "/images/ships/icons/arrow_right.png"))
-                    .build();
-            this.powerUp.setFocusTraversable(false);
-            this.powerDown.setFocusTraversable(false);
-            this.powerBox.getNodes().addAll(powerUp, powerButton, powerDown);
-        } else {
-            final GrowingRegion growingRegion = new GrowingRegion();
-            this.powerBox.getNodes().addAll(growingRegion, this.power, new GrowingRegion());
-        }
-    }
-
-    private void updatePower(ShipModule shipModule) {
-        if (shipModule != null) {
-
-            this.power.setImage(ImageService.getImage("/images/ships/icons/" + (shipModule.isPowered() ? "powered" : "unpowered") + shipModule.getPowerGroup() + ".png"));
-
-            if (!isCurrentShip()) {
-                this.powerButton.setGraphic(this.power);
-                this.powerButton.register(this.power);
-            }
-
-            final boolean hasPowerToggle = shipModule.hasPowerToggle();
-            if (!isCurrentShip()) {
-                final int powerGroup = shipModule.getPowerGroup();
-                this.powerUp.setVisible(hasPowerToggle && powerGroup > 1);
-                this.powerDown.setVisible(hasPowerToggle && powerGroup < 5);
-                this.powerButton.setVisible(hasPowerToggle);
-            } else {
-                this.power.setVisible(hasPowerToggle);
-//                this.powerBox.getNodes().clear();
-//                this.powerBox.getNodes().addAll(new GrowingRegion(), this.power, new GrowingRegion());
-            }
-        }
-    }
-
-    private static DestroyableResizableImageView createIcon(String styleClass, String imageResource, Integer powerGroup) {
-        final DestroyableResizableImageView icon = createIcon(styleClass, imageResource);
-        final DestroyableTooltip tooltip = TooltipBuilder.builder()
-                .withShowDelay(Duration.seconds(0.1))
-                .withText("ship.stats.config.power.group", powerGroup)
-                .build();
-        tooltip.install(icon);
-        return icon;
-    }
-
-    private static DestroyableResizableImageView createIcon(String styleClass, String imageResource) {
-        return ResizableImageViewBuilder.builder()
-                .withStyleClass(styleClass)
-                .withImage(imageResource)
-                .build();
-    }
-
-    private void notifyChanged() {
-        EventService.publish(new ShipBuilderEvent());
-        update();
-    }
-
     private static Boolean isCurrentShip() {
         return APPLICATION_STATE.getPreferredCommander()
                 .flatMap(commander -> ShipService.getShipConfigurations(commander).getSelectedShipConfiguration())
@@ -299,12 +205,15 @@ public class Config extends Stats implements DestroyableEventTemplate {
             fuel.setValue(getShip().map(Ship::getCurrentFuel).orElse(0D).intValue());
             fuelreserve.setMax(maxFuelReserve);
             fuelreserve.setValue(getShip().map(Ship::getCurrentFuelReserve).orElse(0D));
-            cargo.setMaxValue(maxCargo + maxPassenger);
+            cargo.setMaxValue(maxCargo);
             cargo.setValue(getShip().map(Ship::getCurrentCargo).orElse(0D).intValue());
-            initPowerBox();
+            passenger.setMaxValue(maxPassenger);
+//            passenger.setValue(getShip().map(Ship::getCurrentPassenger).orElse(0D).intValue());
+//            initPowerBox();
             this.getShip().ifPresent(ship -> {
-                updatePower(ship.getCargoHatch().getShipModule());
+                powerControl.updatePower(ship.getCargoHatch().getShipModule());
             });
+            log.debug("Ship selected: {}, isCurrentShip: {}", event.getShipUUID(), isCurrentShip());
             this.live.setSelected(this.live.isSelected() && isCurrentShip());
             this.live.setDisable(!isCurrentShip());
         }));
@@ -318,6 +227,9 @@ public class Config extends Stats implements DestroyableEventTemplate {
                         event.getEnginePips(),
                         event.getWeaponPips());
             }
+        }));
+        register(EventService.addListener(true, this, ShipBuilderEvent.class, event -> {
+            update();
         }));
     }
 
@@ -335,6 +247,9 @@ public class Config extends Stats implements DestroyableEventTemplate {
         cargo.setMaxValue(maxCargo + maxPassenger);
         cargoLabel.addBinding(cargoLabel.textProperty(), LocaleService.getStringBinding("ship.stats.config.cargo", maxCargo, maxPassenger));
 
+        this.getShip().ifPresent(ship -> {
+            powerControl.updatePower(ship.getCargoHatch().getShipModule());
+        });
     }
 
 

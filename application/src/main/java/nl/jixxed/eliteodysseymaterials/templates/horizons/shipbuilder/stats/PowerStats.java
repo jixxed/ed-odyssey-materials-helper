@@ -38,6 +38,7 @@ public class PowerStats extends Stats implements DestroyableEventTemplate {
 
     @Override
     public void initComponents() {
+        this.getStyleClass().add("power-stats");
         this.retractedPowerLabel = createValueLabel("ship.stats.power.retracted.power.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D), Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
         this.deployedPowerLabel = createValueLabel("ship.stats.power.deployed.power.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D), Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
         this.retractedPowerBar = new PowerBar(true);

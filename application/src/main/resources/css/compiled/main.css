@@ -1077,879 +1077,997 @@
       -fx-font-size: 1.35em; }
     .app .application-screen .horizons-tab-content .shipbuilder-tab-content {
       -fx-fit-to-width: true;
-      -fx-fit-to-height: true;
-      /*.shipbuilder-ship-col-angled{*/
-      /*    -fx-rotate: 90;*/
-      /*    !*-fx-alignment: center-right;*!*/
-      /*    !*-fx-text-alignment: right;*!*/
-      /*    -fx-min-width: 11em;*/
-      /*    -fx-max-width: 11em;*/
-      /*    !*-fx-alignment: right;*!*/
-      /*    -fx-background-color: #0A65BF;*/
-      /*    !*-fx-padding: 0em 10em 0em 0em;*!*/
-      /*    !*-fx-label-padding: 0em 5em 0em 0em;*!*/
-      /*}*/
-      /*.shipbuilder-ship-col-angled-label{*/
-      /*    !*-fx-rotate: 90;*!*/
-      /*    !*-fx-alignment: center-right;*!*/
-      /*    -fx-text-alignment: right;*/
-      /*    -fx-alignment: top-right;*/
-      /*    -fx-min-width: 11em;*/
-      /*    -fx-max-width: 11em;*/
-      /*    -fx-min-height: 2em;*/
-      /*    !*-fx-padding: 0em 2em 0em 0em;*!*/
-      /*    !*-fx-label-padding: 0em 5em 0em 0em;*!*/
-      /*    -fx-background-color: #064100;*/
-      /*}*/
-      /*.stats-values{*/
-      /*    -fx-padding:  0em 1.5em 0em 0em;*/
-      /*    -fx-min-width: 20em;*/
-      /*    -fx-max-width: 20em;*/
-      /*}*/ }
+      -fx-fit-to-height: true; }
       .app .application-screen .horizons-tab-content .shipbuilder-tab-content .scroll-pane-content {
         -fx-padding: 0.25em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .header {
-        -fx-background-color: #0f0f0f;
-        -fx-alignment: bottom-left; }
-        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .header .cell {
-          -fx-text-alignment: right;
-          -fx-alignment: center-right;
-          -fx-border-color: #3f3f3f;
-          -fx-border-width: 0em 0.1em 0em 0em;
-          -fx-min-height: 2em;
-          -fx-padding: 0em 0.2em 0em 0.2em; }
-          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .header .cell:hover {
-            -fx-background-color: #3f3f3f;
+      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents {
+        -fx-spacing: 0.25em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .header {
+          -fx-background-color: #0f0f0f;
+          -fx-alignment: bottom-left; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .header .cell {
+            -fx-text-alignment: right;
+            -fx-alignment: center-right;
+            -fx-border-color: #3f3f3f;
+            -fx-border-width: 0em 0.1em 0em 0em;
+            -fx-min-height: 2em;
+            -fx-padding: 0em 0.2em 0em 0.2em; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .header .cell:hover {
+              -fx-background-color: #3f3f3f;
+              -fx-cursor: hand; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .row {
+          -fx-background-color: #1f1f1f;
+          /*-fx-background-insets: 0em 0.2em 0em 0.2em;*/ }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .row:hover {
+            -fx-background-color: black;
             -fx-cursor: hand; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .row {
-        -fx-background-color: #1f1f1f;
-        /*-fx-background-insets: 0em 0.2em 0em 0.2em;*/ }
-        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .row:hover {
-          -fx-background-color: #000000;
-          -fx-cursor: hand; }
-        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .row .cell {
-          -fx-text-alignment: right;
-          -fx-alignment: center-right;
-          -fx-border-color: #3f3f3f;
-          -fx-border-width: 0em 0.1em 0em 0em;
-          -fx-min-height: 2em;
-          -fx-padding: 0em 0.2em 0em 0.2em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-ship-name {
-        -fx-min-width: 11em;
-        -fx-pref-width: 11em;
-        -fx-max-width: 11em;
-        -fx-alignment: center-left !important;
-        -fx-text-alignment: left !important;
-        -fx-border-width: 0em 0.1em 0em 0.1em !important; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-price {
-        -fx-min-width: 6em;
-        -fx-pref-width: 6em;
-        -fx-max-width: 6em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-size {
-        -fx-min-width: 3em;
-        -fx-pref-width: 3em;
-        -fx-max-width: 3em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-fighterbay {
-        -fx-min-width: 5.5em;
-        -fx-pref-width: 5.5em;
-        -fx-max-width: 5.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-crew {
-        -fx-min-width: 3em;
-        -fx-pref-width: 3em;
-        -fx-max-width: 3em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-masslock {
-        -fx-min-width: 5.5em;
-        -fx-pref-width: 5.5em;
-        -fx-max-width: 5.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-mass {
-        -fx-min-width: 3em;
-        -fx-pref-width: 3em;
-        -fx-max-width: 3em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-jumprange {
-        -fx-min-width: 6em;
-        -fx-pref-width: 6em;
-        -fx-max-width: 6em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-speed {
-        -fx-min-width: 4em;
-        -fx-pref-width: 4em;
-        -fx-max-width: 4em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-boost {
-        -fx-min-width: 4em;
-        -fx-pref-width: 4em;
-        -fx-max-width: 4em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-boostinterval {
-        -fx-min-width: 7em;
-        -fx-pref-width: 7em;
-        -fx-max-width: 7em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-shield {
-        -fx-min-width: 4em;
-        -fx-pref-width: 4em;
-        -fx-max-width: 4em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-armor {
-        -fx-min-width: 4em;
-        -fx-pref-width: 4em;
-        -fx-max-width: 4em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-hardness {
-        -fx-min-width: 5em;
-        -fx-pref-width: 5em;
-        -fx-max-width: 5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-fuel {
-        -fx-min-width: 3em;
-        -fx-pref-width: 3em;
-        -fx-max-width: 3em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-cargo {
-        -fx-min-width: 4em;
-        -fx-pref-width: 4em;
-        -fx-max-width: 4em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-passenger {
-        -fx-min-width: 8em;
-        -fx-pref-width: 8em;
-        -fx-max-width: 8em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-slot-hardpoints {
-        -fx-min-width: 10em;
-        -fx-pref-width: 10em;
-        -fx-max-width: 10em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-slot-utility {
-        -fx-min-width: 5em;
-        -fx-pref-width: 5em;
-        -fx-max-width: 5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-slot-armour {
-        -fx-min-width: 2.5em;
-        -fx-pref-width: 2.5em;
-        -fx-max-width: 2.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-slot-powerplant {
-        -fx-min-width: 2.5em;
-        -fx-pref-width: 2.5em;
-        -fx-max-width: 2.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-slot-thrusters {
-        -fx-min-width: 2.5em;
-        -fx-pref-width: 2.5em;
-        -fx-max-width: 2.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-slot-frameshiftdrive {
-        -fx-min-width: 2.5em;
-        -fx-pref-width: 2.5em;
-        -fx-max-width: 2.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-slot-lifesupport {
-        -fx-min-width: 2.5em;
-        -fx-pref-width: 2.5em;
-        -fx-max-width: 2.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-slot-powerdistribution {
-        -fx-min-width: 2.5em;
-        -fx-pref-width: 2.5em;
-        -fx-max-width: 2.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-slot-sensors {
-        -fx-min-width: 2.5em;
-        -fx-pref-width: 2.5em;
-        -fx-max-width: 2.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-slot-fueltank {
-        -fx-min-width: 2.5em;
-        -fx-pref-width: 2.5em;
-        -fx-max-width: 2.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-slot-optional {
-        -fx-min-width: 13em;
-        -fx-pref-width: 13em;
-        -fx-max-width: 13em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .controls .ships-menu {
-        -fx-padding: 0.25em;
-        -fx-hgap: 0.25em;
-        -fx-vgap: 0.25em;
-        -fx-background-insets: 0em 1.3em 0em 0em;
-        -fx-background-color: #0f0f0f; }
-        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .controls .ships-menu .ships-wishlist-create-new {
-          -fx-font-style: italic; }
-        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .controls .ships-menu .ship-select {
-          -fx-min-width: 35em;
-          -fx-pref-width: 35em;
-          -fx-max-width: 35em; }
-        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .controls .ships-menu .ships-newname {
-          -fx-min-width: 20em;
-          -fx-border-color: black; }
-        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .controls .ships-menu .help-image {
-          -fx-min-height: 2em;
-          -fx-pref-height: 2em;
-          -fx-max-height: 2em;
-          -fx-min-width: 2em;
-          -fx-pref-width: 2em;
-          -fx-max-width: 2em;
-          -fx-cursor: hand; }
-        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .controls .ships-menu .spacer {
-          -fx-min-width: 24.5em;
-          -fx-pref-width: 24.5em;
-          -fx-max-width: 24.5em; }
-        .horizons-shipbuilder-help-popover {
-          -fx-background-color: transparent !important;
-          -fx-border-width: 0; }
-          .horizons-shipbuilder-help-popover > .border {
-            -fx-stroke: #fff !important;
-            -fx-stroke-width: 0.1em !important;
-            -fx-fill: #0f0f0f !important; }
-          .horizons-shipbuilder-help-popover .help-popover .hint-line {
-            -fx-spacing: 0.5em; }
-          .horizons-shipbuilder-help-popover .help-popover .hint-color {
-            -fx-text-fill: #dcc030;
-            -fx-font-style: italic;
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .row .cell {
+            -fx-text-alignment: right;
+            -fx-alignment: center-right;
+            -fx-border-color: #3f3f3f;
+            -fx-border-width: 0em 0.1em 0em 0em;
+            -fx-min-height: 2em;
+            -fx-padding: 0em 0.2em 0em 0.2em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-ship-name {
+          -fx-min-width: 11em;
+          -fx-pref-width: 11em;
+          -fx-max-width: 11em;
+          -fx-alignment: center-left !important;
+          -fx-text-alignment: left !important;
+          -fx-border-width: 0em 0.1em 0em 0.1em !important; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-price {
+          -fx-min-width: 6em;
+          -fx-pref-width: 6em;
+          -fx-max-width: 6em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-size {
+          -fx-min-width: 3em;
+          -fx-pref-width: 3em;
+          -fx-max-width: 3em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-fighterbay {
+          -fx-min-width: 5.5em;
+          -fx-pref-width: 5.5em;
+          -fx-max-width: 5.5em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-crew {
+          -fx-min-width: 3em;
+          -fx-pref-width: 3em;
+          -fx-max-width: 3em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-masslock {
+          -fx-min-width: 5.5em;
+          -fx-pref-width: 5.5em;
+          -fx-max-width: 5.5em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-mass {
+          -fx-min-width: 3em;
+          -fx-pref-width: 3em;
+          -fx-max-width: 3em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-jumprange {
+          -fx-min-width: 6em;
+          -fx-pref-width: 6em;
+          -fx-max-width: 6em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-speed {
+          -fx-min-width: 4em;
+          -fx-pref-width: 4em;
+          -fx-max-width: 4em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-boost {
+          -fx-min-width: 4em;
+          -fx-pref-width: 4em;
+          -fx-max-width: 4em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-boostinterval {
+          -fx-min-width: 7em;
+          -fx-pref-width: 7em;
+          -fx-max-width: 7em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-shield {
+          -fx-min-width: 4em;
+          -fx-pref-width: 4em;
+          -fx-max-width: 4em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-armor {
+          -fx-min-width: 4em;
+          -fx-pref-width: 4em;
+          -fx-max-width: 4em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-hardness {
+          -fx-min-width: 5em;
+          -fx-pref-width: 5em;
+          -fx-max-width: 5em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-fuel {
+          -fx-min-width: 3em;
+          -fx-pref-width: 3em;
+          -fx-max-width: 3em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-cargo {
+          -fx-min-width: 4em;
+          -fx-pref-width: 4em;
+          -fx-max-width: 4em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-passenger {
+          -fx-min-width: 8em;
+          -fx-pref-width: 8em;
+          -fx-max-width: 8em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-slot-hardpoints {
+          -fx-min-width: 10em;
+          -fx-pref-width: 10em;
+          -fx-max-width: 10em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-slot-utility {
+          -fx-min-width: 5em;
+          -fx-pref-width: 5em;
+          -fx-max-width: 5em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-slot-armour {
+          -fx-min-width: 2.5em;
+          -fx-pref-width: 2.5em;
+          -fx-max-width: 2.5em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-slot-powerplant {
+          -fx-min-width: 2.5em;
+          -fx-pref-width: 2.5em;
+          -fx-max-width: 2.5em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-slot-thrusters {
+          -fx-min-width: 2.5em;
+          -fx-pref-width: 2.5em;
+          -fx-max-width: 2.5em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-slot-frameshiftdrive {
+          -fx-min-width: 2.5em;
+          -fx-pref-width: 2.5em;
+          -fx-max-width: 2.5em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-slot-lifesupport {
+          -fx-min-width: 2.5em;
+          -fx-pref-width: 2.5em;
+          -fx-max-width: 2.5em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-slot-powerdistribution {
+          -fx-min-width: 2.5em;
+          -fx-pref-width: 2.5em;
+          -fx-max-width: 2.5em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-slot-sensors {
+          -fx-min-width: 2.5em;
+          -fx-pref-width: 2.5em;
+          -fx-max-width: 2.5em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-slot-fueltank {
+          -fx-min-width: 2.5em;
+          -fx-pref-width: 2.5em;
+          -fx-max-width: 2.5em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ship-select-view .col-slot-optional {
+          -fx-min-width: 13em;
+          -fx-pref-width: 13em;
+          -fx-max-width: 13em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ships-menu {
+          -fx-spacing: 0.25em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ships-menu .ships-wishlist-create-new {
+            -fx-font-style: italic; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ships-menu .ship-select {
+            -fx-min-width: 35em;
+            -fx-pref-width: 35em;
+            -fx-max-width: 35em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ships-menu .ships-newname {
+            -fx-min-width: 20em;
+            -fx-border-color: black; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .ships-menu .help-image {
+            -fx-min-height: 2em;
+            -fx-pref-height: 2em;
+            -fx-max-height: 2em;
+            -fx-min-width: 2em;
+            -fx-pref-width: 2em;
+            -fx-max-width: 2em;
+            -fx-cursor: hand; }
+          .horizons-shipbuilder-help-popover {
+            -fx-background-color: transparent !important;
+            -fx-border-width: 0; }
+            .horizons-shipbuilder-help-popover > .border {
+              -fx-stroke: #fff !important;
+              -fx-stroke-width: 1px !important;
+              -fx-fill: #0f0f0f !important; }
+            .horizons-shipbuilder-help-popover .help-popover .hint-line {
+              -fx-spacing: 0.5em; }
+            .horizons-shipbuilder-help-popover .help-popover .hint-color {
+              -fx-text-fill: #dcc030;
+              -fx-font-style: italic;
+              -fx-min-width: 10em; }
+            .horizons-shipbuilder-help-popover .help-popover .ship-text {
+              -fx-text-fill: white;
+              -fx-font-style: italic;
+              -fx-max-width: 35em;
+              -fx-wrap-text: true; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats {
+          -fx-min-height: 22.6em;
+          -fx-background-color: #0f0f0f;
+          -fx-border-color: white; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .selectors {
             -fx-min-width: 10em; }
-          .horizons-shipbuilder-help-popover .help-popover .ship-text {
-            -fx-text-fill: white;
-            -fx-font-style: italic;
-            -fx-max-width: 35em;
-            -fx-wrap-text: true; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-hbox {
-        /*-fx-spacing: 0.2em;*/ }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-vbox {
-        /*-fx-spacing: 0.2em;*/ }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox {
-        -fx-background-color: #0f0f0f;
-        -fx-min-width: 26em;
-        -fx-max-width: 26em;
-        -fx-min-height: 5em;
-        -fx-max-height: 5em;
-        -fx-border-color: white;
-        -fx-border-width: 0.1em;
-        -fx-padding: 0.1em;
-        -fx-border-insets: 0.1em;
-        -fx-background-insets: 0.1em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-military {
-        -fx-background-color: linear-gradient(from 0px 0px to 10px 10px, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%); }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-cargo {
-        -fx-background-color: linear-gradient(from 0px 10px to 10px 0px, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%); }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-military .button {
-        -fx-background-color: transparent; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-label-normal {
-        -fx-font-size: 1em;
-        -fx-text-fill: white; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-label-empty {
-        /*-fx-min-width: 23.7em;*/
-        /*-fx-max-width: 23.7em;*/
-        /* fontsize seems to affect max width, so above value / fontsize */
-        -fx-min-width: 6.77em;
-        -fx-max-width: 6.77em;
-        -fx-font-size: 3.5em;
-        -fx-text-fill: #4f4f4f; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox:hover {
-        -fx-border-color: #89D07F; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-hover-good {
-        -fx-border-color: #89D07F; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-hover-bad {
-        -fx-border-color: #ff7c7c; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-stackpane {
-        -fx-min-width: 78em;
-        -fx-max-width: 78em;
-        -fx-spacing: 0;
-        -fx-padding: 0; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-ship-image {
-        -fx-min-width: 78em;
-        -fx-max-width: 78em;
-        -fx-min-height: 44.26875em;
-        -fx-max-height: 44.26875em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-overlay {
-        -fx-min-width: 78em;
-        -fx-max-width: 78em;
-        -fx-min-height: 44.26875em;
-        -fx-max-height: 44.26875em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-size-label {
-        -fx-label-padding: 0.2em;
-        -fx-min-width: 1.4em;
-        -fx-max-width: 1.4em;
-        -fx-min-height: 3.0em;
-        -fx-max-height: 3.0em;
-        -fx-text-alignment: center;
-        -fx-alignment: bottom-center; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-size-hardpoint-label {
-        -fx-label-padding: 0.2em;
-        -fx-min-width: 1.4em;
-        -fx-max-width: 1.4em;
-        -fx-min-height: 1.5em;
-        -fx-max-height: 1.5em;
-        -fx-text-alignment: center;
-        -fx-alignment: center; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-hardpoint-group-label {
-        -fx-min-width: 1.4em;
-        -fx-max-width: 1.4em;
-        -fx-min-height: 1.5em;
-        -fx-max-height: 1.5em;
-        -fx-text-fill: #2e92df;
-        -fx-font-weight: bold;
-        /*-fx-background-color: #2e92df;*/
-        -fx-text-alignment: center;
-        -fx-alignment: center; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-texts {
-        -fx-min-width: 19.3em;
-        -fx-padding: 0.2em 0em 0.2em 0.2em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-popover {
-        -fx-stroke-width: 0; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-popover-content {
-        -fx-min-width: 26em;
-        -fx-max-width: 26em;
-        -fx-min-height: 25em;
-        -fx-max-height: 25em;
-        -fx-background-color: #0f0f0f; }
-        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-popover-content .scroll-pane-content {
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .selectors .stat-select {
+              -fx-background-color: #0f0f0f;
+              -fx-border-color: white;
+              -fx-border-width: 0.1em 0.1em 0em 0.1em;
+              -fx-fit-to-width: true;
+              -fx-min-width: 10em;
+              -fx-min-height: 2.5em;
+              -fx-pref-height: 2.5em;
+              -fx-max-height: 2.5em;
+              -fx-alignment: center; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .selectors .stat-select:hover {
+                -fx-background-color: #252525; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .selectors .stat-select:first {
+                -fx-border-width: 0em 0.1em 0em 0.1em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config {
+            -fx-min-width: 19em;
+            -fx-pref-width: 19em;
+            -fx-max-width: 19em; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .shipbuilder-stats-title {
+              -fx-padding: 0.25em; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .splitter .line {
+              -fx-border-color: white;
+              -fx-border-width: 0.05em;
+              -fx-border-insets: 0.0em 0 0.0em 0; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .config-controls {
+              -fx-padding: 0.25em;
+              -fx-spacing: 0.25em; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .intfield {
+              -fx-max-width: 7em; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .fuelreserve {
+              -fx-max-width: 7em; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .pipselect {
+              -fx-spacing: 0.25em;
+              -fx-padding: 0.25em 0em 0em 0; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .pipselect .pipselect-rectangle {
+                -fx-fill: #2b2b2b;
+                -fx-padding: 0 0 0 0.2em;
+                -fx-cursor: hand; }
+                .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .pipselect .pipselect-rectangle:half {
+                  -fx-fill: #2e92df;
+                  -fx-opacity: 0.5; }
+                .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .pipselect .pipselect-rectangle:full {
+                  -fx-fill: #2e92df;
+                  -fx-opacity: 1.0; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .pipselect:disabled {
+                -fx-opacity: 0.5; }
+                .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .pipselect:disabled .pipselect-rectangle:half {
+                  -fx-opacity: 0.25; }
+                .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .pipselect:disabled .pipselect-rectangle:full {
+                  -fx-opacity: 0.5; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .slider {
+              -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.slider.SliderSkin"; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .slider-popup {
+              -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.slider.SliderPopupSkin"; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .slider-popup .label {
+                -fx-background-color: #0f0f0f;
+                -fx-text-fill: white; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .power-control {
+              -fx-spacing: 0em; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .power-control:configurable {
+                -fx-spacing: 0.25em; }
+                .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .power-control:configurable .power-icon-and-label {
+                  -fx-cursor: hand; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .power-control:configurable .power-icon-and-label:hover .control-text {
+                    -fx-text-fill: #ffafaf; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .power-control:configurable .power-icon-and-label:hover .icon-container .icon {
+                    -fx-fill: #ffafaf; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .power-control:configurable .power-icon-and-label:hover:powered .control-text {
+                    -fx-text-fill: #abdea4; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .power-control:configurable .power-icon-and-label:hover:powered .icon-container .icon {
+                    -fx-fill: #abdea4; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .power-control:configurable .power-icon-and-label:pressed .control-text {
+                    -fx-text-fill: #2e92df !important; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .power-control:configurable .power-icon-and-label:pressed .icon-container .icon {
+                    -fx-fill: #2e92df !important; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .power-control .power-icon-and-label .icon-container {
+                -fx-min-height: 2em;
+                -fx-pref-height: 2em;
+                -fx-max-height: 2em;
+                -fx-padding: 0.25em 0 0 0em; }
+                .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .power-control .power-icon-and-label .icon-container .icon {
+                  -fx-min-height: 1em;
+                  -fx-pref-height: 1em;
+                  -fx-max-height: 1em;
+                  -fx-fill: #ff7c7c;
+                  -fx-font-size: 1em; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .power-control .power-icon-and-label .control-text {
+                -fx-text-fill: #ff7c7c;
+                -fx-min-height: 2em;
+                -fx-pref-height: 2em;
+                -fx-max-height: 2em;
+                -fx-padding: 0.2em 0 0 0.1em;
+                -fx-alignment: center; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .power-control .power-icon-and-label:powered .control-text {
+                -fx-text-fill: #89d07f; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .power-control .power-icon-and-label:powered .icon-container .icon {
+                -fx-fill: #89d07f; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .power-control .icon-container {
+                -fx-min-height: 2em;
+                -fx-pref-height: 2em;
+                -fx-max-height: 2em; }
+                .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .power-control .icon-container .control-button {
+                  -fx-cursor: hand;
+                  -fx-font-size: 1.5em;
+                  -fx-alignment: center;
+                  -fx-fill: white; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .config .power-control .icon-container .control-button:hover {
+                    -fx-fill: #2e92df; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .shipbuilder-stats {
+            -fx-min-width: 15.8em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .shipbuilder-stats-label-small {
+            -fx-label-padding: 0.3em 1em 0.2em 0; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .shipbuilder-stats-value-small {
+            -fx-font-weight: bold;
+            -fx-label-padding: 0.3em 0em 0.2em 0; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .shipbuilder-stats-title {
+            -fx-font-size: 1.2em;
+            -fx-font-weight: bold; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .shipbuilder-stats-value {
+            -fx-font-weight: bold;
+            -fx-label-padding: 0.5em 0em 0.5em 0; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .shipbuilder-stats-box {
+            /*-fx-min-height: 20em;*/
+            /*-fx-max-height: 20em;*/
+            /*-fx-background-color: #0f0f0f;*/
+            -fx-background-insets: 0em 1.3em 0em 0em;
+            -fx-padding: 0em 1.3em 0em 0em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .shipbuilder-stats-layer-bg {
+            -fx-background-insets: 0em 1.3em 0em 0em;
+            -fx-padding: 0em 1.3em 0em 0em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .shipbuilder-stats-box-bg {
+            -fx-background-color: #0f0f0f; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .shipbuilder-stats-configuration {
+            -fx-min-width: 19em;
+            -fx-max-width: 19em;
+            -fx-padding: 0.25em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .power-stats .power-progressbar {
+            -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentedBarSkin";
+            -fx-min-width: 15em;
+            -fx-max-width: 15em;
+            -fx-min-height: 1em;
+            -fx-pref-height: 2em;
+            -fx-max-height: 2em;
+            -fx-padding: 0.1em 0em 0.1em 0em;
+            -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.PowerSegmentedBarSkin"; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .power-stats .power-progressbar:horizontal > .only-segment {
+              -fx-background-radius: 0;
+              -fx-border-radius: 0; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .power-stats .power-progressbar:horizontal > .first-segment {
+              -fx-background-insets: 0 0 0 0;
+              -fx-background-radius: 0 0 0 0; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .power-stats .power-progressbar:horizontal > .middle-segment {
+              -fx-background-insets: 0 0 0 0;
+              -fx-background-radius: 0;
+              -fx-border-radius: 0; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .power-stats .power-progressbar:horizontal > .last-segment {
+              -fx-background-radius: 0 0 0 0;
+              -fx-border-radius: 0 0 0 0; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .power-stats .power-stats-powerbars {
+            -fx-min-height: 4.2em;
+            -fx-pref-height: 4.2em;
+            -fx-max-height: 4.2em;
+            /*-fx-spacing: 0.2em;*/ }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .power-stats .power-progressbar-popover {
+            -fx-background-color: black;
+            -fx-border-width: 0.12em;
+            -fx-border-color: #fff; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .power-stats .power-progressbar-label {
+            -fx-background-color: black;
+            -fx-text-fill: #fff !important;
+            /*-fx-font-weight: bold;*/
+            /*-fx-font-size: 1.2em;*/
+            -fx-padding: 0.2em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .power-stats .power-stats-overpower {
+            -fx-text-fill: #ff7c7c; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .weapon-stats .power-progressbar {
+            -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentedBarSkin";
+            -fx-min-width: 15em;
+            -fx-max-width: 15em;
+            -fx-min-height: 1em;
+            -fx-pref-height: 2em;
+            -fx-max-height: 2em;
+            -fx-padding: 0.1em 0em 0.1em 0em;
+            -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.PowerSegmentedBarSkin"; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .weapon-stats .power-progressbar:horizontal > .only-segment {
+              -fx-background-radius: 0;
+              -fx-border-radius: 0; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .weapon-stats .power-progressbar:horizontal > .first-segment {
+              -fx-background-insets: 0 0 0 0;
+              -fx-background-radius: 0 0 0 0; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .weapon-stats .power-progressbar:horizontal > .middle-segment {
+              -fx-background-insets: 0 0 0 0;
+              -fx-background-radius: 0;
+              -fx-border-radius: 0; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .weapon-stats .power-progressbar:horizontal > .last-segment {
+              -fx-background-radius: 0 0 0 0;
+              -fx-border-radius: 0 0 0 0; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .weapon-stats .power-stats-powerbars {
+            -fx-min-height: 4.2em;
+            -fx-pref-height: 4.2em;
+            -fx-max-height: 4.2em;
+            /*-fx-spacing: 0.2em;*/ }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .weapon-stats .power-progressbar-popover {
+            -fx-background-color: black;
+            -fx-border-width: 0.12em;
+            -fx-border-color: #fff; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .weapon-stats .power-progressbar-label {
+            -fx-background-color: black;
+            -fx-text-fill: #fff !important;
+            /*-fx-font-weight: bold;*/
+            /*-fx-font-size: 1.2em;*/
+            -fx-padding: 0.2em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .shield-image {
+            -fx-min-width: 5em;
+            -fx-max-width: 5em;
+            -fx-min-height: 6.199em;
+            -fx-max-height: 6.199em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .shield-component-red {
+            -fx-min-width: 15em;
+            -fx-max-width: 15em;
+            -fx-min-height: 9.6em;
+            -fx-max-height: 9.6em;
+            -fx-padding: 0.6em 0em 0em 0em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .shield-component-blue {
+            -fx-min-width: 15em;
+            -fx-max-width: 15em;
+            -fx-min-height: 6.6em;
+            -fx-max-height: 6.6em;
+            -fx-padding: 0.6em 0em 0em 0em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .shield-label-blue {
+            -fx-text-fill: #2e92df;
+            -fx-font-weight: bold; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .shield-label-red {
+            -fx-text-fill: #ff7c7c;
+            -fx-font-weight: bold; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .shield-label-symbol {
+            -fx-label-padding: 0.2em 0em 0em 0em;
+            -fx-font-size: 2.5em;
+            -fx-font-weight: bolder; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .shield-label-title {
+            -fx-label-padding: 0em 0em 0.5em 0em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .toggle-button-stats-hardpoint {
+            -fx-min-width: 3.75em;
+            -fx-max-width: 3.75em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .weapon-stats-legend-label {
+            -fx-alignment: baseline-center;
+            -fx-padding: 0em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .weapon-stats-legend-box {
+            -fx-min-width: 15em;
+            -fx-max-width: 15em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .power-progressbar-line {
+            -fx-min-height: 2em;
+            -fx-pref-height: 2em;
+            -fx-max-height: 2em;
+            -fx-max-width: 15em;
+            -fx-stroke: white;
+            -fx-stroke-width: 0.1em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .range-indicator {
+            -fx-min-height: 3em;
+            -fx-min-width: 15em;
+            -fx-max-width: 15em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .range-indicator-line {
+            -fx-min-height: 1em;
+            -fx-min-width: 15em;
+            -fx-max-width: 15em;
+            -fx-stroke: white;
+            -fx-stroke-width: 0.1em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .range-indicator-line-current {
+            -fx-min-height: 1em;
+            -fx-stroke: #2e92df;
+            -fx-stroke-width: 0.2em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .range-indicator-line-current-green {
+            -fx-stroke: #89d07f; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .range-indicator-current {
+            -fx-text-fill: #2e92df; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .range-indicator-current-green {
+            -fx-text-fill: #89d07f; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats .range-indicator-values {
+            -fx-min-width: 15em;
+            -fx-max-width: 15em; }
+        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules {
+          -fx-fit-to-width: true;
+          -fx-vgap: 0.5em;
+          -fx-hgap: 0.25em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column {
+            -fx-spacing: 0.25em; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content {
+              -fx-min-width: 27em;
+              -fx-pref-width: 27em;
+              -fx-max-width: 27em;
+              -fx-min-height: 4.6em;
+              -fx-background-color: #0f0f0f;
+              -fx-spacing: 0.2em;
+              -fx-border-color: white; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content:military {
+                -fx-background-color: linear-gradient(from 0px 0px to 10px 10px, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%); }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content:cargo {
+                -fx-background-color: linear-gradient(from 0px 10px to 10px 0px, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%); }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content:hover {
+                -fx-border-color: #2e92df; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content:good {
+                -fx-border-color: #89d07f; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content:bad {
+                -fx-border-color: #ff7c7c; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .slot-info {
+                -fx-padding: 0 0 0.2em 0.2em; }
+                .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .slot-info .tag {
+                  -fx-min-width: 1.4em;
+                  -fx-max-width: 1.4em;
+                  -fx-min-height: 1.5em;
+                  -fx-max-height: 1.5em;
+                  -fx-text-fill: #2e92df;
+                  -fx-font-weight: bold;
+                  /*-fx-background-color: #2e92df;*/
+                  -fx-text-alignment: center;
+                  -fx-alignment: center; }
+                .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .slot-info .slot-size {
+                  -fx-min-width: 1.4em;
+                  -fx-max-width: 1.4em;
+                  -fx-min-height: 1.5em;
+                  -fx-max-height: 1.5em;
+                  -fx-text-alignment: center;
+                  -fx-alignment: center; }
+                .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .slot-info .changed-icon {
+                  -fx-font-size: 1.2em;
+                  -fx-fill: #2e92df; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .splitter .line {
+                -fx-border-color: white;
+                -fx-border-width: 0.05em;
+                -fx-border-insets: 0.0em 0 0.0em 0; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .module-data {
+                -fx-min-width: 19.3em;
+                -fx-padding: 0.2em 0em 0.2em 0.2em; }
+                .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .module-data .module-icons {
+                  -fx-min-height: 1.4em;
+                  -fx-max-height: 1.4em;
+                  -fx-max-width: 20em; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .module-data .module-icons .module-icon {
+                    -fx-max-width: 1.5em;
+                    -fx-max-height: 1.5em;
+                    -fx-padding: 0em 0.2em 0em 0em; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide {
+                    -fx-max-width: 1.875em;
+                    -fx-max-height: 1.5em;
+                    -fx-padding: 0em 0.2em 0em 0em; }
+                .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .module-data .name {
+                  -fx-max-width: 20em; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .module-data .name:changed {
+                    -fx-text-fill: #2e92df; }
+                .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .module-data .blueprints-flow {
+                  -fx-max-width: 20em; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .module-data .blueprints-flow .blueprint {
+                    -fx-font-style: italic;
+                    -fx-text-fill: #2e92df;
+                    -fx-max-width: 19.5em;
+                    -fx-wrap-text: true;
+                    -fx-max-height: 1em; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .module-data .blueprints-flow .blueprint:same {
+                      -fx-text-fill: #dcc030; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .module-data .blueprints-flow .separator-comma {
+                    -fx-font-style: italic;
+                    -fx-text-fill: #2e92df; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .module-data .blueprints-flow .separator-comma:same {
+                      -fx-text-fill: #dcc030; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .module-data .blueprints-flow .effect {
+                    -fx-font-style: italic;
+                    -fx-text-fill: #2e92df; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .module-data .blueprints-flow .effect:same {
+                      -fx-text-fill: #dcc030; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .module-data .blueprints-flow .effect:missing-blueprints > .text {
+                      -fx-strikethrough: true; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .empty {
+                -fx-min-width: 6.77em;
+                -fx-max-width: 6.77em;
+                -fx-font-size: 3.5em;
+                -fx-text-fill: #4f4f4f; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .size-control .control-text {
+                -fx-min-width: 1em;
+                -fx-pref-width: 1em;
+                -fx-max-width: 1em;
+                -fx-min-height: 1.5em;
+                -fx-pref-height: 1.5em;
+                -fx-max-height: 1.5em;
+                -fx-alignment: center; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .size-control .control-button {
+                -fx-min-width: 2em;
+                -fx-pref-width: 2em;
+                -fx-max-width: 2em;
+                -fx-cursor: hand;
+                -fx-font-size: 1.5em;
+                -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .size-control .control-button:hover {
+                  -fx-fill: #2e92df; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .class-control .control-text {
+                -fx-min-width: 1em;
+                -fx-pref-width: 1em;
+                -fx-max-width: 1em;
+                -fx-min-height: 1.5em;
+                -fx-pref-height: 1.5em;
+                -fx-max-height: 1.5em;
+                -fx-alignment: center; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .class-control .control-button {
+                -fx-padding: 0.25em;
+                -fx-cursor: hand;
+                -fx-font-size: 1.5em;
+                -fx-alignment: center;
+                -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .class-control .control-button:hover {
+                  -fx-fill: #2e92df; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .mounting-control .control-text {
+                -fx-min-width: 1em;
+                -fx-pref-width: 1em;
+                -fx-max-width: 1em;
+                -fx-min-height: 1.5em;
+                -fx-pref-height: 1.5em;
+                -fx-max-height: 1.5em;
+                -fx-padding: 0 0 0 -0.1em;
+                -fx-alignment: center; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .mounting-control .icon {
+                -fx-min-width: 1.5em;
+                -fx-pref-width: 1.5em;
+                -fx-max-width: 1.5em;
+                -fx-min-height: 1.5em;
+                -fx-pref-height: 1.5em;
+                -fx-max-height: 1.5em; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .mounting-control .control-button {
+                -fx-cursor: hand;
+                -fx-font-size: 1.5em;
+                -fx-alignment: center;
+                -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .mounting-control .control-button:hover {
+                  -fx-fill: #2e92df; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .power-control {
+                -fx-min-width: 1.5em;
+                -fx-pref-width: 1.5em;
+                -fx-max-width: 1.5em; }
+                .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .power-control .power-icon-and-label {
+                  -fx-spacing: -0.1em; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .power-control .power-icon-and-label:configurable {
+                    -fx-spacing: -0.1em;
+                    -fx-cursor: hand; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .power-control .power-icon-and-label:configurable:hover .control-text {
+                      -fx-text-fill: #ffafaf; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .power-control .power-icon-and-label:configurable:hover .icon-container .icon {
+                      -fx-fill: #ffafaf; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .power-control .power-icon-and-label:configurable:hover:powered .control-text {
+                      -fx-text-fill: #abdea4; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .power-control .power-icon-and-label:configurable:hover:powered .icon-container .icon {
+                      -fx-fill: #abdea4; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .power-control .power-icon-and-label:configurable:pressed .control-text {
+                      -fx-text-fill: #2e92df !important; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .power-control .power-icon-and-label:configurable:pressed .icon-container .icon {
+                      -fx-fill: #2e92df !important; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .power-control .power-icon-and-label .icon-container {
+                    -fx-min-width: 1em;
+                    -fx-pref-width: 1em;
+                    -fx-max-width: 1em;
+                    -fx-min-height: 1.5em;
+                    -fx-pref-height: 1.5em;
+                    -fx-max-height: 1.5em;
+                    -fx-padding: 0.25em 0 0 0em; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .power-control .power-icon-and-label .icon-container .icon {
+                      -fx-min-width: 1em;
+                      -fx-pref-width: 1em;
+                      -fx-max-width: 1em;
+                      -fx-min-height: 1em;
+                      -fx-pref-height: 1em;
+                      -fx-max-height: 1em;
+                      -fx-fill: #ff7c7c;
+                      -fx-font-size: 1em; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .power-control .power-icon-and-label .control-text {
+                    -fx-text-fill: #ff7c7c;
+                    -fx-min-height: 1.3em;
+                    -fx-pref-height: 1.3em;
+                    -fx-max-height: 1.3em;
+                    -fx-padding: 0.2em 0 0 0.1em;
+                    -fx-alignment: center; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .power-control .power-icon-and-label:powered .control-text {
+                    -fx-text-fill: #89d07f; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .power-control .power-icon-and-label:powered .icon-container .icon {
+                    -fx-fill: #89d07f; }
+                .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .power-control .icon-container {
+                  -fx-min-width: 1.5em;
+                  -fx-pref-width: 1.5em;
+                  -fx-max-width: 1.5em; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .power-control .icon-container .control-button {
+                    -fx-cursor: hand;
+                    -fx-font-size: 1.5em;
+                    -fx-alignment: center;
+                    -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .slot-content .power-control .icon-container .control-button:hover {
+                      -fx-fill: #2e92df; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .overlay {
+              -fx-padding: 0.3em;
+              -fx-alignment: top-right; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .slots-column .slot-box .overlay .resize-warning {
+                -fx-background-color: #2e92df;
+                -fx-font-weight: bold;
+                -fx-padding: 0.4em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .column-set {
+            -fx-spacing: 0.25em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules .column-header {
+            -fx-min-width: 27em;
+            -fx-pref-width: 27em;
+            -fx-max-width: 27em;
+            -fx-min-height: 2em;
+            -fx-pref-height: 2em;
+            -fx-max-height: 2em;
+            -fx-background-color: #0f0f0f;
+            -fx-border-color: white;
+            -fx-alignment: center; }
+        .shipbuilder-details-popover {
+          -fx-background-color: transparent !important;
+          -fx-border-width: 0;
+          -fx-background-insets: 0 !important;
+          -fx-border-insets: 0em;
           -fx-padding: 0em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ships-modules-buttons {
-        /*-fx-pref-width: 100%;*/
-        /*-fx-fit-to-width: true;*/
-        -fx-pref-width: 24.5em;
-        -fx-max-width: 24.5em;
-        -fx-font-size: 1em;
-        /*-fx-spacing: 0.1em;*/
-        -fx-spacing: 0.1em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ships-modules-buttons .button {
-        -fx-pref-height: 2.1em;
-        /*-fx-pref-width: 100%;*/
-        /*-fx-fit-to-width: true;*/
-        /*-fx-border-color: black;*/
-        /*-fx-border-width: 0.1em;*/ }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ships-modules-title {
-        -fx-pref-width: 24.5em;
-        -fx-max-width: 24.5em;
-        -fx-text-alignment: center;
-        -fx-font-size: 1.05em;
-        -fx-label-padding: 0.2em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ships-modules {
-        -fx-spacing: 0.5em;
-        -fx-pref-width: 24.5em;
-        -fx-max-width: 24.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ships-modules-item {
-        -fx-padding: 0.2em;
-        -fx-spacing: 0.1em;
-        -fx-background-color: #0f0f0f; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .toggle-button-blueprints {
-        -fx-pref-width: 24.5em;
-        -fx-max-width: 24.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-stats {
-        -fx-background-color: #0f0f0f;
-        -fx-padding: 0.2em;
-        -fx-border-color: white;
-        -fx-border-width: 0.1em;
-        -fx-border-insets: 0.1em;
-        -fx-background-insets: 0.1em;
-        -fx-min-width: 15.8em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-stats-label-small {
-        -fx-label-padding: 0.3em 1em 0.2em 0; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-stats-value-small {
-        -fx-font-weight: bold;
-        -fx-label-padding: 0.3em 0em 0.2em 0; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-stats-title {
-        -fx-font-size: 1.2em;
-        -fx-font-weight: bold; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-stats-label {
-        -fx-label-padding: 0.5em 1em 0.5em 0; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-stats-value {
-        -fx-font-weight: bold;
-        -fx-label-padding: 0.5em 0em 0.5em 0; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-popover-vbox {
-        -fx-spacing: 0.5em;
-        -fx-pref-width: 24.5em;
-        -fx-max-width: 24.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-ship-row {
-        -fx-background-color: #1f1f1f;
-        /*-fx-background-insets: 0em 0.2em 0em 0.2em;*/
-        -fx-padding: 0em 0em 0em 0.2em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-ship-row:hover {
-        -fx-background-color: #000000;
-        -fx-cursor: hand; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-ship-cell {
-        -fx-text-alignment: right;
-        -fx-alignment: center-right;
-        -fx-border-color: #3f3f3f; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-ship-name {
-        -fx-min-width: 11em;
-        -fx-max-width: 11em;
-        -fx-pref-width: 11em;
-        -fx-alignment: center-left;
-        -fx-text-alignment: left;
-        -fx-border-width: 0em 0.1em 0em 0.1em;
-        -fx-border-insets: 0em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-price {
-        -fx-min-width: 6em;
-        -fx-max-width: 6em;
-        -fx-pref-width: 6em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-size {
-        -fx-min-width: 3em;
-        -fx-max-width: 3em;
-        -fx-pref-width: 3em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-fighterbay {
-        -fx-min-width: 5.5em;
-        -fx-max-width: 5.5em;
-        -fx-pref-width: 5.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-crew {
-        -fx-min-width: 3em;
-        -fx-max-width: 3em;
-        -fx-pref-width: 3em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-masslock {
-        -fx-min-width: 5.5em;
-        -fx-max-width: 5.5em;
-        -fx-pref-width: 5.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-mass {
-        -fx-min-width: 3em;
-        -fx-max-width: 3em;
-        -fx-pref-width: 3em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-jumprange {
-        -fx-min-width: 6em;
-        -fx-max-width: 6em;
-        -fx-pref-width: 6em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-speed {
-        -fx-min-width: 4em;
-        -fx-max-width: 4em;
-        -fx-pref-width: 4em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-boost {
-        -fx-min-width: 4em;
-        -fx-max-width: 4em;
-        -fx-pref-width: 4em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-boostinterval {
-        -fx-min-width: 7em;
-        -fx-max-width: 7em;
-        -fx-pref-width: 7em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-shield {
-        -fx-min-width: 4em;
-        -fx-max-width: 4em;
-        -fx-pref-width: 4em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-armor {
-        -fx-min-width: 4em;
-        -fx-max-width: 4em;
-        -fx-pref-width: 4em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-hardness {
-        -fx-min-width: 5em;
-        -fx-max-width: 5em;
-        -fx-pref-width: 5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-fuel {
-        -fx-min-width: 3em;
-        -fx-max-width: 3em;
-        -fx-pref-width: 3em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-cargo {
-        -fx-min-width: 4em;
-        -fx-max-width: 4em;
-        -fx-pref-width: 4em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-passenger {
-        -fx-min-width: 6em;
-        -fx-max-width: 6em;
-        -fx-pref-width: 6em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-slot-hardpoints {
-        -fx-min-width: 10em;
-        -fx-max-width: 10em;
-        -fx-pref-width: 10em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-slot-utility {
-        -fx-min-width: 5em;
-        -fx-max-width: 5em;
-        -fx-pref-width: 5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-slot-armour {
-        -fx-min-width: 2.5em;
-        -fx-max-width: 2.5em;
-        -fx-pref-width: 2.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-slot-powerplant {
-        -fx-min-width: 2.5em;
-        -fx-max-width: 2.5em;
-        -fx-pref-width: 2.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-slot-thrusters {
-        -fx-min-width: 2.5em;
-        -fx-max-width: 2.5em;
-        -fx-pref-width: 2.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-slot-frameshiftdrive {
-        -fx-min-width: 2.5em;
-        -fx-max-width: 2.5em;
-        -fx-pref-width: 2.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-slot-lifesupport {
-        -fx-min-width: 2.5em;
-        -fx-max-width: 2.5em;
-        -fx-pref-width: 2.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-slot-powerdistribution {
-        -fx-min-width: 2.5em;
-        -fx-max-width: 2.5em;
-        -fx-pref-width: 2.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-slot-sensors {
-        -fx-min-width: 2.5em;
-        -fx-max-width: 2.5em;
-        -fx-pref-width: 2.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-slot-fueltank {
-        -fx-min-width: 2.5em;
-        -fx-max-width: 2.5em;
-        -fx-pref-width: 2.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-slot-optional {
-        -fx-min-width: 13em;
-        -fx-max-width: 13em;
-        -fx-pref-width: 13em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-ship-header {
-        -fx-background-color: #0f0f0f;
-        -fx-padding: 0.5em 0.2em 0em 0.2em;
-        -fx-max-height: 8em;
-        -fx-alignment: bottom-left; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-ship-value-cell {
-        -fx-border-width: 0em 0.1em 0em 0em;
-        -fx-min-height: 2em;
-        -fx-padding: 0em 0.2em 0em 0.2em;
-        -fx-background-insets: 0em 0em 0em 0em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-ship-header-cell {
-        -fx-border-color: #3f3f3f;
-        -fx-border-width: 0em 0.1em 0em 0em;
-        -fx-min-height: 2em;
-        -fx-padding: 0em 0.2em 0em 0.2em;
-        -fx-background-insets: 0em 0em 0em 0em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-ship-header-cell:hover {
-        -fx-background-color: #3f3f3f;
-        -fx-cursor: hand; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ships-button-image {
-        /*-fx-max-width: 1.5em;*/
-        -fx-max-height: 1.5em;
-        -fx-padding: 0em 0.2em 0em 0em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-military-hint {
-        -fx-font-size: 0.9em;
-        -fx-min-width: 4.6em;
-        -fx-max-width: 4.6em;
-        -fx-text-alignment: center;
-        -fx-alignment: center;
-        /*-fx-rotate: 90;*/
-        /*-fx-background-color: #0A65BF;*/ }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-military-hint-pane {
-        -fx-min-width: 4.4em;
-        -fx-min-height: 1.1em;
-        -fx-max-width: 4.4em;
-        -fx-max-height: 1.1em;
-        /*-fx-background-color: #064100;*/ }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-military .shipbuilder-slots-slotbox-military-hint-pane, .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-military .shipbuilder-slots-slotbox-military-hint {
-        -fx-background-color: transparent;
-        -fx-text-fill: transparent; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-military:hover .shipbuilder-slots-slotbox-military-hint-pane, .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-military:hover .shipbuilder-slots-slotbox-military-hint {
-        -fx-background-color: #064100;
-        -fx-text-fill: white; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-button-icon {
-        -fx-min-width: 1.5em;
-        -fx-min-height: 1.5em;
-        -fx-max-width: 1.5em;
-        -fx-max-height: 1.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-button {
-        -fx-padding: 0em;
-        -fx-max-width: 1.5em;
-        -fx-max-height: 1.4em;
-        -fx-min-width: 1.5em;
-        -fx-min-height: 1.4em;
-        -fx-background-color: transparent;
-        /*-fx-border-width: 0;*/ }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-size-text {
-        -fx-max-width: 1.5em;
-        -fx-max-height: 1.5em;
-        -fx-min-width: 1.5em;
-        -fx-min-height: 1.5em;
-        -fx-text-alignment: center;
-        -fx-alignment: center; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-icon {
-        -fx-max-width: 1.5em;
-        -fx-max-height: 1.5em;
-        -fx-padding: 0em 0.2em 0em 0em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-icon-wide {
-        -fx-max-width: 1.875em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-icons {
-        -fx-min-height: 1.4em;
-        -fx-max-height: 1.4em;
-        -fx-max-width: 20em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-power-config {
-        -fx-min-height: 2em;
-        -fx-max-height: 2em;
-        -fx-alignment: center-left; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-icons-stackpane {
-        -fx-min-height: 1.4em;
-        -fx-max-height: 1.4em;
-        -fx-max-width: 20em;
-        -fx-padding: 0; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-blueprints-flow {
-        -fx-max-width: 20em;
-        -fx-max-height: 1em;
-        -fx-wrap-text: false; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-blueprints-label-blue {
-        -fx-font-style: italic;
-        -fx-text-fill: #2e92df;
-        -fx-fill: #2e92df; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-label-blue {
-        -fx-text-fill: #2e92df; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-blueprints-label-gold {
-        -fx-font-style: italic;
-        -fx-text-fill: #dcc030;
-        -fx-fill: #dcc030; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-module-label {
-        -fx-max-width: 20em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .stats-filler {
-        -fx-background-color: #0f0f0f; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .stats-values {
-        -fx-background-color: #0f0f0f;
-        -fx-min-width: 20.6em;
-        -fx-max-width: 20.6em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .module-details-title {
-        -fx-padding: 0.5em 0em 0.1em 0.2em;
-        -fx-font-size: 1.2em;
-        -fx-font-weight: bold;
-        -fx-wrap-text: true; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .module-details-label-title {
-        /*-fx-padding: 0em 0em 0em 0.2em;*/
-        -fx-min-height: 1.4em;
-        -fx-alignment: center-left; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .module-details-label {
-        -fx-padding: 0.1em 0.2em 0.1em 0.2em;
-        -fx-border-radius: 0.5em;
-        -fx-border-color: #2e92df;
-        -fx-border-width: 0.1em;
-        -fx-alignment: center-left; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .module-details-label-green {
-        -fx-text-fill: #89d07f;
-        -fx-border-color: #89d07f; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .module-details-label-red {
-        -fx-text-fill: #ff7c7c;
-        -fx-border-color: #ff7c7c; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .module-details-arrow {
-        -fx-font-size: 2em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .fit-to-width {
-        /*-fx-fit-to-width: true;*/
-        /*-fx-alignment: center-right;*/ }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-module-resize-warning {
-        -fx-background-color: #2e92df;
-        -fx-font-weight: bold;
-        -fx-padding: 0.4em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-layer2 {
-        -fx-padding: 0.3em;
-        -fx-alignment: top-right; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .pipselect {
-        -fx-hgap: 0.2em;
-        -fx-spacing: 0.2em;
-        -fx-padding: 0.25em 0.2em 0.25em 0.2em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .pipselect-rectangle {
-        -fx-fill: #2b2b2b;
-        -fx-min-width: 1.5em;
-        -fx-max-width: 1.5em;
-        -fx-min-height: 1.5em;
-        -fx-max-height: 1.5em;
-        -fx-padding: 0.2em;
-        -fx-cursor: hand; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .pipselect-half {
-        -fx-fill: #2e92df;
-        -fx-opacity: 0.5; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .pipselect-full {
-        -fx-fill: #2e92df;
-        -fx-opacity: 1.0; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .pipselect-rectangle:disabled {
-        -fx-opacity: 0.5; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .pipselect-half:disabled {
-        -fx-opacity: 0.25; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .pipselect-full:disabled {
-        -fx-opacity: 0.5; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .slider {
-        -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.slider.SliderSkin"; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .slider-popup {
-        -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.slider.SliderPopupSkin"; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .range-indicator {
-        -fx-min-height: 3em;
-        -fx-min-width: 15em;
-        -fx-max-width: 15em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .range-indicator-line {
-        -fx-min-height: 1em;
-        -fx-min-width: 15em;
-        -fx-max-width: 15em;
-        -fx-stroke: white;
-        -fx-stroke-width: 0.1em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .range-indicator-line-current {
-        -fx-min-height: 1em;
-        -fx-stroke: #2e92df;
-        -fx-stroke-width: 0.2em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .range-indicator-line-current-green {
-        -fx-stroke: #89d07f; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .range-indicator-current {
-        -fx-text-fill: #2e92df; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .range-indicator-current-green {
-        -fx-text-fill: #89d07f; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .range-indicator-values {
-        -fx-min-width: 15em;
-        -fx-max-width: 15em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-modules-scrollpane {
-        -fx-padding: 0;
-        /*-fx-border-insets: 0;*/
-        /*-fx-background-insets:  0;*/
-        /*-fx-border-width: 0px;*/
-        /*-fx-background-color: #4260f6;*/ }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-shipselection-scrollpane {
-        -fx-padding: 2.6em 0em 0em 0.2em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-details-scrollpane {
-        -fx-padding: 0em 1.5em 0em 0em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .stats-values-pane {
-        -fx-background-color: #0f0f0f;
-        -fx-background-insets: 0em 1.3em 0em 0em;
-        -fx-padding: 0em 1.3em 0em 0em;
-        -fx-min-width: 22em;
-        -fx-max-width: 22em;
-        /*-fx-min-height: 100%;*/ }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .stats-column {
-        -fx-background-color: #0f0f0f;
-        -fx-min-width: 20em;
-        -fx-max-width: 20em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-stats-box {
-        /*-fx-min-height: 20em;*/
-        /*-fx-max-height: 20em;*/
-        /*-fx-background-color: #0f0f0f;*/
-        -fx-background-insets: 0em 1.3em 0em 0em;
-        -fx-padding: 0em 1.3em 0em 0em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-stats-layer-bg {
-        -fx-background-insets: 0em 1.3em 0em 0em;
-        -fx-padding: 0em 1.3em 0em 0em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-stats-box-bg {
-        -fx-background-color: #0f0f0f; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-hbox {
-        /*-fx-padding: 3.25em 0em 0em 0.25em;*/ }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-stackpane-anchor {
-        -fx-padding: 0em 0em 0em 0em;
-        -fx-min-width: 104em;
-        -fx-max-width: 104em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-stackpane {
-        -fx-min-width: 78em;
-        -fx-max-width: 78em;
-        /*-fx-min-height: 44.26875em;*/
-        -fx-max-height: 44.26875em;
-        -fx-padding: 0em 0em 0em 0em;
-        /*-fx-background-color: #27013622;*/ }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-content {
-        -fx-padding: 3.25em 0em 0em 0.25em;
-        /*-fx-border-insets: 0;*/
-        /*-fx-background-insets: 0;*/
-        /*-fx-border-width: 0;*/
-        /*-fx-start-margin: 0;*/
-        /*-fx-end-margin: 0;*/ }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-stats-configuration {
-        -fx-min-width: 19em;
-        -fx-max-width: 19em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .config-toggle .label {
-        /*    -fx-max-width: 0;*/
-        /*    -fx-padding: 0em;*/
-        /*    -fx-background-insets: 0em;*/
-        /*    -fx-border-insets: 0em;*/
-        /*    !*-fx-background-insets: 0em;*!*/
-        -fx-pref-width: -20;
-        -fx-max-width: -20;
-        -fx-background-color: #a45109; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .config-toggle .stack-pane {
-        -fx-max-width: 0;
-        -fx-padding: 0em;
-        -fx-background-insets: 0em;
-        -fx-border-insets: 0em;
-        -fx-alignment: center-right;
-        /*-fx-background-insets: 0em;*/
-        -fx-background-color: #3b1b00; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .config-toggle {
-        /*-fx-background-insets: 0em;*/
-        /*-fx-border-insets: 0em;*/
-        -fx-alignment: center-right;
-        -fx-background-color: #2a003b;
-        /*-fx-border-insets: 0em 0em 0em -20 !important;*/
-        -fx-max-width: 1em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .config-toggle .thumb {
-        /*-fx-background-insets: 0em;*/
-        /*-fx-padding: 0em;*/
-        /*-fx-border-insets: 0em;*/
-        -fx-background-color: #35790e; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .config-toggle .thumb-area {
-        /*-fx-background-insets: 0em !important;*/
-        -fx-padding: 0em !important;
-        /*-fx-border-insets: 0em 0em 0em -20 !important;*/
-        -fx-background-color: #2b4483; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .power-stats-legend-label {
-        -fx-alignment: center-left;
-        -fx-spacing: 0.5em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .power-stats-legend-label-text {
-        /*-fx-padding: 0em 0em 0em 0.5em;*/
-        /*-fx-min-height: 1.5em;*/
-        /*-fx-font-size: 1.5em;*/ }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-stats-shield-label {
-        -fx-font-weight: bold; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shield-stats-stackpane {
-        -fx-pref-height: 18.8em;
-        -fx-fit-to-height: true; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .power-progressbar {
-        -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentedBarSkin";
-        -fx-min-width: 15em;
-        -fx-max-width: 15em;
-        -fx-min-height: 1em;
-        -fx-pref-height: 2em;
-        -fx-max-height: 2em;
-        -fx-padding: 0.1em 0em 0.1em 0em;
-        -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.PowerSegmentedBarSkin"; }
-        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .power-progressbar:horizontal > .only-segment {
-          -fx-background-radius: 0;
-          -fx-border-radius: 0; }
-        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .power-progressbar:horizontal > .first-segment {
-          -fx-background-insets: 0 0 0 0;
-          -fx-background-radius: 0 0 0 0; }
-        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .power-progressbar:horizontal > .middle-segment {
-          -fx-background-insets: 0 0 0 0;
-          -fx-background-radius: 0;
-          -fx-border-radius: 0; }
-        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .power-progressbar:horizontal > .last-segment {
-          -fx-background-radius: 0 0 0 0;
-          -fx-border-radius: 0 0 0 0; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .power-stats-powerbars {
-        -fx-min-height: 4.2em;
-        -fx-pref-height: 4.2em;
-        -fx-max-height: 4.2em;
-        /*-fx-spacing: 0.2em;*/ }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .power-progressbar-popover {
-        -fx-background-color: black;
-        -fx-border-width: 0.12em;
-        -fx-border-color: #fff; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .power-progressbar-label {
-        -fx-background-color: black;
-        -fx-text-fill: #fff !important;
-        /*-fx-font-weight: bold;*/
-        /*-fx-font-size: 1.2em;*/
-        -fx-padding: 0.2em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shield-image {
-        -fx-min-width: 5em;
-        -fx-max-width: 5em;
-        -fx-min-height: 6.199em;
-        -fx-max-height: 6.199em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shield-component-red {
-        -fx-min-width: 15em;
-        -fx-max-width: 15em;
-        -fx-min-height: 9.6em;
-        -fx-max-height: 9.6em;
-        -fx-padding: 0.6em 0em 0em 0em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shield-component-blue {
-        -fx-min-width: 15em;
-        -fx-max-width: 15em;
-        -fx-min-height: 6.6em;
-        -fx-max-height: 6.6em;
-        -fx-padding: 0.6em 0em 0em 0em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shield-label-blue {
-        -fx-text-fill: #2e92df;
-        -fx-font-weight: bold; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shield-label-red {
-        -fx-text-fill: #ff7c7c;
-        -fx-font-weight: bold; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shield-label-symbol {
-        -fx-label-padding: 0.2em 0em 0em 0em;
-        -fx-font-size: 2.5em;
-        -fx-font-weight: bolder; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shield-label-title {
-        -fx-label-padding: 0em 0em 0.5em 0em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .power-stats-overpower {
-        -fx-text-fill: #ff7c7c; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .config-intfield {
-        -fx-max-width: 7em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .config-fuelreserve {
-        -fx-max-width: 7em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .toggle-button-stats-hardpoint {
-        -fx-min-width: 3.75em;
-        -fx-max-width: 3.75em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .weapon-stats-legend-label {
-        -fx-alignment: baseline-center;
-        -fx-padding: 0em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .weapon-stats-legend-box {
-        -fx-min-width: 15em;
-        -fx-max-width: 15em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .power-progressbar-line {
-        -fx-min-height: 2em;
-        -fx-pref-height: 2em;
-        -fx-max-height: 2em;
-        -fx-max-width: 15em;
-        -fx-stroke: white;
-        -fx-stroke-width: 0.1em; }
-      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .module-details-engineering {
-        -fx-min-width: 20.6em;
-        -fx-max-width: 20.6em;
-        -fx-padding: 0 0 0 0.75em; }
+          .shipbuilder-details-popover > .border {
+            -fx-stroke: #fff !important;
+            -fx-stroke-width: 1px !important;
+            -fx-fill: #0f0f0f !important; }
+          .shipbuilder-details-popover > .border {
+            -fx-stroke: white !important;
+            -fx-stroke-width: 1px !important;
+            -fx-fill: #0f0f0f !important;
+            -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
+          .shipbuilder-details-popover .module-details {
+            -fx-background-color: #0f0f0f;
+            -fx-min-width: 42.1em;
+            -fx-pref-width: 42.1em;
+            -fx-max-width: 42.1em;
+            -fx-border-color: white;
+            -fx-border-width: 1px; }
+            .shipbuilder-details-popover .module-details .title {
+              -fx-padding: 0.25em;
+              -fx-font-size: 1.2em;
+              -fx-font-weight: bold;
+              -fx-wrap-text: true; }
+            .shipbuilder-details-popover .module-details .legacy-save {
+              -fx-cursor: hand;
+              -fx-text-fill: #2e92df;
+              -fx-alignment: bottom-right;
+              -fx-padding: 0.25em 0.25em 0em 0em; }
+              .shipbuilder-details-popover .module-details .legacy-save:hover {
+                -fx-text-fill: #5aa9e6; }
+            .shipbuilder-details-popover .module-details .properties {
+              -fx-min-width: 42em;
+              -fx-pref-width: 42em;
+              -fx-max-width: 42em;
+              -fx-border-width: 0.1em 0 0.1em 0;
+              -fx-border-color: white; }
+              .shipbuilder-details-popover .module-details .properties .property {
+                -fx-padding: 0.25em;
+                -fx-min-width: 21em;
+                -fx-pref-width: 21em;
+                -fx-max-width: 21em;
+                -fx-border-width: 0 0.1em 0.1em 0;
+                -fx-border-color: #252525; }
+                .shipbuilder-details-popover .module-details .properties .property:left-column {
+                  -fx-border-width: 0 0.1em 0.1em 0; }
+                .shipbuilder-details-popover .module-details .properties .property:right-column {
+                  -fx-border-width: 0 0 0.1em 0; }
+                .shipbuilder-details-popover .module-details .properties .property:first-row:left-column {
+                  -fx-border-width: 0 0.1em 0.1em 0; }
+                .shipbuilder-details-popover .module-details .properties .property:first-row:right-column {
+                  -fx-border-width: 0 0 0.1em 0; }
+                .shipbuilder-details-popover .module-details .properties .property:last-row:left-column {
+                  -fx-border-width: 0 0.1em 0 0; }
+                .shipbuilder-details-popover .module-details .properties .property:last-row:right-column {
+                  -fx-border-width: 0 0 0 0; }
+                .shipbuilder-details-popover .module-details .properties .property .name {
+                  -fx-min-height: 1.45em;
+                  -fx-alignment: center-left; }
+                .shipbuilder-details-popover .module-details .properties .property .value {
+                  -fx-min-height: 1.45em;
+                  -fx-alignment: center-right; }
+            .shipbuilder-details-popover .module-details .attributes {
+              -fx-min-width: 42em;
+              -fx-pref-width: 42em;
+              -fx-max-width: 42em;
+              -fx-border-width: 0.1em 0 0 0;
+              -fx-border-color: white; }
+              .shipbuilder-details-popover .module-details .attributes .attribute {
+                -fx-min-width: 21em;
+                -fx-pref-width: 21em;
+                -fx-max-width: 21em;
+                -fx-border-width: 0 0.1em 0.1em 0;
+                -fx-border-color: #252525; }
+                .shipbuilder-details-popover .module-details .attributes .attribute:left-column {
+                  -fx-border-width: 0 0.1em 0.1em 0; }
+                .shipbuilder-details-popover .module-details .attributes .attribute:right-column {
+                  -fx-border-width: 0 0 0.1em 0; }
+                .shipbuilder-details-popover .module-details .attributes .attribute:first-row:left-column {
+                  -fx-border-width: 0 0.1em 0.1em 0; }
+                .shipbuilder-details-popover .module-details .attributes .attribute:first-row:right-column {
+                  -fx-border-width: 0 0 0.1em 0; }
+                .shipbuilder-details-popover .module-details .attributes .attribute:last-row:left-column {
+                  -fx-border-width: 0 0.1em 0 0; }
+                .shipbuilder-details-popover .module-details .attributes .attribute:last-row:right-column {
+                  -fx-border-width: 0 0 0 0; }
+                .shipbuilder-details-popover .module-details .attributes .attribute .texts {
+                  -fx-padding: 0.25em;
+                  -fx-min-width: 21em;
+                  -fx-pref-width: 21em;
+                  -fx-max-width: 21em; }
+                  .shipbuilder-details-popover .module-details .attributes .attribute .texts .name {
+                    -fx-min-height: 1.45em;
+                    -fx-alignment: center-left; }
+                  .shipbuilder-details-popover .module-details .attributes .attribute .texts .value {
+                    -fx-padding: 0.1em 0.2em 0.1em 0.2em;
+                    -fx-border-radius: 0.5em;
+                    -fx-border-color: #2e92df;
+                    -fx-border-width: 0.1em;
+                    -fx-alignment: center-left; }
+                    .shipbuilder-details-popover .module-details .attributes .attribute .texts .value:negative {
+                      -fx-text-fill: #ff7c7c;
+                      -fx-border-color: #ff7c7c; }
+                    .shipbuilder-details-popover .module-details .attributes .attribute .texts .value:positive {
+                      -fx-text-fill: #89d07f;
+                      -fx-border-color: #89d07f; }
+                  .shipbuilder-details-popover .module-details .attributes .attribute .texts .arrow {
+                    -fx-alignment: center-left;
+                    -fx-font-size: 1.3em; }
+                .shipbuilder-details-popover .module-details .attributes .attribute .progress {
+                  -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentedBarSkin";
+                  -fx-min-width: 20.9em;
+                  -fx-pref-width: 20.9em;
+                  -fx-max-width: 20.9em;
+                  -fx-min-height: 0.2em;
+                  -fx-pref-height: 0.2em;
+                  -fx-max-height: 0.2em; }
+                  .shipbuilder-details-popover .module-details .attributes .attribute .progress:horizontal > .only-segment {
+                    -fx-background-radius: 0;
+                    -fx-border-radius: 0; }
+                  .shipbuilder-details-popover .module-details .attributes .attribute .progress:horizontal > .first-segment {
+                    -fx-background-insets: 0 0 0 0;
+                    -fx-background-radius: 0 0 0 0; }
+                  .shipbuilder-details-popover .module-details .attributes .attribute .progress:horizontal > .middle-segment {
+                    -fx-background-insets: 0 0 0 0;
+                    -fx-background-radius: 0;
+                    -fx-border-radius: 0; }
+                  .shipbuilder-details-popover .module-details .attributes .attribute .progress:horizontal > .last-segment {
+                    -fx-background-radius: 0 0 0 0;
+                    -fx-border-radius: 0 0 0 0; }
+                  .shipbuilder-details-popover .module-details .attributes .attribute .progress .present {
+                    -fx-background-color: #ff7c7c; }
+                    .shipbuilder-details-popover .module-details .attributes .attribute .progress .present:positive {
+                      -fx-background-color: #89d07f; }
+                  .shipbuilder-details-popover .module-details .attributes .attribute .progress .not-present {
+                    -fx-background-color: gray; }
+        .stats-column {
+          -fx-border-width: 1px;
+          -fx-border-color: white; }
+        .stats-column-left {
+          -fx-border-width: 1px 1px 1px 1px;
+          -fx-border-color: white; }
+        .stats-column-right {
+          -fx-border-width: 1px 1px 1px 0;
+          -fx-border-color: white; }
+        .shipbuilder-ship-view-popover {
+          -fx-background-color: transparent !important;
+          -fx-border-width: 0;
+          -fx-min-width: 27em;
+          -fx-pref-width: 27em;
+          -fx-max-width: 27em;
+          -fx-min-height: 15.1875em;
+          -fx-pref-height: 15.1875em;
+          -fx-max-height: 15.1875em;
+          -fx-background-insets: 0 !important;
+          -fx-border-insets: 0em;
+          -fx-padding: 0em; }
+          .shipbuilder-ship-view-popover > .border {
+            -fx-stroke: #fff !important;
+            -fx-stroke-width: 1px !important;
+            -fx-fill: #0f0f0f !important; }
+          .shipbuilder-ship-view-popover > .border {
+            -fx-stroke: white !important;
+            -fx-stroke-width: 0px !important;
+            -fx-fill: #0f0f0f !important;
+            -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
+          .shipbuilder-ship-view-popover .ship-view {
+            -fx-min-width: 27em;
+            -fx-pref-width: 27em;
+            -fx-max-width: 27em;
+            -fx-min-height: 15.1875em;
+            -fx-pref-height: 15.1875em;
+            -fx-max-height: 15.1875em; }
+            .shipbuilder-ship-view-popover .ship-view .ship-view-image {
+              -fx-padding: 1em;
+              -fx-min-width: 26.5em;
+              -fx-pref-width: 26.5em;
+              -fx-max-width: 26.5em;
+              -fx-min-height: 14.9063em;
+              -fx-pref-height: 14.9063em;
+              -fx-max-height: 14.9063em; }
+            .shipbuilder-ship-view-popover .ship-view .target {
+              -fx-stroke: #89d07f;
+              -fx-fill: #89d07f;
+              -fx-stroke-width: 0.25em; }
+            .shipbuilder-ship-view-popover .ship-view .container {
+              -fx-min-width: 27em;
+              -fx-pref-width: 27em;
+              -fx-max-width: 27em;
+              -fx-min-height: 15.1875em;
+              -fx-pref-height: 15.1875em;
+              -fx-max-height: 15.1875em;
+              -fx-border-insets: -1px;
+              -fx-border-width: 2px;
+              -fx-border-color: white; }
+              .shipbuilder-ship-view-popover .ship-view .container .viewport {
+                -fx-padding: 1em;
+                -fx-min-width: 26.5em;
+                -fx-pref-width: 26.5em;
+                -fx-max-width: 26.5em;
+                -fx-min-height: 14.9063em;
+                -fx-pref-height: 14.9063em;
+                -fx-max-height: 14.9063em; }
+        .shipbuilder-module-select-popover {
+          -fx-min-width: 27em;
+          -fx-pref-width: 27em;
+          -fx-max-width: 27em;
+          -fx-min-height: 25em;
+          -fx-max-height: 25em;
+          -fx-padding: 0em;
+          -fx-background-insets: 0 !important;
+          -fx-border-insets: 0em !important; }
+          .shipbuilder-module-select-popover > .border {
+            -fx-fill: black !important;
+            -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
+          .shipbuilder-module-select-popover .scroll-pane2 {
+            -fx-padding: 0em;
+            -fx-min-width: 27em;
+            -fx-pref-width: 27em;
+            -fx-max-width: 27em;
+            -fx-min-height: 25em;
+            -fx-max-height: 25em;
+            -fx-fit-to-width: true;
+            -fx-fit-to-height: true; }
+            .shipbuilder-module-select-popover .scroll-pane2 .scroll-pane-content {
+              -fx-padding: 0em !important;
+              -fx-spacing: 0em; }
+            .shipbuilder-module-select-popover .scroll-pane2 .module-select-content {
+              -fx-padding: 0em !important;
+              -fx-spacing: 0.25em;
+              -fx-min-width: 25.7em;
+              -fx-pref-width: 25.7em;
+              -fx-max-width: 25.7em; }
+              .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .changes .button {
+                -fx-min-width: 25.1em;
+                -fx-pref-width: 25.1em;
+                -fx-max-width: 25.1em; }
+              .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section {
+                -fx-min-width: 25.7em;
+                -fx-pref-width: 25.7em;
+                -fx-max-width: 25.7em;
+                -fx-padding: 0.25em;
+                -fx-spacing: 0.1em;
+                -fx-background-color: #0f0f0f; }
+                .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .title {
+                  -fx-min-height: 2em;
+                  -fx-pref-height: 2em;
+                  -fx-max-height: 2em;
+                  -fx-alignment: center-left;
+                  -fx-font-size: 1.05em;
+                  -fx-background-color: #0f0f0f; }
+                .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .blueprint-buttons {
+                  -fx-spacing: 0.1em;
+                  -fx-min-width: 25.1em;
+                  -fx-pref-width: 25.1em;
+                  -fx-max-width: 25.1em; }
+                  .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .blueprint-buttons .blueprint-button {
+                    -fx-min-width: 25.1em;
+                    -fx-pref-width: 25.1em;
+                    -fx-max-width: 25.1em; }
+                .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .progression {
+                  -fx-min-width: 25.1em;
+                  -fx-pref-width: 25.1em;
+                  -fx-max-width: 25.1em;
+                  -fx-spacing: 0.125em; }
+                .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .hardpoint-buttons {
+                  -fx-min-width: 25.1em;
+                  -fx-pref-width: 25.1em;
+                  -fx-max-width: 25.1em;
+                  -fx-spacing: 0.1em; }
+                  .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .hardpoint-buttons .hardpoint-button {
+                    -fx-min-width: 6.2em;
+                    -fx-pref-width: 6.2em;
+                    -fx-max-width: 6.2em; }
+                .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons {
+                  -fx-min-width: 25.1em;
+                  -fx-pref-width: 25.1em;
+                  -fx-max-width: 25.1em;
+                  -fx-font-size: 1em;
+                  -fx-spacing: 0.1em; }
+                  .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button {
+                    -fx-pref-height: 2.1em; }
+                    .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button:overload {
+                      -fx-border-color: #ff7c7c; }
+                    .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image {
+                      /*-fx-max-width: 1.5em;*/
+                      -fx-max-height: 1.5em;
+                      -fx-padding: 0em 0.2em 0em 0em; }
     .app .application-screen .horizons-tab-content .wishlist-tab {
       -fx-background-insets: 0 0 0 0;
       -fx-effect: none;
@@ -1995,7 +2113,7 @@
             -fx-border-width: 0; }
             .horizons-wishlist-blueprints-help-popover > .border {
               -fx-stroke: #fff !important;
-              -fx-stroke-width: 0.1em !important;
+              -fx-stroke-width: 1px !important;
               -fx-fill: #0f0f0f !important; }
             .horizons-wishlist-blueprints-help-popover .help-popover .hint-line {
               -fx-spacing: 0.5em; }
@@ -2175,7 +2293,7 @@
               -fx-border-width: 0; }
               .horizons-wishlist-blueprints-module-popover > .border {
                 -fx-stroke: #fff !important;
-                -fx-stroke-width: 0.1em !important;
+                -fx-stroke-width: 1px !important;
                 -fx-fill: #0f0f0f !important; }
               .horizons-wishlist-blueprints-module-popover .content {
                 -fx-padding: 0.25em;
@@ -2240,7 +2358,7 @@
             -fx-border-width: 0; }
             .horizons-wishlist-materials-help-popover > .border {
               -fx-stroke: #fff !important;
-              -fx-stroke-width: 0.1em !important;
+              -fx-stroke-width: 1px !important;
               -fx-fill: #0f0f0f !important; }
             .horizons-wishlist-materials-help-popover .help-popover .hint-line {
               -fx-spacing: 0.5em; }
@@ -3252,7 +3370,7 @@
             -fx-border-width: 0; }
             .odyssey-wishlist-blueprints-help-popover > .border {
               -fx-stroke: #fff !important;
-              -fx-stroke-width: 0.1em !important;
+              -fx-stroke-width: 1px !important;
               -fx-fill: #0f0f0f !important; }
             .odyssey-wishlist-blueprints-help-popover .help-popover .hint-line {
               -fx-spacing: 0.5em; }
@@ -3418,7 +3536,7 @@
               -fx-border-width: 0; }
               .odyssey-wishlist-blueprints-module-popover > .border {
                 -fx-stroke: #fff !important;
-                -fx-stroke-width: 0.1em !important;
+                -fx-stroke-width: 1px !important;
                 -fx-fill: #0f0f0f !important; }
               .odyssey-wishlist-blueprints-module-popover .content {
                 -fx-padding: 0.25em;
@@ -3478,7 +3596,7 @@
             -fx-border-width: 0; }
             .odyssey-wishlist-materials-help-popover > .border {
               -fx-stroke: #fff !important;
-              -fx-stroke-width: 0.1em !important;
+              -fx-stroke-width: 1px !important;
               -fx-fill: #0f0f0f !important; }
             .odyssey-wishlist-materials-help-popover .help-popover .hint-line {
               -fx-spacing: 0.5em; }

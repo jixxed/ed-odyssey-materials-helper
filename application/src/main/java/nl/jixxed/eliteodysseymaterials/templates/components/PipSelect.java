@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.components;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.css.PseudoClass;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import nl.jixxed.eliteodysseymaterials.builder.RectangleBuilder;
@@ -79,32 +80,13 @@ public class PipSelect extends DestroyableHBox {
     }
 
     private void render() {
-        rectangle1.getStyleClass().removeAll("pipselect-full", "pipselect-half");
-        rectangle2.getStyleClass().removeAll("pipselect-full", "pipselect-half");
-        rectangle3.getStyleClass().removeAll("pipselect-full", "pipselect-half");
-        rectangle4.getStyleClass().removeAll("pipselect-full", "pipselect-half");
-        switch (value.get()) {
-            case 8:
-                rectangle4.getStyleClass().add("pipselect-full");
-            case 7:
-                rectangle4.getStyleClass().add("pipselect-half");
-            case 6:
-                rectangle3.getStyleClass().add("pipselect-full");
-            case 5:
-                rectangle3.getStyleClass().add("pipselect-half");
-            case 4:
-                rectangle2.getStyleClass().add("pipselect-full");
-            case 3:
-                rectangle2.getStyleClass().add("pipselect-half");
-            case 2:
-                rectangle1.getStyleClass().add("pipselect-full");
-            case 1:
-                rectangle1.getStyleClass().add("pipselect-half");
-                break;
-            case 0:
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + value);
-        }
+        rectangle4.pseudoClassStateChanged(PseudoClass.getPseudoClass("full"), value.get() >= 8);
+        rectangle4.pseudoClassStateChanged(PseudoClass.getPseudoClass("half"), value.get() >= 7);
+        rectangle3.pseudoClassStateChanged(PseudoClass.getPseudoClass("full"), value.get() >= 6);
+        rectangle3.pseudoClassStateChanged(PseudoClass.getPseudoClass("half"), value.get() >= 5);
+        rectangle2.pseudoClassStateChanged(PseudoClass.getPseudoClass("full"), value.get() >= 4);
+        rectangle2.pseudoClassStateChanged(PseudoClass.getPseudoClass("half"), value.get() >= 3);
+        rectangle1.pseudoClassStateChanged(PseudoClass.getPseudoClass("full"), value.get() >= 2);
+        rectangle1.pseudoClassStateChanged(PseudoClass.getPseudoClass("half"), value.get() >= 1);
     }
 }

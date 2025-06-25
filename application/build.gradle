@@ -256,6 +256,7 @@ dependencies {
     implementation "com.github.jai-imageio:jai-imageio-core"
     testImplementation "io.github.secretx33:path-matching-resource-pattern-resolver"
     implementation "com.github.wille:oslib"
+    implementation "eu.hansolo.fx:charts"
 }
 jpackage {
 

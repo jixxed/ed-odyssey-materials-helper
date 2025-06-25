@@ -15,20 +15,21 @@ import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DestroyableManager {
-    private static final Map<DestroyableParent, ObservableListOverride> OBSERVABLE_LIST_OVERRIDES = new HashMap<>();
-    private static final Map<Destroyable, Map<ObservableValue<Object>, List<ChangeListener<Object>>>> CHANGE_LISTENERS = new HashMap<>();
-    private static final Map<DestroyableParent, Map<ObservableList<Node>, List<ListChangeListener<? super Node>>>> LIST_CHANGE_LISTENERS = new HashMap<>();
-    private static final Map<DestroyableParent, Map<ObservableList<Node>, List<InvalidationListener>>> LIST_INVALIDATION_LISTENERS = new HashMap<>();
-    private static final Map<Destroyable, Set<Property<Object>>> BINDINGS = new HashMap<>();
-    private static final Map<Destroyable, Map<EventType<? extends Event>, List<EventHandler<? super Event>>>> EVENT_HANDLERS = new HashMap<>();
-    private static final Map<Destroyable, Map<EventType<? extends Event>, List<EventHandler<? super Event>>>> EVENT_FILTERS = new HashMap<>();
+    private static final Map<DestroyableParent, ObservableListOverride> OBSERVABLE_LIST_OVERRIDES = new ConcurrentHashMap<>();
+    private static final Map<Destroyable, Map<ObservableValue<Object>, List<ChangeListener<Object>>>> CHANGE_LISTENERS = new ConcurrentHashMap<>();
+    private static final Map<DestroyableParent, Map<ObservableList<Node>, List<ListChangeListener<? super Node>>>> LIST_CHANGE_LISTENERS = new ConcurrentHashMap<>();
+    private static final Map<DestroyableParent, Map<ObservableList<Node>, List<InvalidationListener>>> LIST_INVALIDATION_LISTENERS = new ConcurrentHashMap<>();
+    private static final Map<Destroyable, Set<Property<Object>>> BINDINGS = new ConcurrentHashMap<>();
+    private static final Map<Destroyable, Map<EventType<? extends Event>, List<EventHandler<? super Event>>>> EVENT_HANDLERS = new ConcurrentHashMap<>();
+    private static final Map<Destroyable, Map<EventType<? extends Event>, List<EventHandler<? super Event>>>> EVENT_FILTERS = new ConcurrentHashMap<>();
 
-    private static final Map<Destroyable, Set<Destroyable>> DESTROYABLES = new HashMap<>();
-    private static final Map<Destroyable, List<EventListener<? extends nl.jixxed.eliteodysseymaterials.service.event.Event>>> EVENT_LISTENERS = new HashMap<>();
+    private static final Map<Destroyable, Set<Destroyable>> DESTROYABLES = new ConcurrentHashMap<>();
+    private static final Map<Destroyable, List<EventListener<? extends nl.jixxed.eliteodysseymaterials.service.event.Event>>> EVENT_LISTENERS = new ConcurrentHashMap<>();
 
     public static Set<Destroyable> getDestroyables(Destroyable d) {
         return DestroyableManager.DESTROYABLES.computeIfAbsent(d, _ -> new HashSet<>());
