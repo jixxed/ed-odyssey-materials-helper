@@ -268,7 +268,11 @@
   }
 
   .shipbuilder-slots-slotbox-military {
-    -fx-background-color: linear-gradient(from 0px 0px to 10px 10px, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%);
+    -fx-background-color: linear-gradient(from 0px 0px to 10px 10px, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%);
+  }
+
+  .shipbuilder-slots-slotbox-cargo {
+    -fx-background-color: linear-gradient(from 0px 10px to 10px 0px, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%);
   }
 
   .shipbuilder-slots-slotbox-military .button {

@@ -110,6 +110,9 @@ class SlotBox extends DestroyableStackPane {
         if (SlotType.MILITARY.equals(slot.getSlotType())) {
             layer1.getStyleClass().add("shipbuilder-slots-slotbox-military");
         }
+        if (SlotType.CARGO.equals(slot.getSlotType())) {
+            layer1.getStyleClass().add("shipbuilder-slots-slotbox-cargo");
+        }
         this.sizeBox = BoxBuilder.builder()
                 .withStyleClass("shipbuilder-slots-slotbox-size").buildVBox();
         this.classBox = BoxBuilder.builder()
@@ -277,7 +280,7 @@ class SlotBox extends DestroyableStackPane {
                     final Slot sourceSlot = ((SlotBox) event.getGestureSource()).slot;
                     if (event.getGestureSource() != this
                             && event.getDragboard().hasContent(customFormat)
-                            && this.slot.getSlotType().getModuleClass().isAssignableFrom(((DragboardContent) event.getDragboard().getContent(customFormat)).shipModule().getClass())
+                            && isSlotValid(this.slot, ((DragboardContent) event.getDragboard().getContent(customFormat)).shipModule())
                             && moduleCouldFit(this.slot, ((DragboardContent) event.getDragboard().getContent(customFormat)).shipModule())
                             && (event.getTransferMode() == TransferMode.COPY || moduleCouldFit(sourceSlot, this.slot.getShipModule()))
 
@@ -301,8 +304,8 @@ class SlotBox extends DestroyableStackPane {
                         ((SlotBox) event.getGestureSource()).module.addBinding(((SlotBox) event.getGestureSource()).module.textProperty(), LocaleService.getStringBinding(sourceSlot.getShipModule().getName().getLocalizationKey()));
                         ((SlotBox) event.getGestureSource()).showContents(sourceSlot.getShipModule(), sourceSlot.getOldShipModule());
                     } else if (event.getTransferMode() == TransferMode.MOVE && this.slot.isOccupied()
-                            && sourceSlot.getSlotType().getModuleClass().isAssignableFrom(this.slot.getShipModule().getClass())
-                            && this.slot.getSlotType().getModuleClass().isAssignableFrom(((DragboardContent) event.getDragboard().getContent(customFormat)).shipModule().getClass())
+                            && isSlotValid(sourceSlot, this.slot.getShipModule())
+                            && isSlotValid(this.slot, ((DragboardContent) event.getDragboard().getContent(customFormat)).shipModule())
                             && moduleCouldFit(this.slot, ((DragboardContent) event.getDragboard().getContent(customFormat)).shipModule())
                             && moduleCouldFit(sourceSlot, this.slot.getShipModule())
                     ) {
@@ -359,7 +362,7 @@ class SlotBox extends DestroyableStackPane {
                     if (db.hasContent(customFormat)
                             && db.getContent(customFormat) != null
                             && moduleCouldFit(this.slot, ((DragboardContent) event.getDragboard().getContent(customFormat)).shipModule())
-                            && (event.getTransferMode() == TransferMode.COPY || (!this.slot.isOccupied() || ((SlotBox) event.getGestureSource()).slot.getSlotType().getModuleClass().isAssignableFrom(this.slot.getShipModule().getClass())))
+                            && (event.getTransferMode() == TransferMode.COPY || (!this.slot.isOccupied() || isSlotValid(((SlotBox) event.getGestureSource()).slot, this.slot.getShipModule())))
                     ) {
                         final Object content = event.getDragboard().getContent(customFormat);
                         final ClipboardContent contentOld = new ClipboardContent();
@@ -388,7 +391,7 @@ class SlotBox extends DestroyableStackPane {
                 if (event.getTransferMode() == TransferMode.MOVE && event.getDragboard() != null) {
                     final Object content = event.getDragboard().getContent(customFormat);
                     if (!(content instanceof String)
-                            && this.slot.getSlotType().getModuleClass().isAssignableFrom(((DragboardContent) event.getDragboard().getContent(customFormat)).shipModule().getClass())) {
+                            && isSlotValid(this.slot, ((DragboardContent) event.getDragboard().getContent(customFormat)).shipModule())) {
                         this.slot.setShipModule(((DragboardContent) content).shipModule());
                         this.slot.setOldShipModule(((DragboardContent) content).oldShipModule());
                         if (((DragboardContent) content).shipModule().getModuleSize().intValue() > this.slot.getSlotSize()) {
@@ -416,8 +419,8 @@ class SlotBox extends DestroyableStackPane {
             final Slot sourceSlot = ((SlotBox) event.getGestureSource()).slot;
             if (event.getDragboard() != null
                     && event.getDragboard().hasContent(customFormat)
-                    && this.slot.getSlotType().getModuleClass().isAssignableFrom(((DragboardContent) event.getDragboard().getContent(customFormat)).shipModule().getClass())
-                    && (event.getTransferMode() == TransferMode.COPY || (!this.slot.isOccupied() || sourceSlot.getSlotType().getModuleClass().isAssignableFrom(this.slot.getShipModule().getClass())))
+                    && isSlotValid(this.slot, ((DragboardContent) event.getDragboard().getContent(customFormat)).shipModule())
+                    && (event.getTransferMode() == TransferMode.COPY || (!this.slot.isOccupied() || isSlotValid(sourceSlot, this.slot.getShipModule())))
                     && moduleCouldFit(this.slot, ((DragboardContent) event.getDragboard().getContent(customFormat)).shipModule())
                     && (event.getTransferMode() == TransferMode.COPY || moduleCouldFit(sourceSlot, this.slot.getShipModule()))
             ) {
@@ -428,6 +431,10 @@ class SlotBox extends DestroyableStackPane {
                 layer1.getStyleClass().add("shipbuilder-slots-slotbox-hover-bad");
             }
         }
+    }
+
+    private boolean isSlotValid(final Slot slot, final ShipModule shipModule) {
+        return slot.getSlotType().getModuleClasses().stream().anyMatch(moduleClass -> moduleClass.isAssignableFrom(shipModule.getClass()));
     }
 
     private boolean moduleCouldFit(Slot slot, ShipModule module) {

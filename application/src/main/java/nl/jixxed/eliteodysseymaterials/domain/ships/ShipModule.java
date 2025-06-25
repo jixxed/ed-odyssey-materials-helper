@@ -82,6 +82,7 @@ public abstract class ShipModule implements Serializable {
             AntiCorrosionCargoRack.ANTI_CORROSION_CARGO_RACKS,
             AutoFieldMaintenanceUnit.AUTO_FIELD_MAINTENANCE_UNITS,
             CargoRack.CARGO_RACKS,
+            OptimisedCargoRack.OPTIMISED_CARGO_RACKS,
             CollectorLimpetController.COLLECTOR_LIMPET_CONTROLLERS,
             Computer.COMPUTERS,
             DecontaminationLimpetController.DECONTAMINATION_LIMPET_CONTROLLERS,
@@ -215,8 +216,7 @@ public abstract class ShipModule implements Serializable {
     public static List<ShipModule> getModules(final SlotType slotType) {
         return SHIP_MODULES.stream().filter(module -> {
             final Class<? extends ShipModule> aClass = module.getClass();
-            final Class<? extends ShipModule> moduleClass = slotType.getModuleClass();
-            return moduleClass.isAssignableFrom(aClass);
+            return slotType.getModuleClasses().stream().anyMatch(moduleClass -> moduleClass.isAssignableFrom(aClass));
         }).toList();
     }
 

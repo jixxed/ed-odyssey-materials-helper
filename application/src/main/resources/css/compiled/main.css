@@ -1310,7 +1310,9 @@
         -fx-border-insets: 0.1em;
         -fx-background-insets: 0.1em; }
       .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-military {
-        -fx-background-color: linear-gradient(from 0px 0px to 10px 10px, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%); }
+        -fx-background-color: linear-gradient(from 0px 0px to 10px 10px, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%); }
+      .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-cargo {
+        -fx-background-color: linear-gradient(from 10px 10px to 0px 0px, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%); }
       .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-military .button {
         -fx-background-color: transparent; }
       .app .application-screen .horizons-tab-content .shipbuilder-tab-content .shipbuilder-slots-slotbox-label-normal {
