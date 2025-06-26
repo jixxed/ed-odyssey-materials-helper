@@ -1,0 +1,80 @@
+{
+  "Slot": "MediumHardpoint2",
+  "Item": "hpt_basicmissilerack_fixed_medium",
+  "On": true,
+  "Priority": 0,
+  "AmmoInClip": 0,
+  "AmmoInHopper": 0,
+  "Health": 1.0,
+  "Engineering": {
+    "EngineerID": 399999,
+    "BlueprintID": 129035483,
+    "BlueprintName": "Weapon_HighCapacity",
+    "Level": 5,
+    "Quality": 1.0,
+    "ExperimentalEffect": "special_fsd_interrupt",
+    "ExperimentalEffect_Localised": "FSD Interrupt",
+    "Modifiers": [
+      {
+        "Label": "Mass",
+        "Value": 8.8,
+        "OriginalValue": 4.0,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "Integrity",
+        "Value": 102.0,
+        "OriginalValue": 51.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "PowerDraw",
+        "Value": 1.56,
+        "OriginalValue": 1.2,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "DamagePerSecond",
+        "Value": 9.333334,
+        "OriginalValue": 13.333334,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "Damage",
+        "Value": 37.799999,
+        "OriginalValue": 40.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "ThermalLoad",
+        "Value": 3.24,
+        "OriginalValue": 3.6,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "ArmourPenetration",
+        "Value": 84.0,
+        "OriginalValue": 60.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "RateOfFire",
+        "Value": 0.246914,
+        "OriginalValue": 0.333333,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "AmmoClipSize",
+        "Value": 12.0,
+        "OriginalValue": 6.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "AmmoMaximum",
+        "Value": 36.0,
+        "OriginalValue": 18.0,
+        "LessIsGood": 0
+      }
+    ]
+  }
+}

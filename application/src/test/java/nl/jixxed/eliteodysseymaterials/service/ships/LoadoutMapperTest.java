@@ -11,6 +11,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipType;
 import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.FrameShiftDrive;
+import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.PowerDistributor;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.PowerPlant;
 import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.DetailedSurfaceScanner;
@@ -174,6 +175,8 @@ class LoadoutMapperTest {
                 Arguments.of("MINING_LASER_1_D_F_PRE.json", MiningLaser.MINING_LASER_1_D_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("MINING_LASER_1_D_F_PRE_ARX.json", MiningLaser.MINING_LASER_1_D_F_PRE_ARX, SlotType.HARDPOINT),
                 Arguments.of("SEEKER_MISSILE_RACK_2_B_F_PRE.json", MissileRack.SEEKER_MISSILE_RACK_2_B_F_PRE, SlotType.HARDPOINT),
+                Arguments.of("SEEKER_MISSILE_RACK_2_B_F_PRE_2.json", MissileRack.SEEKER_MISSILE_RACK_2_B_F_PRE_2, SlotType.HARDPOINT),
+                Arguments.of("SEEKER_MISSILE_RACK_3_A_F_PRE.json", MissileRack.SEEKER_MISSILE_RACK_3_A_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("MULTI_CANNON_2_E_F_PRE.json", MultiCannon.MULTI_CANNON_2_E_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("RAIL_GUN_2_B_F_PRE.json", RailGun.RAIL_GUN_2_B_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_GREEN.json", RemoteReleaseFlakLauncher.REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_GREEN, SlotType.HARDPOINT),
@@ -189,6 +192,11 @@ class LoadoutMapperTest {
                 Arguments.of("FRAME_SHIFT_DRIVE_5_A_SCO_V1_PRE.json", FrameShiftDrive.FRAME_SHIFT_DRIVE_OVERCHARGE_5_A_PRE, SlotType.CORE_FRAME_SHIFT_DRIVE),
                 Arguments.of("FRAME_SHIFT_DRIVE_6_A_SCO_V1_PRE.json", FrameShiftDrive.FRAME_SHIFT_DRIVE_OVERCHARGE_6_A_PRE, SlotType.CORE_FRAME_SHIFT_DRIVE),
                 Arguments.of("FRAME_SHIFT_DRIVE_7_A_SCO_V1_PRE.json", FrameShiftDrive.FRAME_SHIFT_DRIVE_OVERCHARGE_7_A_PRE, SlotType.CORE_FRAME_SHIFT_DRIVE),
+                Arguments.of("POWER_DISTRIBUTOR_3_A_PRE.json", PowerDistributor.POWER_DISTRIBUTOR_3_A_SYSTEM_ENGINE_FOCUSED, SlotType.CORE_POWER_DISTRIBUTION),
+                Arguments.of("POWER_DISTRIBUTOR_3_D_PRE.json", PowerDistributor.POWER_DISTRIBUTOR_3_D_SYSTEM_ENGINE_FOCUSED, SlotType.CORE_POWER_DISTRIBUTION),
+                Arguments.of("POWER_DISTRIBUTOR_4_A_PRE.json", PowerDistributor.POWER_DISTRIBUTOR_4_A_SYSTEM_ENGINE_FOCUSED, SlotType.CORE_POWER_DISTRIBUTION),
+                Arguments.of("POWER_DISTRIBUTOR_4_D_PRE.json", PowerDistributor.POWER_DISTRIBUTOR_4_D_SYSTEM_ENGINE_FOCUSED, SlotType.CORE_POWER_DISTRIBUTION),
+                Arguments.of("POWER_DISTRIBUTOR_6_A_PRE.json", PowerDistributor.POWER_DISTRIBUTOR_6_A_SYSTEM_ENGINE_FOCUSED, SlotType.CORE_POWER_DISTRIBUTION),
                 Arguments.of("POWER_PLANT_3_A_ARMOURED_OVERCHARGED_PRE.json", PowerPlant.POWER_PLANT_3_A_ARMOURED_OVERCHARGED, SlotType.CORE_POWER_PLANT),
                 Arguments.of("POWER_PLANT_3_A_OVERCHARGED_OVERCHARGED_PRE.json", PowerPlant.POWER_PLANT_3_A_OVERCHARGED_OVERCHARGED, SlotType.CORE_POWER_PLANT),
                 Arguments.of("POWER_PLANT_4_A_OVERCHARGED_OVERCHARGED_PRE.json", PowerPlant.POWER_PLANT_4_A_OVERCHARGED_OVERCHARGED, SlotType.CORE_POWER_PLANT),
@@ -207,7 +215,7 @@ class LoadoutMapperTest {
         List modules = ShipModule.getBasicModules();
         return Stream.of(
 
-                Arguments.of("SHIELD_GENERATOR_3_A_PRE.json", ShieldGenerator.SHIELD_GENERATOR_3_A_PRE, SlotType.OPTIONAL)
+                Arguments.of("SEEKER_MISSILE_RACK_2_B_F_PRE_2.json", MissileRack.SEEKER_MISSILE_RACK_2_B_F_PRE_2, SlotType.HARDPOINT)
 
         );
     }

@@ -48,11 +48,12 @@ public class MissileRackPreEngineeredBlueprints {
                             Map.of(
                             ),
                             Map.ofEntries(
-                                    Map.entry(HorizonsModifier.MASS, new HorizonsNumberModifierValue("+120", true, percentagePositive(0.0, 1.2))),
-                                    Map.entry(HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+100", true, percentagePositive(0.0, 1.0))),
-                                    Map.entry(HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue(" +30", true, percentagePositive(0.0, 0.3))),
+                                    Map.entry(HorizonsModifier.MASS, new HorizonsNumberModifierValue("+120%", true, percentagePositive(0.0, 1.2))),
+                                    Map.entry(HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.0, 1.0))),
+                                    Map.entry(HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.3))),
+                                    Map.entry(HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-10%", true, percentageNegative(0.0, 0.1))),
                                     Map.entry(HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-5.5%", false, percentageNegative(0.0, 0.055))),
-                                    Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-5.5%", false, percentageNegative(0.0, 0.055))),
+                                    Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-30%", false, percentageNegative(0.0, 0.3))),
                                     Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue(" -10%", false, percentageNegative(0.0, 0.1))),
                                     Map.entry(HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue(" +40%", true, percentagePositive(0.0, 0.4))),
                                     Map.entry(HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue(" -26%", false, percentageNegative(0.0, 0.26))),

@@ -1,0 +1,53 @@
+{
+  "Slot": "PowerDistributor",
+  "Item": "int_powerdistributor_size4_class5",
+  "On": true,
+  "Priority": 0,
+  "Health": 1.0,
+  "Value": 16555121,
+  "Engineering": {
+    "EngineerID": 399999,
+    "BlueprintID": 129035483,
+    "BlueprintName": "PowerDistributor_PrioritySystems",
+    "Level": 5,
+    "Quality": 1.0,
+    "Modifiers": [
+      {
+        "Label": "WeaponsCapacity",
+        "Value": 24.0,
+        "OriginalValue": 32.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "WeaponsRecharge",
+        "Value": 2.8,
+        "OriginalValue": 3.5,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "EnginesCapacity",
+        "Value": 33.350002,
+        "OriginalValue": 23.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "EnginesRecharge",
+        "Value": 2.66,
+        "OriginalValue": 1.9,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "SystemsCapacity",
+        "Value": 33.350002,
+        "OriginalValue": 23.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "SystemsRecharge",
+        "Value": 2.66,
+        "OriginalValue": 1.9,
+        "LessIsGood": 0
+      }
+    ]
+  }
+}
