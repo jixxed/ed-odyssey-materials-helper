@@ -1,3 +1,8 @@
+Version 2.193
+-------------
+Fix new CG pre-engineered missile rack blueprints
+Include passive power consumers in ship power label calculation
+
 Version 2.192
 -------------
 Fix crash for shortest path calculations when a blueprint with no grades was configured
