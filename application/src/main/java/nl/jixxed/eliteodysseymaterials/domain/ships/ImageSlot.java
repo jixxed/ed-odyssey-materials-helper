@@ -6,13 +6,13 @@ import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 @AllArgsConstructor
-public class ImageSlot extends Slot{
+public class ImageSlot extends Slot {
     @Getter
-    private  int imageIndex;
+    private int imageIndex;
     @Getter
-    private  int x;
+    private int x;
     @Getter
-    private  int y;
+    private int y;
 
     public ImageSlot(ImageSlot slot) {
         super(slot);
