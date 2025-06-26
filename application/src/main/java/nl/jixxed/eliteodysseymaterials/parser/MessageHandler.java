@@ -121,6 +121,10 @@ class MessageHandler {
             Map.entry(JournalEventType.PROSPECTEDASTEROID, new ProspectedAsteroidMessageProcessor()),
             Map.entry(JournalEventType.CARRIERLOCATION, new CarrierLocationMessageProcessor()),
             Map.entry(JournalEventType.CARRIERTRADEORDER, new CarrierTradeOrderMessageProcessor()),
+            Map.entry(JournalEventType.MODULEBUY, new ModuleBuyMessageProcessor()),
+            Map.entry(JournalEventType.MODULERETRIEVE, new ModuleRetrieveMessageProcessor()),
+            Map.entry(JournalEventType.MODULESELL, new ModuleSellMessageProcessor()),
+            Map.entry(JournalEventType.MODULESTORE, new ModuleStoreMessageProcessor()),
 
             Map.entry(JournalEventType.LOADGAME, new LoadGameMessageProcessor())
     );

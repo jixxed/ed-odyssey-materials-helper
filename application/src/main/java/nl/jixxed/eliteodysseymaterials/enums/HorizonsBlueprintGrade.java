@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 
 @RequiredArgsConstructor
@@ -16,6 +17,10 @@ public enum HorizonsBlueprintGrade {
     GRADE_5(5),
     NONE(0);
     private final int grade;
+
+    public static HorizonsBlueprintGrade forDigit(final BigInteger digit) {
+        return forDigit(digit.intValue());
+    }
 
     public static HorizonsBlueprintGrade forDigit(final String digit) {
         return forDigit(Integer.parseInt(digit));
@@ -31,18 +36,18 @@ public enum HorizonsBlueprintGrade {
     }
 
     public int getNumberOfRolls(Engineer engineer, HorizonsBlueprintType type) {
-        if(engineer == null){
+        if (engineer == null) {
             return 1;
         }
         final Integer engineerRank = ApplicationState.getInstance().getEngineerRank(engineer);
-        return getNumberOfRolls(engineerRank,type);
+        return getNumberOfRolls(engineerRank, type);
     }
 
     public int getNumberOfRolls(Integer engineerRank, HorizonsBlueprintType type) {
-        if(HorizonsBlueprintType.ANTI_GUARDIAN_ZONE_RESISTANCE.equals(type)){
+        if (HorizonsBlueprintType.ANTI_GUARDIAN_ZONE_RESISTANCE.equals(type)) {
             return 1;
         }
-        if(engineerRank == 0){//engineer not unlocked
+        if (engineerRank == 0) {//engineer not unlocked
             return 5;
         }
 

@@ -193,7 +193,7 @@ public class LoadoutMapper {
     }
 
 
-    static Slot getShipSlot(Ship ship, String slotName) {
+    public static Slot getShipSlot(Ship ship, String slotName) {
         if (HARDPOINT_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
             return getHardpointSlot(ship.getHardpointSlots(), slotName);
         }
