@@ -81,7 +81,7 @@ public class WishlistService {
     public static Integer getAllWishlistsCount(final OdysseyMaterial odysseyMaterial) {
         return APPLICATION_STATE.getPreferredCommander().map(commander ->
                         getOdysseyWishlists(commander).getWishlists().stream().mapToInt(wishlist -> wishlist.getItems().stream()
-                                        .map(odysseyWishlistBlueprint -> OdysseyBlueprintConstants.getRecipe(odysseyWishlistBlueprint.getRecipeName()).getRequiredAmount(odysseyMaterial))
+                                        .map(odysseyWishlistBlueprint -> odysseyWishlistBlueprint.getQuantity() * OdysseyBlueprintConstants.getRecipe(odysseyWishlistBlueprint.getRecipeName()).getRequiredAmount(odysseyMaterial))
                                         .mapToInt(Integer::intValue)
                                         .sum())
                                 .sum())
@@ -92,7 +92,7 @@ public class WishlistService {
     public static Integer getCurrentWishlistCount(final OdysseyMaterial odysseyMaterial) {
         return APPLICATION_STATE.getPreferredCommander().map(commander ->
                 getOdysseyWishlists(commander).getSelectedWishlist().getItems().stream()
-                        .map(odysseyWishlistBlueprint -> OdysseyBlueprintConstants.getRecipe(odysseyWishlistBlueprint.getRecipeName()).getRequiredAmount(odysseyMaterial))
+                        .map(odysseyWishlistBlueprint -> odysseyWishlistBlueprint.getQuantity() * OdysseyBlueprintConstants.getRecipe(odysseyWishlistBlueprint.getRecipeName()).getRequiredAmount(odysseyMaterial))
                         .mapToInt(Integer::intValue)
                         .sum()
         ).orElse(0);
@@ -135,6 +135,7 @@ public class WishlistService {
     private static IntegerRange getWishlistCount(HorizonsMaterial horizonsMaterial, HorizonsWishlist wishlist) {
         return wishlist.getItems().stream()
                 .map(horizonsWishlistBlueprint -> {
+                    final int quantity = horizonsWishlistBlueprint.getQuantity();
                     if (horizonsWishlistBlueprint instanceof HorizonsModuleWishlistBlueprint horizonsModuleWishlistBlueprint) {//modules
                         return horizonsModuleWishlistBlueprint.getPercentageToComplete().entrySet().stream().map(entry -> {
                             final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsModuleWishlistBlueprint.getRecipeName(), getBlueprintType(horizonsModuleWishlistBlueprint), entry.getKey());
@@ -143,13 +144,13 @@ public class WishlistService {
                                     .map(engineer -> ApplicationState.getInstance().getEngineerRank(engineer))
                                     .orElse(0);
                             return new IntegerRange(
-                                    blueprint.getRequiredAmount(horizonsMaterial, null) * entry.getKey().getNumberOfRolls(5, getBlueprintType(horizonsModuleWishlistBlueprint)),
-                                    blueprint.getRequiredAmount(horizonsMaterial, null) * entry.getKey().getNumberOfRolls(lowestRank, getBlueprintType(horizonsModuleWishlistBlueprint))
+                                    quantity * blueprint.getRequiredAmount(horizonsMaterial, null) * entry.getKey().getNumberOfRolls(5, getBlueprintType(horizonsModuleWishlistBlueprint)),
+                                    quantity * blueprint.getRequiredAmount(horizonsMaterial, null) * entry.getKey().getNumberOfRolls(lowestRank, getBlueprintType(horizonsModuleWishlistBlueprint))
                             );
                         }).reduce(new IntegerRange(0, 0), IntegerRange::sum);
                     } else {//other
                         final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe((HorizonsBlueprintName) horizonsWishlistBlueprint.getRecipeName(), getBlueprintType(horizonsWishlistBlueprint), getBlueprintGrade(horizonsWishlistBlueprint));
-                        return new IntegerRange(blueprint.getRequiredAmount(horizonsMaterial, null), blueprint.getRequiredAmount(horizonsMaterial, null));
+                        return new IntegerRange(quantity * blueprint.getRequiredAmount(horizonsMaterial, null), quantity * blueprint.getRequiredAmount(horizonsMaterial, null));
                     }
                 })
                 .reduce(new IntegerRange(0, 0), IntegerRange::sum);

@@ -251,19 +251,20 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
         return APPLICATION_STATE.getPreferredCommander().map(commander ->
                         WishlistService.getHorizonsWishlists(commander).getSelectedWishlist().getItems().stream()
                                 .map(bp -> {
+                                    final int quantity = bp.getQuantity();
                                     switch (bp) {
                                         case HorizonsModuleWishlistBlueprint horizonsModuleWishlistBlueprint -> {//modules
                                             return horizonsModuleWishlistBlueprint.getPercentageToComplete().keySet().stream()
                                                     .map(grade -> {
                                                         final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsModuleWishlistBlueprint.getRecipeName(), HorizonsWishlistBlueprint.getBlueprintType(horizonsModuleWishlistBlueprint), grade);
-                                                        return blueprint.getRequiredAmount(horizonsMaterial, getCurrentEngineerForRecipe(blueprint).orElseGet(() -> getWorstEngineerForRecipe(blueprint)));
+                                                        return quantity * blueprint.getRequiredAmount(horizonsMaterial, getCurrentEngineerForBlueprint(blueprint).orElseGet(() -> getWorstEngineerForRecipe(blueprint)));
                                                     })
                                                     .reduce(Integer::sum)
                                                     .orElse(0);
                                         }
                                         case HorizonsWishlistBlueprint horizonsWishlistBlueprint -> {//other
                                             final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsWishlistBlueprint.getRecipeName(), HorizonsWishlistBlueprint.getBlueprintType(bp), HorizonsWishlistBlueprint.getBlueprintGrade(bp));
-                                            return blueprint.getRequiredAmount(horizonsMaterial, getCurrentEngineerForRecipe(blueprint).orElseGet(() -> getWorstEngineerForRecipe(blueprint)));
+                                            return quantity * blueprint.getRequiredAmount(horizonsMaterial, getCurrentEngineerForBlueprint(blueprint).orElseGet(() -> getWorstEngineerForRecipe(blueprint)));
                                         }
                                         default -> {
                                             return 0;
@@ -275,7 +276,7 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
                 .orElse(0);
     }
 
-    private Optional<Engineer> getCurrentEngineerForRecipe(Blueprint<HorizonsBlueprintName> blueprint) {
+    private Optional<Engineer> getCurrentEngineerForBlueprint(Blueprint<HorizonsBlueprintName> blueprint) {
         if (blueprint == null || shortestPath == null) {
             return Optional.empty();
         }
