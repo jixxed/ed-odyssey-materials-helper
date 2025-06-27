@@ -86,10 +86,10 @@ public class TextExporter {
         textBuilder.append(String.format("%18s", "Available S"));
         textBuilder.append(String.format("%18s", "Available FC"));
         textBuilder.append(String.format("%18s", "Available Total"));
-        textBuilder.append(String.format("%12s", "Required min"));
-        textBuilder.append(String.format("%12s", "Required cur"));
-        textBuilder.append(String.format("%12s", "Required max"));
-        textBuilder.append(String.format("%12s", "Need"));
+        textBuilder.append(String.format("%14s", "Required min"));
+        textBuilder.append(String.format("%14s", "Required cur"));
+        textBuilder.append(String.format("%14s", "Required max"));
+        textBuilder.append(String.format("%14s", "Need"));
         textBuilder.append("\n\n");
         ((List<Map<HorizonsMaterial, WishlistMaterial>>) (List<?>) List.of(wishlistNeededRaw, wishlistNeededEncoded, wishlistNeededManufactured, wishlistNeededCommodity)).forEach(wishlistNeededMaterials ->
                 wishlistNeededMaterials.entrySet().stream()
