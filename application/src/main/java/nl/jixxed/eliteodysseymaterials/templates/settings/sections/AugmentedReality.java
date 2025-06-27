@@ -64,7 +64,7 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableEven
         final DestroyableHBox arColorIrrelevantSetting = createARColorSetting(PreferenceConstants.AR_IRRELEVANT_COLOR, "tab.settings.ar.color.irrelevant", Color.RED);
         final DestroyableHBox arColorWishlistSetting = createARColorSetting(PreferenceConstants.AR_WISHLIST_COLOR, "tab.settings.ar.color.wishlist", Color.LIME);
         final DestroyableHBox arColorBlueprintSetting = createARColorSetting(PreferenceConstants.AR_BLUEPRINT_COLOR, "tab.settings.ar.color.blueprint", Color.BLUE);
-        final DestroyableHBox arColorBartenderSetting = createARColorSetting(PreferenceConstants.AR_BARTENDER_COLOR, "tab.settings.ar.color.bartender", Color.WHITE);
+        final DestroyableHBox arColorBartenderSetting = createARColorSetting(PreferenceConstants.AR_BARTENDER_COLOR, "tab.settings.ar.color.bartender", Color.web("0xb3b3b3ff"));
 
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
         this.getNodes().addAll(arLabel, BoxBuilder.builder()

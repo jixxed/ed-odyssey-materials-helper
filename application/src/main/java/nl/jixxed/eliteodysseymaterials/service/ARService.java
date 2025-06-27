@@ -34,6 +34,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -53,6 +54,7 @@ public class ARService {
         OpenCV.loadLocally();
     }
 
+    private static final AtomicInteger tradeHits = new AtomicInteger();
     private static final double MATCHING_THRESHOLD = 0.75;
     private static final double BARTENDER_MATCHING_THRESHOLD = 0.65;
     private static final String STYLESHEET = "/css/ar.css";
@@ -209,6 +211,7 @@ public class ARService {
                         Thread.sleep(1000);
                         MENU_VISIBLE.set(false);
                         TRADE_VISIBLE.set(false);
+                        tradeHits.set(0);
                         REQUEST_HIDE.set(true);
                         return;
                     }
@@ -219,6 +222,7 @@ public class ARService {
 
                         MENU_VISIBLE.set(false);
                         TRADE_VISIBLE.set(false);
+                        tradeHits.set(0);
                         REQUEST_HIDE.set(true);
                         Thread.sleep(1000);
                         return;
@@ -284,6 +288,7 @@ public class ARService {
                         }
                         MENU_VISIBLE.set(false);
                         TRADE_VISIBLE.set(false);
+                        tradeHits.set(0);
                     }
                     if (pauseThread) {
                         Thread.sleep(2000);
@@ -333,7 +338,7 @@ public class ARService {
         if (previousBartenderMatch) {
 
             previousBartenderMatch = false;
-            log.debug("bartendermenu detected. Confidence(" + BARTENDER_MATCHING_THRESHOLD + "): " + matchValue);
+            log.debug("bartendermenu detected 2. Confidence(" + BARTENDER_MATCHING_THRESHOLD + "): " + matchValue);
             try {
                 Thread.sleep(20);
             } catch (final InterruptedException e) {
@@ -413,13 +418,16 @@ public class ARService {
                     } else if (TRADE_VISIBLE.get()) {
                         bartenderMenuCapture = getBartenderMenuCapture();
                         if (BartenderMenuHelper.isTradeMenu(bartenderMenuCapture, getBartenderMenu())) {
-                            processTradeMenu();
-                        } else {
-                            Thread.sleep(20);
-                            bartenderMenuCapture = getBartenderMenuCapture();
-                            if (BartenderMenuHelper.isTradeMenu(bartenderMenuCapture, getBartenderMenu())) {
-                                processTradeMenu();
+                            if (tradeHits.get() <= 4) {
+                                tradeHits.getAndIncrement();
                             }
+                            if (tradeHits.get() > 4) {
+                                processTradeMenu();
+                            } else {
+                                Thread.sleep(20);
+                            }
+                        } else {
+                            tradeHits.set(0);
                         }
                     } else {
                         getDownloadMenu().getScanned().clear();
@@ -578,6 +586,7 @@ public class ARService {
                     arStage.hide();
                     arStage.setAlwaysOnTop(false);
                     log.debug("hide overlay");
+                    tradeHits.set(0);
                     System.gc();
                 }
             }

@@ -34,6 +34,7 @@ public class BartenderMenu {
     public double getFontSize() {
         return 50 * this.scale;
     }
+
     double getHeaderFontSize() {
         return 30 * this.scale;
     }
@@ -41,12 +42,12 @@ public class BartenderMenu {
     private void setupScale() {
         if ((this.contentWidth / this.contentHeight > 1920D / 1080D)) {
             //UW
-            this.scale = this.contentHeight  / 1600D;
+            this.scale = this.contentHeight / 1600D;
 //            this.scale = this.contentWidth / (1600D / 9D * 16D);
         } else if ((this.contentWidth / this.contentHeight < 1920D / 1080D)) {
             //4:3
 //            this.scale = this.contentHeight / 1600D;
-            this.scale = this.contentWidth  / (1600D / 9D * 16D);
+            this.scale = this.contentWidth / (1600D / 9D * 16D);
         } else {
             this.scale = this.contentHeight / 1600D;
         }
@@ -138,10 +139,10 @@ public class BartenderMenu {
         //740
         //154
         final int offsetY = index * 78;
-        final int x = (int)  ( 230 * this.scale);
-        final int y = (int)  ( (377+ 16 + offsetY) * this.scale);
-        final int x2 = (int) ( 772 * this.scale);
-        final int y2 = (int) ( (377 + 70 - 16 + offsetY) * this.scale);
+        final int x = (int) (230 * this.scale);
+        final int y = (int) ((377 + 16 + offsetY) * this.scale);
+        final int x2 = (int) (772 * this.scale);
+        final int y2 = (int) ((377 + 70 - 16 + offsetY) * this.scale);
 
         return new Rectangle(x, y, x2, y2);
     }
@@ -159,8 +160,8 @@ public class BartenderMenu {
         final int offsetY = index * 78;
         final int x = (int) (500 * this.scale);
         final int y = (int) ((377 + 16 + offsetY) * this.scale);
-        final int x2 = (int) ( 1031  * this.scale);
-        final int y2 = (int) ( (377 + 70 - 16 + offsetY) * this.scale);
+        final int x2 = (int) (1031 * this.scale);
+        final int y2 = (int) ((377 + 70 - 16 + offsetY) * this.scale);
 
         return new Rectangle(x, y, x2, y2);
     }
@@ -180,9 +181,15 @@ public class BartenderMenu {
     }
 
     Point getSellMenuDetectionRightPixel() {
-        return new Point((int) (2726D * this.scale), (int) (135D * this.scale));
+        return new Point((int) (2688D * this.scale), (int) (171D * this.scale));
 
     }
+
+    Point getSellMenuDetectionRightPixel2() {
+        return new Point((int) (2750D * this.scale), (int) (171D * this.scale));
+
+    }
+
     Rectangle getMenuItem(final Asset asset) {
         final int offsetX = (this.subMenu.equals(BartenderMenuType.SUBMENU)) ? 0 : 445;
         final int offsetY = this.visibleAssets.indexOf(asset) * 78;
@@ -193,6 +200,7 @@ public class BartenderMenu {
 
         return new Rectangle(x, y, x2, y2);
     }
+
     Point getWishlistTextPosition(final Asset asset) {
         final int offsetX = (this.subMenu.equals(BartenderMenuType.SUBMENU)) ? 0 : 445;
         final int offsetY = this.visibleAssets.indexOf(asset) * 78;
@@ -201,14 +209,16 @@ public class BartenderMenu {
 
         return new Point(x, y);
     }
+
     Point getFleetCarrierTextPosition(final Asset asset) {
         final int offsetX = (this.subMenu.equals(BartenderMenuType.SUBMENU)) ? 0 : 445;
         final int offsetY = this.visibleAssets.indexOf(asset) * 78;
-        final int x = (int) (this.menu.getX() + (1035 -45 + offsetX) * this.scale);//88start
+        final int x = (int) (this.menu.getX() + (1035 - 145 + offsetX) * this.scale);//88start
         final int y = (int) (this.menu.getY() + (377 + 5 + offsetY) * this.scale);
 
         return new Point(x, y);
     }
+
     Point getWishlistHeaderPosition() {
         final int offsetX = (this.subMenu.equals(BartenderMenuType.SUBMENU)) ? 0 : 445;
         final int offsetY = -78;
@@ -217,43 +227,45 @@ public class BartenderMenu {
 
         return new Point(x, y);
     }
+
     Point getFleetCarrierHeaderPosition() {
         final int offsetX = (this.subMenu.equals(BartenderMenuType.SUBMENU)) ? 0 : 445;
         final int offsetY = -78;
-        final int x = (int) (this.menu.getX() + (1035 -45 + offsetX) * this.scale);//88start
+        final int x = (int) (this.menu.getX() + (1035 - 145 + offsetX) * this.scale);//88start
         final int y = (int) (this.menu.getY() + (377 + 35 + offsetY) * this.scale);
 
         return new Point(x, y);
     }
+
     Point getLine11LeftPixel() {
         final int offsetX = -5;
         final int offsetY = 35;
-        final int x = (int) ( (357 + offsetX) * this.scale);
-        final int y = (int) ( (1157 + offsetY) * this.scale);
+        final int x = (int) ((357 + offsetX) * this.scale);
+        final int y = (int) ((1157 + offsetY) * this.scale);
         return new Point(x, y);
     }
 
     Point getLine11RightPixel() {
         final int offsetX = 5;
         final int offsetY = 35;
-        final int x = (int) ( (357 + offsetX) * this.scale);
-        final int y = (int) ( (1157 + offsetY) * this.scale);
+        final int x = (int) ((357 + offsetX) * this.scale);
+        final int y = (int) ((1157 + offsetY) * this.scale);
         return new Point(x, y);
     }
 
     Point getLine12LeftPixel() {
         final int offsetX = -5;
         final int offsetY = 35;
-        final int x = (int) ( (357 + offsetX) * this.scale);
-        final int y = (int) ( (1235 + offsetY) * this.scale);
+        final int x = (int) ((357 + offsetX) * this.scale);
+        final int y = (int) ((1235 + offsetY) * this.scale);
         return new Point(x, y);
     }
 
     Point getLine12RightPixel() {
         final int offsetX = 5;
         final int offsetY = 35;
-        final int x = (int) ( (357 + offsetX) * this.scale);
-        final int y = (int) ( (1235 + offsetY) * this.scale);
+        final int x = (int) ((357 + offsetX) * this.scale);
+        final int y = (int) ((1235 + offsetY) * this.scale);
         return new Point(x, y);
     }
 }
