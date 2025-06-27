@@ -81,5 +81,5 @@
 "notification.shipbuilder.error.wishlist.title","Can’t create wishlist","","","No se puede crear lista de deseos","","","Невозможно создать список желаний","无法创建愿望单"
 "notification.shipbuilder.error.wishlist.text","No items to add","","","No hay elementos que añadir","","","Нет элементов для добавления","没有要添加的物品"
 "notification.capi.message.auth.bad.account","Account mismatch detected! Account will not be linked.","","","¡Cuenta incorrecta detectada! La cuenta no será vinculada.","","","Обнаружено несоответствие аккаунта! Аккаунт не будет привязан.","检测到账号不匹配！账号将不会被链接。"
-"notification.media.feature.pack.title","Media Feature Pack","","","","","","",""
-"notification.media.feature.pack.text","Media Feature Pack is not installed. Please install the Media Feature Pack to enable notification sounds. Windows Settings > Applications > Optional features","","","","","","",""
+"notification.media.feature.pack.title","Media Feature Pack","","","","","","Media Feature Pack","媒体功能包"
+"notification.media.feature.pack.text","Media Feature Pack is not installed. Please install the Media Feature Pack to enable notification sounds. Windows Settings > Applications > Optional features","","","","","","Media Feature Pack не установлен. Пожалуйста, установите Media Feature Pack для включения звуков уведомлений. Настройки Windows > Приложения > Дополнительные функции","媒体功能包未安装。请安装媒体功能包以启用通知声音。Windows 设置 > 应用程序 > 可选功能"
