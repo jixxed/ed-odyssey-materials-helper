@@ -69,6 +69,10 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
                 .withStyleClass("name")
                 .withText(this.commodity.getLocalizationKey())
                 .build();
+        DestroyableLabel categoryLabel = LabelBuilder.builder()
+                .withStyleClass("category")
+                .withText(this.commodity.getCommodityType().getLocalizationKey())
+                .build();
         this.leftAmountLabel = LabelBuilder.builder()
                 .withStyleClass("fleetcarrier-amount")
                 .build();
@@ -147,9 +151,12 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
         HBox.setHgrow(this.leftAmountLabel, Priority.ALWAYS);
         this.leftAmountLabel.addBinding(this.leftAmountLabel.visibleProperty(), ApplicationState.getInstance().getFcMaterials());
         fleetCarrierImage.addBinding(fleetCarrierImage.visibleProperty(), ApplicationState.getInstance().getFcMaterials());
+        DestroyableVBox nameAndCategory = BoxBuilder.builder()
+                .withStyleClass("name-category")
+                .withNodes(typeImage, nameLabel, categoryLabel).buildVBox();
         DestroyableHBox firstLine = BoxBuilder.builder()
                 .withStyleClass("name-line")
-                .withNodes(typeImage, nameLabel).buildHBox();
+                .withNodes(typeImage, nameAndCategory).buildHBox();
         firstLine.addBinding(firstLine.spacingProperty(), ScalingHelper.getPixelDoubleBindingFromEm(0.5));
         DestroyableHBox secondLine = BoxBuilder.builder()
                 .withStyleClass("quantity-line")
@@ -161,10 +168,12 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
         if (this.commodity instanceof RareCommodity) {
             DestroyableResizableImageView rareImage = ResizableImageViewBuilder.builder()
                     .withStyleClass("rare-image")
-                    .withImage("/images/material/stock/rare.png")
+                    .withImage("/images/material/stock/rare_right.png")
                     .build();
-            this.getNodes().add(rareImage);
-            StackPane.setAlignment(rareImage, Pos.TOP_RIGHT);
+            var rareContainer = BoxBuilder.builder()
+                    .withStyleClass("rare-container")
+                    .withNodes(new GrowingRegion(), rareImage).buildHBox();
+            this.getNodes().add(rareContainer);
         }
         this.getNodes().add(content);
         this.getNodes().add(this.market);

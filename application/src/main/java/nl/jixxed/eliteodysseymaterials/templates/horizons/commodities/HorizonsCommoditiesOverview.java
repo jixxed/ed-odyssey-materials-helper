@@ -10,7 +10,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.CommoditiesSearch;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
@@ -18,7 +17,10 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsCommoditiesSearchEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.MarketUpdatedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,10 +79,6 @@ public class HorizonsCommoditiesOverview extends DestroyableVBox implements Dest
     }
 
     private DestroyableHBox createCommodityCardRow(final CommodityType type, final HorizonsCommodityCard[] array) {
-        final DestroyableLabel category = LabelBuilder.builder()
-                .withStyleClass("row-name")
-                .withText(type.getLocalizationKey())
-                .build();
         final DestroyableFlowPane commodities = FlowPaneBuilder.builder()
                 .withStyleClass("material-card-flow-pane")
                 .withNodes(array)
@@ -90,7 +88,7 @@ public class HorizonsCommoditiesOverview extends DestroyableVBox implements Dest
         HBox.setHgrow(commodities, Priority.ALWAYS);
         final DestroyableHBox row = BoxBuilder.builder()
                 .withStyleClass("category-row")
-                .withNodes(category, commodities)
+                .withNodes(commodities)
                 .buildHBox();
         row.addBinding(row.visibleProperty(), commodities.visibleProperty());
         row.addBinding(row.managedProperty(), commodities.managedProperty());

@@ -60,14 +60,25 @@
       }
 
       .name {
-        -fx-padding: 0.25em 0 0 0;
+        //-fx-padding: 0.25em 0 0 0;
         -fx-text-fill: $text-color-white;
-        @include fixedWidth(14em);
-        -fx-min-height: 2em;
-        -fx-max-height: 12em;
+        @include fixedWidth(13.75em);
+        //-fx-min-height: 2em;
+        //-fx-max-height: 12em;
         -fx-wrap-text: true;
 
-        -fx-alignment: top-left;
+        //-fx-alignment: top-left;
+      }
+
+      .category {
+        //-fx-padding: 0.25em 0 0 0;
+        -fx-text-fill: $text-color-grey;
+        @include fixedWidth(13.75em);
+        //-fx-min-height: 2em;
+        //-fx-max-height: 12em;
+        -fx-wrap-text: true;
+
+        //-fx-alignment: top-left;
       }
 
 

@@ -299,7 +299,7 @@
             -fx-border-color: #dcc030; }
           .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card:buys:sells {
             -fx-border-color: #2e92df; }
-          .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .rare-image {
+          .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .rare-container .rare-image {
             -fx-pref-height: 100%;
             -fx-opacity: 0.3; }
           .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content {
@@ -325,9 +325,15 @@
                 -fx-min-width: 28em;
                 -fx-pref-width: 28em;
                 -fx-max-width: 28em;
-                -fx-label-padding: 0.5em, 0, 0, 0;
                 -fx-alignment: center-left;
                 -fx-wrap-text: true; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .category {
+                -fx-min-width: 28em;
+                -fx-pref-width: 28em;
+                -fx-max-width: 28em;
+                -fx-alignment: center-left;
+                -fx-wrap-text: true;
+                -fx-text-fill: #707070; }
             .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .quantity-line .image {
               -fx-min-width: 2em;
               -fx-pref-width: 2em;
@@ -539,15 +545,17 @@
             -fx-text-fill: #dcc030;
             -fx-font-weight: bold; }
           .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .name {
-            -fx-padding: 0.25em 0 0 0;
             -fx-text-fill: white;
-            -fx-min-width: 14em;
-            -fx-pref-width: 14em;
-            -fx-max-width: 14em;
-            -fx-min-height: 2em;
-            -fx-max-height: 12em;
-            -fx-wrap-text: true;
-            -fx-alignment: top-left; }
+            -fx-min-width: 13.75em;
+            -fx-pref-width: 13.75em;
+            -fx-max-width: 13.75em;
+            -fx-wrap-text: true; }
+          .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .category {
+            -fx-text-fill: #707070;
+            -fx-min-width: 13.75em;
+            -fx-pref-width: 13.75em;
+            -fx-max-width: 13.75em;
+            -fx-wrap-text: true; }
           .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .image {
             -fx-min-width: 2em;
             -fx-pref-width: 2em;

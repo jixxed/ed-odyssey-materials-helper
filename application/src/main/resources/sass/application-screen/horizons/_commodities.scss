@@ -47,9 +47,13 @@
         -fx-border-color: #2e92df;
       }
 
-      .rare-image {
-        -fx-pref-height: 100%;
-        -fx-opacity: 0.3;
+      .rare-container {
+
+        .rare-image {
+          -fx-pref-height: 100%;
+          -fx-opacity: 0.3;
+
+        }
       }
 
       .content {
@@ -69,9 +73,17 @@
 
           .name {
             @include fixedWidth(28em);
-            -fx-label-padding: 0.5em, 0, 0, 0;
+            //-fx-label-padding: 0.5em, 0, 0, 0;
             -fx-alignment: center-left;
             -fx-wrap-text: true;
+          }
+
+          .category {
+            @include fixedWidth(28em);
+            //-fx-label-padding: 0.5em, 0, 0, 0;
+            -fx-alignment: center-left;
+            -fx-wrap-text: true;
+            -fx-text-fill: $text-color-grey;
           }
         }
 

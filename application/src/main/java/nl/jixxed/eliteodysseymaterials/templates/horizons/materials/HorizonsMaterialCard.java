@@ -33,8 +33,6 @@ import java.util.Map;
 @Slf4j
 public class HorizonsMaterialCard extends DestroyableVBox implements DestroyableEventTemplate {
 
-    private DestroyableResizableImageView gradeImage;
-    private DestroyableLabel nameLabel;
     @Getter
     private final HorizonsMaterial material;
     private TypeSegment present;
@@ -57,13 +55,17 @@ public class HorizonsMaterialCard extends DestroyableVBox implements Destroyable
         } else if (HorizonsMaterialType.GUARDIAN.equals(this.material.getMaterialType())) {
             this.pseudoClassStateChanged(PseudoClass.getPseudoClass("guardian"), true);
         }
-        this.gradeImage = ResizableImageViewBuilder.builder()
+        DestroyableResizableImageView gradeImage = ResizableImageViewBuilder.builder()
                 .withStyleClass("image")
                 .withImage(this.material.getRarity().getImagePath())
                 .build();
-        this.nameLabel = LabelBuilder.builder()
+        DestroyableLabel nameLabel = LabelBuilder.builder()
                 .withStyleClass("name")
                 .withText(this.material.getLocalizationKey())
+                .build();
+        DestroyableLabel categoryLabel = LabelBuilder.builder()
+                .withStyleClass("category")
+                .withText(this.material.getMaterialType().getLocalizationKey())
                 .build();
         HBox.setHgrow(nameLabel, Priority.ALWAYS);
         final Integer materialCount = StorageService.getMaterialCount(this.material);
@@ -81,9 +83,12 @@ public class HorizonsMaterialCard extends DestroyableVBox implements Destroyable
                 .withSegmentViewFactory(segment ->
                         new TypeSegmentView(segment, Map.of(SegmentType.PRESENT, Color.web("#89d07f"), SegmentType.NOT_PRESENT, Color.web("#ff7c7c")), true))
                 .build();
+        final var nameAndCategory = BoxBuilder.builder()
+                .withStyleClass("name-and-category")
+                .withNodes(nameLabel, categoryLabel).buildVBox();
         final DestroyableHBox hBox = BoxBuilder.builder()
                 .withStyleClass("text-line")
-                .withNodes(this.gradeImage, this.nameLabel).buildHBox();
+                .withNodes(gradeImage, nameAndCategory).buildHBox();
         VBox.setVgrow(hBox, Priority.ALWAYS);
         this.getNodes().add(hBox);
         this.getNodes().add(new GrowingRegion());

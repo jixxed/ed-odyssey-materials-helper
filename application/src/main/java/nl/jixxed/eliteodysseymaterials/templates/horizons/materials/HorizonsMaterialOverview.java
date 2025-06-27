@@ -6,7 +6,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.SpawnConstants;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsMaterialsSearch;
 import nl.jixxed.eliteodysseymaterials.enums.*;
@@ -53,12 +52,8 @@ public class HorizonsMaterialOverview extends DestroyableVBox implements Destroy
                         new HorizonsNearestTrader(HorizonsStorageType.MANUFACTURED)
                 )
                 .build();
-        final DestroyableLabel nearestTradersTitle = LabelBuilder.builder()
-                .withStyleClass("row-name")
-                .withText("horizons.materials.nearest.trader")
-                .build();
         this.nearestTraders = BoxBuilder.builder()
-                .withNodes(nearestTradersTitle, traders)
+                .withNodes(traders)
                 .buildHBox();
         HBox.setHgrow(traders, Priority.ALWAYS);
 
@@ -147,10 +142,10 @@ public class HorizonsMaterialOverview extends DestroyableVBox implements Destroy
     }
 
     private DestroyableFlowPane createMaterialCardRow(final HorizonsMaterialType type, final HorizonsMaterialCard[] array) {
-        final DestroyableLabel category = LabelBuilder.builder()
-                .withStyleClass("row-name")
-                .withText(type.getLocalizationKey())
-                .build();
+//        final DestroyableLabel category = LabelBuilder.builder()
+//                .withStyleClass("row-name")
+//                .withText(type.getLocalizationKey())
+//                .build();
         final DestroyableFlowPane materials = FlowPaneBuilder.builder()
                 .withStyleClass(FLOW_PANE_STYLE_CLASS)
                 .withNodes(array)
@@ -158,7 +153,7 @@ public class HorizonsMaterialOverview extends DestroyableVBox implements Destroy
         HBox.setHgrow(materials, Priority.ALWAYS);
         final DestroyableHBox row = BoxBuilder.builder()
                 .withStyleClass("category-row")
-                .withNodes(category, materials)
+                .withNodes(/*category,*/ materials)
                 .buildHBox();
         row.addBinding(row.visibleProperty(), materials.visibleProperty());
         row.addBinding(row.managedProperty(), materials.managedProperty());
