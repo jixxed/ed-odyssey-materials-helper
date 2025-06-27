@@ -11,3 +11,4 @@ Changed FC and WL to FLEETCARRIER and WISHLIST in the AR overlay for clarity
 Fixed column spacing in wishlist text export
 Fixed wishlist counts for higher quantities in trade suggestions, exports and AR overlay
 Redesign of commodity and material cards to include categories
+Updated Russian and Chinese translations
