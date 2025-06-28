@@ -1,3 +1,7 @@
+Version 2.196
+-------------
+Updated AR detection for bartender. Should give better results at the cost of potential false positives.
+
 Version 2.195
 -------------
 Added colorblind support (WIP). You can select the style in Settings > General
