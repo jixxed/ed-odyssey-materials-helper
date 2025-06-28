@@ -105,6 +105,15 @@
 
           //-fx-alignment: center-left;
         }
+
+        .not-present {
+          -fx-background-color: $progress-bar-color-red;
+        }
+
+        .present {
+          -fx-background-color: $progress-bar-color-green;
+        }
+
       }
 
       .text-line {

@@ -6,7 +6,6 @@ import javafx.geometry.Orientation;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
@@ -28,7 +27,6 @@ import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegme
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 public class HorizonsMaterialCard extends DestroyableVBox implements DestroyableEventTemplate {
@@ -81,7 +79,7 @@ public class HorizonsMaterialCard extends DestroyableVBox implements Destroyable
                 .withOrientation(Orientation.HORIZONTAL)
                 .withInfoNodeFactory(_ -> null)
                 .withSegmentViewFactory(segment ->
-                        new TypeSegmentView(segment, Map.of(SegmentType.PRESENT, Color.web("#89d07f"), SegmentType.NOT_PRESENT, Color.web("#ff7c7c")), true))
+                        new TypeSegmentView(segment, true))
                 .build();
         final var nameAndCategory = BoxBuilder.builder()
                 .withStyleClass("name-and-category")

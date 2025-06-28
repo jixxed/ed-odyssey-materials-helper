@@ -18,7 +18,6 @@ public class TypeSegmentView extends DestroyableStackPane {
         this.setPrefHeight(30.0);
         if (withLabel) {
             final DestroyableLabel label = LabelBuilder.builder()
-                    .withStyleClass("horizons-materialcard-amount")//horizons-materialcard-amount
                     .withVisibilityProperty(segment.textProperty().isNotEqualTo("0"))
                     .build();
             label.addBinding(label.textProperty(), segment.textProperty());
@@ -30,7 +29,6 @@ public class TypeSegmentView extends DestroyableStackPane {
         this.getStyleClass().add(getStyleClassName(segment));
         if (withLabel) {
             DestroyableLabel label = LabelBuilder.builder()
-                    .withStyleClass("horizons-materialcard-amount")//horizons-materialcard-amount
                     .withVisibilityProperty(segment.textProperty().isNotEqualTo("0"))
                     .build();
             label.addBinding(label.textProperty(), segment.textProperty());

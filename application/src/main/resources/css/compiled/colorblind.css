@@ -591,6 +591,10 @@
               -fx-text-overrun: clip; }
               .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .segmented-bar .segment .label {
                 -fx-text-fill: black; }
+            .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .segmented-bar .not-present {
+              -fx-background-color: red; }
+            .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .segmented-bar .present {
+              -fx-background-color: #709adc; }
           .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .text-line {
             -fx-spacing: 0.25em;
             -fx-min-width: 16.5em;
