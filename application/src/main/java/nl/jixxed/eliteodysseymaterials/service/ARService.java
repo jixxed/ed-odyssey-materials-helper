@@ -47,6 +47,7 @@ import static org.opencv.imgproc.Imgproc.THRESH_OTSU;
 public class ARService {
 
 
+    public static boolean debug = false;
     private static final AtomicBoolean bartenderOverlayEnabled = new AtomicBoolean(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_AR, true));
     private static BartenderMenuType newBartenderSubMenu;
 
@@ -125,6 +126,21 @@ public class ARService {
 
                 }
         ));
+
+        arrowTemplate = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_download.png")));
+        arrowTemplateScaled = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_download.png")));
+        cocktailTemplate = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail.png")));
+        cocktailTemplateScaled = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail.png")));
+        cocktailMask = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail_tp.png")));
+        cocktailMaskScaled = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail_tp.png")));
+        //greyscale templates
+        Imgproc.cvtColor(arrowTemplate, arrowTemplate, Imgproc.COLOR_BGRA2GRAY);
+        Imgproc.cvtColor(arrowTemplateScaled, arrowTemplateScaled, Imgproc.COLOR_BGRA2GRAY);
+        Imgproc.cvtColor(cocktailTemplate, cocktailTemplate, Imgproc.COLOR_BGRA2GRAY);
+        Imgproc.cvtColor(cocktailTemplateScaled, cocktailTemplateScaled, Imgproc.COLOR_BGRA2GRAY);
+        Imgproc.cvtColor(cocktailMask, cocktailMask, Imgproc.COLOR_BGRA2GRAY);
+        Imgproc.cvtColor(cocktailMaskScaled, cocktailMaskScaled, Imgproc.COLOR_BGRA2GRAY);
+        Imgproc.threshold(cocktailMaskScaled, cocktailMaskScaled, 50, 255, Imgproc.THRESH_BINARY);
     }
 
     public static void bartenderToggle() {
@@ -137,20 +153,6 @@ public class ARService {
             scaling = 1;
             log.debug("enabling AR Service");
 
-            arrowTemplate = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_download.png")));
-            arrowTemplateScaled = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_download.png")));
-            cocktailTemplate = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail.png")));
-            cocktailTemplateScaled = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail.png")));
-            cocktailMask = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail_tp.png")));
-            cocktailMaskScaled = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail_tp.png")));
-            //greyscale templates
-            Imgproc.cvtColor(arrowTemplate, arrowTemplate, Imgproc.COLOR_BGRA2GRAY);
-            Imgproc.cvtColor(arrowTemplateScaled, arrowTemplateScaled, Imgproc.COLOR_BGRA2GRAY);
-            Imgproc.cvtColor(cocktailTemplate, cocktailTemplate, Imgproc.COLOR_BGRA2GRAY);
-            Imgproc.cvtColor(cocktailTemplateScaled, cocktailTemplateScaled, Imgproc.COLOR_BGRA2GRAY);
-            Imgproc.cvtColor(cocktailMask, cocktailMask, Imgproc.COLOR_BGRA2GRAY);
-            Imgproc.cvtColor(cocktailMaskScaled, cocktailMaskScaled, Imgproc.COLOR_BGRA2GRAY);
-            Imgproc.threshold(cocktailMaskScaled, cocktailMaskScaled, 50, 255, Imgproc.THRESH_BINARY);
 
             arStage = new Stage();
             arOverlay = new AROverlay();
@@ -251,9 +253,7 @@ public class ARService {
                         //scaling
                         scaling = newScaling;
                         Imgproc.resize(arrowTemplate, arrowTemplateScaled, new Size(), scaling, scaling, Imgproc.INTER_AREA);
-                        Imgproc.resize(cocktailTemplate, cocktailTemplateScaled, new Size(), bartenderMenu1.getScale(), bartenderMenu1.getScale(), Imgproc.INTER_AREA);
-                        Imgproc.resize(cocktailMask, cocktailMaskScaled, new Size(), bartenderMenu1.getScale(), bartenderMenu1.getScale(), Imgproc.INTER_AREA);
-                        Imgproc.threshold(cocktailMaskScaled, cocktailMaskScaled, 50, 255, Imgproc.THRESH_BINARY);
+                        updateScaling(bartenderMenu1);
                         WarningHelper.updateScale(scaling);
 
                         ImageTransformHelper.init(downloadMenu1, scaling);
@@ -302,7 +302,13 @@ public class ARService {
         timerDisplay.scheduleAtFixedRate(timerDisplayTask, 0, 50);//100fps
     }
 
-    private static boolean isBartenderMenu(final BufferedImage capture) {
+    static void updateScaling(BartenderMenu bartenderMenu1) {
+        Imgproc.resize(cocktailTemplate, cocktailTemplateScaled, new Size(), bartenderMenu1.getScale(), bartenderMenu1.getScale(), Imgproc.INTER_AREA);
+        Imgproc.resize(cocktailMask, cocktailMaskScaled, new Size(), bartenderMenu1.getScale(), bartenderMenu1.getScale(), Imgproc.INTER_AREA);
+        Imgproc.threshold(cocktailMaskScaled, cocktailMaskScaled, 50, 255, Imgproc.THRESH_BINARY);
+    }
+
+    public static boolean isBartenderMenu(final BufferedImage capture) {
         if (capture == null) {
             return false;
         }
@@ -323,11 +329,36 @@ public class ARService {
         }
         //grayscale capture
         Imgproc.cvtColor(cocktailCaptureMat, cocktailCaptureMatGray, Imgproc.COLOR_BGRA2GRAY);
+        Mat temp = new Mat();
+        Imgproc.threshold(cocktailCaptureMatGray, temp, 128, 255, Imgproc.THRESH_BINARY_INV + THRESH_OTSU);
+
+        // Apply mask using copyTo
+//        cocktailTemplateScaled.copyTo(maskedResult, cocktailMaskScaled);
+        Mat temp2 = new Mat();
+        Imgproc.threshold(cocktailTemplateScaled, temp2, 128, 255, Imgproc.THRESH_BINARY_INV + THRESH_OTSU);
         //matching
-        Imgproc.matchTemplate(cocktailCaptureMatGray, cocktailTemplateScaled, bartenderMenuResult, MATCH_METHOD, cocktailMaskScaled);
-        final Core.MinMaxLocResult mmr = Core.minMaxLoc(bartenderMenuResult);
+        Imgproc.matchTemplate(temp, temp2, bartenderMenuResult, MATCH_METHOD);
+        //take the best result mmr.maxLoc
+        Core.MinMaxLocResult mmr = Core.minMaxLoc(bartenderMenuResult);
+        //cut out a mat with the same dimensions as cocktailMaskScaled
+        final Mat cutOutMat = new Mat(temp, new Rect((int) mmr.maxLoc.x, (int) mmr.maxLoc.y, cocktailMaskScaled.cols(), cocktailMaskScaled.rows()));
+
+        Imgproc.threshold(cutOutMat, cutOutMat, 128, 255, Imgproc.THRESH_BINARY_INV);
+        Imgproc.threshold(temp2, temp2, 128, 255, Imgproc.THRESH_BINARY_INV);
+        //apply mask to the cut out mat
+        // Create destination Mat
+        Mat maskedResult = new Mat();
+        cutOutMat.copyTo(maskedResult, cocktailMaskScaled);
+        //match again
+        Imgproc.matchTemplate(maskedResult, temp2, bartenderMenuResult, MATCH_METHOD);
+
+        mmr = Core.minMaxLoc(bartenderMenuResult);
+
 
         final double matchValue = mmr.maxVal;
+        if (debug) {
+            log.debug("bartendermenu detected. Confidence(" + BARTENDER_MATCHING_THRESHOLD + "): " + matchValue);
+        }
         if (matchValue > BARTENDER_MATCHING_THRESHOLD) {
             if (!previousBartenderMatch) {
                 previousBartenderMatch = true;
