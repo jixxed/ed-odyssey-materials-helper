@@ -10,6 +10,15 @@
   //combobox
   .blueprint-list {
     @include fixedWidth(36em);
+
+    .list-cell {
+      -fx-text-fill: $text-color-white;
+
+      &:complete {
+        -fx-text-fill: $text-color-green;
+      }
+    }
+
   }
 
   .blueprint-grade-togglebutton {

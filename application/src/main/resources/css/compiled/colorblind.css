@@ -648,6 +648,10 @@
         -fx-min-width: 36em;
         -fx-pref-width: 36em;
         -fx-max-width: 36em; }
+        .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-list .list-cell {
+          -fx-text-fill: white; }
+          .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-list .list-cell:complete {
+            -fx-text-fill: #709adc; }
       .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-grade-togglebutton {
         -fx-min-width: 7.2em;
         -fx-max-height: 2em; }
@@ -2944,6 +2948,12 @@
         -fx-min-width: 36em;
         -fx-pref-width: 36em;
         -fx-max-width: 36em; }
+        .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-list .list-cell {
+          -fx-text-fill: white; }
+          .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-list .list-cell:complete {
+            -fx-text-fill: #709adc; }
+          .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-list .list-cell:trade {
+            -fx-text-fill: #dcc030; }
       .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content {
         -fx-padding: 0.25em;
         -fx-max-height: 9999;

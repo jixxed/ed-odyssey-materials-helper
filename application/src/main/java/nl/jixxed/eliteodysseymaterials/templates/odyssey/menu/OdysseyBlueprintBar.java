@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.menu;
 
+import javafx.css.PseudoClass;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
@@ -66,11 +67,14 @@ public class OdysseyBlueprintBar extends DestroyableAccordion implements Destroy
 
             private void updateStyle(final OdysseyBlueprintName item) {
                 if (BlueprintHelper.isCompletedEngineerRecipe(item) || BlueprintHelper.getCraftabilityForModuleOrUpgradeRecipe(item).equals(Craftability.CRAFTABLE)) {
-                    this.setStyle("-fx-text-fill: #89d07f;");
+                    this.pseudoClassStateChanged(PseudoClass.getPseudoClass("complete"), true);
+                    this.pseudoClassStateChanged(PseudoClass.getPseudoClass("trade"), false);
                 } else if (BlueprintHelper.getCraftabilityForModuleOrUpgradeRecipe(item).equals(Craftability.CRAFTABLE_WITH_TRADE)) {
-                    this.setStyle("-fx-text-fill: #dcc030;");
+                    this.pseudoClassStateChanged(PseudoClass.getPseudoClass("complete"), false);
+                    this.pseudoClassStateChanged(PseudoClass.getPseudoClass("trade"), true);
                 } else {
-                    this.setStyle("-fx-text-fill: white;");
+                    this.pseudoClassStateChanged(PseudoClass.getPseudoClass("complete"), false);
+                    this.pseudoClassStateChanged(PseudoClass.getPseudoClass("trade"), false);
                 }
             }
         };

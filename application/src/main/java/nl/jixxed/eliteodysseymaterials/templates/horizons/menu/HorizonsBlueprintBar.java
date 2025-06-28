@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.menu;
 
+import javafx.css.PseudoClass;
 import javafx.scene.Node;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -63,9 +64,9 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
 
             private void updateStyle(final HorizonsBlueprintName item) {
                 if (item != null && BlueprintHelper.isCompletedEngineerRecipe(item)) {
-                    this.setStyle("-fx-text-fill: #89d07f;");
+                    this.pseudoClassStateChanged(PseudoClass.getPseudoClass("complete"), true);
                 } else {
-                    this.setStyle("-fx-text-fill: white;");
+                    this.pseudoClassStateChanged(PseudoClass.getPseudoClass("complete"), false);
                 }
             }
         };
