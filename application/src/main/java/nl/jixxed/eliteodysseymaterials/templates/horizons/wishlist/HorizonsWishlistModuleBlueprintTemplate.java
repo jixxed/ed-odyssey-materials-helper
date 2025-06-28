@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -44,7 +45,8 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
     private DestroyableLabel title;
     private DestroyableLabel blueprintName;
     private DestroyableLabel experimentalEffectName;
-    private DestroyableLabel settingsButton;
+    private DestroyableHBox settingsButton;
+    private DestroyableFontAwesomeIconView settingsIcon;
     private DestroyableTooltip tooltip;
     private DestroyableTooltip tooltipEffect;
     private AtomicReference<PopOver> popOverRef = new AtomicReference<>();
@@ -137,14 +139,20 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
                 .withManaged(this.wishlistUUID.equals(Wishlist.ALL.getUuid()) && wishlistBlueprint.getQuantity() > 10)
                 .withVisibility(this.wishlistUUID.equals(Wishlist.ALL.getUuid()) && wishlistBlueprint.getQuantity() > 10)
                 .build();
-        this.settingsButton = LabelBuilder.builder()
-                .withStyleClass("config")
-                .withNonLocalizedText("\u25BC")
+        this.settingsIcon = FontAwesomeIconViewBuilder.builder()
+                .withStyleClass("config-icon")
+                .withIcon(FontAwesomeIcon.ANGLE_DOWN)
+                .withManaged(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()))
+                .withVisibility(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()))
+//                .withOnMouseClicked(_ -> showGradeSettings())
+                .build();
+        this.settingsButton = BoxBuilder.builder()
+                .withStyleClass("settings-button")
+                .withNode(this.settingsIcon)
                 .withManaged(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()))
                 .withVisibility(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()))
                 .withOnMouseClicked(_ -> showGradeSettings())
-                .build();
-
+                .buildHBox();
         final DestroyableHBox titleLine = BoxBuilder.builder().withStyleClass("title-line").withNodes(title, new GrowingRegion(), quantityLabel, visibilityButton, removeBlueprint).buildHBox();
         final DestroyableHBox moduleLine = BoxBuilder.builder().withStyleClass("blueprint-line").withNodes(this.blueprintName, new GrowingRegion(), this.settingsButton).buildHBox();
         quantityLine = (HorizonsWishlist.ALL.getUuid().equals(wishlistUUID)) ? new QuantitySelect(wishlistBlueprint.getQuantity(), visible, wishlistBlueprint) : new ControllableQuantitySelect(wishlistBlueprint.getQuantity(), visible, wishlistBlueprint);
@@ -243,7 +251,7 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
                         EventService.publish(new HorizonsWishlistBlueprintAlteredEvent(this.wishlistUUID));
                     })
                     .build();
-            final DestroyableLabel experimetalEffectSelectTitle = LabelBuilder.builder()
+            final DestroyableLabel experimentalEffectSelectTitle = LabelBuilder.builder()
                     .withStyleClass("title")
                     .withText("wishlist.effect.select")
                     .build();
@@ -262,13 +270,13 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
                     })
                     .build();
             final boolean hasEffects = !items.isEmpty();
-            experimetalEffectSelectTitle.setVisible(hasEffects);
+            experimentalEffectSelectTitle.setVisible(hasEffects);
             experimentalEffectSelect.setVisible(hasEffects);
-            experimetalEffectSelectTitle.setManaged(hasEffects);
+            experimentalEffectSelectTitle.setManaged(hasEffects);
             experimentalEffectSelect.setManaged(hasEffects);
             final DestroyableVBox content = BoxBuilder.builder()
                     .withStyleClass("content")
-                    .withNodes(blueprintSelectTitle, blueprintSelect, experimetalEffectSelectTitle, experimentalEffectSelect, title, explain, grades)
+                    .withNodes(blueprintSelectTitle, blueprintSelect, experimentalEffectSelectTitle, experimentalEffectSelect, title, explain, grades)
                     .buildVBox();
             final DestroyablePopOver popOver = PopOverBuilder.builder()
                     .withStyleClass("horizons-wishlist-blueprints-module-popover")

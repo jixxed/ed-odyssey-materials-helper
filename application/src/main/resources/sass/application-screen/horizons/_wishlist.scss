@@ -214,17 +214,22 @@
               @include tooltip;
             }
 
-
-            .config {
+            .config-icon {
               -fx-cursor: hand;
+              -fx-font-size: 1.5em;
+
+              -fx-fill: $text-color-white;
 
               &:hover {
-                -fx-text-fill: $text-color-blue;
+                -fx-fill: $text-color-blue;
               }
             }
 
             @at-root {
               .horizons-wishlist-blueprints-module-popover {
+                //-fx-font-family: 'System';
+                -fx-font-size: 14px;
+                -fx-font-size: 1em;
 
                 @include popover-style;
 
@@ -245,6 +250,7 @@
                   }
 
                   .explain {
+                    -fx-font-size: 1em;
                     -fx-font-style: italic;
                     -fx-max-width: 21.5em;
                     -fx-wrap-text: true;
