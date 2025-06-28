@@ -41,6 +41,9 @@ public class Main {
             System.exit(0);
         }
         log.info("launching app with java version: " + getVersion());
+        if (System.getProperty("sentry.dsn") == null || System.getProperty("sentry.dsn").isBlank() || System.getProperty("sentry.dsn").equals("null")) {
+            log.error("Sentry DSN is not set. Please set the DSN.");
+        }
         Sentry.init(options -> {
 
             final String buildVersion = getBuildVersion();
