@@ -6,9 +6,5 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Some AR detection improvements. Prevent text from appearing on bartender sell menu, since it is not supported.
-Changed FC and WL to FLEETCARRIER and WISHLIST in the AR overlay for clarity
-Fixed column spacing in wishlist text export
-Fixed wishlist counts for higher quantities in trade suggestions, exports and AR overlay
-Redesign of commodity and material cards to include categories
-Updated Russian and Chinese translations
+Added colorblind support (WIP). You can select the style in Settings > General
+Added fontawesome and replaced the chevron down icon for the wishlist items
