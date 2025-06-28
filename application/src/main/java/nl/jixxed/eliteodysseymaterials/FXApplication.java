@@ -105,6 +105,7 @@ public class FXApplication extends Application {
 
     @Override
     public void start(final Stage primaryStage) {
+        System.setProperty("de.jensd.fx.glyphs.fontawesome.disableCSS", "true");
         DeeplinkHelper.setFxApplication(this);
         NotificationService.init();
         LocationService.init();

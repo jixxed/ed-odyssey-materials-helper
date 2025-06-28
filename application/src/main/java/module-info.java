@@ -39,6 +39,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires static lombok;
     requires transitive javafx.controls;
     requires transitive javafx.media;
+    requires de.jensd.fx.glyphs.fontawesome;
 
     exports nl.jixxed.eliteodysseymaterials.domain.ships;
     exports nl.jixxed.eliteodysseymaterials.domain;

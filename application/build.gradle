@@ -204,6 +204,8 @@ dependencies {
     implementation "org.apache.xmlbeans:xmlbeans"
     implementation "com.zaxxer:SparseBitSet"
     implementation "io.sentry:sentry"
+    implementation 'de.jensd:fontawesomefx-commons'
+    implementation 'de.jensd:fontawesomefx-fontawesome'
 //    implementation "io.sentry:sentry-logback"
     implementation "com.google.j2objc:j2objc-annotations:${project.getProperties().version_j2objc_annotations}"
 
