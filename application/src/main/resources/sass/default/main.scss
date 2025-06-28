@@ -23,3 +23,9 @@
 @import "common/notifications";
 
 //@import "old";
+
+
+//bugfix?
+.combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:pressed:filled:selected {
+  -fx-background-color: rgba(51, 51, 51, 1);
+}

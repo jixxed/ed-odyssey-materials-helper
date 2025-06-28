@@ -29,10 +29,14 @@ plugins {
 //compileSass.configure {
 //    options.compilerArgs += ['-Xdoclint:none', '-Xlint:none', '-nowarn']
 //}
-compileSass {
+tasks.register('compileSassDefault', compileSass.getClass()) {
+    group = 'build'
     def skipProvider = providers.gradleProperty("skipSass")
     onlyIf("there is no property skipHello") {
         !skipProvider.present
+    }
+    source = fileTree('src/main/resources/sass/default') {
+        include '**/*.scss'
     }
     destinationDir = file("src/main/resources/css/compiled")
     indent = "  "
@@ -46,6 +50,23 @@ compileSass {
     sourceMapEnabled = false
 }
 
+tasks.register('compileSassColorblind', compileSass.getClass()) {
+    group = 'build'
+    description = 'Compiles Sass files to CSS'
+    source = fileTree('src/main/resources/sass/colorblind') {
+        include '**/*.scss'
+    }
+    destinationDir = file('src/main/resources/css/compiled')
+    indent = '  '
+    linefeed = '\n'
+    omitSourceMapUrl = false
+    outputStyle = 'NESTED'
+    precision = 8
+    sourceComments = false
+    sourceMapContents = false
+    sourceMapEmbed = false
+    sourceMapEnabled = false
+}
 tasks.register('wrapper', Wrapper) {
     gradleVersion "8.14.1"
 }
@@ -639,4 +660,9 @@ afterEvaluate {
 //}
 
 // Ensure Sass compiles before Java compilation
-compileJava.dependsOn compileSass
+compileJava.dependsOn compileSassDefault
+compileJava.dependsOn compileSassColorblind
+tasks.named('compileSass') {
+    dependsOn tasks.named('compileSassDefault')
+    dependsOn tasks.named('compileSassColorblind')
+}

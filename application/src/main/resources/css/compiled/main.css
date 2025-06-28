@@ -3918,3 +3918,6 @@
 .notification-bar.dark > .pane .title,
 .notification-bar.dark > .pane .label {
   -fx-text-fill: #ffffff; }
+
+.combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:pressed:filled:selected {
+  -fx-background-color: #333333; }

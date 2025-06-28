@@ -15,6 +15,7 @@ import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
+import nl.jixxed.eliteodysseymaterials.enums.StyleSheet;
 import nl.jixxed.eliteodysseymaterials.export.CsvExporter;
 import nl.jixxed.eliteodysseymaterials.export.TextExporter;
 import nl.jixxed.eliteodysseymaterials.export.XlsExporter;
@@ -44,6 +45,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
     private DestroyableLabel selectedFolderLabel;
     private DestroyableButton journalSelectButton;
     private DestroyableComboBox<FontSize> fontsizeSelect;
+    private DestroyableComboBox<StyleSheet> styleSheetSelect;
     private DestroyableComboBox<ApplicationLocale> languageSelect;
     private DestroyableButton urlSchemeLinkingButton;
     private DestroyableLabel urlSchemeLinkingActiveLabel;
@@ -70,6 +72,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 .build();
         final DestroyableHBox langSetting = createLangSetting();
         final DestroyableHBox fontSetting = creatFontSetting();
+        final DestroyableHBox styleSheetSetting = creatStyleSheetSetting();
         final DestroyableHBox customJournalFolderSetting = createCustomJournalFolderSetting();
         final DestroyableHBox pollSetting = createPollSetting();
         final DestroyableHBox urlSchemeLinkingSetting = createUrlSchemeLinkingSetting();
@@ -83,6 +86,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 generalLabel,
                 langSetting,
                 fontSetting,
+                styleSheetSetting,
                 customJournalFolderSetting,
                 pollSetting,
                 urlSchemeLinkingSetting
@@ -98,6 +102,34 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 importSlefFromClipboardSetting,
                 supportPackageSetting
         );
+    }
+
+    private DestroyableHBox creatStyleSheetSetting() {
+        final DestroyableLabel styleSheetLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.stylesheet")
+                .build();
+        this.styleSheetSelect = ComboBoxBuilder.builder(StyleSheet.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(LocaleService.getListBinding(StyleSheet::values))
+                .withSelected(StyleSheet.valueOf(PreferencesService.getPreference(PreferenceConstants.STYLESHEET, "DEFAULT")))
+                .withValueChangeListener((obs, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        PreferencesService.setPreference(PreferenceConstants.STYLESHEET, newValue.name());
+                        for (final StyleSheet styleSheet : StyleSheet.values()) {
+                            FXApplication.getInstance().getPrimaryStage().getScene().getStylesheets().remove(getClass().getResource(styleSheet.getStyleSheet()).toExternalForm());
+                        }
+                        FXApplication.getInstance().getPrimaryStage().getScene().getStylesheets().add(getClass().getResource(newValue.getStyleSheet()).toExternalForm());
+//                        EventService.publish(new StyleSheetChangedEvent(newValue));
+                    }
+                })
+                .asLocalized()
+                .build();
+
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(styleSheetLabel, this.styleSheetSelect)
+                .buildHBox();
     }
 
     private DestroyableHBox createDarkModeSetting() {

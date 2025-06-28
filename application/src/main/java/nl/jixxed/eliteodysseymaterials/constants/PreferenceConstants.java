@@ -56,4 +56,6 @@ public class PreferenceConstants {
     public static final String FLIP_WISHLIST_REMAINING_AVAILABLE_ODYSSEY = "flip.wishlist.remaining.available.odyssey";
     public static final String TOOLTIP_BLUEPRINT_EXPANDED = "tooltip.blueprint.expanded";
     public static final String DARK_MODE = "application.dark.mode";
+    public static final String STYLESHEET = "application.stylesheet";
+
 }

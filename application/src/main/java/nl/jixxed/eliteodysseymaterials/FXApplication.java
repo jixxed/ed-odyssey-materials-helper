@@ -36,6 +36,7 @@ import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
+import nl.jixxed.eliteodysseymaterials.enums.StyleSheet;
 import nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper;
 import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
@@ -66,7 +67,6 @@ import static nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper.deeplinkCons
 public class FXApplication extends Application {
 
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private static final String MAIN_STYLESHEET = "/css/compiled/sass/main.css";
 
     private ApplicationScreen applicationScreen;
     private TimeStampedGameStateWatcher timeStampedCargoWatcher;
@@ -448,8 +448,13 @@ public class FXApplication extends Application {
         if (VersionService.getBuildVersion() == null) {//dev mode for hotswap css
             try {
                 final String currentWorkingDirectory = new File(".").getCanonicalPath();
-                final File compiledCss = new File(currentWorkingDirectory + "/src/main/resources/css/compiled/sass/main.css");
-                scene.getStylesheets().add(compiledCss.toURI().toURL().toExternalForm());
+                final File mainCss = new File(currentWorkingDirectory + "/src/main/resources/css/compiled/main.css");
+                final File colorblindCss = new File(currentWorkingDirectory + "/src/main/resources/css/compiled/colorblind.css");
+
+                switch (StyleSheet.valueOf(PreferencesService.getPreference(PreferenceConstants.STYLESHEET, "DEFAULT"))) {
+                    case DEFAULT -> scene.getStylesheets().add(mainCss.toURI().toURL().toExternalForm());
+                    case COLORBLIND -> scene.getStylesheets().add(colorblindCss.toURI().toURL().toExternalForm());
+                }
 
                 AtomicReference<FileListener> fileListenerRef = new AtomicReference<>();
                 subscribe = Observable.<String>create(emitter -> {
@@ -463,7 +468,7 @@ public class FXApplication extends Application {
                                 public void onModified(FileEvent event) {
                                     var pathToCss = "";
                                     try {
-                                        pathToCss = compiledCss.toURI().toURL().toExternalForm();
+                                        pathToCss = event.getFile().toURI().toURL().toExternalForm();//compiledCss.toURI().toURL().toExternalForm();
                                     } catch (final IOException e) {
                                         log.error("Error loading modified css", e);
                                     }
@@ -480,15 +485,21 @@ public class FXApplication extends Application {
                         .observeOn(Schedulers.io())
                         .subscribe(cssFile -> Platform.runLater(() -> {
                             log.info("reloading stylesheet {}", cssFile);
-                            scene.getStylesheets().remove(cssFile);
+                            try {
+                                scene.getStylesheets().remove(mainCss.toURI().toURL().toExternalForm());
+                                scene.getStylesheets().remove(colorblindCss.toURI().toURL().toExternalForm());
+                            } catch (final IOException e) {
+                                log.error("Error loading modified css", e);
+                            }
+                            log.info("reloaded stylesheet {}", cssFile);
                             scene.getStylesheets().add(cssFile);
                         }));
-                FileService.subscribe(currentWorkingDirectory + "/src/main/resources/css/compiled/sass", false, fileListenerRef.get());
+                FileService.subscribe(currentWorkingDirectory + "/src/main/resources/css/compiled", false, fileListenerRef.get());
             } catch (final IOException e) {
                 log.error("Error loading stylesheet", e);
             }
         } else {
-            scene.getStylesheets().add(getClass().getResource(MAIN_STYLESHEET).toExternalForm());
+            scene.getStylesheets().add(getClass().getResource(StyleSheet.valueOf(PreferencesService.getPreference(PreferenceConstants.STYLESHEET, "DEFAULT")).getStyleSheet()).toExternalForm());
             scene.getStylesheets().add(getClass().getResource("/notificationpopup.css").toExternalForm());
         }
         addCustomCss(scene);
@@ -512,7 +523,7 @@ public class FXApplication extends Application {
             urlSchemeStage.initModality(Modality.APPLICATION_MODAL);
             final JMetro jMetro = new JMetro(Style.DARK);
             jMetro.setScene(urlSchemeScene);
-            urlSchemeScene.getStylesheets().add(getClass().getResource(MAIN_STYLESHEET).toExternalForm());
+            urlSchemeScene.getStylesheets().add(getClass().getResource(StyleSheet.valueOf(PreferencesService.getPreference(PreferenceConstants.STYLESHEET, "DEFAULT")).getStyleSheet()).toExternalForm());
             urlSchemeStage.setScene(urlSchemeScene);
             urlSchemeStage.titleProperty().set("Register url scheme");
             urlSchemeStage.showAndWait();
@@ -528,7 +539,7 @@ public class FXApplication extends Application {
             eddnStage.initModality(Modality.APPLICATION_MODAL);
             final JMetro jMetro = new JMetro(Style.DARK);
             jMetro.setScene(eddnScene);
-            eddnScene.getStylesheets().add(getClass().getResource(MAIN_STYLESHEET).toExternalForm());
+            eddnScene.getStylesheets().add(getClass().getResource(StyleSheet.valueOf(PreferencesService.getPreference(PreferenceConstants.STYLESHEET, "DEFAULT")).getStyleSheet()).toExternalForm());
             eddnStage.setScene(eddnScene);
             eddnStage.titleProperty().set("EDDN Support");
             eddnStage.showAndWait();
@@ -553,7 +564,7 @@ public class FXApplication extends Application {
                 versionStage.initModality(Modality.APPLICATION_MODAL);
                 final JMetro jMetro = new JMetro(Style.DARK);
                 jMetro.setScene(versionScene);
-                versionScene.getStylesheets().add(getClass().getResource(MAIN_STYLESHEET).toExternalForm());
+                versionScene.getStylesheets().add(getClass().getResource(StyleSheet.valueOf(PreferencesService.getPreference(PreferenceConstants.STYLESHEET, "DEFAULT")).getStyleSheet()).toExternalForm());
                 versionStage.setScene(versionScene);
                 versionStage.titleProperty().set("New version");
                 versionStage.setAlwaysOnTop(true);
@@ -572,7 +583,7 @@ public class FXApplication extends Application {
             policyStage.initModality(Modality.APPLICATION_MODAL);
             final JMetro jMetro = new JMetro(Style.DARK);
             jMetro.setScene(policyScene);
-            policyScene.getStylesheets().add(getClass().getResource(MAIN_STYLESHEET).toExternalForm());
+            policyScene.getStylesheets().add(getClass().getResource(StyleSheet.valueOf(PreferencesService.getPreference(PreferenceConstants.STYLESHEET, "DEFAULT")).getStyleSheet()).toExternalForm());
             policyStage.setScene(policyScene);
             policyStage.titleProperty().set("What's new & privacy policy");
             policyStage.setAlwaysOnTop(true);
