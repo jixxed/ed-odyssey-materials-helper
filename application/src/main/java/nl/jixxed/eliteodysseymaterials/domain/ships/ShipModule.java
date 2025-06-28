@@ -82,7 +82,7 @@ public abstract class ShipModule implements Serializable {
             AntiCorrosionCargoRack.ANTI_CORROSION_CARGO_RACKS,
             AutoFieldMaintenanceUnit.AUTO_FIELD_MAINTENANCE_UNITS,
             CargoRack.CARGO_RACKS,
-            OptimisedCargoRack.OPTIMISED_CARGO_RACKS,
+            MkIICargoRack.MK_II_CARGO_RACKS,
             CollectorLimpetController.COLLECTOR_LIMPET_CONTROLLERS,
             Computer.COMPUTERS,
             DecontaminationLimpetController.DECONTAMINATION_LIMPET_CONTROLLERS,

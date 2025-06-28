@@ -19,19 +19,19 @@ public class ShipConfigDiscoveryTest {
     void findShipStats() {
 
         ShipModule.getBasicModules();
-        final Ship corsair = Ship.CORSAIR;
+        final Ship ship = Ship.PANTHER_CLIPPER_MK_II;
         //Fill in MASS and FUEL_RESERVE on the ship
 
-//        findTopSpeed(corsair, 288.0, 0.5);
-//        findBoostSpeed(corsair, 366.0, 0.5);
-//        findPitch(corsair, 26.78, 0.5);
-//        findRoll(corsair, 82.40, 0.5);
-//        findYaw(corsair, 10.30, 0.5);
-//        findShieldStrength(corsair, 264.0, 0.5);
-//        findArmourStrength(corsair, 486.0, 0.5);
+//        findTopSpeed(ship, 182.0, 0.5);
+//        findBoostSpeed(ship, 253.0, 0.5);
+//        findPitch(ship, 26.78, 0.5);
+//        findRoll(ship, 82.40, 0.5);
+//        findYaw(ship, 10.30, 0.5);
+//        findShieldStrength(ship, 385.0, 0.5);
+//        findArmourStrength(ship, 1116.0, 0.5);
 // Requires TOP_SPEED to be set
-//        findMinThrust(corsair, 185.0, 0.5);
-//        findMinPitch(corsair, 14.12, 0.5D);
+//        findMinThrust(ship, 185.0, 0.5);
+//        findMinPitch(ship, 14.12, 0.5D);
 
     }
 

@@ -11,20 +11,20 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class OptimisedCargoRack extends CargoOptionalModule {
-    public static final OptimisedCargoRack OPTIMISED_CARGO_RACK_7_E = new OptimisedCargoRack("OPTIMISED_CARGO_RACK_7_E", HorizonsBlueprintName.OPTIMISED_CARGO_RACK, ModuleSize.SIZE_7, ModuleClass.E, 0, "Int_OptimisedCargoRack_Size7_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY, 192.0)));
-    public static final OptimisedCargoRack OPTIMISED_CARGO_RACK_8_E = new OptimisedCargoRack("OPTIMISED_CARGO_RACK_8_E", HorizonsBlueprintName.OPTIMISED_CARGO_RACK, ModuleSize.SIZE_8, ModuleClass.E, 0, "Int_OptimisedCargoRack_Size8_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY, 384.0)));
+public class MkIICargoRack extends CargoOptionalModule {
+    public static final MkIICargoRack MK_II_CARGO_RACK_7_D = new MkIICargoRack("MK_II_CARGO_RACK_7_D", HorizonsBlueprintName.MK_II_CARGO_RACK, ModuleSize.SIZE_7, ModuleClass.D, 0, "Int_MkIICargoRack_Size7_Class2", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY, 192.0)));
+    public static final MkIICargoRack MK_II_CARGO_RACK_8_D = new MkIICargoRack("MK_II_CARGO_RACK_8_D", HorizonsBlueprintName.MK_II_CARGO_RACK, ModuleSize.SIZE_8, ModuleClass.D, 0, "Int_MkIICargoRack_Size8_Class2", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY, 384.0)));
 
-    public static final List<OptimisedCargoRack> OPTIMISED_CARGO_RACKS = List.of(
-            OPTIMISED_CARGO_RACK_7_E,
-            OPTIMISED_CARGO_RACK_8_E
+    public static final List<MkIICargoRack> MK_II_CARGO_RACKS = List.of(
+            MK_II_CARGO_RACK_7_D,
+            MK_II_CARGO_RACK_8_D
     );
 
-    public OptimisedCargoRack(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
+    public MkIICargoRack(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, basePrice, internalName, attributes);
     }
 
-    private OptimisedCargoRack(final OptimisedCargoRack cargoRack) {
+    private MkIICargoRack(final MkIICargoRack cargoRack) {
         super(cargoRack);
     }
 
@@ -39,8 +39,8 @@ public class OptimisedCargoRack extends CargoOptionalModule {
     }
 
     @Override
-    public OptimisedCargoRack Clone() {
-        return new OptimisedCargoRack(this);
+    public MkIICargoRack Clone() {
+        return new MkIICargoRack(this);
     }
 
     @Override

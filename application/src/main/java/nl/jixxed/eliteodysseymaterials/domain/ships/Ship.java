@@ -2659,12 +2659,12 @@ public class Ship {
             0,
             0,
             Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, Double.NaN),//unittest
-                    Map.entry(HorizonsModifier.BOOST_SPEED, Double.NaN),//unittest
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, Double.NaN),//from the buy screen
-                    Map.entry(HorizonsModifier.SHIELDS, Double.NaN),//unittest
-                    Map.entry(HorizonsModifier.ARMOUR, Double.NaN),//unittest
-                    Map.entry(HorizonsModifier.MASS, Double.NaN),//from the buy screen
+                    Map.entry(HorizonsModifier.TOP_SPEED, 179.0),//unittest
+                    Map.entry(HorizonsModifier.BOOST_SPEED, 249.0),//unittest
+                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 0.0),//from the buy screen
+                    Map.entry(HorizonsModifier.SHIELDS, 350.0),//unittest
+                    Map.entry(HorizonsModifier.ARMOUR, 620.0),//unittest
+                    Map.entry(HorizonsModifier.MASS, 1200.0),//from the buy screen
                     Map.entry(HorizonsModifier.MINIMUM_THRUST, Double.NaN),//ingame testing
                     Map.entry(HorizonsModifier.BOOST_INTERVAL, Double.NaN),//ingame testing
                     Map.entry(HorizonsModifier.BOOST_COST, Double.NaN),//ingame testing
@@ -2675,7 +2675,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.HEAT_CAPACITY, Double.NaN),//ingame testing
                     Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, Double.NaN),//ingame testing
                     Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, Double.NaN),//ingame testing
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, Double.NaN),//from journal
+                    Map.entry(HorizonsModifier.FUEL_RESERVE, 1.5),//from journal
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, Double.NaN),//side panel (Armour Rating)
                     Map.entry(HorizonsModifier.MASS_LOCK, Double.NaN)//ingame testing
             ),
@@ -2688,8 +2688,8 @@ public class Ship {
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(5).slotSize(2).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(6).slotSize(1).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(7).slotSize(1).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(8).slotSize(1).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(9).slotSize(1).build()
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(8).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(9).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
             ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(960).y(540).index(0).slotSize(0).build(),
@@ -2710,8 +2710,8 @@ public class Ship {
                     Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(7).shipModule(FuelTank.FUEL_TANK_7_C).build()
             ),
             List.of(
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(8).build(),
-                    Slot.builder().slotType(SlotType.CARGO).index(1).slotSize(8).build(),
+                    Slot.builder().slotType(SlotType.CARGO).index(0).slotSize(8).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(8).build(),
                     Slot.builder().slotType(SlotType.CARGO).index(2).slotSize(7).build(),
                     Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(7).build(),
                     Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(6).build(),
@@ -2843,7 +2843,7 @@ public class Ship {
 
     public double getMaxCargo() {
         return this.getOptionalSlots().stream()
-                .filter(slot -> slot.getShipModule() instanceof CargoRack || slot.getShipModule() instanceof AntiCorrosionCargoRack || slot.getShipModule() instanceof OptimisedCargoRack)
+                .filter(slot -> slot.getShipModule() instanceof CargoRack || slot.getShipModule() instanceof AntiCorrosionCargoRack || slot.getShipModule() instanceof MkIICargoRack)
                 .map(Slot::getShipModule)
                 .map(shipModule -> (double) shipModule.getAttributeValue(HorizonsModifier.CARGO_CAPACITY))
                 .mapToDouble(Double::doubleValue)
@@ -2852,8 +2852,8 @@ public class Ship {
 
     public double getMaxPotentialCargo() {
         return this.getOptionalSlots().stream()
-                .filter(slot -> slot.getSlotType().equals(SlotType.OPTIONAL))
-                .mapToDouble(slot -> Math.pow(2, slot.getSlotSize()))
+                .filter(slot -> slot.getSlotType().equals(SlotType.OPTIONAL) || slot.getSlotType().equals(SlotType.CARGO))
+                .mapToDouble(slot -> Math.pow(2, slot.getSlotSize()) * (slot.getSlotType().equals(SlotType.CARGO) ? 1.5 : 1.0))
                 .sum();
     }
 
