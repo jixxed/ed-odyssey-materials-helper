@@ -90,22 +90,22 @@ public class BarterConstants {
             Map.entry(Good.TRUEFORMFOSSIL, 100_000),
             Map.entry(Good.UNIVERSALTRANSLATOR, 10_000),
             Map.entry(Good.VEHICLESCHEMATIC, 70_000),
-//            Map.entry(Good.WEAPONSCHEMATIC, 0_000),
-//            Map.entry(Good.POWERINDUSTRIAL, 0_000),
-//            Map.entry(Good.POWERMISCINDUST, 0_000),
+            Map.entry(Good.WEAPONSCHEMATIC, 35_000),
+            Map.entry(Good.POWERMISCINDUST, 100_000),
             Map.entry(Good.POWERINVENTORY, 100_000),
-//            Map.entry(Good.POWERPLAYMILITARY, 0_000),
             Map.entry(Good.POWERELECTRONICS, 100_000),
-//            Map.entry(Good.POWERCOMPUTER, 0_000),
-//            Map.entry(Good.POWEREXPERIMENT, 0_000),
-//            Map.entry(Good.POWERAGRICULTURE, 0_000),
-//            Map.entry(Good.POWERMEDICAL, 0_000),
-//            Map.entry(Good.POWEREXTRACTION, 0_000),
-//            Map.entry(Good.POWERMISCCOMPUTER, 0_000),
-//            Map.entry(Good.POWERSECURITY, 0_000),
-//            Map.entry(Good.POWERPOWER, 0_000),
-//            Map.entry(Good.POWEREQUIPMENT, 0_000),
+            Map.entry(Good.POWERCOMPUTER, 100_000),
+            Map.entry(Good.POWEREXPERIMENT, 100_000),
+            Map.entry(Good.POWERAGRICULTURE, 100_000),
+            Map.entry(Good.POWERMEDICAL, 100_000),
+            Map.entry(Good.POWERMISCCOMPUTER, 100_000),
+            Map.entry(Good.POWERSECURITY, 100_000),
+            Map.entry(Good.POWERPOWER, 100_000),
+            Map.entry(Good.POWEREQUIPMENT, 100_000),
             Map.entry(Good.POWERRESEARCH, 100_000),
+            Map.entry(Good.POWERINDUSTRIAL, 100_000),//assumed
+            Map.entry(Good.POWERPLAYMILITARY, 100_000),//assumed
+            Map.entry(Good.POWEREXTRACTION, 100_000),//assumed
 
             Map.entry(Data.ACCIDENTLOGS, 4_000),
             Map.entry(Data.AIRQUALITYREPORTS, 3_000),
@@ -221,8 +221,8 @@ public class BarterConstants {
             Map.entry(Data.WEAPONINVENTORY, 9_000),
             Map.entry(Data.WEAPONTESTDATA, 15_000),
             Map.entry(Data.XENODEFENCEPROTOCOLS, 25_000),
-//            Map.entry(Data.POWERPREPARATIONSPYWARE, 25_000),//check - assumed
-//            Map.entry(Data.POWERSPYWARE, 25_000),//check - assumed
+            Map.entry(Data.POWERPREPARATIONSPYWARE, 25_000),
+            Map.entry(Data.POWERSPYWARE, 25_000),
 //            Map.entry(Data.POWERMEGASHIPDATA, 0_000),//todo
             Map.entry(Data.POWERRESEARCHDATA, 21_000),
             Map.entry(Data.POWEREMPLOYEEDATA, 18_000),
