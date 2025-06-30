@@ -42,29 +42,22 @@ public enum OdysseyMaterialShow {
     public static Predicate<? super OdysseyMaterial> getFilter(final Search search) {
         return switch (search.getMaterialShow()) {
             case ALL -> material -> true;
-            case ALL_WITH_STOCK ->
-                    material -> StorageService.getMaterialCount(material,AmountType.TOTAL) > 0;
-            case BACKPACK ->
-                    material -> StorageService.getMaterialCount(material,AmountType.BACKPACK) > 0;
-            case FLEETCARRIER ->
-                    material -> StorageService.getMaterialCount(material,AmountType.FLEETCARRIER) > 0;
-            case BLUEPRINT ->
-                    OdysseyBlueprintConstants::isBlueprintIngredientWithOverride;
+            case ALL_WITH_STOCK -> material -> StorageService.getMaterialCount(material, AmountType.TOTAL) > 0;
+            case BACKPACK -> material -> StorageService.getMaterialCount(material, AmountType.BACKPACK) > 0;
+            case FLEETCARRIER -> material -> StorageService.getMaterialCount(material, AmountType.FLEETCARRIER) > 0;
+            case BLUEPRINT -> OdysseyBlueprintConstants::isBlueprintIngredientWithOverride;
             case IRRELEVANT -> OdysseyMaterialShow::getIrrelevantFilter;
             case IRRELEVANT_WITH_STOCK ->
-                    material -> getIrrelevantFilter(material) && StorageService.getMaterialCount(material,AmountType.TOTAL) > 0;
+                    material -> getIrrelevantFilter(material) && StorageService.getMaterialCount(material, AmountType.TOTAL) > 0;
             case PROHIBITED -> OdysseyMaterial::isIllegal;
             case POWERPLAY -> OdysseyMaterial::isPowerplay;
-            case ALL_ENGINEER ->
-                    OdysseyBlueprintConstants::isEngineeringIngredient;
-            case REQUIRED_ENGINEER ->
-                    OdysseyBlueprintConstants::isEngineeringIngredientAndNotCompleted;
+            case ALL_ENGINEER -> OdysseyBlueprintConstants::isEngineeringIngredient;
+            case REQUIRED_ENGINEER -> OdysseyBlueprintConstants::isEngineeringIngredientAndNotCompleted;
             case ALL_ENGINEER_BLUEPRINT ->
                     material -> OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(material) || OdysseyBlueprintConstants.isEngineeringIngredient(material);
             case REQUIRED_ENGINEER_BLUEPRINT ->
                     material -> OdysseyBlueprintConstants.isEngineeringIngredientAndNotCompleted(material) || OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(material);
-            case FAVOURITES ->
-                    FavouriteService::isFavourite;
+            case FAVOURITES -> FavouriteService::isFavourite;
             case NOT_ON_WISHLIST -> material -> {
                 final int amountOnAllWishlists = Wishlist.ALL.getItems().stream().map(odysseyWishlistBlueprint -> OdysseyBlueprintConstants.getRecipe(odysseyWishlistBlueprint.getRecipeName()).getRequiredAmount(material)).mapToInt(Integer::intValue).sum();
                 final Integer materialCount = StorageService.getMaterialCount(material, AmountType.TOTAL);
@@ -74,6 +67,6 @@ public enum OdysseyMaterialShow {
     }
 
     private static boolean getIrrelevantFilter(final OdysseyMaterial odysseyMaterial) {
-        return APPLICATION_STATE.getSoloMode() ? OdysseyBlueprintConstants.isNotRelevantWithOverrideAndNotRequiredEngineeringIngredient(odysseyMaterial) : OdysseyBlueprintConstants.isNotRelevantAndNotEngineeringIngredient(odysseyMaterial);
+        return !odysseyMaterial.isPowerplay() && (APPLICATION_STATE.getSoloMode() ? OdysseyBlueprintConstants.isNotRelevantWithOverrideAndNotRequiredEngineeringIngredient(odysseyMaterial) : OdysseyBlueprintConstants.isNotRelevantAndNotEngineeringIngredient(odysseyMaterial));
     }
 }

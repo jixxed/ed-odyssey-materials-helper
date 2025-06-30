@@ -185,10 +185,10 @@ public class OdysseyMaterialOverview extends DestroyableVBox implements Destroya
 
         double availableWidth = 1 + newValue.doubleValue() - ScalingHelper.getPixelDoubleFromEm(2D);
 
+        final long numberOfCards = flowPane.getChildren().stream().filter(Node::isVisible).count();
         if (Orientation.VERTICAL.equals(flowPane.getOrientation())) {
             if (!flowPane.getNodes().isEmpty()) {
                 final OdysseyMaterialCard card = flowPane.getNodes().get(0);
-                final long numberOfCards = flowPane.getChildren().stream().filter(Node::isVisible).count();
                 final double materialCardWidth = 0.5 + (card.getWidth() > 0 ? card.getWidth() : card.getPrefWidth());
                 final double materialCardHeight = 0.5 + (card.getHeight() > 0 ? card.getHeight() : card.getPrefHeight());
                 int count = 0;
@@ -208,6 +208,8 @@ public class OdysseyMaterialOverview extends DestroyableVBox implements Destroya
         } else {
             resetFlowPaneHeight(flowPane);
         }
+        flowPane.setVisible(numberOfCards > 0);
+        flowPane.setManaged(numberOfCards > 0);
     }
 
     private void resetFlowPaneHeight(final FlowPane flowPane) {
