@@ -76,7 +76,7 @@ public class ShipSelectView extends DestroyableVBox implements DestroyableTempla
             values.put("ship.view.header.slot.powerdistribution", () -> Formatters.NUMBER_FORMAT_0.format(ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION)).findFirst().map(Slot::getSlotSize).orElse(0)));
             values.put("ship.view.header.slot.sensors", () -> Formatters.NUMBER_FORMAT_0.format(ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_SENSORS)).findFirst().map(Slot::getSlotSize).orElse(0)));
             values.put("ship.view.header.slot.fueltank", () -> Formatters.NUMBER_FORMAT_0.format(ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_FUEL_TANK)).findFirst().map(Slot::getSlotSize).orElse(0)));
-            values.put("ship.view.header.slot.optional", () -> ship.getOptionalSlots().stream().map(slot -> slot.getSlotType().equals(SlotType.MILITARY) ? "M" + slot.getSlotSizeName() : slot.getSlotSizeName()).collect(Collectors.joining(" ")));
+            values.put("ship.view.header.slot.optional", () -> ship.getOptionalSlots().stream().map(ShipSelectView::getSlotSizeName).collect(Collectors.joining(" ")));
             table.add(ship, values);
         });
 
@@ -125,6 +125,14 @@ public class ShipSelectView extends DestroyableVBox implements DestroyableTempla
                                 }))
                         .buildHBox()));
         update();
+    }
+
+    private static String getSlotSizeName(Slot slot) {
+        return switch (slot.getSlotType()) {
+            case CARGO -> "C" + slot.getSlotSizeName();
+            case MILITARY -> "M" + slot.getSlotSizeName();
+            default -> slot.getSlotSizeName();
+        };
     }
 
     private void sortTable(String key) {

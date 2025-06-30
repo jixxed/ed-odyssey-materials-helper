@@ -1206,9 +1206,9 @@
         -fx-pref-width: 8em;
         -fx-max-width: 8em; }
       .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-slot-hardpoints {
-        -fx-min-width: 9em;
-        -fx-pref-width: 9em;
-        -fx-max-width: 9em; }
+        -fx-min-width: 10em;
+        -fx-pref-width: 10em;
+        -fx-max-width: 10em; }
       .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-selection .ship-select-view .col-slot-utility {
         -fx-min-width: 5em;
         -fx-pref-width: 5em;
@@ -1526,9 +1526,9 @@
         -fx-max-width: 6em;
         -fx-pref-width: 6em; }
       .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-slot-hardpoints {
-        -fx-min-width: 9em;
-        -fx-max-width: 9em;
-        -fx-pref-width: 9em; }
+        -fx-min-width: 10em;
+        -fx-max-width: 10em;
+        -fx-pref-width: 10em; }
       .app .application-screen .horizons-tab-content .shipbuilder-tab-content .ship-view-header-slot-utility {
         -fx-min-width: 5em;
         -fx-max-width: 5em;

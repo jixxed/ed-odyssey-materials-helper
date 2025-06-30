@@ -128,7 +128,7 @@
       }
 
       .col-slot-hardpoints {
-        @include fixedWidth(9em);
+        @include fixedWidth(10em);
       }
 
       .col-slot-utility {
@@ -587,9 +587,9 @@
   }
 
   .ship-view-header-slot-hardpoints {
-    -fx-min-width: 9em;
-    -fx-max-width: 9em;
-    -fx-pref-width: 9em;
+    -fx-min-width: 10em;
+    -fx-max-width: 10em;
+    -fx-pref-width: 10em;
   }
 
   .ship-view-header-slot-utility {
