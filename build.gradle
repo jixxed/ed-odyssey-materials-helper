@@ -116,7 +116,7 @@ ext {
     version_logback = "1.5.18"
     version_jackson = "2.19.1"
     version_jna = "5.17.0"
-    version_junit_jupiter = "5.13.1"
+    version_junit_jupiter = "5.13.2"
     version_junit_platform = "1.13.2"
     version_javafx = "23.0.1"
     version_controlsfx = "11.2.2"
