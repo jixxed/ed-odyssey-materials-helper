@@ -1,3 +1,9 @@
+Version 2.197
+-------------
+Added barter prices for Powerplay materials
+Removed Powerplay materials from Irrelevant filter
+Added an elevated privileges check for Windows at the start of the application to prevent issues with running as Administrator
+
 Version 2.196
 -------------
 Updated AR detection for bartender. Should give better results at the cost of potential false positives.
