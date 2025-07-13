@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
+@SuppressWarnings("unchecked")
 public abstract class AbstractNodeBuilder<T extends AbstractNodeBuilder<T>> {
     private final List<String> styleClasses = new ArrayList<>();
     private boolean visibility = true;

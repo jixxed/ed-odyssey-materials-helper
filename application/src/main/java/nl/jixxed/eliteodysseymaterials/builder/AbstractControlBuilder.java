@@ -7,6 +7,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableCompone
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTooltip;
 
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
+@SuppressWarnings("unchecked")
 public abstract class AbstractControlBuilder<T extends AbstractControlBuilder<T>> extends AbstractNodeBuilder<T> {
 
     private DestroyableTooltip tooltip;

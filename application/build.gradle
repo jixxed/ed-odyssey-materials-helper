@@ -68,12 +68,13 @@ tasks.register('compileSassColorblind', compileSass.getClass()) {
     sourceMapEnabled = false
 }
 tasks.register('wrapper', Wrapper) {
-    gradleVersion "8.14.1"
+    gradleVersion = "8.14.3"
 }
-group 'nl.jixxed'
+group = 'nl.jixxed'
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(23)
+        languageVersion = JavaLanguageVersion.of(24)
+        vendor = JvmVendorSpec.AZUL
     }
     modularity.inferModulePath = true
 }
@@ -95,18 +96,21 @@ repositories {
     mavenCentral {
     }
     maven {
-        name 'nexus'
-        url "https://nexus.jixxed.nl/nexus/content/repositories/releases"
+        name = 'nexus'
+        url = "https://nexus.jixxed.nl/nexus/content/repositories/releases"
     }
-    maven { url 'https://jitpack.io' }
+    maven { url = 'https://jitpack.io' }
 }
 application {
     mainModule = "nl.jixxed.eliteodysseymaterials"
     mainClass = "nl.jixxed.eliteodysseymaterials.Main"
     version = project.version
 }
-
+//def javaVersion = JavaVersion.current().majorVersion as int
+//def javafxJmods = file("/path/to/javafx-jmods-24")
+//def jdkJmods = file("${System.getProperty('java.home')}/jmods")
 jlink {
+//    jmods = javaVersion >= 24 ? [javafxJmods, jdkJmods] : [jdkJmods, javafxJmods]
     mergedModule {
         excludeProvides servicePattern: 'reactor.blockhound.*'
 //        excludeProvides servicePattern: "jakarta.servlet.*"
@@ -619,15 +623,15 @@ jsonSchema2Pojo {
     // when adding JSR-303 annotations to generated Java types
     useJakartaValidation = false
 }
-buildtimetracker {
-    reporters {
-        summary {
-            ordered false
-            threshold 50
-            barstyle 'unicode'
-        }
-    }
-}
+//buildtimetracker {
+//    reporters {
+//        summary {
+//            ordered false
+//            threshold 50
+//            barstyle 'unicode'
+//        }
+//    }
+//}
 tasks.jpackageImage.doFirst {
     if (os.isWindows()) {
         ant.attrib(readonly: false) {
@@ -643,9 +647,17 @@ tasks.withType(JavaCompile).configureEach {
 }
 tasks.withType(Test).configureEach {
     jvmArgs += "--enable-preview"
+    jvmArgs += "--enable-native-access=ALL-UNNAMED"
+    jvmArgs += "--enable-native-access=com.sun.jna"
+    jvmArgs += "--enable-native-access=javafx.graphics"
+    jvmArgs += "--enable-native-access=org.openpnp"
 }
 tasks.withType(JavaExec).configureEach {
     jvmArgs += "--enable-preview"
+    jvmArgs += "--enable-native-access=ALL-UNNAMED"
+    jvmArgs += "--enable-native-access=com.sun.jna"
+    jvmArgs += "--enable-native-access=javafx.graphics,javafx.media,javafx.web"
+    jvmArgs += "--enable-native-access=org.openpnp"
 }
 afterEvaluate {
     generateEffectiveLombokConfig.mustRunAfter generateJsonSchema2Pojo

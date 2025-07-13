@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.helper;
 
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -25,7 +26,7 @@ public class CSVResourceBundle extends ResourceBundle {
                 final CSVRecord header = csvParser.iterator().next();
                 final int translationColumn = IntStream.range(2, header.size()).map(col -> {
                     final String language = header.get(col);
-                    if (!language.isEmpty() && locale.getLanguage().equals(new Locale(language).getLanguage())) {
+                    if (!language.isEmpty() && locale.getLanguage().equals(Locale.of(language).getLanguage())) {
                         return col;
                     }
                     return 0;
@@ -34,12 +35,12 @@ public class CSVResourceBundle extends ResourceBundle {
                 // reading to properties
                 StreamSupport.stream(csvParser.spliterator(), true).forEach(csvRecord -> {
                     final String key = csvRecord.get(0);
-                    try{
+                    try {
                         String translation = csvRecord.get(translationColumn);
                         translation = translation.isEmpty() ? csvRecord.get(1) : translation;
                         this.properties.put(key, translation);
-                    } catch (ArrayIndexOutOfBoundsException exception){
-                        log.error("Failed to get translation for key: " + key);
+                    } catch (ArrayIndexOutOfBoundsException exception) {
+                        log.error("Failed to get translation for key: {}", key);
                         throw exception;
                     }
                 });
@@ -58,18 +59,18 @@ public class CSVResourceBundle extends ResourceBundle {
         this.properties = properties;
     }
 
-    public static ResourceBundle getResourceBundle(final Locale locale,final String... resourceBundleNames) {
-        return BUNDLES.computeIfAbsent("merged" + locale, key -> new CSVResourceBundle(locale,resourceBundleNames));
+    public static ResourceBundle getResourceBundle(final Locale locale, final String... resourceBundleNames) {
+        return BUNDLES.computeIfAbsent("merged" + locale, key -> new CSVResourceBundle(locale, resourceBundleNames));
     }
 
     @Override
-    protected Object handleGetObject(final String key) {
+    protected Object handleGetObject(final @NonNull String key) {
         return this.properties != null ? this.properties.get(key) : this.parent.getObject(key);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public Enumeration<String> getKeys() {
+    public @NonNull Enumeration<String> getKeys() {
         return this.properties != null ? (Enumeration<String>) this.properties.propertyNames() : this.parent.getKeys();
     }
 

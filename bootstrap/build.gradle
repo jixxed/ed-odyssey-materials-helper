@@ -17,11 +17,12 @@ apply plugin: "org.beryx.jlink"
 group 'nl.jixxed'
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(23)
+        languageVersion = JavaLanguageVersion.of(24)
+        vendor = JvmVendorSpec.AZUL
     }
 }
 tasks.register('wrapper', Wrapper) {
-    gradleVersion "8.14.1"
+    gradleVersion = "8.14.3"
 }
 
 OperatingSystem os = OperatingSystem.current();
