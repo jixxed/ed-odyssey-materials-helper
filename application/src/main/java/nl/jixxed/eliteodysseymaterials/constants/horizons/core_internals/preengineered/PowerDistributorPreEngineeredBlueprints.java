@@ -30,12 +30,12 @@ public class PowerDistributorPreEngineeredBlueprints {
                             Map.of(
                             ),
                             Map.of(
-                                    HorizonsModifier.SYSTEMS_CAPACITY, new HorizonsNumberModifierValue("+45%", false, percentagePositive(0.0, 0.45)),
-                                    HorizonsModifier.SYSTEMS_RECHARGE, new HorizonsNumberModifierValue("+40%", false, percentagePositive(0.0, 0.40)),
+                                    HorizonsModifier.SYSTEMS_CAPACITY, new HorizonsNumberModifierValue("+45%", true, percentagePositive(0.0, 0.45)),
+                                    HorizonsModifier.SYSTEMS_RECHARGE, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.0, 0.40)),
                                     HorizonsModifier.ENGINES_CAPACITY, new HorizonsNumberModifierValue("+45%", true, percentagePositive(0.0, 0.45)),
                                     HorizonsModifier.ENGINES_RECHARGE, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.0, 0.40)),
                                     HorizonsModifier.WEAPONS_CAPACITY, new HorizonsNumberModifierValue("-25%", false, percentageNegative(0.0, 0.25)),
-                                    HorizonsModifier.WEAPONS_RECHARGE, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.04, 0.20))
+                                    HorizonsModifier.WEAPONS_RECHARGE, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.0, 0.20))
                             ),
                             List.of(),
                             true
