@@ -15,10 +15,7 @@ import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiFleetCar
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiMessageProcessor;
 import nl.jixxed.eliteodysseymaterials.schemas.capi.CapiFleetcarrier;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Event;
-import nl.jixxed.eliteodysseymaterials.service.EDDNService;
-import nl.jixxed.eliteodysseymaterials.service.OrderService;
-import nl.jixxed.eliteodysseymaterials.service.ReportService;
-import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
 
@@ -240,7 +237,9 @@ class MessageHandler {
             OBJECT_MAPPER2.readValue(message, CapiFleetcarrier.class);
         } catch (final Exception e) {
             //report
-            ReportService.reportJournal("capi", message, "unknown fc capi event: " + e.getMessage());
+            if (!e.getMessage().startsWith("Unexpected end-of-input"))
+                ReportService.reportJournal("capi", message, "App version: " + VersionService.getBuildVersion() + ". Unknown FC CAPI event: " + e.getMessage());
+
         }
     }
 
