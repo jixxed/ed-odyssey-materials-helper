@@ -411,10 +411,13 @@
           .app .application-screen .horizons-tab-content .engineers-tab-content .engineer-grid .engineer-card .separator .line {
             -fx-border-width: 0.1em;
             -fx-border-insets: 0.25em 0 0.25em 0; }
-          .app .application-screen .horizons-tab-content .engineers-tab-content .engineer-grid .engineer-card .image {
+          .app .application-screen .horizons-tab-content .engineers-tab-content .engineer-grid .engineer-card .engineer-image {
             -fx-min-width: 21em;
             -fx-pref-width: 21em;
-            -fx-max-width: 21em; }
+            -fx-max-width: 21em;
+            -fx-min-height: 15.8em;
+            -fx-pref-height: 15.8em;
+            -fx-max-height: 15.8em; }
           .app .application-screen .horizons-tab-content .engineers-tab-content .engineer-grid .engineer-card .text-box {
             -fx-padding: 0.25em;
             -fx-spacing: 0.1em; }
@@ -2579,10 +2582,13 @@
           .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .separator .line {
             -fx-border-width: 0.1em;
             -fx-border-insets: 0.25em 0 0.25em 0; }
-          .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .image {
+          .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .engineer-image {
             -fx-min-width: 21em;
             -fx-pref-width: 21em;
-            -fx-max-width: 21em; }
+            -fx-max-width: 21em;
+            -fx-min-height: 15.8em;
+            -fx-pref-height: 15.8em;
+            -fx-max-height: 15.8em; }
           .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .text-box {
             -fx-padding: 0.25em;
             -fx-spacing: 0.1em; }

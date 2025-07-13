@@ -107,7 +107,7 @@ public abstract class EngineerCard extends DestroyableVBox implements Destroyabl
 
     private DestroyableResizableImageView getEngineerImageView() {
         return ResizableImageViewBuilder.builder()
-                .withStyleClass("image")
+                .withStyleClass("engineer-image")
                 .withPreserveRatio(true)
                 .withImage(ImageService.getImage("/images/engineer/locked.png"))
                 .build();

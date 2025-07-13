@@ -227,8 +227,9 @@
   }
 
 
-  .image {
+  .engineer-image {
     @include fixedWidth(21em);
+    @include fixedHeight(15.8em);
   }
 
   .text-box {
