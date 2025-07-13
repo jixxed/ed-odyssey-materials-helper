@@ -6,6 +6,7 @@ Added an elevated privileges check for Windows at the start of the application t
 Fixed engineer image locked size and resizing issue when switching text size
 Fixed stats on pre-engineered power distributor showing positive effects as negative
 Add new pre-engineered Fragment Cannon from community goal
+Add blueprint split option and auto split effects on removing blueprints from remote workshop
 
 Version 2.196
 -------------

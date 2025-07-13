@@ -178,6 +178,28 @@
 
             .blueprint-line {
               -fx-spacing: 1em;
+
+              .config-icon {
+                -fx-cursor: hand;
+                -fx-font-size: 1.5em;
+
+                -fx-fill: $text-color-white;
+
+                &:hover {
+                  -fx-fill: $text-color-blue;
+                }
+              }
+
+              .split-icon {
+                -fx-cursor: hand;
+                -fx-font-size: 1em;
+
+                -fx-fill: $text-color-white;
+
+                &:hover {
+                  -fx-fill: $text-color-blue;
+                }
+              }
             }
 
             .quantity-text {
@@ -214,16 +236,6 @@
               @include tooltip;
             }
 
-            .config-icon {
-              -fx-cursor: hand;
-              -fx-font-size: 1.5em;
-
-              -fx-fill: $text-color-white;
-
-              &:hover {
-                -fx-fill: $text-color-blue;
-              }
-            }
 
             @at-root {
               .horizons-wishlist-blueprints-module-popover {

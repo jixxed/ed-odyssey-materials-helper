@@ -213,6 +213,15 @@ public class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBo
             ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
                 final HorizonsWishlists horizonsWishlists = WishlistService.getHorizonsWishlists(commander);
                 final HorizonsWishlist selectedWishlist = horizonsWishlists.getSelectedWishlist();
+                if (this.pathItem.getEngineer() == Engineer.REMOTE_WORKSHOP) {
+                    selectedWishlist.getItems().stream()
+                            .filter(bp -> !((HorizonsWishlistBlueprint) bp).getUuid().equals("-1"))
+                            .filter(bp -> this.pathItem.getRecipes().containsKey(bp.getBlueprint()))
+                            .filter(bp -> bp instanceof HorizonsModuleWishlistBlueprint)
+                            .map(HorizonsModuleWishlistBlueprint.class::cast)
+                            .filter(bp -> bp.getExperimentalEffect() != null)
+                            .forEach(bp -> splitBlueprint(commander, selectedWishlist, bp));
+                }
                 selectedWishlist.getItems().removeIf(bp -> !((HorizonsWishlistBlueprint) bp).getUuid().equals("-1") && this.pathItem.getRecipes().containsKey(bp.getBlueprint()));
                 WishlistService.saveHorizonsWishlists(commander, horizonsWishlists);
             });
@@ -224,6 +233,13 @@ public class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBo
                 WishlistService.saveOdysseyWishlists(commander, odysseyWishlists);
             });
         }
+    }
+
+    private void splitBlueprint(Commander commander, HorizonsWishlist wishlist, HorizonsModuleWishlistBlueprint blueprint) {
+        var bp = new HorizonsExperimentalWishlistBlueprint(blueprint.getExperimentalEffect());
+        bp.setRecipeName((blueprint.getRecipeName()));
+        bp.setQuantity(blueprint.getQuantity());
+        EventService.publish(new HorizonsWishlistBlueprintEvent(commander, wishlist.getUuid(), List.of(bp), Action.ADDED));
     }
 
     private HorizonsBlueprintType getBlueprintType(final EngineeringBlueprint<T> blueprint) {

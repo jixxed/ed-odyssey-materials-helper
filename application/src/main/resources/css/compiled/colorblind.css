@@ -2111,6 +2111,18 @@
                   -fx-text-fill: red; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .blueprint-line {
               -fx-spacing: 1em; }
+              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .blueprint-line .config-icon {
+                -fx-cursor: hand;
+                -fx-font-size: 1.5em;
+                -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .blueprint-line .config-icon:hover {
+                  -fx-fill: #2e92df; }
+              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .blueprint-line .split-icon {
+                -fx-cursor: hand;
+                -fx-font-size: 1em;
+                -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .blueprint-line .split-icon:hover {
+                  -fx-fill: #2e92df; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-text {
               -fx-font-style: italic; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .name {
@@ -2154,12 +2166,6 @@
               -fx-font-size: 0.85em;
               -fx-font-weight: normal;
               -fx-font-style: normal; }
-            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config-icon {
-              -fx-cursor: hand;
-              -fx-font-size: 1.5em;
-              -fx-fill: white; }
-              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .config-icon:hover {
-                -fx-fill: #2e92df; }
             .horizons-wishlist-blueprints-module-popover {
               -fx-font-size: 14px;
               -fx-font-size: 1em;

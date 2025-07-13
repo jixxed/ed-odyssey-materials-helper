@@ -45,6 +45,7 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
     private DestroyableLabel title;
     private DestroyableLabel blueprintName;
     private DestroyableLabel experimentalEffectName;
+    private DestroyableFontAwesomeIconView split;
     private DestroyableHBox settingsButton;
     private DestroyableFontAwesomeIconView settingsIcon;
     private DestroyableTooltip tooltip;
@@ -101,13 +102,13 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
                 .withText("wishlist.blueprint.horizons.title.module",
                         LocaleService.LocalizationKey.of(this.wishlistBlueprint.getBlueprintType().getLocalizationKey()),
                         gradeList.isEmpty() ? "?" : gradeList)
-                .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getPercentageToComplete().keySet().stream().findFirst().orElse(HorizonsBlueprintGrade.GRADE_1)))))
+                .withOnMouseClicked(_ -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getPercentageToComplete().keySet().stream().findFirst().orElse(HorizonsBlueprintGrade.GRADE_1)))))
                 .build();
 
         experimentalEffectName = LabelBuilder.builder()
                 .withStyleClass("name")
                 .withText(this.wishlistBlueprint.getExperimentalEffect() != null ? this.wishlistBlueprint.getExperimentalEffect().getLocalizationKey() : "blank")
-                .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(getRecipeName(), this.wishlistBlueprint.getExperimentalEffect(), null))))
+                .withOnMouseClicked(_ -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(getRecipeName(), this.wishlistBlueprint.getExperimentalEffect(), null))))
                 .build();
         this.tooltip = TooltipBuilder.builder()
                 .withStyleClass("tooltip")
@@ -120,9 +121,16 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
                 .withText(wishlistBlueprint.getExperimentalEffect() != null ? LocaleService.getToolTipStringBinding((HorizonsEngineeringBlueprint) HorizonsBlueprintConstants.getRecipe(getRecipeName(), wishlistBlueprint.getExperimentalEffect(), null), "tab.wishlist.blueprint.tooltip") : LocaleService.getStringBinding("blank"))
                 .withShowDelay(Duration.millis(100))
                 .build();
+        split = FontAwesomeIconViewBuilder.builder()
+                .withStyleClass("split-icon")
+                .withIcon(FontAwesomeIcon.EXPAND)
+                .withOnMouseClicked(_ -> splitBlueprint())
+                .build();
         tooltipEffect.install(experimentalEffectName);
         experimentalEffectName.addBinding(experimentalEffectName.visibleProperty(), this.experimentalEffectName.textProperty().isNotEmpty());
         experimentalEffectName.addBinding(experimentalEffectName.managedProperty(), this.experimentalEffectName.textProperty().isNotEmpty());
+        split.addBinding(split.visibleProperty(), this.experimentalEffectName.textProperty().isNotEmpty());
+        split.addBinding(split.managedProperty(), this.experimentalEffectName.textProperty().isNotEmpty());
         removeBlueprint = LabelBuilder.builder()
                 .withStyleClass("remove")
                 .withNonLocalizedText("\u274C")
@@ -155,14 +163,30 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
                 .buildHBox();
         final DestroyableHBox titleLine = BoxBuilder.builder().withStyleClass("title-line").withNodes(title, new GrowingRegion(), quantityLabel, visibilityButton, removeBlueprint).buildHBox();
         final DestroyableHBox moduleLine = BoxBuilder.builder().withStyleClass("blueprint-line").withNodes(this.blueprintName, new GrowingRegion(), this.settingsButton).buildHBox();
+        final DestroyableHBox effectLine = BoxBuilder.builder().withStyleClass("blueprint-line").withNodes(this.experimentalEffectName, new GrowingRegion(), this.split).buildHBox();
         quantityLine = (HorizonsWishlist.ALL.getUuid().equals(wishlistUUID)) ? new QuantitySelect(wishlistBlueprint.getQuantity(), visible, wishlistBlueprint) : new ControllableQuantitySelect(wishlistBlueprint.getQuantity(), visible, wishlistBlueprint);
         quantityLine.addChangeListener(quantityLine.getQuantity(), (_, _, quantity) -> updateQuantity(quantity.intValue()));
-        this.getNodes().addAll(titleLine, moduleLine, experimentalEffectName, new GrowingRegion(), (Node & Destroyable) quantityLine);
+        this.getNodes().addAll(titleLine, moduleLine, effectLine, new GrowingRegion(), (Node & Destroyable) quantityLine);
 
 
 //        register(this.tooltip);
 
         this.canCraft();
+    }
+
+    private void splitBlueprint() {
+        ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
+            HorizonsWishlist wishlist = WishlistService.getHorizonsWishlists(commander).getWishlist(wishlistUUID);
+            var bp = new HorizonsExperimentalWishlistBlueprint(this.wishlistBlueprint.getExperimentalEffect());
+            bp.setRecipeName((this.wishlistBlueprint.getRecipeName()));
+            bp.setQuantity(this.wishlistBlueprint.getQuantity());
+            bp.setVisible(this.wishlistBlueprint.isVisible());
+            EventService.publish(new HorizonsWishlistBlueprintEvent(commander, wishlist.getUuid(), List.of(bp), Action.ADDED));
+            this.wishlistBlueprint.setExperimentalEffect(null);
+            modify();
+            update();
+            EventService.publish(new HorizonsWishlistBlueprintAlteredEvent(this.wishlistUUID));
+        });
     }
 
     private void updateQuantity(Integer quantity) {
