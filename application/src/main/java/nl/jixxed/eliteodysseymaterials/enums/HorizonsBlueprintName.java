@@ -53,6 +53,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     CANNON(BlueprintGroup.CANNONS, BlueprintCategory.HARDPOINT),
     CONCORD_CANNON(BlueprintGroup.CANNONS, BlueprintCategory.HARDPOINT, false),
     FRAGMENT_CANNON(BlueprintGroup.FRAGMENT_CANNONS, BlueprintCategory.HARDPOINT),
+    FRAGMENT_CANNON_PRE(BlueprintGroup.FRAGMENT_CANNONS, BlueprintCategory.HARDPOINT, false),
     PACIFIER_FRAGMENT_CANNON(BlueprintGroup.FRAGMENT_CANNONS, BlueprintCategory.HARDPOINT, false),
     MINE_LAUNCHER(BlueprintGroup.MINE_LAUNCHERS, BlueprintCategory.HARDPOINT),
     SHOCK_MINE_LAUNCHER(BlueprintGroup.MINE_LAUNCHERS, BlueprintCategory.HARDPOINT, false),

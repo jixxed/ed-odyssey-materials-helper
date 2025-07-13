@@ -5,6 +5,7 @@ Removed Powerplay materials from Irrelevant filter
 Added an elevated privileges check for Windows at the start of the application to prevent issues with running as Administrator
 Fixed engineer image locked size and resizing issue when switching text size
 Fixed stats on pre-engineered power distributor showing positive effects as negative
+Add new pre-engineered Fragment Cannon from community goal
 
 Version 2.196
 -------------

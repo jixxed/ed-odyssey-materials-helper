@@ -199,3 +199,4 @@
 "blueprint.horizons.type.engineered_fsd_sco_a7_v1","Engineered FSD SCO 7A V1","","","MDD SDS 7A V1 Modificado","","","Полностью оборудованный FSD (ПГР) 7A V1","预改造FSD SCO 7A V1"
 "blueprint.horizons.type.system_engine_focused","System + engine focused","","","","","","Распределитель питания на систему и двигатель",""
 "blueprint.horizons.type.high_capacity_magazine_sturdy_fsd_interrupt","High Capacity, Sturdy, FSD Interrupt","","","","","","Вместительный магазин, Прочное крепление, Помеха для FSD",""
+"blueprint.horizons.type.double_shot_high_capacity_magazine_screening_shell","Double Shot, High Capacity Magazine, Screening Shell","","","","","","",""

@@ -317,7 +317,7 @@ public abstract class HorizonsBlueprintConstants {
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.BURST_LASER, BurstLaserBlueprints.BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.CANNON, CannonBlueprints.BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.ENZYME_MISSILE_RACK, EnzymeMissileRackPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS);
-        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.FRAGMENT_CANNON, FragmentCannonBlueprints.BLUEPRINTS);
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.FRAGMENT_CANNON, merge(FragmentCannonBlueprints.BLUEPRINTS, FragmentCannonPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_GAUSS_CANNON, merge(GuardianGaussCannonBlueprints.BLUEPRINTS, GuardianGaussCannonPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_PLASMA_CHARGER, merge(GuardianPlasmaChargerBlueprints.BLUEPRINTS, GuardianPlasmaChargerPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_SHARD_CANNON, merge(GuardianShardCannonBlueprints.BLUEPRINTS, GuardianShardCannonPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));

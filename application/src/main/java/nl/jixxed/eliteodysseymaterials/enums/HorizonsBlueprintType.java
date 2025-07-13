@@ -207,6 +207,7 @@ public enum HorizonsBlueprintType {
     ANTI_GUARDIAN_ZONE_RESISTANCE(false, false),
     SYSTEM_ENGINE_FOCUSED(false, true),
     HIGH_CAPACITY_MAGAZINE_STURDY_FSD_INTERRUPT(false, true),
+    DOUBLE_SHOT_HIGH_CAPACITY_MAGAZINE_SCREENING_SHELL(false, true),
     NONE(false, false);
     @Getter
     private final boolean experimental;
