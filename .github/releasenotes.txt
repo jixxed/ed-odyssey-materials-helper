@@ -6,10 +6,4 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Added barter prices for Powerplay materials
-Removed Powerplay materials from Irrelevant filter
-Added an elevated privileges check for Windows at the start of the application to prevent issues with running as Administrator
-Fixed engineer image locked size and resizing issue when switching text size
-Fixed stats on pre-engineered power distributor showing positive effects as negative
-Add new pre-engineered Fragment Cannon from community goal
-Add blueprint split option and auto split effects on removing blueprints from remote workshop
+Fix issue with frontier API throwing invalid scope error

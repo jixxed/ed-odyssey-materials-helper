@@ -1,3 +1,7 @@
+Version 2.198
+-------------
+Fix issue with frontier API throwing invalid scope error
+
 Version 2.197
 -------------
 Added barter prices for Powerplay materials
