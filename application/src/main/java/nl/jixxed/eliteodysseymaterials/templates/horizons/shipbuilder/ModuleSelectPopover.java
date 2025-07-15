@@ -118,16 +118,13 @@ public class ModuleSelectPopover extends DestroyablePopOver implements Destroyab
         if (shipModule != null && !shipModule.getAllowedBlueprints().isEmpty()) {
             this.blueprintSection = addBlueprintSection(content, "tabs.ships.blueprints", false);
         }
-
     }
 
     private void addExperimentalEffects(final DestroyableVBox content) {
         final ShipModule shipModule = slotBox.getSlot().getShipModule();
-
         if (shipModule != null && !shipModule.getAllowedExperimentalEffects().isEmpty()) {
             this.experintalEffectsSection = addBlueprintSection(content, "tabs.ships.experimental.effects", true);
         }
-
     }
 
 
@@ -259,7 +256,6 @@ public class ModuleSelectPopover extends DestroyablePopOver implements Destroyab
                         .build();
                 toggleButton.setFocusTraversable(false);
                 toggleButton.setToggleGroup(toggleGroupRank);
-                log.debug(String.valueOf(maxGrade.get()));
                 toggleButton.addBinding(toggleButton.disableProperty(), toggleGroup.selectedToggleProperty().isNull().or(maxGrade.lessThan(horizonsBlueprintGrade.getGrade())));
                 toggleButton.disableProperty().addListener((observable, oldValue, newValue) -> {
                     if (Boolean.TRUE.equals(newValue) && toggleButton.isSelected()) {
