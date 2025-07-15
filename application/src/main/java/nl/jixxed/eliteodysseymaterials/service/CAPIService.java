@@ -10,6 +10,7 @@ import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.AccessTokenRequestParams;
 import com.github.scribejava.core.oauth.AuthorizationUrlBuilder;
 import com.github.scribejava.core.oauth.OAuth20Service;
+import io.sentry.Sentry;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -124,7 +125,7 @@ public class CAPIService {
                                 this.timerTask = new TimerTask() {
                                     @Override
                                     public void run() {
-                                        if (isCapiRunning() && isOutdated(fleetCarrierFile)) {
+                                        if (isCapiRunning()) {
                                             requestFleetCarrierData();
                                         }
                                     }
@@ -155,7 +156,11 @@ public class CAPIService {
                     final String name = jsonNode.get("commander").get("name").asText();
 
                     log.info("Test equals: " + commander.getName() + " <> " + name);
-                    return commander.getName().equalsIgnoreCase(name);
+                    boolean isEqual = commander.getName().equalsIgnoreCase(name);
+                    if (!isEqual) {
+                        Sentry.captureMessage("Commander name mismatch: expected '" + commander.getName() + "', got '" + name + "'");
+                    }
+                    return isEqual;
                 }
                 if (response.getCode() == 400) {
                     Platform.runLater(() -> {
@@ -218,68 +223,68 @@ public class CAPIService {
     private void requestFleetCarrierData() {
         if (this.active.get() && this.fcEnabled.get()) {
             APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-
-                this.executor.submit(() -> {
-                    final String url = GameVersion.LEGACY.equals(commander.getGameVersion()) ? "https://legacy-companion.orerve.net/fleetcarrier" : "https://companion.orerve.net/fleetcarrier";
-                    final OAuthRequest oAuthRequest = new OAuthRequest(Verb.GET, url);
-                    this.service.signRequest(this.oAuth2AccessToken, oAuthRequest);
-                    try {
-                        Response response = this.service.execute(oAuthRequest);
-                        // retry if token expired
-                        if (response.getCode() == 401) {
-                            log.warn("Frontier API returned unauthorized. Attempting to refresh token.");
-                            refreshToken();
-                            final OAuthRequest oAuthRequest2 = new OAuthRequest(Verb.GET, url);
-                            this.service.signRequest(this.oAuth2AccessToken, oAuthRequest2);
-                            response = this.service.execute(oAuthRequest2);
-                        }
-                        // handle response
-                        if (response.getCode() == 204) {
-                            log.warn("Frontier API returned a " + response.getCode() + "(No fleetcarrier). Disabling FC endpoint.");
-                            // no FC -> disable endpoint
-                            Platform.runLater(() -> {
-                                this.fcEnabled.set(false);
-                            });
-                        } else if (response.getCode() == 400) {
-                            log.warn("Frontier API returned a " + response.getCode() + "(No game entitlement). Disabling FC endpoint.");
-                            // no FC -> disable endpoint
-                            Platform.runLater(() -> {
-                                this.fcEnabled.set(false);
-                                NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.400"));
-                            });
-                        } else if (response.getCode() == 200) {
-                            log.info("Frontier API returned a " + response.getCode() + ". Storing response.");
-                            // write response to file
-                            final String pathname = commander.getCommanderFolder();
-                            final File fleetCarrierFileDir = new File(pathname);
-                            fleetCarrierFileDir.mkdirs();
-                            final File fleetCarrierFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.FLEETCARRIER_FILE);
-                            try (final FileOutputStream fileOutputStream = new FileOutputStream(fleetCarrierFile)) {
-                                fileOutputStream.write(response.getBody().getBytes(StandardCharsets.UTF_8));
+                final String pathname = commander.getCommanderFolder();
+                final File fleetCarrierFileDir = new File(pathname);
+                fleetCarrierFileDir.mkdirs();
+                final File fleetCarrierFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.FLEETCARRIER_FILE);
+                if (isOutdated(fleetCarrierFile)) {
+                    this.executor.submit(() -> {
+                        final String url = GameVersion.LEGACY.equals(commander.getGameVersion()) ? "https://legacy-companion.orerve.net/fleetcarrier" : "https://companion.orerve.net/fleetcarrier";
+                        final OAuthRequest oAuthRequest = new OAuthRequest(Verb.GET, url);
+                        this.service.signRequest(this.oAuth2AccessToken, oAuthRequest);
+                        try {
+                            Response response = this.service.execute(oAuthRequest);
+                            // retry if token expired
+                            if (response.getCode() == 401) {
+                                log.warn("Frontier API returned unauthorized. Attempting to refresh token.");
+                                refreshToken();
+                                final OAuthRequest oAuthRequest2 = new OAuthRequest(Verb.GET, url);
+                                this.service.signRequest(this.oAuth2AccessToken, oAuthRequest2);
+                                response = this.service.execute(oAuthRequest2);
                             }
-                        } else {
-                            log.warn("Frontier API returned a " + response.getCode() + ". Disabling service.");
-                            Platform.runLater(() -> this.active.set(false));
+                            // handle response
+                            if (response.getCode() == 204) {
+                                log.warn("Frontier API returned a " + response.getCode() + "(No fleetcarrier). Disabling FC endpoint.");
+                                // no FC -> disable endpoint
+                                Platform.runLater(() -> {
+                                    this.fcEnabled.set(false);
+                                });
+                            } else if (response.getCode() == 400) {
+                                log.warn("Frontier API returned a " + response.getCode() + "(No game entitlement). Disabling FC endpoint.");
+                                // no FC -> disable endpoint
+                                Platform.runLater(() -> {
+                                    this.fcEnabled.set(false);
+                                    NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.400"));
+                                });
+                            } else if (response.getCode() == 200) {
+                                log.info("Frontier API returned a " + response.getCode() + ". Storing response.");
+                                // write response to file
+                                try (final FileOutputStream fileOutputStream = new FileOutputStream(fleetCarrierFile)) {
+                                    fileOutputStream.write(response.getBody().getBytes(StandardCharsets.UTF_8));
+                                }
+                            } else {
+                                log.warn("Frontier API returned a " + response.getCode() + ". Disabling service.");
+                                Platform.runLater(() -> this.active.set(false));
+                            }
+                            Platform.runLater(() -> EventService.publish(new CapiFleetCarrierEvent()));
+                        } catch (final InterruptedException e) {
+                            log.error("InterruptedException", e);
+                        } catch (final ExecutionException e) {
+                            log.error("ExecutionException", e);
+                        } catch (final IOException e) {
+                            log.error("IOException", e);
+                        } catch (final Exception e) {
+                            log.error("Exception", e);
+                            log.warn("Frontier API returned an error. Disabling service.");
+                            Platform.runLater(() -> {
+                                this.active.set(false);
+                                final boolean delete = fleetCarrierFile.delete();
+                                if (delete) log.info("Deleted stale fleetcarrier file");
+                                NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.auth.fail"));
+                            });
                         }
-                        Platform.runLater(() -> EventService.publish(new CapiFleetCarrierEvent()));
-                    } catch (final InterruptedException e) {
-                        log.error("InterruptedException", e);
-                    } catch (final ExecutionException e) {
-                        log.error("ExecutionException", e);
-                    } catch (final IOException e) {
-                        log.error("IOException", e);
-                    } catch (final Exception e) {
-                        log.error("Exception", e);
-                        log.warn("Frontier API returned an error. Disabling service.");
-                        Platform.runLater(() -> {
-                            this.active.set(false);
-                            final String pathname = commander.getCommanderFolder();
-                            final boolean delete = new File(pathname + OsConstants.getOsSlash() + AppConstants.FLEETCARRIER_FILE).delete();
-                            if (delete) log.info("Deleted stale fleetcarrier file");
-                            NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.auth.fail"));
-                        });
-                    }
-                });
+                    });
+                }
             });
         }
     }

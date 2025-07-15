@@ -353,6 +353,9 @@ public class FXApplication extends Application {
 
     private void setupFleetCarrierWatcher(final File watchedFolder, final Commander commander) {
 
+        if (this.fleetCarrierWatcher != null) {
+            this.fleetCarrierWatcher.stop();
+        }
         if (commander != null) {
             final String pathname = commander.getCommanderFolder();
             final File watchedFolderFleetCarrier = new File(pathname);

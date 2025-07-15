@@ -13,8 +13,7 @@ import java.io.OutputStream;
 import java.util.Random;
 
 public class CapiOAuth20Service extends OAuth20Service {
-
-    static final String CLIENT_ID = "c1fbc317-e74d-4118-bd86-6dbcca08f4e8";
+    static final String CLIENT_ID = "0b06e4ea-5a72-4b7f-9257-5afc57fe6e3f";
     private final Random random = new Random();
     private final String secretState;
     private final AuthorizationUrlBuilder authorizationUrlBuilder;
