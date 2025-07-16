@@ -248,9 +248,9 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
             final Double minimumMultiplier = getMinimumMultiplier(thrusters);
             final Double optimalMultiplier = getOptimalMultiplier(thrusters);
             final Double maximumMultiplier = getMaximumMultiplier(thrusters);
-            final Double pitchSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.PITCH_SPEED, 0.0D);
-            final Double yawSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.YAW_SPEED, 0.0D);
-            final Double rollSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.ROLL_SPEED, 0.0D);
+            final Double pitchSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MAX_PITCH_SPEED, 0.0D);
+            final Double yawSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MAX_YAW_SPEED, 0.0D);
+            final Double rollSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MAX_ROLL_SPEED, 0.0D);
             final Double minPitchSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MIN_PITCH_SPEED, 0.0D);
             final Double minYawSpeed = yawSpeed;//reported to be unaffected by pips
             final Double minRollSpeed = rollSpeed;//reported to be unaffected by pips

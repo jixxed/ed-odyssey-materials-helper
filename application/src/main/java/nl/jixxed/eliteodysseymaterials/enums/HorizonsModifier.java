@@ -205,10 +205,18 @@ public enum HorizonsModifier {
     BOOST_COST(1050, false, ""),//ship
     BOOST_INTERVAL(1055, ""),
     MANOEUVRABILITY(1060, ""),//ship
+    SUPERCRUISE_PROFILE(1065, ""),//ship
+    CRUISE_PITCH_PROFILE(1066, ""),//ship
+    CRUISE_ROLL_PROFILE(1067, ""),//ship
+    CRUISE_YAW_PROFILE(1068, ""),//ship
+    SC_ROLL_SPEED(1070, ""),//ship
+    SC_YAW_SPEED(1070, ""),//ship
     MIN_PITCH_SPEED(1070, ""),//ship
-    PITCH_SPEED(1080, ""),//ship
-    YAW_SPEED(1090, ""),//ship
-    ROLL_SPEED(1100, ""),//ship
+    MAX_PITCH_SPEED(1075, ""),//ship
+    MIN_YAW_SPEED(1080, ""),//ship
+    MAX_YAW_SPEED(1085, ""),//ship
+    MIN_ROLL_SPEED(1090, ""),//ship
+    MAX_ROLL_SPEED(1195, ""),//ship
     SHIELDS(1110, ""),//ship
     ARMOUR(1120, ""),//ship
     ARMOUR_HARDNESS(1130, ""),//ship
