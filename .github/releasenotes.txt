@@ -6,4 +6,9 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Fix issue with frontier API throwing invalid scope error
+Added new Cargo slot type
+Add Panther Clipper Mk II (Some stats still missing until released)
+Add Mk II Cargo Racks
+Update current ship in Ship Editor on EngineerCraft, ModuleBuy, ModuleRetrieve, ModuleSell, ModuleStore events
+- Note that some events miss engineering data, so the current ship will always be accurate
+- Leaving the outfitting screen will trigger a Loadout event and that will contain all engineering data
