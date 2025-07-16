@@ -2675,8 +2675,8 @@ public class Ship {
                     Map.entry(HorizonsModifier.HEAT_CAPACITY, Double.NaN),//ingame testing
                     Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, Double.NaN),//ingame testing
                     Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, Double.NaN),//ingame testing
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 1.5),//from journal
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, Double.NaN),//side panel (Armour Rating)
+                    Map.entry(HorizonsModifier.FUEL_RESERVE, 1.11),//from journal
+                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 70.0),//side panel (Armour Rating)
                     Map.entry(HorizonsModifier.MASS_LOCK, Double.NaN)//ingame testing
             ),
             List.of(
@@ -2711,17 +2711,17 @@ public class Ship {
             ),
             List.of(
                     Slot.builder().slotType(SlotType.CARGO).index(0).slotSize(8).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(8).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).namedIndex(1).slotSize(8).build(),
                     Slot.builder().slotType(SlotType.CARGO).index(2).slotSize(7).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(7).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(6).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(6).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(6).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(5).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(5).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(4).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).slotSize(2).shipModule(Computer.SUPERCRUISE_ASSIST).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).slotSize(1).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(7).namedIndex(2).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(6).namedIndex(3).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(6).namedIndex(4).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(6).namedIndex(5).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(5).namedIndex(6).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(5).namedIndex(7).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(4).namedIndex(8).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).slotSize(2).namedIndex(9).shipModule(Computer.SUPERCRUISE_ASSIST).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).slotSize(1).namedIndex(10).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build()
             ));
     public static final List<Ship> ALL = List.of(
             SIDE_WINDER,
@@ -2843,7 +2843,7 @@ public class Ship {
 
     public double getMaxCargo() {
         return this.getOptionalSlots().stream()
-                .filter(slot -> slot.getShipModule() instanceof CargoRack || slot.getShipModule() instanceof AntiCorrosionCargoRack || slot.getShipModule() instanceof MkIICargoRack)
+                .filter(slot -> slot.getShipModule() instanceof CargoRack || slot.getShipModule() instanceof AntiCorrosionCargoRack || slot.getShipModule() instanceof LargeCargoRack)
                 .map(Slot::getShipModule)
                 .map(shipModule -> (double) shipModule.getAttributeValue(HorizonsModifier.CARGO_CAPACITY))
                 .mapToDouble(Double::doubleValue)

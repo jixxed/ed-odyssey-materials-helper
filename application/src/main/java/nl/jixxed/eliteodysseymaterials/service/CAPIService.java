@@ -130,7 +130,7 @@ public class CAPIService {
                                         }
                                     }
                                 };
-                                this.timer.scheduleAtFixedRate(this.timerTask, 0L, 5L * 1000L);
+                                this.timer.schedule(this.timerTask, 0L, 5L * 1000L);
                             });
                         }
                 );

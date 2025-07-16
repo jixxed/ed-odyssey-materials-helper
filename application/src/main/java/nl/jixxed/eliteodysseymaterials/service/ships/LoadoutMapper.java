@@ -32,6 +32,7 @@ public class LoadoutMapper {
     private static final Set<String> UTILITY_SLOT_NAMES = Set.of("TinyHardpoint");
     private static final Set<String> CORE_SLOT_NAMES = Set.of("Armour", "PowerPlant", "MainEngines", "FrameShiftDrive", "LifeSupport", "PowerDistributor", "Radar", "FuelTank");
     private static final Set<String> MILITARY_SLOT_NAMES = Set.of("Military");
+    private static final Set<String> CARGO_SLOT_NAMES = Set.of("Cargo");
     private static final Set<String> OPTIONAL_SLOT_NAMES = Set.of("Slot");
     private static final double EPSILON = 0.0001;
 
@@ -211,6 +212,10 @@ public class LoadoutMapper {
             final List<Slot> militarySlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.MILITARY)).toList();
             return getMilitarySlot(militarySlots, slotName);
         }
+        if (CARGO_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
+            final List<Slot> cargoSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CARGO)).toList();
+            return getCargoSlot(cargoSlots, slotName);
+        }
         if ("CargoHatch".equals(slotName)) {
             return ship.getCargoHatch();
         }
@@ -271,6 +276,11 @@ public class LoadoutMapper {
     }
 
     private static Slot getMilitarySlot(List<Slot> militarySlots, String slotName) {
+        final int slotNumber = Integer.parseInt(slotName.substring(slotName.length() - 2));
+        return militarySlots.get(slotNumber - 1);
+    }
+
+    private static Slot getCargoSlot(List<Slot> militarySlots, String slotName) {
         final int slotNumber = Integer.parseInt(slotName.substring(slotName.length() - 2));
         return militarySlots.get(slotNumber - 1);
     }

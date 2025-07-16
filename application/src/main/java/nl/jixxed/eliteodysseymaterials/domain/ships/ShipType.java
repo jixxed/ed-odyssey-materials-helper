@@ -51,7 +51,7 @@ public enum ShipType {
     MAMBA(128915979, "Mamba", ShipSize.M, false, 1),
     COBRA_MK_V(128947462, "CobraMkV", ShipSize.S, false, 2),
     CORSAIR(0, "Corsair", ShipSize.M, false, 1),
-    PANTHER_CLIPPER_MK_II(0, "Panther_Clipper_MkII", ShipSize.L, true, 3);
+    PANTHER_CLIPPER_MK_II(0, "PantherMkII", ShipSize.L, true, 3);
 
     final long internalID;
     final String internalName;
