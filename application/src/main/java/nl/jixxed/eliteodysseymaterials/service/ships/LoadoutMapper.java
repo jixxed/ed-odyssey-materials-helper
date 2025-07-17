@@ -169,14 +169,14 @@ public class LoadoutMapper {
                         final Object attributeValue = shipModule.getAttributeValue(moduleAttribute);
 
                         if (attributeValue instanceof Double value2) {
-//                            log.debug(moduleAttribute.name() + ": " + value.setScale(2, RoundingMode.HALF_EVEN) + " =? " + BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));
+                            log.debug(moduleAttribute.name() + ": " + value.setScale(2, RoundingMode.HALF_EVEN) + " =? " + BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));
                             return value.setScale(2, RoundingMode.HALF_EVEN).equals(BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));
                         }
                         if (attributeValue instanceof Boolean) {
-//                            log.debug("bool true");
+                            log.debug("bool true");
                             return true;
                         }
-//                        log.debug("false");
+                        log.debug("false");
                         return false;
                     }).orElse(true));
         }).findFirst().map(ShipModule::isPreEngineered).orElse(false);

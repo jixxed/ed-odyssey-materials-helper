@@ -177,6 +177,8 @@ class LoadoutMapperTest {
                 Arguments.of("SEEKER_MISSILE_RACK_2_B_F_PRE.json", MissileRack.SEEKER_MISSILE_RACK_2_B_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("SEEKER_MISSILE_RACK_2_B_F_PRE_2.json", MissileRack.SEEKER_MISSILE_RACK_2_B_F_PRE_2, SlotType.HARDPOINT),
                 Arguments.of("SEEKER_MISSILE_RACK_3_A_F_PRE.json", MissileRack.SEEKER_MISSILE_RACK_3_A_F_PRE, SlotType.HARDPOINT),
+                Arguments.of("FRAGMENT_CANNON_1_E_G_PRE.json", FragmentCannon.FRAGMENT_CANNON_1_E_G_PRE, SlotType.HARDPOINT),
+                Arguments.of("FRAGMENT_CANNON_3_C_G_PRE.json", FragmentCannon.FRAGMENT_CANNON_3_C_G_PRE, SlotType.HARDPOINT),
                 Arguments.of("MULTI_CANNON_2_E_F_PRE.json", MultiCannon.MULTI_CANNON_2_E_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("RAIL_GUN_2_B_F_PRE.json", RailGun.RAIL_GUN_2_B_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_GREEN.json", RemoteReleaseFlakLauncher.REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_GREEN, SlotType.HARDPOINT),
@@ -208,6 +210,7 @@ class LoadoutMapperTest {
                 Arguments.of("POINT_DEFENCE_0_I_PRE.json", PointDefence.POINT_DEFENCE_0_I_PRE, SlotType.UTILITY),
                 Arguments.of("HEAT_SINK_LAUNCHER_0_I_PRE.json", SinkLauncher.HEAT_SINK_LAUNCHER_0_I_PRE, SlotType.UTILITY)//,
 
+
         );
     }
 
@@ -215,7 +218,8 @@ class LoadoutMapperTest {
         List modules = ShipModule.getBasicModules();
         return Stream.of(
 
-                Arguments.of("SEEKER_MISSILE_RACK_2_B_F_PRE_2.json", MissileRack.SEEKER_MISSILE_RACK_2_B_F_PRE_2, SlotType.HARDPOINT)
+                Arguments.of("FRAGMENT_CANNON_1_E_G_PRE.json", FragmentCannon.FRAGMENT_CANNON_1_E_G_PRE, SlotType.HARDPOINT),
+                Arguments.of("FRAGMENT_CANNON_3_C_G_PRE.json", FragmentCannon.FRAGMENT_CANNON_3_C_G_PRE, SlotType.HARDPOINT)
 
         );
     }

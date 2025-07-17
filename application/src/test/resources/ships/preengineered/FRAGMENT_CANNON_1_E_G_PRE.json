@@ -1,0 +1,74 @@
+{
+  "Slot": "LargeHardpoint4",
+  "Item": "hpt_slugshot_gimbal_small",
+  "On": true,
+  "Priority": 0,
+  "AmmoInClip": 3,
+  "AmmoInHopper": 180,
+  "Health": 1.0,
+  "Engineering": {
+    "EngineerID": 399999,
+    "BlueprintID": 129035483,
+    "BlueprintName": "Weapon_DoubleShot",
+    "Level": 5,
+    "Quality": 1.0,
+    "ExperimentalEffect": "special_screening_shell",
+    "ExperimentalEffect_Localised": "Screening Shell",
+    "Modifiers": [
+      {
+        "Label": "Mass",
+        "Value": 3.2,
+        "OriginalValue": 2.0,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "PowerDraw",
+        "Value": 0.708,
+        "OriginalValue": 0.59,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "DamagePerSecond",
+        "Value": 104.831329,
+        "OriginalValue": 71.294113,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "MaximumRange",
+        "Value": 1800.0,
+        "OriginalValue": 2000.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "RateOfFire",
+        "Value": 8.649449,
+        "OriginalValue": 5.882353,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "BurstSize",
+        "Value": 2.0,
+        "OriginalValue": 1.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "AmmoClipSize",
+        "Value": 8.0,
+        "OriginalValue": 3.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "AmmoMaximum",
+        "Value": 302.0,
+        "OriginalValue": 180.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "ReloadTime",
+        "Value": 2.5,
+        "OriginalValue": 5.0,
+        "LessIsGood": 1
+      }
+    ]
+  }
+}

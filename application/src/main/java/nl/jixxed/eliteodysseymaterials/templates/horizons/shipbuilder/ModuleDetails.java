@@ -25,6 +25,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -199,7 +200,12 @@ public class ModuleDetails extends DestroyableVBox implements DestroyableEventTe
             properties.getNodes().add(getSeparator());
             moduleName.setText(LocaleService.getLocalizedStringForCurrentLocale(shipModule.getLocalizationKey()) + " " + shipModule.getModuleSize().intValue() + shipModule.getModuleClass() + ((shipModule instanceof HardpointModule hardpointModule ? "-" + hardpointModule.getMounting().getShortName() : "")));
 
-            shipModule.getAttibutes().stream().filter(Predicate.not(shipModule::isHiddenStat)).sorted(Comparator.comparing(HorizonsModifier::getOrder)).forEach(horizonsModifier -> {
+            List<HorizonsModifier> attributesList = shipModule.getAttibutes().stream().filter(Predicate.not(shipModule::isHiddenStat)).collect(Collectors.toList());
+            if (shipModule instanceof HardpointModule && !attributesList.contains(HorizonsModifier.DAMAGE_PER_SECOND)) {
+                attributesList.add(HorizonsModifier.DAMAGE_PER_SECOND);
+            }
+
+            attributesList.stream().sorted(Comparator.comparing(HorizonsModifier::getOrder)).forEach(horizonsModifier -> {
                 addAttribute(horizonsModifier, shipModule);
             });
             if (shipModule.isLegacy()) {

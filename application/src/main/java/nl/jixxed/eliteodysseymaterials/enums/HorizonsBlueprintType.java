@@ -208,6 +208,7 @@ public enum HorizonsBlueprintType {
     SYSTEM_ENGINE_FOCUSED(false, true),
     HIGH_CAPACITY_MAGAZINE_STURDY_FSD_INTERRUPT(false, true),
     DOUBLE_SHOT_HIGH_CAPACITY_MAGAZINE_SCREENING_SHELL(false, true),
+    DOUBLE_SHOT_HIGH_CAPACITY_MAGAZINE_SCREENING_SHELL_B(false, true),
     NONE(false, false);
     @Getter
     private final boolean experimental;

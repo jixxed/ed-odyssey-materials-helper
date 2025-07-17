@@ -273,17 +273,28 @@ public abstract class ShipModule implements Serializable {
         }
     }
 
+    public <T> T getAttributeValueOrDefault(final HorizonsModifier moduleAttribute, Double completeness, final T defaultValue) {
+        try {
+            return (T) getAttributeValue(moduleAttribute, completeness);
+        } catch (final IllegalArgumentException e) {
+            return defaultValue;
+        }
+    }
+
     public Object getOriginalAttributeValue(final HorizonsModifier moduleAttribute) {
         if (!this.attributes.containsKey(moduleAttribute)) {
+            if (HorizonsModifier.DAMAGE_PER_SECOND.equals(moduleAttribute) && this.attributes.containsKey(HorizonsModifier.DAMAGE)) {
+                return (double) this.attributes.get(HorizonsModifier.DAMAGE) * (double) this.attributes.getOrDefault(HorizonsModifier.RATE_OF_FIRE, 1.0) * (double) this.attributes.getOrDefault(HorizonsModifier.ROUNDS_PER_SHOT, 1.0);
+            }
             throw new IllegalArgumentException("Unknown Module Attribute: " + moduleAttribute + " for module: " + this.name);
         }
         return this.attributes.get(moduleAttribute);
     }
 
     public Object getAttributeValue(final HorizonsModifier moduleAttribute) {
-        if (HorizonsModifier.DAMAGE_PER_SECOND.equals(moduleAttribute) && this.attributes.containsKey(HorizonsModifier.DAMAGE) && !this.attributes.containsKey(HorizonsModifier.DAMAGE_PER_SECOND)) {
-            return (double) getAttributeValue(HorizonsModifier.DAMAGE, null) * (double) getAttributeValue(HorizonsModifier.RATE_OF_FIRE, null);
-        }
+//        if (HorizonsModifier.DAMAGE_PER_SECOND.equals(moduleAttribute) && this.attributes.containsKey(HorizonsModifier.DAMAGE) && !this.attributes.containsKey(HorizonsModifier.DAMAGE_PER_SECOND)) {
+//            return (double) getAttributeValue(HorizonsModifier.DAMAGE, null) * getAttributeValueOrDefault(HorizonsModifier.RATE_OF_FIRE, 1.0) * getAttributeValueOrDefault(HorizonsModifier.ROUNDS_PER_SHOT, 1.0);
+//        }
         return getAttributeValue(moduleAttribute, null);
     }
 
@@ -311,6 +322,9 @@ public abstract class ShipModule implements Serializable {
 
     public Object getAttributeValue(final HorizonsModifier moduleAttribute, Double completeness) {
         if (!this.attributes.containsKey(moduleAttribute)) {
+            if (HorizonsModifier.DAMAGE_PER_SECOND.equals(moduleAttribute) && this.attributes.containsKey(HorizonsModifier.DAMAGE)) {
+                return (double) getAttributeValue(HorizonsModifier.DAMAGE, completeness) * getAttributeValueOrDefault(HorizonsModifier.RATE_OF_FIRE, completeness, 1.0) * getAttributeValueOrDefault(HorizonsModifier.ROUNDS_PER_SHOT, completeness, 1.0);
+            }
             throw new IllegalArgumentException("Unknown Module Attribute: " + moduleAttribute + " for module: " + this.name);
         }
         if (modifiers.containsKey(moduleAttribute) && (completeness == null || isLegacy())) {
