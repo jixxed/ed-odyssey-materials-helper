@@ -115,11 +115,17 @@ public class ModuleDetails extends DestroyableVBox implements DestroyableEventTe
             }
             moduleName.setText(LocaleService.getLocalizedStringForCurrentLocale(shipModule.getLocalizationKey()) + " " + shipModule.getModuleSize().intValue() + shipModule.getModuleClass() + ((shipModule instanceof HardpointModule hardpointModule ? "-" + hardpointModule.getMounting().getShortName() : "")));
 
-            List<HorizonsModifier> attributesList = shipModule.getAttibutes().stream().filter(Predicate.not(shipModule::isHiddenStat)).sorted(Comparator.comparing(HorizonsModifier::getOrder)).toList();
+            List<HorizonsModifier> attributesList = shipModule.getAttibutes().stream().filter(Predicate.not(shipModule::isHiddenStat)).collect(Collectors.toList());
 
-            for (int i = 0; i < attributesList.size(); i++) {
-                HorizonsModifier horizonsModifier = attributesList.get(i);
-                addAttribute(horizonsModifier, shipModule, i, attributesList.size());
+            if (shipModule instanceof HardpointModule && !attributesList.contains(HorizonsModifier.DAMAGE_PER_SECOND)) {
+                attributesList.add(HorizonsModifier.DAMAGE_PER_SECOND);
+            }
+
+            List<HorizonsModifier> sortedAttributesList = attributesList.stream().sorted(Comparator.comparing(HorizonsModifier::getOrder)).toList();
+
+            for (int i = 0; i < sortedAttributesList.size(); i++) {
+                HorizonsModifier horizonsModifier = sortedAttributesList.get(i);
+                addAttribute(horizonsModifier, shipModule, i, sortedAttributesList.size());
             }
             if (shipModule.isLegacy()) {
                 legacySaveButton.setVisible(true);
