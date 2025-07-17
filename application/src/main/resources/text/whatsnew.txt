@@ -1,6 +1,7 @@
 Version 2.200
 -------------
 Fix pre-engineered fragment cannons blueprints
+Fix Cargo hatch detection in shipbuilder
 
 Version 2.199
 -------------
