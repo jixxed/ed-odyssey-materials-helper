@@ -1028,7 +1028,7 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
-                            HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
+//                            HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
                             HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05))
                     ),
                     List.of(

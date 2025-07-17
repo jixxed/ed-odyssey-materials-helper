@@ -169,14 +169,14 @@ public class LoadoutMapper {
                         final Object attributeValue = shipModule.getAttributeValue(moduleAttribute);
 
                         if (attributeValue instanceof Double value2) {
-                            log.debug(moduleAttribute.name() + ": " + value.setScale(2, RoundingMode.HALF_EVEN) + " =? " + BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));
+//                            log.debug(moduleAttribute.name() + ": " + value.setScale(2, RoundingMode.HALF_EVEN) + " =? " + BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));
                             return value.setScale(2, RoundingMode.HALF_EVEN).equals(BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));
                         }
                         if (attributeValue instanceof Boolean) {
-                            log.debug("bool true");
+//                            log.debug("bool true");
                             return true;
                         }
-                        log.debug("false");
+//                        log.debug("false");
                         return false;
                     }).orElse(true));
         }).findFirst().map(ShipModule::isPreEngineered).orElse(false);
@@ -212,12 +212,12 @@ public class LoadoutMapper {
             final List<Slot> militarySlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.MILITARY)).toList();
             return getMilitarySlot(militarySlots, slotName);
         }
-        if (CARGO_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
-            final List<Slot> cargoSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CARGO)).toList();
-            return getCargoSlot(cargoSlots, slotName);
-        }
         if ("CargoHatch".equals(slotName)) {
             return ship.getCargoHatch();
+        }
+        if (CARGO_SLOT_NAMES.stream().anyMatch(slotName::startsWith)) {//Cargo
+            final List<Slot> cargoSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CARGO)).toList();
+            return getCargoSlot(cargoSlots, slotName);
         }
         log.warn(String.format("Could not determine slot for ship: %s and slotname: %s", ship.getShipType(), slotName));
         return null;
