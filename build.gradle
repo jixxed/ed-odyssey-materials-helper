@@ -177,7 +177,7 @@ allprojects {
                 implementation "javax.servlet:javax.servlet-api:4.0.1"
                 implementation "org.controlsfx:controlsfx:${version_controlsfx}"
                 implementation "org.jfxtras:jmetro:11.6.16"
-                implementation 'io.github.classgraph:classgraph:4.8.180'
+                implementation 'io.github.classgraph:classgraph:4.8.181'
                 implementation 'de.jensd:fontawesomefx-commons:9.1.2'
                 implementation 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2'
 
