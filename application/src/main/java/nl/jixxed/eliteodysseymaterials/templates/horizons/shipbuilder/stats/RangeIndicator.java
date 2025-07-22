@@ -44,32 +44,32 @@ public class RangeIndicator extends DestroyableVBox implements DestroyableEventT
 
     @Override
     public void initComponents() {
+        this.getStyleClass().add("range-indicator");
         this.startValueLabel = LabelBuilder.builder()
                 .build();
         this.endValueLabel = LabelBuilder.builder()
                 .build();
         this.currentValueLabel = LabelBuilder.builder()
-                .withStyleClass("range-indicator-current")
+                .withStyleClass("current")
                 .build();
         this.titleLabel = LabelBuilder.builder()
                 .withText(title)
                 .build();
         this.values = BoxBuilder.builder()
                 .withNodes(this.startValueLabel, new GrowingRegion(), this.currentValueLabel, new GrowingRegion(), this.endValueLabel)
-                .withStyleClass("range-indicator-values")
+                .withStyleClass("values")
                 .buildHBox();
         bar = new DestroyableLine(0, 0, 0, 0);
         start = new DestroyableLine(0, 0, 0, 0);
         end = new DestroyableLine(0, 0, 0, 0);
         current = new DestroyableLine(0, 0, 0, 0);
-        bar.getStyleClass().add("range-indicator-line");
-        start.getStyleClass().add("range-indicator-line");
-        end.getStyleClass().add("range-indicator-line");
-        current.getStyleClass().addAll("range-indicator-line", "range-indicator-line-current");
+        bar.getStyleClass().add("line");
+        start.getStyleClass().add("line");
+        end.getStyleClass().add("line");
+        current.getStyleClass().addAll("line", "line-current");
         lines = PaneBuilder.builder()
                 .withNodes(bar, start, end, current)
                 .build();
-        this.getStyleClass().add("range-indicator");
         update();
         this.getNodes().addAll(this.titleLabel, lines, values);
     }

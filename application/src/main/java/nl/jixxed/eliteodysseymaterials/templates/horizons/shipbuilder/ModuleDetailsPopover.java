@@ -156,30 +156,32 @@ public class ModuleDetailsPopover extends DestroyablePopOver implements Destroya
         Platform.runLater(() -> {
             final Bounds boundsInLocal = slotBox.getBoundsInLocal();
             final Bounds bounds = slotBox.localToScreen(boundsInLocal);
-            double x = bounds.getMaxX() + 1;
-            double y = bounds.getMinY();
-            if (getContentNode() instanceof ModuleDetails moduleDetails) {
-                final double width = moduleDetails.getWidth();
-                final double height = moduleDetails.getHeight();
+            if (bounds != null) {
+                double x = bounds.getMaxX() + 1;
+                double y = bounds.getMinY();
+                if (getContentNode() instanceof ModuleDetails moduleDetails) {
+                    final double width = moduleDetails.getWidth();
+                    final double height = moduleDetails.getHeight();
 //                log.debug("width: {}, height: {}, x: {}, y: {}", moduleDetails.getPrefWidth(), moduleDetails.getPrefHeight(), x, y);
-                if (width == 0) {
-                    moduleDetails.addChangeListener(moduleDetails.widthProperty(), (observable, oldValue, newValue) -> {
-                        updateDetailsPopoverPosition();
-                    });
-                    return;
+                    if (width == 0) {
+                        moduleDetails.addChangeListener(moduleDetails.widthProperty(), (observable, oldValue, newValue) -> {
+                            updateDetailsPopoverPosition();
+                        });
+                        return;
+                    }
+                    // compare to maxX of current screen
+                    final Screen screen = Screen.getScreensForRectangle(x, y, 1, 1).getFirst();
+                    if (x + width > screen.getVisualBounds().getMaxX()) {
+                        x = bounds.getMinX() - width - 2;
+                    }
+                    if (y + height > screen.getVisualBounds().getMaxY()) {
+                        y = bounds.getMaxY() - height;
+                    }
+                    setX(x);
+                    setAnchorX(x);
+                    setY(y);
+                    setAnchorY(y);
                 }
-                // compare to maxX of current screen
-                final Screen screen = Screen.getScreensForRectangle(x, y, 1, 1).getFirst();
-                if (x + width > screen.getVisualBounds().getMaxX()) {
-                    x = bounds.getMinX() - width - 2;
-                }
-                if (y + height > screen.getVisualBounds().getMaxY()) {
-                    y = bounds.getMaxY() - height;
-                }
-                setX(x);
-                setAnchorX(x);
-                setY(y);
-                setAnchorY(y);
             }
         });
     }

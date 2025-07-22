@@ -35,6 +35,10 @@ public class ShipView extends DestroyableStackPane implements DestroyableTemplat
     public void initComponents() {
         this.getStyleClass().add("ship-view");
         final Ship ship = APPLICATION_STATE.getShip();
+        if (ship == null) {
+            log.warn("Ship is null, cannot initialize ShipView.");
+            return;
+        }
         final int imageIndex = getImageIndex();
         shipImage = ResizableImageViewBuilder.builder()
                 .withImage("/images/ships/ship/" + ship.getShipType().name().toLowerCase() + "." + imageIndex + ".png")

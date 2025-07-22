@@ -98,14 +98,14 @@ public class ConfigPowerControl extends DestroyableHBox implements DestroyableEv
     }
 
     public void updatePower(ShipModule shipModule) {
-        log.debug("Updating power for {}", shipModule);
+//        log.debug("Updating power for {}", shipModule);
         if (shipModule != null) {
 //            this.power.setImage(ImageService.getImage("/images/ships/icons/" + (shipModule.isPowered() ? "powered" : "unpowered") + shipModule.getPowerGroup() + ".png"));
             this.powerLabel.setText(String.valueOf(shipModule.getPowerGroup()));
             powerIconAndLabel.pseudoClassStateChanged(PseudoClass.getPseudoClass("powered"), shipModule.isPowered());
             this.pseudoClassStateChanged(PseudoClass.getPseudoClass("configurable"), !isCurrentShip());
-            log.debug("Powered is changed to {}", shipModule.isPowered());
-            log.debug("Configurable is changed to {}", !isCurrentShip());
+//            log.debug("Powered is changed to {}", shipModule.isPowered());
+//            log.debug("Configurable is changed to {}", !isCurrentShip());
 //            if (!isCurrentShip()) {
 //                this.powerLabel.setGraphic(this.power);
 //                this.powerLabel.register(this.power);

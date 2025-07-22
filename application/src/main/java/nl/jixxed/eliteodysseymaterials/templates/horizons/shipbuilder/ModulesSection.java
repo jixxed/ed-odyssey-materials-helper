@@ -29,7 +29,7 @@ public class ModulesSection extends DestroyableFlowPane implements DestroyableEv
 
     @Override
     public void initComponents() {
-        this.getStyleClass().add("modules");
+        this.getStyleClass().add("modules-section");
         initShipLayout();
 
     }

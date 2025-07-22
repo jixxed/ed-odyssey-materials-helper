@@ -18,14 +18,14 @@
         .cell {
           -fx-text-alignment: right;
           -fx-alignment: center-right;
-          -fx-border-color: #3f3f3f;
+          -fx-border-color: $border-color-grey;
           -fx-border-width: 0em 0.1em 0em 0em;
           -fx-min-height: 2em;
           -fx-padding: 0em 0.2em 0em 0.2em;
           //-fx-background-insets: 0em 0em 0em 0em;
 
           &:hover {
-            -fx-background-color: #3f3f3f;
+            -fx-background-color: lighten($background-color-dark, 10%);
             -fx-cursor: hand;
           }
         }
@@ -33,7 +33,7 @@
       }
 
       .row {
-        -fx-background-color: #1f1f1f;
+        -fx-background-color: $background-color-medium;
         /*-fx-background-insets: 0em 0.2em 0em 0.2em;*/
         //-fx-padding: 0em 0em 0em 0.2em;
 
@@ -45,7 +45,7 @@
         .cell {
           -fx-text-alignment: right;
           -fx-alignment: center-right;
-          -fx-border-color: #3f3f3f;
+          -fx-border-color: $background-color-light;
           -fx-border-width: 0em 0.1em 0em 0em;
           -fx-min-height: 2em;
           -fx-padding: 0em 0.2em 0em 0.2em;
@@ -221,31 +221,34 @@
     }
 
     //statsSection class
-    .stats {
-      -fx-min-height: 22.6em;
-
-      -fx-background-color: $background-color-dark;
-      -fx-border-color: $border-color-white;
+    .stats-section {
+      @include hvGap(0.25em);
 
       .selectors {
+        @include fixedHeight(24.00em);
         -fx-min-width: 10em;
+        //
+        -fx-background-color: $background-color-dark;
+        -fx-border-color: $border-color-white;
 
         .stat-select {
           -fx-background-color: $background-color-dark;
           -fx-border-color: $border-color-white;
-          -fx-border-width: 0.1em 0.1em 0em 0.1em;
-          -fx-fit-to-width: true;
-          -fx-min-width: 10em;
-
-          @include fixedHeight(2.5em);
+          -fx-border-width: 1px 0 0 0;
+          -fx-max-height: infinity;
+          -fx-max-width: infinity;
           -fx-alignment: center;
 
           &:hover {
             -fx-background-color: $background-color-light;
           }
 
+          &:selected {
+            -fx-text-fill: $text-color-blue;
+          }
+
           &:first {
-            -fx-border-width: 0em 0.1em 0em 0.1em;
+            -fx-border-width: 0;
 
           }
         }
@@ -253,21 +256,19 @@
       }
 
       .config {
-        .shipbuilder-stats-title {
-          -fx-padding: 0.25em;
-        }
+        @include fixedHeight(24.00em);
+        -fx-background-color: $background-color-dark;
+        -fx-border-color: $border-color-white;
+        -fx-border-width: 1px 0 1px 1px;
 
-        .splitter .line {
-          -fx-border-color: $border-color-white;
-          -fx-border-width: 0.05em;
-          -fx-border-insets: 0.0em 0 0.0em 0;
-        }
-
-        @include fixedWidth(19em);
 
         .config-controls {
           -fx-padding: 0.25em;
           -fx-spacing: 0.25em;
+
+          .control-line {
+            -fx-spacing: 1em;
+          }
         }
 
         .intfield {
@@ -283,18 +284,18 @@
           -fx-padding: 0.25em 0em 0em 0;
 
           .pipselect-rectangle {
-            -fx-fill: #2b2b2b;
+            -fx-fill: $background-color-lighter;
             -fx-padding: 0 0 0 0.2em;
             -fx-cursor: hand;
 
 
             &:half {
-              -fx-fill: #2e92df;
+              -fx-fill: $background-color-blue;
               -fx-opacity: 0.5;
             }
 
             &:full {
-              -fx-fill: #2e92df;
+              -fx-fill: $background-color-blue;
               -fx-opacity: 1.0;
             }
 
@@ -382,11 +383,9 @@
           //@include fixedWidth(3.5em);
 
           .power-icon-and-label {
-            //-fx-background-color: #80bf0a;
             //-fx-spacing: -0.1em;
 
             .icon-container {
-              //-fx-background-color: #2a003b;
               //@include fixedWidth(1em);
               @include fixedHeight(2em);
               -fx-padding: 0.25em 0 0 0em;
@@ -400,7 +399,6 @@
             }
 
             .control-text {
-              //-fx-background-color: #2a003b;
               -fx-text-fill: $text-color-red;
               //@include fixedWidth(1em);
               @include fixedHeight(2em);
@@ -421,24 +419,10 @@
                 }
               }
             }
-
-            //&:configurable:hover {
-            //  .control-text {
-            //    -fx-text-fill: $text-color-blue;
-            //  }
-            //
-            //  .icon-container {
-            //    .icon {
-            //      -fx-fill: $text-color-blue;
-            //    }
-            //  }
-            //}
           }
 
           .icon-container {
-            //@include fixedWidth(1em);
             @include fixedHeight(2em);
-            //-fx-background-color: #2a003b;
 
             .control-button {
               -fx-cursor: hand;
@@ -455,63 +439,73 @@
         }
       }
 
-      .shipbuilder-stats {
-        //-fx-background-color: #0f0f0f;
-        //-fx-padding: 0.25em;
-        //-fx-border-color: white;
-        //-fx-border-width: 0.1em;
-        //-fx-border-insets: 0.1em;
-        //-fx-background-insets: 0.1em;
-        -fx-min-width: 15.8em;
+      .validation {
+        .error {
+          -fx-text-fill: $text-color-red;
+        }
+
+        .warning {
+          -fx-text-fill: $text-color-yellow;
+        }
       }
 
-      .shipbuilder-stats-label-small {
-        -fx-label-padding: 0.3em 1em 0.2em 0;
-      }
-
-      .shipbuilder-stats-value-small {
-        -fx-font-weight: bold;
-        -fx-label-padding: 0.3em 0em 0.2em 0;
-      }
-
-      .shipbuilder-stats-title {
-        -fx-font-size: 1.2em;
-        -fx-font-weight: bold;
-      }
-
-      //.shipbuilder-stats-label {
-      //  -fx-label-padding: 0.5em 1em 0.5em 0;
-      //}
-
-      .shipbuilder-stats-value {
-        -fx-font-weight: bold;
-        -fx-label-padding: 0.5em 0em 0.5em 0;
-      }
-
-      .shipbuilder-stats-box {
-        /*-fx-min-height: 20em;*/
-        /*-fx-max-height: 20em;*/
-        /*-fx-background-color: #0f0f0f;*/
-        -fx-background-insets: 0em 1.3em 0em 0em;
-        -fx-padding: 0em 1.3em 0em 0em;
-      }
-
-      .shipbuilder-stats-layer-bg {
-        -fx-background-insets: 0em 1.3em 0em 0em;
-        -fx-padding: 0em 1.3em 0em 0em;
-      }
-
-      .shipbuilder-stats-box-bg {
-        -fx-background-color: #0f0f0f;
-      }
-
-      .shipbuilder-stats-configuration {
-        -fx-min-width: 19em;
-        -fx-max-width: 19em;
+      .stats {
+        -fx-min-height: 22.6em;
+        -fx-background-color: $background-color-dark;
+        -fx-border-color: $border-color-white;
+        -fx-border-width: 1px 1px 1px 1px;
         -fx-padding: 0.25em;
+        -fx-min-width: 15.8em;
+
+
+        .title {
+          -fx-padding: 0.25em;
+          -fx-font-size: 1.2em;
+          -fx-font-weight: bold;
+        }
+
+        .key-small {
+          -fx-padding: 0.5em 0 0 0;
+        }
+
+        .value-small {
+          -fx-font-weight: bold;
+          //-fx-label-padding: 0.3em 0em 0.2em 0;
+        }
+
+        .key {
+          @include fixedHeight(2em);
+          -fx-text-alignment: center;
+          //-fx-label-padding: 0.5em 1em 0.5em 0;
+        }
+
+        .value {
+          @include fixedHeight(2em);
+          -fx-text-alignment: center;
+          -fx-font-weight: bold;
+          //-fx-label-padding: 0.5em 0em 0.5em 0;
+        }
+
+
+        .splitter .line {
+          -fx-border-color: $border-color-white;
+          -fx-border-width: 0.05em;
+          -fx-border-insets: 0.0em -0.25em 0.0em -0.25em;
+        }
+
       }
 
-      .power-stats {
+      .power-thermal-stats {
+
+        .percentage-line {
+          -fx-min-height: 2em;
+          -fx-pref-height: 2em;
+          -fx-max-height: 2em;
+          -fx-max-width: 15em;
+          -fx-stroke: $border-color-white;
+          -fx-stroke-width: 0.1em;
+        }
+
         .power-progressbar {
 
           @include segmented-bar-straight;
@@ -522,6 +516,44 @@
           -fx-max-height: 2em;
           -fx-padding: 0.1em 0em 0.1em 0em;
           -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.PowerSegmentedBarSkin";
+
+
+          .power-group-p {
+            -fx-background-color: $progress-bar-color-power-passive;
+          }
+
+          .power-group-1 {
+            -fx-background-color: $progress-bar-color-power-1;
+          }
+
+          .power-group-2 {
+            -fx-background-color: $progress-bar-color-power-2;
+          }
+
+          .power-group-3 {
+            -fx-background-color: $progress-bar-color-power-3;
+          }
+
+          .power-group-4 {
+            -fx-background-color: $progress-bar-color-power-4;
+          }
+
+          .power-group-5 {
+            -fx-background-color: $progress-bar-color-power-5;
+          }
+
+          .power-group-none {
+            -fx-background-color: $progress-bar-color-power-none;
+          }
+
+          .power-overpower {
+            -fx-background-color: $progress-bar-color-power-overpower;
+          }
+
+          .power-potential-overpower {
+            -fx-background-color: $progress-bar-color-power-overpower;
+            -fx-opacity: 0.2;
+          }
         }
 
         .power-stats-powerbars {
@@ -531,27 +563,61 @@
           /*-fx-spacing: 0.2em;*/
         }
 
-        .power-progressbar-popover {
-          -fx-background-color: black;
-          -fx-border-width: 0.12em;
-          -fx-border-color: #fff;
-        }
-
-        .power-progressbar-label {
-          -fx-background-color: black;
-          -fx-text-fill: #fff !important;
-          /*-fx-font-weight: bold;*/
-          /*-fx-font-size: 1.2em;*/
-          -fx-padding: 0.2em;
-        }
-
         .power-stats-overpower {
-          -fx-text-fill: #ff7c7c;
+          -fx-text-fill: $text-color-red;
+        }
+
+        .tooltip-text {
+          -fx-background-color: $background-color-dark;
+          -fx-border-color: $border-color-white;
+          -fx-text-fill: $text-color-white;
+          -fx-border-width: 1px;
+          -fx-padding: 0.25em;
+        }
+
+        .power-legend {
+          -fx-alignment: center-left;
+          -fx-spacing: 0.5em;
+
+
+          .power-group-p {
+            -fx-fill: $progress-bar-color-power-passive;
+          }
+
+          .power-group-1 {
+            -fx-fill: $progress-bar-color-power-1;
+          }
+
+          .power-group-2 {
+            -fx-fill: $progress-bar-color-power-2;
+          }
+
+          .power-group-3 {
+            -fx-fill: $progress-bar-color-power-3;
+          }
+
+          .power-group-4 {
+            -fx-fill: $progress-bar-color-power-4;
+          }
+
+          .power-group-5 {
+            -fx-fill: $progress-bar-color-power-5;
+          }
+        }
+      }
+
+      .jump-stats {
+        .ranges {
+          -fx-spacing: 0.25em;
+        }
+
+        .hoverable-line-chart {
+          @include fixedWidth(30em);
         }
       }
 
       .weapon-stats {
-        .power-progressbar {
+        .weapon-progressbar {
 
           @include segmented-bar-straight;
           -fx-min-width: 15em;
@@ -561,139 +627,184 @@
           -fx-max-height: 2em;
           -fx-padding: 0.1em 0em 0.1em 0em;
           -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.PowerSegmentedBarSkin";
+
+          .hardpoint-thermal {
+            -fx-background-color: $progress-bar-color-hardpoint-thermal;
+          }
+
+          .hardpoint-kinetic {
+            -fx-background-color: $progress-bar-color-hardpoint-kinetic;
+          }
+
+          .hardpoint-explosive {
+            -fx-background-color: $progress-bar-color-hardpoint-explosive;
+          }
+
+          .hardpoint-absolute {
+            -fx-background-color: $progress-bar-color-hardpoint-absolute;
+          }
+
+          .hardpoint-caustic {
+            -fx-background-color: $progress-bar-color-hardpoint-caustic;
+          }
+
+          .hardpoint-antixeno {
+            -fx-background-color: $progress-bar-color-hardpoint-antixeno;
+          }
+
+          .hardpoint-none {
+            -fx-background-color: $progress-bar-color-hardpoint-none;
+          }
         }
 
-        .power-stats-powerbars {
-          -fx-min-height: 4.2em;
-          -fx-pref-height: 4.2em;
-          -fx-max-height: 4.2em;
-          /*-fx-spacing: 0.2em;*/
-        }
-
-        .power-progressbar-popover {
+        .weapon-progressbar-popover {
           -fx-background-color: black;
-          -fx-border-width: 0.12em;
-          -fx-border-color: #fff;
+          -fx-border-width: 1px;
+          -fx-border-color: $border-color-white;
         }
 
-        .power-progressbar-label {
-          -fx-background-color: black;
-          -fx-text-fill: #fff !important;
-          /*-fx-font-weight: bold;*/
-          /*-fx-font-size: 1.2em;*/
-          -fx-padding: 0.2em;
+        .toggles {
+          -fx-spacing: 0.1em;
+          -fx-max-width: 15em;
+
+          .group-toggle {
+            //-fx-min-width: 3.70em;
+            -fx-max-width: Infinity;
+          }
+        }
+
+        .tooltip-text {
+          -fx-background-color: $background-color-dark;
+          -fx-border-color: $border-color-white;
+          -fx-text-fill: $text-color-white;
+          -fx-border-width: 1px;
+          -fx-padding: 0.25em;
+        }
+
+        .legend-box {
+          -fx-min-width: 15em;
+          -fx-max-width: 15em;
+
+          .legend-text {
+            -fx-alignment: baseline-center;
+            -fx-padding: 0em;
+          }
+
+          .hardpoint-thermal {
+            -fx-fill: $progress-bar-color-hardpoint-thermal;
+          }
+
+          .hardpoint-kinetic {
+            -fx-fill: $progress-bar-color-hardpoint-kinetic;
+          }
+
+          .hardpoint-explosive {
+            -fx-fill: $progress-bar-color-hardpoint-explosive;
+          }
+
+          .hardpoint-absolute {
+            -fx-fill: $progress-bar-color-hardpoint-absolute;
+          }
+
+          .hardpoint-caustic {
+            -fx-fill: $progress-bar-color-hardpoint-caustic;
+          }
+
+          .hardpoint-antixeno {
+            -fx-fill: $progress-bar-color-hardpoint-antixeno;
+          }
+
+          .hardpoint-none {
+            -fx-fill: $progress-bar-color-hardpoint-none;
+          }
+
         }
       }
 
-      .shield-image {
-        -fx-min-width: 5em;
-        -fx-max-width: 5em;
-        -fx-min-height: 6.199em;
-        -fx-max-height: 6.199em;
+      .shield-stats, .armour-stats {
+        .shield-image {
+          -fx-min-width: 5em;
+          -fx-max-width: 5em;
+          -fx-min-height: 6.199em;
+          -fx-max-height: 6.199em;
+        }
+
+        .shield-component-red {
+          -fx-min-width: 15em;
+          -fx-max-width: 15em;
+          -fx-min-height: 9.6em;
+          -fx-max-height: 9.6em;
+          -fx-padding: 0.6em 0em 0em 0em;
+        }
+
+        .shield-component-blue {
+          -fx-min-width: 15em;
+          -fx-max-width: 15em;
+          -fx-min-height: 6.6em;
+          -fx-max-height: 6.6em;
+          -fx-padding: 0.6em 0em 0em 0em;
+        }
+
+        .shield-label-blue {
+          -fx-text-fill: $text-color-blue;
+          -fx-font-weight: bold;
+        }
+
+        .shield-label-red {
+          -fx-text-fill: $text-color-red;
+          -fx-font-weight: bold;
+        }
+
+        .shield-label-symbol {
+          -fx-padding: 0.2em 0 0 0;
+          -fx-font-size: 2.5em;
+          -fx-font-weight: bolder;
+        }
+
+        .shield-label-title {
+          -fx-padding: 0 0 0.5em 0;
+        }
+
       }
-
-      .shield-component-red {
-        -fx-min-width: 15em;
-        -fx-max-width: 15em;
-        -fx-min-height: 9.6em;
-        -fx-max-height: 9.6em;
-        -fx-padding: 0.6em 0em 0em 0em;
-      }
-
-      .shield-component-blue {
-        -fx-min-width: 15em;
-        -fx-max-width: 15em;
-        -fx-min-height: 6.6em;
-        -fx-max-height: 6.6em;
-        -fx-padding: 0.6em 0em 0em 0em;
-      }
-
-      .shield-label-blue {
-        -fx-text-fill: #2e92df;
-        -fx-font-weight: bold;
-      }
-
-      .shield-label-red {
-        -fx-text-fill: #ff7c7c;
-        -fx-font-weight: bold;
-      }
-
-      .shield-label-symbol {
-        -fx-label-padding: 0.2em 0em 0em 0em;
-        -fx-font-size: 2.5em;
-        -fx-font-weight: bolder;
-      }
-
-      .shield-label-title {
-        -fx-label-padding: 0em 0em 0.5em 0em;
-      }
-
-
-      .toggle-button-stats-hardpoint {
-        -fx-min-width: 3.75em;
-        -fx-max-width: 3.75em;
-      }
-
-      .weapon-stats-legend-label {
-        -fx-alignment: baseline-center;
-        -fx-padding: 0em;
-      }
-
-      .weapon-stats-legend-box {
-        -fx-min-width: 15em;
-        -fx-max-width: 15em;
-      }
-
-      .power-progressbar-line {
-        -fx-min-height: 2em;
-        -fx-pref-height: 2em;
-        -fx-max-height: 2em;
-        -fx-max-width: 15em;
-        -fx-stroke: white;
-        -fx-stroke-width: 0.1em;
-      }
-
 
       .range-indicator {
         -fx-min-height: 3em;
-        -fx-min-width: 15em;
-        -fx-max-width: 15em;
-      }
+        @include fixedWidth(15em);
 
-      .range-indicator-line {
-        -fx-min-height: 1em;
-        -fx-min-width: 15em;
-        -fx-max-width: 15em;
-        -fx-stroke: white;
-        -fx-stroke-width: 0.1em;
-      }
+        &:optimal {
+          .line-current {
+            -fx-stroke: $text-color-green;
+          }
 
-      .range-indicator-line-current {
-        -fx-min-height: 1em;
-        -fx-stroke: #2e92df;
-        -fx-stroke-width: 0.2em;
-      }
+          .current {
+            -fx-text-fill: $text-color-green;
+          }
+        }
 
-      .range-indicator-line-current-green {
-        -fx-stroke: #89d07f;
-      }
+        .values {
+          @include fixedWidth(15em);
+        }
 
-      .range-indicator-current {
-        -fx-text-fill: #2e92df;
-      }
+        .current {
+          -fx-text-fill: $text-color-blue;
+        }
 
-      .range-indicator-current-green {
-        -fx-text-fill: #89d07f;
-      }
+        .line {
+          -fx-min-height: 1em;
+          @include fixedWidth(15em);
+          -fx-stroke: white;
+          -fx-stroke-width: 0.1em;
+        }
 
-      .range-indicator-values {
-        -fx-min-width: 15em;
-        -fx-max-width: 15em;
+        .line-current {
+          -fx-min-height: 1em;
+          -fx-stroke: $text-color-blue;
+          -fx-stroke-width: 0.2em;
+        }
       }
-
     }
 
-    .modules {
+    .modules-section {
 
       -fx-fit-to-width: true;
       -fx-vgap: 0.5em;
@@ -714,11 +825,11 @@
             -fx-border-color: white;
 
             &:military {
-              -fx-background-color: linear-gradient(from 0px 0px to 10px 10px, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%);
+              -fx-background-color: linear-gradient(from 0px 0px to 10px 10px, repeat, $background-color-dark 0%, $background-color-medium 25%, $background-color-dark 50%, $background-color-medium 75%, $background-color-dark 100%);
             }
 
             &:cargo {
-              -fx-background-color: linear-gradient(from 0px 10px to 10px 0px, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%);
+              -fx-background-color: linear-gradient(from 0px 10px to 10px 0px, repeat, $background-color-dark 0%, $background-color-medium 25%, $background-color-dark 50%, $background-color-medium 75%, $background-color-dark 100%);
             }
 
             &:hover {
@@ -741,15 +852,13 @@
                 -fx-max-width: 1.4em;
                 -fx-min-height: 1.5em;
                 -fx-max-height: 1.5em;
-                -fx-text-fill: #2e92df;
+                -fx-text-fill: $text-color-blue;
                 -fx-font-weight: bold;
-                /*-fx-background-color: #2e92df;*/
                 -fx-text-alignment: center;
                 -fx-alignment: center;
               }
 
               .slot-size {
-                //-fx-label-padding: 0.2em;
                 -fx-min-width: 1.4em;
                 -fx-max-width: 1.4em;
                 -fx-min-height: 1.5em;
@@ -842,10 +951,11 @@
             }
 
             .empty {
+              @include fixedHeight(1.27em);
               -fx-min-width: 6.77em;
               -fx-max-width: 6.77em;
               -fx-font-size: 3.5em;
-              -fx-text-fill: #4f4f4f;
+              -fx-text-fill: $text-color-grey;
             }
 
             .size-control {
@@ -916,12 +1026,11 @@
             }
 
             .power-control {
-              //-fx-background-color: #3b1b00;
 
               @include fixedWidth(1.5em);
 
-              .power-icon-and-label {
-                &:configurable {
+              &:configurable {
+                .power-icon-and-label {
                   -fx-spacing: -0.1em;
 
                   -fx-cursor: hand;
@@ -961,14 +1070,13 @@
                       }
                     }
                   }
-
                 }
+              }
 
-                //-fx-background-color: #80bf0a;
+              .power-icon-and-label {
                 -fx-spacing: -0.1em;
 
                 .icon-container {
-                  //-fx-background-color: #2a003b;
                   @include fixedWidth(1em);
                   @include fixedHeight(1.5em);
                   -fx-padding: 0.25em 0 0 0em;
@@ -983,10 +1091,8 @@
 
                 .control-text {
                   -fx-text-fill: $text-color-red;
-                  //@include fixedWidth(1em);
                   @include fixedHeight(1.3em);
                   -fx-padding: 0.2em 0 0 0.1em;
-                  //-fx-padding: 0 0 0 -0.1em;
                   -fx-alignment: center;
                 }
 
@@ -1001,6 +1107,7 @@
                     }
                   }
                 }
+
 
               }
 
@@ -1028,7 +1135,7 @@
             -fx-alignment: top-right;
 
             .resize-warning {
-              -fx-background-color: #2e92df;
+              -fx-background-color: $background-color-blue;
               -fx-font-weight: bold;
               -fx-padding: 0.4em;
             }
@@ -1065,7 +1172,7 @@
         }
 
         .module-details {
-          -fx-background-color: #0f0f0f;
+          -fx-background-color: $background-color-dark;
           @include fixedWidth(42.1em);
           //-fx-min-width: 42.1em;
           //-fx-max-width: 42.2em;
@@ -1185,7 +1292,7 @@
                 .value {
                   -fx-padding: 0.1em 0.2em 0.1em 0.2em;
                   -fx-border-radius: 0.5em;
-                  -fx-border-color: #2e92df;
+                  -fx-border-color: $border-color-blue;
                   -fx-border-width: 0.1em;
                   -fx-alignment: center-left;
 
@@ -1337,13 +1444,13 @@
               @include fixedWidth(25.7em);
               -fx-padding: 0.25em;
               -fx-spacing: 0.1em;
-              -fx-background-color: #0f0f0f;
+              -fx-background-color: $background-color-dark;
 
               .title {
                 @include fixedHeight(2em);
                 -fx-alignment: center-left;
                 -fx-font-size: 1.05em;
-                -fx-background-color: #0f0f0f;
+                -fx-background-color: $background-color-dark;
               }
 
 
@@ -1382,7 +1489,7 @@
                   -fx-pref-height: 2.1em;
 
                   &:overload {
-                    -fx-border-color: #ff7c7c;
+                    -fx-border-color: $border-color-red;
                   }
 
                   .image-box {

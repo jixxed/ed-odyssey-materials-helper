@@ -2,7 +2,9 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.FXApplication;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
@@ -25,13 +27,11 @@ import static nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent.Type
 @Slf4j
 public class HorizonsShipBuilderTab extends HorizonsTab implements DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private static final String SHIP_CONTENT_STYLE_CLASS = "ships-content";
 
     private ControlsSection controlsSection;
     private StatsSection statsSection;
     private ModulesSection modulesSection;
     private ShipSelectView shipSelectView;
-    //    private NoShipLayer noShipLayer;
     private ModuleDetailsPopover detailsPopOver;
     private ShipViewPopover shipViewPopOver;
 
@@ -60,27 +60,25 @@ public class HorizonsShipBuilderTab extends HorizonsTab implements DestroyableEv
 
         detailsPopOver = new ModuleDetailsPopover();
         shipViewPopOver = new ShipViewPopover();
-
-
+        FXApplication.getInstance().getPrimaryStage().focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+            if (!isNowFocused) {
+                System.out.println("App lost focus");
+                detailsPopOver.hide(Duration.ZERO);
+                shipViewPopOver.hide(Duration.ZERO);
+            }
+        });
         this.register(detailsPopOver);
         this.register(shipViewPopOver);
         shipSelectView = new ShipSelectView();
-//        shipSelectionLayer = new ShipSelectionLayer();
-//        noShipLayer = new NoShipLayer();
-//        controlsLayer.setVisible(false);
         statsSection.setVisible(false);
         modulesSection.setVisible(false);
         shipSelectView.setVisible(false);
-//        noShipLayer.setVisible(false);
-//        controlsLayer.setPickOnBounds(false);
-//        statsSection.setPickOnBounds(false);
         DestroyableVBox content = BoxBuilder.builder()
                 .withStyleClass("contents")
                 .withNodes(
                         controlsSection,
                         statsSection,
                         modulesSection,
-//                        noShipLayer,
                         shipSelectView)
                 .buildVBox();
         this.setClosable(false);
@@ -100,7 +98,6 @@ public class HorizonsShipBuilderTab extends HorizonsTab implements DestroyableEv
                 if (configuration.getShipType() != null) {
                     showShip();
                     modulesSection.initShipSlots();
-//                    statsSection.initStats();
                 } else if (configuration == ShipConfiguration.CURRENT) {
                     showNoShip();
                 } else {
@@ -111,28 +108,22 @@ public class HorizonsShipBuilderTab extends HorizonsTab implements DestroyableEv
     }
 
     private void showNoShip() {
-//        setVisible(controlsLayer, true);
         setVisible(statsSection, false);
         setVisible(modulesSection, false);
         setVisible(shipSelectView, false);
-//        setVisible(noShipLayer, true);
     }
 
     private void showShip() {
-//        setVisible(controlsLayer, true);
         setVisible(statsSection, true);
         setVisible(modulesSection, true);
         setVisible(shipSelectView, false);
-//        setVisible(noShipLayer, false);
 
     }
 
     private void showShipSelect() {
-//        setVisible(controlsLayer, true);
         setVisible(statsSection, false);
         setVisible(modulesSection, false);
         setVisible(shipSelectView, true);
-//        setVisible(noShipLayer, false);
 
     }
 
@@ -171,61 +162,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab implements DestroyableEv
 
         register(EventService.addListener(true, this, 9, ShipLoadoutEvent.class, event -> {
 
-//            if (this.controlsLayer.getShipSelect().getSelectionModel().getSelectedItem().equals(ShipConfiguration.CURRENT)) {
-//                refreshContent();
-//            }
         }));
-//        register(EventService.addListener(true, this, /*9,*/ SlotboxHoverEvent.class, (event) -> {
-//            if (activeSlotBox != null && activeSlotBox.isMenuOpen()) {
-//                return;
-//            }
-//            activeSlotBox = event.getSlotBox();
-////            if (event.isShow() && event.getShipModule() != null) {
-////                if (!detailsPopOver.isShowing()) {
-////                    var moduleDetails = new ModuleDetails(event.getShipModule());
-////                    if (detailsPopOver.getContentNode() instanceof Destroyable destroyable) {
-////                        destroyable.destroy();
-////                    }
-////                    detailsPopOver.setContentNode(detailsPopOver.register(moduleDetails));
-////                    detailsPopOver.show(activeSlotBox);
-////                }
-////            } else if (detailsPopOver.isShowing() && !activeSlotBox.isMenuOpen()) {
-////                detailsPopOver.hide(Duration.ZERO);
-////            }
-//
-//            if (event.isHover() && (event.getSlotBox().getSlot().getSlotType() == SlotType.HARDPOINT || event.getSlotBox().getSlot().getSlotType() == SlotType.UTILITY)) {
-//                if (!shipViewPopOver.isShowing()) {
-//                    final Bounds boundsInLocal = event.getSlotBox().getBoundsInLocal();
-//                    final Bounds bounds = event.getSlotBox().localToScreen(boundsInLocal);
-//                    final int x = (int) bounds.getMinX();
-//                    final int y = (int) (bounds.getMinY() - shipViewPopOver.getHeight());
-//
-//                    var shipView = new ShipView(activeSlotBox);
-//                    if (shipViewPopOver.getContentNode() instanceof Destroyable destroyable) {
-//                        destroyable.destroy();
-//                    }
-//                    shipViewPopOver.setContentNode(shipViewPopOver.register(shipView));
-//                    shipViewPopOver.show(event.getSlotBox(), x, y, Duration.millis(1));
-//                }
-//            } else if (shipViewPopOver.isShowing() && !activeSlotBox.isMenuOpen()) {
-//                shipViewPopOver.hide(Duration.ZERO);
-//            }
-//        }));
-////        register(EventService.addListener(true, this, /*9,*/ ModuleSelectHoverEvent.class, (event) -> {
-////            ShipModule shipModule = event.isShow() ? event.getShipModule() : activeSlotBox.getSlot().getShipModule();
-////            var moduleDetails = new ModuleDetails(shipModule);
-////            if (detailsPopOver.getContentNode() instanceof Destroyable destroyable) {
-////                destroyable.destroy();
-////            }
-////            detailsPopOver.setContentNode(detailsPopOver.register(moduleDetails));
-////            updateDetailsPopoverPosition();
-////        }));
-////        register(EventService.addListener(true, this, /*9,*/ ModuleSelectCloseEvent.class, (event) -> {
-////            if (shipViewPopOver.isShowing()) {
-////                shipViewPopOver.hide(Duration.ZERO);
-////            }
-////        }));
-
     }
 
     @Override

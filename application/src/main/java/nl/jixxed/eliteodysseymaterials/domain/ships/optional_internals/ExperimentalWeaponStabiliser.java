@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ExperimentalWeaponStabiliser extends OptionalModule {
-    public static final ExperimentalWeaponStabiliser EXPERIMENTAL_WEAPON_STABILISER_3_F = new ExperimentalWeaponStabiliser("EXPERIMENTAL_WEAPON_STABILISER_3_F", HorizonsBlueprintName.EXPERIMENTAL_WEAPON_STABILISER, ModuleSize.SIZE_3, ModuleClass.F, false, 2000000, "Int_ExpModuleStabiliser_Size3_Class3", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 8.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.0)));
-    public static final ExperimentalWeaponStabiliser EXPERIMENTAL_WEAPON_STABILISER_5_F = new ExperimentalWeaponStabiliser("EXPERIMENTAL_WEAPON_STABILISER_5_F", HorizonsBlueprintName.EXPERIMENTAL_WEAPON_STABILISER, ModuleSize.SIZE_5, ModuleClass.F, false, 4000000, "Int_ExpModuleStabiliser_Size5_Class3", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 20.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.0)));
+    public static final ExperimentalWeaponStabiliser EXPERIMENTAL_WEAPON_STABILISER_3_F = new ExperimentalWeaponStabiliser("EXPERIMENTAL_WEAPON_STABILISER_3_F", HorizonsBlueprintName.EXPERIMENTAL_WEAPON_STABILISER, ModuleSize.SIZE_3, ModuleClass.F, false, 2000000, "Int_ExpModuleStabiliser_Size3_Class3", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 8.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.0), Map.entry(HorizonsModifier.MODULE_LIMIT_INCREASE, 1.0)));
+    public static final ExperimentalWeaponStabiliser EXPERIMENTAL_WEAPON_STABILISER_5_F = new ExperimentalWeaponStabiliser("EXPERIMENTAL_WEAPON_STABILISER_5_F", HorizonsBlueprintName.EXPERIMENTAL_WEAPON_STABILISER, ModuleSize.SIZE_5, ModuleClass.F, false, 4000000, "Int_ExpModuleStabiliser_Size5_Class3", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 20.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.0), Map.entry(HorizonsModifier.MODULE_LIMIT_INCREASE, 2.0)));
 
     public static final List<ExperimentalWeaponStabiliser> EXPERIMENTAL_WEAPON_STABILISERS = List.of(
             EXPERIMENTAL_WEAPON_STABILISER_3_F,
@@ -66,5 +66,9 @@ public class ExperimentalWeaponStabiliser extends OptionalModule {
     @Override
     public int getModuleLimit() {
         return 1;
+    }
+
+    public int getExperimentalModuleIncrease() {
+        return (int) (double) this.getAttributeValue(HorizonsModifier.MODULE_LIMIT_INCREASE);
     }
 }

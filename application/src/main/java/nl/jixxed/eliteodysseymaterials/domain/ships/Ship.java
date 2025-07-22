@@ -23,28 +23,7 @@ public class Ship {
             ShipType.SIDE_WINDER,
             5070,
             32000,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 220.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 320.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 5.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 40.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 60.0),
-                    Map.entry(HorizonsModifier.MASS, 25.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 45.454),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 7.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 42.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 16.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 110.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 34.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 140.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 1.18),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 18.15),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.3),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 20.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 6.0)
-
-            ),
+            ShipSpecs.SIDE_WINDER,
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1107).y(597).index(0).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1043).y(663).index(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
@@ -62,7 +41,6 @@ public class Ship {
                     Slot.builder().slotType(SlotType.CORE_POWER_DISTRIBUTION).index(5).slotSize(1).shipModule(PowerDistributor.POWER_DISTRIBUTOR_1_E).build(),
                     Slot.builder().slotType(SlotType.CORE_SENSORS).index(6).slotSize(1).shipModule(Sensors.SENSORS_1_E).build(),
                     Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(1).shipModule(FuelTank.FUEL_TANK_1_C).build()
-
             ),
             List.of(
                     Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(2).shipModule(ShieldGenerator.SHIELD_GENERATOR_2_E).build(),
@@ -77,28 +55,8 @@ public class Ship {
             ShipType.EAGLE,
             7490,
             44800,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 240.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 350.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 7.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 60.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 40.0),
-                    Map.entry(HorizonsModifier.MASS, 50.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 75.0),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.5),
-                    Map.entry(HorizonsModifier.BOOST_COST, 8.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 50.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 18.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 120.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 40.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 165.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 1.38),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 21.48),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.34),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 28.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 6.0)
+            ShipSpecs.EAGLE,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1028).y(569).index(0).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(970).y(561).index(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -132,28 +90,8 @@ public class Ship {
             ShipType.HAULER,
             8160,
             52720,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 200.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 300.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 4.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 50.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 100.0),
-                    Map.entry(HorizonsModifier.MASS, 14.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 35.0),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 7.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 36.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 14.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 100.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 30.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 123.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 1.06),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 16.2),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.25),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 20.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 6.0)
+            ShipSpecs.HAULER,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(927).y(465).index(0).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
             ),
@@ -185,28 +123,8 @@ public class Ship {
             ShipType.ADDER,
             18710,
             87810,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 220.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 320.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 4.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 60.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 90.0),
-                    Map.entry(HorizonsModifier.MASS, 35.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 45.454),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 8.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 38.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 14.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 100.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 30.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 170.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 1.45),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 22.6),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.36),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 35.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 7.0)
+            ShipSpecs.ADDER,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1003).y(559).index(0).slotSize(2).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1155).y(565).index(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -241,28 +159,8 @@ public class Ship {
             ShipType.EMPIRE_EAGLE,
             50890,
             110830,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 300.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 400.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 5.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 80.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 60.0),
-                    Map.entry(HorizonsModifier.MASS, 50.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 70.0),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.5),
-                    Map.entry(HorizonsModifier.BOOST_COST, 8.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 40.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 15.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 100.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 30.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 163.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 1.5),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 21.2),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.37),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 28.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 6.0)
+            ShipSpecs.EMPIRE_EAGLE,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1032).y(573).index(0).slotSize(2).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(972).y(562).index(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -296,28 +194,8 @@ public class Ship {
             ShipType.VIPER_MK_III,
             74610,
             142930,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 320.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 400.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 4.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 105.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 70.0),
-                    Map.entry(HorizonsModifier.MASS, 50.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 62.5),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 5.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 10.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 35.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 15.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 90.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 30.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 195.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 1.69),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 26.2),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.41),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 35.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 7.0)
+            ShipSpecs.VIPER_MK_III,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1064).y(579).index(0).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(939).y(448).index(1).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -353,28 +231,8 @@ public class Ship {
             ShipType.COBRA_MK_III,
             186260,
             349720,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 280.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 400.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 5.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 80.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 120.0),
-                    Map.entry(HorizonsModifier.MASS, 180.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 50.0),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 5.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 10.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 40.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 10.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 100.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 30.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 225.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 1.92),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 30.63),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.49),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 35.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 8.0)
+            ShipSpecs.COBRA_MK_III,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1257).y(702).index(0).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1165).y(799).index(1).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -411,28 +269,8 @@ public class Ship {
             ShipType.VIPER_MK_IV,
             290680,
             437930,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 270.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 340.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 3.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 150.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 150.0),
-                    Map.entry(HorizonsModifier.MASS, 190.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 64.815),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 5.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 10.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 30.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 12.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 90.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 25.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 209.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 1.82),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 28.98),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.46),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 35.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 7.0)
+            ShipSpecs.VIPER_MK_IV,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1090).y(562).index(0).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(948).y(408).index(1).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -470,28 +308,8 @@ public class Ship {
             ShipType.DIAMOND_BACK,
             441800,
             564330,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 280.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 380.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 5.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 120.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 120.0),
-                    Map.entry(HorizonsModifier.MASS, 170.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 60.714),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 10.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 42.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 15.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 100.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 35.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 346.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.42),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 48.05),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.49),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 40.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 8.0)
+            ShipSpecs.DIAMOND_BACK,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(3).x(779).y(836).index(0).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1163).y(327).index(1).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -528,28 +346,8 @@ public class Ship {
             ShipType.COBRA_MK_IV,
             584200,
             764720,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 200.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 300.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 3.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 120.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 120.0),
-                    Map.entry(HorizonsModifier.MASS, 210.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 50.0),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 5.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 10.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 30.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 10.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 90.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 25.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 228.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 1.99),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 31.68),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.51),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 35.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 8.0)
+            ShipSpecs.COBRA_MK_IV,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1278).y(680).index(0).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1177).y(788).index(1).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -589,28 +387,8 @@ public class Ship {
             ShipType.TYPE_6,
             858010,
             1045950,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 220.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 350.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 3.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 90.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 180.0),
-                    Map.entry(HorizonsModifier.MASS, 155.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 40.909),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 10.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 30.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 17.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 100.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 23.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 179.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 1.7),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 24.55),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.39),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 35.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 8.0)
+            ShipSpecs.TYPE_6,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1178).y(649).index(0).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1051).y(509).index(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
@@ -646,28 +424,8 @@ public class Ship {
             ShipType.DOLPHIN,
             1095780,
             1337320,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 250.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 350.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 3.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 110.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 110.0),
-                    Map.entry(HorizonsModifier.MASS, 140.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 48.0),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 10.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 30.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 20.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 100.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 23.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 245.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 1.91),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 56.0),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.5),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 35.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 9.0)
+            ShipSpecs.DOLPHIN,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1165).y(412).index(0).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1204).y(457).index(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
@@ -704,28 +462,8 @@ public class Ship {
             ShipType.DIAMOND_BACK_XL,
             1616160,
             1894760,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 260.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 340.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 4.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 150.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 150.0),
-                    Map.entry(HorizonsModifier.MASS, 260.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 61.538),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 13.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 35.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 13.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 90.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 28.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 351.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.46),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 50.55),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.52),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 42.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 10.0)
+            ShipSpecs.DIAMOND_BACK_XL,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1148).y(492).index(0).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(3).x(734).y(877).index(1).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -763,28 +501,8 @@ public class Ship {
             ShipType.EMPIRE_COURIER,
             2462010,
             2542930,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 280.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 380.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 4.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 200.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 80.0),
-                    Map.entry(HorizonsModifier.MASS, 35.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 78.571),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 10.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 38.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 16.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 90.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 32.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 230.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 1.62),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 25.05),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.41),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 30.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 7.0)
+            ShipSpecs.EMPIRE_COURIER,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(898).y(825).index(0).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1235).y(479).index(1).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -822,28 +540,8 @@ public class Ship {
             ShipType.INDEPENDANT_TRADER,
             2937840,
             3126150,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 200.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 300.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 2.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 135.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 270.0),
-                    Map.entry(HorizonsModifier.MASS, 180.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 45.0),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 10.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 27.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 15.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 100.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 20.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 215.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 1.87),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 29.78),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.39),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 45.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 8.0)
+            ShipSpecs.INDEPENDANT_TRADER,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1233).y(637).index(0).slotSize(2).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1124).y(751).index(1).slotSize(2).build(),
@@ -880,28 +578,8 @@ public class Ship {
             ShipType.ASP_SCOUT,
             3811220,
             3961160,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 220.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 300.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 5.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 120.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 180.0),
-                    Map.entry(HorizonsModifier.MASS, 150.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 50.0),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.5),
-                    Map.entry(HorizonsModifier.BOOST_COST, 13.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 40.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 15.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 110.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 35.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 210.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 1.8),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 29.65),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.47),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 52.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 8.0)
+            ShipSpecs.ASP_SCOUT,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1232).y(700).index(0).slotSize(2).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1166).y(772).index(1).slotSize(2).build(),
@@ -937,28 +615,8 @@ public class Ship {
             ShipType.VULTURE,
             4670100,
             4925620,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 210.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 340.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 5.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 240.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 160.0),
-                    Map.entry(HorizonsModifier.MASS, 230.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 90.476),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.5),
-                    Map.entry(HorizonsModifier.BOOST_COST, 16.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 42.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 17.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 110.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 35.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 237.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 1.87),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 35.63),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.57),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 55.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 10.0)
+            ShipSpecs.VULTURE,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1205).y(538).index(0).slotSize(3).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1002).y(743).index(1).slotSize(3).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
@@ -995,28 +653,8 @@ public class Ship {
             ShipType.ASP,
             6137180,
             6661160,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 250.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 340.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 4.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 140.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 210.0),
-                    Map.entry(HorizonsModifier.MASS, 280.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 48.0),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.5),
-                    Map.entry(HorizonsModifier.BOOST_COST, 13.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 38.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 10.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 100.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 30.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 272.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.34),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 39.9),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.63),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 52.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 11.0)
+            ShipSpecs.ASP,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1163).y(773).index(0).slotSize(2).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1229).y(702).index(1).slotSize(2).build(),
@@ -1057,28 +695,8 @@ public class Ship {
             ShipType.FEDERATION_DROPSHIP,
             13501480,
             14314210,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 180.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 300.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 3.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 200.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 300.0),
-                    Map.entry(HorizonsModifier.MASS, 580.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 55.556),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 6.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 19.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 30.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 14.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 80.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 20.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 331.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.6),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 46.5),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.83),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 60.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 14.0)
+            ShipSpecs.FEDERATION_DROPSHIP,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1318).y(510).index(0).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1088).y(548).index(1).slotSize(2).build(),
@@ -1120,28 +738,8 @@ public class Ship {
             ShipType.TYPE_7,
             16774470,
             17472250,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 180.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 300.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 1.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 156.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 340.0),
-                    Map.entry(HorizonsModifier.MASS, 350.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 33.333),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 6.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 10.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 22.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 22.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 60.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 16.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 226.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.17),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 32.45),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.52),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 54.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 10.0)
+            ShipSpecs.TYPE_7,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1226).y(450).index(0).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1186).y(408).index(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -1182,28 +780,8 @@ public class Ship {
             ShipType.TYPE_X,
             18603850,
             19382250,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 230.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 330.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 4.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 200.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 280.0),
-                    Map.entry(HorizonsModifier.MASS, 400.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 65.217),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 6.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 19.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 38.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 16.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 90.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 32.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 289.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.6),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 46.5),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.77),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 65.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 13.0)
+            ShipSpecs.TYPE_X,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1030).y(534).index(0).slotSize(3).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1190).y(688).index(1).slotSize(3).build(),
@@ -1245,28 +823,8 @@ public class Ship {
             ShipType.FEDERATION_DROPSHIP_MK_II,
             19102490,
             19814210,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 210.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 350.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 4.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 200.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 300.0),
-                    Map.entry(HorizonsModifier.MASS, 480.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 71.429),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 6.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 19.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 38.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 19.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 90.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 30.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 286.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.53),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 45.23),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.72),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 60.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 14.0)
+            ShipSpecs.FEDERATION_DROPSHIP_MK_II,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1317).y(514).index(0).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1130).y(643).index(1).slotSize(3).build(),
@@ -1306,28 +864,8 @@ public class Ship {
             ShipType.EMPIRE_TRADER,
             21108270,
             22295860,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 300.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 380.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 5.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 180.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 270.0),
-                    Map.entry(HorizonsModifier.MASS, 400.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 60.0),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.5),
-                    Map.entry(HorizonsModifier.BOOST_COST, 19.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 40.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 18.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 80.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 30.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 304.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.63),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 46.8),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.74),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 60.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 12.0)
+            ShipSpecs.EMPIRE_TRADER,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1030).y(156).index(0).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(481).y(652).index(1).slotSize(3).build(),
@@ -1367,28 +905,8 @@ public class Ship {
             ShipType.TYPE_X_2,
             22087940,
             22866340,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 180.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 300.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 3.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 200.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 300.0),
-                    Map.entry(HorizonsModifier.MASS, 500.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 61.11),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 6.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 19.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 32.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 16.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 80.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 30.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 316.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.53),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 45.23),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.77),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 65.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 13.0)
+            ShipSpecs.TYPE_X_2,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1190).y(688).index(0).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1049).y(549).index(1).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -1431,28 +949,8 @@ public class Ship {
             ShipType.TYPE_X_3,
             29561170,
             30472250,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 200.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 310.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 4.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 220.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 300.0),
-                    Map.entry(HorizonsModifier.MASS, 450.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 65.0),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 6.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 19.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 35.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 16.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 90.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 32.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 316.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.87),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 51.4),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.77),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 65.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 13.0)
+            ShipSpecs.TYPE_X_3,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1194).y(687).index(0).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1177).y(495).index(1).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -1496,28 +994,8 @@ public class Ship {
             ShipType.FEDERATION_GUNSHIP,
             34806280,
             35814210,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 170.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 280.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 1.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 250.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 350.0),
-                    Map.entry(HorizonsModifier.MASS, 580.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 58.824),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 6.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 23.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 25.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 18.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 80.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 20.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 325.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.87),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 51.4),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.82),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 60.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 14.0)
+            ShipSpecs.FEDERATION_GUNSHIP,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1308).y(405).index(0).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1240).y(885).index(1).slotSize(2).build(),
@@ -1560,28 +1038,8 @@ public class Ship {
             ShipType.KRAIT_LIGHT,
             35732880,
             37472250,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 250.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 350.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 3.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 200.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 180.0),
-                    Map.entry(HorizonsModifier.MASS, 270.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 64.0),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.5),
-                    Map.entry(HorizonsModifier.BOOST_COST, 13.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 31.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 10.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 90.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 26.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 300.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.68),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 52.05),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.63),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 60.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 14.0)
+            ShipSpecs.KRAIT_LIGHT,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1003).y(659).index(0).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1114).y(546).index(1).slotSize(3).build(),
@@ -1621,28 +1079,8 @@ public class Ship {
             ShipType.KRAIT_MK_II,
             44152080,
             45814210,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 240.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 330.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 3.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 220.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 220.0),
-                    Map.entry(HorizonsModifier.MASS, 320.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 62.5),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.5),
-                    Map.entry(HorizonsModifier.BOOST_COST, 13.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 31.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 10.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 90.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 26.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 300.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.68),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 52.05),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.63),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 55.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 16.0)
+            ShipSpecs.KRAIT_MK_II,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1170).y(681).index(0).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1004).y(658).index(1).slotSize(3).build(),
@@ -1683,28 +1121,8 @@ public class Ship {
             ShipType.ORCA,
             47792090,
             48539890,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 300.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 380.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 1.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 220.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 220.0),
-                    Map.entry(HorizonsModifier.MASS, 290.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 66.667),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 16.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 25.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 18.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 55.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 20.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 262.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.3),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 42.68),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.79),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 55.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 15.0)
+            ShipSpecs.ORCA,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1261).y(407).index(0).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1064).y(463).index(1).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -1743,28 +1161,8 @@ public class Ship {
             ShipType.FER_DE_LANCE,
             51126980,
             51567040,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 260.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 350.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 4.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 300.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 225.0),
-                    Map.entry(HorizonsModifier.MASS, 250.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 84.615),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 5.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 19.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 38.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 12.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 90.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 30.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 224.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.05),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 41.63),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.67),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 70.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 12.0)
+            ShipSpecs.FER_DE_LANCE,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1080).y(572).index(0).slotSize(4).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1158).y(733).index(1).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -1804,28 +1202,8 @@ public class Ship {
             ShipType.MAMBA,
             55434290,
             55867040,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 310.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 380.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 3.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 270.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 230.0),
-                    Map.entry(HorizonsModifier.MASS, 250.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 77.42),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 5.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 16.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 30.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 10.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 75.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 27.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 165.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.05),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 41.63),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.5),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 70.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 12.0)
+            ShipSpecs.MAMBA,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(951).y(507).index(0).slotSize(4).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1194).y(498).index(1).slotSize(3).build(),
@@ -1865,28 +1243,8 @@ public class Ship {
             ShipType.PYTHON,
             55316050,
             56978180,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 230.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 300.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 2.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 260.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 260.0),
-                    Map.entry(HorizonsModifier.MASS, 350.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 60.87),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.5),
-                    Map.entry(HorizonsModifier.BOOST_COST, 23.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 29.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 10.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 90.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 24.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 300.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.68),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 52.05),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.83),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 65.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 17.0)
+            ShipSpecs.PYTHON,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(996).y(714).index(0).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1154).y(552).index(1).slotSize(3).build(),
@@ -1928,28 +1286,8 @@ public class Ship {
             ShipType.TYPE_9,
             72108220,
             76555840,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 130.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 200.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 0.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 240.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 480.0),
-                    Map.entry(HorizonsModifier.MASS, 850.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 30.769),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 6.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 19.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 20.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 8.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 20.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 15.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 289.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 3.1),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 48.35),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.77),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 65.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 16.0)
+            ShipSpecs.TYPE_9,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1152).y(496).index(0).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1227).y(435).index(1).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -1992,28 +1330,8 @@ public class Ship {
             ShipType.BELUGA_LINER,
             79686090,
             84532760,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 200.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 280.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 2.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 280.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 280.0),
-                    Map.entry(HorizonsModifier.MASS, 950.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 55.0),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 6.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 19.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 25.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 17.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 60.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 20.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 283.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.6),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 50.85),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.81),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 60.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 18.0)
+            ShipSpecs.BELUGA_LINER,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(852).y(447).index(0).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(822).y(475).index(1).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -2059,28 +1377,8 @@ public class Ship {
             ShipType.TYPE_9_MILITARY,
             121486140,
             124755340,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 180.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 220.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 0.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 320.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 580.0),
-                    Map.entry(HorizonsModifier.MASS, 1200.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 83.333),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 6.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 19.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 22.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 8.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 40.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 18.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 335.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 3.16),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 67.15),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.77),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 75.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 26.0)
+            ShipSpecs.TYPE_9_MILITARY,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1179).y(319).index(0).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(733).y(766).index(1).slotSize(3).build(),
@@ -2132,28 +1430,8 @@ public class Ship {
             ShipType.ANACONDA,
             142447820,
             146969450,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 180.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 240.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 1.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 350.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 525.0),
-                    Map.entry(HorizonsModifier.MASS, 400.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 44.444),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 6.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 27.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 25.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 10.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 60.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 20.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 334.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 3.16),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 67.15),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 1.07),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 65.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 23.0)
+            ShipSpecs.ANACONDA,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1150).y(466).index(0).slotSize(4).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1346).y(329).index(1).slotSize(3).build(),
@@ -2205,28 +1483,8 @@ public class Ship {
             ShipType.FEDERATION_CORVETTE,
             183147460,
             187969450,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 200.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 260.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 2.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 555.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 370.0),
-                    Map.entry(HorizonsModifier.MASS, 900.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 50.0),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 6.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 27.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 28.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 8.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 75.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 22.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 333.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 3.28),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 70.33),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 1.13),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 70.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 24.0)
+            ShipSpecs.FEDERATION_CORVETTE,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(707).y(254).index(0).slotSize(4).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(644).y(316).index(1).slotSize(4).build(),
@@ -2277,28 +1535,8 @@ public class Ship {
             ShipType.CUTTER,
             200484780,
             208969450,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 200.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 320.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 0.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 600.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 400.0),
-                    Map.entry(HorizonsModifier.MASS, 1100.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 80.0),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 6.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 23.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 18.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 8.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 45.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 14.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 327.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 3.27),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 72.58),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 1.16),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 70.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 26.0)
+            ShipSpecs.CUTTER,
 
-            ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1503).y(258).index(0).slotSize(4).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1123).y(603).index(1).slotSize(3).build(),
@@ -2348,44 +1586,7 @@ public class Ship {
             ShipType.PYTHON_NX,
             66161981,
             67527359,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 256.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 345.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 5.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 335.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 280.0),
-                    Map.entry(HorizonsModifier.MASS, 450.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 85.85),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 5.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 20.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 37.01),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 12.51),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 91.03),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 30.0),
-                    Map.entry(HorizonsModifier.SUPERCRUISE_PROFILE, new Double[][]{
-                            {50D, 22D, 60D},
-                            {80D, 90D, 80D},
-                            {50D, 10D, 60D}}),
-                    Map.entry(HorizonsModifier.CRUISE_PITCH_PROFILE, new Double[][]{
-                            {60D, 40D},
-                            {23D, 26D},
-                            {70D, 40D}}),
-                    Map.entry(HorizonsModifier.CRUISE_ROLL_PROFILE, new Double[][]{
-                            {40D, 40D},
-                            {80D, 80D},
-                            {40D, 40D}}),
-                    Map.entry(HorizonsModifier.CRUISE_YAW_PROFILE, new Double[][]{
-                            {60D, 40D},
-                            {9D, 10D},
-                            {70D, 40D}}),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 260.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.68),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 52.05),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.83),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 70.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 17.0)
-
-            ),
+            ShipSpecs.PYTHON_NX,
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(933).y(624).index(0).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1100).y(460).index(1).slotSize(3).build(),
@@ -2425,44 +1626,7 @@ public class Ship {
             ShipType.TYPE_8,
             36238840,
             38453970,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 200.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 340.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 1.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 228.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 440.0),
-                    Map.entry(HorizonsModifier.MASS, 400.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 45.0),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 6.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 10.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 28.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 18.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 60.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 18.0),//ingame testing
-                    Map.entry(HorizonsModifier.SUPERCRUISE_PROFILE, new Double[][]{
-                            {50D, 18D, 60D},
-                            {80D, 60D, 80D},
-                            {50D, 18D, 60D}}),
-                    Map.entry(HorizonsModifier.CRUISE_PITCH_PROFILE, new Double[][]{
-                            {50D, 50D},
-                            {18D, 28D},
-                            {40D, 60D}}),
-                    Map.entry(HorizonsModifier.CRUISE_ROLL_PROFILE, new Double[][]{
-                            {80D, 80D},
-                            {60D, 60D},
-                            {80D, 90D}}),
-                    Map.entry(HorizonsModifier.CRUISE_YAW_PROFILE, new Double[][]{
-                            {50D, 50D},
-                            {16D, 18D},
-                            {40D, 60D}}),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 235.75),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 3.1),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 36.25),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.52),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 58.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 18.0)
-
-            ),// 2 116 55   // 1 -18 -21
+            ShipSpecs.TYPE_8,
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(803).y(749).index(0).namedIndex(1).slotSize(2).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1088).y(582).index(1).namedIndex(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -2503,28 +1667,7 @@ public class Ship {
             ShipType.MANDALAY,
             16527690,
             17639221,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 280.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 350.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 5.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 220.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 230.0),
-                    Map.entry(HorizonsModifier.MASS, 230.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 71.5),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 5.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 14.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 35.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 28.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 96.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 24.5),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 250.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, Double.NaN),//TODO - unknown
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 51.0),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.5),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 55.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 11.0)
-
-            ),
+            ShipSpecs.MANDALAY,
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1051).y(444).index(0).namedIndex(1).slotSize(2).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(914).y(570).index(1).namedIndex(2).slotSize(2).build(),
@@ -2567,28 +1710,7 @@ public class Ship {
             ShipType.COBRA_MK_V,
             1473191,
             1989461,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 290.0),
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 410.0),
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 5.0),
-                    Map.entry(HorizonsModifier.SHIELDS, 160.0),
-                    Map.entry(HorizonsModifier.ARMOUR, 180.0),
-                    Map.entry(HorizonsModifier.MASS, 150.0),
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 79.0),
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 5.0),
-                    Map.entry(HorizonsModifier.BOOST_COST, 10.0),
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 45.0),
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 33.0),
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 120.0),
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 40.0),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 245.0),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, Double.NaN),
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 39.5),
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.49),
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 40.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 8.0)
-
-            ),
+            ShipSpecs.COBRA_MK_V,
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1490).y(504).index(0).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1313).y(283).index(1).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -2626,45 +1748,9 @@ public class Ship {
 
     public static final Ship CORSAIR = new Ship(
             ShipType.CORSAIR,
-            79304748,
             76884160,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 280.0),//unittest
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 356.0),//unittest
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 4.0),//from the buy screen
-                    Map.entry(HorizonsModifier.SHIELDS, 235.0),//unittest
-                    Map.entry(HorizonsModifier.ARMOUR, 270.0),//unittest
-                    Map.entry(HorizonsModifier.MASS, 265.0),//from the buy screen
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 64.0),//ingame testing
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, 5.0),//ingame testing
-                    Map.entry(HorizonsModifier.BOOST_COST, 19.0),//ingame testing
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 26.0),//unittest
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, 10.0),//unittest
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 80.0),//unittest
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 23.0),//ingame testing
-                    Map.entry(HorizonsModifier.SUPERCRUISE_PROFILE, new Double[][]{
-                            {50D, 21D, 60D},
-                            {80D, 80D, 80D},
-                            {50D, 10D, 60D}}),
-                    Map.entry(HorizonsModifier.CRUISE_PITCH_PROFILE, new Double[][]{
-                            {60D, 40D},
-                            {23D, 26D},
-                            {70D, 40D}}),
-                    Map.entry(HorizonsModifier.CRUISE_ROLL_PROFILE, new Double[][]{
-                            {40D, 40D},
-                            {80D, 80D},
-                            {40D, 40D}}),
-                    Map.entry(HorizonsModifier.CRUISE_YAW_PROFILE, new Double[][]{
-                            {60D, 40D},
-                            {9D, 10D},
-                            {70D, 40D}}),
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 230.0),//ingame testing
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 1.62),//ingame testing
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 52.05),//ingame testing
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.41),//from journal
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 65.0),//side panel (Armour Rating)
-                    Map.entry(HorizonsModifier.MASS_LOCK, 7.0)//ingame testing
-            ),
+            79304748,
+            ShipSpecs.CORSAIR,
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1055).y(504).index(0).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(4).x(786).y(429).index(1).slotSize(3).build(),
@@ -2706,38 +1792,18 @@ public class Ship {
             ShipType.PANTHER_CLIPPER_MK_II,
             0,
             0,
-            Map.ofEntries(
-                    Map.entry(HorizonsModifier.TOP_SPEED, 179.0),//unittest
-                    Map.entry(HorizonsModifier.BOOST_SPEED, 249.0),//unittest
-                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 0.0),//from the buy screen
-                    Map.entry(HorizonsModifier.SHIELDS, 350.0),//unittest
-                    Map.entry(HorizonsModifier.ARMOUR, 620.0),//unittest
-                    Map.entry(HorizonsModifier.MASS, 1200.0),//from the buy screen
-                    Map.entry(HorizonsModifier.MINIMUM_THRUST, Double.NaN),//ingame testing
-                    Map.entry(HorizonsModifier.BOOST_INTERVAL, Double.NaN),//ingame testing
-                    Map.entry(HorizonsModifier.BOOST_COST, Double.NaN),//ingame testing
-                    Map.entry(HorizonsModifier.MAX_PITCH_SPEED, Double.NaN),//unittest
-                    Map.entry(HorizonsModifier.MAX_YAW_SPEED, Double.NaN),//unittest
-                    Map.entry(HorizonsModifier.MAX_ROLL_SPEED, Double.NaN),//unittest
-                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, Double.NaN),//ingame testing
-                    Map.entry(HorizonsModifier.HEAT_CAPACITY, Double.NaN),//ingame testing
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, Double.NaN),//ingame testing
-                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, Double.NaN),//ingame testing
-                    Map.entry(HorizonsModifier.FUEL_RESERVE, 1.11),//from journal
-                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 70.0),//side panel (Armour Rating)
-                    Map.entry(HorizonsModifier.MASS_LOCK, Double.NaN)//ingame testing
-            ),
+            ShipSpecs.PANTHER_CLIPPER_MK_II,
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(0).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(1).slotSize(3).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(2).slotSize(2).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(3).slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(2).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(3).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(4).slotSize(2).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(5).slotSize(2).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(6).slotSize(1).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(7).slotSize(1).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(8).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(9).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(8).slotSize(1).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(9).slotSize(1).build()
             ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(960).y(540).index(0).slotSize(0).build(),
@@ -2758,18 +1824,18 @@ public class Ship {
                     Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(7).shipModule(FuelTank.FUEL_TANK_7_C).build()
             ),
             List.of(
-                    Slot.builder().slotType(SlotType.CARGO).index(0).slotSize(8).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).namedIndex(1).slotSize(8).build(),
+                    Slot.builder().slotType(SlotType.CARGO).index(0).slotSize(8).shipModule(CargoRack.CARGO_RACK_7_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).namedIndex(1).slotSize(8).shipModule(ShieldGenerator.SHIELD_GENERATOR_8_E).build(),
                     Slot.builder().slotType(SlotType.CARGO).index(2).slotSize(7).build(),
                     Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(7).namedIndex(2).build(),
                     Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(6).namedIndex(3).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(6).namedIndex(4).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(6).namedIndex(5).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(6).namedIndex(4).shipModule(CargoRack.CARGO_RACK_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(6).namedIndex(5).shipModule(CargoRack.CARGO_RACK_5_E).build(),
                     Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(5).namedIndex(6).build(),
                     Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(5).namedIndex(7).build(),
                     Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(4).namedIndex(8).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).slotSize(2).namedIndex(9).shipModule(Computer.SUPERCRUISE_ASSIST).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).slotSize(1).namedIndex(10).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).slotSize(2).namedIndex(9).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).slotSize(1).namedIndex(10).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
     public static final List<Ship> ALL = List.of(
             SIDE_WINDER,
@@ -2910,7 +1976,7 @@ public class Ship {
             return 0;
         }
         return this.getOptionalSlots().stream()
-                .filter(slot -> slot.getSlotSize() >= cabinType.getMinSize() && slot.getSlotSize() <= cabinType.getMaxSize())
+                .filter(slot -> slot.getSlotSize() >= cabinType.getMinSize())
                 .mapToInt(slot -> cabinType.getPassengerCount(slot.getSlotSize()))
                 .sum();
     }
@@ -2984,7 +2050,7 @@ public class Ship {
     }
 
     public void setCurrentCargo(double currentCargo) {
-        this.currentCargo = Math.min(currentCargo, getMaxCargo() + getMaxPassenger());
+        this.currentCargo = Math.min(currentCargo, getMaxCargo());
     }
 
     public Map<Integer, Double> getRetractedPower() {
@@ -3081,5 +2147,15 @@ public class Ship {
 
     public Long getHullValue() {
         return this.price;
+    }
+
+    public boolean supportsGraphs() {
+        return this.shipType == ShipType.PYTHON_NX
+                || this.shipType == ShipType.MANDALAY
+                || this.shipType == ShipType.COBRA_MK_V
+                || this.shipType == ShipType.CORSAIR
+//                || this.shipType == ShipType.PANTHER_CLIPPER_MK_II
+                || this.shipType == ShipType.TYPE_8;
+
     }
 }

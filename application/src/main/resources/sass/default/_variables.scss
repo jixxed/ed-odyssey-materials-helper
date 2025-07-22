@@ -1,4 +1,5 @@
 $background-color-dark: rgb(15, 15, 15); //0f0f0f
+$background-color-medium: rgb(31, 31, 31);
 $background-color-light: rgb(37, 37, 37);
 $background-color-lighter: rgb(46, 46, 46);
 $background-color-input: rgb(17, 17, 17);
@@ -6,10 +7,12 @@ $background-color-white: rgb(255, 255, 255);
 $background-color-thargoid: rgb(59, 27, 0);
 $background-color-guardian: rgb(39, 1, 54);
 $background-color-black: rgb(0, 0, 0);
+$background-color-blue: rgb(46, 146, 223);
 
 $border-color-black: rgb(0, 0, 0);
 $border-color-grey: rgb(37, 37, 37);
 $border-color-white: rgb(255, 255, 255);
+$border-color-light-grey: rgb(192, 192, 192);
 $border-color-yellow: rgb(220, 192, 48);
 $border-color-green: rgb(137, 208, 127);
 $border-color-red: rgb(255, 124, 124);
@@ -38,3 +41,18 @@ $progress-bar-color-orange: rgb(255, 165, 0);
 $progress-bar-color-grey: rgb(128, 128, 128);
 $progress-bar-color-light-grey: rgb(192, 192, 192);
 $progress-bar-color-black: rgb(0, 0, 0);
+$progress-bar-color-power-passive: rgb(50, 164, 168);
+$progress-bar-color-power-1: rgb(206, 108, 30);
+$progress-bar-color-power-2: rgb(137, 208, 127);
+$progress-bar-color-power-3: rgb(46, 146, 223);
+$progress-bar-color-power-4: rgb(109, 61, 168);
+$progress-bar-color-power-5: rgb(248, 255, 46);
+$progress-bar-color-power-none: rgb(128, 128, 128);
+$progress-bar-color-power-overpower: rgb(240, 20, 20);
+$progress-bar-color-hardpoint-thermal: rgb(255, 124, 124);
+$progress-bar-color-hardpoint-kinetic: rgb(46, 146, 223);
+$progress-bar-color-hardpoint-explosive: rgb(206, 108, 30);
+$progress-bar-color-hardpoint-absolute: rgb(109, 61, 168);
+$progress-bar-color-hardpoint-caustic: rgb(248, 255, 46);
+$progress-bar-color-hardpoint-antixeno: rgb(137, 208, 127);
+$progress-bar-color-hardpoint-none: rgb(128, 128, 128);

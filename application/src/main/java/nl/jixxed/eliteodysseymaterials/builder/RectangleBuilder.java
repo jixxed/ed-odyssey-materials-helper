@@ -28,8 +28,13 @@ public class RectangleBuilder extends AbstractShapeBuilder<RectangleBuilder> {
     public DestroyableRectangle build() {
         DestroyableRectangle rectangle = new DestroyableRectangle();
         super.build(rectangle);
-        rectangle.setWidth(width);
-        rectangle.setHeight(height);
+        if (width != null) {
+            rectangle.setWidth(width);
+        }
+        if (height != null) {
+            rectangle.setHeight(height);
+        }
+
         return rectangle;
     }
 }

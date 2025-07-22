@@ -130,7 +130,7 @@ public class ShipViewPopover extends DestroyablePopOver implements DestroyableEv
             final Bounds boundsInLocal = slotBox.getBoundsInLocal();
             final Bounds bounds = slotBox.localToScreen(boundsInLocal);
 
-            if (getContentNode() instanceof ShipView shipView) {
+            if (bounds != null && getContentNode() instanceof ShipView shipView) {
                 final double width = shipView.getWidth();
                 final double height = shipView.getHeight();
                 double x = bounds.getMinX() - 1;

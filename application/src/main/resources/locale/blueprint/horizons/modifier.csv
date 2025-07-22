@@ -226,3 +226,4 @@
 "modifier.horizons.name.overcharge_control_interference","Overcharge Control Interference","","","Interferencia de control de la Sobrecarga","","Interferência de Controle de Sobrecarga","Влияние перегрузки на управление","超巡过载控制干扰"
 "modifier.horizons.name.listed_power_draw","Listed Power Draw","Listed Power Draw","","Consumo de Energía Listado","","Consumo de Energia Nominal","Заявленное потребление мощности","Listed Power Draw"
 "modifier.horizons.name.boost_interval","Boost Interval","","","Intervalo de Postquemador","","","Интервал ускорения","加力间隔"
+"modifier.horizons.name.module_limit_increase","Module Limit Increase","","","","","","",""

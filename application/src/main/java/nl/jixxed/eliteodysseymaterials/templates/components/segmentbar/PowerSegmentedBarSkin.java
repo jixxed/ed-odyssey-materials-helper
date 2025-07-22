@@ -131,7 +131,7 @@ public class PowerSegmentedBarSkin<T extends SegmentedBar.Segment> extends SkinB
             DestroyablePopOver popOver = PopOverBuilder.builder()
                     .withDetachable(false)
                     .withHeaderAlwaysVisible(false)
-                    .withStyleClass("power-progressbar-popover")
+                    .withStyleClass("progressbar-popover")
                     .withArrowIndent(0)
                     .withArrowSize(0)
                     .withCornerRadius(0)

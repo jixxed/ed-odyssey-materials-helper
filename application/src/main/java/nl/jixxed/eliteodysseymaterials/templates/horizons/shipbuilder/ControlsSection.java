@@ -141,10 +141,10 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
         DestroyableHBox lockModeHint = getHint("lockmode");
         DestroyableHBox legacyHint = getHint("legacy");
         DestroyableHBox liveModeHint = getHint("livemode");
-        DestroyableHBox yellowBlueHint = getHint("yellowblue");
+        DestroyableHBox textcolorHint = getHint("textcolor");
         final DestroyableVBox contentNode = BoxBuilder.builder()
                 .withStyleClass("help-popover")
-                .withNodes(dragDropHint, lockModeHint, legacyHint, liveModeHint, yellowBlueHint)
+                .withNodes(dragDropHint, lockModeHint, legacyHint, liveModeHint, textcolorHint)
                 .buildVBox();
         final DestroyablePopOver popOver = PopOverBuilder.builder()
                 .withStyleClass("horizons-shipbuilder-help-popover")

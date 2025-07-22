@@ -1,9 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Orientation;
-import javafx.scene.paint.Color;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.PaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.SegmentedBarBuilder;
@@ -21,8 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats.PowerStats.*;
-
 public class PowerBar extends DestroyableHBox implements DestroyableEventTemplate {
 
 
@@ -35,10 +30,11 @@ public class PowerBar extends DestroyableHBox implements DestroyableEventTemplat
     private TypeSegment group5;
     private TypeSegment groupAvailable;
     private TypeSegment groupOverPower;
+    private TypeSegment groupOverPowerPotential;
     private double overPower = 0D;
     private boolean retracted;
-    private DoubleProperty overPowerFactor = new SimpleDoubleProperty(1D);
-    private DoubleProperty availableFactor = new SimpleDoubleProperty(1D);
+//    private DoubleProperty overPowerFactor = new SimpleDoubleProperty(1.1);
+//    private DoubleProperty availableFactor = new SimpleDoubleProperty(1D);
 
     public PowerBar(boolean retracted) {
         this.retracted = retracted;
@@ -55,11 +51,15 @@ public class PowerBar extends DestroyableHBox implements DestroyableEventTemplat
         this.group4 = new TypeSegment(Math.max(0D, retractedPower.get(4)), SegmentType.POWER_GROUP_4);
         this.group5 = new TypeSegment(Math.max(0D, retractedPower.get(5)), SegmentType.POWER_GROUP_5);
         this.groupOverPower = new TypeSegment(0D, SegmentType.POWER_OVERPOWER);
+        this.groupOverPowerPotential = new TypeSegment(0D, SegmentType.POWER_POTENTIAL_OVERPOWER);
         this.groupAvailable = new TypeSegment(Math.max(0D, retractedPower.get(0) - retractedPower.get(-1) - retractedPower.get(1) - retractedPower.get(2) - retractedPower.get(3) - retractedPower.get(4) - retractedPower.get(5)), SegmentType.POWER_GROUP_NONE);
         this.segmentedBar = SegmentedBarBuilder.builder(TypeSegment.class)
                 .withStyleClass("power-progressbar")
                 .withOrientation(Orientation.HORIZONTAL)
                 .withInfoNodeFactory(segment -> {
+                    if (segment.getSegmentType() == SegmentType.POWER_POTENTIAL_OVERPOWER) {
+                        return null;
+                    }
                     final Map<Integer, Double> power = retracted ? calculateRetractedPower() : calculateDeployedPower();
                     Double temp = 0D;
                     Double percentage = switch (segment.getSegmentType()) {
@@ -87,21 +87,16 @@ public class PowerBar extends DestroyableHBox implements DestroyableEventTemplat
                         default:
                             yield 0.0;
                     } / power.get(0) * 100;
+                    String text = segment.getText() + ": "
+                            + Formatters.NUMBER_FORMAT_2.format(segment.getSegmentType() == SegmentType.POWER_OVERPOWER ? overPower : segment.getValue())
+                            + "MW (" + Formatters.NUMBER_FORMAT_1_CEIL.format(percentage) + "%)";
                     return LabelBuilder.builder()
-                            .withStyleClass("power-progressbar-label")
-                            .withNonLocalizedText(segment.getText() + ": " + Formatters.NUMBER_FORMAT_2.format(segment.getSegmentType() == SegmentType.POWER_OVERPOWER ? overPower : segment.getValue()) + "MW (" + Formatters.NUMBER_FORMAT_1_CEIL.format(percentage) + "%)")
+                            .withStyleClass("tooltip-text")
+                            .withNonLocalizedText(text)
                             .build();
                 })
-                .withSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(
-                        SegmentType.POWER_GROUP_P, POWER_GROUP_P_COLOR,
-                        SegmentType.POWER_GROUP_1, POWER_GROUP_1_COLOR,
-                        SegmentType.POWER_GROUP_2, POWER_GROUP_2_COLOR,
-                        SegmentType.POWER_GROUP_3, POWER_GROUP_3_COLOR,
-                        SegmentType.POWER_GROUP_4, POWER_GROUP_4_COLOR,
-                        SegmentType.POWER_GROUP_5, POWER_GROUP_5_COLOR,
-                        SegmentType.POWER_GROUP_NONE, Color.rgb(128, 128, 128),
-                        SegmentType.POWER_OVERPOWER, Color.rgb(240, 20, 20)), false))
-                .withSegments(groupP, group1, group2, group3, group4, group5, groupAvailable, groupOverPower)
+                .withSegmentViewFactory(segment -> new TypeSegmentView(segment, false))
+                .withSegments(groupP, group1, group2, group3, group4, group5, groupAvailable, groupOverPower, groupOverPowerPotential)
                 .build();
 
         final DestroyableLine lineDestroyedAndMalfunction = createLine(0.2);
@@ -122,10 +117,10 @@ public class PowerBar extends DestroyableHBox implements DestroyableEventTemplat
 
     private DestroyableLine createLine(double percentage) {
         DestroyableLine lineMalfunction = new DestroyableLine();
-        lineMalfunction.getStyleClass().add("power-progressbar-line");
+        lineMalfunction.getStyleClass().add("percentage-line");
 //        lineMalfunction.setStartX(0D);
-        lineMalfunction.addBinding(lineMalfunction.startXProperty(), this.segmentedBar.widthProperty().divide(overPowerFactor).divide(availableFactor).multiply(percentage));
-        lineMalfunction.addBinding(lineMalfunction.endXProperty(), this.segmentedBar.widthProperty().divide(overPowerFactor).divide(availableFactor).multiply(percentage));
+        lineMalfunction.addBinding(lineMalfunction.startXProperty(), this.segmentedBar.widthProperty().multiply(percentage / 1.1));
+        lineMalfunction.addBinding(lineMalfunction.endXProperty(), this.segmentedBar.widthProperty().multiply(percentage / 1.1));
         lineMalfunction.addBinding(lineMalfunction.endYProperty(), this.segmentedBar.heightProperty());
         return lineMalfunction;
     }
@@ -144,9 +139,10 @@ public class PowerBar extends DestroyableHBox implements DestroyableEventTemplat
         groupAvailable.setValue(Math.max(available, 0D));
 //        groupOverPower.setValue(Math.abs(Math.min(available, 0D)));
         overPower = Math.abs(Math.min(available, 0D));
-        overPowerFactor.set(overPower > 0D ? 1.1 : 1D);
-        availableFactor.set(overPower > 0D ? (power.get(0) + overPower) / power.get(0) : 1D);
+//        overPowerFactor.set(overPower > 0D ? 1.1 : 1D);
+//        availableFactor.set(overPower > 0D ? (power.get(0) + overPower) / power.get(0) : 1D);
         groupOverPower.setValue(overPower > 0D ? usedPower / 10D : 0D);
+        groupOverPowerPotential.setValue(overPower <= 0D ? (usedPower + available) / 10D : 0D);
 
     }
 

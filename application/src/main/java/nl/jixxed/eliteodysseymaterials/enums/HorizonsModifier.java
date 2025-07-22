@@ -198,10 +198,14 @@ public enum HorizonsModifier {
     FIGHTER_PITCH_RATE(811, "FighterPitchRate"),
     FIGHTER_ROLL_RATE(812, "FighterRollRate"),
     FIGHTER_YAW_RATE(813, "FighterYawRate"),
+    MODULE_LIMIT_INCREASE(814, ""),
     CREW(1010, ""),//ship
     TOP_SPEED(1020, ""),//ship
     BOOST_SPEED(1030, ""),//ship
     MINIMUM_THRUST(1040, ""),//ship
+    FORWARD_ACCELERATION(1045, ""),//ship
+    REVERSE_ACCELERATION(1045, ""),//ship
+    LATERAL_ACCELERATION(1045, ""),//ship
     BOOST_COST(1050, false, ""),//ship
     BOOST_INTERVAL(1055, ""),
     MANOEUVRABILITY(1060, ""),//ship

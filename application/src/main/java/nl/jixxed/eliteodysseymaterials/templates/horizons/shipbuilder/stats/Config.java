@@ -5,7 +5,6 @@ import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.application.Platform;
-import javafx.geometry.Orientation;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.CheckBoxBuilder;
@@ -34,13 +33,11 @@ public class Config extends Stats implements DestroyableEventTemplate {
     private PipSelect enginePipSelect;
     private PipSelect weaponPipSelect;
     private IntField cargo;
-    private IntField passenger;
     private IntField fuel;
     private DestroyableSlider fuelreserve;
     private DestroyableCheckBox live;
     private ConfigPowerControl powerControl;
     private DestroyableLabel cargoLabel;
-    private DestroyableLabel passengerLabel;
     private DestroyableLabel fuelLabel;
     private Disposable subscribe;
 
@@ -53,19 +50,13 @@ public class Config extends Stats implements DestroyableEventTemplate {
     @Override
     public void initComponents() {
         this.getStyleClass().add("config");
-        this.getNodes().add(BoxBuilder.builder()
-                .withNodes(new GrowingRegion(), createTitle("ship.stats.config"), new GrowingRegion())
-                .buildHBox());
-        DestroyableSeparator separator = new DestroyableSeparator(Orientation.HORIZONTAL);
-        separator.getStyleClass().add("splitter");
-        this.getNodes().add(separator);
+        addTitle("ship.stats.config");
         systemPipSelect = new PipSelect(8);
         enginePipSelect = new PipSelect(8);
         weaponPipSelect = new PipSelect(8);
         Double maxFuelReserve = this.getShip().map(Ship::getMaxFuelReserve).orElse(0D);
         int maxFuel = this.getShip().map(Ship::getMaxFuel).orElse(0D).intValue();
         int maxCargo = this.getShip().map(Ship::getMaxCargo).orElse(0D).intValue();
-        int maxPassenger = this.getShip().map(Ship::getMaxPassenger).orElse(0D).intValue();
         live = CheckBoxBuilder.builder()
                 .withSelected(ApplicationState.getInstance().isLiveStats())
                 .withSelectedProperty((_, _, newValue) -> {
@@ -86,16 +77,13 @@ public class Config extends Stats implements DestroyableEventTemplate {
                 .withDisableProperty(live.selectedProperty())
                 .build();
 
-        cargo = new IntField(0, maxCargo + maxPassenger, this.getShip().map(Ship::getCurrentCargo).orElse(0D).intValue());
-        passenger = new IntField(0, maxCargo + maxPassenger, this.getShip().map(Ship::getCurrentCargo).orElse(0D).intValue());
+        cargo = new IntField(0, maxCargo, this.getShip().map(Ship::getCurrentCargo).orElse(0D).intValue());
         powerControl = new ConfigPowerControl();
 
         fuelLabel = createLabel("ship.stats.config.fuel", String.valueOf(maxFuel));
-        cargoLabel = createLabel("ship.stats.config.cargo", String.valueOf(maxCargo), String.valueOf(maxPassenger));
-        passengerLabel = createLabel("ship.stats.config.passenger", String.valueOf(maxPassenger));
+        cargoLabel = createLabel("ship.stats.config.cargo", String.valueOf(maxCargo));
         fuel.addBinding(fuel.disableProperty(), live.selectedProperty());
         cargo.addBinding(cargo.disableProperty(), live.selectedProperty());
-        passenger.addBinding(passenger.disableProperty(), live.selectedProperty());
         systemPipSelect.addBinding(systemPipSelect.disableProperty(), live.selectedProperty());
         enginePipSelect.addBinding(enginePipSelect.disableProperty(), live.selectedProperty());
         weaponPipSelect.addBinding(weaponPipSelect.disableProperty(), live.selectedProperty());
@@ -103,30 +91,35 @@ public class Config extends Stats implements DestroyableEventTemplate {
                 .withStyleClass("config-controls")
                 .buildVBox();
         controls.getNodes().add(BoxBuilder.builder()
+                .withStyleClass("control-line")
                 .withNodes(createLabel("ship.stats.config.live"), new GrowingRegion(), live)
                 .buildHBox());
         controls.getNodes().add(BoxBuilder.builder()
+                .withStyleClass("control-line")
                 .withNodes(createLabel("ship.stats.config.fuelreserve"), new GrowingRegion(), fuelreserve)
                 .buildHBox());
         controls.getNodes().add(BoxBuilder.builder()
+                .withStyleClass("control-line")
                 .withNodes(fuelLabel, new GrowingRegion(), fuel)
                 .buildHBox());
         controls.getNodes().add(BoxBuilder.builder()
+                .withStyleClass("control-line")
                 .withNodes(cargoLabel, new GrowingRegion(), cargo)
                 .buildHBox());
         controls.getNodes().add(BoxBuilder.builder()
-                .withNodes(passengerLabel, new GrowingRegion(), passenger)
+                .withStyleClass("control-line")
+                .withNodes(createSmallLabel("ship.stats.config.system"), new GrowingRegion(), systemPipSelect)
                 .buildHBox());
         controls.getNodes().add(BoxBuilder.builder()
-                .withNodes(createLabel("ship.stats.config.system"), new GrowingRegion(), systemPipSelect)
+                .withStyleClass("control-line")
+                .withNodes(createSmallLabel("ship.stats.config.engine"), new GrowingRegion(), enginePipSelect)
                 .buildHBox());
         controls.getNodes().add(BoxBuilder.builder()
-                .withNodes(createLabel("ship.stats.config.engine"), new GrowingRegion(), enginePipSelect)
+                .withStyleClass("control-line")
+                .withNodes(createSmallLabel("ship.stats.config.weapon"), new GrowingRegion(), weaponPipSelect)
                 .buildHBox());
         controls.getNodes().add(BoxBuilder.builder()
-                .withNodes(createLabel("ship.stats.config.weapon"), new GrowingRegion(), weaponPipSelect)
-                .buildHBox());
-        controls.getNodes().add(BoxBuilder.builder()
+                .withStyleClass("control-line")
                 .withNodes(createLabel("ship.stats.config.cargo_hatch"), new GrowingRegion(), powerControl)
                 .buildHBox());
         this.getNodes().add(controls);
@@ -200,16 +193,12 @@ public class Config extends Stats implements DestroyableEventTemplate {
             double maxFuelReserve = this.getShip().map(Ship::getMaxFuelReserve).orElse(0D);
             int maxFuel = this.getShip().map(Ship::getMaxFuel).orElse(0D).intValue();
             int maxCargo = this.getShip().map(Ship::getMaxCargo).orElse(0D).intValue();
-            int maxPassenger = this.getShip().map(Ship::getMaxPassenger).orElse(0D).intValue();
             fuel.setMaxValue(maxFuel);
             fuel.setValue(getShip().map(Ship::getCurrentFuel).orElse(0D).intValue());
             fuelreserve.setMax(maxFuelReserve);
             fuelreserve.setValue(getShip().map(Ship::getCurrentFuelReserve).orElse(0D));
             cargo.setMaxValue(maxCargo);
             cargo.setValue(getShip().map(Ship::getCurrentCargo).orElse(0D).intValue());
-            passenger.setMaxValue(maxPassenger);
-//            passenger.setValue(getShip().map(Ship::getCurrentPassenger).orElse(0D).intValue());
-//            initPowerBox();
             this.getShip().ifPresent(ship -> {
                 powerControl.updatePower(ship.getCargoHatch().getShipModule());
             });
@@ -237,15 +226,14 @@ public class Config extends Stats implements DestroyableEventTemplate {
     protected void update() {
         int maxFuel = this.getShip().map(Ship::getMaxFuel).orElse(0D).intValue();
         int maxCargo = this.getShip().map(Ship::getMaxCargo).orElse(0D).intValue();
-        int maxPassenger = this.getShip().map(Ship::getMaxPassenger).orElse(0D).intValue();
 
         if (fuel.getMaxValue() != maxFuel) {
             fuel.setMaxValue(maxFuel);
             fuelLabel.addBinding(fuelLabel.textProperty(), LocaleService.getStringBinding("ship.stats.config.fuel", maxFuel));
         }
 
-        cargo.setMaxValue(maxCargo + maxPassenger);
-        cargoLabel.addBinding(cargoLabel.textProperty(), LocaleService.getStringBinding("ship.stats.config.cargo", maxCargo, maxPassenger));
+        cargo.setMaxValue(maxCargo);
+        cargoLabel.addBinding(cargoLabel.textProperty(), LocaleService.getStringBinding("ship.stats.config.cargo", maxCargo));
 
         this.getShip().ifPresent(ship -> {
             powerControl.updatePower(ship.getCargoHatch().getShipModule());

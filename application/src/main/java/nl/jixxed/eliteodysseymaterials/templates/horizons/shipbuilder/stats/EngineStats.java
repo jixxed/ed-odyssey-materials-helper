@@ -1,6 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
-import javafx.geometry.Orientation;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
@@ -8,10 +7,12 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
 import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.helper.Formatters;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableSeparator;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.util.Optional;
@@ -21,6 +22,9 @@ public class EngineStats extends Stats implements DestroyableTemplate {
     private RangeIndicator speedIndicator;
     private RangeIndicator boostIndicator;
     private RechargeRangeIndicator rechargeIndicator;
+    private DestroyableLabel forwardAcceleration;
+    private DestroyableLabel reverseAcceleration;
+    private DestroyableLabel lateralAcceleration;
 
     public EngineStats() {
         super();
@@ -31,16 +35,28 @@ public class EngineStats extends Stats implements DestroyableTemplate {
     @Override
     public void initComponents() {
         this.getStyleClass().add("engine-stats");
+        addTitle("ship.stats.engine");
         speedIndicator = new RangeIndicator(0D, 0D, 0D, "ship.stats.engine.speed", "ship.stats.engine.speed.value");
         boostIndicator = new RangeIndicator(0D, 0D, 0D, "ship.stats.engine.boost", "ship.stats.engine.boost.value");
         rechargeIndicator = new RechargeRangeIndicator(0D, 0D, 0D, 0D, "ship.stats.engine.recharge", "ship.stats.engine.recharge.value");
 
-        this.getNodes().add(BoxBuilder.builder()
-                .withNodes(new GrowingRegion(), createTitle("ship.stats.engine"), new GrowingRegion()).buildHBox());
-        this.getNodes().add(new DestroyableSeparator(Orientation.HORIZONTAL));
         this.getNodes().add(speedIndicator);
         this.getNodes().add(boostIndicator);
         this.getNodes().add(rechargeIndicator);
+        this.getNodes().add(new GrowingRegion());
+        this.forwardAcceleration = createValueLabel("ship.stats.engine.acceleration.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
+        this.reverseAcceleration = createValueLabel("ship.stats.engine.acceleration.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
+        this.lateralAcceleration = createValueLabel("ship.stats.engine.acceleration.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
+        this.getNodes().add(BoxBuilder.builder()
+                .withNodes(createLabel("ship.stats.engine.acceleration.forward"), new GrowingRegion(), this.forwardAcceleration)
+                .buildHBox());
+        this.getNodes().add(BoxBuilder.builder()
+                .withNodes(createLabel("ship.stats.engine.acceleration.reverse"), new GrowingRegion(), this.reverseAcceleration)
+                .buildHBox());
+        this.getNodes().add(BoxBuilder.builder()
+                .withNodes(createLabel("ship.stats.engine.acceleration.lateral"), new GrowingRegion(), this.lateralAcceleration)
+                .buildHBox());
+
     }
 
     @Override
@@ -95,6 +111,18 @@ public class EngineStats extends Stats implements DestroyableTemplate {
                 .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MINIMUM_MULTIPLIER)).orElse(0D));
     }
 
+    private Double calculateForwardAcceleration(Ship ship, final Double maximumMultiplier) {
+        return (Double) ship.getAttributes().get(HorizonsModifier.FORWARD_ACCELERATION) * maximumMultiplier / 100D;
+    }
+
+    private Double calculateReverseAcceleration(Ship ship, final Double maximumMultiplier) {
+        return (Double) ship.getAttributes().get(HorizonsModifier.REVERSE_ACCELERATION) * maximumMultiplier / 100D;
+    }
+
+    private Double calculateLateralAcceleration(Ship ship, final Double maximumMultiplier) {
+        return (Double) ship.getAttributes().get(HorizonsModifier.LATERAL_ACCELERATION) * maximumMultiplier / 100D;
+    }
+
     @Override
     protected void update() {
 
@@ -132,7 +160,11 @@ public class EngineStats extends Stats implements DestroyableTemplate {
             this.speedIndicator.updateValues(minSpeed, currentSpeed, maxSpeed);
             this.boostIndicator.updateValues(minBoost, currentBoost, maxBoost);
             this.rechargeIndicator.updateValues(minRecharge, currentRecharge, maxRecharge, boostInterval);
+            this.forwardAcceleration.addBinding(this.forwardAcceleration.textProperty(), LocaleService.getStringBinding("ship.stats.engine.acceleration.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(calculateForwardAcceleration(ship, maximumMultiplier))));
+            this.reverseAcceleration.addBinding(this.reverseAcceleration.textProperty(), LocaleService.getStringBinding("ship.stats.engine.acceleration.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(calculateReverseAcceleration(ship, maximumMultiplier))));
+            this.lateralAcceleration.addBinding(this.lateralAcceleration.textProperty(), LocaleService.getStringBinding("ship.stats.engine.acceleration.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(calculateLateralAcceleration(ship, maximumMultiplier))));
         });
     }
+
 
 }

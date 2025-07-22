@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
+import javafx.css.PseudoClass;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.PaneBuilder;
@@ -45,33 +46,34 @@ public class RechargeRangeIndicator extends DestroyableVBox implements Destroyab
     }
 
     public void initComponents() {
+        this.getStyleClass().add("range-indicator");
         this.startValueLabel = LabelBuilder.builder()
                 .build();
         this.endValueLabel = LabelBuilder.builder()
                 .build();
         this.currentValueLabel = LabelBuilder.builder()
-                .withStyleClass("range-indicator-current")
+                .withStyleClass("current")
                 .build();
         this.titleLabel = LabelBuilder.builder()
                 .withText(title)
                 .build();
         this.values = BoxBuilder.builder()
                 .withNodes(this.startValueLabel, new GrowingRegion(), this.currentValueLabel, new GrowingRegion(), this.endValueLabel)
-                .withStyleClass("range-indicator-values").buildHBox();
+                .withStyleClass("values")
+                .buildHBox();
         bar = new DestroyableLine(0, 0, 0, 0);
         start = new DestroyableLine(0, 0, 0, 0);
         end = new DestroyableLine(0, 0, 0, 0);
         recharge = new DestroyableLine(0, 0, 0, 0);
         current = new DestroyableLine(0, 0, 0, 0);
-        bar.getStyleClass().add("range-indicator-line");
-        start.getStyleClass().add("range-indicator-line");
-        recharge.getStyleClass().add("range-indicator-line");
-        end.getStyleClass().add("range-indicator-line");
-        current.getStyleClass().addAll("range-indicator-line", "range-indicator-line-current");
+        bar.getStyleClass().add("line");
+        start.getStyleClass().add("line");
+        recharge.getStyleClass().add("line");
+        end.getStyleClass().add("line");
+        current.getStyleClass().addAll("line", "line-current");
         lines = PaneBuilder.builder()
                 .withNodes(bar, start, end, recharge, current)
                 .build();
-        this.getStyleClass().add("range-indicator");
         update();
         this.getNodes().addAll(this.titleLabel, lines, values);
     }
@@ -139,11 +141,6 @@ public class RechargeRangeIndicator extends DestroyableVBox implements Destroyab
             current.setEndX(end.getEndX());
             current.setEndY(sliderHeight);
         }
-        this.currentValueLabel.getStyleClass().remove("range-indicator-current-green");
-        this.current.getStyleClass().remove("range-indicator-line-current-green");
-        if (!Double.isNaN(rechargeValue) && currentValue <= rechargeValue) {
-            this.currentValueLabel.getStyleClass().add("range-indicator-current-green");
-            this.current.getStyleClass().add("range-indicator-line-current-green");
-        }
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("optimal"), !Double.isNaN(rechargeValue) && currentValue <= rechargeValue);
     }
 }

@@ -31,14 +31,14 @@ public class PriceStats extends Stats implements DestroyableEventTemplate {
                 .withNodes(new GrowingRegion(), createTitle("ship.stats.price"), new GrowingRegion())
                 .buildHBox());
         this.getNodes().add(new DestroyableSeparator(Orientation.HORIZONTAL));
-        this.price = createValueSmallLabel("ship.stats.price.price.value", Formatters.NUMBER_FORMAT_0.format(0D));
-        this.rebuy = createValueSmallLabel("ship.stats.price.rebuy.value", Formatters.NUMBER_FORMAT_0.format(0D));
+        this.price = createValueLabel("ship.stats.price.price.value", Formatters.NUMBER_FORMAT_0.format(0D));
+        this.rebuy = createValueLabel("ship.stats.price.rebuy.value", Formatters.NUMBER_FORMAT_0.format(0D));
 
         this.getNodes().add(BoxBuilder.builder()
-                .withNodes(createSmallLabel("ship.stats.price.price"), new GrowingRegion(), this.price)
+                .withNodes(createLabel("ship.stats.price.price"), new GrowingRegion(), this.price)
                 .buildHBox());
         this.getNodes().add(BoxBuilder.builder()
-                .withNodes(createSmallLabel("ship.stats.price.rebuy"), new GrowingRegion(), this.rebuy)
+                .withNodes(createLabel("ship.stats.price.rebuy"), new GrowingRegion(), this.rebuy)
                 .buildHBox());
 
     }

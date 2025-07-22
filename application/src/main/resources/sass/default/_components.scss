@@ -1,0 +1,32 @@
+.hoverable-line-chart {
+  -fx-max-width: 20em;
+  -fx-max-height: 15em;
+
+  .chart-plot-background {
+    -fx-background-color: transparent;
+
+  }
+
+  .chart-content {
+
+  }
+
+  .vertical-line {
+    -fx-stroke-width: 0.1em;
+    -fx-stroke: $border-color-light-grey;
+  }
+
+  .circle {
+    -fx-fill: $text-color-white;
+  }
+
+  .text-background {
+    -fx-fill: $background-color-dark;
+    -fx-stroke-width: 1px;
+    -fx-stroke: $border-color-white;
+  }
+
+  .tooltip-text {
+    -fx-fill: $text-color-white;
+  }
+}

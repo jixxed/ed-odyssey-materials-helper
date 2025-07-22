@@ -1,9 +1,10 @@
-@import "variables";
-@import "mixins";
-
 .root {
   fx-font-size: 12px;
 }
+
+@import "variables";
+@import "components";
+@import "mixins";
 
 // ApplicationLayout
 .app {

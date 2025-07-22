@@ -1,11 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
-import javafx.geometry.Orientation;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.StackPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
@@ -21,7 +19,10 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTooltip;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
@@ -46,10 +47,7 @@ public class ShieldStats extends Stats implements DestroyableEventTemplate {
     @Override
     public void initComponents() {
         this.getStyleClass().add("shield-stats");
-        this.getNodes().add(BoxBuilder.builder()
-                .withNodes(new GrowingRegion(), createTitle("ship.stats.shield"), new GrowingRegion())
-                .buildHBox());
-        this.getNodes().add(new DestroyableSeparator(Orientation.HORIZONTAL));
+        addTitle("ship.stats.shield");
         shieldResistance = new Shield("RES", "%", "blue");
         shieldIntegrity = new Shield("STR", "\u2795", "red");
         final DestroyableVBox shields = BoxBuilder.builder()
@@ -84,28 +82,20 @@ public class ShieldStats extends Stats implements DestroyableEventTemplate {
                 .withVisibility(false)
                 .build();
         scbRestorationLabel = LabelBuilder.builder()
-                .withText("ship.stats.armour.scb.restoration")
+                .withText("ship.stats.armour.scb")
                 .withVisibility(false)
                 .build();
 
-        final DestroyableVBox rebuildBox = BoxBuilder.builder()
-                .withNodes(new GrowingRegion(),
-                        BoxBuilder.builder()
-                                .withNodes(new GrowingRegion(), scbRestoration)
-                                .buildHBox(),
-                        BoxBuilder.builder()
-                                .withNodes(new GrowingRegion(), scbRestorationLabel)
-                                .buildHBox(),
-                        BoxBuilder.builder()
-                                .withNodes(regenTime, new GrowingRegion(), rebuildTime)
-                                .buildHBox(),
-                        BoxBuilder.builder()
-                                .withNodes(regen, new GrowingRegion(), rebuild)
-                                .buildHBox()
-                ).buildVBox();
-        final DestroyableStackPane stackPane = StackPaneBuilder.builder().withNodes(shields, rebuildBox).build();
-        stackPane.getStyleClass().add("shield-stats-stackpane");
-        this.getNodes().addAll(stackPane);
+        var scbLine = BoxBuilder.builder()
+                .withNodes(scbRestorationLabel, new GrowingRegion(), scbRestoration)
+                .buildHBox();
+        var regenLine = BoxBuilder.builder()
+                .withNodes(regen, new GrowingRegion(), regenTime)
+                .buildHBox();
+        var rebuildLine = BoxBuilder.builder()
+                .withNodes(rebuild, new GrowingRegion(), rebuildTime)
+                .buildHBox();
+        this.getNodes().addAll(shields, new GrowingRegion(), scbLine, regenLine, rebuildLine);
 
     }
 

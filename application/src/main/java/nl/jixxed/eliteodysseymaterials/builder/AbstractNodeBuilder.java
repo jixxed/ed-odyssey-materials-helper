@@ -30,6 +30,8 @@ public abstract class AbstractNodeBuilder<T extends AbstractNodeBuilder<T>> {
     private ChangeListener<Boolean> hoverPropertyChangeListener;
     private NodeOrientation nodeOrientation;
 
+    private Boolean isMouseTransparent;
+
     public T withStyleClass(final String styleClass) {
         this.styleClasses.add(styleClass);
         return (T) this;
@@ -90,6 +92,11 @@ public abstract class AbstractNodeBuilder<T extends AbstractNodeBuilder<T>> {
         return (T) this;
     }
 
+    public T withMouseTransparent(Boolean isMouseTransparent) {
+        this.isMouseTransparent = isMouseTransparent;
+        return (T) this;
+    }
+
     public <N extends Node & DestroyableComponent> N build(N node) {
         node.getStyleClass().addAll(this.styleClasses);
         node.setDisable(this.disable);
@@ -116,6 +123,9 @@ public abstract class AbstractNodeBuilder<T extends AbstractNodeBuilder<T>> {
         }
         if (pickOnBounds != null) {
             node.setPickOnBounds(pickOnBounds);
+        }
+        if (this.isMouseTransparent != null) {
+            node.setMouseTransparent(this.isMouseTransparent);
         }
         return node;
     }

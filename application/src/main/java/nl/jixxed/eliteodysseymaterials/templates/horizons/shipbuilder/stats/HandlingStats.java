@@ -1,13 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
-import eu.hansolo.fx.charts.*;
-import eu.hansolo.fx.charts.data.XYChartItem;
-import eu.hansolo.fx.charts.series.XYSeriesBuilder;
-import javafx.geometry.Orientation;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
@@ -15,9 +8,6 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
-import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLineChart;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableSeparator;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.util.Optional;
@@ -32,123 +22,6 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
         super();
         initComponents();
         initEventHandling();
-
-        pitchIndicator = new RangeIndicator(0D, 0D, 0D, "ship.stats.handling.pitch", "ship.stats.handling.pitch.value");
-//        this.getNodes().add(pitchIndicator);
-        rollIndicator = new RangeIndicator(0D, 0D, 0D, "ship.stats.handling.roll", "ship.stats.handling.roll.value");
-//        this.getNodes().add(rollIndicator);
-        yawIndicator = new RangeIndicator(0D, 0D, 0D, "ship.stats.handling.yaw", "ship.stats.handling.yaw.value");
-//        this.getNodes().add(yawIndicator);
-//        final NumberAxis xAxis = new NumberAxis();
-//        final NumberAxis yAxis = new NumberAxis();
-//        xAxis.setLabel("Supercruise speed");
-//        DestroyableLineChart<XYChartItem> pitchChart = new DestroyableLineChart<>();
-        XYChartItem p0 = new XYChartItem(0, 45, "0%", "0% Speed");
-        XYChartItem p1 = new XYChartItem(10, 50, "10%", "10% Speed");
-        XYChartItem p2 = new XYChartItem(20, 80, "20%", "20% Speed");
-        XYChartItem p3 = new XYChartItem(30, 90, "30%", "30% Speed");
-        XYChartItem p4 = new XYChartItem(40, 100, "40%", "40% Speed");
-        XYChartItem p5 = new XYChartItem(50, 90, "50%", "50% Speed");
-        XYChartItem p6 = new XYChartItem(60, 80, "60%", "60% Speed");
-        XYChartItem p7 = new XYChartItem(70, 70, "70%", "70% Speed");
-        XYChartItem p8 = new XYChartItem(80, 60, "80%", "80% Speed");
-        XYChartItem p9 = new XYChartItem(90, 50, "90%", "90% Speed");
-        XYChartItem p10 = new XYChartItem(100, 40, "100%", "100% Speed");
-        var series = XYSeriesBuilder.create()
-                .items(p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10)
-                .chartType(ChartType.SMOOTH_LINE)
-                .fill(Color.web("#00AEF520"))
-                .stroke(Color.web("#00AEF5"))
-                .symbolFill(Color.web("#00AEF5"))
-                .symbolStroke(Color.web("#293C47"))
-                .symbolSize(10)
-                .strokeWidth(3)
-                .symbolsVisible(true)
-                .build();
-        var xAxisBottom = AxisBuilder.create(Orientation.HORIZONTAL, Position.BOTTOM)
-                .type(AxisType.TEXT)
-                .prefHeight(40d)
-                .categories("0%",
-                        "10%",
-                        "20%",
-                        "30%",
-                        "40%",
-                        "50%",
-                        "60%",
-                        "70%",
-                        "80%",
-                        "90%",
-                        "100%")
-                .minValue(0)
-                .maxValue(100)
-                .autoScale(true)
-                .axisColor(Color.web("#85949B"))
-                .tickLabelColor(Color.web("#85949B"))
-                .tickMarkColor(Color.web("#85949B"))
-                //.tickMarksVisible(false)
-                .build();
-        AnchorPane.setBottomAnchor(xAxisBottom, 0d);
-        AnchorPane.setLeftAnchor(xAxisBottom, 40d);
-        AnchorPane.setRightAnchor(xAxisBottom, 40d);
-
-        var yAxisLeft = AxisBuilder.create(Orientation.VERTICAL, Position.LEFT)
-                .type(AxisType.LINEAR)
-                .prefWidth(40d)
-                .minValue(0)
-                .maxValue(110)
-                .autoScale(true)
-                .axisColor(Color.web("#85949B"))
-                .tickLabelColor(Color.web("#85949B"))
-                .tickMarkColor(Color.web("#85949B"))
-//                //.tickMarksVisible(false)
-//                // test the new numberFormatter as well
-//                .numberFormatter(new StringConverter<Number>() {
-//                    private final DecimalFormat df = new DecimalFormat("0 deg/s");
-//
-//                    @Override
-//                    public String toString(Number object) {
-//                        if (object == null) {
-//                            return "";
-//                        }
-//                        return df.format(object);
-//                    }
-//
-//                    @Override
-//                    public Number fromString(String string) {
-//                        try {
-//                            if (string == null) {
-//                                return null;
-//                            }
-//                            string = string.trim();
-//                            if (string.length() < 1) {
-//                                return null;
-//                            }
-//                            return df.parse(string).doubleValue();
-//                        } catch (ParseException ex) {
-//                            throw new RuntimeException(ex);
-//                        }
-//                    }
-//                })
-                .build();
-        AnchorPane.setTopAnchor(yAxisLeft, 0d);
-        AnchorPane.setBottomAnchor(yAxisLeft, 40d);
-        AnchorPane.setLeftAnchor(yAxisLeft, 0d);
-
-        var grid = GridBuilder.create(xAxisBottom, yAxisLeft)
-                .gridLinePaint(Color.web("#384C57"))
-                .minorHGridLinesVisible(false)
-                .mediumHGridLinesVisible(false)
-                .minorVGridLinesVisible(false)
-                .mediumVGridLinesVisible(false)
-                .gridLineDashes(4, 4)
-                .build();
-
-        XYPane lineChartPane = new XYPane(series);
-
-        DestroyableLineChart<XYChartItem> lineChart = new DestroyableLineChart<>(lineChartPane, grid, yAxisLeft, xAxisBottom);
-
-//        pitchChart.getData().add(series);
-        this.getNodes().add(BoxBuilder.builder().withNodes(BoxBuilder.builder().withNodes(pitchIndicator, rollIndicator, yawIndicator).buildVBox(), lineChart).buildHBox());
 
     }
 
@@ -190,11 +63,13 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
 
     @Override
     public void initComponents() {
-        this.getNodes().add(BoxBuilder.builder()
-                .withNodes(new GrowingRegion(), createTitle("ship.stats.handling"), new GrowingRegion())
-                .buildHBox());
-        this.getNodes().add(new DestroyableSeparator(Orientation.HORIZONTAL));
-
+        addTitle("ship.stats.handling");
+        pitchIndicator = new RangeIndicator(0D, 0D, 0D, "ship.stats.handling.pitch", "ship.stats.handling.pitch.value");
+        this.getNodes().add(pitchIndicator);
+        rollIndicator = new RangeIndicator(0D, 0D, 0D, "ship.stats.handling.roll", "ship.stats.handling.roll.value");
+        this.getNodes().add(rollIndicator);
+        yawIndicator = new RangeIndicator(0D, 0D, 0D, "ship.stats.handling.yaw", "ship.stats.handling.yaw.value");
+        this.getNodes().add(yawIndicator);
     }
 
     @Override

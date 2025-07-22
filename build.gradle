@@ -7,13 +7,16 @@ buildscript {
         }
     }
     dependencies {
-        classpath "org.gradlex:extra-java-module-info:1.12"
-        classpath("net.jsign:jsign-gradle-plugin:7.1")
+        classpath "org.gradlex:extra-java-module-info:1.13"
+        classpath "net.jsign:jsign-gradle-plugin:7.1"
     }
 }
-apply plugin: "org.gradlex.extra-java-module-info"
-apply plugin: "java"
-apply plugin: "net.jsign"
+plugins {
+    id "org.gradlex.extra-java-module-info" version "1.13"
+    id "java"
+    id "net.jsign" version "7.1"
+}
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(24)
@@ -117,8 +120,8 @@ ext {
     version_logback = "1.5.18"
     version_jackson = "2.19.1"
     version_jna = "5.17.0"
-    version_junit_jupiter = "5.13.2"
-    version_junit_platform = "1.13.2"
+    version_junit_jupiter = "5.13.3"
+    version_junit_platform = "1.13.3"
     version_javafx = "24.0.1"
     version_controlsfx = "11.2.2"
     version_scribejava = "8.3.3"
@@ -136,7 +139,7 @@ ext {
     version_guava = "33.4.8-jre"
     version_j2objc_annotations = "3.0.0"
     version_mockito = "5.18.0"
-    version_sentry = "8.16.0"
+    version_sentry = "8.17.0"
 }
 allprojects {
     plugins.withType(JavaPlugin).whenPluginAdded {
@@ -155,7 +158,7 @@ allprojects {
                 implementation "com.google.j2objc:j2objc-annotations:${version_j2objc_annotations}"
                 implementation "commons-io:commons-io:${version_apache_commons_io}"
                 implementation "io.github.pustike:commons-csv:1.7.0"
-                implementation "io.reactivex.rxjava3:rxjava:3.1.10"
+                implementation "io.reactivex.rxjava3:rxjava:3.1.11"
                 implementation "net.java.dev.jna:jna-platform:${version_jna}"
                 implementation "net.java.dev.jna:jna:${version_jna}"
                 implementation "nl.jixxed.lept4j:lept4j:${version_lept4j}"
@@ -197,8 +200,7 @@ allprojects {
                 implementation "io.sentry:sentry:${version_sentry}"
                 implementation "io.sentry:sentry-logback:${version_sentry}"
 
-                implementation 'org.apache.logging.log4j:log4j-api:2.25.0'
-                implementation "eu.hansolo.fx:charts:21.0.25"
+                implementation 'org.apache.logging.log4j:log4j-api:2.25.1'
 
                 implementation "com.github.wille:oslib:master-SNAPSHOT"
             }

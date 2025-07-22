@@ -1,7 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
 import javafx.geometry.Orientation;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
@@ -43,12 +44,6 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
     private TypeSegment causticPercentageGroup;
     private TypeSegment antiXenoPercentageGroup;
     private TypeSegment noDamageGroup;
-    public static final Color HARDPOINT_THERMAL_COLOR = Color.web("#ff7c7c");
-    public static final Color HARDPOINT_KINETIC_COLOR = Color.web("#2e92df");
-    public static final Color HARDPOINT_EXPLOSIVE_COLOR = Color.web("#CE6C1E");
-    public static final Color HARDPOINT_ABSOLUTE_COLOR = Color.web("#6D3DA8");
-    public static final Color HARDPOINT_CAUSTIC_COLOR = Color.web("#F8FF2E");
-    public static final Color HARDPOINT_ANTIXENO_COLOR = Color.web("#89D07F");
 
     public WeaponStats() {
         super();
@@ -59,14 +54,11 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
     @Override
     public void initComponents() {
         this.getStyleClass().add("weapon-stats");
-        this.getNodes().add(BoxBuilder.builder()
-                .withNodes(new GrowingRegion(), createTitle("ship.stats.weapon"), new GrowingRegion())
-                .buildHBox());
-        this.getNodes().add(new DestroyableSeparator(Orientation.HORIZONTAL));
+        addTitle("ship.stats.weapon");
 
         DestroyableToggleButton[] buttons = Arrays.stream(HardpointGroup.values()).map(group -> {
             final DestroyableToggleButton groupButton = ToggleButtonBuilder.builder()
-                    .withStyleClass("toggle-button-stats-hardpoint")
+                    .withStyleClass("group-toggle")
                     .withNonLocalizedText(group.name())
                     .build();
             groupButton.setSelected(true);
@@ -79,23 +71,25 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
                 }
                 update();
             });
+            HBox.setHgrow(groupButton, Priority.ALWAYS);
             return groupButton;
         }).toArray(DestroyableToggleButton[]::new);
 
         DestroyableHBox box = BoxBuilder.builder()
+                .withStyleClass("toggles")
                 .withNodes(buttons)
                 .buildHBox();
         this.getNodes().add(box);
-        this.rawDamage = createValueSmallLabel("ship.stats.weapon.rawdamage.value", String.format("%.2f", 0d));
+        this.rawDamage = createValueLabel("ship.stats.weapon.rawdamage.value", String.format("%.2f", 0d));
 
         this.getNodes().add(BoxBuilder.builder()
                 .withNodes(createLabel("ship.stats.weapon.rawdamage"), new GrowingRegion(), this.rawDamage)
                 .buildHBox());
         this.getNodes().add(BoxBuilder.builder()
-                .withStyleClass("weapon-stats-legend-box")
+                .withStyleClass("legend-box")
                 .withNodes(BoxBuilder.builder()
                                 .withNodes(BoxBuilder.builder()
-                                                .withNodes(new GrowingRegion(), createLegendCircle(HARDPOINT_THERMAL_COLOR), new GrowingRegion())
+                                                .withNodes(new GrowingRegion(), createLegendCircle("hardpoint-thermal"), new GrowingRegion())
                                                 .buildHBox(),
                                         BoxBuilder.builder()
                                                 .withNodes(new GrowingRegion(), createLegendLabel("ship.stats.weapon.thermalpercentage"), new GrowingRegion())
@@ -105,7 +99,7 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
                         new GrowingRegion(),
                         BoxBuilder.builder()
                                 .withNodes(BoxBuilder.builder()
-                                                .withNodes(new GrowingRegion(), createLegendCircle(HARDPOINT_KINETIC_COLOR), new GrowingRegion())
+                                                .withNodes(new GrowingRegion(), createLegendCircle("hardpoint-kinetic"), new GrowingRegion())
                                                 .buildHBox(),
                                         BoxBuilder.builder()
                                                 .withNodes(new GrowingRegion(), createLegendLabel("ship.stats.weapon.kineticpercentage"), new GrowingRegion())
@@ -115,7 +109,7 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
                         new GrowingRegion(),
                         BoxBuilder.builder()
                                 .withNodes(BoxBuilder.builder()
-                                                .withNodes(new GrowingRegion(), createLegendCircle(HARDPOINT_EXPLOSIVE_COLOR), new GrowingRegion())
+                                                .withNodes(new GrowingRegion(), createLegendCircle("hardpoint-explosive"), new GrowingRegion())
                                                 .buildHBox(),
                                         BoxBuilder.builder()
                                                 .withNodes(new GrowingRegion(), createLegendLabel("ship.stats.weapon.explosivepercentage"), new GrowingRegion())
@@ -134,27 +128,19 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
         this.noDamageGroup = new TypeSegment(100D, SegmentType.HARDPOINT_NONE);
 
         this.segmentedBar = SegmentedBarBuilder.builder(TypeSegment.class)
-                .withStyleClass("power-progressbar")
+                .withStyleClass("weapon-progressbar")
                 .withOrientation(Orientation.HORIZONTAL)
                 .withInfoNodeFactory(segment -> LabelBuilder.builder()
-                        .withStyleClass("power-progressbar-label")
+                        .withStyleClass("tooltip-text")
                         .withNonLocalizedText(segment.getText() + ": " + LocaleService.getLocalizedStringForCurrentLocale("ship.stats.weapon.value", String.format("%.2f", segment.getValue())))
                         .build())
-                .withSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(
-                        SegmentType.HARDPOINT_THERMAL, HARDPOINT_THERMAL_COLOR,
-                        SegmentType.HARDPOINT_KINETIC, HARDPOINT_KINETIC_COLOR,
-                        SegmentType.HARDPOINT_EXPLOSIVE, HARDPOINT_EXPLOSIVE_COLOR,
-                        SegmentType.HARDPOINT_ABSOLUTE, HARDPOINT_ABSOLUTE_COLOR,
-                        SegmentType.HARDPOINT_CAUSTIC, HARDPOINT_CAUSTIC_COLOR,
-                        SegmentType.HARDPOINT_ANTIXENO, HARDPOINT_ANTIXENO_COLOR,
-                        SegmentType.HARDPOINT_NONE, Color.rgb(128, 128, 128)
-                ), false))
+                .withSegmentViewFactory(segment -> new TypeSegmentView(segment, false))
                 .withSegments(absolutePercentageGroup, kineticPercentageGroup, thermalPercentageGroup, explosivePercentageGroup, causticPercentageGroup, antiXenoPercentageGroup, noDamageGroup)
                 .build();
 
         this.getNodes().add(this.segmentedBar);
         this.getNodes().add(BoxBuilder.builder()
-                .withStyleClass("weapon-stats-legend-box")
+                .withStyleClass("legend-box")
                 .withNodes(
                         BoxBuilder.builder()
                                 .withNodes(
@@ -162,7 +148,7 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
                                                 .withNodes(new GrowingRegion(), createLegendLabel("ship.stats.weapon.absolutepercentage"), new GrowingRegion())
                                                 .buildHBox(),
                                         BoxBuilder.builder()
-                                                .withNodes(new GrowingRegion(), createLegendCircle(HARDPOINT_ABSOLUTE_COLOR), new GrowingRegion())
+                                                .withNodes(new GrowingRegion(), createLegendCircle("hardpoint-absolute"), new GrowingRegion())
                                                 .buildHBox()
                                 ).buildVBox(),
                         new GrowingRegion(),
@@ -172,7 +158,7 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
                                                 .withNodes(new GrowingRegion(), createLegendLabel("ship.stats.weapon.causticpercentage"), new GrowingRegion())
                                                 .buildHBox(),
                                         BoxBuilder.builder()
-                                                .withNodes(new GrowingRegion(), createLegendCircle(HARDPOINT_CAUSTIC_COLOR), new GrowingRegion())
+                                                .withNodes(new GrowingRegion(), createLegendCircle("hardpoint-caustic"), new GrowingRegion())
                                                 .buildHBox()
                                 ).buildVBox(),
                         new GrowingRegion(),
@@ -182,7 +168,7 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
                                                 .withNodes(new GrowingRegion(), createLegendLabel("ship.stats.weapon.antixenopercentage"), new GrowingRegion())
                                                 .buildHBox(),
                                         BoxBuilder.builder()
-                                                .withNodes(new GrowingRegion(), createLegendCircle(HARDPOINT_ANTIXENO_COLOR), new GrowingRegion())
+                                                .withNodes(new GrowingRegion(), createLegendCircle("hardpoint-antixeno"), new GrowingRegion())
                                                 .buildHBox()
                                 ).buildVBox()
                 ).buildHBox());
@@ -193,16 +179,16 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
 
     }
 
-    private DestroyableCircle createLegendCircle(Color powerGroupColor) {
+    private DestroyableCircle createLegendCircle(String styleClass) {
         final DestroyableCircle circle = new DestroyableCircle();
         circle.addBinding(circle.radiusProperty(), ScalingHelper.getPixelDoubleBindingFromEm(0.5D));
-        circle.setFill(powerGroupColor);
+        circle.getStyleClass().add(styleClass);
         return circle;
     }
 
     private DestroyableLabel createLegendLabel(String key) {
         return LabelBuilder.builder()
-                .withStyleClass("weapon-stats-legend-label")
+                .withStyleClass("legend-text")
                 .withText(key)
                 .build();
     }
