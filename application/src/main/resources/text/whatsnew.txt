@@ -1,3 +1,19 @@
+Version 2.201
+-------------
+Ship editor redesign
+- Editor not scales with the application size, allowing it to be used on lower resolutions
+- Reworked styling, so the UI is now colorblind friendly with the respective colorblind theme
+- Added validation that reports on invalid ship configurations, for example equipping 2 shield generators
+- New stats for acceleration (all ships)
+- New stats for ship details (all ships)
+- New supercruise profile stats for the FSD (newer ships only for now)
+- Removed passengers from cargo config, passengers do not affect mass
+- Power bars now are a fixed size, so 20%, 40% and 50% lines will stay in place even when overpowered
+Updated pricing and mass for Panther Clipper Mk II Armour and Mk II Cargo racks
+Updated Panther Clipper Mk II stats, thermals and image remaining
+Added ability to add anti-corrosion cargo racks to Cargo slots
+Added limitation to elevated privileges check to only run on UAC enabled systems. Disabling UAC severely compromises the security of the system and is not recommended, but some users have chosen to do so.
+
 Version 2.200
 -------------
 Fix pre-engineered fragment cannons blueprints
