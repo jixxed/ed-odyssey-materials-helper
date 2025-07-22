@@ -1,3 +1,7 @@
+Version 2.202
+-------------
+Added Panther Clipper Mk II thermals, image, weapon slots and price
+
 Version 2.201
 -------------
 Ship editor redesign

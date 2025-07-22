@@ -1864,9 +1864,9 @@ public class ShipSpecs {
             Map.entry(HorizonsModifier.MAX_YAW_SPEED, 10.0),//unittest
             Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 20.0),//unittest
             Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 14.0),//ingame testing
-            Map.entry(HorizonsModifier.HEAT_CAPACITY, Double.NaN),//ingame testing
+            Map.entry(HorizonsModifier.HEAT_CAPACITY, 329.12),//ingame testing
             Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, Double.NaN),//ingame testing
-            Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, Double.NaN),//ingame testing
+            Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 62.23),//ingame testing
             Map.entry(HorizonsModifier.FUEL_RESERVE, 1.11),//from journal
             Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 70.0),//side panel (Armour Rating)
             Map.entry(HorizonsModifier.MASS_LOCK, 25.0)//ingame testing
