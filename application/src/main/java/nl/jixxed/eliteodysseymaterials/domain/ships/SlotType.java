@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.domain.ships;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.*;
+import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.AntiCorrosionCargoRack;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.CargoRack;
 import nl.jixxed.eliteodysseymaterials.domain.ships.special.CargoHatch;
 import nl.jixxed.eliteodysseymaterials.domain.ships.special.FuelTank;
@@ -24,7 +25,7 @@ public enum SlotType {
     CORE_FUEL_TANK(List.of(FuelTank.class), true),
     OPTIONAL(List.of(OptionalModule.class), false),
     MILITARY(List.of(MilitaryOptionalModule.class), false),
-    CARGO(List.of(CargoOptionalModule.class, CargoRack.class, FuelTank.class), false);
+    CARGO(List.of(CargoOptionalModule.class, CargoRack.class, AntiCorrosionCargoRack.class, FuelTank.class), false);
     @Getter
     private final List<Class<? extends ShipModule>> moduleClasses;
     @Getter
