@@ -79,10 +79,8 @@ public class Validation extends Stats implements DestroyableTemplate {
         addErrorLabel("ship.validation.error.max.refinery", isMaxRefineryExceeded);
         addErrorLabel("ship.validation.error.max.shieldgenerator", isMaxShieldGeneratorExceeded);
         addErrorLabel("ship.validation.error.max.xenoscanner", isMaxXenoScannerExceeded);
-        //PD not enough to boost
-        addWarningLabel("ship.validation.warning.max.power.delivery.boost", isMaxBoostPowerExceeded);
-        //thruster mass exceeded
         addErrorLabel("ship.validation.error.max.thruster.mass", isMaxThrusterMassExceeded);
+        addWarningLabel("ship.validation.warning.max.power.delivery.boost", isMaxBoostPowerExceeded);
 
         BooleanBinding anyOf = getAnyOf(
                 isMaxExperimentalWeaponExceeded,

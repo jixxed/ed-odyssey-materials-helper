@@ -613,6 +613,11 @@
 
         .hoverable-line-chart {
           @include fixedWidth(30em);
+          //@include fixedHeight(15em);
+
+          .chart-plot-background {
+            -fx-background-color: transparent;
+          }
         }
       }
 
@@ -765,6 +770,9 @@
           -fx-padding: 0 0 0.5em 0;
         }
 
+        .shield-value, .armour-value {
+          -fx-font-weight: bold;
+        }
       }
 
       .range-indicator {

@@ -53,11 +53,11 @@ public class ShieldStats extends Stats implements DestroyableEventTemplate {
         final DestroyableVBox shields = BoxBuilder.builder()
                 .withNodes(shieldResistance, shieldIntegrity).buildVBox();
         regenTime = LabelBuilder.builder()
-                .withStyleClass("ship-stats-shield-label")
+                .withStyleClass("shield-value")
                 .withText("ship.stats.shield.build.unit", 0)
                 .build();
         rebuildTime = LabelBuilder.builder()
-                .withStyleClass("ship-stats-shield-label")
+                .withStyleClass("shield-value")
                 .withText("ship.stats.shield.build.unit", 0)
                 .build();
         final DestroyableLabel regen = LabelBuilder.builder()
@@ -77,7 +77,7 @@ public class ShieldStats extends Stats implements DestroyableEventTemplate {
                 .build();
         rebuildTooltip.install(rebuild);
         scbRestoration = LabelBuilder.builder()
-                .withStyleClass("ship-stats-shield-label")
+                .withStyleClass("shield-value")
                 .withText("ship.stats.armour.scb.restoration.unit", 0, 0)
                 .withVisibility(false)
                 .build();

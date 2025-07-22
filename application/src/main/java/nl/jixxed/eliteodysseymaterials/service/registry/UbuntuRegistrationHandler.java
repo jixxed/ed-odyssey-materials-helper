@@ -74,6 +74,10 @@ public class UbuntuRegistrationHandler implements RegistrationHandler {
         return true;
     }
 
+    @Override
+    public boolean isUACEnabled() {
+        return true;
+    }
 
     private static void writeDesktopFile(final File file) throws IOException {
         try (final OutputStream output = new FileOutputStream(file)) {

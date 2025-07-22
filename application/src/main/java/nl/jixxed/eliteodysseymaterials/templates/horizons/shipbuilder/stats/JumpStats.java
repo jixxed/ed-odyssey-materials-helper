@@ -180,10 +180,10 @@ public class JumpStats extends Stats implements DestroyableTemplate {
             if (ship.supportsGraphs()) {
                 chart.setVisible(true);
                 chart.setManaged(true);
+                supercruiseLabel.setVisible(true);
+                supercruiseLabel.setManaged(true);
                 totalJumpRangeIndicator.setVisible(true);
                 totalJumpRangeIndicator.setManaged(true);
-                supercruiseLabel.setVisible(false);
-                supercruiseLabel.setManaged(false);
                 totalJumpRangeIndicator2.setVisible(false);
                 totalJumpRangeIndicator2.setManaged(false);
                 superCruisePitchMap.forEach((key, value) -> {
@@ -210,10 +210,10 @@ public class JumpStats extends Stats implements DestroyableTemplate {
             } else {
                 chart.setVisible(false);
                 chart.setManaged(false);
+                supercruiseLabel.setVisible(false);
+                supercruiseLabel.setManaged(false);
                 totalJumpRangeIndicator.setVisible(false);
                 totalJumpRangeIndicator.setManaged(false);
-                supercruiseLabel.setVisible(true);
-                supercruiseLabel.setManaged(true);
                 totalJumpRangeIndicator2.setVisible(true);
                 totalJumpRangeIndicator2.setManaged(true);
             }

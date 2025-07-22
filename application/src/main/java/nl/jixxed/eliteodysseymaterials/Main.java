@@ -12,6 +12,7 @@ import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
+import nl.jixxed.eliteodysseymaterials.service.RegistryService;
 import nl.jixxed.eliteodysseymaterials.service.SupportService;
 import nl.jixxed.eliteodysseymaterials.service.VersionService;
 
@@ -37,7 +38,7 @@ public class Main {
 
     public static void main(final String[] args) {
         //check if running as admin
-        if (OsCheck.isWindows() && isRunningAsAdmin()) {
+        if (OsCheck.isWindows() && isRunningAsAdmin() && RegistryService.isUACEnabled()) {
             log.error("This application should not be started with elevated privileges. Please restart the app without elevated privileges.");
             AdminError.launchFx(args);
         } else {

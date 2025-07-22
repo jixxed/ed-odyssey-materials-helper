@@ -75,6 +75,11 @@ public class WindowsRegistrationHandler implements RegistrationHandler {
         return !Objects.equals(getRegistryValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Setup\\WindowsFeatures\\WindowsMediaVersion", "Version"), "");
     }
 
+    @Override
+    public boolean isUACEnabled() {
+        return Objects.equals(getRegistryValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", "EnableLUA"), "0x1");
+    }
+
     private static void writeRegFile(final File file) {
         try (final OutputStreamWriter output = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_16LE)) {
             output.write('\ufeff');

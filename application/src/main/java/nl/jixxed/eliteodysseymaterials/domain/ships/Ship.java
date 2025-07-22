@@ -1825,7 +1825,7 @@ public class Ship {
             ),
             List.of(
                     Slot.builder().slotType(SlotType.CARGO).index(0).slotSize(8).shipModule(CargoRack.CARGO_RACK_7_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).namedIndex(1).slotSize(8).shipModule(ShieldGenerator.SHIELD_GENERATOR_8_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).namedIndex(1).slotSize(8).shipModule(ShieldGenerator.SHIELD_GENERATOR_7_E).build(),
                     Slot.builder().slotType(SlotType.CARGO).index(2).slotSize(7).build(),
                     Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(7).namedIndex(2).build(),
                     Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(6).namedIndex(3).build(),
@@ -2154,7 +2154,7 @@ public class Ship {
                 || this.shipType == ShipType.MANDALAY
                 || this.shipType == ShipType.COBRA_MK_V
                 || this.shipType == ShipType.CORSAIR
-//                || this.shipType == ShipType.PANTHER_CLIPPER_MK_II
+                || this.shipType == ShipType.PANTHER_CLIPPER_MK_II
                 || this.shipType == ShipType.TYPE_8;
 
     }

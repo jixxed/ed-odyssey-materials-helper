@@ -8,4 +8,6 @@ public interface RegistrationHandler {
     boolean isRegistered();
 
     boolean hasMediaServices();
+
+    boolean isUACEnabled();
 }

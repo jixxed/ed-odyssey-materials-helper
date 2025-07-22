@@ -1832,44 +1832,44 @@ public class ShipSpecs {
 
     );
     public static final Map<HorizonsModifier, Object> PANTHER_CLIPPER_MK_II = Map.ofEntries(
-            Map.entry(HorizonsModifier.TOP_SPEED, 179.0),//unittest
+            Map.entry(HorizonsModifier.TOP_SPEED, 180.0),//unittest
             Map.entry(HorizonsModifier.BOOST_SPEED, 249.0),//unittest
             Map.entry(HorizonsModifier.MANOEUVRABILITY, 0.0),//from the buy screen
             Map.entry(HorizonsModifier.SHIELDS, 350.0),//unittest
             Map.entry(HorizonsModifier.ARMOUR, 620.0),//unittest
             Map.entry(HorizonsModifier.MASS, 1200.0),//from the buy screen
-            Map.entry(HorizonsModifier.MINIMUM_THRUST, Double.NaN),//ingame testing
-            Map.entry(HorizonsModifier.BOOST_INTERVAL, Double.NaN),//ingame testing
-            Map.entry(HorizonsModifier.BOOST_COST, Double.NaN),//ingame testing
-            Map.entry(HorizonsModifier.FORWARD_ACCELERATION, Double.NaN),
-            Map.entry(HorizonsModifier.REVERSE_ACCELERATION, Double.NaN),
-            Map.entry(HorizonsModifier.LATERAL_ACCELERATION, Double.NaN),
+            Map.entry(HorizonsModifier.MINIMUM_THRUST, 34.0),
+            Map.entry(HorizonsModifier.BOOST_INTERVAL, 6.5),
+            Map.entry(HorizonsModifier.BOOST_COST, 19.0),
+            Map.entry(HorizonsModifier.FORWARD_ACCELERATION, 30.0),
+            Map.entry(HorizonsModifier.REVERSE_ACCELERATION, 10.0),
+            Map.entry(HorizonsModifier.LATERAL_ACCELERATION, 10.0),
             Map.entry(HorizonsModifier.SUPERCRUISE_PROFILE, new Double[][]{
-                    {Double.NaN, Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN, Double.NaN}}),
+                    {50.0, 16.0, 60.0},
+                    {80.0, 25.0, 80.0},
+                    {50.0, 10.0, 60.0}}),
             Map.entry(HorizonsModifier.CRUISE_PITCH_PROFILE, new Double[][]{
-                    {Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN}}),
+                    {80.0, 80.0},
+                    {14.0, 18.0},
+                    {80.0, 60.0}}),
             Map.entry(HorizonsModifier.CRUISE_ROLL_PROFILE, new Double[][]{
-                    {Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN}}),
+                    {80.0, 80.0},
+                    {20.0, 20.0},
+                    {80.0, 90.0}}),
             Map.entry(HorizonsModifier.CRUISE_YAW_PROFILE, new Double[][]{
-                    {Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN}}),
+                    {80.0, 80.0},
+                    {8.0, 10.0},
+                    {80.0, 60.0}}),
             Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 18.0),//unittest
             Map.entry(HorizonsModifier.MAX_YAW_SPEED, 10.0),//unittest
             Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 20.0),//unittest
-            Map.entry(HorizonsModifier.MIN_PITCH_SPEED, Double.NaN),//ingame testing
+            Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 14.0),//ingame testing
             Map.entry(HorizonsModifier.HEAT_CAPACITY, Double.NaN),//ingame testing
             Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, Double.NaN),//ingame testing
             Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, Double.NaN),//ingame testing
             Map.entry(HorizonsModifier.FUEL_RESERVE, 1.11),//from journal
             Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 70.0),//side panel (Armour Rating)
-            Map.entry(HorizonsModifier.MASS_LOCK, Double.NaN)//ingame testing
+            Map.entry(HorizonsModifier.MASS_LOCK, 25.0)//ingame testing
 
 
     );

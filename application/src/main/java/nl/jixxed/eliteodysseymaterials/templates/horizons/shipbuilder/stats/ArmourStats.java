@@ -47,11 +47,11 @@ public class ArmourStats extends Stats implements DestroyableTemplate {
                 .withNodes(armourResistance, armourIntegrity)
                 .buildVBox();
         mrpIntegrity = LabelBuilder.builder()
-                .withStyleClass("ship-stats-shield-label")
+                .withStyleClass("armour-value")
                 .withText("ship.stats.armour.mrp.integrity.unit", 0)
                 .build();
         mrpProtection = LabelBuilder.builder()
-                .withStyleClass("ship-stats-shield-label")
+                .withStyleClass("armour-value")
                 .withText("ship.stats.armour.mrp.protection.unit", 0)
                 .build();
         final DestroyableLabel mrpLabel = LabelBuilder.builder()

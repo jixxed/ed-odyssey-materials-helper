@@ -57,4 +57,8 @@ public class RegistryService {
     public static boolean hasMediaServices() {
         return getHandler().map(RegistrationHandler::hasMediaServices).orElse(false);
     }
+
+    public static boolean isUACEnabled() {
+        return getHandler().map(RegistrationHandler::isUACEnabled).orElse(false);
+    }
 }
