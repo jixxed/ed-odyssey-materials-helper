@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 public class LargeCargoRack extends CargoOptionalModule {
-    public static final LargeCargoRack LARGE_CARGO_RACK_7_D = new LargeCargoRack("LARGE_CARGO_RACK_7_D", HorizonsBlueprintName.LARGE_CARGO_RACK, ModuleSize.SIZE_7, ModuleClass.D, 0, "Int_LargeCargoRack_Size7_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY, 192.0)));
-    public static final LargeCargoRack LARGE_CARGO_RACK_8_D = new LargeCargoRack("LARGE_CARGO_RACK_8_D", HorizonsBlueprintName.LARGE_CARGO_RACK, ModuleSize.SIZE_8, ModuleClass.D, 0, "Int_LargeCargoRack_Size8_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY, 384.0)));
+    public static final LargeCargoRack LARGE_CARGO_RACK_7_D = new LargeCargoRack("LARGE_CARGO_RACK_7_D", HorizonsBlueprintName.LARGE_CARGO_RACK, ModuleSize.SIZE_7, ModuleClass.D, 1958680, "Int_LargeCargoRack_Size7_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY, 192.0)));
+    public static final LargeCargoRack LARGE_CARGO_RACK_8_D = new LargeCargoRack("LARGE_CARGO_RACK_8_D", HorizonsBlueprintName.LARGE_CARGO_RACK, ModuleSize.SIZE_8, ModuleClass.D, 4929317, "Int_LargeCargoRack_Size8_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY, 384.0)));
 
     public static final List<LargeCargoRack> LARGE_CARGO_RACKS = List.of(
             LARGE_CARGO_RACK_7_D,
