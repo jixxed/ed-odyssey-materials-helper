@@ -1,3 +1,8 @@
+Version 2.203
+-------------
+Fixed an issue where slot image and menu would overlap when menu opened near the bottom of the screen. Image will now shift up.
+Added interactive chart for handling of ships (newer ships only for now)
+
 Version 2.202
 -------------
 Added Panther Clipper Mk II thermals, image, weapon slots and price
