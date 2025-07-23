@@ -86,7 +86,7 @@ public class StatsSection extends DestroyableFlowPane implements DestroyableEven
                         createLabel("tab.ships.stats.shield", shieldStats),
                         createLabel("tab.ships.stats.weapon", weaponStats)
                 )
-                .withHoverProperty((_, _, newValue) -> {
+                .withHoverProperty(_ -> (_, _, newValue) -> {
                     if (Boolean.FALSE.equals(newValue)) {
                         stats.forEach(node -> {
                             if (node instanceof Validation valid) {
@@ -120,7 +120,7 @@ public class StatsSection extends DestroyableFlowPane implements DestroyableEven
         DestroyableLabel selector = LabelBuilder.builder()
                 .withStyleClass("stat-select")
                 .withText(localeKey)
-                .withHoverProperty((_, _, newValue) -> {
+                .withHoverProperty(_ -> (_, _, newValue) -> {
                     if (Boolean.TRUE.equals(newValue)) {
                         stats.forEach(stat -> {
                             if (stat instanceof Validation valid) {

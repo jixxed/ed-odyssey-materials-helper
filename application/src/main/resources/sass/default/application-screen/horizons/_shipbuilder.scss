@@ -612,12 +612,100 @@
         }
 
         .hoverable-line-chart {
+          .default-color0.chart-series-line {
+            -fx-stroke: $border-color-red;
+          }
+
+          .default-color1.chart-series-line {
+            -fx-stroke: $border-color-yellow;
+          }
+
+          .default-color2.chart-series-line {
+            -fx-stroke: $border-color-blue;
+            //-fx-opacity: 0.2;
+          }
+
           @include fixedWidth(30em);
           //@include fixedHeight(15em);
 
           .chart-plot-background {
             -fx-background-color: transparent;
           }
+        }
+      }
+
+      .handling-stats {
+        .ranges {
+          -fx-spacing: 0.25em;
+        }
+
+        .hoverable-line-chart {
+          @include fixedWidth(30em);
+          //@include fixedHeight(15em);
+          .default-color0.chart-series-line {
+            -fx-stroke: $border-color-light-grey;
+            -fx-opacity: 0.2;
+          }
+
+          .default-color1.chart-series-line {
+            -fx-stroke: $border-color-light-grey;
+            -fx-opacity: 0.2;
+          }
+
+          .default-color2.chart-series-line {
+            -fx-stroke: $border-color-blue;
+            //-fx-opacity: 0.2;
+          }
+
+          .chart-plot-background {
+            -fx-background-color: transparent;
+          }
+        }
+
+        .handling-buttons {
+          @include fixedHeight(3.00em);
+          @include fixedWidth(30.00em);
+          //-fx-min-width: 10em;
+          //
+          -fx-background-color: $background-color-dark;
+          //-fx-border-color: $border-color-white;
+
+          .handling-button {
+            -fx-background-color: $background-color-dark;
+            -fx-border-color: $border-color-white;
+            -fx-border-width: 0 0 0 1px;
+            -fx-max-height: infinity;
+            -fx-max-width: infinity;
+            -fx-alignment: center;
+
+            &:hover {
+              -fx-background-color: $background-color-light;
+            }
+
+            &:selected {
+              -fx-text-fill: $text-color-blue;
+            }
+
+            &:first {
+              -fx-border-width: 0;
+
+            }
+          }
+
+        }
+
+        .max-values {
+          @include fixedHeight(2.00em);
+          @include fixedWidth(30.00em);
+
+          .max-value {
+
+            -fx-max-height: infinity;
+            -fx-max-width: infinity;
+            -fx-alignment: center;
+            -fx-text-fill: $text-color-blue;
+          }
+
         }
       }
 

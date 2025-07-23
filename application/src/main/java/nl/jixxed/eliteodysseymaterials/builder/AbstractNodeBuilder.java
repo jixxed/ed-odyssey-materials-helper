@@ -13,6 +13,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableCompone
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @SuppressWarnings("unchecked")
@@ -27,7 +28,7 @@ public abstract class AbstractNodeBuilder<T extends AbstractNodeBuilder<T>> {
     private ObservableValue<Boolean> visibilityObservable;
     private ObservableValue<Boolean> disableObservable;
     private ObservableValue<Boolean> managedObservable;
-    private ChangeListener<Boolean> hoverPropertyChangeListener;
+    private Function<Node, ChangeListener<Boolean>> hoverPropertyChangeListenerFunction;
     private NodeOrientation nodeOrientation;
 
     private Boolean isMouseTransparent;
@@ -62,8 +63,8 @@ public abstract class AbstractNodeBuilder<T extends AbstractNodeBuilder<T>> {
         return (T) this;
     }
 
-    public T withHoverProperty(final ChangeListener<Boolean> hoverPropertyChangeListener) {
-        this.hoverPropertyChangeListener = hoverPropertyChangeListener;
+    public T withHoverProperty(Function<Node, ChangeListener<Boolean>> hoverPropertyChangeListenerFunction) {
+        this.hoverPropertyChangeListenerFunction = hoverPropertyChangeListenerFunction;
         return (T) this;
     }
 
@@ -115,8 +116,8 @@ public abstract class AbstractNodeBuilder<T extends AbstractNodeBuilder<T>> {
         if (this.disableObservable != null) {
             node.addBinding(node.disableProperty(), this.disableObservable);
         }
-        if (this.hoverPropertyChangeListener != null) {
-            node.addChangeListener(node.hoverProperty(), this.hoverPropertyChangeListener);
+        if (this.hoverPropertyChangeListenerFunction != null) {
+            node.addChangeListener(node.hoverProperty(), this.hoverPropertyChangeListenerFunction.apply(node));
         }
         if (this.nodeOrientation != null) {
             node.setNodeOrientation(this.nodeOrientation);

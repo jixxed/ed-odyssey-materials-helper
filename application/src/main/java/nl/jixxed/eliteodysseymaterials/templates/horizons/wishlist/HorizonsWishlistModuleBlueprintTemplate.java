@@ -77,7 +77,7 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
         visibilityButton = LabelBuilder.builder()
                 .withStyleClass("visible-button")
                 .withOnMouseClicked(_ -> setVisibility(!this.visible.get()))
-                .withHoverProperty((_, _, newValue) -> {
+                .withHoverProperty(_ -> (_, _, newValue) -> {
                     if (Boolean.TRUE.equals(newValue)) {
                         this.visibilityImage.setImage(ImageService.getImage("/images/other/visible_blue.png"));
                     } else {

@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.components;
 
+import javafx.beans.binding.StringBinding;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -13,30 +14,26 @@ import nl.jixxed.eliteodysseymaterials.builder.CircleBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LineBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.RectangleBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TextBuilder;
-import nl.jixxed.eliteodysseymaterials.helper.Formatters;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableText;
 
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 @Slf4j
 public class HoverableLineChart extends LineChart<Number, Number> implements DestroyableTemplate {
-    private final String tooltipLocaleKey;
-    NumberAxisContainer xAxis;
-    NumberAxisContainer yAxis;
+    private final Function<Map<Object, Number>, StringBinding> tooltipFunction;
 
-    public HoverableLineChart(NumberAxisContainer xAxis, NumberAxisContainer yAxis, String tooltipLocaleKey) {
-        super(xAxis.axis(), yAxis.axis());
-        this.xAxis = xAxis;
-        this.yAxis = yAxis;
-        this.tooltipLocaleKey = tooltipLocaleKey;
+    public HoverableLineChart(NumberAxis xAxis, NumberAxis yAxis, Function<Map<Object, Number>, StringBinding> tooltipFunction) {
+        super(xAxis, yAxis);
+        this.tooltipFunction = tooltipFunction;
         initComponents();
     }
 
-    public HoverableLineChart(NumberAxisContainer xAxis, NumberAxisContainer yAxis, ObservableList<Series<Number, Number>> data, String tooltipLocaleKey) {
-        super(xAxis.axis(), yAxis.axis(), data);
-        this.xAxis = xAxis;
-        this.yAxis = yAxis;
-        this.tooltipLocaleKey = tooltipLocaleKey;
+    public HoverableLineChart(NumberAxis xAxis, NumberAxis yAxis, ObservableList<Series<Number, Number>> data, Function<Map<Object, Number>, StringBinding> tooltipFunction) {
+        super(xAxis, yAxis, data);
+        this.tooltipFunction = tooltipFunction;
         initComponents();
     }
 
@@ -60,16 +57,10 @@ public class HoverableLineChart extends LineChart<Number, Number> implements Des
                 .withStyleClass("text-background")
                 .withMouseTransparent(true)
                 .build();
-//        circle.setStrokeWidth(1);
-//        circle.setRadius(5);
-//        circle.setStroke(Color.BLUE);
-//        circle.setMouseTransparent(true);
         DestroyableText tooltip = TextBuilder.builder()
                 .withStyleClass("tooltip-text")
                 .withText("blank")
                 .build();
-        // Create tooltip and add it to the chart
-//        tooltip.setStyle("-fx-font-size: 12px; -fx-fill: black;");
         tooltip.setMouseTransparent(true);
 
         ((Pane) this.lookup(".chart-content")).getChildren().add(verticalLine);
@@ -264,12 +255,17 @@ public class HoverableLineChart extends LineChart<Number, Number> implements Des
             // Update tooltip with proper X axis scaling
             double mouseXValue = mouseX * (maxX - minX) / plotWidth + minX;
 //            tooltip.setText(String.format("Speed: %.1f%%\n%s: %.1f °/s", nearestX, nearestSeries.getName(), nearestY));
-            tooltip.textProperty().bind(LocaleService.getStringBinding(tooltipLocaleKey,
-                    LocaleService.LocalizationKey.of(xAxis.tooltipLocaleKey()), Formatters.NUMBER_FORMAT_0.format(nearestX),
-                    this.getData().get(0).getName(), Formatters.NUMBER_FORMAT_1.format(this.getData().get(0).getData().get((int) nearestX).getYValue()),
-                    this.getData().get(1).getName(), Formatters.NUMBER_FORMAT_1.format(this.getData().get(1).getData().get((int) nearestX).getYValue()),
-                    this.getData().get(2).getName(), Formatters.NUMBER_FORMAT_1.format(this.getData().get(2).getData().get((int) nearestX).getYValue())
-            ));
+            int finalNearestX = (int) nearestX;
+            Map<Object, Number> values = this.getData().stream()
+                    .map(series -> Map.entry(series, series.getData().get(finalNearestX).getYValue()))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            values.put("x", nearestX);
+            tooltip.textProperty().bind(tooltipFunction.apply(values));
+//            LocaleService.getStringBinding(tooltipLocaleKey,
+//                    LocaleService.LocalizationKey.of(xAxis.tooltipLocaleKey()), Formatters.NUMBER_FORMAT_0.format(nearestX),
+//                    this.getData().get(0).getName(), Formatters.NUMBER_FORMAT_1.format(this.getData().get(0).getData().get((int) nearestX).getYValue()),
+//                    this.getData().get(1).getName(), Formatters.NUMBER_FORMAT_1.format(this.getData().get(1).getData().get((int) nearestX).getYValue()),
+//                    this.getData().get(2).getName(), Formatters.NUMBER_FORMAT_1.format(this.getData().get(2).getData().get((int) nearestX).getYValue())
         });
     }
 }

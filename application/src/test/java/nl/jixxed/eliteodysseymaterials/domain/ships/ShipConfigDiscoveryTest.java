@@ -21,7 +21,7 @@ public class ShipConfigDiscoveryTest {
         ShipModule.getBasicModules();
         final Ship ship = Ship.PANTHER_CLIPPER_MK_II;
         //Fill in MASS and FUEL_RESERVE on the ship
-
+        Ship.ALL.stream().forEach(sheep -> log.debug(sheep.getShipType() + " " + (sheep.getEmptyMass() + sheep.getCurrentFuel() + sheep.getCurrentFuelReserve())));
         findTopSpeed(ship, 182.0, 0.5);
         findBoostSpeed(ship, 252.0, 0.5);
         findPitch(ship, 18.18, 0.5);

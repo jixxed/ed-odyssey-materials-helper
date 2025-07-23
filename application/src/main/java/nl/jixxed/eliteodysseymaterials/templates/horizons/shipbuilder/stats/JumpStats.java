@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
+import javafx.beans.binding.StringBinding;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import lombok.extern.slf4j.Slf4j;
@@ -10,18 +11,19 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
 import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.FrameShiftDriveBooster;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.HoverableLineChart;
-import nl.jixxed.eliteodysseymaterials.templates.components.NumberAxisContainer;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 @Slf4j
 public class JumpStats extends Stats implements DestroyableTemplate {
@@ -63,17 +65,26 @@ public class JumpStats extends Stats implements DestroyableTemplate {
         NumberAxis yAxis = NumberAxisBuilder.builder()
                 .withLabel("ship.stats.jump.chart.yaxis")
                 .build();
-        chart = new HoverableLineChart(new NumberAxisContainer(xAxis, "ship.stats.jump.chart.xaxis.tooltip"), new NumberAxisContainer(yAxis, "ship.stats.jump.chart.yaxis.tooltip"), "ship.stats.jump.chart.tooltip");
-        chart.setLegendVisible(false);
-        chart.setCreateSymbols(false);
-        chart.setHorizontalGridLinesVisible(false);
-        chart.setVerticalGridLinesVisible(false);
+
         XYChart.Series<Number, Number> superCruisePitchSeries = new XYChart.Series<>();
         superCruisePitchSeries.nameProperty().bind(LocaleService.getStringBinding("ship.stats.jump.chart.pitch"));
         XYChart.Series<Number, Number> superCruiseRollSeries = new XYChart.Series<>();
         superCruiseRollSeries.nameProperty().bind(LocaleService.getStringBinding("ship.stats.jump.chart.roll"));
         XYChart.Series<Number, Number> superCruiseYawSeries = new XYChart.Series<>();
         superCruiseYawSeries.nameProperty().bind(LocaleService.getStringBinding("ship.stats.jump.chart.yaw"));
+
+        Function<Map<Object, Number>, StringBinding> tooltipFunction = data -> LocaleService.getStringBinding("ship.stats.jump.chart.tooltip",
+                LocaleService.LocalizationKey.of("ship.stats.jump.chart.throttle"), Formatters.NUMBER_FORMAT_0.format(data.get("x")),
+                LocaleService.LocalizationKey.of("ship.stats.jump.chart.roll"), Formatters.NUMBER_FORMAT_1.format(data.get(superCruiseRollSeries)),
+                LocaleService.LocalizationKey.of("ship.stats.jump.chart.pitch"), Formatters.NUMBER_FORMAT_1.format(data.get(superCruisePitchSeries)),
+                LocaleService.LocalizationKey.of("ship.stats.jump.chart.yaw"), Formatters.NUMBER_FORMAT_1.format(data.get(superCruiseYawSeries))
+        );
+
+        chart = new HoverableLineChart(xAxis, yAxis, tooltipFunction);
+        chart.setLegendVisible(false);
+        chart.setCreateSymbols(false);
+        chart.setHorizontalGridLinesVisible(false);
+        chart.setVerticalGridLinesVisible(false);
         superCruisePitchMap = new HashMap<>();
         superCruiseRollMap = new HashMap<>();
         superCruiseYawMap = new HashMap<>();

@@ -1509,8 +1509,63 @@
             -fx-min-width: 30em;
             -fx-pref-width: 30em;
             -fx-max-width: 30em; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .jump-stats .hoverable-line-chart .default-color0.chart-series-line {
+              -fx-stroke: #ff7c7c; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .jump-stats .hoverable-line-chart .default-color1.chart-series-line {
+              -fx-stroke: #dcc030; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .jump-stats .hoverable-line-chart .default-color2.chart-series-line {
+              -fx-stroke: #2e92df; }
             .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .jump-stats .hoverable-line-chart .chart-plot-background {
               -fx-background-color: transparent; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .handling-stats .ranges {
+            -fx-spacing: 0.25em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .handling-stats .hoverable-line-chart {
+            -fx-min-width: 30em;
+            -fx-pref-width: 30em;
+            -fx-max-width: 30em; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .handling-stats .hoverable-line-chart .default-color0.chart-series-line {
+              -fx-stroke: silver;
+              -fx-opacity: 0.2; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .handling-stats .hoverable-line-chart .default-color1.chart-series-line {
+              -fx-stroke: silver;
+              -fx-opacity: 0.2; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .handling-stats .hoverable-line-chart .default-color2.chart-series-line {
+              -fx-stroke: #2e92df; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .handling-stats .hoverable-line-chart .chart-plot-background {
+              -fx-background-color: transparent; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .handling-stats .handling-buttons {
+            -fx-min-height: 3em;
+            -fx-pref-height: 3em;
+            -fx-max-height: 3em;
+            -fx-min-width: 30em;
+            -fx-pref-width: 30em;
+            -fx-max-width: 30em;
+            -fx-background-color: #0f0f0f; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .handling-stats .handling-buttons .handling-button {
+              -fx-background-color: #0f0f0f;
+              -fx-border-color: white;
+              -fx-border-width: 0 0 0 1px;
+              -fx-max-height: infinity;
+              -fx-max-width: infinity;
+              -fx-alignment: center; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .handling-stats .handling-buttons .handling-button:hover {
+                -fx-background-color: #252525; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .handling-stats .handling-buttons .handling-button:selected {
+                -fx-text-fill: #2e92df; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .handling-stats .handling-buttons .handling-button:first {
+                -fx-border-width: 0; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .handling-stats .max-values {
+            -fx-min-height: 2em;
+            -fx-pref-height: 2em;
+            -fx-max-height: 2em;
+            -fx-min-width: 30em;
+            -fx-pref-width: 30em;
+            -fx-max-width: 30em; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .handling-stats .max-values .max-value {
+              -fx-max-height: infinity;
+              -fx-max-width: infinity;
+              -fx-alignment: center;
+              -fx-text-fill: #2e92df; }
           .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .weapon-stats .weapon-progressbar {
             -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentedBarSkin";
             -fx-min-width: 15em;
