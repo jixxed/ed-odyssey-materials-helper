@@ -25,26 +25,6 @@ public class ShipViewPopover extends DestroyablePopOver implements DestroyableEv
 
     @Override
     public void initComponents() {
-//        shipViewPopOver = PopOverBuilder.builder()
-//                .withStyleClass("shipbuilder-ship-view-popover")
-////                .withContent(shipView)
-//                .withDetachable(false)
-//                .withHeaderAlwaysVisible(false)
-//                .withCornerRadius(0)
-//                .withArrowSize(0)
-//                .withArrowIndent(0)
-//                .withDestroyOnHide(false)
-////                .withArrowLocation(PopOver.ArrowLocation.BOTTOM_RIGHT)
-//                .withAutoFix(false)
-//                .build();
-//        shipViewPopOver.showingProperty().addListener((observable, oldValue, newValue) -> {
-//            Platform.runLater(() -> {
-//                if (Boolean.TRUE.equals(newValue)) {
-//                    ((ShipView) shipViewPopOver.getContentNode()).animate();
-//                }
-//            });
-//        });
-
 
         this.getStyleClass().add("shipbuilder-ship-view-popover");
         this.setDetachable(false);
@@ -135,6 +115,11 @@ public class ShipViewPopover extends DestroyablePopOver implements DestroyableEv
                 final double height = shipView.getHeight();
                 double x = bounds.getMinX() - 1;
                 double y = bounds.getMinY() - height - 2;
+
+                if (slotBox.isMenuOpen() && slotBox.menu().getY() < bounds.getMinY()) {
+                    y -= (bounds.getMinY() - slotBox.menu().getY());
+                }
+
 //                log.debug("width: {}, height: {}, x: {}, y: {}", shipView.getPrefWidth(), shipView.getPrefHeight(), x, y);
                 if (width == 0) {
                     shipView.addChangeListener(shipView.widthProperty(), (observable, oldValue, newValue) -> {

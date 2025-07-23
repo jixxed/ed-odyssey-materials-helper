@@ -570,4 +570,8 @@ public class SlotBox extends DestroyableStackPane {
     public boolean isMenuOpen() {
         return this.moduleSelectPopover != null && this.moduleSelectPopover.isShowing();
     }
+
+    public ModuleSelectPopover menu() {
+        return this.moduleSelectPopover;
+    }
 }
