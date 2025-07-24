@@ -6,4 +6,6 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Updated images in Ship Editor for Cobra MkV, Mandalay, Python MkII and Type-8
+Added pre-engineered cargo racks
+Added min/max buttons for fuel and cargo
+Added silent running stat - how much time you have under full thrust until you start to overheat.
