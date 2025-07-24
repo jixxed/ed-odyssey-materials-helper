@@ -6,5 +6,4 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Fixed an issue where slot image and menu would overlap when menu opened near the bottom of the screen. Image will now shift up.
-Added interactive chart for handling of ships (newer ships only for now)
+Updated images in Ship Editor for Cobra MkV, Mandalay, Python MkII and Type-8

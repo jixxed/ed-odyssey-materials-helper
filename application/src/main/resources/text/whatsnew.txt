@@ -1,3 +1,7 @@
+Version 2.204
+-------------
+Updated images in Ship Editor for Cobra MkV, Mandalay, Python MkII and Type-8
+
 Version 2.203
 -------------
 Fixed an issue where slot image and menu would overlap when menu opened near the bottom of the screen. Image will now shift up.
