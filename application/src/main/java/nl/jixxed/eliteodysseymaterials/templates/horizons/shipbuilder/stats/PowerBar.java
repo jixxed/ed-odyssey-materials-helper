@@ -102,7 +102,9 @@ public class PowerBar extends DestroyableHBox implements DestroyableEventTemplat
         final DestroyableLine lineDestroyedAndMalfunction = createLine(0.2);
         final DestroyableLine lineMalfunction = createLine(0.4);
         final DestroyableLine lineDestroyed = createLine(0.5);
+        this.segmentedBar.minWidthProperty().bind(this.widthProperty());
         final DestroyablePane stackPane = PaneBuilder.builder()
+                .withStyleClass("bar-container")
                 .withNodes(this.segmentedBar, lineDestroyedAndMalfunction, lineMalfunction, lineDestroyed)
                 .build();
         this.getNodes().add(stackPane);

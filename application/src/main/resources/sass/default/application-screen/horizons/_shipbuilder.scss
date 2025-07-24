@@ -521,11 +521,21 @@
           -fx-stroke-width: 0.1em;
         }
 
+        .thermal-line {
+          -fx-spacing: 1em;
+        }
+
+        -fx-min-width: 15em;
+
         .power-progressbar {
 
           @include segmented-bar-straight;
-          -fx-min-width: 15em;
-          -fx-max-width: 15em;
+
+          .bar-container {
+          }
+
+          //-fx-fill-width: true;
+          //-fx-fit-to-width: true;
           -fx-min-height: 1em;
           -fx-pref-height: 2em;
           -fx-max-height: 2em;

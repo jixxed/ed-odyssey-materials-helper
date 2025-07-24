@@ -48,6 +48,9 @@ public class EngineStats extends Stats implements DestroyableTemplate {
         this.reverseAcceleration = createValueLabel("ship.stats.engine.acceleration.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
         this.lateralAcceleration = createValueLabel("ship.stats.engine.acceleration.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
         this.getNodes().add(BoxBuilder.builder()
+                .withNodes(createLabel("ship.stats.engine.acceleration"))
+                .buildHBox());
+        this.getNodes().add(BoxBuilder.builder()
                 .withNodes(createLabel("ship.stats.engine.acceleration.forward"), new GrowingRegion(), this.forwardAcceleration)
                 .buildHBox());
         this.getNodes().add(BoxBuilder.builder()

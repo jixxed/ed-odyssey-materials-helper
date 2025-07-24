@@ -1,11 +1,13 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
 import javafx.beans.binding.StringBinding;
+import javafx.util.Duration;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
 import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
@@ -16,10 +18,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableCircle;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -48,23 +47,52 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
     public void initComponents() {
         this.getStyleClass().add("power-thermal-stats");
         addTitle("ship.stats.thermalpower");
+
         this.idleThermals = createValueLabel("ship.stats.thermal.idle.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
         this.thrusterThermals = createValueLabel("ship.stats.thermal.thruster.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
         this.fsdThermals = createValueLabel("ship.stats.thermal.fsd.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
         this.silentRunTime = createValueLabel("ship.stats.thermal.thruster.silentruntime.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
 
-        this.getNodes().add(BoxBuilder.builder()
+
+        DestroyableHBox idleLine = BoxBuilder.builder()
+                .withStyleClass("thermal-line")
                 .withNodes(createLabel("ship.stats.thermal.idle.thermals"), new GrowingRegion(), this.idleThermals)
-                .buildHBox());
-        this.getNodes().add(BoxBuilder.builder()
+                .buildHBox();
+        DestroyableHBox thrusterLine = BoxBuilder.builder()
+                .withStyleClass("thermal-line")
                 .withNodes(createLabel("ship.stats.thermal.thruster.thermals"), new GrowingRegion(), this.thrusterThermals)
-                .buildHBox());
-        this.getNodes().add(BoxBuilder.builder()
+                .buildHBox();
+        DestroyableHBox fsdLine = BoxBuilder.builder()
+                .withStyleClass("thermal-line")
                 .withNodes(createLabel("ship.stats.thermal.fsd.thermals"), new GrowingRegion(), this.fsdThermals)
-                .buildHBox());
-        this.getNodes().add(BoxBuilder.builder()
+                .buildHBox();
+        DestroyableHBox silentRunningLine = BoxBuilder.builder()
+                .withStyleClass("thermal-line")
                 .withNodes(createLabel("ship.stats.thermal.thruster.silentruntime"), new GrowingRegion(), this.silentRunTime)
-                .buildHBox());
+                .buildHBox();
+
+        final DestroyableTooltip idleThermalsTooltip = TooltipBuilder.builder()
+                .withShowDelay(Duration.ZERO)
+                .withText("ship.stats.thermal.idle.thermals.tooltip")
+                .build();
+        idleThermalsTooltip.install(idleLine);
+        final DestroyableTooltip thrusterThermalsTooltip = TooltipBuilder.builder()
+                .withShowDelay(Duration.ZERO)
+                .withText("ship.stats.thermal.thruster.thermals.tooltip")
+                .build();
+        thrusterThermalsTooltip.install(thrusterLine);
+        final DestroyableTooltip fsdThermalsTooltip = TooltipBuilder.builder()
+                .withShowDelay(Duration.ZERO)
+                .withText("ship.stats.thermal.fsd.thermals.tooltip")
+                .build();
+        fsdThermalsTooltip.install(fsdLine);
+        final DestroyableTooltip silentRunTimeTooltip = TooltipBuilder.builder()
+                .withShowDelay(Duration.ZERO)
+                .withText("ship.stats.thermal.thruster.silentruntime.tooltip")
+                .build();
+        silentRunTimeTooltip.install(silentRunningLine);
+
+        this.getNodes().addAll(idleLine, thrusterLine, fsdLine, silentRunningLine);
 
 
         this.getNodes().add(new GrowingRegion());
@@ -284,8 +312,6 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
     }
 
     static double getEquilibriumHeatLevel(double maximumHeatDissipation, double thermalLoad) {
-        if (maximumHeatDissipation <= 0)
-            return Double.POSITIVE_INFINITY;
         return Math.sqrt(thermalLoad / maximumHeatDissipation);
     }
 

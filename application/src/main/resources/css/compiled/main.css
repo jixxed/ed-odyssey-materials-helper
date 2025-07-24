@@ -979,7 +979,8 @@
           .app .application-screen .horizons-tab-content .powerplay-tab-content .powerplay-flow .powerplay-card .category {
             -fx-padding: 0.25em 0 0.25em 0;
             -fx-text-fill: white;
-            -fx-font-size: 1.1em; }
+            -fx-font-size: 1.1em;
+            -fx-wrap-text: true; }
           .app .application-screen .horizons-tab-content .powerplay-tab-content .powerplay-flow .powerplay-card .merits {
             -fx-text-fill: white; }
           .app .application-screen .horizons-tab-content .powerplay-tab-content .powerplay-flow .powerplay-card .power-rank {
@@ -1442,82 +1443,84 @@
               -fx-border-color: white;
               -fx-border-width: 0.05em;
               -fx-border-insets: 0.0em -0.25em 0.0em -0.25em; }
-          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .percentage-line {
-            -fx-min-height: 2em;
-            -fx-pref-height: 2em;
-            -fx-max-height: 2em;
-            -fx-max-width: 15em;
-            -fx-stroke: white;
-            -fx-stroke-width: 0.1em; }
-          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar {
-            -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentedBarSkin";
-            -fx-min-width: 15em;
-            -fx-max-width: 15em;
-            -fx-min-height: 1em;
-            -fx-pref-height: 2em;
-            -fx-max-height: 2em;
-            -fx-padding: 0.1em 0em 0.1em 0em;
-            -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.PowerSegmentedBarSkin"; }
-            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar:horizontal > .only-segment {
-              -fx-background-radius: 0;
-              -fx-border-radius: 0; }
-            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar:horizontal > .first-segment {
-              -fx-background-insets: 0 0 0 0;
-              -fx-background-radius: 0 0 0 0; }
-            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar:horizontal > .middle-segment {
-              -fx-background-insets: 0 0 0 0;
-              -fx-background-radius: 0;
-              -fx-border-radius: 0; }
-            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar:horizontal > .last-segment {
-              -fx-background-radius: 0 0 0 0;
-              -fx-border-radius: 0 0 0 0; }
-            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar .power-group-p {
-              -fx-background-color: #32a4a8; }
-            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar .power-group-1 {
-              -fx-background-color: #ce6c1e; }
-            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar .power-group-2 {
-              -fx-background-color: #89d07f; }
-            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar .power-group-3 {
-              -fx-background-color: #2e92df; }
-            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar .power-group-4 {
-              -fx-background-color: #6d3da8; }
-            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar .power-group-5 {
-              -fx-background-color: #f8ff2e; }
-            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar .power-group-none {
-              -fx-background-color: gray; }
-            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar .power-overpower {
-              -fx-background-color: #f01414; }
-            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar .power-potential-overpower {
-              -fx-background-color: #f01414;
-              -fx-opacity: 0.2; }
-          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-stats-powerbars {
-            -fx-min-height: 4.2em;
-            -fx-pref-height: 4.2em;
-            -fx-max-height: 4.2em;
-            /*-fx-spacing: 0.2em;*/ }
-          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-stats-overpower {
-            -fx-text-fill: #ff7c7c; }
-          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .tooltip-text {
-            -fx-background-color: #0f0f0f;
-            -fx-border-color: white;
-            -fx-text-fill: white;
-            -fx-border-width: 1px;
-            -fx-padding: 0.25em; }
-          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-legend {
-            -fx-alignment: center-left;
-            -fx-spacing: 0.5em; }
-            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-legend .power-group-p {
-              -fx-fill: #32a4a8; }
-            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-legend .power-group-1 {
-              -fx-fill: #ce6c1e; }
-            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-legend .power-group-2 {
-              -fx-fill: #89d07f; }
-            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-legend .power-group-3 {
-              -fx-fill: #2e92df; }
-            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-legend .power-group-4 {
-              -fx-fill: #6d3da8; }
-            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-legend .power-group-5 {
-              -fx-fill: #f8ff2e; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats {
+            -fx-min-width: 15em; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .percentage-line {
+              -fx-min-height: 2em;
+              -fx-pref-height: 2em;
+              -fx-max-height: 2em;
+              -fx-max-width: 15em;
+              -fx-stroke: white;
+              -fx-stroke-width: 0.1em; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .thermal-line {
+              -fx-spacing: 1em; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar {
+              -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentedBarSkin";
+              -fx-min-height: 1em;
+              -fx-pref-height: 2em;
+              -fx-max-height: 2em;
+              -fx-padding: 0.1em 0em 0.1em 0em;
+              -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.PowerSegmentedBarSkin"; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar:horizontal > .only-segment {
+                -fx-background-radius: 0;
+                -fx-border-radius: 0; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar:horizontal > .first-segment {
+                -fx-background-insets: 0 0 0 0;
+                -fx-background-radius: 0 0 0 0; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar:horizontal > .middle-segment {
+                -fx-background-insets: 0 0 0 0;
+                -fx-background-radius: 0;
+                -fx-border-radius: 0; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar:horizontal > .last-segment {
+                -fx-background-radius: 0 0 0 0;
+                -fx-border-radius: 0 0 0 0; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar .power-group-p {
+                -fx-background-color: #32a4a8; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar .power-group-1 {
+                -fx-background-color: #ce6c1e; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar .power-group-2 {
+                -fx-background-color: #89d07f; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar .power-group-3 {
+                -fx-background-color: #2e92df; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar .power-group-4 {
+                -fx-background-color: #6d3da8; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar .power-group-5 {
+                -fx-background-color: #f8ff2e; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar .power-group-none {
+                -fx-background-color: gray; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar .power-overpower {
+                -fx-background-color: #f01414; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-progressbar .power-potential-overpower {
+                -fx-background-color: #f01414;
+                -fx-opacity: 0.2; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-stats-powerbars {
+              -fx-min-height: 4.2em;
+              -fx-pref-height: 4.2em;
+              -fx-max-height: 4.2em;
+              /*-fx-spacing: 0.2em;*/ }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-stats-overpower {
+              -fx-text-fill: #ff7c7c; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .tooltip-text {
+              -fx-background-color: #0f0f0f;
+              -fx-border-color: white;
+              -fx-text-fill: white;
+              -fx-border-width: 1px;
+              -fx-padding: 0.25em; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-legend {
+              -fx-alignment: center-left;
+              -fx-spacing: 0.5em; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-legend .power-group-p {
+                -fx-fill: #32a4a8; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-legend .power-group-1 {
+                -fx-fill: #ce6c1e; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-legend .power-group-2 {
+                -fx-fill: #89d07f; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-legend .power-group-3 {
+                -fx-fill: #2e92df; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-legend .power-group-4 {
+                -fx-fill: #6d3da8; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .power-thermal-stats .power-legend .power-group-5 {
+                -fx-fill: #f8ff2e; }
           .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .jump-stats .ranges {
             -fx-spacing: 0.25em; }
           .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .jump-stats .hoverable-line-chart {
