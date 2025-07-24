@@ -8,6 +8,7 @@ public class UTF8Constants {
     public static final String CHECK_TRUE = "\u2714";
     public static final String CHECK_FALSE = "\u2718";
     public static final String BULLET = "\u2022";
+    public static final String INFINITY = "\u221e";
 
     public static String forBool(boolean value) {
         if (value) {

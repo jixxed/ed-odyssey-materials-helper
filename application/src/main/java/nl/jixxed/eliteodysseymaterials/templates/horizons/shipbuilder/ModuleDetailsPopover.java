@@ -12,6 +12,8 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyablePopOver;
 
+import java.util.NoSuchElementException;
+
 @Slf4j
 public class ModuleDetailsPopover extends DestroyablePopOver implements DestroyableEventTemplate {
     @Setter
@@ -122,7 +124,7 @@ public class ModuleDetailsPopover extends DestroyablePopOver implements Destroya
     }
 
     private void showPopover(boolean show, ShipModule shipModule) {
-        if (slotBox == null) {
+        if (slotBox == null || slotBox.getBoundsInLocal() == null) {
             return;
         }
         if (show && hasContent(shipModule) && !this.isShowing()) {
@@ -170,17 +172,22 @@ public class ModuleDetailsPopover extends DestroyablePopOver implements Destroya
                         return;
                     }
                     // compare to maxX of current screen
-                    final Screen screen = Screen.getScreensForRectangle(x, y, 1, 1).getFirst();
-                    if (x + width > screen.getVisualBounds().getMaxX()) {
-                        x = bounds.getMinX() - width - 2;
+                    try {
+                        final Screen screen = Screen.getScreensForRectangle(x, y, 1, 1).getFirst();
+                        if (x + width > screen.getVisualBounds().getMaxX()) {
+                            x = bounds.getMinX() - width - 2;
+                        }
+                        if (y + height > screen.getVisualBounds().getMaxY()) {
+                            y = bounds.getMaxY() - height;
+                        }
+                        setX(x);
+                        setAnchorX(x);
+                        setY(y);
+                        setAnchorY(y);
+                    } catch (NoSuchElementException e) {
+                        log.error("cannot find screen for x:{} y:{}", x, y);
                     }
-                    if (y + height > screen.getVisualBounds().getMaxY()) {
-                        y = bounds.getMaxY() - height;
-                    }
-                    setX(x);
-                    setAnchorX(x);
-                    setY(y);
-                    setAnchorY(y);
+
                 }
             }
         });

@@ -13,6 +13,7 @@ import nl.jixxed.eliteodysseymaterials.constants.horizons.core_internals.preengi
 import nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints.*;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints.preengineered.*;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.optional_internals.*;
+import nl.jixxed.eliteodysseymaterials.constants.horizons.optional_internals.preengineered.CargoRackPreEngineeredBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.optional_internals.preengineered.DetailedSurfaceScannerPreEngineeredBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.optional_internals.preengineered.ShieldGeneratorPreEngineeredBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.utilitymounts.*;
@@ -346,6 +347,7 @@ public abstract class HorizonsBlueprintConstants {
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.SHIELD_CELL_BANK, ShieldCellBankBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.SHIELD_GENERATOR, merge(ShieldGeneratorBlueprints.BLUEPRINTS, ShieldGeneratorPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.DETAILED_SURFACE_SCANNER, merge(DetailedSurfaceScannerBlueprints.BLUEPRINTS, DetailedSurfaceScannerPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
+        OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.CARGO_RACK, CargoRackPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS);
         UTILITY_MOUNT_BLUEPRINTS.put(HorizonsBlueprintName.CAUSTIC_SINK_LAUNCHER, CausticSinkLauncherBlueprints.BLUEPRINTS);
         UTILITY_MOUNT_BLUEPRINTS.put(HorizonsBlueprintName.CHAFF_LAUNCHER, ChaffLauncherBlueprints.BLUEPRINTS);
         UTILITY_MOUNT_BLUEPRINTS.put(HorizonsBlueprintName.ELECTRONIC_COUNTERMEASURE, ElectronicCounterMeasureBlueprints.BLUEPRINTS);

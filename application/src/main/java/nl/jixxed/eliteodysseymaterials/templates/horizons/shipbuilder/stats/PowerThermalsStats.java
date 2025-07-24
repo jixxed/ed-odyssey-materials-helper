@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
 import javafx.beans.binding.StringBinding;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
@@ -35,6 +36,7 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
     private DestroyableLabel idleThermals;
     private DestroyableLabel thrusterThermals;
     private DestroyableLabel fsdThermals;
+    private DestroyableLabel silentRunTime;
 
     public PowerThermalsStats() {
         super();
@@ -49,6 +51,7 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
         this.idleThermals = createValueLabel("ship.stats.thermal.idle.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
         this.thrusterThermals = createValueLabel("ship.stats.thermal.thruster.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
         this.fsdThermals = createValueLabel("ship.stats.thermal.fsd.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
+        this.silentRunTime = createValueLabel("ship.stats.thermal.thruster.silentruntime.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
 
         this.getNodes().add(BoxBuilder.builder()
                 .withNodes(createLabel("ship.stats.thermal.idle.thermals"), new GrowingRegion(), this.idleThermals)
@@ -58,6 +61,9 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
                 .buildHBox());
         this.getNodes().add(BoxBuilder.builder()
                 .withNodes(createLabel("ship.stats.thermal.fsd.thermals"), new GrowingRegion(), this.fsdThermals)
+                .buildHBox());
+        this.getNodes().add(BoxBuilder.builder()
+                .withNodes(createLabel("ship.stats.thermal.thruster.silentruntime"), new GrowingRegion(), this.silentRunTime)
                 .buildHBox());
 
 
@@ -141,39 +147,73 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
         this.idleThermals.addBinding(this.idleThermals.textProperty(), calculateIdleThermals().format());
         this.thrusterThermals.addBinding(this.thrusterThermals.textProperty(), calculateThrusterThermals().format());
         this.fsdThermals.addBinding(this.fsdThermals.textProperty(), calculateFsdThermals().format());
+        this.silentRunTime.addBinding(this.silentRunTime.textProperty(), calculateSilentRunTime().format());
+    }
+
+    private Value calculateSilentRunTime() {
+        return getShip().map(ship -> {
+            final double heatCapacity = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_CAPACITY, 0d);
+            final double maximumHeatDissipation = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_DISSIPATION_MAX, 0d);
+            final double powerCapacity = (double) ship.getCoreSlots().stream()
+                    .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
+                    .filter(Slot::isOccupied)
+                    .filter(slot -> slot.getShipModule().isPowered())
+                    .findFirst()
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY))
+                    .orElse(Double.NaN);
+            final double heatEfficiency = (double) ship.getCoreSlots().stream()
+                    .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
+                    .filter(Slot::isOccupied)
+                    .filter(slot -> slot.getShipModule().isPowered())
+                    .findFirst()
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.HEAT_EFFICIENCY))
+                    .orElse(Double.NaN);
+            final double engineHeat = (double) ship.getCoreSlots().stream()
+                    .filter(slot -> SlotType.CORE_THRUSTERS.equals(slot.getSlotType()))
+                    .filter(Slot::isOccupied)
+                    .filter(slot -> slot.getShipModule().isPowered())
+                    .findFirst()
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.ENGINE_THERMAL_LOAD))
+                    .orElse(Double.NaN);
+
+            final double powerForHeat = getPowerForHeat(powerCapacity, heatEfficiency);
+
+            PowerThermalsStats.Value heatLevelForDuration = getHeatLevelForDuration(engineHeat, powerForHeat, maximumHeatDissipation, heatCapacity, 60);
+            return new Value((heatCapacity - heatCapacity * heatLevelForDuration.getValue() / 100) / (powerForHeat + engineHeat), Value.ValueType.SECONDS);// expect 25s
+        }).orElse(new Value(0D, Value.ValueType.SECONDS));
     }
 
     Value getHeatLevel(double thermalLoad, double baseThermalLoad, double maximumHeatDissipation, double heatCapacity) {
         if (thermalLoad > 0D) {
             thermalLoad += baseThermalLoad;
             if (baseThermalLoad > maximumHeatDissipation) {
-                return new Value(Double.NaN, ThermalStats.Value.ValueType.ERROR);//error
+                return new Value(Double.NaN, Value.ValueType.ERROR);//error
             } else if (thermalLoad > maximumHeatDissipation) {
                 var heatlevelBase = getEquilibriumHeatLevel(maximumHeatDissipation, baseThermalLoad);
                 var time10 = getTimeUntilHeatLevel(heatCapacity, maximumHeatDissipation, thermalLoad, heatlevelBase, 1.0);
                 var time15 = (heatCapacity / 2) / (thermalLoad - maximumHeatDissipation); // displayed heatlevel 66% -> 100% is actual heatlevel 1.0 -> 1.5
-                return new Value(time10 + time15, ThermalStats.Value.ValueType.SECONDS);// <- time?
+                return new Value(time10 + time15, Value.ValueType.SECONDS);// <- time?
             } else {
-                return new Value(getEquilibriumHeatLevel(maximumHeatDissipation, thermalLoad) / 1.5 * 100, ThermalStats.Value.ValueType.PERCENTAGE);
+                return new Value(getEquilibriumHeatLevel(maximumHeatDissipation, thermalLoad) / 1.5 * 100, Value.ValueType.PERCENTAGE);
             }
         }
-        return new Value(Double.NaN, ThermalStats.Value.ValueType.ERROR);
+        return new Value(Double.NaN, Value.ValueType.ERROR);
     }
 
     Value getHeatLevelForDuration(double thermalLoad, double baseThermalLoad, double maximumHeatDissipation, double heatCapacity, double duration) {
         if (thermalLoad > 0) {
             thermalLoad += baseThermalLoad;
             if (baseThermalLoad > maximumHeatDissipation) {
-                return new Value(Double.NaN, ThermalStats.Value.ValueType.ERROR);//error
+                return new Value(Double.NaN, Value.ValueType.ERROR);//error
             } else if (thermalLoad > maximumHeatDissipation) {
                 var baseHeatLevel = getEquilibriumHeatLevel(maximumHeatDissipation, baseThermalLoad);
                 var time10 = getTimeUntilHeatLevel(heatCapacity, maximumHeatDissipation, thermalLoad, baseHeatLevel, 1.0);
                 if ((time10 > duration)) {
-                    return new Value(getHeatLevelAtTime(heatCapacity, maximumHeatDissipation, thermalLoad, baseHeatLevel, duration) / 1.5 * 100, ThermalStats.Value.ValueType.PERCENTAGE);
+                    return new Value(getHeatLevelAtTime(heatCapacity, maximumHeatDissipation, thermalLoad, baseHeatLevel, duration) / 1.5 * 100, Value.ValueType.PERCENTAGE);
                 } else {
                     var time15 = (heatCapacity / 2) / (thermalLoad - maximumHeatDissipation); // displayed heatlevel 66% -> 100% is actual heatlevel 1.0 -> 1.5
                     if ((time10 + time15) > duration) {
-                        return new Value((2 + ((duration - time10) / time15)) / 3 * 100, ThermalStats.Value.ValueType.SECONDS);
+                        return new Value((2 + ((duration - time10) / time15)) / 3 * 100, Value.ValueType.SECONDS);
                     } else {
                         duration -= time10 + time15;
                         var peakHeatLevel = 1.5 + (duration * (thermalLoad - maximumHeatDissipation) / heatCapacity);
@@ -181,10 +221,10 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
                     }
                 }
             } else {
-                return new Value(getEquilibriumHeatLevel(maximumHeatDissipation, thermalLoad) / 1.5 * 100, ThermalStats.Value.ValueType.PERCENTAGE);
+                return new Value(getEquilibriumHeatLevel(maximumHeatDissipation, thermalLoad) / 1.5 * 100, Value.ValueType.PERCENTAGE);
             }
         }
-        return new Value(Double.NaN, ThermalStats.Value.ValueType.ERROR);
+        return new Value(Double.NaN, Value.ValueType.ERROR);
     }
 
     double getTimeUntilHeatLevel(double heatCapacity, double maximumHeatDissipation, double thermalLoad, double heatLevelAtStart, double heatLevel) {
@@ -243,7 +283,9 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
         return ((Double.isInfinite(a)) ? 1 : ((Double.isInfinite(b)) ? -1 : ((a - b) / (a + b))));
     }
 
-    double getEquilibriumHeatLevel(double maximumHeatDissipation, double thermalLoad) {
+    static double getEquilibriumHeatLevel(double maximumHeatDissipation, double thermalLoad) {
+        if (maximumHeatDissipation <= 0)
+            return Double.POSITIVE_INFINITY;
         return Math.sqrt(thermalLoad / maximumHeatDissipation);
     }
 
@@ -269,7 +311,7 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
             final double powerForHeat = getPowerForHeat(powerCapacity, heatEfficiency);
 
             return getHeatLevelForDuration(powerForHeat, 0, maximumHeatDissipation, heatCapacity, 60);
-        }).orElse(new Value(0D, ThermalStats.Value.ValueType.PERCENTAGE));
+        }).orElse(new Value(0D, Value.ValueType.PERCENTAGE));
     }
 
     private double getPowerForHeat(double powerCapacity, double heatEfficiency) {
@@ -312,7 +354,7 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
             final double powerForHeat = getPowerForHeat(powerCapacity, heatEfficiency);
 
             return getHeatLevelForDuration(engineHeat, powerForHeat, maximumHeatDissipation, heatCapacity, 60);
-        }).orElse(new Value(0D, ThermalStats.Value.ValueType.PERCENTAGE));
+        }).orElse(new Value(0D, Value.ValueType.PERCENTAGE));
     }
 
     private Value calculateFsdThermals() {
@@ -351,7 +393,7 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
             final double powerForHeat = getPowerForHeat(powerCapacity, heatEfficiency);
 
             return getHeatLevelForDuration(fsdHeat, powerForHeat + engineHeat, maximumHeatDissipation, heatCapacity, 60);
-        }).orElse(new Value(0D, ThermalStats.Value.ValueType.PERCENTAGE));
+        }).orElse(new Value(0D, Value.ValueType.PERCENTAGE));
     }
 
     private Map<Integer, Double> calculateRetractedPower() {
@@ -433,15 +475,16 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
 
 
     @AllArgsConstructor
-    class Value {
+    static class Value {
         enum ValueType {
             PERCENTAGE,
             SECONDS,
             ERROR
         }
 
+        @Getter
         private double value;
-        private ThermalStats.Value.ValueType valueType;
+        private Value.ValueType valueType;
 
         StringBinding format() {
             switch (valueType) {

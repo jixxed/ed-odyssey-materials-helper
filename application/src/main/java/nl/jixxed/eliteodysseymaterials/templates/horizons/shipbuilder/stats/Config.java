@@ -17,7 +17,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.components.IntField;
+import nl.jixxed.eliteodysseymaterials.templates.components.MinMaxIntField;
 import nl.jixxed.eliteodysseymaterials.templates.components.PipSelect;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
@@ -32,8 +32,8 @@ public class Config extends Stats implements DestroyableEventTemplate {
     private PipSelect systemPipSelect;
     private PipSelect enginePipSelect;
     private PipSelect weaponPipSelect;
-    private IntField cargo;
-    private IntField fuel;
+    private MinMaxIntField cargo;
+    private MinMaxIntField fuel;
     private DestroyableSlider fuelreserve;
     private DestroyableCheckBox live;
     private ConfigPowerControl powerControl;
@@ -67,7 +67,7 @@ public class Config extends Stats implements DestroyableEventTemplate {
                 .build();
 
 
-        fuel = new IntField(0, maxFuel, this.getShip().map(Ship::getCurrentFuel).orElse(0D).intValue());
+        fuel = new MinMaxIntField(0, maxFuel, this.getShip().map(Ship::getCurrentFuel).orElse(0D).intValue());
 
         fuelreserve = SliderBuilder.builder()
                 .withStyleClass("fuelreserve")
@@ -77,7 +77,7 @@ public class Config extends Stats implements DestroyableEventTemplate {
                 .withDisableProperty(live.selectedProperty())
                 .build();
 
-        cargo = new IntField(0, maxCargo, this.getShip().map(Ship::getCurrentCargo).orElse(0D).intValue());
+        cargo = new MinMaxIntField(0, maxCargo, this.getShip().map(Ship::getCurrentCargo).orElse(0D).intValue());
         powerControl = new ConfigPowerControl();
 
         fuelLabel = createLabel("ship.stats.config.fuel", String.valueOf(maxFuel));

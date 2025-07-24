@@ -271,8 +271,23 @@
           }
         }
 
-        .intfield {
-          -fx-max-width: 7em;
+        //.intfield {
+        //  -fx-max-width: 7em;
+        //}
+
+        .min-max-int-field {
+          -fx-max-width: 6.9em;
+
+          .intfield {
+            @include fixedWidth(3.9em);
+            @include fixedHeight(2em);
+          }
+
+          .button {
+            @include fixedWidth(1.5em);
+            @include fixedHeight(2em);
+            -fx-padding: 0.25em 0 0.25em 0;
+          }
         }
 
         .fuelreserve {

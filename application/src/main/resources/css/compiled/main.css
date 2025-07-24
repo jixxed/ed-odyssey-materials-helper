@@ -1312,8 +1312,23 @@
               -fx-spacing: 0.25em; }
               .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .config .config-controls .control-line {
                 -fx-spacing: 1em; }
-            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .config .intfield {
-              -fx-max-width: 7em; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .config .min-max-int-field {
+              -fx-max-width: 6.9em; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .config .min-max-int-field .intfield {
+                -fx-min-width: 3.9em;
+                -fx-pref-width: 3.9em;
+                -fx-max-width: 3.9em;
+                -fx-min-height: 2em;
+                -fx-pref-height: 2em;
+                -fx-max-height: 2em; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .config .min-max-int-field .button {
+                -fx-min-width: 1.5em;
+                -fx-pref-width: 1.5em;
+                -fx-max-width: 1.5em;
+                -fx-min-height: 2em;
+                -fx-pref-height: 2em;
+                -fx-max-height: 2em;
+                -fx-padding: 0.25em 0 0.25em 0; }
             .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .config .fuelreserve {
               -fx-max-width: 7em; }
             .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .config .pipselect {

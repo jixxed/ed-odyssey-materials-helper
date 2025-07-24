@@ -52,7 +52,7 @@ public class ShipViewPopover extends DestroyablePopOver implements DestroyableEv
                 this.hide(Duration.ZERO);
             }
             slotBox = event.getSlotBox();
-            showPopover(event.isHover(), slotBox);
+            showPopover(event.isHover());
             updateDetailsPopoverPosition();
 
         }));
@@ -70,13 +70,13 @@ public class ShipViewPopover extends DestroyablePopOver implements DestroyableEv
                 }
             }
             slotBox = event.getSlotBox();
-            showPopover(event.isHover(), slotBox);
+            showPopover(event.isHover());
             updateDetailsPopoverPosition();
         }));
     }
 
-    private void showPopover(boolean show, SlotBox slotBox) {
-        if (this.slotBox == null) {
+    private void showPopover(boolean show) {
+        if (this.slotBox == null || slotBox.getBoundsInLocal() == null) {
             return;
         }
         if (show && hasContent(slotBox) && !this.isShowing()) {

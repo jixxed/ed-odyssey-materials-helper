@@ -182,3 +182,5 @@
 "ship.stats.handling.chart.min","No pips","","","","","","",""
 "ship.stats.handling.chart.current","Current","","","","","","",""
 "ship.stats.handling.chart.max","Full pips","","","","","","",""
+"ship.stats.thermal.thruster.silentruntime.value","{0}s","","","","","","",""
+"ship.stats.thermal.thruster.silentruntime","Silent run time","","","","","","",""
