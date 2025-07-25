@@ -979,7 +979,8 @@
           .app .application-screen .horizons-tab-content .powerplay-tab-content .powerplay-flow .powerplay-card .category {
             -fx-padding: 0.25em 0 0.25em 0;
             -fx-text-fill: white;
-            -fx-font-size: 1.1em; }
+            -fx-font-size: 1.1em;
+            -fx-wrap-text: true; }
           .app .application-screen .horizons-tab-content .powerplay-tab-content .powerplay-flow .powerplay-card .merits {
             -fx-text-fill: white; }
           .app .application-screen .horizons-tab-content .powerplay-tab-content .powerplay-flow .powerplay-card .power-rank {
