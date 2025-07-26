@@ -65,7 +65,7 @@
 }
 
 .market-location {
-  -fx-text-fill: #0078d6 !important;
+  -fx-text-fill: $text-color-blue !important;
   -fx-label-padding: 0em 0.4em 0em 0em;
 }
 
@@ -90,7 +90,7 @@
 }
 
 .market-location-line:hover > .market-location {
-  -fx-text-fill: #2e92df !important;
+  -fx-text-fill: $text-color-blue !important;
 }
 
 .popover-menubutton-layout {
@@ -235,20 +235,20 @@
 }
 
 .blueprint-listing-label-experimental {
-  -fx-background-color: #2e92df;
+  -fx-background-color: $border-color-blue;
   /*-fx-text-fill: #2e92df !important;*/
 }
 
 .horizons-tradetype1 {
-  -fx-text-fill: #89d07f !important;
+  -fx-text-fill: $text-color-green !important;
 }
 
 .horizons-tradetype2 {
-  -fx-text-fill: #dcc030 !important;
+  -fx-text-fill: $text-color-yellow !important;
 }
 
 .horizons-tradetype3, .horizons-tradetype4, .horizons-tradetype5 {
-  -fx-text-fill: #ff7c7c !important;
+  -fx-text-fill: $text-color-red !important;
 }
 
 .trade-suggestion-bullet {

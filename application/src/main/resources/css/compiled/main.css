@@ -87,7 +87,7 @@
                   -fx-fit-to-height: true;
                   -fx-fit-to-width: true; }
                 .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .project-view .contents .copyable-location .distance {
-                  -fx-text-fill: #707070; }
+                  -fx-text-fill: gray; }
             .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .project-view .buttons-contents {
               -fx-alignment: top-right; }
           .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .stats-blazers {
@@ -135,7 +135,7 @@
                   -fx-fit-to-height: true;
                   -fx-fit-to-width: true; }
                 .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .stats-blazers .trailblazers .copyable-location .distance {
-                  -fx-text-fill: #707070; }
+                  -fx-text-fill: gray; }
         .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials {
           -fx-hgap: 0.25em;
           -fx-vgap: 0.25em; }
@@ -214,7 +214,7 @@
                 -fx-max-width: 30em;
                 -fx-alignment: center-left;
                 -fx-min-height: 1.25em;
-                -fx-text-fill: #707070; }
+                -fx-text-fill: gray; }
               .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .name-category {
                 -fx-spacing: 0.25em;
                 -fx-min-width: 30em;
@@ -350,7 +350,7 @@
                 -fx-max-width: 28em;
                 -fx-alignment: center-left;
                 -fx-wrap-text: true;
-                -fx-text-fill: #707070; }
+                -fx-text-fill: gray; }
             .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .quantity-line .image {
               -fx-min-width: 2em;
               -fx-pref-width: 2em;
@@ -485,7 +485,7 @@
               -fx-fit-to-height: true;
               -fx-fit-to-width: true; }
             .app .application-screen .horizons-tab-content .engineers-tab-content .engineer-grid .engineer-card .copyable-location .distance {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
           .app .application-screen .horizons-tab-content .engineers-tab-content .engineer-grid .engineer-card .segmented-bar {
             -fx-min-width: 17.5em;
             -fx-pref-width: 17.5em;
@@ -571,7 +571,7 @@
             -fx-max-width: 13.75em;
             -fx-wrap-text: true; }
           .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .category {
-            -fx-text-fill: #707070;
+            -fx-text-fill: gray;
             -fx-min-width: 13.75em;
             -fx-pref-width: 13.75em;
             -fx-max-width: 13.75em;
@@ -653,7 +653,7 @@
               -fx-fit-to-height: true;
               -fx-fit-to-width: true; }
             .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .nearest-trader .copyable-location .distance {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
     .app .application-screen .horizons-tab-content .blueprint-menu {
       -fx-min-width: 36.2em;
       -fx-pref-width: 36.2em;
@@ -888,7 +888,7 @@
               -fx-fit-to-height: true;
               -fx-fit-to-width: true; }
             .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-broker .copyable-location .distance {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
       .app .application-screen .horizons-tab-content .blueprint-menu .about-title-pane {
         -fx-min-width: 36em;
         -fx-pref-width: 36em;
@@ -1052,7 +1052,7 @@
               -fx-fit-to-height: true;
               -fx-fit-to-width: true; }
             .app .application-screen .horizons-tab-content .powerplay-tab-content .powerplay-flow .powerplay-card .copyable-location .distance {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
     .app .application-screen .horizons-tab-content .search .filter-and-sort {
       -fx-min-height: 2.5em;
       -fx-pref-height: 2.5em;
@@ -1282,9 +1282,9 @@
           -fx-hgap: 0.25em;
           -fx-vgap: 0.25em; }
           .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .selectors {
-            -fx-min-height: 24em;
-            -fx-pref-height: 24em;
-            -fx-max-height: 24em;
+            -fx-min-height: 24.75em;
+            -fx-pref-height: 24.75em;
+            -fx-max-height: 24.75em;
             -fx-min-width: 10em;
             -fx-background-color: #0f0f0f;
             -fx-border-color: white; }
@@ -1302,9 +1302,9 @@
               .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .selectors .stat-select:first {
                 -fx-border-width: 0; }
           .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .config {
-            -fx-min-height: 24em;
-            -fx-pref-height: 24em;
-            -fx-max-height: 24em;
+            -fx-min-height: 24.75em;
+            -fx-pref-height: 24.75em;
+            -fx-max-height: 24.75em;
             -fx-background-color: #0f0f0f;
             -fx-border-color: white;
             -fx-border-width: 1px 0 1px 1px; }
@@ -1409,6 +1409,11 @@
                   -fx-fill: white; }
                   .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .config .power-control .icon-container .control-button:hover {
                     -fx-fill: #2e92df; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .config .toggles {
+              -fx-spacing: 0.1em;
+              -fx-max-width: Infinity; }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .config .toggles .group-toggle {
+                -fx-max-width: Infinity; }
           .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .validation .error {
             -fx-text-fill: #ff7c7c; }
           .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .validation .warning {
@@ -1624,11 +1629,6 @@
             -fx-background-color: black;
             -fx-border-width: 1px;
             -fx-border-color: white; }
-          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .weapon-stats .toggles {
-            -fx-spacing: 0.1em;
-            -fx-max-width: 15em; }
-            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .weapon-stats .toggles .group-toggle {
-              -fx-max-width: Infinity; }
           .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .weapon-stats .tooltip-text {
             -fx-background-color: #0f0f0f;
             -fx-border-color: white;
@@ -1809,7 +1809,7 @@
                 -fx-min-width: 6.77em;
                 -fx-max-width: 6.77em;
                 -fx-font-size: 3.5em;
-                -fx-text-fill: #707070; }
+                -fx-text-fill: gray; }
               .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .size-control .control-text {
                 -fx-min-width: 1em;
                 -fx-pref-width: 1em;
@@ -2330,7 +2330,7 @@
               .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .value {
                 -fx-font-size: 1.2em;
                 -fx-alignment: top-center;
-                -fx-text-fill: #707070; }
+                -fx-text-fill: gray; }
                 .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .value:filled {
                   -fx-text-fill: white; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial-1 .quantity-select .value-1 {
@@ -2421,27 +2421,27 @@
               .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .name:hover {
                 -fx-text-fill: #5aa9e6; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .module {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-1 {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-2 {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-3 {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-4 {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-5 {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-6 {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-7 {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-8 {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-9 {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-10 {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .tooltip {
               -fx-background: #1e1e1e;
               -fx-text-fill: white;
@@ -2666,7 +2666,7 @@
                 -fx-fit-to-height: true;
                 -fx-fit-to-width: true; }
               .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .copyable-location .distance {
-                -fx-text-fill: #707070; }
+                -fx-text-fill: gray; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .distance-line {
               -fx-padding: 0 0 1em 0;
               -fx-spacing: 0.25em; }
@@ -2786,7 +2786,7 @@
             -fx-alignment: baseline-left;
             -fx-font-style: italic; }
             .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .buy-value:disabled, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .sell-value:disabled {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
           .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .name {
             -fx-min-height: 2em;
             -fx-pref-height: 2em;
@@ -2933,7 +2933,7 @@
               -fx-fit-to-height: true;
               -fx-fit-to-width: true; }
             .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .copyable-location .distance {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
           .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .name {
             -fx-alignment: center-right;
             -fx-max-height: 2.2em;
@@ -3587,7 +3587,7 @@
               .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .value {
                 -fx-font-size: 1.2em;
                 -fx-alignment: top-center;
-                -fx-text-fill: #707070; }
+                -fx-text-fill: gray; }
                 .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .value:filled {
                   -fx-text-fill: white; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:partial-1 .quantity-select .value-1 {
@@ -3666,27 +3666,27 @@
               .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .name:hover {
                 -fx-text-fill: #5aa9e6; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .module {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-1 {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-2 {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-3 {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-4 {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-5 {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-6 {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-7 {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-8 {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-9 {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-10 {
-              -fx-text-fill: #707070; }
+              -fx-text-fill: gray; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .tooltip {
               -fx-background: #1e1e1e;
               -fx-text-fill: white;
@@ -3904,7 +3904,7 @@
                 -fx-fit-to-height: true;
                 -fx-fit-to-width: true; }
               .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .copyable-location .distance {
-                -fx-text-fill: #707070; }
+                -fx-text-fill: gray; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .distance-line {
               -fx-padding: 0 0 1em 0;
               -fx-spacing: 0.25em; }
@@ -4006,10 +4006,22 @@
       .app .application-screen .settings-tab-content .settings-vbox .settings-legacy-module-details-label-red {
         -fx-text-fill: #ff7c7c;
         -fx-border-color: #ff7c7c; }
-      .app .application-screen .settings-tab-content .settings-vbox .settings-legacy-module-valid {
+      .app .application-screen .settings-tab-content .settings-vbox .module-attribute:valid {
         -fx-background-color: #89d07f, text_input_background_color; }
-      .app .application-screen .settings-tab-content .settings-vbox .settings-legacy-module-invalid {
+        .app .application-screen .settings-tab-content .settings-vbox .module-attribute:valid:hover {
+          -fx-background-color: border_hover_color, background_hover_color; }
+        .app .application-screen .settings-tab-content .settings-vbox .module-attribute:valid:focused {
+          -fx-background-color: accent_color, background_focused_color; }
+        .app .application-screen .settings-tab-content .settings-vbox .module-attribute:valid:disabled {
+          -fx-background-color: border_disabled_color, background_disabled_color; }
+      .app .application-screen .settings-tab-content .settings-vbox .module-attribute:invalid {
         -fx-background-color: #ff7c7c, text_input_background_color; }
+        .app .application-screen .settings-tab-content .settings-vbox .module-attribute:invalid:hover {
+          -fx-background-color: border_hover_color, background_hover_color; }
+        .app .application-screen .settings-tab-content .settings-vbox .module-attribute:invalid:focused {
+          -fx-background-color: accent_color, background_focused_color; }
+        .app .application-screen .settings-tab-content .settings-vbox .module-attribute:invalid:disabled {
+          -fx-background-color: border_disabled_color, background_disabled_color; }
       .app .application-screen .settings-tab-content .settings-vbox .settings-legacy-module-label {
         -fx-min-height: 1.6em;
         -fx-min-width: 20em;
@@ -4088,7 +4100,7 @@
       -fx-fit-to-height: true;
       -fx-fit-to-width: true; }
     .app .material-popover .copyable-location .distance {
-      -fx-text-fill: #707070; }
+      -fx-text-fill: gray; }
   .app .material-popover .label {
     -fx-font-weight: normal;
     -fx-text-fill: white; }
@@ -4114,7 +4126,7 @@
     -fx-max-width: 40em;
     -fx-wrap-text: true; }
   .app .market-location {
-    -fx-text-fill: #0078d6 !important;
+    -fx-text-fill: #2e92df !important;
     -fx-label-padding: 0em 0.4em 0em 0em; }
   .app .market-location-line {
     -fx-max-width: 35em; }

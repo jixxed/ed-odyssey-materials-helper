@@ -36,15 +36,15 @@
       }
 
       &:buys {
-        -fx-border-color: #89d07f;
+        -fx-border-color: $border-color-green;
       }
 
       &:sells {
-        -fx-border-color: #dcc030;
+        -fx-border-color: $border-color-yellow;
       }
 
       &:buys:sells {
-        -fx-border-color: #2e92df;
+        -fx-border-color: $border-color-blue;
       }
 
       .rare-container {

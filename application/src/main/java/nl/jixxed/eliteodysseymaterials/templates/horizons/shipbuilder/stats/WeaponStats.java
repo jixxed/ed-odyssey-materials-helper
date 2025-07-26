@@ -1,13 +1,10 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
 import javafx.geometry.Orientation;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.SegmentedBarBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ToggleButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
@@ -20,12 +17,16 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.HardpointGroupSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegmentView;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableCircle;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableSegmentedBar;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -56,30 +57,6 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
         this.getStyleClass().add("weapon-stats");
         addTitle("ship.stats.weapon");
 
-        DestroyableToggleButton[] buttons = Arrays.stream(HardpointGroup.values()).map(group -> {
-            final DestroyableToggleButton groupButton = ToggleButtonBuilder.builder()
-                    .withStyleClass("group-toggle")
-                    .withNonLocalizedText(group.name())
-                    .build();
-            groupButton.setSelected(true);
-            groupButton.setFocusTraversable(false);
-            groupButton.selectedProperty().addListener((_, _, newValue) -> {
-                if (newValue) {
-                    selectedHardpointGroups.add(group);
-                } else {
-                    selectedHardpointGroups.remove(group);
-                }
-                update();
-            });
-            HBox.setHgrow(groupButton, Priority.ALWAYS);
-            return groupButton;
-        }).toArray(DestroyableToggleButton[]::new);
-
-        DestroyableHBox box = BoxBuilder.builder()
-                .withStyleClass("toggles")
-                .withNodes(buttons)
-                .buildHBox();
-        this.getNodes().add(box);
         this.rawDamage = createValueLabel("ship.stats.weapon.rawdamage.value", String.format("%.2f", 0d));
 
         this.getNodes().add(BoxBuilder.builder()
@@ -175,7 +152,7 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
 
         bustIndicator = new RangeIndicator(0D, 0D, 0D, "ship.stats.weapon.burstduration", "ship.stats.weapon.burstduration.value");
         ammoIndicator = new RangeIndicator(0D, 0D, 0D, "ship.stats.weapon.ammoduration", "ship.stats.weapon.ammoduration.value");
-        this.getNodes().addAll(bustIndicator, ammoIndicator);
+        this.getNodes().addAll(new GrowingRegion(), bustIndicator, ammoIndicator);
 
     }
 
@@ -196,6 +173,14 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
     @Override
     public void initEventHandling() {
         register(EventService.addListener(true, this, ShipConfigEvent.class, _ -> update()));
+        register(EventService.addListener(true, this, HardpointGroupSelectedEvent.class, event -> {
+            if (event.isEnabled()) {
+                selectedHardpointGroups.add(event.getGroup());
+            } else {
+                selectedHardpointGroups.remove(event.getGroup());
+            }
+            update();
+        }));
     }
 
     private List<ShipModule> selectedHardPoints() {

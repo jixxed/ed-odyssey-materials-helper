@@ -5,14 +5,15 @@ import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.application.Platform;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.CheckBoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.SliderBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfig;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
+import nl.jixxed.eliteodysseymaterials.enums.HardpointGroup;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
@@ -22,6 +23,7 @@ import nl.jixxed.eliteodysseymaterials.templates.components.PipSelect;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -122,6 +124,28 @@ public class Config extends Stats implements DestroyableEventTemplate {
                 .withStyleClass("control-line")
                 .withNodes(createLabel("ship.stats.config.cargo_hatch"), new GrowingRegion(), powerControl)
                 .buildHBox());
+
+        DestroyableToggleButton[] buttons = Arrays.stream(HardpointGroup.values()).map(group -> {
+            final DestroyableToggleButton groupButton = ToggleButtonBuilder.builder()
+                    .withStyleClass("group-toggle")
+                    .withNonLocalizedText(group.name())
+                    .build();
+            groupButton.setSelected(true);
+            groupButton.setFocusTraversable(false);
+            groupButton.selectedProperty().addListener((_, _, newValue) -> {
+                EventService.publish(new HardpointGroupSelectedEvent(group, Boolean.TRUE.equals(newValue)));
+            });
+            HBox.setHgrow(groupButton, Priority.ALWAYS);
+            return groupButton;
+        }).toArray(DestroyableToggleButton[]::new);
+
+        DestroyableHBox box = BoxBuilder.builder()
+                .withStyleClass("toggles")
+                .withNodes(buttons)
+                .buildHBox();
+
+        controls.getNodes().add(LabelBuilder.builder().withStyleClass("weapon-group-title").withText("ship.stats.config.weapon.groups").build());
+        controls.getNodes().add(box);
         this.getNodes().add(controls);
         systemPipSelect.addChangeListener(systemPipSelect.valueProperty(), (_, _, newValue) -> {
             ApplicationState.getInstance().setSystemPips(newValue.intValue());

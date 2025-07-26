@@ -225,7 +225,7 @@
       @include hvGap(0.25em);
 
       .selectors {
-        @include fixedHeight(24.00em);
+        @include fixedHeight(24.75em);
         -fx-min-width: 10em;
         //
         -fx-background-color: $background-color-dark;
@@ -256,11 +256,14 @@
       }
 
       .config {
-        @include fixedHeight(24.00em);
+        @include fixedHeight(24.75em);
         -fx-background-color: $background-color-dark;
         -fx-border-color: $border-color-white;
         -fx-border-width: 1px 0 1px 1px;
 
+        .weapon-group-title {
+          //-fx-background-color: #3e0255;
+        }
 
         .config-controls {
           -fx-padding: 0.25em;
@@ -450,6 +453,16 @@
                 -fx-fill: $text-color-blue;
               }
             }
+          }
+        }
+
+        .toggles {
+          -fx-spacing: 0.1em;
+          -fx-max-width: Infinity;
+
+          .group-toggle {
+            //-fx-min-width: 3.70em;
+            -fx-max-width: Infinity;
           }
         }
       }
@@ -781,15 +794,6 @@
           -fx-border-color: $border-color-white;
         }
 
-        .toggles {
-          -fx-spacing: 0.1em;
-          -fx-max-width: 15em;
-
-          .group-toggle {
-            //-fx-min-width: 3.70em;
-            -fx-max-width: Infinity;
-          }
-        }
 
         .tooltip-text {
           -fx-background-color: $background-color-dark;

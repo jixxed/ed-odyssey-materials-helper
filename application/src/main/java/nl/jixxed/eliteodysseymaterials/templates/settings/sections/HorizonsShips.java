@@ -164,20 +164,20 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
 //
         DestroyableLabel nameTitle = LabelBuilder.builder()
                 .withText("tab.settings.ships.legacy.modules.name")
-                .withVisibilityProperty(selectedNull)
+                .withVisibilityProperty(selectedNull.not())
                 .build();
         nameValue = TextFieldBuilder.builder()
                 .withStyleClass(SETTINGS_LEGACY_MODULE_CB_STYLE_CLASS)
-                .withVisibilityProperty(selectedNull)
+                .withVisibilityProperty(selectedNull.not())
                 .build();
         DestroyableLabel typeTitle = LabelBuilder.builder()
                 .withStyleClass(SETTINGS_LEGACY_MODULE_LABEL_STYLE_CLASS)
                 .withText("tab.settings.ships.legacy.modules.type")
-                .withVisibilityProperty(selectedNull)
+                .withVisibilityProperty(selectedNull.not())
                 .build();
         typeValue = LabelBuilder.builder()
                 .withStyleClass(SETTINGS_LEGACY_MODULE_LABEL_STYLE_CLASS)
-                .withVisibilityProperty(selectedNull)
+                .withVisibilityProperty(selectedNull.not())
                 .build();
         blueprints = BoxBuilder.builder()
                 .withStyleClass(SETTINGS_LEGACY_MODULE_CB_STYLE_CLASS)

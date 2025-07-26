@@ -41,6 +41,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires transitive javafx.media;
     requires de.jensd.fx.glyphs.fontawesome;
     requires org.apache.commons.collections4;
+    requires java.desktop;
 
     exports nl.jixxed.eliteodysseymaterials.domain.ships;
     exports nl.jixxed.eliteodysseymaterials.domain;

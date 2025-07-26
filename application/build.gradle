@@ -648,9 +648,6 @@ tasks.withType(JavaCompile).configureEach {
 tasks.withType(Test).configureEach {
     jvmArgs += "--enable-preview"
     jvmArgs += "--enable-native-access=ALL-UNNAMED"
-    jvmArgs += "--enable-native-access=com.sun.jna"
-    jvmArgs += "--enable-native-access=javafx.graphics,javafx.media"
-    jvmArgs += "--enable-native-access=org.openpnp"
 }
 tasks.withType(JavaExec).configureEach {
     jvmArgs += "--enable-preview"

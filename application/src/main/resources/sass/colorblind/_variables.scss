@@ -1,59 +1,86 @@
-$background-color-dark: rgb(15, 15, 15); //0f0f0f
+// Base Color Palette
+$black: rgb(0, 0, 0);
+$white: rgb(255, 255, 255);
+$grey-dark: rgb(37, 37, 37);
+$grey-medium: rgb(128, 128, 128);
+$grey-light: rgb(192, 192, 192);
+
+$green: rgb(112, 154, 220);
+$red: rgb(255, 0, 0);
+$blue: rgb(46, 146, 223);
+$yellow: rgb(220, 192, 48);
+
+$force: rgb(255, 60, 0);
+$dynamic: rgb(255, 0, 231);
+$strategic: rgb(124, 212, 41);
+
+$power-passive: rgb(50, 164, 168);
+$orange-deep: rgb(206, 108, 30);
+$purple: rgb(109, 61, 168);
+$light-yellow: rgb(248, 255, 46);
+$overpower: rgb(240, 20, 20);
+
+$powerplay: rgb(255, 165, 0);
+$thargoid: rgb(59, 27, 0);
+$guardian: rgb(39, 1, 54);
+
+// Background Colors
+$background-color-dark: rgb(15, 15, 15);
 $background-color-medium: rgb(31, 31, 31);
-$background-color-light: rgb(37, 37, 37);
+$background-color-light: $grey-dark;
 $background-color-lighter: rgb(46, 46, 46);
 $background-color-input: rgb(17, 17, 17);
-$background-color-white: rgb(255, 255, 255);
-$background-color-thargoid: rgb(59, 27, 0);
-$background-color-guardian: rgb(39, 1, 54);
-$background-color-black: rgb(0, 0, 0);
-$background-color-blue: rgb(46, 146, 223);
+$background-color-white: $white;
+$background-color-black: $black;
+$background-color-blue: $blue;
+$background-color-thargoid: $thargoid;
+$background-color-guardian: $guardian;
 
-$border-color-black: rgb(0, 0, 0);
-$border-color-grey: rgb(37, 37, 37);
-$border-color-white: rgb(255, 255, 255);
-$border-color-light-grey: rgb(192, 192, 192);
-$border-color-yellow: rgb(220, 192, 48);
-$border-color-green: rgb(112, 154, 220);
-$border-color-red: rgb(255, 0, 0);
-$border-color-blue: rgb(46, 146, 223);
+// Border Colors
+$border-color-black: $black;
+$border-color-grey: $grey-dark;
+$border-color-light-grey: $grey-light;
+$border-color-white: $white;
+$border-color-yellow: $yellow;
+$border-color-green: $green;
+$border-color-red: $red;
+$border-color-blue: $blue;
 
-//base text colors
-$text-color-green: rgb(112, 154, 220);
-$text-color-red: rgb(255, 0, 0);
-$text-color-blue: rgb(46, 146, 223);
-$text-color-yellow: rgb(220, 192, 48);
-$text-color-white: rgb(255, 255, 255);
-$text-color-orange: rgb(255, 165, 0);
-$text-color-grey: rgb(112, 112, 112);
-$text-color-black: rgb(0, 0, 0);
+// Text Colors
+$text-color-black: $black;
+$text-color-white: $white;
+$text-color-grey: $grey-medium;
+$text-color-green: $green;
+$text-color-red: $red;
+$text-color-blue: $blue;
+$text-color-yellow: $yellow;
+$text-color-orange: $powerplay;
+$text-color-force: $force;
+$text-color-dynamic: $dynamic;
+$text-color-strategic: $strategic;
 
-$text-color-force: rgb(255, 60, 0);
-$text-color-dynamic: rgb(255, 0, 231);
-$text-color-strategic: rgb(124, 212, 41);
-
-//progress bar colors
-$progress-bar-color-green: rgb(112, 154, 220);
-$progress-bar-color-red: rgb(255, 0, 0);
-$progress-bar-color-blue: rgb(46, 146, 223);
-$progress-bar-color-yellow: rgb(220, 192, 48);
-$progress-bar-color-white: rgb(255, 255, 255);
-$progress-bar-color-orange: rgb(255, 165, 0);
-$progress-bar-color-grey: rgb(128, 128, 128);
-$progress-bar-color-light-grey: rgb(192, 192, 192);
-$progress-bar-color-black: rgb(0, 0, 0);
-$progress-bar-color-power-passive: rgb(50, 164, 168);
-$progress-bar-color-power-1: rgb(206, 108, 30);
-$progress-bar-color-power-2: rgb(112, 154, 220);
-$progress-bar-color-power-3: rgb(0, 25, 154);
-$progress-bar-color-power-4: rgb(109, 61, 168);
-$progress-bar-color-power-5: rgb(248, 255, 46);
-$progress-bar-color-power-none: rgb(128, 128, 128);
-$progress-bar-color-power-overpower: rgb(240, 20, 20);
-$progress-bar-color-hardpoint-thermal: rgb(255, 0, 0);
-$progress-bar-color-hardpoint-kinetic: rgb(46, 217, 223);
-$progress-bar-color-hardpoint-explosive: rgb(206, 108, 30);
-$progress-bar-color-hardpoint-absolute: rgb(109, 61, 168);
-$progress-bar-color-hardpoint-caustic: rgb(248, 255, 46);
-$progress-bar-color-hardpoint-antixeno: rgb(112, 154, 220);
-$progress-bar-color-hardpoint-none: rgb(128, 128, 128);
+// Progress Bar Colors
+$progress-bar-color-black: $black;
+$progress-bar-color-white: $white;
+$progress-bar-color-grey: $grey-medium;
+$progress-bar-color-light-grey: $grey-light;
+$progress-bar-color-green: $green;
+$progress-bar-color-red: $red;
+$progress-bar-color-blue: $blue;
+$progress-bar-color-yellow: $yellow;
+$progress-bar-color-orange: $powerplay;
+$progress-bar-color-power-passive: $power-passive;
+$progress-bar-color-power-1: $orange-deep;
+$progress-bar-color-power-2: $green;
+$progress-bar-color-power-3: $blue;
+$progress-bar-color-power-4: $purple;
+$progress-bar-color-power-5: $light-yellow;
+$progress-bar-color-power-none: $grey-medium;
+$progress-bar-color-power-overpower: $overpower;
+$progress-bar-color-hardpoint-thermal: $red;
+$progress-bar-color-hardpoint-kinetic: $blue;
+$progress-bar-color-hardpoint-explosive: $orange-deep;
+$progress-bar-color-hardpoint-absolute: $purple;
+$progress-bar-color-hardpoint-caustic: $light-yellow;
+$progress-bar-color-hardpoint-antixeno: $green;
+$progress-bar-color-hardpoint-none: $grey-medium;

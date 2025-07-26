@@ -95,28 +95,96 @@
     .settings-legacy-module-details-label {
       -fx-padding: 0em 0.2em 0em 0.2em;
       -fx-border-radius: 0.5em;
-      -fx-border-color: #2e92df;
+      -fx-border-color: $border-color-blue;
       -fx-border-width: 0.1em;
       -fx-alignment: center-left;
     }
 
     .settings-legacy-module-details-label-green {
-      -fx-text-fill: #89d07f;
-      -fx-border-color: #89d07f;
+      -fx-text-fill: $text-color-green;
+      -fx-border-color: $border-color-green;
     }
 
     .settings-legacy-module-details-label-red {
-      -fx-text-fill: #ff7c7c;
-      -fx-border-color: #ff7c7c;
+      -fx-text-fill: $text-color-red;
+      -fx-border-color: $border-color-red;
     }
 
-    .settings-legacy-module-valid {
-      -fx-background-color: #89d07f, text_input_background_color;
+    .module-attribute {
+      &:valid {
+        -fx-background-color: $border-color-green, text_input_background_color;
+
+        &:hover {
+          -fx-background-color: border_hover_color, background_hover_color;
+        }
+
+        &:focused {
+          -fx-background-color: accent_color, background_focused_color;
+        }
+
+        &:disabled {
+          -fx-background-color: border_disabled_color, background_disabled_color;
+        }
+      }
+
+      &:invalid {
+        -fx-background-color: $border-color-red, text_input_background_color;
+
+        &:hover {
+          -fx-background-color: border_hover_color, background_hover_color;
+        }
+
+        &:focused {
+          -fx-background-color: accent_color, background_focused_color;
+        }
+
+        &:disabled {
+          -fx-background-color: border_disabled_color, background_disabled_color;
+        }
+      }
     }
 
-    .settings-legacy-module-invalid {
-      -fx-background-color: #ff7c7c, text_input_background_color;
-    }
+    //text-input {
+    //  -fx-background-radius: 0, 0;
+    //
+    //  -fx-background-color: border_color, text_input_background_color;
+    //  -fx-background-insets: 0, 2;
+    //
+    //  -fx-prompt-text-fill: prompt_text_color;
+    //
+    //  -fx-highlight-fill: highlight_color;
+    //  -fx-highlight-text-fill: highlighted_text_color;
+    //
+    //  -fx-font-size: 1em; /* 12 */
+    //
+    //  -fx-text-fill: text_color;
+    //}
+    //
+    //.text-input.text-field > Pane,
+    //.text-input.password-field > Pane {
+    //  -fx-background-color: transparent;
+    //}
+    //
+    ///* hover */
+    //.text-input:hover {
+    //  -fx-background-color: border_hover_color, background_hover_color;
+    //}
+    //
+    ///* focused */
+    //.text-input:focused {
+    //  -fx-background-color: accent_color, background_focused_color;
+    //
+    //  -fx-text-fill: text_focused_color;
+    //}
+    //
+    ///* disabled */
+    //.text-input:disabled {
+    //  -fx-opacity: 1;
+    //  -fx-background-insets: 0, 2;
+    //  -fx-background-color: border_disabled_color, background_disabled_color;
+    //  -fx-text-fill: text_disabled_color;
+    //  -fx-prompt-text-fill: text_disabled_color;
+    //}
 
     .settings-legacy-module-label {
       -fx-min-height: 1.6em;

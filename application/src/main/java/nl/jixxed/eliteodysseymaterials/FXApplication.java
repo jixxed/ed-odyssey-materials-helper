@@ -8,6 +8,7 @@ import io.sentry.Hint;
 import io.sentry.Sentry;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
@@ -55,6 +56,8 @@ import nl.jixxed.eliteodysseymaterials.watchdog.FileService;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -179,24 +182,93 @@ public class FXApplication extends Application {
             this.primaryStage = primaryStage;
             primaryStage.setTitle(AppConstants.APP_TITLE);
             primaryStage.getIcons().add(new Image(FXApplication.class.getResourceAsStream(AppConstants.APP_ICON_PATH)));
-            this.primaryStage.setOnCloseRequest(event -> {
-                log.debug("Application closing");
-                try {
-                    applicationScreen.destroyTemplate();
-                    BackupService.createConfigBackup();
-                    if (subscribe != null) {
-                        subscribe.dispose();
+
+            Image fxImage = new Image(FXApplication.class.getResourceAsStream("/images/application/rocket16.png"));
+            java.awt.Image image = SwingFXUtils.fromFXImage(fxImage, null);
+
+            TrayIcon trayIcon = new TrayIcon(image, "EDOMH");
+            //unhide stage on doubleclick
+            trayIcon.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getClickCount() > 1) {
+                        Platform.runLater(() -> {
+                            log.debug("Tray icon double clicked, showing application");
+                            if (FXApplication.this.primaryStage.isShowing()) {
+                                log.debug("isShowing");
+                                FXApplication.this.primaryStage.toFront();
+                            } else {
+                                log.debug("show");
+                                FXApplication.this.primaryStage.show();
+                                log.debug("sh " + FXApplication.this.primaryStage.isShowing());
+                            }
+                        });
                     }
-                    EventService.publish(new TerminateApplicationEvent());
-                    EventService.shutdown();
-//                NativeLibrary.disposeAll();
-                    APPLICATION_STATE.releaseLock();
-                    Platform.exit();
-                } catch (final Exception ex) {
-                    //don't care
-                    log.error(ex.getMessage(), ex);
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+
                 }
             });
+            // Create a popup menu for the tray icon
+            PopupMenu trayMenu = new PopupMenu();
+            MenuItem exitItem = new MenuItem("Exit");
+            exitItem.addActionListener(e -> {
+                Platform.runLater(() -> {
+                    exit();
+                    System.exit(0);
+                });
+            });
+            MenuItem showItem = new MenuItem("Show");
+            showItem.addActionListener(e -> {
+                Platform.runLater(() -> {
+                    if (this.primaryStage.isShowing()) {
+                        this.primaryStage.toFront();
+                    } else {
+                        try {
+                            primaryStage.show();
+                        } catch (Exception xe) {
+                            xe.printStackTrace();
+                        }
+                    }
+                });
+            });
+            trayMenu.add(showItem);
+            trayMenu.add(exitItem);
+            trayIcon.setPopupMenu(trayMenu);
+            SystemTray.getSystemTray().add(trayIcon);
+            Platform.setImplicitExit(false);
+            // Handle minimizing the stage
+            primaryStage.setOnCloseRequest(event -> {
+                if (PreferencesService.getPreference(PreferenceConstants.MINIMIZE_TO_TRAY, false)) {
+                    event.consume(); // Prevent window closing
+                    primaryStage.hide(); // Hide application instead
+                } else {
+                    exit();
+                    System.exit(0);
+                }
+            });
+            primaryStage.setIconified(true);
+
+//            this.primaryStage.setOnCloseRequest(event -> {
+//                exit();
+//            });
             createApplicationScene();
             setupDeeplinkWatcher();
             setupWatchers();
@@ -236,6 +308,25 @@ public class FXApplication extends Application {
                 Sentry.captureException(ex, Hint.withAttachment(attachment));
             }
             showAlert(supportFile, ex);
+        }
+    }
+
+    private void exit() {
+        log.debug("Application closing");
+        try {
+            applicationScreen.destroyTemplate();
+            BackupService.createConfigBackup();
+            if (subscribe != null) {
+                subscribe.dispose();
+            }
+            EventService.publish(new TerminateApplicationEvent());
+            EventService.shutdown();
+//                NativeLibrary.disposeAll();
+            APPLICATION_STATE.releaseLock();
+            Platform.exit();
+        } catch (final Exception ex) {
+            //don't care
+            log.error(ex.getMessage(), ex);
         }
     }
 

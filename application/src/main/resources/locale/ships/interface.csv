@@ -189,3 +189,6 @@
 "ship.stats.thermal.thruster.thermals.tooltip","Heat level with full throttle","","","","","","",""
 "ship.stats.thermal.fsd.thermals.tooltip","Heat level or time to overheat with full throttle and FSD charging","","","","","","",""
 "ship.stats.thermal.thruster.silentruntime.tooltip","Time until 100% heat with full throttle when silent running","","","","","","",""
+"ship.stats.thermal.weapon.thermals","Weapon fire","","","","","","",""
+"ship.stats.thermal.weapon.thermals.value","{0}%","","","{0}%","","","{0}%","{0}%"
+"ship.stats.config.weapon.groups","Weapon groups","","","","","","",""

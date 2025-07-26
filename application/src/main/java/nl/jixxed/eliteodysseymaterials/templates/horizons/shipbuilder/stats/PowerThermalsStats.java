@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
+import com.google.common.primitives.Doubles;
+import com.google.common.util.concurrent.AtomicDouble;
 import javafx.beans.binding.StringBinding;
 import javafx.util.Duration;
 import lombok.AllArgsConstructor;
@@ -11,11 +13,13 @@ import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
 import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
+import nl.jixxed.eliteodysseymaterials.enums.HardpointGroup;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.HardpointGroupSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
@@ -23,10 +27,14 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @Slf4j
 public class PowerThermalsStats extends Stats implements DestroyableEventTemplate {
+    Set<HardpointGroup> selectedHardpointGroups = new HashSet<>(Set.of(HardpointGroup.A, HardpointGroup.B, HardpointGroup.C, HardpointGroup.D));
+
     private DestroyableLabel retractedPowerLabel;
     private DestroyableLabel deployedPowerLabel;
     private PowerBar retractedPowerBar;
@@ -36,6 +44,7 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
     private DestroyableLabel thrusterThermals;
     private DestroyableLabel fsdThermals;
     private DestroyableLabel silentRunTime;
+//    private DestroyableLabel weaponThermals;
 
     public PowerThermalsStats() {
         super();
@@ -52,6 +61,7 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
         this.thrusterThermals = createValueLabel("ship.stats.thermal.thruster.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
         this.fsdThermals = createValueLabel("ship.stats.thermal.fsd.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
         this.silentRunTime = createValueLabel("ship.stats.thermal.thruster.silentruntime.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
+//        this.weaponThermals = createValueLabel("ship.stats.thermal.weapon.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
 
 
         DestroyableHBox idleLine = BoxBuilder.builder()
@@ -70,6 +80,10 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
                 .withStyleClass("thermal-line")
                 .withNodes(createLabel("ship.stats.thermal.thruster.silentruntime"), new GrowingRegion(), this.silentRunTime)
                 .buildHBox();
+//        DestroyableHBox weaponLine = BoxBuilder.builder()
+//                .withStyleClass("thermal-line")
+//                .withNodes(createLabel("ship.stats.thermal.weapon.thermals"), new GrowingRegion(), this.weaponThermals)
+//                .buildHBox();
 
         final DestroyableTooltip idleThermalsTooltip = TooltipBuilder.builder()
                 .withShowDelay(Duration.ZERO)
@@ -92,7 +106,7 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
                 .build();
         silentRunTimeTooltip.install(silentRunningLine);
 
-        this.getNodes().addAll(idleLine, thrusterLine, fsdLine, silentRunningLine);
+        this.getNodes().addAll(idleLine, thrusterLine, fsdLine, silentRunningLine/*, weaponLine*/);
 
 
         this.getNodes().add(new GrowingRegion());
@@ -146,6 +160,14 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
     @Override
     public void initEventHandling() {
         register(EventService.addListener(true, this, ShipConfigEvent.class, event -> update()));
+        register(EventService.addListener(true, this, HardpointGroupSelectedEvent.class, event -> {
+            if (event.isEnabled()) {
+                selectedHardpointGroups.add(event.getGroup());
+            } else {
+                selectedHardpointGroups.remove(event.getGroup());
+            }
+            update();
+        }));
     }
 
 
@@ -176,6 +198,7 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
         this.thrusterThermals.addBinding(this.thrusterThermals.textProperty(), calculateThrusterThermals().format());
         this.fsdThermals.addBinding(this.fsdThermals.textProperty(), calculateFsdThermals().format());
         this.silentRunTime.addBinding(this.silentRunTime.textProperty(), calculateSilentRunTime().format());
+//        this.weaponThermals.addBinding(this.weaponThermals.textProperty(), calculateWeaponThermals().format());
     }
 
     private Value calculateSilentRunTime() {
@@ -350,6 +373,65 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
         powerForHeat *= heatEfficiency;
         return powerForHeat;
     }
+
+    private Value calculateWeaponThermals() {
+        return getShip().map(ship -> {
+            final double heatCapacity = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_CAPACITY, 0d);
+            final double maximumHeatDissipation = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_DISSIPATION_MAX, 0d);
+            final double powerCapacity = (double) ship.getCoreSlots().stream()
+                    .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
+                    .filter(Slot::isOccupied)
+                    .filter(slot -> slot.getShipModule().isPowered())
+                    .findFirst()
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY))
+                    .orElse(Double.NaN);
+            final double heatEfficiency = (double) ship.getCoreSlots().stream()
+                    .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
+                    .filter(Slot::isOccupied)
+                    .filter(slot -> slot.getShipModule().isPowered())
+                    .findFirst()
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.HEAT_EFFICIENCY))
+                    .orElse(Double.NaN);
+            final double engineHeat = (double) ship.getCoreSlots().stream()
+                    .filter(slot -> SlotType.CORE_THRUSTERS.equals(slot.getSlotType()))
+                    .filter(Slot::isOccupied)
+                    .filter(slot -> slot.getShipModule().isPowered())
+                    .findFirst()
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.ENGINE_THERMAL_LOAD))
+                    .orElse(Double.NaN);
+            final double weaponCapacity = (double) ship.getCoreSlots().stream()
+                    .filter(slot -> SlotType.CORE_POWER_DISTRIBUTION.equals(slot.getSlotType()))
+                    .filter(Slot::isOccupied)
+                    .filter(slot -> slot.getShipModule().isPowered())
+                    .findFirst()
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.WEAPONS_CAPACITY))
+                    .orElse(Double.NaN);
+            AtomicDouble currentWeaponCapacity = new AtomicDouble(0);
+            final double weaponHeat = ship.getHardpointSlots().stream()
+                    .filter(Slot::isOccupied)
+                    .filter(slot -> slot.getShipModule().isPowered())
+                    .filter(slot -> selectedHardpointGroups.contains(slot.getHardpointGroup()))
+                    .mapToDouble(slot -> {
+                        double thermalLoad = (double) slot.getShipModule().getAttributeValue(HorizonsModifier.THERMAL_LOAD);
+                        double distDraw = (double) slot.getShipModule().getAttributeValue(HorizonsModifier.DISTRIBUTOR_DRAW);
+                        currentWeaponCapacity.set(currentWeaponCapacity.get() - distDraw);
+                        return thermalLoad * Doubles.constrainToRange(1 + 4 * (weaponCapacity - currentWeaponCapacity.get() + distDraw) / weaponCapacity, 0D, 1D);
+                    })
+                    .sum();
+
+            final double powerForHeat = getPowerForHeat(powerCapacity, heatEfficiency);
+
+            return getHeatLevelForDuration(weaponHeat, powerForHeat + engineHeat, maximumHeatDissipation, heatCapacity, 60);
+        }).orElse(new Value(0D, Value.ValueType.PERCENTAGE));
+
+
+//        stats.thmload_hardpoint_wepfull += getEffectiveWeaponThermalLoad(thmload, distdraw, wepcap, 1.0);
+//        stats.thmload_hardpoint_wepempty += getEffectiveWeaponThermalLoad(thmload, distdraw, wepcap, 0.0);
+    }
+//    var getEffectiveWeaponThermalLoad = function(thmload, distdraw, wepcap, weplvl) {
+//         https://forums.frontier.co.uk/threads/research-detailed-heat-mechanics.286628/post-6408594
+//        return (thmload * (1 + 4 * min(max(1 - (wepcap * weplvl - distdraw) / wepcap, 0), 1)));
+//    }; // getEffectiveWeaponThermalLoad()
 
     private Value calculateThrusterThermals() {
         return getShip().map(ship -> {

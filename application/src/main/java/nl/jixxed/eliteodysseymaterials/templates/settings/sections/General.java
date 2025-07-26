@@ -75,6 +75,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
         final DestroyableHBox styleSheetSetting = creatStyleSheetSetting();
         final DestroyableHBox customJournalFolderSetting = createCustomJournalFolderSetting();
         final DestroyableHBox pollSetting = createPollSetting();
+        final DestroyableHBox minimizeToTraySetting = createMinimizeToTraySetting();
         final DestroyableHBox urlSchemeLinkingSetting = createUrlSchemeLinkingSetting();
         final DestroyableHBox exportInventory = createExportInventorySetting();
         final DestroyableHBox blueprintExpandedSetting = createBlueprintExpandedSetting();
@@ -87,6 +88,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 langSetting,
                 fontSetting,
                 styleSheetSetting,
+                minimizeToTraySetting,
                 customJournalFolderSetting,
                 pollSetting,
                 urlSchemeLinkingSetting
@@ -273,6 +275,23 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
         return BoxBuilder.builder()
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)
                 .withNodes(fontsizeLabel, this.fontsizeSelect)
+                .buildHBox();
+    }
+
+    private DestroyableHBox createMinimizeToTraySetting() {
+        DestroyableLabel minimizeToTrayLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.minimize")
+                .build();
+        DestroyableCheckBox minimizeToTrayCheckBox = CheckBoxBuilder.builder()
+                .withSelected(PreferencesService.getPreference(PreferenceConstants.MINIMIZE_TO_TRAY, Boolean.FALSE))
+                .withSelectedProperty((_, _, newValue) -> {
+                    PreferencesService.setPreference(PreferenceConstants.MINIMIZE_TO_TRAY, newValue);
+                })
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(minimizeToTrayLabel, minimizeToTrayCheckBox)
                 .buildHBox();
     }
 

@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
+import javafx.css.PseudoClass;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.CheckBoxBuilder;
@@ -65,15 +66,20 @@ public class ShipAttribute {
                 );
             }
             textField = TextFieldBuilder.builder()
+                    .withStyleClass("module-attribute")
                     .withNonLocalizedText(currentValue.toString())
                     .withTextProperty((_, _, newValue) -> {
-                        textField.getStyleClass().removeAll("settings-legacy-module-valid", "settings-legacy-module-invalid");
+//                        textField.getStyleClass().removeAll("settings-legacy-module-valid", "settings-legacy-module-invalid");
                         try {
                             final double parsedValue = Double.parseDouble(newValue);
-                            textField.getStyleClass().add("settings-legacy-module-valid");
+//                            textField.getStyleClass().add("settings-legacy-module-valid");
+                            textField.pseudoClassStateChanged(PseudoClass.getPseudoClass("valid"), true);
+                            textField.pseudoClassStateChanged(PseudoClass.getPseudoClass("invalid"), false);
                             shipModule.getModifiers().put(modifier, parsedValue);
                         } catch (NumberFormatException | NullPointerException e) {
-                            textField.getStyleClass().add("settings-legacy-module-invalid");
+//                            textField.getStyleClass().add("settings-legacy-module-invalid");
+                            textField.pseudoClassStateChanged(PseudoClass.getPseudoClass("valid"), false);
+                            textField.pseudoClassStateChanged(PseudoClass.getPseudoClass("invalid"), true);
                             shipModule.getModifiers().put(modifier, currentValue);
                         }
                     })
