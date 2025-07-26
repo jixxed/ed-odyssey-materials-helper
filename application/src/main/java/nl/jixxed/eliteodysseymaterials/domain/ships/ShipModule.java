@@ -561,6 +561,9 @@ public abstract class ShipModule implements Serializable {
     }
 
     public boolean isHiddenStat(HorizonsModifier modifier) {
+        if (HorizonsModifier.POWER_DRAW.equals(modifier) && (this.getAttributeValue(modifier).equals(0D) && this.getOriginalAttributeValue(modifier).equals(0D))) {
+            return true;
+        }
         return false;
     }
 

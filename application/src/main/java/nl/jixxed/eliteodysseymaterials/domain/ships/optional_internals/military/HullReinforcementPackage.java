@@ -36,7 +36,6 @@ public class HullReinforcementPackage extends MilitaryOptionalModule {
             HULL_REINFORCEMENT_PACKAGE_5_E,
             HULL_REINFORCEMENT_PACKAGE_5_D
     );
-    public static final List<HorizonsModifier> HIDDEN_STATS = List.of(HorizonsModifier.POWER_DRAW, HorizonsModifier.CAUSTIC_RESISTANCE);
 
     private HullReinforcementPackage(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, basePrice, internalName, attributes);
@@ -65,7 +64,7 @@ public class HullReinforcementPackage extends MilitaryOptionalModule {
 
     @Override
     public boolean isHiddenStat(HorizonsModifier modifier) {
-        if(HIDDEN_STATS.contains(modifier)){
+        if (HorizonsModifier.CAUSTIC_RESISTANCE.equals(modifier)) {
             return true;
         }
         return super.isHiddenStat(modifier);

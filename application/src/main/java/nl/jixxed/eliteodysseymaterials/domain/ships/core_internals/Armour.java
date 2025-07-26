@@ -494,14 +494,6 @@ public class Armour extends CoreModule {
     }
 
     @Override
-    public boolean isHiddenStat(HorizonsModifier modifier) {
-        if (HorizonsModifier.POWER_DRAW.equals(modifier)) {
-            return true;
-        }
-        return super.isHiddenStat(modifier);
-    }
-
-    @Override
     public int getGrouping() {
         return switch (armourType) {
             case LIGHTWEIGHT_ALLOY -> 1;

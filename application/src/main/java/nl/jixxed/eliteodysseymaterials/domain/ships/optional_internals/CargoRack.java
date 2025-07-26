@@ -73,14 +73,6 @@ public class CargoRack extends OptionalModule {
     }
 
     @Override
-    public boolean isHiddenStat(HorizonsModifier modifier) {
-        if (HorizonsModifier.POWER_DRAW.equals(modifier)) {
-            return true;
-        }
-        return super.isHiddenStat(modifier);
-    }
-
-    @Override
     public boolean isPreEngineered() {
         return HorizonsBlueprintName.CARGO_RACK_PRE.equals(this.getName());
     }
