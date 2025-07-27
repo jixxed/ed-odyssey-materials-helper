@@ -11,6 +11,13 @@ buildscript {
     }
 }
 
+plugins {
+    id 'java'
+    id 'application'
+    id 'io.freefair.lombok' version '8.14'
+    id 'idea' // optional (to generate IntelliJ IDEA project files)
+    id 'org.beryx.jlink' version '3.1.1'
+}
 apply plugin: "java"
 apply plugin: "application"
 apply plugin: "org.beryx.jlink"
@@ -170,6 +177,11 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation 'com.fasterxml.jackson.core:jackson-core'
     implementation 'commons-io:commons-io'
+    implementation "net.java.dev.jna:jna"
+    implementation "net.java.dev.jna:jna-platform"
+    implementation "ch.qos.logback:logback-core"
+    implementation "ch.qos.logback:logback-classic"
+    implementation "org.slf4j:slf4j-api"
 
     implementation group: "org.openjfx", name: "javafx-base", classifier: "${platform}"
     implementation group: "org.openjfx", name: "javafx-controls", classifier: "${platform}"
@@ -177,6 +189,9 @@ dependencies {
     implementation group: "org.openjfx", name: "javafx-graphics", classifier: "${platform}"
 }
 
+tasks.withType(JavaExec).configureEach {
+    jvmArgs += "--enable-native-access=com.sun.jna"
+}
 
 test {
     useJUnitPlatform()

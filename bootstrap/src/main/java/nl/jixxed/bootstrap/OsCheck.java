@@ -43,4 +43,8 @@ public final class OsCheck {
         }
         return detectedOS;
     }
+
+    public static boolean isWindows() {
+        return getOperatingSystemType().equals(OSType.Windows);
+    }
 }
