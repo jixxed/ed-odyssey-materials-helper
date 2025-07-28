@@ -123,7 +123,7 @@ jlink {
             imageOptions += ['--icon', 'src/main/resources/images/application/rocket.ico']
         }
     }
-    addExtraDependencies("javafx", "jackson", "log4j")
+    addExtraDependencies("javafx", "jackson", "log4j", "jdk.accessibility")
     forceMerge("j2objc"/*, "logback"*/)
     addOptions('--strip-debug', '--compress', 'zip-0', '--no-header-files', '--no-man-pages')
     launcher {
