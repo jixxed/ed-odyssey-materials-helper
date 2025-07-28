@@ -182,81 +182,82 @@ public class FXApplication extends Application {
             this.primaryStage = primaryStage;
             primaryStage.setTitle(AppConstants.APP_TITLE);
             primaryStage.getIcons().add(new Image(FXApplication.class.getResourceAsStream(AppConstants.APP_ICON_PATH)));
+            if (OsCheck.isWindows()) {
+                Image fxImage = new Image(FXApplication.class.getResourceAsStream("/images/application/rocket16.png"));
+                java.awt.Image image = SwingFXUtils.fromFXImage(fxImage, null);
 
-            Image fxImage = new Image(FXApplication.class.getResourceAsStream("/images/application/rocket16.png"));
-            java.awt.Image image = SwingFXUtils.fromFXImage(fxImage, null);
-
-            TrayIcon trayIcon = new TrayIcon(image, "EDOMH");
-            //unhide stage on doubleclick
-            trayIcon.addMouseListener(new MouseListener() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    if (e.getClickCount() > 1) {
-                        Platform.runLater(() -> {
-                            log.debug("Tray icon double clicked, showing application");
-                            if (FXApplication.this.primaryStage.isShowing()) {
-                                log.debug("isShowing");
-                                FXApplication.this.primaryStage.toFront();
-                            } else {
-                                log.debug("show");
-                                FXApplication.this.primaryStage.show();
-                                log.debug("sh " + FXApplication.this.primaryStage.isShowing());
-                            }
-                        });
-                    }
-                }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-
-                }
-            });
-            // Create a popup menu for the tray icon
-            PopupMenu trayMenu = new PopupMenu();
-            MenuItem exitItem = new MenuItem("Exit");
-            exitItem.addActionListener(e -> {
-                Platform.runLater(() -> {
-                    exit();
-                    System.exit(0);
-                });
-            });
-            MenuItem showItem = new MenuItem("Show");
-            showItem.addActionListener(e -> {
-                Platform.runLater(() -> {
-                    if (this.primaryStage.isShowing()) {
-                        this.primaryStage.toFront();
-                    } else {
-                        try {
-                            primaryStage.show();
-                        } catch (Exception xe) {
-                            xe.printStackTrace();
+                TrayIcon trayIcon = new TrayIcon(image, "EDOMH");
+                //unhide stage on doubleclick
+                trayIcon.addMouseListener(new MouseListener() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        if (e.getClickCount() > 1) {
+                            Platform.runLater(() -> {
+                                log.debug("Tray icon double clicked, showing application");
+                                if (FXApplication.this.primaryStage.isShowing()) {
+                                    log.debug("isShowing");
+                                    FXApplication.this.primaryStage.toFront();
+                                } else {
+                                    log.debug("show");
+                                    FXApplication.this.primaryStage.show();
+                                    log.debug("sh " + FXApplication.this.primaryStage.isShowing());
+                                }
+                            });
                         }
                     }
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+
+                    }
                 });
-            });
-            trayMenu.add(showItem);
-            trayMenu.add(exitItem);
-            trayIcon.setPopupMenu(trayMenu);
-            SystemTray.getSystemTray().add(trayIcon);
+                // Create a popup menu for the tray icon
+                PopupMenu trayMenu = new PopupMenu();
+                MenuItem exitItem = new MenuItem("Exit");
+                exitItem.addActionListener(e -> {
+                    Platform.runLater(() -> {
+                        exit();
+                        System.exit(0);
+                    });
+                });
+                MenuItem showItem = new MenuItem("Show");
+                showItem.addActionListener(e -> {
+                    Platform.runLater(() -> {
+                        if (this.primaryStage.isShowing()) {
+                            this.primaryStage.toFront();
+                        } else {
+                            try {
+                                primaryStage.show();
+                            } catch (Exception xe) {
+                                xe.printStackTrace();
+                            }
+                        }
+                    });
+                });
+                trayMenu.add(showItem);
+                trayMenu.add(exitItem);
+                trayIcon.setPopupMenu(trayMenu);
+                SystemTray.getSystemTray().add(trayIcon);
+            }
             Platform.setImplicitExit(false);
             // Handle minimizing the stage
             primaryStage.setOnCloseRequest(event -> {
-                if (PreferencesService.getPreference(PreferenceConstants.MINIMIZE_TO_TRAY, false)) {
+                if (OsCheck.isWindows() && PreferencesService.getPreference(PreferenceConstants.MINIMIZE_TO_TRAY, false)) {
                     event.consume(); // Prevent window closing
                     primaryStage.hide(); // Hide application instead
                 } else {
@@ -265,10 +266,6 @@ public class FXApplication extends Application {
                 }
             });
             primaryStage.setIconified(true);
-
-//            this.primaryStage.setOnCloseRequest(event -> {
-//                exit();
-//            });
             createApplicationScene();
             setupDeeplinkWatcher();
             setupWatchers();

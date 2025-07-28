@@ -75,7 +75,16 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
         final DestroyableHBox styleSheetSetting = creatStyleSheetSetting();
         final DestroyableHBox customJournalFolderSetting = createCustomJournalFolderSetting();
         final DestroyableHBox pollSetting = createPollSetting();
-        final DestroyableHBox minimizeToTraySetting = createMinimizeToTraySetting();
+        this.getNodes().addAll(
+                generalLabel,
+                langSetting,
+                fontSetting,
+                styleSheetSetting
+        );
+        if (OsCheck.isWindows()) {
+            final DestroyableHBox minimizeToTraySetting = createMinimizeToTraySetting();
+            this.getNodes().add(minimizeToTraySetting);
+        }
         final DestroyableHBox urlSchemeLinkingSetting = createUrlSchemeLinkingSetting();
         final DestroyableHBox exportInventory = createExportInventorySetting();
         final DestroyableHBox blueprintExpandedSetting = createBlueprintExpandedSetting();
@@ -84,11 +93,6 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
         final DestroyableHBox supportPackageSetting = createSupportPackageSetting();
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
         this.getNodes().addAll(
-                generalLabel,
-                langSetting,
-                fontSetting,
-                styleSheetSetting,
-                minimizeToTraySetting,
                 customJournalFolderSetting,
                 pollSetting,
                 urlSchemeLinkingSetting
