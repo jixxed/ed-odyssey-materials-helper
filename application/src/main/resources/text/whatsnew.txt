@@ -1,3 +1,11 @@
+Version 2.206
+-------------
+Added minimize to tray option
+Ship editor
+- Moved weapon group selection to config section
+- Fixed current ship showing modifications as changed if it was modified during session
+- Show powerdraw stat if it is modified
+
 Version 2.205
 -------------
 Added pre-engineered cargo racks
