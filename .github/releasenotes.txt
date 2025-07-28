@@ -6,8 +6,4 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Added minimize to tray option
-Ship editor
-- Moved weapon group selection to config section
-- Fixed current ship showing modifications as changed if it was modified during session
-- Show powerdraw stat if it is modified
+Removed minimize to tray option for linux as it generated errors on startup

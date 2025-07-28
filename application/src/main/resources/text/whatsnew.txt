@@ -1,3 +1,7 @@
+Version 2.207
+-------------
+Removed minimize to tray option for linux as it generated errors on startup
+
 Version 2.206
 -------------
 Added minimize to tray option
