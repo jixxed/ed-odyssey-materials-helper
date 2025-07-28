@@ -171,9 +171,13 @@ public class SlotBox extends DestroyableStackPane {
 
                         final Bounds boundsInLocal = this.getBoundsInLocal();
                         final Bounds bounds = this.localToScreen(boundsInLocal);
-                        this.moduleSelectPopover.show(this, bounds.getMinX(),
-                                bounds.getMaxY());
-                        EventService.publish(new SlotboxOpenEvent(this, this.slot.getShipModule(), true));
+                        try{
+                            this.moduleSelectPopover.show(this, bounds.getMinX(),
+                                    bounds.getMaxY());
+                            EventService.publish(new SlotboxOpenEvent(this, this.slot.getShipModule(), true));
+                        }catch (Exception ex){
+                            log.error("Error showing ModuleSelectPopover", ex);
+                        }
                     }
                 } else if (event.getButton().equals(MouseButton.SECONDARY)) {
                     close();
@@ -184,7 +188,6 @@ public class SlotBox extends DestroyableStackPane {
                         this.refresh();
                     }
                 }
-
             });
             this.addEventBinding(this.onDragDetectedProperty(), event -> {
                 close();

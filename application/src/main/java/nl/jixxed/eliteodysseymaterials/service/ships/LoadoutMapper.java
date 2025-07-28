@@ -232,7 +232,7 @@ public class LoadoutMapper {
                     .findFirst()
                     .orElseGet(() -> getHardpointSlots(hardpointSlots, slotName).get(slotNumber - 1));
         } catch (IllegalStateException ex) {
-            hardpointSlots.stream().map(slot -> slot.toString()).forEach(log::debug);
+            hardpointSlots.stream().map(Slot::toString).forEach(log::debug);
             throw ex;
         }
     }
@@ -280,9 +280,9 @@ public class LoadoutMapper {
         return militarySlots.get(slotNumber - 1);
     }
 
-    private static Slot getCargoSlot(List<Slot> militarySlots, String slotName) {
+    private static Slot getCargoSlot(List<Slot> cargoSlots, String slotName) {
         final int slotNumber = Integer.parseInt(slotName.substring(slotName.length() - 2));
-        return militarySlots.get(slotNumber - 1);
+        return cargoSlots.get(slotNumber - 1);
     }
 
     private static Slot getCoreSlot(List<Slot> coreSlots, String slotName) {

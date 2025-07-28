@@ -215,8 +215,13 @@ public abstract class ShipModule implements Serializable {
 
     public static List<ShipModule> getModules(final SlotType slotType) {
         return SHIP_MODULES.stream().filter(module -> {
-            final Class<? extends ShipModule> aClass = module.getClass();
-            return slotType.getModuleClasses().stream().anyMatch(moduleClass -> moduleClass.isAssignableFrom(aClass));
+            try {
+                final Class<? extends ShipModule> aClass = module.getClass();
+                return slotType.getModuleClasses().stream().anyMatch(moduleClass -> moduleClass.isAssignableFrom(aClass));
+            } catch (Exception ex) {
+                log.error("Error filtering modules for slot type: " + slotType, ex);
+                return false;
+            }
         }).toList();
     }
 

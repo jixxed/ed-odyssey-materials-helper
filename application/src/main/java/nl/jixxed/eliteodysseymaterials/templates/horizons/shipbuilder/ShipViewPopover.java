@@ -80,7 +80,11 @@ public class ShipViewPopover extends DestroyablePopOver implements DestroyableEv
             return;
         }
         if (show && hasContent(slotBox) && !this.isShowing()) {
-            this.show(this.slotBox, -1);
+            try{
+                this.show(this.slotBox, -1);
+            }catch (Exception ex){
+                log.error("Error showing ShipViewPopover", ex);
+            }
         } else if (!show && this.isShowing() && !this.slotBox.isMenuOpen()) {
 //            log.debug("hiding");
             this.hide(Duration.ZERO);

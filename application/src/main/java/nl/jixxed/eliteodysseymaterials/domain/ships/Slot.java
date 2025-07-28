@@ -15,12 +15,12 @@ import java.util.List;
 public class Slot {
     private static final List<String> slotMapping = List.of("U", "S", "M", "L", "H");
     @Getter
-    private  SlotType slotType;
+    private SlotType slotType;
     @Getter
-    private  int index;
+    private int index;
     @Getter
-    private  int slotSize;
-    private  Integer namedIndex;
+    private int slotSize;
+    private Integer namedIndex;
     @Setter
     private HardpointGroup hardpointGroup;
     @Getter

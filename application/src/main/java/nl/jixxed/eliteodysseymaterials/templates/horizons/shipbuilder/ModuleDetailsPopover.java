@@ -22,23 +22,6 @@ public class ModuleDetailsPopover extends DestroyablePopOver implements Destroya
     public ModuleDetailsPopover() {
         initComponents();
         initEventHandling();
-//        detailsPopOver = PopOverBuilder.builder()
-//                .withStyleClass()
-////                .withContent(moduleDetails)
-//                .withDetachable(false)
-//                .withHeaderAlwaysVisible(false)
-//                .withCornerRadius(0)
-//                .withArrowSize(0)
-//                .withArrowIndent(0)
-//                .withDestroyOnHide(false)
-//                .withAutoFix(false)
-//                .build();
-//        detailsPopOver.showingProperty().addListener((observable, oldValue, newValue) -> {
-//            if (Boolean.TRUE.equals(newValue)) {
-//                updateDetailsPopoverPosition();
-//            }
-//
-//        });
     }
 
     @Override
@@ -67,18 +50,9 @@ public class ModuleDetailsPopover extends DestroyablePopOver implements Destroya
             slotBox = event.getSlotBox();
             showPopover(event.isHover(), event.getShipModule());
             updateDetailsPopoverPosition();
-//            if (event.isShow() && event.getShipModule() != null) {
-//                if (!this.isShowing()) {
-//                    updateContent(event.getShipModule());
-//                    this.show(slotBox);
-//                }
-//            } else if (this.isShowing() && !slotBox.isMenuOpen()) {
-//                this.hide(Duration.ZERO);
-//            }
 
         }));
         register(EventService.addListener(true, this, /*9,*/ SlotboxHoverEvent.class, (event) -> {
-//            log.debug("SlotboxHoverEvent {}", event);
             //no updates if a menu is open
             if (slotBox != null && slotBox.isMenuOpen()) {
                 return;
@@ -90,14 +64,6 @@ public class ModuleDetailsPopover extends DestroyablePopOver implements Destroya
             slotBox = event.getSlotBox();
             showPopover(event.isHover(), event.getShipModule());
             updateDetailsPopoverPosition();
-//            if (event.isShow() && event.getShipModule() != null) {
-//                if (!this.isShowing()) {
-//                    updateContent(event.getShipModule());
-//                    this.show(slotBox);
-//                }
-//            } else if (this.isShowing() && !slotBox.isMenuOpen()) {
-//                this.hide(Duration.ZERO);
-//            }
 
         }));
         register(EventService.addListener(true, this, /*9,*/ SlotboxEngineeringEvent.class, (event) -> {
@@ -107,20 +73,12 @@ public class ModuleDetailsPopover extends DestroyablePopOver implements Destroya
             updateDetailsPopoverPosition();
         }));
         register(EventService.addListener(true, this, /*9,*/ ModuleSelectHoverEvent.class, (event) -> {
-//            log.debug("ModuleSelectHoverEvent {}", event);
             //update content with the shipmodule from the event or the one from the slotbox, depending on whether the button is hovered
             ShipModule shipModule = event.isHover() ? event.getShipModule() : slotBox.getSlot().getShipModule();
             updateContent(shipModule);
             showPopover(true, event.getShipModule());
             updateDetailsPopoverPosition();
         }));
-//        register(EventService.addListener(true, this, /*9,*/ ModuleSelectCloseEvent.class, (event) -> {
-////            log.debug("ModuleSelectCloseEvent {}", event);
-//            //when the menu is showing
-////            if (this.isShowing()) {
-////                this.hide(Duration.ZERO);
-////            }
-//        }));
     }
 
     private void showPopover(boolean show, ShipModule shipModule) {
@@ -128,7 +86,11 @@ public class ModuleDetailsPopover extends DestroyablePopOver implements Destroya
             return;
         }
         if (show && hasContent(shipModule) && !this.isShowing()) {
-            this.show(slotBox, 0);
+            try{
+                this.show(slotBox, 0);
+            }catch (Exception ex){
+                log.error("Error showing ModuleDetailsPopover", ex);
+            }
         } else if (!show && this.isShowing() && !slotBox.isMenuOpen()) {
 //            log.debug("hiding");
             this.hide(Duration.ZERO);

@@ -1669,12 +1669,6 @@ public class Ship {
             17639221,
             ShipSpecs.MANDALAY,
             List.of(
-//            1: 1117, 403
-//            2: 985, 543
-//            1: 1223, 709
-//            2: 908, 515
-//            3: 1394, 670
-//            4: 1305, 790
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1117).y(403).index(0).namedIndex(1).slotSize(2).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(985).y(543).index(1).namedIndex(2).slotSize(2).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1223).y(709).index(2).namedIndex(3).slotSize(2).build(),
@@ -1683,10 +1677,6 @@ public class Ship {
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1305).y(790).index(5).namedIndex(2).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
             ),
             List.of(
-//                    3: 1419, 423
-//                    5: 1152, 299
-//                    4: 1267, 299
-//                    6: 855, 606
                     ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1419).y(423).index(0).slotSize(0).build(),
                     ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1152).y(299).index(1).slotSize(0).build(),
                     ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1267).y(299).index(2).slotSize(0).build(),
