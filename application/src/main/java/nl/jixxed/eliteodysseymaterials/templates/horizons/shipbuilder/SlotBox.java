@@ -285,7 +285,6 @@ public class SlotBox extends DestroyableStackPane {
                         contentOld.put(customFormat, this.slot.isOccupied() ? new DragboardContent(this.slot.getShipModule(), this.slot.getOldShipModule()) : "null");
                         event.getDragboard().setContent(contentOld);
                         this.slot.setShipModule(((DragboardContent) content).shipModule());
-                        this.slot.setOldShipModule(((DragboardContent) content).oldShipModule());
                         if (((DragboardContent) content).shipModule().getModuleSize().intValue() > this.slot.getSlotSize()) {
                             this.slot.getShipModule().findLowerSize(this.slot.getSlotSize()).ifPresent(this::replaceModule);
                         }
