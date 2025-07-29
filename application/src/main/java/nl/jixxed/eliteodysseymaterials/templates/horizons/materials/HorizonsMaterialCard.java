@@ -129,7 +129,12 @@ public class HorizonsMaterialCard extends DestroyableVBox implements Destroyable
     private boolean searchForSpawnLocation(final String search) {
         final List<HorizonsMaterialSpawnLocation> horizonsMaterialSpawnLocations = SpawnConstants.HORIZONSMATERIAL_LOCATION.get(this.material);
         if (horizonsMaterialSpawnLocations != null && !horizonsMaterialSpawnLocations.isEmpty()) {
-            return horizonsMaterialSpawnLocations.stream().map(horizonsMaterialSpawnLocation -> LocaleService.getLocalizedStringForCurrentLocale(horizonsMaterialSpawnLocation.getLocalizationKey())).anyMatch(spawn -> spawn.toLowerCase().contains(search.toLowerCase(LocaleService.getCurrentLocale())));
+            return horizonsMaterialSpawnLocations.stream()
+                    .anyMatch(horizonsMaterialSpawnLocation ->
+                            LocaleService.getLocalizedStringForCurrentLocale(horizonsMaterialSpawnLocation.getLocalizationKey()).toLowerCase().contains(search.toLowerCase(LocaleService.getCurrentLocale()))
+                                    || (horizonsMaterialSpawnLocation.getLocations() != null && horizonsMaterialSpawnLocation.getLocations().stream()
+                                    .anyMatch(location -> location.getStarSystem().getName().contains(search.toLowerCase(LocaleService.getCurrentLocale()))
+                                            || location.getBody().toLowerCase(LocaleService.getCurrentLocale()).contains(search.toLowerCase(LocaleService.getCurrentLocale())))));
         }
         return false;
     }

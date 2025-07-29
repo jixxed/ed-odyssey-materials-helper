@@ -295,11 +295,18 @@ public class MaterialService {
                     .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE)
                     .withText(LocaleService.getStringBinding("material.tooltip.spawnlocations"))
                     .build());
-            final DestroyableLabel locations = LabelBuilder.builder()
-                    .withText(LocaleService.getStringBinding(() -> horizonsMaterialSpawnLocations.stream().map(horizonsMaterialSpawnLocation -> LocaleService.getLocalizedStringForCurrentLocale(horizonsMaterialSpawnLocation.getLocalizationKey())).collect(Collectors.joining("\n"))))
-                    .build();
-            locations.setWrapText(true);
-            vBox.getNodes().add(locations);
+            horizonsMaterialSpawnLocations.stream().forEach(spawn -> {
+                if (spawn.hasLocations()) {
+                    Location closest = spawn.getClosest();
+                    final CopyableLocation copyableLocation = new CopyableLocation(closest.getStarSystem(), LocaleService.getLocalizedStringForCurrentLocale(spawn.getLocalizationKey(), closest.getBody()));
+                    vBox.getNodes().add(copyableLocation);
+                } else {
+                    final DestroyableLabel location = LabelBuilder.builder()
+                            .withText(LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale(spawn.getLocalizationKey())))
+                            .build();
+                    vBox.getNodes().add(location);
+                }
+            });
         }
     }
 
