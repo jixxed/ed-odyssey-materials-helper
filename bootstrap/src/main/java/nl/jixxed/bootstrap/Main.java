@@ -10,18 +10,21 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Objects;
+
 @Slf4j
 public class Main {
 
     public static void main(final String[] args) {
-        boolean runningAsAdmin = isRunningAsAdmin();
-        boolean uacEnabled = isUACEnabled();
-        log.info("runningAsAdmin: {}, uacEnabled: {}", runningAsAdmin, uacEnabled);
-        if (OsCheck.isWindows() && runningAsAdmin && uacEnabled) {
-            log.error("This application should not be started with elevated privileges. Please restart the app without elevated privileges.");
-            AdminError.launchFx(args);
-        }else {
-            Launcher.launchFx(args);
+        if (OsCheck.isWindows()) {
+            boolean runningAsAdmin = isRunningAsAdmin();
+            boolean uacEnabled = isUACEnabled();
+            log.info("runningAsAdmin: {}, uacEnabled: {}", runningAsAdmin, uacEnabled);
+            if (runningAsAdmin && uacEnabled) {
+                log.error("This application should not be started with elevated privileges. Please restart the app without elevated privileges.");
+                AdminError.launchFx(args);
+            } else {
+                Launcher.launchFx(args);
+            }
         }
     }
 
