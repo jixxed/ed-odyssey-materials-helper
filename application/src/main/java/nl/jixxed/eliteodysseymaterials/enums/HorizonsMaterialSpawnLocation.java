@@ -14,7 +14,17 @@ import java.util.Optional;
 public enum HorizonsMaterialSpawnLocation implements SpawnLocation {
     HOT_JUPITER(List.of(new Location(new StarSystem("Col 285 Sector RF-C b14-7", -164.0625, 12.84375, -55.90625), "B1", null, null, null, null))),
     DAVS_HOPE(List.of(new Location(new StarSystem("Hyades Sector DR-V c2-23", -104.625, -0.8125, -151.90625), "A5", null, null, null, null))),
-    BRAIN_TREES(List.of(new Location(new StarSystem("HR 3230", 394.15625, 19.25, -152.375), "3AA", null, null, null, null))),
+    BRAIN_TREES_SELENIUM(List.of(
+            new Location(new StarSystem("HR 3230", 394.15625, 19.25, -152.375), "3AA", null, null, null, null),
+            new Location(new StarSystem("Synuefe SE-V b49-4", 387.78125, -180.90625, -4.5625), "B3A @ -51.48, 63.90", null, null, null, null))),
+    BRAIN_TREES_POLONIUM(List.of(new Location(new StarSystem("Synuefe AA-P c22-7", 420.75, -172.78125, -75.0625), "5C", null, null, null, null))),
+    BRAIN_TREES_RUTHENIUM(List.of(new Location(new StarSystem("35 G. Carinae", 395.5, -126.59375, -44.3125), "2C", null, null, null, null))),
+    BRAIN_TREES_TELLURIUM(List.of(new Location(new StarSystem("Synuefe SE-V b49-4", 387.78125, -180.90625, -4.5625), "B3A @ -50.97, 63.98", null, null, null, null))),
+    BRAIN_TREES_TECHNETIUM(List.of(
+            new Location(new StarSystem("35 G. Carinae", 395.5, -126.59375, -44.3125), "2A", null, null, null, null),
+            new Location(new StarSystem("HR 3230", 394.15625, 19.25, -152.375), "3AA", null, null, null, null))),
+    BRAIN_TREES_YTTRIUM(List.of(new Location(new StarSystem("35 G. Carinae", 395.5, -126.59375, -44.3125), "2D", null, null, null, null))),
+    BRAIN_TREES_ANTIMONY(List.of(new Location(new StarSystem("35 G. Carinae", 395.5, -126.59375, -44.3125), "1E", null, null, null, null))),
     JAMESON_CRASH_SITE(List.of(new Location(new StarSystem("HIP 12099", -101.90625, -95.46875, -165.59375), "1B", null, null, null, null))),
     MISSION_REWARD(null),
     SCAN_MISSIONS(null),
@@ -113,7 +123,7 @@ public enum HorizonsMaterialSpawnLocation implements SpawnLocation {
     }
 
     public Location getClosest() {
-        if(!hasLocations()) return null;
+        if (!hasLocations()) return null;
         final StarSystem currentSystem = LocationService.getCurrentLocation().getStarSystem();
         Optional<Location> closest = locations.stream().min(Comparator.comparing(location -> currentSystem.getDistance(location.getStarSystem())));
         return closest.orElse(null);
