@@ -1,3 +1,7 @@
+Version 2.210
+-------------
+Fix bug in Chinese locale
+
 Version 2.209
 -------------
 Fixed a bug that could cause the MODULE RESIZED message to stick on the module
