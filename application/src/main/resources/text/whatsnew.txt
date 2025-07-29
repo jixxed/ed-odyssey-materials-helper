@@ -1,3 +1,9 @@
+Version 2.209
+-------------
+Fixed a bug that could cause the MODULE RESIZED message to stick on the module
+Added new crashed ship material locations.
+Added clickable link for material locations and shows closest one if there are multiple locations
+
 Version 2.208
 -------------
 Fix launching application on Windows that have certain accessibility features configured.
