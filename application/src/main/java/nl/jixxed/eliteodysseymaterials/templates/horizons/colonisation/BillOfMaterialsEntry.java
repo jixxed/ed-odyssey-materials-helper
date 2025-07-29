@@ -280,7 +280,17 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
         if (currentCargo == 0D)
             return Formatters.NUMBER_FORMAT_0.format(Double.POSITIVE_INFINITY);
 
-        return Formatters.NUMBER_FORMAT_0.format(1 + (quantity / currentCargo)) + " x " + Formatters.NUMBER_FORMAT_0.format(currentCargo) + "T";
+        return Formatters.NUMBER_FORMAT_0.format(calculateTrips(quantity, currentCargo)) + " x " + Formatters.NUMBER_FORMAT_0.format(currentCargo) + "T";
+    }
+
+    public static Double calculateTrips(int quantity, int currentCargoCapacity) {
+        if (quantity <= 0) {
+            return 0D;
+        }
+        if( currentCargoCapacity <= 0){
+            return Double.POSITIVE_INFINITY;
+        }
+        return 1D + ((quantity-1) / currentCargoCapacity);
     }
 
     private void updateStyle() {
