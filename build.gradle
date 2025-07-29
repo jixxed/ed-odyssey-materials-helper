@@ -140,6 +140,7 @@ ext {
     version_j2objc_annotations = "3.0.0"
     version_mockito = "5.18.0"
     version_sentry = "8.17.0"
+    version_github_classgraph = "4.8.181"
 }
 allprojects {
     plugins.withType(JavaPlugin).whenPluginAdded {
@@ -180,7 +181,7 @@ allprojects {
                 implementation "javax.servlet:javax.servlet-api:4.0.1"
                 implementation "org.controlsfx:controlsfx:${version_controlsfx}"
                 implementation "org.jfxtras:jmetro:11.6.16"
-                implementation 'io.github.classgraph:classgraph:4.8.181'
+                implementation "io.github.classgraph:classgraph:${version_github_classgraph}"
                 implementation 'de.jensd:fontawesomefx-commons:9.1.2'
                 implementation 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2'
 
