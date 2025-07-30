@@ -108,9 +108,20 @@ public class WishlistService {
      * @return a range of integers representing the minimum and maximum amount of the material needed for the current wishlist.
      */
     public static IntegerRange getCurrentWishlistCount(final HorizonsMaterial horizonsMaterial) {
+        return getCurrentWishlistCount(horizonsMaterial, true);
+    }
+    /**
+     * Get the current wishlist count for a specific material.
+     * Minimum amounts assume engineer ranks of 5.
+     * Maximum amounts are based on the level of the lowest ranking engineer.
+     *
+     * @param horizonsMaterial
+     * @return a range of integers representing the minimum and maximum amount of the material needed for the current wishlist.
+     */
+    public static IntegerRange getCurrentWishlistCount(final HorizonsMaterial horizonsMaterial, boolean includeInvisible) {
         return APPLICATION_STATE.getPreferredCommander().map(commander -> {
                     final HorizonsWishlist selectedWishlist = getHorizonsWishlists(commander).getSelectedWishlist();
-                    return getWishlistCount(horizonsMaterial, selectedWishlist);
+                    return getWishlistCount(horizonsMaterial, selectedWishlist, includeInvisible);
                 }
         ).orElse(new IntegerRange(0, 0));
     }
@@ -127,13 +138,14 @@ public class WishlistService {
         return APPLICATION_STATE.getPreferredCommander()
                 .map(commander ->
                         getHorizonsWishlists(commander).getWishlists().stream()
-                                .map(wishlist -> getWishlistCount(horizonsMaterial, wishlist))
+                                .map(wishlist -> getWishlistCount(horizonsMaterial, wishlist, true))
                                 .reduce(new IntegerRange(0, 0), IntegerRange::sum))
                 .orElse(new IntegerRange(0, 0));
     }
 
-    private static IntegerRange getWishlistCount(HorizonsMaterial horizonsMaterial, HorizonsWishlist wishlist) {
+    private static IntegerRange getWishlistCount(HorizonsMaterial horizonsMaterial, HorizonsWishlist wishlist, boolean includeInvisible) {
         return wishlist.getItems().stream()
+                .filter(bp-> includeInvisible || bp.isVisible())
                 .map(horizonsWishlistBlueprint -> {
                     final int quantity = horizonsWishlistBlueprint.getQuantity();
                     if (horizonsWishlistBlueprint instanceof HorizonsModuleWishlistBlueprint horizonsModuleWishlistBlueprint) {//modules

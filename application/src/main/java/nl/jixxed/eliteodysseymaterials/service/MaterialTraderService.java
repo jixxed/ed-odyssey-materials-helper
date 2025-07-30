@@ -70,7 +70,7 @@ public class MaterialTraderService {
                 .filter(mat -> mat.getClass().equals(horizonsMaterial.getClass())) // only same class materials can be traded
                 .filter(mat -> mat.getMaterialType() != HorizonsMaterialType.GUARDIAN && mat.getMaterialType() != HorizonsMaterialType.THARGOID) // only human materials can be traded
                 .sorted(getMaterialSorter(horizonsMaterial).thenComparing(Comparator.comparing(HorizonsMaterial::getRarity).reversed()))
-                .map(material -> new HorizonsTradeSuggestion(material, horizonsMaterial, StorageService.getMaterialCount(material), WishlistService.getCurrentWishlistCount(material).max(), WishlistService.getCurrentWishlistCount(horizonsMaterial).max() - StorageService.getMaterialCount(horizonsMaterial)))
+                .map(material -> new HorizonsTradeSuggestion(material, horizonsMaterial, StorageService.getMaterialCount(material), WishlistService.getCurrentWishlistCount(material,false).max(), WishlistService.getCurrentWishlistCount(horizonsMaterial,false).max() - StorageService.getMaterialCount(horizonsMaterial)))
                 .filter(HorizonsTradeSuggestion::canCompleteTrade)
                 .sorted(getSuggestionSorter(horizonsMaterial).thenComparing(Comparator.comparing((HorizonsTradeSuggestion o) -> o.getHorizonsMaterialFrom().getRarity()).reversed()).thenComparing(Comparator.comparing(HorizonsTradeSuggestion::getPercentageUsedOnTrade)))
                 .limit(4)
