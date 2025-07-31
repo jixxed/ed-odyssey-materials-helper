@@ -264,6 +264,26 @@
         @include copyable-location;
       }
     }
+    .nearest-guardian-structure {
+      @include fixedWidth(35.25em);
+      -fx-background-color: $background-color-dark;
+      -fx-border-color: $border-color-black;
+      -fx-padding: 0.25em;
+
+      &:hidden {
+        -fx-opacity: 0;
+      }
+
+      .title {
+        -fx-text-fill: white;
+        -fx-font-size: 1.2em;
+        -fx-font-weight: normal;
+      }
+
+      .copyable-location {
+        @include copyable-location;
+      }
+    }
   }
 
   .about-title-pane {

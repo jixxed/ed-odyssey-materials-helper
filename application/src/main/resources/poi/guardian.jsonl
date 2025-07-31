@@ -17,6 +17,7 @@
 {"name":"Col 173 Sector RU-O d6-16","coords":{"x":951.1875,"y":-223.25,"z":-152.40625},"body":"A2A","layout":"Hammerbot"}
 {"name":"Col 173 Sector SU-O d6-54","coords":{"x":981.125,"y":-202.65625,"z":-110.53125},"body":"B2","layout":"Turtle"}
 {"name":"Col 173 Sector SZ-G b26-0","coords":{"x":925.625,"y":-234.96875,"z":-132.6875},"body":"B2","layout":"Turtle"}
+{"name":"Col 173 Sector XG-K b25-3","coords":{"x":896.21875,"y":-81.90625,"z":-159.0625},"body":"B2","layout":"Turtle"}
 {"name":"Col 173 Sector XH-H c11-21","coords":{"x":894.3125,"y":-153.75,"z":-212.3125},"body":"B1","layout":"Bear"}
 {"name":"Col 173 Sector ZL-L b24-2","coords":{"x":896.78125,"y":-134.90625,"z":-182.09375},"body":"B1","layout":"Bowl"}
 {"name":"Col 173 Sector ZS-F c12-27","coords":{"x":894.6875,"y":-113.5625,"z":-166.46875},"body":"B3","layout":"Hammerbot"}
@@ -28,9 +29,11 @@
 {"name":"IC 2391 Sector FL-X b1-7","coords":{"x":611.34375,"y":-78.40625,"z":-51.6875},"body":"A3","layout":"Squid"}
 {"name":"IC 2391 Sector HG-X b1-8","coords":{"x":603.9375,"y":-104.15625,"z":-61.5625},"body":"C2","layout":"Robolobster"}
 {"name":"NGC 2451A Sector DL-Y d61","coords":{"x":734.6875,"y":-150.28125,"z":-272.28125},"body":"A2","layout":"Turtle"}
+{"name":"NGC 2451A Sector EB-X c1-18","coords":{"x":731.03125,"y":-86.5,"z":-280.90625},"body":"C2","layout":"Hammerbot"}
 {"name":"NGC 2451A Sector IR-W d1-77","coords":{"x":742.78125,"y":-156.90625,"z":-260.96875},"body":"AB1A","layout":"Hammerbot"}
 {"name":"NGC 2451A Sector MC-V c2-5","coords":{"x":795.6875,"y":-114.34375,"z":-258.25},"body":"E1","layout":"Bowl"}
 {"name":"NGC 2451A Sector TO-R c4-10","coords":{"x":758.875,"y":-122,"z":-165.03125},"body":"B1","layout":"Robolobster"}
+{"name":"NGC 2451A Sector UJ-Q b5-7","coords":{"x":758.09375,"y":-90.75,"z":-226.34375},"body":"B2","layout":"Hammerbot"}
 {"name":"NGC 2451A Sector VJ-R c4-22","coords":{"x":746.34375,"y":-153.09375,"z":-164.25},"body":"A1","layout":"Stickyhand"}
 {"name":"NGC 2451A Sector WE-Q b5-6","coords":{"x":772.5625,"y":-123.75,"z":-240.125},"body":"B1","layout":"Bear"}
 {"name":"Pencil Sector BQ-X b1-4","coords":{"x":800.71875,"y":26.75,"z":-104.59375},"body":"B2","layout":"Bear"}

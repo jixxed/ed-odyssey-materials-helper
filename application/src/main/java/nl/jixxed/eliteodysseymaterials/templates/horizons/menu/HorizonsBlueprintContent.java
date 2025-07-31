@@ -78,7 +78,24 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
         if (this.blueprint instanceof HorizonsTechBrokerBlueprint blueprint) {
             initClosestTrader(blueprint.getHorizonsBrokerTypes());
         }
+        if (this.blueprint instanceof HorizonsTechBrokerBlueprint blueprint &&
+                List.of(HorizonsBlueprintName.GUARDIAN_FIGHTERS,
+                        HorizonsBlueprintName.GUARDIAN_MODULES,
+                        HorizonsBlueprintName.GUARDIAN_WEAPONS).contains(blueprint.getBlueprintName())) {
+            initClosestGuardianStructure(getLayoutsForName(blueprint.getBlueprintName()));
+        }
 
+    }
+
+    private List<GuardianStructureLayout> getLayoutsForName(HorizonsBlueprintName blueprintName) {
+        return switch (blueprintName) {
+            case HorizonsBlueprintName.GUARDIAN_FIGHTERS ->
+                    List.of(GuardianStructureLayout.ROBOLOBSTER, GuardianStructureLayout.STICKYHAND, GuardianStructureLayout.SQUID);
+            case HorizonsBlueprintName.GUARDIAN_MODULES -> List.of(GuardianStructureLayout.TURTLE);
+            case HorizonsBlueprintName.GUARDIAN_WEAPONS ->
+                    List.of(GuardianStructureLayout.BEAR, GuardianStructureLayout.HAMMERBOT, GuardianStructureLayout.BOWL);
+            default -> throw new IllegalArgumentException("Unsupported guardian blueprint name: " + blueprintName);
+        };
     }
 
     private void initHeader() {
@@ -120,6 +137,15 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
                 .withText("blueprint.label.nearest")
                 .build();
         this.getNodes().addAll(title, new HorizonsNearestBroker(horizonsBrokerTypes));
+    }
+
+    private void initClosestGuardianStructure(final List<GuardianStructureLayout> guardianStructureLayouts) {
+
+        final DestroyableLabel title = LabelBuilder.builder()
+                .withStyleClasses(TITLE_STYLE_CLASS, SPACING)
+                .withText("blueprint.label.nearest.guardian.structure")
+                .build();
+        this.getNodes().addAll(title, new HorizonsNearestGuardianStructure(guardianStructureLayouts));
     }
 
     private void loadIngredients() {

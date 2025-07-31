@@ -934,6 +934,39 @@
               -fx-fit-to-width: true; }
             .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-broker .copyable-location .distance {
               -fx-text-fill: gray; }
+        .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure {
+          -fx-min-width: 35.25em;
+          -fx-pref-width: 35.25em;
+          -fx-max-width: 35.25em;
+          -fx-background-color: #0f0f0f;
+          -fx-border-color: black;
+          -fx-padding: 0.25em; }
+          .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure:hidden {
+            -fx-opacity: 0; }
+          .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure .title {
+            -fx-text-fill: white;
+            -fx-font-size: 1.2em;
+            -fx-font-weight: normal; }
+          .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure .copyable-location {
+            -fx-font-weight: normal;
+            -fx-hgap: 0.25em; }
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure .copyable-location:hover {
+              -fx-cursor: hand; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure .copyable-location:hover .location {
+                -fx-text-fill: #5aa9e6; }
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure .copyable-location .location {
+              -fx-text-fill: #2e92df; }
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure .copyable-location .copy-icon {
+              -fx-min-width: 1em;
+              -fx-pref-width: 1em;
+              -fx-max-width: 1em;
+              -fx-min-height: 1em;
+              -fx-pref-height: 1em;
+              -fx-max-height: 1em;
+              -fx-fit-to-height: true;
+              -fx-fit-to-width: true; }
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure .copyable-location .distance {
+              -fx-text-fill: gray; }
       .app .application-screen .horizons-tab-content .blueprint-menu .about-title-pane {
         -fx-min-width: 36em;
         -fx-pref-width: 36em;
