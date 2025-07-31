@@ -19,3 +19,5 @@
 "total.type.name.powerplay","Powerplay","","","Powerplay","","","Powerplay","权力游戏"
 "tab.trader.distance","({0}Ly)","","","({0}Al)","","","({0}Св.л.)","({0}Ly)"
 "tab.trader.distance.in.system","({0}Ls ±{1}Ls)","","","({0}sl ±{1}sl)","","","({0}Св.с ±{1}Св.с)","({0}Ls ±{1}Ls)"
+"quantity.header.collected","Available","","","","","","",""
+"quantity.header.free","Free space","","","","","","",""

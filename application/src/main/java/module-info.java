@@ -43,6 +43,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires org.apache.commons.collections4;
     requires java.desktop;
     requires jdk.accessibility;
+    requires de.jensd.fx.glyphs.commons;
 
     exports nl.jixxed.eliteodysseymaterials.domain.ships;
     exports nl.jixxed.eliteodysseymaterials.domain;

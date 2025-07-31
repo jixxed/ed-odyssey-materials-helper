@@ -62,7 +62,7 @@
       .name {
         //-fx-padding: 0.25em 0 0 0;
         -fx-text-fill: $text-color-white;
-        @include fixedWidth(13.75em);
+        @include fixedWidth(11.25em);
         //-fx-min-height: 2em;
         //-fx-max-height: 12em;
         -fx-wrap-text: true;
@@ -73,14 +73,34 @@
       .category {
         //-fx-padding: 0.25em 0 0 0;
         -fx-text-fill: $text-color-grey;
-        @include fixedWidth(13.75em);
+        @include fixedWidth(11.25em);
         //-fx-min-height: 2em;
         //-fx-max-height: 12em;
         -fx-wrap-text: true;
 
         //-fx-alignment: top-left;
       }
+      .quantity-line {
+        -fx-spacing: 0.25em;
+        -fx-padding: 0.25em;
+        .count-label {
+          -fx-text-fill: $text-color-green;
+        }
 
+        .storage-label {
+          -fx-text-fill: $text-color-white;
+        }
+
+        .count {
+          -fx-text-fill: $text-color-green;
+          -fx-font-weight: bold;
+        }
+
+        .storage {
+          -fx-text-fill: $text-color-white;
+          -fx-font-weight: bold;
+        }
+      }
 
       .image {
         @include fixedWidth(2em);
@@ -88,10 +108,40 @@
         -fx-fit-to-height: true;
         -fx-fit-to-width: true;
       }
+      .icon{
+        @include fixedWidth(2em);
+        @include fixedHeight(2em);
+        -fx-font-size: 2em !important;
+        -fx-fill: white;
+        //&:hover{
+        //  -fx-fill: $text-color-yellow;
+        //}
+      }
+      .wishlist-icon{
+        -fx-padding: 0.25em 0.25em 0 0;
+        .glyph-icon {
+          -fx-alignment: top-right;
+          @include fixedWidth(1em);
+          @include fixedHeight(1em);
+          -fx-fill: $text-color-blue;
+          -fx-font-size: 2em !important;
+          //&:hover{
+          //  -fx-fill: $text-color-yellow;
+          //}}
+        }
+      }
+      .wishlist-image {
+        @include fixedWidth(2em);
+        @include fixedHeight(2em);
+        -fx-background-color: #123123;
+        -fx-fit-to-height: true;
+        -fx-fit-to-width: true;
+        -fx-alignment: right;
+      }
 
       .segmented-bar {
         @include fixedWidth(16.5em);
-        @include fixedHeight(1em);
+        @include fixedHeight(0.5em);
 
         @include segmented-bar-straight;
 
@@ -107,7 +157,7 @@
         }
 
         .not-present {
-          -fx-background-color: $progress-bar-color-red;
+          -fx-background-color: $progress-bar-color-grey;
         }
 
         .present {
@@ -117,8 +167,8 @@
       }
 
       .text-line {
-        -fx-spacing: 0.25em;
         @include fixedWidth(16.5em);
+        -fx-spacing: 0.25em;
         -fx-padding: 0.25em;
       }
     }

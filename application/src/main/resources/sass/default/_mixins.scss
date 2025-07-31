@@ -319,7 +319,12 @@
     -fx-stroke: #fff !important;
     -fx-stroke-width: 1px !important;
     -fx-fill: #0f0f0f !important;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important;
   }
+  -fx-background-insets: 0 !important;
+  -fx-border-insets: 0em;
+  -fx-padding: 0em;
+
 }
 
 @mixin tooltip {

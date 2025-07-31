@@ -566,16 +566,29 @@
             -fx-font-weight: bold; }
           .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .name {
             -fx-text-fill: white;
-            -fx-min-width: 13.75em;
-            -fx-pref-width: 13.75em;
-            -fx-max-width: 13.75em;
+            -fx-min-width: 11.25em;
+            -fx-pref-width: 11.25em;
+            -fx-max-width: 11.25em;
             -fx-wrap-text: true; }
           .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .category {
             -fx-text-fill: gray;
-            -fx-min-width: 13.75em;
-            -fx-pref-width: 13.75em;
-            -fx-max-width: 13.75em;
+            -fx-min-width: 11.25em;
+            -fx-pref-width: 11.25em;
+            -fx-max-width: 11.25em;
             -fx-wrap-text: true; }
+          .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .quantity-line {
+            -fx-spacing: 0.25em;
+            -fx-padding: 0.25em; }
+            .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .quantity-line .count-label {
+              -fx-text-fill: #89d07f; }
+            .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .quantity-line .storage-label {
+              -fx-text-fill: white; }
+            .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .quantity-line .count {
+              -fx-text-fill: #89d07f;
+              -fx-font-weight: bold; }
+            .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .quantity-line .storage {
+              -fx-text-fill: white;
+              -fx-font-weight: bold; }
           .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .image {
             -fx-min-width: 2em;
             -fx-pref-width: 2em;
@@ -585,13 +598,45 @@
             -fx-max-height: 2em;
             -fx-fit-to-height: true;
             -fx-fit-to-width: true; }
+          .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .icon {
+            -fx-min-width: 2em;
+            -fx-pref-width: 2em;
+            -fx-max-width: 2em;
+            -fx-min-height: 2em;
+            -fx-pref-height: 2em;
+            -fx-max-height: 2em;
+            -fx-font-size: 2em !important;
+            -fx-fill: white; }
+          .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .wishlist-icon {
+            -fx-padding: 0.25em 0.25em 0 0; }
+            .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .wishlist-icon .glyph-icon {
+              -fx-alignment: top-right;
+              -fx-min-width: 1em;
+              -fx-pref-width: 1em;
+              -fx-max-width: 1em;
+              -fx-min-height: 1em;
+              -fx-pref-height: 1em;
+              -fx-max-height: 1em;
+              -fx-fill: #2e92df;
+              -fx-font-size: 2em !important; }
+          .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .wishlist-image {
+            -fx-min-width: 2em;
+            -fx-pref-width: 2em;
+            -fx-max-width: 2em;
+            -fx-min-height: 2em;
+            -fx-pref-height: 2em;
+            -fx-max-height: 2em;
+            -fx-background-color: #123123;
+            -fx-fit-to-height: true;
+            -fx-fit-to-width: true;
+            -fx-alignment: right; }
           .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .segmented-bar {
             -fx-min-width: 16.5em;
             -fx-pref-width: 16.5em;
             -fx-max-width: 16.5em;
-            -fx-min-height: 1em;
-            -fx-pref-height: 1em;
-            -fx-max-height: 1em;
+            -fx-min-height: 0.5em;
+            -fx-pref-height: 0.5em;
+            -fx-max-height: 0.5em;
             -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentedBarSkin"; }
             .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .segmented-bar:horizontal > .only-segment {
               -fx-background-radius: 0;
@@ -612,14 +657,14 @@
               .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .segmented-bar .segment .label {
                 -fx-text-fill: black; }
             .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .segmented-bar .not-present {
-              -fx-background-color: #ff7c7c; }
+              -fx-background-color: gray; }
             .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .segmented-bar .present {
               -fx-background-color: #89d07f; }
           .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .text-line {
-            -fx-spacing: 0.25em;
             -fx-min-width: 16.5em;
             -fx-pref-width: 16.5em;
             -fx-max-width: 16.5em;
+            -fx-spacing: 0.25em;
             -fx-padding: 0.25em; }
         .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .nearest-trader-flow {
           -fx-hgap: 0.25em;
@@ -1262,11 +1307,15 @@
             -fx-cursor: hand; }
           .horizons-shipbuilder-help-popover {
             -fx-background-color: transparent !important;
-            -fx-border-width: 0; }
+            -fx-border-width: 0;
+            -fx-background-insets: 0 !important;
+            -fx-border-insets: 0em;
+            -fx-padding: 0em; }
             .horizons-shipbuilder-help-popover > .border {
               -fx-stroke: #fff !important;
               -fx-stroke-width: 1px !important;
-              -fx-fill: #0f0f0f !important; }
+              -fx-fill: #0f0f0f !important;
+              -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
             .horizons-shipbuilder-help-popover .help-popover .hint-line {
               -fx-spacing: 0.5em; }
             .horizons-shipbuilder-help-popover .help-popover .hint-color {
@@ -1950,11 +1999,15 @@
           -fx-border-width: 0;
           -fx-background-insets: 0 !important;
           -fx-border-insets: 0em;
+          -fx-padding: 0em;
+          -fx-background-insets: 0 !important;
+          -fx-border-insets: 0em;
           -fx-padding: 0em; }
           .shipbuilder-details-popover > .border {
             -fx-stroke: #fff !important;
             -fx-stroke-width: 1px !important;
-            -fx-fill: #0f0f0f !important; }
+            -fx-fill: #0f0f0f !important;
+            -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
           .shipbuilder-details-popover > .border {
             -fx-stroke: white !important;
             -fx-stroke-width: 1px !important;
@@ -2096,6 +2149,9 @@
         .shipbuilder-ship-view-popover {
           -fx-background-color: transparent !important;
           -fx-border-width: 0;
+          -fx-background-insets: 0 !important;
+          -fx-border-insets: 0em;
+          -fx-padding: 0em;
           -fx-min-width: 27em;
           -fx-pref-width: 27em;
           -fx-max-width: 27em;
@@ -2108,7 +2164,8 @@
           .shipbuilder-ship-view-popover > .border {
             -fx-stroke: #fff !important;
             -fx-stroke-width: 1px !important;
-            -fx-fill: #0f0f0f !important; }
+            -fx-fill: #0f0f0f !important;
+            -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
           .shipbuilder-ship-view-popover > .border {
             -fx-stroke: white !important;
             -fx-stroke-width: 0px !important;
@@ -2278,11 +2335,15 @@
             -fx-cursor: hand; }
           .horizons-wishlist-blueprints-help-popover {
             -fx-background-color: transparent !important;
-            -fx-border-width: 0; }
+            -fx-border-width: 0;
+            -fx-background-insets: 0 !important;
+            -fx-border-insets: 0em;
+            -fx-padding: 0em; }
             .horizons-wishlist-blueprints-help-popover > .border {
               -fx-stroke: #fff !important;
               -fx-stroke-width: 1px !important;
-              -fx-fill: #0f0f0f !important; }
+              -fx-fill: #0f0f0f !important;
+              -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
             .horizons-wishlist-blueprints-help-popover .help-popover .hint-line {
               -fx-spacing: 0.5em; }
             .horizons-wishlist-blueprints-help-popover .help-popover .wishlist-hint-explain {
@@ -2458,11 +2519,15 @@
               -fx-font-size: 14px;
               -fx-font-size: 1em;
               -fx-background-color: transparent !important;
-              -fx-border-width: 0; }
+              -fx-border-width: 0;
+              -fx-background-insets: 0 !important;
+              -fx-border-insets: 0em;
+              -fx-padding: 0em; }
               .horizons-wishlist-blueprints-module-popover > .border {
                 -fx-stroke: #fff !important;
                 -fx-stroke-width: 1px !important;
-                -fx-fill: #0f0f0f !important; }
+                -fx-fill: #0f0f0f !important;
+                -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
               .horizons-wishlist-blueprints-module-popover .content {
                 -fx-padding: 0.25em;
                 -fx-spacing: 0.25em;
@@ -2523,11 +2588,15 @@
             -fx-cursor: hand; }
           .horizons-wishlist-materials-help-popover {
             -fx-background-color: transparent !important;
-            -fx-border-width: 0; }
+            -fx-border-width: 0;
+            -fx-background-insets: 0 !important;
+            -fx-border-insets: 0em;
+            -fx-padding: 0em; }
             .horizons-wishlist-materials-help-popover > .border {
               -fx-stroke: #fff !important;
               -fx-stroke-width: 1px !important;
-              -fx-fill: #0f0f0f !important; }
+              -fx-fill: #0f0f0f !important;
+              -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
             .horizons-wishlist-materials-help-popover .help-popover .hint-line {
               -fx-spacing: 0.5em; }
             .horizons-wishlist-materials-help-popover .help-popover .wishlist-hint-explain {
@@ -3535,11 +3604,15 @@
             -fx-cursor: hand; }
           .odyssey-wishlist-blueprints-help-popover {
             -fx-background-color: transparent !important;
-            -fx-border-width: 0; }
+            -fx-border-width: 0;
+            -fx-background-insets: 0 !important;
+            -fx-border-insets: 0em;
+            -fx-padding: 0em; }
             .odyssey-wishlist-blueprints-help-popover > .border {
               -fx-stroke: #fff !important;
               -fx-stroke-width: 1px !important;
-              -fx-fill: #0f0f0f !important; }
+              -fx-fill: #0f0f0f !important;
+              -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
             .odyssey-wishlist-blueprints-help-popover .help-popover .hint-line {
               -fx-spacing: 0.5em; }
             .odyssey-wishlist-blueprints-help-popover .help-popover .wishlist-hint-explain {
@@ -3701,11 +3774,15 @@
               -fx-font-style: normal; }
             .odyssey-wishlist-blueprints-module-popover {
               -fx-background-color: transparent !important;
-              -fx-border-width: 0; }
+              -fx-border-width: 0;
+              -fx-background-insets: 0 !important;
+              -fx-border-insets: 0em;
+              -fx-padding: 0em; }
               .odyssey-wishlist-blueprints-module-popover > .border {
                 -fx-stroke: #fff !important;
                 -fx-stroke-width: 1px !important;
-                -fx-fill: #0f0f0f !important; }
+                -fx-fill: #0f0f0f !important;
+                -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
               .odyssey-wishlist-blueprints-module-popover .content {
                 -fx-padding: 0.25em;
                 -fx-spacing: 0.25em;
@@ -3761,11 +3838,15 @@
             -fx-cursor: hand; }
           .odyssey-wishlist-materials-help-popover {
             -fx-background-color: transparent !important;
-            -fx-border-width: 0; }
+            -fx-border-width: 0;
+            -fx-background-insets: 0 !important;
+            -fx-border-insets: 0em;
+            -fx-padding: 0em; }
             .odyssey-wishlist-materials-help-popover > .border {
               -fx-stroke: #fff !important;
               -fx-stroke-width: 1px !important;
-              -fx-fill: #0f0f0f !important; }
+              -fx-fill: #0f0f0f !important;
+              -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
             .odyssey-wishlist-materials-help-popover .help-popover .hint-line {
               -fx-spacing: 0.5em; }
             .odyssey-wishlist-materials-help-popover .help-popover .wishlist-hint-explain {
