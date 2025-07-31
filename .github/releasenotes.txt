@@ -6,5 +6,9 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Update to the launcher
-Updated localizations
+Fix issue where app would minimize on start
+Updated several ship engineer unlock requirement texts
+Added sensor fragment spawn locations
+Remove material trader locations in tooltip for guardian and thargoid materials
+Show trade suggestions with quantities for visible blueprints only, instead of all blueprints
+Add techbroker blueprints to wishlist from ship editor for repeatable unlock blueprints

@@ -1,3 +1,12 @@
+Version 2.212
+-------------
+Fix issue where app would minimize on start
+Updated several ship engineer unlock requirement texts
+Added sensor fragment spawn locations
+Remove material trader locations in tooltip for guardian and thargoid materials
+Show trade suggestions with quantities for visible blueprints only, instead of all blueprints
+Add techbroker blueprints to wishlist from ship editor for repeatable unlock blueprints
+
 Version 2.211
 -------------
 Update to the launcher
