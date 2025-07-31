@@ -264,7 +264,6 @@ public class FXApplication extends Application {
                     System.exit(0);
                 }
             });
-            primaryStage.setIconified(true);
             createApplicationScene();
             setupDeeplinkWatcher();
             setupWatchers();
