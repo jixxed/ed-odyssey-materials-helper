@@ -65,7 +65,10 @@ public enum HorizonsMaterialSpawnLocation implements SpawnLocation {
     GUARDIAN_DATA_TERMINAL(null),
     GUARDIAN_OBELISK(null),
     THARGOID_SCAVENGER(null),
-    THARGOID_SENSOR(null),
+    CRASHED_THARGOID_SHIP(List.of(
+            new Location(new StarSystem("Pleiades Sector AB-W b2-4", -137.5625, -118.25, -380.4375), "9A", null, null, null, null),//Pleiades Sector AB-W b2-4 body 9 a
+            new Location(new StarSystem("HIP 17862", -81.4375, -151.90625, -359.59375), "6CA", null, null, null, null), //HIP 17862 body 6 c a
+            new Location(new StarSystem("HIP 17403", -93.6875, -158.96875, -367.625), "A4A", null, null, null, null))), //HIP 17403 body A 4 a
     THARGOID_SHIP(null),
     GUARDIAN_PANELS(null),
     GUARDIAN_SENTINELS(null),
