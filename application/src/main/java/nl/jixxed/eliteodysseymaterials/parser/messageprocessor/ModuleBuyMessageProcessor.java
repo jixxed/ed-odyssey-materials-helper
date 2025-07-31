@@ -28,7 +28,7 @@ public class ModuleBuyMessageProcessor implements MessageProcessor<ModuleBuy> {
             return;
         }
         final ShipModule module = ShipModule.getModules(shipSlot.getSlotType()).stream()
-                .filter(shipModule -> shipModule.getInternalName().equalsIgnoreCase(event.getBuyItem()))
+                .filter(shipModule -> shipModule.getInternalName().equalsIgnoreCase(cleanName(event.getBuyItem())))
                 .filter(Predicate.not(ShipModule::isPreEngineered))
                 .findFirst()
                 .orElse(null);
@@ -37,6 +37,13 @@ public class ModuleBuyMessageProcessor implements MessageProcessor<ModuleBuy> {
 
         ShipMapper.toShipConfiguration(ship, ShipConfiguration.CURRENT, ShipConfiguration.CURRENT.getName());
         EventService.publish(new ShipLoadoutEvent());
+    }
+
+    static String cleanName(final String name) {
+        if (name.startsWith("$") && name.endsWith("_name;")) {
+            return name.substring(1, name.length() - 6);
+        }
+        return name;
     }
 
     @Override
