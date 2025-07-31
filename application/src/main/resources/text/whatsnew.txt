@@ -1,3 +1,8 @@
+Version 2.213
+-------------
+Fixed setting modules after ModuleRetrieve and ModuleBuy events by sanitizing module name
+Added nearest guardian site to techbroker blueprints
+
 Version 2.212
 -------------
 Fix issue where app would minimize on start
