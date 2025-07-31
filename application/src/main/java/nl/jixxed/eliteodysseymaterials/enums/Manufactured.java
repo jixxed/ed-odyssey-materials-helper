@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 @RequiredArgsConstructor
 @Getter
-public enum Manufactured implements HorizonsMaterial {
+public enum Manufactured implements EngineeringMaterial {
     BASICCONDUCTORS(Rarity.VERY_COMMON, HorizonsMaterialType.CONDUCTIVE, GameVersion.LEGACY),
     TG_BIOMECHANICALCONDUITS(Rarity.STANDARD, HorizonsMaterialType.THARGOID, GameVersion.LEGACY),//tg_biomechanicalconduits
     BIOTECHCONDUCTORS(Rarity.VERY_RARE, HorizonsMaterialType.CONDUCTIVE, GameVersion.LEGACY),

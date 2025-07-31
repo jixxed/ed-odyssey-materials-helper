@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 @RequiredArgsConstructor
 @Getter
-public enum Raw implements HorizonsMaterial {
+public enum Raw implements EngineeringMaterial {
 
     ANTIMONY(Rarity.RARE, HorizonsMaterialType.RAW_7),
     ARSENIC(Rarity.COMMON, HorizonsMaterialType.RAW_6),

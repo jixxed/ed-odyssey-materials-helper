@@ -103,7 +103,7 @@ public class MaterialService {
                         .withText(LocaleService.getStringBinding("material.tooltip.type.manufactured"))
                         .build());
             }
-            if (horizonsMaterial instanceof Raw || horizonsMaterial instanceof Encoded || horizonsMaterial instanceof Manufactured) {
+            if (horizonsMaterial instanceof EngineeringMaterial engineeringMaterial && engineeringMaterial.isHuman()) {
                 addClosestTraderToTooltip(horizonsMaterial, vBox);
             }
             addHorizonsSpawnLocationsToTooltip(SpawnConstants.HORIZONSMATERIAL_LOCATION.get(horizonsMaterial), vBox);

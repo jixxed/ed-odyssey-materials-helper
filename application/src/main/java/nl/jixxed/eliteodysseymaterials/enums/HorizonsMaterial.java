@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public sealed interface HorizonsMaterial extends Material permits Manufactured, Encoded, Raw, Commodity {
+public sealed interface HorizonsMaterial extends Material permits EngineeringMaterial, Commodity {
 
     default HorizonsStorageType getStorageType() {
         return HorizonsStorageType.OTHER;

@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 @RequiredArgsConstructor
 @Getter
-public enum Encoded implements HorizonsMaterial {
+public enum Encoded implements EngineeringMaterial {
     SHIELDPATTERNANALYSIS(Rarity.RARE, HorizonsMaterialType.SHIELD_DATA, GameVersion.LEGACY),
     COMPACTEMISSIONSDATA(Rarity.VERY_RARE, HorizonsMaterialType.EMISSION_DATA, GameVersion.LEGACY),
     ADAPTIVEENCRYPTORS(Rarity.VERY_RARE, HorizonsMaterialType.ENCRYPTION_FILES, GameVersion.LEGACY),
