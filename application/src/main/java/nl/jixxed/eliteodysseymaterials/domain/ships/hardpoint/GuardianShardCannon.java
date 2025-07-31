@@ -1,6 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint;
 
+import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints.GuardianShardCannonBlueprints;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsTechBrokerBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
@@ -112,5 +114,16 @@ public class GuardianShardCannon extends HardpointModule {
     @Override
     public int getModuleLimit() {
         return 4;
+    }
+
+    @Override
+    public HorizonsTechBrokerBlueprint techBrokerBlueprint() {
+        if (GUARDIAN_SHARD_CANNON_1_D_F_PRE.equals(this)){
+            return (HorizonsTechBrokerBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.GUARDIAN_WEAPONS, HorizonsBlueprintType.MODIFIED_SHARD_CANNON_FIXED_SMALL, null);
+        }
+        if (GUARDIAN_SHARD_CANNON_2_A_F_PRE.equals(this)){
+            return (HorizonsTechBrokerBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.GUARDIAN_WEAPONS, HorizonsBlueprintType.MODIFIED_SHARD_CANNON_FIXED_MEDIUM, null);
+        }
+        return super.techBrokerBlueprint();
     }
 }

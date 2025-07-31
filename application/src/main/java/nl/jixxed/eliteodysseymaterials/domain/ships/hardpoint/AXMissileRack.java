@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint;
 
+import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsTechBrokerBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
@@ -95,5 +97,17 @@ public class AXMissileRack extends HardpointModule {
     @Override
     public int getModuleLimit() {
         return 4;
+    }
+
+
+    @Override
+    public HorizonsTechBrokerBlueprint techBrokerBlueprint() {
+        if (AX_MISSILE_RACK_2_E_F_PRE.equals(this)){
+            return (HorizonsTechBrokerBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.HUMAN_WEAPONS, HorizonsBlueprintType.E2_SIRIUS_CORPORATION_AX_MISSILE_RACK, null);
+        }
+        if (AX_MISSILE_RACK_3_C_F_PRE.equals(this)){
+            return (HorizonsTechBrokerBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.HUMAN_WEAPONS, HorizonsBlueprintType.C3_SIRIUS_CORPORATION_AX_MISSILE_RACK, null);
+        }
+        return super.techBrokerBlueprint();
     }
 }

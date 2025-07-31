@@ -1,7 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint;
 
+import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.ExperimentalEffectBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints.MissileRackBlueprints;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsTechBrokerBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
@@ -114,7 +116,7 @@ public class MissileRack extends HardpointModule {
 
     @Override
     public boolean isCGExclusive() {
-        return SEEKER_MISSILE_RACK_2_B_F_PRE.equals(this) || SEEKER_MISSILE_RACK_2_B_F_PRE_2.equals(this) || SEEKER_MISSILE_RACK_3_A_F_PRE.equals(this);
+        return SEEKER_MISSILE_RACK_2_B_F_PRE_2.equals(this) || SEEKER_MISSILE_RACK_3_A_F_PRE.equals(this);
     }
 
     @Override
@@ -160,4 +162,11 @@ public class MissileRack extends HardpointModule {
         return super.findLowerSize();
     }
 
+    @Override
+    public HorizonsTechBrokerBlueprint techBrokerBlueprint() {
+        if (SEEKER_MISSILE_RACK_2_B_F_PRE.equals(this)) {
+            return (HorizonsTechBrokerBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.HUMAN_WEAPONS, HorizonsBlueprintType.ENGINEERED_MISSILE_RACK_V1, null);
+        }
+        return super.techBrokerBlueprint();
+    }
 }

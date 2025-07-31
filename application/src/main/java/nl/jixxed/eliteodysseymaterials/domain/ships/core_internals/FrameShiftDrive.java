@@ -1,7 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.core_internals;
 
+import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.ExperimentalEffectBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.core_internals.FSDBlueprints;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsTechBrokerBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.ships.CoreModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Modification;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleClass;
@@ -264,5 +266,26 @@ public class FrameShiftDrive extends CoreModule {
 
     public boolean isSelectable() {
         return !FRAME_SHIFT_DRIVE_2_E_FREE.equals(this);
+    }
+
+    @Override
+    public HorizonsTechBrokerBlueprint techBrokerBlueprint() {
+        return switch (this.getId()) {
+            case "FRAME_SHIFT_DRIVE_5_A_V1_PRE" ->
+                    (HorizonsTechBrokerBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_V1, null);
+            case "FRAME_SHIFT_DRIVE_OVERCHARGE_2_A_PRE" ->
+                    (HorizonsTechBrokerBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_SCO_A2_V1, null);
+            case "FRAME_SHIFT_DRIVE_OVERCHARGE_3_A_PRE" ->
+                    (HorizonsTechBrokerBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_SCO_A3_V1, null);
+            case "FRAME_SHIFT_DRIVE_OVERCHARGE_4_A_PRE" ->
+                    (HorizonsTechBrokerBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_SCO_A4_V1, null);
+            case "FRAME_SHIFT_DRIVE_OVERCHARGE_5_A_PRE" ->
+                    (HorizonsTechBrokerBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_SCO_A5_V1, null);
+            case "FRAME_SHIFT_DRIVE_OVERCHARGE_6_A_PRE" ->
+                    (HorizonsTechBrokerBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_SCO_A6_V1, null);
+            case "FRAME_SHIFT_DRIVE_OVERCHARGE_7_A_PRE" ->
+                    (HorizonsTechBrokerBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_SCO_A7_V1, null);
+            default -> super.techBrokerBlueprint();
+        };
     }
 }

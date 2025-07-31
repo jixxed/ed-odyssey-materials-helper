@@ -65,6 +65,7 @@ public class BeamLaser extends HardpointModule {
     public BeamLaser Clone() {
         return new BeamLaser(this);
     }
+
     @Override
     public String getClarifier() {
         if(RETRIBUTOR_BEAM_LASER_1_E_F.equals(this)){

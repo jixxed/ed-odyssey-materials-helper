@@ -43,10 +43,12 @@ public class MineLauncher extends HardpointModule {
     public List<HorizonsBlueprintType> getAllowedExperimentalEffects() {
         return ExperimentalEffectBlueprints.MINE_LAUNCHER.keySet().stream().toList();
     }
+
     @Override
     public MineLauncher Clone() {
         return new MineLauncher(this);
     }
+
     @Override
     public String getClarifier() {
         if(SHOCK_MINE_LAUNCHER_1_I_F.equals(this)){

@@ -39,6 +39,7 @@ public class Cannon extends HardpointModule {
             CANNON_4_B_G,
             CONCORD_CANNON_2_D_G
     );
+
     public Cannon(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, Mounting mounting, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, multiCrew, mounting, basePrice, internalName, attributes);
     }
@@ -68,6 +69,7 @@ public class Cannon extends HardpointModule {
     public Cannon Clone() {
         return new Cannon(this);
     }
+
     @Override
     public String getClarifier() {
         if(CONCORD_CANNON_2_D_G.equals(this)){

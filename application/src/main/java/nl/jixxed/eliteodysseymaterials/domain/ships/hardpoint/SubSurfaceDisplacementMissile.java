@@ -48,6 +48,7 @@ public class SubSurfaceDisplacementMissile extends HardpointModule {
     public SubSurfaceDisplacementMissile Clone() {
         return new SubSurfaceDisplacementMissile(this);
     }
+
     @Override
     public int getGrouping() {
         return switch (getId()) {

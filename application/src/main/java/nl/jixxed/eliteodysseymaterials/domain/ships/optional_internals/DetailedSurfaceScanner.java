@@ -1,6 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals;
 
+import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.optional_internals.DetailedSurfaceScannerBlueprints;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsTechBrokerBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
@@ -59,6 +61,14 @@ public class DetailedSurfaceScanner extends OptionalModule {
     @Override
     public boolean isPreEngineered() {
         return DETAILED_SURFACE_SCANNER_1_I_V1_PRE.equals(this);
+    }
+
+    @Override
+    public HorizonsTechBrokerBlueprint techBrokerBlueprint() {
+        if (DETAILED_SURFACE_SCANNER_1_I_V1_PRE.equals(this)){
+            return (HorizonsTechBrokerBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_DETAILED_SURFACE_SCANNER_V1, null);
+        }
+        return super.techBrokerBlueprint();
     }
 
     @Override

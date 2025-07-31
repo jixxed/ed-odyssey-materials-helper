@@ -1,6 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.utility;
 
+import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.utilitymounts.HeatSinkLauncherBlueprints;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsTechBrokerBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
@@ -66,6 +68,7 @@ public class SinkLauncher extends UtilityModule {
     public String getNonSortingClarifier() {
         return " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey() + ".short");
     }
+
     @Override
     public int getGrouping() {
         return switch (getId()) {
@@ -74,8 +77,17 @@ public class SinkLauncher extends UtilityModule {
             default -> 0;
         };
     }
+
     @Override
     public boolean isPassivePower(){
         return true;
+    }
+
+    @Override
+    public HorizonsTechBrokerBlueprint techBrokerBlueprint() {
+        if (HEAT_SINK_LAUNCHER_0_I_PRE.equals(this)){
+            return (HorizonsTechBrokerBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.SIRIUS_HEAT_SINK_LAUNCHER, null);
+        }
+        return super.techBrokerBlueprint();
     }
 }

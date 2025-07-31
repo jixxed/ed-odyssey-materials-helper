@@ -471,48 +471,69 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
 
     private static List<HorizonsWishlistBlueprint> getModuleBlueprints(boolean all, ShipConfigurationSlot slot, HorizonsBlueprintName name) {
         final List<HorizonsWishlistBlueprint> wishlistBlueprints = new ArrayList<>();
-        slot.getModification().stream()
-                .filter(modification -> !modification.getType().isPreEngineered())
-                .forEach(modification -> {
-                    //get grade
-                    final HorizonsBlueprintGrade grade = modification.getGrade();
-                    //get grades before and including grade
-                    final Map<HorizonsBlueprintGrade, Double> gradePercentageToComplete = new EnumMap<>(HorizonsBlueprintGrade.class);
-                    if (all || didNotHaveModule(slot) || hasDifferentModification(slot, modification)) {
-                        gradePercentageToComplete.putAll(getPercentagesUpTo(modification, name, grade));
-                    } else {
-                        final ShipConfigurationModification oldModification = slot.getOldModule().getModification().stream().filter(oldMod -> oldMod.getType().equals(modification.getType())).findFirst().orElseThrow(IllegalArgumentException::new);
-                        final HorizonsBlueprintGrade oldGrade = oldModification.getGrade();
-                        if (hasHigherGrade(oldGrade, grade) || (hasSameGrade(oldGrade, grade) && hasHigherCompletion(modification, oldModification))) {
-                            gradePercentageToComplete.putAll(getPercentagesToComplete(name, modification, oldGrade, grade, oldModification));
-                        } else {
-                            gradePercentageToComplete.putAll(getPercentagesUpTo(modification, name, grade));
+        slot.getModification().forEach(modification -> {
+            ShipModule module = ShipModule.getModule(slot.getId());
+                    if(module.isPreEngineered()){
+                        if (all || didNotHaveModule(slot) || hasDifferentModification(slot)) {
+                            if (module.hasTechBrokerBlueprint()) {
+                                final HorizonsTechBrokerWishlistBlueprint bp = new HorizonsTechBrokerWishlistBlueprint(module.techBrokerBlueprint().getHorizonsBlueprintType());
+                                bp.setRecipeName(module.techBrokerBlueprint().getHorizonsBlueprintName());
+                                bp.setVisible(true);
+                                wishlistBlueprints.add(bp);
+                            }
+                        }
+                        //effect
+                        HorizonsBlueprintType effect = null;
+                        if (all || didNotHaveModule(slot) || hasDifferentExperimentalEffect(slot) || hasDifferentModification(slot)) {
+                            effect = slot.getFirstExperimentalEffect() != null ? slot.getFirstExperimentalEffect().getType() : null;
                         }
 
-                        //cases
-                        //oldgrade is lower -> upgrade from oldgrade to new grade
-                        //no oldmodule or oldgrade is higher -> upgrade from 0 to new grade
-                    }
+                        if (effect != null) {
+                            final HorizonsExperimentalWishlistBlueprint bp = new HorizonsExperimentalWishlistBlueprint(effect);
+                            bp.setVisible(true);
+                            bp.setRecipeName(name);
+                            wishlistBlueprints.add(bp);
+                        }
+                    }else{
+                        //get grade
+                        final HorizonsBlueprintGrade grade = modification.getGrade();
+                        //get grades before and including grade
+                        final Map<HorizonsBlueprintGrade, Double> gradePercentageToComplete = new EnumMap<>(HorizonsBlueprintGrade.class);
+                        if (all || didNotHaveModule(slot) || hasDifferentModification(slot, modification)) {
+                            gradePercentageToComplete.putAll(getPercentagesUpTo(modification, name, grade));
+                        } else {
+                            final ShipConfigurationModification oldModification = slot.getOldModule().getModification().stream().filter(oldMod -> oldMod.getType().equals(modification.getType())).findFirst().orElseThrow(IllegalArgumentException::new);
+                            final HorizonsBlueprintGrade oldGrade = oldModification.getGrade();
+                            if (hasHigherGrade(oldGrade, grade) || (hasSameGrade(oldGrade, grade) && hasHigherCompletion(modification, oldModification))) {
+                                gradePercentageToComplete.putAll(getPercentagesToComplete(name, modification, oldGrade, grade, oldModification));
+                            } else {
+                                gradePercentageToComplete.putAll(getPercentagesUpTo(modification, name, grade));
+                            }
 
-                    //effect
-                    HorizonsBlueprintType effect = null;
-                    if (all || didNotHaveModule(slot) || hasDifferentExperimentalEffect(slot) || hasDifferentModification(slot)) {
-                        effect = slot.getFirstExperimentalEffect() != null ? slot.getFirstExperimentalEffect().getType() : null;
-                    }
+                            //cases
+                            //oldgrade is lower -> upgrade from oldgrade to new grade
+                            //no oldmodule or oldgrade is higher -> upgrade from 0 to new grade
+                        }
 
-                    if (!gradePercentageToComplete.values().stream().allMatch(rolls -> rolls.equals(0D))) {
-                        final HorizonsModuleWishlistBlueprint bp = new HorizonsModuleWishlistBlueprint(modification.getType(), gradePercentageToComplete);
-                        bp.setExperimentalEffect(effect);
-                        bp.setRecipeName(name);
-                        bp.setVisible(true);
-                        wishlistBlueprints.add(bp);
-                    } else if (effect != null) {
-                        final HorizonsExperimentalWishlistBlueprint bp = new HorizonsExperimentalWishlistBlueprint(effect);
-                        bp.setVisible(true);
-                        bp.setRecipeName(name);
-                        wishlistBlueprints.add(bp);
-                    }
+                        //effect
+                        HorizonsBlueprintType effect = null;
+                        if (all || didNotHaveModule(slot) || hasDifferentExperimentalEffect(slot) || hasDifferentModification(slot)) {
+                            effect = slot.getFirstExperimentalEffect() != null ? slot.getFirstExperimentalEffect().getType() : null;
+                        }
 
+                        if (!gradePercentageToComplete.values().stream().allMatch(rolls -> rolls.equals(0D))) {
+                            final HorizonsModuleWishlistBlueprint bp = new HorizonsModuleWishlistBlueprint(modification.getType(), gradePercentageToComplete);
+                            bp.setExperimentalEffect(effect);
+                            bp.setRecipeName(name);
+                            bp.setVisible(true);
+                            wishlistBlueprints.add(bp);
+                        } else if (effect != null) {
+                            final HorizonsExperimentalWishlistBlueprint bp = new HorizonsExperimentalWishlistBlueprint(effect);
+                            bp.setVisible(true);
+                            bp.setRecipeName(name);
+                            wishlistBlueprints.add(bp);
+                        }
+                    }
                 });
         return wishlistBlueprints;
     }

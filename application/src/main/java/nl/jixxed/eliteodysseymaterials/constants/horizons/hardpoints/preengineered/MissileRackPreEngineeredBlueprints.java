@@ -21,6 +21,7 @@ import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.*;
 public class MissileRackPreEngineeredBlueprints {
     public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> PRE_ENGINEERED_BLUEPRINTS = Map.of(
             //https://forums.frontier.co.uk/threads/enhanced-missile-rack-initiative-mining.564538/
+            //available at tech broker
             HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE_THERMAL_CASCADE,
             Map.of(
                     HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE_THERMAL_CASCADE, HorizonsBlueprintGrade.GRADE_5,

@@ -68,6 +68,7 @@ public class PulseLaser extends HardpointModule {
     public PulseLaser Clone() {
         return new PulseLaser(this);
     }
+
     @Override
     public String getClarifier() {
         if(PULSE_DISRUPTOR_LASER_2_E_F.equals(this)){

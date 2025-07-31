@@ -1,6 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint;
 
+import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints.GuardianPlasmaChargerBlueprints;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsTechBrokerBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
@@ -92,5 +94,16 @@ public class GuardianPlasmaCharger extends HardpointModule {
     @Override
     public int getModuleLimit() {
         return 4;
+    }
+
+    @Override
+    public HorizonsTechBrokerBlueprint techBrokerBlueprint() {
+        if (GUARDIAN_PLASMA_CHARGER_1_D_F_PRE.equals(this)){
+            return (HorizonsTechBrokerBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.GUARDIAN_WEAPONS, HorizonsBlueprintType.MODIFIED_PLASMA_CHARGER_FIXED_SMALL, null);
+        }
+        if (GUARDIAN_PLASMA_CHARGER_2_B_F_PRE.equals(this)){
+            return (HorizonsTechBrokerBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.GUARDIAN_WEAPONS, HorizonsBlueprintType.MODIFIED_PLASMA_CHARGER_FIXED_MEDIUM, null);
+        }
+        return super.techBrokerBlueprint();
     }
 }

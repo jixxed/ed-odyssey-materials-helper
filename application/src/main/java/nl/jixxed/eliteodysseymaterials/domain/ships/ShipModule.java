@@ -9,6 +9,7 @@ import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBiFunction;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModifierValue;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsTechBrokerBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.*;
@@ -607,11 +608,24 @@ public abstract class ShipModule implements Serializable {
 
     public boolean isSameModifications(ShipModule other) {
         return other != null && this.modifications.size() == other.getModifications().size()
-                && new HashSet<>(this.getModifications()).containsAll(other.getModifications());
+                && new HashSet<>(this.getModifications()).containsAll(other.getModifications())
+                && this.getModifications().stream()
+                .allMatch(mod -> other.getModifications().stream()
+                        .filter(modOther -> modOther.equals(mod))
+                        .allMatch(modOther -> modOther.getModificationCompleteness().equals(mod.getModificationCompleteness())
+                                && modOther.getGrade().equals(mod.getGrade())));
     }
 
     public boolean isSameExperimentalEffects(ShipModule other) {
         return other != null && this.experimentalEffects.size() == other.getExperimentalEffects().size()
                 && new HashSet<>(this.getExperimentalEffects()).containsAll(other.getExperimentalEffects());
+    }
+
+    public HorizonsTechBrokerBlueprint techBrokerBlueprint() {
+        return null;
+    }
+
+    public boolean hasTechBrokerBlueprint() {
+        return this.techBrokerBlueprint() != null;
     }
 }

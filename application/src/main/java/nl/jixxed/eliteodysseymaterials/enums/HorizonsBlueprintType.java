@@ -217,8 +217,7 @@ public enum HorizonsBlueprintType {
     private final boolean preEngineered;
 
     HorizonsBlueprintType(boolean experimental) {
-        this.experimental = experimental;
-        this.preEngineered = false;
+        this(experimental, false);
     }
 
     public static HorizonsBlueprintType forName(final String name) {

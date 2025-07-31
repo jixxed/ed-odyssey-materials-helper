@@ -77,11 +77,6 @@ public class KillWarrantScanner extends UtilityModule {
     }
 
     @Override
-    public String getClarifier() {
-        return isPreEngineered() ? " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey()) : "";
-    }
-
-    @Override
     public boolean isCGExclusive() {
         return isPreEngineered();
     }

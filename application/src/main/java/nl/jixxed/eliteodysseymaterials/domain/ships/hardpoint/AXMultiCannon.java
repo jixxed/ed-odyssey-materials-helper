@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint;
 
+import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsTechBrokerBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
@@ -104,4 +106,14 @@ public class AXMultiCannon extends HardpointModule {
         return 4;
     }
 
+    @Override
+    public HorizonsTechBrokerBlueprint techBrokerBlueprint() {
+        if (AX_MULTI_CANNON_2_E_F_PRE.equals(this)){
+            return (HorizonsTechBrokerBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.HUMAN_WEAPONS, HorizonsBlueprintType.E2_AZIMUTH_ENHANCED_AX_MULTICANNON, null);
+        }
+        if (AX_MULTI_CANNON_3_C_F_PRE.equals(this)){
+            return (HorizonsTechBrokerBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.HUMAN_WEAPONS, HorizonsBlueprintType.C3_AZIMUTH_ENHANCED_AX_MULTICANNON, null);
+        }
+        return super.techBrokerBlueprint();
+    }
 }
