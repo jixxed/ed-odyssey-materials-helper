@@ -50,34 +50,34 @@ public class OdysseyEngineersTab extends OdysseyTab implements DestroyableEventT
     }
 
     public void initEventHandling() {
-        register(EventService.addListener(true, this, OdysseyEngineerSearchEvent.class, odysseyEngineerSearchEvent -> {
-            update(odysseyEngineerSearchEvent.getSearch());
-        }));
+//        register(EventService.addListener(true, this, OdysseyEngineerSearchEvent.class, odysseyEngineerSearchEvent -> {
+//            update(odysseyEngineerSearchEvent.getSearch());
+//        }));
     }
 
-    private void update(final String search) {
-        this.flowPane.getNodes().clear();
-
-        final List<OdysseyEngineerCard> engineerCards = Arrays.stream(this.odysseyEngineerCards)
-                .filter(odysseyEngineerCard -> search.isBlank()
-                        || odysseyEngineerCard.getEngineer().getSettlement().getSettlementName().toLowerCase().contains(search.toLowerCase())
-                        || odysseyEngineerCard.getEngineer().getStarSystem().getName().toLowerCase().contains(search.toLowerCase())
-                        || LocaleService.getLocalizedStringForCurrentLocale(odysseyEngineerCard.getEngineer().getSpecialisation().getLocalizationKey()).toLowerCase().contains(search.toLowerCase())
-                        || LocaleService.getLocalizedStringForCurrentLocale(odysseyEngineerCard.getEngineer().getLocalizationKey()).toLowerCase().contains(search.toLowerCase())
-                        || hasBlueprintLike(odysseyEngineerCard.getEngineer(), search)
-                )
-                .toList();
-        this.flowPane.getNodes().addAll(engineerCards);
-    }
-
-    private boolean hasBlueprintLike(final Engineer engineer, final String search) {
-        return OdysseyBlueprintConstants.getSuitModuleBlueprints().entrySet().stream()
-                .filter(entry -> entry.getValue().getEngineers().contains(engineer))
-                .anyMatch(entry -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getLocalizationKey()).toLowerCase().contains(search.toLowerCase()))
-                || OdysseyBlueprintConstants.getWeaponModuleBlueprints().entrySet().stream()
-                .filter(entry -> entry.getValue().getEngineers().contains(engineer))
-                .anyMatch(entry -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getLocalizationKey()).toLowerCase().contains(search.toLowerCase()));
-    }
+//    private void update(final String search) {
+//        this.flowPane.getChildren().clear();
+//
+//        final List<OdysseyEngineerCard> engineerCards = Arrays.stream(this.odysseyEngineerCards)
+//                .filter(odysseyEngineerCard -> search.isBlank()
+//                        || odysseyEngineerCard.getEngineer().getSettlement().getSettlementName().toLowerCase().contains(search.toLowerCase())
+//                        || odysseyEngineerCard.getEngineer().getStarSystem().getName().toLowerCase().contains(search.toLowerCase())
+//                        || LocaleService.getLocalizedStringForCurrentLocale(odysseyEngineerCard.getEngineer().getSpecialisation().getLocalizationKey()).toLowerCase().contains(search.toLowerCase())
+//                        || LocaleService.getLocalizedStringForCurrentLocale(odysseyEngineerCard.getEngineer().getLocalizationKey()).toLowerCase().contains(search.toLowerCase())
+//                        || hasBlueprintLike(odysseyEngineerCard.getEngineer(), search)
+//                )
+//                .toList();
+//        this.flowPane.getChildren().addAll(engineerCards);
+//    }
+//
+//    private boolean hasBlueprintLike(final Engineer engineer, final String search) {
+//        return OdysseyBlueprintConstants.getSuitModuleBlueprints().entrySet().stream()
+//                .filter(entry -> entry.getValue().getEngineers().contains(engineer))
+//                .anyMatch(entry -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getLocalizationKey()).toLowerCase().contains(search.toLowerCase()))
+//                || OdysseyBlueprintConstants.getWeaponModuleBlueprints().entrySet().stream()
+//                .filter(entry -> entry.getValue().getEngineers().contains(engineer))
+//                .anyMatch(entry -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getLocalizationKey()).toLowerCase().contains(search.toLowerCase()));
+//    }
 
     @Override
     public OdysseyTabs getTabType() {

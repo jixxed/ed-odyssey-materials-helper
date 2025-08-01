@@ -9,16 +9,15 @@ import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.OdysseyEngineerSearchEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.EngineerCard;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -92,6 +91,29 @@ class OdysseyEngineerCard extends EngineerCard implements DestroyableEventTempla
 //                this.getNodes().addAll(this.unlockRequirementsLabels);
             }
         }));
+        register(EventService.addListener(true, this, OdysseyEngineerSearchEvent.class, odysseyEngineerSearchEvent -> {
+            update(odysseyEngineerSearchEvent.getSearch());
+        }));
+    }
+
+    private void update(final String search) {
+        boolean visible = search.isBlank()
+                        || engineer.getSettlement().getSettlementName().toLowerCase().contains(search.toLowerCase())
+                        || engineer.getStarSystem().getName().toLowerCase().contains(search.toLowerCase())
+                        || LocaleService.getLocalizedStringForCurrentLocale(engineer.getSpecialisation().getLocalizationKey()).toLowerCase().contains(search.toLowerCase())
+                        || LocaleService.getLocalizedStringForCurrentLocale(engineer.getLocalizationKey()).toLowerCase().contains(search.toLowerCase())
+                        || hasBlueprintLike(engineer, search);
+        this.setVisible(visible);
+        this.setManaged(visible);
+    }
+
+    private boolean hasBlueprintLike(final Engineer engineer, final String search) {
+        return OdysseyBlueprintConstants.getSuitModuleBlueprints().entrySet().stream()
+                .filter(entry -> entry.getValue().getEngineers().contains(engineer))
+                .anyMatch(entry -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getLocalizationKey()).toLowerCase().contains(search.toLowerCase()))
+                || OdysseyBlueprintConstants.getWeaponModuleBlueprints().entrySet().stream()
+                .filter(entry -> entry.getValue().getEngineers().contains(engineer))
+                .anyMatch(entry -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getLocalizationKey()).toLowerCase().contains(search.toLowerCase()));
     }
 
     private DestroyableHBox getEngineerSpecialisation() {
