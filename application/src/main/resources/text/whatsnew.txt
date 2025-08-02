@@ -1,3 +1,9 @@
+Version 2.214
+-------------
+Bugfix in ModuleRetrieve event handling that would alter module engineering templates
+Bugfix for unknown legacy blueprints. (fe.: heatsink ammo capacity grade 3)
+Bugfix for odyssey engineer search
+
 Version 2.213
 -------------
 Fixed setting modules after ModuleRetrieve and ModuleBuy events by sanitizing module name
