@@ -343,6 +343,7 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.service.event;
     exports nl.jixxed.eliteodysseymaterials.service.ships;
     exports nl.jixxed.eliteodysseymaterials.service;
+    exports nl.jixxed.eliteodysseymaterials.templates.components.edfont;
     exports nl.jixxed.eliteodysseymaterials.templates.components.segmentbar;
     exports nl.jixxed.eliteodysseymaterials.templates.components.slider;
     exports nl.jixxed.eliteodysseymaterials.templates.components;
