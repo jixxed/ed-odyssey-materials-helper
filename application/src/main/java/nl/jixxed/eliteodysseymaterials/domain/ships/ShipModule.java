@@ -357,7 +357,10 @@ public abstract class ShipModule implements Serializable {
         final AtomicDouble modificationCompleteness = new AtomicDouble();
         final AtomicBoolean positive = new AtomicBoolean();
         this.modifications.forEach(modification -> {
-            final HorizonsBlueprint moduleBlueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(this.name.getPrimary(), modification.getModification(), modification.getGrade());
+            final HorizonsBlueprint moduleBlueprint = isLegacy()
+                    ? (HorizonsBlueprint) HorizonsBlueprintConstants.getLegacyRecipe(this.name.getPrimary(), modification.getModification(), modification.getGrade())
+                    : (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(this.name.getPrimary(), modification.getModification(), modification.getGrade());
+
             final HorizonsModifierValue horizonsModifierValue = moduleBlueprint.getModifiers().get(moduleAttribute);
             if (horizonsModifierValue != null) {
                 final HorizonsBiFunction current = moduleModifier.get();

@@ -23,6 +23,7 @@ import nl.jixxed.eliteodysseymaterials.constants.horizons.utilitymounts.preengin
 import nl.jixxed.eliteodysseymaterials.domain.Blueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsEngineerBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 
@@ -453,5 +454,16 @@ public abstract class HorizonsBlueprintConstants {
                 .filter(horizonsBlueprint -> horizonsBlueprint.getMaterialCollection(horizonsMaterial.getClass()).containsKey(horizonsMaterial))
                 .forEach(horizonsBlueprint -> newMap.put(horizonsBlueprint, horizonsBlueprint.getMaterialCollection(horizonsMaterial.getClass()).get(horizonsMaterial)));
         return newMap;
+    }
+
+    public static Blueprint<HorizonsBlueprintName> getLegacyRecipe(HorizonsBlueprintName primary, HorizonsBlueprintType modification, HorizonsBlueprintGrade grade) {
+        return new HorizonsModuleBlueprint(primary, modification, grade,
+                Map.of(
+                ),
+                Map.of(
+                ),
+                List.of(
+                )
+        );
     }
 }

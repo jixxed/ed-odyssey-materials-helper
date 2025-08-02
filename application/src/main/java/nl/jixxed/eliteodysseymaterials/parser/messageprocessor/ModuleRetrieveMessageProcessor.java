@@ -38,12 +38,16 @@ public class ModuleRetrieveMessageProcessor implements MessageProcessor<ModuleRe
                 .findFirst()
                 .map(ShipModule::Clone)
                 .orElse(null);
+        if(event.getQuality().stream().allMatch(quality -> quality.compareTo(BigDecimal.ZERO) == 0)){
+            module.setLegacy(true);
+        }
         if (module == null) {
             log.error("Could not find module for " + event.getRetrievedItem() + " in slot " + event.getSlot());
             return;
         }
         //this module is technically not engineered fully because information is missing, but will be updated once the outfitting screen is exited
         event.getEngineerModifications().ifPresent(modifications -> module.applyModification(HorizonsBlueprintType.forInternalName(modifications), HorizonsBlueprintGrade.forDigit(event.getLevel().orElse(BigInteger.ZERO)), event.getQuality().orElse(BigDecimal.ZERO)));
+
         shipSlot.setShipModule(module);
         shipSlot.setOldShipModule(module);
 
