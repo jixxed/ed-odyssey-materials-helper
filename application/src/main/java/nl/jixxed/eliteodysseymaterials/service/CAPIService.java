@@ -77,7 +77,8 @@ public class CAPIService {
                             .addExtraParameter("client_id", CapiOAuth20Service.CLIENT_ID);
                     this.oAuth2AccessToken = this.service.getAccessToken(accessTokenRequestParams);
 //                    https://companion.orerve.net/profile
-                    if (validCommander()) {
+                    CommanderCheck commanderCheck = validCommander();
+                    if (commanderCheck.isValid()) {
                         log.info("save access token");
                         saveToken(this.oAuth2AccessToken);
                         Platform.runLater(() -> {
@@ -86,7 +87,11 @@ public class CAPIService {
                         });
                     } else {
                         Platform.runLater(() -> {
-                            NotificationService.showInformation(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.auth.bad.account"));
+                            if(commanderCheck.expected != null) {
+                                NotificationService.showInformation(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.auth.bad.account", commanderCheck.expected, commanderCheck.actual));
+                            }else{
+                                NotificationService.showInformation(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.error"));
+                            }
                             this.active.set(false);
                         });
                     }
@@ -143,7 +148,7 @@ public class CAPIService {
         return Boolean.FALSE.equals(PreferencesService.getPreference("colonisation.horizons.pause.capi", false));
     }
 
-    private boolean validCommander() {
+    private CommanderCheck validCommander() {
         return APPLICATION_STATE.getPreferredCommander().map(commander -> {
             final String url = GameVersion.LEGACY.equals(commander.getGameVersion()) ? "https://legacy-companion.orerve.net/profile" : "https://companion.orerve.net/profile";
             final OAuthRequest oAuthRequest = new OAuthRequest(Verb.GET, url);
@@ -156,11 +161,11 @@ public class CAPIService {
                     final String name = jsonNode.get("commander").get("name").asText();
 
                     log.info("Test equals: " + commander.getName() + " <> " + name);
-                    boolean isEqual = commander.getName().equalsIgnoreCase(name);
-                    if (!isEqual) {
+                    var check = new CommanderCheck(commander.getName(), name);
+                    if (!check.isValid()) {
                         Sentry.captureMessage("Commander name mismatch: expected '" + commander.getName() + "', got '" + name + "'");
                     }
-                    return isEqual;
+                    return check;
                 }
                 if (response.getCode() == 400) {
                     Platform.runLater(() -> {
@@ -177,8 +182,8 @@ public class CAPIService {
             } catch (final Exception e) {
                 log.error("Exception", e);
             }
-            return false;
-        }).orElse(false);
+            return new CommanderCheck(null, null);
+        }).orElse(new CommanderCheck(null, null));
     }
 
     private static boolean isOutdated(final File fleetCarrierFile) {
@@ -362,5 +367,10 @@ public class CAPIService {
                 log.error("Failed to delete CAPI token file", e);
             }
         });
+    }
+    private record CommanderCheck(String expected, String actual){
+        boolean isValid(){
+            return expected != null && expected.equalsIgnoreCase(actual);
+        }
     }
 }

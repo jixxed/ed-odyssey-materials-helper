@@ -317,11 +317,11 @@ public enum HorizonsBlueprintType {
             case "sensor_expanded" -> EXPANDED_PROBE_SCANNING_RADIUS;
 
             case "misc_chaffcapacity",
-                 "chafflauncher_chaffcapacity",
+                 "chafflauncher_chaffcapacity",//legacy
                  "misc_heatsinkcapacity",
-                 "heatsinklauncher_heatsinkcapacity",
+                 "heatsinklauncher_heatsinkcapacity",//legacy
                  "misc_pointdefensecapacity",
-                 "pointdefence_pointdefensecapacity" -> AMMO_CAPACITY;
+                 "pointdefence_pointdefensecapacity" /*legacy*/ -> AMMO_CAPACITY;
 
             case "shieldbooster_explosive" -> BLAST_RESISTANT;
             case "shieldbooster_heavyduty" -> HEAVY_DUTY;

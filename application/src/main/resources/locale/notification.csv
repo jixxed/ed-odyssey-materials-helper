@@ -80,6 +80,7 @@
 "notification.material.information.irrelevant.text","{0}({1}) - Irrelevant","","","{0}({1}) - Irrelevante","","","{0}({1}) - Не требуемое","{0}({1}) - 无用"
 "notification.shipbuilder.error.wishlist.title","Can’t create wishlist","","","No se puede crear lista de deseos","","","Невозможно создать список желаний","无法创建愿望单"
 "notification.shipbuilder.error.wishlist.text","No items to add","","","No hay elementos que añadir","","","Нет элементов для добавления","没有要添加的物品"
-"notification.capi.message.auth.bad.account","Account mismatch detected! Account will not be linked.","","","¡Cuenta incorrecta detectada! La cuenta no será vinculada.","","","Обнаружено несоответствие аккаунта! Аккаунт не будет привязан.","检测到账号不匹配！账号将不会被链接。"
+"notification.capi.message.auth.bad.account","Account mismatch detected! Account will not be linked.\nExpected {0} but got {1}","","","¡Cuenta incorrecta detectada! La cuenta no será vinculada.\nExpected {0} but got {1}","","","Обнаружено несоответствие аккаунта! Аккаунт не будет привязан.\nExpected {0} but got {1}","检测到账号不匹配！账号将不会被链接。\nExpected {0} but got {1}"
 "notification.media.feature.pack.title","Media Feature Pack","","","","","","Media Feature Pack","媒体功能包"
 "notification.media.feature.pack.text","Media Feature Pack is not installed. Please install the Media Feature Pack to enable notification sounds. Windows Settings > Applications > Optional features","","","","","","Media Feature Pack не установлен. Пожалуйста, установите Media Feature Pack для включения звуков уведомлений. Настройки Windows > Приложения > Дополнительные функции","媒体功能包未安装。请安装媒体功能包以启用通知声音。Windows 设置 > 应用程序 > 可选功能"
+"notification.capi.error","CAPI returned an error","","","","","","",""
