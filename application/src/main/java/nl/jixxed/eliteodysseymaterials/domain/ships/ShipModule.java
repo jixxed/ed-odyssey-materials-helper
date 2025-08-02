@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Predicate;
 
 import static java.util.function.Predicate.not;
 
@@ -218,7 +219,10 @@ public abstract class ShipModule implements Serializable {
         return SHIP_MODULES.stream().filter(module -> {
             try {
                 final Class<? extends ShipModule> aClass = module.getClass();
-                return slotType.getModuleClasses().stream().anyMatch(moduleClass -> moduleClass.isAssignableFrom(aClass));
+                // weird predicate double negate wrapping to try and fix:
+                // IncompatibleClassChangeError
+                // Class java.util.AbstractList$RandomAccessSpliterator does not implement the requested interface java.util.function.Predicate
+                return slotType.getModuleClasses().stream().anyMatch(Predicate.not(moduleClass -> !moduleClass.isAssignableFrom(aClass)));
             } catch (Exception ex) {
                 log.error("Error filtering modules for slot type: " + slotType, ex);
                 return false;
