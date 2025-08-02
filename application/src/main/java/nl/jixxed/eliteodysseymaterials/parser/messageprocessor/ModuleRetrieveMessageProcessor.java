@@ -36,6 +36,7 @@ public class ModuleRetrieveMessageProcessor implements MessageProcessor<ModuleRe
                 .filter(shipModule -> shipModule.getInternalName().equalsIgnoreCase(cleanName(event.getRetrievedItem())))
                 .filter(Predicate.not(ShipModule::isPreEngineered))
                 .findFirst()
+                .map(ShipModule::Clone)
                 .orElse(null);
         if (module == null) {
             log.error("Could not find module for " + event.getRetrievedItem() + " in slot " + event.getSlot());

@@ -31,6 +31,7 @@ public class ModuleBuyMessageProcessor implements MessageProcessor<ModuleBuy> {
                 .filter(shipModule -> shipModule.getInternalName().equalsIgnoreCase(cleanName(event.getBuyItem())))
                 .filter(Predicate.not(ShipModule::isPreEngineered))
                 .findFirst()
+                .map(ShipModule::Clone)
                 .orElse(null);
         shipSlot.setShipModule(module);
         shipSlot.setOldShipModule(module);
