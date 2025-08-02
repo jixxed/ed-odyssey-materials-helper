@@ -29,6 +29,7 @@ import nl.jixxed.eliteodysseymaterials.service.window.FXWinUtil;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -127,6 +128,15 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                         }
                         FXApplication.getInstance().getPrimaryStage().getScene().getStylesheets().add(getClass().getResource(newValue.getStyleSheet()).toExternalForm());
 //                        EventService.publish(new StyleSheetChangedEvent(newValue));
+                        var customCss = new File(OsConstants.getCustomCss());
+                        try {
+                            if(FXApplication.getInstance().getPrimaryStage().getScene().getStylesheets().contains(customCss.toURI().toURL().toExternalForm())) {
+                                FXApplication.getInstance().getPrimaryStage().getScene().getStylesheets().remove(customCss.toURI().toURL().toExternalForm());
+                                FXApplication.getInstance().getPrimaryStage().getScene().getStylesheets().add(customCss.toURI().toURL().toExternalForm());
+                            }
+                        } catch (MalformedURLException e) {
+                            log.error("Error loading stylesheet", e);
+                        }
                     }
                 })
                 .asLocalized()
