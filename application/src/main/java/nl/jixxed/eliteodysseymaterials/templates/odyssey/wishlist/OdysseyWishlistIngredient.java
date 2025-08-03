@@ -184,7 +184,7 @@ public class OdysseyWishlistIngredient extends DestroyableVBox implements Destro
             }
         }));
         register(EventService.addListener(true, this, StorageEvent.class, evt -> {
-            if (evt.getStoragePool().equals(StoragePool.SHIP) || evt.getStoragePool().equals(StoragePool.FLEETCARRIER)) {
+            if (evt.getStoragePool().equals(StoragePool.SHIPLOCKER) || evt.getStoragePool().equals(StoragePool.BACKPACK)) {
                 this.update();
             }
         }));
