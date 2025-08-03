@@ -225,3 +225,4 @@
 "modifier.horizons.unit.listed_power_draw","MW/s","","","","","","МВт/с","兆瓦/秒"
 "modifier.horizons.unit.boost_interval","s","","","","","","с","秒"
 "modifier.horizons.unit.module_limit_increase","","","","","","","",""
+"modifier.horizons.unit.sensor_lock_min","m","","","","","","",""

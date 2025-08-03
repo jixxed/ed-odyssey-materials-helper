@@ -228,6 +228,7 @@ public enum HorizonsModifier {
     HEAT_DISSIPATION_MIN(1150, ""),//ship
     HEAT_DISSIPATION_MAX(1160, ""),//ship
     MASS_LOCK(1170, false, ""),//ship
+    SENSOR_LOCK_MIN(1175, ""),//ship
     FUEL_COST(1180, false, ""),//ship
     FUEL_RESERVE(1190, ""),//ship
     FUEL_EFFICIENCY(2000, ""),//synthesis
