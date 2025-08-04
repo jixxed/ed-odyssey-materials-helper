@@ -7,3 +7,4 @@ The portable zip versions are used as update packages. You can run them standalo
 
 **Release notes for this version:**
 Added sensor emission range stats to ship builder
+Reload ship list on ship change so current ship type is updated
