@@ -1,3 +1,7 @@
+Version 2.217
+-------------
+Added collector mode toggle that will show available material storage as incomplete
+
 Version 2.216
 -------------
 Added sensor emission range stats to ship builder

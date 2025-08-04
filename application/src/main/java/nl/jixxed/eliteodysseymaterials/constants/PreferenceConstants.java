@@ -58,6 +58,6 @@ public class PreferenceConstants {
     public static final String DARK_MODE = "application.dark.mode";
     public static final String STYLESHEET = "application.stylesheet";
     public static final String MINIMIZE_TO_TRAY = "application.minimize.to.tray";
-
+    public static final String COLLECTOR_MODE = "horizons.material.collector.mode";
 
 }

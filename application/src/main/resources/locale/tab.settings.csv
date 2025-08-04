@@ -101,3 +101,5 @@
 "tab.settings.module","{0} {1}{2}{3}","","","{0} {1}{2}{3}","","","{0} {1}{2}{3}","{0} {1}{2}{3}"
 "tab.settings.stylesheet","Style","","","","","","Стиль","样式"
 "tab.settings.minimize","Minimize to tray on close","","","","","","Сворачивать в область уведомлений при закрытии","关闭时最小化到托盘"
+"tab.settings.collector.mode","Collector mode","","","","","","",""
+"tab.settings.collector.mode.explain","This will show available space as incomplete for horizons materials","","","","","","",""

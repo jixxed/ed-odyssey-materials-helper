@@ -564,6 +564,12 @@
           .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card:highlight .name {
             -fx-text-fill: #dcc030;
             -fx-font-weight: bold; }
+          .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card:collector .quantity-line .storage-label {
+            -fx-text-fill: #ff7c7c; }
+          .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card:collector .quantity-line .storage {
+            -fx-text-fill: #ff7c7c; }
+          .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card:collector .segmented-bar .not-present {
+            -fx-background-color: #ff7c7c; }
           .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .name {
             -fx-text-fill: white;
             -fx-min-width: 11.25em;

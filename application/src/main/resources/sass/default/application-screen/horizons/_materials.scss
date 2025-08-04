@@ -59,6 +59,25 @@
         }
       }
 
+      &:collector {
+
+        .quantity-line {
+          .storage-label {
+            -fx-text-fill: $text-color-red;
+          }
+
+          .storage {
+            -fx-text-fill: $text-color-red;
+          }
+        }
+
+        .segmented-bar {
+          .not-present {
+            -fx-background-color: $progress-bar-color-red;
+          }
+        }
+      }
+
       .name {
         //-fx-padding: 0.25em 0 0 0;
         -fx-text-fill: $text-color-white;
@@ -80,9 +99,11 @@
 
         //-fx-alignment: top-left;
       }
+
       .quantity-line {
         -fx-spacing: 0.25em;
         -fx-padding: 0.25em;
+
         .count-label {
           -fx-text-fill: $text-color-green;
         }
@@ -108,7 +129,8 @@
         -fx-fit-to-height: true;
         -fx-fit-to-width: true;
       }
-      .icon{
+
+      .icon {
         @include fixedWidth(2em);
         @include fixedHeight(2em);
         -fx-font-size: 2em !important;
@@ -117,8 +139,10 @@
         //  -fx-fill: $text-color-yellow;
         //}
       }
-      .wishlist-icon{
+
+      .wishlist-icon {
         -fx-padding: 0.25em 0.25em 0 0;
+
         .glyph-icon {
           -fx-alignment: top-right;
           @include fixedWidth(1em);
@@ -130,6 +154,7 @@
           //}}
         }
       }
+
       .wishlist-image {
         @include fixedWidth(2em);
         @include fixedHeight(2em);

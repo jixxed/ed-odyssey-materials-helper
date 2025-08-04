@@ -12,13 +12,11 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.SegmentedBarBuilder;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.constants.SpawnConstants;
 import nl.jixxed.eliteodysseymaterials.domain.IntegerRange;
 import nl.jixxed.eliteodysseymaterials.enums.*;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.MaterialService;
-import nl.jixxed.eliteodysseymaterials.service.StorageService;
-import nl.jixxed.eliteodysseymaterials.service.WishlistService;
+import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
@@ -151,14 +149,15 @@ public class HorizonsMaterialCard extends DestroyableVBox implements Destroyable
                 update();
             }
         }));
-        register(EventService.addListener(true, this, HorizonsWishlistChangedEvent.class, _ -> {
-            update();
-        }));
-        register(EventService.addListener(true, this, HorizonsWishlistSelectedEvent.class, _ -> {
-            update();
-        }));
+
+        register(EventService.addListener(true, this, HorizonsWishlistChangedEvent.class, _ -> update()));
+
+        register(EventService.addListener(true, this, HorizonsWishlistSelectedEvent.class, _ -> update()));
+
         register(EventService.addListener(true, this, HorizonsMaterialSearchEvent.class, horizonsMaterialSearchEvent ->
                 update(horizonsMaterialSearchEvent.getSearch().getQuery())));
+
+        register(EventService.addListener(true, this, CollectorModeEvent.class, collectorModeEvent -> updateStyle(collectorModeEvent.isEnabled())));
     }
 
     private void update() {
@@ -175,14 +174,15 @@ public class HorizonsMaterialCard extends DestroyableVBox implements Destroyable
         if (currentWishlistCount > 0) {
             this.wishlistImage.setVisible(true);
             this.wishlistImage.setManaged(true);
-//            this.wishlistImage.setTooltip(LabelBuilder.builder()
-//                    .withStyleClass("wishlist-tooltip")
-//                    .withText(LocaleService.getStringBinding("material.wishlist.count", currentWishlistCount))
-//                    .build());
         } else {
             this.wishlistImage.setVisible(false);
             this.wishlistImage.setManaged(false);
         }
+        updateStyle(PreferencesService.getPreference(PreferenceConstants.COLLECTOR_MODE, false));
+    }
+
+    private void updateStyle(boolean enabled) {
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("collector"), enabled && StorageService.getMaterialCount(this.material) < this.material.getMaxAmount());
     }
 
     private void update(final String search) {
