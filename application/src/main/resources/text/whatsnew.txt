@@ -1,3 +1,7 @@
+Version 2.216
+-------------
+Added sensor emission range stats to ship builder
+
 Version 2.215
 -------------
 Fix updating odyssey wishlist cards on storage changes
