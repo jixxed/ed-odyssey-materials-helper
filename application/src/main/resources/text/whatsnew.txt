@@ -1,3 +1,9 @@
+Version 2.215
+-------------
+Fix updating odyssey wishlist cards on storage changes
+Reload custom css on selecting a different style
+Add expected and actual commander names to CAPI account link failure notification
+
 Version 2.214
 -------------
 Bugfix in ModuleRetrieve event handling that would alter module engineering templates

@@ -6,6 +6,6 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Bugfix in ModuleRetrieve event handling that would alter module engineering templates
-Bugfix for unknown legacy blueprints. (fe.: heatsink ammo capacity grade 3)
-Bugfix for odyssey engineer search
+Fix updating odyssey wishlist cards on storage changes
+Reload custom css on selecting a different style
+Add expected and actual commander names to CAPI account link failure notification
