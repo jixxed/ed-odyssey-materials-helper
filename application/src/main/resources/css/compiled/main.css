@@ -1496,6 +1496,8 @@
               -fx-max-width: Infinity; }
               .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .config .toggles .group-toggle {
                 -fx-max-width: Infinity; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .ship-stats .stat-line {
+            -fx-spacing: 0.25em; }
           .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .validation .error {
             -fx-text-fill: #ff7c7c; }
           .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .validation .warning {

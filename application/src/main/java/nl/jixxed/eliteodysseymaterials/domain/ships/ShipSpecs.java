@@ -338,7 +338,7 @@ public class ShipSpecs {
             Map.entry(HorizonsModifier.FUEL_RESERVE, 0.46),
             Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 35.0),
             Map.entry(HorizonsModifier.MASS_LOCK, 7.0),
-            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, Double.NaN)
+            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, 334.0)
     );
 
     public static final Map<HorizonsModifier, Object> DIAMOND_BACK = Map.ofEntries(//Diamondback Scout
@@ -464,7 +464,7 @@ public class ShipSpecs {
             Map.entry(HorizonsModifier.FUEL_RESERVE, 0.39),
             Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 35.0),
             Map.entry(HorizonsModifier.MASS_LOCK, 8.0),
-            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, Double.NaN)
+            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, 406.0)
     );
 
     public static final Map<HorizonsModifier, Object> DOLPHIN = Map.ofEntries(
@@ -632,7 +632,7 @@ public class ShipSpecs {
             Map.entry(HorizonsModifier.FUEL_RESERVE, 0.39),
             Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 45.0),
             Map.entry(HorizonsModifier.MASS_LOCK, 8.0),
-            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, Double.NaN)
+            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, 334.0)
     );
 
     public static final Map<HorizonsModifier, Object> ASP_SCOUT = Map.ofEntries(
@@ -674,7 +674,7 @@ public class ShipSpecs {
             Map.entry(HorizonsModifier.FUEL_RESERVE, 0.47),
             Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 52.0),
             Map.entry(HorizonsModifier.MASS_LOCK, 8.0),
-            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, Double.NaN)
+            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, 337.5)
     );
 
     public static final Map<HorizonsModifier, Object> VULTURE = Map.ofEntries(
@@ -842,7 +842,7 @@ public class ShipSpecs {
             Map.entry(HorizonsModifier.FUEL_RESERVE, 0.52),
             Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 54.0),
             Map.entry(HorizonsModifier.MASS_LOCK, 10.0),
-            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, Double.NaN)
+            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, 429.0)
     );
 
     public static final Map<HorizonsModifier, Object> TYPE_X = Map.ofEntries(//Alliance Chieftain
@@ -1220,7 +1220,7 @@ public class ShipSpecs {
             Map.entry(HorizonsModifier.FUEL_RESERVE, 0.79),
             Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 55.0),
             Map.entry(HorizonsModifier.MASS_LOCK, 15.0),
-            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, Double.NaN)
+            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, 432.5)
     );
 
     public static final Map<HorizonsModifier, Object> FER_DE_LANCE = Map.ofEntries(
@@ -1640,7 +1640,7 @@ public class ShipSpecs {
             Map.entry(HorizonsModifier.FUEL_RESERVE, 0.83),
             Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 70.0),
             Map.entry(HorizonsModifier.MASS_LOCK, 17.0),
-            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, 434.0)//1E
+            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, 434.0)
     );
     
     public static final Map<HorizonsModifier, Object> TYPE_8 = Map.ofEntries(
@@ -1682,7 +1682,7 @@ public class ShipSpecs {
             Map.entry(HorizonsModifier.FUEL_RESERVE, 0.52),
             Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 58.0),
             Map.entry(HorizonsModifier.MASS_LOCK, 18.0),
-            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, 372.0)//1E
+            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, 372.0)
     );
     
     public static final Map<HorizonsModifier, Object> MANDALAY = Map.ofEntries(
@@ -1724,7 +1724,7 @@ public class ShipSpecs {
             Map.entry(HorizonsModifier.FUEL_RESERVE, 0.5),
             Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 55.0),
             Map.entry(HorizonsModifier.MASS_LOCK, 11.0),
-            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, 294.0)//1E
+            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, 294.0)
     );
     
     public static final Map<HorizonsModifier, Object> COBRA_MK_V = Map.ofEntries(
@@ -1766,7 +1766,7 @@ public class ShipSpecs {
             Map.entry(HorizonsModifier.FUEL_RESERVE, 0.49),
             Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 40.0),
             Map.entry(HorizonsModifier.MASS_LOCK, 8.0),
-            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, 247.0)//1E
+            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, 247.0)
     );
 
     public static final Map<HorizonsModifier, Object> CORSAIR = Map.ofEntries(
@@ -1808,7 +1808,7 @@ public class ShipSpecs {
             Map.entry(HorizonsModifier.FUEL_RESERVE, 0.41),
             Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 65.0),
             Map.entry(HorizonsModifier.MASS_LOCK, 7.0),
-            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, 434.0)//1E
+            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, 434.0)
     );
     
     public static final Map<HorizonsModifier, Object> PANTHER_CLIPPER_MK_II = Map.ofEntries(

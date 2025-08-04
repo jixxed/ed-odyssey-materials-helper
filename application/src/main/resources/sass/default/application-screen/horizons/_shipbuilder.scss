@@ -467,6 +467,11 @@
         }
       }
 
+      .ship-stats {
+        .stat-line {
+          -fx-spacing: 0.25em;
+        }
+      }
       .validation {
         .error {
           -fx-text-fill: $text-color-red;
