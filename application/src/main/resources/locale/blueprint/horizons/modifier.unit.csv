@@ -86,7 +86,7 @@
 "modifier.horizons.unit.fsd_fuel_use_increase","none","","","","","","none","无"
 "modifier.horizons.unit.fsd_heat_rate","MW/s","","","","","","МВт/с","兆瓦/秒"
 "modifier.horizons.unit.fsd_interdictor_facing_limit","°","","","","","","°","°"
-"modifier.horizons.unit.fsd_interdictor_range","M","","","","","","M","M"
+"modifier.horizons.unit.fsd_interdictor_range","s","","","","","","",""
 "modifier.horizons.unit.fsd_optimised_mass","T","","","","","","T","吨"
 "modifier.horizons.unit.fuel_capacity","T","","","","","","T","吨"
 "modifier.horizons.unit.fuel_cost","Cr","","","","","","Кр","Cr"
