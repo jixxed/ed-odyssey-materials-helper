@@ -291,8 +291,10 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
                 APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists)));
         register(EventService.addListener(true, this, AfterFontSizeSetEvent.class,
                 fontSizeEvent -> applyFontSizingHack(fontSizeEvent.getFontSize())));
-        register(EventService.addListener(true, this, 9, ShipLoadoutEvent.class, _ ->
-                EventService.publish(new HorizonsShipSelectedEvent(this.shipSelect.getSelectionModel().getSelectedItem().getUuid()))));
+        register(EventService.addListener(true, this, 9, ShipLoadoutEvent.class, _ -> {
+            refreshShipSelect();
+            EventService.publish(new HorizonsShipSelectedEvent(this.shipSelect.getSelectionModel().getSelectedItem().getUuid()));
+        }));
 //        register(EventService.addListener(true, this, HorizonsShipChangedEvent.class, horizonsShipChangedEvent ->
 //                this.activeShipUUID = horizonsShipChangedEvent.getShipUUID()));
 
