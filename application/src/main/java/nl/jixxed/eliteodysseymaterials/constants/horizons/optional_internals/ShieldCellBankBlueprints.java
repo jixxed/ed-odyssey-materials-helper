@@ -24,7 +24,7 @@ public class ShieldCellBankBlueprints {
                             Map.of(
                                     HorizonsModifier.SHIELDBANK_SPIN_UP, new HorizonsNumberModifierValue("-10%", true, percentageNegative(0.0, 0.1)),
                                     HorizonsModifier.SHIELDBANK_REINFORCEMENT, new HorizonsNumberModifierValue("+5%", true, percentagePositive(0.0, 0.05)),
-                                    HorizonsModifier.BOOT_TIME, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.0, 0.1)),
+                                    HorizonsModifier.BOOT_TIME, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.05, 0.1)),
                                     HorizonsModifier.SHIELDBANK_DURATION, new HorizonsNumberModifierValue("-6%", false, percentageNegative(0.0, 0.06))
                             ),
                             List.of(
@@ -93,8 +93,8 @@ public class ShieldCellBankBlueprints {
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.0, 0.05)),
                                     HorizonsModifier.SHIELDBANK_HEAT, new HorizonsNumberModifierValue("-6%", true, percentageNegative(0.0, 0.06)),
                                     HorizonsModifier.BOOT_TIME, new HorizonsNumberModifierValue("-8%", true, percentageNegative(0.0, 0.08)),
-                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.0, 0.1)),
-                                    HorizonsModifier.SHIELDBANK_REINFORCEMENT, new HorizonsNumberModifierValue("+4%", true, percentagePositive(0.0, 0.04))
+                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.05, 0.1)),
+                                    HorizonsModifier.SHIELDBANK_REINFORCEMENT, new HorizonsNumberModifierValue("+4%", true, percentagePositive(0.02, 0.04))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,

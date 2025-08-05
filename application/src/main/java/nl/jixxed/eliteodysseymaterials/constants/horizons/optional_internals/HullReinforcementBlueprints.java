@@ -108,7 +108,7 @@ public class HullReinforcementBlueprints {
                                     Raw.CARBON, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+24%", true, percentagePositive(0.0, 0.24)),
+                                    HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+24%", true, percentagePositive(0.12, 0.24)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+8%", false, percentagePositive(0.0, 0.08)),
                                     HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, resistancePositive(0.0, 0.03)),
                                     HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, resistancePositive(0.0, 0.03)),
@@ -287,7 +287,7 @@ public class HullReinforcementBlueprints {
                             Map.of(
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.0, 0.04)),
                                     HorizonsModifier.HULL_BOOST, new HorizonsNumberModifierValue("+8%", true, hullBoostPositive(0.0, 0.08)),
-                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-8%", true, percentageNegative(0.0, 0.08))
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-8%", true, percentageNegative(0.04, 0.08))
                             ),
                             List.of(
                                     Engineer.LIZ_RYDER,

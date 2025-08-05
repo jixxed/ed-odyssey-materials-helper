@@ -22,9 +22,9 @@ public class FrameShiftDriveInterdictorBlueprints {
                                     Manufactured.MECHANICALSCRAP, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.FSD_INTERDICTOR_FACING_LIMIT, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.0, 0.4)),
+                                    HorizonsModifier.FSD_INTERDICTOR_FACING_LIMIT, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.2, 0.4)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.0, 0.1)),
-                                    HorizonsModifier.FSD_INTERDICTOR_RANGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1))
+                                    HorizonsModifier.FSD_INTERDICTOR_RANGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.05, 0.1))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -105,10 +105,10 @@ public class FrameShiftDriveInterdictorBlueprints {
                                     Encoded.ENCRYPTEDFILES, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.0, 0.1)),
-                                    HorizonsModifier.FSD_INTERDICTOR_FACING_LIMIT, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.05, 0.1)),
+                                    HorizonsModifier.FSD_INTERDICTOR_FACING_LIMIT, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.05, 0.1)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.0, 0.1)),
-                                    HorizonsModifier.FSD_INTERDICTOR_RANGE, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.0, 0.2))
+                                    HorizonsModifier.FSD_INTERDICTOR_RANGE, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.1, 0.2))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
