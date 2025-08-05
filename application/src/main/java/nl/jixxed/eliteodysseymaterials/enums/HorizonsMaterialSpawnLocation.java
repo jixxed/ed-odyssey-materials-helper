@@ -97,7 +97,7 @@ public enum HorizonsMaterialSpawnLocation implements SpawnLocation {
             new Location(new StarSystem("LHS 4046", -36.6875, -72.84375, -0.3125), "5B", null, null, null, null),
             new Location(new StarSystem("LP 675-76", 27.21875, 45.59375, 11.59375), "B2A", null, null, null, null),
             new Location(new StarSystem("LP 804-27", 3.3125, 17.84375, 43.28125), "4B", null, null, null, null),
-            new Location(new StarSystem("LTT 606", 0.5625, -78.125, -5.28125), "C1A", null, null, null, null),
+            new Location(new StarSystem("LTT 606", 0.5625, -78.125, -5.28125), "6", null, null, null, null),
             new Location(new StarSystem("LTT 9097", 25.3125, -82.5625, 55.21875), "3A", null, null, null, null),
             new Location(new StarSystem("Lushu", -7.9375, -90.6875, 0.40625), "3", null, null, null, null),
             new Location(new StarSystem("Maiku", 95.03125, -81.65625, -39.40625), "ABC1A", null, null, null, null),
