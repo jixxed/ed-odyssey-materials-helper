@@ -294,7 +294,8 @@ public class MultiCannonBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.0, 0.1)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.0, 0.2)),
+                                    HorizonsModifier.SHOT_SPEED, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.0, 0.2)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+140%", true, falloffPercentagePositive(2000.0, 0.0, 0.20)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+3%", false, percentagePositive(0.0, 0.03)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.0, 0.2))
                             ),
@@ -311,7 +312,8 @@ public class MultiCannonBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+15%", false, percentagePositive(0.1, 0.15)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.2, 0.4)),
+                                    HorizonsModifier.SHOT_SPEED, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.2, 0.4)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+180%", true, falloffPercentagePositive(2000.0, 0.20, 0.40)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+6%", false, percentagePositive(0.03, 0.06)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.2, 0.4))
                             ),
@@ -329,7 +331,8 @@ public class MultiCannonBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.15, 0.2)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.4, 0.6)),
+                                    HorizonsModifier.SHOT_SPEED, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.4, 0.6)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+220%", true, falloffPercentagePositive(2000.0, 0.40, 0.60)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+9%", false, percentagePositive(0.06, 0.09)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.4, 0.6))
                             ),
@@ -347,7 +350,8 @@ public class MultiCannonBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+25%", false, percentagePositive(0.2, 0.25)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+80%", true, percentagePositive(0.6, 0.8)),
+                                    HorizonsModifier.SHOT_SPEED, new HorizonsNumberModifierValue("+80%", true, percentagePositive(0.6, 0.8)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+260%", true, falloffPercentagePositive(2000.0, 0.60, 0.80)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+12%", false, percentagePositive(0.09, 0.12)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+80%", true, percentagePositive(0.6, 0.8))
                             ),
@@ -364,7 +368,8 @@ public class MultiCannonBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.25, 0.3)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.8, 1.0)),
+                                    HorizonsModifier.SHOT_SPEED, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.8, 1.0)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+300%", true, falloffPercentagePositive(2000.0, 0.80, 1.00)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+15%", false, percentagePositive(0.12, 0.15)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.8, 1.0))
                             ),
