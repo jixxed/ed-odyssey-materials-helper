@@ -7,6 +7,7 @@ import lombok.Setter;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
 
+import java.time.LocalDateTime;
 import java.util.Locale;
 
 @RequiredArgsConstructor
@@ -16,6 +17,7 @@ public class Commander {
     private final String name;
     private final String fid;
     private final GameVersion gameVersion;
+    private final LocalDateTime timestamp;
     @Setter
     private boolean duplicateName = false;
 

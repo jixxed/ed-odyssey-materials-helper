@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -75,7 +76,7 @@ class HorizonsWishlistModuleBlueprintTemplateTest {
     @Test
     public void testMemoryLeakHorizonsWishlistModuleBlueprintTemplate() {
 
-        ApplicationState.getInstance().addCommander("unittest", "F0000000", GameVersion.LIVE);
+        ApplicationState.getInstance().addCommander("unittest", "F0000000", GameVersion.LIVE, LocalDateTime.of(2024,12,12,12,12,12));
         HorizonsWishlistModuleBlueprintTemplate subject = ApplicationState.getInstance().getPreferredCommander()
                 .map(commander -> WishlistService.getHorizonsWishlists(commander).getSelectedWishlist().getItems().stream()
                         .findFirst()
@@ -94,7 +95,7 @@ class HorizonsWishlistModuleBlueprintTemplateTest {
     @Test
     public void testMemoryLeakDestroyableHBox() {
 
-        ApplicationState.getInstance().addCommander("unittest", "F0000000", GameVersion.LIVE);
+        ApplicationState.getInstance().addCommander("unittest", "F0000000", GameVersion.LIVE, LocalDateTime.of(2024,12,12,12,12,12));
         DestroyableHBox subject = BoxBuilder.builder()
                 .withNodes(LabelBuilder.builder().withText("blank").build())
                 .buildHBox();
@@ -110,7 +111,7 @@ class HorizonsWishlistModuleBlueprintTemplateTest {
     @Test
     public void testMemoryLeakDestroyableShortestPathItem() {
 
-        ApplicationState.getInstance().addCommander("unittest", "F0000000", GameVersion.LIVE);
+        ApplicationState.getInstance().addCommander("unittest", "F0000000", GameVersion.LIVE, LocalDateTime.of(2024,12,12,12,12,12));
         final PathItem<HorizonsBlueprintName> pathItem = new PathItem<>(List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO), List.of(HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.DOUBLE_SHOT, HorizonsBlueprintGrade.GRADE_3)));
         pathItem.setEngineer(Engineer.UNKNOWN);
         pathItem.setDistance(100D);
@@ -131,7 +132,7 @@ class HorizonsWishlistModuleBlueprintTemplateTest {
     @Test
     public void testMemoryLeakLabel() {
 
-        ApplicationState.getInstance().addCommander("unittest", "F0000000", GameVersion.LIVE);
+        ApplicationState.getInstance().addCommander("unittest", "F0000000", GameVersion.LIVE, LocalDateTime.of(2024,12,12,12,12,12));
         DestroyableLabel subject = LabelBuilder.builder()
                 .withText("blank")
                 .withOnMouseClicked(event -> {
@@ -150,7 +151,7 @@ class HorizonsWishlistModuleBlueprintTemplateTest {
     @Test
     public void testMemoryLeakButton() {
         AtomicInteger somevar = new AtomicInteger(1);
-        ApplicationState.getInstance().addCommander("unittest", "F0000000", GameVersion.LIVE);
+        ApplicationState.getInstance().addCommander("unittest", "F0000000", GameVersion.LIVE, LocalDateTime.of(2024,12,12,12,12,12));
         var graphic = ResizableImageViewBuilder.builder()
                 .withStyleClass("market-copy-icon")
                 .withImage("/images/other/copy.png")

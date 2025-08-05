@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileLock;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Slf4j
@@ -257,9 +258,11 @@ public class ApplicationState {
         return Optional.empty();
     }
 
-    public void addCommander(final String name, final String fid, final GameVersion gameVersion) {
-        if (this.commanders.get().stream().noneMatch(commander -> commander.getName().equals(name) && commander.getFid().equals(fid) && commander.getGameVersion().equals(gameVersion))) {
-            final Commander commander = new Commander(name, fid, gameVersion);
+    public void addCommander(final String name, final String fid, final GameVersion gameVersion, LocalDateTime timestamp) {
+        //remove if older commander with same FID and gameversion is in the list
+        this.commanders.get().removeIf(commander -> commander.getTimestamp().isBefore(timestamp) && commander.getFid().equals(fid) && commander.getGameVersion().equals(gameVersion));
+        if (this.commanders.get().stream().noneMatch(commander -> commander.getFid().equals(fid) && commander.getGameVersion().equals(gameVersion))) {
+            final Commander commander = new Commander(name, fid, gameVersion, timestamp);
             final boolean existingName = this.commanders.get().stream().anyMatch(commander1 -> commander1.getName().equals(name) && commander1.getGameVersion().equals(gameVersion));
             this.commanders.get().add(commander);
             this.commanders.setValue(this.commanders.get());

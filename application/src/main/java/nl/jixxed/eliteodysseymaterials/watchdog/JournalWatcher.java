@@ -125,7 +125,6 @@ public class JournalWatcher {
                 final String line = scanner.nextLine();
                 final JsonNode journalMessage = this.objectMapper.readTree(line);
                 final JsonNode eventNode = journalMessage.get("event");
-
                 if (eventNode.asText().equalsIgnoreCase("Fileheader")) {
                     final String gameversion = journalMessage.get("gameversion").asText("");
                     if (gameversion.startsWith("3")) {
@@ -134,9 +133,10 @@ public class JournalWatcher {
                         gameVersion = GameVersion.LIVE;
                     }
                 } else if (eventNode.asText().equals("Commander") && !gameVersion.equals(GameVersion.UNKNOWN)) {
+                    nl.jixxed.eliteodysseymaterials.schemas.journal.Commander.Commander commander = objectMapper.readValue(line, nl.jixxed.eliteodysseymaterials.schemas.journal.Commander.Commander.class);
                     final JsonNode nameNode = journalMessage.get("Name");
                     final JsonNode fidNode = journalMessage.get("FID");
-                    APPLICATION_STATE.addCommander(nameNode.asText(), fidNode.asText(), gameVersion);
+                    APPLICATION_STATE.addCommander(commander.getName(), commander.getFid(), gameVersion, commander.getTimestamp());
                     break;
                 }
             }
