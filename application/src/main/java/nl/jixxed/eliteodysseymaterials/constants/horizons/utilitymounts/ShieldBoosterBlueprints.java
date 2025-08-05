@@ -106,7 +106,7 @@ public class ShieldBoosterBlueprints {
                                     Manufactured.GRIDRESISTORS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+100%", false, percentagePositive(0.0, 1.0)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+100%", false, percentagePositive(0.5, 1.0)),
                                     HorizonsModifier.SHIELD_BOOST, new HorizonsNumberModifierValue("+10%", true, shieldBoostPositive(0.0, 0.1)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03))
@@ -283,7 +283,7 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+5%", true, resistancePositive(0.0, 0.05)),
                                     HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+5%", true, resistancePositive(0.0, 0.05)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05)),
-                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.0, 0.04))
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.02, 0.04))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,

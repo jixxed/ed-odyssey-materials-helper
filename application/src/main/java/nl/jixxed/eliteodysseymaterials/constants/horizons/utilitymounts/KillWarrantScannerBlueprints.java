@@ -25,7 +25,7 @@ public class KillWarrantScannerBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.SCANNER_RANGE, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.0, 0.05)),
-                                    HorizonsModifier.SCAN_TIME, new HorizonsNumberModifierValue("-20%", true, percentageNegative(0.0, 0.2)),
+                                    HorizonsModifier.SCAN_TIME, new HorizonsNumberModifierValue("-20%", true, percentageNegative(0.05, 0.2)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1))
                             ),
                             List.of(
@@ -113,7 +113,7 @@ public class KillWarrantScannerBlueprints {
                                     Raw.PHOSPHORUS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-45%", true, percentageNegative(0.0, 0.45)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-45%", true, percentageNegative(0.35, 0.45)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1))
                             ),
                             List.of(
@@ -199,7 +199,7 @@ public class KillWarrantScannerBlueprints {
                             Map.of(
                                     HorizonsModifier.SCANNER_RANGE, new HorizonsNumberModifierValue("+24%", true, percentagePositive(0.0, 0.24)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.0, 0.1)),
-                                    HorizonsModifier.MAX_ANGLE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1))
+                                    HorizonsModifier.MAX_ANGLE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.05, 0.1))
                             ),
                             List.of(
                                     Engineer.ETIENNE_DORN,

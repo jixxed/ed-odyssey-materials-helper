@@ -25,7 +25,7 @@ public class ElectronicCounterMeasureBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
-                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-45%", true, percentageNegative(0.0, 0.45))
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-45%", true, percentageNegative(0.35, 0.45))
                             ),
                             List.of(
                                     Engineer.RAM_TAH,
