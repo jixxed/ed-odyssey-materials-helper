@@ -8,10 +8,10 @@
         </encoder>
     </appender>
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>log/edomh.log</file>
+        <file>${logging.config}/edomh.log</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <fileNamePattern>log/edomh.%i.log</fileNamePattern>
+            <fileNamePattern>${logging.config}/edomh.%i.log</fileNamePattern>
             <minIndex>1</minIndex>
             <maxIndex>14</maxIndex>
         </rollingPolicy>

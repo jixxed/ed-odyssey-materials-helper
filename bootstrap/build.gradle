@@ -18,10 +18,9 @@ plugins {
     id 'idea' // optional (to generate IntelliJ IDEA project files)
     id 'org.beryx.jlink' version '3.1.1'
 }
-apply plugin: "java"
-apply plugin: "application"
-apply plugin: "org.beryx.jlink"
+
 group 'nl.jixxed'
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(24)
@@ -50,6 +49,7 @@ application {
     mainModule = "nl.jixxed.bootstrap"
     mainClass = "nl.jixxed.bootstrap.Main"
 }
+
 def packageType = System.getProperty("packageType") ?: 'msi' // default to windows
 
 jlink {
@@ -59,6 +59,7 @@ jlink {
         name = 'Elite Dangerous Odyssey Materials Helper Launcher'
         jvmArgs = [
                 '-Dapp.version=' + project.version,
+                '-Dlogging.config=' + os.isWindows() ? 'log' : '${user.home}/.ed-odyssey-materials-helper/log',
                 os.isWindows() ? '-Djavafx.cachedir=javafx-cache' : ''
         ]
         if (os.isWindows()) {

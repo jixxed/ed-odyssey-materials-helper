@@ -15,6 +15,7 @@ import java.util.Objects;
 public class Main {
 
     public static void main(final String[] args) {
+        log.info("Launching launcher with java version: " + getVersion());
         if (OsCheck.isWindows()) {
             boolean runningAsAdmin = isRunningAsAdmin();
             boolean uacEnabled = isUACEnabled();
@@ -25,6 +26,8 @@ public class Main {
             } else {
                 Launcher.launchFx(args);
             }
+        } else {
+            Launcher.launchFx(args);
         }
     }
 
@@ -84,5 +87,19 @@ public class Main {
             log.error("failed to read registry", e);
         }
         return "";
+    }
+
+
+    private static int getVersion() {
+        String version = System.getProperty("java.version");
+        if (version.startsWith("1.")) {
+            version = version.substring(2, 3);
+        } else {
+            final int dot = version.indexOf(".");
+            if (dot != -1) {
+                version = version.substring(0, dot);
+            }
+        }
+        return Integer.parseInt(version);
     }
 }

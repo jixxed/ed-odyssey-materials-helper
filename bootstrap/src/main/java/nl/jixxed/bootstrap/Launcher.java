@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
@@ -28,7 +29,7 @@ import java.util.concurrent.Executors;
 import java.util.stream.StreamSupport;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-
+@Slf4j
 public class Launcher extends Application {
     private JsonNode response;
     private File appFolder;
@@ -45,6 +46,7 @@ public class Launcher extends Application {
         final String currentDir = binDir.trim().replace("\"", "") + "\\";
         final StackPane root = new StackPane();
         root.setAlignment(Pos.CENTER);
+        log.info("Checking for updates...");
         final Label label = new Label("Checking for updates...");
         final Image pacmanEating = new Image(getClass().getResourceAsStream("/images/pacman.gif"));
         final ImageView animation = new ImageView(pacmanEating);
@@ -67,14 +69,17 @@ public class Launcher extends Application {
                 this.appFolder.mkdirs();
                 final String latestVersion = getLatestVersion();
                 if ("ERROR".equals(latestVersion)) {
+                    log.error("Unable to determine latest version. Trying to launch application...");
                     error(label, animation, "Unable to determine latest version. Trying to launch application...", true);
                 } else {
                     if (!getCurrentVersion(this.appFolder).equals(latestVersion)) {
                         //update
+                        log.info("Downloading update...");
                         Platform.runLater(() -> label.setText("Downloading update..."));
                         //download zip
                         final String latestUpdateUrl = getLatestUpdateUrl();
                         if (!latestUpdateUrl.endsWith("zip")) {
+                            log.error("Update file is invalid. Trying to launch application...");
                             error(label, animation, "Update file is invalid. Trying to launch application...", true);
                         }
                         final URL url = new URL(latestUpdateUrl);
@@ -92,9 +97,11 @@ public class Launcher extends Application {
                         final long expectedSize = getLatestUpdateSize();
                         final long actualSize = updateFile.length();
                         if (actualSize != expectedSize) {
+                            log.error("Downloaded update integrity check failed. Please try again.(" + actualSize + ")");
                             error(label, animation, "Downloaded update integrity check failed. Please try again.(" + actualSize + ")", false);
                         }
                         //remove old
+                        log.info("Cleaning old files...");
                         Platform.runLater(() -> label.setText("Cleaning old files..."));
                         try {
                             //linux does not put files in use so always kill existing instances
@@ -110,17 +117,21 @@ public class Launcher extends Application {
                             FileUtils.deleteDirectory(this.appFolder);
 
                         } catch (final IOException ex) {
+                            log.info("Terminating running application...");
                             Platform.runLater(() -> label.setText("Terminating running application..."));
                             runCommand(OsConstants.KILL_COMMAND);
                             Thread.sleep(3000);
+                            log.info("Cleaning old files...");
                             Platform.runLater(() -> label.setText("Cleaning old files..."));
                             try {
                                 FileUtils.deleteDirectory(this.appFolder);
                             } catch (final IOException exAgain) {
+                                log.error("Unable to clean old files. Files in use.", exAgain);
                                 error(label, animation, "Unable to clean old files. Files in use.", false);
                             }
                         }
                         //extract new
+                        log.info("Installing the update...");
                         Platform.runLater(() -> label.setText("Installing the update..."));
                         try {
                             unzipFile(updateFile, this.appFolder);
@@ -130,19 +141,24 @@ public class Launcher extends Application {
 //                                file.setExecutable(true);
                             }
                         } catch (final IOException ex) {
+                            log.error("Failed to install the update.", ex);
                             error(label, animation, "Failed to install the update.", false);
                         }
                         //remove zip
+                        log.info("Wiping the evidence...");
                         Platform.runLater(() -> label.setText("Wiping the evidence..."));
 
                         if (!updateFile.delete()) {
+                            log.error("Failed to get rid of the evidence. Trying to launch app...");
                             error(label, animation, "Failed to get rid of the evidence. Trying to launch app...", true);
                         }
                     }
                     //launch app
+                    log.info("Launching the application...");
                     Platform.runLater(() -> label.setText("Launching the application..."));
                     runCommand(String.format(OsConstants.START_COMMAND, this.appFolder));
                     //close this launcher
+                    log.info("Bye! ;)");
                     System.exit(0);
                 }
             } catch (final IOException | InterruptedException e) {
