@@ -24,9 +24,9 @@ public class PowerPlantBlueprints {
                                     Manufactured.WORNSHIELDEMITTERS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.POWER_CAPACITY, new HorizonsNumberModifierValue("+4%", true, percentagePositive(0.0, 0.04)),
-                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.0, 0.40)),
-                                    HorizonsModifier.HEAT_EFFICIENCY, new HorizonsNumberModifierValue("-4%", true, percentageNegative(0.0, 0.04)),
+                                    HorizonsModifier.POWER_CAPACITY, new HorizonsNumberModifierValue("+4%", true, percentagePositive(0.02, 0.04)),
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.2, 0.40)),
+                                    HorizonsModifier.HEAT_EFFICIENCY, new HorizonsNumberModifierValue("-4%", true, percentageNegative(0.02, 0.04)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+4%", false, percentagePositive(0.0, 0.04))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.FELICITY_FARSEER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
@@ -90,7 +90,7 @@ public class PowerPlantBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+4%", false, percentagePositive(0.0, 0.04)),
-                                    HorizonsModifier.HEAT_EFFICIENCY, new HorizonsNumberModifierValue("-25%", true, percentageNegative(0.0, 0.25)),
+                                    HorizonsModifier.HEAT_EFFICIENCY, new HorizonsNumberModifierValue("-25%", true, percentageNegative(0.15, 0.25)),
                                     HorizonsModifier.POWER_CAPACITY, new HorizonsNumberModifierValue("-3%", false, percentageNegative(0.0, 0.03))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.FELICITY_FARSEER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
@@ -151,7 +151,7 @@ public class PowerPlantBlueprints {
                             Map.of(
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.0, 0.05)),
                                     HorizonsModifier.HEAT_EFFICIENCY, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05)),
-                                    HorizonsModifier.POWER_CAPACITY, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.0, 0.12))
+                                    HorizonsModifier.POWER_CAPACITY, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.05, 0.12))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.FELICITY_FARSEER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_PLANT, HorizonsBlueprintType.OVERCHARGED, HorizonsBlueprintGrade.GRADE_2,

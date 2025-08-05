@@ -87,7 +87,7 @@ public class ArmourBlueprints {
                                     KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+1%", true, resistancePositive(0.0, 0.01)),
                                     EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+1%", true, resistancePositive(0.0, 0.01)),
                                     HULL_BOOST, new HorizonsNumberModifierValue("+12%", true, hullBoostPositive(0.0, 0.12)),
-                                    MASS, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.0, 0.10))
+                                    MASS, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.05, 0.10))
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.SELENE_JEAN, Engineer.PETRA_OLMANOVA)),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.ARMOUR, HorizonsBlueprintType.HEAVY_DUTY, HorizonsBlueprintGrade.GRADE_2,
@@ -217,7 +217,7 @@ public class ArmourBlueprints {
                                     THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, resistancePositive(0.0, 0.03)),
                                     KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, resistancePositive(0.0, 0.03)),
                                     HULL_BOOST, new HorizonsNumberModifierValue("-1%", false, hullBoostNegative(0.0, 0.01)),
-                                    MASS, new HorizonsNumberModifierValue("-15%", true, percentageNegative(0.0, 0.15))
+                                    MASS, new HorizonsNumberModifierValue("-15%", true, percentageNegative(0.05, 0.15))
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.SELENE_JEAN, Engineer.PETRA_OLMANOVA)),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.ARMOUR, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_2,

@@ -25,7 +25,7 @@ public class FSDBlueprints {
                             Map.of(
                                     HorizonsModifier.FSD_OPTIMISED_MASS, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-3%", false, percentageNegative(0.0, 0.03)),
-                                    HorizonsModifier.BOOT_TIME, new HorizonsNumberModifierValue("-20%", true, percentageNegative(0.0, 0.20)),
+                                    HorizonsModifier.BOOT_TIME, new HorizonsNumberModifierValue("-20%", true, percentageNegative(0.05, 0.20)),
                                     HorizonsModifier.FSD_HEAT_RATE, new HorizonsNumberModifierValue("+4%", false, percentagePositive(0.0, 0.04))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.COLONEL_BRIS_DEKKER, Engineer.CHLOE_SEDESI)),
@@ -89,9 +89,9 @@ public class FSDBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+3%", false, percentagePositive(0.0, 0.03)),
-                                    HorizonsModifier.FSD_OPTIMISED_MASS, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)),
+                                    HorizonsModifier.FSD_OPTIMISED_MASS, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.05, 0.15)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-3%", false, percentageNegative(0.0, 0.03)),
-                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.0, 0.10))
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.05, 0.10))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.COLONEL_BRIS_DEKKER, Engineer.CHLOE_SEDESI)),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.INCREASED_FSD_RANGE, HorizonsBlueprintGrade.GRADE_2,
@@ -155,7 +155,7 @@ public class FSDBlueprints {
                             Map.of(
                                     HorizonsModifier.FSD_OPTIMISED_MASS, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+25%", true, percentagePositive(0.0, 0.25)),
-                                    HorizonsModifier.FSD_HEAT_RATE, new HorizonsNumberModifierValue("-10%", true, percentageNegative(0.0, 0.10)),
+                                    HorizonsModifier.FSD_HEAT_RATE, new HorizonsNumberModifierValue("-10%", true, percentageNegative(0.05, 0.10)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+4%", false, percentagePositive(0.0, 0.04))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.COLONEL_BRIS_DEKKER, Engineer.CHLOE_SEDESI)),

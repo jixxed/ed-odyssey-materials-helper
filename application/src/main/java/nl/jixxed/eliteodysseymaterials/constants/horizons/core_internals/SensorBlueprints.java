@@ -23,7 +23,7 @@ public class SensorBlueprints {
                                     Raw.IRON, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.10)),
+                                    HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.05, 0.10)),
                                     HorizonsModifier.MAX_RANGE, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.0, 0.20))
                             ),
@@ -131,7 +131,7 @@ public class SensorBlueprints {
                             Map.of(
                                     HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.0, 0.05)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.10)),
-                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-20%", true, percentageNegative(0.0, 0.20))
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-20%", true, percentageNegative(0.05, 0.20))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.LEI_CHEUNG, Engineer.TIANA_FORTUNE, Engineer.HERA_TANI, Engineer.FELICITY_FARSEER)),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.SENSORS, HorizonsBlueprintType.LIGHT_WEIGHT_SCANNER, HorizonsBlueprintGrade.GRADE_2,

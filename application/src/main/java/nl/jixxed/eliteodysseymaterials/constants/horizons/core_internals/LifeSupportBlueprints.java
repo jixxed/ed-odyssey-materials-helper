@@ -27,7 +27,7 @@ public class LifeSupportBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.10)),
-                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-45%", true, percentageNegative(0.0, 0.45))
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-45%", true, percentageNegative(0.35, 0.45))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)
                     ),
@@ -92,8 +92,8 @@ public class LifeSupportBlueprints {
                                     Raw.NICKEL, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.30, 0.60)),
-                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.15, 0.30))
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.30, 0.60)),//TODO verify: oddly high
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.15, 0.30))//TODO verify: oddly high
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)
                     ),
