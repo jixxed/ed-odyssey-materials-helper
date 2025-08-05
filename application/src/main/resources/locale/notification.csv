@@ -32,7 +32,7 @@
 "notification.clipboard.wishlist.copied.text","The wishlist has been copied to your clipboard","","","La lista de deseos ha sido copiada a tu portapapeles","","","Список желаний был скопирован в ваш буфер обмена","愿望单已复制到剪贴板"
 "notification.clipboard.url.length.text","Due to the length, the URL might not work in browsers and must be directly imported inside the app.","","","Debido a su longitud, es posible que la URL no funcione en el navegador y debe ser importada directamente dentro de la app.","","","Из-за длины URL-адрес может не работать в браузерах и должен быть напрямую импортирован в приложение.","由于其长度，该URL可能无法在浏览器中工作，必须直接被导入至此应用。"
 "notification.test.title","Test","","","Prueba","","","Тест","测试"
-"notification.test.text","This is a test notification","","","Esta es una notificación de prueba","","","Это тестовое уведомление","这是一个测试通知"
+"notification.test.text","This is a test notification. Due to the length, the URL might not work in browsers and must be directly imported inside the app.","","","Esta es una notificación de prueba","","","Это тестовое уведомление","这是一个测试通知"
 "notification.ar.download.complete.title","Download complete","","","Descarga completa","","","Загрузка завершена","下载完成"
 "notification.ar.download.complete.text","Download of OCR languagedata complete","","","Descarga de datos de lenguage OCR completada","","","Загрузка языковых данных OCR завершена","OCR语言文件下载完成"
 "notification.ar.download.failed.title","Download failed","","","Descarga fallida","","","Загрузка не удалась","下载失败"

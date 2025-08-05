@@ -4,5 +4,7 @@
 
 .notification-bar.dark > .pane .title,
 .notification-bar.dark > .pane .label {
+  @include fixedWidth(27.5em);
+  -fx-wrap-text: true;
   -fx-text-fill: #ffffff;
 }

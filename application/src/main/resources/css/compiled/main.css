@@ -4367,6 +4367,10 @@
 
 .notification-bar.dark > .pane .title,
 .notification-bar.dark > .pane .label {
+  -fx-min-width: 27.5em;
+  -fx-pref-width: 27.5em;
+  -fx-max-width: 27.5em;
+  -fx-wrap-text: true;
   -fx-text-fill: #ffffff; }
 
 .combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:pressed:filled:selected {
