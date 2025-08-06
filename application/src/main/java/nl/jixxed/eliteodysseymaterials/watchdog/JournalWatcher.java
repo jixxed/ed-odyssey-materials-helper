@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.watchdog;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import javafx.application.Platform;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,10 @@ public class JournalWatcher {
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private final Pattern journalPatternTimestamp = Pattern.compile("Journal\\.(\\d+)\\.(\\d{2})\\.log");
     private final Pattern journalPatternDate = Pattern.compile("Journal\\.(\\d{4})-(\\d{2})-(\\d{2})T(\\d{6})\\.(\\d{2})\\.log");
+
+    public JournalWatcher() {
+        objectMapper.registerModule(new JavaTimeModule());
+    }
 
     public void watch(final File folder, final Consumer<File> fileModifiedProcessor, final Consumer<File> fileSwitchedProcessor) {
 //        Platform.runLater(() -> {
