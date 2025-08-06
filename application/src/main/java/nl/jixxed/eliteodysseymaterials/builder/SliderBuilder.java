@@ -51,6 +51,7 @@ public class SliderBuilder extends AbstractControlBuilder<SliderBuilder> {
             slider.setMinorTickCount(0);
             slider.setMajorTickUnit(majorTickUnit);
             slider.setSnapToTicks(true);
+            slider.setBlockIncrement(1);
         }
         if (this.changeListener != null) {
             slider.addChangeListener(slider.valueProperty(), this.changeListener);

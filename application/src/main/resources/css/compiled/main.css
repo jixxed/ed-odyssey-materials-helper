@@ -2311,6 +2311,8 @@
                   -fx-pref-width: 25.1em;
                   -fx-max-width: 25.1em;
                   -fx-spacing: 0.125em; }
+                  .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .progression .slider {
+                    -show-value-on-interaction: false; }
                 .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .hardpoint-buttons {
                   -fx-min-width: 25.1em;
                   -fx-pref-width: 25.1em;

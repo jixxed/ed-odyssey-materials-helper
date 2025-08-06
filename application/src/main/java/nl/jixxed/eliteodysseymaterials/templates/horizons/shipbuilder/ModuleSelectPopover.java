@@ -283,8 +283,10 @@ public class ModuleSelectPopover extends DestroyablePopOver implements Destroyab
             });
             progression.getNodes().addAll(toggleButtonsRank);
             progressSlider = SliderBuilder.builder()
+                    .withStyleClass("slider")
                     .withMin(0)
                     .withMax(100)
+                    .withMajorTickUnit(1)
                     .withValue(shipModule.getModifications().stream()
                             .findFirst()
                             .flatMap(Modification::getModificationCompleteness)
