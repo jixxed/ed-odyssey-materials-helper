@@ -25,9 +25,9 @@ public class BurstLaserBlueprints {
                                     Raw.SULPHUR, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-37.5%", true, percentageNegative(0.0, 0.375))
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.04, 0.08)),
+                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.04, 0.08)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-37.5%", true, percentageNegative(0.325, 0.375))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)
                     ),
@@ -95,10 +95,10 @@ public class BurstLaserBlueprints {
                                     Raw.IRON, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.0, 0.36)),
-                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.0, 0.40)),
+                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.2, 0.36)),
+                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.2, 0.40)),
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+1%", false, percentagePositive(0.0, 0.01)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.0, 0.36))
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.2, 0.36))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.BURST_LASER, HorizonsBlueprintType.FOCUSED_WEAPON, HorizonsBlueprintGrade.GRADE_2,
@@ -159,8 +159,8 @@ public class BurstLaserBlueprints {
                                     Raw.PHOSPHORUS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.0, 0.20)),
-                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-30%", true, percentageNegative(0.0, 0.30))
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.1, 0.20)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-30%", true, percentageNegative(0.15, 0.30))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.BURST_LASER, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_2,
@@ -224,7 +224,7 @@ public class BurstLaserBlueprints {
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+3%", false, percentagePositive(0.0, 0.03)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.0, 0.20)),
                                     HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+620%", true, percentagePositive(5.0, 6.20)),
-                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.0, 0.10))
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.05, 0.10))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.BURST_LASER, HorizonsBlueprintType.LONG_RANGE_WEAPON, HorizonsBlueprintGrade.GRADE_2,
@@ -285,9 +285,9 @@ public class BurstLaserBlueprints {
                                     Raw.NICKEL, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.30)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.30)),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("+15%", false, percentagePositive(0.0, 0.15)),
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.2, 0.30)),
+                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.2, 0.30)),
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("+15%", false, percentagePositive(0.1, 0.15)),
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+3%", false, percentagePositive(0.0, 0.03))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
@@ -353,7 +353,7 @@ public class BurstLaserBlueprints {
                                     HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-1%", false, percentageNegative(0.0, 0.01)),
 //                                    HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("-25%", true, percentageNegative(0.0, 0.25)),
                                     HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0.5", false, plus(0.5)),
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08))
+                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08))//todo verify first step +8, other steps +9
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.BURST_LASER, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_2,
@@ -422,8 +422,8 @@ public class BurstLaserBlueprints {
                                     Raw.NICKEL, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+27%", true, percentagePositive(0.0, 0.27)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+27%", true, percentagePositive(0.0, 0.27)),
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+27%", true, percentagePositive(0.15, 0.27)),
+                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+27%", true, percentagePositive(0.15, 0.27)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.10))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
@@ -486,9 +486,9 @@ public class BurstLaserBlueprints {
                                     Raw.NICKEL, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.0, 1.0)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-10%", true, percentageNegative(0.0, 0.10)),
-                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.0, 0.20)),
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.5, 1.0)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-10%", true, percentageNegative(0.05, 0.10)),
+                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.1, 0.20)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.0, 0.20))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),

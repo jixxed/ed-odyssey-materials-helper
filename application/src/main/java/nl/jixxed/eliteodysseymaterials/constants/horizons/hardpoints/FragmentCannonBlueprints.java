@@ -24,7 +24,7 @@ public class FragmentCannonBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("1", true, plus(1.0)),
-                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+600%", true, percentagePositive(0.0, 6.0)),
+                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+600%", true, percentagePositive(4.0, 6.0)),
                                     HorizonsModifier.BURST_SIZE, new HorizonsNumberModifierValue("1", true, plus(1.0)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02))
                             ),
@@ -112,9 +112,9 @@ public class FragmentCannonBlueprints {
                                     Raw.SULPHUR, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08)),
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.04, 0.08)),
 //                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-37.5%", true, percentageNegative(0.0, 0.375))
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-37.5%", true, percentageNegative(0.325, 0.375))
                             ),
                             List.of(
                                     Engineer.MARSHA_HICKS,
@@ -200,11 +200,11 @@ public class FragmentCannonBlueprints {
                                     Manufactured.MECHANICALSCRAP, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.0, 0.2)),
-                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.0, 0.36)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.1, 0.2)),
+                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.2, 0.36)),
                                     HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+2%", true, percentagePositive(0.0, 0.02)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+4%", false, percentagePositive(0.0, 0.04)),
-                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.0, 0.36))
+                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.2, 0.36))
                             ),
                             List.of(
                                     Engineer.MARSHA_HICKS,
@@ -293,8 +293,8 @@ public class FragmentCannonBlueprints {
                                     Raw.PHOSPHORUS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-30%", true, percentageNegative(0.0, 0.3)),
-                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.0, 0.2))
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-30%", true, percentageNegative(0.15, 0.3)),
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.1, 0.2))
                             ),
                             List.of(
                                     Engineer.MARSHA_HICKS,
@@ -379,10 +379,10 @@ public class FragmentCannonBlueprints {
                                     Raw.NICKEL, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.3)),
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.2, 0.3)),
 //                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.3)),
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+3%", false, percentagePositive(0.0, 0.03)),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("+15%", false, percentagePositive(0.0, 0.15))
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("+15%", false, percentagePositive(0.1, 0.15))
                             ),
                             List.of(
                                     Engineer.MARSHA_HICKS,
@@ -470,8 +470,8 @@ public class FragmentCannonBlueprints {
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-1%", false, percentageNegative(0.0, 0.01)),
 //                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-1%", false, percentageNegative(0.0, 0.01)),
                                     HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, plus(0.5)),
-                                    HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("-25%", true, percentageNegative(0.0, 0.25)),
-                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08))
+                                    HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("-25%", true, percentageNegative(0.15, 0.25)),
+                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08))//TODO replace with burst interval
                             ),
                             List.of(
                                     Engineer.MARSHA_HICKS,
@@ -564,9 +564,9 @@ public class FragmentCannonBlueprints {
                                     Raw.NICKEL, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.0, 1.0)),
-                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.0, 0.2)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-10%", true, percentageNegative(0.0, 0.1)),
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.5, 1.0)),
+                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.1, 0.2)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-10%", true, percentageNegative(0.05, 0.1)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.0, 0.2))
                             ),
                             List.of(
