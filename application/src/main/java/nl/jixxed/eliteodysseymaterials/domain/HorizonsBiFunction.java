@@ -1,9 +1,11 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
 import io.reactivex.rxjava3.functions.BiFunction;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 
+@Getter
 public class HorizonsBiFunction<T> {
     private boolean bool;
     private double value;
@@ -36,8 +38,12 @@ public class HorizonsBiFunction<T> {
 
     public final BiFunction<T, Double, T> getFunction() {
         return switch (calculationType) {
-            case FALLOFF_PERCENTAGE_POSITIVE ->
-                    (BiFunction<T, Double, T>) (BiFunction<Double, Double, Double>) (base, percent) -> (base + value) * ((1D + start) + (Math.abs(end - start) * percent));
+//            case PRE_BUFF_PERCENTAGE_POSITIVE ->
+//                    (BiFunction<T, Double, T>) (BiFunction<Double, Double, Double>) (base, percent) -> (base * (1 + value)) + base * ((start) + (Math.abs(end - start) * percent));
+//            case PRE_BUFF_PERCENTAGE_NEGATIVE ->
+//                    (BiFunction<T, Double, T>) (BiFunction<Double, Double, Double>) (base, percent) -> (base * (1 - value)) - base * ((start) + (Math.abs(end - start) * percent));
+//            case FALLOFF_PERCENTAGE_POSITIVE ->
+//                    (BiFunction<T, Double, T>) (BiFunction<Double, Double, Double>) (base, percent) -> (base + value) * ((1D + start) + (Math.abs(end - start) * percent));
             case HULL_BOOST_POSITIVE, SHIELD_BOOST_POSITIVE ->
                     (BiFunction<T, Double, T>) (BiFunction<Double, Double, Double>) (base, percent) -> (1 + base) * ((1D + start) + (Math.abs(end - start) * percent)) - 1;
             case HULL_BOOST_NEGATIVE, SHIELD_BOOST_NEGATIVE ->
@@ -70,6 +76,6 @@ public class HorizonsBiFunction<T> {
     }
 
     public enum CalculationType {
-        PERCENTAGE_POSITIVE, PERCENTAGE_NEGATIVE, PLUS, MINUS, BOOL, FALLOFF_PERCENTAGE_POSITIVE, RESISTANCE_NEGATIVE, RESISTANCE_POSITIVE, HULL_BOOST_POSITIVE, HULL_BOOST_NEGATIVE, SHIELD_BOOST_POSITIVE, SHIELD_BOOST_NEGATIVE
+        PERCENTAGE_POSITIVE, PERCENTAGE_NEGATIVE, PLUS, MINUS, BOOL, RESISTANCE_NEGATIVE, RESISTANCE_POSITIVE, HULL_BOOST_POSITIVE, HULL_BOOST_NEGATIVE, SHIELD_BOOST_POSITIVE, SHIELD_BOOST_NEGATIVE
     }
 }
