@@ -18,11 +18,12 @@ public class MissionCompletedMessageProcessor implements MessageProcessor<Missio
                 final String name = materialsReward.getName();
                 try {
                     final HorizonsMaterial horizonsMaterial = HorizonsMaterial.subtypeForName(name);
-                    if (horizonsMaterial instanceof Commodity commodity && !horizonsMaterial.isUnknown()) {
-                        StorageService.addCommodity(commodity, StoragePool.SHIP, materialsReward.getCount().intValue());
-                    }
-                    if (!horizonsMaterial.isUnknown()) {
-                        StorageService.addMaterial(horizonsMaterial, materialsReward.getCount().intValue());
+                    if(!horizonsMaterial.isUnknown()) {
+                        if (horizonsMaterial instanceof Commodity commodity) {
+                            StorageService.addCommodity(commodity, StoragePool.SHIP, materialsReward.getCount().intValue());
+                        } else {
+                            StorageService.addMaterial(horizonsMaterial, materialsReward.getCount().intValue());
+                        }
                     }
                     EventService.publish(new StorageEvent(StoragePool.SHIP));
                 } catch (final IllegalArgumentException ex) {
