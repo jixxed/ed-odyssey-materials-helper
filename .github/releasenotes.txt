@@ -6,5 +6,13 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Added sensor emission range stats to ship builder
-Reload ship list on ship change so current ship type is updated
+Added collector mode toggle that will show available material storage as incomplete
+Corrected G1 blueprints to start at a higher value than 0 for a lot of modifiers. The game would give you a minimum boost even if you would be at 0.01% of a G1 blueprint.
+Corrected all damage falloff start values on blueprints
+The percentage slider for grades will now snap to whole numbers when adjusted.
+Automatically filter out old commanders on the same account (for example due to a rename or reset)
+Fixed FSD Interdictor unit from 'm' to 's'
+Fixed CRASHED_SHIP_ANACONDA spawn body in LTT 606
+Fixed an issue with the launcher for linux that was no longer working
+Added more logging to the launcher
+Made the text in the notification popup a fixed width, as it would sometimes go offscreen
