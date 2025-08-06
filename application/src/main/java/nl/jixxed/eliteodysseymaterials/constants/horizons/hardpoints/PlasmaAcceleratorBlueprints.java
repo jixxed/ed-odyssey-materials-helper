@@ -290,7 +290,7 @@ public class PlasmaAcceleratorBlueprints {
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.0, 0.1)),
                                     HorizonsModifier.SHOT_SPEED, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.0, 0.2)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.0, 0.2)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+110%", true, percentagePositive(0.75, 1.10)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.0, 0.2)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+3%", false, percentagePositive(0.0, 0.03))
                             ),
@@ -308,7 +308,7 @@ public class PlasmaAcceleratorBlueprints {
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+15%", false, percentagePositive(0.1, 0.15)),
                                     HorizonsModifier.SHOT_SPEED, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.2, 0.4)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.2, 0.4)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+145%", true, percentagePositive(1.10, 1.45)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.2, 0.4)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+6%", false, percentagePositive(0.03, 0.06))
                             ),
@@ -327,7 +327,7 @@ public class PlasmaAcceleratorBlueprints {
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.15, 0.2)),
                                     HorizonsModifier.SHOT_SPEED, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.4, 0.6)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.4, 0.6)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+180%", true, percentagePositive(1.45, 1.80)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.4, 0.6)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+9%", false, percentagePositive(0.06, 0.09))
                             ),
@@ -345,7 +345,7 @@ public class PlasmaAcceleratorBlueprints {
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+25%", false, percentagePositive(0.2, 0.25)),
                                     HorizonsModifier.SHOT_SPEED, new HorizonsNumberModifierValue("+80%", true, percentagePositive(0.6, 0.8)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+80%", true, percentagePositive(0.6, 0.8)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+215%", true, percentagePositive(1.80, 2.15)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+80%", true, percentagePositive(0.6, 0.8)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+12%", false, percentagePositive(0.09, 0.12))
                             ),
@@ -363,7 +363,7 @@ public class PlasmaAcceleratorBlueprints {
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.25, 0.3)),
                                     HorizonsModifier.SHOT_SPEED, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.8, 1.0)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.8, 1.0)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+250%", true, percentagePositive(2.15, 2.50)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.8, 1.0)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+15%", false, percentagePositive(0.12, 0.15))
                             ),

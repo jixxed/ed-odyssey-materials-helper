@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.*;
+import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.percentagePositive;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @SuppressWarnings("java:S1192")
@@ -222,7 +223,7 @@ public class BurstLaserBlueprints {
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+3%", false, percentagePositive(0.0, 0.03)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.0, 0.20)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+20%", true, falloffPercentagePositive(2500.0, 0.0, 0.20)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+620%", true, percentagePositive(5.0, 6.20)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.0, 0.10))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
@@ -234,7 +235,7 @@ public class BurstLaserBlueprints {
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+6%", false, percentagePositive(0.03, 0.06)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.20, 0.40)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+40%", true, falloffPercentagePositive(2500.0, 0.20, 0.40)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+740%", true, percentagePositive(6.20, 7.40)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+15%", false, percentagePositive(0.10, 0.15))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
@@ -247,7 +248,7 @@ public class BurstLaserBlueprints {
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+9%", false, percentagePositive(0.06, 0.09)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.40, 0.60)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+60%", true, falloffPercentagePositive(2500.0, 0.40, 0.60)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+860%", true, percentagePositive(7.40, 8.60)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.15, 0.20))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
@@ -260,7 +261,7 @@ public class BurstLaserBlueprints {
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+12%", false, percentagePositive(0.09, 0.12)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+80%", true, percentagePositive(0.60, 0.80)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+80%", true, falloffPercentagePositive(2500.0, 0.60, 0.80)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+980%", true, percentagePositive(8.60, 9.80)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+25%", false, percentagePositive(0.20, 0.25))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.BROO_TARQUIN)),
@@ -273,7 +274,7 @@ public class BurstLaserBlueprints {
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+15%", false, percentagePositive(0.12, 0.15)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.80, 1.00)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+100%", true, falloffPercentagePositive(2500.0, 0.80, 1.00)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+1100%", true, percentagePositive(9.80, 11.0)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.25, 0.30))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.BROO_TARQUIN))),
