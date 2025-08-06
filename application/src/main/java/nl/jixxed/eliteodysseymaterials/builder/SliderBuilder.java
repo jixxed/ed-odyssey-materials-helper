@@ -11,6 +11,7 @@ public class SliderBuilder extends AbstractControlBuilder<SliderBuilder> {
     private double min;
     private double max;
     private ChangeListener<Number> changeListener;
+    private Integer majorTickUnit;
 
     public static SliderBuilder builder() {
         return new SliderBuilder();
@@ -36,11 +37,21 @@ public class SliderBuilder extends AbstractControlBuilder<SliderBuilder> {
         return this;
     }
 
+    public SliderBuilder withMajorTickUnit(Integer majorTickUnit) {
+        this.majorTickUnit = majorTickUnit;
+        return this;
+    }
+
     @SuppressWarnings("unchecked")
     public DestroyableSlider build() {
         final DestroyableSlider slider = new DestroyableSlider(this.min, this.max, this.value);
         super.build(slider);
 
+        if (this.majorTickUnit != null) {
+            slider.setMinorTickCount(0);
+            slider.setMajorTickUnit(majorTickUnit);
+            slider.setSnapToTicks(true);
+        }
         if (this.changeListener != null) {
             slider.addChangeListener(slider.valueProperty(), this.changeListener);
         }
