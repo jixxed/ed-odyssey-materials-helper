@@ -16,6 +16,8 @@ public class Formatters {
         NUMBER_FORMAT_1_CEIL.setMaximumFractionDigits(1);
         NUMBER_FORMAT_1.setMaximumFractionDigits(1);
         NUMBER_FORMAT_2.setMaximumFractionDigits(2);
+        NUMBER_FORMAT_1.setRoundingMode(RoundingMode.HALF_UP);
+        NUMBER_FORMAT_2.setRoundingMode(RoundingMode.HALF_UP);
         NUMBER_FORMAT_2_DUAL_DECIMAL.setMaximumFractionDigits(2);
         NUMBER_FORMAT_2_DUAL_DECIMAL.setMinimumFractionDigits(2);
         NUMBER_FORMAT_2_DUAL_DECIMAL.setGroupingUsed(false);
