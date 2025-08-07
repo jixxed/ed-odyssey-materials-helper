@@ -108,6 +108,23 @@ jlink {
         }
     }
 }
+tasks.register("patchShellScript") {
+    doLast {
+        def launcherScript = file("$buildDir/jpackage/Elite Dangerous Odyssey Materials Helper Launcher/lib/runtime/bin/Elite Dangerous Odyssey Materials Helper Launcher")
+        if (launcherScript.exists()) {
+            def text = launcherScript.text
+            // Replace the unescaped version with escaped version
+            text = text.replace(
+                    '-Dlogging.config=${user.home}/.ed-odyssey-materials-helper/log',
+                    '-Dlogging.config=\\${user.home}/.ed-odyssey-materials-helper/log'
+            )
+            launcherScript.text = text
+            println "Patched shell launcher for escaped logging.config"
+        } else {
+            println "Launcher script not found at: ${launcherScript}"
+        }
+    }
+}
 
 tasks.register("jpackageSigned") {
     dependsOn jpackageImage

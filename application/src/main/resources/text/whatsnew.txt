@@ -1,3 +1,7 @@
+Version 2.220
+-------------
+Fixed an issue for linux launched via the shell script (for real now?)
+
 Version 2.219
 -------------
 Fixed an issue for linux launched via the shell script
