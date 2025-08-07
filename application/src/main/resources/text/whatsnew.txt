@@ -1,3 +1,7 @@
+Version 2.219
+-------------
+Fixed an issue for linux launched via the shell script
+
 Version 2.218
 -------------
 Fixed an issue with with the log configuration
