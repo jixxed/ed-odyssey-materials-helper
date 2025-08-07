@@ -2053,60 +2053,70 @@ public class Ship {
         this.currentCargo = Math.min(currentCargo, getMaxCargo());
     }
 
-    public Map<Integer, Double> getRetractedPower() {
-        Map<Integer, Double> powerValues = new HashMap<>(Map.of(
-                -1, 0D,
-                0, 0D,
-                1, 0D,
-                2, 0D,
-                3, 0D,
-                4, 0D,
-                5, 0D
-        ));
+    public PowerProfile getRetractedPower() {
+        PowerProfile powerProfile = new PowerProfile();
+//        Map<Integer, Double> powerValues = new HashMap<>(Map.of(
+//                -1, 0D,
+//                0, 0D,
+//                1, 0D,
+//                2, 0D,
+//                3, 0D,
+//                4, 0D,
+//                5, 0D
+//        ));
 
 
-        powerValues.put(0, (Double) getCoreSlots().stream().filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType())).findFirst().filter(Slot::isOccupied).map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY)).orElse(0.0D));
+        powerProfile.setPowerCapacity((Double) getCoreSlots().stream().filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType())).findFirst().filter(Slot::isOccupied).map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY)).orElse(0.0D));
         if (getCargoHatch().isOccupied() && getCargoHatch().getShipModule().isPowered()) {
-            powerValues.compute(getCargoHatch().getShipModule().isPassivePowerWithoutToggle() ? -1 : getCargoHatch().getShipModule().getPowerGroup(), (key, value) -> value + (double) getCargoHatch().getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW));
+            int group = getCargoHatch().getShipModule().isPassivePowerWithoutToggle() ? -1 : getCargoHatch().getShipModule().getPowerGroup();
+            powerProfile.increasePowerGroup(group, (double) getCargoHatch().getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW));
         }
         getUtilitySlots().stream()
                 .filter(Slot::isOccupied)
                 .filter(slot -> slot.getShipModule().isPassivePower())
                 .filter(slot -> slot.getShipModule().isPowered())
-                .forEach(slot -> powerValues.compute(slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
+                .forEach(slot -> {
+                    int group = slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup();
+                    powerProfile.increasePowerGroup(group, (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW));
+                });
         getOptionalSlots().stream()
                 .filter(Slot::isOccupied)
                 .filter(slot -> slot.getShipModule().isPowered())
-                .forEach(slot -> powerValues.compute(slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
+                .forEach(slot -> {
+                    int group = slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup();
+                    powerProfile.increasePowerGroup(group, (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW));
+                });
         getCoreSlots().stream()
                 .filter(Slot::isOccupied)
                 .filter(slot -> slot.getShipModule().isPowered())
-                .forEach(slot -> powerValues.compute(slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
-
-        return powerValues;
+                .forEach(slot -> {
+                    int group = slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup();
+                    powerProfile.increasePowerGroup(group, (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW));
+                });
+        return powerProfile;
     }
 
-    public Map<Integer, Double> getDeployedPower() {
-        Map<Integer, Double> powerValues = getRetractedPower();
+    public PowerProfile getDeployedPower() {
+        PowerProfile powerProfile = getRetractedPower();
 
         getHardpointSlots().stream()
                 .filter(Slot::isOccupied)
                 .filter(slot -> slot.getShipModule().isPowered())
-                .forEach(slot -> powerValues.compute(
-                        slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(),
-                        (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)
-                ));
+                .forEach(slot -> {
+                    int group = slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup();
+                    powerProfile.increasePowerGroup(group, (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW));
+                });
         getUtilitySlots().stream()
                 .filter(Slot::isOccupied)
                 .filter(slot -> !slot.getShipModule().isPassivePower())
                 .filter(slot -> slot.getShipModule().isPowered())
-                .forEach(slot -> powerValues.compute(
-                        slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(),
-                        (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)
-                ));
+                .forEach(slot -> {
+                    int group = slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup();
+                    powerProfile.increasePowerGroup(group, (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW));
+                });
 
 
-        return powerValues;
+        return powerProfile;
     }
 
     public double getMaximumMass() {

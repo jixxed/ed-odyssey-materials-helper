@@ -5,6 +5,7 @@ import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.PaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.SegmentedBarBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.ships.PowerProfile;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
@@ -43,16 +44,16 @@ public class PowerBar extends DestroyableHBox implements DestroyableEventTemplat
     }
 
     public void initComponents() {
-        final Map<Integer, Double> retractedPower = calculateRetractedPower();
-        this.groupP = new TypeSegment(Math.max(0D, retractedPower.get(-1)), SegmentType.POWER_GROUP_P);
-        this.group1 = new TypeSegment(Math.max(0D, retractedPower.get(1)), SegmentType.POWER_GROUP_1);
-        this.group2 = new TypeSegment(Math.max(0D, retractedPower.get(2)), SegmentType.POWER_GROUP_2);
-        this.group3 = new TypeSegment(Math.max(0D, retractedPower.get(3)), SegmentType.POWER_GROUP_3);
-        this.group4 = new TypeSegment(Math.max(0D, retractedPower.get(4)), SegmentType.POWER_GROUP_4);
-        this.group5 = new TypeSegment(Math.max(0D, retractedPower.get(5)), SegmentType.POWER_GROUP_5);
+        final PowerProfile retractedPower = calculateRetractedPower();
+        this.groupP = new TypeSegment(Math.max(0D, retractedPower.getPowerGroupPassive()), SegmentType.POWER_GROUP_P);
+        this.group1 = new TypeSegment(Math.max(0D, retractedPower.getPowerGroup1()), SegmentType.POWER_GROUP_1);
+        this.group2 = new TypeSegment(Math.max(0D, retractedPower.getPowerGroup2()), SegmentType.POWER_GROUP_2);
+        this.group3 = new TypeSegment(Math.max(0D, retractedPower.getPowerGroup3()), SegmentType.POWER_GROUP_3);
+        this.group4 = new TypeSegment(Math.max(0D, retractedPower.getPowerGroup4()), SegmentType.POWER_GROUP_4);
+        this.group5 = new TypeSegment(Math.max(0D, retractedPower.getPowerGroup5()), SegmentType.POWER_GROUP_5);
         this.groupOverPower = new TypeSegment(0D, SegmentType.POWER_OVERPOWER);
         this.groupOverPowerPotential = new TypeSegment(0D, SegmentType.POWER_POTENTIAL_OVERPOWER);
-        this.groupAvailable = new TypeSegment(Math.max(0D, retractedPower.get(0) - retractedPower.get(-1) - retractedPower.get(1) - retractedPower.get(2) - retractedPower.get(3) - retractedPower.get(4) - retractedPower.get(5)), SegmentType.POWER_GROUP_NONE);
+        this.groupAvailable = new TypeSegment(Math.max(0D, retractedPower.getPowerCapacity() - retractedPower.getPowerGroupPassive() - retractedPower.getPowerGroup1() - retractedPower.getPowerGroup2() - retractedPower.getPowerGroup3() - retractedPower.getPowerGroup4() - retractedPower.getPowerGroup5()), SegmentType.POWER_GROUP_NONE);
         this.segmentedBar = SegmentedBarBuilder.builder(TypeSegment.class)
                 .withStyleClass("power-progressbar")
                 .withOrientation(Orientation.HORIZONTAL)
@@ -60,33 +61,35 @@ public class PowerBar extends DestroyableHBox implements DestroyableEventTemplat
                     if (segment.getSegmentType() == SegmentType.POWER_POTENTIAL_OVERPOWER) {
                         return null;
                     }
-                    final Map<Integer, Double> power = retracted ? calculateRetractedPower() : calculateDeployedPower();
+
+
+                    final PowerProfile powerProfile = retracted ? calculateRetractedPower() : calculateDeployedPower();
                     Double temp = 0D;
                     Double percentage = switch (segment.getSegmentType()) {
                         case POWER_GROUP_5:
-                            temp += power.get(5);
+                            temp += powerProfile.getPowerGroup5();
                         case POWER_GROUP_4:
-                            temp += power.get(4);
+                            temp += powerProfile.getPowerGroup4();
                         case POWER_GROUP_3:
-                            temp += power.get(3);
+                            temp += powerProfile.getPowerGroup3();
                         case POWER_GROUP_2:
-                            temp += power.get(2);
+                            temp += powerProfile.getPowerGroup2();
                         case POWER_GROUP_1:
-                            temp += power.get(1);
+                            temp += powerProfile.getPowerGroup1();
                         case POWER_GROUP_P:
-                            yield temp + power.get(-1);
+                            yield temp + powerProfile.getPowerGroupPassive();
                         case POWER_GROUP_NONE:
-                            double usedPower1 = power.get(-1) + power.get(1) + power.get(2) + power.get(3) + power.get(4) + power.get(5);
-                            final double available1 = power.get(0) - usedPower1;
+                            double usedPower1 = powerProfile.usedPower();
+                            final double available1 = powerProfile.getPowerCapacity() - usedPower1;
                             yield Math.max(available1, 0D);
                         case POWER_OVERPOWER:
-                            double usedPower2 = power.get(-1) + power.get(1) + power.get(2) + power.get(3) + power.get(4) + power.get(5);
-                            final double available2 = power.get(0) - usedPower2;
+                            double usedPower2 = powerProfile.usedPower();
+                            final double available2 = powerProfile.getPowerCapacity() - usedPower2;
                             overPower = Math.abs(Math.min(available2, 0D));
                             yield overPower;
                         default:
                             yield 0.0;
-                    } / power.get(0) * 100;
+                    } / powerProfile.getPowerCapacity() * 100;
                     String text = segment.getText() + ": "
                             + Formatters.NUMBER_FORMAT_2.format(segment.getSegmentType() == SegmentType.POWER_OVERPOWER ? overPower : segment.getValue())
                             + "MW (" + Formatters.NUMBER_FORMAT_1_CEIL.format(percentage) + "%)";
@@ -128,48 +131,37 @@ public class PowerBar extends DestroyableHBox implements DestroyableEventTemplat
     }
 
     public void update() {
-        final Map<Integer, Double> power = retracted ? calculateRetractedPower() : calculateDeployedPower();
-
-        groupP.setValue(power.get(-1));
-        group1.setValue(power.get(1));
-        group2.setValue(power.get(2));
-        group3.setValue(power.get(3));
-        group4.setValue(power.get(4));
-        group5.setValue(power.get(5));
-        double usedPower = power.get(-1) + power.get(1) + power.get(2) + power.get(3) + power.get(4) + power.get(5);
-        final double available = power.get(0) - usedPower;
+        final PowerProfile powerProfile = retracted ? calculateRetractedPower() : calculateDeployedPower();
+        double available = powerProfile.getPowerCapacity() - powerProfile.getPowerGroupPassive();
+        groupP.setValue(available > 0 ? powerProfile.getPowerGroupPassive() : powerProfile.getPowerGroupPassive() - Math.abs(available));
+        available = available - powerProfile.getPowerGroup1();
+        group1.setValue(available > 0 ? powerProfile.getPowerGroup1() : Math.max(0D, powerProfile.getPowerGroup1() - Math.abs(available)));
+        available = available - powerProfile.getPowerGroup2();
+        group2.setValue(available > 0 ? powerProfile.getPowerGroup2() : Math.max(0D, powerProfile.getPowerGroup2() - Math.abs(available)));
+        available = available - powerProfile.getPowerGroup3();
+        group3.setValue(available > 0 ? powerProfile.getPowerGroup3() : Math.max(0D, powerProfile.getPowerGroup3() - Math.abs(available)));
+        available = available - powerProfile.getPowerGroup4();
+        group4.setValue(available > 0 ? powerProfile.getPowerGroup4() : Math.max(0D, powerProfile.getPowerGroup4() - Math.abs(available)));
+        available = available - powerProfile.getPowerGroup5();
+        group5.setValue(available > 0 ? powerProfile.getPowerGroup5() : Math.max(0D, powerProfile.getPowerGroup5() - Math.abs(available)));
+//        double usedPower = powerProfile.usedPower();
+//        final double available = powerProfile.getPowerCapacity() - usedPower;
         groupAvailable.setValue(Math.max(available, 0D));
 //        groupOverPower.setValue(Math.abs(Math.min(available, 0D)));
         overPower = Math.abs(Math.min(available, 0D));
 //        overPowerFactor.set(overPower > 0D ? 1.1 : 1D);
 //        availableFactor.set(overPower > 0D ? (power.get(0) + overPower) / power.get(0) : 1D);
-        groupOverPower.setValue(overPower > 0D ? usedPower / 10D : 0D);
-        groupOverPowerPotential.setValue(overPower <= 0D ? (usedPower + available) / 10D : 0D);
+        groupOverPower.setValue(overPower > 0D ? powerProfile.getPowerCapacity() / 10D : 0D);
+        groupOverPowerPotential.setValue(overPower <= 0D ? powerProfile.getPowerCapacity() / 10D : 0D);
 
     }
 
-    private Map<Integer, Double> calculateRetractedPower() {
-        return getShip().map(Ship::getRetractedPower).orElseGet(() -> new HashMap<>(Map.of(
-                -1, 0D,
-                0, 0D,
-                1, 0D,
-                2, 0D,
-                3, 0D,
-                4, 0D,
-                5, 0D
-        )));
+    private PowerProfile calculateRetractedPower() {
+        return getShip().map(Ship::getRetractedPower).orElseGet(PowerProfile::new);
     }
 
-    private Map<Integer, Double> calculateDeployedPower() {
-        return getShip().map(Ship::getDeployedPower).orElseGet(() -> new HashMap<>(Map.of(
-                -1, 0D,
-                0, 0D,
-                1, 0D,
-                2, 0D,
-                3, 0D,
-                4, 0D,
-                5, 0D
-        )));
+    private PowerProfile calculateDeployedPower() {
+        return getShip().map(Ship::getDeployedPower).orElseGet(PowerProfile::new);
     }
 
     public Optional<Ship> getShip() {

@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
+import nl.jixxed.eliteodysseymaterials.domain.ships.PowerProfile;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
 import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
@@ -173,10 +174,10 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
 
     @Override
     protected void update() {
-        final Map<Integer, Double> retractedPower = calculateRetractedPower();
-        final Double retractedUsage = retractedPower.entrySet().stream().filter(entry -> !entry.getKey().equals(0)).mapToDouble(Map.Entry::getValue).reduce(0D, Double::sum);
-        final Double powerBudget = retractedPower.get(0);
-        final Double deployedUsage = calculateDeployedPower().entrySet().stream().filter(entry -> !entry.getKey().equals(0)).mapToDouble(Map.Entry::getValue).reduce(0D, Double::sum);
+        final PowerProfile retractedPower = calculateRetractedPower();
+        final Double retractedUsage = retractedPower.usedPower();
+        final Double powerBudget = retractedPower.getPowerCapacity();
+        final Double deployedUsage = calculateDeployedPower().usedPower();
         this.retractedPowerLabel.addBinding(this.retractedPowerLabel.textProperty(), LocaleService.getStringBinding("ship.stats.power.retracted.power.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(retractedUsage), Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(powerBudget)));
         this.deployedPowerLabel.addBinding(this.deployedPowerLabel.textProperty(), LocaleService.getStringBinding("ship.stats.power.deployed.power.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(deployedUsage), Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(powerBudget)));
         if (retractedUsage > powerBudget) {
@@ -504,28 +505,12 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
         }).orElse(new Value(0D, Value.ValueType.PERCENTAGE));
     }
 
-    private Map<Integer, Double> calculateRetractedPower() {
-        return getShip().map(Ship::getRetractedPower).orElseGet(() -> new HashMap<>(Map.of(
-                -1, 0D,
-                0, 0D,
-                1, 0D,
-                2, 0D,
-                3, 0D,
-                4, 0D,
-                5, 0D
-        )));
+    private PowerProfile calculateRetractedPower() {
+        return getShip().map(Ship::getRetractedPower).orElseGet(PowerProfile::new);
     }
 
-    private Map<Integer, Double> calculateDeployedPower() {
-        return getShip().map(Ship::getDeployedPower).orElseGet(() -> new HashMap<>(Map.of(
-                -1, 0D,
-                0, 0D,
-                1, 0D,
-                2, 0D,
-                3, 0D,
-                4, 0D,
-                5, 0D
-        )));
+    private PowerProfile calculateDeployedPower() {
+        return getShip().map(Ship::getDeployedPower).orElseGet(PowerProfile::new);
     }
 
     private Map<Integer, Double> calculateRetractedPowerThermal() {

@@ -3,10 +3,7 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 import javafx.util.Duration;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ShipType;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
-import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
+import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -153,9 +150,9 @@ public class ShipStats extends Stats implements DestroyableEventTemplate {
     }
 
     private double calculateEffectiveSensorRangeMax() {
-        final Map<Integer, Double> retractedPower = calculateRetractedPower();
+        final PowerProfile retractedPower = calculateRetractedPower();
         double powerPlantEfficiency = getPowerPlantEfficiency();
-        final double retractedUsage = retractedPower.entrySet().stream().filter(entry -> !entry.getKey().equals(0)).mapToDouble(Map.Entry::getValue).reduce(0D, Double::sum);
+        final double retractedUsage = retractedPower.usedPower();
         final double thermalLoad = retractedUsage * powerPlantEfficiency;
         return Math.min(14000D, Math.max(getShipSensorRangeMax(), getShip()
                 .map(ship -> getShipSensorRangeMax() * Math.pow((1D + (thermalLoad - (double)ship.getAttributes().get(HorizonsModifier.HEAT_DISSIPATION_MIN)) / (double)ship.getAttributes().get(HorizonsModifier.HEAT_DISSIPATION_MIN)), 2D))
@@ -163,9 +160,9 @@ public class ShipStats extends Stats implements DestroyableEventTemplate {
     }
 
     private double calculateEffectiveSensorRangeMin() {
-        final Map<Integer, Double> retractedPower = calculateRetractedPower();
+        final PowerProfile retractedPower = calculateRetractedPower();
         double powerPlantEfficiency = getPowerPlantEfficiency();
-        final double retractedUsage = retractedPower.entrySet().stream().filter(entry -> !entry.getKey().equals(0)).mapToDouble(Map.Entry::getValue).reduce(0D, Double::sum);
+        final double retractedUsage = retractedPower.usedPower();
         final double thermalLoad = retractedUsage * powerPlantEfficiency;
         return Math.min(14000D, Math.max(getShipSensorRangeMin(), getShip()
                 .map(ship -> getShipSensorRangeMin() * Math.pow((1D + (thermalLoad - (double)ship.getAttributes().get(HorizonsModifier.HEAT_DISSIPATION_MIN)) / (double)ship.getAttributes().get(HorizonsModifier.HEAT_DISSIPATION_MIN)), 2D))
@@ -198,16 +195,8 @@ public class ShipStats extends Stats implements DestroyableEventTemplate {
         return getShip().map(ship -> (double) ship.getAttributes().get(HorizonsModifier.SENSOR_LOCK_MIN)).orElse(0D);
     }
 
-    private Map<Integer, Double> calculateRetractedPower() {
-        return getShip().map(Ship::getRetractedPower).orElseGet(() -> new HashMap<>(Map.of(
-                -1, 0D,
-                0, 0D,
-                1, 0D,
-                2, 0D,
-                3, 0D,
-                4, 0D,
-                5, 0D
-        )));
+    private PowerProfile calculateRetractedPower() {
+        return getShip().map(Ship::getRetractedPower).orElseGet(PowerProfile::new);
     }
 
     private double calculateCabinCapacity() {

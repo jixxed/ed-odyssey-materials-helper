@@ -5,10 +5,7 @@ import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ExternalModule;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Mounting;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Origin;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
+import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.PowerDistributor;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.PowerPlant;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.Thrusters;
@@ -67,8 +64,8 @@ public class ShipModuleButton extends DestroyableButton {
 //                }
             }
             case PowerPlant powerPlant -> {
-                final Map<Integer, Double> power = ApplicationState.getInstance().getShip().getRetractedPower();
-                double usedPower = power.get(1) + power.get(2) + power.get(3) + power.get(4) + power.get(5);
+                final PowerProfile powerProfile = ApplicationState.getInstance().getShip().getRetractedPower();
+                double usedPower = powerProfile.usedPower();
                 final double available = (double) powerPlant.getAttributeValue(HorizonsModifier.POWER_CAPACITY) - usedPower;
                 this.pseudoClassStateChanged(PseudoClass.getPseudoClass("overload"), available < 0D);
 //                if (available < 0D) {
