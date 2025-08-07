@@ -130,7 +130,7 @@ jlink {
         name = 'Elite Dangerous Odyssey Materials Helper'
         jvmArgs = [
                 '-Dapp.version=' + project.version,
-                '-Dlogging.config=' + os.isWindows() ? 'log' : '${user.home}/.ed-odyssey-materials-helper/log',
+                os.isWindows() ? '-Dlogging.config=log' : '-Dlogging.config=${user.home}/.ed-odyssey-materials-helper/log',
                 '-Dsentry.dsn=' + System.getenv("SENTRY_DSN"),
 //                '-Dlogging.appender.console.level.sentry=ERROR',
                 '-Xmx2048M',

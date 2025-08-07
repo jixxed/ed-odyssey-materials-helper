@@ -1,3 +1,7 @@
+Version 2.218
+-------------
+Fixed an issue with with the log configuration
+
 Version 2.217
 -------------
 Added collector mode toggle that will show available material storage as incomplete

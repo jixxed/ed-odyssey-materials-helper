@@ -59,7 +59,7 @@ jlink {
         name = 'Elite Dangerous Odyssey Materials Helper Launcher'
         jvmArgs = [
                 '-Dapp.version=' + project.version,
-                '-Dlogging.config=' + os.isWindows() ? 'log' : '${user.home}/.ed-odyssey-materials-helper/log',
+                os.isWindows() ? '-Dlogging.config=log' : '-Dlogging.config=${user.home}/.ed-odyssey-materials-helper/log',
                 os.isWindows() ? '-Djavafx.cachedir=javafx-cache' : ''
         ]
         if (os.isWindows()) {
