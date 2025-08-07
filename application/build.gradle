@@ -7,7 +7,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath "org.beryx:badass-jlink-plugin:3.1.1"
+        classpath "org.beryx:badass-jlink-plugin:3.1.2"
         classpath 'org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:1.2.2'
         classpath "net.rdrei.android.buildtimetracker:gradle-plugin:0.11.1"
         classpath("io.freefair.jsass-java:io.freefair.jsass-java.gradle.plugin:6.5.0.2")
