@@ -99,6 +99,10 @@ repositories {
         name = 'nexus'
         url = "https://nexus.jixxed.nl/nexus/content/repositories/releases"
     }
+    maven {
+        name 'repsy'
+        url "https://repo.repsy.io/mvn/jixxed/maven/"
+    }
     maven { url = 'https://jitpack.io' }
 }
 application {
