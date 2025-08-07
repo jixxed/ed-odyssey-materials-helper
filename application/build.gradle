@@ -152,6 +152,7 @@ jlink {
     }
 }
 tasks.register("patchShellScript") {
+    dependsOn jpackage
     doLast {
         def launcherScript = file("$buildDir/jpackage/Elite Dangerous Odyssey Materials Helper/lib/runtime/bin/Elite Dangerous Odyssey Materials Helper")
         if (launcherScript.exists()) {
