@@ -235,7 +235,7 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05)),
-                            HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 2.9126213592233))
+                            HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 0.029126213592233))
                     ),
                     List.of(
                             Engineer.MEL_BRANDON,
@@ -398,7 +398,7 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05)),
-                            HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 2.9126213592233))
+                            HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 0.029126213592233))
                     ),
                     List.of(
                             Engineer.MEL_BRANDON,
@@ -609,7 +609,7 @@ public class ExperimentalEffectBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05)),
-                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 2.9126213592233))
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 0.029126213592233))
                             ),
                             List.of(
                                     Engineer.MARSHA_HICKS,
@@ -811,7 +811,7 @@ public class ExperimentalEffectBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05)),
-                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 2.9126213592233))
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 0.029126213592233))
                             ),
                             List.of(
                                     Engineer.MARSHA_HICKS,
@@ -999,7 +999,7 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05)),
-                            HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 2.9126213592233))
+                            HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 0.029126213592233))
                     ),
                     List.of(
                             Engineer.MARSHA_HICKS,
@@ -1157,7 +1157,7 @@ public class ExperimentalEffectBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05)),
-                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 2.9126213592233))
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 0.029126213592233))
                             ),
                             List.of(
                                     Engineer.LIZ_RYDER,
@@ -1608,7 +1608,7 @@ public class ExperimentalEffectBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05)),
-                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 2.9126213592233))
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 0.029126213592233))
                             ),
                             List.of(
                                     Engineer.ETIENNE_DORN,
@@ -1783,7 +1783,7 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05)),
-                            HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 2.9126213592233))
+                            HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 0.029126213592233))
                     ),
                     List.of(
                             Engineer.ETIENNE_DORN,

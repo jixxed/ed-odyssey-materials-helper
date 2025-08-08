@@ -437,12 +437,12 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
 
     @Override
     protected void update() {
-        thermalPercentageGroup.setValue(calculateThermalPercentage());
-        kineticPercentageGroup.setValue(calculateKineticPercentage());
-        explosivePercentageGroup.setValue(calculateExplosivePercentage());
-        absolutePercentageGroup.setValue(calculateAbsolutePercentage());
-        causticPercentageGroup.setValue(calculateCausticPercentage());
-        antiXenoPercentageGroup.setValue(calculateAntiXenoPercentage());
+        thermalPercentageGroup.setValue(Math.max(0D, calculateThermalPercentage()));
+        kineticPercentageGroup.setValue(Math.max(0D, calculateKineticPercentage()));
+        explosivePercentageGroup.setValue(Math.max(0D, calculateExplosivePercentage()));
+        absolutePercentageGroup.setValue(Math.max(0D, calculateAbsolutePercentage()));
+        causticPercentageGroup.setValue(Math.max(0D, calculateCausticPercentage()));
+        antiXenoPercentageGroup.setValue(Math.max(0D, calculateAntiXenoPercentage()));
         noDamageGroup.setValue(calculateRawDamage() == 0d ? 100d : 0d);
         this.rawDamage.addBinding(this.rawDamage.textProperty(), LocaleService.getStringBinding("ship.stats.weapon.rawdamage.value", String.format("%.2f", calculateRawDamage())));
 
