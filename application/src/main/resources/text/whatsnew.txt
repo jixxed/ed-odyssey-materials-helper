@@ -1,6 +1,20 @@
-Version 2.220
+Version 2.222
+-------------
+Fixed misaligned power bars when overpowering a ship in the ship editor
+Corrected damage of Plasma Chargers
+Fixed aligning of modified attributes progression bar when adjacent attribute is multiline
+Removed Rate of Fire and Damage per Second from all blueprints and effects. replaced with Burst Interval, which is the hidden attribute that is actually modified.
+Rate of Fire and Damage per Second are now dynamically calculated based of other attributes
+Added boost cost to the Ship Editor stats panel
+Filter out nearest traders and brokers that are at an engineer station which you have yet to unlock. Locked engineers have contacts locked.
+
+Version 2.221
 -------------
 Fixed an issue for linux launched via the shell script (for real now 2.0?)
+
+Version 2.220
+-------------
+Fixed an issue for linux launched via the shell script (for real now?)
 
 Version 2.219
 -------------

@@ -6,4 +6,10 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Fixed an issue for linux launched via the shell script (for real now 2.0?)
+Fixed misaligned power bars when overpowering a ship in the ship editor
+Corrected damage of Plasma Chargers
+Fixed aligning of modified attributes progression bar when adjacent attribute is multiline
+Removed Rate of Fire and Damage per Second from all blueprints and effects. replaced with Burst Interval, which is the hidden attribute that is actually modified.
+Rate of Fire and Damage per Second are now dynamically calculated based of other attributes
+Added boost cost to the Ship Editor stats panel
+Filter out nearest traders and brokers that are at an engineer station which you have yet to unlock. Locked engineers have contacts locked.
