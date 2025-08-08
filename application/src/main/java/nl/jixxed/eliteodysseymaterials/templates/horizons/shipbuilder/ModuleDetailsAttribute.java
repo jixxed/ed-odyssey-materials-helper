@@ -126,6 +126,7 @@ public class ModuleDetailsAttribute extends DestroyableVBox implements Destroyab
                     return segmentView;
                 })
                 .build();
+        this.getNodes().add(new GrowingRegion());
         this.getNodes().add(segmentedBar);
     }
 
