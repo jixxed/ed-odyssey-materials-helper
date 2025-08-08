@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.*;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @SuppressWarnings("java:S1192")
 public class MineLauncherBlueprints {
@@ -22,7 +23,7 @@ public class MineLauncherBlueprints {
                                     Manufactured.MECHANICALSCRAP, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+2%", true, percentagePositive(0.0, 0.02)),
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2%", true, percentageNegative(0.0, 0.02)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.1, 0.2)),
                                     HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.2, 0.36)),
                                     HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.2, 0.36)),
@@ -40,7 +41,7 @@ public class MineLauncherBlueprints {
                                     Manufactured.MECHANICALSCRAP, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+4%", true, percentagePositive(0.02, 0.04)),
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-4%", true, percentageNegative(0.02, 0.04)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.2, 0.3)),
                                     HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+52%", true, percentagePositive(0.36, 0.52)),
                                     HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+52%", true, percentagePositive(0.36, 0.52)),
@@ -59,7 +60,7 @@ public class MineLauncherBlueprints {
                                     Manufactured.MECHANICALSCRAP, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+6%", true, percentagePositive(0.04, 0.06)),
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-6%", true, percentageNegative(0.04, 0.06)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+40%", false, percentagePositive(0.3, 0.4)),
                                     HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+68%", true, percentagePositive(0.52, 0.68)),
                                     HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+68%", true, percentagePositive(0.52, 0.68)),
@@ -78,7 +79,7 @@ public class MineLauncherBlueprints {
                                     Manufactured.MECHANICALEQUIPMENT, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.06, 0.08)),
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-8%", true, percentageNegative(0.06, 0.08)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+50%", false, percentagePositive(0.4, 0.5)),
                                     HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+84%", true, percentagePositive(0.68, 0.84)),
                                     HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+84%", true, percentagePositive(0.68, 0.84)),
@@ -96,7 +97,7 @@ public class MineLauncherBlueprints {
                                     Manufactured.MECHANICALCOMPONENTS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.08, 0.1)),
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-10%", true, percentageNegative(0.08, 0.1)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+60%", false, percentagePositive(0.5, 0.6)),
                                     HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.84, 1.0)),
                                     HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.84, 1.0)),
@@ -203,9 +204,8 @@ public class MineLauncherBlueprints {
                             Map.of(
                                     HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, plus(0.5)),
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-1%", false, percentageNegative(0.0, 0.01)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-1%", false, percentageNegative(0.0, 0.01)),
                                     HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("-25%", true, percentageNegative(0.15, 0.25)),
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08))//todo replace
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-8%", true, percentageNegative(0.0, 0.08))//todo replace
                             ),
                             List.of(
                                     Engineer.LIZ_RYDER,
@@ -219,11 +219,10 @@ public class MineLauncherBlueprints {
                                     Manufactured.MECHANICALSCRAP, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+17%", true, percentagePositive(0.08, 0.17)),
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-17%", true, percentageNegative(0.08, 0.17)),
                                     HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("-35%", true, percentageNegative(0.25, 0.35)),
 //                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-5%", true, percentageNegative(0.0, 0.05)),
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.01, 0.02)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.01, 0.02)),
                                     HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, plus(0.5))
                             ),
                             List.of(
@@ -239,11 +238,10 @@ public class MineLauncherBlueprints {
                                     Manufactured.MECHANICALEQUIPMENT, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+26%", true, percentagePositive(0.17, 0.26)),
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-26%", true, percentageNegative(0.17, 0.26)),
                                     HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("-45%", true, percentageNegative(0.35, 0.45)),
 //                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-15%", true, percentageNegative(0.05, 0.15)),
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-3%", false, percentageNegative(0.02, 0.03)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-3%", false, percentageNegative(0.02, 0.03)),
                                     HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, plus(0.5))
                             ),
                             List.of(
@@ -259,11 +257,10 @@ public class MineLauncherBlueprints {
                                     Manufactured.MECHANICALCOMPONENTS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+35%", true, percentagePositive(0.26, 0.35)),
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-35%", true, percentageNegative(0.26, 0.35)),
                                     HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("-55%", true, percentageNegative(0.45, 0.55)),
 //                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-25%", true, percentageNegative(0.15, 0.25)),
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.03, 0.04)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.03, 0.04)),
                                     HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, plus(0.5))
                             ),
                             List.of(
@@ -278,11 +275,10 @@ public class MineLauncherBlueprints {
                                     Manufactured.PRECIPITATEDALLOYS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+44%", true, percentagePositive(0.35, 0.44)),
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-44%", true, percentageNegative(0.35, 0.44)),
                                     HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("-65%", true, percentageNegative(0.55, 0.65)),
 //                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-35%", true, percentageNegative(0.25, 0.35)),
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.04, 0.05)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.04, 0.05)),
                                     HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, plus(0.5))
                             ),
                             List.of(

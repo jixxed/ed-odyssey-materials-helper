@@ -27,7 +27,6 @@ public class EnzymeMissileRackPreEngineeredBlueprints {
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+60%", false, percentagePositive(0.0, 0.6)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.0, 0.2)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+50%", true, percentagePositive(0.0, 0.5)),
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+50%", true, percentagePositive(0.0, 0.5)),
                                     HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+75%", true, percentagePositive(0.0, 0.75)),
                                     HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+25%", true, percentagePositive(0.0, 0.25))

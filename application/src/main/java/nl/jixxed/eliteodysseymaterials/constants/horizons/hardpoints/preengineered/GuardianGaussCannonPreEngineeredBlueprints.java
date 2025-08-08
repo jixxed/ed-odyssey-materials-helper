@@ -26,11 +26,10 @@ public class GuardianGaussCannonPreEngineeredBlueprints {
                             Map.of(
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+0.0%", true, percentagePositive(0.0, 0.0)),
-                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-75.2%", false, percentageNegative(0.0, 0.752137)),
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-75.2%", false, percentageNegative(0.0, 0.752137)),  // 38.500000 -> 9.542736,
                                     HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-75%", true, percentageNegative(0.0, 0.75)),
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-75%", true, percentageNegative(0.0, 0.75)),
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+303.5%", true, percentagePositive(0.0, 3.035)),
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-37%", true, percentageNegative(0.0, 0.37)),
                                     HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("-1100%", true, percentageNegative(0.0, 11.0)),
                                     HorizonsModifier.BURST_SIZE, new HorizonsNumberModifierValue("+3", true, plus(3.0)),
                                     HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+300%", true, percentagePositive(0.0, 3.0)),

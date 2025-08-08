@@ -27,7 +27,6 @@ public class AXMultiCannonPreEngineeredBlueprints {
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+75%", false, percentagePositive(0.0, 0.75)),
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+300%", false, percentagePositive(0.0, 3.0)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.0, 0.1)),
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.0, 0.1))
                             ),
                             List.of(

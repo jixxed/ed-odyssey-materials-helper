@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.percentagePositive;
+import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.plus;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class GuardianPlasmaChargerPreEngineeredBlueprints {
@@ -32,7 +33,7 @@ public class GuardianPlasmaChargerPreEngineeredBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+50%", false, percentagePositive(0.0, 0.5)),
                                     HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+37.5%", true, percentagePositive(0.0, 0.375)),
                                     HorizonsModifier.SHOT_SPEED, new HorizonsNumberModifierValue("+400%", true, percentagePositive(0.0, 4.00)),
-                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+33.3%", true, percentagePositive(0.0, 0.333))
+                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+33.3%", true, plus(5.0))
                             ),
                             List.of(
                             ),

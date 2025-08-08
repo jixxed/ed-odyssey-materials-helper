@@ -25,8 +25,7 @@ public class RemoteReleaseFlakLauncherBlueprints {
                             Map.of(
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-99%", false, percentageNegative(0.0, 0.99)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-99%", false, percentageNegative(0.0, 0.99))
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-99%", false, percentageNegative(0.0, 0.99))
                             ),
                             List.of(
                             ),
@@ -39,8 +38,7 @@ public class RemoteReleaseFlakLauncherBlueprints {
                             Map.of(
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-99%", false, percentageNegative(0.0, 0.99)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-99%", false, percentageNegative(0.0, 0.99))
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-99%", false, percentageNegative(0.0, 0.99))
                             ),
                             List.of(
                             ),
@@ -53,8 +51,7 @@ public class RemoteReleaseFlakLauncherBlueprints {
                             Map.of(
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-99%", false, percentageNegative(0.0, 0.99)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-99%", false, percentageNegative(0.0, 0.99))
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-99%", false, percentageNegative(0.0, 0.99))
                             ),
                             List.of(
                             ),

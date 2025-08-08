@@ -27,10 +27,9 @@ public class AXMissileRackPreEngineeredBlueprints {
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+70%", false, percentagePositive(0.0, 0.7)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.0, 0.2)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+38.6%", true, percentagePositive(0.0, 0.386)),
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-3%", false, percentageNegative(0.0, 0.03)),
                                     HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-20%", true, percentageNegative(0.0, 0.2)),
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+42.9%", true, percentagePositive(0.0, 0.429)),
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-30%", true, percentageNegative(0.0, 0.3)),//todo
                                     HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.0, 1.0)),
                                     HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.0, 1.0)),
                                     HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("-45%", true, percentageNegative(0.0, 0.45)),

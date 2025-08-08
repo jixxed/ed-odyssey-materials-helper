@@ -292,10 +292,28 @@ public abstract class ShipModule implements Serializable {
     }
 
     public Object getOriginalAttributeValue(final HorizonsModifier moduleAttribute) {
-        if (!this.attributes.containsKey(moduleAttribute)) {
-            if (HorizonsModifier.DAMAGE_PER_SECOND.equals(moduleAttribute) && this.attributes.containsKey(HorizonsModifier.DAMAGE)) {
-                return (double) this.attributes.get(HorizonsModifier.DAMAGE) * (double) this.attributes.getOrDefault(HorizonsModifier.RATE_OF_FIRE, 1.0) * (double) this.attributes.getOrDefault(HorizonsModifier.ROUNDS_PER_SHOT, 1.0);
+        if (HorizonsModifier.DAMAGE_PER_SECOND.equals(moduleAttribute) && this.attributes.containsKey(HorizonsModifier.DAMAGE)) {
+            if((double)this.attributes.get(HorizonsModifier.BURST_INTERVAL) == 0D){
+                return this.attributes.get(HorizonsModifier.DAMAGE);
             }
+            if(this.attributes.containsKey(HorizonsModifier.DAMAGE_MULTIPLIER)){
+                return (double) this.attributes.get(HorizonsModifier.DAMAGE) * (double) this.attributes.getOrDefault(HorizonsModifier.DAMAGE_MULTIPLIER, 1.0) / (double) this.attributes.getOrDefault(HorizonsModifier.CHARGE_TIME, 1.0);
+            }
+            return (double) this.attributes.get(HorizonsModifier.DAMAGE) * (double) getOriginalAttributeValue(HorizonsModifier.RATE_OF_FIRE) * (double) this.attributes.getOrDefault(HorizonsModifier.ROUNDS_PER_SHOT, 1.0);
+        }
+        if (HorizonsModifier.RATE_OF_FIRE.equals(moduleAttribute) && this.attributes.containsKey(HorizonsModifier.BURST_INTERVAL)) {
+            // Rate of Fire = Ammo Clip / ((Charge time + (Burst Size - 1) / Burst Rate of Fire + Burst Interval) * ceil(Ammo Clip / Burst Size))
+            if((double)this.attributes.get(HorizonsModifier.BURST_INTERVAL) == 0D){
+                return Double.POSITIVE_INFINITY;
+            }
+            double burstSize = (double) this.attributes.getOrDefault(HorizonsModifier.BURST_SIZE, 1D);// (double) this.attributes.get(HorizonsModifier.BURST_SIZE);
+            double ammoClipSize = (double) this.attributes.getOrDefault(HorizonsModifier.AMMO_CLIP_SIZE, burstSize);// default to burstSize if there is no ammo clip
+            double chargeTime = 0D;//(double) this.attributes.getOrDefault(HorizonsModifier.CHARGE_TIME, 0D);// (double) this.attributes.get(HorizonsModifier.CHARGE_TIME);
+            double burstRateOfFire = (double) this.attributes.getOrDefault(HorizonsModifier.BURST_RATE_OF_FIRE, -1D);// (double) this.attributes.get(HorizonsModifier.BURST_RATE_OF_FIRE);
+            double burstInterval = (double) this.attributes.getOrDefault(HorizonsModifier.BURST_INTERVAL, 1D);
+            return ammoClipSize / ((chargeTime + (burstSize - 1) / burstRateOfFire + burstInterval) * Math.ceil(ammoClipSize / burstSize));
+        }
+        if (!this.attributes.containsKey(moduleAttribute)) {
             throw new IllegalArgumentException("Unknown Module Attribute: " + moduleAttribute + " for module: " + this.name);
         }
         return this.attributes.get(moduleAttribute);
@@ -322,7 +340,15 @@ public abstract class ShipModule implements Serializable {
                 final HorizonsBlueprint moduleBlueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(this.name.getPrimary(), modifications.getFirst().getModification(), modifications.getFirst().getGrade());
                 final var horizonsModifierValue = moduleBlueprint.getModifiers().get(moduleAttribute);
                 if (horizonsModifierValue != null && horizonsModifierValue.isPositive()) {
-                    return modifications.getFirst().getModificationCompleteness().orElse(BigDecimal.ZERO);
+                    BigDecimal completeness = modifications.getFirst().getModificationCompleteness().orElse(BigDecimal.ZERO);
+                    Object attributeValue = getAttributeValue(moduleAttribute, completeness.doubleValue());
+                    if(attributeValue instanceof Double) {
+                        double currentValue1 = (double) attributeValue;
+                        double maxValue = (double) getAttributeValue(moduleAttribute, 1.0);
+                        return maxValue == currentValue1 ? BigDecimal.ONE : completeness;
+                    }else{
+                        return modifications.getFirst().getModificationCompleteness().orElse(BigDecimal.ZERO);
+                    }
                 } else {
                     return BigDecimal.ONE;
                 }
@@ -331,10 +357,30 @@ public abstract class ShipModule implements Serializable {
     }
 
     public Object getAttributeValue(final HorizonsModifier moduleAttribute, Double completeness) {
-        if (!this.attributes.containsKey(moduleAttribute)) {
-            if (HorizonsModifier.DAMAGE_PER_SECOND.equals(moduleAttribute) && this.attributes.containsKey(HorizonsModifier.DAMAGE)) {
-                return (double) getAttributeValue(HorizonsModifier.DAMAGE, completeness) * getAttributeValueOrDefault(HorizonsModifier.RATE_OF_FIRE, completeness, 1.0) * getAttributeValueOrDefault(HorizonsModifier.ROUNDS_PER_SHOT, completeness, 1.0);
+        if (HorizonsModifier.DAMAGE_PER_SECOND.equals(moduleAttribute) && this.attributes.containsKey(HorizonsModifier.DAMAGE)) {
+            if((double)this.attributes.get(HorizonsModifier.BURST_INTERVAL) == 0D){
+                return getAttributeValue(HorizonsModifier.DAMAGE, completeness);
             }
+
+            if(this.attributes.containsKey(HorizonsModifier.DAMAGE_MULTIPLIER)){
+                return (double) getAttributeValue(HorizonsModifier.DAMAGE, completeness) * getAttributeValueOrDefault(HorizonsModifier.DAMAGE_MULTIPLIER, completeness, 1.0) / getAttributeValueOrDefault(HorizonsModifier.CHARGE_TIME, completeness, 1.0);
+            }
+            return (double) getAttributeValue(HorizonsModifier.DAMAGE, completeness) * getAttributeValueOrDefault(HorizonsModifier.RATE_OF_FIRE, completeness, 1.0) * getAttributeValueOrDefault(HorizonsModifier.ROUNDS_PER_SHOT, completeness, 1.0);
+        }
+        if (HorizonsModifier.RATE_OF_FIRE.equals(moduleAttribute) && this.attributes.containsKey(HorizonsModifier.BURST_INTERVAL)) {
+            // Rate of Fire = Ammo Clip / ((Charge time + (Burst Size - 1) / Burst Rate of Fire + Burst Interval) * ceil(Ammo Clip / Burst Size))
+            if((double)this.attributes.get(HorizonsModifier.BURST_INTERVAL) == 0D){
+                return Double.POSITIVE_INFINITY;
+            }
+            double burstSize = getAttributeValueOrDefault(HorizonsModifier.BURST_SIZE, completeness, 1.0);
+            double ammoClipSize = getAttributeValueOrDefault(HorizonsModifier.AMMO_CLIP_SIZE, completeness, burstSize);// default to burstSize if there is no ammo clip
+            double chargeTime = 0D;//getAttributeValueOrDefault(HorizonsModifier.CHARGE_TIME, completeness, 0.0);
+            double burstRateOfFire = getAttributeValueOrDefault(HorizonsModifier.BURST_RATE_OF_FIRE, completeness, -1.0);
+            double burstInterval = getAttributeValueOrDefault(HorizonsModifier.BURST_INTERVAL, completeness, 1.0);
+            log.info("BURST_INTERVAL: " + burstInterval + " @ " + completeness);
+            return ammoClipSize / ((chargeTime + (burstSize - 1) / burstRateOfFire + burstInterval) * Math.ceil(ammoClipSize / burstSize));
+        }
+        if (!this.attributes.containsKey(moduleAttribute)) {
             throw new IllegalArgumentException("Unknown Module Attribute: " + moduleAttribute + " for module: " + this.name);
         }
         if (modifiers.containsKey(moduleAttribute) && (completeness == null || isLegacy())) {

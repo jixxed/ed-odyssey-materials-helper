@@ -28,11 +28,10 @@ public class RailGunPreEngineeredBlueprints {
                             Map.ofEntries(
                                     Map.entry(HorizonsModifier.MASS, new HorizonsNumberModifierValue("+90%", false, percentagePositive(0.0, 0.9))),
                                     Map.entry(HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+65%", false, percentagePositive(0.0, 0.65))),
-                                    Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+6.7%", true, percentagePositive(0.0, 53.371883 / 50.036144 - 1))),
                                     Map.entry(HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.0, 0.2))),
                                     Map.entry(HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-40%", true, percentageNegative(0.0, 0.4))),
                                     Map.entry(HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.0, 1.0))),
-                                    Map.entry(HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+33%", true, percentagePositive(0.0, 1.606426 / 1.204819 - 1))),
+                                    Map.entry(HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-25%", true, percentageNegative(0.0, 0.25))),
                                     Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.0, 1.0))),
                                     Map.entry(HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.0, 1.0))),
                                     Map.entry(HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("+25%", false, percentagePositive(0.0, 0.25))),

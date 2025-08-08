@@ -30,7 +30,7 @@ public class MiningLaserPreEngineeredBlueprints {
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("-50%", true, percentageNegative(0.0, 0.5)),
                                     HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-50%", true, percentageNegative(0.0, 0.5)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-50%", false, percentageNegative(0.0, 0.5)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.0, 0.05)),
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.0, 0.05)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+400%", true, percentagePositive(0.0, 4.0)),
                                     HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+733.3%", true, percentagePositive(0.0, 2200.0 / 300.0)),
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-49%", true, percentageNegative(0.0, 0.49))
@@ -48,7 +48,7 @@ public class MiningLaserPreEngineeredBlueprints {
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.2, 0.2)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+15%", false, percentagePositive(0.15, 0.15)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.05, 0.05)),
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.05, 0.05)),
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+200%", false, percentagePositive(2.0, 2.0)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+400%", true, percentagePositive(4.0, 4.0)),
                                     HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+733.3%", true, percentagePositive(0.0, 2200.0 / 300.0))
