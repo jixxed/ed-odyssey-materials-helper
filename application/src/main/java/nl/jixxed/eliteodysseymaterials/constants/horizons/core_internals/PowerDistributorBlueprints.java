@@ -196,9 +196,9 @@ public class PowerDistributorBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.05, 0.10)),
-                                    HorizonsModifier.ENGINES_RECHARGE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02)),
-                                    HorizonsModifier.SYSTEMS_RECHARGE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02)),
-                                    HorizonsModifier.WEAPONS_RECHARGE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02)),
+                                    HorizonsModifier.ENGINES_RECHARGE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02)),//grade1 - grade2 difference not applied because effect is negative
+                                    HorizonsModifier.SYSTEMS_RECHARGE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02)),//grade1 - grade2 difference not applied because effect is negative
+                                    HorizonsModifier.WEAPONS_RECHARGE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02)),//grade1 - grade2 difference not applied because effect is negative
                                     HorizonsModifier.ENGINES_CAPACITY, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.02, 0.10)),
                                     HorizonsModifier.SYSTEMS_CAPACITY, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.02, 0.10)),
                                     HorizonsModifier.WEAPONS_CAPACITY, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.02, 0.10))

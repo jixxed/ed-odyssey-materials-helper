@@ -461,7 +461,7 @@ public class CannonBlueprints {
                             Map.of(
                                     HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("-25%", true, percentageNegative(0.15, 0.25)),
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-1%", false, percentageNegative(0.0, 0.01)),
-                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-8%", true, percentageNegative(0.0, 0.08)),//todo verify WRONG use BURST_INTERVAL
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-8%", true, percentageNegative(0.0, 0.08)),
                                     HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, plus(0.5))
                             ),
                             List.of(

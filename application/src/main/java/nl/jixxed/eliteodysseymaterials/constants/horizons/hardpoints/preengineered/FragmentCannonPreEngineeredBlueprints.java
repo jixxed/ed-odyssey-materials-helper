@@ -36,8 +36,8 @@ public class FragmentCannonPreEngineeredBlueprints {
                                     Map.entry(HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1))),
                                     Map.entry(HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("-50%", true, percentageNegative(0.0, 0.5))),
                                     Map.entry(HorizonsModifier.BURST_SIZE, new HorizonsNumberModifierValue("+1", true, plus(1.0))),
-                                    Map.entry(HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-6%", true, percentageNegative(0.0, 0.06))),//todo
-                                    Map.entry(HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("-1500%", true, percentageNegative(0.0, 15.0))),//todo
+                                    Map.entry(HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-6%", true, percentageNegative(0.0, 0.06))),
+                                    Map.entry(HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("-1500%", true, percentageNegative(0.0, 15.0))),
                                     Map.entry(HorizonsModifier.EFFECTIVENESS_INCREASE_AGAINST_MUNITIONS, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)))
                             ),
                             List.of(

@@ -92,8 +92,8 @@ public class LifeSupportBlueprints {
                                     Raw.NICKEL, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.30, 0.60)),//TODO verify: oddly high
-                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.15, 0.30))//TODO verify: oddly high
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.0, 0.60)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.0, 0.30))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)
                     ),

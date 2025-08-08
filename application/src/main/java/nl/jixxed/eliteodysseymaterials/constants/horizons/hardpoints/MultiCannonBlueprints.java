@@ -472,7 +472,7 @@ public class MultiCannonBlueprints {
                                     HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, plus(0.5)),
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-1%", false, percentageNegative(0.0, 0.01)),
                                     HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("-25%", true, percentageNegative(0.15, 0.25)),
-                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-8%", true, percentageNegative(0.0, 0.08))//todo replace
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-8%", true, percentageNegative(0.0, 0.08))
                             ),
                             List.of(
                                     Engineer.MARSHA_HICKS,
