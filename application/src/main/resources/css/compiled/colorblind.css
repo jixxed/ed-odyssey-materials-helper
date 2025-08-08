@@ -564,6 +564,12 @@
           .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card:highlight .name {
             -fx-text-fill: #dcc030;
             -fx-font-weight: bold; }
+          .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card:collector .quantity-line .storage-label {
+            -fx-text-fill: red; }
+          .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card:collector .quantity-line .storage {
+            -fx-text-fill: red; }
+          .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card:collector .segmented-bar .not-present {
+            -fx-background-color: red; }
           .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .material-card .name {
             -fx-text-fill: white;
             -fx-min-width: 11.25em;
@@ -933,6 +939,39 @@
               -fx-fit-to-height: true;
               -fx-fit-to-width: true; }
             .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-broker .copyable-location .distance {
+              -fx-text-fill: gray; }
+        .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure {
+          -fx-min-width: 35.25em;
+          -fx-pref-width: 35.25em;
+          -fx-max-width: 35.25em;
+          -fx-background-color: #0f0f0f;
+          -fx-border-color: black;
+          -fx-padding: 0.25em; }
+          .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure:hidden {
+            -fx-opacity: 0; }
+          .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure .title {
+            -fx-text-fill: white;
+            -fx-font-size: 1.2em;
+            -fx-font-weight: normal; }
+          .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure .copyable-location {
+            -fx-font-weight: normal;
+            -fx-hgap: 0.25em; }
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure .copyable-location:hover {
+              -fx-cursor: hand; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure .copyable-location:hover .location {
+                -fx-text-fill: #5aa9e6; }
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure .copyable-location .location {
+              -fx-text-fill: #2e92df; }
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure .copyable-location .copy-icon {
+              -fx-min-width: 1em;
+              -fx-pref-width: 1em;
+              -fx-max-width: 1em;
+              -fx-min-height: 1em;
+              -fx-pref-height: 1em;
+              -fx-max-height: 1em;
+              -fx-fit-to-height: true;
+              -fx-fit-to-width: true; }
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure .copyable-location .distance {
               -fx-text-fill: gray; }
       .app .application-screen .horizons-tab-content .blueprint-menu .about-title-pane {
         -fx-min-width: 36em;
@@ -1463,6 +1502,8 @@
               -fx-max-width: Infinity; }
               .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .config .toggles .group-toggle {
                 -fx-max-width: Infinity; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .ship-stats .stat-line {
+            -fx-spacing: 0.25em; }
           .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .validation .error {
             -fx-text-fill: red; }
           .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .validation .warning {
@@ -2270,6 +2311,8 @@
                   -fx-pref-width: 25.1em;
                   -fx-max-width: 25.1em;
                   -fx-spacing: 0.125em; }
+                  .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .progression .slider {
+                    -show-value-on-interaction: false; }
                 .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .hardpoint-buttons {
                   -fx-min-width: 25.1em;
                   -fx-pref-width: 25.1em;
@@ -4326,6 +4369,10 @@
 
 .notification-bar.dark > .pane .title,
 .notification-bar.dark > .pane .label {
+  -fx-min-width: 27.5em;
+  -fx-pref-width: 27.5em;
+  -fx-max-width: 27.5em;
+  -fx-wrap-text: true;
   -fx-text-fill: #ffffff; }
 
 .combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:pressed:filled:selected {
