@@ -73,7 +73,6 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
-                            HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
                             HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05))
                     ),
                     List.of(
@@ -90,8 +89,7 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.TARGET_WING_SHIELDS_REGENERATED, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)),
-                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
-                            HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1))
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1))
                     ),
                     List.of(
                             Engineer.MEL_BRANDON,
@@ -138,7 +136,6 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
-                            HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
                             HorizonsModifier.TARGET_HEAT_INCREASED, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE))
                     ),
                     List.of(
@@ -221,8 +218,7 @@ public class ExperimentalEffectBlueprints {
                             HorizonsModifier.JITTER, new HorizonsNumberModifierValue("3", false, plus(3.0)),
                             HorizonsModifier.THERMAL_DAMAGE_RATIO, new HorizonsNumberModifierValue("-50%", false, minus(0.5)),
                             HorizonsModifier.KINETIC_DAMAGE_RATIO, new HorizonsNumberModifierValue("+50%", true, plus(0.5)),
-                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+50%", true, percentagePositive(0.0, 0.5)),
-                            HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+50%", true, percentagePositive(0.0, 0.5))
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+50%", true, percentagePositive(0.0, 0.5))
                     ),
                     List.of(
                             Engineer.MEL_BRANDON,
@@ -239,7 +235,7 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05)),
-                            HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03))
+                            HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 2.9126213592233))
                     ),
                     List.of(
                             Engineer.MEL_BRANDON,
@@ -255,7 +251,6 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
-                            HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
                             HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05))
                     ),
                     List.of(
@@ -273,7 +268,6 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
-                            HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
                             HorizonsModifier.PART_OF_DAMAGE_THROUGH_SHIELDS, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE))
                     ),
                     List.of(
@@ -290,7 +284,7 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.TARGET_MODULES_MALFUNCTIONS, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)),
-                            HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("-8.3%", false, percentageNegative(0.0, 0.0826589652825357))
+                            HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("11.11%", false, percentagePositive(0.0, 0.11111111111))
                     ),
                     List.of(
                             Engineer.MEL_BRANDON,
@@ -322,7 +316,6 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
-                            HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
                             HorizonsModifier.TARGET_HEAT_INCREASED, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE))
                     ),
                     List.of(
@@ -405,7 +398,7 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05)),
-                            HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03))
+                            HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 2.9126213592233))
                     ),
                     List.of(
                             Engineer.MEL_BRANDON,
@@ -421,7 +414,6 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
-                            HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
                             HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05))
                     ),
                     List.of(
@@ -439,7 +431,6 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
-                            HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
                             HorizonsModifier.PART_OF_DAMAGE_THROUGH_SHIELDS, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE))
                     ),
                     List.of(
@@ -456,7 +447,7 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.TARGET_MODULES_MALFUNCTIONS, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)),
-                            HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1))
+                            HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("11.11%", false, percentagePositive(0.0, 0.11111111111))
                     ),
                     List.of(
                             Engineer.MEL_BRANDON,
@@ -488,7 +479,6 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
-                            HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
                             HorizonsModifier.TARGET_HEAT_INCREASED, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE))
                     ),
                     List.of(
@@ -597,7 +587,7 @@ public class ExperimentalEffectBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+200%", false, percentagePositive(0.0, 2.0)),
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.0, 0.05)),
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("5.26%", false, percentagePositive(0.0, 0.05263157894736842)),
                                     HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)),
                                     HorizonsModifier.KINETIC_DAMAGE_RATIO, new HorizonsNumberModifierValue("-90%", false, minus(0.9)),
                                     HorizonsModifier.THERMAL_DAMAGE_RATIO, new HorizonsNumberModifierValue("+90%", true, plus(0.9))
@@ -619,7 +609,7 @@ public class ExperimentalEffectBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05)),
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03))
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 2.9126213592233))
                             ),
                             List.of(
                                     Engineer.MARSHA_HICKS,
@@ -637,7 +627,6 @@ public class ExperimentalEffectBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05))
                             ),
                             List.of(
@@ -692,7 +681,6 @@ public class ExperimentalEffectBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
                                     HorizonsModifier.TARGET_HEAT_INCREASED, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE))
                             ),
                             List.of(
@@ -802,7 +790,7 @@ public class ExperimentalEffectBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.DAMAGE_PARTIALLY_EXPLOSIVE, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)),
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("11.11%", false, percentagePositive(0.0, 0.11111111111)),
                                     HorizonsModifier.KINETIC_DAMAGE_RATIO, new HorizonsNumberModifierValue("-50%", false, minus(0.5)),
                                     HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, new HorizonsNumberModifierValue("+50%", true, plus(0.5))
                             ),
@@ -823,7 +811,7 @@ public class ExperimentalEffectBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05)),
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03))
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 2.9126213592233))
                             ),
                             List.of(
                                     Engineer.MARSHA_HICKS,
@@ -841,7 +829,6 @@ public class ExperimentalEffectBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05))
                             ),
                             List.of(
@@ -992,7 +979,7 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+200%", false, percentagePositive(0.0, 2.0)),
-                            HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.0, 0.05)),
+                            HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("5.26%", false, percentagePositive(0.0, 0.05263157894736842)),
                             HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)),
                             HorizonsModifier.KINETIC_DAMAGE_RATIO, new HorizonsNumberModifierValue("-90%", false, minus(0.9)),
                             HorizonsModifier.THERMAL_DAMAGE_RATIO, new HorizonsNumberModifierValue("+90%", true, plus(0.9))
@@ -1012,7 +999,7 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05)),
-                            HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03))
+                            HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 2.9126213592233))
                     ),
                     List.of(
                             Engineer.MARSHA_HICKS,
@@ -1028,7 +1015,6 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
-//                            HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
                             HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05))
                     ),
                     List.of(
@@ -1151,9 +1137,8 @@ public class ExperimentalEffectBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.TARGET_FSD_REBOOTS, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)),
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("-50%", false, percentageNegative(0.0, 0.5)),
-                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-30%", false, percentageNegative(0.0, 0.3)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-30%", false, percentageNegative(0.0, 0.3))
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("50%", false, percentagePositive(0.0, 0.5)),
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-30%", false, percentageNegative(0.0, 0.3))
                             ),
                             List.of(
                                     Engineer.LIZ_RYDER,
@@ -1172,7 +1157,7 @@ public class ExperimentalEffectBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05)),
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03))
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 2.9126213592233))
                             ),
                             List.of(
                                     Engineer.LIZ_RYDER,
@@ -1210,7 +1195,6 @@ public class ExperimentalEffectBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05))
                             ),
                             List.of(
@@ -1327,7 +1311,6 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
-                            HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
                             HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05))
                     ),
                     List.of(
@@ -1474,7 +1457,6 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
-                            HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
                             HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05))
                     ),
                     List.of(
@@ -1626,7 +1608,7 @@ public class ExperimentalEffectBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05)),
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03))
+                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 2.9126213592233))
                             ),
                             List.of(
                                     Engineer.ETIENNE_DORN,
@@ -1644,7 +1626,6 @@ public class ExperimentalEffectBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05))
                             ),
                             List.of(
@@ -1664,7 +1645,6 @@ public class ExperimentalEffectBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
                                     HorizonsModifier.PART_OF_DAMAGE_THROUGH_SHIELDS, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE))
                             ),
                             List.of(
@@ -1685,8 +1665,7 @@ public class ExperimentalEffectBlueprints {
                             Map.of(
                                     HorizonsModifier.RELOAD_FROM_SHIP_FUEL, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)),
                                     HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("-100%", false, percentageNegative(0.0, 1.0)),
-                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1))
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1))
                             ),
                             List.of(
                                     Engineer.ETIENNE_DORN,
@@ -1772,8 +1751,7 @@ public class ExperimentalEffectBlueprints {
                     Map.of(
                             HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-40%", true, percentageNegative(0.0, 0.4)),
                             HorizonsModifier.TARGET_SHIELD_CELL_DISRUPTED, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)),
-                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.0, 0.2)),
-                            HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.0, 0.2))
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.0, 0.2))
                     ),
                     List.of(
                             Engineer.ETIENNE_DORN,
@@ -1805,7 +1783,7 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05)),
-                            HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03))
+                            HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 2.9126213592233))
                     ),
                     List.of(
                             Engineer.ETIENNE_DORN,
@@ -1821,7 +1799,6 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
-                            HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
                             HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05))
                     ),
                     List.of(
@@ -1841,8 +1818,7 @@ public class ExperimentalEffectBlueprints {
                             HorizonsModifier.RELOAD_FROM_SHIP_FUEL, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)),
                             HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("-100%", false, percentageNegative(0.0, 1.0)),
                             HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-40%", true, percentageNegative(0.0, 0.4)),
-                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
-                            HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1))
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1))
                     ),
                     List.of(
                             Engineer.ETIENNE_DORN,
