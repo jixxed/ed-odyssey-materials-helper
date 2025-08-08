@@ -6,14 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsTradeSuggestion;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -57,6 +56,11 @@ public class MaterialTraderService {
         final Integer range = PreferencesService.getPreference(PreferenceConstants.HORIZONS_MATERIAL_TRADER_MAX_RANGE, 5000);
         return MATERIAL_TRADERS.stream()
                 .filter(materialTrader -> materialTrader.getType().equals(type) && materialTrader.getDistanceFromStar() <= range)
+                .filter(materialTrader -> {
+                    Optional<Engineer> engineerAtLocation = Arrays.stream(Engineer.values()).filter(engineer -> engineer.getStarSystem().equals(materialTrader.getStarSystem()) && engineer.getSettlement().getSettlementName().equals(materialTrader.getName())).findFirst();
+                    return engineerAtLocation.map(engineer -> (engineer.isOdyssey()) ? ApplicationState.getInstance().isEngineerUnlocked(engineer) : ApplicationState.getInstance().isEngineerUnlockedExact(engineer))//only allow unlocked engineer stations
+                            .orElse(true);// trader allowed if there is no engineer
+                })
                 .min(Comparator.comparing(materialTrader -> getDistance(materialTrader.getStarSystem(), currentLocation)))
                 .orElseThrow(IllegalArgumentException::new);
     }
