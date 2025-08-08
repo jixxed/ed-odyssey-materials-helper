@@ -302,16 +302,15 @@ public abstract class ShipModule implements Serializable {
             return (double) this.attributes.get(HorizonsModifier.DAMAGE) * (double) getOriginalAttributeValue(HorizonsModifier.RATE_OF_FIRE) * (double) this.attributes.getOrDefault(HorizonsModifier.ROUNDS_PER_SHOT, 1.0);
         }
         if (HorizonsModifier.RATE_OF_FIRE.equals(moduleAttribute) && this.attributes.containsKey(HorizonsModifier.BURST_INTERVAL)) {
-            // Rate of Fire = Ammo Clip / ((Charge time + (Burst Size - 1) / Burst Rate of Fire + Burst Interval) * ceil(Ammo Clip / Burst Size))
+            // Rate of Fire = Ammo Clip / (((Burst Size - 1) / Burst Rate of Fire + Burst Interval) * ceil(Ammo Clip / Burst Size))
             if((double)this.attributes.get(HorizonsModifier.BURST_INTERVAL) == 0D){
                 return Double.POSITIVE_INFINITY;
             }
-            double burstSize = (double) this.attributes.getOrDefault(HorizonsModifier.BURST_SIZE, 1D);// (double) this.attributes.get(HorizonsModifier.BURST_SIZE);
+            double burstSize = (double) this.attributes.getOrDefault(HorizonsModifier.BURST_SIZE, 1D);
             double ammoClipSize = (double) this.attributes.getOrDefault(HorizonsModifier.AMMO_CLIP_SIZE, burstSize);// default to burstSize if there is no ammo clip
-            double chargeTime = 0D;//(double) this.attributes.getOrDefault(HorizonsModifier.CHARGE_TIME, 0D);// (double) this.attributes.get(HorizonsModifier.CHARGE_TIME);
-            double burstRateOfFire = (double) this.attributes.getOrDefault(HorizonsModifier.BURST_RATE_OF_FIRE, -1D);// (double) this.attributes.get(HorizonsModifier.BURST_RATE_OF_FIRE);
+            double burstRateOfFire = (double) this.attributes.getOrDefault(HorizonsModifier.BURST_RATE_OF_FIRE, -1D);
             double burstInterval = (double) this.attributes.getOrDefault(HorizonsModifier.BURST_INTERVAL, 1D);
-            return ammoClipSize / ((chargeTime + (burstSize - 1) / burstRateOfFire + burstInterval) * Math.ceil(ammoClipSize / burstSize));
+            return ammoClipSize / (((burstSize - 1) / burstRateOfFire + burstInterval) * Math.ceil(ammoClipSize / burstSize));
         }
         if (!this.attributes.containsKey(moduleAttribute)) {
             throw new IllegalArgumentException("Unknown Module Attribute: " + moduleAttribute + " for module: " + this.name);
@@ -320,9 +319,6 @@ public abstract class ShipModule implements Serializable {
     }
 
     public Object getAttributeValue(final HorizonsModifier moduleAttribute) {
-//        if (HorizonsModifier.DAMAGE_PER_SECOND.equals(moduleAttribute) && this.attributes.containsKey(HorizonsModifier.DAMAGE) && !this.attributes.containsKey(HorizonsModifier.DAMAGE_PER_SECOND)) {
-//            return (double) getAttributeValue(HorizonsModifier.DAMAGE, null) * getAttributeValueOrDefault(HorizonsModifier.RATE_OF_FIRE, 1.0) * getAttributeValueOrDefault(HorizonsModifier.ROUNDS_PER_SHOT, 1.0);
-//        }
         return getAttributeValue(moduleAttribute, null);
     }
 
@@ -368,17 +364,15 @@ public abstract class ShipModule implements Serializable {
             return (double) getAttributeValue(HorizonsModifier.DAMAGE, completeness) * getAttributeValueOrDefault(HorizonsModifier.RATE_OF_FIRE, completeness, 1.0) * getAttributeValueOrDefault(HorizonsModifier.ROUNDS_PER_SHOT, completeness, 1.0);
         }
         if (HorizonsModifier.RATE_OF_FIRE.equals(moduleAttribute) && this.attributes.containsKey(HorizonsModifier.BURST_INTERVAL)) {
-            // Rate of Fire = Ammo Clip / ((Charge time + (Burst Size - 1) / Burst Rate of Fire + Burst Interval) * ceil(Ammo Clip / Burst Size))
+            // Rate of Fire = Ammo Clip / (((Burst Size - 1) / Burst Rate of Fire + Burst Interval) * ceil(Ammo Clip / Burst Size))
             if((double)this.attributes.get(HorizonsModifier.BURST_INTERVAL) == 0D){
                 return Double.POSITIVE_INFINITY;
             }
             double burstSize = getAttributeValueOrDefault(HorizonsModifier.BURST_SIZE, completeness, 1.0);
             double ammoClipSize = getAttributeValueOrDefault(HorizonsModifier.AMMO_CLIP_SIZE, completeness, burstSize);// default to burstSize if there is no ammo clip
-            double chargeTime = 0D;//getAttributeValueOrDefault(HorizonsModifier.CHARGE_TIME, completeness, 0.0);
             double burstRateOfFire = getAttributeValueOrDefault(HorizonsModifier.BURST_RATE_OF_FIRE, completeness, -1.0);
             double burstInterval = getAttributeValueOrDefault(HorizonsModifier.BURST_INTERVAL, completeness, 1.0);
-            log.info("BURST_INTERVAL: " + burstInterval + " @ " + completeness);
-            return ammoClipSize / ((chargeTime + (burstSize - 1) / burstRateOfFire + burstInterval) * Math.ceil(ammoClipSize / burstSize));
+            return ammoClipSize / (((burstSize - 1) / burstRateOfFire + burstInterval) * Math.ceil(ammoClipSize / burstSize));
         }
         if (!this.attributes.containsKey(moduleAttribute)) {
             throw new IllegalArgumentException("Unknown Module Attribute: " + moduleAttribute + " for module: " + this.name);
