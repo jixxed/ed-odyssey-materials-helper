@@ -24,6 +24,7 @@ public class ShipStats extends Stats implements DestroyableEventTemplate {
     private DestroyableLabel mlf;
     private DestroyableLabel slf;
     private DestroyableLabel crew;
+    private DestroyableLabel boostCost;
     private DestroyableLabel manoeuvrability;
     private DestroyableLabel cabinCapacity;
     private DestroyableLabel sensorRange;
@@ -45,6 +46,7 @@ public class ShipStats extends Stats implements DestroyableEventTemplate {
         this.mlf = createValueLabel("ship.stats.ship.mlf.value", Formatters.NUMBER_FORMAT_0.format(0D));
         this.slf = createValueLabel("ship.stats.ship.slf.value", Formatters.NUMBER_FORMAT_0.format(0D));
         this.crew = createValueLabel("ship.stats.ship.crew.value", Formatters.NUMBER_FORMAT_0.format(0D));
+        this.boostCost = createValueLabel("ship.stats.ship.boostcost.value", Formatters.NUMBER_FORMAT_0.format(0D));
         this.manoeuvrability = createValueLabel("ship.stats.ship.manoeuvrability.value", Formatters.NUMBER_FORMAT_0.format(0D));
         this.cabinCapacity = createValueLabel("ship.stats.ship.cabincapacity.value", Formatters.NUMBER_FORMAT_0.format(0D));
         this.sensorRange = createValueLabel("ship.stats.ship.sensorrange.value", Formatters.NUMBER_FORMAT_0.format(0D), Formatters.NUMBER_FORMAT_0.format(0D));
@@ -74,6 +76,10 @@ public class ShipStats extends Stats implements DestroyableEventTemplate {
         this.getNodes().add(BoxBuilder.builder()
                 .withStyleClass("stat-line")
                 .withNodes(createLabel("ship.stats.ship.crew"), new GrowingRegion(), this.crew)
+                .buildHBox());
+        this.getNodes().add(BoxBuilder.builder()
+                .withStyleClass("stat-line")
+                .withNodes(createLabel("ship.stats.ship.boostcost"), new GrowingRegion(), this.boostCost)
                 .buildHBox());
         this.getNodes().add(BoxBuilder.builder()
                 .withStyleClass("stat-line")
@@ -143,10 +149,15 @@ public class ShipStats extends Stats implements DestroyableEventTemplate {
         this.mlf.addBinding(this.mlf.textProperty(), LocaleService.getStringBinding("ship.stats.ship.mlf.value", Formatters.NUMBER_FORMAT_0.format(calculateMlf())));
         this.slf.addBinding(this.slf.textProperty(), LocaleService.getStringBinding(calculateSlf() ? "ship.view.yes" : "ship.view.no"));
         this.crew.addBinding(this.crew.textProperty(), LocaleService.getStringBinding("ship.stats.ship.crew.value", Formatters.NUMBER_FORMAT_0.format(calculateCrew())));
+        this.boostCost.addBinding(this.boostCost.textProperty(), LocaleService.getStringBinding("ship.stats.ship.boostcost.value", Formatters.NUMBER_FORMAT_0.format(calculateBoostCost())));
         this.manoeuvrability.addBinding(this.manoeuvrability.textProperty(), LocaleService.getStringBinding("ship.stats.ship.manoeuvrability.value", Formatters.NUMBER_FORMAT_0.format(calculateManoeuvrability())));
         this.cabinCapacity.addBinding(this.cabinCapacity.textProperty(), LocaleService.getStringBinding("ship.stats.ship.cabincapacity.value", Formatters.NUMBER_FORMAT_0.format(calculateCabinCapacity())));
         this.sensorRange.addBinding(this.sensorRange.textProperty(), LocaleService.getStringBinding("ship.stats.ship.sensorrange.value", Formatters.NUMBER_FORMAT_0.format(calculateSensorRangeMin()), Formatters.NUMBER_FORMAT_0.format(calculateSensorRangeMax())));
         this.effectiveSensorRange.addBinding(this.effectiveSensorRange.textProperty(), LocaleService.getStringBinding("ship.stats.ship.effectivesensorrange.value", Formatters.NUMBER_FORMAT_0.format(calculateEffectiveSensorRangeMin()), Formatters.NUMBER_FORMAT_0.format(calculateEffectiveSensorRangeMax())));
+    }
+
+    private double calculateBoostCost() {
+        return (double) getShip().map(ship -> ship.getAttributes().get(HorizonsModifier.BOOST_COST)).orElse(Double.NaN);
     }
 
     private double calculateEffectiveSensorRangeMax() {

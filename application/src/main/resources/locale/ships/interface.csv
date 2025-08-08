@@ -198,3 +198,5 @@
 "ship.stats.ship.effectivesensorrange.value","{0}m - {1}m","","","","","","",""
 "ship.stats.ship.effectivesensorrange","Effective detection","","","","","","",""
 "ship.stats.ship.effectivesensorrange.tooltip","Ship effective sensor detection range when idle, based on current thermal\nload and the typical emission range of the scanning ship’s sensors(1E-8A)","","","","","","",""
+"ship.stats.ship.boostcost","Boost cost","","","","","","",""
+"ship.stats.ship.boostcost.value","{0} MW","","","","","","",""
