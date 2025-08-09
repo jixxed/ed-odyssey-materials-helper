@@ -22,6 +22,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.utility.SinkLauncher;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Engineering;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Loadout;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module;
+import nl.jixxed.eliteodysseymaterials.service.ShipModuleService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -39,10 +40,6 @@ import java.util.stream.Stream;
 
 @Slf4j
 class LoadoutMapperTest {
-    @BeforeEach
-    public void setUp() {
-        List modules = ShipModule.getBasicModules();
-    }
 
     @Test
     public void getShipSlotIndexes() {
@@ -230,7 +227,7 @@ class LoadoutMapperTest {
         String line = "";
         try (InputStream resourceAsStream = LoadoutMapperTest.class.getResourceAsStream("/ships/preengineered/" + filename)) {
             Assertions.assertTrue(resourceAsStream.available() > 0, "File is empty");
-            ShipModule.ALL_MODULES.stream().flatMap(Collection::stream).filter(ShipModule::isPreEngineered).map(ShipModule::getId).forEach(log::info);
+            ShipModuleService.getAllModules().stream().filter(ShipModule::isPreEngineered).map(ShipModule::getId).forEach(log::info);
             ShipModule.getBasicModules();
             final Module module = objectMapper.readValue(resourceAsStream, Module.class);
             Ship sa = Ship.KRAIT_MK_II;

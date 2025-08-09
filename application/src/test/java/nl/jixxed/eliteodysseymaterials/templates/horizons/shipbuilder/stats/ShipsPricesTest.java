@@ -9,6 +9,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.Origin;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Outfitting.Item;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Outfitting.Outfitting;
+import nl.jixxed.eliteodysseymaterials.service.ShipModuleService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
 public class ShipsPricesTest {
     @Test
     public void testsss() throws IOException {
-        final List<? extends ShipModule> allModules = ShipModule.ALL_MODULES.stream().flatMap(List::stream).toList();
+        final List<? extends ShipModule> allModules = ShipModuleService.getAllModules();
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.registerModule(new JavaTimeModule());
@@ -59,7 +60,7 @@ public class ShipsPricesTest {
     }
     @Test
     public void testJamesonBeta() throws IOException {
-        final List<? extends ShipModule> allModules = ShipModule.ALL_MODULES.stream().flatMap(List::stream).toList();
+        final List<? extends ShipModule> allModules = ShipModuleService.getAllModules();
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.registerModule(new JavaTimeModule());
@@ -103,7 +104,7 @@ public class ShipsPricesTest {
 
     @Test
     public void testchange() throws IOException {
-        final List<? extends ShipModule> allModules = ShipModule.ALL_MODULES.stream().flatMap(List::stream).toList();
+//        final List<? extends ShipModule> allModules = ShipModuleService.getAllModules();
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.registerModule(new JavaTimeModule());
@@ -126,7 +127,7 @@ public class ShipsPricesTest {
 
     @Test
     public void testshin() throws IOException {
-        final List<? extends ShipModule> allModules = ShipModule.ALL_MODULES.stream().flatMap(List::stream).toList();
+//        final List<? extends ShipModule> allModules = ShipModule.ALL_MODULES.stream().flatMap(List::stream).toList();
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.registerModule(new JavaTimeModule());
@@ -185,7 +186,11 @@ public class ShipsPricesTest {
     }
     @Test
     public void testComplete() throws IOException {
-        final List<String> allModules = ShipModule.ALL_MODULES.stream().flatMap(List::stream).filter(shipModule -> shipModule.getOrigin() == Origin.HUMAN && !shipModule.isCGExclusive() && !shipModule.isPreEngineered() && !shipModule.isLegacy()).map(ShipModule::getInternalName).map(String::toLowerCase).collect(Collectors.toList());
+        final List<String> allModules = ShipModuleService.getAllModules().stream()
+                .filter(shipModule -> shipModule.getOrigin() == Origin.HUMAN && !shipModule.isCGExclusive() && !shipModule.isPreEngineered() && !shipModule.isLegacy())
+                .map(ShipModule::getInternalName)
+                .map(String::toLowerCase)
+                .collect(Collectors.toList());
         Map<String, BigInteger> prices = new HashMap<>();
 
 //        deduct(prices, allModules, "/ships/prices/galti.json");

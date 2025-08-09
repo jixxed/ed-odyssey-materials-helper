@@ -29,10 +29,6 @@ import java.util.List;
 
 @Slf4j
 public class Main {
-    static {
-        final List<List<? extends ShipModule>> modules = ShipModule.ALL_MODULES;
-    }
-
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static Instant lastSentTime = Instant.MIN;
 

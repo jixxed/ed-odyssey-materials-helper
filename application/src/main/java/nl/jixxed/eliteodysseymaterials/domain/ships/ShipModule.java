@@ -19,6 +19,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.special.FuelTank;
 import nl.jixxed.eliteodysseymaterials.domain.ships.utility.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.ShipModuleService;
 import nl.jixxed.eliteodysseymaterials.service.ships.PriceService;
 
 import java.io.Serializable;
@@ -34,92 +35,6 @@ import static java.util.function.Predicate.not;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class ShipModule implements Serializable {
 
-    private static final List<ShipModule> SHIP_MODULES = new ArrayList<>();
-
-    public static final List<List<? extends ShipModule>> ALL_MODULES = List.of(
-            //hardpoint
-            AbrasionBlaster.ABRASION_BLASTERS,
-            AXMissileRack.AX_MISSILE_RACKS,
-            AXMultiCannon.AX_MULTI_CANNONS,
-            BeamLaser.BEAM_LASERS,
-            BurstLaser.BURST_LASERS,
-            Cannon.CANNONS,
-            EnzymeMissileRack.ENZYME_MISSILE_RACKS,
-            FragmentCannon.FRAGMENT_CANNONS,
-            GuardianGaussCannon.GUARDIAN_GAUSS_CANNONS,
-            GuardianNaniteTorpedoPylon.GUARDIAN_NANITE_TORPEDO_PYLONS,
-            GuardianPlasmaCharger.GUARDIAN_PLASMA_CHARGERS,
-            GuardianShardCannon.GUARDIAN_SHARD_CANNONS,
-            MineLauncher.MINE_LAUNCHERS,
-            MiningLaser.MINING_LASERS,
-            MissileRack.MISSILE_RACKS,
-            MultiCannon.MULTI_CANNONS,
-            PlasmaAccelerator.PLASMA_ACCELERATORS,
-            PulseLaser.PULSE_LASERS,
-            RailGun.RAIL_GUNS,
-            RemoteReleaseFlakLauncher.REMOTE_RELEASE_FLAK_LAUNCHERS,
-            RemoteReleaseFlechetteLauncher.REMOTE_RELEASE_FLECHETTE_LAUNCHERS,
-            SeismicChargeLauncher.SEISMIC_CHARGE_LAUNCHERS,
-            ShockCannon.SHOCK_CANNONS,
-            SubSurfaceDisplacementMissile.SUB_SURFACE_DISPLACEMENT_MISSILES,
-            TorpedoPylon.TORPEDO_PYLONS,
-            //core
-            Armour.ARMOURS,
-            FrameShiftDrive.FRAME_SHIFT_DRIVES,
-            LifeSupport.LIFE_SUPPORTS,
-            PowerDistributor.POWER_DISTRIBUTORS,
-            PowerPlant.POWER_PLANTS,
-            Sensors.SENSORS,
-            Thrusters.THRUSTERS,
-            FuelTank.FUEL_TANKS,
-            CargoHatch.CARGO_HATCHES,
-            //military
-            GuardianHullReinforcementPackage.GUARDIAN_HULL_REINFORCEMENT_PACKAGES,
-            GuardianModuleReinforcementPackage.GUARDIAN_MODULE_REINFORCEMENT_PACKAGES,
-            GuardianShieldReinforcementPackage.GUARDIAN_SHIELD_REINFORCEMENT_PACKAGES,
-            HullReinforcementPackage.HULL_REINFORCEMENT_PACKAGES,
-            ModuleReinforcementPackage.MODULE_REINFORCEMENT_PACKAGES,
-            ShieldCellBank.SHIELD_CELL_BANKS,
-            //optional
-            AntiCorrosionCargoRack.ANTI_CORROSION_CARGO_RACKS,
-            AutoFieldMaintenanceUnit.AUTO_FIELD_MAINTENANCE_UNITS,
-            CargoRack.CARGO_RACKS,
-            LargeCargoRack.LARGE_CARGO_RACKS,
-            CollectorLimpetController.COLLECTOR_LIMPET_CONTROLLERS,
-            Computer.COMPUTERS,
-            DecontaminationLimpetController.DECONTAMINATION_LIMPET_CONTROLLERS,
-            DetailedSurfaceScanner.DETAILED_SURFACE_SCANNERS,
-            ExperimentalWeaponStabiliser.EXPERIMENTAL_WEAPON_STABILISERS,
-            FighterHangar.FIGHTER_HANGARS,
-            FrameShiftDriveBooster.FRAME_SHIFT_DRIVE_BOOSTERS,
-            FrameShiftDriveInterdictor.FRAME_SHIFT_DRIVE_INTERDICTORS,
-            FuelScoop.FUEL_SCOOPS,
-            FuelTransferLimpetController.FUEL_TRANSFER_LIMPET_CONTROLLERS,
-            HatchBreakerLimpetController.HATCH_BREAKER_LIMPET_CONTROLLERS,
-            MetaAlloyHullReinforcementPackage.META_ALLOY_HULL_REINFORCEMENT_PACKAGES,
-            MultiLimpetController.MULTI_LIMPET_CONTROLLERS,
-            PassengerCabin.PASSENGER_CABINS,
-            PlanetaryVehicleHangar.PLANETARY_VEHICLE_HANGARS,
-            ProspectorLimpetController.PROSPECTOR_LIMPET_CONTROLLERS,
-            ReconLimpetController.RECON_LIMPET_CONTROLLERS,
-            Refinery.REFINERIES,
-            RepairLimpetController.REPAIR_LIMPET_CONTROLLERS,
-            ResearchLimpetController.RESEARCH_LIMPET_CONTROLLERS,
-            ShieldGenerator.SHIELD_GENERATORS,
-            DiscoveryScanner.DISCOVERY_SCANNERS,
-            //utility
-            ChaffLauncher.CHAFF_LAUNCHERS,
-            ElectronicCountermeasure.ELECTRONIC_COUNTERMEASURES,
-            FrameShiftWakeScanner.FRAME_SHIFT_WAKE_SCANNERS,
-            KillWarrantScanner.KILL_WARRANT_SCANNERS,
-            ManifestScanner.MANIFEST_SCANNERS,
-            PointDefence.POINT_DEFENCES,
-            PulseWaveAnalyser.PULSE_WAVE_ANALYSERS,
-            ShieldBooster.SHIELD_BOOSTERS,
-            SinkLauncher.SINK_LAUNCHERS,
-            Xeno.XENOS
-
-    );
     @Getter
     @EqualsAndHashCode.Include
     private final String id;
@@ -192,7 +107,7 @@ public abstract class ShipModule implements Serializable {
             this.powerToggle = false;
             return 0.0;
         });
-        SHIP_MODULES.add(this);
+        ShipModuleService.register(this);
     }
 
     public ShipModule(final ShipModule shipModule) {
@@ -216,26 +131,15 @@ public abstract class ShipModule implements Serializable {
     }
 
     public static List<ShipModule> getModules(final SlotType slotType) {
-        return SHIP_MODULES.stream().filter(module -> {
-            try {
-                final Class<? extends ShipModule> aClass = module.getClass();
-                // weird predicate double negate wrapping to try and fix:
-                // IncompatibleClassChangeError
-                // Class java.util.AbstractList$RandomAccessSpliterator does not implement the requested interface java.util.function.Predicate
-                return slotType.getModuleClasses().stream().anyMatch(Predicate.not(moduleClass -> !moduleClass.isAssignableFrom(aClass)));
-            } catch (Exception ex) {
-                log.error("Error filtering modules for slot type: " + slotType, ex);
-                return false;
-            }
-        }).toList();
+        return ShipModuleService.getModules(slotType);
     }
 
     public static List<ShipModule> getBasicModules() {
-        return SHIP_MODULES.stream().filter(not(ShipModule::isPreEngineered).and(not(CargoHatch.class::isInstance))).toList();
+        return ShipModuleService.getBasicModules();
     }
 
     public static ShipModule getModule(String id) {
-        return SHIP_MODULES.stream().filter(module -> module.getId().equals(id)).findFirst().orElseThrow(IllegalArgumentException::new);
+        return ShipModuleService.getModule(id);
     }
 
     public void applyModification(final HorizonsBlueprintType modification, final HorizonsBlueprintGrade grade, final BigDecimal modificationCompleteness) {
@@ -523,63 +427,27 @@ public abstract class ShipModule implements Serializable {
     }
 
     public Optional<ShipModule> findHigherSize() {
-        return SHIP_MODULES.stream()
-                .filter(shipModule -> shipModule.getName().equals(this.getName()) &&
-                        (shipModule instanceof HardpointModule || shipModule.getModuleClass().equals(this.getModuleClass())) &&
-                        shipModule.getModuleSize().isHigher(this.getModuleSize())
-                )
-                .sorted(Comparator.comparing(ShipModule::getModuleSize))
-                .findFirst();
+        return ShipModuleService.findHigherSize(this);
     }
 
     public Optional<ShipModule> findHighestSize(int maxSize) {
-        return SHIP_MODULES.stream()
-                .filter(shipModule -> shipModule.getName().equals(this.getName()) &&
-                        (shipModule instanceof HardpointModule || shipModule.getModuleClass().equals(this.getModuleClass())) &&
-                        shipModule.getModuleSize().isLowerOrEqual(maxSize)
-                )
-                .sorted(Comparator.comparing(ShipModule::getModuleSize).reversed())
-                .findFirst();
+        return ShipModuleService.findHighestSize(this, maxSize);
     }
 
     public Optional<ShipModule> findLowerSize() {
-        return SHIP_MODULES.stream()
-                .filter(shipModule -> shipModule.getName().equals(this.getName()) &&
-                        (shipModule instanceof HardpointModule || shipModule.getModuleClass().equals(this.getModuleClass())) &&
-                        shipModule.getModuleSize().isLower(this.getModuleSize())
-                )
-                .sorted(Comparator.comparing(ShipModule::getModuleSize).reversed())
-                .findFirst();
+        return ShipModuleService.findLowerSize(this);
     }
 
     public Optional<ShipModule> findLowerSize(int maxSize) {
-        return SHIP_MODULES.stream()
-                .filter(shipModule -> shipModule.getName().equals(this.getName()) &&
-                        (shipModule instanceof HardpointModule || shipModule.getModuleClass().equals(this.getModuleClass())) &&
-                        shipModule.getModuleSize().isLowerOrEqual(maxSize)
-                )
-                .sorted(Comparator.comparing(ShipModule::getModuleSize).reversed())
-                .findFirst();
+        return ShipModuleService.findLowerSize(this, maxSize);
     }
 
     public Optional<ShipModule> findHigherClass() {
-        return SHIP_MODULES.stream()
-                .filter(shipModule -> shipModule.getName().equals(this.getName()) &&
-                        shipModule.getModuleSize().equals(this.getModuleSize()) &&
-                        shipModule.getModuleClass().isHigher(this.getModuleClass())
-                )
-                .sorted(Comparator.comparing(ShipModule::getModuleClass))
-                .findFirst();
+        return ShipModuleService.findHigherClass(this);
     }
 
     public Optional<ShipModule> findLowerClass() {
-        return SHIP_MODULES.stream()
-                .filter(shipModule -> shipModule.getName().equals(this.getName()) &&
-                        shipModule.getModuleSize().equals(this.getModuleSize()) &&
-                        shipModule.getModuleClass().isLower(this.getModuleClass())
-                )
-                .sorted(Comparator.comparing(ShipModule::getModuleClass).reversed())
-                .findFirst();
+        return ShipModuleService.findLowerClass(this);
     }
 
     public void togglePower() {

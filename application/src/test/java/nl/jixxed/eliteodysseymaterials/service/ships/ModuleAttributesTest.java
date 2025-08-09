@@ -11,6 +11,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.service.ShipModuleService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +25,7 @@ public class ModuleAttributesTest {
 
     @Test
     void testBlueprintsAttributePresence(){
-        Assertions.assertAll( ShipModule.ALL_MODULES.stream().flatMap(Collection::stream).map(shipModule -> () -> {
+        Assertions.assertAll(  ShipModuleService.getAllModules().stream().map(shipModule -> () -> {
                     final Set<HorizonsModifier> shipModuleAttibutes = shipModule.getAttibutes();
                     Assertions.assertAll(
                             shipModule.getAllowedBlueprints().stream()
@@ -41,7 +42,7 @@ public class ModuleAttributesTest {
     }
     @Test
     void testExperimentalEffectsAttributePresence(){
-        Assertions.assertAll( ShipModule.ALL_MODULES.stream().flatMap(Collection::stream).map(shipModule -> () -> {
+        Assertions.assertAll( ShipModuleService.getAllModules().stream().map(shipModule -> () -> {
                     final Set<HorizonsModifier> shipModuleAttibutes = shipModule.getAttibutes();
                     Assertions.assertAll(
                             shipModule.getAllowedExperimentalEffects().stream()

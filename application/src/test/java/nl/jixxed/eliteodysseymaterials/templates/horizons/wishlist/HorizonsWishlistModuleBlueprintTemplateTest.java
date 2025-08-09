@@ -39,7 +39,6 @@ class HorizonsWishlistModuleBlueprintTemplateTest {
 
     @BeforeAll
     static void beforeAll() {
-        final List<? extends ShipModule> allModules = ShipModule.ALL_MODULES.stream().flatMap(List::stream).toList();
         fxPanel = new JFXPanel();
         Locale.setDefault(Locale.ENGLISH);
         LocaleService.setCurrentLocale(LocaleService.getCurrentLocale());

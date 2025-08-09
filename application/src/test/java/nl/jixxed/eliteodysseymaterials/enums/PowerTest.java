@@ -10,10 +10,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PowerTest {
-    @BeforeAll
-    static void beforeAll() {
-        final List<? extends ShipModule> allModules = ShipModule.ALL_MODULES.stream().flatMap(List::stream).toList();
-    }
 
     @ParameterizedTest
     @CsvSource({
