@@ -149,6 +149,13 @@ public abstract class ShipModule implements Serializable {
                 this.modifications.clear();
                 this.modifications.add(mod);
                 this.modifiers.clear();
+            }else{
+                this.modifications.stream().filter(existingMod -> Objects.equals(existingMod, mod))
+                        .findFirst()
+                        .ifPresent(existingModification -> {
+                            existingModification.setGrade(grade);
+                            existingModification.setModificationCompleteness(modificationCompleteness);
+                        });
             }
         }
     }
