@@ -138,7 +138,7 @@ public class ShipModuleService {
     }
 
     public static ShipModule getModule(String id) {
-        log.info(SHIP_MODULES.size() + " modules found while searching. " + id);
+//        log.info(SHIP_MODULES.size() + " modules found while searching. " + id);
         return SHIP_MODULES.stream().filter(module -> module.getId().equals(id)).findFirst().orElseThrow(IllegalArgumentException::new);
     }
 
