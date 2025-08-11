@@ -10,6 +10,11 @@
       "type" : "string",
       "examples" : [ "jixxed", "Sam Ishum", "Jake Larson" ]
     },
+    "Offender_Localised" : {
+      "title" : "Offender_Localised",
+      "type" : "string",
+      "examples" : [ "jixxed", "Sam Ishum", "Jake Larson" ]
+    },
     "CrimeType" : {
       "title" : "CrimeType",
       "type" : "string",
