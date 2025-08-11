@@ -26,6 +26,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,7 @@ public class PinnedBlueprintService {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final Map<Engineer, HorizonsBlueprint> pinnedBlueprints = new EnumMap<>(Engineer.class);
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
-
+    private static LocalDateTime lastChange = LocalDateTime.now();
     static {
         EVENT_LISTENERS.add(EventService.addStaticListener(0, CommanderSelectedEvent.class, event -> {
             load(event.getCommander());
@@ -71,6 +72,7 @@ public class PinnedBlueprintService {
     }
 
     private static void save() {
+        lastChange = LocalDateTime.now();
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             try {
                 final String wishlistsJson = OBJECT_MAPPER.writeValueAsString(pinnedBlueprints.entrySet().stream()
@@ -168,5 +170,9 @@ public class PinnedBlueprintService {
     }
 
     public static void init() {
+    }
+
+    public static boolean hasChangedSince(LocalDateTime instant) {
+        return lastChange.isAfter(instant);
     }
 }

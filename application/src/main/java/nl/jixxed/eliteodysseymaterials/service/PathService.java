@@ -10,6 +10,7 @@ import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -32,9 +33,11 @@ public class PathService {
     private static StarSystem lastOdysseyStarSystem;
     private static List<OdysseyWishlistBlueprint> lastOdysseyWishlistBlueprints;
     private static List<PathItem<OdysseyBlueprintName>> lastOdysseyCalculation;
+    private static LocalDateTime lastPinnedCheck = LocalDateTime.MIN;
 
     public static List<PathItem<HorizonsBlueprintName>> calculateHorizonsShortestPath(final List<HorizonsWishlistBlueprint> wishlistBlueprints) {
-        if (LocationService.getCurrentStarSystem().equals(lastHorizonsStarSystem) && wishlistBlueprints.equals(lastHorizonsWishlistBlueprints)) {
+        if (LocationService.getCurrentStarSystem().equals(lastHorizonsStarSystem) && wishlistBlueprints.equals(lastHorizonsWishlistBlueprints) && lastHorizonsCalculation != null && !PinnedBlueprintService.hasChangedSince(lastPinnedCheck)) {
+            lastPinnedCheck = LocalDateTime.now();
 //            log.info("Shortest path horizons cache hit");
             return lastHorizonsCalculation;
         }
@@ -188,7 +191,7 @@ public class PathService {
     }
 
     public static List<PathItem<OdysseyBlueprintName>> calculateOdysseyShortestPath(final List<OdysseyWishlistBlueprint> wishlistBlueprints) {
-        if (LocationService.getCurrentStarSystem().equals(lastOdysseyStarSystem) && wishlistBlueprints.equals(lastOdysseyWishlistBlueprints)) {
+        if (LocationService.getCurrentStarSystem().equals(lastOdysseyStarSystem) && wishlistBlueprints.equals(lastOdysseyWishlistBlueprints) && lastOdysseyCalculation != null) {
 //            log.info("Shortest path horizons cache hit");
             return lastOdysseyCalculation;
         }
