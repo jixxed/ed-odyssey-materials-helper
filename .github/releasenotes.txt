@@ -6,4 +6,5 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Fixed a bug with burst interval on multi-servos giving -291% instead of 2.91%
+Fixed a bug when upgrading a module at the engineer would not go past the initial upgrade in the shipbuilder
+Update shortest path on wishlist when (un)pinning a blueprint

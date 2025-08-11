@@ -1,3 +1,8 @@
+Version 2.224
+-------------
+Fixed a bug when upgrading a module at the engineer would not go past the initial upgrade in the shipbuilder
+Update shortest path on wishlist when (un)pinning a blueprint
+
 Version 2.223
 -------------
 Fixed a bug with burst interval on multi-servos giving -291% instead of 2.91%
