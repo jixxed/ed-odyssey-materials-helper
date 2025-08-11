@@ -12,6 +12,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @NoArgsConstructor
 @Data
@@ -26,13 +27,13 @@ public class ShipConfiguration {
     private ShipType shipType;
     private ShipConfigurationSlot cargoHatch;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private final List<ShipConfigurationSlot> hardpointSlots = new ArrayList<>();
+    private final List<ShipConfigurationSlot> hardpointSlots = new CopyOnWriteArrayList<>();
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private final List<ShipConfigurationSlot> utilitySlots = new ArrayList<>();
+    private final List<ShipConfigurationSlot> utilitySlots = new CopyOnWriteArrayList<>();
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private final List<ShipConfigurationSlot> coreSlots = new ArrayList<>();
+    private final List<ShipConfigurationSlot> coreSlots = new CopyOnWriteArrayList<>();
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private final List<ShipConfigurationSlot> optionalSlots = new ArrayList<>();
+    private final List<ShipConfigurationSlot> optionalSlots = new CopyOnWriteArrayList<>();
     private double currentFuelReserve;
     private double currentFuel;
     private double currentCargo;
@@ -68,7 +69,7 @@ public class ShipConfiguration {
         newShipConfiguration.setCargoHatch(this.getCargoHatch().cloneShipConfigurationSlot());
         return newShipConfiguration;
     }
-    public static void resetCurrent(){
+    public static synchronized void resetCurrent(){
         CURRENT.name = "Current Ship (read only)";
         CURRENT.shipType = null;
         CURRENT.coreSlots.clear();

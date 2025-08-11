@@ -9,13 +9,14 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class ShipMapper {
-    public static ShipConfiguration toShipConfiguration(Ship ship, ShipConfiguration shipConfiguration, String name) {
+    public static synchronized ShipConfiguration toShipConfiguration(Ship ship, ShipConfiguration shipConfiguration, String name) {
         shipConfiguration.setShipType(ship.getShipType());
         shipConfiguration.setName(name);
         shipConfiguration.setCurrentFuelReserve(ship.getCurrentFuelReserve());
@@ -59,24 +60,25 @@ public class ShipMapper {
         return shipConfiguration;
     }
 
-    public static Ship toShip(ShipConfiguration shipConfiguration) {
+    public static synchronized Ship toShip(ShipConfiguration shipConfiguration) {
         if (shipConfiguration.getShipType() == null) {
             return null;
         }
         Ship ship = ShipService.createBlankShip(shipConfiguration.getShipType());
-        shipConfiguration.getCoreSlots().forEach(shipConfigurationSlot -> {
+        // Create defensive copies to avoid concurrent modification
+        new ArrayList<>(shipConfiguration.getCoreSlots()).forEach(shipConfigurationSlot -> {
             final Slot slot = ship.getCoreSlots().get(shipConfigurationSlot.getIndex());
             mapSlot(shipConfigurationSlot, slot);
         });
-        shipConfiguration.getOptionalSlots().forEach(shipConfigurationSlot -> {
+        new ArrayList<>(shipConfiguration.getOptionalSlots()).forEach(shipConfigurationSlot -> {
             final Slot slot = ship.getOptionalSlots().get(shipConfigurationSlot.getIndex());
             mapSlot(shipConfigurationSlot, slot);
         });
-        shipConfiguration.getHardpointSlots().forEach(shipConfigurationSlot -> {
+        new ArrayList<>(shipConfiguration.getHardpointSlots()).forEach(shipConfigurationSlot -> {
             final Slot slot = ship.getHardpointSlots().get(shipConfigurationSlot.getIndex());
             mapSlot(shipConfigurationSlot, slot);
         });
-        shipConfiguration.getUtilitySlots().forEach(shipConfigurationSlot -> {
+        new ArrayList<>(shipConfiguration.getUtilitySlots()).forEach(shipConfigurationSlot -> {
             final Slot slot = ship.getUtilitySlots().get(shipConfigurationSlot.getIndex());
             mapSlot(shipConfigurationSlot, slot);
         });

@@ -134,7 +134,7 @@ class MessageHandler {
     private static final String EVENT = "event";
     private static final String TIMESTAMP = "timestamp";
 
-    static void handleMessage(final String message, final File file) {
+    static synchronized void handleMessage(final String message, final File file) {
         try {
             final JsonNode jsonNode = OBJECT_MAPPER.readTree(message);
             if (jsonNode.get(EVENT) != null) {
@@ -166,7 +166,7 @@ class MessageHandler {
      * @param file
      * @param journalEventType
      */
-    static void handleMessage(final File file, final JournalEventType journalEventType) {
+    static synchronized void handleMessage(final File file, final JournalEventType journalEventType) {
         try {
             final String message = Files.readString(file.toPath());
             final JsonNode jsonNode = OBJECT_MAPPER.readTree(message);
