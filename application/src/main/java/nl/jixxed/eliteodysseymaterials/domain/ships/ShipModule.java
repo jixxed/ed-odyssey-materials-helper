@@ -298,6 +298,13 @@ public abstract class ShipModule implements Serializable {
         if (baseAttributeValue instanceof Double) {
             Double toReturn = Double.valueOf((double) baseAttributeValue);
             toReturn = (Double) applyModsToAttributeValue(moduleAttribute, toReturn, completeness);
+            if (HorizonsModifier.AMMO_CLIP_SIZE.equals(moduleAttribute)){
+                double burstSize = getAttributeValueOrDefault(HorizonsModifier.BURST_SIZE, completeness, 1.0);
+                toReturn = Math.ceil(toReturn / burstSize) * burstSize;
+            }
+            if (HorizonsModifier.AMMO_MAXIMUM.equals(moduleAttribute)){
+                toReturn = Math.floor(toReturn);
+            }
             return toReturn;
         } else if (baseAttributeValue instanceof Boolean) {
             Boolean toReturn = Boolean.valueOf((boolean) baseAttributeValue);
