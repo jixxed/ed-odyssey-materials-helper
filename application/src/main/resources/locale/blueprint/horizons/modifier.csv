@@ -228,3 +228,4 @@
 "modifier.horizons.name.boost_interval","Boost Interval","","","Intervalo de Postquemador","","","Интервал ускорения","加力间隔"
 "modifier.horizons.name.module_limit_increase","Module Limit Increase","","","","","","Увеличение лимита модуля","模块限制增加"
 "modifier.horizons.name.sensor_lock_min","Minimum Sensor Lock Range","","","","","","",""
+"modifier.horizons.name.overcharge_fuel_consumption","Overcharge Fuel Consumption","","","","","","",""

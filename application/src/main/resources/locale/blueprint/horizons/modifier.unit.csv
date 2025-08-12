@@ -222,6 +222,7 @@
 "modifier.horizons.unit.overcharge_max_acceleration_rate","","","","","","","",""
 "modifier.horizons.unit.overcharge_heat_generation_rate","","","","","","","",""
 "modifier.horizons.unit.overcharge_control_interference","","","","","","","",""
+"modifier.horizons.unit.overcharge_fuel_consumption","T/s","","","","","","",""
 "modifier.horizons.unit.listed_power_draw","MW/s","","","","","","МВт/с","兆瓦/秒"
 "modifier.horizons.unit.boost_interval","s","","","","","","с","秒"
 "modifier.horizons.unit.module_limit_increase","","","","","","","",""
