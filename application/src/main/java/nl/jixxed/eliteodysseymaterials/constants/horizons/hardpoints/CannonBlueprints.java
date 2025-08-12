@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.constants.horizons.BlueprintModifications;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsNumberModifierValue;
@@ -107,13 +108,7 @@ public class CannonBlueprints {
                             Map.of(
                                     Manufactured.MECHANICALSCRAP, 1
                             ),
-                            Map.of(
-                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2%", true, percentageNegative(0.0, 0.02)),
-                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.2, 0.36)),
-                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.1, 0.2)),
-                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.2, 0.36)),
-                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+4%", false, percentagePositive(0.0, 0.04))
-                            ),
+                            BlueprintModifications.HIGH_CAPACITY_GRADE_1,
                             List.of(
                                     Engineer.MARSHA_HICKS,
                                     Engineer.TOD_THE_BLASTER_MCQUINN,
@@ -125,13 +120,7 @@ public class CannonBlueprints {
                                     Raw.VANADIUM, 1,
                                     Manufactured.MECHANICALSCRAP, 1
                             ),
-                            Map.of(
-                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-4%", true, percentageNegative(0.02, 0.04)),
-                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+51.67%", true, percentagePositive(0.36, 0.5167)),
-                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.2, 0.3)),
-                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+51.67%", true, percentagePositive(0.36, 0.5167)),
-                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+8%", false, percentagePositive(0.04, 0.08))
-                            ),
+                            BlueprintModifications.HIGH_CAPACITY_GRADE_2,
                             List.of(
                                     Engineer.MARSHA_HICKS,
                                     Engineer.TOD_THE_BLASTER_MCQUINN,
@@ -144,13 +133,7 @@ public class CannonBlueprints {
                                     Raw.NIOBIUM, 1,
                                     Manufactured.MECHANICALSCRAP, 1
                             ),
-                            Map.of(
-                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-6%", true, percentageNegative(0.04, 0.06)),
-                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+68%", true, percentagePositive(0.5167, 0.68)),
-                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+40%", false, percentagePositive(0.3, 0.4)),
-                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+68%", true, percentagePositive(0.5167, 0.68)),
-                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+12%", false, percentagePositive(0.08, 0.12))
-                            ),
+                            BlueprintModifications.HIGH_CAPACITY_GRADE_3,
                             List.of(
                                     Engineer.MARSHA_HICKS,
                                     Engineer.THE_SARGE
@@ -162,13 +145,7 @@ public class CannonBlueprints {
                                     Manufactured.HIGHDENSITYCOMPOSITES, 1,
                                     Manufactured.MECHANICALEQUIPMENT, 1
                             ),
-                            Map.of(
-                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-8%", true, percentageNegative(0.06, 0.08)),
-                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+83.67%", true, percentagePositive(0.68, 0.8367)),
-                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+50%", false, percentagePositive(0.4, 0.5)),
-                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+83.67%", true, percentagePositive(0.68, 0.8367)),
-                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+16%", false, percentagePositive(0.12, 0.16))
-                            ),
+                            BlueprintModifications.HIGH_CAPACITY_GRADE_4,
                             List.of(
                                     Engineer.MARSHA_HICKS,
                                     Engineer.THE_SARGE
@@ -180,13 +157,7 @@ public class CannonBlueprints {
                                     Manufactured.MILITARYSUPERCAPACITORS, 1,
                                     Manufactured.MECHANICALCOMPONENTS, 1
                             ),
-                            Map.of(
-                                    HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-10%", true, percentageNegative(0.08, 0.1)),
-                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.8367, 1.0)),
-                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+60%", false, percentagePositive(0.5, 0.6)),
-                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.8367, 1.0)),
-                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.16, 0.2))
-                            ),
+                            BlueprintModifications.HIGH_CAPACITY_GRADE_5,
                             List.of(
                                     Engineer.MARSHA_HICKS,
                                     Engineer.THE_SARGE
