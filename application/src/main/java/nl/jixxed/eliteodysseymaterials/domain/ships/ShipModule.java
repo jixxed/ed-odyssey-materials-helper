@@ -212,6 +212,9 @@ public abstract class ShipModule implements Serializable {
             }
             return (double) this.attributes.get(HorizonsModifier.DAMAGE) * (double) getOriginalAttributeValue(HorizonsModifier.RATE_OF_FIRE) * (double) this.attributes.getOrDefault(HorizonsModifier.ROUNDS_PER_SHOT, 1.0);
         }
+        if (HorizonsModifier.BREACH_DAMAGE.equals(moduleAttribute)) {
+            return (double) getOriginalAttributeValue(HorizonsModifier.DAMAGE) * (double) this.attributes.get(HorizonsModifier.BREACH_DAMAGE);
+        }
         if (HorizonsModifier.RATE_OF_FIRE.equals(moduleAttribute) && this.attributes.containsKey(HorizonsModifier.BURST_INTERVAL)) {
             // Rate of Fire = Ammo Clip / (((Burst Size - 1) / Burst Rate of Fire + Burst Interval) * ceil(Ammo Clip / Burst Size))
             if((double)this.attributes.get(HorizonsModifier.BURST_INTERVAL) == 0D){
@@ -273,6 +276,9 @@ public abstract class ShipModule implements Serializable {
                 return (double) getAttributeValue(HorizonsModifier.DAMAGE, completeness) * getAttributeValueOrDefault(HorizonsModifier.DAMAGE_MULTIPLIER, completeness, 1.0) / getAttributeValueOrDefault(HorizonsModifier.CHARGE_TIME, completeness, 1.0);
             }
             return (double) getAttributeValue(HorizonsModifier.DAMAGE, completeness) * getAttributeValueOrDefault(HorizonsModifier.RATE_OF_FIRE, completeness, 1.0) * getAttributeValueOrDefault(HorizonsModifier.ROUNDS_PER_SHOT, completeness, 1.0);
+        }
+        if (HorizonsModifier.BREACH_DAMAGE.equals(moduleAttribute)) {
+            return (double) getAttributeValue(HorizonsModifier.DAMAGE, completeness) * (double) this.attributes.get(HorizonsModifier.BREACH_DAMAGE);//todo move BREACH_DAMAGE to dedicated attribute
         }
         if (HorizonsModifier.RATE_OF_FIRE.equals(moduleAttribute) && this.attributes.containsKey(HorizonsModifier.BURST_INTERVAL)) {
             // Rate of Fire = Ammo Clip / (((Burst Size - 1) / Burst Rate of Fire + Burst Interval) * ceil(Ammo Clip / Burst Size))
