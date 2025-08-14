@@ -19,7 +19,7 @@ public class VersionService {
     }
 
     public static String getLatestVersion() throws IOException {
-        if (getBuildVersion() == null) {
+        if (isDev()) {
             return "dev";
         }
         final URL url = new URL("https://api.github.com/repos/jixxed/ed-odyssey-materials-helper/releases/latest");
@@ -32,7 +32,7 @@ public class VersionService {
     }
 
     public static String getBuildVersion() {
-        return System.getProperty("app.version");
+        return Secrets.getOrDefault("app.version", "dev");
     }
 
     public static boolean isLatestVersion() {
@@ -48,6 +48,6 @@ public class VersionService {
     }
 
     public static boolean isDev() {
-        return getBuildVersion() == null;
+        return "dev".equals(getBuildVersion());
     }
 }

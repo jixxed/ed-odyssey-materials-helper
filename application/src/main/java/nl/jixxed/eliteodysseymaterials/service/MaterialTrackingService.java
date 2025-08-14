@@ -188,7 +188,7 @@ public class MaterialTrackingService {
                     final String data = OBJECT_MAPPER.writeValueAsString(new MaterialTrackingMessage(items));
                     log.info(data);
                     final HttpClient httpClient = HttpClient.newHttpClient();
-                    final String domainName = DnsHelper.resolveCname("edmattracking2.jixxed.nl");
+                    final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
                     final HttpRequest request = HttpRequest.newBuilder()
                             .uri(URI.create("https://" + domainName + "/Prod/v2/submit-material-tracking"))
                             .POST(HttpRequest.BodyPublishers.ofString(data))
@@ -228,7 +228,7 @@ public class MaterialTrackingService {
                     final String datax = OBJECT_MAPPER.writeValueAsString(new DataTrackingMessage(items));
                     log.info(datax);
                     final HttpClient httpClient = HttpClient.newHttpClient();
-                    final String domainName = DnsHelper.resolveCname("edmattracking2.jixxed.nl");
+                    final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
                     final HttpRequest request = HttpRequest.newBuilder()
                             .uri(URI.create("https://" + domainName + "/Prod/v2/submit-data-tracking"))
                             .POST(HttpRequest.BodyPublishers.ofString(datax))

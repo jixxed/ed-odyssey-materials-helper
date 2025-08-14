@@ -8,6 +8,7 @@ bootstrap/build
 bootstrap/out
 application/.gradle
 application/src/main/resources/simplelogger.properties
+application/src/main/resources/secret.properties
 application/.idea
 application/build
 application/out

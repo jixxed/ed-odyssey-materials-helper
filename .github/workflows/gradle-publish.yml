@@ -12,6 +12,8 @@ jobs:
       contents: write
     env:
       SENTRY_DSN: "${{secrets.SENTRY_DSN}}"
+      EDDN_SOFTWARE_NAME: "${{secrets.EDDN_SOFTWARE_NAME}}"
+      API_SERVICES_HOST: "${{secrets.API_SERVICES_HOST}}"
 
     steps:
       - uses: olegtarasov/get-tag@v2.1.3
@@ -30,6 +32,8 @@ jobs:
         run: chmod +x ./gradlew
       #      - name: Setup Gradle
       #        uses: gradle/actions/setup-gradle@v3
+      - name: Generate secrets file
+        run: ./gradlew application:generateSecrets
       - name: Build release with Gradle
         run: ./gradlew createReleaseLinux -DpackageType=deb -PskipSass
       - name: Build rpm Gradle
@@ -56,6 +60,8 @@ jobs:
       contents: write
     env:
       SENTRY_DSN: "${{secrets.SENTRY_DSN}}"
+      EDDN_SOFTWARE_NAME: "${{secrets.EDDN_SOFTWARE_NAME}}"
+      API_SERVICES_HOST: "${{secrets.API_SERVICES_HOST}}"
 
     steps:
       - uses: olegtarasov/get-tag@v2.1.3
@@ -72,6 +78,9 @@ jobs:
 
       #      - name: Setup Gradle
       #        uses: gradle/actions/setup-gradle@v3
+
+      - name: Generate secrets file
+        run: ./gradlew application:generateSecrets
       - name: Build with Gradle
         run: ./gradlew createReleaseSigned -DpackageType=msi -Dpfx_alias="${{secrets.CODE_SIGN_CERT_ALIAS}}" -Dpfx_password='"${{secrets.CODE_SIGN_PASSWORD}}"' -Dbase64_pfx="${{secrets.CODE_SIGN_BASE64}}" -PskipSass
       - name: Create Release

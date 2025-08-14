@@ -131,7 +131,7 @@ public class FXApplication extends Application {
             } catch (final IOException | FontFormatException e) {
                 //Handle exception
             }
-            PreferencesService.setPreference(PreferenceConstants.APP_SETTINGS_VERSION, System.getProperty("app.version"));
+            PreferencesService.setPreference(PreferenceConstants.APP_SETTINGS_VERSION, Secrets.getOrDefault("app.version", "dev"));
             whatsnewPopup();
             urlSchemePopup();
             eddnPopup();

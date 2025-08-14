@@ -86,7 +86,7 @@ public class MiningService {
                     final Runnable run = () -> {
                         try (final HttpClient httpClient = HttpClient.newHttpClient()) {
                             log.info(data);
-                            final String domainName = DnsHelper.resolveCname("edmattracking2.jixxed.nl");
+                            final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
                             final HttpRequest request = HttpRequest.newBuilder()
                                     .uri(URI.create("https://" + domainName + "/Prod/v2/submit-mining-event"))
                                     .POST(HttpRequest.BodyPublishers.ofString(data))

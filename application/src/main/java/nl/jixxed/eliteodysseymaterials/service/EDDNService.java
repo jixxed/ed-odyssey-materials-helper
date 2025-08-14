@@ -86,7 +86,7 @@ public class EDDNService {
     private static final ThreadPoolExecutor EXECUTOR_SERVICE = new ThreadPoolExecutor(1, 1,
             0L, TimeUnit.MILLISECONDS,
             new LinkedBlockingQueue<>());
-    public static final String SOFTWARE_NAME = "EDO Materials Helper";
+    public static final String SOFTWARE_NAME = Secrets.getOrDefault("eddn.software.name", "missing");
 
     public static void init() {
         OBJECT_MAPPER.setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
@@ -471,12 +471,12 @@ public class EDDNService {
     }
 
     private static String getBuildVersion() {
-        final String version = System.getProperty("app.version");
-        return version != null ? version : "dev";
+        return VersionService.getBuildVersion();
     }
 
     private static boolean isTestMode() {
-        return "dev".equals(getBuildVersion());
+        //EDDN is only to be used from official application distributions
+        return "dev".equals(getBuildVersion()) || SOFTWARE_NAME.equals("missing");
     }
 
     public static int queueSize() {

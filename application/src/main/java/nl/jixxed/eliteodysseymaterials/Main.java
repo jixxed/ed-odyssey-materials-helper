@@ -13,6 +13,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.service.RegistryService;
+import nl.jixxed.eliteodysseymaterials.service.Secrets;
 import nl.jixxed.eliteodysseymaterials.service.SupportService;
 import nl.jixxed.eliteodysseymaterials.service.VersionService;
 
@@ -48,48 +49,48 @@ public class Main {
                 System.exit(0);
             }
             log.info("launching app with java version: " + getVersion());
-            if (System.getProperty("sentry.dsn") == null || System.getProperty("sentry.dsn").isBlank() || System.getProperty("sentry.dsn").equals("null")) {
+            if (Secrets.getOrDefault("sentry.dsn", "missing").equals("missing")) {
                 log.error("Sentry DSN is not set. Please set the DSN.");
-            }
-            Sentry.init(options -> {
-
-                final String buildVersion = getBuildVersion();
-                options.setDsn(System.getProperty("sentry.dsn"));
-                options.setEnvironment(getEnvironment(buildVersion));
-                options.setRelease("edomh-app@" + buildVersion);
-                options.setEnabled(!buildVersion.equals("dev"));
-                options.setBeforeSend((event, hint) -> {
-                    if (!VersionService.isLatestVersion()) {
-                        return null;  // Returning null prevents the event from being sent to Sentry
-                    }
-                    if (Duration.between(lastSentTime, Instant.now()).getSeconds() < 30) {
-                        return null;  // Throttle if less than 30 seconds have passed
-                    }
-                    lastSentTime = Instant.now();
-                    String supportFile = "";
-                    try {
-                        supportFile = SupportService.createSupportPackage();
-                    } catch (Exception e) {
-                        log.error("Failed to create support package", e);
-                    }
-                    if (!supportFile.isBlank()) {
-                        Attachment attachment = new Attachment(supportFile);
-                        hint.addAttachment(attachment);
-                    }
-                    OperatingSystem os = new OperatingSystem();
-                    os.setName(System.getProperty("os.name"));
-                    os.setVersion(System.getProperty("os.version"));
-                    os.setBuild(System.getProperty("os.arch"));
-                    event.getContexts().setOperatingSystem(os);
-                    if (APPLICATION_STATE.getFileheader() != null) {
-                        event.setTag("game.version", APPLICATION_STATE.getFileheader().getGameversion());
-                        event.setTag("game.build", APPLICATION_STATE.getFileheader().getBuild());
-                        event.setTag("game.language", APPLICATION_STATE.getFileheader().getLanguage());
-                        event.setTag("game.odyssey", String.valueOf(APPLICATION_STATE.getFileheader().getOdyssey()));
-                    }
-                    return event;
+            } else {
+                Sentry.init(options -> {
+                    final String buildVersion = getBuildVersion();
+                    options.setDsn(Secrets.getOrDefault("sentry.dsn", "localhost"));
+                    options.setEnvironment(getEnvironment(buildVersion));
+                    options.setRelease("edomh-app@" + buildVersion);
+                    options.setEnabled(!buildVersion.equals("dev"));
+                    options.setBeforeSend((event, hint) -> {
+                        if (!VersionService.isLatestVersion()) {
+                            return null;  // Returning null prevents the event from being sent to Sentry
+                        }
+                        if (Duration.between(lastSentTime, Instant.now()).getSeconds() < 30) {
+                            return null;  // Throttle if less than 30 seconds have passed
+                        }
+                        lastSentTime = Instant.now();
+                        String supportFile = "";
+                        try {
+                            supportFile = SupportService.createSupportPackage();
+                        } catch (Exception e) {
+                            log.error("Failed to create support package", e);
+                        }
+                        if (!supportFile.isBlank()) {
+                            Attachment attachment = new Attachment(supportFile);
+                            hint.addAttachment(attachment);
+                        }
+                        OperatingSystem os = new OperatingSystem();
+                        os.setName(System.getProperty("os.name"));
+                        os.setVersion(System.getProperty("os.version"));
+                        os.setBuild(System.getProperty("os.arch"));
+                        event.getContexts().setOperatingSystem(os);
+                        if (APPLICATION_STATE.getFileheader() != null) {
+                            event.setTag("game.version", APPLICATION_STATE.getFileheader().getGameversion());
+                            event.setTag("game.build", APPLICATION_STATE.getFileheader().getBuild());
+                            event.setTag("game.language", APPLICATION_STATE.getFileheader().getLanguage());
+                            event.setTag("game.odyssey", String.valueOf(APPLICATION_STATE.getFileheader().getOdyssey()));
+                        }
+                        return event;
+                    });
                 });
-            });
+            }
             FXApplication.launchFx(args);
         }
     }
@@ -105,11 +106,7 @@ public class Main {
     }
 
     public static String getBuildVersion() {
-        var version = System.getProperty("app.version");
-        if (version == null) {
-            return "dev";
-        }
-        return version;
+        return VersionService.getBuildVersion();
     }
 
     private static void handleDeeplink(final String arg) {

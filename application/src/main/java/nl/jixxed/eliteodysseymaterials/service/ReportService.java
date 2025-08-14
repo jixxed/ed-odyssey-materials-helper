@@ -34,7 +34,7 @@ public class ReportService {
                     final String data = OBJECT_MAPPER.writeValueAsString(new Report(buildVersion, ApplicationState.getInstance().getFileheader(), material));
                     log.info(data);
                     final HttpClient httpClient = HttpClient.newHttpClient();
-                    final String domainName = DnsHelper.resolveCname("edmattracking2.jixxed.nl");
+                    final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
                     final HttpRequest request = HttpRequest.newBuilder()
                             .uri(URI.create("https://" + domainName + "/Prod/v2/submit-unknown-material"))
                             .POST(HttpRequest.BodyPublishers.ofString(data))
@@ -59,7 +59,7 @@ public class ReportService {
                     final String data = OBJECT_MAPPER.writeValueAsString(new ReportUnknownJournal(channel, buildVersion, ApplicationState.getInstance().getFileheader(), journalLine, error));
                     log.info(data);
                     final HttpClient httpClient = HttpClient.newHttpClient();
-                    final String domainName = DnsHelper.resolveCname("edmattracking2.jixxed.nl");
+                    final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
                     final HttpRequest request = HttpRequest.newBuilder()
                             .uri(URI.create("https://" + domainName + "/Prod/v2/submit-unknown-journal"))
                             .POST(HttpRequest.BodyPublishers.ofString(data))

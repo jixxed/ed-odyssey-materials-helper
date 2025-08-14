@@ -67,6 +67,21 @@ tasks.register('compileSassColorblind', compileSass.getClass()) {
     sourceMapEmbed = false
     sourceMapEnabled = false
 }
+tasks.register("generateSecrets")  {
+    doLast {
+        def secretFile = file("src/main/resources/secret.properties")
+        secretFile.parentFile.mkdirs()
+
+        secretFile.text = """
+            app.version=${project.version ?: 'dev'}
+            eddn.software.name=${System.getenv('EDDN_SOFTWARE_NAME') ?: 'missing'}
+            api.services.host=${System.getenv('API_SERVICES_HOST') ?: 'localhost'}
+            sentry.dsn=${System.getenv("SENTRY_DSN") ?: 'missing'}
+        """.stripIndent().stripLeading().stripTrailing()
+    }
+}
+
+
 tasks.register('wrapper', Wrapper) {
     gradleVersion = "8.14.3"
 }
@@ -96,12 +111,12 @@ repositories {
     mavenCentral {
     }
     maven {
-        name = 'nexus'
-        url = "https://nexus.jixxed.nl/nexus/content/repositories/releases"
-    }
-    maven {
         name 'repsy'
         url "https://repo.repsy.io/mvn/jixxed/maven/"
+    }
+    maven {
+        name = 'nexus'
+        url = "https://nexus.jixxed.nl/nexus/content/repositories/releases"
     }
     maven { url = 'https://jitpack.io' }
 }
@@ -133,10 +148,7 @@ jlink {
     launcher {
         name = 'Elite Dangerous Odyssey Materials Helper'
         jvmArgs = [
-                '-Dapp.version=' + project.version,
                 os.isWindows() ? '-Dlogging.config=log' : '-Dlogging.config=${user.home}/.ed-odyssey-materials-helper/log',
-                '-Dsentry.dsn=' + System.getenv("SENTRY_DSN"),
-//                '-Dlogging.appender.console.level.sentry=ERROR',
                 '-Xmx2048M',
                 '--add-exports=java.base/jdk.internal.misc=nl.jixxed.merged.module',
                 '--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls',
@@ -373,7 +385,6 @@ compileJava {
                 '--module-path', classpath.asPath,
                 '--add-exports', "javafx.graphics/com.sun.javafx.tk=nl.jixxed.eliteodysseymaterials",
                 '--add-exports', "javafx.graphics/com.sun.glass.ui=nl.jixxed.eliteodysseymaterials"
-
         ]
         classpath = files()
     }
