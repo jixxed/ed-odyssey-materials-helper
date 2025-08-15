@@ -166,7 +166,7 @@ public class ShipStats extends Stats implements DestroyableEventTemplate {
         final double retractedUsage = retractedPower.usedPower();
         final double thermalLoad = retractedUsage * powerPlantEfficiency;
         return Math.min(14000D, Math.max(getShipSensorRangeMax(), getShip()
-                .map(ship -> getShipSensorRangeMax() * Math.pow((1D + (thermalLoad - (double)ship.getAttributes().get(HorizonsModifier.HEAT_DISSIPATION_MIN)) / (double)ship.getAttributes().get(HorizonsModifier.HEAT_DISSIPATION_MIN)), 2D))
+                .map(ship -> 1.75 * getShipSensorRangeMax() * Math.pow((1D + (thermalLoad - (double)ship.getAttributes().get(HorizonsModifier.HEAT_DISSIPATION_MIN)) / (double)ship.getAttributes().get(HorizonsModifier.HEAT_DISSIPATION_MIN)), 2D))
                 .orElse(0D)));
     }
 
@@ -199,7 +199,7 @@ public class ShipStats extends Stats implements DestroyableEventTemplate {
     }
 
     private double getShipSensorRangeMax() {
-        return getShipSensorRangeMin() / 4000D * 7680D;
+        return getShipSensorRangeMin() / 4000D * 7680D * 1.75;
     }
 
     private Double getShipSensorRangeMin() {
