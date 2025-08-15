@@ -1,3 +1,10 @@
+Version 2.225
+-------------
+Added SCO fuel consumption stat to SCO FSD
+Corrected stats for several modules
+Converted breach damage to a percentage value of damage instead
+Splitted Seeker Missile Rack to its own group
+
 Version 2.224
 -------------
 Fixed a bug when upgrading a module at the engineer would not go past the initial upgrade in the shipbuilder
