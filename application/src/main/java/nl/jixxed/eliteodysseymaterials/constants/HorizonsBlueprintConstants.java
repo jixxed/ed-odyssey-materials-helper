@@ -325,7 +325,8 @@ public abstract class HorizonsBlueprintConstants {
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_SHARD_CANNON, merge(GuardianShardCannonBlueprints.BLUEPRINTS, GuardianShardCannonPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MINE_LAUNCHER, MineLauncherBlueprints.BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MINING_LASER, MiningLaserPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS);
-        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MISSILE_RACK, merge(MissileRackBlueprints.BLUEPRINTS, MissileRackPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, DumbfireMissileRackBlueprints.BLUEPRINTS);
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.SEEKER_MISSILE_RACK, merge(SeekerMissileRackBlueprints.BLUEPRINTS, SeekerMissileRackPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MULTI_CANNON, merge(MultiCannonBlueprints.BLUEPRINTS, MultiCannonPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.PLASMA_ACCELERATOR, PlasmaAcceleratorBlueprints.BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.PULSE_LASER, PulseLaserBlueprints.BLUEPRINTS);
@@ -364,7 +365,8 @@ public abstract class HorizonsBlueprintConstants {
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.MULTI_CANNON, ExperimentalEffectBlueprints.MULTI_CANNON);
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.CANNON, ExperimentalEffectBlueprints.CANNON);
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.FRAGMENT_CANNON, ExperimentalEffectBlueprints.FRAGMENT_CANNON);
-        EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.MISSILE_RACK, ExperimentalEffectBlueprints.MISSILE_RACK);
+        EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, ExperimentalEffectBlueprints.DUMBFIRE_MISSILE_RACK);
+        EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.SEEKER_MISSILE_RACK, ExperimentalEffectBlueprints.SEEKER_MISSILE_RACK);
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.TORPEDO_PYLON, ExperimentalEffectBlueprints.TORPEDO_PYLON);
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.MINE_LAUNCHER, ExperimentalEffectBlueprints.MINE_LAUNCHER);
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.PLASMA_ACCELERATOR, ExperimentalEffectBlueprints.PLASMA_ACCELERATOR);

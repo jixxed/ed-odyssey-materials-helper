@@ -24,7 +24,6 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Loadout;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module;
 import nl.jixxed.eliteodysseymaterials.service.ShipModuleService;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -171,9 +170,9 @@ class LoadoutMapperTest {
                 Arguments.of("GUARDIAN_SHARD_CANNON_2_A_F_PRE_GOD.json", GuardianShardCannon.GUARDIAN_SHARD_CANNON_2_A_F_PRE_GOD, SlotType.HARDPOINT),
                 Arguments.of("MINING_LASER_1_D_F_PRE.json", MiningLaser.MINING_LASER_1_D_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("MINING_LASER_1_D_F_PRE_ARX.json", MiningLaser.MINING_LASER_1_D_F_PRE_ARX, SlotType.HARDPOINT),
-                Arguments.of("SEEKER_MISSILE_RACK_2_B_F_PRE.json", MissileRack.SEEKER_MISSILE_RACK_2_B_F_PRE, SlotType.HARDPOINT),
-                Arguments.of("SEEKER_MISSILE_RACK_2_B_F_PRE_2.json", MissileRack.SEEKER_MISSILE_RACK_2_B_F_PRE_2, SlotType.HARDPOINT),
-                Arguments.of("SEEKER_MISSILE_RACK_3_A_F_PRE.json", MissileRack.SEEKER_MISSILE_RACK_3_A_F_PRE, SlotType.HARDPOINT),
+                Arguments.of("SEEKER_MISSILE_RACK_2_B_F_PRE.json", SeekerMissileRack.SEEKER_MISSILE_RACK_2_B_F_PRE, SlotType.HARDPOINT),
+                Arguments.of("SEEKER_MISSILE_RACK_2_B_F_PRE_2.json", SeekerMissileRack.SEEKER_MISSILE_RACK_2_B_F_PRE_2, SlotType.HARDPOINT),
+                Arguments.of("SEEKER_MISSILE_RACK_3_A_F_PRE.json", SeekerMissileRack.SEEKER_MISSILE_RACK_3_A_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("FRAGMENT_CANNON_1_E_G_PRE.json", FragmentCannon.FRAGMENT_CANNON_1_E_G_PRE, SlotType.HARDPOINT),
                 Arguments.of("FRAGMENT_CANNON_3_C_G_PRE.json", FragmentCannon.FRAGMENT_CANNON_3_C_G_PRE, SlotType.HARDPOINT),
                 Arguments.of("MULTI_CANNON_2_E_F_PRE.json", MultiCannon.MULTI_CANNON_2_E_F_PRE, SlotType.HARDPOINT),

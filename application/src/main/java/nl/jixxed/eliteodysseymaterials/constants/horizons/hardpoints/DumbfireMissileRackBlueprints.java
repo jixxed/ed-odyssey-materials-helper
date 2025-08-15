@@ -15,7 +15,7 @@ import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @SuppressWarnings("java:S1192")
-public class MissileRackBlueprints {
+public class DumbfireMissileRackBlueprints {
     public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
             HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE,
             Map.of(

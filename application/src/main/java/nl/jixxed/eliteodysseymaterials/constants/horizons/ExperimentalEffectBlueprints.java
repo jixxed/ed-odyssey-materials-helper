@@ -1056,7 +1056,7 @@ public class ExperimentalEffectBlueprints {
                     )
             )
     );
-    public static final Map<HorizonsBlueprintType, HorizonsBlueprint> MISSILE_RACK = Map.ofEntries(
+    public static final Map<HorizonsBlueprintType, HorizonsBlueprint> DUMBFIRE_MISSILE_RACK = Map.ofEntries(
             Map.entry(
                     HorizonsBlueprintType.DOUBLE_BRACED, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.DOUBLE_BRACED,
                             Map.of(
@@ -1066,23 +1066,6 @@ public class ExperimentalEffectBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15))
-                            ),
-                            List.of(
-                                    Engineer.LIZ_RYDER,
-                                    Engineer.PETRA_OLMANOVA,
-                                    Engineer.JURI_ISHMAAK
-                            )
-                    )
-            ),
-            Map.entry(
-                    HorizonsBlueprintType.DRAG_MUNITION, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.DRAG_MUNITION,
-                            Map.of(
-                                    Raw.MOLYBDENUM, 2,
-                                    Raw.CARBON, 5,
-                                    Manufactured.GRIDRESISTORS, 5
-                            ),
-                            Map.of(
-                                    HorizonsModifier.TARGET_SPEED_REDUCED, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE))
                             ),
                             List.of(
                                     Engineer.LIZ_RYDER,
@@ -1257,6 +1240,170 @@ public class ExperimentalEffectBlueprints {
                     )
             )
     );
+        public static final Map<HorizonsBlueprintType, HorizonsBlueprint> SEEKER_MISSILE_RACK = Map.ofEntries(
+                Map.entry(
+                        HorizonsBlueprintType.DOUBLE_BRACED, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.SEEKER_MISSILE_RACK, HorizonsBlueprintType.DOUBLE_BRACED,
+                                Map.of(
+                                        Raw.VANADIUM, 3,
+                                        Manufactured.COMPACTCOMPOSITES, 5,
+                                        Manufactured.MECHANICALSCRAP, 5
+                                ),
+                                Map.of(
+                                        HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15))
+                                ),
+                                List.of(
+                                        Engineer.LIZ_RYDER,
+                                        Engineer.PETRA_OLMANOVA,
+                                        Engineer.JURI_ISHMAAK
+                                )
+                        )
+                ),
+                Map.entry(
+                        HorizonsBlueprintType.DRAG_MUNITION, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.SEEKER_MISSILE_RACK, HorizonsBlueprintType.DRAG_MUNITION,
+                                Map.of(
+                                        Raw.MOLYBDENUM, 2,
+                                        Raw.CARBON, 5,
+                                        Manufactured.GRIDRESISTORS, 5
+                                ),
+                                Map.of(
+                                        HorizonsModifier.TARGET_SPEED_REDUCED, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE))
+                                ),
+                                List.of(
+                                        Engineer.LIZ_RYDER,
+                                        Engineer.PETRA_OLMANOVA,
+                                        Engineer.JURI_ISHMAAK
+                                )
+                        )
+                ),
+                Map.entry(
+                        HorizonsBlueprintType.EMISSIVE_MUNITIONS, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.SEEKER_MISSILE_RACK, HorizonsBlueprintType.EMISSIVE_MUNITIONS,
+                                Map.of(
+                                        Raw.MANGANESE, 3,
+                                        Encoded.EMISSIONDATA, 3,
+                                        Manufactured.HEATEXCHANGERS, 3,
+                                        Manufactured.MECHANICALEQUIPMENT, 4
+                                ),
+                                Map.of(
+                                        HorizonsModifier.TARGET_SIGNATURE_INCREASED, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)),
+                                        HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+100%", false, percentagePositive(0.0, 1.0))
+                                ),
+                                List.of(
+                                        Engineer.LIZ_RYDER,
+                                        Engineer.PETRA_OLMANOVA,
+                                        Engineer.JURI_ISHMAAK
+                                )
+                        )
+                ),
+                Map.entry(
+                        HorizonsBlueprintType.FLOW_CONTROL, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.SEEKER_MISSILE_RACK, HorizonsBlueprintType.FLOW_CONTROL,
+                                Map.of(
+                                        Encoded.EMBEDDEDFIRMWARE, 1,
+                                        Manufactured.HYBRIDCAPACITORS, 3,
+                                        Manufactured.MECHANICALSCRAP, 5
+                                ),
+                                Map.of(
+                                        HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("-10%", true, percentageNegative(0.0, 0.1))
+                                ),
+                                List.of(
+                                        Engineer.LIZ_RYDER,
+                                        Engineer.PETRA_OLMANOVA,
+                                        Engineer.JURI_ISHMAAK
+                                )
+                        )
+                ),
+                Map.entry(
+                        HorizonsBlueprintType.MULTI_SERVOS, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.SEEKER_MISSILE_RACK, HorizonsBlueprintType.MULTI_SERVOS,
+                                Map.of(
+                                        Manufactured.CONFIGURABLECOMPONENTS, 2,
+                                        Manufactured.MECHANICALSCRAP, 5,
+                                        Manufactured.FOCUSCRYSTALS, 4,
+                                        Manufactured.CONDUCTIVEPOLYMERS, 2
+                                ),
+                                Map.of(
+                                        HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05)),
+                                        HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-2.91%", true, percentageNegative(0.0, 0.029126213592233))
+                                ),
+                                List.of(
+                                        Engineer.LIZ_RYDER,
+                                        Engineer.PETRA_OLMANOVA,
+                                        Engineer.JURI_ISHMAAK
+                                )
+                        )
+                ),
+                Map.entry(
+                        HorizonsBlueprintType.OVERLOAD_MUNITIONS, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.SEEKER_MISSILE_RACK, HorizonsBlueprintType.OVERLOAD_MUNITIONS,
+                                Map.of(
+                                        Raw.GERMANIUM, 3,
+                                        Encoded.SHIELDPATTERNANALYSIS, 2,
+                                        Encoded.ENCRYPTIONCODES, 4,
+                                        Manufactured.FILAMENTCOMPOSITES, 5
+                                ),
+                                Map.of(
+                                        HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)),
+                                        HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, new HorizonsNumberModifierValue("-50%", false, minus(0.5)),
+                                        HorizonsModifier.THERMAL_DAMAGE_RATIO, new HorizonsNumberModifierValue("+50%", true, plus(0.5))
+                                ),
+                                List.of(
+                                        Engineer.LIZ_RYDER,
+                                        Engineer.PETRA_OLMANOVA,
+                                        Engineer.JURI_ISHMAAK
+                                )
+                        )
+                ),
+                Map.entry(
+                        HorizonsBlueprintType.OVERSIZED, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.SEEKER_MISSILE_RACK, HorizonsBlueprintType.OVERSIZED,
+                                Map.of(
+                                        Raw.RUTHENIUM, 1,
+                                        Manufactured.MECHANICALCOMPONENTS, 3,
+                                        Manufactured.MECHANICALSCRAP, 5
+                                ),
+                                Map.of(
+                                        HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
+                                        HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05))
+                                ),
+                                List.of(
+                                        Engineer.LIZ_RYDER,
+                                        Engineer.PETRA_OLMANOVA,
+                                        Engineer.JURI_ISHMAAK
+                                )
+                        )
+                ),
+                Map.entry(
+                        HorizonsBlueprintType.STRIPPED_DOWN, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.SEEKER_MISSILE_RACK, HorizonsBlueprintType.STRIPPED_DOWN,
+                                Map.of(
+                                        Raw.CARBON, 5,
+                                        Raw.TIN, 1,
+                                        Manufactured.SALVAGEDALLOYS, 5
+                                ),
+                                Map.of(
+                                        HorizonsModifier.MASS, new HorizonsNumberModifierValue("-10%", true, percentageNegative(0.0, 0.1))
+                                ),
+                                List.of(
+                                        Engineer.LIZ_RYDER,
+                                        Engineer.PETRA_OLMANOVA,
+                                        Engineer.JURI_ISHMAAK
+                                )
+                        )
+                ),
+                Map.entry(
+                        HorizonsBlueprintType.THERMAL_CASCADE, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.SEEKER_MISSILE_RACK, HorizonsBlueprintType.THERMAL_CASCADE,
+                                Map.of(
+                                        Raw.PHOSPHORUS, 5,
+                                        Manufactured.HIGHDENSITYCOMPOSITES, 3,
+                                        Manufactured.HEATCONDUCTIONWIRING, 5,
+                                        Manufactured.HYBRIDCAPACITORS, 4
+                                ),
+                                Map.of(
+                                        HorizonsModifier.SHIELDED_TARGET_HEAT_INCREASED, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE))
+                                ),
+                                List.of(
+                                        Engineer.LIZ_RYDER,
+                                        Engineer.PETRA_OLMANOVA,
+                                        Engineer.JURI_ISHMAAK
+                                )
+                        )
+                )
+        );
     public static final Map<HorizonsBlueprintType, HorizonsBlueprint> TORPEDO_PYLON = Map.of(
             HorizonsBlueprintType.DOUBLE_BRACED, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.TORPEDO_PYLON, HorizonsBlueprintType.DOUBLE_BRACED,
                     Map.of(

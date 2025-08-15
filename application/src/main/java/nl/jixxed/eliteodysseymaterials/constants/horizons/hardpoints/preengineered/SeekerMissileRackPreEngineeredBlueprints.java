@@ -18,13 +18,13 @@ import java.util.Map;
 import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class MissileRackPreEngineeredBlueprints {
+public class SeekerMissileRackPreEngineeredBlueprints {
     public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> PRE_ENGINEERED_BLUEPRINTS = Map.of(
             //https://forums.frontier.co.uk/threads/enhanced-missile-rack-initiative-mining.564538/
             //available at tech broker
             HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE_THERMAL_CASCADE,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE_THERMAL_CASCADE, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.SEEKER_MISSILE_RACK, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE_THERMAL_CASCADE, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                             ),
                             Map.of(
@@ -44,7 +44,7 @@ public class MissileRackPreEngineeredBlueprints {
             //https://forums.frontier.co.uk/threads/imperial-campaign-targets-archon-delaine-in-beta-3-tucani-combat.638440
             HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE_STURDY_FSD_INTERRUPT,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE_STURDY_FSD_INTERRUPT, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.SEEKER_MISSILE_RACK, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE_STURDY_FSD_INTERRUPT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                             ),
                             Map.ofEntries(

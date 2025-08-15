@@ -45,7 +45,8 @@ public class ShipModuleService {
         var guardianShardCannons = GuardianShardCannon.GUARDIAN_SHARD_CANNONS;
         var mineLaunchers = MineLauncher.MINE_LAUNCHERS;
         var miningLasers = MiningLaser.MINING_LASERS;
-        var missileRacks = MissileRack.MISSILE_RACKS;
+        var dumbfireMissileRacks = DumbfireMissileRack.DUMBFIRE_MISSILE_RACKS;
+        var seekerMissileRacks = SeekerMissileRack.SEEKER_MISSILE_RACKS;
         var multiCannons = MultiCannon.MULTI_CANNONS;
         var plasmaAccelerators = PlasmaAccelerator.PLASMA_ACCELERATORS;
         var pulseLasers = PulseLaser.PULSE_LASERS;
