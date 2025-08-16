@@ -290,10 +290,11 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
             return FRAGMENT_CANNON;
         } else if (nameLowerCase.startsWith("hpt_minelauncher")) {
             return MINE_LAUNCHER;
-        } else if (nameLowerCase.startsWith("hpt_dumbfiremissilerack")
-                || nameLowerCase.startsWith("hpt_drunkmissilerack")
+        } else if (nameLowerCase.startsWith("hpt_dumbfiremissilerack")) {
+            return DUMBFIRE_MISSILE_RACK;
+        } else if (nameLowerCase.startsWith("hpt_drunkmissilerack")
                 || nameLowerCase.startsWith("hpt_basicmissilerack")) {
-            return MISSILE_RACK;
+            return SEEKER_MISSILE_RACK;
         } else if (nameLowerCase.startsWith("hpt_multicannon")) {
             return MULTI_CANNON;
         } else if (nameLowerCase.startsWith("hpt_plasmaaccelerator")) {

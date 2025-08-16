@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.engineers;
 import javafx.geometry.Orientation;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
@@ -11,6 +12,8 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableSeparator;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
+
+import java.util.List;
 
 public class PinnedBlueprintSection extends DestroyableVBox implements DestroyableTemplate {
 
@@ -42,7 +45,8 @@ public class PinnedBlueprintSection extends DestroyableVBox implements Destroyab
             return new PinnedBlueprint(null, 0, true, engineer);
         }
         blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(blueprint.getBlueprintName(), blueprint.getHorizonsBlueprintType(), HorizonsBlueprintGrade.forDigit(HorizonsBlueprintConstants.getEngineerMaxGrade(blueprint, this.engineer)));
-        return new PinnedBlueprint(blueprint, HorizonsBlueprintConstants.getEngineerMaxGrade(blueprint, this.engineer), true, this.engineer);
+        final Integer engineerRank = ApplicationState.getInstance().getEngineerRank(engineer);
+        return new PinnedBlueprint(blueprint, Math.min(engineerRank, HorizonsBlueprintConstants.getEngineerMaxGrade(blueprint, this.engineer)), true, this.engineer);
     }
 
     private DestroyableLabel getPinnedBlueprintTitle() {

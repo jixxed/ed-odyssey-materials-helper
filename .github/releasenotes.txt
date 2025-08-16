@@ -6,4 +6,6 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Bugfix for pinned blueprints (Missile racks)
+Bugfix for experimental effects (Missile racks)
+Bugfix for importing wishlist from edsy/coriolis with Missile racks
+Combined pinning for dumbfire and seeker missile racks

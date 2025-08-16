@@ -1058,7 +1058,7 @@ public class ExperimentalEffectBlueprints {
     );
     public static final Map<HorizonsBlueprintType, HorizonsBlueprint> DUMBFIRE_MISSILE_RACK = Map.ofEntries(
             Map.entry(
-                    HorizonsBlueprintType.DOUBLE_BRACED, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.DOUBLE_BRACED,
+                    HorizonsBlueprintType.DOUBLE_BRACED, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.DOUBLE_BRACED,
                             Map.of(
                                     Raw.VANADIUM, 3,
                                     Manufactured.COMPACTCOMPOSITES, 5,
@@ -1075,7 +1075,7 @@ public class ExperimentalEffectBlueprints {
                     )
             ),
             Map.entry(
-                    HorizonsBlueprintType.EMISSIVE_MUNITIONS, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.EMISSIVE_MUNITIONS,
+                    HorizonsBlueprintType.EMISSIVE_MUNITIONS, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.EMISSIVE_MUNITIONS,
                             Map.of(
                                     Raw.MANGANESE, 3,
                                     Encoded.EMISSIONDATA, 3,
@@ -1094,7 +1094,7 @@ public class ExperimentalEffectBlueprints {
                     )
             ),
             Map.entry(
-                    HorizonsBlueprintType.FLOW_CONTROL, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.FLOW_CONTROL,
+                    HorizonsBlueprintType.FLOW_CONTROL, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.FLOW_CONTROL,
                             Map.of(
                                     Encoded.EMBEDDEDFIRMWARE, 1,
                                     Manufactured.HYBRIDCAPACITORS, 3,
@@ -1111,7 +1111,7 @@ public class ExperimentalEffectBlueprints {
                     )
             ),
             Map.entry(
-                    HorizonsBlueprintType.FSD_INTERRUPT, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.FSD_INTERRUPT,
+                    HorizonsBlueprintType.FSD_INTERRUPT, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.FSD_INTERRUPT,
                             Map.of(
                                     Encoded.FSDTELEMETRY, 5,
                                     Encoded.WAKESOLUTIONS, 3,
@@ -1131,7 +1131,7 @@ public class ExperimentalEffectBlueprints {
                     )
             ),
             Map.entry(
-                    HorizonsBlueprintType.MULTI_SERVOS, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.MULTI_SERVOS,
+                    HorizonsBlueprintType.MULTI_SERVOS, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.MULTI_SERVOS,
                             Map.of(
                                     Manufactured.CONFIGURABLECOMPONENTS, 2,
                                     Manufactured.MECHANICALSCRAP, 5,
@@ -1150,7 +1150,7 @@ public class ExperimentalEffectBlueprints {
                     )
             ),
             Map.entry(
-                    HorizonsBlueprintType.OVERLOAD_MUNITIONS, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.OVERLOAD_MUNITIONS,
+                    HorizonsBlueprintType.OVERLOAD_MUNITIONS, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.OVERLOAD_MUNITIONS,
                             Map.of(
                                     Raw.GERMANIUM, 3,
                                     Encoded.SHIELDPATTERNANALYSIS, 2,
@@ -1170,7 +1170,7 @@ public class ExperimentalEffectBlueprints {
                     )
             ),
             Map.entry(
-                    HorizonsBlueprintType.OVERSIZED, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.OVERSIZED,
+                    HorizonsBlueprintType.OVERSIZED, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.OVERSIZED,
                             Map.of(
                                     Raw.RUTHENIUM, 1,
                                     Manufactured.MECHANICALCOMPONENTS, 3,
@@ -1188,7 +1188,7 @@ public class ExperimentalEffectBlueprints {
                     )
             ),
             Map.entry(
-                    HorizonsBlueprintType.PENETRATOR_MUNITIONS, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.PENETRATOR_MUNITIONS,
+                    HorizonsBlueprintType.PENETRATOR_MUNITIONS, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.PENETRATOR_MUNITIONS,
                             Map.of(
                                     Raw.ZIRCONIUM, 3,
                                     Manufactured.GALVANISINGALLOYS, 5,
@@ -1205,7 +1205,7 @@ public class ExperimentalEffectBlueprints {
                     )
             ),
             Map.entry(
-                    HorizonsBlueprintType.STRIPPED_DOWN, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.STRIPPED_DOWN,
+                    HorizonsBlueprintType.STRIPPED_DOWN, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.STRIPPED_DOWN,
                             Map.of(
                                     Raw.CARBON, 5,
                                     Raw.TIN, 1,
@@ -1222,7 +1222,7 @@ public class ExperimentalEffectBlueprints {
                     )
             ),
             Map.entry(
-                    HorizonsBlueprintType.THERMAL_CASCADE, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.THERMAL_CASCADE,
+                    HorizonsBlueprintType.THERMAL_CASCADE, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.THERMAL_CASCADE,
                             Map.of(
                                     Raw.PHOSPHORUS, 5,
                                     Manufactured.HIGHDENSITYCOMPOSITES, 3,
