@@ -1,3 +1,7 @@
+Version 2.229
+-------------
+Bugfix for individual experimental effects (Missile racks)
+
 Version 2.228
 -------------
 Bugfix for experimental effects (Missile racks)
