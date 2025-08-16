@@ -1,3 +1,8 @@
+Version 2.230
+-------------
+Fix migration of old missile rack wishlist blueprints to dumbfire/seeker
+If the blueprint has drag munitions it will be a seeker, otherwise dumbfire
+
 Version 2.229
 -------------
 Bugfix for individual experimental effects (Missile racks)

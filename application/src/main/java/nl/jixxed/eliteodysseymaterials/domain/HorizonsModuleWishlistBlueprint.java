@@ -30,7 +30,7 @@ public final class HorizonsModuleWishlistBlueprint extends HorizonsWishlistBluep
     public HorizonsModuleWishlistBlueprint(HorizonsBlueprintType blueprintType, Map<HorizonsBlueprintGrade, Double> percentageToComplete) {
         this.blueprintType = blueprintType;
         this.percentageToComplete = percentageToComplete;
-        bugfix(getRecipeName(), blueprintType);
+        bugfix(getRecipeName(), experimentalEffect);
     }
 
     public void setBlueprintGradePercentageToComplete(final HorizonsBlueprintGrade grade, final Double percentage) {
@@ -46,12 +46,12 @@ public final class HorizonsModuleWishlistBlueprint extends HorizonsWishlistBluep
 
     public void setRecipeName(HorizonsBlueprintName recipeName) {
         super.setRecipeName(recipeName);
-        bugfix(recipeName, this.blueprintType);
+        bugfix(recipeName, this.experimentalEffect);
     }
 
-    private void bugfix(HorizonsBlueprintName recipeName, HorizonsBlueprintType blueprintType) {
-        if (blueprintType != null && HorizonsBlueprintName.MISSILE_RACK.equals(recipeName)) {
-            if (blueprintType == HorizonsBlueprintType.DRAG_MUNITION) {
+    private void bugfix(HorizonsBlueprintName recipeName, HorizonsBlueprintType experimentalEffect) {
+        if (experimentalEffect != null && HorizonsBlueprintName.MISSILE_RACK.equals(recipeName)) {
+            if (experimentalEffect == HorizonsBlueprintType.DRAG_MUNITION) {
                 super.setRecipeName(HorizonsBlueprintName.SEEKER_MISSILE_RACK);
             } else {
                 super.setRecipeName(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK);
@@ -61,6 +61,11 @@ public final class HorizonsModuleWishlistBlueprint extends HorizonsWishlistBluep
 
     public void setBlueprintType(HorizonsBlueprintType blueprintType) {
         this.blueprintType = blueprintType;
-        bugfix(getRecipeName(), blueprintType);
+        bugfix(getRecipeName(), experimentalEffect);
+    }
+
+    public void setExperimentalEffect(HorizonsBlueprintType experimentalEffect) {
+        this.experimentalEffect = experimentalEffect;
+        bugfix(getRecipeName(), experimentalEffect);
     }
 }
