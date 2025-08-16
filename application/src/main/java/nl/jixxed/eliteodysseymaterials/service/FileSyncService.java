@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
+import nl.jixxed.eliteodysseymaterials.helper.DnsHelper;
 
+import javax.naming.NamingException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -30,10 +32,14 @@ public class FileSyncService {
 
     private static final List<SyncItem> SYNC_ITEMS = new ArrayList<>();
 
-    public static final String BROKERS_TRADERS_URL = "https://d1nzd8004kn2jv.cloudfront.net/traders_brokers.zip";
-
     static {
-        SYNC_ITEMS.add(new SyncItem(BROKERS_TRADERS_URL, Duration.ofDays(1), OsConstants.getConfigDirectory() + OsConstants.getOsSlash() + "traders_brokers.zip", FileSyncService::extractZipFiles));
+        try {
+            final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("broker.host", "localhost"));
+            final String brokerUrl = "https://" + domainName + "/traders_brokers.zip";
+            SYNC_ITEMS.add(new SyncItem(brokerUrl, Duration.ofDays(14), OsConstants.getConfigDirectory() + OsConstants.getOsSlash() + "traders_brokers.zip", FileSyncService::extractZipFiles));
+        } catch (NamingException e) {
+            log.error(e.getMessage(), e);
+        }
     }
 
     private static void extractZipFiles(String zipFilePath) {

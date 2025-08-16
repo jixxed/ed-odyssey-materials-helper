@@ -77,6 +77,7 @@ tasks.register("generateSecrets")  {
             eddn.software.name=${System.getenv('EDDN_SOFTWARE_NAME') ?: 'missing'}
             api.services.host=${System.getenv('API_SERVICES_HOST') ?: 'localhost'}
             sentry.dsn=${System.getenv("SENTRY_DSN") ?: 'missing'}
+            broker.host=${System.getenv("BROKER_HOST") ?: 'localhost'}
         """.stripIndent().stripLeading().stripTrailing()
     }
 }
