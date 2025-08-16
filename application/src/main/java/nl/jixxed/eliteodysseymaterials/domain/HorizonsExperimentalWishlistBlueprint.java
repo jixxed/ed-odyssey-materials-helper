@@ -19,12 +19,11 @@ public final class HorizonsExperimentalWishlistBlueprint extends HorizonsWishlis
         bugfix(recipeName, this.blueprintType);
     }
     private void bugfix(HorizonsBlueprintName recipeName, HorizonsBlueprintType blueprintType) {
-        if (blueprintType != null && HorizonsBlueprintName.MISSILE_RACK.equals(recipeName)) {
-            if (blueprintType == HorizonsBlueprintType.DRAG_MUNITION) {
-                super.setRecipeName(HorizonsBlueprintName.SEEKER_MISSILE_RACK);
-            } else {
-                super.setRecipeName(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK);
-            }
+        if (HorizonsBlueprintName.MISSILE_RACK.equals(recipeName)) {
+            super.setRecipeName(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK);
+        }
+        if (HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK.equals(getRecipeName()) && blueprintType == HorizonsBlueprintType.DRAG_MUNITION) {
+            super.setRecipeName(HorizonsBlueprintName.SEEKER_MISSILE_RACK);
         }
     }
 

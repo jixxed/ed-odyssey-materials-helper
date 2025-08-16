@@ -50,12 +50,11 @@ public final class HorizonsModuleWishlistBlueprint extends HorizonsWishlistBluep
     }
 
     private void bugfix(HorizonsBlueprintName recipeName, HorizonsBlueprintType experimentalEffect) {
-        if (experimentalEffect != null && HorizonsBlueprintName.MISSILE_RACK.equals(recipeName)) {
-            if (experimentalEffect == HorizonsBlueprintType.DRAG_MUNITION) {
-                super.setRecipeName(HorizonsBlueprintName.SEEKER_MISSILE_RACK);
-            } else {
-                super.setRecipeName(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK);
-            }
+        if (HorizonsBlueprintName.MISSILE_RACK.equals(recipeName)) {
+            super.setRecipeName(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK);
+        }
+        if (HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK.equals(getRecipeName()) && blueprintType == HorizonsBlueprintType.DRAG_MUNITION) {
+            super.setRecipeName(HorizonsBlueprintName.SEEKER_MISSILE_RACK);
         }
     }
 
