@@ -19,7 +19,7 @@ public class DumbfireMissileRackBlueprints {
     public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
             HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Manufactured.MECHANICALSCRAP, 1
                             ),
@@ -30,7 +30,7 @@ public class DumbfireMissileRackBlueprints {
                                     Engineer.JURI_ISHMAAK
                             )
                     ),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.VANADIUM, 1,
                                     Manufactured.MECHANICALSCRAP, 1
@@ -42,7 +42,7 @@ public class DumbfireMissileRackBlueprints {
                                     Engineer.JURI_ISHMAAK
                             )
                     ),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.VANADIUM, 1,
                                     Raw.NIOBIUM, 1,
@@ -55,7 +55,7 @@ public class DumbfireMissileRackBlueprints {
                                     Engineer.JURI_ISHMAAK
                             )
                     ),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Raw.TIN, 1,
                                     Manufactured.HIGHDENSITYCOMPOSITES, 1,
@@ -67,7 +67,7 @@ public class DumbfireMissileRackBlueprints {
                                     Engineer.LIZ_RYDER
                             )
                     ),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.FEDPROPRIETARYCOMPOSITES, 1,
                                     Manufactured.MILITARYSUPERCAPACITORS, 1,
@@ -82,7 +82,7 @@ public class DumbfireMissileRackBlueprints {
             ),
             HorizonsBlueprintType.LIGHTWEIGHT_MOUNT,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.PHOSPHORUS, 1
                             ),
@@ -96,7 +96,7 @@ public class DumbfireMissileRackBlueprints {
                                     Engineer.JURI_ISHMAAK
                             )
                     ),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.MANGANESE, 1,
                                     Manufactured.SALVAGEDALLOYS, 1
@@ -113,7 +113,7 @@ public class DumbfireMissileRackBlueprints {
                                     Engineer.JURI_ISHMAAK
                             )
                     ),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.MANGANESE, 1,
                                     Manufactured.SALVAGEDALLOYS, 1,
@@ -131,7 +131,7 @@ public class DumbfireMissileRackBlueprints {
                                     Engineer.JURI_ISHMAAK
                             )
                     ),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.PHASEALLOYS, 1,
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
@@ -148,7 +148,7 @@ public class DumbfireMissileRackBlueprints {
                                     Engineer.LIZ_RYDER
                             )
                     ),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.PROTORADIOLICALLOYS, 1,
                                     Manufactured.PROTOLIGHTALLOYS, 1,
@@ -168,7 +168,7 @@ public class DumbfireMissileRackBlueprints {
             ),
             HorizonsBlueprintType.RAPID_FIRE_MODIFICATION,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Manufactured.MECHANICALSCRAP, 1
                             ),
@@ -184,7 +184,7 @@ public class DumbfireMissileRackBlueprints {
                                     Engineer.JURI_ISHMAAK
                             )
                     ),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Manufactured.HEATDISPERSIONPLATE, 1,
                                     Manufactured.MECHANICALSCRAP, 1
@@ -202,7 +202,7 @@ public class DumbfireMissileRackBlueprints {
                                     Engineer.JURI_ISHMAAK
                             )
                     ),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Encoded.LEGACYFIRMWARE, 1,
                                     Manufactured.PRECIPITATEDALLOYS, 1,
@@ -221,7 +221,7 @@ public class DumbfireMissileRackBlueprints {
                                     Engineer.JURI_ISHMAAK
                             )
                     ),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Encoded.CONSUMERFIRMWARE, 1,
                                     Manufactured.THERMICALLOYS, 1,
@@ -239,7 +239,7 @@ public class DumbfireMissileRackBlueprints {
                                     Engineer.LIZ_RYDER
                             )
                     ),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Raw.TECHNETIUM, 1,
                                     Manufactured.CONFIGURABLECOMPONENTS, 1,
@@ -260,7 +260,7 @@ public class DumbfireMissileRackBlueprints {
             ),
             HorizonsBlueprintType.STURDY_MOUNT,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.NICKEL, 1
                             ),
@@ -276,7 +276,7 @@ public class DumbfireMissileRackBlueprints {
                                     Engineer.JURI_ISHMAAK
                             )
                     ),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.NICKEL, 1,
                                     Manufactured.SHIELDEMITTERS, 1
@@ -293,7 +293,7 @@ public class DumbfireMissileRackBlueprints {
                                     Engineer.JURI_ISHMAAK
                             )
                     ),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.NICKEL, 1,
                                     Raw.TUNGSTEN, 1,
@@ -311,7 +311,7 @@ public class DumbfireMissileRackBlueprints {
                                     Engineer.JURI_ISHMAAK
                             )
                     ),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Raw.MOLYBDENUM, 1,
                                     Raw.ZINC, 1,
@@ -328,7 +328,7 @@ public class DumbfireMissileRackBlueprints {
                                     Engineer.LIZ_RYDER
                             )
                     ),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.MISSILE_RACK, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Raw.MOLYBDENUM, 1,
                                     Raw.TECHNETIUM, 1,

@@ -1,3 +1,7 @@
+Version 2.226
+-------------
+Bugfix for Missile racks
+
 Version 2.225
 -------------
 Added SCO fuel consumption stat to SCO FSD
