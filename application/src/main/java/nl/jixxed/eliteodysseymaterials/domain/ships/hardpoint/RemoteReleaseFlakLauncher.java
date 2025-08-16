@@ -15,6 +15,7 @@ public class RemoteReleaseFlakLauncher extends HardpointModule {
     public static final RemoteReleaseFlakLauncher REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_GREEN  = new RemoteReleaseFlakLauncher("REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_GREEN", HorizonsBlueprintName.FESTIVE_LAUNCHER, ModuleSize.SIZE_2, ModuleClass.B, true, Mounting.TURRETED, 0, "Hpt_FlakMortar_Turret_Medium", Map.ofEntries(         Map.entry(HorizonsModifier.MASS, 4.0), Map.entry(HorizonsModifier.INTEGRITY, 51.0), Map.entry(HorizonsModifier.POWER_DRAW, 1.2), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, 17.0), Map.entry(HorizonsModifier.DAMAGE, 34.0), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 0.24), Map.entry(HorizonsModifier.THERMAL_LOAD, 3.6), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 60.0), Map.entry(HorizonsModifier.SHOT_SPEED, 550.0), Map.entry(HorizonsModifier.RATE_OF_FIRE, 0.5), Map.entry(HorizonsModifier.BURST_INTERVAL, 2.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 1.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM, 32.0), Map.entry(HorizonsModifier.RELOAD_TIME, 2.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.05), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 1.0), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 1.0), Map.entry(HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, 1.0), Map.entry(HorizonsModifier.AMMO_COST, 125.0)));
     public static final RemoteReleaseFlakLauncher REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_YELLOW = new RemoteReleaseFlakLauncher("REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_YELLOW", HorizonsBlueprintName.FESTIVE_LAUNCHER, ModuleSize.SIZE_2, ModuleClass.B, true, Mounting.TURRETED, 0, "Hpt_FlakMortar_Turret_Medium", Map.ofEntries(        Map.entry(HorizonsModifier.MASS, 4.0), Map.entry(HorizonsModifier.INTEGRITY, 51.0), Map.entry(HorizonsModifier.POWER_DRAW, 1.2), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, 17.0), Map.entry(HorizonsModifier.DAMAGE, 34.0), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 0.24), Map.entry(HorizonsModifier.THERMAL_LOAD, 3.6), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 60.0), Map.entry(HorizonsModifier.SHOT_SPEED, 550.0), Map.entry(HorizonsModifier.RATE_OF_FIRE, 0.5), Map.entry(HorizonsModifier.BURST_INTERVAL, 2.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 1.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM, 32.0), Map.entry(HorizonsModifier.RELOAD_TIME, 2.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.05), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 1.0), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 1.0), Map.entry(HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, 1.0), Map.entry(HorizonsModifier.AMMO_COST, 125.0)));
     public static final RemoteReleaseFlakLauncher REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_RED    = new RemoteReleaseFlakLauncher("REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_RED", HorizonsBlueprintName.FESTIVE_LAUNCHER, ModuleSize.SIZE_2, ModuleClass.B, true, Mounting.TURRETED, 0, "Hpt_FlakMortar_Turret_Medium", Map.ofEntries(           Map.entry(HorizonsModifier.MASS, 4.0), Map.entry(HorizonsModifier.INTEGRITY, 51.0), Map.entry(HorizonsModifier.POWER_DRAW, 1.2), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, 17.0), Map.entry(HorizonsModifier.DAMAGE, 34.0), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 0.24), Map.entry(HorizonsModifier.THERMAL_LOAD, 3.6), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 60.0), Map.entry(HorizonsModifier.SHOT_SPEED, 550.0), Map.entry(HorizonsModifier.RATE_OF_FIRE, 0.5), Map.entry(HorizonsModifier.BURST_INTERVAL, 2.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 1.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM, 32.0), Map.entry(HorizonsModifier.RELOAD_TIME, 2.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.05), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 1.0), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 1.0), Map.entry(HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, 1.0), Map.entry(HorizonsModifier.AMMO_COST, 125.0)));
+    public static final RemoteReleaseFlakLauncher REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_PINK   = new RemoteReleaseFlakLauncher("REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_PINK", HorizonsBlueprintName.FESTIVE_LAUNCHER, ModuleSize.SIZE_2, ModuleClass.B, true, Mounting.TURRETED, 0, "Hpt_FlakMortar_Turret_Medium", Map.ofEntries(          Map.entry(HorizonsModifier.MASS, 4.0), Map.entry(HorizonsModifier.INTEGRITY, 51.0), Map.entry(HorizonsModifier.POWER_DRAW, 1.2), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, 17.0), Map.entry(HorizonsModifier.DAMAGE, 34.0), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 0.24), Map.entry(HorizonsModifier.THERMAL_LOAD, 3.6), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 60.0), Map.entry(HorizonsModifier.SHOT_SPEED, 550.0), Map.entry(HorizonsModifier.RATE_OF_FIRE, 0.5), Map.entry(HorizonsModifier.BURST_INTERVAL, 2.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 1.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM, 32.0), Map.entry(HorizonsModifier.RELOAD_TIME, 2.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.05), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 1.0), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 1.0), Map.entry(HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, 1.0), Map.entry(HorizonsModifier.AMMO_COST, 125.0)));
 
     static {
         REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_GREEN.getModifications().add(
@@ -26,6 +27,9 @@ public class RemoteReleaseFlakLauncher extends HardpointModule {
         REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_RED.getModifications().add(
                 new Modification(HorizonsBlueprintType.DECORATIVE_RED, 1.0, HorizonsBlueprintGrade.GRADE_5)
         );
+        REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_PINK.getModifications().add(
+                new Modification(HorizonsBlueprintType.DECORATIVE_PINK, 1.0, HorizonsBlueprintGrade.GRADE_5)
+        );
     }
 
     public static final List<RemoteReleaseFlakLauncher> REMOTE_RELEASE_FLAK_LAUNCHERS = List.of(
@@ -33,7 +37,8 @@ public class RemoteReleaseFlakLauncher extends HardpointModule {
             REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T,
             REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_GREEN,
             REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_YELLOW,
-            REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_RED
+            REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_RED,
+            REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_PINK
     );
 
     public RemoteReleaseFlakLauncher(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, Mounting mounting, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
@@ -79,6 +84,7 @@ public class RemoteReleaseFlakLauncher extends HardpointModule {
             case "REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_GREEN" -> 2;
             case "REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_YELLOW" -> 3;
             case "REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_RED" -> 4;
+            case "REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_PINK" -> 5;
             default -> 0;
         };
     }
@@ -93,6 +99,8 @@ public class RemoteReleaseFlakLauncher extends HardpointModule {
                         " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey() + ".yellow");
                 case "REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_RED" ->
                         " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey() + ".red");
+                case "REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_PINK" ->
+                        " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey() + ".pink");
                 default -> "";
             };
         }

@@ -185,6 +185,7 @@ public enum HorizonsBlueprintType {
     DECORATIVE_GREEN(false, true),
     DECORATIVE_RED(false, true),
     DECORATIVE_YELLOW(false, true),
+    DECORATIVE_PINK(false, true),
     HIGH_CAPACITY_MAGAZINE_RAPID_FIRE_MODIFICATION(false, true),
     FAST_SCANNER_LONG_RANGE_SCANNER(false, true),
     LONG_RANGE_WEAPON_INCENDIARY_ROUNDS(false, true),
@@ -372,6 +373,7 @@ public enum HorizonsBlueprintType {
             case "shieldgenerator_thermic" -> THERMAL_RESISTANT_SHIELDS;
             case "decorative_green" -> DECORATIVE_GREEN;
             case "decorative_red" -> DECORATIVE_RED;
+            case "decorative_pink" -> DECORATIVE_PINK;
             case "decorative_yellow" -> DECORATIVE_YELLOW;
             case "guardianweapon_sturdy",//has been replaced on weapons by guardianmodule_sturdy
                  "guardianmodule_sturdy" -> ANTI_GUARDIAN_ZONE_RESISTANCE;

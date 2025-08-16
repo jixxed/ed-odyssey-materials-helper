@@ -57,6 +57,19 @@ public class RemoteReleaseFlakLauncherBlueprints {
                             ),
                             true
                     )
+            ),
+            HorizonsBlueprintType.DECORATIVE_PINK,
+            Map.of(
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.REMOTE_RELEASE_FLAK_LAUNCHER, HorizonsBlueprintType.DECORATIVE_PINK, HorizonsBlueprintGrade.GRADE_5,
+                            Map.of(
+                            ),
+                            Map.of(
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-99%", false, percentageNegative(0.0, 0.99))
+                            ),
+                            List.of(
+                            ),
+                            true
+                    )
             )
     );
 }
