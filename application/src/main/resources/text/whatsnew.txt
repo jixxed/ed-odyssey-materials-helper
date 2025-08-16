@@ -1,3 +1,7 @@
+Version 2.227
+-------------
+Bugfix for pinned blueprints (Missile racks)
+
 Version 2.226
 -------------
 Bugfix for Missile racks

@@ -106,7 +106,7 @@ public class PinnedBlueprintService {
                 final HashMap<Engineer, HorizonsBlueprintJson> pinnedBlueprintsMap = OBJECT_MAPPER.readValue(Files.readString(pinnedBlueprintsFile.toPath()), typeRef);
                 pinnedBlueprintsMap.forEach((engineer, horizonsBlueprintJson) -> {
                     final Integer engineerRank = ApplicationState.getInstance().getEngineerRank(engineer);
-                    final HorizonsBlueprintName name = HorizonsBlueprintName.forName(horizonsBlueprintJson.getName());
+                    final HorizonsBlueprintName name = HorizonsBlueprintName.forName(horizonsBlueprintJson.getName().equals("MISSILE_RACK") ? "DUMBFIRE_MISSILE_RACK" : horizonsBlueprintJson.getName());
                     final HorizonsBlueprintType horizonsBlueprintType = HorizonsBlueprintType.forName(horizonsBlueprintJson.getType());
                     final int maxBlueprintGrade = HorizonsBlueprintConstants.getBlueprintGrades(name, horizonsBlueprintType).stream().max(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).orElse(HorizonsBlueprintGrade.GRADE_1).getGrade();
                     pinnedBlueprints.put(engineer, (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(
