@@ -36,6 +36,18 @@ public class Secrets {
     }
 
     public static String getOrDefault(final String key, final String defaultValue) {
+        if(isJUnitTest()){
+            return defaultValue;
+        }
         return props.getProperty(key, defaultValue);
+    }
+
+    public static boolean isJUnitTest() {
+        for (StackTraceElement element : Thread.currentThread().getStackTrace()) {
+            if (element.getClassName().startsWith("org.junit.")) {
+                return true;
+            }
+        }
+        return false;
     }
 }
