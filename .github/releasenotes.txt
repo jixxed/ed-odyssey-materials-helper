@@ -6,5 +6,4 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Fix migration of old missile rack wishlist blueprints to dumbfire/seeker
-If the blueprint has drag munitions it will be a seeker, otherwise dumbfire
+Fix v2 migration of old missile rack wishlist blueprints to dumbfire/seeker

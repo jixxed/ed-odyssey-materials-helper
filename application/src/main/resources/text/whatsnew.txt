@@ -1,3 +1,7 @@
+Version 2.231
+-------------
+Fix v2 migration of old missile rack wishlist blueprints to dumbfire/seeker
+
 Version 2.230
 -------------
 Fix migration of old missile rack wishlist blueprints to dumbfire/seeker
