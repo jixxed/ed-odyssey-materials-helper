@@ -15,6 +15,7 @@ jobs:
       EDDN_SOFTWARE_NAME: "${{secrets.EDDN_SOFTWARE_NAME}}"
       API_SERVICES_HOST: "${{secrets.API_SERVICES_HOST}}"
       BROKER_HOST: "${{secrets.BROKER_HOST}}"
+      CCID: "${{secrets.CCID}}"
 
     steps:
       - uses: olegtarasov/get-tag@v2.1.3
@@ -64,6 +65,7 @@ jobs:
       EDDN_SOFTWARE_NAME: "${{secrets.EDDN_SOFTWARE_NAME}}"
       API_SERVICES_HOST: "${{secrets.API_SERVICES_HOST}}"
       BROKER_HOST: "${{secrets.BROKER_HOST}}"
+      CCID: "${{secrets.CCID}}"
 
     steps:
       - uses: olegtarasov/get-tag@v2.1.3
