@@ -150,6 +150,7 @@ jlink {
     launcher {
         name = 'Elite Dangerous Odyssey Materials Helper'
         jvmArgs = [
+                '-Dapp.version=' + project.version,
                 os.isWindows() ? '-Dlogging.config=log' : '-Dlogging.config=${user.home}/.ed-odyssey-materials-helper/log',
                 '-Xmx2048M',
                 '--add-exports=java.base/jdk.internal.misc=nl.jixxed.merged.module',

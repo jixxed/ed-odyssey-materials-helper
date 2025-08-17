@@ -1,3 +1,7 @@
+Version 2.234
+-------------
+Add back the version number that is used for update checks in the launcher
+
 Version 2.233
 -------------
 Bugfix for application not starting

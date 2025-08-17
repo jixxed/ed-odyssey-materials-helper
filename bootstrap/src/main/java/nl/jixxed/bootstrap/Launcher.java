@@ -44,6 +44,7 @@ public class Launcher extends Application {
 
         final String binDir = Paths.get(ProcessHandle.current().info().command().orElseThrow(IllegalArgumentException::new)).getParent().toString();
         final String currentDir = binDir.trim().replace("\"", "") + "\\";
+        log.info("Current directory: {}", currentDir);
         final StackPane root = new StackPane();
         root.setAlignment(Pos.CENTER);
         log.info("Checking for updates...");
@@ -182,9 +183,9 @@ public class Launcher extends Application {
         if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux)) {
             final String[] linuxCMD = new String[1];
             linuxCMD[0] = cmd;
-            Runtime.getRuntime().exec(linuxCMD);
+            Runtime.getRuntime().exec(linuxCMD, null, this.appFolder);
         } else {
-            Runtime.getRuntime().exec(cmd);
+            Runtime.getRuntime().exec(cmd, null, this.appFolder);
         }
     }
 
@@ -195,7 +196,7 @@ public class Launcher extends Application {
         });
         Thread.sleep(3000);
         if (launch) {
-            Runtime.getRuntime().exec(String.format(OsConstants.START_COMMAND, this.appFolder));
+            Runtime.getRuntime().exec(String.format(OsConstants.START_COMMAND, this.appFolder), null, this.appFolder);
             //close this launcher
 
         }
