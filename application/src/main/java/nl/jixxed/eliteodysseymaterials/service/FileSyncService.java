@@ -37,7 +37,7 @@ public class FileSyncService {
             final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("broker.host", "localhost"));
             final String brokerUrl = "https://" + domainName + "/traders_brokers.zip";
             SYNC_ITEMS.add(new SyncItem(brokerUrl, Duration.ofDays(14), OsConstants.getConfigDirectory() + OsConstants.getOsSlash() + "traders_brokers.zip", FileSyncService::extractZipFiles));
-        } catch (NamingException e) {
+        } catch (NamingException | IllegalArgumentException e) {
             log.error(e.getMessage(), e);
         }
     }

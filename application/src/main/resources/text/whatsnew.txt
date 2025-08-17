@@ -1,3 +1,7 @@
+Version 2.233
+-------------
+Bugfix for application not starting
+
 Version 2.232
 -------------
 Add pink festive launcher
