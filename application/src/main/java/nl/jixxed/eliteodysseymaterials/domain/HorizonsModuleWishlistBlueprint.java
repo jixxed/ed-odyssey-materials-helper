@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 
 import java.util.Map;
 import java.util.stream.Collectors;
-
+@Slf4j
 @NoArgsConstructor
 //@AllArgsConstructor
 @Data
@@ -51,9 +52,11 @@ public final class HorizonsModuleWishlistBlueprint extends HorizonsWishlistBluep
 
     private void bugfix(HorizonsBlueprintName recipeName, HorizonsBlueprintType experimentalEffect) {
         if (HorizonsBlueprintName.MISSILE_RACK.equals(recipeName)) {
+            log.debug("HorizonsModuleWishlistBlueprint: Bugfixing recipe name for MISSILE_RACK to DUMBFIRE_MISSILE_RACK");
             super.setRecipeName(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK);
         }
-        if (HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK.equals(getRecipeName()) && blueprintType == HorizonsBlueprintType.DRAG_MUNITION) {
+        if (HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK.equals(getRecipeName()) && HorizonsBlueprintType.DRAG_MUNITION.equals(experimentalEffect)) {
+            log.debug("HorizonsModuleWishlistBlueprint: Bugfixing recipe name for DUMBFIRE_MISSILE_RACK to SEEKER_MISSILE_RACK");
             super.setRecipeName(HorizonsBlueprintName.SEEKER_MISSILE_RACK);
         }
     }
