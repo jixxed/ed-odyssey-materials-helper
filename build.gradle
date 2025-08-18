@@ -138,7 +138,7 @@ ext {
     version_mockito_inline = "5.2.0"
     version_guava = "33.4.8-jre"
     version_j2objc_annotations = "3.1"
-    version_mockito = "5.18.0"
+    version_mockito = "5.19.0"
     version_sentry = "8.19.1"
     version_github_classgraph = "4.8.181"
 }
