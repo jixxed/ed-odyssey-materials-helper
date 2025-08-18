@@ -7,7 +7,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "org.beryx:badass-jlink-plugin:3.1.2"
+        classpath "org.beryx:badass-jlink-plugin:3.1.3"
     }
 }
 
