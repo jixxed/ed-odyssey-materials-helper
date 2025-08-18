@@ -195,29 +195,33 @@ public class LoadoutMapper {
 
 
     public static Slot getShipSlot(Ship ship, String slotName) {
-        if (HARDPOINT_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
-            return getHardpointSlot(ship.getHardpointSlots(), slotName);
-        }
-        if (UTILITY_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
-            return getUtilitySlot(ship.getUtilitySlots(), slotName);
-        }
-        if (CORE_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
-            return getCoreSlot(ship.getCoreSlots(), slotName);
-        }
-        if (OPTIONAL_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
-            final List<Slot> optionalSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.OPTIONAL)).toList();
-            return getOptionalSlot(optionalSlots, slotName);
-        }
-        if (MILITARY_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
-            final List<Slot> militarySlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.MILITARY)).toList();
-            return getMilitarySlot(militarySlots, slotName);
-        }
-        if ("CargoHatch".equals(slotName)) {
-            return ship.getCargoHatch();
-        }
-        if (CARGO_SLOT_NAMES.stream().anyMatch(slotName::startsWith)) {//Cargo
-            final List<Slot> cargoSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CARGO)).toList();
-            return getCargoSlot(cargoSlots, slotName);
+        try {
+            if (HARDPOINT_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
+                return getHardpointSlot(ship.getHardpointSlots(), slotName);
+            }
+            if (UTILITY_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
+                return getUtilitySlot(ship.getUtilitySlots(), slotName);
+            }
+            if (CORE_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
+                return getCoreSlot(ship.getCoreSlots(), slotName);
+            }
+            if (OPTIONAL_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
+                final List<Slot> optionalSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.OPTIONAL)).toList();
+                return getOptionalSlot(optionalSlots, slotName);
+            }
+            if (MILITARY_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
+                final List<Slot> militarySlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.MILITARY)).toList();
+                return getMilitarySlot(militarySlots, slotName);
+            }
+            if ("CargoHatch".equals(slotName)) {
+                return ship.getCargoHatch();
+            }
+            if (CARGO_SLOT_NAMES.stream().anyMatch(slotName::startsWith)) {//Cargo
+                final List<Slot> cargoSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CARGO)).toList();
+                return getCargoSlot(cargoSlots, slotName);
+            }
+        } catch (IndexOutOfBoundsException | IllegalArgumentException e) {
+            log.error(e.getMessage(), e);
         }
         log.warn(String.format("Could not determine slot for ship: %s and slotname: %s", ship.getShipType(), slotName));
         return null;
@@ -231,7 +235,7 @@ public class LoadoutMapper {
                     .filter(slot -> slot.getNamedIndex() == slotNumber)
                     .findFirst()
                     .orElseGet(() -> getHardpointSlots(hardpointSlots, slotName).get(slotNumber - 1));
-        } catch (IllegalStateException ex) {
+        } catch (IllegalArgumentException ex) {
             hardpointSlots.stream().map(Slot::toString).forEach(log::debug);
             throw ex;
         }
@@ -251,7 +255,7 @@ public class LoadoutMapper {
             case "HugeHardpoint" -> hardpointSlots.stream()
                     .filter(slot -> slot.getSlotSize() == 4)
                     .toList();
-            default -> throw new IllegalStateException("Unexpected value: " + slotName);
+            default -> throw new IllegalArgumentException("Unexpected value: " + slotName);
         };
     }
 
@@ -319,7 +323,7 @@ public class LoadoutMapper {
                     .filter(slot -> slot.getSlotType().equals(SlotType.CORE_FUEL_TANK))
                     .findFirst()
                     .orElseThrow(IllegalArgumentException::new);
-            default -> throw new IllegalStateException("Unexpected value: " + slotName);
+            default -> throw new IllegalArgumentException("Unexpected value: " + slotName);
         };
     }
 }
