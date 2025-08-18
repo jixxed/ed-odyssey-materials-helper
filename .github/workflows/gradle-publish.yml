@@ -45,6 +45,7 @@ jobs:
         with:
           allowUpdates: true
           draft: true
+          omitBodyDuringUpdate: true
           bodyFile: ".github/releasenotes.txt"
           artifacts: "output/*.*"
           name: "Elite Dangerous Odyssey Materials Helper ${{ steps.tagName.outputs.tag }}"
@@ -102,6 +103,18 @@ jobs:
           update_release_body: true
           files: |
             output/*.*
+
+      - name: Append VirusTotal links to release notes
+        run: |
+          echo -e "\n\n## VirusTotal Analysis\n$(echo "${{ steps.virustotal.outputs.analysis }}" | tr ',' '\n' | awk -F= '{print $NF}')" >> .github/releasenotes.txt
+
+      - name: Update Release with VirusTotal links
+        uses: ncipollo/release-action@v1.14.0
+        with:
+          allowUpdates: true
+          draft: true
+          bodyFile: ".github/releasenotes.txt"
+          name: "Elite Dangerous Odyssey Materials Helper ${{ steps.tagName.outputs.tag }}"
 
   publish-release:
     runs-on: ubuntu-latest
