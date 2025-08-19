@@ -1,3 +1,8 @@
+Version 2.236
+-------------
+Updated journal schemas for Vanguards update
+Better handle errors on ship slots
+
 Version 2.235
 -------------
 Bugfix for missile racks
