@@ -163,6 +163,9 @@
         },
         "microresourceCapacityReserved": {
           "type": "number"
+        },
+        "squadronBankTotal": {
+          "type": "number"
         }
       },
       "required": [
