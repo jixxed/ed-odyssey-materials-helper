@@ -103,7 +103,7 @@
     },
     "NewTraitsDiscovered" : {
 	  "description": "The NewTraitsDiscovered field is optional depending on the results of the scan",
-      "title" : "IsNewEntry",
+      "title" : "NewTraitsDiscovered",
       "type" : "boolean",
       "examples" : [ true ]
     },

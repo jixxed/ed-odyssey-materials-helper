@@ -95,13 +95,13 @@
       "examples" : [ "Ryazanski Dock", "Jameson Memorial", "Ockels Relay" ]
     },
     "NewDestinationSystem" : {
-      "title" : "DestinationSystem",
+      "title" : "NewDestinationSystem",
       "description": "If it has been redirected",
       "type" : "string",
       "examples" : [ "Nuenets", "Shinrarta Dezhra", "LDS 413" ]
     },
     "NewDestinationStation" : {
-      "title" : "DestinationStation",
+      "title" : "NewDestinationStation",
       "description": "If it has been redirected",
       "type" : "string",
       "examples" : [ "Ryazanski Dock", "Jameson Memorial", "Ockels Relay" ]

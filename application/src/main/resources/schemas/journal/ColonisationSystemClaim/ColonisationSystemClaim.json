@@ -11,23 +11,15 @@
     }
   ],
   "properties": {
-    "StarSystem": {
-      "title": "StarSystem",
-      "type": "string",
-      "examples": [
-        "Celaeno",
-        "Panoi",
-        "HIP 20485"
-      ]
+    "StarSystem" : {
+      "title" : "StarSystem",
+      "type" : "string",
+      "examples" : [ "Celaeno", "Panoi", "HIP 20485" ]
     },
-    "SystemAddress": {
-      "title": "SystemAddress",
-      "type": "integer",
-      "examples": [
-        198875014308,
-        6955800204002,
-        3657265287866
-      ]
+    "SystemAddress" : {
+      "title" : "SystemAddress",
+      "type" : "integer",
+      "examples" : [ 198875014308, 6955800204002, 3657265287866 ]
     }
   },
   "additionalProperties": false,

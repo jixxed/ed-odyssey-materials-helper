@@ -19,6 +19,11 @@
       "title" : "AllowNotorious",
       "type" : "boolean",
       "examples" : [ true, false ]
+    },
+    "CarrierType" : {
+      "title" : "CarrierType",
+      "type" : "string",
+      "examples" : [ "FleetCarrier", "SquadronCarrier" ]
     }
   },
   "additionalProperties" : false,

@@ -4,6 +4,11 @@
   "extends" : { "$ref": "../_Event.json"},
   "allOf": [{ "$ref": "../_Event.json"}],
   "properties" : {
+    "SquadronID" : {
+      "title" : "SquadronID",
+      "type" : "integer",
+      "examples" : [ 3, 0, 4 ]
+    },
     "SquadronName" : {
       "title" : "SquadronName",
       "type" : "string",
@@ -18,6 +23,26 @@
       "title" : "NewRank",
       "type" : "integer",
       "examples" : [ 3 ]
+    },
+    "OldRankName" : {
+      "title" : "OldRankName",
+      "type" : "string",
+      "examples" : [ "$Squadron_DefaultRankName_Rank4;" ]
+    },
+    "OldRankName_Localised" : {
+      "title" : "OldRankName_Localised",
+      "type" : "string",
+      "examples" : [ "Rookie" ]
+    },
+    "NewRankName" : {
+      "title" : "NewRankName",
+      "type" : "string",
+      "examples" : [ "$Squadron_DefaultRankName_Rank1;" ]
+    },
+    "NewRankName_Localised" : {
+      "title" : "NewRankName_Localised",
+      "type" : "string",
+      "examples" : [ "Senior Officer" ]
     }
   },
   "additionalProperties" : false,

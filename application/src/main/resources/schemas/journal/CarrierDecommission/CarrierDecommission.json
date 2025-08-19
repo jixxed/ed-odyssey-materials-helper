@@ -19,6 +19,11 @@
       "title" : "ScrapTime",
       "type" : "integer",
       "examples" : [ 1584601200 ]
+    },
+    "CarrierType" : {
+      "title" : "CarrierType",
+      "type" : "string",
+      "examples" : [ "FleetCarrier", "SquadronCarrier" ]
     }
   },
   "additionalProperties" : false,

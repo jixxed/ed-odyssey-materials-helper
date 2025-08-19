@@ -15,6 +15,11 @@
       "type" : "string",
       "examples" : [ "Bartender", "VistaGenomics", "PioneerSupplies" ]
     },
+    "CarrierType" : {
+      "title" : "CarrierType",
+      "type" : "string",
+      "examples" : [ "FleetCarrier", "SquadronCarrier" ]
+    },
     "Operation" : {
       "title" : "Operation",
       "type" : "string",

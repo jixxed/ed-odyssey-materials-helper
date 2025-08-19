@@ -10,6 +10,11 @@
       "type" : "integer",
       "examples" : [ 3707430144, 3705124096 ]
     },
+    "CarrierType" : {
+      "title" : "CarrierType",
+      "type" : "string",
+      "examples" : [ "FleetCarrier", "SquadronCarrier" ]
+    },
     "BoughtAtMarket" : {
       "title" : "BoughtAtMarket",
       "type" : "integer",

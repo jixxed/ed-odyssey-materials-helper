@@ -10,6 +10,11 @@
       "type" : "integer",
       "examples" : [ 3710009344, 3703777280, 3701272576 ]
     },
+    "CarrierType" : {
+      "title" : "CarrierType",
+      "type" : "string",
+      "examples" : [ "FleetCarrier", "SquadronCarrier" ]
+    },
     "StarSystem" : {
       "title" : "StarSystem",
       "type" : "string",

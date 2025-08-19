@@ -5,6 +5,11 @@
   "extends" : { "$ref": "../_Event.json"},
   "allOf": [{ "$ref": "../_Event.json"}],
   "properties" : {
+    "CarrierType" : {
+      "title" : "CarrierType",
+      "type" : "string",
+      "examples" : [ "FleetCarrier", "SquadronCarrier" ]
+    },
     "Docked" : {
       "title" : "Docked",
       "type" : "boolean",

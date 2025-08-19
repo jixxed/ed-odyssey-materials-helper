@@ -9,6 +9,11 @@
       "title" : "CarrierID",
       "type" : "integer",
       "examples" : [ 3700005632 ]
+    },
+    "CarrierType" : {
+      "title" : "CarrierType",
+      "type" : "string",
+      "examples" : [ "FleetCarrier", "SquadronCarrier" ]
     }
   },
   "additionalProperties" : false,

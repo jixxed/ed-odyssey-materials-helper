@@ -16,7 +16,7 @@
       "examples" : [ "A1A-B2B", "Shinn Enterprise", "$EXT_PANEL_ColonisationShip:#index=1;" ]
     },
     "StationName_Localised" : {
-      "title" : "StationName",
+      "title" : "StationName_Localised",
       "type" : "string",
       "examples" : [ "System Colonisation Ship" ]
     },

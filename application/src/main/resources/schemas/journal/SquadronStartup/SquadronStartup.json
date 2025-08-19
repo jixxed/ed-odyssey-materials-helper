@@ -13,6 +13,21 @@
       "title" : "CurrentRank",
       "type" : "integer",
       "examples" : [ 3, 0, 4 ]
+    },
+    "CurrentRankName" : {
+      "title" : "CurrentRankName",
+      "type" : "string",
+      "examples" : [ "Pilot", "$Squadron_DefaultRankName_Rank0;" ]
+    },
+    "CurrentRankName_Localised" : {
+      "title" : "CurrentRankName_Localised",
+      "type" : "string",
+      "examples" : [ "Pilot" ]
+    },
+    "SquadronID" : {
+      "title" : "SquadronID",
+      "type" : "integer",
+      "examples" : [ 3, 0, 4 ]
     }
   },
   "additionalProperties" : false,

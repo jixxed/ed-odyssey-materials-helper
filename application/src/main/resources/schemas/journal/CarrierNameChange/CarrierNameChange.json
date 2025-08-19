@@ -9,6 +9,11 @@
       "type" : "integer",
       "examples" : [ 3705124096 ]
     },
+    "CarrierType" : {
+      "title" : "CarrierType",
+      "type" : "string",
+      "examples" : [ "FleetCarrier", "SquadronCarrier" ]
+    },
     "Name" : {
       "title" : "Name",
       "type" : "string",

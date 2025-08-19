@@ -21,6 +21,7 @@
       ]
     },
     "Contributions": {
+      "title": "Contributions",
       "type": "array",
       "items": {
         "type": "object",

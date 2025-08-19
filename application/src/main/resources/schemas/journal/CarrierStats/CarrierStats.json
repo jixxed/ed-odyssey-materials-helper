@@ -15,6 +15,11 @@
       "type" : "string",
       "examples" : [ "A1A-B2B" ]
     },
+    "CarrierType" : {
+      "title" : "CarrierType",
+      "type" : "string",
+      "examples" : [ "FleetCarrier", "SquadronCarrier" ]
+    },
     "Name" : {
       "title" : "Name",
       "type" : "string",

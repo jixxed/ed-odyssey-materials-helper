@@ -20,6 +20,11 @@
       "description": "Total amount of fuel after donation",
       "type" : "integer",
       "examples" : [ 1000, 510, 818 ]
+    },
+    "CarrierType" : {
+      "title" : "CarrierType",
+      "type" : "string",
+      "examples" : [ "FleetCarrier", "SquadronCarrier" ]
     }
   },
   "additionalProperties" : false,

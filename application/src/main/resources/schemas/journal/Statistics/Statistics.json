@@ -1159,6 +1159,134 @@
       },
       "additionalProperties" : false,
       "required" : [ "CQC_Time_Played", "CQC_KD", "CQC_Kills", "CQC_WL" ]
+    },
+    "Squadron": {
+      "title" : "CQC",
+      "type" : "object",
+      "properties" : {
+        "Squadron_Bank_Credits_Deposited": {
+          "title" : "Squadron_Bank_Credits_Deposited",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Bank_Credits_Withdrawn": {
+          "title" : "Squadron_Bank_Credits_Withdrawn",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Bank_Commodities_Deposited_Num": {
+          "title" : "Squadron_Bank_Commodities_Deposited_Num",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Bank_Commodities_Deposited_Value": {
+          "title" : "Squadron_Bank_Commodities_Deposited_Value",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Bank_Commodities_Withdrawn_Num": {
+          "title" : "Squadron_Bank_Commodities_Withdrawn_Num",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Bank_Commodities_Withdrawn_Value": {
+          "title" : "Squadron_Bank_Commodities_Withdrawn_Value",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Bank_PersonalAssets_Deposited_Num": {
+          "title" : "Squadron_Bank_PersonalAssets_Deposited_Num",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Bank_PersonalAssets_Deposited_Value": {
+          "title" : "Squadron_Bank_PersonalAssets_Deposited_Value",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Bank_PersonalAssets_Withdrawn_Num": {
+          "title" : "Squadron_Bank_PersonalAssets_Withdrawn_Num",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Bank_PersonalAssets_Withdrawn_Value": {
+          "title" : "Squadron_Bank_PersonalAssets_Withdrawn_Value",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Bank_Ships_Deposited_Num": {
+          "title" : "Squadron_Bank_Ships_Deposited_Num",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Bank_Ships_Deposited_Value": {
+          "title" : "Squadron_Bank_Ships_Deposited_Value",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Leaderboard_aegis_highestcontribution": {
+          "title" : "Squadron_Leaderboard_aegis_highestcontribution",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Leaderboard_bgs_highestcontribution": {
+          "title" : "Squadron_Leaderboard_bgs_highestcontribution",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Leaderboard_bounty_highestcontribution":{
+          "title" : "Squadron_Leaderboard_bounty_highestcontribution",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Leaderboard_colonisation_contribution_highestcontribution": {
+          "title" : "Squadron_Leaderboard_colonisation_contribution_highestcontribution",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Leaderboard_combat_highestcontribution": {
+          "title" : "Squadron_Leaderboard_combat_highestcontribution",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Leaderboard_cqc_highestcontribution": {
+          "title" : "Squadron_Leaderboard_cqc_highestcontribution",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Leaderboard_exploration_highestcontribution": {
+          "title" : "Squadron_Leaderboard_exploration_highestcontribution",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Leaderboard_mining_highestcontribution": {
+          "title" : "Squadron_Leaderboard_mining_highestcontribution",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Leaderboard_powerplay_highestcontribution": {
+          "title" : "Squadron_Leaderboard_powerplay_highestcontribution",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Leaderboard_trade_highestcontribution": {
+          "title" : "Squadron_Leaderboard_trade_highestcontribution",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Leaderboard_trade_illicit_highestcontribution": {
+          "title" : "Squadron_Leaderboard_trade_illicit_highestcontribution",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Squadron_Leaderboard_podiums": {
+          "title" : "Squadron_Leaderboard_podiums",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "Squadron_Bank_Credits_Deposited", "Squadron_Bank_Credits_Withdrawn", "Squadron_Bank_Commodities_Deposited_Num", "Squadron_Bank_Commodities_Deposited_Value", "Squadron_Bank_Commodities_Withdrawn_Num", "Squadron_Bank_Commodities_Withdrawn_Value", "Squadron_Bank_PersonalAssets_Deposited_Num", "Squadron_Bank_PersonalAssets_Deposited_Value", "Squadron_Bank_PersonalAssets_Withdrawn_Num", "Squadron_Bank_PersonalAssets_Withdrawn_Value", "Squadron_Bank_Ships_Deposited_Num", "Squadron_Bank_Ships_Deposited_Value", "Squadron_Leaderboard_aegis_highestcontribution", "Squadron_Leaderboard_bgs_highestcontribution", "Squadron_Leaderboard_bounty_highestcontribution", "Squadron_Leaderboard_colonisation_contribution_highestcontribution", "Squadron_Leaderboard_combat_highestcontribution", "Squadron_Leaderboard_cqc_highestcontribution", "Squadron_Leaderboard_exploration_highestcontribution", "Squadron_Leaderboard_mining_highestcontribution", "Squadron_Leaderboard_powerplay_highestcontribution", "Squadron_Leaderboard_trade_highestcontribution", "Squadron_Leaderboard_trade_illicit_highestcontribution", "Squadron_Leaderboard_podiums" ]
     }
   },
   "additionalProperties" : false,

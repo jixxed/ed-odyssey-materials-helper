@@ -347,7 +347,7 @@
             "examples" : [ "iron", "nickel", "sulphur" ]
           },
           "Name_Localised" : {
-            "title" : "Name",
+            "title" : "Name_Localised",
             "type" : "string",
             "examples" : [ "iron", "nickel", "sulphur" ]
           },

@@ -11,7 +11,7 @@
       "examples" : [ "$USS_Type_MissionTarget;" ]
     },
     "Type_Localised" : {
-      "title" : "Type",
+      "title" : "Type_Localised",
       "type" : "string",
       "examples" : [ "Target" ]
     },
