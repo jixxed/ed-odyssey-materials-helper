@@ -1,3 +1,9 @@
+Version 2.237
+-------------
+Updated more journal schemas for Vanguards update
+Implement bugfix for empty field name in CarrierNameChange events
+Only update carrier ID and location for fleetcarrier
+
 Version 2.236
 -------------
 Updated journal schemas for Vanguards update
