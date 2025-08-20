@@ -181,6 +181,11 @@ public class FileProcessor {
             object.set("LocalisedName", jsonNode.get(""));
             object.remove("");
         }
+        if (event != null && "CarrierNameChange".equals(event) && jsonNode.get("") != null) {
+            ObjectNode object = (ObjectNode) jsonNode;
+            object.set("CarrierType", jsonNode.get(""));
+            object.remove("");
+        }
         return jsonNode.toString();
     }
 

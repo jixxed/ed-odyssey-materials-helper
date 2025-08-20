@@ -1,0 +1,25 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 0, 3228917248, 128858186 ]
+    },
+    "ShipType" : {
+      "title" : "ShipType",
+      "type" : "string",
+      "examples" : [ "Mandalay", "corsair", "type9" ]
+    },
+    "ShipType_Localised": {
+      "title" : "ShipType_Localised",
+      "type" : "string",
+      "examples" : [ "Beluga Liner", "Type-9 Heavy" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "MarketID", "ShipType" ]
+}
