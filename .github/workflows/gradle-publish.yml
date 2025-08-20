@@ -100,13 +100,14 @@ jobs:
         uses: crazy-max/ghaction-virustotal@v4
         with:
           vt_api_key: ${{ secrets.VIRUS_TOTAL_API_KEY }}
-          update_release_body: true
           files: |
             output/*.*
 
       - name: Append VirusTotal links to release notes
+        env:
+          ANALYSIS: ${{ steps.virustotal.outputs.analysis }}
         run: |
-          echo -e "\n\n## VirusTotal Analysis\n$(echo "${{ steps.virustotal.outputs.analysis }}" | tr ',' '\n' | awk -F= '{print $NF}')" >> .github/releasenotes.txt
+          echo -e "\n\n🛡 **VirusTotal Analysis:**\n$(echo "$ANALYSIS" | tr ',' '\n' | awk -F= '{fname=$1; sub(/^[^=]+=*/, "", $0); printf "[%s](%s)\n", fname, $0}')" >> .github/releasenotes.txt
         shell: bash
 
       - name: Update Release with VirusTotal links
