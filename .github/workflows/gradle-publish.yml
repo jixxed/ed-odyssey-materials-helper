@@ -107,6 +107,7 @@ jobs:
       - name: Append VirusTotal links to release notes
         run: |
           echo -e "\n\n## VirusTotal Analysis\n$(echo "${{ steps.virustotal.outputs.analysis }}" | tr ',' '\n' | awk -F= '{print $NF}')" >> .github/releasenotes.txt
+        shell: bash
 
       - name: Update Release with VirusTotal links
         uses: ncipollo/release-action@v1.14.0
