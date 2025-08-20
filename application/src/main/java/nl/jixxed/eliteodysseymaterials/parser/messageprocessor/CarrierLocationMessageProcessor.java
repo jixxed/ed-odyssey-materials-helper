@@ -7,8 +7,10 @@ import nl.jixxed.eliteodysseymaterials.service.UserPreferencesService;
 public class CarrierLocationMessageProcessor implements MessageProcessor<CarrierLocation> {
     @Override
     public void process(final CarrierLocation event) {
-        UserPreferencesService.setPreference("fleetcarrier.carrier.id", event.getCarrierID().toString());
-        LocationService.setCarrierLocation(event.getStarSystem());
+        if(event.getCarrierType().map("FleetCarrier"::equals).orElse(false)) {
+            UserPreferencesService.setPreference("fleetcarrier.carrier.id", event.getCarrierID().toString());
+            LocationService.setCarrierLocation(event.getStarSystem());
+        }
     }
 
     @Override
