@@ -299,6 +299,7 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.ShipRedeemed;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.ShipTargeted;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.Shipyard;
+    exports nl.jixxed.eliteodysseymaterials.schemas.journal.ShipyardBankDeposit;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.ShipyardBuy;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.ShipyardNew;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.ShipyardRedeem;
@@ -628,6 +629,7 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.ShipRedeemed to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.ShipTargeted to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.Shipyard to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.journal.ShipyardBankDeposit to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.ShipyardBuy to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.ShipyardNew to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.ShipyardRedeem to com.fasterxml.jackson.databind;
