@@ -1,3 +1,8 @@
+Version 2.238
+-------------
+Added new cargo rack blueprint
+Handle an error when testing notification sounds in Settings, when no audio can be played
+
 Version 2.237
 -------------
 Updated more journal schemas for Vanguards update
