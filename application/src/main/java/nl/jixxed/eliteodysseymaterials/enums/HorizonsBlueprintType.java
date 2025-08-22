@@ -231,6 +231,7 @@ public enum HorizonsBlueprintType {
 
     public static HorizonsBlueprintType forInternalName(final String internalName) {
         return switch (internalName.toLowerCase()) {
+            case "cargorack_increasedcapacity" -> INCREASED_CARGO_CAPACITY;
             //modules
             case "misc_lightweight",
                  "chafflauncher_lightweight",

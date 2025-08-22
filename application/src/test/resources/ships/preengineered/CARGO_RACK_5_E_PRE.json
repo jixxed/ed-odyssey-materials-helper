@@ -1,0 +1,23 @@
+{
+  "Slot": "Slot02_Size5",
+  "Item": "int_cargorack_size5_class1",
+  "On": true,
+  "Priority": 1,
+  "Health": 1.0,
+  "Value": 5688921,
+  "Engineering": {
+    "EngineerID": 399999,
+    "BlueprintID": 129036395,
+    "BlueprintName": "CargoRack_IncreasedCapacity",
+    "Level": 5,
+    "Quality": 1.0,
+    "Modifiers": [
+      {
+        "Label": "CargoCapacity",
+        "Value": 43.0,
+        "OriginalValue": 32.0,
+        "LessIsGood": 0
+      }
+    ]
+  }
+}

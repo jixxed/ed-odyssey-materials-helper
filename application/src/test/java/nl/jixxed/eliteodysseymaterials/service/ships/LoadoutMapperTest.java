@@ -14,6 +14,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.FrameShiftDri
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.PowerDistributor;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.PowerPlant;
 import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.*;
+import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.CargoRack;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.DetailedSurfaceScanner;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.ShieldGenerator;
 import nl.jixxed.eliteodysseymaterials.domain.ships.utility.KillWarrantScanner;
@@ -200,6 +201,8 @@ class LoadoutMapperTest {
                 Arguments.of("POWER_PLANT_3_A_OVERCHARGED_OVERCHARGED_PRE.json", PowerPlant.POWER_PLANT_3_A_OVERCHARGED_OVERCHARGED, SlotType.CORE_POWER_PLANT),
                 Arguments.of("POWER_PLANT_4_A_OVERCHARGED_OVERCHARGED_PRE.json", PowerPlant.POWER_PLANT_4_A_OVERCHARGED_OVERCHARGED, SlotType.CORE_POWER_PLANT),
                 Arguments.of("POWER_PLANT_5_A_OVERCHARGED_OVERCHARGED_PRE.json", PowerPlant.POWER_PLANT_5_A_OVERCHARGED_OVERCHARGED, SlotType.CORE_POWER_PLANT),
+                Arguments.of("CARGO_RACK_6_E_PRE.json", CargoRack.CARGO_RACK_6_E_PRE, SlotType.OPTIONAL),
+                Arguments.of("CARGO_RACK_5_E_PRE.json", CargoRack.CARGO_RACK_5_E_PRE, SlotType.OPTIONAL),
                 Arguments.of("DETAILED_SURFACE_SCANNER_1_I_V1_PRE.json", DetailedSurfaceScanner.DETAILED_SURFACE_SCANNER_1_I_V1_PRE, SlotType.OPTIONAL),
                 Arguments.of("SHIELD_GENERATOR_3_A_PRE.json", ShieldGenerator.SHIELD_GENERATOR_3_A_PRE, SlotType.OPTIONAL),
                 Arguments.of("KILL_WARRANT_SCANNER_0_A_PRE.json", KillWarrantScanner.KILL_WARRANT_SCANNER_0_A_PRE, SlotType.UTILITY),
