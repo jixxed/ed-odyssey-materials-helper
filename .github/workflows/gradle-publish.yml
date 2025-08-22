@@ -101,6 +101,7 @@ jobs:
           artifacts: "output/*.*"
           name: "Elite Dangerous Odyssey Materials Helper ${{ steps.tagName.outputs.tag }}"
       - name: VirusTotal Scan
+        id: virustotal
         uses: crazy-max/ghaction-virustotal@v4
         with:
           vt_api_key: ${{ secrets.VIRUS_TOTAL_API_KEY }}
@@ -111,6 +112,7 @@ jobs:
         env:
           ANALYSIS: ${{ steps.virustotal.outputs.analysis }}
         run: |
+          echo "$ANALYSIS"
           echo -e "\n\n🛡 **VirusTotal Analysis:**\n$(echo "$ANALYSIS" | tr ',' '\n' | awk -F= '{fname=$1; sub(/^[^=]+=*/, "", $0); printf "[%s](%s)\n", fname, $0}')" >> .github/releasenotes.txt
         shell: bash
 
