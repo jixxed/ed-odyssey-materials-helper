@@ -16,6 +16,8 @@ jobs:
       API_SERVICES_HOST: "${{secrets.API_SERVICES_HOST}}"
       BROKER_HOST: "${{secrets.BROKER_HOST}}"
       CCID: "${{secrets.CCID}}"
+      PROPRIETARY_REPO_USER: "${{secrets.PROPRIETARY_REPO_USER}}"
+      PROPRIETARY_REPO_PASSWORD: "${{secrets.PROPRIETARY_REPO_PASS}}"
 
     steps:
       - uses: olegtarasov/get-tag@v2.1.3
@@ -67,6 +69,8 @@ jobs:
       API_SERVICES_HOST: "${{secrets.API_SERVICES_HOST}}"
       BROKER_HOST: "${{secrets.BROKER_HOST}}"
       CCID: "${{secrets.CCID}}"
+      PROPRIETARY_REPO_USER: "${{secrets.PROPRIETARY_REPO_USER}}"
+      PROPRIETARY_REPO_PASSWORD: "${{secrets.PROPRIETARY_REPO_PASS}}"
 
     steps:
       - uses: olegtarasov/get-tag@v2.1.3
