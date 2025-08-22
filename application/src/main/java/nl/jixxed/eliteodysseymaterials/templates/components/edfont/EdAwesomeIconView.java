@@ -3,26 +3,32 @@ package nl.jixxed.eliteodysseymaterials.templates.components.edfont;
 import de.jensd.fx.glyphs.GlyphIcon;
 import javafx.scene.text.Font;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.ed.awesome.api.FontLoader;
+import nl.jixxed.ed.awesome.api.NoOpFontLoader;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 
 import java.io.IOException;
+import java.util.ServiceLoader;
+
 @Slf4j
 public class EdAwesomeIconView extends GlyphIcon<EdAwesomeIcon> implements DestroyableComponent {
 
-    public final static String TTF_PATH = "/fonts/EdAwesome.ttf";
+    private static FontLoader fontLoader;
 
     static {
-        try {
-            Font.loadFont(EdAwesomeIconView.class.getResource(TTF_PATH).openStream(), 10.0d);
-        } catch (IOException ex) {
-            log.error("Failed to load font", ex);
-        }
+        ServiceLoader<FontLoader> loader = ServiceLoader.load(FontLoader.class);
+        fontLoader = loader.stream().map(ServiceLoader.Provider::get)
+                .filter(f -> !(f instanceof NoOpFontLoader))
+                .findFirst()
+                .orElseGet(NoOpFontLoader::new);
+        fontLoader.load();
     }
 
     public EdAwesomeIconView(EdAwesomeIcon icon, String iconSize) {
         super(EdAwesomeIcon.class);
         setIcon(icon);
-        setStyle(String.format("-fx-font-family: %s; -fx-font-size: %s;", icon.fontFamily(), iconSize));
+        setStyle(String.format("-fx-font-family: %s; -fx-font-size: %s;", fontLoader.fontFamily(), iconSize));
+        this.getStyleClass().add(icon.name().toLowerCase().replaceAll("_", "-"));
     }
 
     public EdAwesomeIconView(EdAwesomeIcon icon) {

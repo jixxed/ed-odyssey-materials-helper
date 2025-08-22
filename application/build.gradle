@@ -109,6 +109,22 @@ jar {
                 'Trusted-Library': ' false'
     }
 }
+def proprietaryUser = System.getenv('PROPRIETARY_REPO_USER')
+def proprietaryPass = System.getenv('PROPRIETARY_REPO_PASS')
+def proprietary = (proprietaryUser && proprietaryPass) || isRepoReachable("https://nexus.jixxed.nl/nexus/content/repositories/releases")
+
+def isRepoReachable(String url) {
+    try {
+        def connection = new URL(url).openConnection()
+        connection.setConnectTimeout(2000)
+        connection.setReadTimeout(2000)
+        connection.requestMethod = 'HEAD'
+        connection.connect()
+        return connection.responseCode == 200
+    } catch (Exception ignored) {
+        return false
+    }
+}
 repositories {
     mavenCentral {
     }
@@ -116,11 +132,23 @@ repositories {
         name 'repsy'
         url "https://repo.repsy.io/mvn/jixxed/maven/"
     }
-    maven {
-        name = 'nexus'
-        url = "https://nexus.jixxed.nl/nexus/content/repositories/releases"
-    }
     maven { url = 'https://jitpack.io' }
+    if (proprietaryUser && proprietaryPass) {
+        maven {
+            name 'repsy'
+            url "https://repo.repsy.io/mvn/jixxed/proprietary/"
+            credentials {
+                username proprietaryUser
+                password proprietaryPass
+            }
+        }
+    }
+    if (proprietary) {
+        maven {
+            name = 'nexus'
+            url = "https://nexus.jixxed.nl/nexus/content/repositories/releases"
+        }
+    }
 }
 application {
     mainModule = "nl.jixxed.eliteodysseymaterials"
@@ -146,6 +174,10 @@ jlink {
     }
     addExtraDependencies("javafx", "jackson", "log4j", "jdk.accessibility")
     forceMerge("j2objc"/*, "logback"*/)
+    if (proprietary) {
+        addExtraDependencies("nl.jixxed.ed.awesome.impl")
+        addOptions '--bind-services'
+    }
     addOptions('--strip-debug', '--compress', 'zip-0', '--no-header-files', '--no-man-pages')
     launcher {
         name = 'Elite Dangerous Odyssey Materials Helper'
@@ -294,6 +326,11 @@ dependencies {
     implementation "com.github.jai-imageio:jai-imageio-core"
     testImplementation "io.github.secretx33:path-matching-resource-pattern-resolver"
     implementation "com.github.wille:oslib"
+    implementation 'nl.jixxed.ed.awesome:ed-awesome-api:1.4'
+
+    if (proprietary) {
+        implementation 'nl.jixxed.ed.awesome:ed-awesome-impl:1.4'
+    }
 }
 jpackage {
 

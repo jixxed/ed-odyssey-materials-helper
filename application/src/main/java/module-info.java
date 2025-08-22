@@ -44,6 +44,9 @@ module nl.jixxed.eliteodysseymaterials {
     requires java.desktop;
     requires jdk.accessibility;
     requires de.jensd.fx.glyphs.commons;
+    requires nl.jixxed.ed.awesome.api;
+
+    uses nl.jixxed.ed.awesome.api.FontLoader;
 
     exports nl.jixxed.eliteodysseymaterials.domain.ships;
     exports nl.jixxed.eliteodysseymaterials.domain;

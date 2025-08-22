@@ -8,10 +8,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.SegmentedBarBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.constants.SpawnConstants;
 import nl.jixxed.eliteodysseymaterials.domain.IntegerRange;
@@ -63,7 +60,9 @@ public class HorizonsMaterialCard extends DestroyableVBox implements Destroyable
                 .build();
         EdAwesomeIconView icon = new EdAwesomeIconView(getGrade(this.material.getRarity()));
         icon.getStyleClass().add("icon");
-        wishlistImage = new EdAwesomeIconViewPane(new EdAwesomeIconView(EdAwesomeIcon.WISHLIST));
+        wishlistImage = EdAwesomeIconViewPaneBuilder.builder()
+                .withIcons(new EdAwesomeIconView(EdAwesomeIcon.WISHLIST))
+                .build();
         wishlistImage.getStyleClass().add("wishlist-icon");
 //        wishlistImage = ResizableImageViewBuilder.builder()
 //                .withStyleClasses("wishlist-image")
