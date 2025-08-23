@@ -30,9 +30,10 @@ plugins {
 //    options.compilerArgs += ['-Xdoclint:none', '-Xlint:none', '-nowarn']
 //}
 tasks.register('compileSassDefault', compileSass.getClass()) {
+    outputs.upToDateWhen { false }
     group = 'build'
     def skipProvider = providers.gradleProperty("skipSass")
-    onlyIf("there is no property skipHello") {
+    onlyIf("there is no property skipSass") {
         !skipProvider.present
     }
     source = fileTree('src/main/resources/sass/default') {
@@ -51,6 +52,7 @@ tasks.register('compileSassDefault', compileSass.getClass()) {
 }
 
 tasks.register('compileSassColorblind', compileSass.getClass()) {
+    outputs.upToDateWhen { false }
     group = 'build'
     description = 'Compiles Sass files to CSS'
     source = fileTree('src/main/resources/sass/colorblind') {
@@ -175,8 +177,8 @@ jlink {
     addExtraDependencies("javafx", "jackson", "log4j", "jdk.accessibility")
     forceMerge("j2objc"/*, "logback"*/)
     if (proprietary) {
-        addExtraDependencies("nl.jixxed.ed.awesome.impl")
-        forceMerge("nl.jixxed.ed.awesome.impl")
+//        addExtraDependencies("nl.jixxed.ed.awesome.impl")
+//        forceMerge("nl.jixxed.ed.awesome.impl")
         addOptions '--bind-services'
     }
     addOptions('--strip-debug', '--compress', 'zip-0', '--no-header-files', '--no-man-pages')
@@ -330,7 +332,7 @@ dependencies {
     implementation 'nl.jixxed.ed.awesome:ed-awesome-api:1.5'
 
     if (proprietary) {
-        implementation 'nl.jixxed.ed.awesome:ed-awesome-impl:1.6'
+        implementation 'nl.jixxed.ed.awesome:ed-awesome-impl:1.8'
     }
 }
 jpackage {
