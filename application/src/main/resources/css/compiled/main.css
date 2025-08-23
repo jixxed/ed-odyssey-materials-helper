@@ -4328,6 +4328,12 @@
     -fx-min-height: 2em;
     -fx-pref-height: 2em;
     -fx-max-height: 2em; }
+    .app .application-screen .bottombar .bottombar-dropdown {
+      -fx-min-height: 2em;
+      -fx-pref-height: 2em;
+      -fx-max-height: 2em; }
+      .app .application-screen .bottombar .bottombar-dropdown .list-cell {
+        -fx-font-size: 0.9em; }
   .app .application-screen .tab-main {
     -fx-background-insets: 0; }
     .app .application-screen .tab-main:left > .tab-header-area {

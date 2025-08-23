@@ -102,6 +102,8 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
             final DestroyableHBox darkModeSetting = createDarkModeSetting();
             this.getNodes().add(darkModeSetting);
         }
+        final DestroyableHBox hideLegacySetting = createHideLegacySetting();
+        this.getNodes().add(hideLegacySetting);
         this.getNodes().addAll(
                 exportInventory,
                 blueprintExpandedSetting,
@@ -109,6 +111,24 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 importSlefFromClipboardSetting,
                 supportPackageSetting
         );
+    }
+
+    private DestroyableHBox createHideLegacySetting() {
+        final DestroyableLabel hideLegacyLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.hidelegacy")
+                .build();
+        final DestroyableToggleSwitch hideLegacyCheckBox = ToggleSwitchBuilder.builder()
+                .withSelected(PreferencesService.getPreference(PreferenceConstants.HIDE_LEGACY, Boolean.TRUE))
+                .withSelectedChangeListener((_, _, newValue) -> {
+                    PreferencesService.setPreference(PreferenceConstants.HIDE_LEGACY, newValue);
+                    EventService.publish(new CommanderListResetEvent());
+                })
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(hideLegacyLabel, hideLegacyCheckBox)
+                .buildHBox();
     }
 
     private DestroyableHBox creatStyleSheetSetting() {

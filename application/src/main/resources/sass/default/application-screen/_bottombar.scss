@@ -5,4 +5,10 @@
   -fx-border-width: 1;
   -fx-border-color: $background-color-lighter;
   @include fixedHeight(2em);
+  .bottombar-dropdown{
+    @include fixedHeight(2em);
+    .list-cell {
+      -fx-font-size: 0.9em;
+    }
+  }
 }

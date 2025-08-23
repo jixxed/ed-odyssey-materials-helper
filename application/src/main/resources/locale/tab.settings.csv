@@ -103,3 +103,4 @@
 "tab.settings.minimize","Minimize to tray on close","","Minimize to tray on close","Minimize to tray on close","Réduire dans la barre d’état à la fermeture","Minimize to tray on close","Сворачивать в область уведомлений при закрытии","关闭时最小化到托盘"
 "tab.settings.collector.mode","Collector mode","","Collector mode","Collector mode","Collector mode","Collector mode","Режим сборщика","收集者模式"
 "tab.settings.collector.mode.explain","This will show available space as incomplete for horizons materials","","This will show available space as incomplete for horizons materials","This will show available space as incomplete for horizons materials","This will show available space as incomplete for horizons materials","This will show available space as incomplete for horizons materials","Будет показано доступное пространство как незавершенное для материалов Horizons","这会将地平线材料的可用存储空间标记为材料缺失。"
+"tab.settings.hidelegacy","Hide legacy commanders","","","","","","",""

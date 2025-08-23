@@ -12,6 +12,7 @@ import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
+import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
 import nl.jixxed.eliteodysseymaterials.helper.POIHelper;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -80,7 +81,10 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
         }
         this.commanderSelect = ComboBoxBuilder.builder(Commander.class)
                 .withStyleClass("bottombar-dropdown")
-                .withItemsProperty(FXCollections.observableArrayList(APPLICATION_STATE.getCommanders().stream().sorted(Comparator.comparing(commander -> commander.getName() + commander.getGameVersion())).toList()))
+                .withItemsProperty(FXCollections.observableArrayList(APPLICATION_STATE.getCommanders().stream()
+                        .filter(commander -> !PreferencesService.getPreference(PreferenceConstants.HIDE_LEGACY, Boolean.TRUE) || GameVersion.LIVE.equals(commander.getGameVersion()))
+                        .sorted(Comparator.comparing(commander -> commander.getName() + commander.getGameVersion()))
+                        .toList()))
                 .withValueChangeListener((obs, oldValue, newValue) -> Platform.runLater(() -> {
                     if (newValue != null) {
                         PreferencesService.setPreference(PreferenceConstants.COMMANDER, newValue.getName() + ":" + newValue.getFid() + ":" + newValue.getGameVersion().name());
@@ -133,6 +137,7 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
         register(EventService.addListener(true, this, JournalLineProcessedEvent.class, this::updateWatchedFileLabel));
         register(EventService.addListener(true, this, EngineerEvent.class, event -> hideLoginRequest()));
         register(EventService.addListener(true, this, CommanderAddedEvent.class, this::handleAddedCommander));
+        register(EventService.addListener(true, this, CommanderListResetEvent.class, _ -> updateCommanderList()));
         register(EventService.addListener(true, this, 0, CommanderAllListedEvent.class, event -> afterAllCommandersListed()));
         register(EventService.addListener(true, this, 0, CommanderResetEvent.class, event -> this.commanderSelect.getItems().clear()));
         register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> this.commanderSelect.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px")));
@@ -144,6 +149,25 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
         register(EventService.addListener(true, this, CapiFleetCarrierEvent.class, event -> updateApiLabel()));
         register(EventService.addListener(true, this, EDDNQueueEvent.class, event -> eddnTransmitting.set(true)));
         register(EventService.addListener(true, this, TerminateApplicationEvent.class, event -> executorService.shutdown()));
+    }
+
+    private void updateCommanderList() {
+        Commander selectedItem = this.commanderSelect.getSelectionModel().getSelectedItem();
+        this.commanderSelect.getItems().clear();
+        ApplicationState.getInstance().getCommanders().stream()
+                .sorted(Comparator.comparing(commander -> commander.getName() + commander.getGameVersion()))
+                .forEach(commander -> {
+                    if (!PreferencesService.getPreference(PreferenceConstants.HIDE_LEGACY, Boolean.TRUE) || GameVersion.LIVE.equals(commander.getGameVersion())) {
+                        this.commanderSelect.getItems().add(commander);
+                    }
+                });
+
+        if (this.commanderSelect.getItems().contains(selectedItem)) {
+            this.commanderSelect.getSelectionModel().select(selectedItem);
+        } else if (!this.commanderSelect.getItems().isEmpty()) {
+            this.commanderSelect.getSelectionModel().selectFirst();
+            EventService.publish(new CommanderSelectedEvent(this.commanderSelect.getSelectionModel().getSelectedItem()));
+        }
     }
 
     private void updateEDDNLabel() {
@@ -168,13 +192,15 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
     }
 
     private void handleAddedCommander(final CommanderAddedEvent commanderAddedEvent) {
-        this.login.setVisible(true);
-        this.login.getStyleClass().remove("statusbar-login-hidden");
-        this.commanderSelect.getItems().add(commanderAddedEvent.getCommander());
-        final String preferredName = PreferencesService.getPreference(PreferenceConstants.COMMANDER, "");
-        if (preferredName.isBlank() || isPreferredCommander(commanderAddedEvent.getCommander(), preferredName)) {
-            this.commanderSelect.getSelectionModel().select(commanderAddedEvent.getCommander());
-            EventService.publish(new CommanderSelectedEvent(commanderAddedEvent.getCommander()));
+        if (!PreferencesService.getPreference(PreferenceConstants.HIDE_LEGACY, Boolean.TRUE) || GameVersion.LIVE.equals(commanderAddedEvent.getCommander().getGameVersion())) {
+            this.login.setVisible(true);
+            this.login.getStyleClass().remove("statusbar-login-hidden");
+            this.commanderSelect.getItems().add(commanderAddedEvent.getCommander());
+            final String preferredName = PreferencesService.getPreference(PreferenceConstants.COMMANDER, "");
+            if (preferredName.isBlank() || isPreferredCommander(commanderAddedEvent.getCommander(), preferredName)) {
+                this.commanderSelect.getSelectionModel().select(commanderAddedEvent.getCommander());
+                EventService.publish(new CommanderSelectedEvent(commanderAddedEvent.getCommander()));
+            }
         }
     }
 
