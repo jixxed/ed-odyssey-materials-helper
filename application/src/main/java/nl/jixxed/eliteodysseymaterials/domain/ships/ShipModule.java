@@ -156,6 +156,7 @@ public abstract class ShipModule implements Serializable {
                             existingModification.setGrade(grade);
                             existingModification.setModificationCompleteness(modificationCompleteness);
                         });
+                this.modifiers.clear();
             }
         }
     }

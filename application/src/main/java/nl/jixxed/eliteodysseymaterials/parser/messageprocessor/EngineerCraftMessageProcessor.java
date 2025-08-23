@@ -50,7 +50,7 @@ public class EngineerCraftMessageProcessor implements MessageProcessor<EngineerC
             return;
         }
         module.applyModification(HorizonsBlueprintType.forInternalName(event.getBlueprintName()), HorizonsBlueprintGrade.forDigit(event.getLevel()), event.getQuality());
-        event.getApplyExperimentalEffect().ifPresent(effect -> module.applyExperimentalEffect(HorizonsBlueprintType.forInternalName(effect)));
+        event.getExperimentalEffect().ifPresent(effect -> module.applyExperimentalEffect(HorizonsBlueprintType.forInternalName(effect)));
         shipSlot.setOldShipModule(module);
         ShipMapper.toShipConfiguration(ship, ShipConfiguration.CURRENT, ShipConfiguration.CURRENT.getName());
         EventService.publish(new ShipLoadoutEvent());
