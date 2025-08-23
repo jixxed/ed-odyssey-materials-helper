@@ -230,6 +230,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.ShipLockerMaterials.ShipL
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ShipRedeemed.ShipRedeemed;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ShipTargeted.ShipTargeted;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Shipyard.Shipyard;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.ShipyardBankDeposit.ShipyardBankDeposit;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ShipyardBuy.ShipyardBuy;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ShipyardNew.ShipyardNew;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ShipyardRedeem.ShipyardRedeem;
@@ -493,6 +494,7 @@ public class JournalEventTypes {
             Map.entry("ShipRedeemed", ShipRedeemed.class),
             Map.entry("ShipTargeted", ShipTargeted.class),
             Map.entry("Shipyard", Shipyard.class),
+            Map.entry("ShipyardBankDeposit", ShipyardBankDeposit.class),
             Map.entry("ShipyardBuy", ShipyardBuy.class),
             Map.entry("ShipyardNew", ShipyardNew.class),
             Map.entry("ShipyardRedeem", ShipyardRedeem.class),
