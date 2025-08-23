@@ -259,6 +259,10 @@
             @include fixedHeight(2.5em);
             -fx-fit-to-height: true;
             -fx-fit-to-width: true;
+            @include commodities;
+            .glyph-icon {
+              -fx-font-size: 2.5em !important;
+            }
           }
 
           .storage-image {

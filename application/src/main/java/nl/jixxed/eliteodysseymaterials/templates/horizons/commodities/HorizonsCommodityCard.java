@@ -8,6 +8,7 @@ import javafx.scene.layout.StackPane;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
@@ -19,10 +20,13 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsCommoditiesSearchEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.MarketUpdatedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
+import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIconView;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 
 @Slf4j
 public class HorizonsCommodityCard extends DestroyableStackPane implements DestroyableEventTemplate {
@@ -61,10 +65,16 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
         if (GameVersion.LIVE.equals(this.commodity.getGameVersion())) {
             this.pseudoClassStateChanged(PseudoClass.getPseudoClass("live"), true);
         }
-        DestroyableResizableImageView typeImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("image")
-                .withImage(this.commodity.getCommodityType().getImagePath())
+        EdAwesomeIconViewPane typeImage = EdAwesomeIconViewPaneBuilder.builder()
+                .withStyleClass("commodity-image")
+                .withIcons(Arrays.stream(this.commodity.getCommodityType().getIcons()).map(icon -> new EdAwesomeIconView(icon, "2.5em")).toArray(EdAwesomeIconView[]::new))
                 .build();
+//        typeImage.getCssMetaData().forEach(System.out::println);
+//        typeImage.getChildren().getFirst().getCssMetaData().forEach(System.out::println);
+//        DestroyableResizableImageView typeImage = ResizableImageViewBuilder.builder()
+//                .withStyleClass("image")
+//                .withImage(this.commodity.getCommodityType().getImagePath())
+//                .build();
         DestroyableLabel nameLabel = LabelBuilder.builder()
                 .withStyleClass("name")
                 .withText(this.commodity.getLocalizationKey())
@@ -153,7 +163,7 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
         fleetCarrierImage.addBinding(fleetCarrierImage.visibleProperty(), ApplicationState.getInstance().getFcMaterials());
         DestroyableVBox nameAndCategory = BoxBuilder.builder()
                 .withStyleClass("name-category")
-                .withNodes(typeImage, nameLabel, categoryLabel).buildVBox();
+                .withNodes(nameLabel, categoryLabel).buildVBox();
         DestroyableHBox firstLine = BoxBuilder.builder()
                 .withStyleClass("name-line")
                 .withNodes(typeImage, nameAndCategory).buildHBox();

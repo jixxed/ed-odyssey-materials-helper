@@ -340,3 +340,60 @@
   -fx-font-weight: normal;
   -fx-font-style: normal;
 }
+
+@mixin commodities {
+  .commodities-chemicals {
+    -fx-fill: rgb(160, 219, 131);
+  }
+  .commodities-consumer-items {
+    -fx-fill: rgb(255, 236, 149);
+  }
+  .commodities-foods {
+    -fx-fill: rgb(255, 228, 94);
+  }
+  .commodities-industrial-materials {
+    -fx-fill: rgb(217, 236, 0);
+  }
+  .commodities-legal-drugs {
+    -fx-fill: rgb(126, 252, 0);
+  }
+  .commodities-limpets {
+    -fx-fill: #ffffff;
+  }
+  .commodities-limpets-1 {
+    -fx-fill: #a6a6a6;
+  }
+  .commodities-limpets-2 {
+    -fx-fill: #ffffff;
+  }
+  .commodities-machinery {
+    -fx-fill: rgb(255, 235, 112);
+  }
+  .commodities-medicines {
+    -fx-fill: rgb(255, 42, 0);
+  }
+  .commodities-metals {
+    -fx-fill: rgb(255, 154, 21);
+  }
+  .commodities-minerals {
+    -fx-fill: rgb(255, 240, 138);
+  }
+  .commodities-salvage {
+    -fx-fill: rgb(75, 161, 255);
+  }
+  .commodities-slavery {
+    -fx-fill: rgb(254, 248, 179);
+  }
+  .commodities-technology {
+    -fx-fill: rgb(185, 255, 0);
+  }
+  .commodities-textiles {
+    -fx-fill: rgb(255, 212, 74);
+  }
+  .commodities-waste {
+    -fx-fill: rgb(153, 255, 0);
+  }
+  .commodities-weapons {
+    -fx-fill: rgb(255, 88, 0);
+  }
+}

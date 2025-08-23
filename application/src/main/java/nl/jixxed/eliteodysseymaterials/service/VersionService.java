@@ -44,7 +44,7 @@ public class VersionService {
             log.error("Error retrieving latest version", e);
         }
 
-        return (VersionService.getBuildVersion() == null || buildVersion.equals(latestVersion) || latestVersion.isBlank());
+        return (VersionService.isDev() || buildVersion.equals(latestVersion) || latestVersion.isBlank());
     }
 
     public static boolean isDev() {

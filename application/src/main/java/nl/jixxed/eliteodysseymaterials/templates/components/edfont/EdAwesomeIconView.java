@@ -36,11 +36,11 @@ public class EdAwesomeIconView extends GlyphIcon<EdAwesomeIcon> implements Destr
     }
 
     public EdAwesomeIconView() {
-        this(EdAwesomeIcon.GRADE_1);
+        this(EdAwesomeIcon.MATERIALS_GRADE_1);
     }
 
     @Override
     public EdAwesomeIcon getDefaultGlyph() {
-        return EdAwesomeIcon.GRADE_1;
+        return EdAwesomeIcon.MATERIALS_GRADE_1;
     }
 }

@@ -3,10 +3,7 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation;
 import javafx.css.PseudoClass;
 import javafx.geometry.Orientation;
 import lombok.Getter;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.SegmentedBarBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
@@ -17,7 +14,9 @@ import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
+import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIconView;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegmentView;
@@ -25,6 +24,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.math.BigInteger;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class BillOfMaterialsEntry extends DestroyableVBox implements DestroyableEventTemplate {
@@ -40,7 +40,7 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
     private DestroyableResizableImageView fleetCarrierImage;
     private DestroyableResizableImageView shipImage;
     private DestroyableResizableImageView coriolisImage;
-    private DestroyableResizableImageView commodityImage;
+    private EdAwesomeIconViewPane commodityImage;
     private DestroyableResizableImageView bracket1Image;
     private DestroyableResizableImageView bracket3Image;
     ColonisationItem colonisationItem;
@@ -94,9 +94,9 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
                 .withStyleClasses("amount-right", "amount-market")
                 .withNonLocalizedText("0")
                 .build();
-        this.commodityImage = ResizableImageViewBuilder.builder()
+        this.commodityImage = EdAwesomeIconViewPaneBuilder.builder()
                 .withStyleClass("material-image")
-                .withImage(commodity.getCommodityType().getImagePath())
+                .withIcons(Arrays.stream(this.commodity.getCommodityType().getIcons()).map(EdAwesomeIconView::new).toArray(EdAwesomeIconView[]::new))
                 .build();
         this.fleetCarrierImage = ResizableImageViewBuilder.builder()
                 .withStyleClass("storage-image")

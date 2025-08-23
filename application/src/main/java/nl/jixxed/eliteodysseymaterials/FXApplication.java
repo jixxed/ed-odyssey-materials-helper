@@ -536,7 +536,7 @@ public class FXApplication extends Application {
         }
         final JMetro jMetro = new JMetro(Style.DARK);
         jMetro.setScene(scene);
-        if (VersionService.getBuildVersion() == null) {//dev mode for hotswap css
+        if (VersionService.isDev()) {//dev mode for hotswap css
             try {
                 final String currentWorkingDirectory = new File(".").getCanonicalPath();
                 final File mainCss = new File(currentWorkingDirectory + "/src/main/resources/css/compiled/main.css");
@@ -647,7 +647,7 @@ public class FXApplication extends Application {
                 log.error("Error retrieving latest version", e);
             }
 
-            if (VersionService.getBuildVersion() != null && !buildVersion.equals(latestVersion) && !latestVersion.isBlank()) {
+            if (!VersionService.isDev() && !buildVersion.equals(latestVersion) && !latestVersion.isBlank()) {
                 final Stage versionStage = new Stage();
                 versionStage.getIcons().add(new Image(FXApplication.class.getResourceAsStream(AppConstants.APP_ICON_PATH)));
 

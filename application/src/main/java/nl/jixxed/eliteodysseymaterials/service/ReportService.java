@@ -28,7 +28,7 @@ public class ReportService {
 
     public static void reportMaterial(final Object material) {
         final String buildVersion = VersionService.getBuildVersion();
-        if (buildVersion != null) {
+        if (!VersionService.isDev()) {
             final Runnable run = () -> {
                 try {
                     final String data = OBJECT_MAPPER.writeValueAsString(new Report(buildVersion, ApplicationState.getInstance().getFileheader(), material));
@@ -53,7 +53,7 @@ public class ReportService {
 
     public static void reportJournal(String channel, String journalLine, String error) {
         final String buildVersion = VersionService.getBuildVersion();
-        if (buildVersion != null) {
+        if (!VersionService.isDev()) {
             final Runnable run = () -> {
                 try {
                     final String data = OBJECT_MAPPER.writeValueAsString(new ReportUnknownJournal(channel, buildVersion, ApplicationState.getInstance().getFileheader(), journalLine, error));

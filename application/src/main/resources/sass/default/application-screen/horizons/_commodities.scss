@@ -51,6 +51,7 @@
 
         .rare-image {
           -fx-pref-height: 100%;
+          //@include fixedHeight(5em);
           -fx-opacity: 0.3;
 
         }
@@ -65,10 +66,14 @@
         .name-line {
           @include fixedHeight(2.5em);
 
-          .image {
+          .commodity-image {
             @include fixedWidth(2.5em);
             @include fixedHeight(2.5em);
             -fx-alignment: center-left;
+            @include commodities;
+            .glyph-icon {
+                -fx-font-size: 2.5em !important;
+            }
           }
 
           .name {

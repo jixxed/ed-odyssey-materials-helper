@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.constants.SpawnConstants;
-import nl.jixxed.eliteodysseymaterials.domain.IntegerRange;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -54,20 +53,13 @@ public class HorizonsMaterialCard extends DestroyableVBox implements Destroyable
         } else if (HorizonsMaterialType.GUARDIAN.equals(this.material.getMaterialType())) {
             this.pseudoClassStateChanged(PseudoClass.getPseudoClass("guardian"), true);
         }
-        DestroyableResizableImageView gradeImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("image")
-                .withImage(this.material.getRarity().getImagePath())
-                .build();
-        EdAwesomeIconView icon = new EdAwesomeIconView(getGrade(this.material.getRarity()));
+
+        EdAwesomeIconView icon = new EdAwesomeIconView(this.material.getRarity().getIcon());
         icon.getStyleClass().add("icon");
         wishlistImage = EdAwesomeIconViewPaneBuilder.builder()
-                .withIcons(new EdAwesomeIconView(EdAwesomeIcon.WISHLIST))
+                .withIcons(new EdAwesomeIconView(EdAwesomeIcon.OTHER_WISHLIST))
                 .build();
         wishlistImage.getStyleClass().add("wishlist-icon");
-//        wishlistImage = ResizableImageViewBuilder.builder()
-//                .withStyleClasses("wishlist-image")
-//                .withImage("/images/material/wishlist.png")
-//                .build();
         DestroyableLabel nameLabel = LabelBuilder.builder()
                 .withStyleClass("name")
                 .withText(this.material.getLocalizationKey())
@@ -128,17 +120,6 @@ public class HorizonsMaterialCard extends DestroyableVBox implements Destroyable
         this.getNodes().add(segmentedBar);
         MaterialService.addMaterialInfoPopOver(this, this.material, false);
         update();
-    }
-
-    private EdAwesomeIcon getGrade(Rarity rarity) {
-        return switch (rarity) {
-            case VERY_COMMON -> EdAwesomeIcon.GRADE_1;
-            case COMMON -> EdAwesomeIcon.GRADE_2;
-            case STANDARD -> EdAwesomeIcon.GRADE_3;
-            case RARE -> EdAwesomeIcon.GRADE_4;
-            case VERY_RARE -> EdAwesomeIcon.GRADE_5;
-            default -> throw new IllegalStateException("Unexpected value: " + rarity);
-        };
     }
 
     @Override

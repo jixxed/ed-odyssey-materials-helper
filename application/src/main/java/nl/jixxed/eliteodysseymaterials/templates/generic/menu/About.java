@@ -143,7 +143,7 @@ class About extends DestroyableVBox implements DestroyableTemplate {
                 log.error("Error retrieving latest version", e);
             }
 
-            if (VersionService.getBuildVersion() == null) {
+            if (VersionService.isDev()) {
                 this.versionLabel.addBinding(this.versionLabel.textProperty(), LocaleService.getStringBinding("menu.about.version", "dev"));
             } else if (buildVersion.equals(latestVersion)) {
                 this.versionLabel.addBinding(this.versionLabel.textProperty(), LocaleService.getStringBinding("menu.about.version", buildVersion));

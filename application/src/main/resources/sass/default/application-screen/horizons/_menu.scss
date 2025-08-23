@@ -149,6 +149,12 @@
           @include fixedHeight(2em);
           -fx-fit-to-height: true;
           -fx-fit-to-width: true;
+          .glyph-icon {
+            -fx-font-size: 2em !important;
+            -fx-fill: $text-color-white;
+          }
+
+          @include commodities;
         }
 
         &:partial .required, &:partial .available, &:partial .quantity {

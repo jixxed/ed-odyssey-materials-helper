@@ -7,6 +7,7 @@ import javafx.scene.layout.VBox;
 import lombok.Getter;
 import lombok.Setter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
@@ -20,10 +21,13 @@ import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
+import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIconView;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Objects;
 
@@ -44,7 +48,7 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
     private Integer available;
 
     private DestroyableLabel nameLabel;
-    private DestroyableResizableImageView image;
+    private EdAwesomeIconViewPane image;
     private DestroyableLabel requiredLabel;
     private DestroyableLabel availableLabel;
     private DestroyableLabel availableTitle;
@@ -144,14 +148,14 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
     @SuppressWarnings("java:S6205")
     private void initImage() {
         if (this.horizonsMaterial instanceof Commodity commodity) {
-            this.image = ResizableImageViewBuilder.builder()
+            this.image = EdAwesomeIconViewPaneBuilder.builder()
                     .withStyleClass("ingredient-image")
-                    .withImage(commodity.getCommodityType().getImagePath())
+                    .withIcons(Arrays.stream(commodity.getCommodityType().getIcons()).map(EdAwesomeIconView::new).toArray(EdAwesomeIconView[]::new))
                     .build();
         } else {
-            this.image = ResizableImageViewBuilder.builder()
+            this.image = EdAwesomeIconViewPaneBuilder.builder()
                     .withStyleClass("ingredient-image")
-                    .withImage(this.horizonsMaterial.getRarity().getImagePath())
+                    .withIcons(new EdAwesomeIconView(this.horizonsMaterial.getRarity().getIcon()))
                     .build();
         }
     }

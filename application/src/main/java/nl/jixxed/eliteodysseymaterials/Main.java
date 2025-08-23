@@ -57,7 +57,7 @@ public class Main {
                     options.setDsn(Secrets.getOrDefault("sentry.dsn", "localhost"));
                     options.setEnvironment(getEnvironment(buildVersion));
                     options.setRelease("edomh-app@" + buildVersion);
-                    options.setEnabled(!buildVersion.equals("dev"));
+                    options.setEnabled(!VersionService.isDev());
                     options.setBeforeSend((event, hint) -> {
                         if (!VersionService.isLatestVersion()) {
                             return null;  // Returning null prevents the event from being sent to Sentry

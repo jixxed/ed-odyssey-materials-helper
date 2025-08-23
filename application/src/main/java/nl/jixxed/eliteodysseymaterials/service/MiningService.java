@@ -79,7 +79,7 @@ public class MiningService {
 
     public static void sendMiningEventAndReset() {
         final String buildVersion = VersionService.getBuildVersion();
-        if (buildVersion != null) {
+        if (!VersionService.isDev()) {
             if (!prospectedAsteroids.isEmpty()) {
                 try {
                     final String data = OBJECT_MAPPER.writeValueAsString(new Report(buildVersion, ApplicationState.getInstance().getFileheader(), new MiningEvent(LocationService.getCurrentStarSystem(), supercruiseDestinationDrop, supercruiseExit, prospectedAsteroids)));

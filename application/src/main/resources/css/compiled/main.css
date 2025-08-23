@@ -244,6 +244,44 @@
                 -fx-max-height: 2.5em;
                 -fx-fit-to-height: true;
                 -fx-fit-to-width: true; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .material-image .commodities-chemicals {
+                  -fx-fill: #a0db83; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .material-image .commodities-consumer-items {
+                  -fx-fill: #ffec95; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .material-image .commodities-foods {
+                  -fx-fill: #ffe45e; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .material-image .commodities-industrial-materials {
+                  -fx-fill: #d9ec00; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .material-image .commodities-legal-drugs {
+                  -fx-fill: #7efc00; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .material-image .commodities-limpets {
+                  -fx-fill: #ffffff; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .material-image .commodities-limpets-1 {
+                  -fx-fill: #a6a6a6; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .material-image .commodities-limpets-2 {
+                  -fx-fill: #ffffff; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .material-image .commodities-machinery {
+                  -fx-fill: #ffeb70; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .material-image .commodities-medicines {
+                  -fx-fill: #ff2a00; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .material-image .commodities-metals {
+                  -fx-fill: #ff9a15; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .material-image .commodities-minerals {
+                  -fx-fill: #fff08a; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .material-image .commodities-salvage {
+                  -fx-fill: #4ba1ff; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .material-image .commodities-slavery {
+                  -fx-fill: #fef8b3; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .material-image .commodities-technology {
+                  -fx-fill: #b9ff00; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .material-image .commodities-textiles {
+                  -fx-fill: #ffd44a; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .material-image .commodities-waste {
+                  -fx-fill: #99ff00; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .material-image .commodities-weapons {
+                  -fx-fill: #ff5800; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .material-image .glyph-icon {
+                  -fx-font-size: 2.5em !important; }
               .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .storage-image {
                 -fx-min-width: 2em;
                 -fx-pref-width: 2em;
@@ -330,7 +368,7 @@
               -fx-min-height: 2.5em;
               -fx-pref-height: 2.5em;
               -fx-max-height: 2.5em; }
-              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .image {
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .commodity-image {
                 -fx-min-width: 2.5em;
                 -fx-pref-width: 2.5em;
                 -fx-max-width: 2.5em;
@@ -338,6 +376,44 @@
                 -fx-pref-height: 2.5em;
                 -fx-max-height: 2.5em;
                 -fx-alignment: center-left; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .commodity-image .commodities-chemicals {
+                  -fx-fill: #a0db83; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .commodity-image .commodities-consumer-items {
+                  -fx-fill: #ffec95; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .commodity-image .commodities-foods {
+                  -fx-fill: #ffe45e; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .commodity-image .commodities-industrial-materials {
+                  -fx-fill: #d9ec00; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .commodity-image .commodities-legal-drugs {
+                  -fx-fill: #7efc00; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .commodity-image .commodities-limpets {
+                  -fx-fill: #ffffff; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .commodity-image .commodities-limpets-1 {
+                  -fx-fill: #a6a6a6; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .commodity-image .commodities-limpets-2 {
+                  -fx-fill: #ffffff; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .commodity-image .commodities-machinery {
+                  -fx-fill: #ffeb70; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .commodity-image .commodities-medicines {
+                  -fx-fill: #ff2a00; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .commodity-image .commodities-metals {
+                  -fx-fill: #ff9a15; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .commodity-image .commodities-minerals {
+                  -fx-fill: #fff08a; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .commodity-image .commodities-salvage {
+                  -fx-fill: #4ba1ff; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .commodity-image .commodities-slavery {
+                  -fx-fill: #fef8b3; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .commodity-image .commodities-technology {
+                  -fx-fill: #b9ff00; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .commodity-image .commodities-textiles {
+                  -fx-fill: #ffd44a; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .commodity-image .commodities-waste {
+                  -fx-fill: #99ff00; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .commodity-image .commodities-weapons {
+                  -fx-fill: #ff5800; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .commodity-image .glyph-icon {
+                  -fx-font-size: 2.5em !important; }
               .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .content .name-line .name {
                 -fx-min-width: 28em;
                 -fx-pref-width: 28em;
@@ -821,6 +897,45 @@
               -fx-max-height: 2em;
               -fx-fit-to-height: true;
               -fx-fit-to-width: true; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .ingredient-image .glyph-icon {
+                -fx-font-size: 2em !important;
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .ingredient-image .commodities-chemicals {
+                -fx-fill: #a0db83; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .ingredient-image .commodities-consumer-items {
+                -fx-fill: #ffec95; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .ingredient-image .commodities-foods {
+                -fx-fill: #ffe45e; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .ingredient-image .commodities-industrial-materials {
+                -fx-fill: #d9ec00; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .ingredient-image .commodities-legal-drugs {
+                -fx-fill: #7efc00; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .ingredient-image .commodities-limpets {
+                -fx-fill: #ffffff; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .ingredient-image .commodities-limpets-1 {
+                -fx-fill: #a6a6a6; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .ingredient-image .commodities-limpets-2 {
+                -fx-fill: #ffffff; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .ingredient-image .commodities-machinery {
+                -fx-fill: #ffeb70; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .ingredient-image .commodities-medicines {
+                -fx-fill: #ff2a00; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .ingredient-image .commodities-metals {
+                -fx-fill: #ff9a15; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .ingredient-image .commodities-minerals {
+                -fx-fill: #fff08a; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .ingredient-image .commodities-salvage {
+                -fx-fill: #4ba1ff; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .ingredient-image .commodities-slavery {
+                -fx-fill: #fef8b3; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .ingredient-image .commodities-technology {
+                -fx-fill: #b9ff00; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .ingredient-image .commodities-textiles {
+                -fx-fill: #ffd44a; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .ingredient-image .commodities-waste {
+                -fx-fill: #99ff00; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient .ingredient-image .commodities-weapons {
+                -fx-fill: #ff5800; }
             .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient:partial .required, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient:partial .available, .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .ingredient:partial .quantity {
               -fx-text-fill: #dcc030; }
           .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .ingredient-flow .mission {
@@ -2731,6 +2846,45 @@
                   -fx-max-height: 2em;
                   -fx-fit-to-height: true;
                   -fx-fit-to-width: true; }
+                  .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .glyph-icon {
+                    -fx-font-size: 2em !important;
+                    -fx-fill: white; }
+                  .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .commodities-chemicals {
+                    -fx-fill: #a0db83; }
+                  .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .commodities-consumer-items {
+                    -fx-fill: #ffec95; }
+                  .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .commodities-foods {
+                    -fx-fill: #ffe45e; }
+                  .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .commodities-industrial-materials {
+                    -fx-fill: #d9ec00; }
+                  .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .commodities-legal-drugs {
+                    -fx-fill: #7efc00; }
+                  .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .commodities-limpets {
+                    -fx-fill: #ffffff; }
+                  .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .commodities-limpets-1 {
+                    -fx-fill: #a6a6a6; }
+                  .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .commodities-limpets-2 {
+                    -fx-fill: #ffffff; }
+                  .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .commodities-machinery {
+                    -fx-fill: #ffeb70; }
+                  .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .commodities-medicines {
+                    -fx-fill: #ff2a00; }
+                  .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .commodities-metals {
+                    -fx-fill: #ff9a15; }
+                  .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .commodities-minerals {
+                    -fx-fill: #fff08a; }
+                  .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .commodities-salvage {
+                    -fx-fill: #4ba1ff; }
+                  .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .commodities-slavery {
+                    -fx-fill: #fef8b3; }
+                  .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .commodities-technology {
+                    -fx-fill: #b9ff00; }
+                  .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .commodities-textiles {
+                    -fx-fill: #ffd44a; }
+                  .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .commodities-waste {
+                    -fx-fill: #99ff00; }
+                  .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .commodities-weapons {
+                    -fx-fill: #ff5800; }
                 .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .name {
                   -fx-font-weight: bold;
                   -fx-alignment: center-left;
