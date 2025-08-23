@@ -176,7 +176,7 @@ public class ShipModuleService {
     public static Optional<ShipModule> findLowerSize(ShipModule module, int maxSize) {
         return SHIP_MODULES.stream()
                 .filter(shipModule -> shipModule.getName().equals(module.getName()) &&
-                        (shipModule instanceof HardpointModule || shipModule.getModuleClass().equals(module.getModuleClass())) &&
+                        ((shipModule instanceof HardpointModule hardpointModule && hardpointModule.getMounting().equals(((HardpointModule)module).getMounting())) || (!(shipModule instanceof HardpointModule) && shipModule.getModuleClass().equals(module.getModuleClass()))) &&
                         shipModule.getModuleSize().isLowerOrEqual(maxSize)
                 )
                 .sorted(Comparator.comparing(ShipModule::getModuleSize).reversed())
