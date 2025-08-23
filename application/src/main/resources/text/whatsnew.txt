@@ -1,3 +1,9 @@
+Version 2.240
+-------------
+Fixed an issue where engineering your current ship would still show old stats on the modules during the session
+Added legacy commander filter under settings, enabled by default
+Fixed resizing a hardpoint could change the mounting type
+
 Version 2.239
 -------------
 Attempt to fix missing images for horizons materials
