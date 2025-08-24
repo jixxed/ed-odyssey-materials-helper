@@ -147,6 +147,7 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
             this.locationLabel.setText("");
         }));
         register(EventService.addListener(true, this, CapiFleetCarrierEvent.class, event -> updateApiLabel()));
+        register(EventService.addListener(true, this, CapiSquadronEvent.class, event -> updateApiLabel()));
         register(EventService.addListener(true, this, EDDNQueueEvent.class, event -> eddnTransmitting.set(true)));
         register(EventService.addListener(true, this, TerminateApplicationEvent.class, event -> executorService.shutdown()));
     }

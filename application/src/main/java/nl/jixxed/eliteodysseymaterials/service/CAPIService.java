@@ -23,7 +23,11 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
+import nl.jixxed.eliteodysseymaterials.service.capi.EndpointHandler;
+import nl.jixxed.eliteodysseymaterials.service.capi.FleetCarrierEndpointHandler;
+import nl.jixxed.eliteodysseymaterials.service.capi.SquadronEndpointHandler;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,16 +35,11 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
 public class CAPIService {
@@ -49,18 +48,21 @@ public class CAPIService {
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
-    private final OAuth20Service service;
+    @Getter
+    private final OAuth20Service oAuth20Service;
+    @Getter
     private OAuth2AccessToken oAuth2AccessToken;
     @Getter
-    private final BooleanProperty active = new SimpleBooleanProperty(false);
-    @Getter
-    private final BooleanProperty fcEnabled = new SimpleBooleanProperty(true);
+    private final SimpleBooleanProperty active = new SimpleBooleanProperty(false);
     private AuthorizationUrlBuilder authorizationUrlBuilder;
     private TimerTask timerTask;
     private Timer timer;
+    private final List<EndpointHandler> endpointHandlers = new ArrayList<>();
 
     private CAPIService() {
-        this.service = new ServiceBuilder(CapiOAuth20Service.CLIENT_ID)
+        endpointHandlers.add(new FleetCarrierEndpointHandler(this));
+        endpointHandlers.add(new SquadronEndpointHandler(this));
+        this.oAuth20Service = new ServiceBuilder(CapiOAuth20Service.CLIENT_ID)
                 .defaultScope("auth capi")
                 .callback("edomh://capi/")
 //                .debug()
@@ -75,7 +77,7 @@ public class CAPIService {
                             .pkceCodeVerifier(this.authorizationUrlBuilder.getPkce().getCodeVerifier())
                             .scope("capi")
                             .addExtraParameter("client_id", CapiOAuth20Service.CLIENT_ID);
-                    this.oAuth2AccessToken = this.service.getAccessToken(accessTokenRequestParams);
+                    this.oAuth2AccessToken = this.oAuth20Service.getAccessToken(accessTokenRequestParams);
 //                    https://companion.orerve.net/profile
                     CommanderCheck commanderCheck = validCommander();
                     if (commanderCheck.isValid()) {
@@ -84,6 +86,7 @@ public class CAPIService {
                         Platform.runLater(() -> {
                             NotificationService.showInformation(NotificationType.SUCCESS, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.auth.success"));
                             this.active.set(true);
+                            endpointHandlers.forEach(EndpointHandler::requestData);
                         });
                     } else {
                         Platform.runLater(() -> {
@@ -105,7 +108,6 @@ public class CAPIService {
                     log.error("Exception", e);
                 }
             });
-            requestFleetCarrierData();
         }));
         EVENT_LISTENERS.add(EventService.addListener(this, TerminateApplicationEvent.class, event -> {
             if (this.timer != null) {
@@ -117,24 +119,25 @@ public class CAPIService {
             if (event.isInitialised()) {
                 Platform.runLater(() -> {
                             this.active.set(this.loadToken(APPLICATION_STATE.getPreferredCommander().orElse(null)));
-                            this.fcEnabled.set(true);
+//                            this.fcEndpointEnabled.set(true);
+                            endpointHandlers.forEach(EndpointHandler::enable);
                             APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                                 if (this.timer != null) {
                                     this.timer.cancel();
                                 }
                                 final String pathname = commander.getCommanderFolder();
-                                final File fleetCarrierFileDir = new File(pathname);
-                                fleetCarrierFileDir.mkdirs();
-                                final File fleetCarrierFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.FLEETCARRIER_FILE);
-                                this.timer = new Timer("Fleetcarrier-api-task", true);
+                                final File commanderFolder = new File(pathname);
+                                commanderFolder.mkdirs();
+                                this.timer = new Timer("capi-task", true);
                                 this.timerTask = new TimerTask() {
                                     @Override
                                     public void run() {
                                         if (isCapiRunning()) {
-                                            requestFleetCarrierData();
+                                            endpointHandlers.forEach(EndpointHandler::requestData);
                                         }
                                     }
                                 };
+                                //endpoints are called every 5 seconds if updates are needed
                                 this.timer.schedule(this.timerTask, 0L, 5L * 1000L);
                             });
                         }
@@ -152,9 +155,8 @@ public class CAPIService {
         return APPLICATION_STATE.getPreferredCommander().map(commander -> {
             final String url = GameVersion.LEGACY.equals(commander.getGameVersion()) ? "https://legacy-companion.orerve.net/profile" : "https://companion.orerve.net/profile";
             final OAuthRequest oAuthRequest = new OAuthRequest(Verb.GET, url);
-            this.service.signRequest(this.oAuth2AccessToken, oAuthRequest);
             try {
-                Response response = this.service.execute(oAuthRequest);
+                Response response = this.request(oAuthRequest);
                 if (response.getCode() == 200) {
                     ObjectMapper objectMapper = new ObjectMapper();
                     final JsonNode jsonNode = objectMapper.readTree(response.getBody());
@@ -169,7 +171,8 @@ public class CAPIService {
                 }
                 if (response.getCode() == 400) {
                     Platform.runLater(() -> {
-                        this.fcEnabled.set(false);
+                        endpointHandlers.forEach(EndpointHandler::disable);
+//                        this.fcEndpointEnabled.set(false);
                         NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.400"));
                     });
                 }
@@ -186,32 +189,6 @@ public class CAPIService {
         }).orElse(new CommanderCheck(null, null));
     }
 
-    private static boolean isOutdated(final File fleetCarrierFile) {
-        if (!fleetCarrierFile.exists()) {
-            return true;
-        }
-        final ZonedDateTime now = ZonedDateTime.now();
-        final ZonedDateTime fileModified = ZonedDateTime.ofInstant(Instant.ofEpochMilli(fleetCarrierFile.lastModified()), ZoneId.systemDefault());
-        final long delay = 300L * 1000L;// 5 minutes
-        final long delayed = (now.toEpochSecond() - fileModified.toEpochSecond()) * 1000;
-        return delayed > delay;
-    }
-
-    private static long calculateDelay(final File fleetCarrierFile) {
-        if (!fleetCarrierFile.exists()) {
-            return 0;
-        }
-        final ZonedDateTime now = ZonedDateTime.now();
-        final ZonedDateTime fileModified = ZonedDateTime.ofInstant(Instant.ofEpochMilli(fleetCarrierFile.lastModified()), ZoneId.systemDefault());
-        final long delay = 300L * 1000L;
-        final long delayed = (now.toEpochSecond() - fileModified.toEpochSecond()) * 1000;
-        if (delayed > delay) {
-            return 0;
-        } else {
-            return delay - delayed;
-        }
-    }
-
     public static CAPIService getInstance() {
         if (capiService == null) {
             capiService = new CAPIService();
@@ -220,83 +197,14 @@ public class CAPIService {
     }
 
     public void authenticate() {
-        this.authorizationUrlBuilder = ((CapiOAuth20Service) this.service).getAuthorizationUrlBuilder();
+        this.authorizationUrlBuilder = ((CapiOAuth20Service) this.oAuth20Service).getAuthorizationUrlBuilder();
         final String build = this.authorizationUrlBuilder.build();
         Platform.runLater(() -> FXApplication.getInstance().getHostServices().showDocument(build));
     }
 
-    private void requestFleetCarrierData() {
-        if (this.active.get() && this.fcEnabled.get()) {
-            APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                final String pathname = commander.getCommanderFolder();
-                final File fleetCarrierFileDir = new File(pathname);
-                fleetCarrierFileDir.mkdirs();
-                final File fleetCarrierFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.FLEETCARRIER_FILE);
-                if (isOutdated(fleetCarrierFile)) {
-                    this.executor.submit(() -> {
-                        final String url = GameVersion.LEGACY.equals(commander.getGameVersion()) ? "https://legacy-companion.orerve.net/fleetcarrier" : "https://companion.orerve.net/fleetcarrier";
-                        final OAuthRequest oAuthRequest = new OAuthRequest(Verb.GET, url);
-                        this.service.signRequest(this.oAuth2AccessToken, oAuthRequest);
-                        try {
-                            Response response = this.service.execute(oAuthRequest);
-                            // retry if token expired
-                            if (response.getCode() == 401) {
-                                log.warn("Frontier API returned unauthorized. Attempting to refresh token.");
-                                refreshToken();
-                                final OAuthRequest oAuthRequest2 = new OAuthRequest(Verb.GET, url);
-                                this.service.signRequest(this.oAuth2AccessToken, oAuthRequest2);
-                                response = this.service.execute(oAuthRequest2);
-                            }
-                            // handle response
-                            if (response.getCode() == 204) {
-                                log.warn("Frontier API returned a " + response.getCode() + "(No fleetcarrier). Disabling FC endpoint.");
-                                // no FC -> disable endpoint
-                                Platform.runLater(() -> {
-                                    this.fcEnabled.set(false);
-                                });
-                            } else if (response.getCode() == 400) {
-                                log.warn("Frontier API returned a " + response.getCode() + "(No game entitlement). Disabling FC endpoint.");
-                                // no FC -> disable endpoint
-                                Platform.runLater(() -> {
-                                    this.fcEnabled.set(false);
-                                    NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.400"));
-                                });
-                            } else if (response.getCode() == 200) {
-                                log.info("Frontier API returned a " + response.getCode() + ". Storing response.");
-                                // write response to file
-                                try (final FileOutputStream fileOutputStream = new FileOutputStream(fleetCarrierFile)) {
-                                    fileOutputStream.write(response.getBody().getBytes(StandardCharsets.UTF_8));
-                                }
-                            } else {
-                                log.warn("Frontier API returned a " + response.getCode() + ". Disabling service.");
-                                Platform.runLater(() -> this.active.set(false));
-                            }
-                            Platform.runLater(() -> EventService.publish(new CapiFleetCarrierEvent()));
-                        } catch (final InterruptedException e) {
-                            log.error("InterruptedException", e);
-                        } catch (final ExecutionException e) {
-                            log.error("ExecutionException", e);
-                        } catch (final IOException e) {
-                            log.error("IOException", e);
-                        } catch (final Exception e) {
-                            log.error("Exception", e);
-                            log.warn("Frontier API returned an error. Disabling service.");
-                            Platform.runLater(() -> {
-                                this.active.set(false);
-                                final boolean delete = fleetCarrierFile.delete();
-                                if (delete) log.info("Deleted stale fleetcarrier file");
-                                NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.auth.fail"));
-                            });
-                        }
-                    });
-                }
-            });
-        }
-    }
-
-    private void refreshToken() {
+    public void refreshToken() {
         try {
-            this.oAuth2AccessToken = this.service.refreshAccessToken(this.oAuth2AccessToken.getRefreshToken());
+            this.oAuth2AccessToken = this.oAuth20Service.refreshAccessToken(this.oAuth2AccessToken.getRefreshToken());
             saveToken(this.oAuth2AccessToken);
             Platform.runLater(() -> this.active.set(true));
         } catch (final InterruptedException e) {
@@ -360,9 +268,8 @@ public class CAPIService {
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
             try {
                 Platform.runLater(() -> this.active.set(false));
-                final String pathname = commander.getLiveCommanderFolder();
-                Files.delete(Path.of(pathname, AppConstants.CAPI_FILE));
-                Files.delete(Path.of(pathname, AppConstants.FLEETCARRIER_FILE));
+                Files.delete(Path.of(commander.getLiveCommanderFolder(), AppConstants.CAPI_FILE));
+                endpointHandlers.forEach(EndpointHandler::cleanup);
             } catch (final IOException e) {
                 log.error("Failed to delete CAPI token file", e);
             }
@@ -372,5 +279,30 @@ public class CAPIService {
         boolean isValid(){
             return expected != null && expected.equalsIgnoreCase(actual);
         }
+    }
+
+    public synchronized Response request(OAuthRequest oAuthRequest) throws IOException, ExecutionException, InterruptedException {
+        if(active.get()) {
+            oAuth20Service.signRequest(oAuth2AccessToken, oAuthRequest);
+            log.info("requesting data from CAPI: " + oAuthRequest.getUrl());
+            Response response = oAuth20Service.execute(oAuthRequest);
+            if (response.getCode() == 401) {
+                log.warn("Frontier API returned unauthorized. Attempting to refresh token.");
+                capiService.refreshToken();
+                final OAuthRequest oAuthRequestRetry = new OAuthRequest(oAuthRequest.getVerb(), oAuthRequest.getUrl());
+                oAuth20Service.signRequest(oAuth2AccessToken, oAuthRequestRetry);
+                log.info("requesting data from CAPI again: " + oAuthRequest.getUrl());
+                response = oAuth20Service.execute(oAuthRequestRetry);
+            }
+            if (response.getCode() == 401) {
+                Platform.runLater(() -> active.set(false));
+                Platform.runLater(() -> {
+                    NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.auth.fail"));
+                });
+            }else{
+                return response;
+            }
+        }
+        return new Response(501,"CAPI service disabled", Map.of(), "");
     }
 }

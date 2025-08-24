@@ -17,18 +17,18 @@ public class WatchServiceFolderWatch extends AbstractFolderWatch implements Runn
     @Getter
     private final String folder;
     private final Consumer<FileEvent> changeConsumer;
-    private final PublishSubject<FileEvent> modifyEventSubject = PublishSubject.create();
+//    private final PublishSubject<FileEvent> modifyEventSubject = PublishSubject.create();
 
     public WatchServiceFolderWatch(final String folder, final Consumer<FileEvent> changeConsumer) {
         super("WatchServiceFolderWatch(" + folder + ")");
         this.folder = folder;
         this.changeConsumer = changeConsumer;
-        Observable<FileEvent> debouncedModifyEvents = modifyEventSubject
-                .debounce(100, TimeUnit.MILLISECONDS)
-                .distinctUntilChanged();
-
-        debouncedModifyEvents.subscribe(changeConsumer::accept, throwable ->
-                log.error("Error processing file events", throwable));
+//        Observable<FileEvent> debouncedModifyEvents = modifyEventSubject
+//                .debounce(100, TimeUnit.MILLISECONDS)
+//                .distinctUntilChanged();
+//
+//        debouncedModifyEvents.subscribe(changeConsumer::accept, throwable ->
+//                log.error("Error processing file events", throwable));
 
         this.thread.start();
         log.info("Started " + this.thread.getName());
@@ -60,14 +60,18 @@ public class WatchServiceFolderWatch extends AbstractFolderWatch implements Runn
 //            this.changeConsumer.accept(new FileEvent(path.resolve((Path) event.context()).toFile(), event.kind()));
             Path filePath = path.resolve((Path) event.context());
             FileEvent fileEvent = new FileEvent(filePath.toFile(), event.kind());
-            if (event.kind() == ENTRY_MODIFY && fileEvent.getFile().getName().contains("Journal.")) {
-                // Debounce ENTRY_MODIFY events
-                modifyEventSubject.onNext(fileEvent);
-            } else {
+//            if (shouldDebounce(event, fileEvent)) {
+//                // Debounce ENTRY_MODIFY events
+//                modifyEventSubject.onNext(fileEvent);
+//            } else {
                 // Immediately process ENTRY_CREATE & ENTRY_DELETE
                 changeConsumer.accept(fileEvent);
-            }
+//            }
         }
         return key.reset();
     }
+
+//    private static boolean shouldDebounce(WatchEvent<?> event, FileEvent fileEvent) {
+//        return event.kind() == ENTRY_MODIFY && (fileEvent.getFile().getName().contains("Journal."));
+//    }
 }

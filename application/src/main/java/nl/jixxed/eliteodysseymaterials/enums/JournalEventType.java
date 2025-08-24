@@ -12,6 +12,7 @@ public enum JournalEventType {
     SHIPLOCKER("ShipLocker"),
     BACKPACK("Backpack"),
     CAPIFLEETCARRIER("CapiFleetCarrier"),//CAPI Resource
+    CAPISQUADRON("CapiSquadron"),//CAPI Resource
     BACKPACKCHANGE("BackpackChange"),
     RESUPPLY("Resupply"),
     FSDJUMP("FSDJump"),

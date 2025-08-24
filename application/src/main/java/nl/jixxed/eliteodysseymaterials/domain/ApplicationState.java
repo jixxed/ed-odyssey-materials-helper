@@ -126,6 +126,8 @@ public class ApplicationState {
     @Getter
     private final BooleanProperty fcMaterials = new SimpleBooleanProperty(false);
     @Getter
+    private final BooleanProperty squadronCarrierMaterials = new SimpleBooleanProperty(false);
+    @Getter
     private final BooleanProperty powerplay = new SimpleBooleanProperty(false);
 
     private ApplicationState() {

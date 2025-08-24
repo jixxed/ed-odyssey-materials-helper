@@ -14,6 +14,7 @@ import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.*;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiFleetCarrierMessageProcessor;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiMessageProcessor;
 import nl.jixxed.eliteodysseymaterials.schemas.capi.CapiFleetcarrier;
+import nl.jixxed.eliteodysseymaterials.schemas.capi.CapiSquadron;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Event;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -218,7 +219,7 @@ class MessageHandler {
     static void handleCapiMessage(final File file, final JournalEventType journalEventType) {
         try {
             final String message = Files.readString(file.toPath());
-            testAndReport(message);
+            testAndReportCapi(message, journalEventType);
             final JsonNode jsonNode = OBJECT_MAPPER.readTree(message);
             log.info("event: " + journalEventType);
             final CapiMessageProcessor messageProcessor = capiMessageProcessors.get(journalEventType);
@@ -233,17 +234,34 @@ class MessageHandler {
         }
     }
 
-    private static void testAndReport(String message) {
+    private static void testAndReportCapi(String message, final JournalEventType journalEventType) {
         try {
             if (message.isEmpty()) {
                 return;
             }
-            OBJECT_MAPPER2.readValue(message, CapiFleetcarrier.class);
+            if (JournalEventType.CAPIFLEETCARRIER.equals(journalEventType)) {
+                OBJECT_MAPPER2.readValue(message, CapiFleetcarrier.class);
+            } else if (JournalEventType.CAPISQUADRON.equals(journalEventType)) {
+                CapiSquadron capiSquadron = OBJECT_MAPPER2.readValue(message, CapiSquadron.class);
+                reportOnce(capiSquadron);
+            }
         } catch (final Exception e) {
             //report
             if (!e.getMessage().startsWith("Unexpected end-of-input"))
                 ReportService.reportJournal("capi", message, "App version: " + VersionService.getBuildVersion() + ". Unknown FC CAPI event: " + e.getMessage());
 
+        }
+    }
+
+    private static Boolean reportOnce = true;
+    private static void reportOnce(CapiSquadron capiSquadron) {
+        if(reportOnce) {
+            try {
+                ReportService.reportJournal("squadron", OBJECT_MAPPER2.writeValueAsString(capiSquadron.getPerks()), "App version: " + VersionService.getBuildVersion() + ". Squadron CAPI perks:");
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+            reportOnce = false;
         }
     }
 

@@ -3,6 +3,9 @@ package nl.jixxed.eliteodysseymaterials.watchdog;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.subjects.PublishSubject;
 import javafx.application.Platform;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +28,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,13 +43,18 @@ public class JournalWatcher {
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private final Pattern journalPatternTimestamp = Pattern.compile("Journal\\.(\\d+)\\.(\\d{2})\\.log");
     private final Pattern journalPatternDate = Pattern.compile("Journal\\.(\\d{4})-(\\d{2})-(\\d{2})T(\\d{6})\\.(\\d{2})\\.log");
+    private final PublishSubject<File> modifyEventSubject = PublishSubject.create();
+    private Disposable subscription;
 
     public JournalWatcher() {
         objectMapper.registerModule(new JavaTimeModule());
     }
 
     public void watch(final File folder, final Consumer<File> fileModifiedProcessor, final Consumer<File> fileSwitchedProcessor) {
-//        Platform.runLater(() -> {
+        Observable<File> debouncedModifyEvents = modifyEventSubject
+                .debounce(100, TimeUnit.MILLISECONDS);
+        subscription = debouncedModifyEvents.subscribe(fileModifiedProcessor::accept, throwable ->
+                log.error("Error processing file", throwable));
         try {
             this.watchedFolder = folder;
             if (!folder.exists()) {
@@ -276,6 +285,9 @@ public class JournalWatcher {
     public void stop() {
         if (this.fileWatcher != null) {
             this.fileWatcher.stop();
+        }
+        if (this.subscription != null) {
+            subscription.dispose();
         }
     }
 

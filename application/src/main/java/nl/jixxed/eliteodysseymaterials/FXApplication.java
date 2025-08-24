@@ -75,6 +75,7 @@ public class FXApplication extends Application {
     private TimeStampedGameStateWatcher timeStampedShipLockerWatcher;
     private TimeStampedGameStateWatcher timeStampedBackPackWatcher;
     private GameStateWatcher fleetCarrierWatcher;
+    private GameStateWatcher squadronWatcher;
     private StateFileWatcher statusWatcher;
     private final JournalWatcher journalWatcher = new JournalWatcher();
     private final DeeplinkWatcher deeplinkWatcher = new DeeplinkWatcher();
@@ -162,7 +163,9 @@ public class FXApplication extends Application {
 //                    });
                     log.debug("setupFleetCarrierWatcher");
 //                    Platform.runLater(() ->
-                    setupFleetCarrierWatcher(this.journalWatcher.getWatchedFolder(), APPLICATION_STATE.getPreferredCommander().orElse(null));
+                    setupFleetCarrierWatcher(APPLICATION_STATE.getPreferredCommander().orElse(null));
+                    log.debug("setupSquadronWatcher");
+                    setupSquadronWatcher(APPLICATION_STATE.getPreferredCommander().orElse(null));
 //                    );
                     log.debug("loadingScreen");
 //                    Platform.runLater(                            () ->
@@ -439,7 +442,7 @@ public class FXApplication extends Application {
 
     }
 
-    private void setupFleetCarrierWatcher(final File watchedFolder, final Commander commander) {
+    private void setupFleetCarrierWatcher(final Commander commander) {
 
         if (this.fleetCarrierWatcher != null) {
             this.fleetCarrierWatcher.stop();
@@ -455,9 +458,31 @@ public class FXApplication extends Application {
             ApplicationState.getInstance().getFcMaterials().set(false);
             this.fleetCarrierWatcher.watch(watchedFolderFleetCarrier, file -> {
                 if (CAPIService.getInstance().getActive().get()) {
-                    FileProcessor.processCapiFile(file, JournalEventType.CAPIFLEETCARRIER);
+                    FileProcessor.processCapiFleetCarrierFile(file, JournalEventType.CAPIFLEETCARRIER);
                 }
             }, AppConstants.FLEETCARRIER_FILE, false, JournalEventType.CAPIFLEETCARRIER);
+        }
+
+    }
+    private void setupSquadronWatcher(final Commander commander) {
+
+        if (this.squadronWatcher != null) {
+            this.squadronWatcher.stop();
+        }
+        if (commander != null) {
+            final String pathname = commander.getCommanderFolder();
+            final File watchedFolderSquadron = new File(pathname);
+            if (!watchedFolderSquadron.exists()) {
+                watchedFolderSquadron.mkdirs();
+            }
+
+            this.squadronWatcher = new GameStateWatcher();
+            ApplicationState.getInstance().getSquadronCarrierMaterials().set(false);
+            this.squadronWatcher.watch(watchedFolderSquadron, file -> {
+                if (CAPIService.getInstance().getActive().get()) {
+                    FileProcessor.processCapiSquadronFile(file, JournalEventType.CAPISQUADRON);
+                }
+            }, AppConstants.SQUADRON_FILE, false, JournalEventType.CAPISQUADRON);
         }
 
     }
@@ -722,6 +747,9 @@ public class FXApplication extends Application {
         StorageService.resetHorizonsCommodityCounts();
         if (this.fleetCarrierWatcher != null) {
             this.fleetCarrierWatcher.stop();
+        }
+        if (this.squadronWatcher != null) {
+            this.squadronWatcher.stop();
         }
         this.timeStampedCargoWatcher.stop();
         this.timeStampedShipLockerWatcher.stop();

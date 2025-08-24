@@ -253,7 +253,7 @@ public class FileProcessor {
         file.ifPresent(f -> Platform.runLater(() -> MessageHandler.handleStateFileMessage(f)));
     }
 
-    public static synchronized void processCapiFile(final Optional<File> file, final JournalEventType journalEventType) {
+    public static synchronized void processCapiFleetCarrierFile(final Optional<File> file, final JournalEventType journalEventType) {
         if (journalEventType.equals(JournalEventType.CAPIFLEETCARRIER)) {
             file.ifPresentOrElse(
                     f -> Platform.runLater(() -> {
@@ -265,6 +265,22 @@ public class FileProcessor {
                         MessageHandler.clearCapi();
                         ApplicationState.getInstance().getFcMaterials().set(false);
                         EventService.publish(new CapiFleetCarrierEvent());
+                    }));
+
+        }
+    }
+    public static synchronized void processCapiSquadronFile(final Optional<File> file, final JournalEventType journalEventType) {
+        if (journalEventType.equals(JournalEventType.CAPISQUADRON)) {
+            file.ifPresentOrElse(
+                    f -> Platform.runLater(() -> {
+                        MessageHandler.handleCapiMessage(f, journalEventType);
+                        ApplicationState.getInstance().getSquadronCarrierMaterials().set(true);
+                        EventService.publish(new CapiSquadronEvent());
+                    }),
+                    () -> Platform.runLater(() -> {
+                        MessageHandler.clearCapi();
+                        ApplicationState.getInstance().getSquadronCarrierMaterials().set(false);
+                        EventService.publish(new CapiSquadronEvent());
                     }));
 
         }

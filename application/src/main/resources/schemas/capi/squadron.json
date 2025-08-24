@@ -1,0 +1,304 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CapiSquadron",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "number"
+    },
+    "name": {
+      "type": "string"
+    },
+    "tag": {
+      "type": "string"
+    },
+    "ownerId": {
+      "type": "number"
+    },
+    "platform": {
+      "type": "string"
+    },
+    "created": {
+      "type": "string"
+    },
+    "acceptingNewMembers": {
+      "type": "number"
+    },
+    "powerId": {},
+    "powerName": {
+      "type": "string"
+    },
+    "superpowerId": {
+      "type": "number"
+    },
+    "superpowerName": {
+      "type": "string"
+    },
+    "factionId": {
+      "type": "number"
+    },
+    "factionName": {
+      "type": "string"
+    },
+    "factionHomeSystemId": {
+      "type": "number"
+    },
+    "factionHomeSystemName": {
+      "type": "string"
+    },
+    "userTags": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "memberCount": {
+      "type": "number"
+    },
+    "full": {
+      "type": "number"
+    },
+    "description": {
+      "type": "string"
+    },
+    "motto": {
+      "type": "string"
+    },
+    "isMentoring": {
+      "type": "boolean"
+    },
+    "perks": {
+      "type": "object",
+      "properties": {
+        "primary": {
+          "type": "string"
+        },
+        "secondary": {
+          "type": "string"
+        },
+        "cooldowns": {
+          "type": "object",
+          "properties": {
+            "primary": {
+              "type": "number"
+            },
+            "secondary": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "primary",
+            "secondary"
+          ]
+        }
+      },
+      "required": [
+        "primary",
+        "secondary",
+        "cooldowns"
+      ]
+    },
+    "active7Days": {
+      "type": "number"
+    },
+    "active30Days": {
+      "type": "number"
+    },
+    "squadronCarrier": {
+      "type": "object",
+      "$ref": "fleetcarrier.json"
+    },
+    "members": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "squadron_id": {
+            "type": "number"
+          },
+          "member_id": {
+            "type": "number"
+          },
+          "joined": {
+            "type": "string"
+          },
+          "expires_ts": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string"
+          },
+          "requested": {
+            "type": "string"
+          },
+          "requested_ts": {
+            "type": "number"
+          },
+          "rank_id": {
+            "type": "number"
+          },
+          "requestletter": {
+            "type": "string"
+          },
+          "credit_contributions": {
+            "type": "number"
+          },
+          "presence": {
+            "type": "boolean"
+          },
+          "biography": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "number"
+          },
+          "rankCombat": {
+            "type": "number"
+          },
+          "rankExplore": {
+            "type": "number"
+          },
+          "rankTrade": {
+            "type": "number"
+          },
+          "rankCqc": {
+            "type": "number"
+          },
+          "soldierRank": {
+            "type": "number"
+          },
+          "exobiologistRank": {
+            "type": "number"
+          },
+          "empireRank": {
+            "type": "number"
+          },
+          "federationRank": {
+            "type": "number"
+          },
+          "powerRank": {
+            "type": "number"
+          },
+          "powerId": {
+            "type": "number"
+          },
+          "lastOnline": {
+            "type": "string"
+          },
+          "lastOnline_ts": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "lastLocationId": {
+            "type": "number"
+          },
+          "lastLocation": {
+            "type": "string"
+          },
+          "shipName": {
+            "type": "string"
+          },
+          "shipModel": {
+            "type": "string"
+          },
+          "userPlayTime": {
+            "type": "number"
+          },
+          "systemAddr": {
+            "type": "number"
+          },
+          "avatarXML": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "squadron_id",
+          "member_id",
+          "joined",
+          "expires_ts",
+          "status",
+          "requested",
+          "requested_ts",
+          "rank_id",
+          "credit_contributions",
+          "presence",
+          "biography",
+          "user_id",
+          "rankCombat",
+          "rankExplore",
+          "rankTrade",
+          "rankCqc",
+          "soldierRank",
+          "exobiologistRank",
+          "empireRank",
+          "federationRank",
+          "lastOnline",
+          "lastOnline_ts",
+          "name",
+          "lastLocationId",
+          "lastLocation",
+          "shipName",
+          "shipModel",
+          "userPlayTime",
+          "systemAddr"
+        ]
+      }
+    },
+    "bank": {
+      "type": "object",
+      "properties": {
+        "credits": {
+          "type": "object",
+          "existingJavaType": "java.util.Map<String,BankItem[]>"
+        },
+        "commodities": {
+          "type": "object",
+          "existingJavaType": "java.util.Map<String,BankItem[]>"
+        },
+        "microresources": {
+          "type": "object",
+          "existingJavaType": "java.util.Map<String,BankItem[]>"
+        }
+      },
+      "required": [
+        "credits",
+        "commodities",
+        "microresources"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "tag",
+    "ownerId",
+    "platform",
+    "created",
+    "acceptingNewMembers",
+    "powerId",
+    "powerName",
+    "superpowerId",
+    "superpowerName",
+    "factionId",
+    "factionName",
+    "factionHomeSystemId",
+    "factionHomeSystemName",
+    "userTags",
+    "memberCount",
+    "full",
+    "description",
+    "motto",
+    "isMentoring",
+    "perks",
+    "active7Days",
+    "active30Days",
+    "squadronCarrier",
+    "members",
+    "bank"
+  ]
+}

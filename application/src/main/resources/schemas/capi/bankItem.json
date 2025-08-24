@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-12/schema#",
+  "title": "BankItem",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "locName": {
+      "type": "string"
+    },
+    "qty": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "locName",
+    "qty"
+  ]
+}
