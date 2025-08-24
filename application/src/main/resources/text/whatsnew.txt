@@ -1,3 +1,7 @@
+Version 2.241
+-------------
+Optimization for reading CAPI files
+
 Version 2.240
 -------------
 Fixed an issue where engineering your current ship would still show old stats on the modules during the session

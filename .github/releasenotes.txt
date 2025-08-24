@@ -6,6 +6,4 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Fixed an issue where engineering your current ship would still show old stats on the modules during the session
-Added legacy commander filter under settings, enabled by default
-Fixed resizing a hardpoint could change the mounting type
+Optimization for reading CAPI files
