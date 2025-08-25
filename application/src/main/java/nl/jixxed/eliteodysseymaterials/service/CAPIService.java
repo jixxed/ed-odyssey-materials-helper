@@ -92,9 +92,10 @@ public class CAPIService {
                         Platform.runLater(() -> {
                             if(commanderCheck.expected != null) {
                                 NotificationService.showInformation(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.auth.bad.account", commanderCheck.expected, commanderCheck.actual));
-                            }else{
-                                NotificationService.showInformation(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.error"));
                             }
+//                            else{
+//                                NotificationService.showInformation(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.error"));
+//                            }
                             this.active.set(false);
                         });
                     }
@@ -156,7 +157,7 @@ public class CAPIService {
             final String url = GameVersion.LEGACY.equals(commander.getGameVersion()) ? "https://legacy-companion.orerve.net/profile" : "https://companion.orerve.net/profile";
             final OAuthRequest oAuthRequest = new OAuthRequest(Verb.GET, url);
             try {
-                Response response = this.request(oAuthRequest);
+                Response response = this.request(oAuthRequest, true);
                 if (response.getCode() == 200) {
                     ObjectMapper objectMapper = new ObjectMapper();
                     final JsonNode jsonNode = objectMapper.readTree(response.getBody());
@@ -280,9 +281,11 @@ public class CAPIService {
             return expected != null && expected.equalsIgnoreCase(actual);
         }
     }
-
     public synchronized Response request(OAuthRequest oAuthRequest) throws IOException, ExecutionException, InterruptedException {
-        if(active.get()) {
+        return request(oAuthRequest, false);
+    }
+    private synchronized Response request(OAuthRequest oAuthRequest, boolean skipActiveCheck) throws IOException, ExecutionException, InterruptedException {
+        if(skipActiveCheck || active.get()) {
             oAuth20Service.signRequest(oAuth2AccessToken, oAuthRequest);
             log.info("requesting data from CAPI: " + oAuthRequest.getUrl());
             Response response = oAuth20Service.execute(oAuthRequest);
