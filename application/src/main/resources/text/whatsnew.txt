@@ -1,3 +1,8 @@
+Version 2.242
+-------------
+Added CAPI endpoint indicators to show if fleetcarrier or squadron endpoints are available and used
+Fixed a bug that could prevent connecting to the Frontier API
+
 Version 2.241
 -------------
 Optimization for reading CAPI files
