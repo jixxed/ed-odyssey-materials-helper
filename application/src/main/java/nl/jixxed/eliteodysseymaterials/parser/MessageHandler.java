@@ -1,9 +1,10 @@
 package nl.jixxed.eliteodysseymaterials.parser;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.deser.BeanDeserializerModifier;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -13,8 +14,10 @@ import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.*;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiFleetCarrierMessageProcessor;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiMessageProcessor;
-import nl.jixxed.eliteodysseymaterials.schemas.capi.CapiFleetcarrier;
-import nl.jixxed.eliteodysseymaterials.schemas.capi.CapiSquadron;
+import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiSquadronMessageProcessor;
+import nl.jixxed.eliteodysseymaterials.schemas.capi.fleetcarrier.CapiFleetcarrier;
+import nl.jixxed.eliteodysseymaterials.schemas.capi.squadron.CapiSquadron;
+import nl.jixxed.eliteodysseymaterials.schemas.capi.squadron.ShipItem;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Event;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -31,13 +34,31 @@ import java.util.Map;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class MessageHandler {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    private static final ObjectMapper OBJECT_MAPPER2 = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER_CAPI = new ObjectMapper();
 
     static {
         OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         OBJECT_MAPPER.registerModule(new JavaTimeModule());
-        OBJECT_MAPPER2.registerModule(new JavaTimeModule());
-        OBJECT_MAPPER2.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
+        OBJECT_MAPPER_CAPI.registerModule(new JavaTimeModule());
+        OBJECT_MAPPER_CAPI.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
+        SimpleModule shipsModule = new SimpleModule();
+        shipsModule.setDeserializerModifier(new BeanDeserializerModifier() {
+            @Override
+            public JsonDeserializer<?> modifyMapDeserializer(
+                    DeserializationConfig config,
+                    MapType type,
+                    BeanDescription beanDesc,
+                    JsonDeserializer<?> deserializer
+            ) {
+                if (type.getKeyType().getRawClass() == String.class
+                        && type.getContentType().getRawClass() == ShipItem[].class) {
+                    return new ShipsDeserializer();
+                }
+                return deserializer;
+            }
+        });
+        OBJECT_MAPPER_CAPI.registerModule(shipsModule);
+
     }
 
     private static final Map<JournalEventType, MessageProcessor<? extends Event>> messageProcessors = Map.ofEntries(
@@ -130,7 +151,8 @@ class MessageHandler {
             Map.entry(JournalEventType.LOADGAME, new LoadGameMessageProcessor())
     );
     private static final Map<JournalEventType, CapiMessageProcessor> capiMessageProcessors = Map.ofEntries(
-            Map.entry(JournalEventType.CAPIFLEETCARRIER, new CapiFleetCarrierMessageProcessor())
+            Map.entry(JournalEventType.CAPIFLEETCARRIER, new CapiFleetCarrierMessageProcessor()),
+            Map.entry(JournalEventType.CAPISQUADRON, new CapiSquadronMessageProcessor())
     );
     private static final String EVENT = "event";
     private static final String TIMESTAMP = "timestamp";
@@ -220,11 +242,11 @@ class MessageHandler {
         try {
             final String message = Files.readString(file.toPath());
             testAndReportCapi(message, journalEventType);
-            final JsonNode jsonNode = OBJECT_MAPPER.readTree(message);
             log.info("event: " + journalEventType);
             final CapiMessageProcessor messageProcessor = capiMessageProcessors.get(journalEventType);
             if (messageProcessor != null) {
-                messageProcessor.process(jsonNode);
+                var event = OBJECT_MAPPER_CAPI.readValue(message, messageProcessor.getMessageClass());
+                messageProcessor.process(event);
                 EventService.publish(new JournalLineProcessedEvent("now", journalEventType, file));
             }
         } catch (final JsonProcessingException e) {
@@ -240,28 +262,31 @@ class MessageHandler {
                 return;
             }
             if (JournalEventType.CAPIFLEETCARRIER.equals(journalEventType)) {
-                OBJECT_MAPPER2.readValue(message, CapiFleetcarrier.class);
+                OBJECT_MAPPER_CAPI.readValue(message, CapiFleetcarrier.class);
             } else if (JournalEventType.CAPISQUADRON.equals(journalEventType)) {
-                CapiSquadron capiSquadron = OBJECT_MAPPER2.readValue(message, CapiSquadron.class);
+                CapiSquadron capiSquadron = OBJECT_MAPPER_CAPI.readValue(message, CapiSquadron.class);
                 reportOnce(capiSquadron);
             }
         } catch (final Exception e) {
             //report
-            if (!e.getMessage().startsWith("Unexpected end-of-input"))
-                ReportService.reportJournal("capi", message, "App version: " + VersionService.getBuildVersion() + ". Unknown FC CAPI event: " + e.getMessage());
+            if (!e.getMessage().startsWith("Unexpected end-of-input")) {
+                String channel = JournalEventType.CAPIFLEETCARRIER.equals(journalEventType) ? "capi" : "squadron";
+                ReportService.reportJournal(channel, message, "App version: " + VersionService.getBuildVersion() + ". Unknown " + channel + " event: " + e.getMessage());
+            }
 
         }
     }
 
     private static Boolean reportOnce = true;
+
     private static void reportOnce(CapiSquadron capiSquadron) {
-        if(reportOnce) {
+        if (reportOnce) {
             try {
-                ReportService.reportJournal("squadron", OBJECT_MAPPER2.writeValueAsString(capiSquadron.getPerks()), "App version: " + VersionService.getBuildVersion() + ". Squadron CAPI perks:");
+                ReportService.reportJournal("squadron", OBJECT_MAPPER_CAPI.writeValueAsString(capiSquadron.getPerks()), "App version: " + VersionService.getBuildVersion() + ". Squadron CAPI perks:");
+                reportOnce = false;
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
-            reportOnce = false;
         }
     }
 

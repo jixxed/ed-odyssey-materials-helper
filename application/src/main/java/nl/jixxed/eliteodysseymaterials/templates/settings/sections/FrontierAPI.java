@@ -1,12 +1,13 @@
 package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import javafx.scene.shape.Circle;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
+import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.CAPIService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.RegistryService;
@@ -39,10 +40,43 @@ public class FrontierAPI extends DestroyableVBox implements DestroyableEventTemp
                 .withStyleClass(SETTINGS_LABEL_CLASS)
                 .withText("tab.settings.capi.explain")
                 .build();
+        final DestroyableLabel capiExplain2Label = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.capi.explain2")
+                .build();
         final DestroyableHBox capiConnectSetting = createCapiConnectSetting();
+        final DestroyableHBox capiConnectStatus = createCapiConnectStatus();
 
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
-        this.getNodes().addAll(capiLabel, capiExplainLabel, capiConnectSetting);
+        this.getNodes().addAll(capiLabel, capiExplainLabel, capiExplain2Label, capiConnectSetting, capiConnectStatus);
+    }
+
+    private DestroyableHBox createCapiConnectStatus() {
+
+        final DestroyableLabel capiStatusLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.capi.status.endpoints")
+                .build();
+        final DestroyableLabel capiFleetCarrierStatusLabel = LabelBuilder.builder()
+                .withText("tab.settings.capi.status.fleetcarrier")
+                .build();
+        final DestroyableLabel capiSquadronStatusLabel = LabelBuilder.builder()
+                .withText("tab.settings.capi.status.squadron")
+                .build();
+        DestroyableFontAwesomeIconView capiFleetCarrierStatusCircle = FontAwesomeIconViewBuilder.builder()
+                .withStyleClass("capi-status")
+                .withIcon(FontAwesomeIcon.CIRCLE)
+                .withDisableProperty(ApplicationState.getInstance().getFleetCarrierEndpoint().not())
+                .build();
+        DestroyableFontAwesomeIconView capiSquadronStatusCircle = FontAwesomeIconViewBuilder.builder()
+                .withStyleClass("capi-status")
+                .withIcon(FontAwesomeIcon.CIRCLE)
+                .withDisableProperty(ApplicationState.getInstance().getSquadronEndpoint().not())
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(capiStatusLabel, capiFleetCarrierStatusCircle, capiFleetCarrierStatusLabel, capiSquadronStatusCircle, capiSquadronStatusLabel)
+                .buildHBox();
     }
 
     @Override

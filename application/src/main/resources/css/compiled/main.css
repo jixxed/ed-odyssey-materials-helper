@@ -4225,6 +4225,10 @@
       .app .application-screen .settings-tab-content .settings-vbox .settingsblock {
         -fx-background-color: #0f0f0f;
         -fx-padding: 0.25em; }
+        .app .application-screen .settings-tab-content .settings-vbox .settingsblock .capi-status {
+          -fx-fill: #89d07f; }
+          .app .application-screen .settings-tab-content .settings-vbox .settingsblock .capi-status:disabled {
+            -fx-fill: #ff7c7c; }
       .app .application-screen .settings-tab-content .settings-vbox .settings-header {
         -fx-font-size: 1.35em;
         -fx-font-weight: bold; }

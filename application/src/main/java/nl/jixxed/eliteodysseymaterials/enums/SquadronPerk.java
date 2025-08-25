@@ -1,50 +1,47 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public enum SquadronPerk {
-    BONUS_MINING_FRAGMENT,
-    POWERPLAY_MERITS,
-    EXP_GAIN,
-    MISSION_REWARD_BOOST,
-    CARGO_INSURANCE,
-    DSS_EFFICIENCY,
-    COLONISATION_DELIVERY_PROFITS,
-    FACTION_INFLUENCE_GAIN,
-    CQC_RANK_GAIN,
-    REDUCED_SYSTEM_COLONISATION_CLAIM_COST,
-    REDUCED_FSD_SYNTHESIS_COSTS,
-    REDUCED_LIMPET_SYNTHESIS_COSTS,
-    NOTORIETY_DECAY,
-    NPC_CREW_RANK_GAIN,
-    REDUCED_PREMIUM_AMMO_SYNTHESIS_COSTS,
-    WING_TRADE_REWARDS,
-    WING_COMBAT_REWARDS;
-//        "primary": "bonusMiningFragment",
-//                "secondary": "powerplayMerits",
-//        "primary": "expGain", increased pilots' federation rank gains
-//                "secondary": "missionRewardBoost", increased mission rewards
-//        "primary": "cargoInsurance", cargo insurance
-//                "secondary": "dssEfficiency",  increased minimum map efficiency target
-//increased colonisation delivery profits
-    //increased faction influence gains
+    BONUS_MINING_FRAGMENT("bonusMiningFragment"),
+    CARGO_INSURANCE("cargoInsurance"),
+    COLONISATION_CLAIM_COST("colonisationClaimCost"),
+    COLONISATION_TRADE_BOND("colonisationTradeBond"),
+    CQC_EXP_GAIN("cqcExpGain"),
+    DSS_EFFICIENCY("dssEfficiency"),
+    EXP_GAIN("expGain"),
+    FACTION_INFLUENCE("factionInfluence"),
+    FSD_SYNTHESIS(""),
+    LIMPET_SYNTHESIS(""),
+    MISSION_REWARD_BOOST("missionRewardBoost"),
+    NOTORIETY_DECAY("notorietyDecay"),
+    NPC_CREW_EXP("npcCrewExp"),
+    POWERPLAY_MERITS("powerplayMerits"),
+    PREMIUM_AMMO_SYNTHESIS("premiumAmmoSynthesis"),
+    SALE_WING_REWARDS("saleWingRewards"),
+    VOUCHER_BOND_WING_REWARDS("voucherBondWingRewards");
+
+    private final String id;
 
 //    primary perks
-    // increased mining fragment yield
-    // cargo insurance
+    // increased mining fragment yield - bonusMiningFragment
+    // cargo insurance - cargoInsurance
     // reduced system colonisation claim cost (PRIMARY)
-    // increased colonisation delivery profits (PRIMARY)
+    // increased colonisation delivery profits (PRIMARY) - colonisationTradeBond
     // increased cqc rank gains (PRIMARY)
-    // increased minimum map efficiency target
-    // increased pilots' federation rank gains
-    // increased faction influence gains
+    // increased minimum map efficiency target - dssEfficiency
+    // increased pilots' federation rank gains - expGain
+    // increased faction influence gains - factionInfluence
     // reduced fsd synthesis costs (PRIMARY)
     // reduced limpet synthesis costs (PRIMARY)
-    // increased mission rewards
-    // notoriety decay (PRIMARY)
+    // increased mission rewards - missionRewardBoost
+    // notoriety decay (PRIMARY) - notorietyDecay
     // increased npc crew rank gains
-    // increased powerplay merity gains
-    // reduced premium ammo synthesis costs (PRIMARY)
-    // increased wing trade rewards
-    // increased wing combat rewards
+    // increased powerplay merity gains - powerplayMerits
+    // reduced premium ammo synthesis costs (PRIMARY) - premiumAmmoSynthesis
+    // increased wing trade rewards - saleWingRewards
+    // increased wing combat rewards - voucherBondWingRewards
 //    faction perks
     // increased mining fragment yield
     // cargo insurance

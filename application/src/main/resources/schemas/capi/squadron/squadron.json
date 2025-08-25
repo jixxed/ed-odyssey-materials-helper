@@ -4,7 +4,7 @@
   "type": "object",
   "properties": {
     "id": {
-      "type": "number"
+      "type": "integer"
     },
     "name": {
       "type": "string"
@@ -13,7 +13,7 @@
       "type": "string"
     },
     "ownerId": {
-      "type": "number"
+      "type": "integer"
     },
     "platform": {
       "type": "string"
@@ -22,26 +22,31 @@
       "type": "string"
     },
     "acceptingNewMembers": {
-      "type": "number"
+      "type": "integer"
     },
-    "powerId": {},
+    "powerId": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
     "powerName": {
       "type": "string"
     },
     "superpowerId": {
-      "type": "number"
+      "type": "integer"
     },
     "superpowerName": {
       "type": "string"
     },
     "factionId": {
-      "type": "number"
+      "type": "integer"
     },
     "factionName": {
       "type": "string"
     },
     "factionHomeSystemId": {
-      "type": "number"
+      "type": "integer"
     },
     "factionHomeSystemName": {
       "type": "string"
@@ -49,14 +54,14 @@
     "userTags": {
       "type": "array",
       "items": {
-        "type": "number"
+        "type": "integer"
       }
     },
     "memberCount": {
-      "type": "number"
+      "type": "integer"
     },
     "full": {
-      "type": "number"
+      "type": "integer"
     },
     "description": {
       "type": "string"
@@ -80,10 +85,10 @@
           "type": "object",
           "properties": {
             "primary": {
-              "type": "number"
+              "type": "integer"
             },
             "secondary": {
-              "type": "number"
+              "type": "integer"
             }
           },
           "required": [
@@ -99,14 +104,14 @@
       ]
     },
     "active7Days": {
-      "type": "number"
+      "type": "integer"
     },
     "active30Days": {
-      "type": "number"
+      "type": "integer"
     },
     "squadronCarrier": {
       "type": "object",
-      "$ref": "fleetcarrier.json"
+      "$ref": "../fleetcarrier/fleetcarrier.json"
     },
     "members": {
       "type": "array",
@@ -114,16 +119,16 @@
         "type": "object",
         "properties": {
           "squadron_id": {
-            "type": "number"
+            "type": "integer"
           },
           "member_id": {
-            "type": "number"
+            "type": "integer"
           },
           "joined": {
             "type": "string"
           },
           "expires_ts": {
-            "type": "number"
+            "type": "integer"
           },
           "status": {
             "type": "string"
@@ -132,16 +137,19 @@
             "type": "string"
           },
           "requested_ts": {
-            "type": "number"
+            "type": "integer"
           },
           "rank_id": {
-            "type": "number"
+            "type": "integer"
           },
           "requestletter": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "credit_contributions": {
-            "type": "number"
+            "type": "integer"
           },
           "presence": {
             "type": "boolean"
@@ -153,49 +161,55 @@
             "type": "string"
           },
           "user_id": {
-            "type": "number"
+            "type": "integer"
           },
           "rankCombat": {
-            "type": "number"
+            "type": "integer"
           },
           "rankExplore": {
-            "type": "number"
+            "type": "integer"
           },
           "rankTrade": {
-            "type": "number"
+            "type": "integer"
           },
           "rankCqc": {
-            "type": "number"
+            "type": "integer"
           },
           "soldierRank": {
-            "type": "number"
+            "type": "integer"
           },
           "exobiologistRank": {
-            "type": "number"
+            "type": "integer"
           },
           "empireRank": {
-            "type": "number"
+            "type": "integer"
           },
           "federationRank": {
-            "type": "number"
+            "type": "integer"
           },
           "powerRank": {
-            "type": "number"
+            "type": [
+              "integer",
+              "null"
+            ]
           },
           "powerId": {
-            "type": "number"
+            "type": [
+              "integer",
+              "null"
+            ]
           },
           "lastOnline": {
             "type": "string"
           },
           "lastOnline_ts": {
-            "type": "number"
+            "type": "integer"
           },
           "name": {
             "type": "string"
           },
           "lastLocationId": {
-            "type": "number"
+            "type": "integer"
           },
           "lastLocation": {
             "type": "string"
@@ -207,10 +221,10 @@
             "type": "string"
           },
           "userPlayTime": {
-            "type": "number"
+            "type": "integer"
           },
           "systemAddr": {
-            "type": "number"
+            "type": "integer"
           },
           "avatarXML": {
             "type": "string"
@@ -263,12 +277,14 @@
         "microresources": {
           "type": "object",
           "existingJavaType": "java.util.Map<String,BankItem[]>"
+        },
+        "ships": {
+          "type": "object",
+          "existingJavaType": "java.util.Map<String,ShipItem[]>"
         }
       },
       "required": [
-        "credits",
-        "commodities",
-        "microresources"
+        "credits"
       ]
     }
   },

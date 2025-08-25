@@ -104,3 +104,7 @@
 "tab.settings.collector.mode","Collector mode","","Collector mode","Collector mode","Collector mode","Collector mode","Режим сборщика","收集者模式"
 "tab.settings.collector.mode.explain","This will show available space as incomplete for horizons materials","","This will show available space as incomplete for horizons materials","This will show available space as incomplete for horizons materials","This will show available space as incomplete for horizons materials","This will show available space as incomplete for horizons materials","Будет показано доступное пространство как незавершенное для материалов Horizons","这会将地平线材料的可用存储空间标记为材料缺失。"
 "tab.settings.hidelegacy","Hide legacy commanders","","","","","","",""
+"tab.settings.capi.status.endpoints","Endpoints","","","","","","",""
+"tab.settings.capi.status.fleetcarrier","Fleetcarrier","","","","","","",""
+"tab.settings.capi.status.squadron","Squadron","","","","","","",""
+"tab.settings.capi.explain2","Endpoints that return an error or empty responses are automatically disabled. This can happen when you don't own a fleetcarrier or aren't a member of a squadron.","","","","","","",""

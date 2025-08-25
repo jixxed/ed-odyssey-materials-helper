@@ -19,11 +19,11 @@
           "type": "string"
         },
         "salary": {
-          "type": "number"
+          "type": "integer"
         },
         "hiringPrice": {
           "type": [
-            "number",
+            "integer",
             "null"
           ]
         },
@@ -47,7 +47,7 @@
         "type": "object",
         "properties": {
           "wages": {
-            "type": "number"
+            "type": "integer"
           },
           "from": {
             "type": "string"
@@ -132,40 +132,40 @@
       "type": "object",
       "properties": {
         "shipPacks": {
-          "type": "number"
+          "type": "integer"
         },
         "modulePacks": {
-          "type": "number"
+          "type": "integer"
         },
         "cargoForSale": {
-          "type": "number"
+          "type": "integer"
         },
         "cargoNotForSale": {
-          "type": "number"
+          "type": "integer"
         },
         "cargoSpaceReserved": {
-          "type": "number"
+          "type": "integer"
         },
         "crew": {
-          "type": "number"
+          "type": "integer"
         },
         "freeSpace": {
-          "type": "number"
+          "type": "integer"
         },
         "microresourceCapacityTotal": {
-          "type": "number"
+          "type": "integer"
         },
         "microresourceCapacityFree": {
-          "type": "number"
+          "type": "integer"
         },
         "microresourceCapacityUsed": {
-          "type": "number"
+          "type": "integer"
         },
         "microresourceCapacityReserved": {
-          "type": "number"
+          "type": "integer"
         },
         "squadronBankTotal": {
-          "type": "number"
+          "type": "integer"
         }
       },
       "required": [
@@ -203,7 +203,7 @@
                 "type": "string"
               },
               "visitDurationSeconds": {
-                "type": "number"
+                "type": "integer"
               },
               "starsystem": {
                 "type": "string"
@@ -218,7 +218,7 @@
           }
         },
         "totalDistanceJumpedLY": {
-          "type": "number"
+          "type": "integer"
         },
         "currentJump": {}
       },
@@ -232,19 +232,19 @@
       "type": "object",
       "properties": {
         "cargoTotalValue": {
-          "type": "number"
+          "type": "integer"
         },
         "allTimeProfit": {
-          "type": "number"
+          "type": "integer"
         },
         "numCommodsForSale": {
-          "type": "number"
+          "type": "integer"
         },
         "numCommodsPurchaseOrders": {
-          "type": "number"
+          "type": "integer"
         },
         "balanceAllocForPurchaseOrders": {
-          "type": "number"
+          "type": "integer"
         }
       },
       "required": [
@@ -259,19 +259,19 @@
       "type": "object",
       "properties": {
         "cargoTotalValue": {
-          "type": "number"
+          "type": "integer"
         },
         "allTimeProfit": {
-          "type": "number"
+          "type": "integer"
         },
         "numCommodsForSale": {
-          "type": "number"
+          "type": "integer"
         },
         "numCommodsPurchaseOrders": {
-          "type": "number"
+          "type": "integer"
         },
         "balanceAllocForPurchaseOrders": {
-          "type": "number"
+          "type": "integer"
         }
       },
       "required": [
@@ -286,37 +286,37 @@
       "type": "object",
       "properties": {
         "bankBalance": {
-          "type": "number"
+          "type": "integer"
         },
         "bankReservedBalance": {
-          "type": "number"
+          "type": "integer"
         },
         "taxation": {
-          "type": "number"
+          "type": "integer"
         },
         "service_taxation": {
           "type": "object",
           "properties": {
             "bartender": {
-              "type": "number"
+              "type": "integer"
             },
             "pioneersupplies": {
-              "type": "number"
+              "type": "integer"
             },
             "rearm": {
-              "type": "number"
+              "type": "integer"
             },
             "refuel": {
-              "type": "number"
+              "type": "integer"
             },
             "repair": {
-              "type": "number"
+              "type": "integer"
             },
             "shipyard": {
-              "type": "number"
+              "type": "integer"
             },
             "outfitting": {
-              "type": "number"
+              "type": "integer"
             }
           },
           "required": [
@@ -330,57 +330,57 @@
           ]
         },
         "numServices": {
-          "type": "number"
+          "type": "integer"
         },
         "numOptionalServices": {
-          "type": "number"
+          "type": "integer"
         },
         "debtThreshold": {
-          "type": "number"
+          "type": "integer"
         },
         "maintenance": {
-          "type": "number"
+          "type": "integer"
         },
         "maintenanceToDate": {
-          "type": "number"
+          "type": "integer"
         },
         "coreCost": {
-          "type": "number"
+          "type": "integer"
         },
         "servicesCost": {
-          "type": "number"
+          "type": "integer"
         },
         "servicesCostToDate": {
-          "type": "number"
+          "type": "integer"
         },
         "jumpsCost": {
-          "type": "number"
+          "type": "integer"
         },
         "numJumps": {
-          "type": "number"
+          "type": "integer"
         },
         "bartender": {
           "type": "object",
           "properties": {
             "microresourcesTotalValue": {
-              "type": "number"
+              "type": "integer"
             },
             "allTimeProfit": {
-              "type": "number"
+              "type": "integer"
             },
             "microresourcesForSale": {
-              "type": "number"
+              "type": "integer"
             },
             "microresourcesPurchaseOrders": {
-              "type": "number"
+              "type": "integer"
             },
             "balanceAllocForPurchaseOrders": {
-              "type": "number"
+              "type": "integer"
             },
             "profitHistory": {
               "type": "array",
               "items": {
-                "type": "number"
+                "type": "integer"
               }
             }
           },
@@ -462,7 +462,7 @@
           },
           "originSystem": {
             "type": [
-              "number",
+              "integer",
               "null"
             ]
           },
@@ -470,10 +470,10 @@
             "type": "boolean"
           },
           "qty": {
-            "type": "number"
+            "type": "integer"
           },
           "value": {
-            "type": "number"
+            "type": "integer"
           },
           "stolen": {
             "type": "boolean"
@@ -533,13 +533,13 @@
                     "type": "string"
                   },
                   "total": {
-                    "type": "number"
+                    "type": "integer"
                   },
                   "outstanding": {
-                    "type": "number"
+                    "type": "integer"
                   },
                   "price": {
-                    "type": "number"
+                    "type": "integer"
                   },
                   "blackmarket": {
                     "type": "boolean"
@@ -579,13 +579,13 @@
                     "type": "string"
                   },
                   "total": {
-                    "type": "number"
+                    "type": "integer"
                   },
                   "outstanding": {
-                    "type": "number"
+                    "type": "integer"
                   },
                   "price": {
-                    "type": "number"
+                    "type": "integer"
                   }
                 },
                 "required": [
@@ -618,10 +618,10 @@
             "type": "object",
             "properties": {
               "id": {
-                "type": "number"
+                "type": "integer"
               },
               "quantity": {
-                "type": "number"
+                "type": "integer"
               },
               "name": {
                 "type": "string"
@@ -644,10 +644,10 @@
             "type": "object",
             "properties": {
               "id": {
-                "type": "number"
+                "type": "integer"
               },
               "quantity": {
-                "type": "number"
+                "type": "integer"
               },
               "name": {
                 "type": "string"
@@ -670,10 +670,10 @@
             "type": "object",
             "properties": {
               "id": {
-                "type": "number"
+                "type": "integer"
               },
               "quantity": {
-                "type": "number"
+                "type": "integer"
               },
               "name": {
                 "type": "string"
@@ -706,7 +706,7 @@
             "type": "string"
           },
           "score": {
-            "type": "number"
+            "type": "integer"
           }
         },
         "required": [
@@ -719,7 +719,7 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "number"
+          "type": "integer"
         },
         "name": {
           "type": "string"
@@ -847,7 +847,7 @@
             "type": "object",
             "properties": {
               "id": {
-                "type": "number"
+                "type": "integer"
               },
               "categoryname": {
                 "type": "string"
@@ -856,32 +856,32 @@
                 "type": "string"
               },
               "stock": {
-                "type": "number"
+                "type": "integer"
               },
               "buyPrice": {
-                "type": "number"
+                "type": "integer"
               },
               "sellPrice": {
-                "type": "number"
+                "type": "integer"
               },
               "demand": {
-                "type": "number"
+                "type": "integer"
               },
               "legality": {
                 "type": "string"
               },
               "meanPrice": {
-                "type": "number"
+                "type": "integer"
               },
               "demandBracket": {
                 "type": [
-                  "number",
+                  "integer",
                   "string"
                 ]
               },
               "stockBracket": {
                 "type": [
-                  "number",
+                  "integer",
                   "string"
                 ]
               },

@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.service;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.MarketItem;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Market.Market;
@@ -23,7 +24,7 @@ public class MarketService {
 
     public static void updateMarket(Market event) {
         MARKET_ITEMS.clear();
-        fleetCarrier = "FleetCarrier".equals(event.getStationType()) && event.getMarketID().equals(new BigInteger(UserPreferencesService.getPreference("fleetcarrier.carrier.id", "0")));
+        fleetCarrier = "FleetCarrier".equals(event.getStationType()) && event.getMarketID().equals(new BigInteger(UserPreferencesService.getPreference(PreferenceConstants.FLEET_CARRIER_ID, "0")));
         event.getItems().ifPresent(items -> items.forEach(item -> {
             final String name = item.getName().substring(1, item.getName().length() - 6);
             try {

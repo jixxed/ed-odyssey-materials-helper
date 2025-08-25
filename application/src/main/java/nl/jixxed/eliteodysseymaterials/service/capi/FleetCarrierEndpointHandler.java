@@ -41,7 +41,7 @@ public class FleetCarrierEndpointHandler implements EndpointHandler {
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
 
     @Getter
-    private final AtomicBoolean endpointEnabled = new AtomicBoolean(true);
+    private static final AtomicBoolean endpointEnabled = new AtomicBoolean(true);
 
     public FleetCarrierEndpointHandler(CAPIService capiService) {
         this.capiService = capiService;
@@ -53,11 +53,13 @@ public class FleetCarrierEndpointHandler implements EndpointHandler {
     @Override
     public void enable() {
         endpointEnabled.set(true);
+        APPLICATION_STATE.setFleetCarrierEndpoint(true);
     }
 
     @Override
     public void disable() {
         endpointEnabled.set(false);
+        APPLICATION_STATE.setFleetCarrierEndpoint(false);
     }
 
     @Override
@@ -74,7 +76,6 @@ public class FleetCarrierEndpointHandler implements EndpointHandler {
 
     @Override
     public void requestData() {
-        log.info("Starting request of fleet carrier endpoint handler");
         if (CAPIService.getInstance().getActive().get() && endpointEnabled.get()) {
             APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                 final String pathname = commander.getCommanderFolder();
@@ -83,46 +84,50 @@ public class FleetCarrierEndpointHandler implements EndpointHandler {
                 final File endpointFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.FLEETCARRIER_FILE);
                 if (isOutdated(endpointFile)) {
                     this.executor.submit(() -> {
-                        final String url = GameVersion.LEGACY.equals(commander.getGameVersion()) ? "https://legacy-companion.orerve.net/fleetcarrier" : "https://companion.orerve.net/fleetcarrier";
-                        final OAuthRequest oAuthRequest = new OAuthRequest(Verb.GET, url);
-                        try {
-                            Response response = capiService.request(oAuthRequest);
-                            // handle response
-                            if (response.getCode() == 204) {
-                                log.warn("Frontier API returned a " + response.getCode() + "(No fleetcarrier). Disabling FC endpoint.");
-                                // no FC -> disable endpoint
-                                    endpointEnabled.set(false);
-                            } else if (response.getCode() == 400) {
-                                log.warn("Frontier API returned a " + response.getCode() + "(No game entitlement). Disabling FC endpoint.");
-                                // no FC -> disable endpoint
-                                endpointEnabled.set(false);
-                                Platform.runLater(() -> {
-                                    NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.400"));
-                                });
-                            } else if (response.getCode() == 200) {
-                                log.info("Frontier API returned a " + response.getCode() + ". Storing response.");
-                                // write response to file
-                                try (final FileOutputStream fileOutputStream = new FileOutputStream(endpointFile)) {
-                                    fileOutputStream.write(response.getBody().getBytes(StandardCharsets.UTF_8));
-                                }
-                            } else {
-                                log.warn("Frontier API returned a " + response.getCode() + ". Disabling endpoint.");
-                                endpointEnabled.set(false);
-                            }
-                            Platform.runLater(() -> EventService.publish(new CapiFleetCarrierEvent()));
-                        } catch (final InterruptedException e) {
-                            log.error("InterruptedException", e);
-                        } catch (final ExecutionException e) {
-                            log.error("ExecutionException", e);
-                        } catch (final IOException e) {
-                            log.error("IOException", e);
-                        } catch (final Exception e) {
-                            log.error("Exception", e);
-                            log.warn("Frontier API returned an error. Disabling service.");
-                            endpointEnabled.set(false);
-                            final boolean delete = endpointFile.delete();
-                            if (delete) log.info("Deleted fleetcarrier file");
+                        if (CAPIService.getInstance().getActive().get() && endpointEnabled.get()) {
+                            if (isOutdated(endpointFile)) {
+                                final String url = GameVersion.LEGACY.equals(commander.getGameVersion()) ? "https://legacy-companion.orerve.net/fleetcarrier" : "https://companion.orerve.net/fleetcarrier";
+                                final OAuthRequest oAuthRequest = new OAuthRequest(Verb.GET, url);
+                                try {
+                                    Response response = capiService.request(oAuthRequest);
+                                    // handle response
+                                    if (response.getCode() == 204) {
+                                        log.warn("Frontier API returned a " + response.getCode() + "(No fleetcarrier). Disabling FC endpoint.");
+                                        // no FC -> disable endpoint
+                                        disable();
+                                    } else if (response.getCode() == 400) {
+                                        log.warn("Frontier API returned a " + response.getCode() + "(No game entitlement). Disabling FC endpoint.");
+                                        // no FC -> disable endpoint
+                                        disable();
+                                        Platform.runLater(() -> {
+                                            NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.400"));
+                                        });
+                                    } else if (response.getCode() == 200) {
+                                        log.info("Frontier API returned a " + response.getCode() + ". Storing response.");
+                                        // write response to file
+                                        try (final FileOutputStream fileOutputStream = new FileOutputStream(endpointFile)) {
+                                            fileOutputStream.write(response.getBody().getBytes(StandardCharsets.UTF_8));
+                                        }
+                                    } else {
+                                        log.warn("Frontier API returned a " + response.getCode() + ". Disabling endpoint.");
+                                        disable();
+                                    }
+                                    Platform.runLater(() -> EventService.publish(new CapiFleetCarrierEvent()));
+                                } catch (final InterruptedException e) {
+                                    log.error("InterruptedException", e);
+                                } catch (final ExecutionException e) {
+                                    log.error("ExecutionException", e);
+                                } catch (final IOException e) {
+                                    log.error("IOException", e);
+                                } catch (final Exception e) {
+                                    log.error("Exception", e);
+                                    log.warn("Frontier API returned an error. Disabling service.");
+                                    disable();
+                                    final boolean delete = endpointFile.delete();
+                                    if (delete) log.info("Deleted fleetcarrier file");
 
+                                }
+                            }
                         }
                     });
                 }

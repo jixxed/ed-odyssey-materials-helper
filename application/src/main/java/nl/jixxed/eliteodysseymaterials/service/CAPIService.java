@@ -86,6 +86,7 @@ public class CAPIService {
                         Platform.runLater(() -> {
                             NotificationService.showInformation(NotificationType.SUCCESS, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.auth.success"));
                             this.active.set(true);
+                            endpointHandlers.forEach(EndpointHandler::enable);
                             endpointHandlers.forEach(EndpointHandler::requestData);
                         });
                     } else {
@@ -120,8 +121,11 @@ public class CAPIService {
             if (event.isInitialised()) {
                 Platform.runLater(() -> {
                             this.active.set(this.loadToken(APPLICATION_STATE.getPreferredCommander().orElse(null)));
-//                            this.fcEndpointEnabled.set(true);
-                            endpointHandlers.forEach(EndpointHandler::enable);
+                            if(this.active.get()){
+                                endpointHandlers.forEach(EndpointHandler::enable);
+                            }else{
+                                endpointHandlers.forEach(EndpointHandler::disable);
+                            }
                             APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                                 if (this.timer != null) {
                                     this.timer.cancel();

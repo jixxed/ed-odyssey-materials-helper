@@ -60,5 +60,7 @@ public class PreferenceConstants {
     public static final String STYLESHEET = "application.stylesheet";
     public static final String MINIMIZE_TO_TRAY = "application.minimize.to.tray";
     public static final String COLLECTOR_MODE = "horizons.material.collector.mode";
+    public static final String FLEET_CARRIER_ID = "fleetcarrier.carrier.id";
+    public static final String SQUADRON_CARRIER_ID = "squadroncarrier.carrier.id";
 
 }

@@ -1,33 +1,28 @@
 package nl.jixxed.eliteodysseymaterials.parser;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.enums.Good;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 
-import java.util.Iterator;
+import java.util.List;
+
 @Slf4j
 public class FleetCarrierGoodParser  {
-    public void parse(final Iterator<JsonNode> items, final StoragePool storagePool) {
-        items.forEachRemaining(itemNode ->
+    public void parse(List<nl.jixxed.eliteodysseymaterials.schemas.capi.fleetcarrier.Good> goods, StoragePool storagePool) {
+        if(goods == null) {
+            return;
+        }
+        goods.forEach(capiGood ->
         {
-            final String name = itemNode.get(getNameField()).asText();
+            final String name = capiGood.getName();
             final Good good = Good.forName(name);
-            final int amount = itemNode.get(getAmountField()).asInt();
+            final int amount = capiGood.getQuantity().intValue();
             if (good.isUnknown()) {
-                log.warn("Unknown Good detected: " + itemNode.toPrettyString());
-                //NotificationService.showWarning(NotificationType.ERROR, "Unknown Material Detected", name + "\nPlease report!");
+                log.warn("Unknown Good detected: " + capiGood);
             } else {
                 StorageService.addMaterial(good, storagePool, amount);
             }
         });
-    }
-    private String getAmountField() {
-        return "quantity";
-    }
-
-    private String getNameField() {
-        return "name";
     }
 }

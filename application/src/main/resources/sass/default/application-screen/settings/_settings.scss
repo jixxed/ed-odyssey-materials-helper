@@ -12,6 +12,12 @@
     .settingsblock {
       -fx-background-color: #0f0f0f;
       -fx-padding: 0.25em;
+      .capi-status {
+        -fx-fill: $text-color-green;
+        &:disabled {
+          -fx-fill: $text-color-red;
+        }
+      }
     }
 
     .settings-header {

@@ -129,6 +129,10 @@ public class ApplicationState {
     private final BooleanProperty squadronCarrierMaterials = new SimpleBooleanProperty(false);
     @Getter
     private final BooleanProperty powerplay = new SimpleBooleanProperty(false);
+    @Getter
+    private final BooleanProperty fleetCarrierEndpoint = new SimpleBooleanProperty(false);
+    @Getter
+    private final BooleanProperty squadronEndpoint = new SimpleBooleanProperty(false);
 
     private ApplicationState() {
 
@@ -143,6 +147,14 @@ public class ApplicationState {
             applicationState = new ApplicationState();
         }
         return applicationState;
+    }
+
+    public void setFleetCarrierEndpoint(boolean enabled) {
+        Platform.runLater(()-> this.fleetCarrierEndpoint.set(enabled));
+    }
+
+    public void setSquadronEndpoint(boolean enabled) {
+        Platform.runLater(()-> this.squadronEndpoint.set(enabled));
     }
 
     public void setPower(Power power) {

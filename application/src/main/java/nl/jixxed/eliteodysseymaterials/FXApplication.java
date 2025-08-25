@@ -460,7 +460,7 @@ public class FXApplication extends Application {
                 if (CAPIService.getInstance().getActive().get()) {
                     FileProcessor.processCapiFleetCarrierFile(file, JournalEventType.CAPIFLEETCARRIER);
                 }
-            }, AppConstants.FLEETCARRIER_FILE, false, JournalEventType.CAPIFLEETCARRIER);
+            }, AppConstants.FLEETCARRIER_FILE, false, 1000, JournalEventType.CAPIFLEETCARRIER);
         }
 
     }
@@ -482,7 +482,7 @@ public class FXApplication extends Application {
                 if (CAPIService.getInstance().getActive().get()) {
                     FileProcessor.processCapiSquadronFile(file, JournalEventType.CAPISQUADRON);
                 }
-            }, AppConstants.SQUADRON_FILE, false, JournalEventType.CAPISQUADRON);
+            }, AppConstants.SQUADRON_FILE, false, 1000, JournalEventType.CAPISQUADRON);
         }
 
     }

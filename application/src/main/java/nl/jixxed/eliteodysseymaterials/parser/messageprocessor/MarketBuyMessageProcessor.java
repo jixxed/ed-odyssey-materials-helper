@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
@@ -22,7 +23,7 @@ public class MarketBuyMessageProcessor implements MessageProcessor<MarketBuy> {
                 StorageService.addCommodity((Commodity) horizonsMaterial, StoragePool.SHIP, event.getCount().intValue());
                 EventService.publish(new StorageEvent(StoragePool.SHIP));
                 //if bought from carrier, decrease storage
-                if (event.getMarketID().equals(new BigInteger(UserPreferencesService.getPreference("fleetcarrier.carrier.id", "0")))) {
+                if (event.getMarketID().equals(new BigInteger(UserPreferencesService.getPreference(PreferenceConstants.FLEET_CARRIER_ID, "0")))) {
                     StorageService.removeCommodity((Commodity) horizonsMaterial, StoragePool.FLEETCARRIER, event.getCount().intValue());
                     EventService.publish(new StorageEvent(StoragePool.FLEETCARRIER));
                 }

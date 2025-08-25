@@ -242,15 +242,13 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
             final File fleetCarrierFileDir = new File(pathname);
             fleetCarrierFileDir.mkdirs();
             final File fleetCarrierFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.FLEETCARRIER_FILE);
-            if (fleetCarrierFile.exists()) {
-                if (CAPIService.getInstance().getActive().getValue().equals(false)) {
-                    this.apiLabel.addBinding(this.apiLabel.textProperty(), LocaleService.getStringBinding("statusbar.api.stale"));
+            final File squadronFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.SQUADRON_FILE);
 
-                } else {
-                    final ZonedDateTime lastModified = ZonedDateTime.ofInstant(Instant.ofEpochMilli(fleetCarrierFile.lastModified()), ZoneId.systemDefault());
-                    this.apiLabel.addBinding(this.apiLabel.textProperty(), LocaleService.getStringBinding("statusbar.api.last.update", lastModified.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))));
-
-                }
+            if (fleetCarrierFile.exists() || squadronFile.exists()) {
+                final ZonedDateTime lastModifiedFleetCarrier = (fleetCarrierFile.exists()) ? ZonedDateTime.ofInstant(Instant.ofEpochMilli(fleetCarrierFile.lastModified()), ZoneId.systemDefault()) : ZonedDateTime.of(0, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault());
+                final ZonedDateTime lastModifiedSquadron = (squadronFile.exists()) ? ZonedDateTime.ofInstant(Instant.ofEpochMilli(squadronFile.lastModified()), ZoneId.systemDefault()) : ZonedDateTime.of(0, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault());
+                final ZonedDateTime lastModified = lastModifiedFleetCarrier.isAfter(lastModifiedSquadron) ? lastModifiedFleetCarrier : lastModifiedSquadron;
+                this.apiLabel.addBinding(this.apiLabel.textProperty(), LocaleService.getStringBinding("statusbar.api.last.update", lastModified.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))));
             } else {
                 this.apiLabel.addBinding(this.apiLabel.textProperty(), LocaleService.getStringBinding("blank"));
             }

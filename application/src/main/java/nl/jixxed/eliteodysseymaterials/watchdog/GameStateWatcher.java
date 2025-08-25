@@ -20,9 +20,9 @@ public class GameStateWatcher {
     private final PublishSubject<Optional<File>> modifyEventSubject = PublishSubject.create();
     private Disposable subscription;
 
-    public void watch(final File folder, final Consumer<Optional<File>> fileProcessor, final String filename, final boolean allowPolling, final JournalEventType... eventType) {
+    public void watch(final File folder, final Consumer<Optional<File>> fileProcessor, final String filename, final boolean allowPolling, final int debounceTime, final JournalEventType... eventType) {
         Observable<Optional<File>> debouncedModifyEvents = modifyEventSubject
-                .debounce(100, TimeUnit.MILLISECONDS);
+                .debounce(debounceTime, TimeUnit.MILLISECONDS);
         subscription = debouncedModifyEvents.subscribe(fileProcessor::accept, throwable ->
                 log.error("Error processing file", throwable));
         findLatestFile(folder, filename);

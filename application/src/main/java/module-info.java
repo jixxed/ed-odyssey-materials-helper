@@ -54,7 +54,8 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.log to ch.qos.logback.core;
     exports nl.jixxed.eliteodysseymaterials.parser.mapping;
     exports nl.jixxed.eliteodysseymaterials.parser;
-    exports nl.jixxed.eliteodysseymaterials.schemas.capi;
+    exports nl.jixxed.eliteodysseymaterials.schemas.capi.fleetcarrier;
+    exports nl.jixxed.eliteodysseymaterials.schemas.capi.squadron;
     exports nl.jixxed.eliteodysseymaterials.schemas.eddn.approachsettlement;
     exports nl.jixxed.eliteodysseymaterials.schemas.eddn.carrierjump;
     exports nl.jixxed.eliteodysseymaterials.schemas.eddn.codexentry;
@@ -380,7 +381,8 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.enums to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.parser to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.parser.mapping to com.fasterxml.jackson.databind;
-    opens nl.jixxed.eliteodysseymaterials.schemas.capi to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.capi.fleetcarrier to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.capi.squadron to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.approachsettlement to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.carrierjump to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.codexentry to com.fasterxml.jackson.databind;

@@ -28,7 +28,7 @@ public class TimeStampedGameStateWatcher {
     public TimeStampedGameStateWatcher(final File folder, final Consumer<Optional<File>> fileProcessor, final String filename, final boolean allowPolling, final JournalEventType... eventType) {
         this.eventType = eventType;
         this.fileProcessor = fileProcessor;
-        this.gameStateWatcher.watch(folder, this::process, filename, allowPolling, eventType);
+        this.gameStateWatcher.watch(folder, this::process, filename, allowPolling, 100, eventType);
 
         for (JournalEventType type : eventType) {
             switch (type) {
