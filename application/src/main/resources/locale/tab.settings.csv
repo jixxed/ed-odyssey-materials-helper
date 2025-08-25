@@ -107,4 +107,4 @@
 "tab.settings.capi.status.endpoints","Endpoints","","","","","","",""
 "tab.settings.capi.status.fleetcarrier","Fleetcarrier","","","","","","",""
 "tab.settings.capi.status.squadron","Squadron","","","","","","",""
-"tab.settings.capi.explain2","Endpoints that return an error or empty responses are automatically disabled. This can happen when you don't own a fleetcarrier or aren't a member of a squadron.","","","","","","",""
+"tab.settings.capi.explain2","Endpoints that return an error or empty responses are automatically disabled. This can happen when you don’t own a fleetcarrier or aren’t a member of a squadron.","","","","","","",""
