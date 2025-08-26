@@ -27,41 +27,14 @@ public enum SquadronPerk {
 
     private final String id;
 
-    public static SquadronPerk forId(final String id) {
+    public static SquadronPerk forId(final String searchId) {
         return Arrays.stream(SquadronPerk.values())
-                .filter(perk -> perk.id.equalsIgnoreCase(id))
+                .filter(perk -> perk.id.equalsIgnoreCase(searchId))
                 .findFirst()
                 .orElse(SquadronPerk.UNKNOWN);
     }
-//    primary perks
-    // increased mining fragment yield - bonusMiningFragment
-    // cargo insurance - cargoInsurance
-    // reduced system colonisation claim cost (PRIMARY)
-    // increased colonisation delivery profits (PRIMARY) - colonisationTradeBond
-    // increased cqc rank gains (PRIMARY)
-    // increased minimum map efficiency target - dssEfficiency
-    // increased pilots' federation rank gains - expGain
-    // increased faction influence gains - factionInfluence
-    // reduced fsd synthesis costs (PRIMARY)
-    // reduced limpet synthesis costs (PRIMARY)
-    // increased mission rewards - missionRewardBoost
-    // notoriety decay (PRIMARY) - notorietyDecay
-    // increased npc crew rank gains
-    // increased powerplay merity gains - powerplayMerits
-    // reduced premium ammo synthesis costs (PRIMARY) - premiumAmmoSynthesis
-    // increased wing trade rewards - saleWingRewards
-    // increased wing combat rewards - voucherBondWingRewards
-//    faction perks
-    // increased mining fragment yield
-    // cargo insurance
-    // increased minimum map efficiency target
-    // increased pilots' federation rank gains
-    // increased faction influence gains
-    // increased mission rewards
-    // increased npc crew rank gains
-    // increased powerplay merity gains
-    // increased wing trade rewards
-    // increased wing combat rewards
 
-
+    public String getLocalizationKey() {
+        return "squadron.perk.name." + this.name().toLowerCase();
+    }
 }
