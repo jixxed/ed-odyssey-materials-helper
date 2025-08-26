@@ -1,3 +1,8 @@
+Version 2.243
+-------------
+Register squadron perks through the API and adjust blueprint costs accordingly automatically
+Fixed some synthesis blueprints that had wrong amounts for some materials
+
 Version 2.242
 -------------
 Added CAPI endpoint indicators to show if fleetcarrier or squadron endpoints are available and used

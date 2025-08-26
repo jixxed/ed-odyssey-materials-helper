@@ -15,7 +15,7 @@ public enum SquadronPerk {
     EXP_GAIN("expGain"),
     FACTION_INFLUENCE("factionInfluence"),
     FSD_BOOST_SYNTHESIS("fsdBoostSynthesis"),
-    LIMPET_SYNTHESIS(""),
+    LIMPET_SYNTHESIS("limpetSynthesis"),
     MISSION_REWARD_BOOST("missionRewardBoost"),
     NOTORIETY_DECAY("notorietyDecay"),
     NPC_CREW_EXP("npcCrewExp"),
