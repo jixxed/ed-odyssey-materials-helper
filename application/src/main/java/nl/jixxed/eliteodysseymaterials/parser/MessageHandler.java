@@ -266,7 +266,6 @@ class MessageHandler {
                 OBJECT_MAPPER_CAPI.readValue(message, CapiFleetcarrier.class);
             } else if (JournalEventType.CAPISQUADRON.equals(journalEventType)) {
                 CapiSquadron capiSquadron = OBJECT_MAPPER_CAPI.readValue(message, CapiSquadron.class);
-                reportOnce(capiSquadron);
             }
         } catch (final Exception e) {
             //report
@@ -277,20 +276,6 @@ class MessageHandler {
 
         }
     }
-
-    private static Boolean reportOnce = true;
-
-    private static void reportOnce(CapiSquadron capiSquadron) {
-        if (reportOnce) {
-            try {
-                ReportService.reportJournal("squadron", OBJECT_MAPPER_CAPI.writeValueAsString(capiSquadron.getPerks()), "App version: " + VersionService.getBuildVersion() + ". Squadron CAPI perks:");
-                reportOnce = false;
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
 
     static void clearCapi(final JournalEventType journalEventType) {
         final CapiMessageProcessor messageProcessor = capiMessageProcessors.get(journalEventType);
