@@ -1161,7 +1161,7 @@
       "required" : [ "CQC_Time_Played", "CQC_KD", "CQC_Kills", "CQC_WL" ]
     },
     "Squadron": {
-      "title" : "CQC",
+      "title" : "Squadron",
       "type" : "object",
       "properties" : {
         "Squadron_Bank_Credits_Deposited": {
