@@ -52,4 +52,11 @@ public class CapiFleetCarrierMessageProcessor implements CapiMessageProcessor<Ca
     public Class<CapiFleetcarrier> getMessageClass() {
         return CapiFleetcarrier.class;
     }
+
+    @Override
+    public void clear() {
+        StorageService.resetFleetCarrierCounts();
+        OrderService.clearOrders();
+        EventService.publish(new StorageEvent(StoragePool.FLEETCARRIER));
+    }
 }

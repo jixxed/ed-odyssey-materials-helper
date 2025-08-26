@@ -2,6 +2,8 @@ package nl.jixxed.eliteodysseymaterials.enums;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.Arrays;
+
 @RequiredArgsConstructor
 public enum SquadronPerk {
     BONUS_MINING_FRAGMENT("bonusMiningFragment"),
@@ -12,7 +14,7 @@ public enum SquadronPerk {
     DSS_EFFICIENCY("dssEfficiency"),
     EXP_GAIN("expGain"),
     FACTION_INFLUENCE("factionInfluence"),
-    FSD_SYNTHESIS(""),
+    FSD_BOOST_SYNTHESIS("fsdBoostSynthesis"),
     LIMPET_SYNTHESIS(""),
     MISSION_REWARD_BOOST("missionRewardBoost"),
     NOTORIETY_DECAY("notorietyDecay"),
@@ -20,10 +22,17 @@ public enum SquadronPerk {
     POWERPLAY_MERITS("powerplayMerits"),
     PREMIUM_AMMO_SYNTHESIS("premiumAmmoSynthesis"),
     SALE_WING_REWARDS("saleWingRewards"),
-    VOUCHER_BOND_WING_REWARDS("voucherBondWingRewards");
+    VOUCHER_BOND_WING_REWARDS("voucherBondWingRewards"),
+    UNKNOWN("");
 
     private final String id;
 
+    public static SquadronPerk forId(final String id) {
+        return Arrays.stream(SquadronPerk.values())
+                .filter(perk -> perk.id.equalsIgnoreCase(id))
+                .findFirst()
+                .orElse(SquadronPerk.UNKNOWN);
+    }
 //    primary perks
     // increased mining fragment yield - bonusMiningFragment
     // cargo insurance - cargoInsurance

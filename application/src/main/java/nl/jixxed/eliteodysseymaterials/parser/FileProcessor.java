@@ -262,7 +262,7 @@ public class FileProcessor {
                         EventService.publish(new CapiFleetCarrierEvent());
                     }),
                     () -> Platform.runLater(() -> {
-                        MessageHandler.clearCapi();
+                        MessageHandler.clearCapi(journalEventType);
                         ApplicationState.getInstance().getFcMaterials().set(false);
                         EventService.publish(new CapiFleetCarrierEvent());
                     }));
@@ -278,7 +278,7 @@ public class FileProcessor {
                         EventService.publish(new CapiSquadronEvent());
                     }),
                     () -> Platform.runLater(() -> {
-                        MessageHandler.clearCapi();
+                        MessageHandler.clearCapi(journalEventType);
                         ApplicationState.getInstance().getSquadronCarrierMaterials().set(false);
                         EventService.publish(new CapiSquadronEvent());
                     }));

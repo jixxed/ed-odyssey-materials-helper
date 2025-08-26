@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -14,10 +15,7 @@ import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.UTF8Constants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
-import nl.jixxed.eliteodysseymaterials.enums.BlueprintCategory;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.BlueprintHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -34,6 +32,7 @@ import java.util.stream.Stream;
 public class HorizonsBlueprintBar extends DestroyableAccordion implements DestroyableEventTemplate {
     private static final String BLUEPRINT_TITLED_PANE_CONTENT_STYLE_CLASS = "blueprint-titled-pane-content";
     private static final String BLUEPRINT_LIST_STYLE_CLASS = "blueprint-list";
+    private DestroyableTitledPane categoryTitledPaneSynthesis;
 
     private Callback<ListView<HorizonsBlueprintName>, ListCell<HorizonsBlueprintName>> createDestroyableCellFactory(Destroyable destroyable) {
         return _ -> new DestroyableListCell<>() {
@@ -88,7 +87,7 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
 
         final DestroyableTitledPane categoryTitledPaneEngineers = register(createCategoryTitledPaneEngineers(HorizonsBlueprintConstants.getEngineerUnlockRequirements()));
         final DestroyableTitledPane categoryTitledPaneExperimental = register(createExperimentalEffectsCategoryTitledPane(HorizonsBlueprintConstants.getExperimentalEffects()));
-        final DestroyableTitledPane categoryTitledPaneSynthesis = register(createSynthesisCategoryTitledPane(HorizonsBlueprintConstants.getSynthesis()));
+        categoryTitledPaneSynthesis = register(createSynthesisCategoryTitledPane(HorizonsBlueprintConstants.getSynthesis()));
         final DestroyableTitledPane categoryTitledPaneTechBroker = register(createTechbrokerCategoryTitledPane(HorizonsBlueprintConstants.getTechbrokerUnlocks()));
         final DestroyableTitledPane aboutTitledPane = register(createAboutTitledPane());
         this.getPanes().addAll(categoryTitledPaneEngineers);
@@ -104,6 +103,23 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
     @Override
     public void initEventHandling() {
 
+
+        register(EventService.addListener(true, this, PerkChangedEvent.class, _ -> {
+//            final DestroyableVBox content = BoxBuilder.builder()
+//                    .withStyleClass(BLUEPRINT_TITLED_PANE_CONTENT_STYLE_CLASS)
+//                    .withNodes(hBoxBlueprints, gradeButtons, scroll)
+//                    .buildVBox();
+//
+//            categoryTitledPane.setContentNode(content);
+//            VBox.setVgrow(scroll, Priority.ALWAYS);
+            DestroyableVBox vBox = (DestroyableVBox)categoryTitledPaneSynthesis.getContent();
+            DestroyableSegmentedButton gradeButtons = (DestroyableSegmentedButton)vBox.getChildren().get(1);
+            gradeButtons.getButtons().stream().filter(ToggleButton::isSelected).findFirst().ifPresent(button -> {button.setSelected(false);button.setSelected(true);});
+//            DestroyableHBox hBoxBlueprints = (DestroyableHBox)vBox.getChildren().get(0);
+//            DestroyableScrollPane scroll = (DestroyableScrollPane)vBox.getChildren().get(2);
+//            DestroyableComboBox<HorizonsBlueprintName> blueprints = (DestroyableComboBox<HorizonsBlueprintName>)hBoxBlueprints.getChildren().get(0);
+//            setContent(scroll, blueprints.getSelectionModel().getSelectedItem(), HorizonsBlueprintType.SYNTHESIS, true, generateContent(HorizonsBlueprintConstants.getSynthesis().getOrDefault(blueprints.getSelectionModel().getSelectedItem(), Collections.emptyMap()).get(gradeButtons.getButtons().)));
+        }));
     }
 
     private DestroyableTitledPane createAboutTitledPane() {
@@ -253,6 +269,7 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
                 .withStyleClass(BLUEPRINT_TITLED_PANE_CONTENT_STYLE_CLASS)
                 .withNodes(hBoxBlueprints, gradeButtons, scroll)
                 .buildVBox();
+
         categoryTitledPane.setContentNode(content);
         VBox.setVgrow(scroll, Priority.ALWAYS);
         return categoryTitledPane;

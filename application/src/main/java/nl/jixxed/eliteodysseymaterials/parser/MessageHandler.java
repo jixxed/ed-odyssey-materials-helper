@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
+import nl.jixxed.eliteodysseymaterials.enums.SquadronPerk;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.*;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiFleetCarrierMessageProcessor;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiMessageProcessor;
@@ -291,8 +292,10 @@ class MessageHandler {
     }
 
 
-    static void clearCapi() {
-        StorageService.resetFleetCarrierCounts();
-        OrderService.clearOrders();
+    static void clearCapi(final JournalEventType journalEventType) {
+        final CapiMessageProcessor messageProcessor = capiMessageProcessors.get(journalEventType);
+        if (messageProcessor != null) {
+            messageProcessor.clear();
+        }
     }
 }

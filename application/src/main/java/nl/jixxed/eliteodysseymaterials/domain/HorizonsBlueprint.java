@@ -97,7 +97,6 @@ public class HorizonsBlueprint implements Blueprint<HorizonsBlueprintName> {
         return amount != null ? amount * getNumberOfRolls(engineer) : 0;
     }
 
-
     public Integer getMinimumAmount(final HorizonsMaterial material) {
         final Engineer engineer = getEngineers().stream().max(Comparator.comparing(eng -> ApplicationState.getInstance().getEngineerRank(eng))).orElse(null);
 
@@ -121,8 +120,4 @@ public class HorizonsBlueprint implements Blueprint<HorizonsBlueprintName> {
         return this.getHorizonsBlueprintName();
     }
 
-//    @Override
-//    public BlueprintName<E> getBlueprintName() {
-//        return (BlueprintName<E>) this.getHorizonsBlueprintName();
-//    }
 }

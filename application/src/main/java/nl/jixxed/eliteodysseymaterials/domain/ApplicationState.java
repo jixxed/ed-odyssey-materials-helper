@@ -133,9 +133,28 @@ public class ApplicationState {
     private final BooleanProperty fleetCarrierEndpoint = new SimpleBooleanProperty(false);
     @Getter
     private final BooleanProperty squadronEndpoint = new SimpleBooleanProperty(false);
+    @Getter
+    private SquadronPerk primaryPerk = SquadronPerk.UNKNOWN;
+    @Getter
+    private SquadronPerk factionPerk = SquadronPerk.UNKNOWN;
+
+    public void setFactionPerk(SquadronPerk factionPerk) {
+        if(!this.factionPerk.equals(factionPerk)) {
+            var oldPerk = this.factionPerk;
+            this.factionPerk = factionPerk;
+            EventService.publish(new PerkChangedEvent(oldPerk, factionPerk));
+        }
+    }
+
+    public void setPrimaryPerk(SquadronPerk primaryPerk) {
+        if(!this.primaryPerk.equals(primaryPerk)) {
+            var oldPerk = this.primaryPerk;
+            this.primaryPerk = primaryPerk;
+            EventService.publish(new PerkChangedEvent(oldPerk, primaryPerk));
+        }
+    }
 
     private ApplicationState() {
-
         this.eventListeners.add(EventService.addListener(this, LoadGameEvent.class, event -> {
             this.gameMode = event.getGameMode();
             this.expansion = event.getExpansion();
