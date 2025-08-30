@@ -59,9 +59,6 @@ public class Cannon extends HardpointModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedExperimentalEffects() {
-        if(CONCORD_CANNON_2_D_G.equals(this)) {
-            return List.of();
-        }
         return ExperimentalEffectBlueprints.CANNON.keySet().stream().toList();
     }
 
