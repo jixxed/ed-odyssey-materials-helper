@@ -167,20 +167,20 @@ public class ShieldStats extends Stats implements DestroyableEventTemplate {
                         .findFirst()
                         .map(shieldGeneratorSlot -> {
                             ShipModule module = shieldGeneratorSlot.getShipModule();
-                            Double minimumMass = (Double) module.getAttributeValue(SHIELDGEN_MINIMUM_MASS);
-                            Double optimalMass = (Double) module.getAttributeValue(SHIELDGEN_OPTIMAL_MASS);
-                            Double maximumMass = (Double) module.getAttributeValue(SHIELDGEN_MAXIMUM_MASS);
-                            Double minimumStrength = (Double) module.getAttributeValue(SHIELDGEN_MINIMUM_STRENGTH);
-                            Double optimalStrength = (Double) module.getAttributeValue(SHIELDGEN_OPTIMAL_STRENGTH);
-                            Double maximumStrength = (Double) module.getAttributeValue(SHIELDGEN_MAXIMUM_STRENGTH);
+                            Double minimumMass = (Double) module.getAttributeValue(SHIELDGEN_MINIMUM_MASS, true);
+                            Double optimalMass = (Double) module.getAttributeValue(SHIELDGEN_OPTIMAL_MASS, true);
+                            Double maximumMass = (Double) module.getAttributeValue(SHIELDGEN_MAXIMUM_MASS, true);
+                            Double minimumStrength = (Double) module.getAttributeValue(SHIELDGEN_MINIMUM_STRENGTH, true);
+                            Double optimalStrength = (Double) module.getAttributeValue(SHIELDGEN_OPTIMAL_STRENGTH, true);
+                            Double maximumStrength = (Double) module.getAttributeValue(SHIELDGEN_MAXIMUM_STRENGTH, true);
                             double shields = (double) ship.getAttributes().getOrDefault(SHIELDS, 0D);
                             double shieldReinforcement = ship.getOptionalSlots().stream()
                                     .filter(slot -> slot.getShipModule() instanceof GuardianShieldReinforcementPackage)
-                                    .mapToDouble(slot -> (Double) slot.getShipModule().getAttributeValue(SHIELD_REINFORCEMENT))
+                                    .mapToDouble(slot -> (Double) slot.getShipModule().getAttributeValue(SHIELD_REINFORCEMENT, true))
                                     .sum();
                             double totalShieldBoost = ship.getUtilitySlots().stream()
                                     .filter(slot -> slot.getShipModule() instanceof ShieldBooster)
-                                    .mapToDouble(slot -> (Double) slot.getShipModule().getAttributeValue(SHIELD_BOOST))
+                                    .mapToDouble(slot -> (Double) slot.getShipModule().getAttributeValue(SHIELD_BOOST, true))
                                     .sum();
                             return shieldReinforcement + (shields
                                     * getEffectiveShieldBoostMultiplier(totalShieldBoost)
@@ -200,12 +200,12 @@ public class ShieldStats extends Stats implements DestroyableEventTemplate {
                                             slot.getShipModule() instanceof ShieldBooster
                                     )
                                     .forEach(slot -> {
-                                                double moduleResistance = (double) slot.getShipModule().getAttributeValue(horizonsModifier);
+                                                double moduleResistance = (double) slot.getShipModule().getAttributeValue(horizonsModifier, true);
                                                 double multiplier = 1D - moduleResistance;
                                                 totalModuleMultiplier.updateAndGet(v -> v * multiplier);
                                             }
                                     );
-                            double shieldResistance = (double) shieldGeneratorSlot.getShipModule().getAttributeValue(horizonsModifier);
+                            double shieldResistance = (double) shieldGeneratorSlot.getShipModule().getAttributeValue(horizonsModifier, true);
                             return getEffectiveDamageResistance((1 - totalModuleMultiplier.get()), shieldResistance);
                         })
                         .orElse(0D))
@@ -244,10 +244,10 @@ public class ShieldStats extends Stats implements DestroyableEventTemplate {
                 .findFirst()
                 .map(sgSlot -> {
                     final Optional<Slot> powerDistributor = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION)).findFirst().filter(Slot::isOccupied);
-                    final double systemRecharge = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(SYSTEMS_RECHARGE)).orElse(0D);
+                    final double systemRecharge = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(SYSTEMS_RECHARGE, true)).orElse(0D);
                     final double multiplier = Math.pow(ApplicationState.getInstance().getSystemPips() / 8.0, 1.1);
-                    final Double regenRate = (Double) sgSlot.getShipModule().getAttributeValue(REGEN_RATE);
-                    final Double energyPerRegen = (Double) sgSlot.getShipModule().getAttributeValue(ENERGY_PER_REGEN);
+                    final Double regenRate = (Double) sgSlot.getShipModule().getAttributeValue(REGEN_RATE, true);
+                    final Double energyPerRegen = (Double) sgSlot.getShipModule().getAttributeValue(ENERGY_PER_REGEN, true);
                     final double rawShieldStrength = rawShieldStrength();
                     final Double fastTime = 0D;
                     final Double slowTime = (rawShieldStrength / 2) / Math.min(regenRate, (systemRecharge * multiplier) / energyPerRegen);
@@ -261,11 +261,11 @@ public class ShieldStats extends Stats implements DestroyableEventTemplate {
                 .findFirst()
                 .map(sgSlot -> {
                     final Optional<Slot> powerDistributor = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION)).findFirst().filter(Slot::isOccupied);
-                    final double systemCapacity = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(SYSTEMS_CAPACITY)).orElse(0D);
-                    final double systemRecharge = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(SYSTEMS_RECHARGE)).orElse(0D);
+                    final double systemCapacity = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(SYSTEMS_CAPACITY, true)).orElse(0D);
+                    final double systemRecharge = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(SYSTEMS_RECHARGE, true)).orElse(0D);
                     final double multiplier = Math.pow(ApplicationState.getInstance().getSystemPips() / 8.0, 1.1);
-                    final Double brokenRegenRate = (Double) sgSlot.getShipModule().getAttributeValue(BROKEN_REGEN_RATE);
-                    final Double energyPerRegen = (Double) sgSlot.getShipModule().getAttributeValue(ENERGY_PER_REGEN);
+                    final Double brokenRegenRate = (Double) sgSlot.getShipModule().getAttributeValue(BROKEN_REGEN_RATE, true);
+                    final Double energyPerRegen = (Double) sgSlot.getShipModule().getAttributeValue(ENERGY_PER_REGEN, true);
                     final double rawShieldStrength = rawShieldStrength();
                     final Double fastTime = Math.min((rawShieldStrength / 2) / brokenRegenRate, (systemCapacity / Math.max(0, brokenRegenRate * energyPerRegen - systemRecharge * multiplier)));
                     final Double slowTime = ((rawShieldStrength / 2) - brokenRegenRate * fastTime) / Math.min(brokenRegenRate, (systemRecharge * multiplier) / energyPerRegen);
@@ -277,13 +277,13 @@ public class ShieldStats extends Stats implements DestroyableEventTemplate {
         return getShip().map(ship -> {
                     double charges = ship.getOptionalSlots().stream()
                             .filter(slot -> slot.getShipModule() instanceof ShieldCellBank)
-                            .map(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.AMMO_CLIP_SIZE) + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.AMMO_MAXIMUM))
+                            .map(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.AMMO_CLIP_SIZE, true) + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.AMMO_MAXIMUM, true))
                             .mapToDouble(Double::doubleValue)
                             .average()
                             .orElse(0D);
                     double amount = ship.getOptionalSlots().stream()
                             .filter(slot -> slot.getShipModule() instanceof ShieldCellBank)
-                            .map(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.SHIELDBANK_DURATION) * (double) slot.getShipModule().getAttributeValue(HorizonsModifier.SHIELDBANK_REINFORCEMENT))
+                            .map(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.SHIELDBANK_DURATION, true) * (double) slot.getShipModule().getAttributeValue(HorizonsModifier.SHIELDBANK_REINFORCEMENT, true))
                             .mapToDouble(Double::doubleValue)
                             .sum();
                     return new Scb(charges, amount / rawShieldStrength() * 100D);

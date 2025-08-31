@@ -116,14 +116,14 @@ public class ArmourStats extends Stats implements DestroyableTemplate {
                             || slot.getShipModule() instanceof GuardianHullReinforcementPackage
                             || slot.getShipModule() instanceof MetaAlloyHullReinforcementPackage)
                     .forEach(slot -> {
-                                double moduleResistance = (double) slot.getShipModule().getAttributeValue(horizonsModifier);
+                                double moduleResistance = (double) slot.getShipModule().getAttributeValue(horizonsModifier, true);
                                 double multiplier = 1D - moduleResistance;
                                 totalModuleMultiplier.updateAndGet(v -> v * multiplier);
                                 minimumMultiplier.updateAndGet(v -> Math.min(v, multiplier));
                             }
                     );
 
-            double armourResistance = (double) armourSlot.map(slot -> slot.getShipModule()).map(sm -> sm.getAttributeValue(horizonsModifier)).orElse(0D);
+            double armourResistance = (double) armourSlot.map(slot -> slot.getShipModule()).map(sm -> sm.getAttributeValue(horizonsModifier, true)).orElse(0D);
             return getEffectiveDamageResistance(armourResistance, (1 - totalModuleMultiplier.get()), (1 - minimumMultiplier.get()));
         }).orElse(0D) * 100D;
     }
@@ -144,16 +144,16 @@ public class ArmourStats extends Stats implements DestroyableTemplate {
         return getShip().map(ship -> {
             final double shipArmour = (double) ship.getAttributes().getOrDefault(HorizonsModifier.ARMOUR, 0D);
             final Optional<ShipModule> armour = ship.getCoreSlots().stream().filter(slot -> SlotType.CORE_ARMOUR.equals(slot.getSlotType())).findFirst().map(Slot::getShipModule);
-            double hullBoost = (double) armour.map(shipModule -> shipModule.getAttributeValue(HorizonsModifier.HULL_BOOST)).orElse(0D);
+            double hullBoost = (double) armour.map(shipModule -> shipModule.getAttributeValue(HorizonsModifier.HULL_BOOST, true)).orElse(0D);
             hullBoost += ship.getOptionalSlots().stream()
                     .filter(slot -> slot.getShipModule() instanceof HullReinforcementPackage)
-                    .mapToDouble(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.HULL_BOOST))
+                    .mapToDouble(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.HULL_BOOST, true))
                     .sum();
             double hullReinforcement = ship.getOptionalSlots().stream()
                     .filter(slot -> slot.getShipModule() instanceof HullReinforcementPackage
                             || slot.getShipModule() instanceof GuardianHullReinforcementPackage
                             || slot.getShipModule() instanceof MetaAlloyHullReinforcementPackage)
-                    .mapToDouble(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.HULL_REINFORCEMENT))
+                    .mapToDouble(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.HULL_REINFORCEMENT, true))
                     .sum();
             return (shipArmour * (1D + hullBoost)) + hullReinforcement;
         }).orElse(0D);
@@ -180,7 +180,7 @@ public class ArmourStats extends Stats implements DestroyableTemplate {
         double protection = getShip().map(ship ->
                 ship.getOptionalSlots().stream()
                         .filter(slot -> slot.getShipModule() instanceof ModuleReinforcementPackage || slot.getShipModule() instanceof GuardianModuleReinforcementPackage)
-                        .map(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.MODULE_DEFENCE_ABSORPTION))
+                        .map(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.MODULE_DEFENCE_ABSORPTION, true))
                         .reduce(1D, (a, b) -> a *= 1 - b)
         ).orElse(1D);
         return (1 - protection) * 100;
@@ -193,7 +193,7 @@ public class ArmourStats extends Stats implements DestroyableTemplate {
         return getShip().map(ship ->
                 ship.getOptionalSlots().stream()
                         .filter(slot -> slot.getShipModule() instanceof ModuleReinforcementPackage || slot.getShipModule() instanceof GuardianModuleReinforcementPackage)
-                        .map(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.INTEGRITY))
+                        .map(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.INTEGRITY, true))
                         .reduce(0D, (a, b) -> a += b)
         ).orElse(0D);
     }

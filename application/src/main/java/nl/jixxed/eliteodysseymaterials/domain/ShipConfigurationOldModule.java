@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 
 import java.util.ArrayList;
@@ -43,6 +44,8 @@ public class ShipConfigurationOldModule {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<ShipConfigurationExperimentalEffect> experimentalEffect = new ArrayList<>();
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private HorizonsBlueprintGrade synthesis;
     /**
      * Returns the first modification of this slot, or null if there are no modifications.
      *

@@ -1,10 +1,13 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint;
 
+import nl.jixxed.eliteodysseymaterials.constants.horizons.SynthesisBlueprints;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsSynthesisBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Modification;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -110,5 +113,10 @@ public class RemoteReleaseFlakLauncher extends HardpointModule {
     @Override
     public boolean isCGExclusive() {
         return isPreEngineered();
+    }
+
+    @Override
+    public Collection<HorizonsSynthesisBlueprint> synthesisBlueprints() {
+        return SynthesisBlueprints.AX_REMOTE_FLAK_MUNITIONS.values();
     }
 }

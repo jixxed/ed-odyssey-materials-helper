@@ -12,19 +12,10 @@ public class ShipConfigurations {
     @SuppressWarnings("java:S1700")
     private Set<ShipConfiguration> shipConfigurations = new HashSet<>();
     private String selectedShipConfigurationUUID;
-//    @JsonIgnore
-//    public Set<LoadoutSet> getAllLoadoutSets() {
-//
-//        final Set<LoadoutSet> loadoutSets1 = new HashSet<>(this.loadoutSets);
-//        loadoutSets1.add(LoadoutSet.CURRENT);
-//        return Collections.unmodifiableSet(loadoutSets1);
-//    }
     @JsonIgnore
     public Set<ShipConfiguration> getAllShipConfigurations() {
         final Set<ShipConfiguration> shipConfigurations1 =  new HashSet<>(this.shipConfigurations);
-//        if(ShipConfiguration.CURRENT.getShipType() != null) {
-            shipConfigurations1.add(ShipConfiguration.CURRENT);
-//        }
+        shipConfigurations1.add(ShipConfiguration.CURRENT);
         return Collections.unmodifiableSet(shipConfigurations1);
     }
 

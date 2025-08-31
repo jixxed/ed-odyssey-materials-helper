@@ -111,3 +111,7 @@
 "ship.module.state","Module state","","","","","","Состояние модуля","模块状态"
 "tab.ships.stats.powerthermals","Thermals & power","","","","","","Нагрев и Мощность","热量&能量"
 "tab.ships.stats.ship","Ship","","","","","","Корабль","舰船"
+"tabs.ships.synthesis","Synthesis","","","","","","",""
+"ship.module.icon.tooltip.synthesis.basic","Basic synthesis","","","","","","",""
+"ship.module.icon.tooltip.synthesis.standard","Standard synthesis","","","","","","",""
+"ship.module.icon.tooltip.synthesis.premium","Premium synthesis","","","","","","",""

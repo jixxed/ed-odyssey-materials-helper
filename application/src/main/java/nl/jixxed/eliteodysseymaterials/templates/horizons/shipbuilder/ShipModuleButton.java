@@ -49,7 +49,7 @@ public class ShipModuleButton extends DestroyableButton {
         switch (shipModule) {
             case ShieldGenerator shieldGenerator -> {
                 double maxMass = ApplicationState.getInstance().getShip().getMaximumMass();
-                final double maxMassForModule = (double) shieldGenerator.getAttributeValue(HorizonsModifier.SHIELDGEN_MAXIMUM_MASS);
+                final double maxMassForModule = (double) shieldGenerator.getAttributeValue(HorizonsModifier.SHIELDGEN_MAXIMUM_MASS, false);
                 this.pseudoClassStateChanged(PseudoClass.getPseudoClass("overload"), maxMass > maxMassForModule);
 //                if (maxMass > maxMassForModule) {
 //                    this.getStyleClass().add("module-button-overload");
@@ -57,7 +57,7 @@ public class ShipModuleButton extends DestroyableButton {
             }
             case Thrusters thrusters -> {
                 double maxMass = ApplicationState.getInstance().getShip().getMaximumMass();
-                final double maxMassForModule = (double) thrusters.getAttributeValue(HorizonsModifier.MAXIMUM_MASS);
+                final double maxMassForModule = (double) thrusters.getAttributeValue(HorizonsModifier.MAXIMUM_MASS, false);
                 this.pseudoClassStateChanged(PseudoClass.getPseudoClass("overload"), maxMass > maxMassForModule);
 //                if (maxMass > maxMassForModule) {
 //                    this.getStyleClass().add("module-button-overload");
@@ -66,14 +66,14 @@ public class ShipModuleButton extends DestroyableButton {
             case PowerPlant powerPlant -> {
                 final PowerProfile powerProfile = ApplicationState.getInstance().getShip().getRetractedPower();
                 double usedPower = powerProfile.usedPower();
-                final double available = (double) powerPlant.getAttributeValue(HorizonsModifier.POWER_CAPACITY) - usedPower;
+                final double available = (double) powerPlant.getAttributeValue(HorizonsModifier.POWER_CAPACITY, false) - usedPower;
                 this.pseudoClassStateChanged(PseudoClass.getPseudoClass("overload"), available < 0D);
 //                if (available < 0D) {
 //                    this.getStyleClass().add("module-button-overload");
 //                }
             }
             case PowerDistributor powerDistributor -> {
-                final double engineCapacity = (double) powerDistributor.getAttributeValue(HorizonsModifier.ENGINES_CAPACITY);
+                final double engineCapacity = (double) powerDistributor.getAttributeValue(HorizonsModifier.ENGINES_CAPACITY, false);
                 final double boostCost = (double) ApplicationState.getInstance().getShip().getAttributes().getOrDefault(HorizonsModifier.BOOST_COST, 0D);
                 final boolean engineCapacityEnough = engineCapacity > boostCost + BOOST_MARGIN;
                 this.pseudoClassStateChanged(PseudoClass.getPseudoClass("overload"), !engineCapacityEnough);

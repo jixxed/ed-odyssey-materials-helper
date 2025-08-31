@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsSynthesisBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Modification;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
@@ -27,6 +28,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipBuilderEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.SlotboxEngineeringEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.SlotboxHoverEvent;
+import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
@@ -51,6 +53,7 @@ public class ModuleSelectPopover extends DestroyablePopOver implements Destroyab
     private DestroyableButton clear;
     private DestroyableVBox blueprintSection;
     private DestroyableVBox experintalEffectsSection;
+    private DestroyableVBox synthesisSection;
 
     private Disposable subscribe;
 
@@ -84,6 +87,9 @@ public class ModuleSelectPopover extends DestroyablePopOver implements Destroyab
         if (slotBox.getSlot().isOccupied() && !slotBox.getSlot().getShipModule().isLegacy()) {
             addEngineering(content);
             addExperimentalEffects(content);
+        }
+        if (slotBox.getSlot().isOccupied() && !slotBox.getSlot().getShipModule().synthesisBlueprints().isEmpty()) {
+            addSynthesis(content);
         }
         content.getNodes().addAll(entries);
         final DestroyableScrollPane scrollPane = ScrollPaneBuilder.builder()
@@ -125,6 +131,69 @@ public class ModuleSelectPopover extends DestroyablePopOver implements Destroyab
         if (shipModule != null && !shipModule.getAllowedExperimentalEffects().isEmpty()) {
             this.experintalEffectsSection = addBlueprintSection(content, "tabs.ships.experimental.effects", true);
         }
+    }
+    private void addSynthesis(final DestroyableVBox content) {
+        final ShipModule shipModule = slotBox.getSlot().getShipModule();
+        if (shipModule != null && !shipModule.synthesisBlueprints().isEmpty()) {
+            this.synthesisSection = addSynthesisSection(content);
+        }
+    }
+    private DestroyableVBox addSynthesisSection(final DestroyableVBox content) {
+        final ShipModule shipModule = slotBox.getSlot().getShipModule();
+        final Collection<HorizonsSynthesisBlueprint> allowedBlueprints = shipModule.synthesisBlueprints();
+        if (!allowedBlueprints.isEmpty()) {
+            final ToggleGroup toggleGroup = new ToggleGroup();
+            final List<DestroyableToggleButton> toggleButtons = allowedBlueprints.stream()
+                    .sorted(Comparator.comparing(horizonsBlueprint -> horizonsBlueprint.getHorizonsBlueprintGrade().getGrade()))
+                    .map(horizonsBlueprint -> {
+                                final DestroyableToggleButton button = ToggleButtonBuilder.builder()
+                                        .withStyleClass("blueprint-button")
+                                        .withText("blueprint.synthesis.grade" + horizonsBlueprint.getHorizonsBlueprintGrade().getGrade())
+                                        .withOnAction(event -> {
+                                            if (((ToggleButton) event.getTarget()).isSelected()) {
+                                                slotBox.getSlot().getShipModule().applySynthesis(horizonsBlueprint.getHorizonsBlueprintGrade());
+                                            } else {
+                                                slotBox.getSlot().getShipModule().removeSynthesis();
+                                            }
+                                            notifyChanged();
+                                            slotBox.refresh();
+                                            setChangedButtonsState();
+                                            EventService.publish(new SlotboxEngineeringEvent(this.slotBox, slotBox.getSlot().getShipModule()));
+                                        })
+                                        .build();
+                                button.setFocusTraversable(false);
+                                boolean selected = horizonsBlueprint.getHorizonsBlueprintGrade().equals(shipModule.getSynthesisGrade());
+                                button.selectedProperty().set(selected);
+                                button.selectedProperty().addListener((observable, oldValue, newValue) ->
+                                {
+                                    if (Boolean.TRUE.equals(oldValue)) {
+                                        slotBox.getSlot().getShipModule().applySynthesis(horizonsBlueprint.getHorizonsBlueprintGrade());
+                                        notifyChanged();
+                                        slotBox.refresh();
+                                    }
+                                });
+                                button.setToggleGroup(toggleGroup);
+                                return button;
+                            }
+
+                    ).toList();
+
+            DestroyableVBox synthesisButtons = BoxBuilder.builder()
+                    .withStyleClass("blueprint-buttons")
+                    .withNodes(toggleButtons)
+                    .buildVBox();
+            DestroyableLabel title = LabelBuilder.builder()
+                    .withStyleClass("title")
+                    .withText("tabs.ships.synthesis")
+                    .build();
+            DestroyableVBox synthesisSection = BoxBuilder.builder()
+                    .withStyleClass("section")
+                    .withNodes(title, synthesisButtons)
+                    .buildVBox();
+            content.getNodes().add(synthesisSection);
+            return synthesisSection;
+        }
+        return null;
     }
 
 
@@ -413,6 +482,7 @@ public class ModuleSelectPopover extends DestroyablePopOver implements Destroyab
                 .withOnAction(event -> {
                     slotBox.getSlot().setOldShipModule(slotBox.getSlot().getShipModule() == null ? null : slotBox.getSlot().getShipModule().Clone());
                     slotBox.refresh();
+                    notifyChanged();
                     close();
                 })
                 .withFocusTraversable(false)
@@ -435,6 +505,7 @@ public class ModuleSelectPopover extends DestroyablePopOver implements Destroyab
                         default -> slotBox.getSlot().setOldShipModule(null);
                     }
                     slotBox.refresh();
+                    notifyChanged();
                     close();
                 })
                 .withFocusTraversable(false)

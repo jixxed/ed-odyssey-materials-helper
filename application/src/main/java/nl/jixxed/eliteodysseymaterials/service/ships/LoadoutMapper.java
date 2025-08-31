@@ -166,7 +166,7 @@ public class LoadoutMapper {
             return engineering.getModifiers().stream().allMatch(modification ->
                     modification.getValue().map(value -> {
                         final HorizonsModifier moduleAttribute = HorizonsModifier.forInternalName(modification.getLabel());
-                        final Object attributeValue = shipModule.getAttributeValue(moduleAttribute);
+                        final Object attributeValue = shipModule.getAttributeValue(moduleAttribute, false);
 
                         if (attributeValue instanceof Double value2) {
 //                            log.debug(moduleAttribute.name() + ": " + value.setScale(2, RoundingMode.HALF_EVEN) + " =? " + BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));

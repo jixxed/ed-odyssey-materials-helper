@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 
 import java.util.ArrayList;
@@ -43,6 +44,9 @@ public class ShipConfigurationSlot {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<ShipConfigurationExperimentalEffect> experimentalEffect = new ArrayList<>();
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private HorizonsBlueprintGrade synthesis;
+
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final Map<HorizonsModifier, Object> modifiers = new HashMap<>();
 
@@ -66,11 +70,13 @@ public class ShipConfigurationSlot {
                     this.oldModule.getBuyPrice(),
                     this.oldModule.getModifiers().entrySet().stream().collect(Collectors.toMap(Map.Entry<HorizonsModifier, Object>::getKey, Map.Entry<HorizonsModifier, Object>::getValue)),
                     this.oldModule.getModification().stream().map(mod -> new ShipConfigurationModification(mod.getType(), mod.getGrade(), mod.getPercentComplete())).toList(),
-                    this.oldModule.getExperimentalEffect().stream().map(mod -> new ShipConfigurationExperimentalEffect(mod.getType())).toList()
+                    this.oldModule.getExperimentalEffect().stream().map(mod -> new ShipConfigurationExperimentalEffect(mod.getType())).toList(),
+                    this.oldModule.getSynthesis()
             );
         }
         clone.modification.addAll(modification.stream().map(mod -> new ShipConfigurationModification(mod.getType(), mod.getGrade(), mod.getPercentComplete())).toList());
         clone.experimentalEffect.addAll(experimentalEffect.stream().map(mod -> new ShipConfigurationExperimentalEffect(mod.getType())).toList());
+        clone.synthesis = this.synthesis;
         modifiers.entrySet().stream().map(mod -> Map.entry(mod.getKey(), cloneMod(mod.getValue()))).forEach(entry -> clone.modifiers.put(entry.getKey(), entry.getValue()));
         return clone;
     }

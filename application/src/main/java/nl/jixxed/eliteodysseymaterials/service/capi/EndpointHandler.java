@@ -14,7 +14,7 @@ public interface EndpointHandler {
         }
         final ZonedDateTime now = ZonedDateTime.now();
         final ZonedDateTime fileModified = ZonedDateTime.ofInstant(Instant.ofEpochMilli(file.lastModified()), ZoneId.systemDefault());
-        final long delay = /*300L*/ 300L * 1000L;// 5 minutes
+        final long delay = getFrequency() * 1000L;
         final long delayed = (now.toEpochSecond() - fileModified.toEpochSecond()) * 1000;
         return delayed > delay;
     }
@@ -24,4 +24,7 @@ public interface EndpointHandler {
     void enable();
 
     void disable();
+
+    int getFrequency();
+
 }

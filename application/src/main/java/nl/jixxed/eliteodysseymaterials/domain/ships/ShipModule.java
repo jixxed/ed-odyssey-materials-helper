@@ -6,17 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsBiFunction;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsModifierValue;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsTechBrokerBlueprint;
-import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.*;
-import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.*;
-import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.*;
-import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military.*;
-import nl.jixxed.eliteodysseymaterials.domain.ships.special.CargoHatch;
-import nl.jixxed.eliteodysseymaterials.domain.ships.special.FuelTank;
-import nl.jixxed.eliteodysseymaterials.domain.ships.utility.*;
+import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.ShipModuleService;
@@ -27,9 +17,6 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Predicate;
-
-import static java.util.function.Predicate.not;
 
 @Slf4j
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -76,6 +63,8 @@ public abstract class ShipModule implements Serializable {
     private boolean powerToggle = true;
     @Setter
     private int powerGroup = 3;
+    @Getter
+    private HorizonsBlueprintGrade synthesisGrade = HorizonsBlueprintGrade.NONE;
 
     public int getPowerGroup() {
         return (!hasPowerToggle() && isPassivePower()) ? -1 : powerGroup;
@@ -128,6 +117,7 @@ public abstract class ShipModule implements Serializable {
         this.powered = shipModule.powered;
         this.powerToggle = shipModule.powerToggle;
         this.buyPrice = shipModule.buyPrice;
+        this.synthesisGrade = shipModule.synthesisGrade;
     }
 
     public static List<ShipModule> getModules(final SlotType slotType) {
@@ -149,7 +139,7 @@ public abstract class ShipModule implements Serializable {
                 this.modifications.clear();
                 this.modifications.add(mod);
                 this.modifiers.clear();
-            }else{
+            } else {
                 this.modifications.stream().filter(existingMod -> Objects.equals(existingMod, mod))
                         .findFirst()
                         .ifPresent(existingModification -> {
@@ -158,6 +148,12 @@ public abstract class ShipModule implements Serializable {
                         });
                 this.modifiers.clear();
             }
+        }
+    }
+
+    public void applySynthesis(final HorizonsBlueprintGrade synthesisGrade) {
+        if(synthesisGrade != null && synthesisBlueprints().stream().map(HorizonsBlueprint::getHorizonsBlueprintGrade).anyMatch(synthesisGrade::equals)) {
+            this.synthesisGrade = synthesisGrade;
         }
     }
 
@@ -187,17 +183,17 @@ public abstract class ShipModule implements Serializable {
         return getAllowedBlueprints().contains(modification);
     }
 
-    public <T> T getAttributeValueOrDefault(final HorizonsModifier moduleAttribute, final T defaultValue) {
+    public <T> T getAttributeValueOrDefault(final HorizonsModifier moduleAttribute, final T defaultValue, boolean synthesized) {
         try {
-            return (T) getAttributeValue(moduleAttribute);
+            return (T) getAttributeValue(moduleAttribute, synthesized);
         } catch (final IllegalArgumentException e) {
             return defaultValue;
         }
     }
 
-    public <T> T getAttributeValueOrDefault(final HorizonsModifier moduleAttribute, Double completeness, final T defaultValue) {
+    public <T> T getAttributeValueOrDefault(final HorizonsModifier moduleAttribute, Double completeness, final T defaultValue, boolean synthesized) {
         try {
-            return (T) getAttributeValue(moduleAttribute, completeness);
+            return (T) getAttributeValue(moduleAttribute, completeness, synthesized);
         } catch (final IllegalArgumentException e) {
             return defaultValue;
         }
@@ -205,10 +201,10 @@ public abstract class ShipModule implements Serializable {
 
     public Object getOriginalAttributeValue(final HorizonsModifier moduleAttribute) {
         if (HorizonsModifier.DAMAGE_PER_SECOND.equals(moduleAttribute) && this.attributes.containsKey(HorizonsModifier.DAMAGE)) {
-            if((double)this.attributes.get(HorizonsModifier.BURST_INTERVAL) == 0D){
+            if ((double) this.attributes.get(HorizonsModifier.BURST_INTERVAL) == 0D) {
                 return this.attributes.get(HorizonsModifier.DAMAGE);
             }
-            if(this.attributes.containsKey(HorizonsModifier.DAMAGE_MULTIPLIER)){
+            if (this.attributes.containsKey(HorizonsModifier.DAMAGE_MULTIPLIER)) {
                 return (double) this.attributes.get(HorizonsModifier.DAMAGE) * (double) this.attributes.getOrDefault(HorizonsModifier.DAMAGE_MULTIPLIER, 1.0) / (double) this.attributes.getOrDefault(HorizonsModifier.CHARGE_TIME, 1.0);
             }
             return (double) this.attributes.get(HorizonsModifier.DAMAGE) * (double) getOriginalAttributeValue(HorizonsModifier.RATE_OF_FIRE) * (double) this.attributes.getOrDefault(HorizonsModifier.ROUNDS_PER_SHOT, 1.0);
@@ -218,7 +214,7 @@ public abstract class ShipModule implements Serializable {
         }
         if (HorizonsModifier.RATE_OF_FIRE.equals(moduleAttribute) && this.attributes.containsKey(HorizonsModifier.BURST_INTERVAL)) {
             // Rate of Fire = Ammo Clip / (((Burst Size - 1) / Burst Rate of Fire + Burst Interval) * ceil(Ammo Clip / Burst Size))
-            if((double)this.attributes.get(HorizonsModifier.BURST_INTERVAL) == 0D){
+            if ((double) this.attributes.get(HorizonsModifier.BURST_INTERVAL) == 0D) {
                 return Double.POSITIVE_INFINITY;
             }
             double burstSize = (double) this.attributes.getOrDefault(HorizonsModifier.BURST_SIZE, 1D);
@@ -233,15 +229,15 @@ public abstract class ShipModule implements Serializable {
         return this.attributes.get(moduleAttribute);
     }
 
-    public Object getAttributeValue(final HorizonsModifier moduleAttribute) {
-        return getAttributeValue(moduleAttribute, null);
+    public Object getAttributeValue(final HorizonsModifier moduleAttribute, boolean synthesized) {
+        return getAttributeValue(moduleAttribute, null, synthesized);
     }
 
-    public BigDecimal getAttributeCompleteness(final HorizonsModifier moduleAttribute) {
+    public BigDecimal getAttributeCompleteness(final HorizonsModifier moduleAttribute, boolean synthesized) {
         Object currentValue = this.modifiers.get(moduleAttribute);
         if (currentValue != null) {
-            double minValue = (double) getAttributeValue(moduleAttribute, 0.0);
-            double maxValue = (double) getAttributeValue(moduleAttribute, 1.0);
+            double minValue = (double) getAttributeValue(moduleAttribute, 0.0, synthesized);
+            double maxValue = (double) getAttributeValue(moduleAttribute, 1.0, synthesized);
             if (maxValue == minValue) {
                 return BigDecimal.ONE;
             }
@@ -252,12 +248,12 @@ public abstract class ShipModule implements Serializable {
                 final var horizonsModifierValue = moduleBlueprint.getModifiers().get(moduleAttribute);
                 if (horizonsModifierValue != null && horizonsModifierValue.isPositive()) {
                     BigDecimal completeness = modifications.getFirst().getModificationCompleteness().orElse(BigDecimal.ZERO);
-                    Object attributeValue = getAttributeValue(moduleAttribute, completeness.doubleValue());
-                    if(attributeValue instanceof Double) {
+                    Object attributeValue = getAttributeValue(moduleAttribute, completeness.doubleValue(), synthesized);
+                    if (attributeValue instanceof Double) {
                         double currentValue1 = (double) attributeValue;
-                        double maxValue = (double) getAttributeValue(moduleAttribute, 1.0);
+                        double maxValue = (double) getAttributeValue(moduleAttribute, 1.0, synthesized);
                         return maxValue == currentValue1 ? BigDecimal.ONE : completeness;
-                    }else{
+                    } else {
                         return modifications.getFirst().getModificationCompleteness().orElse(BigDecimal.ZERO);
                     }
                 } else {
@@ -267,35 +263,35 @@ public abstract class ShipModule implements Serializable {
         }
     }
 
-    public Object getAttributeValue(final HorizonsModifier moduleAttribute, Double completeness) {
+    public Object getAttributeValue(final HorizonsModifier moduleAttribute, Double completeness, boolean synthesized) {
         if (HorizonsModifier.DAMAGE_PER_SECOND.equals(moduleAttribute) && this.attributes.containsKey(HorizonsModifier.DAMAGE)) {
-            if((double)this.attributes.get(HorizonsModifier.BURST_INTERVAL) == 0D){
-                return getAttributeValue(HorizonsModifier.DAMAGE, completeness);
+            if ((double) this.attributes.get(HorizonsModifier.BURST_INTERVAL) == 0D) {
+                return getAttributeValue(HorizonsModifier.DAMAGE, completeness, synthesized);
             }
 
-            if(this.attributes.containsKey(HorizonsModifier.DAMAGE_MULTIPLIER)){
-                return (double) getAttributeValue(HorizonsModifier.DAMAGE, completeness) * getAttributeValueOrDefault(HorizonsModifier.DAMAGE_MULTIPLIER, completeness, 1.0) / getAttributeValueOrDefault(HorizonsModifier.CHARGE_TIME, completeness, 1.0);
+            if (this.attributes.containsKey(HorizonsModifier.DAMAGE_MULTIPLIER)) {
+                return (double) getAttributeValue(HorizonsModifier.DAMAGE, completeness, synthesized) * getAttributeValueOrDefault(HorizonsModifier.DAMAGE_MULTIPLIER, completeness, 1.0, synthesized) / getAttributeValueOrDefault(HorizonsModifier.CHARGE_TIME, completeness, 1.0, synthesized);
             }
-            return (double) getAttributeValue(HorizonsModifier.DAMAGE, completeness) * getAttributeValueOrDefault(HorizonsModifier.RATE_OF_FIRE, completeness, 1.0) * getAttributeValueOrDefault(HorizonsModifier.ROUNDS_PER_SHOT, completeness, 1.0);
+            return (double) getAttributeValue(HorizonsModifier.DAMAGE, completeness, synthesized) * getAttributeValueOrDefault(HorizonsModifier.RATE_OF_FIRE, completeness, 1.0, synthesized) * getAttributeValueOrDefault(HorizonsModifier.ROUNDS_PER_SHOT, completeness, 1.0, synthesized);
         }
         if (HorizonsModifier.BREACH_DAMAGE.equals(moduleAttribute)) {
-            return (double) getAttributeValue(HorizonsModifier.DAMAGE, completeness) * (double) this.attributes.get(HorizonsModifier.BREACH_DAMAGE);//todo move BREACH_DAMAGE to dedicated attribute
+            return (double) getAttributeValue(HorizonsModifier.DAMAGE, completeness, synthesized) * (double) this.attributes.get(HorizonsModifier.BREACH_DAMAGE);//todo move BREACH_DAMAGE to dedicated attribute
         }
         if (HorizonsModifier.RATE_OF_FIRE.equals(moduleAttribute) && this.attributes.containsKey(HorizonsModifier.BURST_INTERVAL)) {
             // Rate of Fire = Ammo Clip / (((Burst Size - 1) / Burst Rate of Fire + Burst Interval) * ceil(Ammo Clip / Burst Size))
-            if((double)this.attributes.get(HorizonsModifier.BURST_INTERVAL) == 0D){
+            if ((double) this.attributes.get(HorizonsModifier.BURST_INTERVAL) == 0D) {
                 return Double.POSITIVE_INFINITY;
             }
-            double burstSize = getAttributeValueOrDefault(HorizonsModifier.BURST_SIZE, completeness, 1.0);
-            double ammoClipSize = getAttributeValueOrDefault(HorizonsModifier.AMMO_CLIP_SIZE, completeness, burstSize);// default to burstSize if there is no ammo clip
-            double burstRateOfFire = getAttributeValueOrDefault(HorizonsModifier.BURST_RATE_OF_FIRE, completeness, -1.0);
-            double burstInterval = getAttributeValueOrDefault(HorizonsModifier.BURST_INTERVAL, completeness, 1.0);
+            double burstSize = getAttributeValueOrDefault(HorizonsModifier.BURST_SIZE, completeness, 1.0, synthesized);
+            double ammoClipSize = getAttributeValueOrDefault(HorizonsModifier.AMMO_CLIP_SIZE, completeness, burstSize, synthesized);// default to burstSize if there is no ammo clip
+            double burstRateOfFire = getAttributeValueOrDefault(HorizonsModifier.BURST_RATE_OF_FIRE, completeness, -1.0, synthesized);
+            double burstInterval = getAttributeValueOrDefault(HorizonsModifier.BURST_INTERVAL, completeness, 1.0, synthesized);
             return ammoClipSize / (((burstSize - 1) / burstRateOfFire + burstInterval) * Math.ceil(ammoClipSize / burstSize));
         }
         if (!this.attributes.containsKey(moduleAttribute)) {
             throw new IllegalArgumentException("Unknown Module Attribute: " + moduleAttribute + " for module: " + this.name);
         }
-        if (modifiers.containsKey(moduleAttribute) && (completeness == null || isLegacy())) {
+        if (modifiers.containsKey(moduleAttribute) && (/*completeness == null ||*/ isLegacy())) {
             if (modifiers.get(moduleAttribute) instanceof Boolean) {
                 return modifiers.get(moduleAttribute);
             }
@@ -304,23 +300,23 @@ public abstract class ShipModule implements Serializable {
         final Object baseAttributeValue = this.attributes.get(moduleAttribute);
         if (baseAttributeValue instanceof Double) {
             Double toReturn = Double.valueOf((double) baseAttributeValue);
-            toReturn = (Double) applyModsToAttributeValue(moduleAttribute, toReturn, completeness);
-            if (HorizonsModifier.AMMO_CLIP_SIZE.equals(moduleAttribute)){
-                double burstSize = getAttributeValueOrDefault(HorizonsModifier.BURST_SIZE, completeness, 1.0);
+            toReturn = (Double) applyModsToAttributeValue(moduleAttribute, toReturn, completeness, synthesized);
+            if (HorizonsModifier.AMMO_CLIP_SIZE.equals(moduleAttribute)) {
+                double burstSize = getAttributeValueOrDefault(HorizonsModifier.BURST_SIZE, completeness, 1.0, synthesized);
                 toReturn = Math.ceil(toReturn / burstSize) * burstSize;
             }
-            if (HorizonsModifier.AMMO_MAXIMUM.equals(moduleAttribute)){
+            if (HorizonsModifier.AMMO_MAXIMUM.equals(moduleAttribute)) {
                 toReturn = Math.floor(toReturn);
             }
             return toReturn;
         } else if (baseAttributeValue instanceof Boolean) {
             Boolean toReturn = Boolean.valueOf((boolean) baseAttributeValue);
-            return applyModsToAttributeValue(moduleAttribute, toReturn, completeness);
+            return applyModsToAttributeValue(moduleAttribute, toReturn, completeness, synthesized);
         }
         return baseAttributeValue;
     }
 
-    private Object applyModsToAttributeValue(HorizonsModifier moduleAttribute, Object attributeValue, Double completeness) {
+    private Object applyModsToAttributeValue(HorizonsModifier moduleAttribute, Object attributeValue, Double completeness, boolean synthesized) {
         final AtomicReference<Object> value = new AtomicReference<>(attributeValue);
         final AtomicReference<HorizonsBiFunction> moduleModifier = new AtomicReference<>();
         final AtomicDouble modificationCompleteness = new AtomicDouble();
@@ -358,6 +354,18 @@ public abstract class ShipModule implements Serializable {
 //                value.set(experimentalEffectModifier.getModifiedValue(value.get(), 1D));
                     try {
                         value.set(experimentalEffectModifier.getModifier().getFunction().apply(value.get(), 1D));
+                    } catch (final Throwable t) {
+                        log.error("Error modifying value", t);
+                    }
+                }
+            });
+        }
+        if (synthesized && !HorizonsBlueprintGrade.NONE.equals(this.synthesisGrade)) {
+            this.synthesisBlueprints().stream().filter(bp -> bp.getHorizonsBlueprintGrade().equals(this.synthesisGrade)).findFirst().ifPresent(blueprint -> {
+                final HorizonsModifierValue synthesisModifier = blueprint.getModifiers().get(moduleAttribute);
+                if (synthesisModifier != null) {
+                    try {
+                        value.set(synthesisModifier.getModifier().getFunction().apply(value.get(), 1D));
                     } catch (final Throwable t) {
                         log.error("Error modifying value", t);
                     }
@@ -429,6 +437,10 @@ public abstract class ShipModule implements Serializable {
 
     public boolean isCGExclusive() {
         return false;
+    }
+
+    public Collection<HorizonsSynthesisBlueprint> synthesisBlueprints() {
+        return Collections.emptyList();
     }
 
     public int getModuleLimit() {
@@ -503,7 +515,7 @@ public abstract class ShipModule implements Serializable {
     }
 
     public boolean isHiddenStat(HorizonsModifier modifier) {
-        if (HorizonsModifier.POWER_DRAW.equals(modifier) && (this.getAttributeValue(modifier).equals(0D) && this.getOriginalAttributeValue(modifier).equals(0D))) {
+        if (HorizonsModifier.POWER_DRAW.equals(modifier) && (this.getAttributeValue(modifier, false).equals(0D) && this.getOriginalAttributeValue(modifier).equals(0D))) {
             return true;
         }
         return false;
@@ -531,7 +543,12 @@ public abstract class ShipModule implements Serializable {
                 && this.getModuleSize().equals(other.getModuleSize())
                 && this.getModuleClass().equals(other.getModuleClass())
                 && isSameModifications(other)
-                && isSameExperimentalEffects(other);
+                && isSameExperimentalEffects(other)
+                && isSameSynthesis(other);
+    }
+
+    private boolean isSameSynthesis(ShipModule other) {
+        return other != null && this.getSynthesisGrade() == other.getSynthesisGrade();
     }
 
     public boolean isSameSize(ShipModule other) {
@@ -563,5 +580,43 @@ public abstract class ShipModule implements Serializable {
 
     public boolean hasTechBrokerBlueprint() {
         return this.techBrokerBlueprint() != null;
+    }
+
+    public void removeSynthesis() {
+        synthesisGrade = HorizonsBlueprintGrade.NONE;
+    }
+
+    public boolean isSynthesisBasic() {
+        return HorizonsBlueprintGrade.GRADE_1.equals(synthesisGrade);
+    }
+
+    public boolean isSynthesisStandard() {
+        return HorizonsBlueprintGrade.GRADE_2.equals(synthesisGrade);
+    }
+
+    public boolean isSynthesisPremium() {
+        return HorizonsBlueprintGrade.GRADE_3.equals(synthesisGrade);
+    }
+
+    public boolean isSynthesized(HorizonsModifier horizonsModifier) {
+        return isSynthesisBasic() && hasSynthesisModifier(HorizonsBlueprintGrade.GRADE_1, horizonsModifier)
+                || isSynthesisStandard() && hasSynthesisModifier(HorizonsBlueprintGrade.GRADE_2, horizonsModifier)
+                || isSynthesisPremium() && hasSynthesisModifier(HorizonsBlueprintGrade.GRADE_3, horizonsModifier);
+    }
+
+    private boolean hasSynthesisModifier(HorizonsBlueprintGrade grade, HorizonsModifier horizonsModifier) {
+        return synthesisBlueprints().stream()
+                .filter(bp -> grade.equals(bp.getHorizonsBlueprintGrade()))
+                .findFirst()
+                .map(bp -> modifiesStat(horizonsModifier, bp))
+                .orElse(false);
+    }
+
+    private static boolean modifiesStat(HorizonsModifier horizonsModifier, HorizonsSynthesisBlueprint bp) {
+        //derived stats check on base stat
+        if(HorizonsModifier.DAMAGE_PER_SECOND.equals(horizonsModifier) || HorizonsModifier.BREACH_DAMAGE.equals(horizonsModifier)) {
+            return bp.getModifiers().containsKey(HorizonsModifier.DAMAGE);
+        }
+        return bp.getModifiers().containsKey(horizonsModifier);
     }
 }

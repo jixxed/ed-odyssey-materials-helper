@@ -211,21 +211,21 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPowered())
                     .findFirst()
-                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY))
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY, true))
                     .orElse(Double.NaN);
             final double heatEfficiency = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPowered())
                     .findFirst()
-                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.HEAT_EFFICIENCY))
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.HEAT_EFFICIENCY, true))
                     .orElse(Double.NaN);
             final double engineHeat = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_THRUSTERS.equals(slot.getSlotType()))
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPowered())
                     .findFirst()
-                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.ENGINE_THERMAL_LOAD))
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.ENGINE_THERMAL_LOAD, true))
                     .orElse(Double.NaN);
 
             final double powerForHeat = getPowerForHeat(powerCapacity, heatEfficiency);
@@ -348,14 +348,14 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPowered())
                     .findFirst()
-                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY))
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY, true))
                     .orElse(Double.NaN);
             final double heatEfficiency = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPowered())
                     .findFirst()
-                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.HEAT_EFFICIENCY))
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.HEAT_EFFICIENCY, true))
                     .orElse(Double.NaN);
 
             final double powerForHeat = getPowerForHeat(powerCapacity, heatEfficiency);
@@ -384,28 +384,28 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPowered())
                     .findFirst()
-                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY))
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY, true))
                     .orElse(Double.NaN);
             final double heatEfficiency = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPowered())
                     .findFirst()
-                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.HEAT_EFFICIENCY))
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.HEAT_EFFICIENCY, true))
                     .orElse(Double.NaN);
             final double engineHeat = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_THRUSTERS.equals(slot.getSlotType()))
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPowered())
                     .findFirst()
-                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.ENGINE_THERMAL_LOAD))
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.ENGINE_THERMAL_LOAD, true))
                     .orElse(Double.NaN);
             final double weaponCapacity = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_POWER_DISTRIBUTION.equals(slot.getSlotType()))
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPowered())
                     .findFirst()
-                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.WEAPONS_CAPACITY))
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.WEAPONS_CAPACITY, true))
                     .orElse(Double.NaN);
             AtomicDouble currentWeaponCapacity = new AtomicDouble(0);
             final double weaponHeat = ship.getHardpointSlots().stream()
@@ -413,8 +413,8 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
                     .filter(slot -> slot.getShipModule().isPowered())
                     .filter(slot -> selectedHardpointGroups.contains(slot.getHardpointGroup()))
                     .mapToDouble(slot -> {
-                        double thermalLoad = (double) slot.getShipModule().getAttributeValue(HorizonsModifier.THERMAL_LOAD);
-                        double distDraw = (double) slot.getShipModule().getAttributeValue(HorizonsModifier.DISTRIBUTOR_DRAW);
+                        double thermalLoad = (double) slot.getShipModule().getAttributeValue(HorizonsModifier.THERMAL_LOAD, true);
+                        double distDraw = (double) slot.getShipModule().getAttributeValue(HorizonsModifier.DISTRIBUTOR_DRAW, true);
                         currentWeaponCapacity.set(currentWeaponCapacity.get() - distDraw);
                         return thermalLoad * Doubles.constrainToRange(1 + 4 * (weaponCapacity - currentWeaponCapacity.get() + distDraw) / weaponCapacity, 0D, 1D);
                     })
@@ -443,21 +443,21 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPowered())
                     .findFirst()
-                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY))
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY, true))
                     .orElse(Double.NaN);
             final double heatEfficiency = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPowered())
                     .findFirst()
-                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.HEAT_EFFICIENCY))
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.HEAT_EFFICIENCY, true))
                     .orElse(Double.NaN);
             final double engineHeat = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_THRUSTERS.equals(slot.getSlotType()))
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPowered())
                     .findFirst()
-                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.ENGINE_THERMAL_LOAD))
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.ENGINE_THERMAL_LOAD, true))
                     .orElse(Double.NaN);
 
             final double powerForHeat = getPowerForHeat(powerCapacity, heatEfficiency);
@@ -475,28 +475,28 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPowered())
                     .findFirst()
-                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY))
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY, true))
                     .orElse(Double.NaN);
             final double heatEfficiency = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPowered())
                     .findFirst()
-                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.HEAT_EFFICIENCY))
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.HEAT_EFFICIENCY, true))
                     .orElse(Double.NaN);
             final double engineHeat = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_THRUSTERS.equals(slot.getSlotType()))
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPowered())
                     .findFirst()
-                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.ENGINE_THERMAL_LOAD))
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.ENGINE_THERMAL_LOAD, true))
                     .orElse(Double.NaN);
             final double fsdHeat = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_FRAME_SHIFT_DRIVE.equals(slot.getSlotType()))
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPowered())
                     .findFirst()
-                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.FSD_HEAT_RATE))
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.FSD_HEAT_RATE, true))
                     .orElse(Double.NaN);
 
             final double powerForHeat = getPowerForHeat(powerCapacity, heatEfficiency);
@@ -525,21 +525,21 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
 
         getShip().ifPresent(ship -> {
             if (ship.getCargoHatch().isOccupied() && ship.getCargoHatch().getShipModule().isPowered()) {
-                powerValues.compute(ship.getCargoHatch().getShipModule().isPassivePowerWithoutToggle() ? -1 : ship.getCargoHatch().getShipModule().getPowerGroup(), (key, value) -> value + (double) ship.getCargoHatch().getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW));
+                powerValues.compute(ship.getCargoHatch().getShipModule().isPassivePowerWithoutToggle() ? -1 : ship.getCargoHatch().getShipModule().getPowerGroup(), (key, value) -> value + (double) ship.getCargoHatch().getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW, true));
             }
             ship.getUtilitySlots().stream()
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPassivePower())
                     .filter(slot -> slot.getShipModule().isPowered())
-                    .forEach(slot -> powerValues.compute(slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
+                    .forEach(slot -> powerValues.compute(slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW, true)));
             ship.getOptionalSlots().stream()
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPowered())
-                    .forEach(slot -> powerValues.compute(slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
+                    .forEach(slot -> powerValues.compute(slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW, true)));
             ship.getCoreSlots().stream()
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPowered())
-                    .forEach(slot -> powerValues.compute(slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
+                    .forEach(slot -> powerValues.compute(slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW, true)));
         });
         return powerValues;
     }
@@ -552,14 +552,14 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
                     .filter(slot -> slot.getShipModule().isPowered())
                     .forEach(slot -> powerValues.compute(
                             slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(),
-                            (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)
+                            (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW, true)
                     ));
             ship.getUtilitySlots().stream()
                     .filter(Slot::isOccupied)
                     .filter(slot -> !slot.getShipModule().isPassivePower())
                     .forEach(slot -> powerValues.compute(
                             slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(),
-                            (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)
+                            (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW, true)
                     ));
         });
 

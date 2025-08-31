@@ -1,6 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.core_internals;
 
+import nl.jixxed.eliteodysseymaterials.constants.horizons.SynthesisBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.core_internals.LifeSupportBlueprints;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsSynthesisBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.ships.CoreModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleClass;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleSize;
@@ -8,6 +10,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -124,5 +127,10 @@ public class LifeSupport extends CoreModule {
 
     public boolean isSelectable() {
         return !LIFE_SUPPORT_1_E_FREE.equals(this);
+    }
+
+    @Override
+    public Collection<HorizonsSynthesisBlueprint> synthesisBlueprints() {
+        return SynthesisBlueprints.LIFE_SUPPORT_SYNTHESIS.values();
     }
 }

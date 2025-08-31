@@ -1,10 +1,13 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint;
 
+import nl.jixxed.eliteodysseymaterials.constants.horizons.SynthesisBlueprints;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsSynthesisBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -55,5 +58,10 @@ public class ShockCannon extends HardpointModule {
     @Override
     public ShockCannon Clone() {
         return new ShockCannon(this);
+    }
+
+    @Override
+    public Collection<HorizonsSynthesisBlueprint> synthesisBlueprints() {
+        return SynthesisBlueprints.SHOCK_CANNON_MUNITIONS.values();
     }
 }

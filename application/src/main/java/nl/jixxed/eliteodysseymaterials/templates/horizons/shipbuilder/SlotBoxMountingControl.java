@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.FontAwesomeIconViewBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
@@ -9,7 +10,10 @@ import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.ships.HardpointModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
+import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIconView;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 public class SlotBoxMountingControl extends DestroyableVBox implements DestroyableEventTemplate {
@@ -74,16 +78,16 @@ public class SlotBoxMountingControl extends DestroyableVBox implements Destroyab
             if (this.mountingLabel.getGraphic() != null) {
                 ((Destroyable) this.mountingLabel.getGraphic()).destroy();
             }
-            var graphic = createIconWithoutTooltip("/images/ships/icons/" + hardpointModule.getMounting().name().toLowerCase() + ".png", "icon");
+            var graphic = createIconWithoutTooltip(hardpointModule.getMounting().getIcon(), "icon");
             this.mountingLabel.setGraphic(graphic);
             this.mountingLabel.register(graphic);
         }
     }
 
-    private static DestroyableResizableImageView createIconWithoutTooltip(String imageResource, String... styleClasses) {
-        return ResizableImageViewBuilder.builder()
+    private static EdAwesomeIconViewPane createIconWithoutTooltip(EdAwesomeIcon icon, String... styleClasses) {
+        return EdAwesomeIconViewPaneBuilder.builder()
                 .withStyleClasses(styleClasses)
-                .withImage(imageResource)
+                .withIcons(new EdAwesomeIconView(icon))
                 .build();
     }
 }

@@ -69,6 +69,6 @@ public class ExperimentalWeaponStabiliser extends OptionalModule {
     }
 
     public int getExperimentalModuleIncrease() {
-        return (int) (double) this.getAttributeValue(HorizonsModifier.MODULE_LIMIT_INCREASE);
+        return (int) (double) this.getAttributeValue(HorizonsModifier.MODULE_LIMIT_INCREASE, true);
     }
 }

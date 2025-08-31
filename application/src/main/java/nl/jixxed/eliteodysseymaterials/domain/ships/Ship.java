@@ -1944,12 +1944,12 @@ public class Ship {
                 .filter(slot -> slot.getSlotType() == SlotType.CORE_FUEL_TANK)
                 .findFirst()
                 .map(Slot::getShipModule)
-                .map(shipModule -> (double) shipModule.getAttributeValue(HorizonsModifier.FUEL_CAPACITY))
+                .map(shipModule -> (double) shipModule.getAttributeValue(HorizonsModifier.FUEL_CAPACITY, true))
                 .orElse(0D);
         final Double optionalFuel = this.getOptionalSlots().stream()
                 .filter(slot -> slot.getShipModule() instanceof FuelTank)
                 .map(Slot::getShipModule)
-                .map(shipModule -> (double) shipModule.getAttributeValue(HorizonsModifier.FUEL_CAPACITY))
+                .map(shipModule -> (double) shipModule.getAttributeValue(HorizonsModifier.FUEL_CAPACITY, true))
                 .mapToDouble(Double::doubleValue)
                 .sum();
         return coreFuel + optionalFuel;
@@ -1959,7 +1959,7 @@ public class Ship {
         return this.getOptionalSlots().stream()
                 .filter(slot -> slot.getShipModule() instanceof CargoRack || slot.getShipModule() instanceof AntiCorrosionCargoRack || slot.getShipModule() instanceof LargeCargoRack)
                 .map(Slot::getShipModule)
-                .map(shipModule -> (double) shipModule.getAttributeValue(HorizonsModifier.CARGO_CAPACITY))
+                .map(shipModule -> (double) shipModule.getAttributeValue(HorizonsModifier.CARGO_CAPACITY, true))
                 .mapToDouble(Double::doubleValue)
                 .sum();
     }
@@ -1985,7 +1985,7 @@ public class Ship {
         return this.getOptionalSlots().stream()
                 .filter(slot -> slot.getShipModule() instanceof PassengerCabin)
                 .map(Slot::getShipModule)
-                .map(shipModule -> (double) shipModule.getAttributeValue(HorizonsModifier.CABIN_CAPACITY))
+                .map(shipModule -> (double) shipModule.getAttributeValue(HorizonsModifier.CABIN_CAPACITY, true))
                 .mapToDouble(Double::doubleValue)
                 .sum();
     }
@@ -2002,7 +2002,7 @@ public class Ship {
     public double getEmptyMass() {
         return (double) this.attributes.getOrDefault(HorizonsModifier.MASS, 0.0)
                 + Stream.concat(this.getCoreSlots().stream(), Stream.concat(this.getHardpointSlots().stream(), Stream.concat(this.getUtilitySlots().stream(), this.getOptionalSlots().stream())))
-                .map(slot -> (slot.isOccupied()) ? (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.MASS, 0.0) : 0.0)
+                .map(slot -> (slot.isOccupied()) ? (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.MASS, 0.0, true) : 0.0)
                 .mapToDouble(Double::doubleValue)
                 .sum();
     }
@@ -2066,10 +2066,10 @@ public class Ship {
 //        ));
 
 
-        powerProfile.setPowerCapacity((Double) getCoreSlots().stream().filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType())).findFirst().filter(Slot::isOccupied).map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY)).orElse(0.0D));
+        powerProfile.setPowerCapacity((Double) getCoreSlots().stream().filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType())).findFirst().filter(Slot::isOccupied).map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY, true)).orElse(0.0D));
         if (getCargoHatch().isOccupied() && getCargoHatch().getShipModule().isPowered()) {
             int group = getCargoHatch().getShipModule().isPassivePowerWithoutToggle() ? -1 : getCargoHatch().getShipModule().getPowerGroup();
-            powerProfile.increasePowerGroup(group, (double) getCargoHatch().getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW));
+            powerProfile.increasePowerGroup(group, (double) getCargoHatch().getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW, true));
         }
         getUtilitySlots().stream()
                 .filter(Slot::isOccupied)
@@ -2077,21 +2077,21 @@ public class Ship {
                 .filter(slot -> slot.getShipModule().isPowered())
                 .forEach(slot -> {
                     int group = slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup();
-                    powerProfile.increasePowerGroup(group, (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW));
+                    powerProfile.increasePowerGroup(group, (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW, true));
                 });
         getOptionalSlots().stream()
                 .filter(Slot::isOccupied)
                 .filter(slot -> slot.getShipModule().isPowered())
                 .forEach(slot -> {
                     int group = slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup();
-                    powerProfile.increasePowerGroup(group, (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW));
+                    powerProfile.increasePowerGroup(group, (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW, true));
                 });
         getCoreSlots().stream()
                 .filter(Slot::isOccupied)
                 .filter(slot -> slot.getShipModule().isPowered())
                 .forEach(slot -> {
                     int group = slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup();
-                    powerProfile.increasePowerGroup(group, (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW));
+                    powerProfile.increasePowerGroup(group, (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW, true));
                 });
         return powerProfile;
     }
@@ -2104,7 +2104,7 @@ public class Ship {
                 .filter(slot -> slot.getShipModule().isPowered())
                 .forEach(slot -> {
                     int group = slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup();
-                    powerProfile.increasePowerGroup(group, (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW));
+                    powerProfile.increasePowerGroup(group, (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW, true));
                 });
         getUtilitySlots().stream()
                 .filter(Slot::isOccupied)
@@ -2112,7 +2112,7 @@ public class Ship {
                 .filter(slot -> slot.getShipModule().isPowered())
                 .forEach(slot -> {
                     int group = slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup();
-                    powerProfile.increasePowerGroup(group, (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW));
+                    powerProfile.increasePowerGroup(group, (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW, true));
                 });
 
 

@@ -25,8 +25,11 @@ import nl.jixxed.eliteodysseymaterials.service.event.ShipBuilderEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.SlotboxHoverEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.SlotboxOpenEvent;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
+import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.FontAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIconView;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.math.BigDecimal;
@@ -390,6 +393,7 @@ public class SlotBox extends DestroyableStackPane {
         this.blueprints.update(shipModule, oldShipModule);
         final boolean isSimilar = similarModules(shipModule, oldShipModule);
         this.changedIcon.setVisible(!isSimilar);
+        this.iconBox.pseudoClassStateChanged(PseudoClass.getPseudoClass("same"), isSimilar);
     }
 
     private static boolean similarModules(ShipModule shipModule, ShipModule oldShipModule) {
@@ -428,22 +432,25 @@ public class SlotBox extends DestroyableStackPane {
     private void updateSlotIcons(final ShipModule shipModule) {
         this.iconBox.getNodes().clear();
         if (shipModule != null) {
-            addIcon((shipModule instanceof HardpointModule hp && Mounting.GIMBALLED.equals(hp.getMounting())) || (shipModule instanceof UtilityModule um && Mounting.GIMBALLED.equals(um.getMounting())), "/images/ships/icons/gimballed.png", "ship.module.icon.tooltip.gimballed", "module-icon");
-            addIcon((shipModule instanceof HardpointModule hp && Mounting.TURRETED.equals(hp.getMounting())) || (shipModule instanceof UtilityModule um && Mounting.TURRETED.equals(um.getMounting())), "/images/ships/icons/turreted.png", "ship.module.icon.tooltip.turreted", "module-icon");
-            addIcon((shipModule instanceof HardpointModule hp && Mounting.FIXED.equals(hp.getMounting())) || (shipModule instanceof UtilityModule um && Mounting.FIXED.equals(um.getMounting())), "/images/ships/icons/fixed.png", "ship.module.icon.tooltip.fixed", "module-icon");
+            addIcon((shipModule instanceof UtilityModule um && Mounting.GIMBALLED.equals(um.getMounting())), EdAwesomeIcon.SHIPS_GIMBALLED, "ship.module.icon.tooltip.gimballed", "module-icon");
+            addIcon((shipModule instanceof UtilityModule um && Mounting.TURRETED.equals(um.getMounting())), EdAwesomeIcon.SHIPS_TURRETED, "ship.module.icon.tooltip.turreted", "module-icon");
+            addIcon((shipModule instanceof UtilityModule um && Mounting.FIXED.equals(um.getMounting())), EdAwesomeIcon.SHIPS_FIXED, "ship.module.icon.tooltip.fixed", "module-icon");
 
-            addIcon(shipModule.isPreEngineered(), "/images/ships/icons/preengineered.png", "ship.module.icon.tooltip.pre.engineered", "module-icon");
-            addIcon(shipModule.isStoreExclusive(), "/images/ships/icons/arx.png", "ship.module.icon.tooltip.arx", "module-icon");
+            addIcon(shipModule.isPreEngineered(), EdAwesomeIcon.SHIPS_ENGINEER, "ship.module.icon.tooltip.pre.engineered", "module-icon", "pre-engineered");
+            addIcon(shipModule.isStoreExclusive(), EdAwesomeIcon.OTHER_ARX, "ship.module.icon.tooltip.arx", "module-icon");
             addIcon(shipModule.isAdvanced(), "/images/ships/icons/advanced2.png", "ship.module.icon.tooltip.advanced", "module-icon-wide");
             addIcon(shipModule.isEnhanced(), "/images/ships/icons/enhanced2.png", "ship.module.icon.tooltip.enhanced", "module-icon-wide");
             addIcon(shipModule.isSeeker(), "/images/ships/icons/seeker2.png", "ship.module.icon.tooltip.seeker", "module-icon-wide");
             addIcon(shipModule.isDumbfire(), "/images/ships/icons/dumb2.png", "ship.module.icon.tooltip.dumbfire", "module-icon-wide");
             addIcon(shipModule.isLegacy(), "/images/ships/icons/legacy.png", "ship.module.icon.tooltip.legacy", "module-icon");
-            addIcon(Origin.POWERPLAY.equals(shipModule.getOrigin()), "/images/ships/icons/powerplay.png", "ship.module.icon.tooltip.powerplay", "module-icon");
-            addIcon(Origin.GUARDIAN.equals(shipModule.getOrigin()), "/images/ships/icons/guardian.png", "ship.module.icon.tooltip.guardian", "module-icon");
-            addIcon(shipModule.isMultiCrew(), "/images/ships/icons/multicrew.png", "ship.module.icon.tooltip.multicrew", "module-icon");
-            addIcon(shipModule.isCGExclusive(), "/images/ships/icons/cg.png", "ship.module.icon.tooltip.community.goal.module", "module-icon");
+            addIcon(Origin.POWERPLAY.equals(shipModule.getOrigin()), EdAwesomeIcon.OTHER_POWERPLAY_OPEN, "ship.module.icon.tooltip.powerplay", "module-icon");
+            addIcon(Origin.GUARDIAN.equals(shipModule.getOrigin()), EdAwesomeIcon.SHIPS_GUARDIAN_1, EdAwesomeIcon.SHIPS_GUARDIAN_2, "ship.module.icon.tooltip.guardian", "module-icon");
+            addIcon(shipModule.isMultiCrew(), EdAwesomeIcon.SHIPS_MULTICREW_RADAR, "ship.module.icon.tooltip.multicrew", "module-icon");
+            addIcon(shipModule.isCGExclusive(), EdAwesomeIcon.OTHER_COMMUNITYGOAL, "ship.module.icon.tooltip.community.goal.module", "module-icon");
             this.iconBox.getNodes().add(new GrowingRegion());
+            addIcon(shipModule.isSynthesisBasic(), EdAwesomeIcon.SHIPS_SYNTHESIS_BASIC, "ship.module.icon.tooltip.synthesis.basic", "module-icon", "synthesis");
+            addIcon(shipModule.isSynthesisStandard(), EdAwesomeIcon.SHIPS_SYNTHESIS_STANDARD, "ship.module.icon.tooltip.synthesis.standard", "module-icon", "synthesis");
+            addIcon(shipModule.isSynthesisPremium(), EdAwesomeIcon.SHIPS_SYNTHESIS_PREMIUM, "ship.module.icon.tooltip.synthesis.premium", "module-icon", "synthesis");
             if (!shipModule.getModifications().isEmpty()) {
                 if (!shipModule.isLegacy()) {
                     this.iconBox.getNodes().add(
@@ -454,7 +461,7 @@ public class SlotBox extends DestroyableStackPane {
                     );
                 }
                 this.iconBox.getNodes().addAll(
-                        createIconWithTooltip("/images/ships/icons/engineered.png", "ship.module.icon.tooltip.engineered", "module-icon"),
+                        createIconWithTooltip(EdAwesomeIcon.SHIPS_ENGINEER, "ship.module.icon.tooltip.engineered", "module-icon"),
                         LabelBuilder.builder()
                                 .withStyleClass("module-grade")
                                 .withNonLocalizedText(String.valueOf(shipModule.getModifications().getFirst().getGrade().getGrade()))
@@ -469,6 +476,43 @@ public class SlotBox extends DestroyableStackPane {
         if (condition) {
             this.iconBox.getNodes().add(createIconWithTooltip(imageResource, tooltipKey, styleClasses));
         }
+    }
+    private void addIcon(boolean condition, EdAwesomeIcon icon, String tooltipKey, String... styleClasses) {
+        if (condition) {
+            this.iconBox.getNodes().add(createIconWithTooltip(icon, tooltipKey, styleClasses));
+        }
+    }
+    private void addIcon(boolean condition, EdAwesomeIcon icon, EdAwesomeIcon icon2, String tooltipKey, String... styleClasses) {
+        if (condition) {
+            this.iconBox.getNodes().add(createIconWithTooltip(icon, icon2, tooltipKey, styleClasses));
+        }
+    }
+
+    private EdAwesomeIconViewPane createIconWithTooltip(EdAwesomeIcon icon, String tooltipKey, String ... styleClasses) {
+        EdAwesomeIconViewPane iconView = EdAwesomeIconViewPaneBuilder.builder()
+                .withStyleClasses(styleClasses)
+                .withIcons(new EdAwesomeIconView(icon))
+                .build();
+        final DestroyableTooltip tooltip = TooltipBuilder.builder()
+                .withShowDelay(Duration.seconds(0.1))
+                .withText(tooltipKey)
+                .build();
+        tooltip.install(iconView);
+        tooltip.setHideDelay(Duration.seconds(0));
+        return iconView;
+    }
+    private EdAwesomeIconViewPane createIconWithTooltip(EdAwesomeIcon icon,EdAwesomeIcon icon2, String tooltipKey, String ... styleClasses) {
+        EdAwesomeIconViewPane iconView = EdAwesomeIconViewPaneBuilder.builder()
+                .withStyleClasses(styleClasses)
+                .withIcons(new EdAwesomeIconView(icon), new EdAwesomeIconView(icon2))
+                .build();
+        final DestroyableTooltip tooltip = TooltipBuilder.builder()
+                .withShowDelay(Duration.seconds(0.1))
+                .withText(tooltipKey)
+                .build();
+        tooltip.install(iconView);
+        tooltip.setHideDelay(Duration.seconds(0));
+        return iconView;
     }
 
     private static DestroyableResizableImageView createIconWithTooltip(String imageResource, String tooltipKey, String... styleClasses) {

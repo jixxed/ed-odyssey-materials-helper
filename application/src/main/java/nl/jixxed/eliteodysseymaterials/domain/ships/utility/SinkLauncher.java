@@ -1,7 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.utility;
 
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.horizons.SynthesisBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.utilitymounts.HeatSinkLauncherBlueprints;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsSynthesisBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsTechBrokerBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
@@ -10,6 +12,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -89,5 +92,13 @@ public class SinkLauncher extends UtilityModule {
             return (HorizonsTechBrokerBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.SIRIUS_HEAT_SINK_LAUNCHER, null);
         }
         return super.techBrokerBlueprint();
+    }
+
+    @Override
+    public Collection<HorizonsSynthesisBlueprint> synthesisBlueprints() {
+        if(CAUSTIC_SINK_LAUNCHER_0_I.equals(this)){
+            return SynthesisBlueprints.CAUSTIC_SINKS.values();
+        }
+        return SynthesisBlueprints.HEATSINKS.values();
     }
 }

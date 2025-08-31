@@ -62,16 +62,23 @@ public class ModuleDetailsAttribute extends DestroyableVBox implements Destroyab
         if (originalAttributeValue instanceof Boolean) {
             booleanLine(horizonsModifier, values);
         } else {
-            if (isModifiedAttribute()) {
-                if (shipModule.getModifiers().containsKey(horizonsModifier)) {
-                    final Double currentValue = Double.parseDouble(shipModule.getModifiers().get(horizonsModifier).toString());
-                    addValues(horizonsModifier, shipModule, values, currentValue);
-                } else {
-                    final Double estimatedValue = (Double) shipModule.getAttributeValue(horizonsModifier);
-                    addValues(horizonsModifier, shipModule, values, estimatedValue);
+            if (isModifiedAttribute() || isSynthesized(horizonsModifier)) {
+                addBaseValue(horizonsModifier, shipModule, values);
+                if(isModifiedAttribute()) {
+                    if (shipModule.isLegacy() && shipModule.getModifiers().containsKey(horizonsModifier)) {
+                        final Double currentValue = Double.parseDouble(shipModule.getModifiers().get(horizonsModifier).toString());
+                        addValues(horizonsModifier, shipModule, values, currentValue);
+                    } else {
+                        final Double estimatedValue = (Double) shipModule.getAttributeValue(horizonsModifier, false);
+                        addValues(horizonsModifier, shipModule, values, estimatedValue);
+                    }
+                    if (!shipModule.getModifications().isEmpty()) {
+                        addTooltip();
+                    }
                 }
-                if (!shipModule.getModifications().isEmpty()) {
-                    addTooltip();
+                if(isSynthesized(horizonsModifier)) {
+                    final Double estimatedValue = (Double) shipModule.getAttributeValue(horizonsModifier, true);
+                    addValues(horizonsModifier, shipModule, values, estimatedValue);
                 }
             } else {
                 values.getNodes().add(LabelBuilder.builder()
@@ -99,19 +106,23 @@ public class ModuleDetailsAttribute extends DestroyableVBox implements Destroyab
         }
         this.getNodes().add(texts);
         if (!shipModule.isLegacy() && originalAttributeValue instanceof Double && isModifiedAttribute()) {
-            if (shipModule.getModifiers().containsKey(horizonsModifier)) {
-                final double currentValue = Double.parseDouble(shipModule.getModifiers().get(horizonsModifier).toString());
-                addProgress(horizonsModifier, shipModule, currentValue);
-            } else {
-                final Double estimatedValue = (Double) shipModule.getAttributeValue(horizonsModifier);
+//            if (shipModule.getModifiers().containsKey(horizonsModifier)) {
+//                final double currentValue = Double.parseDouble(shipModule.getModifiers().get(horizonsModifier).toString());
+//                addProgress(horizonsModifier, shipModule, currentValue);
+//            } else {
+                final Double estimatedValue = (Double) shipModule.getAttributeValue(horizonsModifier, false);
                 addProgress(horizonsModifier, shipModule, estimatedValue);
-            }
+//            }
         }
+    }
+
+    private boolean isSynthesized(HorizonsModifier horizonsModifier) {
+        return shipModule.isSynthesized(horizonsModifier);
     }
 
     private void addProgress(HorizonsModifier horizonsModifier, ShipModule shipModule, double currentValue) {
         double originalAttributeValue = (Double) shipModule.getOriginalAttributeValue(horizonsModifier);
-        BigDecimal presentValue = shipModule.getAttributeCompleteness(horizonsModifier).multiply(BigDecimal.valueOf(100));
+        BigDecimal presentValue = shipModule.getAttributeCompleteness(horizonsModifier, false).multiply(BigDecimal.valueOf(100));
         var present = new TypeSegment(Math.max(0D, presentValue.doubleValue()), SegmentType.PRESENT);
 
         var notPresent = new TypeSegment(Math.max(0D, (100D - presentValue.doubleValue())), SegmentType.NOT_PRESENT);
@@ -145,7 +156,7 @@ public class ModuleDetailsAttribute extends DestroyableVBox implements Destroyab
 
 
     private void booleanLine(HorizonsModifier horizonsModifier, DestroyableHBox valuesLine) {
-        final Object estimatedValue = shipModule.getAttributeValue(horizonsModifier);
+        final Object estimatedValue = shipModule.getAttributeValue(horizonsModifier, true);
         final DestroyableLabel value = LabelBuilder.builder()
                 .withStyleClass("value")
                 .withNonLocalizedText(horizonsModifier.format(estimatedValue))
@@ -155,6 +166,16 @@ public class ModuleDetailsAttribute extends DestroyableVBox implements Destroyab
         valuesLine.getNodes().addAll(value);
     }
 
+    private static void addBaseValue(HorizonsModifier horizonsModifier, ShipModule shipModule, DestroyableHBox valuesLine) {
+        double originalAttributeValue = (Double) shipModule.getOriginalAttributeValue(horizonsModifier);
+        DestroyableLabel original = LabelBuilder.builder()
+                .withStyleClass("value")
+                .withNonLocalizedText(horizonsModifier.format(originalAttributeValue))
+                .build();
+        valuesLine.getNodes().addAll(
+                original
+        );
+    }
     private static void addValues(HorizonsModifier horizonsModifier, ShipModule shipModule, DestroyableHBox valuesLine, double currentValue) {
         double originalAttributeValue = (Double) shipModule.getOriginalAttributeValue(horizonsModifier);
         final DestroyableLabel value = LabelBuilder.builder()
@@ -163,16 +184,11 @@ public class ModuleDetailsAttribute extends DestroyableVBox implements Destroyab
                 .build();
         value.pseudoClassStateChanged(PseudoClass.getPseudoClass("positive"), currentValue > originalAttributeValue && horizonsModifier.isHigherBetter() || currentValue < originalAttributeValue && !horizonsModifier.isHigherBetter());
         value.pseudoClassStateChanged(PseudoClass.getPseudoClass("negative"), currentValue < originalAttributeValue && horizonsModifier.isHigherBetter() || currentValue > originalAttributeValue && !horizonsModifier.isHigherBetter());
-        DestroyableLabel original = LabelBuilder.builder()
-                .withStyleClass("value")
-                .withNonLocalizedText(horizonsModifier.format(originalAttributeValue))
-                .build();
         DestroyableLabel arrow = LabelBuilder.builder()
                 .withStyleClass("arrow")
                 .withNonLocalizedText(" → ")
                 .build();
         valuesLine.getNodes().addAll(
-                original,
                 arrow,
                 value
         );
@@ -187,9 +203,9 @@ public class ModuleDetailsAttribute extends DestroyableVBox implements Destroyab
 
     private void addTooltip() {
         final Double originalAttributeValue = (Double) shipModule.getOriginalAttributeValue(horizonsModifier);
-        final Double minValue = (Double) shipModule.getAttributeValue(horizonsModifier, 0.0);
-        final Double maxValue = (Double) shipModule.getAttributeValue(horizonsModifier, 1.0);
-        final Double estimatedValue = (Double) shipModule.getAttributeValue(horizonsModifier);
+        final Double minValue = (Double) shipModule.getAttributeValue(horizonsModifier, 0.0, false);
+        final Double maxValue = (Double) shipModule.getAttributeValue(horizonsModifier, 1.0, false);
+        final Double estimatedValue = (Double) shipModule.getAttributeValue(horizonsModifier, false);
 
         final BigDecimal estimated = !Objects.equals(minValue, maxValue) && (estimatedValue > originalAttributeValue && horizonsModifier.isHigherBetter() || estimatedValue < originalAttributeValue && !horizonsModifier.isHigherBetter())
                 ? shipModule.getModifications().getFirst().getModificationCompleteness().orElse(BigDecimal.ZERO).multiply(BigDecimal.valueOf(100))
@@ -200,7 +216,7 @@ public class ModuleDetailsAttribute extends DestroyableVBox implements Destroyab
         String minValueText = horizonsModifier.format(minValue);
         String estValueText = horizonsModifier.format(estimatedValue) + (shipModule.isLegacy() ? "" : " @ " + Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(estimated) + "%");
         String actValueText = hasActualValue
-                ? horizonsModifier.format(shipModule.getModifiers().get(horizonsModifier)) + (shipModule.isLegacy() ? "" : " @ " + Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(shipModule.getAttributeCompleteness(horizonsModifier).multiply(BigDecimal.valueOf(100))) + "%")
+                ? horizonsModifier.format(shipModule.getModifiers().get(horizonsModifier)) + (shipModule.isLegacy() ? "" : " @ " + Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(shipModule.getAttributeCompleteness(horizonsModifier, false).multiply(BigDecimal.valueOf(100))) + "%")
                 : "";
         String maxValueText = horizonsModifier.format(maxValue);
         StringBinding text = hasActualValue
@@ -216,7 +232,7 @@ public class ModuleDetailsAttribute extends DestroyableVBox implements Destroyab
 
     private boolean isModifiedAttribute() {
         final Object originalAttributeValue = shipModule.getOriginalAttributeValue(horizonsModifier);
-        final Object maxAttributeValue = shipModule.getAttributeValue(horizonsModifier, 1.0);
+        final Object maxAttributeValue = shipModule.getAttributeValue(horizonsModifier, 1.0, false);
         return !originalAttributeValue.equals(maxAttributeValue);
     }
 }

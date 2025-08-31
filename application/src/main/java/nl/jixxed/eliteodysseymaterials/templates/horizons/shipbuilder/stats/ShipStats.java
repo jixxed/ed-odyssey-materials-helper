@@ -186,7 +186,7 @@ public class ShipStats extends Stats implements DestroyableEventTemplate {
                 .filter(Slot::isOccupied)
                 .filter(slot -> slot.getShipModule().isPowered())
                 .findFirst()
-                .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.HEAT_EFFICIENCY))
+                .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.HEAT_EFFICIENCY, true))
                 .orElse(Double.NaN)).orElse(1D);
     }
 

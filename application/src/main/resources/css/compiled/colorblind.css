@@ -1973,10 +1973,52 @@
                   -fx-min-height: 1.4em;
                   -fx-max-height: 1.4em;
                   -fx-max-width: 20em; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons:same .module-icon .ships-synthesis-basic {
+                    -fx-fill: #dcc030; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons:same .module-icon .ships-synthesis-standard {
+                    -fx-fill: #dcc030; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons:same .module-icon .ships-synthesis-premium {
+                    -fx-fill: #dcc030; }
                   .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon {
+                    -fx-min-width: 1.5em;
+                    -fx-pref-width: 1.5em;
                     -fx-max-width: 1.5em;
+                    -fx-min-height: 1.5em;
+                    -fx-pref-height: 1.5em;
                     -fx-max-height: 1.5em;
                     -fx-padding: 0em 0.2em 0em 0em; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .glyph-icon {
+                      -fx-font-size: 1.5em !important; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .ships-multicrew-radar {
+                      -fx-fill: #159ec2; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .other-powerplay-open {
+                      -fx-fill: #ffc600; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .ships-guardian-1 {
+                      -fx-fill: #026fa2; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .ships-guardian-2 {
+                      -fx-fill: #00aafc; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .other-communitygoal {
+                      -fx-font-size: 1.3em !important;
+                      -fx-fill: #ffeb00; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .other-arx {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .ships-engineer {
+                      -fx-font-size: 1.3em !important;
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .ships-gimballed {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .ships-turreted {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .ships-fixed {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .ships-synthesis-basic {
+                      -fx-fill: #2e92df; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .ships-synthesis-standard {
+                      -fx-fill: #2e92df; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .ships-synthesis-premium {
+                      -fx-fill: #2e92df; }
+                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .pre-engineered .ships-engineer {
+                    -fx-fill: #f2c80e; }
                   .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide {
                     -fx-max-width: 1.875em;
                     -fx-max-height: 1.5em;
@@ -2064,6 +2106,14 @@
                 -fx-min-height: 1.5em;
                 -fx-pref-height: 1.5em;
                 -fx-max-height: 1.5em; }
+                .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .mounting-control .icon .glyph-icon {
+                  -fx-font-size: 1.5em !important; }
+                .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .mounting-control .icon .ships-gimballed {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .mounting-control .icon .ships-turreted {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .mounting-control .icon .ships-fixed {
+                  -fx-fill: white; }
               .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .mounting-control .control-button {
                 -fx-cursor: hand;
                 -fx-font-size: 1.5em;

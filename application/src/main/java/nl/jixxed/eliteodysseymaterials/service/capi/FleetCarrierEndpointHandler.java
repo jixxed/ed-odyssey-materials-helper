@@ -40,6 +40,11 @@ public class FleetCarrierEndpointHandler implements EndpointHandler {
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
 
+    @Override
+    public int getFrequency() {
+        return 3610;//refresh every (just over an) hour
+    }
+
     @Getter
     private static final AtomicBoolean endpointEnabled = new AtomicBoolean(true);
 

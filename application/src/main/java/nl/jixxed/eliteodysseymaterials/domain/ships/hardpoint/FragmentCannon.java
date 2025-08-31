@@ -1,7 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint;
 
 import nl.jixxed.eliteodysseymaterials.constants.horizons.ExperimentalEffectBlueprints;
+import nl.jixxed.eliteodysseymaterials.constants.horizons.SynthesisBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints.FragmentCannonBlueprints;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsSynthesisBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
@@ -9,6 +11,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -108,5 +111,10 @@ public class FragmentCannon extends HardpointModule {
         return getModuleSize().intValue() * 10
                 + (isPreEngineered() ? 1 : 0)
                 + (getOrigin() == Origin.POWERPLAY ? 2 : 0);
+    }
+
+    @Override
+    public Collection<HorizonsSynthesisBlueprint> synthesisBlueprints() {
+        return SynthesisBlueprints.LARGE_CALIBRE_MUNITIONS.values();
     }
 }

@@ -1,13 +1,16 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint;
 
 import nl.jixxed.eliteodysseymaterials.constants.horizons.ExperimentalEffectBlueprints;
+import nl.jixxed.eliteodysseymaterials.constants.horizons.SynthesisBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints.PlasmaAcceleratorBlueprints;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsSynthesisBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -70,5 +73,10 @@ public class PlasmaAccelerator extends HardpointModule {
             case "ADVANCED_PLASMA_ACCELERATOR_3_B_F" -> 2;
             default -> 0;
         };
+    }
+
+    @Override
+    public Collection<HorizonsSynthesisBlueprint> synthesisBlueprints() {
+        return SynthesisBlueprints.PLASMA_MUNITIONS.values();
     }
 }

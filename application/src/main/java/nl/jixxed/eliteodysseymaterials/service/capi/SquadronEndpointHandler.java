@@ -39,6 +39,11 @@ public class SquadronEndpointHandler implements EndpointHandler {
     private final CAPIService capiService;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
+    @Override
+    public int getFrequency() {
+        return 300;//refresh every 5 minutes
+    }
+
     @Getter
     private static final AtomicBoolean endpointEnabled = new AtomicBoolean(true);
 

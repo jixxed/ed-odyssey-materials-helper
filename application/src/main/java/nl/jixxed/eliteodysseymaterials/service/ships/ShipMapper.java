@@ -105,6 +105,7 @@ public class ShipMapper {
                     .forEach(type -> {
                         shipModule.getExperimentalEffects().add(type);
                     });
+            shipModule.applySynthesis(shipConfigurationSlot.getSynthesis());
             if (!shipConfigurationSlot.getModifiers().isEmpty()) {
                 shipModule.getModifiers().putAll(shipConfigurationSlot.getModifiers());
             }
@@ -137,6 +138,7 @@ public class ShipMapper {
                     .forEach(type -> {
                         shipModule.getExperimentalEffects().add(type);
                     });
+            shipModule.applySynthesis(shipConfigurationSlot.getOldModule().getSynthesis());
             shipConfigurationSlot.getOldModule().getModifiers().forEach((modifier, value) -> {
                 shipModule.getModifiers().put(modifier, value);
             });
@@ -166,6 +168,7 @@ public class ShipMapper {
             shipConfigurationSlot.setExperimentalEffect(shipModule.getExperimentalEffects().stream()
                     .filter(Predicate.not(HorizonsBlueprintType::isPreEngineered))
                     .map(ShipConfigurationExperimentalEffect::new).toList());
+            shipConfigurationSlot.setSynthesis(shipModule.getSynthesisGrade());
             shipConfigurationSlot.setBuyPrice(shipModule.getBuyPrice());
             if (shipModule.isLegacy()) {
                 shipConfigurationSlot.setLegacy(true);
@@ -187,13 +190,14 @@ public class ShipMapper {
                     .filter(Predicate.not(HorizonsBlueprintType::isPreEngineered))
                     .map(ShipConfigurationExperimentalEffect::new)
                     .toList();
+            var synthesis = shipModule.getSynthesisGrade();
             var legacy = shipModule.isLegacy();
             var powered = shipModule.isPowered();
             var powerGroup = shipModule.getPowerGroup();
             var buyPrice = shipModule.getBuyPrice();
             var modifiers = shipModule.getModifiers().entrySet().stream()
                     .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-            shipConfigurationSlot.setOldModule(new ShipConfigurationOldModule(id, legacy, powered, powerGroup, buyPrice, modifiers, modifications, effects));
+            shipConfigurationSlot.setOldModule(new ShipConfigurationOldModule(id, legacy, powered, powerGroup, buyPrice, modifiers, modifications, effects, synthesis));
         }, () -> shipConfigurationSlot.setOldModule(null));
     }
 }

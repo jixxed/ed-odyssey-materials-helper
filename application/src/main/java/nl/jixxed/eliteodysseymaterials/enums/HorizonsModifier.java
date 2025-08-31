@@ -110,7 +110,7 @@ public enum HorizonsModifier {
     FUEL_CAPACITY(97, "FuelCapacity"),
     DRONE_REPAIR_CAPACITY(98, "DroneRepairCapacity"),
     REPAIR_CAPACITY(99, "AFMRepairCapacity"),
-    CONSUMPTION(100, false, "AFMRepairConsumption"),
+    CONSUMPTION(100, true, "AFMRepairConsumption"),
     REPAIR_RATING(101, "AFMRepairPerAmmo"),
     CABIN_CAPACITY(102, "CabinCapacity"),
     CARGO_CAPACITY(103, "CargoCapacity"),

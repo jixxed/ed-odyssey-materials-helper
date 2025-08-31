@@ -46,7 +46,7 @@ public class ShipLegacyModule {
         this(
                 shipModule.getId(),
                 shipModule.getId(),
-                shipModule.getAttibutes().stream().map(modifier -> Map.entry(modifier, shipModule.getAttributeValue(modifier))).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)),
+                shipModule.getAttibutes().stream().map(modifier -> Map.entry(modifier, shipModule.getAttributeValue(modifier, false))).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)),
                 shipModule.getModifications().stream().map(modification -> new ShipConfigurationModification(modification.getModification(), modification.getGrade(), modification.getModificationCompleteness().orElse(BigDecimal.ZERO))).toList(),
                 shipModule.getExperimentalEffects().stream().map(ShipConfigurationExperimentalEffect::new).toList()
         );

@@ -16,7 +16,7 @@ import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.*;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @SuppressWarnings("java:S1192")
 public class SynthesisBlueprints {
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> GUARDIAN_PLASMA_CHARGER_MUNITIONS = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> GUARDIAN_PLASMA_CHARGER_MUNITIONS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.GUARDIAN_PLASMA_CHARGER_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.CHROMIUM, 3,
@@ -32,7 +32,7 @@ public class SynthesisBlueprints {
                             Manufactured.GUARDIAN_POWERCELL, 2,
                             Manufactured.GUARDIAN_TECHCOMPONENT, 2),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)))),
             HorizonsBlueprintGrade.GRADE_3, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.GUARDIAN_PLASMA_CHARGER_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_3,
                     Map.of(
                             Raw.CHROMIUM, 6,
@@ -49,10 +49,10 @@ public class SynthesisBlueprints {
                             Manufactured.GUARDIAN_POWERCELL, 2,
                             Manufactured.GUARDIAN_SENTINEL_WEAPONPARTS, 2),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.30))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.30))),
                     SquadronPerk.PREMIUM_AMMO_SYNTHESIS
             ));
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> GUARDIAN_NANITE_MUNITIONS = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> GUARDIAN_NANITE_MUNITIONS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.GUARDIAN_NANITE_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Manufactured.GUARDIAN_POWERCELL, 2,
@@ -60,7 +60,7 @@ public class SynthesisBlueprints {
                             Manufactured.TG_ABRASION02, 5),
                     Map.of(),
                     GameVersion.LIVE));
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> GUARDIAN_GAUSS_CANNON_MUNITIONS = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> GUARDIAN_GAUSS_CANNON_MUNITIONS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.GUARDIAN_GAUSS_CANNON_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.MANGANESE, 3,
@@ -76,7 +76,7 @@ public class SynthesisBlueprints {
                             Manufactured.GUARDIAN_POWERCONDUIT, 4,
                             Manufactured.GUARDIAN_SENTINEL_WEAPONPARTS, 3),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)))),
             HorizonsBlueprintGrade.GRADE_3, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.GUARDIAN_GAUSS_CANNON_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_3,
                     Map.of(
                             Raw.MANGANESE, 8,
@@ -89,10 +89,10 @@ public class SynthesisBlueprints {
                             Manufactured.FOCUSCRYSTALS, 5,
                             Manufactured.GUARDIAN_TECHCOMPONENT, 3),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.30))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.30))),
                     SquadronPerk.PREMIUM_AMMO_SYNTHESIS
             ));
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> AX_SMALL_CALIBRE_MUNITIONS = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> AX_SMALL_CALIBRE_MUNITIONS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.AX_SMALL_CALIBRE_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.IRON, 2,
@@ -108,7 +108,7 @@ public class SynthesisBlueprints {
                             Manufactured.UNKNOWNENERGYSOURCE, 3,
                             Manufactured.TG_WEAPONPARTS, 4),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+5%", true, percentagePositive(0.0, 0.05)))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+5%", true, percentagePositive(0.0, 0.05)))),
             HorizonsBlueprintGrade.GRADE_3, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.AX_SMALL_CALIBRE_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_3,
                     Map.of(
                             Raw.IRON, 3,
@@ -125,10 +125,10 @@ public class SynthesisBlueprints {
                             Manufactured.UNKNOWNCARAPACE, 1,
                             Manufactured.TG_WEAPONPARTS, 3),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.0, 0.10))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.0, 0.10))),
                     SquadronPerk.PREMIUM_AMMO_SYNTHESIS
             ));
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> AX_REMOTE_FLAK_MUNITIONS = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> AX_REMOTE_FLAK_MUNITIONS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.AX_REMOTE_FLAK_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.NICKEL, 4,
@@ -143,7 +143,7 @@ public class SynthesisBlueprints {
                             Manufactured.UNKNOWNTECHNOLOGYCOMPONENTS, 3,
                             Manufactured.TG_WRECKAGECOMPONENTS, 2),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+5%", true, percentagePositive(0.0, 0.05)))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+5%", true, percentagePositive(0.0, 0.05)))),
             HorizonsBlueprintGrade.GRADE_3, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.AX_REMOTE_FLAK_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_3,
                     Map.of(
                             Raw.ZINC, 8,
@@ -160,10 +160,10 @@ public class SynthesisBlueprints {
                             Manufactured.UNKNOWNTECHNOLOGYCOMPONENTS, 2,
                             Manufactured.TG_WEAPONPARTS, 1),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.0, 0.10))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.0, 0.10))),
                     SquadronPerk.PREMIUM_AMMO_SYNTHESIS
             ));
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> ENZYME_MISSILE_LAUNCHER_MUNITIONS = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> ENZYME_MISSILE_LAUNCHER_MUNITIONS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.ENZYME_MISSILE_LAUNCHER_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.IRON, 3,
@@ -182,7 +182,7 @@ public class SynthesisBlueprints {
                             Manufactured.TG_WEAPONPARTS, 4,
                             Raw.LEAD, 4),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)))),
             HorizonsBlueprintGrade.GRADE_3, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.ENZYME_MISSILE_LAUNCHER_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_3,
                     Map.of(
                             Raw.PHOSPHORUS, 5,
@@ -199,10 +199,10 @@ public class SynthesisBlueprints {
                             Manufactured.TG_WEAPONPARTS, 3,
                             Raw.LEAD, 3),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.30))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.30))),
                     SquadronPerk.PREMIUM_AMMO_SYNTHESIS
             ));
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> FLECHETTE_LAUNCHER_MUNITIONS = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> FLECHETTE_LAUNCHER_MUNITIONS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.FLECHETTE_LAUNCHER_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.TUNGSTEN, 1,
@@ -217,7 +217,7 @@ public class SynthesisBlueprints {
                             Manufactured.MECHANICALCOMPONENTS, 4,
                             Raw.BORON, 4),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+5%", true, percentagePositive(0.0, 0.05)))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+5%", true, percentagePositive(0.0, 0.05)))),
             HorizonsBlueprintGrade.GRADE_3, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.FLECHETTE_LAUNCHER_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_3,
                     Map.of(
                             Raw.TUNGSTEN, 6,
@@ -230,10 +230,10 @@ public class SynthesisBlueprints {
                             Manufactured.MECHANICALCOMPONENTS, 3,
                             Raw.BORON, 3),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.0, 0.10))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.0, 0.10))),
                     SquadronPerk.PREMIUM_AMMO_SYNTHESIS
             ));
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> GUARDIAN_SHARD_CANNON_MUNITIONS = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> GUARDIAN_SHARD_CANNON_MUNITIONS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.GUARDIAN_SHARD_CANNON_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.CARBON, 3,
@@ -248,7 +248,7 @@ public class SynthesisBlueprints {
                             Manufactured.GUARDIAN_POWERCELL, 2,
                             Manufactured.GUARDIAN_SENTINEL_WEAPONPARTS, 2),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)))),
             HorizonsBlueprintGrade.GRADE_3, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.GUARDIAN_SHARD_CANNON_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_3,
                     Map.of(
                             Raw.CARBON, 8,
@@ -261,10 +261,10 @@ public class SynthesisBlueprints {
                             Manufactured.CRYSTALSHARDS, 4,
                             Manufactured.GUARDIAN_POWERCELL, 3),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.30))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.30))),
                     SquadronPerk.PREMIUM_AMMO_SYNTHESIS
             ));
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> AX_EXPLOSIVE_MUNITIONS = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> AX_EXPLOSIVE_MUNITIONS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.AX_EXPLOSIVE_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.CARBON, 4,
@@ -280,7 +280,7 @@ public class SynthesisBlueprints {
                             Manufactured.TG_PROPULSIONELEMENT, 4,
                             Manufactured.UNKNOWNORGANICCIRCUITRY, 4),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+5%", true, percentagePositive(0.0, 0.05)))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+5%", true, percentagePositive(0.0, 0.05)))),
             HorizonsBlueprintGrade.GRADE_3, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.AX_EXPLOSIVE_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_3,
                     Map.of(
                             Raw.TUNGSTEN, 5,
@@ -297,17 +297,17 @@ public class SynthesisBlueprints {
                             Manufactured.TG_PROPULSIONELEMENT, 3,
                             Encoded.TG_SHIPFLIGHTDATA, 3),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.0, 0.10))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.0, 0.10))),
                     SquadronPerk.PREMIUM_AMMO_SYNTHESIS
             ));
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> LIFE_SUPPORT_SYNTHESIS = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> LIFE_SUPPORT_SYNTHESIS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.LIFE_SUPPORT_SYNTHESIS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.IRON, 2,
                             Raw.NICKEL, 1),
                     Map.of(
                             HorizonsModifier.REFILL, new HorizonsNumberModifierValue("100%", true, percentagePositive(0.0, 1.0)))));
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> LIMPETS = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> LIMPETS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.LIMPETS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.IRON, 10,
@@ -319,7 +319,7 @@ public class SynthesisBlueprints {
                             HorizonsModifier.LIMPETS, new HorizonsNumberModifierValue("+4", true, percentagePositive(0.0, 0.04))),
                     SquadronPerk.LIMPET_SYNTHESIS
             ));
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> CHAFF = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> CHAFF = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.CHAFF, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Manufactured.COMPACTCOMPOSITES, 1,
@@ -341,8 +341,8 @@ public class SynthesisBlueprints {
                             Manufactured.PROTORADIOLICALLOYS, 1),
                     Map.of(
                             HorizonsModifier.REFILL, new HorizonsNumberModifierValue("100%", true, percentagePositive(0.0, 1.0)),
-                            HorizonsModifier.ECM_TIME_TO_CHARGE, new HorizonsNumberModifierValue("+2s", true, plus(2.0)))));
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> HEATSINKS = Map.of(
+                            HorizonsModifier.JAM_DURATION, new HorizonsNumberModifierValue("+2s", true, plus(2.0)))));
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> HEATSINKS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.HEATSINKS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Manufactured.BASICCONDUCTORS, 2,
@@ -356,7 +356,7 @@ public class SynthesisBlueprints {
                             Manufactured.HEATEXCHANGERS, 2),
                     Map.of(
                             HorizonsModifier.REFILL, new HorizonsNumberModifierValue("100%", true, percentagePositive(0.0, 1.0)),
-                            HorizonsModifier.HEAT_DISSIPATION, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)))),
+                            HorizonsModifier.THERMAL_DRAIN, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)))),
             HorizonsBlueprintGrade.GRADE_3, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.HEATSINKS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_3,
                     Map.of(
                             Manufactured.BASICCONDUCTORS, 2,
@@ -365,8 +365,8 @@ public class SynthesisBlueprints {
                             Manufactured.PROTOHEATRADIATORS, 1),
                     Map.of(
                             HorizonsModifier.REFILL, new HorizonsNumberModifierValue("100%", true, percentagePositive(0.0, 1.0)),
-                            HorizonsModifier.HEAT_DISSIPATION, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.3)))));
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> FSD_INJECTION = Map.of(
+                            HorizonsModifier.THERMAL_DRAIN, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.3)))));
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> FSD_INJECTION = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.FSD_INJECTION, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.CARBON, 1,
@@ -411,7 +411,7 @@ public class SynthesisBlueprints {
                     SquadronPerk.FSD_BOOST_SYNTHESIS
             )
     );
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> PLASMA_MUNITIONS = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> PLASMA_MUNITIONS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.PLASMA_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.SULPHUR, 3,
@@ -425,7 +425,7 @@ public class SynthesisBlueprints {
                             Raw.SELENIUM, 1,
                             Raw.MOLYBDENUM, 4),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)))),
             HorizonsBlueprintGrade.GRADE_3, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.PLASMA_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_3,
                     Map.of(
                             Raw.SELENIUM, 5,
@@ -438,10 +438,10 @@ public class SynthesisBlueprints {
                             Raw.MOLYBDENUM, 2,
                             Raw.TECHNETIUM, 1),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.3))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.3))),
                     SquadronPerk.PREMIUM_AMMO_SYNTHESIS
             ));
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> EXPLOSIVE_MUNITIONS = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> EXPLOSIVE_MUNITIONS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.EXPLOSIVE_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.IRON, 3,
@@ -456,7 +456,7 @@ public class SynthesisBlueprints {
                             Raw.ARSENIC, 4,
                             Raw.MERCURY, 2),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)))),
             HorizonsBlueprintGrade.GRADE_3, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.EXPLOSIVE_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_3,
                     Map.of(
                             Raw.PHOSPHORUS, 5,
@@ -471,10 +471,10 @@ public class SynthesisBlueprints {
                             Raw.MERCURY, 3,
                             Raw.POLONIUM, 3),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.3))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.3))),
                     SquadronPerk.PREMIUM_AMMO_SYNTHESIS
             ));
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> SMALL_CALIBRE_MUNITIONS = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> SMALL_CALIBRE_MUNITIONS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.SMALL_CALIBRE_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.IRON, 2,
@@ -489,7 +489,7 @@ public class SynthesisBlueprints {
                             Raw.SELENIUM, 2,
                             Raw.ZIRCONIUM, 2),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)))),
             HorizonsBlueprintGrade.GRADE_3, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.SMALL_CALIBRE_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_3,
                     Map.of(
                             Raw.SULPHUR, 2,
@@ -506,10 +506,10 @@ public class SynthesisBlueprints {
                             Raw.MERCURY, 1,
                             Raw.ANTIMONY, 1),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.3))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.3))),
                     SquadronPerk.PREMIUM_AMMO_SYNTHESIS
             ));
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> HIGH_VELOCITY_MUNITIONS = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> HIGH_VELOCITY_MUNITIONS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.HIGH_VELOCITY_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.IRON, 2,
@@ -522,7 +522,7 @@ public class SynthesisBlueprints {
                             Raw.TUNGSTEN, 2,
                             Raw.ZIRCONIUM, 2),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)))),
             HorizonsBlueprintGrade.GRADE_3, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.HIGH_VELOCITY_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_3,
                     Map.of(
                             Raw.VANADIUM, 4,
@@ -535,10 +535,10 @@ public class SynthesisBlueprints {
                             Raw.ZIRCONIUM, 1,
                             Raw.YTTRIUM, 1),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.3))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.3))),
                     SquadronPerk.PREMIUM_AMMO_SYNTHESIS
             ));
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> LARGE_CALIBRE_MUNITIONS = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> LARGE_CALIBRE_MUNITIONS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.LARGE_CALIBRE_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.NICKEL, 4,
@@ -553,7 +553,7 @@ public class SynthesisBlueprints {
                             Raw.ARSENIC, 1,
                             Raw.ZIRCONIUM, 2),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)))),
             HorizonsBlueprintGrade.GRADE_3, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.LARGE_CALIBRE_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_3,
                     Map.of(
                             Raw.ZINC, 8,
@@ -568,10 +568,10 @@ public class SynthesisBlueprints {
                             Raw.MERCURY, 1,
                             Raw.ANTIMONY, 1),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.3))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.3))),
                     SquadronPerk.PREMIUM_AMMO_SYNTHESIS
             ));
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> AFM_REFILL = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> AFM_REFILL = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.AFM_REFILL, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.NICKEL, 2,
@@ -598,7 +598,7 @@ public class SynthesisBlueprints {
                             Raw.RUTHENIUM, 1),
                     Map.of(
                             HorizonsModifier.CONSUMPTION, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.0, 1.0)))));
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> SRV_AMMO_RESTOCK = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> SRV_AMMO_RESTOCK = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.SRV_AMMO_RESTOCK, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.SULPHUR, 2,
@@ -611,7 +611,7 @@ public class SynthesisBlueprints {
                             Raw.SELENIUM, 1,
                             Raw.MOLYBDENUM, 1),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)))),
             HorizonsBlueprintGrade.GRADE_3, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.SRV_AMMO_RESTOCK, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_3,
                     Map.of(
                             Raw.PHOSPHORUS, 2,
@@ -624,10 +624,10 @@ public class SynthesisBlueprints {
                             Raw.MOLYBDENUM, 1,
                             Raw.TECHNETIUM, 1),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.3))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.3))),
                     SquadronPerk.PREMIUM_AMMO_SYNTHESIS
             ));
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> SRV_REPAIR = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> SRV_REPAIR = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.SRV_REPAIR, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.IRON, 2,
@@ -650,7 +650,7 @@ public class SynthesisBlueprints {
                             Raw.TELLURIUM, 1),
                     Map.of(
                             HorizonsModifier.HULL_STRENGTH, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.0, 1.0)))));
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> SRV_REFUEL = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> SRV_REFUEL = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.SRV_REFUEL, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.SULPHUR, 1,
@@ -674,7 +674,7 @@ public class SynthesisBlueprints {
                             HorizonsModifier.FUEL_EFFICIENCY, new HorizonsNumberModifierValue("+200%", true, percentagePositive(0.0, 2.0)))));
 
 
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> CONFIGURABLE_EXPLOSIVE_MUNITIONS = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> CONFIGURABLE_EXPLOSIVE_MUNITIONS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.CONFIGURABLE_EXPLOSIVE_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.IRON, 3,
@@ -691,9 +691,13 @@ public class SynthesisBlueprints {
                             Manufactured.GUARDIAN_POWERCONDUIT, 1,
                             Manufactured.GUARDIAN_TECHCOMPONENT, 1),
                     Map.of(
-                            HorizonsModifier.ANTI_XENO_DAMAGE, new HorizonsNumberModifierValue(UTF8Constants.CHECK_TRUE, true, bool(true)))));
+                            HorizonsModifier.THERMAL_DAMAGE_RATIO, new HorizonsNumberModifierValue("-100%", false, percentageNegative(0.0, 1.0)),
+                            HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, new HorizonsNumberModifierValue("-100%", false, percentageNegative(0.0, 1.0)),
+                            HorizonsModifier.ANTI_XENO_DAMAGE_RATIO, new HorizonsNumberModifierValue("+100%", true, plus(1.0)),
+                            HorizonsModifier.ANTI_XENO_DAMAGE, new HorizonsNumberModifierValue(UTF8Constants.CHECK_TRUE, true, bool(true))
+                    )));
 
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> CONFIGURABLE_SMALL_CALIBRE_MUNITIONS = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> CONFIGURABLE_SMALL_CALIBRE_MUNITIONS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.CONFIGURABLE_SMALL_CALIBRE_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.IRON, 2,
@@ -709,9 +713,13 @@ public class SynthesisBlueprints {
                             Manufactured.GUARDIAN_POWERCONDUIT, 1,
                             Manufactured.GUARDIAN_TECHCOMPONENT, 1),
                     Map.of(
-                            HorizonsModifier.ANTI_XENO_DAMAGE, new HorizonsNumberModifierValue(UTF8Constants.CHECK_TRUE, true, bool(true)))));
+                            HorizonsModifier.THERMAL_DAMAGE_RATIO, new HorizonsNumberModifierValue("-100%", false, percentageNegative(0.0, 1.0)),
+                            HorizonsModifier.KINETIC_DAMAGE_RATIO, new HorizonsNumberModifierValue("-100%", false, percentageNegative(0.0, 1.0)),
+                            HorizonsModifier.ANTI_XENO_DAMAGE_RATIO, new HorizonsNumberModifierValue("+100%", true, plus(1.0)),
+                            HorizonsModifier.ANTI_XENO_DAMAGE, new HorizonsNumberModifierValue(UTF8Constants.CHECK_TRUE, true, bool(true))
+                    )));
 
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> SEISMIC_CHARGE_MUNITIONS = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> SEISMIC_CHARGE_MUNITIONS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.SEISMIC_CHARGE_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.IRON, 2,
@@ -721,7 +729,7 @@ public class SynthesisBlueprints {
                             Raw.MERCURY, 1),
                     Map.of()));
 
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> SHOCK_CANNON_MUNITIONS = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> SHOCK_CANNON_MUNITIONS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.SHOCK_CANNON_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Manufactured.GRIDRESISTORS, 3,
@@ -740,7 +748,7 @@ public class SynthesisBlueprints {
                             Raw.LEAD, 3
                     ),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+5%", true, percentagePositive(0.0, 0.05)))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+5%", true, percentagePositive(0.0, 0.05)))),
             HorizonsBlueprintGrade.GRADE_3, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.SHOCK_CANNON_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_3,
                     Map.of(
                             Manufactured.GRIDRESISTORS, 7,
@@ -757,11 +765,11 @@ public class SynthesisBlueprints {
                             Raw.LEAD, 3
                     ),
                     Map.of(
-                            HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.0, 0.1))),
+                            HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.0, 0.1))),
                     SquadronPerk.PREMIUM_AMMO_SYNTHESIS
             ));
 
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> SUB_SURFACE_DISPLACEMENT_MUNITIONS = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> SUB_SURFACE_DISPLACEMENT_MUNITIONS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.SUB_SURFACE_DISPLACEMENT_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Raw.NICKEL, 3,
@@ -771,7 +779,7 @@ public class SynthesisBlueprints {
                     Map.of()));
 
 
-    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> CAUSTIC_SINKS = Map.of(
+    public static final Map<HorizonsBlueprintGrade, HorizonsSynthesisBlueprint> CAUSTIC_SINKS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsSynthesisBlueprint(HorizonsBlueprintName.CAUSTIC_SINKS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(
                             Manufactured.CHEMICALSTORAGEUNITS, 1,

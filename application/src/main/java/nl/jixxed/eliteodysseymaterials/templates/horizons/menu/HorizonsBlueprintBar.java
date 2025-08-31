@@ -234,7 +234,7 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
         return categoryTitledPane;
     }
 
-    private DestroyableTitledPane createSynthesisCategoryTitledPane(final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> recipesEntry) {
+    private DestroyableTitledPane createSynthesisCategoryTitledPane(final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, ? extends HorizonsBlueprint>> recipesEntry) {
         final DestroyableScrollPane scroll = createScrollPane();
         final List<DestroyableToggleButton> toggleButtons = new ArrayList<>();
         final DestroyableComboBox<HorizonsBlueprintName> blueprints = createBlueprintsComboboxForSynthesis(scroll, toggleButtons, recipesEntry.keySet(), HorizonsBlueprintType.SYNTHESIS, recipesEntry);
@@ -364,7 +364,7 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
                 .build());
     }
 
-    private DestroyableComboBox<HorizonsBlueprintName> createBlueprintsComboboxForSynthesis(final DestroyableScrollPane scroll, final List<DestroyableToggleButton> toggleButtons, final Set<HorizonsBlueprintName> horizonsBlueprintNames, final HorizonsBlueprintType type, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> recipeEntry) {
+    private DestroyableComboBox<HorizonsBlueprintName> createBlueprintsComboboxForSynthesis(final DestroyableScrollPane scroll, final List<DestroyableToggleButton> toggleButtons, final Set<HorizonsBlueprintName> horizonsBlueprintNames, final HorizonsBlueprintType type, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, ? extends HorizonsBlueprint>> recipeEntry) {
         final DestroyableComboBox<HorizonsBlueprintName> blueprints = ComboBoxBuilder.builder(HorizonsBlueprintName.class)
                 .withStyleClass(BLUEPRINT_LIST_STYLE_CLASS)
                 .withItemsProperty(LocaleService.getListBinding(horizonsBlueprintNames.stream().sorted(Comparator.comparing(recipeName -> LocaleService.getLocalizedStringForCurrentLocale(recipeName.getLocalizationKey()))).toArray(HorizonsBlueprintName[]::new)))
@@ -430,7 +430,7 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
                 .toList();
     }
 
-    private List<DestroyableToggleButton> getSynthesisToggleButtons(final DestroyableScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> recipesEntry) {
+    private List<DestroyableToggleButton> getSynthesisToggleButtons(final DestroyableScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, ? extends HorizonsBlueprint>> recipesEntry) {
         return Stream.of(HorizonsBlueprintGrade.GRADE_1, HorizonsBlueprintGrade.GRADE_2, HorizonsBlueprintGrade.GRADE_3)
                 .map(grade -> getSynthesisToggleButton(scroll, selectedType, selectedBlueprint, grade, recipesEntry))
                 .toList();
@@ -453,7 +453,7 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
         return toggleButton;
     }
 
-    private DestroyableToggleButton getSynthesisToggleButton(final DestroyableScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final HorizonsBlueprintGrade grade, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> recipesEntry) {
+    private DestroyableToggleButton getSynthesisToggleButton(final DestroyableScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final HorizonsBlueprintGrade grade, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, ? extends HorizonsBlueprint>> recipesEntry) {
         final DestroyableToggleButton toggleButton = ToggleButtonBuilder.builder()
                 .withText("blueprint.synthesis.grade" + grade.getGrade())
                 .withStyleClass("blueprint-synthesis-togglebutton")

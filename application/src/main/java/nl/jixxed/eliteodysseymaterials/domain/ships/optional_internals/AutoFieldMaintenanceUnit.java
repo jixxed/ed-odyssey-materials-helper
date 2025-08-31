@@ -1,6 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals;
 
+import nl.jixxed.eliteodysseymaterials.constants.horizons.SynthesisBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.optional_internals.AutoFieldMaintenanceUnitBlueprints;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsSynthesisBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleClass;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleSize;
 import nl.jixxed.eliteodysseymaterials.domain.ships.OptionalModule;
@@ -9,6 +11,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -121,5 +124,10 @@ public class AutoFieldMaintenanceUnit extends OptionalModule {
     @Override
     public AutoFieldMaintenanceUnit Clone() {
         return new AutoFieldMaintenanceUnit(this);
+    }
+
+    @Override
+    public Collection<HorizonsSynthesisBlueprint> synthesisBlueprints() {
+        return SynthesisBlueprints.AFM_REFILL.values();
     }
 }

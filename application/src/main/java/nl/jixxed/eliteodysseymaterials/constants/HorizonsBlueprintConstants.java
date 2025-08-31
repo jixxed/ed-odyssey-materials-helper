@@ -40,7 +40,7 @@ public abstract class HorizonsBlueprintConstants {
     private static final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> CORE_INTERNAL_BLUEPRINTS = new EnumMap<>(HorizonsBlueprintName.class);
     private static final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> OPTIONAL_INTERNAL_BLUEPRINTS = new EnumMap<>(HorizonsBlueprintName.class);
     private static final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, HorizonsBlueprint>> EXPERIMENTAL_EFFECTS = new EnumMap<>(HorizonsBlueprintName.class);
-    private static final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> SYNTHESIS = new EnumMap<>(HorizonsBlueprintName.class);
+    private static final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, ? extends HorizonsBlueprint>> SYNTHESIS = new EnumMap<>(HorizonsBlueprintName.class);
     private static final Map<HorizonsBlueprintName, HorizonsEngineerBlueprint> ENGINEER_UNLOCK_REQUIREMENTS = new EnumMap<>(HorizonsBlueprintName.class);
     private static final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, HorizonsBlueprint>> TECHBROKER_UNLOCKS = new EnumMap<>(HorizonsBlueprintName.class);
 
@@ -64,7 +64,7 @@ public abstract class HorizonsBlueprintConstants {
         return EXPERIMENTAL_EFFECTS;
     }
 
-    public static Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> getSynthesis() {
+    public static Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, ? extends HorizonsBlueprint>> getSynthesis() {
         return SYNTHESIS;
     }
 

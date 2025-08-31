@@ -9,6 +9,7 @@ import jakarta.json.JsonReader;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.ed.awesome.api.FontLoader;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
@@ -70,6 +71,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.ServiceLoader;
 import java.util.concurrent.*;
 import java.util.stream.Stream;
 import java.util.zip.Deflater;
@@ -476,7 +478,7 @@ public class EDDNService {
 
     private static boolean isTestMode() {
         //EDDN is only to be used from official application distributions
-        return "dev".equals(getBuildVersion()) || SOFTWARE_NAME.equals("missing");
+        return "dev".equals(getBuildVersion()) || SOFTWARE_NAME.equals("missing") || ServiceLoader.load(FontLoader.class).stream().count() < 2;
     }
 
     public static int queueSize() {

@@ -2,7 +2,9 @@ package nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint;
 
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.ExperimentalEffectBlueprints;
+import nl.jixxed.eliteodysseymaterials.constants.horizons.SynthesisBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints.SeekerMissileRackBlueprints;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsSynthesisBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsTechBrokerBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
@@ -11,10 +13,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class SeekerMissileRack extends HardpointModule {
     public static final SeekerMissileRack SEEKER_MISSILE_RACK_1_B_F = new SeekerMissileRack("SEEKER_MISSILE_RACK_1_B_F", HorizonsBlueprintName.SEEKER_MISSILE_RACK_REG, ModuleSize.SIZE_1, ModuleClass.B, true, Mounting.FIXED, 72600, "Hpt_BasicMissileRack_Fixed_Small",                                                                              Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.00), Map.entry(HorizonsModifier.INTEGRITY, 40.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.60), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, 13.333), Map.entry(HorizonsModifier.DAMAGE, 40.000), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 0.240), Map.entry(HorizonsModifier.THERMAL_LOAD, 3.60), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 60.0), Map.entry(HorizonsModifier.SHOT_SPEED, 625.0), Map.entry(HorizonsModifier.RATE_OF_FIRE, 0.333), Map.entry(HorizonsModifier.BURST_INTERVAL, 3.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 6.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM, 6.0),                                                        Map.entry(HorizonsModifier.RELOAD_TIME, 12.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.4), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 0.0), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 0.0), Map.entry(HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, 1.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.0), Map.entry(HorizonsModifier.AMMO_COST, 500.0), Map.entry(HorizonsModifier.JITTER, 0.0), Map.entry(HorizonsModifier.SHIELDED_TARGET_HEAT_INCREASED, false), Map.entry(HorizonsModifier.TARGET_SIGNATURE_INCREASED, false), Map.entry(HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, false), Map.entry(HorizonsModifier.TARGET_SPEED_REDUCED, false)));
@@ -140,5 +139,10 @@ public class SeekerMissileRack extends HardpointModule {
             return (HorizonsTechBrokerBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.HUMAN_WEAPONS, HorizonsBlueprintType.ENGINEERED_MISSILE_RACK_V1, null);
         }
         return super.techBrokerBlueprint();
+    }
+
+    @Override
+    public Collection<HorizonsSynthesisBlueprint> synthesisBlueprints() {
+        return SynthesisBlueprints.EXPLOSIVE_MUNITIONS.values();
     }
 }

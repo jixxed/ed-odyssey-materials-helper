@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals;
 
+import nl.jixxed.eliteodysseymaterials.constants.horizons.SynthesisBlueprints;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsSynthesisBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleClass;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleSize;
 import nl.jixxed.eliteodysseymaterials.domain.ships.OptionalModule;
@@ -9,6 +11,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -85,5 +88,10 @@ public class MultiLimpetController extends OptionalModule {
     @Override
     public int getModuleLimit() {
         return 1;
+    }
+
+    @Override
+    public Collection<HorizonsSynthesisBlueprint> synthesisBlueprints() {
+        return SynthesisBlueprints.LIMPETS.values();
     }
 }
