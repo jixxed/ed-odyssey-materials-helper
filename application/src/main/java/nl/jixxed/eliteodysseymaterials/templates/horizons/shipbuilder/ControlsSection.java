@@ -39,6 +39,7 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
 
     @Getter
     private DestroyableComboBox<ShipConfiguration> shipSelect;
+    private DestroyableButton quickCreate;
     private DestroyableMenuButton menuButton;
     private DestroyableMenuButton addAllToWishlist;
     private DestroyableMenuButton addChangedToWishlist;
@@ -70,6 +71,15 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
         APPLICATION_STATE.getPreferredCommander()
                 .flatMap(commander -> ShipService.getShipConfigurations(commander).getSelectedShipConfiguration())
                 .ifPresent(shipConfiguration -> this.shipSelect.getSelectionModel().select(shipConfiguration));
+        this.quickCreate = ButtonBuilder.builder()
+                .withText("tab.ships.quick.create")
+                .withOnAction(_ -> ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
+                    final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
+                    shipConfigurations.createShipConfiguration("");
+                    ShipService.saveShipConfigurations(commander, shipConfigurations);
+                    refreshShipSelect();
+                }))
+                .build();
         this.menuButton = MenuButtonBuilder.builder()
                 .withText("tab.ships.options")
                 .withMenuItems(
@@ -112,20 +122,7 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
                 .withOnMouseClicked(this::showHelp)
                 .withVisibilityProperty(this.shipSelect.getSelectionModel().selectedItemProperty().map(s -> s.getShipType() != null))
                 .build();
-
-//        final DestroyableRegion spacer = RegionBuilder.builder()
-//                .withStyleClass("spacer")
-//                .build();
-
-//        final DestroyableHBox shipsMenu = BoxBuilder.builder()
-//                .withStyleClass("ships-menu")
-//                .withNodes(this.shipSelect, this.menuButton, this.addAllToWishlist, this.addChangedToWishlist, new GrowingRegion(), this.shipsHelp, spacer)
-//                .buildHBox();
-        this.getNodes().addAll(this.shipSelect, this.menuButton, this.addAllToWishlist, this.addChangedToWishlist, this.shipsHelp);
-//        shipsMenu.setPickOnBounds(false);
-//
-//        AnchorPane.setLeftAnchor(shipsMenu, 0D);
-//        AnchorPane.setRightAnchor(shipsMenu, 0D);
+        this.getNodes().addAll(this.shipSelect, this.quickCreate, this.menuButton, this.addAllToWishlist, this.addChangedToWishlist, this.shipsHelp);
         APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
     }
 

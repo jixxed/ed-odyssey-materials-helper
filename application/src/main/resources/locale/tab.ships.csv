@@ -3,6 +3,7 @@
 "tabs.ships.blueprints","Blueprints","","","Plano","Plans","Projetos","Чертежи","蓝图"
 "tabs.ships.experimental.effects","Experimental effects","","","Efectos Experimentales","Effets expérimentaux","Efeitos experimentais","Экспериментальные эффекты","实验效果"
 "tab.ships.create","Create ship","","","Crear nave","Créer un vaisseau","Criar nave","Создать корабль","创建舰船"
+"tab.ships.quick.create","Quick create ship","","","","","","",""
 "tab.ships.clone","Clone ship","","","Clonar nave","Cloner le vaisseau","Clonar nave","Клонировать корабль","复制舰船"
 "tab.ships.options","Options","Options","Optionen","Opciones","Options","Opções","Опции","选项"
 "tab.ships.rename","Rename ship","","","Renombrar nave","Renommer le vaisseau","Renomear nave","Переименовать корабль","重命名舰船"
