@@ -21,9 +21,9 @@ class ModifierFunctionHelperTest {
     void percentagePositive() throws Throwable {
         final Armour clone = Armour.ASP_ARMOUR_GRADE_1.Clone();
         clone.applyModification(HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_5, BigDecimal.ONE);
-        Assertions.assertEquals(-0.02,(Double)clone.getAttributeValue(KINETIC_RESISTANCE), Precision.EPSILON);
-        Assertions.assertEquals( 0.15,(Double)clone.getAttributeValue(THERMAL_RESISTANCE), Precision.EPSILON);
-        Assertions.assertEquals(-0.19,(Double)clone.getAttributeValue(EXPLOSIVE_RESISTANCE), Precision.EPSILON);
+        Assertions.assertEquals(-0.02,(Double)clone.getAttributeValue(KINETIC_RESISTANCE, false), Precision.EPSILON);
+        Assertions.assertEquals( 0.15,(Double)clone.getAttributeValue(THERMAL_RESISTANCE, false), Precision.EPSILON);
+        Assertions.assertEquals(-0.19,(Double)clone.getAttributeValue(EXPLOSIVE_RESISTANCE, false), Precision.EPSILON);
 
     }
 }

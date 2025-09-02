@@ -41,9 +41,9 @@ public class ShipConfigDiscoveryTest {
 
     protected void findMinPitch(Ship ship, Double expected, Double delta) {
         final Optional<Slot> thrusters = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_THRUSTERS)).findFirst().filter(Slot::isOccupied);
-        final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS)).orElse(0D);
-        final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS)).orElse(0D);
-        final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS)).orElse(0D);
+        final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS, false)).orElse(0D);
+        final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS, false)).orElse(0D);
+        final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS, false)).orElse(0D);
         final Double minimumMultiplier = getMinimumMultiplier(thrusters);
         final Double optimalMultiplier = getOptimalMultiplier(thrusters);
         final Double maximumMultiplier = getMaximumMultiplier(thrusters);
@@ -72,22 +72,22 @@ public class ShipConfigDiscoveryTest {
     private static Double getMaximumMultiplier(Optional<Slot> thrusters) {
         return thrusters
                 .map(Slot::getShipModule)
-                .flatMap(shipModule -> Optional.ofNullable((Double) shipModule.getAttributeValueOrDefault(HorizonsModifier.MAXIMUM_MULTIPLIER_SPEED, null)))
-                .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MAXIMUM_MULIPLIER)).orElse(0D));
+                .flatMap(shipModule -> Optional.ofNullable((Double) shipModule.getAttributeValueOrDefault(HorizonsModifier.MAXIMUM_MULTIPLIER_SPEED, null, false)))
+                .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MAXIMUM_MULIPLIER, false)).orElse(0D));
     }
 
     private static Double getOptimalMultiplier(Optional<Slot> thrusters) {
         return thrusters
                 .map(Slot::getShipModule)
-                .flatMap(shipModule -> Optional.ofNullable((Double) shipModule.getAttributeValueOrDefault(HorizonsModifier.OPTIMAL_MULTIPLIER_SPEED, null)))
-                .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.OPTIMAL_MULTIPLIER)).orElse(0D));
+                .flatMap(shipModule -> Optional.ofNullable((Double) shipModule.getAttributeValueOrDefault(HorizonsModifier.OPTIMAL_MULTIPLIER_SPEED, null, false)))
+                .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.OPTIMAL_MULTIPLIER, false)).orElse(0D));
     }
 
     private static Double getMinimumMultiplier(Optional<Slot> thrusters) {
         return thrusters
                 .map(Slot::getShipModule)
-                .flatMap(shipModule -> Optional.ofNullable((Double) shipModule.getAttributeValueOrDefault(HorizonsModifier.MINIMUM_MULTIPLIER_SPEED, null)))
-                .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MINIMUM_MULTIPLIER)).orElse(0D));
+                .flatMap(shipModule -> Optional.ofNullable((Double) shipModule.getAttributeValueOrDefault(HorizonsModifier.MINIMUM_MULTIPLIER_SPEED, null, false)))
+                .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MINIMUM_MULTIPLIER, false)).orElse(0D));
     }
 
     private double calculateMinSpeed(Ship ship, Double speed, Double minimumThrust, ModuleProfile moduleProfile) {
@@ -97,9 +97,9 @@ public class ShipConfigDiscoveryTest {
     protected void findMinThrust(Ship ship, Double expected, Double delta) {
 
         final Optional<Slot> thrusters = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_THRUSTERS)).findFirst().filter(Slot::isOccupied);
-        final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS)).orElse(0D);
-        final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS)).orElse(0D);
-        final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS)).orElse(0D);
+        final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS, false)).orElse(0D);
+        final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS, false)).orElse(0D);
+        final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS, false)).orElse(0D);
         final Double minimumMultiplier = getMinimumMultiplier(thrusters);
         final Double optimalMultiplier = getOptimalMultiplier(thrusters);
         final Double maximumMultiplier = getMaximumMultiplier(thrusters);
@@ -124,9 +124,9 @@ public class ShipConfigDiscoveryTest {
     protected void findTopSpeed(Ship ship, Double expected, Double delta) {
 
         final Optional<Slot> thrusters = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_THRUSTERS)).findFirst().filter(Slot::isOccupied);
-        final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS)).orElse(0D);
-        final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS)).orElse(0D);
-        final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS)).orElse(0D);
+        final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS, false)).orElse(0D);
+        final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS, false)).orElse(0D);
+        final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS, false)).orElse(0D);
         final Double minimumMultiplier = getMinimumMultiplier(thrusters);
         final Double optimalMultiplier = getOptimalMultiplier(thrusters);
         final Double maximumMultiplier = getMaximumMultiplier(thrusters);
@@ -151,9 +151,9 @@ public class ShipConfigDiscoveryTest {
     protected void findBoostSpeed(Ship ship, Double expected, Double delta) {
 
         final Optional<Slot> thrusters = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_THRUSTERS)).findFirst().filter(Slot::isOccupied);
-        final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS)).orElse(0D);
-        final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS)).orElse(0D);
-        final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS)).orElse(0D);
+        final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS, false)).orElse(0D);
+        final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS, false)).orElse(0D);
+        final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS, false)).orElse(0D);
         final Double minimumMultiplier = getMinimumMultiplier(thrusters);
         final Double optimalMultiplier = getOptimalMultiplier(thrusters);
         final Double maximumMultiplier = getMaximumMultiplier(thrusters);
@@ -209,9 +209,9 @@ public class ShipConfigDiscoveryTest {
 
     protected void findPitch(Ship ship, Double expected, Double delta) {
         final Optional<Slot> thrusters = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_THRUSTERS)).findFirst().filter(Slot::isOccupied);
-        final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS)).orElse(0D);
-        final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS)).orElse(0D);
-        final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS)).orElse(0D);
+        final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS, false)).orElse(0D);
+        final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS, false)).orElse(0D);
+        final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS, false)).orElse(0D);
         final Double minimumMultiplier = getMinimumMultiplier(thrusters);
         final Double optimalMultiplier = getOptimalMultiplier(thrusters);
         final Double maximumMultiplier = getMaximumMultiplier(thrusters);
@@ -234,9 +234,9 @@ public class ShipConfigDiscoveryTest {
 
     protected void findRoll(Ship ship, Double expected, Double delta) {
         final Optional<Slot> thrusters = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_THRUSTERS)).findFirst().filter(Slot::isOccupied);
-        final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS)).orElse(0D);
-        final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS)).orElse(0D);
-        final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS)).orElse(0D);
+        final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS, false)).orElse(0D);
+        final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS, false)).orElse(0D);
+        final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS, false)).orElse(0D);
         final Double minimumMultiplier = getMinimumMultiplier(thrusters);
         final Double optimalMultiplier = getOptimalMultiplier(thrusters);
         final Double maximumMultiplier = getMaximumMultiplier(thrusters);
@@ -260,9 +260,9 @@ public class ShipConfigDiscoveryTest {
 
     protected void findYaw(Ship ship, Double expected, Double delta) {
         final Optional<Slot> thrusters = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_THRUSTERS)).findFirst().filter(Slot::isOccupied);
-        final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS)).orElse(0D);
-        final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS)).orElse(0D);
-        final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS)).orElse(0D);
+        final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS, false)).orElse(0D);
+        final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS, false)).orElse(0D);
+        final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS, false)).orElse(0D);
         final Double minimumMultiplier = getMinimumMultiplier(thrusters);
         final Double optimalMultiplier = getOptimalMultiplier(thrusters);
         final Double maximumMultiplier = getMaximumMultiplier(thrusters);
@@ -290,19 +290,19 @@ public class ShipConfigDiscoveryTest {
                 .findFirst()
                 .ifPresent(shieldGeneratorSlot -> {
                     ShipModule module = shieldGeneratorSlot.getShipModule();
-                    Double minimumMass = (Double) module.getAttributeValue(SHIELDGEN_MINIMUM_MASS);
-                    Double optimalMass = (Double) module.getAttributeValue(SHIELDGEN_OPTIMAL_MASS);
-                    Double maximumMass = (Double) module.getAttributeValue(SHIELDGEN_MAXIMUM_MASS);
-                    Double minimumStrength = (Double) module.getAttributeValue(SHIELDGEN_MINIMUM_STRENGTH);
-                    Double optimalStrength = (Double) module.getAttributeValue(SHIELDGEN_OPTIMAL_STRENGTH);
-                    Double maximumStrength = (Double) module.getAttributeValue(SHIELDGEN_MAXIMUM_STRENGTH);
+                    Double minimumMass = (Double) module.getAttributeValue(SHIELDGEN_MINIMUM_MASS, false);
+                    Double optimalMass = (Double) module.getAttributeValue(SHIELDGEN_OPTIMAL_MASS, false);
+                    Double maximumMass = (Double) module.getAttributeValue(SHIELDGEN_MAXIMUM_MASS, false);
+                    Double minimumStrength = (Double) module.getAttributeValue(SHIELDGEN_MINIMUM_STRENGTH, false);
+                    Double optimalStrength = (Double) module.getAttributeValue(SHIELDGEN_OPTIMAL_STRENGTH, false);
+                    Double maximumStrength = (Double) module.getAttributeValue(SHIELDGEN_MAXIMUM_STRENGTH, false);
                     double shieldReinforcement = ship.getOptionalSlots().stream()
                             .filter(slot -> slot.getShipModule() instanceof GuardianShieldReinforcementPackage)
-                            .mapToDouble(slot -> (Double) slot.getShipModule().getAttributeValue(SHIELD_REINFORCEMENT))
+                            .mapToDouble(slot -> (Double) slot.getShipModule().getAttributeValue(SHIELD_REINFORCEMENT, false))
                             .sum();
                     double totalShieldBoost = ship.getUtilitySlots().stream()
                             .filter(slot -> slot.getShipModule() instanceof ShieldBooster)
-                            .mapToDouble(slot -> (Double) slot.getShipModule().getAttributeValue(SHIELD_BOOST))
+                            .mapToDouble(slot -> (Double) slot.getShipModule().getAttributeValue(SHIELD_BOOST, false))
                             .sum();
 
                     Double value = 0D;
@@ -333,7 +333,7 @@ public class ShipConfigDiscoveryTest {
     public void findArmourStrength(Ship ship, Double expected, Double delta) {
 
         final Optional<ShipModule> armourModule = ship.getCoreSlots().stream().filter(slot -> SlotType.CORE_ARMOUR.equals(slot.getSlotType())).findFirst().map(Slot::getShipModule);
-        double hullBoost = (double) armourModule.map(shipModule -> shipModule.getAttributeValue(HorizonsModifier.HULL_BOOST)).orElse(0D);
+        double hullBoost = (double) armourModule.map(shipModule -> shipModule.getAttributeValue(HorizonsModifier.HULL_BOOST, false)).orElse(0D);
 
         Double value = 0D;
         Double armour = 0D;

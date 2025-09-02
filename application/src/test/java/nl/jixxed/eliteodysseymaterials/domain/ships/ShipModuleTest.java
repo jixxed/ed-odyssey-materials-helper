@@ -75,7 +75,7 @@ class ShipModuleTest {
             shipModule.applyModification(blueprint, HorizonsBlueprintGrade.GRADE_5, BigDecimal.ONE);
         if (effect != null)
             shipModule.applyExperimentalEffect(effect);
-        assertEquals(expectedValue, Precision.round((Double) shipModule.getAttributeValue(modifierToTest),4), 0.00001);
+        assertEquals(expectedValue, Precision.round((Double) shipModule.getAttributeValue(modifierToTest, false),4), 0.00001);
     }
 
     @Test
@@ -95,6 +95,6 @@ class ShipModuleTest {
                 ShipModule.getBasicModules().stream()
                         .filter(shipModule -> shipModule instanceof HardpointModule)
                         .map(shipModule ->
-                                () -> Assertions.assertTrue(shipModule.getAttributeValue(HorizonsModifier.DAMAGE) !=null && shipModule.getAttributeValue(HorizonsModifier.DAMAGE_PER_SECOND) !=null, "Hardpoint module must have DAMAGE and DAMAGE_PER_SECOND: " + shipModule.getId())));
+                                () -> Assertions.assertTrue(shipModule.getAttributeValue(HorizonsModifier.DAMAGE, false) !=null && shipModule.getAttributeValue(HorizonsModifier.DAMAGE_PER_SECOND, false) !=null, "Hardpoint module must have DAMAGE and DAMAGE_PER_SECOND: " + shipModule.getId())));
     }
 }
