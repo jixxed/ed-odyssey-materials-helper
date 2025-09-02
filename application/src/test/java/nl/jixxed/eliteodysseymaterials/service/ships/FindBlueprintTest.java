@@ -26,9 +26,9 @@ public class FindBlueprintTest {
         List<ShipModule> modules = ShipModule.getModules(SlotType.HARDPOINT);
         modules.forEach(module -> {
             if (module.getAttibutes().contains(HorizonsModifier.BREACH_DAMAGE)){
-                double value = Math.round((double) module.getAttributeValue(HorizonsModifier.BREACH_DAMAGE) / (double) module.getAttributeValue(HorizonsModifier.DAMAGE)* 100D);
-                double valueMin = Math.round(((double) module.getAttributeValue(HorizonsModifier.BREACH_DAMAGE) -0.05 )/ (double) module.getAttributeValue(HorizonsModifier.DAMAGE)* 100D);
-                double valueMax =Math.round(( (double) module.getAttributeValue(HorizonsModifier.BREACH_DAMAGE) + 0.05) / (double) module.getAttributeValue(HorizonsModifier.DAMAGE)* 100D);
+                double value = Math.round((double) module.getAttributeValue(HorizonsModifier.BREACH_DAMAGE, false) / (double) module.getAttributeValue(HorizonsModifier.DAMAGE, false)* 100D);
+                double valueMin = Math.round(((double) module.getAttributeValue(HorizonsModifier.BREACH_DAMAGE, false) -0.05 )/ (double) module.getAttributeValue(HorizonsModifier.DAMAGE, false)* 100D);
+                double valueMax =Math.round(( (double) module.getAttributeValue(HorizonsModifier.BREACH_DAMAGE, false) + 0.05) / (double) module.getAttributeValue(HorizonsModifier.DAMAGE, false)* 100D);
                 log.info("module " + module.getId() + " does " + value + "% breach damage. min/max: " + valueMin + "%/" +valueMax+"%");
             }
 //            if (!module.getAttibutes().contains(HorizonsModifier.DAMAGE_PER_SECOND)){
