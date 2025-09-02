@@ -39,3 +39,4 @@
 "material.tooltip.market.buys","The current market buys this commodity for {0}CR/T and has a demand of {1}T","","","El mercado actual compra esta mercancía por {0}Cr/t y tiene una demanda de {1}t","Le marché actuel achète cette marchandise pour {0}CR/T et a une demande de {1}T","","Здешний рынок покупает этот товар по цене {0}КР/T и запрашивает {1}T","当前市场以 {0} Cr/吨 的价格购买这种货物，需求 {1} 吨"
 "material.tooltip.mining","Mining","","","Minería","Minage","","Разработка астероидов","采矿"
 "material.tooltip.mining.locations","This material can be mined in the following locations:","","","Este material puede ser extraido en las siguientes localizaciones:","Ce matériau peut être miné aux endroits suivants :","","Этот материал можно добывать в следующих местах:","该材料可在以下地点开采："
+"location.tooltip.permit.required","Permit required","","","","","","",""

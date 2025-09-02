@@ -1,10 +1,11 @@
 package nl.jixxed.eliteodysseymaterials.templates.generic;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 import lombok.Getter;
 import lombok.NonNull;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.Location;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
@@ -13,12 +14,14 @@ import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
+import nl.jixxed.eliteodysseymaterials.service.PermitService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationChangedEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
+import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
+import nl.jixxed.eliteodysseymaterials.templates.components.FontAwesomeIconViewPane;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIconView;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 
 public class CopyableLocation extends DestroyableFlowPane implements DestroyableEventTemplate {
@@ -30,6 +33,7 @@ public class CopyableLocation extends DestroyableFlowPane implements Destroyable
     private String station;
     private Double distanceFromStar;
     private DestroyableLabel location;
+    private EdAwesomeIconViewPane permitIcon;
 
 
     public CopyableLocation(@NonNull StarSystem starSystem, @NonNull String station, double distanceFromStar, double distanceFromStarVariance) {
@@ -62,16 +66,30 @@ public class CopyableLocation extends DestroyableFlowPane implements Destroyable
                 .withNonLocalizedText("(0Ly)")
                 .build();
 
-        final DestroyableResizableImageView copyIcon = ResizableImageViewBuilder.builder()
+        FontAwesomeIconViewPane copyIcon = new FontAwesomeIconViewPane(FontAwesomeIconViewBuilder.builder()
                 .withStyleClass("copy-icon")
-                .withImage("/images/other/copy.png")
+                .withIcon(FontAwesomeIcon.CLONE)
+                .build());
+        permitIcon = EdAwesomeIconViewPaneBuilder.builder()
+                .withStyleClass("permit-icon")
+                .withIcons(new EdAwesomeIconView(EdAwesomeIcon.OTHER_PERMIT))
                 .build();
+        final DestroyableTooltip tooltip = TooltipBuilder.builder()
+                .withShowDelay(Duration.ZERO)
+                .withText("location.tooltip.permit.required")
+                .build();
+        tooltip.install(permitIcon);
+
+//        final DestroyableResizableImageView copyIcon = ResizableImageViewBuilder.builder()
+//                .withStyleClass("copy-icon")
+//                .withImage("/images/other/copy.png")
+//                .build();
 
         this.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             copyLocationToClipboard();
             NotificationService.showInformation(NotificationType.COPY, LocaleService.LocaleString.of("notification.clipboard.title"), LocaleService.LocaleString.of("notification.clipboard.system.copied.text"));
         });
-        this.getNodes().addAll(location, copyIcon, this.distance);
+        this.getNodes().addAll(location, permitIcon, copyIcon, this.distance);
 
         update();
     }
@@ -83,7 +101,9 @@ public class CopyableLocation extends DestroyableFlowPane implements Destroyable
 
     private void update() {
         final Location currentLocation = LocationService.getCurrentLocation();
-
+        boolean permitSystem = PermitService.isPermitSystem(starSystem);
+        permitIcon.setVisible(permitSystem);
+        permitIcon.setManaged(permitSystem);
         location.setText(this.station.isEmpty() ? starSystem.getName() : this.station + " | " + starSystem.getName());
         final Double starDistance = starSystem.getDistance(currentLocation.getStarSystem());
         if (starDistance > 0D || distanceFromStar == 0D) {

@@ -204,9 +204,15 @@
   .copy-icon {
     @include fixedWidth(1em);
     @include fixedHeight(1em);
-    -fx-fit-to-height: true;
-    -fx-fit-to-width: true;
-    //-fx-background-color: $text-color-white;
+    -fx-fill: $text-color-grey;
+  }
+  .permit-icon {
+    //@include fixedWidth(1em);
+    @include fixedHeight(1em);
+    .glyph-icon {
+      -fx-fill: $text-color-dark-red;
+      -fx-font-size: 1em !important;
+    }
   }
 
   .distance {

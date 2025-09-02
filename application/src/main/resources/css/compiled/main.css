@@ -84,8 +84,14 @@
                   -fx-min-height: 1em;
                   -fx-pref-height: 1em;
                   -fx-max-height: 1em;
-                  -fx-fit-to-height: true;
-                  -fx-fit-to-width: true; }
+                  -fx-fill: gray; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .project-view .contents .copyable-location .permit-icon {
+                  -fx-min-height: 1em;
+                  -fx-pref-height: 1em;
+                  -fx-max-height: 1em; }
+                  .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .project-view .contents .copyable-location .permit-icon .glyph-icon {
+                    -fx-fill: red;
+                    -fx-font-size: 1em !important; }
                 .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .project-view .contents .copyable-location .distance {
                   -fx-text-fill: gray; }
             .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .project-view .buttons-contents {
@@ -132,8 +138,14 @@
                   -fx-min-height: 1em;
                   -fx-pref-height: 1em;
                   -fx-max-height: 1em;
-                  -fx-fit-to-height: true;
-                  -fx-fit-to-width: true; }
+                  -fx-fill: gray; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .stats-blazers .trailblazers .copyable-location .permit-icon {
+                  -fx-min-height: 1em;
+                  -fx-pref-height: 1em;
+                  -fx-max-height: 1em; }
+                  .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .stats-blazers .trailblazers .copyable-location .permit-icon .glyph-icon {
+                    -fx-fill: red;
+                    -fx-font-size: 1em !important; }
                 .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .stats-blazers .trailblazers .copyable-location .distance {
                   -fx-text-fill: gray; }
         .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials {
@@ -558,8 +570,14 @@
               -fx-min-height: 1em;
               -fx-pref-height: 1em;
               -fx-max-height: 1em;
-              -fx-fit-to-height: true;
-              -fx-fit-to-width: true; }
+              -fx-fill: gray; }
+            .app .application-screen .horizons-tab-content .engineers-tab-content .engineer-grid .engineer-card .copyable-location .permit-icon {
+              -fx-min-height: 1em;
+              -fx-pref-height: 1em;
+              -fx-max-height: 1em; }
+              .app .application-screen .horizons-tab-content .engineers-tab-content .engineer-grid .engineer-card .copyable-location .permit-icon .glyph-icon {
+                -fx-fill: red;
+                -fx-font-size: 1em !important; }
             .app .application-screen .horizons-tab-content .engineers-tab-content .engineer-grid .engineer-card .copyable-location .distance {
               -fx-text-fill: gray; }
           .app .application-screen .horizons-tab-content .engineers-tab-content .engineer-grid .engineer-card .segmented-bar {
@@ -777,8 +795,14 @@
               -fx-min-height: 1em;
               -fx-pref-height: 1em;
               -fx-max-height: 1em;
-              -fx-fit-to-height: true;
-              -fx-fit-to-width: true; }
+              -fx-fill: gray; }
+            .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .nearest-trader .copyable-location .permit-icon {
+              -fx-min-height: 1em;
+              -fx-pref-height: 1em;
+              -fx-max-height: 1em; }
+              .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .nearest-trader .copyable-location .permit-icon .glyph-icon {
+                -fx-fill: red;
+                -fx-font-size: 1em !important; }
             .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .nearest-trader .copyable-location .distance {
               -fx-text-fill: gray; }
     .app .application-screen .horizons-tab-content .blueprint-menu {
@@ -1051,8 +1075,14 @@
               -fx-min-height: 1em;
               -fx-pref-height: 1em;
               -fx-max-height: 1em;
-              -fx-fit-to-height: true;
-              -fx-fit-to-width: true; }
+              -fx-fill: gray; }
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-broker .copyable-location .permit-icon {
+              -fx-min-height: 1em;
+              -fx-pref-height: 1em;
+              -fx-max-height: 1em; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-broker .copyable-location .permit-icon .glyph-icon {
+                -fx-fill: red;
+                -fx-font-size: 1em !important; }
             .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-broker .copyable-location .distance {
               -fx-text-fill: gray; }
         .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure {
@@ -1084,8 +1114,14 @@
               -fx-min-height: 1em;
               -fx-pref-height: 1em;
               -fx-max-height: 1em;
-              -fx-fit-to-height: true;
-              -fx-fit-to-width: true; }
+              -fx-fill: gray; }
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure .copyable-location .permit-icon {
+              -fx-min-height: 1em;
+              -fx-pref-height: 1em;
+              -fx-max-height: 1em; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure .copyable-location .permit-icon .glyph-icon {
+                -fx-fill: red;
+                -fx-font-size: 1em !important; }
             .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure .copyable-location .distance {
               -fx-text-fill: gray; }
       .app .application-screen .horizons-tab-content .blueprint-menu .about-title-pane {
@@ -1248,8 +1284,14 @@
               -fx-min-height: 1em;
               -fx-pref-height: 1em;
               -fx-max-height: 1em;
-              -fx-fit-to-height: true;
-              -fx-fit-to-width: true; }
+              -fx-fill: gray; }
+            .app .application-screen .horizons-tab-content .powerplay-tab-content .powerplay-flow .powerplay-card .copyable-location .permit-icon {
+              -fx-min-height: 1em;
+              -fx-pref-height: 1em;
+              -fx-max-height: 1em; }
+              .app .application-screen .horizons-tab-content .powerplay-tab-content .powerplay-flow .powerplay-card .copyable-location .permit-icon .glyph-icon {
+                -fx-fill: red;
+                -fx-font-size: 1em !important; }
             .app .application-screen .horizons-tab-content .powerplay-tab-content .powerplay-flow .powerplay-card .copyable-location .distance {
               -fx-text-fill: gray; }
     .app .application-screen .horizons-tab-content .search .filter-and-sort {
@@ -2979,8 +3021,14 @@
                 -fx-min-height: 1em;
                 -fx-pref-height: 1em;
                 -fx-max-height: 1em;
-                -fx-fit-to-height: true;
-                -fx-fit-to-width: true; }
+                -fx-fill: gray; }
+              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .copyable-location .permit-icon {
+                -fx-min-height: 1em;
+                -fx-pref-height: 1em;
+                -fx-max-height: 1em; }
+                .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .copyable-location .permit-icon .glyph-icon {
+                  -fx-fill: red;
+                  -fx-font-size: 1em !important; }
               .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .copyable-location .distance {
                 -fx-text-fill: gray; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .distance-line {
@@ -3246,8 +3294,14 @@
               -fx-min-height: 1em;
               -fx-pref-height: 1em;
               -fx-max-height: 1em;
-              -fx-fit-to-height: true;
-              -fx-fit-to-width: true; }
+              -fx-fill: gray; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .copyable-location .permit-icon {
+              -fx-min-height: 1em;
+              -fx-pref-height: 1em;
+              -fx-max-height: 1em; }
+              .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .copyable-location .permit-icon .glyph-icon {
+                -fx-fill: red;
+                -fx-font-size: 1em !important; }
             .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .copyable-location .distance {
               -fx-text-fill: gray; }
           .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .name {
@@ -4229,8 +4283,14 @@
                 -fx-min-height: 1em;
                 -fx-pref-height: 1em;
                 -fx-max-height: 1em;
-                -fx-fit-to-height: true;
-                -fx-fit-to-width: true; }
+                -fx-fill: gray; }
+              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .copyable-location .permit-icon {
+                -fx-min-height: 1em;
+                -fx-pref-height: 1em;
+                -fx-max-height: 1em; }
+                .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .copyable-location .permit-icon .glyph-icon {
+                  -fx-fill: red;
+                  -fx-font-size: 1em !important; }
               .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .copyable-location .distance {
                 -fx-text-fill: gray; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .distance-line {
@@ -4435,8 +4495,14 @@
       -fx-min-height: 1em;
       -fx-pref-height: 1em;
       -fx-max-height: 1em;
-      -fx-fit-to-height: true;
-      -fx-fit-to-width: true; }
+      -fx-fill: gray; }
+    .app .material-popover .copyable-location .permit-icon {
+      -fx-min-height: 1em;
+      -fx-pref-height: 1em;
+      -fx-max-height: 1em; }
+      .app .material-popover .copyable-location .permit-icon .glyph-icon {
+        -fx-fill: red;
+        -fx-font-size: 1em !important; }
     .app .material-popover .copyable-location .distance {
       -fx-text-fill: gray; }
   .app .material-popover .label {
