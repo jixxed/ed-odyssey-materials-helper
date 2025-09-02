@@ -1,3 +1,13 @@
+Version 2.244
+-------------
+Reduce update frequency of the fleetcarrier endpoint to once an hour
+- You no longer need to pause the API if this app is the only thing using the fleetcarrier endpoint
+Added synthesis to the Ship Editor
+- See effects of the synthesis blueprints on the ship stats
+- Add synthesis to the wishlist from the Ship Editor
+Fixed Concord Cannon not having experimental effects
+Added a quick create ship button to the Ship Editor
+
 Version 2.243
 -------------
 Register squadron perks through the API and adjust blueprint costs accordingly automatically
