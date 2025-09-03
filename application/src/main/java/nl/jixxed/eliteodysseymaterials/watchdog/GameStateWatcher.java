@@ -49,7 +49,7 @@ public class GameStateWatcher {
                         final File file = event.getFile();
                         if (file.isFile() && file.getName().equals(filename)) {
                             GameStateWatcher.this.watchedFile = Optional.of(file);
-                            log.info(event.getFile().toString() + ": " + event.getKind().toString());
+//                            log.info(event.getFile().toString() + ": " + event.getKind().toString());
 //                            fileProcessor.accept(Optional.of(file));
 
                             modifyEventSubject.onNext(Optional.of(file));
@@ -59,7 +59,7 @@ public class GameStateWatcher {
                     private void handleDelete(final FileEvent event, final Consumer<Optional<File>> fileProcessor) {
                         final File file = event.getFile();
                         if (file.getName().equals(filename)) {
-                            log.info(event.getFile().toString() + ": " + event.getKind().toString());
+//                            log.info(event.getFile().toString() + ": " + event.getKind().toString());
                             fileProcessor.accept(Optional.empty());
                         }
                     }
