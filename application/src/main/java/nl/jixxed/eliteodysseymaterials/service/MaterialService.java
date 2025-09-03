@@ -108,7 +108,7 @@ public class MaterialService {
             }
             addHorizonsSpawnLocationsToTooltip(SpawnConstants.HORIZONSMATERIAL_LOCATION.get(horizonsMaterial), vBox);
             if (!(horizonsMaterial instanceof Commodity)) {
-                if (wishlist && WishlistService.getCurrentWishlistCount(horizonsMaterial).max() - StorageService.getMaterialCount(horizonsMaterial) > 0) {
+                if (wishlist && WishlistService.getCurrentWishlistCount(horizonsMaterial, false).max() - StorageService.getMaterialCount(horizonsMaterial) > 0) {
                     addHorizonsTradeToTooltip(horizonsMaterial, vBox);
                 } else {
                     addHorizonsTradeToTooltipClassic(horizonsMaterial, vBox);

@@ -149,17 +149,23 @@ public class WishlistService {
                 .map(horizonsWishlistBlueprint -> {
                     final int quantity = horizonsWishlistBlueprint.getQuantity();
                     if (horizonsWishlistBlueprint instanceof HorizonsModuleWishlistBlueprint horizonsModuleWishlistBlueprint) {//modules
-                        return horizonsModuleWishlistBlueprint.getPercentageToComplete().entrySet().stream().map(entry -> {
-                            final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsModuleWishlistBlueprint.getRecipeName(), getBlueprintType(horizonsModuleWishlistBlueprint), entry.getKey());
+                        IntegerRange blueprintTotal = horizonsModuleWishlistBlueprint.getPercentageToComplete().keySet().stream().map(grade -> {
+                            final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsModuleWishlistBlueprint.getRecipeName(), getBlueprintType(horizonsModuleWishlistBlueprint), grade);
                             final Integer lowestRank = blueprint.getEngineers().stream()
                                     .min(Comparator.comparing(engineer -> ApplicationState.getInstance().getEngineerRank(engineer)))
                                     .map(engineer -> ApplicationState.getInstance().getEngineerRank(engineer))
                                     .orElse(0);
                             return new IntegerRange(
-                                    quantity * blueprint.getRequiredAmount(horizonsMaterial, null) * entry.getKey().getNumberOfRolls(5, getBlueprintType(horizonsModuleWishlistBlueprint)),
-                                    quantity * blueprint.getRequiredAmount(horizonsMaterial, null) * entry.getKey().getNumberOfRolls(lowestRank, getBlueprintType(horizonsModuleWishlistBlueprint))
+                                    quantity * blueprint.getRequiredAmount(horizonsMaterial, null) * grade.getNumberOfRolls(5, getBlueprintType(horizonsModuleWishlistBlueprint)),
+                                    quantity * blueprint.getRequiredAmount(horizonsMaterial, null) * grade.getNumberOfRolls(lowestRank, getBlueprintType(horizonsModuleWishlistBlueprint))
                             );
                         }).reduce(new IntegerRange(0, 0), IntegerRange::sum);
+                        if(horizonsModuleWishlistBlueprint.getExperimentalEffect() != null) {
+                            final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe((HorizonsBlueprintName) horizonsWishlistBlueprint.getRecipeName(), horizonsModuleWishlistBlueprint.getExperimentalEffect(), getBlueprintGrade(horizonsWishlistBlueprint));
+                            var effectTotal = new IntegerRange(quantity * blueprint.getRequiredAmount(horizonsMaterial, null), quantity * blueprint.getRequiredAmount(horizonsMaterial, null));
+                            blueprintTotal = IntegerRange.sum(blueprintTotal, effectTotal);
+                        }
+                        return blueprintTotal;
                     } else {//other
                         final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe((HorizonsBlueprintName) horizonsWishlistBlueprint.getRecipeName(), getBlueprintType(horizonsWishlistBlueprint), getBlueprintGrade(horizonsWishlistBlueprint));
                         return new IntegerRange(quantity * blueprint.getRequiredAmount(horizonsMaterial, null), quantity * blueprint.getRequiredAmount(horizonsMaterial, null));
