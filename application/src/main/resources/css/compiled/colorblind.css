@@ -2040,7 +2040,6 @@
                     .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .ships-guardian-2 {
                       -fx-fill: #00aafc; }
                     .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .other-communitygoal {
-                      -fx-font-size: 1.3em !important;
                       -fx-fill: #ffeb00; }
                     .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .other-arx {
                       -fx-fill: white; }
@@ -2059,12 +2058,65 @@
                       -fx-fill: #2e92df; }
                     .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .ships-synthesis-premium {
                       -fx-fill: #2e92df; }
-                  .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .pre-engineered .ships-engineer {
-                    -fx-fill: #f2c80e; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .ships-preengineered {
+                      -fx-fill: #f2c80e; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .ships-advanced {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .ships-enhanced {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .ships-dumbfire {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .ships-seeker {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .ships-legacy {
+                      -fx-fill: #d16a0a; }
                   .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide {
-                    -fx-max-width: 1.875em;
+                    -fx-min-width: 2.7em;
+                    -fx-pref-width: 2.7em;
+                    -fx-max-width: 2.7em;
                     -fx-max-height: 1.5em;
                     -fx-padding: 0em 0.2em 0em 0em; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .glyph-icon {
+                      -fx-font-size: 1.5em !important; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .ships-multicrew-radar {
+                      -fx-fill: #159ec2; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .other-powerplay-open {
+                      -fx-fill: #ffc600; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .ships-guardian-1 {
+                      -fx-fill: #026fa2; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .ships-guardian-2 {
+                      -fx-fill: #00aafc; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .other-communitygoal {
+                      -fx-fill: #ffeb00; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .other-arx {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .ships-engineer {
+                      -fx-font-size: 1.3em !important;
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .ships-gimballed {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .ships-turreted {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .ships-fixed {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .ships-synthesis-basic {
+                      -fx-fill: #2e92df; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .ships-synthesis-standard {
+                      -fx-fill: #2e92df; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .ships-synthesis-premium {
+                      -fx-fill: #2e92df; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .ships-preengineered {
+                      -fx-fill: #f2c80e; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .ships-advanced {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .ships-enhanced {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .ships-dumbfire {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .ships-seeker {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .ships-legacy {
+                      -fx-fill: #d16a0a; }
                 .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .name {
                   -fx-max-width: 20em; }
                   .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .name:changed {
@@ -2540,9 +2592,103 @@
                     .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button:overload {
                       -fx-border-color: red; }
                     .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image {
-                      /*-fx-max-width: 1.5em;*/
+                      -fx-min-width: 1.5em;
+                      -fx-pref-width: 1.5em;
+                      -fx-max-width: 1.5em;
+                      -fx-min-height: 1.5em;
+                      -fx-pref-height: 1.5em;
                       -fx-max-height: 1.5em;
                       -fx-padding: 0em 0.2em 0em 0em; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .glyph-icon {
+                        -fx-font-size: 1.5em !important; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .ships-multicrew-radar {
+                        -fx-fill: #159ec2; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .other-powerplay-open {
+                        -fx-fill: #ffc600; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .ships-guardian-1 {
+                        -fx-fill: #026fa2; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .ships-guardian-2 {
+                        -fx-fill: #00aafc; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .other-communitygoal {
+                        -fx-fill: #ffeb00; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .other-arx {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .ships-engineer {
+                        -fx-font-size: 1.3em !important;
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .ships-gimballed {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .ships-turreted {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .ships-fixed {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .ships-synthesis-basic {
+                        -fx-fill: #2e92df; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .ships-synthesis-standard {
+                        -fx-fill: #2e92df; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .ships-synthesis-premium {
+                        -fx-fill: #2e92df; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .ships-preengineered {
+                        -fx-fill: #f2c80e; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .ships-advanced {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .ships-enhanced {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .ships-dumbfire {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .ships-seeker {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .ships-legacy {
+                        -fx-fill: #d16a0a; }
+                    .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide {
+                      -fx-min-width: 2.7em;
+                      -fx-pref-width: 2.7em;
+                      -fx-max-width: 2.7em;
+                      -fx-min-height: 1.5em;
+                      -fx-pref-height: 1.5em;
+                      -fx-max-height: 1.5em;
+                      -fx-padding: 0em 0.2em 0em 0em; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .glyph-icon {
+                        -fx-font-size: 1.5em !important; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .ships-multicrew-radar {
+                        -fx-fill: #159ec2; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .other-powerplay-open {
+                        -fx-fill: #ffc600; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .ships-guardian-1 {
+                        -fx-fill: #026fa2; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .ships-guardian-2 {
+                        -fx-fill: #00aafc; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .other-communitygoal {
+                        -fx-fill: #ffeb00; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .other-arx {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .ships-engineer {
+                        -fx-font-size: 1.3em !important;
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .ships-gimballed {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .ships-turreted {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .ships-fixed {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .ships-synthesis-basic {
+                        -fx-fill: #2e92df; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .ships-synthesis-standard {
+                        -fx-fill: #2e92df; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .ships-synthesis-premium {
+                        -fx-fill: #2e92df; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .ships-preengineered {
+                        -fx-fill: #f2c80e; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .ships-advanced {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .ships-enhanced {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .ships-dumbfire {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .ships-seeker {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .ships-legacy {
+                        -fx-fill: #d16a0a; }
     .app .application-screen .horizons-tab-content .wishlist-tab {
       -fx-background-insets: 0 0 0 0;
       -fx-effect: none;

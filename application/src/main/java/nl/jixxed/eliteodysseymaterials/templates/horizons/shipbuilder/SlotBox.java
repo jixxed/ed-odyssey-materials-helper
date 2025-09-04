@@ -436,13 +436,13 @@ public class SlotBox extends DestroyableStackPane {
             addIcon((shipModule instanceof UtilityModule um && Mounting.TURRETED.equals(um.getMounting())), EdAwesomeIcon.SHIPS_TURRETED, "ship.module.icon.tooltip.turreted", "module-icon");
             addIcon((shipModule instanceof UtilityModule um && Mounting.FIXED.equals(um.getMounting())), EdAwesomeIcon.SHIPS_FIXED, "ship.module.icon.tooltip.fixed", "module-icon");
 
-            addIcon(shipModule.isPreEngineered(), EdAwesomeIcon.SHIPS_ENGINEER, "ship.module.icon.tooltip.pre.engineered", "module-icon", "pre-engineered");
+            addIcon(shipModule.isPreEngineered(), EdAwesomeIcon.SHIPS_PREENGINEERED, "ship.module.icon.tooltip.pre.engineered", "module-icon");
             addIcon(shipModule.isStoreExclusive(), EdAwesomeIcon.OTHER_ARX, "ship.module.icon.tooltip.arx", "module-icon");
-            addIcon(shipModule.isAdvanced(), "/images/ships/icons/advanced2.png", "ship.module.icon.tooltip.advanced", "module-icon-wide");
-            addIcon(shipModule.isEnhanced(), "/images/ships/icons/enhanced2.png", "ship.module.icon.tooltip.enhanced", "module-icon-wide");
-            addIcon(shipModule.isSeeker(), "/images/ships/icons/seeker2.png", "ship.module.icon.tooltip.seeker", "module-icon-wide");
-            addIcon(shipModule.isDumbfire(), "/images/ships/icons/dumb2.png", "ship.module.icon.tooltip.dumbfire", "module-icon-wide");
-            addIcon(shipModule.isLegacy(), "/images/ships/icons/legacy.png", "ship.module.icon.tooltip.legacy", "module-icon");
+            addIcon(shipModule.isAdvanced(), EdAwesomeIcon.SHIPS_ADVANCED, "ship.module.icon.tooltip.advanced", "module-icon-wide");
+            addIcon(shipModule.isEnhanced(), EdAwesomeIcon.SHIPS_ENHANCED, "ship.module.icon.tooltip.enhanced", "module-icon-wide");
+            addIcon(shipModule.isSeeker(), EdAwesomeIcon.SHIPS_SEEKER, "ship.module.icon.tooltip.seeker", "module-icon-wide");
+            addIcon(shipModule.isDumbfire(), EdAwesomeIcon.SHIPS_DUMBFIRE, "ship.module.icon.tooltip.dumbfire", "module-icon-wide");
+            addIcon(shipModule.isLegacy(), EdAwesomeIcon.SHIPS_LEGACY, "ship.module.icon.tooltip.legacy", "module-icon");
             addIcon(Origin.POWERPLAY.equals(shipModule.getOrigin()), EdAwesomeIcon.OTHER_POWERPLAY_OPEN, "ship.module.icon.tooltip.powerplay", "module-icon");
             addIcon(Origin.GUARDIAN.equals(shipModule.getOrigin()), EdAwesomeIcon.SHIPS_GUARDIAN_1, EdAwesomeIcon.SHIPS_GUARDIAN_2, "ship.module.icon.tooltip.guardian", "module-icon");
             addIcon(shipModule.isMultiCrew(), EdAwesomeIcon.SHIPS_MULTICREW_RADAR, "ship.module.icon.tooltip.multicrew", "module-icon");

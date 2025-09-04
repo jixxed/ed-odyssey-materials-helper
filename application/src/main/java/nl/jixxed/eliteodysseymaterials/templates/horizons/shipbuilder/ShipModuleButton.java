@@ -3,7 +3,7 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 import javafx.css.PseudoClass;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.PowerDistributor;
@@ -13,13 +13,15 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.ShieldGen
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ModuleSelectHoverEvent;
+import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIconView;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableButton;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 @Getter
 public class ShipModuleButton extends DestroyableButton {
@@ -32,11 +34,11 @@ public class ShipModuleButton extends DestroyableButton {
                 EventService.publish(new ModuleSelectHoverEvent(slotBox, shipModule, true)));
         this.addEventBinding(this.onMouseExitedProperty(), _ ->
                 EventService.publish(new ModuleSelectHoverEvent(slotBox, null, false)));
-        final List<DestroyableResizableImageView> icons = getIcons(shipModule);
+        final List<EdAwesomeIconViewPane> icons = getIcons(shipModule);
         if (!icons.isEmpty()) {
             DestroyableHBox imagesBox = BoxBuilder.builder()
                     .withStyleClass("image-box")
-                    .withNodes(icons.toArray(DestroyableResizableImageView[]::new))
+                    .withNodes(icons.toArray(EdAwesomeIconViewPane[]::new))
                     .buildHBox();
             this.setGraphic(imagesBox);
             this.register(imagesBox);
@@ -86,29 +88,32 @@ public class ShipModuleButton extends DestroyableButton {
         }
     }
 
-    private static List<DestroyableResizableImageView> getIcons(ShipModule shipModule) {
-        List<DestroyableResizableImageView> images = new ArrayList<>();
+    private static List<EdAwesomeIconViewPane> getIcons(ShipModule shipModule) {
+        List<EdAwesomeIconViewPane> images = new ArrayList<>();
         if (shipModule instanceof ExternalModule externalModule && !externalModule.getMounting().equals(Mounting.NA)) {
-            images.add(createImage("/images/ships/icons/" + externalModule.getMounting().name().toLowerCase() + ".png"));
+            images.add(createImage("module-image", externalModule.getMounting().getIcon()));
         }
-        if (Origin.GUARDIAN.equals(shipModule.getOrigin()) || Origin.POWERPLAY.equals(shipModule.getOrigin())) {
-            images.add(createImage("/images/ships/icons/" + shipModule.getOrigin().name().toLowerCase() + ".png"));
+        if (Origin.GUARDIAN.equals(shipModule.getOrigin()) ) {
+            images.add(createImage("module-image", EdAwesomeIcon.SHIPS_GUARDIAN_1, EdAwesomeIcon.SHIPS_GUARDIAN_2));
         }
-        if (shipModule.isLegacy()) images.add(createImage("/images/ships/icons/legacy.png"));
-        if (shipModule.isPreEngineered()) images.add(createImage("/images/ships/icons/preengineered.png"));
-        if (shipModule.isStoreExclusive()) images.add(createImage("/images/ships/icons/arx.png"));
-        if (shipModule.isAdvanced()) images.add(createImage("/images/ships/icons/advanced2.png"));
-        if (shipModule.isEnhanced()) images.add(createImage("/images/ships/icons/enhanced2.png"));
-        if (shipModule.isDumbfire()) images.add(createImage("/images/ships/icons/dumb2.png"));
-        if (shipModule.isSeeker()) images.add(createImage("/images/ships/icons/seeker2.png"));
-        if (shipModule.isCGExclusive()) images.add(createImage("/images/ships/icons/cg.png"));
+        if (Origin.POWERPLAY.equals(shipModule.getOrigin())) {
+            images.add(createImage("module-image", EdAwesomeIcon.OTHER_POWERPLAY_OPEN));
+        }
+        if (shipModule.isLegacy()) images.add(createImage("module-image", EdAwesomeIcon.SHIPS_LEGACY));
+        if (shipModule.isPreEngineered()) images.add(createImage("module-image", EdAwesomeIcon.SHIPS_PREENGINEERED));
+        if (shipModule.isStoreExclusive()) images.add(createImage("module-image", EdAwesomeIcon.OTHER_ARX));
+        if (shipModule.isAdvanced()) images.add(createImage("module-image-wide", EdAwesomeIcon.SHIPS_ADVANCED));
+        if (shipModule.isEnhanced()) images.add(createImage("module-image-wide", EdAwesomeIcon.SHIPS_ENHANCED));
+        if (shipModule.isDumbfire()) images.add(createImage("module-image-wide", EdAwesomeIcon.SHIPS_DUMBFIRE));
+        if (shipModule.isSeeker()) images.add(createImage("module-image-wide", EdAwesomeIcon.SHIPS_SEEKER));
+        if (shipModule.isCGExclusive()) images.add(createImage("module-image", EdAwesomeIcon.OTHER_COMMUNITYGOAL));
         return images;
     }
 
-    private static DestroyableResizableImageView createImage(String imageResource) {
-        return ResizableImageViewBuilder.builder()
-                .withImage(imageResource)
-                .withStyleClass("module-image")
+    private static EdAwesomeIconViewPane createImage(String styleClass, EdAwesomeIcon ... icons) {
+        return EdAwesomeIconViewPaneBuilder.builder()
+                .withIcons(Arrays.stream(icons).map(EdAwesomeIconView::new).toArray(EdAwesomeIconView[]::new))
+                .withStyleClass(styleClass)
                 .build();
     }
 }

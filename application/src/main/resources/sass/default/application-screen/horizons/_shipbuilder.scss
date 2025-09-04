@@ -1040,76 +1040,16 @@
                   @include fixedHeight(1.5em);
                   -fx-padding: 0em 0.2em 0em 0em;
 
-                  .glyph-icon {
-                    -fx-font-size: 1.5em !important;
-                  }
+                  @include awesome-icons;
 
-                  .ships-multicrew-radar {
-                    -fx-fill: rgb(21, 158, 194);
-                  }
-
-                  .other-powerplay-open {
-                    -fx-fill: rgb(255, 198, 0);
-                  }
-
-                  .ships-guardian-1 {
-                    -fx-fill: rgb(2, 111, 162);
-                  }
-
-                  .ships-guardian-2 {
-                    -fx-fill: rgb(0, 170, 252);
-                  }
-
-                  .other-communitygoal {
-                    -fx-font-size: 1.3em !important;
-                    -fx-fill: rgb(255, 235, 0);
-                  }
-
-                  .other-arx {
-                    -fx-fill: rgb(255, 255, 255);
-                  }
-
-                  .ships-engineer {
-                    -fx-font-size: 1.3em !important;
-                    -fx-fill: rgb(255, 255, 255);
-                  }
-
-                  .ships-gimballed {
-                    -fx-fill: rgb(255, 255, 255);
-                  }
-
-                  .ships-turreted {
-                    -fx-fill: rgb(255, 255, 255);
-                  }
-
-                  .ships-fixed {
-                    -fx-fill: rgb(255, 255, 255);
-                  }
-
-                  .ships-synthesis-basic {
-                    -fx-fill: $text-color-blue;
-                  }
-
-                  .ships-synthesis-standard {
-                    -fx-fill: $text-color-blue;
-                  }
-
-                  .ships-synthesis-premium {
-                    -fx-fill: $text-color-blue;
-                  }
-                }
-
-                .pre-engineered {
-                  .ships-engineer {
-                    -fx-fill: rgb(242, 200, 14);
-                  }
                 }
 
                 .module-icon-wide {
-                  -fx-max-width: 1.875em;
+                  @include fixedWidth(2.7em);
                   -fx-max-height: 1.5em;
                   -fx-padding: 0em 0.2em 0em 0em;
 
+                  @include awesome-icons;
                 }
               }
 
@@ -1725,9 +1665,18 @@
 
                   .image-box {
                     .module-image {
-                      /*-fx-max-width: 1.5em;*/
-                      -fx-max-height: 1.5em;
+                      @include fixedWidth(1.5em);
+                      @include fixedHeight(1.5em);
                       -fx-padding: 0em 0.2em 0em 0em;
+
+                      @include awesome-icons;
+                    }
+                    .module-image-wide {
+                      @include fixedWidth(2.7em);
+                      @include fixedHeight(1.5em);
+                      -fx-padding: 0em 0.2em 0em 0em;
+
+                      @include awesome-icons;
                     }
                   }
                 }
