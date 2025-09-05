@@ -1,3 +1,12 @@
+Version 2.245
+-------------
+New feature: Quick apply favourites to Ship Editor
+- Configure your preferred core modules and engineering and apply them with a single click
+- Settings are commander specific and can be configured under Settings > Ships - Favourite modules
+Fixed a bug where invalid trade suggestions were shown for wishlist materials
+Added a permit indicator to copyable locations
+Added API endpoint refresh interval labels
+
 Version 2.244
 -------------
 Reduce update frequency of the fleetcarrier endpoint to once an hour
