@@ -246,6 +246,16 @@ public class FrameShiftDrive extends CoreModule {
     }
 
     @Override
+    public boolean isCGExclusive() {
+        if (FRAME_SHIFT_DRIVE_3_A_V1_PRE.equals(this)
+                || FRAME_SHIFT_DRIVE_4_A_V1_PRE.equals(this)
+                || FRAME_SHIFT_DRIVE_6_A_V1_PRE.equals(this)) {
+            return true;
+        }
+        return super.isCGExclusive();
+    }
+
+    @Override
     public boolean isPreEngineered() {
         return HorizonsBlueprintName.FRAME_SHIFT_DRIVE_PRE.equals(this.getName()) || HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE_PRE.equals(this.getName());
     }
