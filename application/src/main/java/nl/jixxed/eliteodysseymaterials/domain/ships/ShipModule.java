@@ -173,6 +173,14 @@ public abstract class ShipModule implements Serializable {
         this.experimentalEffects.removeIf(experimentalEffect1 -> Objects.equals(experimentalEffect1, experimentalEffect));
     }
 
+    public void removeModifications() {
+        this.modifications.clear();
+    }
+
+    public void removeExperimentalEffects() {
+        this.experimentalEffects.clear();
+    }
+
     private boolean validModification(final HorizonsBlueprintType modification, final boolean experimental) {
         if (modification == null) {
             return false;

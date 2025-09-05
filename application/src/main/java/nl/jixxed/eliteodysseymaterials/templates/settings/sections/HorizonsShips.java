@@ -15,16 +15,17 @@ import javafx.util.Callback;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.horizons.ExperimentalEffectBlueprints;
+import nl.jixxed.eliteodysseymaterials.constants.horizons.core_internals.*;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfigurationModification;
 import nl.jixxed.eliteodysseymaterials.domain.ShipLegacyModule;
-import nl.jixxed.eliteodysseymaterials.domain.ships.HardpointModule;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Modification;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
+import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.UserPreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LegacyModuleSavedEvent;
@@ -91,15 +92,347 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
 
     @Override
     public void initComponents() {
-        final DestroyableLabel shipsLabel = LabelBuilder.builder()
+        final DestroyableLabel shipsFavouritesLabel = LabelBuilder.builder()
+                .withStyleClass("settings-header")
+                .withText("tab.settings.title.ships.horizons.favourites")
+                .build();
+        final DestroyableLabel shipsLegacyLabel = LabelBuilder.builder()
                 .withStyleClass("settings-header")
                 .withText("tab.settings.title.ships.horizons")
                 .build();
+        final DestroyableHBox horizonsShipsArmourFavourites = createHorizonsShipsArmourFavourites();
+        final DestroyableHBox horizonsShipsPowerPlantFavourites = createHorizonsShipsPowerPlantFavourites();
+        final DestroyableHBox horizonsShipsThrusterFavourites = createHorizonsShipsThrusterFavourites();
+        final DestroyableHBox horizonsShipsFrameShiftDriveFavourites = createHorizonsShipsFrameShiftDriveFavourites();
+        final DestroyableHBox horizonsShipsLifeSupportFavourites = createHorizonsShipsLifeSupportFavourites();
+        final DestroyableHBox horizonsShipsPowerDistributorFavourites = createHorizonsShipsPowerDistributorFavourites();
+        final DestroyableHBox horizonsShipsSensorsFavourites = createHorizonsShipsSensorsFavourites();
         final DestroyableHBox horizonsShipsCreateModule = createHorizonsShipsCreateModule();
         final DestroyableHBox horizonsShipsModuleList = createHorizonsShipsModuleList();
 
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
-        this.getNodes().addAll(shipsLabel, horizonsShipsCreateModule, horizonsShipsModuleList);
+        this.getNodes().addAll(
+                shipsFavouritesLabel,
+                horizonsShipsArmourFavourites,
+                horizonsShipsPowerPlantFavourites,
+                horizonsShipsThrusterFavourites,
+                horizonsShipsFrameShiftDriveFavourites,
+                horizonsShipsLifeSupportFavourites,
+                horizonsShipsPowerDistributorFavourites,
+                horizonsShipsSensorsFavourites,
+                shipsLegacyLabel,
+                horizonsShipsCreateModule,
+                horizonsShipsModuleList
+        );
+    }
+
+    private DestroyableHBox createHorizonsShipsArmourFavourites() {
+        final DestroyableLabel moduleLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ships.favourite.armour")
+                .build();
+
+        DestroyableComboBox<ArmourType> moduleComboBox = ComboBoxBuilder.builder(ArmourType.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(FXCollections.observableList(Arrays.stream(ArmourType.values()).toList()))
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.armour.module", ArmourType.LIGHTWEIGHT_ALLOY))
+                .withValueChangeListener((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.armour.module", newValue.name());
+                })
+                .build();
+        List<HorizonsBlueprintType> blueprintTypes = new ArrayList<>(ArmourBlueprints.BLUEPRINTS.keySet().stream().toList());
+        blueprintTypes.addFirst(HorizonsBlueprintType.NONE);
+        DestroyableComboBox<HorizonsBlueprintType> engineeringComboBox = ComboBoxBuilder.builder(HorizonsBlueprintType.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(FXCollections.observableList(blueprintTypes))
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.armour.blueprint", HorizonsBlueprintType.NONE))
+                .withValueChangeListener((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.armour.blueprint", newValue.name());
+                })
+                .build();
+        List<HorizonsBlueprintType> effectTypes = new ArrayList<>(ExperimentalEffectBlueprints.ARMOUR.keySet().stream().toList());
+        effectTypes.addFirst(HorizonsBlueprintType.NONE);
+        DestroyableComboBox<HorizonsBlueprintType> experimentalComboBox = ComboBoxBuilder.builder(HorizonsBlueprintType.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(FXCollections.observableList(effectTypes))
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.armour.experimental", HorizonsBlueprintType.NONE))
+                .withValueChangeListener((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.armour.experimental", newValue.name());
+                })
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(moduleLabel, moduleComboBox, engineeringComboBox, experimentalComboBox)
+                .buildHBox();
+    }
+
+    private DestroyableHBox createHorizonsShipsPowerPlantFavourites() {
+        final DestroyableLabel moduleLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ships.favourite.powerplant")
+                .build();
+
+        DestroyableCheckBox guardianCheckBox = CheckBoxBuilder.builder()
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withText("tab.settings.ships.favourite.powerplant.guardian")
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.powerplant.guardian", false))
+                .withSelectedProperty((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.powerplant.guardian", newValue);
+                })
+                .build();
+        DestroyableComboBox<ModuleClass> moduleClassComboBox = ComboBoxBuilder.builder(ModuleClass.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(FXCollections.observableList(List.of(ModuleClass.A, ModuleClass.B, ModuleClass.C, ModuleClass.D, ModuleClass.E)))
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.powerplant.class", ModuleClass.E))
+                .withValueChangeListener((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.powerplant.class", newValue.name());
+                })
+                .withDisableProperty(guardianCheckBox.selectedProperty())
+                .build();
+        List<HorizonsBlueprintType> blueprintTypes = new ArrayList<>(PowerPlantBlueprints.BLUEPRINTS.keySet().stream().toList());
+        blueprintTypes.addFirst(HorizonsBlueprintType.NONE);
+        DestroyableComboBox<HorizonsBlueprintType> engineeringComboBox = ComboBoxBuilder.builder(HorizonsBlueprintType.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(FXCollections.observableList(blueprintTypes))
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.powerplant.blueprint", HorizonsBlueprintType.NONE))
+                .withValueChangeListener((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.powerplant.blueprint", newValue.name());
+                })
+                .withDisableProperty(guardianCheckBox.selectedProperty())
+                .build();
+        List<HorizonsBlueprintType> effectTypes = new ArrayList<>(ExperimentalEffectBlueprints.POWER_PLANT.keySet().stream().toList());
+        effectTypes.addFirst(HorizonsBlueprintType.NONE);
+        DestroyableComboBox<HorizonsBlueprintType> experimentalComboBox = ComboBoxBuilder.builder(HorizonsBlueprintType.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(FXCollections.observableList(effectTypes))
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.powerplant.experimental", HorizonsBlueprintType.NONE))
+                .withValueChangeListener((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.powerplant.experimental", newValue.name());
+                })
+                .withDisableProperty(guardianCheckBox.selectedProperty())
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(moduleLabel, guardianCheckBox, moduleClassComboBox, engineeringComboBox, experimentalComboBox)
+                .buildHBox();
+    }
+
+
+    private DestroyableHBox createHorizonsShipsThrusterFavourites() {
+        final DestroyableLabel moduleLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ships.favourite.thruster")
+                .build();
+
+        DestroyableCheckBox enhancedCheckBox = CheckBoxBuilder.builder()
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withText("tab.settings.ships.favourite.thruster.enhanced")
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.thruster.enhanced", false))
+                .withSelectedProperty((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.thruster.enhanced", newValue);
+                })
+                .build();
+        DestroyableComboBox<ModuleClass> moduleClassComboBox = ComboBoxBuilder.builder(ModuleClass.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(FXCollections.observableList(List.of(ModuleClass.A, ModuleClass.B, ModuleClass.C, ModuleClass.D, ModuleClass.E)))
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.thruster.class", ModuleClass.E))
+                .withValueChangeListener((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.thruster.class", newValue.name());
+                })
+                .build();
+        List<HorizonsBlueprintType> blueprintTypes = new ArrayList<>(ThrusterBlueprints.BLUEPRINTS.keySet().stream().toList());
+        blueprintTypes.addFirst(HorizonsBlueprintType.NONE);
+        DestroyableComboBox<HorizonsBlueprintType> engineeringComboBox = ComboBoxBuilder.builder(HorizonsBlueprintType.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(FXCollections.observableList(blueprintTypes))
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.thruster.blueprint", HorizonsBlueprintType.NONE))
+                .withValueChangeListener((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.thruster.blueprint", newValue.name());
+                })
+                .build();
+        List<HorizonsBlueprintType> effectTypes = new ArrayList<>(ExperimentalEffectBlueprints.THRUSTERS.keySet().stream().toList());
+        effectTypes.addFirst(HorizonsBlueprintType.NONE);
+        DestroyableComboBox<HorizonsBlueprintType> experimentalComboBox = ComboBoxBuilder.builder(HorizonsBlueprintType.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(FXCollections.observableList(effectTypes))
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.thruster.experimental", HorizonsBlueprintType.NONE))
+                .withValueChangeListener((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.thruster.experimental", newValue.name());
+                })
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(moduleLabel, enhancedCheckBox, moduleClassComboBox, engineeringComboBox, experimentalComboBox)
+                .buildHBox();
+    }
+
+    private DestroyableHBox createHorizonsShipsFrameShiftDriveFavourites() {
+        final DestroyableLabel moduleLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ships.favourite.fsd")
+                .build();
+
+        DestroyableCheckBox preEngineeredCheckBox = CheckBoxBuilder.builder()
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withText("tab.settings.ships.favourite.fsd.preengineered")
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.fsd.preengineered", false))
+                .withSelectedProperty((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.fsd.preengineered", newValue);
+                })
+                .build();
+        DestroyableCheckBox scoCheckBox = CheckBoxBuilder.builder()
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withText("tab.settings.ships.favourite.fsd.sco")
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.fsd.sco", false))
+                .withSelectedProperty((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.fsd.sco", newValue);
+                })
+                .build();
+        DestroyableComboBox<ModuleClass> moduleClassComboBox = ComboBoxBuilder.builder(ModuleClass.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(FXCollections.observableList(List.of(ModuleClass.A, ModuleClass.B, ModuleClass.C, ModuleClass.D, ModuleClass.E)))
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.fsd.class", ModuleClass.E))
+                .withValueChangeListener((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.fsd.class", newValue.name());
+                })
+                .withDisableProperty(preEngineeredCheckBox.selectedProperty())
+                .build();
+        List<HorizonsBlueprintType> blueprintTypes = new ArrayList<>(FSDBlueprints.BLUEPRINTS.keySet().stream().toList());
+        blueprintTypes.addFirst(HorizonsBlueprintType.NONE);
+        DestroyableComboBox<HorizonsBlueprintType> engineeringComboBox = ComboBoxBuilder.builder(HorizonsBlueprintType.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(FXCollections.observableList(blueprintTypes))
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.fsd.blueprint", HorizonsBlueprintType.NONE))
+                .withValueChangeListener((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.fsd.blueprint", newValue.name());
+                })
+                .withDisableProperty(preEngineeredCheckBox.selectedProperty())
+                .build();
+        List<HorizonsBlueprintType> effectTypes = new ArrayList<>(ExperimentalEffectBlueprints.FRAME_SHIFT_DRIVE.keySet().stream().toList());
+        effectTypes.addFirst(HorizonsBlueprintType.NONE);
+        DestroyableComboBox<HorizonsBlueprintType> experimentalComboBox = ComboBoxBuilder.builder(HorizonsBlueprintType.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(FXCollections.observableList(effectTypes))
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.fsd.experimental", HorizonsBlueprintType.NONE))
+                .withValueChangeListener((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.fsd.experimental", newValue.name());
+                })
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(moduleLabel, preEngineeredCheckBox, scoCheckBox, moduleClassComboBox, engineeringComboBox, experimentalComboBox)
+                .buildHBox();
+    }
+
+    private DestroyableHBox createHorizonsShipsLifeSupportFavourites() {
+        final DestroyableLabel moduleLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ships.favourite.lifesupport")
+                .build();
+
+        DestroyableComboBox<ModuleClass> moduleClassComboBox = ComboBoxBuilder.builder(ModuleClass.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(FXCollections.observableList(List.of(ModuleClass.A, ModuleClass.B, ModuleClass.C, ModuleClass.D, ModuleClass.E)))
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.lifesupport.class", ModuleClass.E))
+                .withValueChangeListener((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.lifesupport.class", newValue.name());
+                })
+                .build();
+        List<HorizonsBlueprintType> blueprintTypes = new ArrayList<>(LifeSupportBlueprints.BLUEPRINTS.keySet().stream().toList());
+        blueprintTypes.addFirst(HorizonsBlueprintType.NONE);
+        DestroyableComboBox<HorizonsBlueprintType> engineeringComboBox = ComboBoxBuilder.builder(HorizonsBlueprintType.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(FXCollections.observableList(blueprintTypes))
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.lifesupport.blueprint", HorizonsBlueprintType.NONE))
+                .withValueChangeListener((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.lifesupport.blueprint", newValue.name());
+                })
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(moduleLabel, moduleClassComboBox, engineeringComboBox)
+                .buildHBox();
+    }
+
+    private DestroyableHBox createHorizonsShipsPowerDistributorFavourites() {
+        final DestroyableLabel moduleLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ships.favourite.powerdistributor")
+                .build();
+
+        DestroyableCheckBox guardianCheckBox = CheckBoxBuilder.builder()
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withText("tab.settings.ships.favourite.powerdistributor.guardian")
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.powerdistributor.guardian", false))
+                .withSelectedProperty((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.powerdistributor.guardian", newValue);
+                })
+                .build();
+        DestroyableComboBox<ModuleClass> moduleClassComboBox = ComboBoxBuilder.builder(ModuleClass.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(FXCollections.observableList(List.of(ModuleClass.A, ModuleClass.B, ModuleClass.C, ModuleClass.D, ModuleClass.E)))
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.powerdistributor.class", ModuleClass.E))
+                .withValueChangeListener((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.powerdistributor.class", newValue.name());
+                })
+                .withDisableProperty(guardianCheckBox.selectedProperty())
+                .build();
+        List<HorizonsBlueprintType> blueprintTypes = new ArrayList<>(PowerDistributorBlueprints.BLUEPRINTS.keySet().stream().toList());
+        blueprintTypes.addFirst(HorizonsBlueprintType.NONE);
+        DestroyableComboBox<HorizonsBlueprintType> engineeringComboBox = ComboBoxBuilder.builder(HorizonsBlueprintType.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(FXCollections.observableList(blueprintTypes))
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.powerdistributor.blueprint", HorizonsBlueprintType.NONE))
+                .withValueChangeListener((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.powerdistributor.blueprint", newValue.name());
+                })
+                .withDisableProperty(guardianCheckBox.selectedProperty())
+                .build();
+        List<HorizonsBlueprintType> effectTypes = new ArrayList<>(ExperimentalEffectBlueprints.POWER_DISTRIBUTOR.keySet().stream().toList());
+        effectTypes.addFirst(HorizonsBlueprintType.NONE);
+        DestroyableComboBox<HorizonsBlueprintType> experimentalComboBox = ComboBoxBuilder.builder(HorizonsBlueprintType.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(FXCollections.observableList(effectTypes))
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.powerdistributor.experimental", HorizonsBlueprintType.NONE))
+                .withValueChangeListener((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.powerdistributor.experimental", newValue.name());
+                })
+                .withDisableProperty(guardianCheckBox.selectedProperty())
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(moduleLabel, guardianCheckBox, moduleClassComboBox, engineeringComboBox, experimentalComboBox)
+                .buildHBox();
+    }
+
+    private DestroyableHBox createHorizonsShipsSensorsFavourites() {
+        final DestroyableLabel moduleLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ships.favourite.sensors")
+                .build();
+
+        DestroyableComboBox<ModuleClass> moduleClassComboBox = ComboBoxBuilder.builder(ModuleClass.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(FXCollections.observableList(List.of(ModuleClass.A, ModuleClass.B, ModuleClass.C, ModuleClass.D, ModuleClass.E)))
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.sensors.class", ModuleClass.E))
+                .withValueChangeListener((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.sensors.class", newValue.name());
+                })
+                .build();
+        List<HorizonsBlueprintType> blueprintTypes = new ArrayList<>(SensorBlueprints.BLUEPRINTS.keySet().stream().toList());
+        blueprintTypes.addFirst(HorizonsBlueprintType.NONE);
+        DestroyableComboBox<HorizonsBlueprintType> engineeringComboBox = ComboBoxBuilder.builder(HorizonsBlueprintType.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(FXCollections.observableList(blueprintTypes))
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.sensors.blueprint", HorizonsBlueprintType.NONE))
+                .withValueChangeListener((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.sensors.blueprint", newValue.name());
+                })
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(moduleLabel, moduleClassComboBox, engineeringComboBox)
+                .buildHBox();
     }
 
     @Override

@@ -14,13 +14,11 @@ import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
+import nl.jixxed.eliteodysseymaterials.domain.ships.*;
+import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.NotificationService;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.WishlistService;
+import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
@@ -28,6 +26,7 @@ import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import org.controlsfx.control.PopOver;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
@@ -40,6 +39,7 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
     @Getter
     private DestroyableComboBox<ShipConfiguration> shipSelect;
     private DestroyableButton quickCreate;
+    private DestroyableButton quickFavourites;
     private DestroyableMenuButton menuButton;
     private DestroyableMenuButton addAllToWishlist;
     private DestroyableMenuButton addChangedToWishlist;
@@ -100,6 +100,30 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
                 .build();
         this.menuButton.setFocusTraversable(false);
 
+        this.quickFavourites = ButtonBuilder.builder()
+                .withText("tab.ships.quick.favourites")
+                .withOnAction(_ -> {
+                    if (APPLICATION_STATE.getShip() != null) {
+                        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+                            final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
+                            final Optional<ShipConfiguration> selectedShipConfiguration = shipConfigurations.getSelectedShipConfiguration();
+                            selectedShipConfiguration.ifPresent(shipConfiguration -> {
+                                setArmourFavourite();
+                                setPowerPlantFavourite();
+                                setThrustersFavourite();
+                                setFrameShiftDriveFavourite();
+                                setLifeSupportFavourite();
+                                setPowerDistributorFavourite();
+                                setSensorFavourite();
+                                ShipMapper.toShipConfiguration(APPLICATION_STATE.getShip(), shipConfiguration, shipConfiguration.getName());
+                                ShipService.saveShipConfigurations(commander, shipConfigurations);
+                                EventService.publish(new HorizonsShipSelectedEvent(shipConfiguration.getUuid()));
+                            });
+                        });
+                    }
+                })
+                .withDisableProperty(this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT))
+                .build();
         final Integer fontSize = FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize();
         applyFontSizingHack(fontSize);
 
@@ -122,8 +146,216 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
                 .withOnMouseClicked(this::showHelp)
                 .withVisibilityProperty(this.shipSelect.getSelectionModel().selectedItemProperty().map(s -> s.getShipType() != null))
                 .build();
-        this.getNodes().addAll(this.shipSelect, this.quickCreate, this.menuButton, this.addAllToWishlist, this.addChangedToWishlist, this.shipsHelp);
+        this.getNodes().addAll(this.shipSelect, this.quickCreate, this.menuButton, this.quickFavourites, this.addAllToWishlist, this.addChangedToWishlist, this.shipsHelp);
         APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
+    }
+
+    private static void setArmourFavourite() {
+        APPLICATION_STATE.getShip().getCoreSlots().stream().filter(slot -> SlotType.CORE_ARMOUR.equals(slot.getSlotType())).findFirst().ifPresent(slot -> {
+            List<ShipModule> armours = ShipModule.getModules(SlotType.CORE_ARMOUR);
+            armours.stream()
+                    .map(Armour.class::cast)
+                    .filter(armour -> armour.getShipType().equals(APPLICATION_STATE.getShip().getShipType()))
+                    .filter(armour -> armour.getArmourType().equals(UserPreferencesService.getPreference("ships.favourite.armour.module", ArmourType.LIGHTWEIGHT_ALLOY)))
+                    .findFirst().ifPresent(armour -> {
+                        slot.setShipModule(armour.Clone());
+                    });
+            HorizonsBlueprintType blueprint = UserPreferencesService.getPreference("ships.favourite.armour.blueprint", HorizonsBlueprintType.NONE);
+            if (!blueprint.equals(HorizonsBlueprintType.NONE)) {
+                slot.getShipModule().applyModification(blueprint, HorizonsBlueprintGrade.GRADE_5, BigDecimal.ONE);
+            } else {
+                slot.getShipModule().removeModifications();
+            }
+            HorizonsBlueprintType effect = UserPreferencesService.getPreference("ships.favourite.armour.experimental", HorizonsBlueprintType.NONE);
+            if (!effect.equals(HorizonsBlueprintType.NONE)) {
+                slot.getShipModule().applyExperimentalEffect(effect);
+            } else {
+                slot.getShipModule().removeExperimentalEffects();
+            }
+        });
+    }
+
+    private static void setPowerPlantFavourite() {
+        APPLICATION_STATE.getShip().getCoreSlots().stream().filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType())).findFirst().ifPresent(slot -> {
+            List<ShipModule> powerPlants = ShipModule.getModules(SlotType.CORE_POWER_PLANT);
+            if (UserPreferencesService.getPreference("ships.favourite.powerplant.guardian", false)) {
+                powerPlants.stream()
+                        .map(PowerPlant.class::cast)
+                        .filter(module -> module.getOrigin().equals(Origin.GUARDIAN))
+                        .filter(module -> module.getModuleSize().intValue() == slot.getSlotSize())
+                        .findFirst()
+                        .ifPresent(powerPlant -> {
+                            slot.setShipModule(powerPlant.Clone());
+                        });
+            } else {
+                powerPlants.stream()
+                        .map(PowerPlant.class::cast)
+                        .filter(module -> !module.getOrigin().equals(Origin.GUARDIAN))
+                        .filter(module -> module.getModuleSize().intValue() == slot.getSlotSize())
+                        .filter(module -> module.getModuleClass().equals(UserPreferencesService.getPreference("ships.favourite.powerplant.class", ModuleClass.E)))
+                        .findFirst()
+                        .ifPresent(powerPlant -> {
+                            slot.setShipModule(powerPlant.Clone());
+                        });
+                HorizonsBlueprintType blueprint = UserPreferencesService.getPreference("ships.favourite.powerplant.blueprint", HorizonsBlueprintType.NONE);
+                if (!blueprint.equals(HorizonsBlueprintType.NONE)) {
+                    slot.getShipModule().applyModification(blueprint, HorizonsBlueprintGrade.GRADE_5, BigDecimal.ONE);
+                } else {
+                    slot.getShipModule().removeModifications();
+                }
+                HorizonsBlueprintType effect = UserPreferencesService.getPreference("ships.favourite.powerplant.experimental", HorizonsBlueprintType.NONE);
+                if (!effect.equals(HorizonsBlueprintType.NONE)) {
+                    slot.getShipModule().applyExperimentalEffect(effect);
+                } else {
+                    slot.getShipModule().removeExperimentalEffects();
+                }
+            }
+        });
+    }
+
+    private static void setThrustersFavourite() {
+        APPLICATION_STATE.getShip().getCoreSlots().stream().filter(slot -> SlotType.CORE_THRUSTERS.equals(slot.getSlotType())).findFirst().ifPresent(slot -> {
+            List<ShipModule> thrusters = ShipModule.getModules(SlotType.CORE_THRUSTERS);
+            boolean selectEnhanced = UserPreferencesService.getPreference("ships.favourite.thruster.enhanced", false) && (slot.getSlotSize() == 2 || slot.getSlotSize() == 3);
+            thrusters.stream()
+                    .map(Thrusters.class::cast)
+                    .filter(module -> selectEnhanced ? module.getName().equals(HorizonsBlueprintName.ENHANCED_THRUSTERS) : module.getName().equals(HorizonsBlueprintName.THRUSTERS))
+                    .filter(module -> module.getModuleSize().intValue() == slot.getSlotSize())
+                    .filter(module -> selectEnhanced || module.getModuleClass().equals(UserPreferencesService.getPreference("ships.favourite.thruster.class", ModuleClass.E)))
+                    .findFirst()
+                    .ifPresent(thruster -> {
+                        slot.setShipModule(thruster.Clone());
+                    });
+            HorizonsBlueprintType blueprint = UserPreferencesService.getPreference("ships.favourite.thruster.blueprint", HorizonsBlueprintType.NONE);
+            if (!blueprint.equals(HorizonsBlueprintType.NONE)) {
+                slot.getShipModule().applyModification(blueprint, HorizonsBlueprintGrade.GRADE_5, BigDecimal.ONE);
+            } else {
+                slot.getShipModule().removeModifications();
+            }
+            HorizonsBlueprintType effect = UserPreferencesService.getPreference("ships.favourite.thruster.experimental", HorizonsBlueprintType.NONE);
+            if (!effect.equals(HorizonsBlueprintType.NONE)) {
+                slot.getShipModule().applyExperimentalEffect(effect);
+            } else {
+                slot.getShipModule().removeExperimentalEffects();
+            }
+        });
+    }
+
+    private static void setFrameShiftDriveFavourite() {
+        APPLICATION_STATE.getShip().getCoreSlots().stream().filter(slot -> SlotType.CORE_FRAME_SHIFT_DRIVE.equals(slot.getSlotType())).findFirst().ifPresent(slot -> {
+            boolean selectSCO = UserPreferencesService.getPreference("ships.favourite.fsd.sco", false);
+            boolean selectPreengineered = UserPreferencesService.getPreference("ships.favourite.fsd.preengineered", false);
+
+            ShipModule.getModules(SlotType.CORE_FRAME_SHIFT_DRIVE).stream()
+                    .map(FrameShiftDrive.class::cast)
+                    .filter(module -> !module.isCGExclusive())
+                    .filter(module -> module.getModuleSize().intValue() == slot.getSlotSize())
+                    .sorted(Comparator.comparing(ShipModule::getName))
+                    .filter(module -> selectPreengineered
+                            ? module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_PRE) || module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE_PRE)
+                            : module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE) || module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE))
+                    .filter(module -> selectSCO
+                            ? module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE) || module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE_PRE)
+                            : module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE) || module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_PRE) || module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE_PRE))
+                    .filter(module -> selectPreengineered || module.getModuleClass().equals(UserPreferencesService.getPreference("ships.favourite.fsd.class", ModuleClass.E)))
+                    .findFirst()
+                    .ifPresent(frameShiftDrive -> {
+                        slot.setShipModule(frameShiftDrive.Clone());
+                    });
+
+            if (!slot.getShipModule().isPreEngineered()) {
+                HorizonsBlueprintType blueprint = UserPreferencesService.getPreference("ships.favourite.fsd.blueprint", HorizonsBlueprintType.NONE);
+                if (!blueprint.equals(HorizonsBlueprintType.NONE)) {
+                    slot.getShipModule().applyModification(blueprint, HorizonsBlueprintGrade.GRADE_5, BigDecimal.ONE);
+                } else {
+                    slot.getShipModule().removeModifications();
+                }
+            }
+            HorizonsBlueprintType effect = UserPreferencesService.getPreference("ships.favourite.fsd.experimental", HorizonsBlueprintType.NONE);
+            if (!effect.equals(HorizonsBlueprintType.NONE)) {
+                slot.getShipModule().applyExperimentalEffect(effect);
+            } else {
+                slot.getShipModule().removeExperimentalEffects();
+            }
+        });
+    }
+
+    private static void setLifeSupportFavourite() {
+        APPLICATION_STATE.getShip().getCoreSlots().stream().filter(slot -> SlotType.CORE_LIFE_SUPPORT.equals(slot.getSlotType())).findFirst().ifPresent(slot -> {
+            List<ShipModule> lifesupports = ShipModule.getModules(SlotType.CORE_LIFE_SUPPORT);
+            lifesupports.stream()
+                    .map(LifeSupport.class::cast)
+                    .filter(module -> module.getModuleSize().intValue() == slot.getSlotSize())
+                    .filter(module -> module.getModuleClass().equals(UserPreferencesService.getPreference("ships.favourite.lifesupport.class", ModuleClass.E)))
+                    .findFirst()
+                    .ifPresent(lifesupport -> {
+                        slot.setShipModule(lifesupport.Clone());
+                    });
+            HorizonsBlueprintType blueprint = UserPreferencesService.getPreference("ships.favourite.lifesupport.blueprint", HorizonsBlueprintType.NONE);
+            if (!blueprint.equals(HorizonsBlueprintType.NONE)) {
+                slot.getShipModule().applyModification(blueprint, HorizonsBlueprintGrade.GRADE_5, BigDecimal.ONE);
+            } else {
+                slot.getShipModule().removeModifications();
+            }
+        });
+    }
+
+    private static void setPowerDistributorFavourite() {
+        APPLICATION_STATE.getShip().getCoreSlots().stream().filter(slot -> SlotType.CORE_POWER_DISTRIBUTION.equals(slot.getSlotType())).findFirst().ifPresent(slot -> {
+            List<ShipModule> powerDistributors = ShipModule.getModules(SlotType.CORE_POWER_DISTRIBUTION);
+            if (UserPreferencesService.getPreference("ships.favourite.powerdistributor.guardian", false)) {
+                powerDistributors.stream()
+                        .map(PowerDistributor.class::cast)
+                        .filter(module -> module.getOrigin().equals(Origin.GUARDIAN))
+                        .filter(module -> module.getModuleSize().intValue() == slot.getSlotSize())
+                        .findFirst()
+                        .ifPresent(powerDistributor -> {
+                            slot.setShipModule(powerDistributor.Clone());
+                        });
+            } else {
+                powerDistributors.stream()
+                        .map(PowerDistributor.class::cast)
+                        .filter(module -> !module.getOrigin().equals(Origin.GUARDIAN))
+                        .filter(module -> module.getModuleSize().intValue() == slot.getSlotSize())
+                        .filter(module -> module.getModuleClass().equals(UserPreferencesService.getPreference("ships.favourite.powerdistributor.class", ModuleClass.E)))
+                        .findFirst()
+                        .ifPresent(powerDistributor -> {
+                            slot.setShipModule(powerDistributor.Clone());
+                        });
+                HorizonsBlueprintType blueprint = UserPreferencesService.getPreference("ships.favourite.powerdistributor.blueprint", HorizonsBlueprintType.NONE);
+                if (!blueprint.equals(HorizonsBlueprintType.NONE)) {
+                    slot.getShipModule().applyModification(blueprint, HorizonsBlueprintGrade.GRADE_5, BigDecimal.ONE);
+                } else {
+                    slot.getShipModule().removeModifications();
+                }
+                HorizonsBlueprintType effect = UserPreferencesService.getPreference("ships.favourite.powerdistributor.experimental", HorizonsBlueprintType.NONE);
+                if (!effect.equals(HorizonsBlueprintType.NONE)) {
+                    slot.getShipModule().applyExperimentalEffect(effect);
+                } else {
+                    slot.getShipModule().removeExperimentalEffects();
+                }
+            }
+        });
+    }
+
+    private static void setSensorFavourite() {
+        APPLICATION_STATE.getShip().getCoreSlots().stream().filter(slot -> SlotType.CORE_SENSORS.equals(slot.getSlotType())).findFirst().ifPresent(slot -> {
+            List<ShipModule> sensors = ShipModule.getModules(SlotType.CORE_SENSORS);
+            sensors.stream()
+                    .map(Sensors.class::cast)
+                    .filter(module -> module.getModuleSize().intValue() == slot.getSlotSize())
+                    .filter(module -> module.getModuleClass().equals(UserPreferencesService.getPreference("ships.favourite.sensors.class", ModuleClass.E)))
+                    .findFirst()
+                    .ifPresent(sensor -> {
+                        slot.setShipModule(sensor.Clone());
+                    });
+            HorizonsBlueprintType blueprint = UserPreferencesService.getPreference("ships.favourite.sensors.blueprint", HorizonsBlueprintType.NONE);
+            if (!blueprint.equals(HorizonsBlueprintType.NONE)) {
+                slot.getShipModule().applyModification(blueprint, HorizonsBlueprintGrade.GRADE_5, BigDecimal.ONE);
+            } else {
+                slot.getShipModule().removeModifications();
+            }
+        });
     }
 
     private void selectShipConfiguration(ShipConfiguration newValue) {
@@ -235,7 +467,8 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
                 });
     }
 
-    private void showInputPopOver(String buttonLocaleKey, String textfieldPromptLocaleKey, BiConsumer<Commander, String> inputHandler) {
+    private void showInputPopOver(String buttonLocaleKey, String
+            textfieldPromptLocaleKey, BiConsumer<Commander, String> inputHandler) {
         final DestroyableTextField textField = TextFieldBuilder.builder()
                 .withStyleClasses("root", "ships-newname")
                 .withPromptTextProperty(LocaleService.getStringBinding(textfieldPromptLocaleKey))
@@ -420,7 +653,8 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
         return wishlistBlueprints;
     }
 
-    private static List<HorizonsWishlistBlueprint> getExperimentalEffectBlueprints(boolean all, ShipConfigurationSlot slot, HorizonsBlueprintName name) {
+    private static List<HorizonsWishlistBlueprint> getExperimentalEffectBlueprints(
+            boolean all, ShipConfigurationSlot slot, HorizonsBlueprintName name) {
         return slot.getExperimentalEffect().stream()
                 .map(effect -> {
                     if (all || didNotHaveModule(slot) || hasDifferentExperimentalEffect(slot, effect) || hasDifferentModification(slot)) {
@@ -442,7 +676,8 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
         return hasDifferentModification(slot, slot.getFirstModification());
     }
 
-    private static boolean hasDifferentModification(ShipConfigurationSlot slot, ShipConfigurationModification modification) {
+    private static boolean hasDifferentModification(ShipConfigurationSlot slot, ShipConfigurationModification
+            modification) {
         ShipConfigurationOldModule oldModule = slot.getOldModule();
         ShipConfigurationModification oldModification = oldModule != null ? oldModule.getFirstModification() : null;
 
@@ -462,7 +697,8 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
         return !Objects.equals(slot.getSynthesis(), slot.getOldModule().getSynthesis());
     }
 
-    private static boolean hasDifferentExperimentalEffect(ShipConfigurationSlot slot, ShipConfigurationExperimentalEffect effect) {
+    private static boolean hasDifferentExperimentalEffect(ShipConfigurationSlot
+                                                                  slot, ShipConfigurationExperimentalEffect effect) {
         ShipConfigurationOldModule oldModule = slot.getOldModule();
         ShipConfigurationExperimentalEffect oldEffect = oldModule != null ? oldModule.getFirstExperimentalEffect() : null;
 
@@ -472,7 +708,8 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
         return !oldEffect.getType().equals(effect.getType());
     }
 
-    private static List<HorizonsWishlistBlueprint> getModuleBlueprints(boolean all, ShipConfigurationSlot slot, HorizonsBlueprintName name) {
+    private static List<HorizonsWishlistBlueprint> getModuleBlueprints(boolean all, ShipConfigurationSlot
+            slot, HorizonsBlueprintName name) {
         final List<HorizonsWishlistBlueprint> wishlistBlueprints = new ArrayList<>();
         slot.getModification().forEach(modification -> {
             ShipModule module = ShipModule.getModule(slot.getId());
@@ -555,7 +792,9 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
     }
 
 
-    private static Map<HorizonsBlueprintGrade, Double> getPercentagesToComplete(HorizonsBlueprintName name, ShipConfigurationModification modification, HorizonsBlueprintGrade oldGrade, HorizonsBlueprintGrade grade, ShipConfigurationModification oldModification) {
+    private static Map<HorizonsBlueprintGrade, Double> getPercentagesToComplete(HorizonsBlueprintName
+                                                                                        name, ShipConfigurationModification modification, HorizonsBlueprintGrade oldGrade, HorizonsBlueprintGrade
+                                                                                        grade, ShipConfigurationModification oldModification) {
         return HorizonsBlueprintConstants.getBlueprintGrades(name, modification.getType())
                 .stream()
                 .filter(gradeToAdd -> gradeToAdd.getGrade() >= oldGrade.getGrade() && gradeToAdd.getGrade() <= grade.getGrade())
@@ -570,7 +809,9 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    private static double getPercentageToComplete(ShipConfigurationModification modification, HorizonsBlueprintGrade horizonsBlueprintGrade, HorizonsBlueprintGrade oldGrade, HorizonsBlueprintGrade grade, ShipConfigurationModification oldModification) {
+    private static double getPercentageToComplete(ShipConfigurationModification
+                                                          modification, HorizonsBlueprintGrade horizonsBlueprintGrade, HorizonsBlueprintGrade
+                                                          oldGrade, HorizonsBlueprintGrade grade, ShipConfigurationModification oldModification) {
         double percentageToComplete;
         if (horizonsBlueprintGrade.equals(oldGrade) && horizonsBlueprintGrade.equals(grade)) {
             percentageToComplete = modification.getPercentComplete().doubleValue() - oldModification.getPercentComplete().doubleValue();
@@ -584,7 +825,8 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
         return percentageToComplete;
     }
 
-    private static boolean hasHigherCompletion(ShipConfigurationModification modification, ShipConfigurationModification oldModification) {
+    private static boolean hasHigherCompletion(ShipConfigurationModification
+                                                       modification, ShipConfigurationModification oldModification) {
         return oldModification.getPercentComplete().doubleValue() <= modification.getPercentComplete().doubleValue();
     }
 
@@ -601,7 +843,8 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
     }
 
     @SuppressWarnings("java:S1640")
-    private static Map<HorizonsBlueprintGrade, Double> getPercentagesUpTo(ShipConfigurationModification modification, HorizonsBlueprintName name, HorizonsBlueprintGrade grade) {
+    private static Map<HorizonsBlueprintGrade, Double> getPercentagesUpTo(ShipConfigurationModification
+                                                                                  modification, HorizonsBlueprintName name, HorizonsBlueprintGrade grade) {
         final Map<HorizonsBlueprintGrade, Double> gradePercentageToComplete = new HashMap<>();
 
         final Set<HorizonsBlueprintGrade> blueprintGrades = HorizonsBlueprintConstants.getBlueprintGrades(name, modification.getType())

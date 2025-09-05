@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships;
 
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+
 public enum ArmourType {
     LIGHTWEIGHT_ALLOY,
     REINFORCED_ALLOY,
@@ -9,5 +11,11 @@ public enum ArmourType {
 
     public String getLocalizationKey() {
         return "ships.module.name.armour." + this.name().toLowerCase();
+    }
+
+
+    @Override
+    public String toString() {
+        return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
     }
 }
