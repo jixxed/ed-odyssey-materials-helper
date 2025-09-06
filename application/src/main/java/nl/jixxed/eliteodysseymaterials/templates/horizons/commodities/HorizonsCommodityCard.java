@@ -173,7 +173,7 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
                 .withNodes(leftHBox, new GrowingRegion(), rightHBox)
                 .buildHBox();
         DestroyableVBox content = BoxBuilder.builder()
-                .withStyleClass("content")
+                .withStyleClass("card-content")
                 .withNodes(firstLine, new GrowingRegion(), secondLine).buildVBox();
         if (this.commodity instanceof RareCommodity) {
             DestroyableResizableImageView rareImage = ResizableImageViewBuilder.builder()
@@ -190,7 +190,7 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
         StackPane.setAlignment(market, Pos.BOTTOM_CENTER);
         updateStyle();
         this.setOnMouseEntered(event -> log.info("Mouse entered"));
-        MaterialService.addMaterialInfoPopOver(this, this.commodity, false);
+        MaterialService.addMaterialInfoPopOver(this, this.commodity, false, () -> 1);
         update();
     }
 

@@ -81,6 +81,7 @@ tasks.register("generateSecrets")  {
             sentry.dsn=${System.getenv("SENTRY_DSN") ?: 'missing'}
             broker.host=${System.getenv("BROKER_HOST") ?: 'localhost'}
             ccid=${System.getenv("CCID") ?: 'aef4566a-2c1b-4d0f-8e3a-5c6f7d8e9a0c'}
+            market.services.host=${System.getenv('MARKET_SERVICES_HOST') ?: 'localhost'}
         """.stripIndent().stripLeading().stripTrailing()
     }
 }

@@ -108,8 +108,10 @@ public class CopyableLocation extends DestroyableFlowPane implements Destroyable
         final Double starDistance = starSystem.getDistance(currentLocation.getStarSystem());
         if (starDistance > 0D || distanceFromStar == 0D) {
             this.distance.addBinding(this.distance.textProperty(), LocaleService.getStringBinding("system.copy.distance", Formatters.NUMBER_FORMAT_2.format(starDistance)));
-        } else {
+        } else if (distanceFromStarVariance > 0D) {
             this.distance.addBinding(this.distance.textProperty(), LocaleService.getStringBinding("system.copy.distance.in.system", Formatters.NUMBER_FORMAT_2.format(distanceFromStar), Formatters.NUMBER_FORMAT_2.format(distanceFromStarVariance)));
+        } else {
+            this.distance.addBinding(this.distance.textProperty(), LocaleService.getStringBinding("system.copy.distance.in.system.no.variance", Formatters.NUMBER_FORMAT_2.format(distanceFromStar)));
         }
     }
 

@@ -40,4 +40,5 @@ public sealed interface Commodity extends HorizonsMaterial permits RegularCommod
     }
     CommodityType getCommodityType();
 
+    boolean isPurchasable();
 }

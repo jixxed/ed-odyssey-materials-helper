@@ -344,9 +344,13 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.WingLeave;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal;
     exports nl.jixxed.eliteodysseymaterials.schemas.slef;
+    exports nl.jixxed.eliteodysseymaterials.schemas.market.save.request;
+    exports nl.jixxed.eliteodysseymaterials.schemas.market.save.response;
+    exports nl.jixxed.eliteodysseymaterials.schemas.market.search;
     exports nl.jixxed.eliteodysseymaterials.service.ar;
     exports nl.jixxed.eliteodysseymaterials.service.event;
     exports nl.jixxed.eliteodysseymaterials.service.ships;
+    exports nl.jixxed.eliteodysseymaterials.service.market;
     exports nl.jixxed.eliteodysseymaterials.service;
     exports nl.jixxed.eliteodysseymaterials.templates.components.edfont;
     exports nl.jixxed.eliteodysseymaterials.templates.components.segmentbar;
@@ -356,11 +360,11 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.templates.dialog;
     exports nl.jixxed.eliteodysseymaterials.templates.generic.menu;
     exports nl.jixxed.eliteodysseymaterials.templates.generic;
+    exports nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons.commodities;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons.engineers;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons.materials;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
-    exports nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons;
     exports nl.jixxed.eliteodysseymaterials.templates.odyssey.engineers;
     exports nl.jixxed.eliteodysseymaterials.templates.odyssey.loadout;
@@ -675,7 +679,11 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.WingJoin to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.WingLeave to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.slef to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.market.save.request to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.market.save.response to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.market.search to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.service.message to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.templates to java.desktop, javafx.fxml, javafx.graphics, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.components to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.components.segmentbar to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.components.slider to javafx.fxml, org.controlsfx.controls;
@@ -696,5 +704,4 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.templates.overlay.ar to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.settings to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.settings.sections to javafx.fxml, org.controlsfx.controls;
-    opens nl.jixxed.eliteodysseymaterials.templates to java.desktop, javafx.fxml, javafx.graphics, org.controlsfx.controls;
 }

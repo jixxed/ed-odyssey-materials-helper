@@ -144,7 +144,7 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
     }
 
     protected void installPopOver() {
-        MaterialService.addMaterialInfoPopOver(this, this.horizonsMaterial, false);
+        MaterialService.addMaterialInfoPopOver(this, this.horizonsMaterial, false, () -> this.maxRequired);
     }
 
     @SuppressWarnings("java:S6205")

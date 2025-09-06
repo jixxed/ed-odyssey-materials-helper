@@ -1,0 +1,151 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Market Save Request",
+  "type": "object",
+  "properties": {
+    "filters": {
+      "type": "object",
+      "properties": {
+        "primary_economy": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "value"
+          ]
+        },
+        "large_pads": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "comparison": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "comparison"
+          ]
+        },
+        "distance": {
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "string"
+            },
+            "max": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "min",
+            "max"
+          ]
+        },
+        "market": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "supply": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    }
+                  },
+                  "comparison": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value",
+                  "comparison"
+                ]
+              }
+            },
+            "required": [
+              "name",
+              "supply"
+            ]
+          }
+        }
+      },
+      "required": [
+        "primary_economy",
+        "distance",
+        "market"
+      ]
+    },
+    "sort": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "distance": {
+            "type": "object",
+            "properties": {
+              "direction": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "direction"
+            ]
+          }
+        },
+        "required": [
+          "distance"
+        ]
+      }
+    },
+    "size": {
+      "type": "number"
+    },
+    "page": {
+      "type": "number"
+    },
+    "reference_coords": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "z": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "z"
+      ]
+    }
+  },
+  "required": [
+    "filters",
+    "sort",
+    "size",
+    "page",
+    "reference_coords"
+  ]
+}

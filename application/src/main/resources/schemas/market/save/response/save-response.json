@@ -1,0 +1,130 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Market Save Response",
+  "type": "object",
+  "properties": {
+    "search": {
+      "type": "object",
+      "properties": {
+        "filters": {
+          "type": "object",
+          "properties": {
+            "distance": {
+              "type": "object",
+              "properties": {
+                "max": {
+                  "type": "string"
+                },
+                "min": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "max",
+                "min"
+              ]
+            },
+            "market": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "supply": {
+                    "type": "object",
+                    "properties": {
+                      "comparison": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "array",
+                        "items": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "required": [
+                      "comparison",
+                      "value"
+                    ]
+                  }
+                },
+                "required": [
+                  "name",
+                  "supply"
+                ]
+              }
+            }
+          },
+          "required": [
+            "distance",
+            "market"
+          ]
+        },
+        "page": {
+          "type": "number"
+        },
+        "reference_coords": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ]
+        },
+        "size": {
+          "type": "number"
+        },
+        "sort": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "distance": {
+                "type": "object",
+                "properties": {
+                  "direction": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "direction"
+                ]
+              }
+            },
+            "required": [
+              "distance"
+            ]
+          }
+        }
+      },
+      "required": [
+        "filters",
+        "page",
+        "reference_coords",
+        "size",
+        "sort"
+      ]
+    },
+    "search_reference": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "search",
+    "search_reference"
+  ]
+}

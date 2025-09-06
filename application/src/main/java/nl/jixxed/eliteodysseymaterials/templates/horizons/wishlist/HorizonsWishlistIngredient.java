@@ -169,7 +169,7 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
     }
 
     protected void installPopOver() {
-        MaterialService.addMaterialInfoPopOver(this, this.getHorizonsMaterial(), true);
+        MaterialService.addMaterialInfoPopOver(this, this.getHorizonsMaterial(), true, () -> this.maximum);
     }
 
     @SuppressWarnings("java:S2177")

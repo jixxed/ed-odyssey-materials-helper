@@ -57,6 +57,7 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
     private DestroyableLabel commodityCategoryLabel;
 
     private ColonisationSearch currentSearch = new ColonisationSearch("", HorizonsColonisationSort.ALPHABETICAL, HorizonsColonisationShow.ALL);
+    private int toBuy;
 
     public BillOfMaterialsEntry(ColonisationItem colonisationItem, Commodity commodity, ConstructionProgress progress) {
         final HorizonsColonisationSort materialSort = HorizonsColonisationSort.valueOf(PreferencesService.getPreference("search.colonisation.sort", "ALPHABETICAL"));
@@ -196,7 +197,8 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
                 .withNodes(title, values, values2, values3)
                 .buildVBox();
         this.getNodes().addAll(content, progressbar);
-        MaterialService.addMaterialInfoPopOver(this, this.commodity, false);
+        toBuy = Math.max(0, remaining - availableShip - availableFleetCarrier);
+        MaterialService.addMaterialInfoPopOver(this, this.commodity, false, () -> toBuy);
         update();
     }
 //
@@ -270,6 +272,8 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
         deliveredLabel.setText(Formatters.NUMBER_FORMAT_0.format(progress.provided()));
         requiredLabel.setText(Formatters.NUMBER_FORMAT_0.format(progress.required()));
         updateStyle();
+
+        toBuy = Math.max(0, remaining - availableShip - availableFleetCarrier);
     }
 
     private static String getCargoString(int quantity) {

@@ -1,6 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.enums;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+
 @Getter
 @RequiredArgsConstructor
 public enum RegularCommodity implements Commodity {
@@ -9,7 +11,7 @@ public enum RegularCommodity implements Commodity {
     AGRICULTURALMEDICINES(CommodityType.MEDICINES),
     AGRONOMICTREATMENT(CommodityType.CHEMICALS),
     AIRELICS(CommodityType.SALVAGE),
-    ALEXANDRITE(CommodityType.MINERALS),
+    ALEXANDRITE(CommodityType.MINERALS, false),
     ALGAE(CommodityType.FOODS),
     ALUMINIUM(CommodityType.METALS),
     ANCIENTCASKET(CommodityType.SALVAGE),
@@ -26,7 +28,7 @@ public enum RegularCommodity implements Commodity {
     ANTIQUEJEWELLERY(CommodityType.SALVAGE),
     ANTIQUITIES(CommodityType.SALVAGE),
     AQUAPONICSYSTEMS(CommodityType.TECHNOLOGY),
-    ARTICULATIONMOTORS(CommodityType.MACHINERY),
+    ARTICULATIONMOTORS(CommodityType.MACHINERY, false),
     ASSAULTPLANS(CommodityType.SALVAGE),
     ATMOSPHERICEXTRACTORS(CommodityType.MACHINERY),
     AUTOFABRICATORS(CommodityType.TECHNOLOGY),
@@ -35,17 +37,17 @@ public enum RegularCommodity implements Commodity {
     BATTLEWEAPONS(CommodityType.WEAPONS),
     BAUXITE(CommodityType.MINERALS),
     BEER(CommodityType.LEGAL_DRUGS),
-    BENITOITE(CommodityType.MINERALS),
+    BENITOITE(CommodityType.MINERALS, false),
     BERTRANDITE(CommodityType.MINERALS),
     BERYLLIUM(CommodityType.METALS),
     BIOREDUCINGLICHEN(CommodityType.TECHNOLOGY),
     BIOWASTE(CommodityType.WASTE),
     BISMUTH(CommodityType.METALS),
-    BOOTLEGLIQUOR(CommodityType.LEGAL_DRUGS),
-    BROMELLITE(CommodityType.MINERALS),
+    BOOTLEGLIQUOR(CommodityType.LEGAL_DRUGS, false),
+    BROMELLITE(CommodityType.MINERALS, false),
     BUILDINGFABRICATORS(CommodityType.MACHINERY),
     CERAMICCOMPOSITES(CommodityType.INDUSTRIAL_MATERIALS),
-    CHEMICALWASTE(CommodityType.WASTE),
+    CHEMICALWASTE(CommodityType.WASTE, false),
     CLOTHING(CommodityType.CONSUMER_ITEMS),
     CMMCOMPOSITE(CommodityType.INDUSTRIAL_MATERIALS),
     COBALT(CommodityType.METALS),
@@ -85,22 +87,22 @@ public enum RegularCommodity implements Commodity {
     GOLD(CommodityType.METALS),
     GOSLARITE(CommodityType.MINERALS),
     GRAIN(CommodityType.FOODS),
-    GRANDIDIERITE(CommodityType.MINERALS),
+    GRANDIDIERITE(CommodityType.MINERALS, false),
     HAEMATITE(CommodityType.MINERALS),
-    HAFNIUM178(CommodityType.METALS),
+    HAFNIUM178(CommodityType.METALS, false),
     HAZARDOUSENVIRONMENTSUITS(CommodityType.TECHNOLOGY),
     HEATSINKINTERLINK(CommodityType.MACHINERY),
     HELIOSTATICFURNACES(CommodityType.MACHINERY),
     HNSHOCKMOUNT(CommodityType.MACHINERY),
     HOSTAGE(CommodityType.SALVAGE),
     HYDROGENFUEL(CommodityType.CHEMICALS),
-    HYDROGENPEROXIDE(CommodityType.CHEMICALS),
+    HYDROGENPEROXIDE(CommodityType.CHEMICALS, false),
     IMPERIALSLAVES(CommodityType.SLAVERY),
     INDITE(CommodityType.MINERALS),
     INDIUM(CommodityType.METALS),
     INSULATINGMEMBRANE(CommodityType.INDUSTRIAL_MATERIALS),
     IONDISTRIBUTOR(CommodityType.MACHINERY),
-    JADEITE(CommodityType.MINERALS),
+    JADEITE(CommodityType.MINERALS, false),
     LANDMINES(CommodityType.WEAPONS),
     LANTHANUM(CommodityType.METALS),
     LARGEEXPLORATIONDATACASH(CommodityType.SALVAGE),
@@ -109,8 +111,8 @@ public enum RegularCommodity implements Commodity {
     LIQUIDOXYGEN(CommodityType.CHEMICALS),
     LIQUOR(CommodityType.LEGAL_DRUGS),
     LITHIUM(CommodityType.METALS),
-    LITHIUMHYDROXIDE(CommodityType.MINERALS),
-    LOWTEMPERATUREDIAMOND(CommodityType.MINERALS),
+    LITHIUMHYDROXIDE(CommodityType.MINERALS, false),
+    LOWTEMPERATUREDIAMOND(CommodityType.MINERALS, false),
     M_TISSUESAMPLE_FLUID(CommodityType.SALVAGE),
     M_TISSUESAMPLE_NERVES(CommodityType.SALVAGE),
     M_TISSUESAMPLE_SOFT(CommodityType.SALVAGE),
@@ -121,43 +123,43 @@ public enum RegularCommodity implements Commodity {
     MARINESUPPLIES(CommodityType.MACHINERY),
     MEDICALDIAGNOSTICEQUIPMENT(CommodityType.TECHNOLOGY),
     METAALLOYS(CommodityType.INDUSTRIAL_MATERIALS),
-    METHANECLATHRATE(CommodityType.MINERALS),
-    METHANOLMONOHYDRATECRYSTALS(CommodityType.MINERALS),
+    METHANECLATHRATE(CommodityType.MINERALS, false),
+    METHANOLMONOHYDRATECRYSTALS(CommodityType.MINERALS, false),
     MICROCONTROLLERS(CommodityType.TECHNOLOGY),
     MILITARYGRADEFABRICS(CommodityType.TEXTILES),
     MILITARYINTELLIGENCE(CommodityType.SALVAGE),
     MINERALEXTRACTORS(CommodityType.MACHINERY),
     MINERALOIL(CommodityType.CHEMICALS),
-    MODULARTERMINALS(CommodityType.MACHINERY),
-    MOISSANITE(CommodityType.MINERALS),
-    MONAZITE(CommodityType.MINERALS),
-    MUSGRAVITE(CommodityType.MINERALS),
+    MODULARTERMINALS(CommodityType.MACHINERY, false),
+    MOISSANITE(CommodityType.MINERALS, false),
+    MONAZITE(CommodityType.MINERALS, false),
+    MUSGRAVITE(CommodityType.MINERALS, false),
     MUTOMIMAGER(CommodityType.TECHNOLOGY),
     MYSTERIOUSIDOL(CommodityType.SALVAGE),
-    NANOBREAKERS(CommodityType.TECHNOLOGY),
+    NANOBREAKERS(CommodityType.TECHNOLOGY, false),
     NATURALFABRICS(CommodityType.TEXTILES),
     NEOFABRICINSULATION(CommodityType.INDUSTRIAL_MATERIALS),
     NERVEAGENTS(CommodityType.CHEMICALS),
     NONLETHALWEAPONS(CommodityType.WEAPONS),
     OCCUPIEDCRYOPOD(CommodityType.SALVAGE),
     ONIONHEADC(CommodityType.LEGAL_DRUGS),
-    OPAL(CommodityType.MINERALS),
-    OSMIUM(CommodityType.METALS),
+    OPAL(CommodityType.MINERALS, false),
+    OSMIUM(CommodityType.METALS, false),
     P_PARTICULATESAMPLE(CommodityType.SALVAGE),
-    PAINITE(CommodityType.MINERALS),
+    PAINITE(CommodityType.MINERALS, false),
     PALLADIUM(CommodityType.METALS),
     PERFORMANCEENHANCERS(CommodityType.MEDICINES),
     PERSONALEFFECTS(CommodityType.SALVAGE),
     PERSONALWEAPONS(CommodityType.WEAPONS),
     PESTICIDES(CommodityType.CHEMICALS),
-    PLATINUM(CommodityType.METALS),
+    PLATINUM(CommodityType.METALS, false),
     POLITICALPRISONER(CommodityType.SALVAGE),
     POLYMERS(CommodityType.INDUSTRIAL_MATERIALS),
     POWERCONVERTER(CommodityType.MACHINERY),
     POWERGENERATORS(CommodityType.MACHINERY),
     POWERGRIDASSEMBLY(CommodityType.MACHINERY),
     POWERTRANSFERCONDUITS(CommodityType.MACHINERY),
-    PRASEODYMIUM(CommodityType.METALS),
+    PRASEODYMIUM(CommodityType.METALS, false),
     PRECIOUSGEMS(CommodityType.SALVAGE),
     PROGENITORCELLS(CommodityType.MEDICINES),
     PROHIBITEDRESEARCHMATERIALS(CommodityType.SALVAGE),
@@ -166,9 +168,9 @@ public enum RegularCommodity implements Commodity {
     REACTIVEARMOUR(CommodityType.WEAPONS),
     REINFORCEDMOUNTINGPLATE(CommodityType.MACHINERY),
     RESONATINGSEPARATORS(CommodityType.TECHNOLOGY),
-    RHODPLUMSITE(CommodityType.MINERALS),
+    RHODPLUMSITE(CommodityType.MINERALS, false),
     ROBOTICS(CommodityType.TECHNOLOGY),
-    ROCKFORTHFERTILISER(CommodityType.CHEMICALS),
+    ROCKFORTHFERTILISER(CommodityType.CHEMICALS, false),
     RUTILE(CommodityType.MINERALS),
     S_TISSUESAMPLE_CELLS(CommodityType.SALVAGE),
     S_TISSUESAMPLE_CORE(CommodityType.SALVAGE),
@@ -177,13 +179,13 @@ public enum RegularCommodity implements Commodity {
     S6_TISSUESAMPLE_COENOSARC(CommodityType.SALVAGE),
     S6_TISSUESAMPLE_MESOGLEA(CommodityType.SALVAGE),
     S9_TISSUESAMPLE_SHELL(CommodityType.SALVAGE),
-    SAMARIUM(CommodityType.METALS),
+    SAMARIUM(CommodityType.METALS, false),
     SAP8CORECONTAINER(CommodityType.SALVAGE),
     SCIENTIFICRESEARCH(CommodityType.SALVAGE),
     SCIENTIFICSAMPLES(CommodityType.SALVAGE),
     SCRAP(CommodityType.WASTE),
     SEMICONDUCTORS(CommodityType.INDUSTRIAL_MATERIALS),
-    SERENDIBITE(CommodityType.MINERALS),
+    SERENDIBITE(CommodityType.MINERALS, false),
     SILVER(CommodityType.METALS),
     SKIMERCOMPONENTS(CommodityType.MACHINERY),
     SLAVES(CommodityType.SLAVERY),
@@ -197,11 +199,11 @@ public enum RegularCommodity implements Commodity {
     SYNTHETICFABRICS(CommodityType.TEXTILES),
     SYNTHETICMEAT(CommodityType.FOODS),
     SYNTHETICREAGENTS(CommodityType.CHEMICALS),
-    TAAFFEITE(CommodityType.MINERALS),
+    TAAFFEITE(CommodityType.MINERALS, false),
     TACTICALDATA(CommodityType.SALVAGE),
     TANTALUM(CommodityType.METALS),
     TEA(CommodityType.FOODS),
-    TELEMETRYSUITE(CommodityType.TECHNOLOGY),
+    TELEMETRYSUITE(CommodityType.TECHNOLOGY, false),
     TERRAINENRICHMENTSYSTEMS(CommodityType.TECHNOLOGY),
     THALLIUM(CommodityType.METALS),
     THARGOIDHEART(CommodityType.SALVAGE),
@@ -232,8 +234,8 @@ public enum RegularCommodity implements Commodity {
     TIMECAPSULE(CommodityType.SALVAGE),
     TITANIUM(CommodityType.METALS),
     TOBACCO(CommodityType.LEGAL_DRUGS),
-    TOXICWASTE(CommodityType.WASTE),
-    TRINKETSOFFORTUNE(CommodityType.CONSUMER_ITEMS),
+    TOXICWASTE(CommodityType.WASTE, false),
+    TRINKETSOFFORTUNE(CommodityType.CONSUMER_ITEMS, false),
     TRITIUM(CommodityType.CHEMICALS),
     UNKNOWNARTIFACT(CommodityType.SALVAGE),
     UNKNOWNARTIFACT2(CommodityType.SALVAGE),
@@ -305,12 +307,19 @@ public enum RegularCommodity implements Commodity {
     UNKNOWN(CommodityType.UNKNOWN);
     private final CommodityType commodityType;
     private final GameVersion gameVersion;
+    private final boolean purchasable;
 
     RegularCommodity(final CommodityType commodityType) {
-        this.commodityType = commodityType;
-        this.gameVersion = GameVersion.LEGACY;
+        this(commodityType, GameVersion.LEGACY, true);
     }
 
+    RegularCommodity(final CommodityType commodityType, final GameVersion gameVersion) {
+        this(commodityType, gameVersion, true);
+    }
+
+    RegularCommodity(final CommodityType commodityType, final boolean purchasable) {
+        this(commodityType, GameVersion.LEGACY, purchasable);
+    }
 
 
     public static RegularCommodity forName(final String name) {
@@ -319,6 +328,15 @@ public enum RegularCommodity implements Commodity {
         } catch (final IllegalArgumentException ex) {
             return RegularCommodity.UNKNOWN;
         }
+    }
+
+    @Override
+    public boolean isPurchasable() {
+        return !(
+                commodityType.equals(CommodityType.POWERPLAY)
+                        || commodityType.equals(CommodityType.SALVAGE)
+                        || !purchasable
+        );
     }
 
     @Override

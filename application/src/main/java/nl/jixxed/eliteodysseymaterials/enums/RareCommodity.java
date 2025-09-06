@@ -169,7 +169,14 @@ public enum RareCommodity implements Commodity {
     }
 
     @Override
+    public boolean isPurchasable() {
+        return false;
+    }
+
+    @Override
     public boolean isUnknown() {
         return this == RareCommodity.UNKNOWN;
     }
+
+
 }

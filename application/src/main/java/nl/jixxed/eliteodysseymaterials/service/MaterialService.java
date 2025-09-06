@@ -2,8 +2,11 @@ package nl.jixxed.eliteodysseymaterials.service;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.beans.binding.StringBinding;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 import javafx.util.Pair;
@@ -15,20 +18,24 @@ import nl.jixxed.eliteodysseymaterials.constants.*;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
+import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.helper.POIHelper;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsBlueprintClickEvent;
+import nl.jixxed.eliteodysseymaterials.service.market.MarketAPIService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.CopyableLocation;
 import org.controlsfx.control.PopOver;
 
 import java.math.BigInteger;
 import java.text.NumberFormat;
+import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static nl.jixxed.eliteodysseymaterials.enums.Rarity.UNKNOWN;
@@ -49,9 +56,10 @@ public class MaterialService {
         NUMBER_FORMAT.setMaximumFractionDigits(2);
     }
 
-    private static DestroyableVBox getMaterialPopOverContent(final HorizonsMaterial horizonsMaterial, final boolean wishlist) {
-        final DestroyableVBox vBox = BoxBuilder.builder()
-                .withStyleClass("material-popover-content").buildVBox();
+    private static <E extends Node & DestroyableComponent> DestroyableMaterialContent getMaterialPopOverContent(final HorizonsMaterial horizonsMaterial, final boolean wishlist, Supplier<Integer> requiredAmount, final E hoverableNode) {
+        final DestroyableMaterialContent vBox = new DestroyableMaterialContent();
+        vBox.getStyleClass().add("material-popover-content");
+//                .withStyleClass("material-popover-content").buildVBox();
         if (horizonsMaterial.isUnknown()) {
             vBox.getNodes().add(LabelBuilder.builder()
                     .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_TITLE)
@@ -90,6 +98,9 @@ public class MaterialService {
                 addMineableToTooltip(commodity, vBox);
                 addRefinableToTooltip(commodity, vBox);
                 addFleetCarrierOrdersToTooltip(commodity, vBox);
+                if (requiredAmount.get() > 0 && commodity.isPurchasable()) {
+                    addNearbyMarketsToTooltip(commodity, vBox, requiredAmount, hoverableNode);
+                }
             } else if (horizonsMaterial instanceof Raw) {
                 vBox.getNodes().add(LabelBuilder.builder()
                         .withText(LocaleService.getStringBinding("material.tooltip.type.raw"))
@@ -119,6 +130,84 @@ public class MaterialService {
         return vBox;
 
 
+    }
+
+    private static <E extends Node & DestroyableComponent> void addNearbyMarketsToTooltip(Commodity commodity, DestroyableMaterialContent vBox, Supplier<Integer> requiredAmount, final E hoverableNode) {
+        vBox.addSecondaryAction(() -> {
+            Integer requiredAmountValue = requiredAmount.get();
+            MarketAPIService.getNearbyStations(commodity, requiredAmountValue, LocationService.getCurrentStarSystem(), marketStations -> {
+                Platform.runLater(() -> {
+                    if (marketStations.isEmpty()) {
+                        return;
+                    }
+                    vBox.getNodes().add(LabelBuilder.builder()
+                            .build());
+                    vBox.getNodes().add(LabelBuilder.builder()
+                            .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE)
+                            .withText("horizons.materials.nearest.markets")
+                            .build());
+                    DestroyableLabel supplyHeader = LabelBuilder.builder().withStyleClass("selling-stations-header").withText("horizons.materials.nearest.markets.supply.header").build();
+                    DestroyableLabel ageHeader = LabelBuilder.builder().withStyleClass("selling-stations-header").withText("horizons.materials.nearest.markets.age.header").build();
+                    DestroyableLabel locationsHeader = LabelBuilder.builder().withStyleClass("selling-stations-header").withText("horizons.materials.nearest.markets.location.header").build();
+                    GridPane.setConstraints(supplyHeader, 0, 0);
+                    GridPane.setConstraints(ageHeader, 1, 0);
+                    GridPane.setConstraints(locationsHeader, 2, 0);
+
+
+                    DestroyableGridPane gridpane = GridPaneBuilder.builder()
+                            .withStyleClass("selling-stations")
+                            .withNodes(supplyHeader, ageHeader, locationsHeader)
+                            .build();
+
+                    for (int i = 0; i < marketStations.size(); i++) {
+                        var station = marketStations.get(i);
+                        DestroyableLabel supply = LabelBuilder.builder().withStyleClass("supply").withText("horizons.materials.nearest.markets.supply", Formatters.NUMBER_FORMAT_0.format(station.getSupply()), Formatters.NUMBER_FORMAT_0.format(station.getSellPrice())).build();
+                        DestroyableLabel age = LabelBuilder.builder().withStyleClass("age").withText(convertToAgeString(station.getLastMarketUpdate())).build();
+                        CopyableLocation copyableLocation = new CopyableLocation(station.getStarSystem(), station.getName(), station.getDistanceFromStar(), 0);
+                        GridPane.setConstraints(supply, 0, i + 1);
+                        GridPane.setConstraints(age, 1, i + 1);
+                        GridPane.setConstraints(copyableLocation, 2, i + 1);
+                        gridpane.getNodes().addAll(supply, age, copyableLocation);
+                    }
+                    vBox.getNodes().add(gridpane);
+                });
+            }, () -> POPOVERS.containsKey(hoverableNode));
+        });
+    }
+
+    private static StringBinding convertToAgeString(ZonedDateTime lastMarketUpdate) {
+        if (lastMarketUpdate == null) {
+            return LocaleService.getStringBinding("time.age.seconds", 0);
+        }
+
+        ZonedDateTime now = ZonedDateTime.now(lastMarketUpdate.getZone());
+        java.time.Duration duration = java.time.Duration.between(lastMarketUpdate, now);
+
+        long seconds = duration.getSeconds();
+        String ageKey;
+        long ageValue;
+
+        if (seconds < 60) {
+            ageValue = seconds;
+            ageKey = ageValue == 1 ? "time.age.second" : "time.age.seconds";
+        } else if (seconds < 3600) { // < 1 hour
+            ageValue = seconds / 60;
+            ageKey = ageValue == 1 ? "time.age.minute" : "time.age.minutes";
+        } else if (seconds < 86400) { // < 1 day
+            ageValue = seconds / 3600;
+            ageKey = ageValue == 1 ? "time.age.hour" : "time.age.hours";
+        } else if (seconds < 2592000) { // < ~30 days
+            ageValue = seconds / 86400;
+            ageKey = ageValue == 1 ? "time.age.day" : "time.age.days";
+        } else if (seconds < 31536000) { // < ~12 months
+            ageValue = seconds / 2592000;
+            ageKey = ageValue == 1 ? "time.age.month" : "time.age.months";
+        } else {
+            ageValue = seconds / 31536000;
+            ageKey = ageValue == 1 ? "time.age.year" : "time.age.years";
+        }
+
+        return LocaleService.getStringBinding(ageKey, ageValue);
     }
 
     private static void addClosestTraderToTooltip(HorizonsMaterial horizonsMaterial, DestroyableVBox vBox) {
@@ -310,9 +399,9 @@ public class MaterialService {
         }
     }
 
-    private static DestroyableVBox getMaterialPopOverContent(final OdysseyMaterial odysseyMaterial) {
-        final DestroyableVBox vBox = BoxBuilder.builder()
-                .withStyleClass("material-popover-content").buildVBox();
+    private static DestroyableMaterialContent getMaterialPopOverContent(final OdysseyMaterial odysseyMaterial) {
+        final DestroyableMaterialContent vBox = new DestroyableMaterialContent();
+        vBox.getStyleClass().add("material-popover-content");
         if (odysseyMaterial.isUnknown()) {
             vBox.getNodes().add(LabelBuilder.builder()
                     .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_TITLE)
@@ -364,8 +453,11 @@ public class MaterialService {
         }
     }
 
-
     public static <E extends Node & DestroyableComponent> void addMaterialInfoPopOver(final E hoverableNode, final Material material, final boolean wishlist) {
+        addMaterialInfoPopOver(hoverableNode, material, wishlist, () -> 0);
+    }
+
+    public static <E extends Node & DestroyableComponent> void addMaterialInfoPopOver(final E hoverableNode, final Material material, final boolean wishlist, Supplier<Integer> requiredAmount) {
         hoverableNode.addEventBinding(hoverableNode.onMouseEnteredProperty(), mouseEvent -> {
             if (POPOVERS.containsKey(hoverableNode)) {
                 return;
@@ -377,10 +469,12 @@ public class MaterialService {
                 final AtomicReference<DestroyableVBox> contentNode = new AtomicReference<>();
                 timelineShow.getKeyFrames().add(new KeyFrame(Duration.millis(500)));
                 timelineShow.setOnFinished(_ -> {
-                    contentNode.set(switch (material) {
-                        case HorizonsMaterial horizonsMaterial -> getMaterialPopOverContent(horizonsMaterial, wishlist);
+                    DestroyableMaterialContent content = switch (material) {
+                        case HorizonsMaterial horizonsMaterial ->
+                                getMaterialPopOverContent(horizonsMaterial, wishlist, requiredAmount, hoverableNode);
                         case OdysseyMaterial odysseyMaterial -> getMaterialPopOverContent(odysseyMaterial);
-                    });
+                    };
+                    contentNode.set(content);
                     contentNode.get().getStyleClass().add("material-popover");
                     if (!POPOVERS.containsKey(hoverableNode) && (hoverableNode.isHover() || contentNode.get().isHover())) {
                         try {
@@ -396,7 +490,7 @@ public class MaterialService {
                                     .withDestroyOnHide(true)
                                     .build();
                             POPOVERS.put(hoverableNode, popOver);
-
+                            content.triggerSecondaryActions();
                             final Rectangle2D currentScreen = screen.getBounds();
                             final double mouseXOnScreen = mouseEvent.getScreenX() - currentScreen.getMinX();
                             final double mouseYOnScreen = mouseEvent.getScreenY() - currentScreen.getMinY();

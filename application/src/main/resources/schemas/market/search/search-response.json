@@ -1,0 +1,457 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Market Search Response",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "number"
+    },
+    "from": {
+      "type": "number"
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "controlling_minor_faction_state": {
+            "type": "string"
+          },
+          "carrier_docking_access": {
+            "type": "string"
+          },
+          "carrier_name": {
+            "type": "string"
+          },
+          "controlling_minor_faction": {
+            "type": "string"
+          },
+          "distance": {
+            "type": "number"
+          },
+          "distance_to_arrival": {
+            "type": "number"
+          },
+          "economies": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "share": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "name",
+                "share"
+              ]
+            }
+          },
+          "export_commodities": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name"
+              ]
+            }
+          },
+          "government": {
+            "type": "string"
+          },
+          "has_large_pad": {
+            "type": "boolean"
+          },
+          "has_market": {
+            "type": "boolean"
+          },
+          "has_outfitting": {
+            "type": "boolean"
+          },
+          "has_shipyard": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "string"
+          },
+          "import_commodities": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name"
+              ]
+            }
+          },
+          "is_planetary": {
+            "type": "boolean"
+          },
+          "large_pads": {
+            "type": "number"
+          },
+          "market": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "buy_price": {
+                  "type": "number"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "commodity": {
+                  "type": "string"
+                },
+                "demand": {
+                  "type": "number"
+                },
+                "sell_price": {
+                  "type": "number"
+                },
+                "supply": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "buy_price",
+                "category",
+                "commodity",
+                "demand",
+                "sell_price",
+                "supply"
+              ]
+            }
+          },
+          "market_id": {
+            "type": "number"
+          },
+          "market_updated_at": {
+            "type": "string"
+          },
+          "medium_pads": {
+            "type": "number"
+          },
+          "modules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "string"
+                },
+                "class": {
+                  "type": "number"
+                },
+                "ed_symbol": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "number"
+                },
+                "rating": {
+                  "type": "string"
+                },
+                "weapon_mode": {
+                  "type": "string"
+                },
+                "ship": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "category",
+                "class",
+                "ed_symbol",
+                "name",
+                "rating"
+              ]
+            }
+          },
+          "name": {
+            "type": "string"
+          },
+          "outfitting_updated_at": {
+            "type": "string"
+          },
+          "primary_economy": {
+            "type": "string"
+          },
+          "prohibited_commodities": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name"
+              ]
+            }
+          },
+          "services": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name"
+              ]
+            }
+          },
+          "ships": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "number"
+                },
+                "symbol": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "price",
+                "symbol"
+              ]
+            }
+          },
+          "shipyard_updated_at": {
+            "type": "string"
+          },
+          "small_pads": {
+            "type": "number"
+          },
+          "system_id64": {
+            "type": "number"
+          },
+          "system_is_being_colonised": {
+            "type": "boolean"
+          },
+          "system_is_colonised": {
+            "type": "boolean"
+          },
+          "system_name": {
+            "type": "string"
+          },
+          "system_power": {
+            "type": "array",
+            "items": {}
+          },
+          "system_primary_economy": {
+            "type": "string"
+          },
+          "system_secondary_economy": {
+            "type": "string"
+          },
+          "system_x": {
+            "type": "number"
+          },
+          "system_y": {
+            "type": "number"
+          },
+          "system_z": {
+            "type": "number"
+          },
+          "type": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          },
+          "body_gravity": {
+            "type": "number"
+          },
+          "body_has_atmosphere": {
+            "type": "boolean"
+          },
+          "body_has_rings": {
+            "type": "boolean"
+          },
+          "body_id64": {
+            "type": "number"
+          },
+          "body_name": {
+            "type": "string"
+          },
+          "body_subtype": {
+            "type": "string"
+          },
+          "body_type": {
+            "type": "string"
+          },
+          "secondary_economy": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "distance_to_arrival",
+          "market",
+          "market_updated_at",
+          "name",
+          "system_name",
+          "system_x",
+          "system_y",
+          "system_z"
+        ]
+      }
+    },
+    "search": {
+      "type": "object",
+      "properties": {
+        "filters": {
+          "type": "object",
+          "properties": {
+            "distance": {
+              "type": "object",
+              "properties": {
+                "max": {
+                  "type": "string"
+                },
+                "min": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "max",
+                "min"
+              ]
+            },
+            "market": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "supply": {
+                    "type": "object",
+                    "properties": {
+                      "comparison": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "array",
+                        "items": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "required": [
+                      "comparison",
+                      "value"
+                    ]
+                  }
+                },
+                "required": [
+                  "name",
+                  "supply"
+                ]
+              }
+            }
+          },
+          "required": [
+            "distance",
+            "market"
+          ]
+        },
+        "page": {
+          "type": "number"
+        },
+        "reference_coords": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ]
+        },
+        "size": {
+          "type": "number"
+        },
+        "sort": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "distance": {
+                "type": "object",
+                "properties": {
+                  "direction": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "direction"
+                ]
+              }
+            },
+            "required": [
+              "distance"
+            ]
+          }
+        }
+      },
+      "required": [
+        "filters",
+        "page",
+        "reference_coords",
+        "size",
+        "sort"
+      ]
+    },
+    "search_reference": {
+      "type": "string"
+    },
+    "size": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "count",
+    "from",
+    "results",
+    "search",
+    "search_reference",
+    "size"
+  ]
+}
