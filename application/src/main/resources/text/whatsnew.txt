@@ -1,3 +1,9 @@
+Version 2.246
+-------------
+Added nearby selling stations to commodity tooltips
+- Takes your current ship size and location into account
+- Rate limited at max 1 request per 5 seconds, so be patient for it to show up
+
 Version 2.245
 -------------
 New feature: Quick apply favourites to Ship Editor

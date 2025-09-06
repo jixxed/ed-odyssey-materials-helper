@@ -6,9 +6,6 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-New feature: Quick apply favourites to Ship Editor
-- Configure your preferred core modules and engineering and apply them with a single click
-- Settings are commander specific and can be configured under Settings > Ships - Favourite modules
-Fixed a bug where invalid trade suggestions were shown for wishlist materials
-Added a permit indicator to copyable locations
-Added API endpoint refresh interval labels
+Added nearby selling stations to commodity tooltips
+- Takes your current ship size and location into account
+- Rate limited at max 1 request per 5 seconds, so be patient for it to show up
