@@ -694,7 +694,9 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
     }
 
     private static boolean hasDifferentSynthesis(ShipConfigurationSlot slot) {
-        return !Objects.equals(slot.getSynthesis(), slot.getOldModule().getSynthesis());
+        ShipConfigurationOldModule oldModule = slot.getOldModule();
+        HorizonsBlueprintGrade oldSynthesis = oldModule != null ? oldModule.getSynthesis() : null;
+        return !Objects.equals(slot.getSynthesis(), oldSynthesis);
     }
 
     private static boolean hasDifferentExperimentalEffect(ShipConfigurationSlot
