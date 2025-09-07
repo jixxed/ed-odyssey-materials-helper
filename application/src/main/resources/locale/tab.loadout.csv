@@ -23,5 +23,5 @@
 "loadout.create.new.wishlist","Create new","Create new","Erstelle neu","Crear nuevo","Créer un nouveau","Crie um novo","Создать новый","新建"
 "tab.loadout.clone","Clone loadout","Clone loadout","Klonlast","Clonar equipamiento","Chargement de clone","Clonar configuração","Клонировать сборку","复制配装"
 "blueprint.add.all.to.wishlist","Add all to wishlist","Add all to wishlist","Fügen Sie alle zur Wunschliste hinzu","Agregar todo a la lista de deseos","Ajouter tout à WishList","Adicione tudo à lista de desejos","Добавьте все в список желаний","全部加入愿望单"
-"tab.loadout.create.prompt","Name (max. 50 characters)","","","Nombre (max. 50 carácteres)","","","Имя (50 символов макс.)","名称 (最多50个字符)"
+"tab.loadout.create.prompt","Name (max. 50 characters)","","","Nombre (max. 50 carácteres)","Nom (max. 50 caractères)","","Имя (50 символов макс.)","名称 (最多50个字符)"
 "tab.loadout.delete.item","Delete","","","Borrar","Supprimer","","Удалить","删除"
