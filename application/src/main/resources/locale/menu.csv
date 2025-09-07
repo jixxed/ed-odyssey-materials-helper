@@ -24,6 +24,6 @@
 "menu.about.commission","Commission","","","Comisión","","","Комиссия","手续费"
 "system.copy.distance","({0}Ly)","","","({0}Al)","({0}al)","","({0}Св.л.)","({0}Ly)"
 "system.copy.distance.in.system","({0}Ls ±{1}Ls)","","","({0}sl ±{1}sl)","({0}sl ±{1}sl)","","({0}Св.с ±{1}Св.с)","({0}Ls ±{1}Ls)"
-"system.copy.distance.in.system.no.variance","({0}Ls)","","","({0}Ls)","({0}Ls)","","({0}Св.с)","({0}Ls)"
+"system.copy.distance.in.system.no.variance","({0}Ls)","","","","","","",""
 "guardian.structure.title","{0} - {1}","","","","{0} - {1}","","{0} - {1}","{0} - {1}"
 "horizons.materials.nearest.markets","Nearby selling markets","","","","","","",""
