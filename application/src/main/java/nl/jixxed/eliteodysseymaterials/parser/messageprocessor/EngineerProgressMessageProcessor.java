@@ -23,6 +23,7 @@ public class EngineerProgressMessageProcessor implements MessageProcessor<Engine
         } else if (engineerProgress.getEngineer().isPresent()) {
             processEngineerProgressItem(engineerProgress.getEngineer(), engineerProgress.getProgress(), engineerProgress.getRankProgress(), engineerProgress.getRank());
         }
+        EventService.publish(new EngineerEvent());
     }
 
     @Override
@@ -112,7 +113,6 @@ public class EngineerProgressMessageProcessor implements MessageProcessor<Engine
                         APPLICATION_STATE.setEngineerStatus(Engineer.PETRA_OLMANOVA, engineerState, rank, rankProgressValue);
                 default -> log.warn("Unknown engineer: " + engineer);
             }
-            EventService.publish(new EngineerEvent());
         }
     }
 
