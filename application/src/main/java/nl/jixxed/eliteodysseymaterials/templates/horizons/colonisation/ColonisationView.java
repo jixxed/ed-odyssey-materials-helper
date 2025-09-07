@@ -104,8 +104,8 @@ public class ColonisationView extends DestroyableVBox implements DestroyableEven
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
             final ColonisationItems colonisationItems = ColonisationService.getColonisationItems(commander);
             final Set<ColonisationItem> items = colonisationItems.getAllColonisationItems();
-            this.colonisationSelect.getItems().clear();
-            this.colonisationSelect.getItems().addAll(items.stream().sorted(Comparator.comparing(ColonisationItem::isAll).thenComparing(ColonisationItem::isCurrent).reversed().thenComparing(ColonisationItem::getName)).toList());
+            this.colonisationSelect.clear();
+            this.colonisationSelect.addAll(items.stream().sorted(Comparator.comparing(ColonisationItem::isAll).thenComparing(ColonisationItem::isCurrent).reversed().thenComparing(ColonisationItem::getName)).toList());
             this.colonisationSelect.getSelectionModel().select(colonisationItems.getSelectedColonisationItem());
         });
     }

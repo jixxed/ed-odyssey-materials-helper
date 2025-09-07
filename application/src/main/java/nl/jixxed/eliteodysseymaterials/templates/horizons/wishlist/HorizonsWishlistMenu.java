@@ -6,6 +6,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ListView;
+import javafx.scene.control.skin.ComboBoxListViewSkin;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 import nl.jixxed.eliteodysseymaterials.FXApplication;
@@ -323,8 +325,8 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
             final HorizonsWishlists wishlists = WishlistService.getHorizonsWishlists(commander);
             final Set<HorizonsWishlist> items = wishlists.getAllWishlists();
-            this.wishlistSelect.getItems().clear();
-            this.wishlistSelect.getItems().addAll(items.stream().sorted(Comparator.comparing(HorizonsWishlist::getName)).toList());
+            this.wishlistSelect.clear();
+            this.wishlistSelect.addAll(items.stream().sorted(Comparator.comparing(HorizonsWishlist::getName)).toList());
             this.wishlistSelect.getSelectionModel().select(wishlists.getSelectedWishlist());
         });
     }

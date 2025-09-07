@@ -241,8 +241,8 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
             final LoadoutSetList loadoutSetList = LoadoutService.getLoadoutSetList(commander);
             final Set<LoadoutSet> items = loadoutSetList.getAllLoadoutSets();
-            this.loadoutSetSelect.getItems().clear();
-            this.loadoutSetSelect.getItems().addAll(items.stream().sorted(Comparator.comparing(LoadoutSet::getName)).toList());
+            this.loadoutSetSelect.clear();
+            this.loadoutSetSelect.addAll(items.stream().sorted(Comparator.comparing(LoadoutSet::getName)).toList());
             this.loadoutSetSelect.getSelectionModel().select(loadoutSetList.getSelectedLoadoutSet());
         });
     }

@@ -236,8 +236,8 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
             final Wishlists wishlists = WishlistService.getOdysseyWishlists(commander);
             final Set<Wishlist> items = wishlists.getAllWishlists();
-            this.wishlistSelect.getItems().clear();
-            this.wishlistSelect.getItems().addAll(items.stream().sorted(Comparator.comparing(Wishlist::getName)).toList());
+            this.wishlistSelect.clear();
+            this.wishlistSelect.addAll(items.stream().sorted(Comparator.comparing(Wishlist::getName)).toList());
             this.wishlistSelect.getSelectionModel().select(wishlists.getSelectedWishlist());
         });
     }
