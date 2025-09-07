@@ -1,3 +1,7 @@
+Version 2.247
+-------------
+Fixed a bug with synthesis in the Ship Editor
+
 Version 2.246
 -------------
 Added nearby selling stations to commodity tooltips

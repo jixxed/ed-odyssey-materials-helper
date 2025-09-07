@@ -6,6 +6,4 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Added nearby selling stations to commodity tooltips
-- Takes your current ship size and location into account
-- Rate limited at max 1 request per 5 seconds, so be patient for it to show up
+Fixed a bug with synthesis in the Ship Editor
