@@ -56,3 +56,6 @@
 "horizons.materials.nearest.markets.supply.header","Supply","","","","","","",""
 "horizons.materials.nearest.markets.age.header","Age","","","","","","",""
 "horizons.materials.nearest.markets.location.header","Location","","","","","","",""
+"horizons.materials.commodity.stats","Statistics","","","","","","",""
+"horizons.materials.commodity.stats.buy","Buy price (min/avg/max): {0} / {1} / {2}","","","","","","",""
+"horizons.materials.commodity.stats.sell","Sell price (min/avg/max): {0} / {1} / {2}","","","","","","",""

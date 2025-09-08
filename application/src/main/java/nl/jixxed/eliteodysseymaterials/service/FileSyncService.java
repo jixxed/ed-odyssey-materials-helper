@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
+import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.helper.DnsHelper;
 
 import javax.naming.NamingException;
@@ -34,14 +35,19 @@ public class FileSyncService {
 
     static {
         try {
-            final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("broker.host", "localhost"));
-            final String brokerUrl = "https://" + domainName + "/traders_brokers.zip";
+            final String brokerDomainName = DnsHelper.resolveCname(Secrets.getOrDefault("broker.host", "localhost"));
+            final String brokerUrl = "https://" + brokerDomainName + "/traders_brokers.zip";
             SYNC_ITEMS.add(new SyncItem(brokerUrl, Duration.ofDays(14), OsConstants.getConfigDirectory() + OsConstants.getOsSlash() + "traders_brokers.zip", FileSyncService::extractZipFiles));
+            final String commodityDomainName = DnsHelper.resolveCname(Secrets.getOrDefault("commodity.host", "localhost"));
+            final String commodityUrl = "https://" + commodityDomainName + "/v2/commodities";
+            SYNC_ITEMS.add(new SyncItem(commodityUrl, Duration.ofDays(1), OsConstants.getConfigDirectory() + OsConstants.getOsSlash() + "commodities.json", FileSyncService::updateCommodities));
         } catch (NamingException | IllegalArgumentException e) {
             log.error(e.getMessage(), e);
         }
     }
-
+    private static void updateCommodities(String filePath){
+        CommodityService.update(filePath);
+    }
     private static void extractZipFiles(String zipFilePath) {
         try (ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFilePath))) {
             ZipEntry entry;

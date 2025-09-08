@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Commodity Stats",
+  "type": "array",
+  "items": {
+    "title": "Commodity Stat",
+    "type": "object",
+    "properties": {
+      "commodityName": {
+        "type": "string"
+      },
+      "minBuyPrice": {
+        "type": "number"
+      },
+      "maxBuyPrice": {
+        "type": "number"
+      },
+      "avgBuyPrice": {
+        "type": "number"
+      },
+      "totalStock": {
+        "type": "number"
+      },
+      "minSellPrice": {
+        "type": "number"
+      },
+      "maxSellPrice": {
+        "type": "number"
+      },
+      "avgSellPrice": {
+        "type": "number"
+      },
+      "totalDemand": {
+        "type": "number"
+      },
+      "timestamp": {
+        "type": "string"
+      },
+      "rare": {
+        "type": "boolean"
+      },
+      "rareMarketId": {
+        "type": "number"
+      },
+      "rareMaxCount": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "commodityName",
+      "timestamp"
+    ]
+  }
+}

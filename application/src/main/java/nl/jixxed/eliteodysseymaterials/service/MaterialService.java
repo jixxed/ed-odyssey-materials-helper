@@ -21,6 +21,7 @@ import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.helper.POIHelper;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
+import nl.jixxed.eliteodysseymaterials.schemas.commodity.CommodityStat;
 import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsBlueprintClickEvent;
@@ -97,6 +98,7 @@ public class MaterialService {
                 addMarketToTooltip(commodity, vBox);
                 addMineableToTooltip(commodity, vBox);
                 addRefinableToTooltip(commodity, vBox);
+                addCommodityStatsToTooltip(commodity, vBox);
                 addFleetCarrierOrdersToTooltip(commodity, vBox);
                 if (requiredAmount.get() > 0 && commodity.isPurchasable()) {
                     addNearbyMarketsToTooltip(commodity, vBox, requiredAmount, hoverableNode);
@@ -130,6 +132,30 @@ public class MaterialService {
         return vBox;
 
 
+    }
+
+    private static void addCommodityStatsToTooltip(Commodity commodity, DestroyableMaterialContent vBox) {
+        CommodityService.getCommodityStat(commodity).ifPresent(stat -> {
+            if (stat.getAvgBuyPrice().isPresent() || stat.getAvgSellPrice().isPresent()) {
+                vBox.getNodes().add(LabelBuilder.builder()
+                        .build());
+                vBox.getNodes().add(LabelBuilder.builder()
+                        .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE)
+                        .withText("horizons.materials.commodity.stats")
+                        .build());
+                stat.getMinBuyPrice().ifPresent(minPrice ->
+                        stat.getAvgBuyPrice().ifPresent(avgPrice ->
+                                stat.getMaxBuyPrice().ifPresent(maxPrice ->
+                                        vBox.getNodes().add(LabelBuilder.builder().withText("horizons.materials.commodity.stats.buy", Formatters.NUMBER_FORMAT_0.format(minPrice.intValue()), Formatters.NUMBER_FORMAT_0.format(avgPrice.intValue()), Formatters.NUMBER_FORMAT_0.format(maxPrice.intValue())).build())
+                                )));
+
+                stat.getMinSellPrice().ifPresent(minPrice ->
+                        stat.getAvgSellPrice().ifPresent(avgPrice ->
+                                stat.getMaxSellPrice().ifPresent(maxPrice ->
+                                        vBox.getNodes().add(LabelBuilder.builder().withText("horizons.materials.commodity.stats.sell", Formatters.NUMBER_FORMAT_0.format(minPrice.intValue()), Formatters.NUMBER_FORMAT_0.format(avgPrice.intValue()), Formatters.NUMBER_FORMAT_0.format(maxPrice.intValue())).build())
+                                )));
+            }
+        });
     }
 
     private static <E extends Node & DestroyableComponent> void addNearbyMarketsToTooltip(Commodity commodity, DestroyableMaterialContent vBox, Supplier<Integer> requiredAmount, final E hoverableNode) {

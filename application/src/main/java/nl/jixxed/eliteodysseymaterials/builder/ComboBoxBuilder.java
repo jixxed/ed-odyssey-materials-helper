@@ -34,18 +34,7 @@ public class ComboBoxBuilder<T> extends AbstractComboBoxBuilder<T, ComboBoxBuild
         }
         comboBox.addChangeListener(comboBox.itemsProperty(), (_,_,_) -> {
             comboBox.setVisibleRowCount(Math.min(comboBox.getItems().size(), 10));
-            Platform.runLater(() -> {
-                if (comboBox.getSkin() instanceof ComboBoxListViewSkin<?> skin) {
-                    log.debug("Requesting layout for combobox {}", comboBox);
-                    ((ListView)skin.getPopupContent()).requestLayout();
-                    ((ListView)skin.getPopupContent()).autosize();
-                }
-            });
-//            comboBox.show();
-//            Platform.runLater(comboBox::hide);
-
         });
-//        comboBox.onShownProperty()
         return comboBox;
     }
 }

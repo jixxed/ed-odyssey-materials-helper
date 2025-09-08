@@ -137,6 +137,7 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
                 .withStyleClass(BLUEPRINT_LIST_STYLE_CLASS)
                 .asLocalized()
                 .build();
+        types.setVisibleRowCount(Math.min(types.getItems().size(), 10));
 
         DestroyableComboBox<HorizonsBlueprintName> blueprints = createBlueprintsComboboxForTypes(types, recipesEntry.keySet(), recipesEntry.entrySet().stream().map(horizonsBlueprintNameMapEntry -> Map.entry(horizonsBlueprintNameMapEntry.getKey(), horizonsBlueprintNameMapEntry.getValue().keySet())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
         DestroyableTitledPane categoryTitledPane = createTitledPane(BlueprintCategory.TECHBROKER.getLocalizationKey());
@@ -196,6 +197,7 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
                 .withStyleClass(BLUEPRINT_LIST_STYLE_CLASS)
                 .asLocalized()
                 .build();
+        types.setVisibleRowCount(Math.min(types.getItems().size(), 10));
         final DestroyableComboBox<HorizonsBlueprintName> blueprints = createBlueprintsComboboxForTypes(types, recipesEntry.keySet(), recipesEntry.entrySet().stream().map(horizonsBlueprintNameMapEntry -> Map.entry(horizonsBlueprintNameMapEntry.getKey(), horizonsBlueprintNameMapEntry.getValue().keySet())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
 
         final DestroyableTitledPane categoryTitledPane = createTitledPane(BlueprintCategory.EXPERIMENTAL_EFFECTS.getLocalizationKey());
@@ -377,7 +379,7 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
                 })
                 .asLocalized()
                 .build();
-        blueprints.setVisibleRowCount(blueprints.getItems().size());
+        blueprints.setVisibleRowCount(Math.min(blueprints.getItems().size(), 10));
         return blueprints;
     }
 
@@ -410,7 +412,7 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
                 })
                 .asLocalized()
                 .build();
-        blueprints.setVisibleRowCount(blueprints.getItems().size());
+        blueprints.setVisibleRowCount(Math.min(blueprints.getItems().size(), 10));
         return blueprints;
     }
 
@@ -500,7 +502,7 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
                 .withItemsProperty(LocaleService.getListBinding(recipesEngineers.keySet().stream().sorted(Comparator.comparing(HorizonsBlueprintName::getLocalizationKey)).toArray(HorizonsBlueprintName[]::new)))
                 .asLocalized()
                 .build();
-        blueprints.setVisibleRowCount(blueprints.getItems().size());
+        blueprints.setVisibleRowCount(Math.min(blueprints.getItems().size(), 10));
 
         final DestroyableHBox hBox = BoxBuilder.builder()
                 .withNode(blueprints).buildHBox();

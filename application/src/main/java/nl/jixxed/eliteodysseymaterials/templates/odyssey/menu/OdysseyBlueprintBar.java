@@ -122,7 +122,7 @@ public class OdysseyBlueprintBar extends DestroyableAccordion implements Destroy
                 .withItemsProperty(LocaleService.getListBinding(recipesEntry.getValue().keySet().stream().sorted(Comparator.comparing(recipeName -> LocaleService.getLocalizedStringForCurrentLocale(recipeName.getLocalizationKey()))).toArray(OdysseyBlueprintName[]::new)))
                 .asLocalized()
                 .build();
-        blueprints.setVisibleRowCount(blueprints.getItems().size());
+        blueprints.setVisibleRowCount(Math.min(blueprints.getItems().size(), 10));
 
         final DestroyableHBox hBox = BoxBuilder.builder()
                 .withNode(blueprints)
