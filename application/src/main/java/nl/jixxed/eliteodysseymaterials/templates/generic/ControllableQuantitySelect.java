@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.generic;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -10,7 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsWishlistBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.OdysseyWishlistBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint;
@@ -50,11 +51,18 @@ public class ControllableQuantitySelect extends DestroyableHBox implements Destr
     @Override
     public void initComponents() {
         this.getStyleClass().add("quantity-select");
-        DestroyableLabel left = LabelBuilder.builder()
-                .withStyleClasses("arrow", "left")
-                .withNonLocalizedText("◀")
+//        DestroyableLabel left = LabelBuilder.builder()
+//                .withStyleClasses("arrow", "left")
+//                .withNonLocalizedText("◀")
+//                .withOnMouseClicked(_ -> decrease())
+//                .build();
+       var left = BoxBuilder.builder()
+               .withStyleClasses("modifier-container", "left")
+               .withNode(FontAwesomeIconViewBuilder.builder()
+                .withStyleClasses("modifier")
+                .withIcon(FontAwesomeIcon.MINUS)
                 .withOnMouseClicked(_ -> decrease())
-                .build();
+                .build()).buildHBox();
         this.getNodes().add(left);
         this.getNodes().add(new GrowingRegion());
 
@@ -96,11 +104,23 @@ public class ControllableQuantitySelect extends DestroyableHBox implements Destr
 
         this.getNodes().add(new GrowingRegion());
 
-        DestroyableLabel right = LabelBuilder.builder()
-                .withStyleClasses("arrow", "right")
-                .withNonLocalizedText("▶")
-                .withOnMouseClicked(_ -> increase())
-                .build();
+//        DestroyableLabel right = LabelBuilder.builder()
+//                .withStyleClasses("arrow", "right")
+//                .withNonLocalizedText("▶")
+//                .withOnMouseClicked(_ -> increase())
+//                .build();
+        var right = BoxBuilder.builder()
+                .withStyleClasses("modifier-container", "right")
+                .withNode(FontAwesomeIconViewBuilder.builder()
+                        .withStyleClasses("modifier")
+                        .withIcon(FontAwesomeIcon.PLUS)
+                        .withOnMouseClicked(_ -> increase())
+                        .build()).buildHBox();
+//        var right = FontAwesomeIconViewBuilder.builder()
+//                .withStyleClasses("arrow", "right")
+//                .withIcon(FontAwesomeIcon.PLUS)
+//                .withOnMouseClicked(_ -> increase())
+//                .build();
         HBox.setHgrow(right, Priority.ALWAYS);
         this.getNodes().add(right);
         update();

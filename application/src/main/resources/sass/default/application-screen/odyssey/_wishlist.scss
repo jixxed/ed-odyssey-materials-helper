@@ -151,13 +151,17 @@
             .quantity-select {
               -fx-spacing: 0.1em;
 
-              .arrow {
-                -fx-cursor: hand;
+              .modifier-container {
                 -fx-alignment: center;
-                -fx-font-size: 1.2em;
+                .modifier {
+                  -fx-cursor: hand;
+                  -fx-font-size: 1.2em !important;
+                  -fx-fill: $text-color-white !important;
 
-                &:hover {
-                  -fx-text-fill: $text-color-blue;
+                  &:hover {
+                    -fx-fill: $text-color-blue !important;
+                  }
+
                 }
 
                 &.left {
@@ -202,19 +206,16 @@
             .title-line {
               -fx-spacing: 0.25em;
 
-              .visible-image {
-                @include fixedWidth(1.5em);
-                @include fixedHeight(1.5em);
-                -fx-fit-to-height: true;
-                -fx-fit-to-width: true;
-                -fx-alignment: center;
-              }
-
-              .visible-button {
-                @include fixedWidth(1.5em);
-                @include fixedHeight(1.2em);
+              .visible-container {
+                -fx-font-size: 1.2em !important;
                 -fx-cursor: hand;
+                .visible-button {
+                  -fx-fill: $text-color-white;
 
+                  &:hover {
+                    -fx-fill: $text-color-blue;
+                  }
+                }
               }
 
               .remove {
@@ -248,6 +249,18 @@
             &:hidden {
               .module {
                 -fx-text-fill: $text-color-grey;
+              }
+
+              .title-line {
+                .visible-container {
+                  .visible-button {
+                    -fx-fill: $text-color-grey;
+
+                    &:hover {
+                      -fx-fill: $text-color-blue;
+                    }
+                  }
+                }
               }
 
               @for $i from 1 through 10 {

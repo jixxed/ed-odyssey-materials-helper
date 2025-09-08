@@ -2772,16 +2772,18 @@
             -fx-spacing: 0.25em; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select {
               -fx-spacing: 0.1em; }
-              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .arrow {
-                -fx-cursor: hand;
-                -fx-alignment: center;
-                -fx-font-size: 1.2em; }
-                .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .arrow:hover {
-                  -fx-text-fill: #2e92df; }
-                .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .arrow.left {
+              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .modifier-container {
+                -fx-alignment: center; }
+                .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .modifier-container .modifier {
+                  -fx-cursor: hand;
+                  -fx-font-size: 1.2em !important;
+                  -fx-fill: white !important; }
+                  .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .modifier-container .modifier:hover {
+                    -fx-fill: #2e92df !important; }
+                .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .modifier-container.left {
                   -fx-alignment: center-left;
                   -fx-padding: 0 0.5em 0 0; }
-                .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .arrow.right {
+                .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .modifier-container.right {
                   -fx-alignment: center-right;
                   -fx-padding: 0 0 0 0.5em; }
               .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .value {
@@ -2832,24 +2834,13 @@
               -fx-text-fill: #709adc; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line {
               -fx-spacing: 0.25em; }
-              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line .visible-image {
-                -fx-min-width: 1.5em;
-                -fx-pref-width: 1.5em;
-                -fx-max-width: 1.5em;
-                -fx-min-height: 1.5em;
-                -fx-pref-height: 1.5em;
-                -fx-max-height: 1.5em;
-                -fx-fit-to-height: true;
-                -fx-fit-to-width: true;
-                -fx-alignment: center; }
-              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line .visible-button {
-                -fx-min-width: 1.5em;
-                -fx-pref-width: 1.5em;
-                -fx-max-width: 1.5em;
-                -fx-min-height: 1.2em;
-                -fx-pref-height: 1.2em;
-                -fx-max-height: 1.2em;
+              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line .visible-container {
+                -fx-font-size: 1.2em !important;
                 -fx-cursor: hand; }
+                .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line .visible-container .visible-button {
+                  -fx-fill: white; }
+                  .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line .visible-container .visible-button:hover {
+                    -fx-fill: #2e92df; }
               .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line .remove {
                 -fx-cursor: hand; }
                 .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line .remove:hover {
@@ -2879,6 +2870,10 @@
                 -fx-text-fill: #5aa9e6; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .module {
               -fx-text-fill: gray; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .title-line .visible-container .visible-button {
+              -fx-fill: gray; }
+              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .title-line .visible-container .visible-button:hover {
+                -fx-fill: #2e92df; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-1 {
               -fx-text-fill: gray; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-2 {
@@ -4092,16 +4087,18 @@
             -fx-spacing: 0.25em; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select {
               -fx-spacing: 0.1em; }
-              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .arrow {
-                -fx-cursor: hand;
-                -fx-alignment: center;
-                -fx-font-size: 1.2em; }
-                .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .arrow:hover {
-                  -fx-text-fill: #2e92df; }
-                .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .arrow.left {
+              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .modifier-container {
+                -fx-alignment: center; }
+                .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .modifier-container .modifier {
+                  -fx-cursor: hand;
+                  -fx-font-size: 1.2em !important;
+                  -fx-fill: white !important; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .modifier-container .modifier:hover {
+                    -fx-fill: #2e92df !important; }
+                .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .modifier-container.left {
                   -fx-alignment: center-left;
                   -fx-padding: 0 0.5em 0 0; }
-                .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .arrow.right {
+                .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .modifier-container.right {
                   -fx-alignment: center-right;
                   -fx-padding: 0 0 0 0.5em; }
               .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .value {
@@ -4152,24 +4149,13 @@
               -fx-text-fill: #709adc; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line {
               -fx-spacing: 0.25em; }
-              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line .visible-image {
-                -fx-min-width: 1.5em;
-                -fx-pref-width: 1.5em;
-                -fx-max-width: 1.5em;
-                -fx-min-height: 1.5em;
-                -fx-pref-height: 1.5em;
-                -fx-max-height: 1.5em;
-                -fx-fit-to-height: true;
-                -fx-fit-to-width: true;
-                -fx-alignment: center; }
-              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line .visible-button {
-                -fx-min-width: 1.5em;
-                -fx-pref-width: 1.5em;
-                -fx-max-width: 1.5em;
-                -fx-min-height: 1.2em;
-                -fx-pref-height: 1.2em;
-                -fx-max-height: 1.2em;
+              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line .visible-container {
+                -fx-font-size: 1.2em !important;
                 -fx-cursor: hand; }
+                .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line .visible-container .visible-button {
+                  -fx-fill: white; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line .visible-container .visible-button:hover {
+                    -fx-fill: #2e92df; }
               .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line .remove {
                 -fx-cursor: hand; }
                 .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .title-line .remove:hover {
@@ -4187,6 +4173,10 @@
                 -fx-text-fill: #5aa9e6; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .module {
               -fx-text-fill: gray; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .title-line .visible-container .visible-button {
+              -fx-fill: gray; }
+              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .title-line .visible-container .visible-button:hover {
+                -fx-fill: #2e92df; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-1 {
               -fx-text-fill: gray; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .quantity-select .value-2 {

@@ -42,7 +42,6 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
     private final HorizonsModuleWishlistBlueprint wishlistBlueprint;
     private final String wishlistUUID;
 
-    private DestroyableResizableImageView visibilityImage;
     private DestroyableLabel title;
     private DestroyableLabel blueprintName;
     private DestroyableLabel experimentalEffectName;
@@ -56,9 +55,9 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
 
     @Getter
     private boolean deleted = false;
-    private DestroyableLabel visibilityButton;
     private DestroyableLabel removeBlueprint;
     private QuantitySelectable quantityLine;
+    private DestroyableFontAwesomeIconView eyeIcon;
 
     HorizonsWishlistModuleBlueprintTemplate(final String wishlistUUID, final HorizonsModuleWishlistBlueprint wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
@@ -70,26 +69,20 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
 
     public void initComponents() {
         this.getStyleClass().add("blueprint");
-        this.visibilityImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("visible-image")
-                .withImage("/images/other/visible_blue.png")
-                .build();
-        visibilityButton = LabelBuilder.builder()
-                .withStyleClass("visible-button")
+
+        eyeIcon = FontAwesomeIconViewBuilder.builder()
+                .withStyleClasses("visible-button")
+                .withIcon(FontAwesomeIcon.EYE)
                 .withOnMouseClicked(_ -> setVisibility(!this.visible.get()))
-                .withHoverProperty(_ -> (_, _, newValue) -> {
-                    if (Boolean.TRUE.equals(newValue)) {
-                        this.visibilityImage.setImage(ImageService.getImage("/images/other/visible_blue.png"));
-                    } else {
-                        this.visibilityImage.setImage(ImageService.getImage(this.visible.get() ? "/images/other/visible_white.png" : "/images/other/invisible_gray.png"));
-                    }
-                })
-                .withGraphic(this.visibilityImage)
                 .build();
+        var visibility = BoxBuilder.builder()
+                .withStyleClasses("visible-container")
+                .withNode(eyeIcon)
+                .buildHBox();
         if (Wishlist.ALL.getUuid().equals(this.wishlistUUID)) {
             setVisibilityValue(true);
-            visibilityButton.setVisible(false);
-            visibilityButton.setManaged(false);
+            visibility.setVisible(false);
+            visibility.setManaged(false);
         } else {
             setVisibilityValue(this.wishlistBlueprint.isVisible());
         }
@@ -162,7 +155,7 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
                 .withVisibility(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()))
                 .withOnMouseClicked(_ -> showGradeSettings())
                 .buildHBox();
-        final DestroyableHBox titleLine = BoxBuilder.builder().withStyleClass("title-line").withNodes(title, new GrowingRegion(), quantityLabel, visibilityButton, removeBlueprint).buildHBox();
+        final DestroyableHBox titleLine = BoxBuilder.builder().withStyleClass("title-line").withNodes(title, new GrowingRegion(), quantityLabel, visibility, removeBlueprint).buildHBox();
         final DestroyableHBox moduleLine = BoxBuilder.builder().withStyleClass("blueprint-line").withNodes(this.blueprintName, new GrowingRegion(), this.settingsButton).buildHBox();
         final DestroyableHBox effectLine = BoxBuilder.builder().withStyleClass("blueprint-line").withNodes(this.experimentalEffectName, new GrowingRegion(), this.split).buildHBox();
         quantityLine = (HorizonsWishlist.ALL.getUuid().equals(wishlistUUID)) ? new QuantitySelect(wishlistBlueprint.getQuantity(), visible, wishlistBlueprint) : new ControllableQuantitySelect(wishlistBlueprint.getQuantity(), visible, wishlistBlueprint);
@@ -390,7 +383,7 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("hidden"), !visible);
         this.visible.set(visible);
         this.wishlistBlueprint.setVisible(visible);
-        this.visibilityImage.setImage(ImageService.getImage(visible ? "/images/other/visible_white.png" : "/images/other/invisible_gray.png"));
+        eyeIcon.setIcon(visible ? FontAwesomeIcon.EYE : FontAwesomeIcon.EYE_SLASH);
     }
 
     public HorizonsBlueprintName getRecipeName() {

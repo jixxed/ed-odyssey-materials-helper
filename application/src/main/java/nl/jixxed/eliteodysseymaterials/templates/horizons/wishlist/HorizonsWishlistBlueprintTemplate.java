@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -8,10 +9,7 @@ import javafx.scene.Node;
 import javafx.util.Duration;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
@@ -38,7 +36,7 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableVBo
     private final HorizonsBlueprint blueprint;
     private final String wishlistUUID;
 
-    private DestroyableResizableImageView visibilityImage;
+//    private DestroyableResizableImageView visibilityImage;
 
     @Getter
     private boolean deleted = false;
@@ -46,6 +44,7 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableVBo
     private DestroyableLabel title;
     private DestroyableLabel blueprintName;
     private QuantitySelectable quantityLine;
+    private DestroyableFontAwesomeIconView eyeIcon;
 
     HorizonsWishlistBlueprintTemplate(final String wishlistUUID, final WishlistBlueprint<HorizonsBlueprintName> wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
@@ -58,26 +57,20 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableVBo
 
     public void initComponents() {
         this.getStyleClass().add("blueprint");
-        this.visibilityImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("visible-image")
-                .withImage("/images/other/visible_blue.png")
-                .build();
-        DestroyableLabel visibilityButton = LabelBuilder.builder()
-                .withStyleClass("visible-button")
+
+        eyeIcon = FontAwesomeIconViewBuilder.builder()
+                .withStyleClasses("visible-button")
+                .withIcon(FontAwesomeIcon.EYE)
                 .withOnMouseClicked(_ -> setVisibility(!this.visible.get()))
-                .withHoverProperty(_ -> (_, _, newValue) -> {
-                    if (Boolean.TRUE.equals(newValue)) {
-                        this.visibilityImage.setImage(ImageService.getImage("/images/other/visible_blue.png"));
-                    } else {
-                        this.visibilityImage.setImage(ImageService.getImage(this.visible.get() ? "/images/other/visible_white.png" : "/images/other/invisible_gray.png"));
-                    }
-                })
-                .withGraphic(this.visibilityImage)
                 .build();
+        var visibility = BoxBuilder.builder()
+                .withStyleClasses("visible-container")
+                .withNode(eyeIcon)
+                .buildHBox();
         if (Wishlist.ALL.getUuid().equals(this.wishlistUUID)) {
             setVisibilityValue(true);
-            visibilityButton.setVisible(false);
-            visibilityButton.setManaged(false);
+            visibility.setVisible(false);
+            visibility.setManaged(false);
         } else {
             setVisibilityValue(this.wishlistBlueprint.isVisible());
         }
@@ -120,7 +113,6 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableVBo
                     .withShowDelay(Duration.millis(100))
                     .build();
             tooltip.install(blueprintName);
-//            register(this.tooltip);
         }
         this.canCraft();
         final DestroyableLabel quantityLabel = LabelBuilder.builder().withText("wishlist.blueprint.horizons.quantity", this.wishlistBlueprint.getQuantity())
@@ -128,7 +120,7 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableVBo
                 .withManaged(this.wishlistUUID.equals(Wishlist.ALL.getUuid()) && wishlistBlueprint.getQuantity() > 10)
                 .withVisibility(this.wishlistUUID.equals(Wishlist.ALL.getUuid()) && wishlistBlueprint.getQuantity() > 10)
                 .build();
-        final DestroyableHBox titleLine = BoxBuilder.builder().withStyleClass("title-line").withNodes(title, new GrowingRegion(), quantityLabel, visibilityButton, removeBlueprint).buildHBox();
+        final DestroyableHBox titleLine = BoxBuilder.builder().withStyleClass("title-line").withNodes(title, new GrowingRegion(), quantityLabel, visibility, removeBlueprint).buildHBox();
         final DestroyableHBox moduleLine = BoxBuilder.builder().withStyleClass("blueprint-line").withNodes(this.blueprintName).buildHBox();
         quantityLine = (HorizonsWishlist.ALL.getUuid().equals(wishlistUUID)) ? new QuantitySelect(wishlistBlueprint.getQuantity(), visible, wishlistBlueprint) : new ControllableQuantitySelect(wishlistBlueprint.getQuantity(), visible, wishlistBlueprint);
         quantityLine.addChangeListener(quantityLine.getQuantity(), (_, _, quantity) -> updateQuantity(quantity.intValue()));
@@ -160,13 +152,7 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableVBo
         canCraft();
     }
 
-    //    private void updateStyle() {
-//        var craftability = HorizonsBlueprintConstants.getCraftability(wishlistBlueprint.getQuantity(), getRecipeName(), getBlueprintType(), getBlueprintGrade());
-//        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("filled"), Craftability.CRAFTABLE.equals(craftability));
-//        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("partial"), Craftability.CRAFTABLE_WITH_TRADE.equals(craftability));
-//    }
     private void canCraft() {
-//        log.debug(String.valueOf(this.hashCode()));
         for (int quantity = 1; quantity <= 10; quantity++) {
             if (quantity > wishlistBlueprint.getQuantity()) {
                 this.pseudoClassStateChanged(PseudoClass.getPseudoClass("filled-" + quantity), false);
@@ -185,12 +171,6 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableVBo
                 this.pseudoClassStateChanged(PseudoClass.getPseudoClass("partial-" + quantity), false);
             }
         }
-
-//        if (Craftability.CRAFTABLE.equals(craftability)) {
-//            this.tooltip.addBinding(this.tooltip.textProperty(), LocaleService.getToolTipStringBinding((HorizonsEngineeringBlueprint) HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), HorizonsBlueprintGrade.GRADE_1), "tab.wishlist.blueprint.tooltip"));
-//        } else if (Craftability.CRAFTABLE_WITH_TRADE.equals(craftability)) {
-//            this.tooltip.addBinding(this.tooltip.textProperty(), LocaleService.getToolTipStringBinding((HorizonsEngineeringBlueprint) HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), HorizonsBlueprintGrade.GRADE_1), "tab.wishlist.blueprint.tooltip.craftable"));
-//        }
     }
 
     @Override
@@ -204,7 +184,7 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableVBo
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("hidden"), !visible);
         this.visible.set(visible);
         this.wishlistBlueprint.setVisible(visible);
-        this.visibilityImage.setImage(ImageService.getImage(visible ? "/images/other/visible_white.png" : "/images/other/invisible_gray.png"));
+        eyeIcon.setIcon(visible ? FontAwesomeIcon.EYE : FontAwesomeIcon.EYE_SLASH);
     }
 
     public HorizonsBlueprintName getRecipeName() {

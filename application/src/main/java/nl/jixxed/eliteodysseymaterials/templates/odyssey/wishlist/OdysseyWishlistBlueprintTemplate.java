@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.css.PseudoClass;
 import javafx.scene.Node;
@@ -7,10 +8,7 @@ import javafx.scene.control.Tooltip;
 import javafx.util.Duration;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.Action;
@@ -42,13 +40,13 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableVBox
     private final OdysseyBlueprint blueprint;
     private final String wishlistUUID;
 
-    private DestroyableResizableImageView visibilityImage;
     @Getter
     private boolean deleted = false;
     private DestroyableLabel title;
     private DestroyableLabel blueprintName;
     private DestroyableTooltip tooltip;
     private QuantitySelectable quantityLine;
+    private DestroyableFontAwesomeIconView eyeIcon;
 
     OdysseyWishlistBlueprintTemplate(final String wishlistUUID, final WishlistBlueprint<OdysseyBlueprintName> wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
@@ -61,26 +59,20 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableVBox
 
     public void initComponents() {
         this.getStyleClass().add("blueprint");
-        this.visibilityImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("visible-image")
-                .withImage("/images/other/visible_blue.png")
-                .build();
-        DestroyableLabel visibilityButton = LabelBuilder.builder()
-                .withStyleClass("visible-button")
+
+        eyeIcon = FontAwesomeIconViewBuilder.builder()
+                .withStyleClasses("visible-button")
+                .withIcon(FontAwesomeIcon.EYE)
                 .withOnMouseClicked(_ -> setVisibility(!this.visible.get()))
-                .withHoverProperty(_ -> (_, _, newValue) -> {
-                    if (Boolean.TRUE.equals(newValue)) {
-                        this.visibilityImage.setImage(ImageService.getImage("/images/other/visible_blue.png"));
-                    } else {
-                        this.visibilityImage.setImage(ImageService.getImage(this.visible.get() ? "/images/other/visible_white.png" : "/images/other/invisible_gray.png"));
-                    }
-                })
-                .withGraphic(this.visibilityImage)
                 .build();
+        var visibility = BoxBuilder.builder()
+                .withStyleClasses("visible-container")
+                .withNode(eyeIcon)
+                .buildHBox();
         if (Wishlist.ALL.getUuid().equals(this.wishlistUUID)) {
             setVisibilityValue(true);
-            visibilityButton.setVisible(false);
-            visibilityButton.setManaged(false);
+            visibility.setVisible(false);
+            visibility.setManaged(false);
         } else {
             setVisibilityValue(this.wishlistBlueprint.isVisible());
         }
@@ -122,7 +114,7 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableVBox
                 .withManaged(this.wishlistUUID.equals(Wishlist.ALL.getUuid()) && wishlistBlueprint.getQuantity() > 10)
                 .withVisibility(this.wishlistUUID.equals(Wishlist.ALL.getUuid()) && wishlistBlueprint.getQuantity() > 10)
                 .build();
-        final DestroyableHBox titleLine = BoxBuilder.builder().withStyleClass("title-line").withNodes(title, new GrowingRegion(), quantityLabel, visibilityButton, removeBlueprint).buildHBox();
+        final DestroyableHBox titleLine = BoxBuilder.builder().withStyleClass("title-line").withNodes(title, new GrowingRegion(), quantityLabel, visibility, removeBlueprint).buildHBox();
         final DestroyableHBox moduleLine = BoxBuilder.builder().withStyleClass("blueprint-line").withNodes(this.blueprintName).buildHBox();
         quantityLine = (HorizonsWishlist.ALL.getUuid().equals(wishlistUUID)) ? new QuantitySelect(wishlistBlueprint.getQuantity(), visible, wishlistBlueprint) : new ControllableQuantitySelect(wishlistBlueprint.getQuantity(), visible, wishlistBlueprint);
         quantityLine.addChangeListener(quantityLine.getQuantity(), (_, _, quantity) -> updateQuantity(quantity.intValue()));
@@ -188,7 +180,7 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableVBox
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("hidden"), !visible);
         this.visible.set(visible);
         this.wishlistBlueprint.setVisible(visible);
-        this.visibilityImage.setImage(ImageService.getImage(visible ? "/images/other/visible_white.png" : "/images/other/invisible_gray.png"));
+        eyeIcon.setIcon(visible ? FontAwesomeIcon.EYE : FontAwesomeIcon.EYE_SLASH);
     }
 
     public OdysseyBlueprintName getRecipeName() {
