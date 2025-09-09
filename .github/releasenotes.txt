@@ -6,4 +6,6 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Fixed a bug with synthesis in the Ship Editor
+Added commodity statistics, updated daily
+Replaced wishlist icons for visibility and decrease/increase blueprint count
+Slight improvement to the dropdown list sizing

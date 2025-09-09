@@ -1,3 +1,9 @@
+Version 2.248
+-------------
+Added commodity statistics, updated daily
+Replaced wishlist icons for visibility and decrease/increase blueprint count
+Slight improvement to the dropdown list sizing
+
 Version 2.247
 -------------
 Fixed a bug with synthesis in the Ship Editor
