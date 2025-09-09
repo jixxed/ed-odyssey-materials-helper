@@ -28,13 +28,4 @@ public class FrontierApi extends DefaultApi20 {
     protected String getAuthorizationBaseUrl() {
         return "https://auth.frontierstore.net/auth";
     }
-
-
-    @Override
-    public OAuth20Service createService(final String apiKey, final String apiSecret, final String callback, final String defaultScope,
-                                        final String responseType, final OutputStream debugStream, final String userAgent, final HttpClientConfig httpClientConfig,
-                                        final HttpClient httpClient) {
-        return new CapiOAuth20Service(this, apiKey, apiSecret, callback, defaultScope, responseType, debugStream, userAgent,
-                httpClientConfig, httpClient);
-    }
 }

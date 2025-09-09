@@ -435,19 +435,20 @@ public class EDDNService {
         try (final JsonReader jsonReader = JSON_VALIDATION_SERVICE.createReader(new CharSequenceInputStream(data, StandardCharsets.UTF_8), schema, PROBLEM_HANDLER)) {
 //            log.info("Attempt to send: " + data);
             jsonReader.readValue();
-            final HttpClient httpClient = HttpClient.newHttpClient();
-            final HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://eddn.edcd.io:4430/upload/"))
-                    .header("Content-Type", "application/json")
-                    .header("Content-Encoding", "gzip")
-                    .POST(HttpRequest.BodyPublishers.ofByteArray(convertJsonToCompressed(data)))
-                    .build();
-            SEMAPHORE.acquire(); // Acquire the permit before sending the request
-            try {
-                final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-                log.info(event + ": " + send.body() + " -> " + data);
-            } finally {
-                SEMAPHORE.release(); // Release the permit after the request is completed
+            try (HttpClient httpClient = HttpClient.newHttpClient()) {
+                final HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create("https://eddn.edcd.io:4430/upload/"))
+                        .header("Content-Type", "application/json")
+                        .header("Content-Encoding", "gzip")
+                        .POST(HttpRequest.BodyPublishers.ofByteArray(convertJsonToCompressed(data)))
+                        .build();
+                SEMAPHORE.acquire(); // Acquire the permit before sending the request
+                try {
+                    final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+                    log.info(event + ": " + send.body() + " -> " + data);
+                } finally {
+                    SEMAPHORE.release(); // Release the permit after the request is completed
+                }
             }
             // Do something useful here
         } catch (final JsonValidatingException ex) {
