@@ -1,3 +1,7 @@
+Version 2.249
+-------------
+Bugfix for frontier API
+
 Version 2.248
 -------------
 Added commodity statistics, updated daily
