@@ -22,6 +22,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.MarketUpdatedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIconView;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
@@ -32,15 +33,18 @@ import java.util.Arrays;
 public class HorizonsCommodityCard extends DestroyableStackPane implements DestroyableEventTemplate {
     private CommoditiesSearch commoditiesSearch;
     @Getter
-    private Integer fleetcarrierAmount;
+    private Integer fleetCarrierAmount;
+    @Getter
+    private Integer squadronCarrierAmount;
     @Getter
     private Integer shipAmount;
-    private DestroyableLabel leftAmountLabel;
-    private DestroyableLabel rightAmountLabel;
-    private DestroyableResizableImageView bracket1SellImage;
-    private DestroyableResizableImageView bracket3SellImage;
-    private DestroyableResizableImageView bracket1BuyImage;
-    private DestroyableResizableImageView bracket3BuyImage;
+    private DestroyableLabel fleetCarrierAmountLabel;
+    private DestroyableLabel shipAmountLabel;
+    private DestroyableLabel squadronCarrierAmountLabel;
+    private EdAwesomeIconViewPane bracket1SellImage;
+    private EdAwesomeIconViewPane bracket3SellImage;
+    private EdAwesomeIconViewPane bracket1BuyImage;
+    private EdAwesomeIconViewPane bracket3BuyImage;
     @Getter
     private final Commodity commodity;
 
@@ -83,39 +87,48 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
                 .withStyleClass("category")
                 .withText(this.commodity.getCommodityType().getLocalizationKey())
                 .build();
-        this.leftAmountLabel = LabelBuilder.builder()
+        this.fleetCarrierAmountLabel = LabelBuilder.builder()
                 .withStyleClass("fleetcarrier-amount")
                 .build();
-        this.rightAmountLabel = LabelBuilder.builder()
+        this.squadronCarrierAmountLabel = LabelBuilder.builder()
+                .withStyleClass("squadroncarrier-amount")
+                .build();
+        this.shipAmountLabel = LabelBuilder.builder()
                 .withStyleClass("ship-amount")
                 .build();
-        DestroyableResizableImageView fleetCarrierImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("image")
-                .withImage("/images/material/fleetcarrier.png")
+        var fleetCarrierImage = EdAwesomeIconViewPaneBuilder.builder()
+                .withStyleClass("icon")
+                .withIcons(EdAwesomeIcon.OTHER_CARRIER_SIMPLE)
                 .build();
-        DestroyableResizableImageView shipImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("image")
-                .withImage("/images/material/ship.png")
+        var shipImage = EdAwesomeIconViewPaneBuilder.builder()
+                .withStyleClass("icon")
+                .withIcons(EdAwesomeIcon.SHIPS_SHIP_1, EdAwesomeIcon.SHIPS_SHIP_2)
                 .build();
-        DestroyableResizableImageView coriolisImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("image")
-                .withImage("/images/material/coriolis.png")
+        var squadronImage = EdAwesomeIconViewPaneBuilder.builder()
+                .withStyleClass("icon")
+                .withIcons(EdAwesomeIcon.SQUADRON_CARRIER)
                 .build();
-        this.bracket1SellImage = ResizableImageViewBuilder.builder()
-                .withStyleClasses("image")
-                .withImage("/images/material/stock/bracket1.png")
+
+        var coriolisImage = EdAwesomeIconViewPaneBuilder.builder()
+                .withStyleClass("icon")
+                .withIcons(EdAwesomeIcon.STATION_CORIOLIS)
                 .build();
-        this.bracket3SellImage = ResizableImageViewBuilder.builder()
-                .withStyleClasses("image")
-                .withImage("/images/material/stock/bracket3.png")
+
+        this.bracket1SellImage = EdAwesomeIconViewPaneBuilder.builder()
+                .withStyleClasses("icon")
+                .withIcons(EdAwesomeIcon.OTHER_STOCK_BRACKET_LOW)
                 .build();
-        this.bracket1BuyImage = ResizableImageViewBuilder.builder()
-                .withStyleClasses("image")
-                .withImage("/images/material/stock/bracket1.png")
+        this.bracket3SellImage = EdAwesomeIconViewPaneBuilder.builder()
+                .withStyleClasses("icon")
+                .withIcons(EdAwesomeIcon.OTHER_STOCK_BRACKET_HIGH)
                 .build();
-        this.bracket3BuyImage = ResizableImageViewBuilder.builder()
-                .withStyleClasses("image")
-                .withImage("/images/material/stock/bracket3.png")
+        this.bracket1BuyImage = EdAwesomeIconViewPaneBuilder.builder()
+                .withStyleClasses("icon")
+                .withIcons(EdAwesomeIcon.OTHER_STOCK_BRACKET_LOW)
+                .build();
+        this.bracket3BuyImage = EdAwesomeIconViewPaneBuilder.builder()
+                .withStyleClasses("icon")
+                .withIcons(EdAwesomeIcon.OTHER_STOCK_BRACKET_HIGH)
                 .build();
         this.bracket1SellImage.addBinding(this.bracket1SellImage.managedProperty(), this.bracket1SellImage.visibleProperty());
         this.bracket3SellImage.addBinding(this.bracket3SellImage.managedProperty(), this.bracket3SellImage.visibleProperty());
@@ -150,27 +163,31 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
                 .withNodes(new GrowingRegion(), buy, stationBuyArrow, coriolisImage, stationSellArrow, sell, new GrowingRegion())
                 .buildHBox();
         DestroyableHBox leftHBox = BoxBuilder.builder()
-                .withNodes(fleetCarrierImage, this.leftAmountLabel)
+                .withNodes(fleetCarrierImage, this.fleetCarrierAmountLabel)
                 .withStyleClass("ingredient-quantity-section")
                 .buildHBox();
-        DestroyableHBox rightHBox = BoxBuilder.builder()
-                .withNodes(this.rightAmountLabel, shipImage)
+        DestroyableHBox bottomRightHBox = BoxBuilder.builder()
+                .withNodes(this.squadronCarrierAmountLabel, squadronImage)
+                .withStyleClass("ingredient-quantity-section")
+                .buildHBox();
+        DestroyableHBox topRightHBox = BoxBuilder.builder()
+                .withNodes(this.shipAmountLabel, shipImage)
                 .withStyleClass("ingredient-quantity-section")
                 .buildHBox();
         updateQuantity();
-        HBox.setHgrow(this.leftAmountLabel, Priority.ALWAYS);
-        this.leftAmountLabel.addBinding(this.leftAmountLabel.visibleProperty(), ApplicationState.getInstance().getFcMaterials());
+        HBox.setHgrow(this.fleetCarrierAmountLabel, Priority.ALWAYS);
+        this.fleetCarrierAmountLabel.addBinding(this.fleetCarrierAmountLabel.visibleProperty(), ApplicationState.getInstance().getFcMaterials());
         fleetCarrierImage.addBinding(fleetCarrierImage.visibleProperty(), ApplicationState.getInstance().getFcMaterials());
         DestroyableVBox nameAndCategory = BoxBuilder.builder()
                 .withStyleClass("name-category")
                 .withNodes(nameLabel, categoryLabel).buildVBox();
         DestroyableHBox firstLine = BoxBuilder.builder()
                 .withStyleClass("name-line")
-                .withNodes(typeImage, nameAndCategory).buildHBox();
+                .withNodes(typeImage, nameAndCategory, new GrowingRegion(), topRightHBox).buildHBox();
         firstLine.addBinding(firstLine.spacingProperty(), ScalingHelper.getPixelDoubleBindingFromEm(0.5));
         DestroyableHBox secondLine = BoxBuilder.builder()
                 .withStyleClass("quantity-line")
-                .withNodes(leftHBox, new GrowingRegion(), rightHBox)
+                .withNodes(leftHBox, new GrowingRegion(), bottomRightHBox)
                 .buildHBox();
         DestroyableVBox content = BoxBuilder.builder()
                 .withStyleClass("card-content")
@@ -202,7 +219,7 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
         }));
 
         register(EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
-            if (storageEvent.getStoragePool().equals(StoragePool.FLEETCARRIER) || storageEvent.getStoragePool().equals(StoragePool.SHIP)) {
+            if (storageEvent.getStoragePool().equals(StoragePool.FLEETCARRIER) || storageEvent.getStoragePool().equals(StoragePool.SQUADRONCARRIER) || storageEvent.getStoragePool().equals(StoragePool.SHIP)) {
                 updateQuantity();
                 this.update();
             }
@@ -224,10 +241,12 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
     }
 
     private void updateQuantity() {
-        this.fleetcarrierAmount = (StorageService.getCommodityCount(this.commodity, StoragePool.FLEETCARRIER));
+        this.squadronCarrierAmount = (StorageService.getCommodityCount(this.commodity, StoragePool.SQUADRONCARRIER));
+        this.fleetCarrierAmount = (StorageService.getCommodityCount(this.commodity, StoragePool.FLEETCARRIER));
         this.shipAmount = (StorageService.getCommodityCount(this.commodity, StoragePool.SHIP));
-        this.leftAmountLabel.setText(this.fleetcarrierAmount.toString());
-        this.rightAmountLabel.setText(this.shipAmount.toString());
+        this.fleetCarrierAmountLabel.setText(this.fleetCarrierAmount.toString());
+        this.shipAmountLabel.setText(this.shipAmount.toString());
+        this.squadronCarrierAmountLabel.setText(this.squadronCarrierAmount.toString());
         this.stationBuy.setText(MarketService.getMarketItem(this.commodity).map(marketItem -> marketItem.demand().equals(BigInteger.ONE) ? "∞" : marketItem.demand().toString()).orElse("0"));
         this.stationSell.setText(MarketService.getMarketItem(this.commodity).map(marketItem -> marketItem.stock().toString()).orElse("0"));
 

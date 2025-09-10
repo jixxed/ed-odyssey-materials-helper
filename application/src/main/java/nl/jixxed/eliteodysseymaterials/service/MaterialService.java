@@ -100,6 +100,7 @@ public class MaterialService {
                 addRefinableToTooltip(commodity, vBox);
                 addCommodityStatsToTooltip(commodity, vBox);
                 addFleetCarrierOrdersToTooltip(commodity, vBox);
+                addSquadronCarrierOrdersToTooltip(commodity, vBox);
                 if (requiredAmount.get() > 0 && commodity.isPurchasable()) {
                     addNearbyMarketsToTooltip(commodity, vBox, requiredAmount, hoverableNode);
                 }
@@ -453,6 +454,7 @@ public class MaterialService {
                 addTransferTimeToTooltip(data, vBox);
             }
             addFleetCarrierOrdersToTooltip(odysseyMaterial, vBox);
+            addSquadronCarrierOrdersToTooltip(odysseyMaterial, vBox);
             addRecipesToTooltip(OdysseyBlueprintConstants.findRecipesContaining(odysseyMaterial), vBox);
             if (odysseyMaterial instanceof Data data) {
                 addSpawnRatesToTooltip(data, vBox);
@@ -619,8 +621,8 @@ public class MaterialService {
     }
 
     private static void addFleetCarrierOrdersToTooltip(final OdysseyMaterial odysseyMaterial, final DestroyableVBox vBox) {
-        final BuyOrder buyOrder = OrderService.getBuyOrder(odysseyMaterial);
-        final SellOrder sellOrder = OrderService.getSellOrder(odysseyMaterial);
+        final BuyOrder buyOrder = OrderService.getBuyOrder(odysseyMaterial, StoragePool.FLEETCARRIER);
+        final SellOrder sellOrder = OrderService.getSellOrder(odysseyMaterial, StoragePool.FLEETCARRIER);
         final Integer fleetCarrierStorageAmount = StorageService.getMaterialStorage(odysseyMaterial).getFleetCarrierValue();
         if (buyOrder != null || sellOrder != null || CAPIService.getInstance().getActive().not().get() || fleetCarrierStorageAmount > 0) {
             vBox.getNodes().add(LabelBuilder.builder()
@@ -654,8 +656,8 @@ public class MaterialService {
     }
 
     private static void addFleetCarrierOrdersToTooltip(final Commodity commodity, final DestroyableVBox vBox) {
-        final BuyOrder buyOrder = OrderService.getBuyOrder(commodity);
-        final SellOrder sellOrder = OrderService.getSellOrder(commodity);
+        final BuyOrder buyOrder = OrderService.getBuyOrder(commodity, StoragePool.FLEETCARRIER);
+        final SellOrder sellOrder = OrderService.getSellOrder(commodity, StoragePool.FLEETCARRIER);
         final Integer fleetCarrierStorageAmount = StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER);
         if (buyOrder != null || sellOrder != null || CAPIService.getInstance().getActive().not().get() || fleetCarrierStorageAmount > 0) {
             vBox.getNodes().add(LabelBuilder.builder()
@@ -688,6 +690,75 @@ public class MaterialService {
 
     }
 
+    private static void addSquadronCarrierOrdersToTooltip(final OdysseyMaterial odysseyMaterial, final DestroyableVBox vBox) {
+        final BuyOrder buyOrder = OrderService.getBuyOrder(odysseyMaterial, StoragePool.SQUADRONCARRIER);
+        final SellOrder sellOrder = OrderService.getSellOrder(odysseyMaterial, StoragePool.SQUADRONCARRIER);
+        final Integer squadronCarrierStorageAmount = StorageService.getMaterialStorage(odysseyMaterial).getSquadronCarrierValue();
+        if (buyOrder != null || sellOrder != null || CAPIService.getInstance().getActive().not().get() || squadronCarrierStorageAmount > 0) {
+            vBox.getNodes().add(LabelBuilder.builder()
+                    .build());
+            vBox.getNodes().add(LabelBuilder.builder()
+                    .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE)
+                    .withText(LocaleService.getStringBinding("material.tooltip.squadroncarrier"))
+                    .build());
+        }
+        if (CAPIService.getInstance().getActive().not().get()) {
+            vBox.getNodes().add(LabelBuilder.builder()
+                    .withText(LocaleService.getStringBinding("material.tooltip.fleetcarrier.not.linked"))
+                    .build());
+        }
+        if (buyOrder != null) {
+            vBox.getNodes().add(LabelBuilder.builder()
+                    .withText(LocaleService.getStringBinding("material.tooltip.fleetcarrier.buy", buyOrder.getTotal(), buyOrder.getOutstanding(), NUMBER_FORMAT.format(buyOrder.getPrice())))
+                    .build());
+        }
+        if (sellOrder != null) {
+            vBox.getNodes().add(LabelBuilder.builder()
+                    .withText(LocaleService.getStringBinding("material.tooltip.fleetcarrier.sell", sellOrder.getStock(), NUMBER_FORMAT.format(sellOrder.getPrice())))
+                    .build());
+        }
+        if (squadronCarrierStorageAmount > 0) {
+            vBox.getNodes().add(LabelBuilder.builder()
+                    .withText(LocaleService.getStringBinding("material.tooltip.fleetcarrier.storage", squadronCarrierStorageAmount))
+                    .build());
+        }
+
+    }
+
+    private static void addSquadronCarrierOrdersToTooltip(final Commodity commodity, final DestroyableVBox vBox) {
+        final BuyOrder buyOrder = OrderService.getBuyOrder(commodity, StoragePool.SQUADRONCARRIER);
+        final SellOrder sellOrder = OrderService.getSellOrder(commodity, StoragePool.SQUADRONCARRIER);
+        final Integer squadronCarrierStorageAmount = StorageService.getCommodityCount(commodity, StoragePool.SQUADRONCARRIER);
+        if (buyOrder != null || sellOrder != null || CAPIService.getInstance().getActive().not().get() || squadronCarrierStorageAmount > 0) {
+            vBox.getNodes().add(LabelBuilder.builder()
+                    .build());
+            vBox.getNodes().add(LabelBuilder.builder()
+                    .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE)
+                    .withText(LocaleService.getStringBinding("material.tooltip.squadroncarrier"))
+                    .build());
+        }
+        if (CAPIService.getInstance().getActive().not().get()) {
+            vBox.getNodes().add(LabelBuilder.builder()
+                    .withText(LocaleService.getStringBinding("material.tooltip.fleetcarrier.not.linked"))
+                    .build());
+        }
+        if (buyOrder != null) {
+            vBox.getNodes().add(LabelBuilder.builder()
+                    .withText(LocaleService.getStringBinding("material.tooltip.fleetcarrier.buy", buyOrder.getTotal(), buyOrder.getOutstanding(), NUMBER_FORMAT.format(buyOrder.getPrice())))
+                    .build());
+        }
+        if (sellOrder != null) {
+            vBox.getNodes().add(LabelBuilder.builder()
+                    .withText(LocaleService.getStringBinding("material.tooltip.fleetcarrier.sell", sellOrder.getStock(), NUMBER_FORMAT.format(sellOrder.getPrice())))
+                    .build());
+        }
+        if (squadronCarrierStorageAmount > 0) {
+            vBox.getNodes().add(LabelBuilder.builder()
+                    .withText(LocaleService.getStringBinding("material.tooltip.fleetcarrier.storage", squadronCarrierStorageAmount))
+                    .build());
+        }
+
+    }
     private static void addRecipesToTooltip(final Map<OdysseyBlueprintName, Integer> recipesContainingMaterial, final DestroyableVBox vBox) {
         if (!recipesContainingMaterial.isEmpty()) {
             vBox.getNodes().add(LabelBuilder.builder()

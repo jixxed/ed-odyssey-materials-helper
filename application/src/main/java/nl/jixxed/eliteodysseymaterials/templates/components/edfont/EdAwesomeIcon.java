@@ -70,7 +70,9 @@ public enum EdAwesomeIcon implements GlyphIcons {
     OTHER_PERMIT("\uE406"),
     OTHER_POWERPLAY("\uE407"),
     OTHER_POWERPLAY_OPEN("\uE408"),
-    OTHER_WISHLIST("\uE409"),
+    OTHER_STOCK_BRACKET_HIGH("\uE409"),
+    OTHER_STOCK_BRACKET_LOW("\uE40A"),
+    OTHER_WISHLIST("\uE40B"),
     SHIPS_ADVANCED("\uE500"),
     SHIPS_ARMOUR("\uE501"),
     SHIPS_ARMOUR_1("\uE502"),
@@ -140,7 +142,8 @@ public enum EdAwesomeIcon implements GlyphIcons {
     SHIPS_WIDTH_1("\uE542"),
     SHIPS_WIDTH_2("\uE543"),
     SQUADRON_BANK("\uE600"),
-    SQUADRON_CARRIER("\uE601");
+    SQUADRON_CARRIER("\uE601"),
+    STATION_CORIOLIS("\uE700");
 
     private static FontLoader fontLoader;
 

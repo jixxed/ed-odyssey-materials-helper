@@ -67,16 +67,13 @@
           -fx-alignment: center-left;
         }
 
-        .material-image {
+        .storage-image, .material-image {
           @include fixedWidth(2em);
           @include fixedHeight(2em);
-          -fx-fit-to-height: true;
-          -fx-fit-to-width: true;
-        }
-
-        .storage-image {
-          @include fixedHeight(2em);
-          -fx-alignment: top-left;
+          @include awesome-icons;
+          .glyph-icon{
+            -fx-font-size: 2em !important;
+          }
         }
 
         .selected-label {
@@ -90,7 +87,7 @@
 
         .buy-value, .sell-value {
           @include fixedHeight(2em);
-          @include fixedWidth(13em);
+          @include fixedWidth(10em);
           -fx-label-padding: 0 0 0 0.25em;
           -fx-alignment: baseline-left;
           -fx-font-style: italic;

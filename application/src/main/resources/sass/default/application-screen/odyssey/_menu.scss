@@ -129,8 +129,10 @@
       .ingredient-image {
         @include fixedWidth(2em);
         @include fixedHeight(2em);
-        -fx-fit-to-height: true;
-        -fx-fit-to-width: true;
+        @include awesome-icons;
+        .glyph-icon{
+          -fx-font-size: 2em !important;
+        }
       }
     }
 

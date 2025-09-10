@@ -15,6 +15,7 @@ public enum HorizonsCommoditiesShow {
     BOUGHT_AT_STATION,
     SHIP,
     FLEETCARRIER,
+    SQUADRONCARRIER,
     CHEMICALS,
     CONSUMER_ITEMS,
     FOODS,
@@ -48,9 +49,10 @@ public enum HorizonsCommoditiesShow {
     public static Predicate<HorizonsCommodityCard> getFilter(final CommoditiesSearch search) {
         return switch (search.getCommoditiesShow()) {
             case ALL -> (HorizonsCommodityCard o) -> true;
-            case ALL_WITH_STOCK -> (HorizonsCommodityCard o) -> o.getFleetcarrierAmount() > 0 || o.getShipAmount() > 0;
+            case ALL_WITH_STOCK -> (HorizonsCommodityCard o) -> o.getFleetCarrierAmount() > 0 ||o.getSquadronCarrierAmount() > 0 || o.getShipAmount() > 0;
             case SHIP -> (HorizonsCommodityCard o) -> o.getShipAmount() > 0;
-            case FLEETCARRIER -> (HorizonsCommodityCard o) -> o.getFleetcarrierAmount() > 0;
+            case FLEETCARRIER -> (HorizonsCommodityCard o) -> o.getFleetCarrierAmount() > 0;
+            case SQUADRONCARRIER -> (HorizonsCommodityCard o) -> o.getSquadronCarrierAmount() > 0;
             case CHEMICALS -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.CHEMICALS);
             case CONSUMER_ITEMS -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.CONSUMER_ITEMS);
             case FOODS -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.FOODS);

@@ -12,19 +12,21 @@ public class Storage {
     private Integer backPack;
     private Integer shipLocker;
     private Integer fleetCarrier;
+    private Integer squadronCarrier;
 
     public Storage() {
         this.backPack = 0;
         this.shipLocker = 0;
         this.fleetCarrier = 0;
+        this.squadronCarrier = 0;
     }
 
     public static Storage of(final Integer backPack, final Integer shipLocker) {
-        return new Storage(backPack, shipLocker, 0);
+        return new Storage(backPack, shipLocker, 0, 0);
     }
 
-    public static Storage of(final Integer backPack, final Integer shipLocker, final Integer fleetCarrier) {
-        return new Storage(backPack, shipLocker, fleetCarrier);
+    public static Storage of(final Integer backPack, final Integer shipLocker, final Integer fleetCarrier, final Integer squadronCarrier) {
+        return new Storage(backPack, shipLocker, fleetCarrier, squadronCarrier);
     }
 
     public Integer getBackPackValue() {
@@ -33,6 +35,9 @@ public class Storage {
 
     public Integer getFleetCarrierValue() {
         return this.fleetCarrier;
+    }
+    public Integer getSquadronCarrierValue() {
+        return this.squadronCarrier;
     }
 
     public Integer getShipLockerValue() {
@@ -49,12 +54,14 @@ public class Storage {
             this.shipLocker = value;
         } else if (pool == StoragePool.FLEETCARRIER) {
             this.fleetCarrier = value;
+        } else if (pool == StoragePool.SQUADRONCARRIER) {
+            this.squadronCarrier = value;
         }
 
     }
 
     public Integer getTotalValue() {
-        return getAvailableValue() + this.fleetCarrier;
+        return getAvailableValue() + this.fleetCarrier + this.squadronCarrier;
     }
 
     public Integer getAvailableValue() {
@@ -66,8 +73,10 @@ public class Storage {
             case BACKPACK -> this.backPack;
             case SHIPLOCKER -> this.shipLocker;
             case FLEETCARRIER -> this.fleetCarrier;
+            case SQUADRONCARRIER -> this.squadronCarrier;
             case SHIP -> null;
             case SRV -> null;
         };
     }
+
 }

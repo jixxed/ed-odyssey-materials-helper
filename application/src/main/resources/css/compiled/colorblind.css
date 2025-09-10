@@ -173,6 +173,8 @@
               -fx-text-fill: #dcc030; }
             .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry:fleetcarrier .bom-entry-content .amount-fleetcarrier {
               -fx-text-fill: #2e92df; }
+            .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry:squadroncarrier .bom-entry-content .amount-squadroncarrier {
+              -fx-text-fill: orange; }
             .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content {
               -fx-padding: 0.25em;
               -fx-spacing: 0.25em; }
@@ -197,20 +199,22 @@
                 -fx-font-weight: bold; }
               .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .amount-fleetcarrier {
                 -fx-font-weight: bold; }
+              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .amount-squadroncarrier {
+                -fx-font-weight: bold; }
               .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .title-amount-delivered {
                 -fx-text-fill: red; }
               .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .values-sub-1 {
                 -fx-hgap: 0.5em;
                 -fx-spacing: 0.5em;
-                -fx-min-width: 13.28em;
-                -fx-pref-width: 13.28em;
-                -fx-max-width: 13.28em; }
+                -fx-min-width: 15.4em;
+                -fx-pref-width: 15.4em;
+                -fx-max-width: 15.4em; }
               .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .values-sub-2 {
                 -fx-hgap: 0.5em;
                 -fx-spacing: 0.5em;
-                -fx-min-width: 17.28em;
-                -fx-pref-width: 17.28em;
-                -fx-max-width: 17.28em; }
+                -fx-min-width: 15.4em;
+                -fx-pref-width: 15.4em;
+                -fx-max-width: 15.4em; }
               .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .values-market {
                 -fx-hgap: 0.2em;
                 -fx-spacing: 0.2em; }
@@ -294,13 +298,100 @@
                   -fx-fill: #ff5800; }
                 .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .material-image .glyph-icon {
                   -fx-font-size: 2.5em !important; }
-              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .storage-image {
+              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon {
                 -fx-min-width: 2em;
                 -fx-pref-width: 2em;
                 -fx-max-width: 2em;
                 -fx-min-height: 2em;
                 -fx-pref-height: 2em;
                 -fx-max-height: 2em; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .glyph-icon {
+                  -fx-font-size: 1.5em !important; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .ships-multicrew-radar {
+                  -fx-fill: #159ec2; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .other-powerplay-open {
+                  -fx-fill: #ffc600; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .ships-guardian-1 {
+                  -fx-fill: #026fa2; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .ships-guardian-2 {
+                  -fx-fill: #00aafc; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .other-communitygoal {
+                  -fx-fill: #ffeb00; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .other-arx {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .ships-engineer {
+                  -fx-font-size: 1.3em !important;
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .ships-gimballed {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .ships-turreted {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .ships-fixed {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .ships-synthesis-basic {
+                  -fx-fill: #2e92df; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .ships-synthesis-standard {
+                  -fx-fill: #2e92df; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .ships-synthesis-premium {
+                  -fx-fill: #2e92df; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .ships-preengineered {
+                  -fx-fill: #f2c80e; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .ships-advanced {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .ships-enhanced {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .ships-dumbfire {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .ships-seeker {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .ships-legacy {
+                  -fx-fill: #d16a0a; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .other-carrier-simple {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .ships-ship-1 {
+                  -fx-fill: #8e8e8e; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .ships-ship-2 {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .squadron-carrier {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .station-coriolis {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .onfoot-backpack-1 {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .onfoot-backpack-2 {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .other-wishlist {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .materials-good-1 {
+                  -fx-fill: #da9b10; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .materials-good-2 {
+                  -fx-fill: #dabe54; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .materials-data {
+                  -fx-fill: #2bb0c6; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .materials-tech-1 {
+                  -fx-fill: #c8f4f6; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .materials-tech-2 {
+                  -fx-fill: #97eef2; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .materials-circuit-1 {
+                  -fx-fill: #fbcec0; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .materials-circuit-2 {
+                  -fx-fill: #fa9778; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .materials-chemical-1 {
+                  -fx-fill: #c9e8b3; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .materials-chemical-2 {
+                  -fx-fill: #97e55d; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .onfoot-dynamic {
+                  -fx-fill: #ff00e7; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .onfoot-force {
+                  -fx-fill: #ff3c00; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .onfoot-strategic {
+                  -fx-fill: #7cd429; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .other-stock-bracket-low {
+                  -fx-fill: red; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .other-stock-bracket-high {
+                  -fx-fill: #709adc; }
+                .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .glyph-icon {
+                  -fx-font-size: 2em !important; }
             .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-progressbar {
               -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentedBarSkin";
               -fx-min-height: 0.5em;
@@ -323,8 +414,10 @@
                 -fx-background-color: red; }
               .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-progressbar .present-ship {
                 -fx-background-color: #dcc030; }
-              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-progressbar .present-fleetcarrier {
+              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-progressbar .present-fleet-carrier {
                 -fx-background-color: #2e92df; }
+              .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-progressbar .present-squadron-carrier {
+                -fx-background-color: orange; }
               .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-progressbar .not-present {
                 -fx-background-color: gray; }
     .app .application-screen .horizons-tab-content .commodities-tab {
@@ -427,25 +520,214 @@
                 .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .commodity-image .glyph-icon {
                   -fx-font-size: 2.5em !important; }
               .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .name {
-                -fx-min-width: 28em;
-                -fx-pref-width: 28em;
-                -fx-max-width: 28em;
+                -fx-min-width: 21.5em;
+                -fx-pref-width: 21.5em;
+                -fx-max-width: 21.5em;
                 -fx-alignment: center-left;
                 -fx-wrap-text: true; }
               .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .category {
-                -fx-min-width: 28em;
-                -fx-pref-width: 28em;
-                -fx-max-width: 28em;
+                -fx-min-width: 21.5em;
+                -fx-pref-width: 21.5em;
+                -fx-max-width: 21.5em;
                 -fx-alignment: center-left;
                 -fx-wrap-text: true;
                 -fx-text-fill: gray; }
-            .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .image {
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .ship-amount {
+                -fx-pref-width: 6.5em;
+                -fx-padding: 0, 0, 0, 1em;
+                -fx-min-height: 2em;
+                -fx-alignment: center-right;
+                -fx-text-alignment: right; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .ingredient-quantity-section {
+                -fx-spacing: 1em; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon {
+                -fx-min-width: 2em;
+                -fx-pref-width: 2em;
+                -fx-max-width: 2em;
+                -fx-min-height: 2em;
+                -fx-pref-height: 2em;
+                -fx-max-height: 2em; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .glyph-icon {
+                  -fx-font-size: 1.5em !important; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .ships-multicrew-radar {
+                  -fx-fill: #159ec2; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .other-powerplay-open {
+                  -fx-fill: #ffc600; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .ships-guardian-1 {
+                  -fx-fill: #026fa2; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .ships-guardian-2 {
+                  -fx-fill: #00aafc; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .other-communitygoal {
+                  -fx-fill: #ffeb00; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .other-arx {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .ships-engineer {
+                  -fx-font-size: 1.3em !important;
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .ships-gimballed {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .ships-turreted {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .ships-fixed {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .ships-synthesis-basic {
+                  -fx-fill: #2e92df; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .ships-synthesis-standard {
+                  -fx-fill: #2e92df; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .ships-synthesis-premium {
+                  -fx-fill: #2e92df; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .ships-preengineered {
+                  -fx-fill: #f2c80e; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .ships-advanced {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .ships-enhanced {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .ships-dumbfire {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .ships-seeker {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .ships-legacy {
+                  -fx-fill: #d16a0a; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .other-carrier-simple {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .ships-ship-1 {
+                  -fx-fill: #8e8e8e; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .ships-ship-2 {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .squadron-carrier {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .station-coriolis {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .onfoot-backpack-1 {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .onfoot-backpack-2 {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .other-wishlist {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .materials-good-1 {
+                  -fx-fill: #da9b10; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .materials-good-2 {
+                  -fx-fill: #dabe54; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .materials-data {
+                  -fx-fill: #2bb0c6; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .materials-tech-1 {
+                  -fx-fill: #c8f4f6; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .materials-tech-2 {
+                  -fx-fill: #97eef2; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .materials-circuit-1 {
+                  -fx-fill: #fbcec0; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .materials-circuit-2 {
+                  -fx-fill: #fa9778; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .materials-chemical-1 {
+                  -fx-fill: #c9e8b3; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .materials-chemical-2 {
+                  -fx-fill: #97e55d; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .onfoot-dynamic {
+                  -fx-fill: #ff00e7; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .onfoot-force {
+                  -fx-fill: #ff3c00; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .onfoot-strategic {
+                  -fx-fill: #7cd429; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .other-stock-bracket-low {
+                  -fx-fill: red; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .other-stock-bracket-high {
+                  -fx-fill: #709adc; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .glyph-icon {
+                  -fx-font-size: 2em !important; }
+            .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon {
               -fx-min-width: 2em;
               -fx-pref-width: 2em;
               -fx-max-width: 2em;
               -fx-min-height: 2em;
               -fx-pref-height: 2em;
               -fx-max-height: 2em; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .glyph-icon {
+                -fx-font-size: 1.5em !important; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .ships-multicrew-radar {
+                -fx-fill: #159ec2; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .other-powerplay-open {
+                -fx-fill: #ffc600; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .ships-guardian-1 {
+                -fx-fill: #026fa2; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .ships-guardian-2 {
+                -fx-fill: #00aafc; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .other-communitygoal {
+                -fx-fill: #ffeb00; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .other-arx {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .ships-engineer {
+                -fx-font-size: 1.3em !important;
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .ships-gimballed {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .ships-turreted {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .ships-fixed {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .ships-synthesis-basic {
+                -fx-fill: #2e92df; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .ships-synthesis-standard {
+                -fx-fill: #2e92df; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .ships-synthesis-premium {
+                -fx-fill: #2e92df; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .ships-preengineered {
+                -fx-fill: #f2c80e; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .ships-advanced {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .ships-enhanced {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .ships-dumbfire {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .ships-seeker {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .ships-legacy {
+                -fx-fill: #d16a0a; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .other-carrier-simple {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .ships-ship-1 {
+                -fx-fill: #8e8e8e; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .ships-ship-2 {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .squadron-carrier {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .station-coriolis {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .onfoot-backpack-1 {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .onfoot-backpack-2 {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .other-wishlist {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .materials-good-1 {
+                -fx-fill: #da9b10; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .materials-good-2 {
+                -fx-fill: #dabe54; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .materials-data {
+                -fx-fill: #2bb0c6; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .materials-tech-1 {
+                -fx-fill: #c8f4f6; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .materials-tech-2 {
+                -fx-fill: #97eef2; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .materials-circuit-1 {
+                -fx-fill: #fbcec0; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .materials-circuit-2 {
+                -fx-fill: #fa9778; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .materials-chemical-1 {
+                -fx-fill: #c9e8b3; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .materials-chemical-2 {
+                -fx-fill: #97e55d; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .onfoot-dynamic {
+                -fx-fill: #ff00e7; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .onfoot-force {
+                -fx-fill: #ff3c00; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .onfoot-strategic {
+                -fx-fill: #7cd429; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .other-stock-bracket-low {
+                -fx-fill: red; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .other-stock-bracket-high {
+                -fx-fill: #709adc; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .glyph-icon {
+                -fx-font-size: 2em !important; }
             .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .ingredient-quantity-section {
               -fx-spacing: 1em; }
             .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .fleetcarrier-amount {
@@ -454,7 +736,7 @@
               -fx-min-height: 2em;
               -fx-alignment: center-left;
               -fx-text-alignment: left; }
-            .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .ship-amount {
+            .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .squadroncarrier-amount {
               -fx-pref-width: 6.5em;
               -fx-padding: 0, 1em, 0, 0;
               -fx-min-height: 2em;
@@ -467,13 +749,100 @@
             -fx-pref-height: 100%;
             -fx-alignment: bottom-center;
             -fx-padding: 0 0em 0.25em 0; }
-            .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .image {
+            .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon {
               -fx-min-width: 2em;
               -fx-pref-width: 2em;
               -fx-max-width: 2em;
               -fx-min-height: 2em;
               -fx-pref-height: 2em;
               -fx-max-height: 2em; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .glyph-icon {
+                -fx-font-size: 1.5em !important; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .ships-multicrew-radar {
+                -fx-fill: #159ec2; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .other-powerplay-open {
+                -fx-fill: #ffc600; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .ships-guardian-1 {
+                -fx-fill: #026fa2; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .ships-guardian-2 {
+                -fx-fill: #00aafc; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .other-communitygoal {
+                -fx-fill: #ffeb00; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .other-arx {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .ships-engineer {
+                -fx-font-size: 1.3em !important;
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .ships-gimballed {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .ships-turreted {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .ships-fixed {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .ships-synthesis-basic {
+                -fx-fill: #2e92df; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .ships-synthesis-standard {
+                -fx-fill: #2e92df; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .ships-synthesis-premium {
+                -fx-fill: #2e92df; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .ships-preengineered {
+                -fx-fill: #f2c80e; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .ships-advanced {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .ships-enhanced {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .ships-dumbfire {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .ships-seeker {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .ships-legacy {
+                -fx-fill: #d16a0a; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .other-carrier-simple {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .ships-ship-1 {
+                -fx-fill: #8e8e8e; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .ships-ship-2 {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .squadron-carrier {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .station-coriolis {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .onfoot-backpack-1 {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .onfoot-backpack-2 {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .other-wishlist {
+                -fx-fill: white; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .materials-good-1 {
+                -fx-fill: #da9b10; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .materials-good-2 {
+                -fx-fill: #dabe54; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .materials-data {
+                -fx-fill: #2bb0c6; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .materials-tech-1 {
+                -fx-fill: #c8f4f6; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .materials-tech-2 {
+                -fx-fill: #97eef2; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .materials-circuit-1 {
+                -fx-fill: #fbcec0; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .materials-circuit-2 {
+                -fx-fill: #fa9778; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .materials-chemical-1 {
+                -fx-fill: #c9e8b3; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .materials-chemical-2 {
+                -fx-fill: #97e55d; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .onfoot-dynamic {
+                -fx-fill: #ff00e7; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .onfoot-force {
+                -fx-fill: #ff3c00; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .onfoot-strategic {
+                -fx-fill: #7cd429; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .other-stock-bracket-low {
+                -fx-fill: red; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .other-stock-bracket-high {
+                -fx-fill: #709adc; }
+              .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .glyph-icon {
+                -fx-font-size: 2em !important; }
             .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .station-box {
               -fx-min-width: 12em;
               -fx-pref-width: 12em;
@@ -2070,6 +2439,50 @@
                       -fx-fill: white; }
                     .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .ships-legacy {
                       -fx-fill: #d16a0a; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .other-carrier-simple {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .ships-ship-1 {
+                      -fx-fill: #8e8e8e; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .ships-ship-2 {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .squadron-carrier {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .station-coriolis {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .onfoot-backpack-1 {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .onfoot-backpack-2 {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .other-wishlist {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .materials-good-1 {
+                      -fx-fill: #da9b10; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .materials-good-2 {
+                      -fx-fill: #dabe54; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .materials-data {
+                      -fx-fill: #2bb0c6; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .materials-tech-1 {
+                      -fx-fill: #c8f4f6; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .materials-tech-2 {
+                      -fx-fill: #97eef2; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .materials-circuit-1 {
+                      -fx-fill: #fbcec0; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .materials-circuit-2 {
+                      -fx-fill: #fa9778; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .materials-chemical-1 {
+                      -fx-fill: #c9e8b3; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .materials-chemical-2 {
+                      -fx-fill: #97e55d; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .onfoot-dynamic {
+                      -fx-fill: #ff00e7; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .onfoot-force {
+                      -fx-fill: #ff3c00; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .onfoot-strategic {
+                      -fx-fill: #7cd429; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .other-stock-bracket-low {
+                      -fx-fill: red; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .other-stock-bracket-high {
+                      -fx-fill: #709adc; }
                   .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide {
                     -fx-min-width: 2.7em;
                     -fx-pref-width: 2.7em;
@@ -2117,6 +2530,50 @@
                       -fx-fill: white; }
                     .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .ships-legacy {
                       -fx-fill: #d16a0a; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .other-carrier-simple {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .ships-ship-1 {
+                      -fx-fill: #8e8e8e; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .ships-ship-2 {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .squadron-carrier {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .station-coriolis {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .onfoot-backpack-1 {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .onfoot-backpack-2 {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .other-wishlist {
+                      -fx-fill: white; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .materials-good-1 {
+                      -fx-fill: #da9b10; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .materials-good-2 {
+                      -fx-fill: #dabe54; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .materials-data {
+                      -fx-fill: #2bb0c6; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .materials-tech-1 {
+                      -fx-fill: #c8f4f6; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .materials-tech-2 {
+                      -fx-fill: #97eef2; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .materials-circuit-1 {
+                      -fx-fill: #fbcec0; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .materials-circuit-2 {
+                      -fx-fill: #fa9778; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .materials-chemical-1 {
+                      -fx-fill: #c9e8b3; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .materials-chemical-2 {
+                      -fx-fill: #97e55d; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .onfoot-dynamic {
+                      -fx-fill: #ff00e7; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .onfoot-force {
+                      -fx-fill: #ff3c00; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .onfoot-strategic {
+                      -fx-fill: #7cd429; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .other-stock-bracket-low {
+                      -fx-fill: red; }
+                    .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .other-stock-bracket-high {
+                      -fx-fill: #709adc; }
                 .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .name {
                   -fx-max-width: 20em; }
                   .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .name:changed {
@@ -2640,6 +3097,50 @@
                         -fx-fill: white; }
                       .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .ships-legacy {
                         -fx-fill: #d16a0a; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .other-carrier-simple {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .ships-ship-1 {
+                        -fx-fill: #8e8e8e; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .ships-ship-2 {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .squadron-carrier {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .station-coriolis {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .onfoot-backpack-1 {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .onfoot-backpack-2 {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .other-wishlist {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .materials-good-1 {
+                        -fx-fill: #da9b10; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .materials-good-2 {
+                        -fx-fill: #dabe54; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .materials-data {
+                        -fx-fill: #2bb0c6; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .materials-tech-1 {
+                        -fx-fill: #c8f4f6; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .materials-tech-2 {
+                        -fx-fill: #97eef2; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .materials-circuit-1 {
+                        -fx-fill: #fbcec0; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .materials-circuit-2 {
+                        -fx-fill: #fa9778; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .materials-chemical-1 {
+                        -fx-fill: #c9e8b3; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .materials-chemical-2 {
+                        -fx-fill: #97e55d; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .onfoot-dynamic {
+                        -fx-fill: #ff00e7; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .onfoot-force {
+                        -fx-fill: #ff3c00; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .onfoot-strategic {
+                        -fx-fill: #7cd429; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .other-stock-bracket-low {
+                        -fx-fill: red; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .other-stock-bracket-high {
+                        -fx-fill: #709adc; }
                     .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide {
                       -fx-min-width: 2.7em;
                       -fx-pref-width: 2.7em;
@@ -2689,6 +3190,50 @@
                         -fx-fill: white; }
                       .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .ships-legacy {
                         -fx-fill: #d16a0a; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .other-carrier-simple {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .ships-ship-1 {
+                        -fx-fill: #8e8e8e; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .ships-ship-2 {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .squadron-carrier {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .station-coriolis {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .onfoot-backpack-1 {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .onfoot-backpack-2 {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .other-wishlist {
+                        -fx-fill: white; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .materials-good-1 {
+                        -fx-fill: #da9b10; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .materials-good-2 {
+                        -fx-fill: #dabe54; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .materials-data {
+                        -fx-fill: #2bb0c6; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .materials-tech-1 {
+                        -fx-fill: #c8f4f6; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .materials-tech-2 {
+                        -fx-fill: #97eef2; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .materials-circuit-1 {
+                        -fx-fill: #fbcec0; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .materials-circuit-2 {
+                        -fx-fill: #fa9778; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .materials-chemical-1 {
+                        -fx-fill: #c9e8b3; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .materials-chemical-2 {
+                        -fx-fill: #97e55d; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .onfoot-dynamic {
+                        -fx-fill: #ff00e7; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .onfoot-force {
+                        -fx-fill: #ff3c00; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .onfoot-strategic {
+                        -fx-fill: #7cd429; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .other-stock-bracket-low {
+                        -fx-fill: red; }
+                      .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .other-stock-bracket-high {
+                        -fx-fill: #709adc; }
     .app .application-screen .horizons-tab-content .wishlist-tab {
       -fx-background-insets: 0 0 0 0;
       -fx-effect: none;
@@ -3261,20 +3806,100 @@
             -fx-pref-height: 2em;
             -fx-max-height: 2em;
             -fx-alignment: center-left; }
-          .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image {
+          .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image {
             -fx-min-width: 2em;
             -fx-pref-width: 2em;
             -fx-max-width: 2em;
             -fx-min-height: 2em;
             -fx-pref-height: 2em;
-            -fx-max-height: 2em;
-            -fx-fit-to-height: true;
-            -fx-fit-to-width: true; }
-          .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image {
-            -fx-min-height: 2em;
-            -fx-pref-height: 2em;
-            -fx-max-height: 2em;
-            -fx-alignment: top-left; }
+            -fx-max-height: 2em; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .glyph-icon, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .glyph-icon {
+              -fx-font-size: 1.5em !important; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .ships-multicrew-radar, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .ships-multicrew-radar {
+              -fx-fill: #159ec2; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .other-powerplay-open, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .other-powerplay-open {
+              -fx-fill: #ffc600; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .ships-guardian-1, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .ships-guardian-1 {
+              -fx-fill: #026fa2; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .ships-guardian-2, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .ships-guardian-2 {
+              -fx-fill: #00aafc; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .other-communitygoal, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .other-communitygoal {
+              -fx-fill: #ffeb00; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .other-arx, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .other-arx {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .ships-engineer, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .ships-engineer {
+              -fx-font-size: 1.3em !important;
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .ships-gimballed, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .ships-gimballed {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .ships-turreted, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .ships-turreted {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .ships-fixed, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .ships-fixed {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .ships-synthesis-basic, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .ships-synthesis-basic {
+              -fx-fill: #2e92df; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .ships-synthesis-standard, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .ships-synthesis-standard {
+              -fx-fill: #2e92df; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .ships-synthesis-premium, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .ships-synthesis-premium {
+              -fx-fill: #2e92df; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .ships-preengineered, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .ships-preengineered {
+              -fx-fill: #f2c80e; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .ships-advanced, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .ships-advanced {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .ships-enhanced, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .ships-enhanced {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .ships-dumbfire, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .ships-dumbfire {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .ships-seeker, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .ships-seeker {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .ships-legacy, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .ships-legacy {
+              -fx-fill: #d16a0a; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .other-carrier-simple, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .other-carrier-simple {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .ships-ship-1, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .ships-ship-1 {
+              -fx-fill: #8e8e8e; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .ships-ship-2, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .ships-ship-2 {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .squadron-carrier, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .squadron-carrier {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .station-coriolis, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .station-coriolis {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .onfoot-backpack-1, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .onfoot-backpack-1 {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .onfoot-backpack-2, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .onfoot-backpack-2 {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .other-wishlist, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .other-wishlist {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .materials-good-1, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .materials-good-1 {
+              -fx-fill: #da9b10; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .materials-good-2, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .materials-good-2 {
+              -fx-fill: #dabe54; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .materials-data, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .materials-data {
+              -fx-fill: #2bb0c6; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .materials-tech-1, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .materials-tech-1 {
+              -fx-fill: #c8f4f6; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .materials-tech-2, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .materials-tech-2 {
+              -fx-fill: #97eef2; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .materials-circuit-1, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .materials-circuit-1 {
+              -fx-fill: #fbcec0; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .materials-circuit-2, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .materials-circuit-2 {
+              -fx-fill: #fa9778; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .materials-chemical-1, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .materials-chemical-1 {
+              -fx-fill: #c9e8b3; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .materials-chemical-2, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .materials-chemical-2 {
+              -fx-fill: #97e55d; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .onfoot-dynamic, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .onfoot-dynamic {
+              -fx-fill: #ff00e7; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .onfoot-force, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .onfoot-force {
+              -fx-fill: #ff3c00; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .onfoot-strategic, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .onfoot-strategic {
+              -fx-fill: #7cd429; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .other-stock-bracket-low, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .other-stock-bracket-low {
+              -fx-fill: red; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .other-stock-bracket-high, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .other-stock-bracket-high {
+              -fx-fill: #709adc; }
+            .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .glyph-icon, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .glyph-icon {
+              -fx-font-size: 2em !important; }
           .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .selected-label {
             -fx-font-weight: bold; }
           .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .selected-value {
@@ -3284,9 +3909,9 @@
             -fx-min-height: 2em;
             -fx-pref-height: 2em;
             -fx-max-height: 2em;
-            -fx-min-width: 13em;
-            -fx-pref-width: 13em;
-            -fx-max-width: 13em;
+            -fx-min-width: 10em;
+            -fx-pref-width: 10em;
+            -fx-max-width: 10em;
             -fx-label-padding: 0 0 0 0.25em;
             -fx-alignment: baseline-left;
             -fx-font-style: italic; }
@@ -3450,10 +4075,99 @@
             -fx-max-height: 2.2em;
             -fx-font-size: 1em; }
           .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image {
+            -fx-min-width: 2.2em;
+            -fx-pref-width: 2.2em;
             -fx-max-width: 2.2em;
-            -fx-max-height: 2.2em;
-            -fx-fit-to-height: true;
-            -fx-fit-to-width: true; }
+            -fx-min-height: 2.2em;
+            -fx-pref-height: 2.2em;
+            -fx-max-height: 2.2em; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .glyph-icon {
+              -fx-font-size: 1.5em !important; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .ships-multicrew-radar {
+              -fx-fill: #159ec2; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .other-powerplay-open {
+              -fx-fill: #ffc600; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .ships-guardian-1 {
+              -fx-fill: #026fa2; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .ships-guardian-2 {
+              -fx-fill: #00aafc; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .other-communitygoal {
+              -fx-fill: #ffeb00; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .other-arx {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .ships-engineer {
+              -fx-font-size: 1.3em !important;
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .ships-gimballed {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .ships-turreted {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .ships-fixed {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .ships-synthesis-basic {
+              -fx-fill: #2e92df; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .ships-synthesis-standard {
+              -fx-fill: #2e92df; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .ships-synthesis-premium {
+              -fx-fill: #2e92df; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .ships-preengineered {
+              -fx-fill: #f2c80e; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .ships-advanced {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .ships-enhanced {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .ships-dumbfire {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .ships-seeker {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .ships-legacy {
+              -fx-fill: #d16a0a; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .other-carrier-simple {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .ships-ship-1 {
+              -fx-fill: #8e8e8e; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .ships-ship-2 {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .squadron-carrier {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .station-coriolis {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .onfoot-backpack-1 {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .onfoot-backpack-2 {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .other-wishlist {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .materials-good-1 {
+              -fx-fill: #da9b10; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .materials-good-2 {
+              -fx-fill: #dabe54; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .materials-data {
+              -fx-fill: #2bb0c6; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .materials-tech-1 {
+              -fx-fill: #c8f4f6; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .materials-tech-2 {
+              -fx-fill: #97eef2; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .materials-circuit-1 {
+              -fx-fill: #fbcec0; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .materials-circuit-2 {
+              -fx-fill: #fa9778; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .materials-chemical-1 {
+              -fx-fill: #c9e8b3; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .materials-chemical-2 {
+              -fx-fill: #97e55d; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .onfoot-dynamic {
+              -fx-fill: #ff00e7; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .onfoot-force {
+              -fx-fill: #ff3c00; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .onfoot-strategic {
+              -fx-fill: #7cd429; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .other-stock-bracket-low {
+              -fx-fill: red; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .other-stock-bracket-high {
+              -fx-fill: #709adc; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .glyph-icon {
+              -fx-font-size: 2.2em !important; }
           .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation:force .name {
             -fx-text-fill: #ff3c00; }
           .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation:dynamic .name {
@@ -3715,9 +4429,9 @@
           -fx-min-height: 2em;
           -fx-pref-height: 2em;
           -fx-max-height: 2em;
-          -fx-min-width: 32em;
-          -fx-pref-width: 32em;
-          -fx-max-width: 32em;
+          -fx-min-width: 38em;
+          -fx-pref-width: 38em;
+          -fx-max-width: 38em;
           -fx-background-color: #0f0f0f;
           -fx-border-color: black;
           -fx-alignment: center-left; }
@@ -3726,10 +4440,105 @@
             -fx-background-color: #252525; }
           .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .name {
             -fx-padding: 0.25em; }
-          .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image {
+          .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image {
             -fx-min-width: 2em;
             -fx-pref-width: 2em;
-            -fx-max-width: 2em; }
+            -fx-max-width: 2em;
+            -fx-min-height: 2em;
+            -fx-pref-height: 2em;
+            -fx-max-height: 2em; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .glyph-icon, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .glyph-icon, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .glyph-icon, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .glyph-icon, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .glyph-icon, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .glyph-icon {
+              -fx-font-size: 1.5em !important; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .ships-multicrew-radar, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .ships-multicrew-radar, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .ships-multicrew-radar, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .ships-multicrew-radar, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .ships-multicrew-radar, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .ships-multicrew-radar {
+              -fx-fill: #159ec2; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .other-powerplay-open, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .other-powerplay-open, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .other-powerplay-open, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .other-powerplay-open, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .other-powerplay-open, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .other-powerplay-open {
+              -fx-fill: #ffc600; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .ships-guardian-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .ships-guardian-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .ships-guardian-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .ships-guardian-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .ships-guardian-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .ships-guardian-1 {
+              -fx-fill: #026fa2; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .ships-guardian-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .ships-guardian-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .ships-guardian-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .ships-guardian-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .ships-guardian-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .ships-guardian-2 {
+              -fx-fill: #00aafc; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .other-communitygoal, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .other-communitygoal, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .other-communitygoal, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .other-communitygoal, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .other-communitygoal, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .other-communitygoal {
+              -fx-fill: #ffeb00; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .other-arx, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .other-arx, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .other-arx, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .other-arx, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .other-arx, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .other-arx {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .ships-engineer, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .ships-engineer, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .ships-engineer, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .ships-engineer, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .ships-engineer, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .ships-engineer {
+              -fx-font-size: 1.3em !important;
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .ships-gimballed, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .ships-gimballed, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .ships-gimballed, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .ships-gimballed, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .ships-gimballed, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .ships-gimballed {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .ships-turreted, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .ships-turreted, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .ships-turreted, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .ships-turreted, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .ships-turreted, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .ships-turreted {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .ships-fixed, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .ships-fixed, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .ships-fixed, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .ships-fixed, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .ships-fixed, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .ships-fixed {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .ships-synthesis-basic, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .ships-synthesis-basic, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .ships-synthesis-basic, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .ships-synthesis-basic, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .ships-synthesis-basic, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .ships-synthesis-basic {
+              -fx-fill: #2e92df; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .ships-synthesis-standard, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .ships-synthesis-standard, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .ships-synthesis-standard, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .ships-synthesis-standard, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .ships-synthesis-standard, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .ships-synthesis-standard {
+              -fx-fill: #2e92df; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .ships-synthesis-premium, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .ships-synthesis-premium, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .ships-synthesis-premium, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .ships-synthesis-premium, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .ships-synthesis-premium, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .ships-synthesis-premium {
+              -fx-fill: #2e92df; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .ships-preengineered, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .ships-preengineered, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .ships-preengineered, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .ships-preengineered, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .ships-preengineered, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .ships-preengineered {
+              -fx-fill: #f2c80e; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .ships-advanced, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .ships-advanced, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .ships-advanced, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .ships-advanced, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .ships-advanced, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .ships-advanced {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .ships-enhanced, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .ships-enhanced, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .ships-enhanced, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .ships-enhanced, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .ships-enhanced, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .ships-enhanced {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .ships-dumbfire, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .ships-dumbfire, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .ships-dumbfire, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .ships-dumbfire, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .ships-dumbfire, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .ships-dumbfire {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .ships-seeker, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .ships-seeker, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .ships-seeker, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .ships-seeker, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .ships-seeker, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .ships-seeker {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .ships-legacy, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .ships-legacy, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .ships-legacy, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .ships-legacy, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .ships-legacy, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .ships-legacy {
+              -fx-fill: #d16a0a; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .other-carrier-simple, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .other-carrier-simple, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .other-carrier-simple, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .other-carrier-simple, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .other-carrier-simple, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .other-carrier-simple {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .ships-ship-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .ships-ship-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .ships-ship-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .ships-ship-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .ships-ship-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .ships-ship-1 {
+              -fx-fill: #8e8e8e; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .ships-ship-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .ships-ship-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .ships-ship-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .ships-ship-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .ships-ship-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .ships-ship-2 {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .squadron-carrier, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .squadron-carrier, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .squadron-carrier, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .squadron-carrier, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .squadron-carrier, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .squadron-carrier {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .station-coriolis, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .station-coriolis, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .station-coriolis, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .station-coriolis, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .station-coriolis, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .station-coriolis {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .onfoot-backpack-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .onfoot-backpack-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .onfoot-backpack-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .onfoot-backpack-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .onfoot-backpack-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .onfoot-backpack-1 {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .onfoot-backpack-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .onfoot-backpack-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .onfoot-backpack-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .onfoot-backpack-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .onfoot-backpack-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .onfoot-backpack-2 {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .other-wishlist, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .other-wishlist, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .other-wishlist, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .other-wishlist, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .other-wishlist, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .other-wishlist {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .materials-good-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .materials-good-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .materials-good-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .materials-good-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .materials-good-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .materials-good-1 {
+              -fx-fill: #da9b10; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .materials-good-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .materials-good-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .materials-good-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .materials-good-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .materials-good-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .materials-good-2 {
+              -fx-fill: #dabe54; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .materials-data, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .materials-data, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .materials-data, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .materials-data, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .materials-data, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .materials-data {
+              -fx-fill: #2bb0c6; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .materials-tech-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .materials-tech-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .materials-tech-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .materials-tech-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .materials-tech-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .materials-tech-1 {
+              -fx-fill: #c8f4f6; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .materials-tech-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .materials-tech-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .materials-tech-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .materials-tech-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .materials-tech-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .materials-tech-2 {
+              -fx-fill: #97eef2; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .materials-circuit-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .materials-circuit-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .materials-circuit-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .materials-circuit-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .materials-circuit-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .materials-circuit-1 {
+              -fx-fill: #fbcec0; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .materials-circuit-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .materials-circuit-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .materials-circuit-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .materials-circuit-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .materials-circuit-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .materials-circuit-2 {
+              -fx-fill: #fa9778; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .materials-chemical-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .materials-chemical-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .materials-chemical-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .materials-chemical-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .materials-chemical-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .materials-chemical-1 {
+              -fx-fill: #c9e8b3; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .materials-chemical-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .materials-chemical-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .materials-chemical-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .materials-chemical-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .materials-chemical-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .materials-chemical-2 {
+              -fx-fill: #97e55d; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .onfoot-dynamic, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .onfoot-dynamic, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .onfoot-dynamic, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .onfoot-dynamic, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .onfoot-dynamic, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .onfoot-dynamic {
+              -fx-fill: #ff00e7; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .onfoot-force, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .onfoot-force, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .onfoot-force, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .onfoot-force, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .onfoot-force, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .onfoot-force {
+              -fx-fill: #ff3c00; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .onfoot-strategic, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .onfoot-strategic, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .onfoot-strategic, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .onfoot-strategic, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .onfoot-strategic, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .onfoot-strategic {
+              -fx-fill: #7cd429; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .other-stock-bracket-low, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .other-stock-bracket-low, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .other-stock-bracket-low, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .other-stock-bracket-low, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .other-stock-bracket-low, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .other-stock-bracket-low {
+              -fx-fill: red; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .other-stock-bracket-high, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .other-stock-bracket-high, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .other-stock-bracket-high, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .other-stock-bracket-high, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .other-stock-bracket-high, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .other-stock-bracket-high {
+              -fx-fill: #709adc; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .glyph-icon, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .glyph-icon, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .glyph-icon, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .glyph-icon, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .glyph-icon, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .glyph-icon {
+              -fx-font-size: 2em !important; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .ships-engineer, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .ships-engineer, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .ships-engineer, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .ships-engineer, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .ships-engineer, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .ships-engineer {
+              -fx-font-size: 1.3em !important; }
+            .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .other-powerplay-open, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .other-powerplay-open, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .other-powerplay-open, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .other-powerplay-open, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .other-powerplay-open, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .other-powerplay-open {
+              -fx-font-size: 1.3em !important;
+              -fx-fill: white; }
           .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-amount, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-amount, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-amount, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-amount, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .total-amount {
             -fx-min-width: 3em;
             -fx-pref-width: 3em;
@@ -3842,9 +4651,94 @@
             -fx-max-width: 2em;
             -fx-min-height: 2em;
             -fx-pref-height: 2em;
-            -fx-max-height: 2em;
-            -fx-fit-to-height: true;
-            -fx-fit-to-width: true; }
+            -fx-max-height: 2em; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .glyph-icon {
+              -fx-font-size: 1.5em !important; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .ships-multicrew-radar {
+              -fx-fill: #159ec2; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .other-powerplay-open {
+              -fx-fill: #ffc600; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .ships-guardian-1 {
+              -fx-fill: #026fa2; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .ships-guardian-2 {
+              -fx-fill: #00aafc; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .other-communitygoal {
+              -fx-fill: #ffeb00; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .other-arx {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .ships-engineer {
+              -fx-font-size: 1.3em !important;
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .ships-gimballed {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .ships-turreted {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .ships-fixed {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .ships-synthesis-basic {
+              -fx-fill: #2e92df; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .ships-synthesis-standard {
+              -fx-fill: #2e92df; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .ships-synthesis-premium {
+              -fx-fill: #2e92df; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .ships-preengineered {
+              -fx-fill: #f2c80e; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .ships-advanced {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .ships-enhanced {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .ships-dumbfire {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .ships-seeker {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .ships-legacy {
+              -fx-fill: #d16a0a; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .other-carrier-simple {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .ships-ship-1 {
+              -fx-fill: #8e8e8e; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .ships-ship-2 {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .squadron-carrier {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .station-coriolis {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .onfoot-backpack-1 {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .onfoot-backpack-2 {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .other-wishlist {
+              -fx-fill: white; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .materials-good-1 {
+              -fx-fill: #da9b10; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .materials-good-2 {
+              -fx-fill: #dabe54; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .materials-data {
+              -fx-fill: #2bb0c6; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .materials-tech-1 {
+              -fx-fill: #c8f4f6; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .materials-tech-2 {
+              -fx-fill: #97eef2; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .materials-circuit-1 {
+              -fx-fill: #fbcec0; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .materials-circuit-2 {
+              -fx-fill: #fa9778; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .materials-chemical-1 {
+              -fx-fill: #c9e8b3; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .materials-chemical-2 {
+              -fx-fill: #97e55d; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .onfoot-dynamic {
+              -fx-fill: #ff00e7; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .onfoot-force {
+              -fx-fill: #ff3c00; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .onfoot-strategic {
+              -fx-fill: #7cd429; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .other-stock-bracket-low {
+              -fx-fill: red; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .other-stock-bracket-high {
+              -fx-fill: #709adc; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .glyph-icon {
+              -fx-font-size: 2em !important; }
         .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .engineer-flow {
           -fx-hgap: 0.25em;
           -fx-vgap: 0.25em;
@@ -4372,9 +5266,94 @@
                   -fx-max-width: 2em;
                   -fx-min-height: 2em;
                   -fx-pref-height: 2em;
-                  -fx-max-height: 2em;
-                  -fx-fit-to-height: true;
-                  -fx-fit-to-width: true; }
+                  -fx-max-height: 2em; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .glyph-icon {
+                    -fx-font-size: 1.5em !important; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .ships-multicrew-radar {
+                    -fx-fill: #159ec2; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .other-powerplay-open {
+                    -fx-fill: #ffc600; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .ships-guardian-1 {
+                    -fx-fill: #026fa2; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .ships-guardian-2 {
+                    -fx-fill: #00aafc; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .other-communitygoal {
+                    -fx-fill: #ffeb00; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .other-arx {
+                    -fx-fill: white; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .ships-engineer {
+                    -fx-font-size: 1.3em !important;
+                    -fx-fill: white; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .ships-gimballed {
+                    -fx-fill: white; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .ships-turreted {
+                    -fx-fill: white; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .ships-fixed {
+                    -fx-fill: white; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .ships-synthesis-basic {
+                    -fx-fill: #2e92df; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .ships-synthesis-standard {
+                    -fx-fill: #2e92df; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .ships-synthesis-premium {
+                    -fx-fill: #2e92df; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .ships-preengineered {
+                    -fx-fill: #f2c80e; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .ships-advanced {
+                    -fx-fill: white; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .ships-enhanced {
+                    -fx-fill: white; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .ships-dumbfire {
+                    -fx-fill: white; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .ships-seeker {
+                    -fx-fill: white; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .ships-legacy {
+                    -fx-fill: #d16a0a; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .other-carrier-simple {
+                    -fx-fill: white; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .ships-ship-1 {
+                    -fx-fill: #8e8e8e; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .ships-ship-2 {
+                    -fx-fill: white; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .squadron-carrier {
+                    -fx-fill: white; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .station-coriolis {
+                    -fx-fill: white; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .onfoot-backpack-1 {
+                    -fx-fill: white; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .onfoot-backpack-2 {
+                    -fx-fill: white; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .other-wishlist {
+                    -fx-fill: white; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .materials-good-1 {
+                    -fx-fill: #da9b10; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .materials-good-2 {
+                    -fx-fill: #dabe54; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .materials-data {
+                    -fx-fill: #2bb0c6; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .materials-tech-1 {
+                    -fx-fill: #c8f4f6; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .materials-tech-2 {
+                    -fx-fill: #97eef2; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .materials-circuit-1 {
+                    -fx-fill: #fbcec0; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .materials-circuit-2 {
+                    -fx-fill: #fa9778; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .materials-chemical-1 {
+                    -fx-fill: #c9e8b3; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .materials-chemical-2 {
+                    -fx-fill: #97e55d; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .onfoot-dynamic {
+                    -fx-fill: #ff00e7; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .onfoot-force {
+                    -fx-fill: #ff3c00; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .onfoot-strategic {
+                    -fx-fill: #7cd429; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .other-stock-bracket-low {
+                    -fx-fill: red; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .other-stock-bracket-high {
+                    -fx-fill: #709adc; }
+                  .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .glyph-icon {
+                    -fx-font-size: 2em !important; }
                 .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .name {
                   -fx-font-weight: bold;
                   -fx-alignment: center-left;

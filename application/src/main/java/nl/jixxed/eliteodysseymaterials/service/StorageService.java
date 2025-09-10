@@ -16,6 +16,7 @@ public class StorageService {
     private static final Map<Commodity, Integer> commoditiesShip = new HashMap<>();
     private static final Map<Commodity, Integer> commoditiesSrv = new HashMap<>();
     private static final Map<Commodity, Integer> commoditiesFleetcarrier = new HashMap<>();
+    private static final Map<Commodity, Integer> commoditiesSquadroncarrier = new HashMap<>();
     private static final Map<Good, Storage> goods = new EnumMap<>(Good.class);
     private static final Map<Asset, Storage> assets = new EnumMap<>(Asset.class);
     private static final Map<Data, Storage> data = new EnumMap<>(Data.class);
@@ -87,7 +88,10 @@ public class StorageService {
     }
 
     public static void addCommodity(final Commodity commodity, final StoragePool storagePool, final Integer amount) {
-        if (StoragePool.FLEETCARRIER.equals(storagePool)) {
+        if (StoragePool.SQUADRONCARRIER.equals(storagePool)) {
+            final int value = commoditiesSquadroncarrier.get(commodity) + amount;
+            commoditiesSquadroncarrier.put(commodity, Math.max(value, 0));
+        } else if (StoragePool.FLEETCARRIER.equals(storagePool)) {
             final int value = commoditiesFleetcarrier.get(commodity) + amount;
             commoditiesFleetcarrier.put(commodity, Math.max(value, 0));
         } else if (StoragePool.SHIP.equals(storagePool)) {
@@ -116,13 +120,16 @@ public class StorageService {
             case BACKPACK -> storage.getBackPackValue();
             case SHIPLOCKER -> storage.getShipLockerValue();
             case FLEETCARRIER -> storage.getFleetCarrierValue();
+            case SQUADRONCARRIER -> storage.getSquadronCarrierValue();
             case TOTAL -> storage.getTotalValue();
             case AVAILABLE -> storage.getAvailableValue();
         };
     }
 
     public static Integer getCommodityCount(final Commodity commodity, final StoragePool storagePool) {
-        if (StoragePool.FLEETCARRIER.equals(storagePool)) {
+        if (StoragePool.SQUADRONCARRIER.equals(storagePool)) {
+            return commoditiesSquadroncarrier.getOrDefault(commodity, 0);
+        } else if (StoragePool.FLEETCARRIER.equals(storagePool)) {
             return commoditiesFleetcarrier.getOrDefault(commodity, 0);
         } else if (StoragePool.SHIP.equals(storagePool)) {
             return commoditiesShip.getOrDefault(commodity, 0);
@@ -139,11 +146,20 @@ public class StorageService {
     }
 
     public static void resetFleetCarrierCounts() {
-         assets.values().forEach(value -> value.setValue(0, StoragePool.FLEETCARRIER));
-         data.values().forEach(value -> value.setValue(0, StoragePool.FLEETCARRIER));
-         goods.values().forEach(value -> value.setValue(0, StoragePool.FLEETCARRIER));
+        assets.values().forEach(value -> value.setValue(0, StoragePool.FLEETCARRIER));
+        data.values().forEach(value -> value.setValue(0, StoragePool.FLEETCARRIER));
+        goods.values().forEach(value -> value.setValue(0, StoragePool.FLEETCARRIER));
         Stream.concat(Arrays.stream(RegularCommodity.values()), Arrays.stream(RareCommodity.values())).forEach(material ->
                 commoditiesFleetcarrier.put(material, 0)
+        );
+    }
+
+    public static void resetSquadronCarrierCounts() {
+        assets.values().forEach(value -> value.setValue(0, StoragePool.SQUADRONCARRIER));
+        data.values().forEach(value -> value.setValue(0, StoragePool.SQUADRONCARRIER));
+        goods.values().forEach(value -> value.setValue(0, StoragePool.SQUADRONCARRIER));
+        Stream.concat(Arrays.stream(RegularCommodity.values()), Arrays.stream(RareCommodity.values())).forEach(material ->
+                commoditiesSquadroncarrier.put(material, 0)
         );
     }
 
@@ -193,6 +209,7 @@ public class StorageService {
         Stream.concat(Arrays.stream(RegularCommodity.values()), Arrays.stream(RareCommodity.values())).forEach(material -> {
             commoditiesShip.put(material, 0);
             commoditiesFleetcarrier.put(material, 0);
+            commoditiesSquadroncarrier.put(material, 0);
             commoditiesSrv.put(material, 0);
         });
     }

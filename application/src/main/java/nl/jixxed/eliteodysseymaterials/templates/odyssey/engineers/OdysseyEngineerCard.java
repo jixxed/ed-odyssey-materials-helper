@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.templates.odyssey.engineers;
 import javafx.css.PseudoClass;
 import javafx.geometry.Orientation;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
@@ -14,6 +15,8 @@ import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyEngineerSearchEvent;
+import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.EngineerCard;
 
@@ -98,11 +101,11 @@ class OdysseyEngineerCard extends EngineerCard implements DestroyableEventTempla
 
     private void update(final String search) {
         boolean visible = search.isBlank()
-                        || engineer.getSettlement().getSettlementName().toLowerCase().contains(search.toLowerCase())
-                        || engineer.getStarSystem().getName().toLowerCase().contains(search.toLowerCase())
-                        || LocaleService.getLocalizedStringForCurrentLocale(engineer.getSpecialisation().getLocalizationKey()).toLowerCase().contains(search.toLowerCase())
-                        || LocaleService.getLocalizedStringForCurrentLocale(engineer.getLocalizationKey()).toLowerCase().contains(search.toLowerCase())
-                        || hasBlueprintLike(engineer, search);
+                || engineer.getSettlement().getSettlementName().toLowerCase().contains(search.toLowerCase())
+                || engineer.getStarSystem().getName().toLowerCase().contains(search.toLowerCase())
+                || LocaleService.getLocalizedStringForCurrentLocale(engineer.getSpecialisation().getLocalizationKey()).toLowerCase().contains(search.toLowerCase())
+                || LocaleService.getLocalizedStringForCurrentLocale(engineer.getLocalizationKey()).toLowerCase().contains(search.toLowerCase())
+                || hasBlueprintLike(engineer, search);
         this.setVisible(visible);
         this.setManaged(visible);
     }
@@ -122,7 +125,12 @@ class OdysseyEngineerCard extends EngineerCard implements DestroyableEventTempla
                 .withText(this.engineer.getSpecialisation().getLocalizationKey())
                 .build();
 
-        final DestroyableResizableImageView specialisationIcon = ResizableImageViewBuilder.builder()
+        final EdAwesomeIconViewPane specialisationIcon = EdAwesomeIconViewPaneBuilder.builder()
+                .withStyleClass("spec-image")
+                .withIcons(this.engineer.getSpecialisation().getIcon())
+                .build();
+
+        ResizableImageViewBuilder.builder()
                 .withStyleClass("spec-image")
                 .withImage("/images/engineer/specialisation/" + this.engineer.getSpecialisation().name().toLowerCase() + ".png")
                 .build();

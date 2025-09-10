@@ -481,4 +481,70 @@
   .ships-legacy{
     -fx-fill: rgb(209, 106, 10);
   }
+  .other-carrier-simple{
+    -fx-fill: rgb(255, 255, 255);
+  }
+  .ships-ship-1{
+    -fx-fill: rgb(142, 142, 142);
+  }
+  .ships-ship-2{
+    -fx-fill: rgb(255, 255, 255);
+  }
+  .squadron-carrier{
+    -fx-fill: rgb(255, 255, 255);
+  }
+  .station-coriolis{
+    -fx-fill: rgb(255, 255, 255);
+  }
+  .onfoot-backpack-1{
+    -fx-fill: rgb(255, 255, 255);
+  }
+  .onfoot-backpack-2{
+    -fx-fill: rgb(255, 255, 255);
+  }
+  .other-wishlist{
+    -fx-fill: rgb(255, 255, 255);
+  }
+  .materials-good-1{
+    -fx-fill: rgb(218, 155, 16);
+  }
+  .materials-good-2{
+    -fx-fill: rgb(218, 190, 84);
+  }
+  .materials-data{
+    -fx-fill: rgb(43, 176, 198);
+  }
+  .materials-tech-1{
+    -fx-fill: rgb(200, 244, 246);
+  }
+  .materials-tech-2{
+    -fx-fill: rgb(151, 238, 242);
+  }
+  .materials-circuit-1{
+    -fx-fill: rgb(251, 206, 192);
+  }
+  .materials-circuit-2{
+    -fx-fill: rgb(250, 151, 120);
+  }
+  .materials-chemical-1{
+    -fx-fill: rgb(201, 232, 179);
+  }
+  .materials-chemical-2{
+    -fx-fill: rgb(151, 229, 93);
+  }
+  .onfoot-dynamic{
+    -fx-fill: $text-color-dynamic;
+  }
+  .onfoot-force{
+    -fx-fill: $text-color-force;
+  }
+  .onfoot-strategic{
+    -fx-fill: $text-color-strategic;
+  }
+  .other-stock-bracket-low{
+    -fx-fill: $text-color-red;
+  }
+  .other-stock-bracket-high{
+    -fx-fill: $text-color-green;
+  }
 }

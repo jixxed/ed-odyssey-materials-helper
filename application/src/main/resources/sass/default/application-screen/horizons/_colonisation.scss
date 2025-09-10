@@ -162,6 +162,14 @@
           }
         }
 
+        &:squadroncarrier {
+          .bom-entry-content {
+            .amount-squadroncarrier {
+              -fx-text-fill: $text-color-orange;
+            }
+          }
+        }
+
         .bom-entry-content {
 
           -fx-padding: 0.25em;
@@ -196,6 +204,10 @@
             -fx-font-weight: bold;
           }
 
+          .amount-squadroncarrier {
+            -fx-font-weight: bold;
+          }
+
           .title-amount-delivered {
             -fx-text-fill: $text-color-red;
           }
@@ -203,13 +215,13 @@
           .values-sub-1 {
             -fx-hgap: 0.5em;
             -fx-spacing: 0.5em;
-            @include fixedWidth(13.28em);
+            @include fixedWidth(15.4em);
           }
 
           .values-sub-2 {
             -fx-hgap: 0.5em;
             -fx-spacing: 0.5em;
-            @include fixedWidth(17.28em);
+            @include fixedWidth(15.4em);
           }
 
           .values-market {
@@ -265,9 +277,13 @@
             }
           }
 
-          .storage-image {
+          .icon {
             @include fixedWidth(2em);
             @include fixedHeight(2em);
+            @include awesome-icons;
+            .glyph-icon{
+              -fx-font-size: 2em !important;
+            }
           }
         }
 
@@ -283,8 +299,12 @@
             -fx-background-color: $progress-bar-color-yellow;
           }
 
-          .present-fleetcarrier {
+          .present-fleet-carrier {
             -fx-background-color: $progress-bar-color-blue;
+          }
+
+          .present-squadron-carrier {
+            -fx-background-color: $progress-bar-color-orange;
           }
 
           .not-present {

@@ -742,6 +742,7 @@ public class FXApplication extends Application {
         StorageService.resetShipLockerCounts();
         StorageService.resetBackPackCounts();
         StorageService.resetFleetCarrierCounts();
+        StorageService.resetSquadronCarrierCounts();
         StorageService.resetSrvCounts();
         StorageService.resetHorizonsMaterialCounts();
         StorageService.resetHorizonsCommodityCounts();

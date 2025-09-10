@@ -10,7 +10,10 @@ public class CarrierLocationMessageProcessor implements MessageProcessor<Carrier
     public void process(final CarrierLocation event) {
         if(event.getCarrierType().map("FleetCarrier"::equals).orElse(false)) {
             UserPreferencesService.setPreference(PreferenceConstants.FLEET_CARRIER_ID, event.getCarrierID().toString());
-            LocationService.setCarrierLocation(event.getStarSystem());
+            LocationService.setFleetCarrierLocation(event.getStarSystem());
+        }else if(event.getCarrierType().map("SquadronCarrier"::equals).orElse(false)) {
+            UserPreferencesService.setPreference(PreferenceConstants.SQUADRON_CARRIER_ID, event.getCarrierID().toString());
+            LocationService.setSquadronCarrierLocation(event.getStarSystem());
         }
     }
 

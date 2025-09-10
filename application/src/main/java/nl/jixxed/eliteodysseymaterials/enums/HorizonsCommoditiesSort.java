@@ -11,6 +11,7 @@ public enum HorizonsCommoditiesSort {
     ALPHABETICAL,
     QUANTITY_SHIP,
     QUANTITY_FLEETCARRIER,
+    QUANTITY_SQUADRONCARRIER,
     QUANTITY_TOTAL;
 
     public String getLocalizationKey() {
@@ -28,9 +29,10 @@ public enum HorizonsCommoditiesSort {
             case ALPHABETICAL ->
                     Comparator.comparing((HorizonsCommodityCard o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getCommodity().getLocalizationKey()));
             case QUANTITY_SHIP -> Comparator.comparing(HorizonsCommodityCard::getShipAmount).reversed();
-            case QUANTITY_FLEETCARRIER -> Comparator.comparing(HorizonsCommodityCard::getFleetcarrierAmount).reversed();
+            case QUANTITY_FLEETCARRIER -> Comparator.comparing(HorizonsCommodityCard::getFleetCarrierAmount).reversed();
+            case QUANTITY_SQUADRONCARRIER -> Comparator.comparing(HorizonsCommodityCard::getSquadronCarrierAmount).reversed();
             case QUANTITY_TOTAL ->
-                    Comparator.comparing((HorizonsCommodityCard o) -> o.getShipAmount() + o.getFleetcarrierAmount()).reversed();
+                    Comparator.comparing((HorizonsCommodityCard o) -> o.getShipAmount() + o.getFleetCarrierAmount()+ o.getSquadronCarrierAmount()).reversed();
         };
     }
 }

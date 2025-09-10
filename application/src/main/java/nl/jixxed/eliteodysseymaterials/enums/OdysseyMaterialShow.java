@@ -25,6 +25,7 @@ public enum OdysseyMaterialShow {
     POWERPLAY,
     BACKPACK,
     FLEETCARRIER,
+    SQUADRONCARRIER,
     FAVOURITES;
 
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
@@ -45,6 +46,7 @@ public enum OdysseyMaterialShow {
             case ALL_WITH_STOCK -> material -> StorageService.getMaterialCount(material, AmountType.TOTAL) > 0;
             case BACKPACK -> material -> StorageService.getMaterialCount(material, AmountType.BACKPACK) > 0;
             case FLEETCARRIER -> material -> StorageService.getMaterialCount(material, AmountType.FLEETCARRIER) > 0;
+            case SQUADRONCARRIER -> material -> StorageService.getMaterialCount(material, AmountType.SQUADRONCARRIER) > 0;
             case BLUEPRINT -> OdysseyBlueprintConstants::isBlueprintIngredientWithOverride;
             case IRRELEVANT -> OdysseyMaterialShow::getIrrelevantFilter;
             case IRRELEVANT_WITH_STOCK ->

@@ -8,7 +8,7 @@ import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import java.util.List;
 
 @Slf4j
-public class FleetCarrierGoodParser  {
+public class CarrierGoodParser {
     public void parse(List<nl.jixxed.eliteodysseymaterials.schemas.capi.fleetcarrier.Good> goods, StoragePool storagePool) {
         if(goods == null) {
             return;

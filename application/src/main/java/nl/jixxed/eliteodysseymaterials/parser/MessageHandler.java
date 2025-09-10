@@ -110,6 +110,7 @@ class MessageHandler {
             Map.entry(JournalEventType.MATERIALS, new MaterialsMessageProcessor()),
             Map.entry(JournalEventType.CARGO, new CargoMessageProcessor()),
             Map.entry(JournalEventType.CARGOTRANSFER, new CargoTransferMessageProcessor()),
+            Map.entry(JournalEventType.EJECTCARGO, new EjectCargoMessageProcessor()),
 
             Map.entry(JournalEventType.SUITLOADOUT, new SuitLoadoutMessageProcessor()),
             Map.entry(JournalEventType.SWITCHSUITLOADOUT, new SuitLoadoutMessageProcessor()),

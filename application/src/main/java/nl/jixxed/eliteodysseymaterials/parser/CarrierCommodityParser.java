@@ -9,8 +9,8 @@ import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import java.util.List;
 
 @Slf4j
-public class FleetCarrierCommodityParser {
-    public void parse(List<Cargo> cargos) {
+public class CarrierCommodityParser {
+    public void parse(List<Cargo> cargos, StoragePool storagePool) {
         if(cargos == null) {
             return;
         }
@@ -22,7 +22,7 @@ public class FleetCarrierCommodityParser {
             if (commodity.isUnknown()) {
                 log.warn("Unknown Commodity detected: " + cargo);
             } else {
-                StorageService.addCommodity(commodity, StoragePool.FLEETCARRIER, amount);
+                StorageService.addCommodity(commodity, storagePool, amount);
             }
         });
     }

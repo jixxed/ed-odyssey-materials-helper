@@ -136,6 +136,12 @@ repositories {
         url "https://repo.repsy.io/mvn/jixxed/maven/"
     }
     maven { url = 'https://jitpack.io' }
+    if (proprietary) {
+        maven {
+            name = 'nexus'
+            url = "https://nexus.jixxed.nl/nexus/content/repositories/releases"
+        }
+    }
     if (proprietaryUser && proprietaryPass) {
         maven {
             name 'repsy'
@@ -144,12 +150,6 @@ repositories {
                 username proprietaryUser
                 password proprietaryPass
             }
-        }
-    }
-    if (proprietary) {
-        maven {
-            name = 'nexus'
-            url = "https://nexus.jixxed.nl/nexus/content/repositories/releases"
         }
     }
 }
@@ -333,7 +333,7 @@ dependencies {
     implementation 'nl.jixxed.ed.awesome:ed-awesome-api:1.5'
 
     if (proprietary) {
-        implementation 'nl.jixxed.ed.awesome:ed-awesome-impl:1.16'
+        implementation 'nl.jixxed.ed.awesome:ed-awesome-impl:1.19'
     }
 }
 jpackage {

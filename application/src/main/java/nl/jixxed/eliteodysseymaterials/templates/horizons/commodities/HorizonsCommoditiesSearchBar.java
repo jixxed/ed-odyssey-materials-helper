@@ -81,7 +81,7 @@ public class HorizonsCommoditiesSearchBar extends DestroyableHBox implements Des
         this.sortMaterialsComboBox = ComboBoxBuilder.builder(HorizonsCommoditiesSort.class)
                 .withStyleClasses("root", "filter-and-sort")
                 .withSelected(HorizonsCommoditiesSort.valueOf(PreferencesService.getPreference("search.commodities.sort", "ALPHABETICAL")))
-                .withItemsProperty(LocaleService.getListBinding(HorizonsCommoditiesSort.ALPHABETICAL, HorizonsCommoditiesSort.QUANTITY_SHIP, HorizonsCommoditiesSort.QUANTITY_FLEETCARRIER, HorizonsCommoditiesSort.QUANTITY_TOTAL))
+                .withItemsProperty(LocaleService.getListBinding(HorizonsCommoditiesSort.ALPHABETICAL, HorizonsCommoditiesSort.QUANTITY_SHIP, HorizonsCommoditiesSort.QUANTITY_FLEETCARRIER, HorizonsCommoditiesSort.QUANTITY_SQUADRONCARRIER, HorizonsCommoditiesSort.QUANTITY_TOTAL))
                 .withPromptTextProperty(LocaleService.getStringBinding("search.sort.placeholder"))
                 .withValueChangeListener((options, oldValue, newValue) -> {
                     if (newValue != null) {
@@ -106,6 +106,7 @@ public class HorizonsCommoditiesSearchBar extends DestroyableHBox implements Des
                         HorizonsCommoditiesShow.ALL_WITH_STOCK,
                         HorizonsCommoditiesShow.SHIP,
                         HorizonsCommoditiesShow.FLEETCARRIER,
+                        HorizonsCommoditiesShow.SQUADRONCARRIER,
                         HorizonsCommoditiesShow.CHEMICALS,
                         HorizonsCommoditiesShow.CONSUMER_ITEMS,
                         HorizonsCommoditiesShow.FOODS,

@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.BuyOrder;
 import nl.jixxed.eliteodysseymaterials.domain.SellOrder;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
+import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
@@ -16,16 +17,20 @@ import java.util.Map;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class OrderService {
-    private static final Map<Material, BuyOrder> BUY_ORDERS = new HashMap<>();
-    private static final Map<Material, SellOrder> SELL_ORDERS = new HashMap<>();
+    private static final Map<StoragePool, Map<Material, BuyOrder>>  BUY_ORDERS = new HashMap<>();
+    private static final Map<StoragePool, Map<Material, SellOrder>>  SELL_ORDERS = new HashMap<>();
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
 
     public static void clearOrders() {
-        BUY_ORDERS.clear();
-        SELL_ORDERS.clear();
+        BUY_ORDERS.values().forEach(Map::clear);
+        SELL_ORDERS.values().forEach(Map::clear);
     }
 
     static {
+        BUY_ORDERS.put(StoragePool.FLEETCARRIER, new HashMap<>());
+        BUY_ORDERS.put(StoragePool.SQUADRONCARRIER, new HashMap<>());
+        SELL_ORDERS.put(StoragePool.FLEETCARRIER, new HashMap<>());
+        SELL_ORDERS.put(StoragePool.SQUADRONCARRIER, new HashMap<>());
         EVENT_LISTENERS.add(EventService.addStaticListener(JournalInitEvent.class, event -> {
             if (event.isInitialised()) {
                 clearOrders();
@@ -34,38 +39,38 @@ public class OrderService {
     }
 
     public static void addBuyOrder(final Material material, final Integer price, final Integer total,
-                                   final Integer outstanding) {
+                                   final Integer outstanding, StoragePool storagePool) {
         if (price == 0 || total == 0) {
-            removeBuyOrder(material);
+            removeBuyOrder(material, storagePool);
         } else {
-            BUY_ORDERS.put(material, new BuyOrder(price, total, outstanding));
+            BUY_ORDERS.get(storagePool).put(material, new BuyOrder(price, total, outstanding));
         }
-        removeSellOrder(material);
+        removeSellOrder(material, storagePool);
     }
 
-    public static void addSellOrder(final Material material, final Integer price, final Integer stock) {
+    public static void addSellOrder(final Material material, final Integer price, final Integer stock, StoragePool storagePool) {
         if (price == 0 || stock == 0) {
-            removeSellOrder(material);
+            removeSellOrder(material, storagePool);
         } else {
-            SELL_ORDERS.put(material, new SellOrder(price, stock));
+            SELL_ORDERS.get(storagePool).put(material, new SellOrder(price, stock));
         }
-        removeBuyOrder(material);
+        removeBuyOrder(material, storagePool);
     }
 
-    public static void removeSellOrder(Material material) {
-        SELL_ORDERS.remove(material);
+    public static void removeSellOrder(Material material, StoragePool storagePool) {
+        SELL_ORDERS.get(storagePool).remove(material);
     }
 
-    public static void removeBuyOrder(Material material) {
-        BUY_ORDERS.remove(material);
+    public static void removeBuyOrder(Material material, StoragePool storagePool) {
+        BUY_ORDERS.get(storagePool).remove(material);
     }
 
-    static BuyOrder getBuyOrder(final Material material) {
-        return BUY_ORDERS.get(material);
+    static BuyOrder getBuyOrder(final Material material, StoragePool storagePool) {
+        return BUY_ORDERS.get(storagePool).get(material);
     }
 
-    static SellOrder getSellOrder(final Material material) {
-        return SELL_ORDERS.get(material);
+    static SellOrder getSellOrder(final Material material, StoragePool storagePool) {
+        return SELL_ORDERS.get(storagePool).get(material);
     }
 
 }

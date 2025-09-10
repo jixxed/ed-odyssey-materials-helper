@@ -77,26 +77,49 @@
           }
 
           .name {
-            @include fixedWidth(28em);
+            @include fixedWidth(21.5em);
             //-fx-label-padding: 0.5em, 0, 0, 0;
             -fx-alignment: center-left;
             -fx-wrap-text: true;
           }
 
           .category {
-            @include fixedWidth(28em);
+            @include fixedWidth(21.5em);
             //-fx-label-padding: 0.5em, 0, 0, 0;
             -fx-alignment: center-left;
             -fx-wrap-text: true;
             -fx-text-fill: $text-color-grey;
           }
+          .ship-amount {
+            -fx-pref-width: 6.5em;
+            -fx-padding: 0, 0, 0, 1em;
+            -fx-min-height: 2em;
+            -fx-alignment: center-right;
+            -fx-text-alignment: right;
+          }
+
+          .ingredient-quantity-section {
+            -fx-spacing: 1em;
+          }
+          .icon {
+            @include fixedWidth(2em);
+            @include fixedHeight(2em);
+            @include awesome-icons;
+            .glyph-icon{
+              -fx-font-size: 2em !important;
+            }
+          }
         }
 
         .quantity-line {
 
-          .image {
+          .icon {
             @include fixedWidth(2em);
             @include fixedHeight(2em);
+            @include awesome-icons;
+            .glyph-icon{
+              -fx-font-size: 2em !important;
+            }
           }
 
           .ingredient-quantity-section {
@@ -111,7 +134,7 @@
             -fx-text-alignment: left;
           }
 
-          .ship-amount {
+          .squadroncarrier-amount {
             -fx-pref-width: 6.5em;
             -fx-padding: 0, 1em, 0, 0;
             -fx-min-height: 2em;
@@ -124,9 +147,13 @@
       }
 
       .market {
-        .image {
+        .icon {
           @include fixedWidth(2em);
           @include fixedHeight(2em);
+          @include awesome-icons;
+          .glyph-icon{
+            -fx-font-size: 2em !important;
+          }
         }
 
         @include fixedWidth(32.8em);

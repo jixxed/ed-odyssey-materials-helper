@@ -105,6 +105,7 @@ class OdysseyMaterialSearchBar extends DestroyableHBox implements DestroyableEve
                         OdysseyMaterialShow.NOT_ON_WISHLIST,
                         OdysseyMaterialShow.BACKPACK,
                         OdysseyMaterialShow.FLEETCARRIER,
+                        OdysseyMaterialShow.SQUADRONCARRIER,
                         OdysseyMaterialShow.PROHIBITED,
                         OdysseyMaterialShow.FAVOURITES,
                         OdysseyMaterialShow.POWERPLAY))

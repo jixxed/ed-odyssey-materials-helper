@@ -15,12 +15,12 @@ import java.math.BigInteger;
 
 @Slf4j
 public class CapiFleetCarrierMessageProcessor implements CapiMessageProcessor<CapiFleetcarrier> {
-    private static final FleetCarrierAssetParser ASSET_PARSER = new FleetCarrierAssetParser();
-    private static final FleetCarrierDataParser DATA_PARSER = new FleetCarrierDataParser();
-    private static final FleetCarrierGoodParser GOOD_PARSER = new FleetCarrierGoodParser();
-    private static final FleetCarrierCommodityParser COMMODITY_PARSER = new FleetCarrierCommodityParser();
-    private static final FleetCarrierBuyOrderParser BUY_ORDER_PARSER = new FleetCarrierBuyOrderParser();
-    private static final FleetCarrierSellOrderParser SELL_ORDER_PARSER = new FleetCarrierSellOrderParser();
+    private static final CarrierAssetParser ASSET_PARSER = new CarrierAssetParser();
+    private static final CarrierDataParser DATA_PARSER = new CarrierDataParser();
+    private static final CarrierGoodParser GOOD_PARSER = new CarrierGoodParser();
+    private static final CarrierCommodityParser COMMODITY_PARSER = new CarrierCommodityParser();
+    private static final CarrierBuyOrderParser BUY_ORDER_PARSER = new CarrierBuyOrderParser();
+    private static final CarrierSellOrderParser SELL_ORDER_PARSER = new CarrierSellOrderParser();
 
     @Override
     public void process(final CapiFleetcarrier capiFleetcarrier) {
@@ -28,16 +28,16 @@ public class CapiFleetCarrierMessageProcessor implements CapiMessageProcessor<Ca
         StorageService.resetFleetCarrierCounts();
         OrderService.clearOrders();
 
-        SELL_ORDER_PARSER.parseOdyssey(capiFleetcarrier.getOrders().getOnfootmicroresources().getSales());
-        BUY_ORDER_PARSER.parseOdyssey(capiFleetcarrier.getOrders().getOnfootmicroresources().getPurchases());
-        SELL_ORDER_PARSER.parse(capiFleetcarrier.getOrders().getCommodities().getSales());
-        BUY_ORDER_PARSER.parse(capiFleetcarrier.getOrders().getCommodities().getPurchases());
+        SELL_ORDER_PARSER.parseOdyssey(capiFleetcarrier.getOrders().getOnfootmicroresources().getSales(), StoragePool.FLEETCARRIER);
+        BUY_ORDER_PARSER.parseOdyssey(capiFleetcarrier.getOrders().getOnfootmicroresources().getPurchases(), StoragePool.FLEETCARRIER);
+        SELL_ORDER_PARSER.parse(capiFleetcarrier.getOrders().getCommodities().getSales(), StoragePool.FLEETCARRIER);
+        BUY_ORDER_PARSER.parse(capiFleetcarrier.getOrders().getCommodities().getPurchases(), StoragePool.FLEETCARRIER);
 
         ASSET_PARSER.parse(capiFleetcarrier.getCarrierLocker().getAssets(), StoragePool.FLEETCARRIER);
         GOOD_PARSER.parse(capiFleetcarrier.getCarrierLocker().getGoods(), StoragePool.FLEETCARRIER);
         DATA_PARSER.parse(capiFleetcarrier.getCarrierLocker().getData(), StoragePool.FLEETCARRIER);
 
-        COMMODITY_PARSER.parse(capiFleetcarrier.getCargo());
+        COMMODITY_PARSER.parse(capiFleetcarrier.getCargo(), StoragePool.FLEETCARRIER);
         try {
             final BigInteger marketId = capiFleetcarrier.getMarket().getId();
             UserPreferencesService.setPreference(PreferenceConstants.FLEET_CARRIER_ID, marketId.toString());

@@ -10,10 +10,7 @@ import javafx.scene.layout.VBox;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.SegmentedBarBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
@@ -23,12 +20,16 @@ import nl.jixxed.eliteodysseymaterials.domain.Wishlist;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegmentView;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -40,7 +41,7 @@ public class OdysseyWishlistIngredient extends DestroyableVBox implements Destro
     @EqualsAndHashCode.Include
     private final OdysseyMaterial odysseyMaterial;
 
-    private DestroyableResizableImageView image;
+    private EdAwesomeIconViewPane image;
     private DestroyableLabel requiredAmountLabel;
     private DestroyableLabel availableAmountLabel;
     private DestroyableLabel remainingAmountLabel;
@@ -184,7 +185,7 @@ public class OdysseyWishlistIngredient extends DestroyableVBox implements Destro
             }
         }));
         register(EventService.addListener(true, this, StorageEvent.class, evt -> {
-            if (evt.getStoragePool().equals(StoragePool.SHIPLOCKER) || evt.getStoragePool().equals(StoragePool.BACKPACK)) {
+            if (evt.getStoragePool().equals(StoragePool.SQUADRONCARRIER) || evt.getStoragePool().equals(StoragePool.FLEETCARRIER) || evt.getStoragePool().equals(StoragePool.SHIPLOCKER) || evt.getStoragePool().equals(StoragePool.BACKPACK)) {
                 this.update();
             }
         }));
@@ -250,22 +251,38 @@ public class OdysseyWishlistIngredient extends DestroyableVBox implements Destro
 
     @SuppressWarnings("java:S6205")
     private void initImage() {
-        final ResizableImageViewBuilder imageViewBuilder = ResizableImageViewBuilder.builder()
-                .withStyleClass("image");
-        switch (OdysseyStorageType.forMaterial(this.odysseyMaterial)) {
-            case DATA -> imageViewBuilder.withImage("/images/material/data.png");
-            case GOOD -> imageViewBuilder.withImage("/images/material/good.png");
-            case ASSET -> {
-                switch (((Asset) this.odysseyMaterial).getType()) {
-                    case TECH -> imageViewBuilder.withImage("/images/material/tech.png");
-                    case CIRCUIT -> imageViewBuilder.withImage("/images/material/circuit.png");
-                    case CHEMICAL -> imageViewBuilder.withImage("/images/material/chemical.png");
+        this.image =  EdAwesomeIconViewPaneBuilder.builder()
+                .withStyleClass("image")
+                .withIcons(getMaterialIcons(this.odysseyMaterial))
+                .build();
+    }
+
+    private EdAwesomeIcon[] getMaterialIcons(OdysseyMaterial odysseyMaterial) {
+        List<EdAwesomeIcon> edAwesomeIcons = new ArrayList<>();
+        if (odysseyMaterial.isUnknown()) {
+            edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_DATA);
+        } else if (odysseyMaterial instanceof Data) {
+            edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_DATA);
+        } else if (odysseyMaterial instanceof Good) {
+            edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_GOOD_1);
+            edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_GOOD_2);
+        } else if (odysseyMaterial instanceof Asset asset) {
+            switch (asset.getType()) {
+                case TECH -> {
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_TECH_1);
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_TECH_2);
+                }
+                case CIRCUIT -> {
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_CIRCUIT_1);
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_CIRCUIT_2);
+                }
+                case CHEMICAL -> {
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_CHEMICAL_1);
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_CHEMICAL_2);
                 }
             }
-            case CONSUMABLE -> imageViewBuilder.withImage("/images/material/unknown.png");
-            case OTHER -> throw new IllegalArgumentException("StorageType Other must use MissionIngredient class");
         }
-        this.image = imageViewBuilder.build();
+        return edAwesomeIcons.toArray(EdAwesomeIcon[]::new);
     }
 
     @SuppressWarnings("unchecked")
@@ -296,7 +313,7 @@ public class OdysseyWishlistIngredient extends DestroyableVBox implements Destro
         maximum = 0;
 
         availableShip = StorageService.getMaterialCount(odysseyMaterial, AmountType.SHIPLOCKER);
-        availableFleetCarrier = StorageService.getMaterialCount(odysseyMaterial, AmountType.FLEETCARRIER);
+        availableFleetCarrier = StorageService.getMaterialCount(odysseyMaterial, AmountType.FLEETCARRIER) + StorageService.getMaterialCount(odysseyMaterial, AmountType.SQUADRONCARRIER);
         remaining = 0;
     }
 

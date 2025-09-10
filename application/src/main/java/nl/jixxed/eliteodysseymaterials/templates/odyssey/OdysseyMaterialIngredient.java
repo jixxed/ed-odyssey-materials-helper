@@ -7,22 +7,25 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.enums.Asset;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
-import nl.jixxed.eliteodysseymaterials.enums.StorageType;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
+import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
+
+import java.util.ArrayList;
+import java.util.List;
 
 //@EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 public class OdysseyMaterialIngredient extends Ingredient implements DestroyableEventTemplate {
@@ -37,7 +40,7 @@ public class OdysseyMaterialIngredient extends Ingredient implements Destroyable
     private Integer rightAmount;
 
     private DestroyableLabel nameLabel;
-    private DestroyableResizableImageView image;
+    private EdAwesomeIconViewPane image;
     private DestroyableLabel leftAmountLabel;
     private DestroyableLabel rightAmountLabel;
     private DestroyableLabel rightDescriptionLabel;
@@ -112,23 +115,40 @@ public class OdysseyMaterialIngredient extends Ingredient implements Destroyable
 
     @SuppressWarnings("java:S6205")
     private void initImage() {
-        final ResizableImageViewBuilder imageViewBuilder = ResizableImageViewBuilder.builder()
-                .withStyleClass("ingredient-image");
-        switch (this.storageType) {
-            case DATA -> imageViewBuilder.withImage("/images/material/data.png");
-            case GOOD -> imageViewBuilder.withImage("/images/material/good.png");
-            case ASSET -> {
-                switch (((Asset) this.odysseyMaterial).getType()) {
-                    case TECH -> imageViewBuilder.withImage("/images/material/tech.png");
-                    case CIRCUIT -> imageViewBuilder.withImage("/images/material/circuit.png");
-                    case CHEMICAL -> imageViewBuilder.withImage("/images/material/chemical.png");
+        this.image =  EdAwesomeIconViewPaneBuilder.builder()
+                .withStyleClass("ingredient-image")
+                .withIcons(getMaterialIcons(this.odysseyMaterial))
+                .build();
+    }
+
+    private EdAwesomeIcon[] getMaterialIcons(OdysseyMaterial odysseyMaterial) {
+        List<EdAwesomeIcon> edAwesomeIcons = new ArrayList<>();
+        if (odysseyMaterial.isUnknown()) {
+            edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_DATA);
+        } else if (odysseyMaterial instanceof Data) {
+            edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_DATA);
+        } else if (odysseyMaterial instanceof Good) {
+            edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_GOOD_1);
+            edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_GOOD_2);
+        } else if (odysseyMaterial instanceof Asset asset) {
+            switch (asset.getType()) {
+                case TECH -> {
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_TECH_1);
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_TECH_2);
+                }
+                case CIRCUIT -> {
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_CIRCUIT_1);
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_CIRCUIT_2);
+                }
+                case CHEMICAL -> {
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_CHEMICAL_1);
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_CHEMICAL_2);
                 }
             }
-            case CONSUMABLE -> imageViewBuilder.withImage("/images/material/unknown.png");
-            case OTHER -> throw new IllegalArgumentException("StorageType Other must use MissionIngredient class");
         }
-        this.image = imageViewBuilder.build();
+        return edAwesomeIcons.toArray(EdAwesomeIcon[]::new);
     }
+
 
     private void setRightAmount(final Integer rightAmount) {
         this.rightAmount = rightAmount;

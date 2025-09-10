@@ -180,7 +180,7 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
             }
         }));
         register(EventService.addListener(true, this, StorageEvent.class, evt -> {
-            if (evt.getStoragePool().equals(StoragePool.SHIP) || evt.getStoragePool().equals(StoragePool.FLEETCARRIER)) {
+            if (evt.getStoragePool().equals(StoragePool.SHIP) || evt.getStoragePool().equals(StoragePool.FLEETCARRIER) || evt.getStoragePool().equals(StoragePool.SQUADRONCARRIER)) {
                 this.update();
             }
         }));
@@ -290,7 +290,7 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
         maximum = 0;
         if (this.horizonsMaterial instanceof Commodity commodity) {
             availableShip = StorageService.getCommodityCount(commodity, StoragePool.SHIP);
-            availableFleetCarrier = StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER);
+            availableFleetCarrier = StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER) + StorageService.getCommodityCount(commodity, StoragePool.SQUADRONCARRIER);
         } else {
             availableShip = StorageService.getMaterialCount(horizonsMaterial);
             availableFleetCarrier = 0;

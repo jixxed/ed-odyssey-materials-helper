@@ -67,7 +67,7 @@
 
     .material-card {
       @include fixedHeight(2em);
-      @include fixedWidth(32em);
+      @include fixedWidth(38em);
       -fx-background-color: $background-color-dark;
       -fx-border-color: $border-color-black;
       -fx-alignment: center-left;
@@ -82,8 +82,23 @@
         -fx-padding: 0.25em;
       }
 
-      .material-image, .fleetcarrier-image, .wishlist-image, .backpack-image, .ship-image {
+      .material-image, .fleetcarrier-image, .squadroncarrier-image, .wishlist-image, .backpack-image, .ship-image {
         @include fixedWidth(2em);
+        @include fixedHeight(2em);
+        @include awesome-icons;
+        .glyph-icon{
+          -fx-font-size: 2em !important;
+        }
+
+        .ships-engineer {
+          -fx-font-size: 1.3em !important;
+          //-fx-opacity: 0.8;
+        }
+        .other-powerplay-open {
+          -fx-font-size: 1.3em !important;
+          //-fx-opacity: 0.8;
+          -fx-fill: rgb(255, 255, 255);
+        }
       }
 
       .fleetcarrier-amount, .wishlist-amount, .backpack-amount, .ship-amount, .total-amount {

@@ -9,7 +9,7 @@ import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import java.util.List;
 
 @Slf4j
-public class FleetCarrierDataParser {
+public class CarrierDataParser {
     public void parse(List<Datum> datas, StoragePool storagePool) {
         if(datas == null) {
             return;

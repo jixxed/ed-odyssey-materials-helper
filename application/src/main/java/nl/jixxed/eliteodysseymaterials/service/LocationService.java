@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.service;
 
 import lombok.Getter;
 import lombok.Setter;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.Location;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -32,7 +33,9 @@ public class LocationService {
     private static Optional<String> statusBodyName;
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
     @Getter
-    private static Optional<String> carrierLocation = Optional.empty();
+    private static Optional<String> fleetCarrierLocation = Optional.empty();
+    @Getter
+    private static Optional<String> squadronCarrierLocation = Optional.empty();
 
 
     private LocationService() {
@@ -191,7 +194,21 @@ public class LocationService {
         return null;
     }
 
-    public static void setCarrierLocation(String starSystem) {
-        carrierLocation = Optional.of(starSystem);
+    public static void setFleetCarrierLocation(String starSystem) {
+        fleetCarrierLocation = Optional.of(starSystem);
+    }
+
+    public static void setSquadronCarrierLocation(String starSystem) {
+        squadronCarrierLocation = Optional.of(starSystem);
+    }
+
+    public static boolean isAtSquadronCarrier(){
+        String squadronCarrierID = UserPreferencesService.getPreference(PreferenceConstants.SQUADRON_CARRIER_ID, "-1");
+        return squadronCarrierID.equals(marketID.toString());
+    }
+
+    public static boolean isAtFleetCarrier(){
+        String fleetCarrierID = UserPreferencesService.getPreference(PreferenceConstants.FLEET_CARRIER_ID, "-1");
+        return fleetCarrierID.equals(marketID.toString());
     }
 }

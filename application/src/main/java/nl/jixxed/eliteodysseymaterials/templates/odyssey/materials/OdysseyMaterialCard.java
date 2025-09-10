@@ -11,6 +11,7 @@ import javafx.scene.layout.Priority;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
@@ -20,7 +21,12 @@ import nl.jixxed.eliteodysseymaterials.domain.Wishlist;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 public class OdysseyMaterialCard extends DestroyableVBox implements DestroyableEventTemplate {
@@ -32,22 +38,25 @@ public class OdysseyMaterialCard extends DestroyableVBox implements DestroyableE
     @Getter
     private final OdysseyMaterial odysseyMaterial;
     private final Storage amounts;
-    private DestroyableResizableImageView image;
+    private EdAwesomeIconViewPane image;
     private DestroyableLabel name;
+    private DestroyableLabel squadronCarrierAmount;
     private DestroyableLabel fleetCarrierAmount;
     private DestroyableLabel wishlistAmount;
     private DestroyableLabel backpackAmount;
     private DestroyableLabel shiplockerAmount;
     private DestroyableLabel totalAmount;
     private OdysseyMaterialShow materialShow;
-    private DestroyableResizableImageView fleetCarrierImage;
-    private DestroyableResizableImageView wishlistImage;
-    private DestroyableResizableImageView backpackImage;
-    private DestroyableResizableImageView shipImage;
+    private EdAwesomeIconViewPane squadronCarrierImage;
+    private EdAwesomeIconViewPane fleetCarrierImage;
+    private EdAwesomeIconViewPane wishlistImage;
+    private EdAwesomeIconViewPane backpackImage;
+    private EdAwesomeIconViewPane shipImage;
 
 
     @Getter
     private final BooleanProperty showFC = new SimpleBooleanProperty(false);
+    private final BooleanProperty showSC = new SimpleBooleanProperty(false);
     private final BooleanProperty showWishlist = new SimpleBooleanProperty(false);
     private final BooleanProperty showBackpack = new SimpleBooleanProperty(false);
     private final BooleanProperty showShip = new SimpleBooleanProperty(false);
@@ -74,6 +83,15 @@ public class OdysseyMaterialCard extends DestroyableVBox implements DestroyableE
                 .withManagedProperty(ApplicationState.getInstance().getFcMaterials().and(this.showFC.or(this.hoverProperty())))
                 .withNodeOrientation(NodeOrientation.LEFT_TO_RIGHT)
                 .withNonLocalizedText(String.valueOf(this.amounts.getFleetCarrierValue()))
+                .build();
+        this.squadronCarrierAmount = LabelBuilder.builder()
+                .withStyleClass("fleetcarrier-amount")
+                .withVisibility(false)
+                .withManaged(false)
+                .withVisibilityProperty(ApplicationState.getInstance().getFcMaterials().and(this.showSC.or(this.hoverProperty())))
+                .withManagedProperty(ApplicationState.getInstance().getFcMaterials().and(this.showSC.or(this.hoverProperty())))
+                .withNodeOrientation(NodeOrientation.LEFT_TO_RIGHT)
+                .withNonLocalizedText(String.valueOf(this.amounts.getSquadronCarrierValue()))
                 .build();
         this.wishlistAmount = LabelBuilder.builder()
                 .withStyleClass("wishlist-amount")
@@ -108,11 +126,10 @@ public class OdysseyMaterialCard extends DestroyableVBox implements DestroyableE
                 .withNonLocalizedText(String.valueOf(this.amounts.getTotalValue()))
                 .build();
 
-        this.image = ResizableImageViewBuilder.builder()
+        this.image = EdAwesomeIconViewPaneBuilder.builder()
                 .withStyleClass("material-image")
-                .withImage(getMaterialImage(this.odysseyMaterial))
+                .withIcons(getMaterialIcons(this.odysseyMaterial))
                 .build();
-
 
         final DestroyableRegion region = new DestroyableRegion();
         HBox.setHgrow(region, Priority.ALWAYS);
@@ -121,51 +138,62 @@ public class OdysseyMaterialCard extends DestroyableVBox implements DestroyableE
         this.setFavourite(this.odysseyMaterial, FavouriteService.isFavourite(this.odysseyMaterial));
         this.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> setFavourite(this.odysseyMaterial, FavouriteService.toggleFavourite(this.odysseyMaterial)));
 
-        this.fleetCarrierImage = ResizableImageViewBuilder.builder()
+        this.fleetCarrierImage = EdAwesomeIconViewPaneBuilder.builder()
                 .withStyleClasses("fleetcarrier-image")
-                .withImage("/images/material/fleetcarrier.png")
                 .withVisibility(false)
                 .withManaged(false)
                 .withVisibilityProperty(ApplicationState.getInstance().getFcMaterials().and(this.showFC.or(this.hoverProperty())))
                 .withManagedProperty(ApplicationState.getInstance().getFcMaterials().and(this.showFC.or(this.hoverProperty())))
+                .withIcons(EdAwesomeIcon.OTHER_CARRIER_SIMPLE)
                 .build();
-        this.wishlistImage = ResizableImageViewBuilder.builder()
+        this.squadronCarrierImage = EdAwesomeIconViewPaneBuilder.builder()
+                .withStyleClasses("squadroncarrier-image")
+                .withVisibility(false)
+                .withManaged(false)
+                .withVisibilityProperty(ApplicationState.getInstance().getFcMaterials().and(this.showSC.or(this.hoverProperty())))
+                .withManagedProperty(ApplicationState.getInstance().getFcMaterials().and(this.showSC.or(this.hoverProperty())))
+                .withIcons(EdAwesomeIcon.SQUADRON_CARRIER)
+                .build();
+        this.wishlistImage = EdAwesomeIconViewPaneBuilder.builder()
                 .withStyleClasses("wishlist-image")
-                .withImage("/images/material/wishlist.png")
                 .withVisibility(false)
                 .withManaged(false)
                 .withVisibilityProperty(this.showWishlist.or(this.hoverProperty()))
                 .withManagedProperty(this.showWishlist.or(this.hoverProperty()))
+                .withIcons(EdAwesomeIcon.OTHER_WISHLIST)
                 .build();
-        this.backpackImage = ResizableImageViewBuilder.builder()
+        this.backpackImage = EdAwesomeIconViewPaneBuilder.builder()
                 .withStyleClasses("backpack-image")
-                .withImage("/images/material/backpack.png")
                 .withVisibility(false)
                 .withManaged(false)
                 .withVisibilityProperty(this.showBackpack.or(this.hoverProperty()))
                 .withManagedProperty(this.showBackpack.or(this.hoverProperty()))
+                .withIcons(EdAwesomeIcon.ONFOOT_BACKPACK_1, EdAwesomeIcon.ONFOOT_BACKPACK_2)
                 .build();
-        this.shipImage = ResizableImageViewBuilder.builder()
+        this.shipImage = EdAwesomeIconViewPaneBuilder.builder()
                 .withStyleClasses("ship-image")
-                .withImage("/images/material/ship.png")
                 .withVisibility(false)
                 .withManaged(false)
                 .withVisibilityProperty(this.showShip.or(this.hoverProperty()))
                 .withManagedProperty(this.showShip.or(this.hoverProperty()))
+                .withIcons(EdAwesomeIcon.SHIPS_SHIP_1, EdAwesomeIcon.SHIPS_SHIP_2)
                 .build();
 
         final DestroyableHBox nameLine = BoxBuilder.builder()
                 .withStyleClass("material-name-line")
-                .withNodes(this.image, this.name, region, this.wishlistImage, this.wishlistAmount, this.backpackImage, this.backpackAmount, this.shipImage, this.shiplockerAmount, this.fleetCarrierImage, this.fleetCarrierAmount, this.totalAmount).buildHBox();
+                .withNodes(this.image, this.name, region, this.wishlistImage, this.wishlistAmount, this.backpackImage, this.backpackAmount, this.shipImage, this.shiplockerAmount, this.fleetCarrierImage, this.fleetCarrierAmount, this.squadronCarrierImage, this.squadronCarrierAmount, this.totalAmount).buildHBox();
         this.getNodes().addAll(nameLine);
         updateStyle();
     }
+
 
     @Override
     public void initEventHandling() {
         register(EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
             if (StoragePool.FLEETCARRIER.equals(storageEvent.getStoragePool())) {
                 this.fleetCarrierAmount.setText(String.valueOf(this.amounts.getFleetCarrierValue()));
+            } else if (StoragePool.SQUADRONCARRIER.equals(storageEvent.getStoragePool())) {
+                this.squadronCarrierAmount.setText(String.valueOf(this.amounts.getSquadronCarrierValue()));
             } else if (StoragePool.BACKPACK.equals(storageEvent.getStoragePool())) {
                 this.backpackAmount.setText(String.valueOf(this.amounts.getBackPackValue()));
             } else if (StoragePool.SHIPLOCKER.equals(storageEvent.getStoragePool())) {
@@ -194,6 +222,9 @@ public class OdysseyMaterialCard extends DestroyableVBox implements DestroyableE
         final boolean isFcFilter = OdysseyMaterialShow.FLEETCARRIER.equals(this.materialShow);
         this.showFC.set(isFcFilter);
 
+        final boolean isScFilter = OdysseyMaterialShow.SQUADRONCARRIER.equals(this.materialShow);
+        this.showSC.set(isScFilter);
+
         final boolean isNotOnWishlistFilter = OdysseyMaterialShow.NOT_ON_WISHLIST.equals(this.materialShow);
         this.showWishlist.set(isNotOnWishlistFilter);
 
@@ -202,7 +233,7 @@ public class OdysseyMaterialCard extends DestroyableVBox implements DestroyableE
     }
 
     private void updateMaterialCardStyle() {
-        this.image.setImage(ImageService.getImage(getMaterialImage(this.odysseyMaterial)));
+        this.image.setIcons(getMaterialIcons(this.odysseyMaterial));
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass(MATERIAL_IRRELEVANT_CLASS), false);
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass(MATERIAL_RELEVANT_CLASS), false);
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass(MATERIAL_POWERPLAY_CLASS), false);
@@ -224,6 +255,41 @@ public class OdysseyMaterialCard extends DestroyableVBox implements DestroyableE
         } else {
             this.pseudoClassStateChanged(PseudoClass.getPseudoClass(MATERIAL_IRRELEVANT_CLASS), true);
         }
+    }
+
+    private EdAwesomeIcon[] getMaterialIcons(OdysseyMaterial odysseyMaterial) {
+        final boolean isEngineerUnlockMaterial = (APPLICATION_STATE.getSoloMode()) ? OdysseyBlueprintConstants.isEngineeringIngredientAndNotCompleted(odysseyMaterial) : OdysseyBlueprintConstants.isEngineeringIngredient(odysseyMaterial);
+
+        List<EdAwesomeIcon> edAwesomeIcons = new ArrayList<>();
+        if (odysseyMaterial.isUnknown()) {
+            edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_DATA);
+        } else if (odysseyMaterial instanceof Data) {
+            edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_DATA);
+        } else if (odysseyMaterial instanceof Good) {
+            edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_GOOD_1);
+            edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_GOOD_2);
+        } else if (odysseyMaterial instanceof Asset asset) {
+            switch (asset.getType()) {
+                case TECH -> {
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_TECH_1);
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_TECH_2);
+                }
+                case CIRCUIT -> {
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_CIRCUIT_1);
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_CIRCUIT_2);
+                }
+                case CHEMICAL -> {
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_CHEMICAL_1);
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_CHEMICAL_2);
+                }
+            }
+        }
+        if (isEngineerUnlockMaterial) {
+            edAwesomeIcons.add(EdAwesomeIcon.SHIPS_ENGINEER);
+        }else if (odysseyMaterial.isPowerplay()) {
+            edAwesomeIcons.add(EdAwesomeIcon.OTHER_POWERPLAY_OPEN);
+        }
+        return edAwesomeIcons.toArray(EdAwesomeIcon[]::new);
     }
 
     private String getMaterialImage(final OdysseyMaterial odysseyMaterial) {
