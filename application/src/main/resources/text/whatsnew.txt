@@ -1,3 +1,7 @@
+Version 2.251
+-------------
+Bugfix for when you don't own a squadron carrier
+
 Version 2.250
 -------------
 Added squadron carrier storage numbers
