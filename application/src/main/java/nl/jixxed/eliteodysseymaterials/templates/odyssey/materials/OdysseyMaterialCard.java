@@ -292,28 +292,6 @@ public class OdysseyMaterialCard extends DestroyableVBox implements DestroyableE
         return edAwesomeIcons.toArray(EdAwesomeIcon[]::new);
     }
 
-    private String getMaterialImage(final OdysseyMaterial odysseyMaterial) {
-
-        final boolean isEngineerUnlockMaterial = (APPLICATION_STATE.getSoloMode()) ? OdysseyBlueprintConstants.isEngineeringIngredientAndNotCompleted(odysseyMaterial) : OdysseyBlueprintConstants.isEngineeringIngredient(odysseyMaterial);
-
-        if (odysseyMaterial.isUnknown()) {
-            return "/images/material/unknown.png";
-        } else if (isEngineerUnlockMaterial) {
-            return "/images/material/engineer.png";
-        } else if (odysseyMaterial instanceof Data) {
-            return "/images/material/data.png";
-        } else if (odysseyMaterial instanceof Good) {
-            return "/images/material/good.png";
-        } else if (odysseyMaterial instanceof Asset asset) {
-            return switch (asset.getType()) {
-                case TECH -> "/images/material/tech.png";
-                case CIRCUIT -> "/images/material/circuit.png";
-                case CHEMICAL -> "/images/material/chemical.png";
-            };
-        }
-        throw new IllegalArgumentException("Not a valid material");
-    }
-
     private void setFavourite(final OdysseyMaterial odysseyMaterial, final boolean isFavourite) {
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass(MATERIAL_FAVOURITE_CLASS), isFavourite);
         this.name.addBinding(this.name.textProperty(), LocaleService.getStringBinding(odysseyMaterial));

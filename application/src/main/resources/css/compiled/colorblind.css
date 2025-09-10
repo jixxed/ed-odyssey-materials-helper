@@ -460,7 +460,9 @@
           .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card:buys:sells {
             -fx-border-color: #2e92df; }
           .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .rare-container .rare-image {
-            -fx-pref-height: 100%;
+            -fx-min-width: 5.6em;
+            -fx-pref-width: 5.6em;
+            -fx-max-width: 5.6em;
             -fx-opacity: 0.3; }
           .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content {
             -fx-padding: 0.25em;
@@ -2271,16 +2273,45 @@
               -fx-fill: #709adc; }
             .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .weapon-stats .legend-box .hardpoint-none {
               -fx-fill: gray; }
-          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .shield-stats .shield-image, .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .armour-stats .shield-image {
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .shield-stats .shield-armour, .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .armour-stats .shield-armour {
             -fx-min-width: 5em;
+            -fx-pref-width: 5em;
             -fx-max-width: 5em;
-            -fx-min-height: 6.199em;
-            -fx-max-height: 6.199em; }
+            -fx-min-height: 6.2em;
+            -fx-pref-height: 6.2em;
+            -fx-max-height: 6.2em; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .shield-stats .shield-armour .glyph-icon, .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .armour-stats .shield-armour .glyph-icon {
+              -fx-font-size: 7em !important; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .shield-stats .shield-armour:red .ships-armour-1, .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .armour-stats .shield-armour:red .ships-armour-1 {
+              -fx-fill: white; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .shield-stats .shield-armour:red .ships-armour-2, .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .armour-stats .shield-armour:red .ships-armour-2 {
+              -fx-fill: red; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .shield-stats .shield-armour:blue .ships-armour-1, .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .armour-stats .shield-armour:blue .ships-armour-1 {
+              -fx-fill: white; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .shield-stats .shield-armour:blue .ships-armour-2, .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .armour-stats .shield-armour:blue .ships-armour-2 {
+              -fx-fill: #2e92df; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .shield-stats .shield-shields, .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .armour-stats .shield-shields {
+            -fx-min-width: 5em;
+            -fx-pref-width: 5em;
+            -fx-max-width: 5em;
+            -fx-min-height: 6.2em;
+            -fx-pref-height: 6.2em;
+            -fx-max-height: 6.2em; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .shield-stats .shield-shields .glyph-icon, .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .armour-stats .shield-shields .glyph-icon {
+              -fx-font-size: 7em !important; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .shield-stats .shield-shields:red .ships-shields-1, .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .armour-stats .shield-shields:red .ships-shields-1 {
+              -fx-fill: red; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .shield-stats .shield-shields:red .ships-shields-2, .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .armour-stats .shield-shields:red .ships-shields-2 {
+              -fx-fill: white; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .shield-stats .shield-shields:blue .ships-shields-1, .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .armour-stats .shield-shields:blue .ships-shields-1 {
+              -fx-fill: #2e92df; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .shield-stats .shield-shields:blue .ships-shields-2, .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .armour-stats .shield-shields:blue .ships-shields-2 {
+              -fx-fill: white; }
           .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .shield-stats .shield-component-red, .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .armour-stats .shield-component-red {
             -fx-min-width: 15em;
             -fx-max-width: 15em;
-            -fx-min-height: 9.6em;
-            -fx-max-height: 9.6em;
+            -fx-min-height: 10em;
+            -fx-max-height: 10em;
             -fx-padding: 0.6em 0em 0em 0em; }
           .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .shield-stats .shield-component-blue, .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .armour-stats .shield-component-blue {
             -fx-min-width: 15em;
@@ -2288,6 +2319,22 @@
             -fx-min-height: 6.6em;
             -fx-max-height: 6.6em;
             -fx-padding: 0.6em 0em 0em 0em; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .shield-stats .shield-armour-label-blue, .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .armour-stats .shield-armour-label-blue {
+            -fx-label-padding: 0.25em 0 0 0;
+            -fx-text-fill: white;
+            -fx-font-weight: bold; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .shield-stats .shield-armour-label-red, .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .armour-stats .shield-armour-label-red {
+            -fx-label-padding: 0.35em 0 0 0;
+            -fx-text-fill: white;
+            -fx-font-weight: bold; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .shield-stats .shield-shields-label-blue, .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .armour-stats .shield-shields-label-blue {
+            -fx-label-padding: 0.25em 0 0 0;
+            -fx-text-fill: #2e92df;
+            -fx-font-weight: bold; }
+          .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .shield-stats .shield-shields-label-red, .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .armour-stats .shield-shields-label-red {
+            -fx-label-padding: 0.35em 0 0 0;
+            -fx-text-fill: red;
+            -fx-font-weight: bold; }
           .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .shield-stats .shield-label-blue, .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .armour-stats .shield-label-blue {
             -fx-text-fill: #2e92df;
             -fx-font-weight: bold; }
@@ -3775,13 +3822,13 @@
           .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bottom-section .bartender-flow {
             -fx-hgap: 0.25em;
             -fx-vgap: 0.25em;
-            -fx-min-width: 50em;
-            -fx-pref-width: 50em;
-            -fx-max-width: 50em; }
+            -fx-min-width: 57em;
+            -fx-pref-width: 57em;
+            -fx-max-width: 57em; }
         .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material {
-          -fx-min-width: 50em;
-          -fx-pref-width: 50em;
-          -fx-max-width: 50em;
+          -fx-min-width: 56.5em;
+          -fx-pref-width: 56.5em;
+          -fx-max-width: 56.5em;
           -fx-min-height: 4.5em;
           -fx-pref-height: 4.5em;
           -fx-max-height: 4.5em;
@@ -3909,9 +3956,9 @@
             -fx-min-height: 2em;
             -fx-pref-height: 2em;
             -fx-max-height: 2em;
-            -fx-min-width: 10em;
-            -fx-pref-width: 10em;
-            -fx-max-width: 10em;
+            -fx-min-width: 13em;
+            -fx-pref-width: 13em;
+            -fx-max-width: 13em;
             -fx-label-padding: 0 0 0 0.25em;
             -fx-alignment: baseline-left;
             -fx-font-style: italic; }

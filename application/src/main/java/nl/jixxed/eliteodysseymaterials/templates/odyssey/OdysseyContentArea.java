@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey;
 
+import javafx.application.Platform;
 import javafx.geometry.Side;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -81,13 +82,13 @@ class OdysseyContentArea extends DestroyableAnchorPane implements DestroyableEve
 
         this.odysseyBlueprintBar = new OdysseyBlueprintBar();
         addChangeListener(this.odysseyBlueprintBar.visibleProperty(), (_, _, newValue) ->
-                setBodyAnchor(newValue, this.odysseyBlueprintBar.getWidth()));
+                setBodyAnchor(newValue));
 //        addChangeListener(this.odysseyBlueprintBar.widthProperty(), (_, _, newValue) ->
 //                setBodyAnchor(isRecipeBarVisible(), newValue.doubleValue()));
         this.odysseyBlueprintBar.setVisible(isRecipeBarVisible());
 
         AnchorPaneHelper.setAnchor(this.odysseyBlueprintBar, 0.0, 0.0, 0.0, null);
-        setBodyAnchor(isRecipeBarVisible(), this.odysseyBlueprintBar.getWidth());
+        setBodyAnchor(isRecipeBarVisible());
         AnchorPaneHelper.setAnchor(this.tabs, 0.0, 0.0, 0.0, null);
 
         this.getNodes().addAll(this.odysseyBlueprintBar, this.body);
@@ -103,8 +104,8 @@ class OdysseyContentArea extends DestroyableAnchorPane implements DestroyableEve
             this.odysseyBlueprintBar.setVisible(true);
             PreferencesService.setPreference(PreferenceConstants.RECIPES_VISIBLE, true);
         }));
-        register(EventService.addListener(true, this, ApplicationLifeCycleEvent.class, _ -> setBodyAnchor(isRecipeBarVisible(), this.odysseyBlueprintBar.getWidth())));
-        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, _ -> setBodyAnchor(isRecipeBarVisible(), this.odysseyBlueprintBar.getWidth())));
+        register(EventService.addListener(true, this, ApplicationLifeCycleEvent.class, _ -> setBodyAnchor(isRecipeBarVisible())));
+        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, _ -> setBodyAnchor(isRecipeBarVisible())));
         register(EventService.addListener(true, this, MenuButtonClickedEvent.class, event -> {
             if (Expansion.ODYSSEY.equals(event.getExpansion())) {
                 final boolean visibility = !this.odysseyBlueprintBar.isVisible();
@@ -135,8 +136,11 @@ class OdysseyContentArea extends DestroyableAnchorPane implements DestroyableEve
         return PreferencesService.getPreference(PreferenceConstants.RECIPES_VISIBLE, Boolean.TRUE);
     }
 
-    private void setBodyAnchor(final boolean isRecipeBarVisible, final double width) {
-        AnchorPaneHelper.setAnchor(this.body, 0.0, 0.0, isRecipeBarVisible ? width : 0.0, 0.0);
+    private void setBodyAnchor(final boolean isRecipeBarVisible) {
+        Platform.runLater(() -> {
+            AnchorPaneHelper.setAnchor(this.body, 0.0, 0.0, isRecipeBarVisible ? this.odysseyBlueprintBar.getWidth() : 0.0, 0.0);
+            this.requestLayout();
+        });
     }
 
 

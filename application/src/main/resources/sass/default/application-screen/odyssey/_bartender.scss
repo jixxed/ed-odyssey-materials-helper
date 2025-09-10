@@ -35,13 +35,13 @@
 
         .bartender-flow {
           @include hvGap(0.25em);
-          @include fixedWidth(50em);
+          @include fixedWidth(57em);
         }
       }
 
 
       .bartender-material {
-        @include fixedWidth(50em);
+        @include fixedWidth(56.5em);
         @include fixedHeight(4.5em);
         -fx-alignment: center-left;
         -fx-background-color: $background-color-dark;
@@ -87,7 +87,7 @@
 
         .buy-value, .sell-value {
           @include fixedHeight(2em);
-          @include fixedWidth(10em);
+          @include fixedWidth(13em);
           -fx-label-padding: 0 0 0 0.25em;
           -fx-alignment: baseline-left;
           -fx-font-style: italic;

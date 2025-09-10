@@ -1,17 +1,17 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
+import javafx.css.PseudoClass;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.service.ImageService;
-import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.text.NumberFormat;
 
-public class Shield extends DestroyableStackPane implements DestroyableEventTemplate {
+public class Shield extends DestroyableStackPane implements DestroyableTemplate {
 
     private static final NumberFormat NUMBER_FORMAT_2 = NumberFormat.getNumberInstance();
 
@@ -31,27 +31,33 @@ public class Shield extends DestroyableStackPane implements DestroyableEventTemp
     private DestroyableLabel thermalLabel;
     private DestroyableLabel causticLabel;
     private DestroyableLabel explosiveLabel;
-    private final String title;
     private final String color;
     private final String symbol;
+    private final String type;
 
-    private DestroyableResizableImageView shieldImage;
+    private EdAwesomeIconViewPane shieldImage;
 
-    public Shield(String title, String symbol, String color) {
-        this.title = title;
+    public Shield(String symbol, String color, String type) {
         this.color = color;
         this.symbol = symbol;
+        this.type = type;
         initComponents();
-        initEventHandling();
     }
 
     @Override
     public void initComponents() {
         this.getStyleClass().add("shield-component-" + this.color);
-        shieldImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("shield-image")
-                .withImage(ImageService.getImage("/images/ships/icons/shield2_" + color + ".png"))
+        shieldImage = "armour".equals(type)
+                ? EdAwesomeIconViewPaneBuilder.builder()
+                .withStyleClasses("shield-"+ type, this.color)
+                .withIcons(EdAwesomeIcon.SHIPS_ARMOUR_1, EdAwesomeIcon.SHIPS_ARMOUR_2)
+                .build()
+                : EdAwesomeIconViewPaneBuilder.builder()
+                .withStyleClasses("shield-"+ type, this.color)
+                .withIcons(EdAwesomeIcon.SHIPS_SHIELDS_1, EdAwesomeIcon.SHIPS_SHIELDS_2)
                 .build();
+        shieldImage.pseudoClassStateChanged(PseudoClass.getPseudoClass(this.color), true);
+
         final DestroyableVBox shieldBox = BoxBuilder.builder()
                 .withNodes(BoxBuilder.builder()
                         .withNodes(new GrowingRegion(), shieldImage, new GrowingRegion())
@@ -59,15 +65,10 @@ public class Shield extends DestroyableStackPane implements DestroyableEventTemp
                 .buildVBox();
         this.getNodes().add(shieldBox);
         final DestroyableVBox titleBox = BoxBuilder.builder()
-                .withNodes(BoxBuilder.builder()
-                        .withNodes(new GrowingRegion(), LabelBuilder.builder()
-                                .withStyleClasses("shield-label-" + color, "shield-label-symbol")
+                .withNodes( BoxBuilder.builder()
+                        .withNodes(new GrowingRegion(),LabelBuilder.builder()
+                                .withStyleClasses("shield-"+ type+"-label-" + color, "shield-label-symbol")
                                 .withNonLocalizedText(symbol)
-                                .build(), new GrowingRegion())
-                        .buildHBox(), BoxBuilder.builder()
-                        .withNodes(new GrowingRegion(), LabelBuilder.builder()
-                                .withStyleClasses("shield-label-" + color, "shield-label-title")
-                                .withNonLocalizedText(title)
                                 .build(), new GrowingRegion())
                         .buildHBox(), new GrowingRegion())
                 .buildVBox();
@@ -158,10 +159,10 @@ public class Shield extends DestroyableStackPane implements DestroyableEventTemp
         }
     }
 
-    @Override
-    public void initEventHandling() {
-        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> shieldImage.setImage(ImageService.getImage("/images/ships/icons/shield2_" + color + ".png"))));
-    }
+//    @Override
+//    public void initEventHandling() {
+//        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> shieldImage.setImage(ImageService.getImage("/images/ships/icons/shield2_" + color + ".png"))));
+//    }
 
     public void updateValues(double raw, double kinetic, double thermal, double caustic, double explosive) {
         this.raw = raw;

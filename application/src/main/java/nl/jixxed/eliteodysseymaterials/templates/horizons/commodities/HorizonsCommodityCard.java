@@ -16,10 +16,7 @@ import nl.jixxed.eliteodysseymaterials.domain.CommoditiesSearch;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.*;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.HorizonsCommoditiesSearchEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.MarketUpdatedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
@@ -53,6 +50,7 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
     private DestroyableHBox market;
     private DestroyableLabel stationBuyArrow;
     private DestroyableLabel stationSellArrow;
+    private DestroyableResizableImageView rareImage;
 
     HorizonsCommodityCard(final Commodity commodity) {
         this.commodity = commodity;
@@ -193,7 +191,7 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
                 .withStyleClass("card-content")
                 .withNodes(firstLine, new GrowingRegion(), secondLine).buildVBox();
         if (this.commodity instanceof RareCommodity) {
-            DestroyableResizableImageView rareImage = ResizableImageViewBuilder.builder()
+            rareImage = ResizableImageViewBuilder.builder()
                     .withStyleClass("rare-image")
                     .withImage("/images/material/stock/rare_right.png")
                     .build();
@@ -228,6 +226,13 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
         register(EventService.addListener(true, this, MarketUpdatedEvent.class, marketUpdatedEvent -> {
             updateQuantity();
             updateStyle();
+        }));
+
+        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+            if (this.commodity instanceof RareCommodity) {
+                rareImage.setImage(ImageService.getImage("/images/material/stock/rare_right.png"));
+                rareImage.requestLayout();
+            }
         }));
     }
 

@@ -48,8 +48,8 @@ public class ShieldStats extends Stats implements DestroyableEventTemplate {
     public void initComponents() {
         this.getStyleClass().add("shield-stats");
         addTitle("ship.stats.shield");
-        shieldResistance = new Shield("RES", "%", "blue");
-        shieldIntegrity = new Shield("STR", "\u2795", "red");
+        shieldResistance = new Shield("%", "blue", "shields");
+        shieldIntegrity = new Shield("\u2795", "red", "shields");
         final DestroyableVBox shields = BoxBuilder.builder()
                 .withNodes(shieldResistance, shieldIntegrity).buildVBox();
         regenTime = LabelBuilder.builder()

@@ -50,8 +50,7 @@
       .rare-container {
 
         .rare-image {
-          -fx-pref-height: 100%;
-          //@include fixedHeight(5em);
+          @include fixedWidth(5.6em);
           -fx-opacity: 0.3;
 
         }

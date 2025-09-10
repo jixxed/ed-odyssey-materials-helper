@@ -130,11 +130,6 @@ class OdysseyEngineerCard extends EngineerCard implements DestroyableEventTempla
                 .withIcons(this.engineer.getSpecialisation().getIcon())
                 .build();
 
-        ResizableImageViewBuilder.builder()
-                .withStyleClass("spec-image")
-                .withImage("/images/engineer/specialisation/" + this.engineer.getSpecialisation().name().toLowerCase() + ".png")
-                .build();
-
         final DestroyableHBox specialisationLine = BoxBuilder.builder()
                 .withStyleClass("specialisation")
                 .withNodes(specialisationIcon, engineerSpecialisation)

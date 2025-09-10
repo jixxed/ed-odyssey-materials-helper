@@ -200,7 +200,7 @@ class OdysseyMaterialTotal extends DestroyableVBox implements DestroyableEventTe
     private void updateTotalsLabels() {
         final Integer subTotal = StorageService.getStorageTotal(this.storageType, StoragePool.BACKPACK, StoragePool.SHIPLOCKER);
         this.subTotalValueLabel.setText(subTotal + "/1000");
-        final Integer total = StorageService.getStorageTotal(this.storageType, StoragePool.BACKPACK, StoragePool.SHIPLOCKER, StoragePool.FLEETCARRIER);
+        final Integer total = StorageService.getStorageTotal(this.storageType, StoragePool.BACKPACK, StoragePool.SHIPLOCKER, StoragePool.FLEETCARRIER, StoragePool.SQUADRONCARRIER);
         this.totalValueLabel.setText(total.toString());
     }
 }

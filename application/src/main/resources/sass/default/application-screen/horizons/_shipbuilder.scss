@@ -850,18 +850,70 @@
       }
 
       .shield-stats, .armour-stats {
-        .shield-image {
-          -fx-min-width: 5em;
-          -fx-max-width: 5em;
-          -fx-min-height: 6.199em;
-          -fx-max-height: 6.199em;
+
+        .shield-armour {
+          @include fixedWidth(5em);
+          @include fixedHeight(6.2em);
+          .glyph-icon {
+            -fx-font-size: 7em !important;
+          }
+
+          &:red {
+            .ships-armour-1 {
+              -fx-fill: $text-color-white;
+            }
+
+            .ships-armour-2 {
+              -fx-fill: $text-color-red;
+            }
+          }
+
+          &:blue {
+            .ships-armour-1 {
+              -fx-fill: $text-color-white;
+            }
+
+            .ships-armour-2 {
+              -fx-fill: $text-color-blue;
+            }
+          }
         }
+
+        .shield-shields {
+          @include fixedWidth(5em);
+          @include fixedHeight(6.2em);
+          .glyph-icon {
+            -fx-font-size: 7em !important;
+          }
+
+          &:red {
+            .ships-shields-1 {
+              -fx-fill: $text-color-red;
+
+            }
+
+            .ships-shields-2 {
+              -fx-fill: $text-color-white;
+            }
+          }
+
+          &:blue {
+            .ships-shields-1 {
+              -fx-fill: $text-color-blue;
+            }
+
+            .ships-shields-2 {
+              -fx-fill: $text-color-white;
+            }
+          }
+        }
+
 
         .shield-component-red {
           -fx-min-width: 15em;
           -fx-max-width: 15em;
-          -fx-min-height: 9.6em;
-          -fx-max-height: 9.6em;
+          -fx-min-height: 10em;
+          -fx-max-height: 10em;
           -fx-padding: 0.6em 0em 0em 0em;
         }
 
@@ -873,6 +925,29 @@
           -fx-padding: 0.6em 0em 0em 0em;
         }
 
+        .shield-armour-label-blue {
+          -fx-label-padding: 0.25em 0 0 0;
+          -fx-text-fill: $text-color-white;
+          -fx-font-weight: bold;
+        }
+
+        .shield-armour-label-red {
+          -fx-label-padding: 0.35em 0 0 0;
+          -fx-text-fill: $text-color-white;
+          -fx-font-weight: bold;
+        }
+
+        .shield-shields-label-blue {
+          -fx-label-padding: 0.25em 0 0 0;
+          -fx-text-fill: $text-color-blue;
+          -fx-font-weight: bold;
+        }
+
+        .shield-shields-label-red {
+          -fx-label-padding: 0.35em 0 0 0;
+          -fx-text-fill: $text-color-red;
+          -fx-font-weight: bold;
+        }
         .shield-label-blue {
           -fx-text-fill: $text-color-blue;
           -fx-font-weight: bold;
@@ -1671,6 +1746,7 @@
 
                       @include awesome-icons;
                     }
+
                     .module-image-wide {
                       @include fixedWidth(2.7em);
                       @include fixedHeight(1.5em);

@@ -40,8 +40,8 @@ public class ArmourStats extends Stats implements DestroyableTemplate {
     public void initComponents() {
         this.getStyleClass().add("armour-stats");
         addTitle("ship.stats.armour");
-        armourResistance = new Shield("RES", "%", "blue");
-        armourIntegrity = new Shield("INT", "\u2795", "red");
+        armourResistance = new Shield("%", "blue", "armour");
+        armourIntegrity = new Shield("\u2795", "red", "armour");
 
         final DestroyableVBox shields = BoxBuilder.builder()
                 .withNodes(armourResistance, armourIntegrity)
