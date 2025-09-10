@@ -53,7 +53,7 @@ public class PinnedBlueprint extends Blueprint implements DestroyableEventTempla
     }
 
     private int getMaxGrade(HorizonsBlueprint pinnedBlueprint) {
-        return HorizonsBlueprintGrade.forDigit(Math.min(HorizonsBlueprintConstants.getEngineerMaxGrade(pinnedBlueprint, engineer), ApplicationState.getInstance().getEngineerRank(engineer))).getGrade();
+        return HorizonsBlueprintGrade.forDigit(Math.max(Math.min(HorizonsBlueprintConstants.getEngineerMaxGrade(pinnedBlueprint, engineer), ApplicationState.getInstance().getEngineerRank(engineer)), 1)).getGrade();
     }
 
     @Override
