@@ -153,7 +153,7 @@ class HorizonsWishlistModuleBlueprintTemplateTest {
         ApplicationState.getInstance().addCommander("unittest", "F0000000", GameVersion.LIVE, LocalDateTime.of(2024,12,12,12,12,12));
         var graphic = ResizableImageViewBuilder.builder()
                 .withStyleClass("market-copy-icon")
-                .withImage("/images/other/copy.png")
+                .withImage("/images/other/help.png")
                 .build();
         DestroyableButton subject = ButtonBuilder.builder()
                 .withText("blank")
