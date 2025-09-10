@@ -1,3 +1,9 @@
+Version 2.252
+-------------
+Replace shield images with higher resolution versions
+Fix odyssey material totals to properly include squadron carrier storage
+Resized bartender material card to fit Russian translations
+
 Version 2.251
 -------------
 Bugfix for when you don't own a squadron carrier
