@@ -1151,6 +1151,9 @@
             -fx-font-size: 1.2em;
             -fx-font-weight: normal; }
           .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .nearest-trader .copyable-location {
+            -fx-min-width: 20em;
+            -fx-pref-width: 20em;
+            -fx-max-width: 20em;
             -fx-font-weight: normal;
             -fx-hgap: 0.25em; }
             .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .nearest-trader .copyable-location:hover {
@@ -3769,11 +3772,26 @@
               -fx-spacing: 0.25em; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .title-line .engineer, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .title-line .index {
               -fx-font-size: 2em; }
-            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .blueprint {
-              -fx-text-fill: #2e92df; }
-              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .blueprint:hover {
-                -fx-text-fill: #5aa9e6;
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .blueprints-line {
+              -fx-spacing: 0.25em; }
+              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .blueprints-line .type-icon {
+                -fx-min-width: 1em;
+                -fx-pref-width: 1em;
+                -fx-max-width: 1em;
+                -fx-min-height: 1em;
+                -fx-pref-height: 1em;
+                -fx-max-height: 1em; }
+                .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .blueprints-line .type-icon .glyph-icon {
+                  -fx-font-size: 1.2em !important;
+                  -fx-fill: #2e92df; }
+              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .blueprints-line .blueprint {
+                -fx-text-fill: #2e92df; }
+              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .blueprints-line:hover {
                 -fx-cursor: hand; }
+                .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .blueprints-line:hover .blueprint {
+                  -fx-text-fill: #5aa9e6; }
+                .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .blueprints-line:hover .type-icon .glyph-icon {
+                  -fx-fill: white; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .buttons {
               -fx-padding: 1em 0 0 0;
               -fx-spacing: 0.25em; }
@@ -5460,11 +5478,26 @@
               -fx-spacing: 0.25em; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .title-line .engineer, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .title-line .index {
               -fx-font-size: 2em; }
-            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .blueprint {
-              -fx-text-fill: #2e92df; }
-              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .blueprint:hover {
-                -fx-text-fill: #5aa9e6;
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .blueprints-line {
+              -fx-spacing: 0.25em; }
+              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .blueprints-line .type-icon {
+                -fx-min-width: 1em;
+                -fx-pref-width: 1em;
+                -fx-max-width: 1em;
+                -fx-min-height: 1em;
+                -fx-pref-height: 1em;
+                -fx-max-height: 1em; }
+                .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .blueprints-line .type-icon .glyph-icon {
+                  -fx-font-size: 1.2em !important;
+                  -fx-fill: #2e92df; }
+              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .blueprints-line .blueprint {
+                -fx-text-fill: #2e92df; }
+              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .blueprints-line:hover {
                 -fx-cursor: hand; }
+                .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .blueprints-line:hover .blueprint {
+                  -fx-text-fill: #5aa9e6; }
+                .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .blueprints-line:hover .type-icon .glyph-icon {
+                  -fx-fill: white; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .buttons {
               -fx-padding: 1em 0 0 0;
               -fx-spacing: 0.25em; }
@@ -5681,6 +5714,9 @@
       -fx-text-fill: gray;
       -fx-padding: 0 0.25em 0 0; }
     .app .material-popover-content .selling-stations .copyable-location {
+      -fx-min-width: 26em;
+      -fx-pref-width: 26em;
+      -fx-max-width: 26em;
       -fx-font-weight: normal;
       -fx-hgap: 0.25em; }
       .app .material-popover-content .selling-stations .copyable-location:hover {

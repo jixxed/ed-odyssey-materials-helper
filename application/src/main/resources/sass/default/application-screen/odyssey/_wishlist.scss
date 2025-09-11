@@ -567,12 +567,32 @@
               -fx-font-size: 2em;
             }
           }
+          .blueprints-line {
+            -fx-spacing: 0.25em;
 
-          .blueprint {
-            -fx-text-fill: $text-color-blue;
+            .type-icon {
+              @include fixedWidth(1em);
+              @include fixedHeight(1em);
+
+              .glyph-icon {
+                -fx-font-size: 1.2em !important;
+                -fx-fill: $text-color-blue;
+              }
+            }
+
+            .blueprint {
+              -fx-text-fill: $text-color-blue;
+            }
 
             &:hover {
-              -fx-text-fill: lighten($text-color-blue, 10%);
+              .blueprint {
+                -fx-text-fill: lighten($text-color-blue, 10%);
+              }
+              .type-icon {
+                .glyph-icon {
+                  -fx-fill: $text-color-white;
+                }
+              }
               -fx-cursor: hand;
             }
           }

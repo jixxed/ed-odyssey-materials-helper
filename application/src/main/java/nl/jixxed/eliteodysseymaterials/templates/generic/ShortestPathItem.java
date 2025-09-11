@@ -1,10 +1,14 @@
 package nl.jixxed.eliteodysseymaterials.templates.generic;
 
 import javafx.beans.binding.StringBinding;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
@@ -13,7 +17,9 @@ import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.*;
@@ -47,7 +53,7 @@ public class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBo
                 .map(commander -> WishlistService.getHorizonsWishlists(commander).getSelectedWishlist());
         final Optional<Wishlist> odysseyWishlist = ApplicationState.getInstance().getPreferredCommander()
                 .map(commander -> WishlistService.getOdysseyWishlists(commander).getSelectedWishlist());
-        List<DestroyableLabel> blueprints = new ArrayList<>(this.pathItem.getRecipes().entrySet().stream()
+        List<DestroyableHBox> blueprints = new ArrayList<>(this.pathItem.getRecipes().entrySet().stream()
                 .sorted(Comparator.comparing((Map.Entry o) -> o.getKey() instanceof HorizonsExperimentalEffectBlueprint)
                         .thenComparing((Map.Entry o) -> LocaleService.getLocalizedStringForCurrentLocale(((Blueprint) o.getKey()).getBlueprintName().getLocalizationKey())))
                 .map(entry ->
@@ -71,12 +77,19 @@ public class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBo
                             } else {
                                 stringBinding = LocaleService.getStringBinding("tab.wishlist.travel.path.column.blueprints.blueprint.odyssey", LocaleService.LocalizationKey.of(blueprint.getBlueprintName().getLocalizationKey()), amount);
                             }
-                            return LabelBuilder.builder()
-                                    .withStyleClasses("blueprint")
-                                    .withOnMouseClicked(_ -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsBlueprintClickEvent(blueprint) : new BlueprintClickEvent(blueprint.getBlueprintName())))
-                                    .withText(stringBinding
-                                    )
+                            EdAwesomeIconViewPane icon = EdAwesomeIconViewPaneBuilder.builder()
+                                    .withStyleClass("type-icon")
+                                    .withIcons(blueprint instanceof HorizonsExperimentalEffectBlueprint ? EdAwesomeIcon.SHIPS_EXPERIMENTAL_EFFECT : EdAwesomeIcon.SHIPS_ENGINEER)
                                     .build();
+                            return BoxBuilder.builder()
+                                    .withStyleClass("blueprints-line")
+                                    .withNodes(icon,
+                                            LabelBuilder.builder()
+                                                    .withStyleClasses("blueprint")
+                                                    .withText(stringBinding)
+                                                    .build())
+                                    .withOnMouseClicked(_ -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsBlueprintClickEvent(blueprint) : new BlueprintClickEvent(blueprint.getBlueprintName())))
+                                    .buildHBox();
                         }
                 ).toList());
 
@@ -93,7 +106,8 @@ public class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBo
 
             if (!Engineer.REMOTE_WORKSHOP.equals(this.pathItem.getEngineer())) {
                 final CopyableLocation copyableLocation = new CopyableLocation(this.pathItem.getEngineer().getStarSystem(), this.pathItem.getEngineer().getSettlement().getSettlementName());
-
+                HBox.setHgrow(copyableLocation, Priority.NEVER);
+                VBox.setVgrow(copyableLocation, Priority.NEVER);
                 DestroyableLabel distanceLabel = LabelBuilder.builder()
                         .withStyleClass("distance-title")
                         .withText("tab.wishlist.travel.path.column.distance")

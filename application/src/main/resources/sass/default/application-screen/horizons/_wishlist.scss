@@ -103,6 +103,7 @@
 
               .modifier-container {
                 -fx-alignment: center;
+
                 .modifier {
                   -fx-cursor: hand;
                   -fx-font-size: 1.2em !important;
@@ -159,6 +160,7 @@
               .visible-container {
                 -fx-font-size: 1.2em !important;
                 -fx-cursor: hand;
+
                 .visible-button {
                   -fx-fill: $text-color-white;
 
@@ -225,13 +227,13 @@
 
               .title-line {
                 .visible-container {
-                .visible-button {
-                  -fx-fill: $text-color-grey;
+                  .visible-button {
+                    -fx-fill: $text-color-grey;
 
-                  &:hover {
-                    -fx-fill: $text-color-blue;
+                    &:hover {
+                      -fx-fill: $text-color-blue;
+                    }
                   }
-                }
                 }
               }
 
@@ -554,11 +556,32 @@
             }
           }
 
-          .blueprint {
-            -fx-text-fill: $text-color-blue;
+          .blueprints-line {
+            -fx-spacing: 0.25em;
+
+            .type-icon {
+              @include fixedWidth(1em);
+              @include fixedHeight(1em);
+
+              .glyph-icon {
+                -fx-font-size: 1.2em !important;
+                -fx-fill: $text-color-blue;
+              }
+            }
+
+            .blueprint {
+              -fx-text-fill: $text-color-blue;
+            }
 
             &:hover {
-              -fx-text-fill: lighten($text-color-blue, 10%);
+              .blueprint {
+                -fx-text-fill: lighten($text-color-blue, 10%);
+              }
+              .type-icon {
+                .glyph-icon {
+                  -fx-fill: $text-color-white;
+                }
+              }
               -fx-cursor: hand;
             }
           }

@@ -79,11 +79,7 @@ public class CopyableLocation extends DestroyableFlowPane implements Destroyable
                 .withText("location.tooltip.permit.required")
                 .build();
         tooltip.install(permitIcon);
-
-//        final DestroyableResizableImageView copyIcon = ResizableImageViewBuilder.builder()
-//                .withStyleClass("copy-icon")
-//                .withImage("/images/other/copy.png")
-//                .build();
+        this.prefWrapLengthProperty().bind(this.widthProperty());
 
         this.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             copyLocationToClipboard();

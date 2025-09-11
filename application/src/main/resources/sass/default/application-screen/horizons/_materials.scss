@@ -220,6 +220,7 @@
       }
 
       .copyable-location {
+        @include fixedWidth(20em);
         @include copyable-location;
       }
     }

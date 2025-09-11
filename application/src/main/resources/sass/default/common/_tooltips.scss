@@ -50,6 +50,7 @@
     //  -fx-text-alignment: right;
     }
     .copyable-location{
+      @include fixedWidth(26em);
       @include copyable-location;
     }
   }
