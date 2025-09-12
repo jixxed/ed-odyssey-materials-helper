@@ -3772,8 +3772,10 @@
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .distance-line {
               -fx-padding: 0 0 1em 0;
               -fx-spacing: 0.25em; }
-            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .title-line .engineer, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .title-line .index {
-              -fx-font-size: 2em; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .title-line {
+              -fx-spacing: 1em; }
+              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .title-line .engineer, .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .title-line .index {
+                -fx-font-size: 2em; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .blueprints-line {
               -fx-spacing: 0.25em; }
               .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .blueprints-line .type-icon {
@@ -5480,8 +5482,10 @@
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .distance-line {
               -fx-padding: 0 0 1em 0;
               -fx-spacing: 0.25em; }
-            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .title-line .engineer, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .title-line .index {
-              -fx-font-size: 2em; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .title-line {
+              -fx-spacing: 1em; }
+              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .title-line .engineer, .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .title-line .index {
+                -fx-font-size: 2em; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .blueprints-line {
               -fx-spacing: 0.25em; }
               .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .blueprints-line .type-icon {
