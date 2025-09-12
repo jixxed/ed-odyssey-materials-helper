@@ -60,4 +60,9 @@
 "horizons.materials.commodity.stats.buy","Buy price (min/avg/max): {0} / {1} / {2}","","","","","","",""
 "horizons.materials.commodity.stats.sell","Sell price (min/avg/max): {0} / {1} / {2}","","","","","","",""
 "material.tooltip.squadroncarrier","Squadron carrier","","","","","","",""
-
+"wishlist.tooltip.remove","Remove from wishlist","","","","","","",""
+"wishlist.tooltip.showhide","Show/hide blueprint","","","","","","",""
+"wishlist.tooltip.split","Split experimental effect","","","","","","",""
+"wishlist.tooltip.configure","Configure blueprint","","","","","","",""
+"wishlist.tooltip.quantity.increase","Increase quantity","","","","","","",""
+"wishlist.tooltip.quantity.decrease","Decrease quantity","","","","","","",""

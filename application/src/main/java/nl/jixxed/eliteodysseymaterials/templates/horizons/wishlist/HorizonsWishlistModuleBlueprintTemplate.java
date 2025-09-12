@@ -75,6 +75,12 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
                 .withIcon(FontAwesomeIcon.EYE)
                 .withOnMouseClicked(_ -> setVisibility(!this.visible.get()))
                 .build();
+        DestroyableTooltip eyeIconTooltip = TooltipBuilder.builder()
+                .withStyleClass("action-tooltip")
+                .withShowDelay(Duration.millis(100))
+                .withText("wishlist.tooltip.showhide")
+                .build();
+        eyeIconTooltip.install(eyeIcon);
         var visibility = BoxBuilder.builder()
                 .withStyleClasses("visible-container")
                 .withNode(eyeIcon)
@@ -120,6 +126,12 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
                 .withIcon(FontAwesomeIcon.EXPAND)
                 .withOnMouseClicked(_ -> splitBlueprint())
                 .build();
+        DestroyableTooltip splitTooltip = TooltipBuilder.builder()
+                .withStyleClass("action-tooltip")
+                .withShowDelay(Duration.millis(100))
+                .withText("wishlist.tooltip.split")
+                .build();
+        splitTooltip.install(split);
         tooltipEffect.install(experimentalEffectName);
         experimentalEffectName.addBinding(experimentalEffectName.visibleProperty(), this.experimentalEffectName.textProperty().isNotEmpty());
         experimentalEffectName.addBinding(experimentalEffectName.managedProperty(), this.experimentalEffectName.textProperty().isNotEmpty());
@@ -136,6 +148,12 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
                     ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> EventService.publish(new HorizonsWishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.wishlistBlueprint), Action.REMOVED)));
                 })
                 .build();
+        DestroyableTooltip removeBlueprintTooltip = TooltipBuilder.builder()
+                .withStyleClass("action-tooltip")
+                .withShowDelay(Duration.millis(100))
+                .withText("wishlist.tooltip.remove")
+                .build();
+        removeBlueprintTooltip.install(this.removeBlueprint);
         final DestroyableLabel quantityLabel = LabelBuilder.builder().withText("wishlist.blueprint.horizons.quantity", this.wishlistBlueprint.getQuantity())
                 .withStyleClass("quantity-text")
                 .withManaged(this.wishlistUUID.equals(Wishlist.ALL.getUuid()) && wishlistBlueprint.getQuantity() > 10)
@@ -148,6 +166,12 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
                 .withVisibility(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()))
 //                .withOnMouseClicked(_ -> showGradeSettings())
                 .build();
+        DestroyableTooltip settingsIconTooltip = TooltipBuilder.builder()
+                .withStyleClass("action-tooltip")
+                .withShowDelay(Duration.millis(100))
+                .withText("wishlist.tooltip.configure")
+                .build();
+        settingsIconTooltip.install(this.settingsIcon);
         this.settingsButton = BoxBuilder.builder()
                 .withStyleClass("settings-button")
                 .withNode(this.settingsIcon)

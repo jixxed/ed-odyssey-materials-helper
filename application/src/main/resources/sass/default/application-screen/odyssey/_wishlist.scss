@@ -147,12 +147,16 @@
             -fx-padding: 0.25em;
             -fx-spacing: 0.25em;
 
+            .action-tooltip {
+              -fx-padding: 0.25em !important;
+            }
 
             .quantity-select {
               -fx-spacing: 0.1em;
 
               .modifier-container {
                 -fx-alignment: center;
+
                 .modifier {
                   -fx-cursor: hand;
                   -fx-font-size: 1.2em !important;
@@ -209,6 +213,7 @@
               .visible-container {
                 -fx-font-size: 1.2em !important;
                 -fx-cursor: hand;
+
                 .visible-button {
                   -fx-fill: $text-color-white;
 
@@ -492,7 +497,8 @@
                 @include fixedWidth(2em);
                 @include fixedHeight(2em);
                 @include awesome-icons;
-                .glyph-icon{
+
+                .glyph-icon {
                   -fx-font-size: 2em !important;
                 }
               }
@@ -567,6 +573,7 @@
               -fx-font-size: 2em;
             }
           }
+
           .blueprints-line {
             -fx-spacing: 0.25em;
 
@@ -588,11 +595,13 @@
               .blueprint {
                 -fx-text-fill: lighten($text-color-blue, 10%);
               }
+
               .type-icon {
                 .glyph-icon {
                   -fx-fill: $text-color-white;
                 }
               }
+
               -fx-cursor: hand;
             }
           }

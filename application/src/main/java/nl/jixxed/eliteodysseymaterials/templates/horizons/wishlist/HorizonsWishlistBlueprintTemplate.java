@@ -63,6 +63,12 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableVBo
                 .withIcon(FontAwesomeIcon.EYE)
                 .withOnMouseClicked(_ -> setVisibility(!this.visible.get()))
                 .build();
+        DestroyableTooltip eyeIconTooltip = TooltipBuilder.builder()
+                .withStyleClass("action-tooltip")
+                .withShowDelay(Duration.millis(100))
+                .withText("wishlist.tooltip.showhide")
+                .build();
+        eyeIconTooltip.install(eyeIcon);
         var visibility = BoxBuilder.builder()
                 .withStyleClasses("visible-container")
                 .withNode(eyeIcon)
@@ -102,6 +108,12 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableVBo
                     APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new HorizonsWishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.wishlistBlueprint), Action.REMOVED)));
                 })
                 .build();
+        DestroyableTooltip removeBlueprintTooltip = TooltipBuilder.builder()
+                .withStyleClass("action-tooltip")
+                .withShowDelay(Duration.millis(100))
+                .withText("wishlist.tooltip.remove")
+                .build();
+        removeBlueprintTooltip.install(removeBlueprint);
 
         this.title = LabelBuilder.builder()
                 .withStyleClass("module")

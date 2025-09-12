@@ -65,6 +65,12 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableVBox
                 .withIcon(FontAwesomeIcon.EYE)
                 .withOnMouseClicked(_ -> setVisibility(!this.visible.get()))
                 .build();
+        DestroyableTooltip eyeIconTooltip = TooltipBuilder.builder()
+                .withStyleClass("action-tooltip")
+                .withShowDelay(Duration.millis(100))
+                .withText("wishlist.tooltip.showhide")
+                .build();
+        eyeIconTooltip.install(eyeIcon);
         var visibility = BoxBuilder.builder()
                 .withStyleClasses("visible-container")
                 .withNode(eyeIcon)
@@ -94,6 +100,12 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableVBox
                     APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new OdysseyWishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.wishlistBlueprint), Action.REMOVED)));
                 })
                 .build();
+        DestroyableTooltip removeBlueprintTooltip = TooltipBuilder.builder()
+                .withStyleClass("action-tooltip")
+                .withShowDelay(Duration.millis(100))
+                .withText("wishlist.tooltip.remove")
+                .build();
+        removeBlueprintTooltip.install(removeBlueprint);
 
         if (this.blueprint instanceof ModuleBlueprint moduleRecipe) {
             tooltip = TooltipBuilder.builder()

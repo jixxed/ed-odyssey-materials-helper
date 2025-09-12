@@ -3365,6 +3365,8 @@
             -fx-border-color: black;
             -fx-padding: 0.25em;
             -fx-spacing: 0.25em; }
+            .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .action-tooltip {
+              -fx-padding: 0.25em !important; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select {
               -fx-spacing: 0.1em; }
               .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .modifier-container {
@@ -5044,6 +5046,8 @@
             -fx-border-color: black;
             -fx-padding: 0.25em;
             -fx-spacing: 0.25em; }
+            .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .action-tooltip {
+              -fx-padding: 0.25em !important; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select {
               -fx-spacing: 0.1em; }
               .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .quantity-select .modifier-container {

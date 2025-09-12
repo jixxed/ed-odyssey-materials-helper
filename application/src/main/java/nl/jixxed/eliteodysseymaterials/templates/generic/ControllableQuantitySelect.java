@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.util.Duration;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.*;
@@ -22,6 +23,7 @@ import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTooltip;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,6 +118,20 @@ public class ControllableQuantitySelect extends DestroyableHBox implements Destr
                         .withIcon(FontAwesomeIcon.PLUS)
                         .withOnMouseClicked(_ -> increase())
                         .build()).buildHBox();
+
+        DestroyableTooltip leftTooltip = TooltipBuilder.builder()
+                .withStyleClass("action-tooltip")
+                .withShowDelay(Duration.millis(100))
+                .withText("wishlist.tooltip.quantity.decrease")
+                .build();
+        leftTooltip.install(left);
+
+        DestroyableTooltip rightTooltip = TooltipBuilder.builder()
+                .withStyleClass("action-tooltip")
+                .withShowDelay(Duration.millis(100))
+                .withText("wishlist.tooltip.quantity.increase")
+                .build();
+        rightTooltip.install(right);
 //        var right = FontAwesomeIconViewBuilder.builder()
 //                .withStyleClasses("arrow", "right")
 //                .withIcon(FontAwesomeIcon.PLUS)
