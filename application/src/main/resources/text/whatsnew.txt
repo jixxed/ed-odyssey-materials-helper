@@ -1,3 +1,8 @@
+Version 2.253
+-------------
+Reduce minimum width of copyable locations, most notable in shortest path items
+Added tooltips to buttons on wishlist blueprints for clarity
+
 Version 2.252
 -------------
 Replace shield images with higher resolution versions
