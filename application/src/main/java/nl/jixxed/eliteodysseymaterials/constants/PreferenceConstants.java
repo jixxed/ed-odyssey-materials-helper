@@ -62,5 +62,7 @@ public class PreferenceConstants {
     public static final String COLLECTOR_MODE = "horizons.material.collector.mode";
     public static final String FLEET_CARRIER_ID = "fleetcarrier.carrier.id";
     public static final String SQUADRON_CARRIER_ID = "squadroncarrier.carrier.id";
+    public static final String COLONISATION_ENABLE_FC = "colonisation.enable.fc";
+    public static final String COLONISATION_ENABLE_SC = "colonisation.enable.sc";
 
 }

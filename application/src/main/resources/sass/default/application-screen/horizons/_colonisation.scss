@@ -169,6 +169,21 @@
             }
           }
         }
+        &:fc-disabled{
+          .bom-entry-content {
+            .fc-icon, .amount-fleetcarrier {
+              -fx-opacity: 0.2;
+            }
+          }
+        }
+
+        &:sc-disabled{
+          .bom-entry-content {
+            .sc-icon, .amount-squadroncarrier {
+              -fx-opacity: 0.2;
+            }
+          }
+        }
 
         .bom-entry-content {
 

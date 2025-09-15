@@ -4,6 +4,7 @@ import javafx.css.PseudoClass;
 import javafx.geometry.Orientation;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.*;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
@@ -126,7 +127,7 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
 //                .build();
 
         this.fleetCarrierImage = EdAwesomeIconViewPaneBuilder.builder()
-                .withStyleClass("icon")
+                .withStyleClasses("icon", "fc-icon")
                 .withIcons(EdAwesomeIcon.OTHER_CARRIER_SIMPLE)
                 .build();
         this.shipImage = EdAwesomeIconViewPaneBuilder.builder()
@@ -134,7 +135,7 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
                 .withIcons(EdAwesomeIcon.SHIPS_SHIP_1, EdAwesomeIcon.SHIPS_SHIP_2)
                 .build();
         this.squadronCarrierImage = EdAwesomeIconViewPaneBuilder.builder()
-                .withStyleClass("icon")
+                .withStyleClasses("icon", "sc-icon")
                 .withIcons(EdAwesomeIcon.SQUADRON_CARRIER)
                 .build();
 
@@ -221,8 +222,10 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
                 .withStyleClass("values2")
                 .withNodes(deliveredTitleLabel, deliveredLabel, new GrowingRegion(), deliverLabel, deliverTitleLabel).buildHBox();
         availableShip = StorageService.getCommodityCount(commodity, StoragePool.SHIP);
-        availableFleetCarrier = StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER);
-        availableSquadronCarrier = StorageService.getCommodityCount(commodity, StoragePool.SQUADRONCARRIER);
+        availableFleetCarrier = UserPreferencesService.getPreference(PreferenceConstants.COLONISATION_ENABLE_FC, true) ? StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER) : 0;
+        availableSquadronCarrier = UserPreferencesService.getPreference(PreferenceConstants.COLONISATION_ENABLE_SC, true) ? StorageService.getCommodityCount(commodity, StoragePool.SQUADRONCARRIER) : 0;
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("fc-disabled"), !UserPreferencesService.getPreference(PreferenceConstants.COLONISATION_ENABLE_FC, true));
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("sc-disabled"), !UserPreferencesService.getPreference(PreferenceConstants.COLONISATION_ENABLE_SC, true));
         var remaining = progress.required() - progress.provided();
         this.delivered = new TypeSegment(Math.max(0, progress.provided()), SegmentType.PRESENT);
         this.presentShip = new TypeSegment(Math.min(remaining, availableShip), SegmentType.PRESENT_SHIP);
@@ -272,6 +275,9 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
                 update();
             }
         }));
+        register(EventService.addListener(true, this, ColonisationStockStateEvent.class, event -> {
+            update();
+        }));
         register(EventService.addListener(true, this, MarketUpdatedEvent.class, event -> {
             update();
         }));
@@ -291,8 +297,10 @@ public class BillOfMaterialsEntry extends DestroyableVBox implements Destroyable
 
     private void update() {
         availableShip = StorageService.getCommodityCount(commodity, StoragePool.SHIP);
-        availableFleetCarrier = StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER);
-        availableSquadronCarrier = StorageService.getCommodityCount(commodity, StoragePool.SQUADRONCARRIER);
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("fc-disabled"), !UserPreferencesService.getPreference(PreferenceConstants.COLONISATION_ENABLE_FC, true));
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("sc-disabled"), !UserPreferencesService.getPreference(PreferenceConstants.COLONISATION_ENABLE_SC, true));
+        availableFleetCarrier = UserPreferencesService.getPreference(PreferenceConstants.COLONISATION_ENABLE_FC, true) ? StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER) : 0;
+        availableSquadronCarrier = UserPreferencesService.getPreference(PreferenceConstants.COLONISATION_ENABLE_SC, true) ? StorageService.getCommodityCount(commodity, StoragePool.SQUADRONCARRIER) : 0;
         var remaining = progress.required() - progress.provided();
         fleetCarrierLabel.setText(Formatters.NUMBER_FORMAT_0.format(availableFleetCarrier));
         squadronCarrierLabel.setText(Formatters.NUMBER_FORMAT_0.format(availableSquadronCarrier));

@@ -42,6 +42,7 @@ public class SettingsTab extends OdysseyTab implements DestroyableTemplate {
                         new OdysseyWishlist(),
                         new HorizonsWishlist(),
                         new HorizonsShips(),
+                        new HorizonsColonisation(),
                         new Notifications(),
                         new FrontierAPI()
                 )

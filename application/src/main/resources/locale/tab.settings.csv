@@ -121,3 +121,8 @@
 "tab.settings.ships.favourite.powerdistributor","Favourite power distributor","","Favourite power distributor","Favourite power distributor","Favourite power distributor","Favourite power distributor","Favourite power distributor","Favourite power distributor"
 "tab.settings.ships.favourite.powerdistributor.guardian","Guardian","","Guardian","Guardian","Guardian","Guardian","Guardian","Guardian"
 "tab.settings.ships.favourite.sensors","Favourite sensors","","Favourite sensors","Favourite sensors","Favourite sensors","Favourite sensors","Favourite sensors","Favourite sensors"
+"tab.settings.title.horizons.colonisation","Colonisation","","","","","","",""
+"tab.settings.colonisation.fc.enabled","Fleetcarrier stock","","","","","","",""
+"tab.settings.colonisation.fc.explain","Include fleetcarrier stock for colonisation","","","","","","",""
+"tab.settings.colonisation.sc.enabled","Squadroncarrier stock","","","","","","",""
+"tab.settings.colonisation.sc.explain","Include squadroncarrier stock for colonisation","","","","","","",""
