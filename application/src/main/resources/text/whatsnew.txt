@@ -1,3 +1,7 @@
+Version 2.255
+-------------
+Fixed Mining Volley Repeater D Rating to C Rating
+
 Version 2.254
 -------------
 Added Colonisation stock configuration. Set which carrier stock to include
