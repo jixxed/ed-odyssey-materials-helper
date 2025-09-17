@@ -29,13 +29,16 @@ public class LoadoutMapper {
     }
 
     private static final Set<String> HARDPOINT_SLOT_NAMES = Set.of("SmallHardpoint", "MediumHardpoint", "LargeHardpoint", "HugeHardpoint");
+    private static final Set<String> MINING_HARDPOINT_SLOT_NAMES = Set.of("SmallMiningHardpoint", "MediumMiningHardpoint", "LargeMiningHardpoint");
     private static final Set<String> UTILITY_SLOT_NAMES = Set.of("TinyHardpoint");
     private static final Set<String> CORE_SLOT_NAMES = Set.of("Armour", "PowerPlant", "MainEngines", "FrameShiftDrive", "LifeSupport", "PowerDistributor", "Radar", "FuelTank");
     private static final Set<String> MILITARY_SLOT_NAMES = Set.of("Military");
     private static final Set<String> CARGO_SLOT_NAMES = Set.of("Cargo");
+    private static final Set<String> SLF_SLOT_NAMES = Set.of("FighterBay");
+    private static final Set<String> LIMPET_SLOT_NAMES = Set.of("LimpetController");
     private static final Set<String> OPTIONAL_SLOT_NAMES = Set.of("Slot");
     private static final double EPSILON = 0.0001;
-
+//LargeMiningHardpoint1 MediumMiningHardpoint1 MediumMiningHardpoint2 SmallMiningHardpoint1 LimpetController01
     public static Ship toShip(Loadout loadout) {
         final ShipType shipType;
         try {
@@ -199,6 +202,9 @@ public class LoadoutMapper {
             if (HARDPOINT_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
                 return getHardpointSlot(ship.getHardpointSlots(), slotName);
             }
+            if (MINING_HARDPOINT_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
+                return getHardpointSlot(ship.getHardpointSlots(), slotName);
+            }
             if (UTILITY_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
                 return getUtilitySlot(ship.getUtilitySlots(), slotName);
             }
@@ -218,6 +224,14 @@ public class LoadoutMapper {
             }
             if (CARGO_SLOT_NAMES.stream().anyMatch(slotName::startsWith)) {//Cargo
                 final List<Slot> cargoSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CARGO)).toList();
+                return getCargoSlot(cargoSlots, slotName);
+            }
+            if (SLF_SLOT_NAMES.stream().anyMatch(slotName::startsWith)) {//FighterBay
+                final List<Slot> cargoSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.SLF)).toList();
+                return getCargoSlot(cargoSlots, slotName);
+            }
+            if (LIMPET_SLOT_NAMES.stream().anyMatch(slotName::startsWith)) {//Limpet
+                final List<Slot> cargoSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.LIMPET)).toList();
                 return getCargoSlot(cargoSlots, slotName);
             }
         } catch (IndexOutOfBoundsException | IllegalArgumentException e) {
@@ -245,15 +259,31 @@ public class LoadoutMapper {
         return switch (slotName.substring(0, slotName.length() - 1)) {
             case "SmallHardpoint" -> hardpointSlots.stream()
                     .filter(slot -> slot.getSlotSize() == 1)
+                    .filter(slot -> SlotType.HARDPOINT.equals(slot.getSlotType()))
                     .toList();
             case "MediumHardpoint" -> hardpointSlots.stream()
                     .filter(slot -> slot.getSlotSize() == 2)
+                    .filter(slot -> SlotType.HARDPOINT.equals(slot.getSlotType()))
                     .toList();
             case "LargeHardpoint" -> hardpointSlots.stream()
                     .filter(slot -> slot.getSlotSize() == 3)
+                    .filter(slot -> SlotType.HARDPOINT.equals(slot.getSlotType()))
                     .toList();
             case "HugeHardpoint" -> hardpointSlots.stream()
                     .filter(slot -> slot.getSlotSize() == 4)
+                    .filter(slot -> SlotType.HARDPOINT.equals(slot.getSlotType()))
+                    .toList();
+            case "SmallMiningHardpoint" -> hardpointSlots.stream()
+                    .filter(slot -> slot.getSlotSize() == 1)
+                    .filter(slot -> SlotType.MINING_HARDPOINT.equals(slot.getSlotType()))
+                    .toList();
+            case "MediumMiningHardpoint" -> hardpointSlots.stream()
+                    .filter(slot -> slot.getSlotSize() == 2)
+                    .filter(slot -> SlotType.MINING_HARDPOINT.equals(slot.getSlotType()))
+                    .toList();
+            case "LargeMiningHardpoint" -> hardpointSlots.stream()
+                    .filter(slot -> slot.getSlotSize() == 3)
+                    .filter(slot -> SlotType.MINING_HARDPOINT.equals(slot.getSlotType()))
                     .toList();
             default -> throw new IllegalArgumentException("Unexpected value: " + slotName);
         };

@@ -38,7 +38,7 @@ public class Slot {
     }
 
     public String getSlotSizeName() {
-        if (this.slotType == SlotType.HARDPOINT || this.slotType == SlotType.UTILITY) {
+        if (this.slotType == SlotType.HARDPOINT || this.slotType == SlotType.MINING_HARDPOINT || this.slotType == SlotType.UTILITY) {
             return LocaleService.getLocalizedStringForCurrentLocale("ships.slot.size." + slotMapping.get(this.slotSize).toLowerCase());
         }
         return String.valueOf(this.slotSize);
@@ -68,7 +68,7 @@ public class Slot {
     }
 
     public HardpointGroup getHardpointGroup() {
-        if(slotType != SlotType.HARDPOINT) {
+        if(slotType != SlotType.HARDPOINT && slotType != SlotType.MINING_HARDPOINT) {
             return null;
         }
         return hardpointGroup;

@@ -44,6 +44,7 @@ public class ShipModuleService {
         var guardianPlasmaChargers = GuardianPlasmaCharger.GUARDIAN_PLASMA_CHARGERS;
         var guardianShardCannons = GuardianShardCannon.GUARDIAN_SHARD_CANNONS;
         var mineLaunchers = MineLauncher.MINE_LAUNCHERS;
+        var miningVolleyRepeaters = MiningVollyRepeater.MINING_VOLLEY_REPEATERS;
         var miningLasers = MiningLaser.MINING_LASERS;
         var dumbfireMissileRacks = DumbfireMissileRack.DUMBFIRE_MISSILE_RACKS;
         var seekerMissileRacks = SeekerMissileRack.SEEKER_MISSILE_RACKS;
@@ -92,6 +93,7 @@ public class ShipModuleService {
         var hatchBreakerLimpetControllers = HatchBreakerLimpetController.HATCH_BREAKER_LIMPET_CONTROLLERS;
         var metaAlloyHullReinforcementPackages = MetaAlloyHullReinforcementPackage.META_ALLOY_HULL_REINFORCEMENT_PACKAGES;
         var multiLimpetControllers = MultiLimpetController.MULTI_LIMPET_CONTROLLERS;
+        var multiLimpetControllersMKII = MkIIMultiLimpetController.MK_II_MULTI_LIMPET_CONTROLLERS;
         var passengerCabins = PassengerCabin.PASSENGER_CABINS;
         var planetaryVehicleHangars = PlanetaryVehicleHangar.PLANETARY_VEHICLE_HANGARS;
         var prospectorLimpetControllers = ProspectorLimpetController.PROSPECTOR_LIMPET_CONTROLLERS;
@@ -176,7 +178,7 @@ public class ShipModuleService {
     public static Optional<ShipModule> findLowerSize(ShipModule module, int maxSize) {
         return SHIP_MODULES.stream()
                 .filter(shipModule -> shipModule.getName().equals(module.getName()) &&
-                        ((shipModule instanceof HardpointModule hardpointModule && hardpointModule.getMounting().equals(((HardpointModule)module).getMounting())) || (!(shipModule instanceof HardpointModule) && shipModule.getModuleClass().equals(module.getModuleClass()))) &&
+                        ((shipModule instanceof HardpointModule hardpointModule && hardpointModule.getMounting().equals(((HardpointModule) module).getMounting())) || (!(shipModule instanceof HardpointModule) && shipModule.getModuleClass().equals(module.getModuleClass()))) &&
                         shipModule.getModuleSize().isLowerOrEqual(maxSize)
                 )
                 .sorted(Comparator.comparing(ShipModule::getModuleSize).reversed())

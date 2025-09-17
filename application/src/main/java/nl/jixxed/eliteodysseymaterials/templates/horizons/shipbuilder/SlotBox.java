@@ -52,6 +52,7 @@ public class SlotBox extends DestroyableStackPane {
     private final DestroyableVBox moduleData;
     private final DestroyableHBox iconBox;
     private final DestroyableHBox layer1;
+    private final DestroyableHBox bg;
     private final DestroyableStackPane layer2;
     private final DestroyableLabel hardpointGroupLabel;
     private final FontAwesomeIconViewPane changedIcon;
@@ -65,6 +66,9 @@ public class SlotBox extends DestroyableStackPane {
     SlotBox(final ModulesSection modulesSection, final Slot slot) {
         this.getStyleClass().add("slot-box");
         this.setFocusTraversable(true);
+        bg = BoxBuilder.builder()
+                .withStyleClass("slot-background")
+                .buildHBox();
         layer1 = BoxBuilder.builder()
                 .withStyleClass("slot-content")
                 .buildHBox();
@@ -76,9 +80,12 @@ public class SlotBox extends DestroyableStackPane {
                         .withStyleClass("resize-warning")
                         .build())
                 .build();
-        this.getNodes().addAll(layer1, layer2);
-        layer1.pseudoClassStateChanged(PseudoClass.getPseudoClass("military"), SlotType.MILITARY.equals(slot.getSlotType()));
-        layer1.pseudoClassStateChanged(PseudoClass.getPseudoClass("cargo"), SlotType.CARGO.equals(slot.getSlotType()));
+        this.getNodes().addAll(bg, layer1, layer2);
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("military"), SlotType.MILITARY.equals(slot.getSlotType()));
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("cargo"), SlotType.CARGO.equals(slot.getSlotType()));
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("fighter"), SlotType.SLF.equals(slot.getSlotType()));
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("limpet"), SlotType.LIMPET.equals(slot.getSlotType()));
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("mining-hardpoint"), SlotType.MINING_HARDPOINT.equals(slot.getSlotType()));
 
         this.iconBox = BoxBuilder.builder()
                 .withStyleClass("module-icons")
@@ -87,7 +94,7 @@ public class SlotBox extends DestroyableStackPane {
                 .withStyleClass("module-data")
                 .buildVBox();
         this.slot = slot;
-        if (SlotType.HARDPOINT.equals(slot.getSlotType())) {
+        if (SlotType.HARDPOINT.equals(slot.getSlotType()) || SlotType.MINING_HARDPOINT.equals(slot.getSlotType())) {
             this.slot.setHardpointGroup(HardpointGroup.A);
         }
         this.modulesSection = modulesSection;
@@ -122,10 +129,42 @@ public class SlotBox extends DestroyableStackPane {
         String tagKey = "blank";
         if (SlotType.HARDPOINT.equals(slot.getSlotType())) {
             tagKey = this.slot.getHardpointGroup().getLocalizationKey();
+        } else if (SlotType.MINING_HARDPOINT.equals(slot.getSlotType())) {
+//            tagKey = "ships.slot.type.mining.hardpoint";
+            tagKey = this.slot.getHardpointGroup().getLocalizationKey();
+            EdAwesomeIconViewPane image = EdAwesomeIconViewPaneBuilder.builder()
+                    .withStyleClass("background-image")
+                    .withIcons(EdAwesomeIcon.OTHER_MINING)
+                    .build();
+            bg.getNodes().addAll(new GrowingRegion(), image);
         } else if (SlotType.MILITARY.equals(slot.getSlotType())) {
-            tagKey = "ships.slot.type.military";
+//            tagKey = "ships.slot.type.military";
+            EdAwesomeIconViewPane image = EdAwesomeIconViewPaneBuilder.builder()
+                    .withStyleClass("background-image")
+                    .withIcons(EdAwesomeIcon.SHIPS_ARMOUR)
+                    .build();
+            bg.getNodes().addAll(new GrowingRegion(), image);
         } else if (SlotType.CARGO.equals(slot.getSlotType())) {
-            tagKey = "ships.slot.type.cargo";
+//            tagKey = "ships.slot.type.cargo";
+            EdAwesomeIconViewPane image = EdAwesomeIconViewPaneBuilder.builder()
+                    .withStyleClass("background-image")
+                    .withIcons(EdAwesomeIcon.COMMODITIES_CONSUMER_ITEMS)
+                    .build();
+            bg.getNodes().addAll(new GrowingRegion(), image);
+        } else if (SlotType.SLF.equals(slot.getSlotType())) {
+//            tagKey = "ships.slot.type.fighter";
+            EdAwesomeIconViewPane image = EdAwesomeIconViewPaneBuilder.builder()
+                    .withStyleClass("background-image")
+                    .withIcons(EdAwesomeIcon.SHIPS_FIGHTER)
+                    .build();
+            bg.getNodes().addAll(new GrowingRegion(), image);
+        } else if (SlotType.LIMPET.equals(slot.getSlotType())) {
+//            tagKey = "ships.slot.type.limpet";
+            EdAwesomeIconViewPane image = EdAwesomeIconViewPaneBuilder.builder()
+                    .withStyleClass("background-image")
+                    .withIcons(EdAwesomeIcon.COMMODITIES_LIMPETS)
+                    .build();
+            bg.getNodes().addAll(new GrowingRegion(), image);
         }
         hardpointGroupLabel = LabelBuilder.builder()
                 .withStyleClass("tag")

@@ -177,3 +177,5 @@
 "blueprint.horizons.description.caustic_sink_launcher","Caustic Sink Launcher","Caustic Sink Launcher","","Eyector Caústico","Lanceur de Dissipateur Caustique","","Антикоррозийная катапульта","Caustic Sink Launcher"
 "blueprint.horizons.description.guardian_nanite_munitions","Refills Guardian Nanite Torpedo Pylon ammunition for a single weapon. Basic synthesis provides half of a weapon’s ammo capacity.","","","","","","Восстанавливает боезапас одной Торпедной нанитной установки. Базовый синтез дает половину запаса орудия.","重新填充一个Guardian Nanite Torpedo Pylon的弹药。基础合成将填充该武器一半的弹药容量。"
 "blueprint.horizons.description.large_cargo_rack","Mk II Cargo Rack","","","","Compartiment de soute Mk II","","Грузовой стеллаж Mk II","Mk II Cargo Rack"
+"blueprint.horizons.description.mining_volley_repeater","Mining Volley Repeater","","","","","","",""
+"blueprint.horizons.description.mk_ii_mining_multi_limpet_controller","Mk II Mining Multi-limpet Controller","","","","","","",""

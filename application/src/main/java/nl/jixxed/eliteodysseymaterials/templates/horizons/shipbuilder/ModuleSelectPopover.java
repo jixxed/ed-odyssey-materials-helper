@@ -79,7 +79,7 @@ public class ModuleSelectPopover extends DestroyablePopOver implements Destroyab
         if (entries.size() > 1) {
             addSearch(content, entries);
         }
-        if (SlotType.HARDPOINT.equals(slotBox.getSlot().getSlotType())) {
+        if (SlotType.HARDPOINT.equals(slotBox.getSlot().getSlotType()) || SlotType.MINING_HARDPOINT.equals(slotBox.getSlot().getSlotType())) {
             addHardpointGroupButtons(content);
         }
         addChangedButtons(content);

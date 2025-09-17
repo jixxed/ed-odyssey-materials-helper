@@ -1020,23 +1020,54 @@
         -fx-spacing: 0.25em;
 
         .slot-box {
+          -fx-background-color: $background-color-dark;
+          &:military {
+            $altcolor: $background-color-medium;
+            -fx-background-color: linear-gradient(from 0px 7px to 7px 0px, repeat, $background-color-dark 0%, $altcolor 25%, $background-color-dark 50%, $altcolor 75%, $background-color-dark 100%);
+          }
+
+          &:cargo {
+            $altcolor: $background-color-medium;
+            -fx-background-color: linear-gradient(from 0px 7px to 7px 0px, repeat, $background-color-dark 0%, $altcolor 25%, $background-color-dark 50%, $altcolor 75%, $background-color-dark 100%);
+          }
+
+          &:fighter {
+            $altcolor: $background-color-medium;
+            -fx-background-color: linear-gradient(from 0px 7px to 7px 0px, repeat, $background-color-dark 0%, $altcolor 25%, $background-color-dark 50%, $altcolor 75%, $background-color-dark 100%);
+          }
+
+          &:limpet {
+            $altcolor: $background-color-medium;
+            -fx-background-color: linear-gradient(from 0px 7px to 7px 0px, repeat, $background-color-dark 0%, $altcolor 25%, $background-color-dark 50%, $altcolor 75%, $background-color-dark 100%);
+          }
+
+          &:mining-hardpoint {
+            $altcolor: $background-color-medium;
+            -fx-background-color: linear-gradient(from 0px 7px to 7px 0px, repeat, $background-color-dark 0%, $altcolor 25%, $background-color-dark 50%, $altcolor 75%, $background-color-dark 100%);
+          }
+          .slot-background {
+            @include fixedHeight(4em);
+            .background-image{
+              -fx-padding: 0 3em 0 0;
+              @include fixedWidth(4em);
+              @include fixedHeight(4em);
+                -fx-opacity: 0.2;
+              .glyph-icon{
+                -fx-fill: $text-color-grey;
+                -fx-font-size: 4em !important;
+              }
+            }
+          }
           .slot-content {
             @include fixedWidth(27em);
             //@include fixedHeight(6em);
             -fx-min-height: 4.6em;
             //-fx-max-height: 6em;
-            -fx-background-color: $background-color-dark;
             -fx-spacing: 0.2em;
 
             -fx-border-color: white;
 
-            &:military {
-              -fx-background-color: linear-gradient(from 0px 0px to 10px 10px, repeat, $background-color-dark 0%, $background-color-medium 25%, $background-color-dark 50%, $background-color-medium 75%, $background-color-dark 100%);
-            }
 
-            &:cargo {
-              -fx-background-color: linear-gradient(from 0px 10px to 10px 0px, repeat, $background-color-dark 0%, $background-color-medium 25%, $background-color-dark 50%, $background-color-medium 75%, $background-color-dark 100%);
-            }
 
             &:hover {
               -fx-border-color: $border-color-blue;

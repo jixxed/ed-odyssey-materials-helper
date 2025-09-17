@@ -82,6 +82,7 @@ tasks.register("generateSecrets")  {
             broker.host=${System.getenv("BROKER_HOST") ?: 'localhost'}
             ccid=${System.getenv("CCID") ?: 'aef4566a-2c1b-4d0f-8e3a-5c6f7d8e9a0c'}
             market.services.host=${System.getenv('MARKET_SERVICES_HOST') ?: 'localhost'}
+            commodity.host=${System.getenv('COMMODITY_HOST') ?: 'localhost'}
         """.stripIndent().stripLeading().stripTrailing()
     }
 }
@@ -330,10 +331,10 @@ dependencies {
     implementation "com.github.jai-imageio:jai-imageio-core"
     testImplementation "io.github.secretx33:path-matching-resource-pattern-resolver"
     implementation "com.github.wille:oslib"
-    implementation 'nl.jixxed.ed.awesome:ed-awesome-api:1.5'
+    implementation 'nl.jixxed.ed.awesome:ed-awesome-api:1.+'
 
     if (proprietary) {
-        implementation 'nl.jixxed.ed.awesome:ed-awesome-impl:1.19'
+        implementation 'nl.jixxed.ed.awesome:ed-awesome-impl:1.21'
     }
 }
 jpackage {

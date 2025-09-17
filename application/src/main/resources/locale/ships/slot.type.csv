@@ -1,3 +1,6 @@
 "messageKey","","en","de","es","fr","pt","ru","zh"
 "ships.slot.type.cargo","C","","","","C","","Г","货"
 "ships.slot.type.military","M","","","","M","","В","军"
+"ships.slot.type.fighter","F","","","","M","","В","军"
+"ships.slot.type.limpet","L","","","","M","","В","军"
+"ships.slot.type.mining.hardpoint","M","","","","M","","В","军"
