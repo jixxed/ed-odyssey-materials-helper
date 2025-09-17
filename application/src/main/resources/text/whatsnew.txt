@@ -1,3 +1,10 @@
+Version 2.254
+-------------
+Added Colonisation stock configuration. Set which carrier stock to include
+Added Type-11 Prospector (WIP)
+Added Mining Volley Repeater
+Added Mk2 Mining Multi-limpet Controller
+
 Version 2.253
 -------------
 Reduce minimum width of copyable locations, most notable in shortest path items
