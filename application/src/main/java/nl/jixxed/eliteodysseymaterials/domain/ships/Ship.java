@@ -1839,8 +1839,8 @@ public class Ship {
             ));
     public static final Ship LAKONMINER = new Ship(//Type-11
             ShipType.LAKONMINER,
-            0,
-            67861851,
+            66346717,
+            67861850,
             ShipSpecs.LAKONMINER,
             List.of(
                     ImageSlot.builder().slotType(SlotType.MINING_HARDPOINT).imageIndex(1).x(0).y(0).index(0).namedIndex(1).slotSize(3).build(),
