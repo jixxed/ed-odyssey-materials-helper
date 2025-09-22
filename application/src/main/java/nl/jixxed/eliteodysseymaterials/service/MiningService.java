@@ -89,6 +89,7 @@ public class MiningService {
                             final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
                             final HttpRequest request = HttpRequest.newBuilder()
                                     .uri(URI.create("https://" + domainName + "/Prod/v2/submit-mining-event"))
+                                    .header("User-Agent", VersionService.getUserAgent())
                                     .POST(HttpRequest.BodyPublishers.ofString(data))
                                     .build();
                             final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());

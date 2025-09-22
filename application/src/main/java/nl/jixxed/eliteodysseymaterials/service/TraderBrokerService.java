@@ -60,6 +60,7 @@ public class TraderBrokerService {
                     final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
                     final HttpRequest request = HttpRequest.newBuilder()
                             .uri(URI.create("https://" + domainName + "/Prod/v2/submit-broker-trader"))
+                            .header("User-Agent", VersionService.getUserAgent())
                             .POST(HttpRequest.BodyPublishers.ofString(data))
                             .build();
                     send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());

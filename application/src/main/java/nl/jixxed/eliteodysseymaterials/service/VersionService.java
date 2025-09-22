@@ -3,6 +3,8 @@ package nl.jixxed.eliteodysseymaterials.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
+import nu.redpois0n.oslib.OperatingSystem;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,6 +15,7 @@ import java.net.URL;
 public class VersionService {
 
     private static final boolean BETA = false;
+    public static final String USER_AGENT = "EDOMH/%s (%s; %s; %s)";
 
     public static boolean isBeta() {
         return BETA;
@@ -49,5 +52,10 @@ public class VersionService {
 
     public static boolean isDev() {
         return "dev".equals(getBuildVersion());
+    }
+
+    public static String getUserAgent() {
+        OperatingSystem.getOperatingSystem().getDetailedString();
+        return USER_AGENT.formatted(getBuildVersion(), OperatingSystem.getOperatingSystem().getDetailedString(), OperatingSystem.getOperatingSystem().getArch(), OperatingSystem.getOperatingSystem().getDesktopEnvironment());
     }
 }

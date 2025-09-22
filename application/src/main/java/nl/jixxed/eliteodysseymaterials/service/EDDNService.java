@@ -438,6 +438,7 @@ public class EDDNService {
             try (HttpClient httpClient = HttpClient.newHttpClient()) {
                 final HttpRequest request = HttpRequest.newBuilder()
                         .uri(URI.create("https://eddn.edcd.io:4430/upload/"))
+                        .header("User-Agent", VersionService.getUserAgent())
                         .header("Content-Type", "application/json")
                         .header("Content-Encoding", "gzip")
                         .POST(HttpRequest.BodyPublishers.ofByteArray(convertJsonToCompressed(data)))

@@ -192,6 +192,7 @@ public class MaterialTrackingService {
                         final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
                         final HttpRequest request = HttpRequest.newBuilder()
                                 .uri(URI.create("https://" + domainName + "/Prod/v2/submit-material-tracking"))
+                                .header("User-Agent", VersionService.getUserAgent())
                                 .POST(HttpRequest.BodyPublishers.ofString(data))
                                 .build();
                         send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
@@ -234,6 +235,7 @@ public class MaterialTrackingService {
                         final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
                         final HttpRequest request = HttpRequest.newBuilder()
                                 .uri(URI.create("https://" + domainName + "/Prod/v2/submit-data-tracking"))
+                                .header("User-Agent", VersionService.getUserAgent())
                                 .POST(HttpRequest.BodyPublishers.ofString(datax))
                                 .build();
                         send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());

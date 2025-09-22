@@ -16,6 +16,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.market.save.response.MarketSaveRe
 import nl.jixxed.eliteodysseymaterials.schemas.market.search.MarketSearchResponse;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.Secrets;
+import nl.jixxed.eliteodysseymaterials.service.VersionService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.TerminateApplicationEvent;
@@ -132,6 +133,7 @@ public class MarketAPIService {
                         final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("market.services.host", "localhost"));
                         final HttpRequest request = HttpRequest.newBuilder()
                                 .uri(URI.create("https://" + domainName + "/api/stations/search/save"))
+                                .header("User-Agent", VersionService.getUserAgent())
                                 .POST(HttpRequest.BodyPublishers.ofString(data))
                                 .build();
                         final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
@@ -140,6 +142,7 @@ public class MarketAPIService {
                         String recallUrl = "https://" + domainName + "/api/stations/search/recall/" + MarketSaveResponse.getSearch_reference();
                         final HttpRequest request2 = HttpRequest.newBuilder()
                                 .uri(URI.create(recallUrl))
+                                .header("User-Agent", VersionService.getUserAgent())
                                 .GET()
                                 .build();
                         recall = httpClient.send(request2, HttpResponse.BodyHandlers.ofString());

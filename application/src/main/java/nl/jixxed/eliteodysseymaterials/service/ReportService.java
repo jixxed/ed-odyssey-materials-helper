@@ -38,6 +38,7 @@ public class ReportService {
                         final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
                         final HttpRequest request = HttpRequest.newBuilder()
                                 .uri(URI.create("https://" + domainName + "/Prod/v2/submit-unknown-material"))
+                                .header("User-Agent", VersionService.getUserAgent())
                                 .POST(HttpRequest.BodyPublishers.ofString(data))
                                 .build();
                         send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
@@ -65,6 +66,7 @@ public class ReportService {
                         final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
                         final HttpRequest request = HttpRequest.newBuilder()
                                 .uri(URI.create("https://" + domainName + "/Prod/v2/submit-unknown-journal"))
+                                .header("User-Agent", VersionService.getUserAgent())
                                 .POST(HttpRequest.BodyPublishers.ofString(data))
                                 .build();
                         send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
