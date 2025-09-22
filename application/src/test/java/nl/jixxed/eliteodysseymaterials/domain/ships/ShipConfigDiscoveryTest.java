@@ -9,6 +9,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats.ModuleProfile;
 import org.junit.jupiter.api.Test;
 
+import java.util.Comparator;
 import java.util.Optional;
 
 import static nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier.*;
@@ -19,20 +20,46 @@ public class ShipConfigDiscoveryTest {
     void findShipStats() {
 
         ShipModule.getBasicModules();
-        final Ship ship = Ship.PANTHER_CLIPPER_MK_II;
+        final Ship ship = Ship.SIDE_WINDER;
         //Fill in MASS and FUEL_RESERVE on the ship
-        Ship.ALL.stream().forEach(sheep -> log.debug(sheep.getShipType() + " " + (sheep.getEmptyMass() + sheep.getCurrentFuel() + sheep.getCurrentFuelReserve())));
-        findTopSpeed(ship, 182.0, 0.5);
-        findBoostSpeed(ship, 252.0, 0.5);
-        findPitch(ship, 18.18, 0.5);
-        findRoll(ship, 20.20, 0.5);
-        findYaw(ship, 10.10, 0.5);
+//        Ship.ALL.stream().forEach(sheep -> log.debug(sheep.getShipType() + " " + (sheep.getEmptyMass() + sheep.getCurrentFuel() + sheep.getCurrentFuelReserve())));
+
+
+        Ship.ALL.stream().sorted(Comparator.comparing(sheep -> (Double)sheep.getAttributes().get(MANOEUVRABILITY))).forEach(sheep ->  {
+            Double pitch = (Double) sheep.getAttributes().get(MAX_PITCH_SPEED);
+            Double roll = (Double) sheep.getAttributes().get(MAX_ROLL_SPEED);
+            Double yaw = (Double) sheep.getAttributes().get(MAX_YAW_SPEED);
+            Double manoeuver = (Double)sheep.getAttributes().get(MANOEUVRABILITY);
+            log.debug(sheep.getShipType() + ": " + manoeuver + " sum: " + (pitch*roll*yaw) + " Pitch: " + pitch + " Roll: " + roll + " Yaw: " + yaw);
+        });
+
+        Ship.ALL.stream().sorted(Comparator.comparing(sheep -> (Double)sheep.getAttributes().get(MANOEUVRABILITY))).forEach(sheep ->  {
+            Double pitch = (Double) sheep.getAttributes().get(FORWARD_ACCELERATION);
+            Double roll = (Double) sheep.getAttributes().get(REVERSE_ACCELERATION);
+            Double yaw = (Double) sheep.getAttributes().get(LATERAL_ACCELERATION);
+            Double manoeuver = (Double)sheep.getAttributes().get(MANOEUVRABILITY);
+            log.debug(sheep.getShipType() + ": " + manoeuver + " sum: " + (pitch*roll*yaw) + " fwd: " + pitch + " rev: " + roll + " lat: " + yaw);
+        });
+//        findTopSpeed(ship, 182.0, 0.5);
+//        findBoostSpeed(ship, 252.0, 0.5);
+//        findPitch(ship, 18.18, 0.5);
+//        findRoll(ship, 20.20, 0.5);
+//        findYaw(ship, 10.10, 0.5);
 //        findShieldStrength(ship, 385.0, 0.5);
 //        findArmourStrength(ship, 1116.0, 0.5);
 // Requires TOP_SPEED to be set
-        findMinThrust(ship, 61.0, 0.5);
+//        findMinThrust(ship, 61.0, 0.5);
 //        findMinPitch(ship, 14.12, 0.5D);
+//findprice(ship);
 
+    }
+
+    private void findprice(Ship ship) {
+//        2025-09-19 10:14:31 INFO  n.j.e.d.s.ShipConfigDiscoveryTest - Base price of PANTHER_CLIPPER_MK_II is 286906177
+//        286906165,
+//                301348585,
+        long value = ship.getRetailPrice() - ship.getModulesValue();
+        log.info("Base price of {} is {}", ship.getShipType(), value);
     }
 
     private double calculatePitchMinimum(Ship ship, double pitchSpeed, ModuleProfile moduleProfile) {

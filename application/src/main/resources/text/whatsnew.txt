@@ -1,3 +1,8 @@
+Version 2.256
+-------------
+New application icon
+Updated manoeuvrability stats for several ships to match ingame (even though the value makes no sense)
+
 Version 2.255
 -------------
 Fixed Mining Volley Repeater D Rating to C Rating
