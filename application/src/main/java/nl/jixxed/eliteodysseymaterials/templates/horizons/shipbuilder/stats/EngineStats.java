@@ -114,16 +114,16 @@ public class EngineStats extends Stats implements DestroyableTemplate {
                 .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MINIMUM_MULTIPLIER, true)).orElse(0D));
     }
 
-    private Double calculateForwardAcceleration(Ship ship, final Double maximumMultiplier) {
-        return (Double) ship.getAttributes().get(HorizonsModifier.FORWARD_ACCELERATION) * maximumMultiplier / 100D;
+    private Double calculateForwardAcceleration(Ship ship, final ModuleProfile moduleProfile) {
+        return (Double) ship.getAttributes().get(HorizonsModifier.FORWARD_ACCELERATION) * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100D;
     }
 
-    private Double calculateReverseAcceleration(Ship ship, final Double maximumMultiplier) {
-        return (Double) ship.getAttributes().get(HorizonsModifier.REVERSE_ACCELERATION) * maximumMultiplier / 100D;
+    private Double calculateReverseAcceleration(Ship ship, final ModuleProfile moduleProfile) {
+        return (Double) ship.getAttributes().get(HorizonsModifier.REVERSE_ACCELERATION) * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100D;
     }
 
-    private Double calculateLateralAcceleration(Ship ship, final Double maximumMultiplier) {
-        return (Double) ship.getAttributes().get(HorizonsModifier.LATERAL_ACCELERATION) * maximumMultiplier / 100D;
+    private Double calculateLateralAcceleration(Ship ship, final ModuleProfile moduleProfile) {
+        return (Double) ship.getAttributes().get(HorizonsModifier.LATERAL_ACCELERATION) * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100D;
     }
 
     @Override
@@ -163,9 +163,9 @@ public class EngineStats extends Stats implements DestroyableTemplate {
             this.speedIndicator.updateValues(minSpeed, currentSpeed, maxSpeed);
             this.boostIndicator.updateValues(minBoost, currentBoost, maxBoost);
             this.rechargeIndicator.updateValues(minRecharge, currentRecharge, maxRecharge, boostInterval);
-            this.forwardAcceleration.addBinding(this.forwardAcceleration.textProperty(), LocaleService.getStringBinding("ship.stats.engine.acceleration.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(calculateForwardAcceleration(ship, maximumMultiplier))));
-            this.reverseAcceleration.addBinding(this.reverseAcceleration.textProperty(), LocaleService.getStringBinding("ship.stats.engine.acceleration.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(calculateReverseAcceleration(ship, maximumMultiplier))));
-            this.lateralAcceleration.addBinding(this.lateralAcceleration.textProperty(), LocaleService.getStringBinding("ship.stats.engine.acceleration.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(calculateLateralAcceleration(ship, maximumMultiplier))));
+            this.forwardAcceleration.addBinding(this.forwardAcceleration.textProperty(), LocaleService.getStringBinding("ship.stats.engine.acceleration.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(calculateForwardAcceleration(ship, moduleProfile))));
+            this.reverseAcceleration.addBinding(this.reverseAcceleration.textProperty(), LocaleService.getStringBinding("ship.stats.engine.acceleration.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(calculateReverseAcceleration(ship, moduleProfile))));
+            this.lateralAcceleration.addBinding(this.lateralAcceleration.textProperty(), LocaleService.getStringBinding("ship.stats.engine.acceleration.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(calculateLateralAcceleration(ship, moduleProfile))));
         });
     }
 
