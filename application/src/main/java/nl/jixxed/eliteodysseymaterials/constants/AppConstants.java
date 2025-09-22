@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 public class AppConstants {
 
     public static final String APP_TITLE = "ED Odyssey Materials Helper";
-    @SuppressWarnings("java:S1075")
-    public static final String APP_ICON_PATH = "/images/application/rocket.png";
     public static final String FLEETCARRIER_FILE = "fleetcarrier.json";
     public static final String SQUADRON_FILE = "squadron.json";
     public static final String SHIPLOCKER_FILE = "ShipLocker.json";

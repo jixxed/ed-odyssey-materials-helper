@@ -12,6 +12,7 @@ import javafx.stage.StageStyle;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.FXApplication;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.ar.*;
@@ -155,6 +156,9 @@ public class ARService {
 
 
             arStage = new Stage();
+            for (int res : new int[]{16,32,48,64,128,256,512}) {
+                arStage.getIcons().add(new Image(FXApplication.class.getResourceAsStream("/images/application/appicon" + res + ".png")));
+            }
             arOverlay = new AROverlay();
             arScene = new Scene(arOverlay, 640, 480);
             arStage.initModality(Modality.WINDOW_MODAL);

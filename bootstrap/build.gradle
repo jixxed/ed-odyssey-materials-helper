@@ -71,7 +71,7 @@ jlink {
     jpackage {
         installerType = packageType
         if (packageType == 'msi') {
-            imageOptions += ['--icon', 'src/main/resources/images/rocket.ico']
+            imageOptions += ['--icon', 'src/main/resources/images/appicon.ico']
             installerOptions = [
                     '--description', 'Installer for ED Odyssey Materials Helper',
                     '--copyright', 'Copyright 2021 CMDR Jixxed',
@@ -83,7 +83,7 @@ jlink {
             ] as List<String>
         }
         if (packageType == 'deb') {
-            imageOptions += ['--icon', 'src/main/resources/images/rocket.png']
+            imageOptions += ['--icon', 'src/main/resources/images/appicon512.png']
             installerOptions = [
                     '--resource-dir', 'build/jpackage/Elite Dangerous Odyssey Materials Helper Launcher/lib',
                     '--description', 'Installer for ED Odyssey Materials Helper',
@@ -95,7 +95,7 @@ jlink {
             ] as List<String>
         }
         if (packageType == 'rpm') {
-            imageOptions += ['--icon', 'src/main/resources/images/rocket.png']
+            imageOptions += ['--icon', 'src/main/resources/images/appicon512.png']
             installerOptions = [
                     '--resource-dir', 'build/jpackage/Elite Dangerous Odyssey Materials Helper Launcher/lib',
                     '--description', 'Installer for ED Odyssey Materials Helper',

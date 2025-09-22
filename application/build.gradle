@@ -171,9 +171,9 @@ jlink {
     jpackage {
         skipInstaller = true
         if (OperatingSystem.current().isLinux()) {
-            imageOptions += ['--icon', 'src/main/resources/images/application/rocket.png']
+            imageOptions += ['--icon', 'src/main/resources/images/application/appicon512.png']
         } else {
-            imageOptions += ['--icon', 'src/main/resources/images/application/rocket.ico']
+            imageOptions += ['--icon', 'src/main/resources/images/application/appicon.ico']
         }
     }
     addExtraDependencies("javafx", "jackson", "log4j", "jdk.accessibility")

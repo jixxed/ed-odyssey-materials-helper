@@ -41,6 +41,9 @@ public class Launcher extends Application {
 
         primaryStage.setTitle("Elite Dangerous Odyssey Materials Helper");
 
+        for (int res : new int[]{16,32,48,64,128,256,512}) {
+            primaryStage.getIcons().add(new Image(Launcher.class.getResourceAsStream("/images/appicon" + res + ".png")));
+        }
 
         final String binDir = Paths.get(ProcessHandle.current().info().command().orElseThrow(IllegalArgumentException::new)).getParent().toString();
         final String currentDir = binDir.trim().replace("\"", "") + "\\";
