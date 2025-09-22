@@ -1,4 +1,4 @@
-Version 2.256
+Version 3.0.0
 -------------
 New application icon
 Updated manoeuvrability stats for several ships to match ingame (even though the value makes no sense)
