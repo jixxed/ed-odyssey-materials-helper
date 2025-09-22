@@ -149,12 +149,6 @@ public class MaterialService {
                                 stat.getMaxBuyPrice().ifPresent(maxPrice ->
                                         vBox.getNodes().add(LabelBuilder.builder().withText("horizons.materials.commodity.stats.buy", Formatters.NUMBER_FORMAT_0.format(minPrice.intValue()), Formatters.NUMBER_FORMAT_0.format(avgPrice.intValue()), Formatters.NUMBER_FORMAT_0.format(maxPrice.intValue())).build())
                                 )));
-
-                stat.getMinSellPrice().ifPresent(minPrice ->
-                        stat.getAvgSellPrice().ifPresent(avgPrice ->
-                                stat.getMaxSellPrice().ifPresent(maxPrice ->
-                                        vBox.getNodes().add(LabelBuilder.builder().withText("horizons.materials.commodity.stats.sell", Formatters.NUMBER_FORMAT_0.format(minPrice.intValue()), Formatters.NUMBER_FORMAT_0.format(avgPrice.intValue()), Formatters.NUMBER_FORMAT_0.format(maxPrice.intValue())).build())
-                                )));
                 stat.getMinSellPrice().ifPresent(minPrice ->
                         stat.getAvgSellPrice().ifPresent(avgPrice ->
                                 stat.getMaxSellPrice().ifPresent(maxPrice ->
