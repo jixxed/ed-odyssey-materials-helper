@@ -315,7 +315,9 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
         register(EventService.addListener(true, this, HorizonsShortestPathChangedEvent.class, shortestPathChangedEvent -> this.shortestPath = shortestPathChangedEvent.getPathItems()));
 
         register(EventService.addListener(true, this, ImportResultEvent.class, importResultEvent -> {
-            if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_EDSY_WISHLIST) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_EDSY_WISHLIST) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_WISHLIST)) {
+            if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_CORIOLIS_WISHLIST)
+                    || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_EDSY_WISHLIST)
+                    || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_WISHLIST)) {
                 refreshWishlistSelect();
             }
         }));
