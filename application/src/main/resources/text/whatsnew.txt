@@ -1,3 +1,9 @@
+Version 3.0.1
+-------------
+Fix refreshing wishlist entries on coriolis import
+Removed a duplicate sell line in the commodity card tooltip
+Properly calculate the ship acceleration based on current loadout instead of max value
+
 Version 3.0.0
 -------------
 New application icon
