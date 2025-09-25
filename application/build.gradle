@@ -87,17 +87,17 @@ tasks.register("generateSecrets")  {
     }
 }
 
-
-tasks.register('wrapper', Wrapper) {
-    gradleVersion = "8.14.3"
-}
 group = 'nl.jixxed'
+
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(24)
-        vendor = JvmVendorSpec.AZUL
+        languageVersion = JavaLanguageVersion.of(25)
+        vendor = JvmVendorSpec.ADOPTIUM
     }
     modularity.inferModulePath = true
+}
+tasks.register('wrapper', Wrapper) {
+    gradleVersion = "9.1.0"
 }
 OperatingSystem os = OperatingSystem.current()
 jar {

@@ -19,13 +19,13 @@ plugins {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(24)
-        vendor = JvmVendorSpec.AZUL
+        languageVersion = JavaLanguageVersion.of(25)
+        vendor = JvmVendorSpec.ADOPTIUM
     }
     modularity.inferModulePath = true
 }
 wrapper {
-    gradleVersion = "8.14.3"
+    gradleVersion = "9.1.0"
 }
 
 tasks.register('copyMsi', Copy) {
