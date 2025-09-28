@@ -100,7 +100,7 @@ public class OdysseyMaterialCard extends DestroyableVBox implements DestroyableE
                 .withVisibilityProperty(this.showWishlist.or(this.hoverProperty()))
                 .withManagedProperty(this.showWishlist.or(this.hoverProperty()))
                 .withNodeOrientation(NodeOrientation.LEFT_TO_RIGHT)
-                .withNonLocalizedText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.odysseyMaterial)).mapToInt(Integer::intValue).sum()))
+                .withNonLocalizedText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.odysseyMaterial) * bp.getQuantity()).mapToInt(Integer::intValue).sum()))
                 .build();
         this.backpackAmount = LabelBuilder.builder()
                 .withStyleClass("backpack-amount")
@@ -212,7 +212,7 @@ public class OdysseyMaterialCard extends DestroyableVBox implements DestroyableE
                 Platform.runLater(this::updateMaterialCardStyle)
         ));
         register(EventService.addListener(true, this, 9, OdysseyWishlistBlueprintEvent.class, _ -> {
-            Platform.runLater(() -> this.wishlistAmount.setText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.odysseyMaterial)).mapToInt(Integer::intValue).sum())));
+            Platform.runLater(() -> this.wishlistAmount.setText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.odysseyMaterial) * bp.getQuantity()).mapToInt(Integer::intValue).sum())));
             Platform.runLater(this::updateStyle);
         }));
     }
