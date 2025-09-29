@@ -40,6 +40,11 @@
       "type" : "string",
       "examples" : [ "Tubus Conifer - Indigo" ]
     },
+    "WasLogged" : {
+      "title" : "WasLogged",
+      "type" : "boolean",
+      "examples" : [ false, true ]
+    },
     "SystemAddress" : {
       "title" : "SystemAddress",
       "type" : "integer",
