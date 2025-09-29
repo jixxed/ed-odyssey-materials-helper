@@ -258,6 +258,11 @@
       "type" : "boolean",
       "examples" : [ true, false ]
     },
+    "WasFootfalled" : {
+      "title" : "WasFootfalled",
+      "type" : "boolean",
+      "examples" : [ true, false ]
+    },
     "StarType" : {
       "title" : "StarType",
       "description": "Written for Star",

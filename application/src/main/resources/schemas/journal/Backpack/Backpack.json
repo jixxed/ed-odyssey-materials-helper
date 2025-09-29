@@ -10,7 +10,7 @@
       "type" : "array",
       "default": null,
       "items" : {
-        "$ref": "../common/ShipLockerBackpack.json#definitions/Item"
+        "$ref": "../common/ShipLockerBackpack.json#/definitions/Item"
       }
     },
     "Components" : {
@@ -18,7 +18,7 @@
       "type" : "array",
       "default": null,
       "items" : {
-        "$ref": "../common/ShipLockerBackpack.json#definitions/Component"
+        "$ref": "../common/ShipLockerBackpack.json#/definitions/Component"
       }
     },
     "Consumables" : {
@@ -26,7 +26,7 @@
       "type" : "array",
       "default": null,
       "items" : {
-        "$ref": "../common/ShipLockerBackpack.json#definitions/Consumable"
+        "$ref": "../common/ShipLockerBackpack.json#/definitions/Consumable"
       }
     },
     "Data" : {
@@ -34,7 +34,7 @@
       "type" : "array",
       "default": null,
       "items" : {
-        "$ref": "../common/ShipLockerBackpack.json#definitions/Data"
+        "$ref": "../common/ShipLockerBackpack.json#/definitions/Data"
       }
     }
   },

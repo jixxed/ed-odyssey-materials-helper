@@ -4,5 +4,6 @@
   "description": "When Written: when a colonisation beacon is deployed",
   "extends": {
     "$ref": "../_Event.json"
-  }
+  },
+  "allOf": [{ "$ref": "../_Event.json"}]
 }

@@ -2,5 +2,6 @@
   "$schema" : "https://json-schema.org/draft/2020-12/schema",
   "type" : "object",
   "description": "When written: on a clean shutdown of the game",
-  "extends" : { "$ref": "../_Event.json"}
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}]
 }
