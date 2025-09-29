@@ -38,7 +38,7 @@ public class ModuleRetrieveMessageProcessor implements MessageProcessor<ModuleRe
                 .findFirst()
                 .map(ShipModule::Clone)
                 .orElse(null);
-        if(event.getQuality().stream().allMatch(quality -> quality.compareTo(BigDecimal.ZERO) == 0)){
+        if(module != null && event.getQuality().stream().allMatch(quality -> quality.compareTo(BigDecimal.ZERO) == 0)){
             module.setLegacy(true);
         }
         if (module == null) {
