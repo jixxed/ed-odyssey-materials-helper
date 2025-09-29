@@ -1,3 +1,11 @@
+Version 3.0.2
+-------------
+Finalize Type-11 Prospector stats
+Handle new journal changes
+Updated Epic notification to ask to login
+Updated repeater/mining controller stats
+Fixed wishlist count on material cards to account for quantities
+
 Version 3.0.1
 -------------
 Fix refreshing wishlist entries on coriolis import
