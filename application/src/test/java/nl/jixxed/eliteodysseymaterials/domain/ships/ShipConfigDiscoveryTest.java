@@ -7,6 +7,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military.
 import nl.jixxed.eliteodysseymaterials.domain.ships.utility.ShieldBooster;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats.ModuleProfile;
+import nu.redpois0n.oslib.OperatingSystem;
 import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
@@ -20,35 +21,40 @@ public class ShipConfigDiscoveryTest {
     void findShipStats() {
 
         ShipModule.getBasicModules();
-        final Ship ship = Ship.SIDE_WINDER;
+        final Ship ship = Ship.LAKONMINER;
         //Fill in MASS and FUEL_RESERVE on the ship
 //        Ship.ALL.stream().forEach(sheep -> log.debug(sheep.getShipType() + " " + (sheep.getEmptyMass() + sheep.getCurrentFuel() + sheep.getCurrentFuelReserve())));
 
 
-        Ship.ALL.stream().sorted(Comparator.comparing(sheep -> (Double)sheep.getAttributes().get(MANOEUVRABILITY))).forEach(sheep ->  {
-            Double pitch = (Double) sheep.getAttributes().get(MAX_PITCH_SPEED);
-            Double roll = (Double) sheep.getAttributes().get(MAX_ROLL_SPEED);
-            Double yaw = (Double) sheep.getAttributes().get(MAX_YAW_SPEED);
-            Double manoeuver = (Double)sheep.getAttributes().get(MANOEUVRABILITY);
-            log.debug(sheep.getShipType() + ": " + manoeuver + " sum: " + (pitch*roll*yaw) + " Pitch: " + pitch + " Roll: " + roll + " Yaw: " + yaw);
-        });
-
-        Ship.ALL.stream().sorted(Comparator.comparing(sheep -> (Double)sheep.getAttributes().get(MANOEUVRABILITY))).forEach(sheep ->  {
-            Double pitch = (Double) sheep.getAttributes().get(FORWARD_ACCELERATION);
-            Double roll = (Double) sheep.getAttributes().get(REVERSE_ACCELERATION);
-            Double yaw = (Double) sheep.getAttributes().get(LATERAL_ACCELERATION);
-            Double manoeuver = (Double)sheep.getAttributes().get(MANOEUVRABILITY);
-            log.debug(sheep.getShipType() + ": " + manoeuver + " sum: " + (pitch*roll*yaw) + " fwd: " + pitch + " rev: " + roll + " lat: " + yaw);
-        });
-//        findTopSpeed(ship, 182.0, 0.5);
-//        findBoostSpeed(ship, 252.0, 0.5);
-//        findPitch(ship, 18.18, 0.5);
-//        findRoll(ship, 20.20, 0.5);
-//        findYaw(ship, 10.10, 0.5);
-//        findShieldStrength(ship, 385.0, 0.5);
-//        findArmourStrength(ship, 1116.0, 0.5);
+//        System.out.println(OperatingSystem.getOperatingSystem().getDetailedString());
+//        System.out.println(OperatingSystem.getOperatingSystem().getArch());
+//        System.out.println(OperatingSystem.getOperatingSystem().getDesktopEnvironment());
+//        System.out.println(OperatingSystem.getOperatingSystem().getDisplayString());
+//        System.out.println(OperatingSystem.getOperatingSystem().getType());
+//        Ship.ALL.stream().sorted(Comparator.comparing(sheep -> (Double)sheep.getAttributes().get(MANOEUVRABILITY))).forEach(sheep ->  {
+//            Double pitch = (Double) sheep.getAttributes().get(MAX_PITCH_SPEED);
+//            Double roll = (Double) sheep.getAttributes().get(MAX_ROLL_SPEED);
+//            Double yaw = (Double) sheep.getAttributes().get(MAX_YAW_SPEED);
+//            Double manoeuver = (Double)sheep.getAttributes().get(MANOEUVRABILITY);
+//            log.debug(sheep.getShipType() + ": " + manoeuver + " sum: " + (pitch*roll*yaw) + " Pitch: " + pitch + " Roll: " + roll + " Yaw: " + yaw);
+//        });
+//
+//        Ship.ALL.stream().sorted(Comparator.comparing(sheep -> (Double)sheep.getAttributes().get(MANOEUVRABILITY))).forEach(sheep ->  {
+//            Double pitch = (Double) sheep.getAttributes().get(FORWARD_ACCELERATION);
+//            Double roll = (Double) sheep.getAttributes().get(REVERSE_ACCELERATION);
+//            Double yaw = (Double) sheep.getAttributes().get(LATERAL_ACCELERATION);
+//            Double manoeuver = (Double)sheep.getAttributes().get(MANOEUVRABILITY);
+//            log.debug(sheep.getShipType() + ": " + manoeuver + " sum: " + (pitch*roll*yaw) + " fwd: " + pitch + " rev: " + roll + " lat: " + yaw);
+//        });
+        findTopSpeed(ship, 271.0, 0.5);
+        findBoostSpeed(ship, 366.0, 0.5);
+        findPitch(ship, 25.05, 0.5);
+        findRoll(ship, 37.57, 0.5);
+        findYaw(ship, 22.04, 0.5);
+        findShieldStrength(ship, 271.0, 0.5);
+        findArmourStrength(ship, 630.0, 0.5);
 // Requires TOP_SPEED to be set
-//        findMinThrust(ship, 61.0, 0.5);
+        findMinThrust(ship, 190.0, 0.5);
 //        findMinPitch(ship, 14.12, 0.5D);
 //findprice(ship);
 

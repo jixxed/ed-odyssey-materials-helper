@@ -1846,11 +1846,11 @@ public class Ship {
                     ImageSlot.builder().slotType(SlotType.MINING_HARDPOINT).imageIndex(1).x(0).y(0).index(0).namedIndex(1).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.MINING_HARDPOINT).imageIndex(1).x(0).y(0).index(1).namedIndex(1).slotSize(2).build(),
                     ImageSlot.builder().slotType(SlotType.MINING_HARDPOINT).imageIndex(1).x(0).y(0).index(2).namedIndex(2).slotSize(2).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(3).namedIndex(1).slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(3).namedIndex(3).slotSize(2).build(),
                     ImageSlot.builder().slotType(SlotType.MINING_HARDPOINT).imageIndex(1).x(0).y(0).index(4).namedIndex(1).slotSize(1).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(5).namedIndex(1).slotSize(1).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(6).namedIndex(2).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(7).namedIndex(3).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(5).namedIndex(2).slotSize(1).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(6).namedIndex(3).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(7).namedIndex(4).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
             ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(0).y(0).index(0).slotSize(0).build(),
@@ -1872,10 +1872,10 @@ public class Ship {
                     Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),//Slot01_Size6
                     Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),//Slot02_Size6
                     Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(6).shipModule(ShieldGenerator.SHIELD_GENERATOR_5_E).build(),//Slot03_Size6
-                    Slot.builder().slotType(SlotType.SLF).index(3).slotSize(5).build(),//FighterBay01
-                    Slot.builder().slotType(SlotType.LIMPET).index(4).slotSize(5).build(),//LimpetController01
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).namedIndex(4).slotSize(5).build(),//Slot04_Size5
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).namedIndex(5).slotSize(5).build(),//Slot05_Size5
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(5).build(),//Slot04_Size5
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(5).build(),//Slot05_Size5
+                    Slot.builder().slotType(SlotType.LIMPET).index(5).slotSize(5).build(),//LimpetController01
+                    Slot.builder().slotType(SlotType.SLF).index(6).slotSize(5).build(),//FighterBay01
                     Slot.builder().slotType(SlotType.OPTIONAL).index(7).namedIndex(6).slotSize(4).build(),//Slot06_Size4
                     Slot.builder().slotType(SlotType.OPTIONAL).index(8).namedIndex(7).slotSize(3).build(),//Slot07_Size3
                     Slot.builder().slotType(SlotType.OPTIONAL).index(9).namedIndex(8).slotSize(2).build(),//Slot08_Size2
@@ -2211,7 +2211,8 @@ public class Ship {
                 || this.shipType == ShipType.COBRA_MK_V
                 || this.shipType == ShipType.CORSAIR
                 || this.shipType == ShipType.PANTHER_CLIPPER_MK_II
-                || this.shipType == ShipType.TYPE_8;
+                || this.shipType == ShipType.TYPE_8
+                || this.shipType == ShipType.LAKONMINER;
 
     }
 }

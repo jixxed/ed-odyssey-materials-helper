@@ -1855,44 +1855,44 @@ public class ShipSpecs {
     );
 
     public static final Map<HorizonsModifier, Object> LAKONMINER = Map.ofEntries(
-            Map.entry(HorizonsModifier.TOP_SPEED, 270.0),
-            Map.entry(HorizonsModifier.BOOST_SPEED, 350.0),
+            Map.entry(HorizonsModifier.TOP_SPEED, 269.0),
+            Map.entry(HorizonsModifier.BOOST_SPEED, 364.0),
             Map.entry(HorizonsModifier.MANOEUVRABILITY, 2.0),
             Map.entry(HorizonsModifier.SHIELDS, 275.0),
             Map.entry(HorizonsModifier.ARMOUR, 350.0),
             Map.entry(HorizonsModifier.MASS, 320.0),
-            Map.entry(HorizonsModifier.MINIMUM_THRUST, 50.0),//TODO
-            Map.entry(HorizonsModifier.BOOST_INTERVAL, 5.0),//TODO
-            Map.entry(HorizonsModifier.BOOST_COST, 12.0),//TODO
-            Map.entry(HorizonsModifier.FORWARD_ACCELERATION, Double.NaN),
-            Map.entry(HorizonsModifier.REVERSE_ACCELERATION, Double.NaN),
-            Map.entry(HorizonsModifier.LATERAL_ACCELERATION, Double.NaN),
+            Map.entry(HorizonsModifier.MINIMUM_THRUST, 71.0),
+            Map.entry(HorizonsModifier.BOOST_INTERVAL, 6.0),
+            Map.entry(HorizonsModifier.BOOST_COST, 25.0),
+            Map.entry(HorizonsModifier.FORWARD_ACCELERATION, 30.0),
+            Map.entry(HorizonsModifier.REVERSE_ACCELERATION, 24.0),
+            Map.entry(HorizonsModifier.LATERAL_ACCELERATION, 20.0),
             Map.entry(HorizonsModifier.SUPERCRUISE_PROFILE, new Double[][]{
-                    {Double.NaN, Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN, Double.NaN}}),
+                    {50.0, 18.0, 60.0},
+                    {80.0, 60.0, 80.0},
+                    {50.0, 18.0, 60.0}}),
             Map.entry(HorizonsModifier.CRUISE_PITCH_PROFILE, new Double[][]{
-                    {Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN}}),
+                    {65.0, 57.5},
+                    {22.5, 25.0},
+                    {55.0, 52.5}}),
             Map.entry(HorizonsModifier.CRUISE_ROLL_PROFILE, new Double[][]{
-                    {Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN}}),
+                    {80.0, 80.0},
+                    {37.0, 37.5},
+                    {80.0, 82.5}}),
             Map.entry(HorizonsModifier.CRUISE_YAW_PROFILE, new Double[][]{
-                    {Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN}}),
-            Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 22.0),
+                    {72.5, 60.0},
+                    {21.5, 22.0},
+                    {65.0, 50.0}}),
+            Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 25.0),
             Map.entry(HorizonsModifier.MAX_YAW_SPEED, 22.0),
             Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 37.5),
-            Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 22.0),//TODO
-            Map.entry(HorizonsModifier.HEAT_CAPACITY, Double.NaN),
-            Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, Double.NaN),
-            Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, Double.NaN),
+            Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 22.5),
+            Map.entry(HorizonsModifier.HEAT_CAPACITY,  298.52),
+            Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.68),
+            Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 52.17),
             Map.entry(HorizonsModifier.FUEL_RESERVE, 0.6),
             Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 58.0),
-            Map.entry(HorizonsModifier.MASS_LOCK, Double.NaN),
-            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, Double.NaN)
+            Map.entry(HorizonsModifier.MASS_LOCK, 15.0),
+            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, 505.0)
     );
 }
