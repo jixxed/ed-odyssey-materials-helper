@@ -92,7 +92,7 @@ group = 'nl.jixxed'
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(25)
-        vendor = JvmVendorSpec.ADOPTIUM
+        vendor = JvmVendorSpec.AZUL
     }
     modularity.inferModulePath = true
 }

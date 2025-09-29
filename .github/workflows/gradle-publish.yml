@@ -27,7 +27,7 @@ jobs:
         uses: actions/setup-java@v4.2.1
         with:
           java-version: |
-            24.0.2
+            25
             21.0.1
           distribution: 'zulu'
           architecture: x64
@@ -80,7 +80,7 @@ jobs:
         uses: actions/setup-java@v4.2.1
         with:
           java-version: |
-            24.0.2
+            25
             21.0.1
           distribution: 'zulu'
           architecture: x64
