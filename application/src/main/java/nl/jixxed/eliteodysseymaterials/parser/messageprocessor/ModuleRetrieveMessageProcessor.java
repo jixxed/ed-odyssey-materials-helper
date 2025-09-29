@@ -24,12 +24,12 @@ public class ModuleRetrieveMessageProcessor implements MessageProcessor<ModuleRe
 
         final Ship ship = ShipMapper.toShip(ShipConfiguration.CURRENT);
         if (ship == null) {
-            log.error("Ship is null, cannot process ModuleRetrieve event: " + event);
+            log.error("Ship is null, cannot process ModuleRetrieve event: {}", event);
             return;
         }
         final Slot shipSlot = LoadoutMapper.getShipSlot(ship, event.getSlot());
         if (shipSlot == null) {
-            log.error("Could not find ship slot for " + event.getSlot());
+            log.error("Could not find ship slot for {}", event.getSlot());
             return;
         }
         final ShipModule module = ShipModule.getModules(shipSlot.getSlotType()).stream()
@@ -38,12 +38,12 @@ public class ModuleRetrieveMessageProcessor implements MessageProcessor<ModuleRe
                 .findFirst()
                 .map(ShipModule::Clone)
                 .orElse(null);
-        if(module != null && event.getQuality().stream().allMatch(quality -> quality.compareTo(BigDecimal.ZERO) == 0)){
-            module.setLegacy(true);
-        }
         if (module == null) {
-            log.error("Could not find module for " + event.getRetrievedItem() + " in slot " + event.getSlot());
+            log.error("Could not find module for {} in slot {}", event.getRetrievedItem(), event.getSlot());
             return;
+        }
+        if(event.getQuality().map(quality -> quality.compareTo(BigDecimal.ZERO) == 0).orElse(false)){
+            module.setLegacy(true);
         }
         //this module is technically not engineered fully because information is missing, but will be updated once the outfitting screen is exited
         event.getEngineerModifications().ifPresent(modifications -> module.applyModification(HorizonsBlueprintType.forInternalName(modifications), HorizonsBlueprintGrade.forDigit(event.getLevel().orElse(BigInteger.ZERO)), event.getQuality().orElse(BigDecimal.ZERO)));
