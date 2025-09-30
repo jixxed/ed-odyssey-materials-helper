@@ -1,3 +1,7 @@
+Version 3.0.4
+-------------
+Bugfix: Allow abrasion blaster in mining slots
+
 Version 3.0.3
 -------------
 Added Type-11 image and slot locations

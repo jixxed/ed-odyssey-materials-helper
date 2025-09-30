@@ -3,10 +3,7 @@ package nl.jixxed.eliteodysseymaterials.domain.ships;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.*;
-import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.MiningLaser;
-import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.MiningVollyRepeater;
-import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.SeismicChargeLauncher;
-import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.SubSurfaceDisplacementMissile;
+import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.special.CargoHatch;
 import nl.jixxed.eliteodysseymaterials.domain.ships.special.FuelTank;
@@ -17,7 +14,7 @@ import java.util.List;
 public enum SlotType {
     CARGO_HATCH(List.of(CargoHatch.class), false),
     HARDPOINT(List.of(HardpointModule.class), false),
-    MINING_HARDPOINT(List.of(MiningLaser.class, SeismicChargeLauncher.class, SubSurfaceDisplacementMissile.class, MiningVollyRepeater.class), false),
+    MINING_HARDPOINT(List.of(AbrasionBlaster.class, MiningLaser.class, SeismicChargeLauncher.class, SubSurfaceDisplacementMissile.class, MiningVollyRepeater.class), false),
     UTILITY(List.of(UtilityModule.class), false),
     CORE_ARMOUR(List.of(Armour.class), true),
     CORE_POWER_PLANT(List.of(PowerPlant.class), true),
