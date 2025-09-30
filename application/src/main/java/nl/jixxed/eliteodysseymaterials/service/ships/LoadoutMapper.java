@@ -200,10 +200,12 @@ public class LoadoutMapper {
     public static Slot getShipSlot(Ship ship, String slotName) {
         try {
             if (HARDPOINT_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
-                return getHardpointSlot(ship.getHardpointSlots(), slotName);
+                List<ImageSlot> hardpointSlots = ship.getHardpointSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.HARDPOINT)).toList();
+                return getHardpointSlot(hardpointSlots, slotName);
             }
             if (MINING_HARDPOINT_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
-                return getHardpointSlot(ship.getHardpointSlots(), slotName);
+                List<ImageSlot> hardpointSlots = ship.getHardpointSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.MINING_HARDPOINT)).toList();
+                return getHardpointSlot(hardpointSlots, slotName);
             }
             if (UTILITY_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
                 return getUtilitySlot(ship.getUtilitySlots(), slotName);
