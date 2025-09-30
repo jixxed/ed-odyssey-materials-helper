@@ -6,8 +6,6 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Finalize Type-11 Prospector stats
-Handle new journal changes
-Updated Epic notification to ask to login
-Updated repeater/mining controller stats
-Fixed wishlist count on material cards to account for quantities
+Added Type-11 image and slot locations
+Fixed an issue with mapping mining slots for the Type-11
+Handle squadron market orders

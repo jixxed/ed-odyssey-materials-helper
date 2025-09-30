@@ -1,3 +1,9 @@
+Version 3.0.3
+-------------
+Added Type-11 image and slot locations
+Fixed an issue with mapping mining slots for the Type-11
+Handle squadron market orders
+
 Version 3.0.2
 -------------
 Finalize Type-11 Prospector stats
