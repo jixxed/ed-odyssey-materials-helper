@@ -149,6 +149,7 @@ class MessageHandler {
             Map.entry(JournalEventType.MODULERETRIEVE, new ModuleRetrieveMessageProcessor()),
             Map.entry(JournalEventType.MODULESELL, new ModuleSellMessageProcessor()),
             Map.entry(JournalEventType.MODULESTORE, new ModuleStoreMessageProcessor()),
+            Map.entry(JournalEventType.MODULESWAP, new ModuleSwapMessageProcessor()),
 
             Map.entry(JournalEventType.LOADGAME, new LoadGameMessageProcessor())
     );

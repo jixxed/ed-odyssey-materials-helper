@@ -89,6 +89,7 @@ public enum JournalEventType {
     MODULERETRIEVE("ModuleRetrieve"),
     MODULESELL("ModuleSell"),
     MODULESTORE("ModuleStore"),
+    MODULESWAP("ModuleSwap"),
 
     ;
     private final String name;
