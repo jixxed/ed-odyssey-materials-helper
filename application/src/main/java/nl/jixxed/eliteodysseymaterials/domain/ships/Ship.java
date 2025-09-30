@@ -1843,20 +1843,20 @@ public class Ship {
             67861850,
             ShipSpecs.LAKONMINER,
             List.of(
-                    ImageSlot.builder().slotType(SlotType.MINING_HARDPOINT).imageIndex(1).x(0).y(0).index(0).namedIndex(1).slotSize(3).build(),
-                    ImageSlot.builder().slotType(SlotType.MINING_HARDPOINT).imageIndex(1).x(0).y(0).index(1).namedIndex(1).slotSize(2).build(),
-                    ImageSlot.builder().slotType(SlotType.MINING_HARDPOINT).imageIndex(1).x(0).y(0).index(2).namedIndex(2).slotSize(2).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(3).namedIndex(3).slotSize(2).build(),
-                    ImageSlot.builder().slotType(SlotType.MINING_HARDPOINT).imageIndex(1).x(0).y(0).index(4).namedIndex(1).slotSize(1).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(5).namedIndex(2).slotSize(1).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(6).namedIndex(3).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(7).namedIndex(4).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
+                    ImageSlot.builder().slotType(SlotType.MINING_HARDPOINT).imageIndex(1).x(1314).y(854).index(0).namedIndex(1).slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.MINING_HARDPOINT).imageIndex(2).x(1393).y(325).index(1).namedIndex(1).slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.MINING_HARDPOINT).imageIndex(2).x(1340).y(270).index(2).namedIndex(2).slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(988).y(433).index(3).namedIndex(3).slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.MINING_HARDPOINT).imageIndex(2).x(1343).y(329).index(4).namedIndex(1).slotSize(1).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1127).y(549).index(5).namedIndex(2).slotSize(1).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(767).y(743).index(6).namedIndex(3).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(843).y(792).index(7).namedIndex(4).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
             ),
             List.of(
-                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(0).y(0).index(0).slotSize(0).build(),
-                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(0).y(0).index(1).slotSize(0).build(),
-                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(0).y(0).index(2).slotSize(0).build(),
-                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(0).y(0).index(3).slotSize(0).build()
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1324).y(692).index(0).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(789).y(759).index(1).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(577).y(235).index(2).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(825).y(144).index(3).slotSize(0).build()
             ),
             List.of(
                     Slot.builder().slotType(SlotType.CORE_ARMOUR).index(0).slotSize(1).shipModule(Armour.LAKONMINER_ARMOUR_GRADE_1).build(),
