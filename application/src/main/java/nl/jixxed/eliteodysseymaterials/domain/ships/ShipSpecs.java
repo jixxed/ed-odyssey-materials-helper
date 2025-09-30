@@ -1814,7 +1814,7 @@ public class ShipSpecs {
 
     public static final Map<HorizonsModifier, Object> PANTHER_CLIPPER_MK_II = Map.ofEntries(
             Map.entry(HorizonsModifier.TOP_SPEED, 180.0),
-            Map.entry(HorizonsModifier.BOOST_SPEED, 249.0),
+            Map.entry(HorizonsModifier.BOOST_SPEED, 250.0),
             Map.entry(HorizonsModifier.MANOEUVRABILITY, 0.0),
             Map.entry(HorizonsModifier.SHIELDS, 350.0),
             Map.entry(HorizonsModifier.ARMOUR, 620.0),
@@ -1855,8 +1855,8 @@ public class ShipSpecs {
     );
 
     public static final Map<HorizonsModifier, Object> LAKONMINER = Map.ofEntries(
-            Map.entry(HorizonsModifier.TOP_SPEED, 269.0),
-            Map.entry(HorizonsModifier.BOOST_SPEED, 364.0),
+            Map.entry(HorizonsModifier.TOP_SPEED, 270.0),
+            Map.entry(HorizonsModifier.BOOST_SPEED, 365.0),
             Map.entry(HorizonsModifier.MANOEUVRABILITY, 2.0),
             Map.entry(HorizonsModifier.SHIELDS, 275.0),
             Map.entry(HorizonsModifier.ARMOUR, 350.0),
