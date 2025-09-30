@@ -21,9 +21,9 @@ public class OrderService {
     private static final Map<StoragePool, Map<Material, SellOrder>>  SELL_ORDERS = new HashMap<>();
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
 
-    public static void clearOrders() {
-        BUY_ORDERS.values().forEach(Map::clear);
-        SELL_ORDERS.values().forEach(Map::clear);
+    public static void clearOrders(StoragePool storagePool) {
+        BUY_ORDERS.get(storagePool).clear();
+        SELL_ORDERS.get(storagePool).clear();
     }
 
     static {
@@ -33,7 +33,8 @@ public class OrderService {
         SELL_ORDERS.put(StoragePool.SQUADRONCARRIER, new HashMap<>());
         EVENT_LISTENERS.add(EventService.addStaticListener(JournalInitEvent.class, event -> {
             if (event.isInitialised()) {
-                clearOrders();
+                clearOrders(StoragePool.FLEETCARRIER);
+                clearOrders(StoragePool.SQUADRONCARRIER);
             }
         }));
     }

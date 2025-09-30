@@ -7,6 +7,7 @@ import nl.jixxed.eliteodysseymaterials.enums.SquadronPerk;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.parser.*;
 import nl.jixxed.eliteodysseymaterials.schemas.capi.squadron.CapiSquadron;
+import nl.jixxed.eliteodysseymaterials.service.OrderService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.UserPreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -32,12 +33,12 @@ public class CapiSquadronMessageProcessor implements CapiMessageProcessor<CapiSq
         ApplicationState.getInstance().setFactionPerk(factionPerk);
 
         StorageService.resetSquadronCarrierCounts();
-//        OrderService.clearOrders();
+        OrderService.clearOrders(StoragePool.SQUADRONCARRIER);
         data.getSquadronCarrier().ifPresent(squadronCarrier -> {
             SELL_ORDER_PARSER.parseOdyssey(squadronCarrier.getOrders().getOnfootmicroresources().getSales(), StoragePool.SQUADRONCARRIER);
             BUY_ORDER_PARSER.parseOdyssey(squadronCarrier.getOrders().getOnfootmicroresources().getPurchases(), StoragePool.SQUADRONCARRIER);
-//        SELL_ORDER_PARSER.parse(data.getSquadronCarrier().getOrders().getCommodities().getSales());
-//        BUY_ORDER_PARSER.parse(data.getSquadronCarrier().getOrders().getCommodities().getPurchases());
+            SELL_ORDER_PARSER.parse(squadronCarrier.getOrders().getCommodities().getSales(), StoragePool.SQUADRONCARRIER);
+            BUY_ORDER_PARSER.parse(squadronCarrier.getOrders().getCommodities().getPurchases(), StoragePool.SQUADRONCARRIER);
 
             ASSET_PARSER.parse(squadronCarrier.getCarrierLocker().getAssets(), StoragePool.SQUADRONCARRIER);
             GOOD_PARSER.parse(squadronCarrier.getCarrierLocker().getGoods(), StoragePool.SQUADRONCARRIER);
@@ -68,6 +69,7 @@ public class CapiSquadronMessageProcessor implements CapiMessageProcessor<CapiSq
         ApplicationState.getInstance().setFactionPerk(SquadronPerk.UNKNOWN);
 
         StorageService.resetSquadronCarrierCounts();
+        OrderService.clearOrders(StoragePool.SQUADRONCARRIER);
         EventService.publish(new StorageEvent(StoragePool.SQUADRONCARRIER));
     }
 }

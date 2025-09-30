@@ -26,7 +26,7 @@ public class CapiFleetCarrierMessageProcessor implements CapiMessageProcessor<Ca
     public void process(final CapiFleetcarrier capiFleetcarrier) {
 
         StorageService.resetFleetCarrierCounts();
-        OrderService.clearOrders();
+        OrderService.clearOrders(StoragePool.FLEETCARRIER);
 
         SELL_ORDER_PARSER.parseOdyssey(capiFleetcarrier.getOrders().getOnfootmicroresources().getSales(), StoragePool.FLEETCARRIER);
         BUY_ORDER_PARSER.parseOdyssey(capiFleetcarrier.getOrders().getOnfootmicroresources().getPurchases(), StoragePool.FLEETCARRIER);
@@ -56,7 +56,7 @@ public class CapiFleetCarrierMessageProcessor implements CapiMessageProcessor<Ca
     @Override
     public void clear() {
         StorageService.resetFleetCarrierCounts();
-        OrderService.clearOrders();
+        OrderService.clearOrders(StoragePool.FLEETCARRIER);
         EventService.publish(new StorageEvent(StoragePool.FLEETCARRIER));
     }
 }
