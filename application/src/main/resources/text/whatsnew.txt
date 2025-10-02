@@ -1,3 +1,9 @@
+Version 3.0.5
+-------------
+Fix some ship speeds that were off by 1
+Handle ModuleSwap events in the ship editor
+Added wishlist sanitization to on load and import from 3rd parties
+
 Version 3.0.4
 -------------
 Bugfix: Allow abrasion blaster in mining slots

@@ -6,4 +6,6 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Bugfix: Allow abrasion blaster in mining slots
+Fix some ship speeds that were off by 1
+Handle ModuleSwap events in the ship editor
+Added wishlist sanitization to on load and import from 3rd parties
