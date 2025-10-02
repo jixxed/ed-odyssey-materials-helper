@@ -11,16 +11,15 @@ import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
+import nl.jixxed.eliteodysseymaterials.templates.settings.sections.OdysseyWishlist;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 public class WishlistService {
@@ -110,6 +109,7 @@ public class WishlistService {
     public static IntegerRange getCurrentWishlistCount(final HorizonsMaterial horizonsMaterial) {
         return getCurrentWishlistCount(horizonsMaterial, true);
     }
+
     /**
      * Get the current wishlist count for a specific material.
      * Minimum amounts assume engineer ranks of 5.
@@ -145,7 +145,7 @@ public class WishlistService {
 
     private static IntegerRange getWishlistCount(HorizonsMaterial horizonsMaterial, HorizonsWishlist wishlist, boolean includeInvisible) {
         return wishlist.getItems().stream()
-                .filter(bp-> includeInvisible || bp.isVisible())
+                .filter(bp -> includeInvisible || bp.isVisible())
                 .map(horizonsWishlistBlueprint -> {
                     final int quantity = horizonsWishlistBlueprint.getQuantity();
                     if (horizonsWishlistBlueprint instanceof HorizonsModuleWishlistBlueprint horizonsModuleWishlistBlueprint) {//modules
@@ -160,7 +160,7 @@ public class WishlistService {
                                     quantity * blueprint.getRequiredAmount(horizonsMaterial, null) * grade.getNumberOfRolls(lowestRank, getBlueprintType(horizonsModuleWishlistBlueprint))
                             );
                         }).reduce(new IntegerRange(0, 0), IntegerRange::sum);
-                        if(horizonsModuleWishlistBlueprint.getExperimentalEffect() != null) {
+                        if (horizonsModuleWishlistBlueprint.getExperimentalEffect() != null) {
                             final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe((HorizonsBlueprintName) horizonsWishlistBlueprint.getRecipeName(), horizonsModuleWishlistBlueprint.getExperimentalEffect(), getBlueprintGrade(horizonsWishlistBlueprint));
                             var effectTotal = new IntegerRange(quantity * blueprint.getRequiredAmount(horizonsMaterial, null), quantity * blueprint.getRequiredAmount(horizonsMaterial, null));
                             blueprintTotal = IntegerRange.sum(blueprintTotal, effectTotal);
@@ -338,18 +338,21 @@ public class WishlistService {
             }
             wishlistsFileContents = Files.readString(wishlistsFile.toPath());
             try {
-                return OBJECT_MAPPER.readValue(wishlistsFileContents, HorizonsWishlists.class);
+                HorizonsWishlists horizonsWishlists = OBJECT_MAPPER.readValue(wishlistsFileContents, HorizonsWishlists.class);
+                return sanitized(horizonsWishlists);
             } catch (final IOException e) {
                 log.warn("Unable to load horizons wishlists from configuration. Try to create new one.", e);
                 createHorizonsWishlist(commander);
                 wishlistsFileContents = Files.readString(wishlistsFile.toPath());
-                return OBJECT_MAPPER.readValue(wishlistsFileContents, HorizonsWishlists.class);
+                HorizonsWishlists horizonsWishlists = OBJECT_MAPPER.readValue(wishlistsFileContents, HorizonsWishlists.class);
+                return sanitized(horizonsWishlists);
             }
         } catch (final IOException e) {
             log.error("Unable to load horizons wishlists from configuration.", e);
             throw new RuntimeException(e);
         }
     }
+
 
     public static Wishlists getOdysseyWishlists(final Commander commander) {
         try {
@@ -368,17 +371,75 @@ public class WishlistService {
             }
             wishlistsFileContents = Files.readString(wishlistsFile.toPath());
             try {
-                return OBJECT_MAPPER.readValue(wishlistsFileContents, Wishlists.class);
+                Wishlists wishlists = OBJECT_MAPPER.readValue(wishlistsFileContents, Wishlists.class);
+                return sanitized(wishlists);
             } catch (final IOException e) {
                 log.warn("Unable to load wishlists from configuration. Try to create new one.", e);
                 createOdysseyWishlist(commander);
                 wishlistsFileContents = Files.readString(wishlistsFile.toPath());
-                return OBJECT_MAPPER.readValue(wishlistsFileContents, Wishlists.class);
+                Wishlists wishlists = OBJECT_MAPPER.readValue(wishlistsFileContents, Wishlists.class);
+                return sanitized(wishlists);
             }
         } catch (final IOException e) {
             log.error("Unable to load wishlists from configuration.", e);
             throw new RuntimeException(e);
         }
+    }
+
+    private static HorizonsWishlists sanitized(HorizonsWishlists horizonsWishlists) {
+        horizonsWishlists.getAllWishlists().stream()
+                .filter(wishlist -> wishlist != HorizonsWishlist.ALL)
+                .forEach(wishlist -> {
+                    wishlist.getItems().removeIf(item ->
+                            switch (item) {
+                                case HorizonsModuleWishlistBlueprint bp -> {
+                                    Set<HorizonsBlueprintGrade> grades = HorizonsBlueprintConstants.getBlueprintGrades(bp.getRecipeName(), bp.getBlueprintType());
+                                    yield grades.isEmpty() || !grades.containsAll(bp.getPercentageToComplete().keySet());
+                                }
+                                case HorizonsEngineerWishlistBlueprint bp -> {
+                                    try {
+                                        HorizonsBlueprintConstants.getRecipe(bp.getRecipeName(), null, null);
+                                        yield false;
+                                    } catch (IllegalArgumentException e) {
+                                        yield true;
+                                    }
+                                }
+                                case HorizonsTechBrokerWishlistBlueprint bp -> {
+                                    try {
+                                        HorizonsBlueprintConstants.getRecipe(bp.getRecipeName(), bp.getBlueprintType(), null);
+                                        yield false;
+                                    } catch (IllegalArgumentException e) {
+                                        yield true;
+                                    }
+                                }
+                                case HorizonsExperimentalWishlistBlueprint bp -> {
+                                    try {
+                                        HorizonsBlueprintConstants.getRecipe(bp.getRecipeName(), bp.getBlueprintType(), null);
+                                        yield false;
+                                    } catch (IllegalArgumentException e) {
+                                        yield true;
+                                    }
+                                }
+                                case HorizonsSynthesisWishlistBlueprint bp -> {
+                                    try {
+                                        HorizonsBlueprintConstants.getRecipe(bp.getRecipeName(), null, bp.getBlueprintGrade());
+                                        yield false;
+                                    } catch (IllegalArgumentException e) {
+                                        yield true;
+                                    }
+                                }
+                            });
+                });
+        return horizonsWishlists;
+    }
+
+    private static Wishlists sanitized(Wishlists wishlists) {
+        wishlists.getAllWishlists().stream()
+                .filter(wishlist -> wishlist != Wishlist.ALL)
+                .forEach(wishlist -> {
+                    wishlist.getItems().removeIf(item -> OdysseyBlueprintConstants.getRecipe(item.getRecipeName()) == null);
+                });
+        return wishlists;
     }
 
     private static void createOdysseyWishlist(final Commander commander) {

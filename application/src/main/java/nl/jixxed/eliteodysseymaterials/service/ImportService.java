@@ -146,6 +146,9 @@ public class ImportService {
                         final HorizonsBlueprintGrade horizonsBlueprintGrade = edsyWishlistItem.getGrade() != null ? HorizonsBlueprintGrade.valueOf("GRADE_" + edsyWishlistItem.getGrade()) : null;
                         final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipeByInternalName(edsyWishlistItem.getItem(), edsyWishlistItem.getBlueprint(), horizonsBlueprintGrade);
                         final HorizonsWishlistBlueprint bp;
+                        if (blueprint.isPreEngineered()) {
+                            return null;
+                        }
                         if (blueprint instanceof HorizonsModuleBlueprint horizonsModuleBlueprint) {
                             bp = new HorizonsModuleWishlistBlueprint(horizonsModuleBlueprint.getHorizonsBlueprintType(), createGradeMap(horizonsModuleBlueprint.getHorizonsBlueprintType(), edsyWishlistItem.getGrade(), edsyWishlistItem.getHighestGradePercentage()));
                         } else if (blueprint instanceof HorizonsExperimentalEffectBlueprint horizonsExperimentalEffectBlueprint) {
@@ -199,6 +202,9 @@ public class ImportService {
                         final HorizonsBlueprintGrade horizonsBlueprintGrade = coriolisWishlistItem.getGrade() != null ? HorizonsBlueprintGrade.valueOf("GRADE_" + coriolisWishlistItem.getGrade().toString()) : null;
                         final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipeByInternalName(coriolisWishlistItem.getItem(), coriolisWishlistItem.getBlueprint(), horizonsBlueprintGrade);
                         final HorizonsWishlistBlueprint bp;
+                        if (blueprint.isPreEngineered()) {
+                            return null;
+                        }
                         if (blueprint instanceof HorizonsModuleBlueprint horizonsModuleBlueprint) {
                             bp = new HorizonsModuleWishlistBlueprint(horizonsModuleBlueprint.getHorizonsBlueprintType(), createGradeMap(horizonsModuleBlueprint.getHorizonsBlueprintType(), coriolisWishlistItem.getGrade(), coriolisWishlistItem.getHighestGradePercentage()));
                         } else if (blueprint instanceof HorizonsExperimentalEffectBlueprint horizonsExperimentalEffectBlueprint) {
