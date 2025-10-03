@@ -17,6 +17,7 @@ import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.ControllableQuantitySelect;
 import nl.jixxed.eliteodysseymaterials.templates.generic.QuantitySelect;
@@ -93,8 +94,9 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableVBo
 
         blueprintName = LabelBuilder.builder()
                 .withStyleClass("name")
-                .withText(Bindings.createStringBinding(() -> blueprintStringBinding.get().trim(), blueprintStringBinding))
+                .withText(Bindings.createStringBinding(() -> blueprintStringBinding.get().replaceAll("^[ ├└\\s]+", ""), blueprintStringBinding))//replace  ├└\s at the start of the string
                 .withOnMouseClicked(_ -> EventService.publish(new HorizonsBlueprintClickEvent(this.blueprint)))
+                .withGraphic(this.wishlistBlueprint.getRecipeName().isInColonia() ? EdAwesomeIconViewPaneBuilder.builder().withStyleClass("colonia-icon").withIcons(EdAwesomeIcon.OTHER_COLONIA).build() : null)
                 .build();
 
         DestroyableLabel removeBlueprint = LabelBuilder.builder()

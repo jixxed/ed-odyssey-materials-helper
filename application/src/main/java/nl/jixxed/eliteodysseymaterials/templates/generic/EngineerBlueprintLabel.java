@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.templates.generic;
 
 import javafx.css.PseudoClass;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
@@ -17,6 +18,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.EngineerPinEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 public class EngineerBlueprintLabel extends DestroyableStackPane implements DestroyableEventTemplate {
@@ -68,6 +70,7 @@ public class EngineerBlueprintLabel extends DestroyableStackPane implements Dest
         this.engineerName = LabelBuilder.builder()
                 .withStyleClass("name")
                 .withText(LocaleService.getStringBinding(this.engineer.getLocalizationKey()))
+                .withGraphic(this.engineer.isInColonia() ? EdAwesomeIconViewPaneBuilder.builder().withStyleClass("colonia-icon").withIcons(EdAwesomeIcon.OTHER_COLONIA).build() : null)
                 .build();
         if (this.engineer.isHorizons()) {
             addGradeImage();

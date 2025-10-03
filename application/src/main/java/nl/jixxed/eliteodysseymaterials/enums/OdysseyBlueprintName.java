@@ -183,4 +183,8 @@ public enum OdysseyBlueprintName implements BlueprintName<OdysseyBlueprintName> 
             return "blank";
         }
     }
+
+    public boolean isInColonia(){
+        return this.equals(ENGINEER_D1_1) || this.equals(ENGINEER_D1_2) || this.equals(ENGINEER_D1_3) || this.equals(ENGINEER_D2) || this.equals(ENGINEER_D3);
+    }
 }

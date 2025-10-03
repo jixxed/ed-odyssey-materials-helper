@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.css.PseudoClass;
 import javafx.scene.Node;
@@ -16,11 +17,9 @@ import nl.jixxed.eliteodysseymaterials.enums.Craftability;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.OdysseyWishlistBlueprintEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.ControllableQuantitySelect;
 import nl.jixxed.eliteodysseymaterials.templates.generic.QuantitySelect;
@@ -86,7 +85,7 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableVBox
                 .withStyleClass("name")
                 .withText(this.wishlistBlueprint.getRecipeName().getShortLocalizationKey())
                 .withOnMouseClicked(_ -> EventService.publish(new BlueprintClickEvent(this.blueprint.getBlueprintName())))
-
+                .withGraphic(this.wishlistBlueprint.getRecipeName().isInColonia() ? EdAwesomeIconViewPaneBuilder.builder().withStyleClass("colonia-icon").withIcons(EdAwesomeIcon.OTHER_COLONIA).build() : null)
                 .build();
 
         DestroyableLabel removeBlueprint = LabelBuilder.builder()

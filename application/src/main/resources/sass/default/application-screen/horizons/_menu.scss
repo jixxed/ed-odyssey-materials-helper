@@ -13,10 +13,22 @@
 
     .list-cell {
       -fx-text-fill: $text-color-white;
+      -fx-content-display: right;
+      .colonia-icon{
+        .glyph-icon {
+          -fx-fill: $text-color-white;
+        }
+      }
 
       &:complete {
         -fx-text-fill: $text-color-green;
+        .colonia-icon{
+          .glyph-icon {
+          -fx-fill: $text-color-green;
+          }
+        }
       }
+
     }
 
   }
@@ -198,10 +210,20 @@
 
       &:unlocked .data .name {
         -fx-text-fill: $text-color-green;
+        .colonia-icon {
+          .glyph-icon {
+            -fx-fill: $text-color-green;
+          }
+        }
       }
 
       &:lowgrade .data .name {
         -fx-text-fill: $text-color-yellow;
+        .colonia-icon {
+          .glyph-icon {
+            -fx-fill: $text-color-yellow;
+          }
+        }
       }
 
       .button-layer {
@@ -221,6 +243,12 @@
           @include fixedHeight(2em);
           -fx-padding: 0.25em;
           -fx-text-fill: $text-color-red;
+          -fx-content-display: right;
+          .colonia-icon {
+            .glyph-icon {
+              -fx-fill: $text-color-red;
+            }
+          }
         }
 
         .maxgrade {

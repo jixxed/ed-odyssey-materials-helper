@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.builder;
 
 import javafx.beans.binding.StringBinding;
+import javafx.scene.Node;
 import javafx.scene.control.Labeled;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizab
 public abstract class AbstractLabeledBuilder<T extends AbstractLabeledBuilder<T>> extends AbstractControlBuilder<T> {
     private StringBinding stringBinding;
     private String nonLocalizedText;
-    private DestroyableResizableImageView graphic;
+    private Node graphic;
     private Boolean mnemonicParsing;
 
     public T withText(final StringBinding stringBinding) {
@@ -35,7 +36,7 @@ public abstract class AbstractLabeledBuilder<T extends AbstractLabeledBuilder<T>
         return (T) this;
     }
 
-    public T withGraphic(final DestroyableResizableImageView graphic) {
+    public <G extends Node & DestroyableComponent> T withGraphic(final G graphic) {
         this.graphic = graphic;
         return (T) this;
     }
@@ -49,7 +50,7 @@ public abstract class AbstractLabeledBuilder<T extends AbstractLabeledBuilder<T>
         }
         if (this.graphic != null) {
             labeled.setGraphic(this.graphic);
-            labeled.register(this.graphic);
+            labeled.register((Node & DestroyableComponent)this.graphic);
         }
         if (this.mnemonicParsing != null) {
             labeled.setMnemonicParsing(this.mnemonicParsing);

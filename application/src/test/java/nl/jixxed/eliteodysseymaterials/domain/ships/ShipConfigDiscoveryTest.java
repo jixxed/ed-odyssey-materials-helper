@@ -174,6 +174,14 @@ public class ShipConfigDiscoveryTest {
 
         }
         log.info("Value of {} results in max speed of {} which is within range", value, maxSpeed);
+
+        while (within(maxSpeed, expected, delta) && value < 1000D) {
+            final Double topSpeed = value = value + delta;
+
+            maxSpeed = calculateMaxSpeed(ship, topSpeed, moduleProfile);
+            log.info("Value of {} results in max speed of {} which is within range", value, maxSpeed);
+
+        }
         var maxSpeed2 = calculateMaxSpeed(ship, value + delta, moduleProfile);
         var inRange = within(maxSpeed2, expected, delta);
         log.info("Value of {} results in max speed of {} which is {}within range", value + delta, maxSpeed2, (!inRange) ? "not " : "");
@@ -202,6 +210,13 @@ public class ShipConfigDiscoveryTest {
 
         }
         log.info("Value of {} results in max boost of {} which is within range", value, maxBoost);
+        while (within(maxBoost, expected, delta) && value < 1000D) {
+            final Double boostSpeed = value = value + delta;
+
+            maxBoost = calculateMaxSpeed(ship, boostSpeed, moduleProfile);
+            log.info("Value of {} results in max boost of {} which is within range", value, maxBoost);
+
+        }
         var maxBoost2 = calculateMaxSpeed(ship, value + delta, moduleProfile);
         var inRange = within(maxBoost2, expected, delta);
         log.info("Value of {} results in max boost of {} which is {}within range", value + delta, maxBoost2, (!inRange) ? "not " : "");

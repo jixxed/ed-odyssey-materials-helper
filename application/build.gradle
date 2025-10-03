@@ -334,7 +334,7 @@ dependencies {
     implementation 'nl.jixxed.ed.awesome:ed-awesome-api:1.+'
 
     if (proprietary) {
-        implementation 'nl.jixxed.ed.awesome:ed-awesome-impl:1.21'
+        implementation 'nl.jixxed.ed.awesome:ed-awesome-impl:1.22'
     }
 }
 jpackage {

@@ -904,9 +904,15 @@
           .app .application-screen .horizons-tab-content .engineers-tab-content .engineer-grid .engineer-card .name {
             -fx-text-fill: white;
             -fx-font-size: 1.2em;
-            -fx-cursor: hand; }
+            -fx-cursor: hand;
+            -fx-content-display: right; }
+            .app .application-screen .horizons-tab-content .engineers-tab-content .engineer-grid .engineer-card .name .colonia-icon .glyph-icon {
+              -fx-font-size: 1.2em !important;
+              -fx-fill: white; }
             .app .application-screen .horizons-tab-content .engineers-tab-content .engineer-grid .engineer-card .name:hover {
               -fx-text-fill: #5aa9e6; }
+              .app .application-screen .horizons-tab-content .engineers-tab-content .engineer-grid .engineer-card .name:hover .colonia-icon .glyph-icon {
+                -fx-fill: #5aa9e6; }
           .app .application-screen .horizons-tab-content .engineers-tab-content .engineer-grid .engineer-card .category {
             -fx-text-fill: white;
             -fx-font-size: 1.1em; }
@@ -1198,9 +1204,14 @@
         -fx-pref-width: 36em;
         -fx-max-width: 36em; }
         .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-list .list-cell {
-          -fx-text-fill: white; }
+          -fx-text-fill: white;
+          -fx-content-display: right; }
+          .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-list .list-cell .colonia-icon .glyph-icon {
+            -fx-fill: white; }
           .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-list .list-cell:complete {
             -fx-text-fill: #709adc; }
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-list .list-cell:complete .colonia-icon .glyph-icon {
+              -fx-fill: #709adc; }
       .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-grade-togglebutton {
         -fx-min-width: 7.2em;
         -fx-max-height: 2em; }
@@ -1370,8 +1381,12 @@
           -fx-border-color: black; }
           .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .engineer:unlocked .data .name {
             -fx-text-fill: #709adc; }
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .engineer:unlocked .data .name .colonia-icon .glyph-icon {
+              -fx-fill: #709adc; }
           .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .engineer:lowgrade .data .name {
             -fx-text-fill: #dcc030; }
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .engineer:lowgrade .data .name .colonia-icon .glyph-icon {
+              -fx-fill: #dcc030; }
           .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .engineer .button-layer {
             -fx-background-color: #0f0f0f;
             -fx-opacity: 0.9; }
@@ -1387,7 +1402,10 @@
               -fx-pref-height: 2em;
               -fx-max-height: 2em;
               -fx-padding: 0.25em;
-              -fx-text-fill: red; }
+              -fx-text-fill: red;
+              -fx-content-display: right; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .engineer .data .name .colonia-icon .glyph-icon {
+                -fx-fill: red; }
             .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .engineer .data .maxgrade {
               -fx-min-height: 2em;
               -fx-pref-height: 2em;
@@ -3489,9 +3507,14 @@
               -fx-text-fill: #2e92df;
               -fx-cursor: hand;
               -fx-alignment: center;
-              -fx-text-alignment: center; }
+              -fx-text-alignment: center;
+              -fx-content-display: right; }
+              .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .name .colonia-icon .glyph-icon {
+                -fx-fill: #2e92df; }
               .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .name:hover {
                 -fx-text-fill: #5aa9e6; }
+                .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .name:hover .colonia-icon .glyph-icon {
+                  -fx-fill: #5aa9e6; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .module {
               -fx-text-fill: gray; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .title-line .visible-container .visible-button {
@@ -4115,9 +4138,15 @@
           .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .name {
             -fx-text-fill: white;
             -fx-font-size: 1.2em;
-            -fx-cursor: hand; }
+            -fx-cursor: hand;
+            -fx-content-display: right; }
+            .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .name .colonia-icon .glyph-icon {
+              -fx-font-size: 1.2em !important;
+              -fx-fill: white; }
             .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .name:hover {
               -fx-text-fill: #5aa9e6; }
+              .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .name:hover .colonia-icon .glyph-icon {
+                -fx-fill: #5aa9e6; }
           .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .category {
             -fx-text-fill: white;
             -fx-font-size: 1.1em; }
@@ -4665,11 +4694,18 @@
         -fx-pref-width: 36em;
         -fx-max-width: 36em; }
         .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-list .list-cell {
-          -fx-text-fill: white; }
+          -fx-text-fill: white;
+          -fx-content-display: right; }
+          .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-list .list-cell .colonia-icon .glyph-icon {
+            -fx-fill: white; }
           .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-list .list-cell:complete {
             -fx-text-fill: #709adc; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-list .list-cell:complete .colonia-icon .glyph-icon {
+              -fx-fill: #709adc; }
           .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-list .list-cell:trade {
             -fx-text-fill: #dcc030; }
+            .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-list .list-cell:trade .colonia-icon .glyph-icon {
+              -fx-fill: #dcc030; }
       .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content {
         -fx-padding: 0.25em;
         -fx-max-height: 9999;
@@ -4845,11 +4881,18 @@
           -fx-background-color: #0f0f0f;
           -fx-border-color: black;
           -fx-text-fill: red;
-          -fx-padding: 0.25em; }
+          -fx-padding: 0.25em;
+          -fx-content-display: right; }
+          .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .engineer .name .colonia-icon .glyph-icon {
+            -fx-fill: red; }
         .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .engineer:unlocked .name {
           -fx-text-fill: #709adc; }
+          .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .engineer:unlocked .name .colonia-icon .glyph-icon {
+            -fx-fill: #709adc; }
         .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .engineer:lowgrade .name {
           -fx-text-fill: #dcc030; }
+          .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .engineer:lowgrade .name .colonia-icon .glyph-icon {
+            -fx-fill: #dcc030; }
         .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .modifier {
           -fx-background-color: #0f0f0f;
           -fx-border-color: black; }
@@ -5160,9 +5203,14 @@
               -fx-text-fill: #2e92df;
               -fx-cursor: hand;
               -fx-alignment: center;
-              -fx-text-alignment: center; }
+              -fx-text-alignment: center;
+              -fx-content-display: right; }
+              .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .name .colonia-icon .glyph-icon {
+                -fx-fill: #2e92df; }
               .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .name:hover {
                 -fx-text-fill: #5aa9e6; }
+                .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint .name:hover .colonia-icon .glyph-icon {
+                  -fx-fill: #5aa9e6; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .module {
               -fx-text-fill: gray; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .category .list .blueprint:hidden .title-line .visible-container .visible-button {

@@ -398,4 +398,8 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
         }
         return this;
     }
+
+    public boolean isInColonia(){
+        return this.equals(ENGINEER_A1) || this.equals(ENGINEER_B1) || this.equals(ENGINEER_D1) || this.equals(ENGINEER_E1);
+    }
 }

@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.templates.generic;
 import javafx.geometry.Orientation;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
@@ -15,9 +16,12 @@ import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIconView;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -101,6 +105,7 @@ public abstract class EngineerCard extends DestroyableVBox implements Destroyabl
         return LabelBuilder.builder()
                 .withStyleClass("name")
                 .withText(this.engineer.getLocalizationKey())
+                .withGraphic(this.engineer.isInColonia() ? EdAwesomeIconViewPaneBuilder.builder().withStyleClass("colonia-icon").withIcons(EdAwesomeIcon.OTHER_COLONIA).build() : null)
                 .withOnMouseClicked(_ -> EventService.publish(new BlueprintClickEvent(this.engineer.isOdyssey() ? OdysseyBlueprintName.forEngineer(this.engineer) : HorizonsBlueprintName.forEngineer(this.engineer))))
                 .build();
     }

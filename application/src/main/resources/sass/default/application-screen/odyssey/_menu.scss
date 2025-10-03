@@ -13,13 +13,29 @@
 
     .list-cell {
       -fx-text-fill: $text-color-white;
+      -fx-content-display: right;
+      .colonia-icon{
+        .glyph-icon {
+          -fx-fill: $text-color-white;
+        }
+      }
 
       &:complete {
         -fx-text-fill: $text-color-green;
+        .colonia-icon{
+          .glyph-icon {
+            -fx-fill: $text-color-green;
+          }
+        }
       }
 
       &:trade {
         -fx-text-fill: $text-color-yellow;
+        .colonia-icon{
+          .glyph-icon {
+            -fx-fill: $text-color-yellow;
+          }
+        }
       }
     }
   }
@@ -148,14 +164,30 @@
         -fx-border-color: $border-color-black;
         -fx-text-fill: $text-color-red;
         -fx-padding: 0.25em;
+        -fx-content-display: right;
+        .colonia-icon {
+          .glyph-icon {
+            -fx-fill: $text-color-red;
+          }
+        }
       }
 
       &:unlocked .name {
         -fx-text-fill: $text-color-green;
+        .colonia-icon {
+          .glyph-icon {
+            -fx-fill: $text-color-green;
+          }
+        }
       }
 
       &:lowgrade .name {
         -fx-text-fill: $text-color-yellow;
+        .colonia-icon {
+          .glyph-icon {
+            -fx-fill: $text-color-yellow;
+          }
+        }
       }
     }
 

@@ -217,9 +217,19 @@
               -fx-cursor: hand;
               -fx-alignment: center;
               -fx-text-alignment: center;
-
+              -fx-content-display: right;
+              .colonia-icon{
+                .glyph-icon {
+                  -fx-fill: $text-color-blue;
+                }
+              }
               &:hover {
                 -fx-text-fill: lighten($text-color-blue, 10%);
+                .colonia-icon{
+                  .glyph-icon {
+                    -fx-fill: lighten($text-color-blue, 10%);
+                  }
+                }
               }
             }
 
