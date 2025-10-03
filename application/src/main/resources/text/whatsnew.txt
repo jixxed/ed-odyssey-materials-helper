@@ -1,3 +1,9 @@
+Version 3.0.6
+-------------
+Replaced copyright icon with Colonia icon for Colonia engineers
+Moved Sub-surface extraction missiles to its own category and exclude it from mining slots
+Fix fetching commodity stats
+
 Version 3.0.5
 -------------
 Fix some ship speeds that were off by 1
