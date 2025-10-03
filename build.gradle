@@ -59,6 +59,7 @@ tasks.register('makePortable', Zip) {
     include '**/*' //to include contents of a folder present inside Reports directory
     archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.zip'
     destinationDirectory = file('/output/')
+    preserveFileTimestamps = true
 }
 
 tasks.register('makeLinuxPortable', Zip) {
@@ -68,6 +69,7 @@ tasks.register('makeLinuxPortable', Zip) {
     include '**/*' //to include contents of a folder present inside Reports directory
     archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.linux.zip'
     destinationDirectory = file('./output/')
+    preserveFileTimestamps = true
 }
 
 tasks.register('makeLinuxAutoUpdaterPortable', Zip) {
@@ -77,6 +79,7 @@ tasks.register('makeLinuxAutoUpdaterPortable', Zip) {
     include '**/*' //to include contents of a folder present inside Reports directory
     archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.linux.autoupdater.zip'
     destinationDirectory = file('./output/')
+    preserveFileTimestamps = true
 }
 
 tasks.register("createRelease") {
