@@ -40,7 +40,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     ABRASION_BLASTER(BlueprintGroup.ABRASION_BLASTERS, BlueprintCategory.HARDPOINT),
     ABRASION_BLASTER_PRE(BlueprintGroup.ABRASION_BLASTERS, BlueprintCategory.HARDPOINT, false),
     SUB_SURFACE_DISPLACEMENT_MISSILE(BlueprintGroup.SUB_SURFACE_DISPLACEMENT_MISSILES, BlueprintCategory.HARDPOINT),
-    SUB_SURFACE_EXTRACTION_MISSILE(BlueprintGroup.SUB_SURFACE_DISPLACEMENT_MISSILES, BlueprintCategory.HARDPOINT, false),
+    SUB_SURFACE_EXTRACTION_MISSILE(BlueprintGroup.SUB_SURFACE_EXTRACTION_MISSILES, BlueprintCategory.HARDPOINT),
     MINING_LASER(BlueprintGroup.MINING_LASERS, BlueprintCategory.HARDPOINT),
     MINING_LASER_PRE(BlueprintGroup.MINING_LASERS, BlueprintCategory.HARDPOINT, false),
     MINING_LASER_PRE_ARX(BlueprintGroup.MINING_LASERS, BlueprintCategory.HARDPOINT, false),

@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.enums;
 public enum BlueprintGroup {
     ABRASION_BLASTERS,
     SUB_SURFACE_DISPLACEMENT_MISSILES,
+    SUB_SURFACE_EXTRACTION_MISSILES,
     MINING_LASERS,
     SEISMIC_CHARGE_LAUNCHERS,
     MINING_VOLLEY_REPEATERS,

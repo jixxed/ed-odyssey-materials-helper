@@ -57,6 +57,7 @@ public class ShipModuleService {
         var seismicChargeLaunchers = SeismicChargeLauncher.SEISMIC_CHARGE_LAUNCHERS;
         var shockCannons = ShockCannon.SHOCK_CANNONS;
         var subSurfaceDisplacementMissiles = SubSurfaceDisplacementMissile.SUB_SURFACE_DISPLACEMENT_MISSILES;
+        var subSurfaceExtractionMissiles = SubSurfaceExtractionMissile.SUB_SURFACE_EXTRACTION_MISSILES;
         var torpedoPylons = TorpedoPylon.TORPEDO_PYLONS;
         //core
         var armours = Armour.ARMOURS;
