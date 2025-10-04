@@ -1,0 +1,20 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "SquadronID" : {
+      "title" : "SquadronID",
+      "type" : "integer",
+      "examples" : [ 3, 0, 4 ]
+    },
+    "SquadronName" : {
+      "title" : "SquadronName",
+      "type" : "string",
+      "examples" : [ "TestSquadron" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "SquadronID", "SquadronName" ]
+}
