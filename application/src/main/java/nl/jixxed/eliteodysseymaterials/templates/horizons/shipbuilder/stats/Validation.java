@@ -157,7 +157,7 @@ public class Validation extends Stats implements DestroyableTemplate {
             isMaxFuelScoopExceeded.set(isMaxModuleExceeded(ship.getOptionalSlots(), 1, FuelScoop.class));
             isMaxKillWarrantScannerExceeded.set(isMaxModuleExceeded(ship.getUtilitySlots(), 1, KillWarrantScanner.class));
             isMaxManifestScannerExceeded.set(isMaxModuleExceeded(ship.getUtilitySlots(), 1, ManifestScanner.class));
-            isMaxMultiLimpetControllerExceeded.set(isMaxModuleExceeded(ship.getOptionalSlots(), 1, MultiLimpetController.class));
+            isMaxMultiLimpetControllerExceeded.set(isMaxModuleExceeded(ship.getOptionalSlots(), 1, MultiLimpetController.class, MkIIMultiLimpetController.class));
             isMaxPulseWaveAnalyzerExceeded.set(isMaxModuleExceeded(ship.getUtilitySlots(), 1, PulseWaveAnalyser.class));
             isMaxRefineryExceeded.set(isMaxModuleExceeded(ship.getOptionalSlots(), 1, Refinery.class));
             isMaxShieldGeneratorExceeded.set(isMaxModuleExceeded(ship.getOptionalSlots(), 1, ShieldGenerator.class));
