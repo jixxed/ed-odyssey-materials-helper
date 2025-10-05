@@ -74,6 +74,47 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
         };
     }
 
+    private Callback<ListView<HorizonsBlueprintName>, ListCell<HorizonsBlueprintName>> createDestroyableButtonCellFactory(Destroyable destroyable) {
+        return _ -> new DestroyableListCell<>() {
+            {
+                destroyable.register(this);
+                register(EventService.addListener(true, destroyable, StorageEvent.class, _ -> {
+                    updateText(getItem(), this.emptyProperty().get());
+                }));
+                register(EventService.addListener(true, destroyable, EngineerEvent.class, _ -> {
+                    updateText(getItem(), this.emptyProperty().get());
+                }));
+            }
+
+            @Override
+            protected void updateItem(final HorizonsBlueprintName item, final boolean empty) {
+                super.updateItem(item, empty);
+                updateText(item, empty);
+                updateStyle(item);
+            }
+
+            private void updateText(final HorizonsBlueprintName item, final boolean empty) {
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    String displayText = item + (BlueprintHelper.isCompletedEngineerRecipe(item) ? " " + UTF8Constants.CHECK_TRUE : "");
+                    displayText = displayText.replaceAll("^[ ├└\\s]+", "");
+                    setText(displayText);
+                    setGraphic(item.isInColonia() ? EdAwesomeIconViewPaneBuilder.builder().withStyleClass("colonia-icon").withIcons(EdAwesomeIcon.OTHER_COLONIA).build() : null);
+                }
+            }
+
+            private void updateStyle(final HorizonsBlueprintName item) {
+                if (item != null && BlueprintHelper.isCompletedEngineerRecipe(item)) {
+                    this.pseudoClassStateChanged(PseudoClass.getPseudoClass("complete"), true);
+                } else {
+                    this.pseudoClassStateChanged(PseudoClass.getPseudoClass("complete"), false);
+                }
+            }
+        };
+    }
+
     public HorizonsBlueprintBar() {
         initComponents();
         initEventHandling();
@@ -539,7 +580,7 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
         var destroyableCellFactory = createDestroyableCellFactory(blueprints);
         blueprints.setCellFactory(destroyableCellFactory);
         blueprints.getSelectionModel().select(blueprints.getItems().getFirst());
-        blueprints.setButtonCell(destroyableCellFactory.call(null));
+        blueprints.setButtonCell(createDestroyableButtonCellFactory(blueprints).call(null));
         return categoryTitledPane;
     }
 
