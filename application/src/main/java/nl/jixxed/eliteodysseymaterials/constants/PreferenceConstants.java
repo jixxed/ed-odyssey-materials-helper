@@ -64,5 +64,8 @@ public class PreferenceConstants {
     public static final String SQUADRON_CARRIER_ID = "squadroncarrier.carrier.id";
     public static final String COLONISATION_ENABLE_FC = "colonisation.enable.fc";
     public static final String COLONISATION_ENABLE_SC = "colonisation.enable.sc";
+    public static final String CAPI_ENABLE_ODYSSEY_MATERIALS = "capi.enable.odyssey.materials";
+    public static final String CAPI_ENABLE_HORIZONS_MATERIALS = "capi.enable.horizons.materials";
+
 
 }

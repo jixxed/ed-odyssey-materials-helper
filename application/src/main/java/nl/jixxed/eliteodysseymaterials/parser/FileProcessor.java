@@ -11,6 +11,7 @@ import javafx.application.Platform;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfig;
 import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
@@ -60,9 +61,21 @@ public class FileProcessor {
                 timer.cancel();
             }
         }));
+        EVENT_LISTENERS.add(EventService.addStaticListener(SquadronCarrierStorageConfigurationEvent.class, event -> {
+            ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
+                final String pathname = commander.getCommanderFolder();
+                final File watchedFolderSquadron = new File(pathname);
+                if (!watchedFolderSquadron.exists()) {
+                    watchedFolderSquadron.mkdirs();
+                }
+                var file = Optional.of(new File(watchedFolderSquadron, AppConstants.SQUADRON_FILE)).filter(File::exists);
+                processCapiSquadronFile(file, JournalEventType.CAPISQUADRON);
+            });
+        }));
         OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         OBJECT_MAPPER.registerModule(new JavaTimeModule());
         OBJECT_MAPPER2.registerModule(new JavaTimeModule());
+
     }
 
 
@@ -269,6 +282,7 @@ public class FileProcessor {
 
         }
     }
+
     public static synchronized void processCapiSquadronFile(final Optional<File> file, final JournalEventType journalEventType) {
         if (journalEventType.equals(JournalEventType.CAPISQUADRON)) {
             file.ifPresentOrElse(

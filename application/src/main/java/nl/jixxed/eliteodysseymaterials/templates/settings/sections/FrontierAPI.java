@@ -3,16 +3,17 @@ package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.scene.shape.Circle;
 import nl.jixxed.eliteodysseymaterials.builder.*;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
-import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.CAPIService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.RegistryService;
+import nl.jixxed.eliteodysseymaterials.service.UserPreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.ApplicationRegisteredEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.SquadronCarrierStorageConfigurationEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
@@ -46,9 +47,10 @@ public class FrontierAPI extends DestroyableVBox implements DestroyableEventTemp
                 .build();
         final DestroyableHBox capiConnectSetting = createCapiConnectSetting();
         final DestroyableHBox capiConnectStatus = createCapiConnectStatus();
-
+        DestroyableHBox enableOdysseySetting = createEnableOdysseySetting();
+        DestroyableHBox enableHorizonsSetting = createEnableHorizonsSetting();
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
-        this.getNodes().addAll(capiLabel, capiExplainLabel, capiExplain2Label, capiConnectSetting, capiConnectStatus);
+        this.getNodes().addAll(capiLabel, capiExplainLabel, capiExplain2Label, capiConnectSetting, capiConnectStatus, enableOdysseySetting, enableHorizonsSetting);
     }
 
     private DestroyableHBox createCapiConnectStatus() {
@@ -126,6 +128,52 @@ public class FrontierAPI extends DestroyableVBox implements DestroyableEventTemp
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(capiConnectLabel, this.capiConnectButton, this.capiDisconnectButton, this.capiStatusLabel)
+                .buildHBox();
+    }
+
+    private DestroyableHBox createEnableOdysseySetting() {
+        var label = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.capi.sc.odysseymaterials")
+                .build();
+        var toggle = ToggleSwitchBuilder.builder()
+                .withSelectedChangeListener((_, _, newValue) -> {
+                    UserPreferencesService.setPreference(PreferenceConstants.CAPI_ENABLE_ODYSSEY_MATERIALS, Boolean.TRUE.equals(newValue));
+                    EventService.publish(new SquadronCarrierStorageConfigurationEvent());
+                })
+                .withSelected(UserPreferencesService.getPreference(PreferenceConstants.CAPI_ENABLE_ODYSSEY_MATERIALS, true))
+                .build();
+
+        DestroyableLabel explainLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.capi.sc.odysseymaterials.explain")
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(label, toggle, explainLabel)
+                .buildHBox();
+    }
+
+    private DestroyableHBox createEnableHorizonsSetting() {
+        var label = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.capi.sc.horizonsmaterials")
+                .build();
+        var toggle = ToggleSwitchBuilder.builder()
+                .withSelectedChangeListener((_, _, newValue) -> {
+                    UserPreferencesService.setPreference(PreferenceConstants.CAPI_ENABLE_HORIZONS_MATERIALS, Boolean.TRUE.equals(newValue));
+                    EventService.publish(new SquadronCarrierStorageConfigurationEvent());
+                })
+                .withSelected(UserPreferencesService.getPreference(PreferenceConstants.CAPI_ENABLE_HORIZONS_MATERIALS, true))
+                .build();
+
+        DestroyableLabel explainLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.capi.sc.horizonsmaterials.explain")
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(label, toggle, explainLabel)
                 .buildHBox();
     }
 

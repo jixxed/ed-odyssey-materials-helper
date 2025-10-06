@@ -13,8 +13,6 @@ import nl.jixxed.eliteodysseymaterials.service.UserPreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 
-import java.math.BigInteger;
-
 @Slf4j
 public class CapiSquadronMessageProcessor implements CapiMessageProcessor<CapiSquadron> {
     private static final CarrierAssetParser ASSET_PARSER = new CarrierAssetParser();
@@ -39,12 +37,15 @@ public class CapiSquadronMessageProcessor implements CapiMessageProcessor<CapiSq
             BUY_ORDER_PARSER.parseOdyssey(squadronCarrier.getOrders().getOnfootmicroresources().getPurchases(), StoragePool.SQUADRONCARRIER);
             SELL_ORDER_PARSER.parse(squadronCarrier.getOrders().getCommodities().getSales(), StoragePool.SQUADRONCARRIER);
             BUY_ORDER_PARSER.parse(squadronCarrier.getOrders().getCommodities().getPurchases(), StoragePool.SQUADRONCARRIER);
+            if(UserPreferencesService.getPreference(PreferenceConstants.CAPI_ENABLE_ODYSSEY_MATERIALS, true)) {
+                ASSET_PARSER.parse(squadronCarrier.getCarrierLocker().getAssets(), StoragePool.SQUADRONCARRIER);
+                GOOD_PARSER.parse(squadronCarrier.getCarrierLocker().getGoods(), StoragePool.SQUADRONCARRIER);
+                DATA_PARSER.parse(squadronCarrier.getCarrierLocker().getData(), StoragePool.SQUADRONCARRIER);
+            }
 
-            ASSET_PARSER.parse(squadronCarrier.getCarrierLocker().getAssets(), StoragePool.SQUADRONCARRIER);
-            GOOD_PARSER.parse(squadronCarrier.getCarrierLocker().getGoods(), StoragePool.SQUADRONCARRIER);
-            DATA_PARSER.parse(squadronCarrier.getCarrierLocker().getData(), StoragePool.SQUADRONCARRIER);
-
-            COMMODITY_PARSER.parse(squadronCarrier.getCargo(), StoragePool.SQUADRONCARRIER);
+            if(UserPreferencesService.getPreference(PreferenceConstants.CAPI_ENABLE_HORIZONS_MATERIALS, true)) {
+                COMMODITY_PARSER.parse(squadronCarrier.getCargo(), StoragePool.SQUADRONCARRIER);
+            }
         });
         //this probably still requires a carrier?
         BANK_PARSER.parse(data.getBank(), StoragePool.SQUADRONCARRIER);
