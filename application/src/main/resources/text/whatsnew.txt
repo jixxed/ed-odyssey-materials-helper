@@ -1,3 +1,11 @@
+Version 3.0.7
+-------------
+Add filters for squadron carrier materials and commodities
+Fixed ship engineer dropdown showing tree structure symbols for the selected value
+Added handling of new journal schemas
+Add Mk II Mining limpet controller to ship validation for max amount of multi-limpet controllers
+Translation updates
+
 Version 3.0.6
 -------------
 Replaced copyright icon with Colonia icon for Colonia engineers

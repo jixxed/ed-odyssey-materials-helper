@@ -6,6 +6,8 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Replaced copyright icon with Colonia icon for Colonia engineers
-Moved Sub-surface extraction missiles to its own category and exclude it from mining slots
-Fix fetching commodity stats
+Add filters for squadron carrier materials and commodities
+Fixed ship engineer dropdown showing tree structure symbols for the selected value
+Added handling of new journal schemas
+Add Mk II Mining limpet controller to ship validation for max amount of multi-limpet controllers
+Translation updates
