@@ -120,7 +120,7 @@ if (arch == "aarch64") {
     platform += "-aarch64"
 }
 ext {
-    version_logback = "1.5.18"
+    version_logback = "1.5.19"
     version_jackson = "2.20.0"
     version_jna = "5.18.0"
     version_junit_jupiter = "5.13.4"
