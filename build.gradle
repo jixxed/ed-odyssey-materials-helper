@@ -70,6 +70,7 @@ tasks.register('makeLinuxPortable', Zip) {
     archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.linux.zip'
     destinationDirectory = file('./output/')
     preserveFileTimestamps = true
+    useFileSystemPermissions()
 }
 
 tasks.register('makeLinuxAutoUpdaterPortable', Zip) {
@@ -80,6 +81,7 @@ tasks.register('makeLinuxAutoUpdaterPortable', Zip) {
     archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.linux.autoupdater.zip'
     destinationDirectory = file('./output/')
     preserveFileTimestamps = true
+    useFileSystemPermissions()
 }
 
 tasks.register("createRelease") {
