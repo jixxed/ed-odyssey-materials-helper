@@ -25,6 +25,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class StartDialog extends DestroyableVBox implements DestroyableTemplate {
     public static final String POLICY_LEVEL_REQUIRED = "v3";
+    public static final String EULA_LEVEL_REQUIRED = "v1";
+
     private final Stage stage;
 
     public StartDialog(final Stage stage) {
@@ -49,18 +51,25 @@ public class StartDialog extends DestroyableVBox implements DestroyableTemplate 
                 .withText("dialog.start.privacypolicy")
                 .build();
         final DestroyableTextArea policyContent = getTextFromFile("/text/privacy.txt");
+        //policy
+        final DestroyableLabel eulaTitle = LabelBuilder.builder()
+                .withStyleClass("title")
+                .withText("dialog.start.eula")
+                .build();
+        final DestroyableTextArea eulaContent = getTextFromFile("/text/eula.txt");
         //buttons
         final DestroyableHBox buttonsBox = BoxBuilder.builder()
                 .withStyleClass("buttons")
                 .withNodes(createButtons())
                 .buildHBox();
-        this.getNodes().addAll(whatsNewTitle, whatsNewContent, policyTitle, policyContent, buttonsBox);
+        this.getNodes().addAll(whatsNewTitle, whatsNewContent, policyTitle, policyContent, eulaTitle, eulaContent, buttonsBox);
     }
 
     @SuppressWarnings("unchecked")
     private <E extends Node & Destroyable> List<E> createButtons() {
         final boolean policyAccepted = PreferencesService.getPreference(PreferenceConstants.POLICY_ACCEPT_VERSION, "").equals(POLICY_LEVEL_REQUIRED);
-        return (List<E>) ((policyAccepted) ? List.of(new GrowingRegion(), continueButton()) : List.of(new GrowingRegion(), acceptButton(), closeButton()));
+        final boolean eulaAccepted = PreferencesService.getPreference(PreferenceConstants.EULA_ACCEPT_VERSION, "").equals(EULA_LEVEL_REQUIRED);
+        return (List<E>) ((policyAccepted && eulaAccepted) ? List.of(new GrowingRegion(), continueButton()) : List.of(new GrowingRegion(), acceptButton(), closeButton()));
     }
 
     private DestroyableTextArea getTextFromFile(String name) {
@@ -100,6 +109,7 @@ public class StartDialog extends DestroyableVBox implements DestroyableTemplate 
                 .withText("dialog.start.accept")
                 .withOnAction(event -> {
                     PreferencesService.setPreference(PreferenceConstants.POLICY_ACCEPT_VERSION, POLICY_LEVEL_REQUIRED);
+                    PreferencesService.setPreference(PreferenceConstants.EULA_ACCEPT_VERSION, EULA_LEVEL_REQUIRED);
                     this.stage.close();
                 })
                 .build();

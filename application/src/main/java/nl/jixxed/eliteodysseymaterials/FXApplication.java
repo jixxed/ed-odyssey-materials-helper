@@ -426,7 +426,6 @@ public class FXApplication extends Application {
     }
 
     private void setupStorageWatchers(final File watchedFolder) {
-
         this.timeStampedCargoWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processCargoStateFile(file, JournalEventType.CARGO), AppConstants.CARGO_FILE, true, JournalEventType.CARGO);
         this.timeStampedShipLockerWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processCargoStateFile(file, JournalEventType.SHIPLOCKER), AppConstants.SHIPLOCKER_FILE, true, JournalEventType.SHIPLOCKER);
         this.timeStampedBackPackWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processCargoStateFile(file, JournalEventType.BACKPACK), AppConstants.BACKPACK_FILE, true, JournalEventType.BACKPACK);
@@ -438,8 +437,6 @@ public class FXApplication extends Application {
         this.navrouteWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.NAVROUTE_FILE, true, JournalEventType.NAVROUTE);
         this.modulesinfoWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.MODULESINFO_FILE, true, JournalEventType.MODULEINFO);
         this.fcMaterialsWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.FCMATERIALS_FILE, true, JournalEventType.FCMATERIALS);
-
-
     }
 
     private void setupFleetCarrierWatcher(final Commander commander) {
@@ -697,23 +694,23 @@ public class FXApplication extends Application {
 
     private void whatsnewPopup() {
         final boolean whatsNewSeen = PreferencesService.getPreference(PreferenceConstants.WHATS_NEW_VERSION, "").equals(PreferencesService.getPreference(PreferenceConstants.APP_SETTINGS_VERSION, "0"));
-        if (!whatsNewSeen || !PreferencesService.getPreference(PreferenceConstants.POLICY_ACCEPT_VERSION, "").equals(StartDialog.POLICY_LEVEL_REQUIRED)) {
+        boolean acceptedPrivacyPolicy = PreferencesService.getPreference(PreferenceConstants.POLICY_ACCEPT_VERSION, "").equals(StartDialog.POLICY_LEVEL_REQUIRED);
+        boolean acceptedEula = PreferencesService.getPreference(PreferenceConstants.EULA_ACCEPT_VERSION, "").equals(StartDialog.EULA_LEVEL_REQUIRED);
+        if (!whatsNewSeen || !acceptedPrivacyPolicy || !acceptedEula) {
             final Stage policyStage = new Stage();
 
-            final Scene policyScene = new Scene(new StartDialog(policyStage), 640, 480);
+            final Scene policyScene = new Scene(new StartDialog(policyStage), 640, 720);
             addIconsToStage(policyStage);
             policyStage.initModality(Modality.APPLICATION_MODAL);
             final JMetro jMetro = new JMetro(Style.DARK);
             jMetro.setScene(policyScene);
             policyScene.getStylesheets().add(getClass().getResource(StyleSheet.valueOf(PreferencesService.getPreference(PreferenceConstants.STYLESHEET, "DEFAULT")).getStyleSheet()).toExternalForm());
             policyStage.setScene(policyScene);
-            policyStage.titleProperty().set("What's new & privacy policy");
+            policyStage.titleProperty().set("What's new, privacy policy & EULA");
             policyStage.setAlwaysOnTop(true);
             policyStage.showAndWait();
-            if (!PreferencesService.getPreference(PreferenceConstants.POLICY_ACCEPT_VERSION, "").equals(StartDialog.POLICY_LEVEL_REQUIRED)) {
+            if (!acceptedPrivacyPolicy || !acceptedEula) {
                 System.exit(0);
-            } else {
-                PreferencesService.setPreference(PreferenceConstants.POLICY_ACCEPT_VERSION, StartDialog.POLICY_LEVEL_REQUIRED);
             }
         }
     }
