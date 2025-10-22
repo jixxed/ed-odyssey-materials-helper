@@ -11,9 +11,7 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Add filters for squadron carrier materials and commodities
-Fixed ship engineer dropdown showing tree structure symbols for the selected value
-Added handling of new journal schemas
-Add Mk II Mining limpet controller to ship validation for max amount of multi-limpet controllers
-Translation updates
+New AR overlay material detection logic and configuration
+Fix packaged file permissions on linux
+Added EULA
 ```

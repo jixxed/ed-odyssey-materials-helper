@@ -1,3 +1,9 @@
+Version 3.0.8
+-------------
+New AR overlay material detection logic and configuration
+Fix packaged file permissions on linux
+Added EULA
+
 Version 3.0.7
 -------------
 Add filters for squadron carrier materials and commodities
