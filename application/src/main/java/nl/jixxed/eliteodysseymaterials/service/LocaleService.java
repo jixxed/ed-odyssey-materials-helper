@@ -145,6 +145,10 @@ public class LocaleService {
 
     static String getDataCharacterForCurrentARLocale() {
         final Locale locale = ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")).getLocale();
+        return getDataCharacterForARLocale(locale);
+    }
+
+    static String getDataCharacterForARLocale(Locale locale) {
         return Arrays.stream(Data.values())
                 .filter(Predicate.not(Data::isUnknown))
                 .map(data -> LocaleService.getLocalizedStringForLocale(locale, data.getLocalizationKey()))

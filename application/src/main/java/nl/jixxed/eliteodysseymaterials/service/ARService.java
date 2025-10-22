@@ -25,7 +25,6 @@ import nu.pattern.OpenCV;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 
-import java.awt.*;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.*;
@@ -61,6 +60,7 @@ public class ARService {
     private static final double BARTENDER_MATCHING_THRESHOLD = 0.65;
     private static final String STYLESHEET = "/css/ar.css";
     private static final String ELITE_DANGEROUS_CLIENT_WINDOW_NAME = "Elite - Dangerous (CLIENT)";
+//    private static final String ELITE_DANGEROUS_CLIENT_WINDOW_NAME = "Elite Simulator";
     private static AROverlay arOverlay;
     private static Scene arScene;
     private static Stage arStage;
@@ -87,7 +87,7 @@ public class ARService {
     private static final AtomicBoolean REQUEST_HIDE = new AtomicBoolean(false);
     private static DownloadMenu downloadMenu;
     private static BartenderMenu bartenderMenu;
-    private static ScrollBar scrollBar;
+    private static ScrollBarV2 scrollBar;
     private static Boolean hasWarning;
     private static BartenderMenuType oldBartenderSubMenu;
     private static boolean enabled = false;
@@ -387,7 +387,7 @@ public class ARService {
 
     private static BufferedImage getCocktailCapture() {
         if (targetWindowInfo.hwnd != 0 && User32.INSTANCE.GetForegroundWindow() == targetWindowInfo.hwnd) {
-            return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getBartenderMenu().getCocktail().getAwtRectangle(), cocktailCapture);
+            return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getBartenderMenu().getCocktail().getAwtRectangle().getBounds(), cocktailCapture);
         }
         return null;
     }
@@ -419,7 +419,7 @@ public class ARService {
                     if (MENU_VISIBLE.get()) {
                         downloadMenuCapture = getDownloadMenuCapture();
                         final Boolean newHasWarning = WarningHelper.menuHasWarning(downloadMenuCapture, scaling, MATCHING_THRESHOLD);
-                        final ScrollBar newScrollBar = getScrollBar(downloadMenuCapture, newHasWarning);
+                        final ScrollBarV2 newScrollBar = getScrollBar(downloadMenuCapture, newHasWarning);
                         final boolean render = !Objects.equals(newScrollBar, scrollBar) || newHasWarning.equals(hasWarning);//initialRender.get();//only render on change
                         scrollBar = newScrollBar;
                         hasWarning = newHasWarning;
@@ -429,10 +429,10 @@ public class ARService {
                                 if (cachedImage != null && cachedImage.fullyRendered()) {
                                     overlayImage = cachedImage.render();
                                     arOverlay.getResizableImageView().setImage(overlayImage);
-                                } else {
+                                } else if(canRenderMore(cachedImage, downloadMenu)){
                                     arOverlay.getResizableImageView().setImage(null);
                                     log.debug("render required for Warning: " + getDownloadMenu().isHasWarning() + ". Scrollbar: " + scrollBar.getPosition() + " size:" + scrollBar.getSize());
-                                    downloadMenu = getDownloadMenu(hasWarning, scrollBar);
+                                    downloadMenu = getDownloadMenu(downloadMenuCapture, hasWarning, scrollBar);
                                     if (PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "").equals("ENGLISH")) {
                                         processMenuType(downloadMenuCapture, getDownloadMenu());
                                     }
@@ -484,6 +484,17 @@ public class ARService {
         };
         timer = new Timer();
         timer.scheduleAtFixedRate(timerTask, 0, 50);//100fps
+    }
+
+    private static boolean canRenderMore(Render cachedImage, DownloadMenu downloadMenu) {
+        if(cachedImage == null)
+            return true;
+        for (int index = 1; index <= downloadMenu.getMenuSize(); index++) {
+            if ((downloadMenu.isMenuItemVisible(index) && downloadMenu.isScanned(index) && !cachedImage.renderedIndexes().contains(index)) || !cachedImage.renderedIndexes().contains(index) && downloadMenu.isMenuItemVisibleForOCR(index)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static void processTradeMenu() throws InterruptedException {
@@ -639,24 +650,27 @@ public class ARService {
         animationTimer.start();
     }
 
-    private static ScrollBar getScrollBar(final BufferedImage downloadMenuCapture, final boolean hasWarning) {
+    private static ScrollBarV2 getScrollBar(final BufferedImage downloadMenuCapture, final boolean hasWarning) {
         if (downloadMenuCapture == null) {
             return scrollBar;
         }
-        return ScrollBarHelper.getScrollBar(downloadMenuCapture, hasWarning, scaling);
+        return ScrollBarHelper.getScrollBarV2(downloadMenuCapture, hasWarning, scaling);
     }
 
     private static void renderMenu(final DownloadMenu downloadMenu) {
         final BufferedImage bufferedImage = MenuOverlayRenderer.renderMenu(downloadMenu);
         final AtomicBoolean isFullyRendered = new AtomicBoolean(true);
-        for (int index = 1; index <= downloadMenu.menuSize(); index++) {
+        final Set<Integer> renderedIndexes = new HashSet();
+        for (int index = 1; index <= downloadMenu.getMenuSize(); index++) {
             if (downloadMenu.isMenuItemVisible(index) && !downloadMenu.isScanned(index)) {
                 log.debug("not scanned index:" + index);
                 isFullyRendered.set(false);
+            }else if (downloadMenu.isMenuItemVisible(index)){
+                renderedIndexes.add(index);
             }
         }
         overlayImage = SwingFXUtils.toFXImage(bufferedImage, null);
-        renderCache.put(String.valueOf(downloadMenu.isHasWarning()) + downloadMenu.getScrollBar().getPosition(), new Render(isFullyRendered.get(), overlayImage));
+        renderCache.put(String.valueOf(downloadMenu.isHasWarning()) + downloadMenu.getScrollBar().getPosition(), new Render(renderedIndexes, isFullyRendered.get(), overlayImage));
     }
 
     private static void renderMenu(final BartenderMenu bartenderMenu) {
@@ -764,12 +778,12 @@ public class ARService {
 
         final long timeRenderBeforeMenu = System.currentTimeMillis();
         final List<Future> tasks = new ArrayList<>();
-        for (int index = 1; index <= downloadMenu.menuSize(); index++) {
+        for (int index = 1; index <= downloadMenu.getMenuSize(); index++) {
             final int finalIndex = index;
             final Future<?> future = executorService.submit(() -> {
                 if (Boolean.TRUE.equals(!downloadMenu.getScanned().getOrDefault(finalIndex, false)) && downloadMenu.isMenuItemVisibleForOCR(finalIndex)) {
                     try {
-                        final double menuItemY = downloadMenu.getMenuItem(finalIndex).getY() + downloadMenu.getMenuItemPositionYOffset();
+                        final double menuItemY = downloadMenu.getMenuItem(finalIndex).getY();
 
                         long timeRenderBefore = System.currentTimeMillis();
                         final BufferedImage warped = ImageTransformHelper.transformForSelection(downloadMenuCapture, new Rectangle(
@@ -780,27 +794,45 @@ public class ARService {
                         );
                         long timeRenderAfter = System.currentTimeMillis();
                         log.debug("Transform menu item time: " + (timeRenderAfter - timeRenderBefore));
-                        final int y = (int) (menuItemY + downloadMenu.getMenuTextReadOffset().getY() - downloadMenu.getMenu().getY());
+//                        final int y = (int) (menuItemY + downloadMenu.getMenuTextReadOffset().getY() - downloadMenu.getMenu().getY());
                         final BufferedImage menuItemLabelCaptureOriginalColor = warped.getSubimage(
                                 (int) (downloadMenu.getMenuItem(finalIndex).getX() + downloadMenu.getMenuTextReadOffset().getX()),
-                                (int) (downloadMenu.getMenuItem(finalIndex).getY() + downloadMenu.getMenuTextReadOffset().getY() + downloadMenu.getMenuItemPositionYOffset()),
+                                (int) (downloadMenu.getMenuItem(finalIndex).getY() + downloadMenu.getMenuTextReadOffset().getY()),
                                 (int) downloadMenu.getMenuTextReadOffset().getWidth(),
                                 (int) downloadMenu.getMenuTextReadOffset().getHeight()
                         );
 
                         final Mat matColor = CvHelper.convertToMat(menuItemLabelCaptureOriginalColor, null);
-                        final Mat matGray = new Mat(matColor.size(), CvType.CV_8UC1);
-                        Imgproc.cvtColor(matColor, matGray, Imgproc.COLOR_RGB2GRAY);
-                        final BufferedImage menuItemLabelCaptureOriginalGray = CvHelper.mat2Img(matGray);
+                        final Mat matShiftedColor = new Mat(matColor.size(), CvType.CV_8UC4);
+                        Map<RGB, Integer> dominantColors = findDominantColors(matColor);
+                        RGB dominant = Collections.max(dominantColors.entrySet(), Map.Entry.comparingByValue()).getKey();
+                        //remove the dominant color(background) value from each pixel
+                        for (int y = 0; y < matColor.rows(); y++) {
+                            for (int x = 0; x < matColor.cols(); x++) {
+                                double[] bgr = matColor.get(y, x);
+                                double b = bgr[0];
+                                double g = bgr[1];
+                                double r = bgr[2];
+
+                                b = Math.abs(b - dominant.b());
+                                g = Math.abs(g - dominant.g());
+                                r = Math.abs(r - dominant.r());
+
+                                matShiftedColor.put(y, x, b,g,r, 255.0);
+
+                            }
+                        }
+
+                        final BufferedImage menuItemLabelCaptureOriginalShifted = CvHelper.mat2Img(matShiftedColor);
                         matColor.release();
-                        matGray.release();
+                        matShiftedColor.release();
                         timeRenderBefore = System.currentTimeMillis();
-                        String cleaned = imageToString(finalIndex, menuItemLabelCaptureOriginalGray);
+                        String cleaned = imageToString(finalIndex, menuItemLabelCaptureOriginalShifted);
                         final Locale locale = ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")).getLocale();
                         try {
-                            OdysseyMaterial.forLocalizedName(cleaned, locale);
+                            OdysseyMaterial.forLocalizedNameSpaceInsensitive(cleaned, locale);
                         } catch (final Exception e) {
-                            final Mat normal = CvHelper.convertToMat(menuItemLabelCaptureOriginalGray, null);
+                            final Mat normal = CvHelper.convertToMat(menuItemLabelCaptureOriginalShifted, null);
                             final Mat inverted = new Mat();
                             Core.bitwise_not(normal, inverted);
                             final BufferedImage menuItemLabelCaptureInverted = CvHelper.mat2Img(inverted);
@@ -815,7 +847,7 @@ public class ARService {
                                 downloadMenu.getDownloadData().put(finalIndex, Data.UNKNOWN);
                                 downloadMenu.getScanned().put(finalIndex, true);
                             } else {
-                                final OdysseyMaterial odysseyMaterial = OdysseyMaterial.forLocalizedName(cleaned, locale);
+                                final OdysseyMaterial odysseyMaterial = OdysseyMaterial.forLocalizedNameSpaceInsensitive(cleaned, locale);
                                 if (odysseyMaterial instanceof Data data && PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "").equals("ENGLISH") && downloadMenu.getDataPortName() != null && !downloadMenu.getDataPortName().equals("UNKNOWN")) {
                                     MaterialTrackingService.registerData(downloadMenu.getDataPortName(), downloadMenu.getType(), data, finalIndex);
                                 }
@@ -879,7 +911,7 @@ public class ARService {
         if (targetWindowInfo.hwnd != 0) {
             final int i = User32.INSTANCE.GetForegroundWindow();
             if (i == targetWindowInfo.hwnd) {
-                return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getDownloadMenu().getMenu().getAwtRectangle(), downloadMenuCapture);
+                return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getDownloadMenu().getMenu().getAwtRectangle().getBounds(), downloadMenuCapture);
             }
         }
         return null;
@@ -889,7 +921,7 @@ public class ARService {
         if (targetWindowInfo.hwnd != 0) {
             final int i = User32.INSTANCE.GetForegroundWindow();
             if (i == targetWindowInfo.hwnd) {
-                return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getBartenderMenu().getMenu().getAwtRectangle(), bartenderMenuCapture);
+                return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getBartenderMenu().getMenu().getAwtRectangle().getBounds(), bartenderMenuCapture);
             }
         }
         return null;
@@ -897,27 +929,29 @@ public class ARService {
 
     private static BufferedImage getArrowCapture() {
         if (targetWindowInfo.hwnd != 0 && User32.INSTANCE.GetForegroundWindow() == targetWindowInfo.hwnd) {
-            return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getDownloadMenu().getArrow().getAwtRectangle(), arrowCapture);
+            return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getDownloadMenu().getArrow().getAwtRectangle().getBounds(), arrowCapture);
         }
         return null;
     }
 
     private static DownloadMenu getDownloadMenu() {
         if (downloadMenu == null) {
-            downloadMenu = new DownloadMenu(scaling, Boolean.TRUE.equals(hasWarning), scrollBar, contentWidth, contentHeight);
+            downloadMenu = new DownloadMenu(downloadMenuCapture, scaling, Boolean.TRUE.equals(hasWarning), scrollBar, contentWidth, contentHeight);
         }
         return downloadMenu;
     }
 
-    private static DownloadMenu getDownloadMenu(final boolean hasWarning, final ScrollBar scrollBar) {
+    private static DownloadMenu getDownloadMenu(final BufferedImage downloadMenuCapture, final boolean hasWarning, final ScrollBarV2 scrollBar) {
         if (downloadMenu == null) {
-            downloadMenu = new DownloadMenu(scaling, hasWarning, scrollBar, contentWidth, contentHeight);
+            downloadMenu = new DownloadMenu(downloadMenuCapture, scaling, hasWarning, scrollBar, contentWidth, contentHeight);
         } else {
             downloadMenu.setScale(scaling);
             downloadMenu.setContentHeight(contentHeight);
             downloadMenu.setContentWidth(contentWidth);
-            downloadMenu.setHasWarning(hasWarning);
-            downloadMenu.setScrollBar(scrollBar);
+//            downloadMenu.setScrollBar(scrollBar);
+//            downloadMenu.setDownloadMenuCapture(downloadMenuCapture);
+//            downloadMenu.setHasWarning(hasWarning);
+            downloadMenu.updateMenuState(downloadMenuCapture, scrollBar, hasWarning);
         }
         return downloadMenu;
     }
@@ -1001,5 +1035,22 @@ public class ARService {
         return cleaned;
     }
 
+    record RGB(int r, int g, int b){}
+    private static Map<RGB, Integer> findDominantColors(Mat img){
+        Map<RGB, Integer> colorCount = new HashMap<>();
+
+        for (int y = 0; y < img.rows(); y++) {
+            for (int x = 0; x < img.cols(); x++) {
+                double[] bgr = img.get(y, x);
+                int b = (int) bgr[0];
+                int g = (int) bgr[1];
+                int r = (int) bgr[2];
+
+                RGB key = new RGB(r,g,b);
+                colorCount.put(key, colorCount.getOrDefault(key, 0) + 1);
+            }
+        }
+        return colorCount;
+    }
 
 }

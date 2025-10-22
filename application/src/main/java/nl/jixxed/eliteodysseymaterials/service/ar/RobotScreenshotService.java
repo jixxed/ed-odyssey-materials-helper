@@ -46,7 +46,7 @@ public class RobotScreenshotService implements ScreenshotService {
             if (scaledPointForRealPoint == null) {
                 return null;
             }
-            final Rectangle scaled = scaledPointForRealPoint.getAwtRectangle();//new Rectangle((int) scaledPointForRealPoint.getX(), (int) scaledPointForRealPoint.getY(), (int) (scaledPointForRealPoint.getWidth()), (int) (scaledPointForRealPoint.getHeight()));
+            final Rectangle scaled = scaledPointForRealPoint.getAwtRectangle().getBounds();//new Rectangle((int) scaledPointForRealPoint.getX(), (int) scaledPointForRealPoint.getY(), (int) (scaledPointForRealPoint.getWidth()), (int) (scaledPointForRealPoint.getHeight()));
 //            final Rectangle scaled = new Rectangle(offset.x + bounds.x, offset.y + bounds.y, bounds.width, bounds.height);
             final MultiResolutionImage multiResolutionScreenCapture = robot.createMultiResolutionScreenCapture(scaled);
             final BufferedImage screenCapture = (BufferedImage) multiResolutionScreenCapture.getResolutionVariant(bounds.width, bounds.height);

@@ -18,6 +18,14 @@
   .hoverable-line-chart .tooltip-text {
     -fx-fill: white; }
 
+.pipette-button {
+  -fx-min-height: 2.5em;
+  -fx-pref-height: 2.5em;
+  -fx-max-height: 2.5em; }
+  .pipette-button .glyph-icon {
+    -fx-fill: white important;
+    -fx-font-size: 1.5em important; }
+
 .app {
   -fx-pref-height: 600px;
   -fx-pref-width: 800px; }
@@ -5639,6 +5647,9 @@
         -fx-alignment: center-left; }
       .app .application-screen .settings-tab-content .settings-vbox .settings-spacing-10 {
         -fx-spacing: 0.75em; }
+      .app .application-screen .settings-tab-content .settings-vbox .settings-multiline {
+        -fx-wrap-text: true;
+        -fx-min-height: 3em; }
       .app .application-screen .settings-tab-content .settings-vbox .settings-dropdown {
         -fx-min-width: 17em;
         -fx-max-height: 2.5em;

@@ -29,6 +29,7 @@ public class PreferenceConstants {
     public static final String NOTIFICATION_VOLUME = "settings.notification.sounds.volume";
     public static final String NOTIFICATION_SCREEN = "settings.notification.screen.id";
     public static final String POLICY_ACCEPT_VERSION = "privacy.policy.version";
+    public static final String EULA_ACCEPT_VERSION = "eula.accept.version";
     public static final String WHATS_NEW_VERSION = "whats.new.version";
     public static final String URL_SCHEME = "url.scheme.asked";
     public static final String WIP = "wip.visible";
@@ -66,6 +67,9 @@ public class PreferenceConstants {
     public static final String COLONISATION_ENABLE_SC = "colonisation.enable.sc";
     public static final String CAPI_ENABLE_ODYSSEY_MATERIALS = "capi.enable.odyssey.materials";
     public static final String CAPI_ENABLE_HORIZONS_MATERIALS = "capi.enable.horizons.materials";
-
+    public static final String AVAILABLE_DATAPORT_COLOR = "ar.dataport.color.available";
+    public static final String AVAILABLE_HIGHLIGHT_DATAPORT_COLOR = "ar.dataport.color.available.highlight";
+    public static final String DOWNLOADED_DATAPORT_COLOR = "ar.dataport.color.downloaded";
+    public static final String DOWNLOADED_HIGHLIGHT_DATAPORT_COLOR = "ar.dataport.color.downloaded.highlight";
 
 }

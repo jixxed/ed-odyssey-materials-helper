@@ -3,6 +3,8 @@ package nl.jixxed.eliteodysseymaterials.service.ar;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.awt.geom.Rectangle2D;
+
 @Getter
 @AllArgsConstructor
 public class Rectangle {
@@ -19,7 +21,7 @@ public class Rectangle {
         return this.maxY - this.y;
     }
 
-    public java.awt.Rectangle getAwtRectangle() {
-        return new java.awt.Rectangle((int) this.x, (int) this.y, (int) getWidth(), (int) getHeight());
+    public java.awt.Rectangle.Double getAwtRectangle() {
+        return new Rectangle2D.Double(this.x,  this.y, getWidth(), getHeight());
     }
 }

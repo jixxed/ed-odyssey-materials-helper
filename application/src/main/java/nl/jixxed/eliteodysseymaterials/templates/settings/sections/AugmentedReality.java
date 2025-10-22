@@ -14,10 +14,7 @@ import nl.jixxed.eliteodysseymaterials.service.ARService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.ARDisableEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.ARLocaleChangeEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.ARWhitelistChangeEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.io.*;
@@ -26,6 +23,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 
@@ -34,8 +33,10 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableEven
     private static final String TESS4J_DIR = new File(OsConstants.getTess4j()).getPath();
 
     private DestroyableLabel arOverlayLabel;
+    private DestroyableLabel arDetectLabel;
     private DestroyableToggleSwitch arOverlayButton;
     private DestroyableTextField arCharacterWhitelistTextField;
+    private Map<String, DestroyablePipetteColorPicker> colorPickers = new HashMap<>();
 
     public AugmentedReality() {
         this.initComponents();
@@ -65,16 +66,18 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableEven
         final DestroyableHBox arColorWishlistSetting = createARColorSetting(PreferenceConstants.AR_WISHLIST_COLOR, "tab.settings.ar.color.wishlist", Color.LIME);
         final DestroyableHBox arColorBlueprintSetting = createARColorSetting(PreferenceConstants.AR_BLUEPRINT_COLOR, "tab.settings.ar.color.blueprint", Color.BLUE);
         final DestroyableHBox arColorBartenderSetting = createARColorSetting(PreferenceConstants.AR_BARTENDER_COLOR, "tab.settings.ar.color.bartender", Color.web("0xb3b3b3ff"));
+        final DestroyableHBox arDataportDetectSetting = createARDetectColorSetting();
 
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
         this.getNodes().addAll(arLabel, BoxBuilder.builder()
-                .withNodes(arExplainLabel, vccLink).buildHBox(), arSetting, arLocaleSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting, arColorPowerplaySetting, arBartenderSetting, arColorBartenderSetting);
+                .withNodes(arExplainLabel, vccLink).buildHBox(), arSetting, arLocaleSetting, arDataportDetectSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting, arColorPowerplaySetting, arBartenderSetting, arColorBartenderSetting);
     }
 
     @Override
     public void initEventHandling() {
         register(EventService.addListener(true, this, ARDisableEvent.class, _ -> this.arOverlayButton.setSelected(false)));
     }
+
 
     private DestroyableHBox createARSetting() {
         this.arOverlayLabel = LabelBuilder.builder()
@@ -201,5 +204,35 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableEven
                 .buildHBox();
     }
 
+    private DestroyableHBox createARDetectColorSetting() {
+        this.arDetectLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText(LocaleService.getStringBinding("tab.settings.ar.color.dataport.colors"))
+                .build();
+        var arDetectExplainLabel = LabelBuilder.builder()
+                .withStyleClass("settings-multiline")
+                .withText(LocaleService.getStringBinding("tab.settings.ar.color.dataport.explain"))
+                .build();
+        DestroyableVBox availableColorPicker = createColorPicker("tab.settings.ar.color.dataport.available", PreferenceConstants.AVAILABLE_DATAPORT_COLOR, Color.web("#ff9500ff"));
+        DestroyableVBox availableHighlightColorPicker = createColorPicker("tab.settings.ar.color.dataport.available.highlight", PreferenceConstants.AVAILABLE_HIGHLIGHT_DATAPORT_COLOR, Color.web("#452801ff"));
+        DestroyableVBox downloadedColorPicker = createColorPicker("tab.settings.ar.color.dataport.downloaded", PreferenceConstants.DOWNLOADED_DATAPORT_COLOR, Color.web("#3d3d3dff"));
+        DestroyableVBox downloadedHighlightColorPicker = createColorPicker("tab.settings.ar.color.dataport.downloaded.highlight", PreferenceConstants.DOWNLOADED_HIGHLIGHT_DATAPORT_COLOR, Color.web("#d6d6d6ff"));
 
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.arDetectLabel, BoxBuilder.builder().withNodes(arDetectExplainLabel, BoxBuilder.builder().withStyleClass(SETTINGS_SPACING_10_CLASS).withNodes(availableColorPicker, availableHighlightColorPicker, downloadedColorPicker, downloadedHighlightColorPicker).buildHBox()).buildVBox())
+                .buildHBox();
+    }
+
+    private DestroyableVBox createColorPicker(final String localizationKey, String preferenceName, Color defaultColor) {
+        var colorPickerLabel = LabelBuilder.builder()
+                .withText(LocaleService.getStringBinding(localizationKey))
+                .build();
+
+        final DestroyablePipetteColorPicker colorPicker = new DestroyablePipetteColorPicker();
+        colorPicker.getColorPicker().setValue(Color.valueOf(PreferencesService.getPreference(preferenceName, defaultColor.toString())));
+        colorPicker.getColorPicker().addChangeListener(colorPicker.getColorPicker().valueProperty(), (_, _, newValue) -> PreferencesService.setPreference(preferenceName, newValue.toString()));
+        colorPickers.put(preferenceName, colorPicker);
+        return BoxBuilder.builder().withNodes(colorPickerLabel, colorPicker).buildVBox();
+    }
 }

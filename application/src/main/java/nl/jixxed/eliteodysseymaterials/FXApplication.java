@@ -709,6 +709,8 @@ public class FXApplication extends Application {
             policyStage.titleProperty().set("What's new, privacy policy & EULA");
             policyStage.setAlwaysOnTop(true);
             policyStage.showAndWait();
+            acceptedPrivacyPolicy = PreferencesService.getPreference(PreferenceConstants.POLICY_ACCEPT_VERSION, "").equals(StartDialog.POLICY_LEVEL_REQUIRED);
+            acceptedEula = PreferencesService.getPreference(PreferenceConstants.EULA_ACCEPT_VERSION, "").equals(StartDialog.EULA_LEVEL_REQUIRED);
             if (!acceptedPrivacyPolicy || !acceptedEula) {
                 System.exit(0);
             }

@@ -73,9 +73,9 @@ public sealed interface OdysseyMaterial extends Material permits Asset, Consumab
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    static OdysseyMaterial forLocalizedName(final String name, final Locale locale) {
+    static OdysseyMaterial forLocalizedNameSpaceInsensitive(final String name, final Locale locale) {
         return Stream.concat(Arrays.stream(Data.values()), Stream.concat(Arrays.stream(Asset.values()), Arrays.stream(Good.values())))
-                .filter((OdysseyMaterial odysseyMaterial) -> LocaleService.getLocalizedStringForLocale(locale, odysseyMaterial.getLocalizationKey()).equalsIgnoreCase(name))
+                .filter((OdysseyMaterial odysseyMaterial) -> LocaleService.getLocalizedStringForLocale(locale, odysseyMaterial.getLocalizationKey()).replaceAll("\\s", "").equalsIgnoreCase(name.replaceAll("\\s", "")))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }

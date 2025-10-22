@@ -30,3 +30,10 @@
     -fx-fill: $text-color-white;
   }
 }
+.pipette-button{
+  @include fixedHeight(2.5em);
+  .glyph-icon {
+    -fx-fill: white important;
+    -fx-font-size: 1.5em important;
+  }
+}

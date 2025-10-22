@@ -3,5 +3,7 @@ package nl.jixxed.eliteodysseymaterials.service.ar;
 
 import javafx.scene.image.Image;
 
-public record Render(boolean fullyRendered, Image render) {
+import java.util.Set;
+
+public record Render(Set<Integer> renderedIndexes, boolean fullyRendered, Image render) {
 }

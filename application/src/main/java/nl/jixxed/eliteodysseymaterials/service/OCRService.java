@@ -35,12 +35,9 @@ public class OCRService {
         System.setProperty(LEPT_DATA_PATH, OcrConstants.TESS4J_DIR);
         instance = new Tesseract1();
         instance.setDatapath(Path.of(OcrConstants.TESS4J_DIR, "tessdata").toString());
-        instance.setLanguage(ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")).getIso6392B());
-
-        setCharWhitelist(LocaleService.getDataCharacterForCurrentARLocale());
+        setLocale(ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")));
         EVENT_LISTENERS.add(EventService.addStaticListener(ARLocaleChangeEvent.class, arLocaleChangeEvent -> {
-                    instance.setLanguage(arLocaleChangeEvent.getLocale().getIso6392B());
-                    setCharWhitelist(LocaleService.getDataCharacterForCurrentARLocale());
+                    setLocale(arLocaleChangeEvent.getLocale());
                 }
         ));
         EVENT_LISTENERS.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
@@ -52,6 +49,11 @@ public class OCRService {
                     }
                 }
         ));
+    }
+
+    public static void setLocale(ApplicationLocale appLocale) {
+        instance.setLanguage(appLocale.getIso6392B());
+        setCharWhitelist(LocaleService.getDataCharacterForARLocale(appLocale.getLocale()));
     }
 
     static void setCharWhitelist(final String characters) {

@@ -57,6 +57,11 @@
     .settings-spacing-10 {
       -fx-spacing: 0.75em;
     }
+    .settings-multiline {
+      -fx-wrap-text: true;
+      -fx-min-height: 3em;
+
+    }
 
 
     .settings-dropdown {
