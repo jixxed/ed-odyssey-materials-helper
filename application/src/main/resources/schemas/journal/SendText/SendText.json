@@ -8,7 +8,13 @@
     "To" : {
       "title" : "To",
       "type" : "string",
-      "examples" : [ "Alice", "Bob", "Mallory" ]
+      "examples" : [ "Alice", "Bob", "$cmdr_decorate:#name=Mallory;" ]
+    },
+    "To_Localised" : {
+      "title" : "To_Localised",
+      "description": "Unclear under which conditions this field is present, but it sometimes is.",
+      "type" : "string",
+      "examples" : [ "CMDR Alice", "CMDR Bob", "CMDR Mallory" ]
     },
     "Message" : {
       "title" : "Message",
