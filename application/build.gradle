@@ -332,9 +332,11 @@ dependencies {
     testImplementation "io.github.secretx33:path-matching-resource-pattern-resolver"
     implementation "com.github.wille:oslib"
     implementation 'nl.jixxed.ed.awesome:ed-awesome-api:1.+'
+    implementation 'nl.jixxed.ed.confidential:ed-confidential-api:1.3'
 
     if (proprietary) {
         implementation 'nl.jixxed.ed.awesome:ed-awesome-impl:1.22'
+        implementation 'nl.jixxed.ed.confidential:ed-confidential-impl:1.0'
     }
 }
 jpackage {

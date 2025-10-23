@@ -3,9 +3,13 @@ package nl.jixxed.eliteodysseymaterials.service;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.ed.confidential.api.PropertiesSecrecyLoader;
+import nl.jixxed.ed.confidential.api.SecrecyLoader;
 
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.ServiceLoader;
+import java.util.function.Supplier;
 
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -17,26 +21,31 @@ public class Secrets {
     }
 
     public static Properties loadSecrets() {
-        props = new Properties();
+        ServiceLoader<SecrecyLoader> loader = ServiceLoader.load(SecrecyLoader.class);
+        SecrecyLoader secrecyLoader = loader.stream().map(ServiceLoader.Provider::get)
+                .filter(f -> !isJUnitTest() && !(f instanceof PropertiesSecrecyLoader))
+                .findFirst()
+                .orElseGet(PropertiesSecrecyLoader::new);
 
-        try (InputStream in = Secrets.class
-                .getClassLoader()
-                .getResourceAsStream("secret.properties")) {
-
-            if (in == null) {
-                return props;
+        props = secrecyLoader.load(() -> {
+            Properties properties = new Properties();
+            try (InputStream in = Secrets.class
+                    .getClassLoader()
+                    .getResourceAsStream("secret.properties")) {
+                if (in == null) {
+                    return properties;
+                }
+                properties.load(in);
+            } catch (Exception e) {
+                log.error("Failed to load secret.properties", e);
             }
-
-            props.load(in);
-        } catch (Exception e) {
-            log.error("Failed to load secret.properties", e);
-            return props;
-        }
+            return properties;
+        });
         return props;
     }
 
     public static String getOrDefault(final String key, final String defaultValue) {
-        if(isJUnitTest()){
+        if (isJUnitTest()) {
             return defaultValue;
         }
         return props.getProperty(key, defaultValue);

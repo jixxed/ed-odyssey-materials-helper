@@ -54,6 +54,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.ScanBaryCentre.ScanBaryCe
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Shipyard.Shipyard;
 import nl.jixxed.eliteodysseymaterials.service.eddn.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.input.CharSequenceInputStream;
 import org.apache.poi.ss.formula.eval.NotImplementedException;
 import org.leadpony.justify.api.JsonSchema;
@@ -413,6 +414,7 @@ public class EDDNService {
                 try {
                     final String data = OBJECT_MAPPER.writeValueAsString(message);
                     final JsonSchema schema = JSON_VALIDATION_SERVICE.readSchema(EDDNService.class.getResourceAsStream("/schemavalidation/eddn/" + schemaName));
+                    if(DigestUtils.sha256Hex(SOFTWARE_NAME).equals("7b88c79b9e3ac3bb7228e80acae56af06d7a1e1ff077b5e0fa166f3d1293d9fe"))
                     validateAndSend(data, schema, event.getEvent());
                 } catch (final InterruptedException e) {
                     Thread.currentThread().interrupt();

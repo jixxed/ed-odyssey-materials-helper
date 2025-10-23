@@ -45,8 +45,11 @@ module nl.jixxed.eliteodysseymaterials {
     requires jdk.accessibility;
     requires de.jensd.fx.glyphs.commons;
     requires nl.jixxed.ed.awesome.api;
+    requires nl.jixxed.ed.confidential.api;
+    requires org.apache.commons.codec;
 
     uses nl.jixxed.ed.awesome.api.FontLoader;
+    uses nl.jixxed.ed.confidential.api.SecrecyLoader;
 
     exports nl.jixxed.eliteodysseymaterials.domain.ships;
     exports nl.jixxed.eliteodysseymaterials.domain;
