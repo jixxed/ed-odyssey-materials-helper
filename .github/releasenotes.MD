@@ -11,8 +11,5 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-New AR overlay material detection logic and configuration
-Updated translations
-Fix packaged file permissions on linux
-Added EULA
+Fix detection of some new squadron related journal events
 ```

@@ -1,6 +1,11 @@
+Version 3.0.9
+-------------
+Fix detection of some new squadron related journal events
+
 Version 3.0.8
 -------------
 New AR overlay material detection logic and configuration
+- If you have custom HUD colors, you need to configure the colors
 Updated translations
 Fix packaged file permissions on linux
 Added EULA
