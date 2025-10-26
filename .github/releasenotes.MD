@@ -11,11 +11,5 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Added AR fuzzy text matching configuration option
-- If detection with exact matching does not work well for you, try enabling fuzzy matching (does increase the chance of false positives)
-- The percentage a read text has to match to a material is configurable (default 90%)
-- Application logs provide insight into what text was read and what materials were matched
-Added an on-screen hint that you can rescan by moving the mouse cursor over the download arrow
-Fixed swapped red and blue color channels for AR menu item detection
-Handle warning offset in AR menu item detection
+Handle multiple monitors for AR color picker
 ```
