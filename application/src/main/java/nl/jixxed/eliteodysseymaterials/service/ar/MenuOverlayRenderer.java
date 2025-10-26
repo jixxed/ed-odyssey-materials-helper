@@ -23,7 +23,7 @@ public class MenuOverlayRenderer {
 //        final int contentWidth = downloadMenu.getContentWidth();
 //        final int contentHeight = downloadMenu.getContentHeight();
         final BufferedImage bufferedImage = new BufferedImage((int) downloadMenu.getMenu().getWidth(), (int) downloadMenu.getMenu().getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
-        final Graphics2D graphics = bufferedImage.createGraphics();
+        Graphics2D graphics = bufferedImage.createGraphics();
 //        final AtomicBoolean isFullyRendered = new AtomicBoolean(true);
 
 //        graphics.setColor(Color.WHITE);
@@ -109,8 +109,22 @@ public class MenuOverlayRenderer {
 
             }
         }
+
         graphics.dispose();
-        return ImageTransformHelper.transform(bufferedImage, downloadMenu);
+        BufferedImage transformed = ImageTransformHelper.transform(bufferedImage, downloadMenu);
+        graphics = transformed.createGraphics();
+        graphics.setColor(Color.WHITE);
+        if (Locale.forLanguageTag("ru").equals(LocaleService.getCurrentLocale())) {
+            graphics.setFont(new Font("Eurostile-Roman", Font.BOLD, (int) (downloadMenu.getFontSize())));
+        } else {
+//                    graphics.setFont(new Font("Eurostile-Roman", Font.BOLD, (int) (downloadMenu.getFontSize())));
+            graphics.setFont(new Font("Euro Caps", Font.BOLD, (int) (downloadMenu.getFontSize())));
+        }
+        graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        final FontMetrics fm = graphics.getFontMetrics();
+        graphics.drawString("Move the mousecursor over the download arrow icon for a rescan", (int) 10, (int) 10 + fm.getHeight() - fm.getDescent() + (int) (0.05 * fm.getHeight()));
+        return transformed;
 //        return bufferedImage1;
 //        final WritableImage overlayImage1 = SwingFXUtils.toFXImage(bufferedImage1, null);
 //        overlayImage = overlayImage1;

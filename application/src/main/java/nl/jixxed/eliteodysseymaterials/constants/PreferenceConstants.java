@@ -71,5 +71,8 @@ public class PreferenceConstants {
     public static final String AVAILABLE_HIGHLIGHT_DATAPORT_COLOR = "ar.dataport.color.available.highlight";
     public static final String DOWNLOADED_DATAPORT_COLOR = "ar.dataport.color.downloaded";
     public static final String DOWNLOADED_HIGHLIGHT_DATAPORT_COLOR = "ar.dataport.color.downloaded.highlight";
+    public static final String AR_SEARCH_METHOD = "ar.search.method";
+    public static final String AR_FUZZY_SCORE = "ar.search.fuzzy.score.min";
+
 
 }

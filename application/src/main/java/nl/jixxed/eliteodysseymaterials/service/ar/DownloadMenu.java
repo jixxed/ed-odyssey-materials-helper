@@ -50,8 +50,9 @@ public class DownloadMenu {
 
     public int detectMenuSize(BufferedImage downloadMenuCapture) {
         try {
+            double offset = (this.hasWarning) ? 71 : 0;
             final double menuItemOffsetX = 25 * this.scale;
-            final double menuItemOffsetY = 275 * this.scale;
+            final double menuItemOffsetY = (275 + offset) * this.scale;
             final double menuItemHeight = 100 * this.scale;
             final double menuItemSeperation = 4 * this.scale;
             final double menuItemSpacing = menuItemHeight + menuItemSeperation;
@@ -70,7 +71,7 @@ public class DownloadMenu {
                 byte[] colorToTest = DataBufferHelper.getData(dataColorPixelTest.getDataBuffer());
                 log.debug("colorToTest {}: {}", i + 1, toHex(colorToTest));
                 if (matchesOneOfColors(colorToTest, colorAvailable, colorAvailableHighlight, colorDownloaded, colorDownloadedHighlight)) {
-                    matches++;
+                    matches = i + 1;
                 }
             }
             return matches;
@@ -84,9 +85,9 @@ public class DownloadMenu {
         Color color = Color.web(webColor);
         return new byte[]{
                 (byte) (color.getOpacity() * 255),
-                (byte) (color.getBlue() * 255),
+                (byte) (color.getRed() * 255),
                 (byte) (color.getGreen() * 255),
-                (byte) (color.getRed() * 255)
+                (byte) (color.getBlue() * 255)
         };
     }
 

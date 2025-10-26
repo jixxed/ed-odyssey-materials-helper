@@ -12,6 +12,7 @@ import javafx.stage.StageStyle;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.xdrop.fuzzywuzzy.model.BoundExtractedResult;
 import nl.jixxed.eliteodysseymaterials.FXApplication;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
@@ -60,7 +61,7 @@ public class ARService {
     private static final double BARTENDER_MATCHING_THRESHOLD = 0.65;
     private static final String STYLESHEET = "/css/ar.css";
     private static final String ELITE_DANGEROUS_CLIENT_WINDOW_NAME = "Elite - Dangerous (CLIENT)";
-//    private static final String ELITE_DANGEROUS_CLIENT_WINDOW_NAME = "Elite Simulator";
+//        private static final String ELITE_DANGEROUS_CLIENT_WINDOW_NAME = "Elite Simulator";
     private static AROverlay arOverlay;
     private static Scene arScene;
     private static Stage arStage;
@@ -156,7 +157,7 @@ public class ARService {
 
 
             arStage = new Stage();
-            for (int res : new int[]{16,32,48,64,128,256,512}) {
+            for (int res : new int[]{16, 32, 48, 64, 128, 256, 512}) {
                 arStage.getIcons().add(new Image(FXApplication.class.getResourceAsStream("/images/application/appicon" + res + ".png")));
             }
             arOverlay = new AROverlay();
@@ -429,7 +430,7 @@ public class ARService {
                                 if (cachedImage != null && cachedImage.fullyRendered()) {
                                     overlayImage = cachedImage.render();
                                     arOverlay.getResizableImageView().setImage(overlayImage);
-                                } else if(canRenderMore(cachedImage, downloadMenu)){
+                                } else if (canRenderMore(cachedImage, downloadMenu)) {
                                     arOverlay.getResizableImageView().setImage(null);
                                     log.debug("render required for Warning: " + getDownloadMenu().isHasWarning() + ". Scrollbar: " + scrollBar.getPosition() + " size:" + scrollBar.getSize());
                                     downloadMenu = getDownloadMenu(downloadMenuCapture, hasWarning, scrollBar);
@@ -487,7 +488,7 @@ public class ARService {
     }
 
     private static boolean canRenderMore(Render cachedImage, DownloadMenu downloadMenu) {
-        if(cachedImage == null)
+        if (cachedImage == null)
             return true;
         for (int index = 1; index <= downloadMenu.getMenuSize(); index++) {
             if ((downloadMenu.isMenuItemVisible(index) && downloadMenu.isScanned(index) && !cachedImage.renderedIndexes().contains(index)) || !cachedImage.renderedIndexes().contains(index) && downloadMenu.isMenuItemVisibleForOCR(index)) {
@@ -665,7 +666,7 @@ public class ARService {
             if (downloadMenu.isMenuItemVisible(index) && !downloadMenu.isScanned(index)) {
                 log.debug("not scanned index:" + index);
                 isFullyRendered.set(false);
-            }else if (downloadMenu.isMenuItemVisible(index)){
+            } else if (downloadMenu.isMenuItemVisible(index)) {
                 renderedIndexes.add(index);
             }
         }
@@ -818,7 +819,7 @@ public class ARService {
                                 g = Math.abs(g - dominant.g());
                                 r = Math.abs(r - dominant.r());
 
-                                matShiftedColor.put(y, x, b,g,r, 255.0);
+                                matShiftedColor.put(y, x, b, g, r, 255.0);
 
                             }
                         }
@@ -829,8 +830,23 @@ public class ARService {
                         timeRenderBefore = System.currentTimeMillis();
                         String cleaned = imageToString(finalIndex, menuItemLabelCaptureOriginalShifted);
                         final Locale locale = ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")).getLocale();
+                        boolean fuzzy = PreferencesService.getPreference(PreferenceConstants.AR_SEARCH_METHOD, "EXACT").equals("FUZZY");
+                        int fuzzyScore = PreferencesService.getPreference(PreferenceConstants.AR_FUZZY_SCORE, 90);
+                        OdysseyMaterial odysseyMaterial;
                         try {
-                            OdysseyMaterial.forLocalizedNameSpaceInsensitive(cleaned, locale);
+                            if (fuzzy) {
+                                BoundExtractedResult<OdysseyMaterial> extractedResult = OdysseyMaterial.forLocalizedNameSpaceInsensitiveFuzzy(cleaned, locale);
+                                log.info("Fuzzy matched '{}' to '{}' with score {}", cleaned, extractedResult.getReferent(), extractedResult.getScore());
+                                if (extractedResult.getScore() >= fuzzyScore) {
+                                    odysseyMaterial = extractedResult.getReferent();
+                                } else {
+                                    throw new IllegalArgumentException("Fuzzy score too low");
+                                }
+                            } else {
+                                odysseyMaterial = OdysseyMaterial.forLocalizedNameSpaceInsensitive(cleaned, locale);
+                            }
+                            downloadMenu.getDownloadData().put(finalIndex, odysseyMaterial);
+                            downloadMenu.getScanned().put(finalIndex, true);
                         } catch (final Exception e) {
                             final Mat normal = CvHelper.convertToMat(menuItemLabelCaptureOriginalShifted, null);
                             final Mat inverted = new Mat();
@@ -840,25 +856,34 @@ public class ARService {
                             inverted.release();
                             log.debug("Attempt OCR inverted");
                             cleaned = imageToString(finalIndex, menuItemLabelCaptureInverted);
+                            try {
+                                if (cleaned.isBlank()) {
+                                    downloadMenu.getDownloadData().put(finalIndex, Data.UNKNOWN);
+                                    downloadMenu.getScanned().put(finalIndex, true);
+                                } else {
+                                    if (fuzzy) {
+                                        BoundExtractedResult<OdysseyMaterial> extractedResult = OdysseyMaterial.forLocalizedNameSpaceInsensitiveFuzzy(cleaned, locale);
+                                        log.info("Fuzzy matched '{}' to '{}' with score {}", cleaned, extractedResult.getReferent(), extractedResult.getScore());
+                                        if (extractedResult.getScore() >= fuzzyScore) {
+                                            odysseyMaterial = extractedResult.getReferent();
+                                        } else {
+                                            throw new IllegalArgumentException("Fuzzy score too low");
+                                        }
+                                    } else {
+                                        odysseyMaterial = OdysseyMaterial.forLocalizedNameSpaceInsensitive(cleaned, locale);
+                                    }
+                                    if (odysseyMaterial instanceof Data data && PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "").equals("ENGLISH") && downloadMenu.getDataPortName() != null && !downloadMenu.getDataPortName().equals("UNKNOWN")) {
+                                        MaterialTrackingService.registerData(downloadMenu.getDataPortName(), downloadMenu.getType(), data, finalIndex);
+                                    }
+                                    downloadMenu.getDownloadData().put(finalIndex, odysseyMaterial);
+                                    downloadMenu.getScanned().put(finalIndex, true);
+                                }
 
-                        }
-                        try {
-                            if (cleaned.isBlank()) {
+                            } catch (final IllegalArgumentException ex) {
+                                log.debug("detected material: UNKNOWN");
                                 downloadMenu.getDownloadData().put(finalIndex, Data.UNKNOWN);
                                 downloadMenu.getScanned().put(finalIndex, true);
-                            } else {
-                                final OdysseyMaterial odysseyMaterial = OdysseyMaterial.forLocalizedNameSpaceInsensitive(cleaned, locale);
-                                if (odysseyMaterial instanceof Data data && PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "").equals("ENGLISH") && downloadMenu.getDataPortName() != null && !downloadMenu.getDataPortName().equals("UNKNOWN")) {
-                                    MaterialTrackingService.registerData(downloadMenu.getDataPortName(), downloadMenu.getType(), data, finalIndex);
-                                }
-                                downloadMenu.getDownloadData().put(finalIndex, odysseyMaterial);
-                                downloadMenu.getScanned().put(finalIndex, true);
                             }
-
-                        } catch (final IllegalArgumentException ex) {
-                            log.debug("detected material: UNKNOWN");
-                            downloadMenu.getDownloadData().put(finalIndex, Data.UNKNOWN);
-                            downloadMenu.getScanned().put(finalIndex, true);
                         }
 
                         timeRenderAfter = System.currentTimeMillis();
@@ -1035,8 +1060,10 @@ public class ARService {
         return cleaned;
     }
 
-    record RGB(int r, int g, int b){}
-    private static Map<RGB, Integer> findDominantColors(Mat img){
+    record RGB(int r, int g, int b) {
+    }
+
+    private static Map<RGB, Integer> findDominantColors(Mat img) {
         Map<RGB, Integer> colorCount = new HashMap<>();
 
         for (int y = 0; y < img.rows(); y++) {
@@ -1046,7 +1073,7 @@ public class ARService {
                 int g = (int) bgr[1];
                 int r = (int) bgr[2];
 
-                RGB key = new RGB(r,g,b);
+                RGB key = new RGB(r, g, b);
                 colorCount.put(key, colorCount.getOrDefault(key, 0) + 1);
             }
         }

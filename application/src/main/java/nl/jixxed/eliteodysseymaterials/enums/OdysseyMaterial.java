@@ -1,5 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
+import lombok.extern.slf4j.Slf4j;
+import me.xdrop.fuzzywuzzy.FuzzySearch;
+import me.xdrop.fuzzywuzzy.model.BoundExtractedResult;
+import me.xdrop.fuzzywuzzy.model.ExtractedResult;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
@@ -78,6 +82,12 @@ public sealed interface OdysseyMaterial extends Material permits Asset, Consumab
                 .filter((OdysseyMaterial odysseyMaterial) -> LocaleService.getLocalizedStringForLocale(locale, odysseyMaterial.getLocalizationKey()).replaceAll("\\s", "").equalsIgnoreCase(name.replaceAll("\\s", "")))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
+    }
+
+    @SuppressWarnings("unchecked")
+    static BoundExtractedResult<OdysseyMaterial> forLocalizedNameSpaceInsensitiveFuzzy(final String name, final Locale locale) {
+       return (BoundExtractedResult<OdysseyMaterial>)(BoundExtractedResult<?>)FuzzySearch.extractOne(name.replaceAll("\\s", ""), Stream.concat(Arrays.stream(Data.values()), Stream.concat(Arrays.stream(Asset.values()), Arrays.stream(Good.values()))).toList(),
+                odysseyMaterial -> LocaleService.getLocalizedStringForLocale(locale, odysseyMaterial.getLocalizationKey()).replaceAll("\\s", ""));
     }
 
     String getLocalizationKey();

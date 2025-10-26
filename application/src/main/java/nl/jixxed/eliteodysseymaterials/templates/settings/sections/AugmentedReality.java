@@ -8,6 +8,7 @@ import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
+import nl.jixxed.eliteodysseymaterials.enums.ArMatchMethod;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.service.ARService;
@@ -37,6 +38,7 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableEven
     private DestroyableToggleSwitch arOverlayButton;
     private DestroyableTextField arCharacterWhitelistTextField;
     private Map<String, DestroyablePipetteColorPicker> colorPickers = new HashMap<>();
+    private DestroyableComboBox<ArMatchMethod> arMatchingMethodSelect;
 
     public AugmentedReality() {
         this.initComponents();
@@ -60,6 +62,8 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableEven
                 .build();
         final DestroyableHBox arSetting = createARSetting();
         final DestroyableHBox arLocaleSetting = createARLocaleSetting();
+        final DestroyableHBox arMatchSetting = createARMatchMethodSetting();
+        final DestroyableHBox arFuzzyScoreSetting = createARFuzzyScoreSetting();
         final DestroyableHBox arBartenderSetting = createARBartenderSetting();
         final DestroyableHBox arColorPowerplaySetting = createARColorSetting(PreferenceConstants.AR_POWERPLAY_COLOR, "tab.settings.ar.color.powerplay", Color.PURPLE);
         final DestroyableHBox arColorIrrelevantSetting = createARColorSetting(PreferenceConstants.AR_IRRELEVANT_COLOR, "tab.settings.ar.color.irrelevant", Color.RED);
@@ -70,7 +74,61 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableEven
 
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
         this.getNodes().addAll(arLabel, BoxBuilder.builder()
-                .withNodes(arExplainLabel, vccLink).buildHBox(), arSetting, arLocaleSetting, arDataportDetectSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting, arColorPowerplaySetting, arBartenderSetting, arColorBartenderSetting);
+                .withNodes(arExplainLabel, vccLink).buildHBox(), arSetting, arLocaleSetting, arMatchSetting, arFuzzyScoreSetting, arDataportDetectSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting, arColorPowerplaySetting, arBartenderSetting, arColorBartenderSetting);
+    }
+
+    private DestroyableHBox createARFuzzyScoreSetting() {
+        DestroyableLabel arMatchingMethodLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ar.fuzzy.score")
+                .build();
+        var arFuzzyMatchingSlider = SliderBuilder.builder()
+                .withStyleClass("slider")
+                .withMin(0)
+                .withMax(100)
+                .withValue(PreferencesService.getPreference(PreferenceConstants.AR_FUZZY_SCORE, 90))
+                .withFocusTraversable(false)
+                .withDisableProperty(arMatchingMethodSelect.getSelectionModel().selectedItemProperty().isNotEqualTo(ArMatchMethod.FUZZY))
+                .withChangeListener((_, _, newValue) -> {
+                    PreferencesService.setPreference(PreferenceConstants.AR_FUZZY_SCORE, newValue.intValue());
+                })
+                .build();
+        DestroyableLabel arFuzzyScoreLabelExplain = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ar.fuzzy.score.explain")
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClass(SETTINGS_SPACING_10_CLASS)
+                .withNodes(arMatchingMethodLabel, arFuzzyMatchingSlider, arFuzzyScoreLabelExplain)
+                .buildHBox();
+    }
+
+    private DestroyableHBox createARMatchMethodSetting() {
+        DestroyableLabel arMatchingMethodLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ar.match.method")
+                .build();
+
+        arMatchingMethodSelect = ComboBoxBuilder.builder(ArMatchMethod.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(LocaleService.getListBinding(ArMatchMethod.values()))
+                .withSelected(ArMatchMethod.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_SEARCH_METHOD, "EXACT")))
+                .withValueChangeListener((_, _, newValue) -> {
+                    if (newValue != null) {
+                        PreferencesService.setPreference(PreferenceConstants.AR_SEARCH_METHOD, newValue.name());
+                    }
+                })
+                .asLocalized()
+                .build();
+        DestroyableLabel arMatchingMethodLabelExplain = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ar.match.method.explain")
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClass(SETTINGS_SPACING_10_CLASS)
+                .withNodes(arMatchingMethodLabel, arMatchingMethodSelect, arMatchingMethodLabelExplain)
+                .buildHBox();
+
     }
 
     @Override

@@ -209,6 +209,7 @@ allprojects {
                 implementation 'org.apache.logging.log4j:log4j-api:2.25.2'
 
                 implementation "com.github.wille:oslib:master-SNAPSHOT"
+                implementation 'me.xdrop:fuzzywuzzy:1.4.0'
             }
         }
     }

@@ -136,3 +136,7 @@
 "tab.settings.ar.color.dataport.downloaded.highlight","Downloaded highlight color","","","","","","",""
 "tab.settings.ar.color.dataport.colors","Dataport entry detection colors","","","","","","",""
 "tab.settings.ar.color.dataport.explain","Below are the possible colors for the entries in the dataports. These colors are used to detect\nentries in the download list. You can use the pipette to sample the colors from the game.","","","","","","",""
+"tab.settings.ar.fuzzy.score","Minimum fuzzy score","","","","","","",""
+"tab.settings.ar.fuzzy.score.explain","Percentage that a material name has to match. A lower value will increase false positives.","","","","","","",""
+"tab.settings.ar.match.method","Text matching method","","","","","","",""
+"tab.settings.ar.match.method.explain","Exact matching requires flawless recognition. Try fuzzy if you have issues detecting materials.","","","","","","",""
