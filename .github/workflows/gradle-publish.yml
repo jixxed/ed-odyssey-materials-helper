@@ -115,7 +115,7 @@ jobs:
           ANALYSIS: ${{ steps.virustotal.outputs.analysis }}
         run: |
           echo "$ANALYSIS"
-          echo -e "\n\n🛡 **VirusTotal Analysis:**\n$(echo "$ANALYSIS" | tr ',' '\n' | awk -F= '{fname=$1; sub(/^output\//, "", fname); sub(/^[^=]+=*/, "", $0); printf "[%s](%s)\n", fname, $0}')" >> .github/releasenotes.txt
+          echo -e "\n\n🛡 **VirusTotal Analysis:**\n$(echo "$ANALYSIS" | tr ',' '\n' | awk -F= '{fname=$1; sub(/^output\//, "", fname); sub(/^[^=]+=*/, "", $0); printf "[%s](%s)\n", fname, $0}')" >> .github/releasenotes.MD
         shell: bash
 
       - name: Update Release with VirusTotal links
