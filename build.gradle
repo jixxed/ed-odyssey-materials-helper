@@ -14,7 +14,7 @@ buildscript {
 plugins {
     id "org.gradlex.extra-java-module-info" version "1.13.1"
     id "java"
-    id "net.jsign" version "7.3"
+    id "net.jsign" version "7.4"
 }
 
 java {
