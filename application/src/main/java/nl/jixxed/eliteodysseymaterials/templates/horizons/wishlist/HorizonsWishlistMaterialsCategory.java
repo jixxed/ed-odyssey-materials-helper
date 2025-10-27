@@ -134,11 +134,11 @@ public class HorizonsWishlistMaterialsCategory extends DestroyableFlowPane imple
             moduleWishlistBlueprint.getPercentageToComplete().forEach((grade, _) -> {
                 final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(moduleWishlistBlueprint.getRecipeName(), moduleWishlistBlueprint.getBlueprintType(), grade);
                 materials.addAll(blueprint.getMaterialCollection(HorizonsMaterial.class).keySet());
-                if (moduleWishlistBlueprint.getExperimentalEffect() != null) {
-                    final HorizonsBlueprint experimentalBlueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(moduleWishlistBlueprint.getRecipeName(), moduleWishlistBlueprint.getExperimentalEffect(), null);
-                    materials.addAll(experimentalBlueprint.getMaterialCollection(HorizonsMaterial.class).keySet());
-                }
             });
+            if (moduleWishlistBlueprint.getExperimentalEffect() != null) {
+                final HorizonsBlueprint experimentalBlueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(moduleWishlistBlueprint.getRecipeName(), moduleWishlistBlueprint.getExperimentalEffect(), null);
+                materials.addAll(experimentalBlueprint.getMaterialCollection(HorizonsMaterial.class).keySet());
+            }
         } else {
             final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(wishlistBlueprint.getRecipeName(), WishlistService.getBlueprintType(wishlistBlueprint), WishlistService.getBlueprintGrade(wishlistBlueprint));
             materials.addAll(blueprint.getMaterialCollection(HorizonsMaterial.class).keySet());
