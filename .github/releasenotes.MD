@@ -11,5 +11,6 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Handle multiple monitors for AR color picker
+Fixed adding wishlist experimental effect material requirement when no grades were selected on the base blueprint
+Fixed colonisation project not updating when delivering materials
 ```

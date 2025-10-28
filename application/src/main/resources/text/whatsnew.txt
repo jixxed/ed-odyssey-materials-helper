@@ -1,3 +1,8 @@
+Version 3.1.2
+-------------
+Fixed adding wishlist experimental effect material requirement when no grades were selected on the base blueprint
+Fixed colonisation project not updating when delivering materials
+
 Version 3.1.1
 -------------
 Handle multiple monitors for AR color picker
