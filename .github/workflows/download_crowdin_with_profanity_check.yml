@@ -1,0 +1,120 @@
+name: Download from Crowdin
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  crowdin:
+    runs-on: ubuntu-latest
+    outputs:
+      pr_number: ${{ steps.crowdin.outputs.pull_request_number }}
+      pr_branch: ${{ steps.crowdin.outputs.pull_request_branch }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GHA_CUSTOM_PAT }}
+
+      - name: Synchronize with Crowdin
+        uses: crowdin/github-action@v2
+        id: crowdin
+        with:
+          upload_sources: true
+          upload_translations: false
+          download_translations: true
+          create_pull_request: true
+          pull_request_title: 'New Crowdin translations'
+          pull_request_body: 'New Crowdin pull request with translations'
+          pull_request_base_branch_name: 'master'
+          localization_branch_name: 'crowdin-translations-${{ github.run_id }}'
+          commit_message: 'Update translations from Crowdin'
+          skip_untranslated_strings: true
+          export_only_approved: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+
+  validation:
+    needs: crowdin
+    runs-on: ubuntu-latest
+    if: needs.crowdin.outputs.pr_number != ''
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: 'crowdin-translations-${{ github.run_id }}'
+          token: ${{ secrets.GHA_CUSTOM_PAT }}
+
+      - name: Set up JDKS
+        uses: actions/setup-java@v4.2.1
+        with:
+          java-version: |
+            23.0.1
+            21.0.1
+          distribution: 'zulu'
+          architecture: x64
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      #      - name: Setup Gradle
+      #        uses: gradle/actions/setup-gradle@v3
+
+      - name: Run LocalizationCheckTest
+        run: ./gradlew application:test --tests nl.jixxed.eliteodysseymaterials.LocalizationCheckTest
+
+      - name: Update PR with validation status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: ${{ needs.crowdin.outputs.pr_number }}
+            });
+            
+            if (pr.state === 'open') {
+              if ('${{ job.status }}' === 'success') {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: ${{ needs.crowdin.outputs.pr_number }},
+                  body: '✅ Localization validation passed!'
+                });
+              } else {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: ${{ needs.crowdin.outputs.pr_number }},
+                  body: '❌ Localization validation failed! Please check the workflow run for details.'
+                });
+              }
+            }      
+
+      - name: Get changed files
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            translations:
+              - added|modified: '*.csv'
+
+      - name: Set base and head SHAs
+        run: |
+          echo "GITHUB_BASE_SHA=$(gh pr view ${{ needs.crowdin.outputs.pr_number }} --json baseRefOid -q .baseRefOid)" >> $GITHUB_ENV
+          echo "GITHUB_HEAD_SHA=$(gh pr view ${{ needs.crowdin.outputs.pr_number }} --json headRefOid -q .headRefOid)" >> $GITHUB_ENV
+
+      - name: Install profanity dependencies
+        run: |
+          pip install glin-profanity gitpython
+
+      - name: Run profanity scanner
+        run: |
+          echo '${{ steps.filter.outputs.translations_files }}' > changed_files.json
+          python .github/scripts/check_translations_profanity.py --json changed_files.json
