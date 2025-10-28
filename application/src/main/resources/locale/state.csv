@@ -1,6 +1,6 @@
 "messageKey","","en","de","es","fr","pt","ru","zh"
-"state.unknown","Unknown","","Unbekannt","Desconocido","Inconnu","Desconhecido","Неизвестно","未知"
-"state.none","None","","Keiner","Ninguno","Aucun","Nenhum","Нет","无"
+"state.unknown","Unknown","","Unknown","Desconocido","Inconnu","Desconhecido","Неизвестно","未知"
+"state.none","None","","None","Ninguno","Aucun","Nenhum","Нет","无"
 "state.boom","Boom","","Boom","Auge","Essor économique","Auge","Бум","Boom"
 "state.bust","Bust","","Bust","Quiebra","Faillite","Quebra","Спад","Bust"
 "state.civilunrest","Civil Unrest","","Civil Unrest","Disturbios","Émeutes","Distúrbios","Гражданские беспорядки","Civil Unrest"
