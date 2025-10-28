@@ -34,6 +34,7 @@ public class ColonisationService {
             ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
                 final ColonisationItems colonisationItems = getColonisationItems(commander);
                 colonisationItems.getAllColonisationItems().stream()
+                        .filter(colonisationItem -> !colonisationItem.isCurrent())
                         .filter(colonisationItem -> Objects.equals(event.getMarketID().toString(), colonisationItem.getMarketID()))
                         .findFirst()
                         .ifPresent(colonisationItem -> {
