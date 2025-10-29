@@ -24,7 +24,7 @@ public class HorizonsMaterialOverview extends DestroyableVBox implements Destroy
 
 
     private static final String FLOW_PANE_STYLE_CLASS = "material-card-flow-pane";
-    private DestroyableHBox nearestTraders;
+    private DestroyableFlowPane nearestTraders;
     private HorizonsMaterialsSearch currentSearch = new HorizonsMaterialsSearch("", HorizonsMaterialsShow.ALL);
     private final List<DestroyableFlowPane> rawFlowPanes = new ArrayList<>();
     private final List<DestroyableFlowPane> encodedFlowPanes = new ArrayList<>();
@@ -43,7 +43,7 @@ public class HorizonsMaterialOverview extends DestroyableVBox implements Destroy
     @Override
     public void initComponents() {
         this.getStyleClass().add("horizons-material-overview");
-        final DestroyableFlowPane traders = FlowPaneBuilder.builder()
+        nearestTraders = FlowPaneBuilder.builder()
                 .withOrientation(Orientation.HORIZONTAL)
                 .withStyleClass("nearest-trader-flow")
                 .withNodes(
@@ -52,10 +52,10 @@ public class HorizonsMaterialOverview extends DestroyableVBox implements Destroy
                         new HorizonsNearestTrader(HorizonsStorageType.MANUFACTURED)
                 )
                 .build();
-        this.nearestTraders = BoxBuilder.builder()
-                .withNodes(traders)
-                .buildHBox();
-        HBox.setHgrow(traders, Priority.ALWAYS);
+//        this.nearestTraders = BoxBuilder.builder()
+//                .withNodes(traders)
+//                .buildHBox();
+//        HBox.setHgrow(traders, Priority.ALWAYS);
 
         rawLine = new DestroyableSeparator(Orientation.HORIZONTAL);
         encodedLine = new DestroyableSeparator(Orientation.HORIZONTAL);
@@ -155,14 +155,14 @@ public class HorizonsMaterialOverview extends DestroyableVBox implements Destroy
                 .withStyleClass(FLOW_PANE_STYLE_CLASS)
                 .withNodes(array)
                 .build();
-        HBox.setHgrow(materials, Priority.ALWAYS);
-        final DestroyableHBox row = BoxBuilder.builder()
-                .withStyleClass("category-row")
-                .withNodes(/*category,*/ materials)
-                .buildHBox();
-        row.addBinding(row.visibleProperty(), materials.visibleProperty());
-        row.addBinding(row.managedProperty(), materials.managedProperty());
-        this.getNodes().add(row);
+//        HBox.setHgrow(materials, Priority.ALWAYS);
+//        final DestroyableHBox row = BoxBuilder.builder()
+//                .withStyleClass("category-row")
+//                .withNodes(/*category,*/ materials)
+//                .buildHBox();
+//        row.addBinding(row.visibleProperty(), materials.visibleProperty());
+//        row.addBinding(row.managedProperty(), materials.managedProperty());
+        this.getNodes().add(materials);
         return materials;
     }
 }

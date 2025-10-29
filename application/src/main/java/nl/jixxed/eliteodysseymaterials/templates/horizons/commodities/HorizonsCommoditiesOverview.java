@@ -57,7 +57,7 @@ public class HorizonsCommoditiesOverview extends DestroyableVBox implements Dest
     }
 
     private void initCards() {
-        final List<DestroyableHBox> rows = Arrays.stream(CommodityType.values())
+        final List<DestroyableFlowPane> rows = Arrays.stream(CommodityType.values())
                 .filter(Predicate.not(CommodityType::isUnknown)).map(commodityType -> {
                     final HorizonsCommodityCard[] array = Arrays.stream(this.commodityCards)
                             .filter(card -> card.getCommodity().getCommodityType().equals(commodityType))
@@ -78,7 +78,7 @@ public class HorizonsCommoditiesOverview extends DestroyableVBox implements Dest
         });
     }
 
-    private DestroyableHBox createCommodityCardRow(final CommodityType type, final HorizonsCommodityCard[] array) {
+    private DestroyableFlowPane createCommodityCardRow(final CommodityType type, final HorizonsCommodityCard[] array) {
         final DestroyableFlowPane commodities = FlowPaneBuilder.builder()
                 .withStyleClass("material-card-flow-pane")
                 .withNodes(array)
@@ -86,13 +86,13 @@ public class HorizonsCommoditiesOverview extends DestroyableVBox implements Dest
         flows.add(commodities);
         makeFlowVisibleWhenHasChildren(commodities);
         HBox.setHgrow(commodities, Priority.ALWAYS);
-        final DestroyableHBox row = BoxBuilder.builder()
-                .withStyleClass("category-row")
-                .withNodes(commodities)
-                .buildHBox();
-        row.addBinding(row.visibleProperty(), commodities.visibleProperty());
-        row.addBinding(row.managedProperty(), commodities.managedProperty());
-        return row;
+//        final DestroyableHBox row = BoxBuilder.builder()
+//                .withStyleClass("category-row")
+//                .withNodes(commodities)
+//                .buildHBox();
+//        row.addBinding(row.visibleProperty(), commodities.visibleProperty());
+//        row.addBinding(row.managedProperty(), commodities.managedProperty());
+        return commodities;
     }
 
     private void makeFlowVisibleWhenHasChildren(DestroyableFlowPane flow) {
