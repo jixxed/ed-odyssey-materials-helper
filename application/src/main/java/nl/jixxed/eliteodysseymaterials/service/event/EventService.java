@@ -16,7 +16,7 @@ public class EventService {
     private static final Map<Class<? extends Event>, List<WeakReference<EventListener<? extends Event>>>> LISTENERS_MAP = new HashMap<>();
 //    static boolean isInit = false;
 
-    public static <T extends Event> void publish(final T event) {
+    public synchronized static <T extends Event> void publish(final T event) {
 //        if (event instanceof JournalInitEvent jie) {
 //            isInit = jie.isInitialised();
 //        }
@@ -44,22 +44,22 @@ public class EventService {
     }
 
     @CheckReturnValue
-    public static <T extends Event> EventListener<T> addListener(final Object owner, final Class<T> eventClass, final Consumer<T> consumer) {
+    public synchronized static <T extends Event> EventListener<T> addListener(final Object owner, final Class<T> eventClass, final Consumer<T> consumer) {
         return addListener(false, owner, eventClass, consumer);
     }
 
     @CheckReturnValue
-    public static <T extends Event> EventListener<T> addListener(final boolean fxThread, final Object owner, final Class<T> eventClass, final Consumer<T> consumer) {
+    public synchronized static <T extends Event> EventListener<T> addListener(final boolean fxThread, final Object owner, final Class<T> eventClass, final Consumer<T> consumer) {
         return addListener(fxThread, owner, 5, eventClass, consumer);
     }
 
     @CheckReturnValue
-    public static <T extends Event> EventListener<T> addListener(final Object owner, final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
+    public synchronized static <T extends Event> EventListener<T> addListener(final Object owner, final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
         return addListener(false, owner, priority, eventClass, consumer);
     }
 
     @CheckReturnValue
-    public static <T extends Event> EventListener<T> addListener(final boolean fxThread, final Object owner, final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
+    public synchronized static <T extends Event> EventListener<T> addListener(final boolean fxThread, final Object owner, final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
         final NonStaticEventListener<T> listener = new NonStaticEventListener<>(fxThread, owner, priority, eventClass, consumer);
         logListener(owner, listener, "register");
         final List<WeakReference<EventListener<? extends Event>>> eventListeners = LISTENERS_MAP.getOrDefault(eventClass, new ArrayList<>());
@@ -70,22 +70,22 @@ public class EventService {
     }
 
     @CheckReturnValue
-    public static <T extends Event> EventListener<T> addStaticListener(final Class<T> eventClass, final Consumer<T> consumer) {
+    public synchronized static <T extends Event> EventListener<T> addStaticListener(final Class<T> eventClass, final Consumer<T> consumer) {
         return addStaticListener(5, eventClass, consumer);
     }
 
     @CheckReturnValue
-    public static <T extends Event> EventListener<T> addStaticListener(final boolean fxThread, final Class<T> eventClass, final Consumer<T> consumer) {
+    public synchronized static <T extends Event> EventListener<T> addStaticListener(final boolean fxThread, final Class<T> eventClass, final Consumer<T> consumer) {
         return addStaticListener(fxThread, 5, eventClass, consumer);
     }
 
     @CheckReturnValue
-    public static <T extends Event> EventListener<T> addStaticListener(final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
+    public synchronized static <T extends Event> EventListener<T> addStaticListener(final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
         return addStaticListener(false, priority, eventClass, consumer);
     }
 
     @CheckReturnValue
-    public static <T extends Event> EventListener<T> addStaticListener(final boolean fxThread, final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
+    public synchronized static <T extends Event> EventListener<T> addStaticListener(final boolean fxThread, final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
         final EventListener<T> listener = new EventListener<>(fxThread, priority, eventClass, consumer);
         logListener(null, listener, "register static");
         final List<WeakReference<EventListener<? extends Event>>> eventListeners = LISTENERS_MAP.getOrDefault(eventClass, new ArrayList<>());
@@ -95,7 +95,7 @@ public class EventService {
         return listener;
     }
 
-    public static void removeListener(final Consumer<? extends Event> eventConsumer, final Class<? extends Event> eventClass) {
+    public synchronized static void removeListener(final Consumer<? extends Event> eventConsumer, final Class<? extends Event> eventClass) {
         LISTENERS_MAP.computeIfPresent(eventClass, (aClass, eventListeners) -> {
             eventListeners.removeIf(ref -> {
                 if (ref.get() == null) {
@@ -112,7 +112,7 @@ public class EventService {
         logListenerSize();
     }
 
-    public static void removeListener(final EventListener<? extends Event> eventListener) {
+    public synchronized static void removeListener(final EventListener<? extends Event> eventListener) {
         logListener(null, eventListener, "deregister");
         LISTENERS_MAP.computeIfPresent(eventListener.getEventClass(), (aClass, eventListeners) -> {
             eventListener.setDisabled(true);
@@ -123,7 +123,7 @@ public class EventService {
         logListenerSize();
     }
 
-    public static void removeListener(final Object owner) {
+    public synchronized static void removeListener(final Object owner) {
         LISTENERS_MAP.values().forEach(eventListeners -> eventListeners.removeIf(ref -> {
             if (ref.get() == null) {
                 return true;
@@ -149,7 +149,7 @@ public class EventService {
 //        log.debug("listener size: " + (Integer) LISTENERS_MAP.values().stream().mapToInt(List::size).sum());
     }
 
-    public static void shutdown() {
+    public synchronized static void shutdown() {
         LISTENERS_MAP.clear();
     }
 }
