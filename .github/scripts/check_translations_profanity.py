@@ -8,7 +8,7 @@ import requests
 from glin_profanity import Filter
 
 # ---------------- CONFIG ----------------
-SUPPORTED_LANGS = ["en", "de", "es", "fr", "pt", "ru", "zh", "ka"]
+SUPPORTED_LANGS = ["en", "de", "es", "fr", "pt", "ru", "zh"] #, "ka"
 LDNOOBW_BASE = "https://raw.githubusercontent.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words/master"
 
 # Mapping of language names (glin-profanity expects filenames like english.json)
@@ -20,7 +20,7 @@ LANG_MAP = {
     "portuguese": "pt",
     "russian": "ru",
     "chinese": "zh",
-    "georgian": "ka",
+#     "georgian": "ka",
 }
 
 # ---------------- HELPERS ----------------
@@ -40,6 +40,11 @@ def ensure_dictionaries(path="/home/runner/.local/lib/shared/dictionaries"):
                 words = [line.strip() for line in r.text.splitlines() if line.strip()]
                 with open(filename, "w", encoding="utf-8") as f:
                     json.dump(words, f, ensure_ascii=False, indent=2)
+            elif r.status_code == 404:
+                # Handle languages not in LDNOOBW gracefully
+                print(f"⚠️ Skipping {lang_name} — no LDNOOBW list available.")
+                with open(filename, "w", encoding="utf-8") as f:
+                    json.dump([], f)
             else:
                 print(f"⚠️ Warning: Could not download {lang_name} list (HTTP {r.status_code})")
 
@@ -88,7 +93,7 @@ def post_pr_comment(pr_number: str, message: str):
 # ---------------- MAIN ----------------
 def main():
     if len(sys.argv) < 2:
-        print("Usage: check_translations_profanity.py --json changed_files.json")
+        print("Usage: check_translations_profanity.py changed_files.json")
         sys.exit(0)
 
     # Ensure dictionaries are present before initializing the filter
