@@ -42,6 +42,8 @@ jobs:
   validation:
     needs: crowdin
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     if: needs.crowdin.outputs.pr_number != ''
     steps:
       - name: Checkout PR branch
@@ -50,18 +52,20 @@ jobs:
           ref: 'crowdin-translations-${{ github.run_id }}'
           token: ${{ secrets.GHA_CUSTOM_PAT }}
 
-      - name: Get changed files
-        uses: dorny/paths-filter@v2
-        id: filter
-        with:
-          filters: |
-            translations:
-              - added|modified: '*.csv'
-
       - name: Set base and head SHAs
         run: |
           echo "GITHUB_BASE_SHA=$(gh pr view ${{ needs.crowdin.outputs.pr_number }} --json baseRefOid -q .baseRefOid)" >> $GITHUB_ENV
           echo "GITHUB_HEAD_SHA=$(gh pr view ${{ needs.crowdin.outputs.pr_number }} --json headRefOid -q .headRefOid)" >> $GITHUB_ENV
+
+      - name: Get changed files
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          base: ${{ steps.pr_shas.outputs.base_sha }}
+          ref:  ${{ steps.pr_shas.outputs.head_sha }}
+          filters: |
+            translations:
+              - added|modified: '*.csv'
 
       - name: Install profanity dependencies
         run: |
