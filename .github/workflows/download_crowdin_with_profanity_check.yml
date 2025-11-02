@@ -1,4 +1,4 @@
-name: Download from Crowdin
+name: Download from Crowdin with profanity check
 
 on:
   workflow_dispatch:
@@ -49,6 +49,7 @@ jobs:
       - name: Checkout PR branch
         uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           ref: 'crowdin-translations-${{ github.run_id }}'
           token: ${{ secrets.GHA_CUSTOM_PAT }}
 
