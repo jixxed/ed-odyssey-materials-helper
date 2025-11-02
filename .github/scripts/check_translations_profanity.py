@@ -4,23 +4,48 @@ import sys
 import json
 import re
 import subprocess
+import requests
 from glin_profanity import Filter
 
 # ---------------- CONFIG ----------------
 SUPPORTED_LANGS = ["en", "de", "es", "fr", "pt", "ru", "zh", "ka"]
+LDNOOBW_BASE = "https://raw.githubusercontent.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words/master"
 
-# Initialize the profanity filter
-pf = Filter({
-    "languages": SUPPORTED_LANGS,
-    "allow_obfuscated_match": True,
-    "fuzzy_tolerance_level": 0.8,
-})
+# Mapping of language names (glin-profanity expects filenames like english.json)
+LANG_MAP = {
+    "english": "en",
+    "german": "de",
+    "spanish": "es",
+    "french": "fr",
+    "portuguese": "pt",
+    "russian": "ru",
+    "chinese": "zh",
+    "georgian": "ka",
+}
 
 # ---------------- HELPERS ----------------
+def ensure_dictionaries(path="/home/runner/.local/lib/shared/dictionaries"):
+    """
+    Ensure profanity dictionaries exist for all supported languages by
+    downloading them from LDNOOBW at runtime if missing.
+    """
+    os.makedirs(path, exist_ok=True)
+    for lang_name, code in LANG_MAP.items():
+        filename = os.path.join(path, f"{lang_name}.json")
+        if not os.path.exists(filename):
+            url = f"{LDNOOBW_BASE}/{code}"
+            print(f"📥 Downloading {lang_name} profanity list from {url}...")
+            r = requests.get(url)
+            if r.status_code == 200:
+                words = [line.strip() for line in r.text.splitlines() if line.strip()]
+                with open(filename, "w", encoding="utf-8") as f:
+                    json.dump(words, f, ensure_ascii=False, indent=2)
+            else:
+                print(f"⚠️ Warning: Could not download {lang_name} list (HTTP {r.status_code})")
+
 def run(cmd):
     """Run a shell command and return its stdout as text."""
     return subprocess.check_output(cmd, text=True).strip()
-
 
 def get_changed_lines(file_path, base_sha, head_sha):
     """
@@ -45,7 +70,6 @@ def get_changed_lines(file_path, base_sha, head_sha):
             current_line += 1
     return lines
 
-
 def post_pr_comment(pr_number: str, message: str):
     """Post a comment to the given PR."""
     repo = os.getenv("GITHUB_REPOSITORY")
@@ -61,12 +85,21 @@ def post_pr_comment(pr_number: str, message: str):
         check=True,
     )
 
-
 # ---------------- MAIN ----------------
 def main():
     if len(sys.argv) < 2:
         print("Usage: check_translations_profanity.py --json changed_files.json")
         sys.exit(0)
+
+    # Ensure dictionaries are present before initializing the filter
+    ensure_dictionaries()
+
+    # Initialize the profanity filter (after dictionaries exist)
+    pf = Filter({
+        "languages": SUPPORTED_LANGS,
+        "allow_obfuscated_match": True,
+        "fuzzy_tolerance_level": 0.8,
+    })
 
     # --- Read changed files from input JSON ---
     json_path = sys.argv[1]
@@ -91,7 +124,7 @@ def main():
         if not os.path.exists(file_path):
             continue
 
-        print(f"Scanning {file_path} for profanity...")
+        print(f"🔍 Scanning {file_path} for profanity...")
         changed_lines = get_changed_lines(file_path, base_sha, head_sha)
 
         for line_no, text in changed_lines:
@@ -116,7 +149,7 @@ def main():
 
     print(comment_body)
 
-    # Get PR number more reliably if available from Crowdin step
+    # Try to resolve PR number more reliably
     event_path = os.getenv("GITHUB_EVENT_PATH")
     if not pr_number and event_path and os.path.exists(event_path):
         with open(event_path, "r") as f:
@@ -130,7 +163,6 @@ def main():
             print(f"⚠️ Failed to post comment: {e}")
     else:
         print("⚠️ No PR number detected; printing output only.")
-
 
 if __name__ == "__main__":
     main()

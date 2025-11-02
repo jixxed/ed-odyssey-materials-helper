@@ -70,8 +70,7 @@ jobs:
 
       - name: Install profanity dependencies
         run: |
-          pip install glin-profanity gitpython
-          python -m glin_profanity download
+          pip install glin-profanity gitpython requests
 
       - name: Run profanity scanner
         run: |
