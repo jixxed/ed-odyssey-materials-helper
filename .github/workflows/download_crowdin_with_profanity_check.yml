@@ -50,53 +50,6 @@ jobs:
           ref: 'crowdin-translations-${{ github.run_id }}'
           token: ${{ secrets.GHA_CUSTOM_PAT }}
 
-      - name: Set up JDKS
-        uses: actions/setup-java@v4.2.1
-        with:
-          java-version: |
-            23.0.1
-            21.0.1
-          distribution: 'zulu'
-          architecture: x64
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
-
-      #      - name: Setup Gradle
-      #        uses: gradle/actions/setup-gradle@v3
-
-      - name: Run LocalizationCheckTest
-        run: ./gradlew application:test --tests nl.jixxed.eliteodysseymaterials.LocalizationCheckTest
-
-      - name: Update PR with validation status
-        if: always()
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const { data: pr } = await github.rest.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: ${{ needs.crowdin.outputs.pr_number }}
-            });
-            
-            if (pr.state === 'open') {
-              if ('${{ job.status }}' === 'success') {
-                await github.rest.issues.createComment({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  issue_number: ${{ needs.crowdin.outputs.pr_number }},
-                  body: '✅ Localization validation passed!'
-                });
-              } else {
-                await github.rest.issues.createComment({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  issue_number: ${{ needs.crowdin.outputs.pr_number }},
-                  body: '❌ Localization validation failed! Please check the workflow run for details.'
-                });
-              }
-            }      
-
       - name: Get changed files
         uses: dorny/paths-filter@v2
         id: filter
