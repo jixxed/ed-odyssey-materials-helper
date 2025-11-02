@@ -66,7 +66,7 @@ jobs:
           ref:  ${{ steps.pr_shas.outputs.head_sha }}
           filters: |
             translations:
-              - added|modified: '*.csv'
+              - added|modified: '**/*.csv'
 
       - name: Install profanity dependencies
         run: |
