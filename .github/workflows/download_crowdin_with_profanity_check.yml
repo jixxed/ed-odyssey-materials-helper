@@ -64,6 +64,7 @@ jobs:
         with:
           base: ${{ steps.pr_shas.outputs.base_sha }}
           ref:  ${{ steps.pr_shas.outputs.head_sha }}
+          list-files: json
           filters: |
             translations:
               - added|modified: '**/*.csv'
