@@ -7,7 +7,7 @@ import subprocess
 from glin_profanity import Filter
 
 # ---------------- CONFIG ----------------
-SUPPORTED_LANGS = ["en", "de", "es", "fr", "pt", "ru", "zh"]
+SUPPORTED_LANGS = ["en", "de", "es", "fr", "pt", "ru", "zh", "ka"]
 
 # Initialize the profanity filter
 pf = Filter({
