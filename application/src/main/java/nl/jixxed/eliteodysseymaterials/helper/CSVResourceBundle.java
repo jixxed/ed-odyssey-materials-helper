@@ -38,6 +38,7 @@ public class CSVResourceBundle extends ResourceBundle {
                     try {
                         String translation = csvRecord.get(translationColumn);
                         translation = translation.isEmpty() ? csvRecord.get(1) : translation;
+                        translation = translation.replaceAll("'", "’");
                         this.properties.put(key, translation);
                     } catch (ArrayIndexOutOfBoundsException exception) {
                         log.error("Failed to get translation for key: {}", key);
