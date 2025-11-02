@@ -74,5 +74,5 @@ jobs:
 
       - name: Run profanity scanner
         run: |
-          echo '${{ steps.filter.outputs.translations }}' | jq '.' > changed_files.json
+          echo '${{ steps.filter.outputs.changes }}' | jq '.' > changed_files.json
           python .github/scripts/check_translations_profanity.py changed_files.json
