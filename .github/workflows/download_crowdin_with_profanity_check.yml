@@ -71,8 +71,9 @@ jobs:
       - name: Install profanity dependencies
         run: |
           pip install glin-profanity gitpython
+          python -m glin_profanity download
 
       - name: Run profanity scanner
         run: |
-          echo '${{ steps.filter.outputs.translations_files }}' > changed_files.json
+          echo '${{ steps.filter.outputs.translations }}' > changed_files.json
           python .github/scripts/check_translations_profanity.py --json changed_files.json
