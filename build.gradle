@@ -123,7 +123,7 @@ if (arch == "aarch64") {
 }
 ext {
     version_logback = "1.5.20"
-    version_jackson = "2.20.0"
+    version_jackson = "2.20.1"
     version_jna = "5.18.1"
     version_junit_jupiter = "6.0.0"
     version_junit_platform = "1.14.0"
