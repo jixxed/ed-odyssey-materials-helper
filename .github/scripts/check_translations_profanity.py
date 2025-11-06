@@ -126,15 +126,15 @@ def main():
     all_violations = []
 
     for file_path in files:
-            if not os.path.exists(file_path):
-                continue
-            print(f"🔍 Scanning {file_path} for profanity...")
-            changed_lines = get_changed_lines(file_path, base_sha, head_sha)
-            for line_no, text in changed_lines:
-                result = pf.check_profanity(text)
-                if result["contains_profanity"]:
-                    bad_words = ", ".join(result["profane_words"])
-                    all_violations.append(f"**{file_path}** line {line_no}: `{bad_words}`")
+        if not os.path.exists(file_path):
+            continue
+        print(f"🔍 Scanning {file_path} for profanity...")
+        changed_lines = get_changed_lines(file_path, base_sha, head_sha)
+        for line_no, text in changed_lines:
+            result = pf.check_profanity(text)
+            if result["contains_profanity"]:
+                bad_words = ", ".join(result["profane_words"])
+                all_violations.append(f"**{file_path}** line {line_no}: `{bad_words}`")
 
         if not all_violations:
             comment_body = "✅ No profanity detected in modified translation lines."
