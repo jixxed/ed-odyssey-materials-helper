@@ -44,6 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_PR_NUMBER: ${{ needs.crowdin.outputs.pr_number }}
     if: needs.crowdin.outputs.pr_number != ''
     steps:
       - name: Checkout PR branch

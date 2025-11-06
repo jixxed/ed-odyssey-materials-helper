@@ -117,7 +117,7 @@ def main():
 
     base_sha = os.getenv("GITHUB_BASE_SHA")
     head_sha = os.getenv("GITHUB_HEAD_SHA")
-    pr_number = os.getenv("GITHUB_REF", "").split("/")[-1]
+    pr_number = os.getenv("GITHUB_PR_NUMBER")
 
     if not (base_sha and head_sha):
         print("Missing base/head SHA environment variables.")
@@ -126,33 +126,26 @@ def main():
     all_violations = []
 
     for file_path in files:
-        if not os.path.exists(file_path):
-            continue
+            if not os.path.exists(file_path):
+                continue
+            print(f"🔍 Scanning {file_path} for profanity...")
+            changed_lines = get_changed_lines(file_path, base_sha, head_sha)
+            for line_no, text in changed_lines:
+                result = pf.check_profanity(text)
+                if result["contains_profanity"]:
+                    bad_words = ", ".join(result["profane_words"])
+                    all_violations.append(f"**{file_path}** line {line_no}: `{bad_words}`")
 
-        print(f"🔍 Scanning {file_path} for profanity...")
-        changed_lines = get_changed_lines(file_path, base_sha, head_sha)
-
-        for line_no, text in changed_lines:
-            result = pf.check_profanity(text)
-            if result["contains_profanity"]:
-                bad_words = ", ".join(result["profane_words"])
-                all_violations.append(
-                    f"**{file_path}** line {line_no}: `{bad_words}`"
-                )
-
-    if not all_violations:
-        print("✅ No profanity detected in modified translation lines.")
-        return
-
-    # --- Build PR comment body ---
-    comment_body = (
-        "⚠️ **Potential profanity detected in translation changes**\n\n"
-        "The following lines may contain flagged words. "
-        "Please review to confirm if they are intentional translations.\n\n"
-        + "\n".join(f"- {v}" for v in all_violations)
-    )
-
-    print(comment_body)
+        if not all_violations:
+            comment_body = "✅ No profanity detected in modified translation lines."
+            print(comment_body)
+        else:
+            comment_body = (
+                "⚠️ **Potential profanity detected in translation changes**\n\n"
+                "The following lines may contain flagged words. Please review if intentional:\n\n"
+                + "\n".join(f"- {v}" for v in all_violations)
+            )
+            print(comment_body)
 
     # Try to resolve PR number more reliably
     event_path = os.getenv("GITHUB_EVENT_PATH")
