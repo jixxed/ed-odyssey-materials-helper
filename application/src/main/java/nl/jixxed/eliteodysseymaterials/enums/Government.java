@@ -17,6 +17,7 @@ public enum Government {
     IMPERIAL("$government_Imperial;", "Imperial"),
     PATRONAGE("$government_Patronage;", "Patronage"),
     PRISONCOLONY("$government_PrisonColony;", "PrisonColony"),
+    PRISON("$government_Prison;", "Prison"),
     THEOCRACY("$government_Theocracy;", "Theocracy"),
     ENGINEER("$government_Engineer;", "Engineer"),
     PRIVATEOWNERSHIP("$government_Carrier;", "PrivateOwnership"),
