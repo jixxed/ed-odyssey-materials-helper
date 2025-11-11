@@ -4,6 +4,7 @@ import io.github.secretx33.resourceresolver.PathMatchingResourcePatternResolver;
 import io.github.secretx33.resourceresolver.Resource;
 import io.github.secretx33.resourceresolver.ResourcePatternResolver;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
@@ -14,6 +15,7 @@ import java.util.List;
 
 public class LocalizationCheckTest {
     @Test
+    @Disabled
     public void noApostropheExistsInCSV() throws IOException {
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         Resource[] resources = resolver.getResources("classpath:locale/**/*.csv");

@@ -20,6 +20,7 @@ public enum Government {
     THEOCRACY("$government_Theocracy;", "Theocracy"),
     ENGINEER("$government_Engineer;", "Engineer"),
     PRIVATEOWNERSHIP("$government_Carrier;", "PrivateOwnership"),
+    MEGACONSTRUCTION("$government_Megaconstruction;", "Megaconstruction"),
     NONE("$government_None;", "None"),
     UNKNOWN("", "Unknown");
     private final String id;
