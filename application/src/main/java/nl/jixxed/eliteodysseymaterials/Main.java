@@ -10,7 +10,6 @@ import io.sentry.protocol.OperatingSystem;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.service.RegistryService;
 import nl.jixxed.eliteodysseymaterials.service.Secrets;
@@ -23,10 +22,10 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.List;
 
 @Slf4j
 public class Main {
@@ -34,6 +33,7 @@ public class Main {
     private static Instant lastSentTime = Instant.MIN;
 
     public static void main(final String[] args) {
+        configurePaths();
         //check if running as admin
         if (OsCheck.isWindows() && isRunningAsAdmin() && RegistryService.isUACEnabled()) {
             log.error("This application should not be started with elevated privileges. Please restart the app without elevated privileges.");
@@ -93,6 +93,16 @@ public class Main {
             }
             FXApplication.launchFx(args);
         }
+    }
+
+    private static void configurePaths() {
+        String javafxCachedir = "javafx-cache-program";
+        String dir = "~/.ed-odyssey-materials-helper/";
+        if(OsCheck.isWindows()) {
+            final String binDir = Paths.get(ProcessHandle.current().info().command().orElseThrow(IllegalArgumentException::new)).getParent().toString();
+            dir = binDir.trim().replace("\"", "") + "\\";
+        }
+        System.setProperty("javafx.cachedir", dir + javafxCachedir);
     }
 
     private static String getEnvironment(String buildVersion) {

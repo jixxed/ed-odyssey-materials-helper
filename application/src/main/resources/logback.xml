@@ -1,5 +1,8 @@
 <configuration>
     <timestamp key="startTimestamp" datePattern="HHmmssSSS"/>
+
+    <contextListener class="nl.jixxed.eliteodysseymaterials.log.listener.LoggerStartupListener"/>
+
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <target>System.out</target>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">

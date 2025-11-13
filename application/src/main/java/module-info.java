@@ -56,6 +56,7 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.domain;
     exports nl.jixxed.eliteodysseymaterials.enums;
     exports nl.jixxed.eliteodysseymaterials.log to ch.qos.logback.core;
+    exports nl.jixxed.eliteodysseymaterials.log.listener to ch.qos.logback.core;
     exports nl.jixxed.eliteodysseymaterials.parser.mapping;
     exports nl.jixxed.eliteodysseymaterials.parser;
     exports nl.jixxed.eliteodysseymaterials.schemas.capi.fleetcarrier;

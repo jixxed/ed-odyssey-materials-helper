@@ -188,7 +188,6 @@ jlink {
         name = 'Elite Dangerous Odyssey Materials Helper'
         jvmArgs = [
                 '-Dapp.version=' + project.version,
-                os.isWindows() ? '-Dlogging.config=log' : '-Dlogging.config=${user.home}/.ed-odyssey-materials-helper/log',
                 '-Xmx2048M',
                 '--add-exports=java.base/jdk.internal.misc=nl.jixxed.merged.module',
                 '--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls',
@@ -196,11 +195,6 @@ jlink {
                 '--add-exports=javafx.graphics/com.sun.glass.ui=nl.jixxed.eliteodysseymaterials',
                 '--add-exports=javafx.graphics/com.sun.javafx.tk=nl.jixxed.eliteodysseymaterials'
         ]
-        if (os.isWindows()) {
-            jvmArgs += [
-                    '-Djavafx.cachedir=javafx-cache-program'
-            ]
-        }
     }
 }
 tasks.register("patchShellScript") {
