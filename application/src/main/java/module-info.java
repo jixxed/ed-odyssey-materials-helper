@@ -143,6 +143,7 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.CommunityGoalDiscard;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.CommunityGoalJoin;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.CommunityGoalReward;
+    exports nl.jixxed.eliteodysseymaterials.schemas.journal.CompleteConstruction;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.Continued;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.CreateSuitLoadout;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.CrewAssign;
@@ -477,6 +478,7 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.CommunityGoalDiscard to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.CommunityGoalJoin to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.CommunityGoalReward to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.journal.CompleteConstruction to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.Continued to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.CreateSuitLoadout to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.CrewAssign to com.fasterxml.jackson.databind;
