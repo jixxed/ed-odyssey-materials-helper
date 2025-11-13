@@ -197,24 +197,24 @@ jlink {
         ]
     }
 }
-tasks.register("patchShellScript") {
-    dependsOn jpackage
-    doLast {
-        def launcherScript = file("$buildDir/jpackage/Elite Dangerous Odyssey Materials Helper/lib/runtime/bin/Elite Dangerous Odyssey Materials Helper")
-        if (launcherScript.exists()) {
-            def text = launcherScript.text
-            // Replace the unescaped version with escaped version
-            text = text.replace(
-                    '-Dlogging.config=${user.home}/.ed-odyssey-materials-helper/log',
-                    '-Dlogging.config=\\${user.home}/.ed-odyssey-materials-helper/log'
-            )
-            launcherScript.text = text
-            println "Patched shell launcher for escaped logging.config"
-        } else {
-            println "Launcher script not found at: ${launcherScript}"
-        }
-    }
-}
+//tasks.register("patchShellScript") {
+//    dependsOn jpackage
+//    doLast {
+//        def launcherScript = file("$buildDir/jpackage/Elite Dangerous Odyssey Materials Helper/lib/runtime/bin/Elite Dangerous Odyssey Materials Helper")
+//        if (launcherScript.exists()) {
+//            def text = launcherScript.text
+//            // Replace the unescaped version with escaped version
+//            text = text.replace(
+//                    '-Dlogging.config=${user.home}/.ed-odyssey-materials-helper/log',
+//                    '-Dlogging.config=\\${user.home}/.ed-odyssey-materials-helper/log'
+//            )
+//            launcherScript.text = text
+//            println "Patched shell launcher for escaped logging.config"
+//        } else {
+//            println "Launcher script not found at: ${launcherScript}"
+//        }
+//    }
+//}
 tasks.register("jpackageSigned") {
     dependsOn jpackage
     // not signing exe until bug is fixed https://bugs.openjdk.org/browse/JDK-8326447

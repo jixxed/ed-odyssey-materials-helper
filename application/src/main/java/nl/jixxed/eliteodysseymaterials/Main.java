@@ -97,10 +97,15 @@ public class Main {
 
     private static void configurePaths() {
         String javafxCachedir = "javafx-cache-program";
-        String dir = "~/.ed-odyssey-materials-helper/";
-        if(OsCheck.isWindows()) {
+        String dir;
+        if (OsCheck.isLinux()) {
+            String userHome = System.getProperty("user.home");
+            dir = userHome + "/.ed-odyssey-materials-helper/";
+        } else if (OsCheck.isWindows()) {
             final String binDir = Paths.get(ProcessHandle.current().info().command().orElseThrow(IllegalArgumentException::new)).getParent().toString();
             dir = binDir.trim().replace("\"", "") + "\\";
+        } else {
+            dir = "";
         }
         System.setProperty("javafx.cachedir", dir + javafxCachedir);
     }

@@ -20,10 +20,15 @@ public class LoggerStartupListener extends ContextAwareBase implements LoggerCon
         if (started) return;
 
         Context context = getContext();
-        String dir = "~/.ed-odyssey-materials-helper/log";
-        if(OsCheck.isWindows()) {
+        String dir;
+        if (OsCheck.isLinux()) {
+            String userHome = System.getProperty("user.home");
+            dir = userHome + "/.ed-odyssey-materials-helper/";
+        } else if (OsCheck.isWindows()) {
             final String binDir = Paths.get(ProcessHandle.current().info().command().orElseThrow(IllegalArgumentException::new)).getParent().toString();
             dir = binDir.trim().replace("\"", "") + "\\";
+        } else {
+            dir = "";
         }
         System.setProperty("logging.config", dir + "log");
         context.putProperty("logging.config", dir + "log");
