@@ -11,6 +11,7 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Fixed adding wishlist experimental effect material requirement when no grades were selected on the base blueprint
-Fixed colonisation project not updating when delivering materials
+Fix faulty javafx cache and log folder locations when opening the application through an edomh url. This could result in an error being shown.
+Handle new CompleteConstruction journal event
+Added Georgian localization support
 ```
