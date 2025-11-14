@@ -133,7 +133,7 @@
 "search.filter.bought_at_station","Bought at current market","","","Comprado en mercado actual","","","Куплено на данном рынке","在当前市场购买",""
 "dialog.start.whatsnew","What’s new?","","","¿Que hay de nuevo?","","","Что нового","新内容",""
 "dialog.start.privacypolicy","Privacy policy","","","Política de privacidad","","","Политика конфиденциальности","隐私条款",""
-"dialog.start.eula","End User License Agreement (EULA)","","","","","","Лицензионное соглашение (EULA)","",""
+"dialog.start.eula","End User License Agreement (EULA)","","","","","","Лицензионное соглашение (EULA)","最终用户许可协议 (EULA)",""
 "dialog.start.accept","Accept & continue","","","Acceptar y continuar","","","Принять и продолжить","接受并继续",""
 "dialog.start.close","Close application","","","Cerrar aplicación","","","Закрыть приложение","关闭程序",""
 "dialog.start.continue","Continue","","","Continuar","Continuer","","Продолжить","继续",""
