@@ -100,7 +100,7 @@ tasks.register("createPortableRelease") {
 }
 
 tasks.register("createReleaseLinux") {
-    dependsOn subprojects.jpackage, subprojects.patchShellScript
+    dependsOn subprojects.jpackage, "bootstrap:patchShellScript"
     finalizedBy makeLinuxPortable, makeLinuxAutoUpdaterPortable, copyDeb
 }
 
