@@ -238,6 +238,16 @@ public class Armour extends CoreModule {
     public static final Armour LAKONMINER_ARMOUR_GRADE_3 = new Armour("LAKONMINER_ARMOUR_GRADE_3", ShipType.LAKONMINER, ArmourType.MILITARY_GRADE_COMPOSITE, HorizonsBlueprintName.MILITARY_GRADE_COMPOSITE_ARMOUR, ModuleSize.SIZE_1, ModuleClass.A, 61075666, "Lakonminer_Armour_Grade3", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 63.00), Map.entry(HorizonsModifier.HULL_BOOST, 2.50), Map.entry(HorizonsModifier.CAUSTIC_RESISTANCE, 0D), Map.entry(HorizonsModifier.KINETIC_RESISTANCE, -0.20), Map.entry(HorizonsModifier.THERMAL_RESISTANCE, 0.0), Map.entry(HorizonsModifier.EXPLOSIVE_RESISTANCE, -0.40)));
     public static final Armour LAKONMINER_ARMOUR_MIRRORED = new Armour("LAKONMINER_ARMOUR_MIRRORED", ShipType.LAKONMINER, ArmourType.MIRRORED_SURFACE_COMPOSITE, HorizonsBlueprintName.MIRRORED_SURFACE_COMPOSITE_ARMOUR, ModuleSize.SIZE_1, ModuleClass.A, 144342155, "Lakonminer_Armour_Mirrored", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 63.00), Map.entry(HorizonsModifier.HULL_BOOST, 2.50), Map.entry(HorizonsModifier.CAUSTIC_RESISTANCE, 0D), Map.entry(HorizonsModifier.KINETIC_RESISTANCE, -0.75), Map.entry(HorizonsModifier.THERMAL_RESISTANCE, 0.50), Map.entry(HorizonsModifier.EXPLOSIVE_RESISTANCE, -0.50)));
     public static final Armour LAKONMINER_ARMOUR_REACTIVE = new Armour("LAKONMINER_ARMOUR_REACTIVE", ShipType.LAKONMINER, ArmourType.REACTIVE_SURFACE_COMPOSITE, HorizonsBlueprintName.REACTIVE_SURFACE_COMPOSITE_ARMOUR, ModuleSize.SIZE_1, ModuleClass.A, 159950379, "Lakonminer_Armour_Reactive", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 63.00), Map.entry(HorizonsModifier.HULL_BOOST, 2.50), Map.entry(HorizonsModifier.CAUSTIC_RESISTANCE, 0D), Map.entry(HorizonsModifier.KINETIC_RESISTANCE, 0.25), Map.entry(HorizonsModifier.THERMAL_RESISTANCE, -0.40), Map.entry(HorizonsModifier.EXPLOSIVE_RESISTANCE, 0.20)));
+    public static final Armour EXPLORER_NX_ARMOUR_GRADE_1 = new Armour("EXPLORER_NX_ARMOUR_GRADE_1", ShipType.EXPLORER_NX, ArmourType.LIGHTWEIGHT_ALLOY, HorizonsBlueprintName.LIGHTWEIGHT_ALLOY_ARMOUR, ModuleSize.SIZE_1, ModuleClass.C, 0, "Explorer_nx_Armour_Grade1", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 0.00), Map.entry(HorizonsModifier.HULL_BOOST, .80), Map.entry(HorizonsModifier.CAUSTIC_RESISTANCE, 0D), Map.entry(HorizonsModifier.KINETIC_RESISTANCE, -0.20), Map.entry(HorizonsModifier.THERMAL_RESISTANCE, 0.0), Map.entry(HorizonsModifier.EXPLOSIVE_RESISTANCE, -0.40)));
+    public static final Armour EXPLORER_NX_ARMOUR_GRADE_2 = new Armour("EXPLORER_NX_ARMOUR_GRADE_2", ShipType.EXPLORER_NX, ArmourType.REINFORCED_ALLOY, HorizonsBlueprintName.REINFORCED_ALLOY_ARMOUR, ModuleSize.SIZE_1, ModuleClass.B, 27144741, "Explorer_nx_Armour_Grade2", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 30.00), Map.entry(HorizonsModifier.HULL_BOOST, 1.52), Map.entry(HorizonsModifier.CAUSTIC_RESISTANCE, 0D), Map.entry(HorizonsModifier.KINETIC_RESISTANCE, -0.20), Map.entry(HorizonsModifier.THERMAL_RESISTANCE, 0.0), Map.entry(HorizonsModifier.EXPLOSIVE_RESISTANCE, -0.40)));
+    public static final Armour EXPLORER_NX_ARMOUR_GRADE_3 = new Armour("EXPLORER_NX_ARMOUR_GRADE_3", ShipType.EXPLORER_NX, ArmourType.MILITARY_GRADE_COMPOSITE, HorizonsBlueprintName.MILITARY_GRADE_COMPOSITE_ARMOUR, ModuleSize.SIZE_1, ModuleClass.A, 61075666, "Explorer_nx_Armour_Grade3", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 60.00), Map.entry(HorizonsModifier.HULL_BOOST, 2.50), Map.entry(HorizonsModifier.CAUSTIC_RESISTANCE, 0D), Map.entry(HorizonsModifier.KINETIC_RESISTANCE, -0.20), Map.entry(HorizonsModifier.THERMAL_RESISTANCE, 0.0), Map.entry(HorizonsModifier.EXPLOSIVE_RESISTANCE, -0.40)));
+    public static final Armour EXPLORER_NX_ARMOUR_MIRRORED = new Armour("EXPLORER_NX_ARMOUR_MIRRORED", ShipType.EXPLORER_NX, ArmourType.MIRRORED_SURFACE_COMPOSITE, HorizonsBlueprintName.MIRRORED_SURFACE_COMPOSITE_ARMOUR, ModuleSize.SIZE_1, ModuleClass.A, 144342155, "Explorer_nx_Armour_Mirrored", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 60.00), Map.entry(HorizonsModifier.HULL_BOOST, 2.50), Map.entry(HorizonsModifier.CAUSTIC_RESISTANCE, 0D), Map.entry(HorizonsModifier.KINETIC_RESISTANCE, -0.75), Map.entry(HorizonsModifier.THERMAL_RESISTANCE, 0.50), Map.entry(HorizonsModifier.EXPLOSIVE_RESISTANCE, -0.50)));
+    public static final Armour EXPLORER_NX_ARMOUR_REACTIVE = new Armour("EXPLORER_NX_ARMOUR_REACTIVE", ShipType.EXPLORER_NX, ArmourType.REACTIVE_SURFACE_COMPOSITE, HorizonsBlueprintName.REACTIVE_SURFACE_COMPOSITE_ARMOUR, ModuleSize.SIZE_1, ModuleClass.A, 159950379, "Explorer_nx_Armour_Reactive", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 60.00), Map.entry(HorizonsModifier.HULL_BOOST, 2.50), Map.entry(HorizonsModifier.CAUSTIC_RESISTANCE, 0D), Map.entry(HorizonsModifier.KINETIC_RESISTANCE, 0.25), Map.entry(HorizonsModifier.THERMAL_RESISTANCE, -0.40), Map.entry(HorizonsModifier.EXPLOSIVE_RESISTANCE, 0.20)));
+    public static final Armour EXPLORER_NX_ARMOUR_GRADE_1_DEFAULT = new Armour("EXPLORER_NX_ARMOUR_GRADE_1_DEFAULT", ShipType.EXPLORER_NX, ArmourType.LIGHTWEIGHT_ALLOY_DEFAULT, HorizonsBlueprintName.LIGHTWEIGHT_ALLOY_ARMOUR_DEFAULT, ModuleSize.SIZE_1, ModuleClass.C, 0, "Explorer_nx_Armour_Grade1_Default", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 15.00), Map.entry(HorizonsModifier.HULL_BOOST, .80), Map.entry(HorizonsModifier.CAUSTIC_RESISTANCE, 0D), Map.entry(HorizonsModifier.KINETIC_RESISTANCE, -0.20), Map.entry(HorizonsModifier.THERMAL_RESISTANCE, 0.0), Map.entry(HorizonsModifier.EXPLOSIVE_RESISTANCE, -0.40)));
+    public static final Armour EXPLORER_NX_ARMOUR_GRADE_2_DEFAULT = new Armour("EXPLORER_NX_ARMOUR_GRADE_2_DEFAULT", ShipType.EXPLORER_NX, ArmourType.REINFORCED_ALLOY_DEFAULT, HorizonsBlueprintName.REINFORCED_ALLOY_ARMOUR_DEFAULT, ModuleSize.SIZE_1, ModuleClass.B, 27144741, "Explorer_nx_Armour_Grade2_Default", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 30.00), Map.entry(HorizonsModifier.HULL_BOOST, 1.52), Map.entry(HorizonsModifier.CAUSTIC_RESISTANCE, 0D), Map.entry(HorizonsModifier.KINETIC_RESISTANCE, -0.20), Map.entry(HorizonsModifier.THERMAL_RESISTANCE, 0.0), Map.entry(HorizonsModifier.EXPLOSIVE_RESISTANCE, -0.40)));
+    public static final Armour EXPLORER_NX_ARMOUR_GRADE_3_DEFAULT = new Armour("EXPLORER_NX_ARMOUR_GRADE_3_DEFAULT", ShipType.EXPLORER_NX, ArmourType.MILITARY_GRADE_COMPOSITE_DEFAULT, HorizonsBlueprintName.MILITARY_GRADE_COMPOSITE_ARMOUR_DEFAULT, ModuleSize.SIZE_1, ModuleClass.A, 61075666, "Explorer_nx_Armour_Grade3_Default", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 60.00), Map.entry(HorizonsModifier.HULL_BOOST, 2.50), Map.entry(HorizonsModifier.CAUSTIC_RESISTANCE, 0D), Map.entry(HorizonsModifier.KINETIC_RESISTANCE, -0.20), Map.entry(HorizonsModifier.THERMAL_RESISTANCE, 0.0), Map.entry(HorizonsModifier.EXPLOSIVE_RESISTANCE, -0.40)));
+    public static final Armour EXPLORER_NX_ARMOUR_MIRRORED_DEFAULT = new Armour("EXPLORER_NX_ARMOUR_MIRRORED_DEFAULT", ShipType.EXPLORER_NX, ArmourType.MIRRORED_SURFACE_COMPOSITE_DEFAULT, HorizonsBlueprintName.MIRRORED_SURFACE_COMPOSITE_ARMOUR_DEFAULT, ModuleSize.SIZE_1, ModuleClass.A, 144342155, "Explorer_nx_Armour_Mirrored_Default", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 60.00), Map.entry(HorizonsModifier.HULL_BOOST, 2.50), Map.entry(HorizonsModifier.CAUSTIC_RESISTANCE, 0D), Map.entry(HorizonsModifier.KINETIC_RESISTANCE, -0.75), Map.entry(HorizonsModifier.THERMAL_RESISTANCE, 0.50), Map.entry(HorizonsModifier.EXPLOSIVE_RESISTANCE, -0.50)));
+    public static final Armour EXPLORER_NX_ARMOUR_REACTIVE_DEFAULT = new Armour("EXPLORER_NX_ARMOUR_REACTIVE_DEFAULT", ShipType.EXPLORER_NX, ArmourType.REACTIVE_SURFACE_COMPOSITE_DEFAULT, HorizonsBlueprintName.REACTIVE_SURFACE_COMPOSITE_ARMOUR_DEFAULT, ModuleSize.SIZE_1, ModuleClass.A, 159950379, "Explorer_nx_Armour_Reactive_Default", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 60.00), Map.entry(HorizonsModifier.HULL_BOOST, 2.50), Map.entry(HorizonsModifier.CAUSTIC_RESISTANCE, 0D), Map.entry(HorizonsModifier.KINETIC_RESISTANCE, 0.25), Map.entry(HorizonsModifier.THERMAL_RESISTANCE, -0.40), Map.entry(HorizonsModifier.EXPLOSIVE_RESISTANCE, 0.20)));
 
     public static final List<Armour> ARMOURS = List.of(
             SIDE_WINDER_ARMOUR_GRADE_1,
@@ -464,7 +474,17 @@ public class Armour extends CoreModule {
             LAKONMINER_ARMOUR_GRADE_2,
             LAKONMINER_ARMOUR_GRADE_3,
             LAKONMINER_ARMOUR_MIRRORED,
-            LAKONMINER_ARMOUR_REACTIVE
+            LAKONMINER_ARMOUR_REACTIVE,
+            EXPLORER_NX_ARMOUR_GRADE_1,
+            EXPLORER_NX_ARMOUR_GRADE_2,
+            EXPLORER_NX_ARMOUR_GRADE_3,
+            EXPLORER_NX_ARMOUR_MIRRORED,
+            EXPLORER_NX_ARMOUR_REACTIVE,
+            EXPLORER_NX_ARMOUR_GRADE_1_DEFAULT,
+            EXPLORER_NX_ARMOUR_GRADE_2_DEFAULT,
+            EXPLORER_NX_ARMOUR_GRADE_3_DEFAULT,
+            EXPLORER_NX_ARMOUR_MIRRORED_DEFAULT,
+            EXPLORER_NX_ARMOUR_REACTIVE_DEFAULT
     );
     @Getter
     private final ShipType shipType;
@@ -507,10 +527,15 @@ public class Armour extends CoreModule {
     public int getGrouping() {
         return switch (armourType) {
             case LIGHTWEIGHT_ALLOY -> 1;
-            case REINFORCED_ALLOY -> 2;
-            case MILITARY_GRADE_COMPOSITE -> 3;
-            case MIRRORED_SURFACE_COMPOSITE -> 4;
-            case REACTIVE_SURFACE_COMPOSITE -> 5;
+            case REINFORCED_ALLOY -> 3;
+            case MILITARY_GRADE_COMPOSITE -> 5;
+            case MIRRORED_SURFACE_COMPOSITE -> 7;
+            case REACTIVE_SURFACE_COMPOSITE -> 9;
+            case LIGHTWEIGHT_ALLOY_DEFAULT -> 2;
+            case REINFORCED_ALLOY_DEFAULT -> 4;
+            case MILITARY_GRADE_COMPOSITE_DEFAULT -> 6;
+            case MIRRORED_SURFACE_COMPOSITE_DEFAULT -> 8;
+            case REACTIVE_SURFACE_COMPOSITE_DEFAULT -> 10;
         };
     }
 

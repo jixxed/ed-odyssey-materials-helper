@@ -37,7 +37,7 @@ public class SlotBoxEntry extends DestroyableVBox {
         //add ship modules
         final ShipModule firstModule = shipModulesList.getFirst();
         final List<ShipModule> shipModules = (firstModule instanceof Armour)
-                ? shipModulesList.stream().filter(shipModule -> ((Armour) shipModule).getShipType().equals(ApplicationState.getInstance().getShip().getShipType())).filter(ShipModule::isSelectable).toList()
+                ? (List<ShipModule>) (List<?>) shipModulesList.stream().map(Armour.class::cast).filter(shipModule -> ((Armour) shipModule).getShipType().equals(ApplicationState.getInstance().getShip().getShipType())).filter(ShipModule::isSelectable).sorted(Comparator.comparing(Armour::toString)).toList()
                 : shipModulesList.stream().filter(ShipModule::isSelectable).toList();
         this.name = LabelBuilder.builder()
                 .withStyleClass("title")

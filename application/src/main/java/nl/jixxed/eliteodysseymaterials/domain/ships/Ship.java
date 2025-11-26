@@ -1882,6 +1882,54 @@ public class Ship {
                     Slot.builder().slotType(SlotType.OPTIONAL).index(10).namedIndex(9).slotSize(1).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build(),//Slot09_Size1
                     Slot.builder().slotType(SlotType.OPTIONAL).index(11).namedIndex(10).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()//Slot10_Size1
             ));
+    public static final Ship EXPLORER_NX = new Ship(//Caspian Explorer
+            ShipType.EXPLORER_NX,
+            0,
+            0,
+            ShipSpecs.EXPLORER_NX,
+            List.of(
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(0).slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(1).slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(2).slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(3).slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(4).slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(5).slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(6).slotSize(2).build()
+            ),
+            List.of(
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(0).y(0).index(0).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(0).y(0).index(1).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(0).y(0).index(2).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(0).y(0).index(3).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(0).y(0).index(4).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(0).y(0).index(5).slotSize(0).build()
+            ),
+            List.of(
+                    Slot.builder().slotType(SlotType.CORE_ARMOUR).index(0).slotSize(1).shipModule(Armour.EXPLORER_NX_ARMOUR_GRADE_1).build(),
+                    Slot.builder().slotType(SlotType.CORE_POWER_PLANT).index(1).slotSize(8).shipModule(PowerPlant.POWER_PLANT_8_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_THRUSTERS).index(2).slotSize(7).shipModule(Thrusters.THRUSTERS_7_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_FRAME_SHIFT_DRIVE).index(3).slotSize(8).shipModule(FrameShiftDrive.FRAME_SHIFT_DRIVE_OVERCHARGE_8_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_LIFE_SUPPORT).index(4).slotSize(5).shipModule(LifeSupport.LIFE_SUPPORT_5_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_POWER_DISTRIBUTION).index(5).slotSize(7).shipModule(PowerDistributor.POWER_DISTRIBUTOR_7_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_SENSORS).index(6).slotSize(8).shipModule(Sensors.SENSORS_8_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(7).shipModule(FuelTank.FUEL_TANK_7_C).build()
+            ),
+            List.of(
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(7).build(),//Slot01_Size7
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(6).build(),//Slot02_Size6
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(6).build(),//Slot03_Size6
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(5).build(),//Slot04_Size5
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(5).build(),//Slot05_Size5
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(5).build(),//Slot06_Size5
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(5).build(),//Slot07_Size5
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(4).build(),//Slot08_Size4
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(4).build(),//Slot09_Size4
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(3).build(),//Slot10_Size3
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).slotSize(2).build(),//Slot11_Size2
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).slotSize(1).build(),//Slot12_Size1
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(12).slotSize(1).build(),//Slot13_Size1
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(13).slotSize(1).build()//Slot14_Size1
+            ));
     public static final List<Ship> ALL = List.of(
             SIDE_WINDER,
             EAGLE,
@@ -1927,7 +1975,8 @@ public class Ship {
             COBRA_MK_V,
             CORSAIR,
             PANTHER_CLIPPER_MK_II,
-            LAKONMINER
+            LAKONMINER,
+            EXPLORER_NX
     );
 
 
