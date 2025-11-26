@@ -185,7 +185,9 @@ public enum HorizonsModifier {
     ANTI_XENO_DAMAGE(729, ""),
     AREA_FSDS_REBOOT(729, ""),
     ANTI_GUARDIAN_ZONE_RESISTANCE(730, "GuardianModuleResistance"),
-    SUPERCRUISE_OVERCHARGE(731, ""),
+    DWARF_BOOST(731, ""),
+    NEUTRON_BOOST(732, ""),
+    SUPERCRUISE_OVERCHARGE(733, ""),
     VEHICLE_ARMOUR_HEALTH(801, "VehicleArmourHealth"),
     VEHICLE_CARGO_CAPACITY(802, "VehicleCargoCapacity"),
     VEHICLE_COUNT(803, ""),
@@ -200,6 +202,8 @@ public enum HorizonsModifier {
     FIGHTER_ROLL_RATE(812, "FighterRollRate"),
     FIGHTER_YAW_RATE(813, "FighterYawRate"),
     MODULE_LIMIT_INCREASE(814, ""),
+    MAX_GLIDE_ANGLE(815, ""),
+    MAX_GLIDE_SPEED(816, ""),
     CREW(1010, ""),//ship
     TOP_SPEED(1020, ""),//ship
     BOOST_SPEED(1030, ""),//ship

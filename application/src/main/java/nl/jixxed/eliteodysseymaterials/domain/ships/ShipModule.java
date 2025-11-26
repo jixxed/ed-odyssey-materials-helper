@@ -559,12 +559,8 @@ public abstract class ShipModule implements Serializable {
         return other != null && this.getSynthesisGrade() == other.getSynthesisGrade();
     }
 
-    public boolean isSameSize(ShipModule other) {
-        return other != null && this.getModuleSize() == other.getModuleSize();
-    }
-
-    public boolean isSameClass(ShipModule other) {
-        return other != null && this.getModuleClass() == other.getModuleClass();
+    public boolean isSameId(ShipModule other) {
+        return other != null && this.getId().equals(other.getId());
     }
 
     public boolean isSameModifications(ShipModule other) {

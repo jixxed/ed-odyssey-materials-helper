@@ -136,6 +136,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     FRAME_SHIFT_DRIVE_PRE(BlueprintGroup.FRAME_SHIFT_DRIVES, BlueprintCategory.CORE_INTERNAL, false),
     FRAME_SHIFT_DRIVE_OVERCHARGE(BlueprintGroup.FRAME_SHIFT_DRIVES, BlueprintCategory.CORE_INTERNAL, false),
     FRAME_SHIFT_DRIVE_OVERCHARGE_PRE(BlueprintGroup.FRAME_SHIFT_DRIVES, BlueprintCategory.CORE_INTERNAL, false),
+    FRAME_SHIFT_DRIVE_OVERCHARGE_MK_II(BlueprintGroup.FRAME_SHIFT_DRIVES, BlueprintCategory.CORE_INTERNAL, false),
     LIFE_SUPPORT(BlueprintGroup.LIFE_SUPPORTS, BlueprintCategory.CORE_INTERNAL),
     POWER_DISTRIBUTOR(BlueprintGroup.POWER_DISTRIBUTORS, BlueprintCategory.CORE_INTERNAL),
     POWER_DISTRIBUTOR_SYSTEM_ENGINE_FOCUSED(BlueprintGroup.POWER_DISTRIBUTORS, BlueprintCategory.CORE_INTERNAL, false),
@@ -147,6 +148,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     SENSORS(BlueprintGroup.SENSORS, BlueprintCategory.CORE_INTERNAL),
     THRUSTERS(BlueprintGroup.THRUSTERS, BlueprintCategory.CORE_INTERNAL),
     ENHANCED_THRUSTERS(BlueprintGroup.THRUSTERS, BlueprintCategory.CORE_INTERNAL, false),
+    THRUSTERS_MK_II(BlueprintGroup.THRUSTERS, BlueprintCategory.CORE_INTERNAL, false),
     //optional
     ANTI_CORROSION_CARGO_RACK(BlueprintGroup.ANTI_CORROSION_CARGO_RACKS, BlueprintCategory.OPTIONAL_INTERNAL),
     AUTO_FIELD_MAINTENANCE_UNIT(BlueprintGroup.AUTO_FIELD_MAINTENANCE_UNITS, BlueprintCategory.OPTIONAL_INTERNAL),

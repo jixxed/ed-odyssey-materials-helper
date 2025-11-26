@@ -229,3 +229,7 @@
 "modifier.horizons.name.module_limit_increase","Module Limit Increase","","","","","","Увеличение лимита модуля","模块限制增加",""
 "modifier.horizons.name.sensor_lock_min","Minimum Sensor Lock Range","","","","","","Минимальная дистанция захвата цели сенсорами","最小传感器锁定范围",""
 "modifier.horizons.name.overcharge_fuel_consumption","Overcharge Fuel Consumption","","","","Consommation de carburant (surcharge)","","Потребление топлива в режиме ПГР","超巡过载燃料消耗",""
+"modifier.horizons.name.dwarf_boost","Dwarf boost","","","","","","","",""
+"modifier.horizons.name.neutron_boost","Neutron boost","","","","","","","",""
+"modifier.horizons.name.max_glide_angle","Maximum Glide Angle","","","","","","","",""
+"modifier.horizons.name.max_glide_speed","Glide speed","","","","","","","",""

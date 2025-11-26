@@ -16,6 +16,7 @@ import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
+import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.Armour;
 import nl.jixxed.eliteodysseymaterials.enums.HardpointGroup;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
@@ -625,10 +626,8 @@ public class SlotBox extends DestroyableStackPane {
         this.moduleName.addBinding(this.moduleName.textProperty(), shipModule.map(mod -> LocaleService.getStringBinding(mod.getName().getLocalizationKey())).orElse(LocaleService.getStringBinding("blank")));
         shipModule.ifPresent(
                 module -> {
-                    final boolean sameSize = module.isSameSize(this.slot.getOldShipModule());
-                    final boolean sameClass = module.isSameClass(this.slot.getOldShipModule());
-                    final boolean sameMounting = !(module instanceof ExternalModule externalModule) || externalModule.isSameMounting(this.slot.getOldShipModule());
-                    this.moduleName.pseudoClassStateChanged(PseudoClass.getPseudoClass("changed"), !sameSize || !sameClass || !sameMounting);
+                    final boolean same = module.isSameId(this.slot.getOldShipModule());
+                    this.moduleName.pseudoClassStateChanged(PseudoClass.getPseudoClass("changed"), !same);
                 });
 
         if (shipModule.isEmpty()) {

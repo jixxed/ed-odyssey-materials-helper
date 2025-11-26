@@ -1186,7 +1186,7 @@
 "ships.module.name.int_hyperdrive_overcharge_size8_class3","Frame Shift Drive (SCO)","","","","","","","",""
 "ships.module.name.int_hyperdrive_overcharge_size8_class4","Frame Shift Drive (SCO)","","","","","","","",""
 "ships.module.name.int_hyperdrive_overcharge_size8_class5","Frame Shift Drive (SCO)","","","","","","","",""
-"ships.module.name.int_hyperdrive_overcharge_size8_class5_overchargebooster_mkii","Mk II Supercharge Optimised Frame Shift Drive (SCO)","","","","","","","",""
+"ships.module.name.int_hyperdrive_overcharge_size8_class5_overchargebooster_mkii","Mk II Frame Shift Drive (SO+SCO)","","","","","","","",""
 "ships.module.name.armour.lightweight_alloy_default","Mk II Ablative Lightweight Alloy","","","","","","","",""
 "ships.module.name.armour.reinforced_alloy_default","Mk II Ablative Reinforced Alloy","","","","","","","",""
 "ships.module.name.armour.military_grade_composite_default","Mk II Ablative Military Grade Composite","","","","","","","",""

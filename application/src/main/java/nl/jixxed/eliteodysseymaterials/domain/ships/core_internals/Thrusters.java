@@ -53,7 +53,7 @@ public class Thrusters extends CoreModule {
     public static final Thrusters THRUSTERS_8_A = new Thrusters("THRUSTERS_8_A", HorizonsBlueprintName.THRUSTERS, ModuleSize.SIZE_8, ModuleClass.A, 162586490, "Int_Engine_Size8_Class5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 160.00), Map.entry(HorizonsModifier.INTEGRITY, 165.0), Map.entry(HorizonsModifier.POWER_DRAW, 10.80), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.ENGINE_MINIMUM_MASS, 1680.0), Map.entry(HorizonsModifier.ENGINE_OPTIMAL_MASS, 3360.0), Map.entry(HorizonsModifier.MAXIMUM_MASS, 5040.0), Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER, 96.0), Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER, 100.0), Map.entry(HorizonsModifier.MAXIMUM_MULIPLIER, 116.0), Map.entry(HorizonsModifier.ENGINE_THERMAL_LOAD, 1.3)));
     public static final Thrusters ENHANCED_THRUSTERS_2_A = new Thrusters("ENHANCED_THRUSTERS_2_A", HorizonsBlueprintName.ENHANCED_THRUSTERS, ModuleSize.SIZE_2, ModuleClass.A, 1610080, "Int_Engine_Size2_Class5_Fast", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.50), Map.entry(HorizonsModifier.INTEGRITY, 40.0), Map.entry(HorizonsModifier.POWER_DRAW, 4.00), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.ENGINE_MINIMUM_MASS, 50.0), Map.entry(HorizonsModifier.ENGINE_OPTIMAL_MASS, 60.0), Map.entry(HorizonsModifier.MAXIMUM_MASS, 120.0), Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER, 90.0), Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER, 115.0), Map.entry(HorizonsModifier.MAXIMUM_MULIPLIER, 137.0), Map.entry(HorizonsModifier.ENGINE_THERMAL_LOAD, 2.0), Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER_SPEED, 90.0), Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER_SPEED, 125.0), Map.entry(HorizonsModifier.MAXIMUM_MULTIPLIER_SPEED, 160.0), Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER_ACCELERATION, 90.0), Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER_ACCELERATION, 110.0), Map.entry(HorizonsModifier.MAXIMUM_MULTIPLIER_ACCELERATION, 120.0), Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER_ROTATION, 90.0), Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER_ROTATION, 110.0), Map.entry(HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION, 130.0)));
     public static final Thrusters ENHANCED_THRUSTERS_3_A = new Thrusters("ENHANCED_THRUSTERS_3_A", HorizonsBlueprintName.ENHANCED_THRUSTERS, ModuleSize.SIZE_3, ModuleClass.A, 5103950, "Int_Engine_Size3_Class5_Fast", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 5.00), Map.entry(HorizonsModifier.INTEGRITY, 55.0), Map.entry(HorizonsModifier.POWER_DRAW, 5.00), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.ENGINE_MINIMUM_MASS, 70.0), Map.entry(HorizonsModifier.ENGINE_OPTIMAL_MASS, 90.0), Map.entry(HorizonsModifier.MAXIMUM_MASS, 200.0), Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER, 90.0), Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER, 115.0), Map.entry(HorizonsModifier.MAXIMUM_MULIPLIER, 137.0), Map.entry(HorizonsModifier.ENGINE_THERMAL_LOAD, 1.3), Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER_SPEED, 90.0), Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER_SPEED, 125.0), Map.entry(HorizonsModifier.MAXIMUM_MULTIPLIER_SPEED, 160.0), Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER_ACCELERATION, 90.0), Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER_ACCELERATION, 110.0), Map.entry(HorizonsModifier.MAXIMUM_MULTIPLIER_ACCELERATION, 120.0), Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER_ROTATION, 90.0), Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER_ROTATION, 110.0), Map.entry(HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION, 130.0)));
-    public static final Thrusters THRUSTERS_7_A_MK_II = new Thrusters("THRUSTERS_7_A_MK_II", HorizonsBlueprintName.THRUSTERS, ModuleSize.SIZE_7, ModuleClass.A, 0, "Int_Engine_Size7_Class5_Gravityoptimised_MkII", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 80.00), Map.entry(HorizonsModifier.INTEGRITY, 121.0), Map.entry(HorizonsModifier.POWER_DRAW, 10.58), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.ENGINE_MINIMUM_MASS, 972.0), Map.entry(HorizonsModifier.ENGINE_OPTIMAL_MASS, 1944.0), Map.entry(HorizonsModifier.MAXIMUM_MASS, 2916.0), Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER, 123.0), Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER, 128.0), Map.entry(HorizonsModifier.MAXIMUM_MULIPLIER, 148.0), Map.entry(HorizonsModifier.ENGINE_THERMAL_LOAD, 0.5)));
+    public static final Thrusters THRUSTERS_7_A_MK_II = new Thrusters("THRUSTERS_7_A_MK_II", HorizonsBlueprintName.THRUSTERS_MK_II, ModuleSize.SIZE_7, ModuleClass.A, 0, "Int_Engine_Size7_Class5_Gravityoptimised_MkII", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 80.00), Map.entry(HorizonsModifier.INTEGRITY, 121.0), Map.entry(HorizonsModifier.POWER_DRAW, 10.58), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.ENGINE_MINIMUM_MASS, 972.0), Map.entry(HorizonsModifier.ENGINE_OPTIMAL_MASS, 1944.0), Map.entry(HorizonsModifier.MAXIMUM_MASS, 2916.0), Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER, 123.0), Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER, 128.0), Map.entry(HorizonsModifier.MAXIMUM_MULIPLIER, 148.0), Map.entry(HorizonsModifier.ENGINE_THERMAL_LOAD, 0.5)));
 
     public static final List<Thrusters> THRUSTERS = List.of(
             THRUSTERS_2_E_FREE,
@@ -122,12 +122,21 @@ public class Thrusters extends CoreModule {
 
     @Override
     public String getClarifier() {
-        return this == ENHANCED_THRUSTERS_2_A || this == ENHANCED_THRUSTERS_3_A ? " " + LocaleService.getLocalizedStringForCurrentLocale("blueprint.horizons.name.enhanced_thrusters") : "";
+        if(this == ENHANCED_THRUSTERS_2_A || this == ENHANCED_THRUSTERS_3_A)
+        return  " " + LocaleService.getLocalizedStringForCurrentLocale("blueprint.horizons.name.enhanced_thrusters");
+        else if(this.equals(THRUSTERS_7_A_MK_II)){
+            return " " + LocaleService.getLocalizedStringForCurrentLocale(this.getLocalizationKey());
+        }
+        else{
+            return "";
+        }
     }
 
     @Override
     public int getGrouping() {
-        return getModuleSize().intValue() * 10 + (this.equals(ENHANCED_THRUSTERS_2_A) || this.equals(ENHANCED_THRUSTERS_3_A) ? 1 : 0);
+        return getModuleSize().intValue() * 10
+                + (this.equals(ENHANCED_THRUSTERS_2_A) || this.equals(ENHANCED_THRUSTERS_3_A) ? 1 : 0)
+                + (this.equals(THRUSTERS_7_A_MK_II) ? 2 : 0);
     }
 
     public boolean isSelectable() {

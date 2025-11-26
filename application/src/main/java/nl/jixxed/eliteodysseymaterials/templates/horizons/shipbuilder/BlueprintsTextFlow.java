@@ -50,7 +50,7 @@ public class BlueprintsTextFlow extends DestroyableFlowPane implements Destroyab
 
     void updateStyle(final ShipModule shipModule, final ShipModule oldShipModule) {
         if (shipModule != null) {
-            final boolean sameModule = shipModule.isSameSize(oldShipModule) && shipModule.isSameClass(oldShipModule) && (!(shipModule instanceof ExternalModule externalModule) || externalModule.isSameMounting(oldShipModule));
+            final boolean sameModule = shipModule.isSameId(oldShipModule);
             final boolean sameModifications = shipModule.isSameModifications(oldShipModule);
             blueprints.forEach(blueprint -> blueprint.pseudoClassStateChanged(PseudoClass.getPseudoClass("same"), sameModule && sameModifications));
             separator.pseudoClassStateChanged(PseudoClass.getPseudoClass("same"), sameModule && sameModifications);

@@ -227,3 +227,7 @@
 "modifier.horizons.unit.boost_interval","s","","","","s","","с","秒",""
 "modifier.horizons.unit.module_limit_increase","","","","","","","","",""
 "modifier.horizons.unit.sensor_lock_min","m","","","","m","","м","米",""
+"modifier.horizons.unit.dwarf_boost","x","","","","","","","",""
+"modifier.horizons.unit.neutron_boost","x","","","","","","","",""
+"modifier.horizons.unit.max_glide_angle","°","","","","","","","",""
+"modifier.horizons.unit.max_glide_speed","m/s","","","","","","","",""

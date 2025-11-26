@@ -37,14 +37,14 @@ public class SlotBoxEntry extends DestroyableVBox {
         //add ship modules
         final ShipModule firstModule = shipModulesList.getFirst();
         final List<ShipModule> shipModules = (firstModule instanceof Armour)
-                ? (List<ShipModule>) (List<?>) shipModulesList.stream().map(Armour.class::cast).filter(shipModule -> ((Armour) shipModule).getShipType().equals(ApplicationState.getInstance().getShip().getShipType())).filter(ShipModule::isSelectable).sorted(Comparator.comparing(Armour::toString)).toList()
+                ? shipModulesList.stream().filter(shipModule -> ((Armour) shipModule).getShipType().equals(ApplicationState.getInstance().getShip().getShipType())).filter(ShipModule::isSelectable).toList()
                 : shipModulesList.stream().filter(ShipModule::isSelectable).toList();
         this.name = LabelBuilder.builder()
                 .withStyleClass("title")
                 .withText(firstModule.getName().getBlueprintGroup().getLocalizationKey())
                 .build();
 //        HBox.setHgrow(this.name, Priority.ALWAYS);
-        Stream<List<ShipModule>> stream = shipModules.stream().allMatch(ShipModule::hasGrouping)
+        Stream<List<ShipModule>> stream = shipModules.stream().allMatch(ShipModule::hasGrouping) && !(firstModule instanceof Armour)
                 ? shipModules.stream().collect(Collectors.groupingBy(shipModule -> String.valueOf(shipModule.getGrouping()))).values().stream()
                 : shipModules.stream().collect(Collectors.groupingBy(shipModule -> shipModule.getModuleSize().toString() + shipModule.getGrouping() + shipModule.getOrigin().equals(Origin.POWERPLAY))).values().stream();
         stream = Stream.concat(stream, ApplicationState.getInstance().getPreferredCommander().map(commander -> {
@@ -52,7 +52,7 @@ public class SlotBoxEntry extends DestroyableVBox {
             return legacyModules.getLegacyModules().stream().map(this::mapToShipModule).filter(shipModule -> shipModule.getClass().equals(firstModule.getClass())).map(Collections::singletonList);
         }).orElseGet(Stream::empty));
         this.options = stream
-                .sorted(Comparator.comparing(shipModuleSubList -> (shipModuleSubList.getFirst().hasGrouping()) ? String.valueOf(shipModuleSubList.getFirst().getGrouping()) : shipModuleSubList.getFirst().getModuleSize().toString() + shipModuleSubList.getFirst().getOrigin().equals(Origin.POWERPLAY)))
+                .sorted(Comparator.comparing(shipModuleSubList -> (shipModuleSubList.getFirst().hasGrouping() || firstModule instanceof Armour) ? String.valueOf(shipModuleSubList.getFirst().getGrouping()) : shipModuleSubList.getFirst().getModuleSize().toString() + shipModuleSubList.getFirst().getOrigin().equals(Origin.POWERPLAY)))
                 .map(shipModuleSubList ->
                         shipModuleSubList.stream()
                                 .map(shipModule -> createShipModuleButton(slotBox, shipModule))
