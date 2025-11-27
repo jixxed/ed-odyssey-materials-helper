@@ -1,3 +1,7 @@
+Version 3.1.7
+-------------
+Fixed stats for size 8 FSDs
+
 Version 3.1.6
 -------------
 Removed non-existent Caspian Explorer Armours

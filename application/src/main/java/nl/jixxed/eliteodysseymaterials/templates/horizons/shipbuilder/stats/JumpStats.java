@@ -128,7 +128,7 @@ public class JumpStats extends Stats implements DestroyableTemplate {
     }
 
     public double calculateJumpRangeMin() {
-        return getShip().map(ship -> calculateJumpRange(ship.getEmptyMass() + ship.getMaxFuelReserve() + ship.getMaxCargo() + ship.getMaxFuel(), ship.getMaxFuel()) * getSynthesisBoost()).orElse(0.0D);
+        return getShip().map(ship -> calculateJumpRange(ship.getEmptyMass()/* + ship.getMaxFuelReserve()*/ + ship.getMaxCargo() + ship.getMaxFuel(), ship.getMaxFuel()) * getSynthesisBoost()).orElse(0.0D);
     }
 
     public double calculateJumpRangeCurrent() {

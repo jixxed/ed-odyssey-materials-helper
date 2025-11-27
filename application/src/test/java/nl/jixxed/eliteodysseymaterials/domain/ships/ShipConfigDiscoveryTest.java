@@ -2,21 +2,57 @@ package nl.jixxed.eliteodysseymaterials.domain.ships;
 
 
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.FrameShiftDriveBooster;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.ShieldGenerator;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military.GuardianShieldReinforcementPackage;
 import nl.jixxed.eliteodysseymaterials.domain.ships.utility.ShieldBooster;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats.ModuleProfile;
-import nu.redpois0n.oslib.OperatingSystem;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.util.Comparator;
 import java.util.Optional;
 
 import static nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier.*;
 
 @Slf4j
 public class ShipConfigDiscoveryTest {
+    @Disabled
+    @Test
+    void findModuleStats() {
+
+        ShipModule.getBasicModules();
+        final Ship ship = Ship.EXPLORER_NX;
+        for (double optimisedMass = 2600.0; optimisedMass < 3200.0; optimisedMass+=10.0){
+
+            for (double fuelPower = 2.75; fuelPower < 3.2; fuelPower+=0.05){
+
+                double rangeCurrent = calculateJumpRangeCurrent(ship, optimisedMass, fuelPower);
+                if(rangeCurrent > 20.4 && rangeCurrent < 20.42)
+                log.info("Current jump range: {}, optimisedMass: {}, fuelPower: {}", rangeCurrent, optimisedMass,fuelPower);
+            }
+
+        }
+    }
+
+    public double calculateJumpRangeCurrent(final Ship ship, double optimisedMass, double fuelPower) {
+        return calculateJumpRange(ship, ship.getEmptyMass() + ship.getCurrentCargo() + ship.getCurrentFuel() + ship.getCurrentFuelReserve(), ship.getCurrentFuel(), optimisedMass, fuelPower);
+    }
+
+    public double calculateJumpRange(final Ship ship, final double mass, final double fuel, double optimisedMass, double fuelPower) {
+
+            final double maxFuelPerJump = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().filter(Slot::isOccupied).map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.MAX_FUEL_PER_JUMP, 1D, true)).orElse(1D);
+        final double fuelMultiplier = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().filter(Slot::isOccupied).map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.FUEL_MULTIPLIER, 1D, true)).orElse(1D);
+        final double jumpRangeIncrease = ship.getOptionalSlots().stream().filter(slot -> slot.getShipModule() instanceof FrameShiftDriveBooster).findFirst().filter(Slot::isOccupied).map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.JUMP_RANGE_INCREASE, 1D, true)).orElse(0D);
+            return calculateJumpDistance(mass, Math.min(fuel, maxFuelPerJump), optimisedMass, fuelMultiplier, fuelPower, jumpRangeIncrease);
+    }
+
+    private double calculateJumpDistance(final double mass, final double fuel, final double optimisedMass, final double fuelMultiplier, final double fuelPower, final double jumpRangeIncrease) {
+        if (fuel <= 0D) {
+            return 0D;
+        }
+        return Math.pow(fuel / fuelMultiplier, 1 / fuelPower) * optimisedMass / mass + jumpRangeIncrease;
+    }
     @Test
     void findShipStats() {
 

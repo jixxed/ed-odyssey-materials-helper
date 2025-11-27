@@ -23,7 +23,7 @@ class JumpStatsTest {
         ApplicationState.getInstance().setShip(Ship.ADDER);
         LocaleService.setCurrentLocale(Locale.ENGLISH);
         final JumpStats jumpStats = new JumpStats();
-        Assertions.assertEquals(8.63, Precision.round(jumpStats.calculateJumpRangeMin(), 2));
+        Assertions.assertEquals(8.67, Precision.round(jumpStats.calculateJumpRangeMin(), 2));
     }
 
     @Test
