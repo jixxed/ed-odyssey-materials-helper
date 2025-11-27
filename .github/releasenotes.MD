@@ -11,10 +11,6 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Added Caspian Explorer (WIP)
-Added new FSD/Thruster/Armour modules
-Added Armour glide angle/speed stats
-Added FSD Dwarf/Neutron boost stats
-Disabled trailblazers section in Colonisation UI, since these were disabled
-Fixed module change detection not working properly on 1A Armours because they were all the same size/class
+Updated stats for Caspian Explorer (WIP)
+Updated stats for FSD and armour (WIP)
 ```

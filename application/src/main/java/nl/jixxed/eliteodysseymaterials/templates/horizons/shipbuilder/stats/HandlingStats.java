@@ -70,27 +70,27 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
     }
 
     private double calculatePitchCurrent(Ship ship, double pitchSpeed, ModuleProfile moduleProfile) {
-        return pitchSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100;
+        return pitchSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() /*+ ship.getCurrentFuelReserve()*/, moduleProfile) / 100;
     }
 
     private double calculateRollCurrent(Ship ship, double rollSpeed, ModuleProfile moduleProfile) {
-        return rollSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100;
+        return rollSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() /*+ ship.getCurrentFuelReserve()*/, moduleProfile) / 100;
     }
 
     private double calculateYawCurrent(Ship ship, double yawSpeed, ModuleProfile moduleProfile) {
-        return yawSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100;
+        return yawSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo()/* + ship.getCurrentFuelReserve()*/, moduleProfile) / 100;
     }
 
     private double calculatePitchMinimum(Ship ship, double pitchSpeed, ModuleProfile moduleProfile) {
-        return pitchSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo() + ship.getMaxFuelReserve(), moduleProfile) / 100;
+        return pitchSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo() /*+ ship.getMaxFuelReserve()*/, moduleProfile) / 100;
     }
 
     private double calculateRollMinimum(Ship ship, double rollSpeed, ModuleProfile moduleProfile) {
-        return rollSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo() + ship.getMaxFuelReserve(), moduleProfile) / 100;
+        return rollSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo()/* + ship.getMaxFuelReserve()*/, moduleProfile) / 100;
     }
 
     private double calculateYawMinimum(Ship ship, double yawSpeed, ModuleProfile moduleProfile) {
-        return yawSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo() + ship.getMaxFuelReserve(), moduleProfile) / 100;
+        return yawSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo()/* + ship.getMaxFuelReserve()*/, moduleProfile) / 100;
     }
 
     private double calculatePitchMaximum(Ship ship, double pitchSpeed, ModuleProfile moduleProfile) {
@@ -500,12 +500,12 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
         if (key <= 50) {
             double pivotMax = pivot;
             double pivotMin = pivotMax * (min / 100);
-            double y = (pivotMax - (pivotMax - pivotMin) * (distance / 100.0)) * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100D;
+            double y = (pivotMax - (pivotMax - pivotMin) * (distance / 100.0)) * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() /*+ ship.getCurrentFuelReserve()*/, moduleProfile) / 100D;
             return (Double.isNaN(y) || Double.isInfinite(y)) ? 0 : y;
         } else {
             double pivotMin = pivot;
             double pivotMax = pivotMin * (max / 100);
-            double y = (pivotMin + (pivotMax - pivotMin) * (distance / 100.0)) * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100D;
+            double y = (pivotMin + (pivotMax - pivotMin) * (distance / 100.0)) * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() /*+ ship.getCurrentFuelReserve()*/, moduleProfile) / 100D;
             return (Double.isNaN(y) || Double.isInfinite(y)) ? 0 : y;
         }
     }

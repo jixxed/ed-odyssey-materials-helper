@@ -1,5 +1,10 @@
 Version 3.1.4
 -------------
+Updated stats for Caspian Explorer (WIP)
+Updated stats for FSD and armour (WIP)
+
+Version 3.1.4
+-------------
 Added Caspian Explorer (WIP)
 Added new FSD/Thruster/Armour modules
 Added Armour glide angle/speed stats

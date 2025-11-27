@@ -21,7 +21,7 @@ public class ShipConfigDiscoveryTest {
     void findShipStats() {
 
         ShipModule.getBasicModules();
-        final Ship ship = Ship.LAKONMINER;
+        final Ship ship = Ship.EXPLORER_NX;
         //Fill in MASS and FUEL_RESERVE on the ship
 //        Ship.ALL.stream().forEach(sheep -> log.debug(sheep.getShipType() + " " + (sheep.getEmptyMass() + sheep.getCurrentFuel() + sheep.getCurrentFuelReserve())));
 
@@ -46,13 +46,13 @@ public class ShipConfigDiscoveryTest {
 //            Double manoeuver = (Double)sheep.getAttributes().get(MANOEUVRABILITY);
 //            log.debug(sheep.getShipType() + ": " + manoeuver + " sum: " + (pitch*roll*yaw) + " fwd: " + pitch + " rev: " + roll + " lat: " + yaw);
 //        });
-        findTopSpeed(ship, 271.0, 0.5);
-        findBoostSpeed(ship, 366.0, 0.5);
-        findPitch(ship, 25.05, 0.5);
-        findRoll(ship, 37.57, 0.5);
-        findYaw(ship, 22.04, 0.5);
-        findShieldStrength(ship, 271.0, 0.5);
-        findArmourStrength(ship, 630.0, 0.5);
+        findTopSpeed(ship, 205.0, 0.5);
+        findBoostSpeed(ship, 283.0, 0.5);
+        findPitch(ship, 29.28, 0.5);
+        findRoll(ship, 73.21, 0.5);
+        findYaw(ship, 13.67, 0.5);
+        findShieldStrength(ship, 195.7, 0.5);
+        findArmourStrength(ship, 621.0, 0.5);
 // Requires TOP_SPEED to be set
         findMinThrust(ship, 190.0, 0.5);
 //        findMinPitch(ship, 14.12, 0.5D);
@@ -364,11 +364,15 @@ public class ShipConfigDiscoveryTest {
 
                     }
                     log.info("Value of {} results in shields of {} which is within range", value, shields);
-                    var shields2 = shieldReinforcement + ((value + delta)
-                            * getEffectiveShieldBoostMultiplier(totalShieldBoost)
-                            * getMassCurveMultiplier((double) ship.getAttributes().getOrDefault(MASS, 0D), new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumStrength, optimalStrength, maximumStrength)));
-                    var inRange = within(shields2, expected, delta);
-                    log.info("Value of {} results in shields of {} which is {}within range", value + delta, shields2, (!inRange) ? "not " : "");
+                    var shields2 = shields;
+                    while (within(shields2, expected, delta) && value < 1000D) {
+                        final Double shieldValue = value = value + delta;
+                         shields2 = shieldReinforcement + (shieldValue
+                                * getEffectiveShieldBoostMultiplier(totalShieldBoost)
+                                * getMassCurveMultiplier((double) ship.getAttributes().getOrDefault(MASS, 0D), new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumStrength, optimalStrength, maximumStrength)));
+                        var inRange = within(shields2, expected, delta);
+                        log.info("Value of {} results in shields of {} which is {}within range", value, shields2, (!inRange) ? "not " : "");
+                    }
                 });
 
     }

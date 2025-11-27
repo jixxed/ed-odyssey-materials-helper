@@ -1885,14 +1885,14 @@ public class Ship {
     public static final Ship EXPLORER_NX = new Ship(//Caspian Explorer
             ShipType.EXPLORER_NX,
             0,
-            0,
+            199857777,
             ShipSpecs.EXPLORER_NX,
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(0).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(1).slotSize(2).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(2).slotSize(2).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(3).slotSize(2).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(4).slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(3).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(4).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(5).slotSize(2).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(0).y(0).index(6).slotSize(2).build()
             ),
@@ -1915,9 +1915,9 @@ public class Ship {
                     Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(7).shipModule(FuelTank.FUEL_TANK_7_C).build()
             ),
             List.of(
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(7).build(),//Slot01_Size7
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(6).build(),//Slot02_Size6
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(6).build(),//Slot03_Size6
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(7).shipModule(CargoRack.CARGO_RACK_6_E).build(),//Slot01_Size7
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(6).shipModule(ShieldGenerator.SHIELD_GENERATOR_6_E).build(),//Slot02_Size6
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),//Slot03_Size6
                     Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(5).build(),//Slot04_Size5
                     Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(5).build(),//Slot05_Size5
                     Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(5).build(),//Slot06_Size5
@@ -1927,8 +1927,8 @@ public class Ship {
                     Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(3).build(),//Slot10_Size3
                     Slot.builder().slotType(SlotType.OPTIONAL).index(10).slotSize(2).build(),//Slot11_Size2
                     Slot.builder().slotType(SlotType.OPTIONAL).index(11).slotSize(1).build(),//Slot12_Size1
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(12).slotSize(1).build(),//Slot13_Size1
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(13).slotSize(1).build()//Slot14_Size1
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(12).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build(),//Slot13_Size1
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(13).slotSize(1).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build()//Slot14_Size1
             ));
     public static final List<Ship> ALL = List.of(
             SIDE_WINDER,
