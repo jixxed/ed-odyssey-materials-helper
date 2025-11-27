@@ -42,7 +42,7 @@ public class ShipStats extends Stats implements DestroyableEventTemplate {
         addTitle("ship.stats.ship");
         this.price = createValueLabel("ship.stats.price.price.value", Formatters.NUMBER_FORMAT_0.format(0D));
         this.rebuy = createValueLabel("ship.stats.price.rebuy.value", Formatters.NUMBER_FORMAT_0.format(0D));
-        this.mass = createValueLabel("ship.stats.ship.mass.value", Formatters.NUMBER_FORMAT_0.format(0D));
+        this.mass = createValueLabel("ship.stats.ship.mass.value", Formatters.NUMBER_FORMAT_1.format(0D));
         this.mlf = createValueLabel("ship.stats.ship.mlf.value", Formatters.NUMBER_FORMAT_0.format(0D));
         this.slf = createValueLabel("ship.stats.ship.slf.value", Formatters.NUMBER_FORMAT_0.format(0D));
         this.crew = createValueLabel("ship.stats.ship.crew.value", Formatters.NUMBER_FORMAT_0.format(0D));
@@ -145,7 +145,7 @@ public class ShipStats extends Stats implements DestroyableEventTemplate {
     protected void update() {
         this.price.addBinding(this.price.textProperty(), LocaleService.getStringBinding("ship.stats.price.price.value", Formatters.NUMBER_FORMAT_0.format(calculatePrice())));
         this.rebuy.addBinding(this.rebuy.textProperty(), LocaleService.getStringBinding("ship.stats.price.rebuy.value", Formatters.NUMBER_FORMAT_0.format(calculateRebuy())));
-        this.mass.addBinding(this.mass.textProperty(), LocaleService.getStringBinding("ship.stats.ship.mass.value", Formatters.NUMBER_FORMAT_0.format(calculateMass())));
+        this.mass.addBinding(this.mass.textProperty(), LocaleService.getStringBinding("ship.stats.ship.mass.value", Formatters.NUMBER_FORMAT_1.format(calculateMass())));
         this.mlf.addBinding(this.mlf.textProperty(), LocaleService.getStringBinding("ship.stats.ship.mlf.value", Formatters.NUMBER_FORMAT_0.format(calculateMlf())));
         this.slf.addBinding(this.slf.textProperty(), LocaleService.getStringBinding(calculateSlf() ? "ship.view.yes" : "ship.view.no"));
         this.crew.addBinding(this.crew.textProperty(), LocaleService.getStringBinding("ship.stats.ship.crew.value", Formatters.NUMBER_FORMAT_0.format(calculateCrew())));

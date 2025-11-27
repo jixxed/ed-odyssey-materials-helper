@@ -1905,7 +1905,7 @@ public class Ship {
                     ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(0).y(0).index(5).slotSize(0).build()
             ),
             List.of(
-                    Slot.builder().slotType(SlotType.CORE_ARMOUR).index(0).slotSize(1).shipModule(Armour.EXPLORER_NX_ARMOUR_GRADE_1).build(),
+                    Slot.builder().slotType(SlotType.CORE_ARMOUR).index(0).slotSize(1).shipModule(Armour.EXPLORER_NX_ARMOUR_GRADE_1_DEFAULT).build(),
                     Slot.builder().slotType(SlotType.CORE_POWER_PLANT).index(1).slotSize(8).shipModule(PowerPlant.POWER_PLANT_8_E).build(),
                     Slot.builder().slotType(SlotType.CORE_THRUSTERS).index(2).slotSize(7).shipModule(Thrusters.THRUSTERS_7_E).build(),
                     Slot.builder().slotType(SlotType.CORE_FRAME_SHIFT_DRIVE).index(3).slotSize(8).shipModule(FrameShiftDrive.FRAME_SHIFT_DRIVE_OVERCHARGE_8_E).build(),

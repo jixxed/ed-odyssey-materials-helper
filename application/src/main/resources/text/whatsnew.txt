@@ -1,4 +1,10 @@
-Version 3.1.4
+Version 3.1.6
+-------------
+Removed non-existent Caspian Explorer Armours
+Swapped Mk2 with Mk1 for Caspian Explorer Armours
+Implement graceful handling of missing core modules. In case your module no longer exists in the app, the default loadout module is restored.
+
+Version 3.1.5
 -------------
 Updated stats for Caspian Explorer (WIP)
 Updated stats for FSD and armour (WIP)

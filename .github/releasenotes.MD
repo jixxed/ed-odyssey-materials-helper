@@ -11,6 +11,7 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Updated stats for Caspian Explorer (WIP)
-Updated stats for FSD and armour (WIP)
+Removed non-existent Caspian Explorer Armours
+Swapped Mk2 with Mk1 for Caspian Explorer Armours
+Implement graceful handling of missing core modules. In case your module no longer exists in the app, the default loadout module is restored.
 ```

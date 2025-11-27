@@ -2,10 +2,7 @@ package nl.jixxed.eliteodysseymaterials.service.ships;
 
 import com.google.common.primitives.Ints;
 import nl.jixxed.eliteodysseymaterials.domain.*;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Modification;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
+import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 
 import java.math.BigDecimal;
@@ -68,31 +65,31 @@ public class ShipMapper {
         // Create defensive copies to avoid concurrent modification
         new ArrayList<>(shipConfiguration.getCoreSlots()).forEach(shipConfigurationSlot -> {
             final Slot slot = ship.getCoreSlots().get(shipConfigurationSlot.getIndex());
-            mapSlot(shipConfigurationSlot, slot);
+            mapSlot(shipConfigurationSlot, slot, shipConfiguration.getShipType(), true);
         });
         new ArrayList<>(shipConfiguration.getOptionalSlots()).forEach(shipConfigurationSlot -> {
             final Slot slot = ship.getOptionalSlots().get(shipConfigurationSlot.getIndex());
-            mapSlot(shipConfigurationSlot, slot);
+            mapSlot(shipConfigurationSlot, slot, shipConfiguration.getShipType(), false);
         });
         new ArrayList<>(shipConfiguration.getHardpointSlots()).forEach(shipConfigurationSlot -> {
             final Slot slot = ship.getHardpointSlots().get(shipConfigurationSlot.getIndex());
-            mapSlot(shipConfigurationSlot, slot);
+            mapSlot(shipConfigurationSlot, slot, shipConfiguration.getShipType(), false);
         });
         new ArrayList<>(shipConfiguration.getUtilitySlots()).forEach(shipConfigurationSlot -> {
             final Slot slot = ship.getUtilitySlots().get(shipConfigurationSlot.getIndex());
-            mapSlot(shipConfigurationSlot, slot);
+            mapSlot(shipConfigurationSlot, slot, shipConfiguration.getShipType(), false);
         });
-        mapSlot(shipConfiguration.getCargoHatch(), ship.getCargoHatch());
+        mapSlot(shipConfiguration.getCargoHatch(), ship.getCargoHatch(), shipConfiguration.getShipType(), false);
         ship.setCurrentFuelReserve(shipConfiguration.getCurrentFuelReserve());
         ship.setCurrentCargo(shipConfiguration.getCurrentCargo());
         ship.setCurrentFuel(shipConfiguration.getCurrentFuel());
         return ship;
     }
 
-    private static void mapSlot(ShipConfigurationSlot shipConfigurationSlot, Slot slot) {
+    private static void mapSlot(ShipConfigurationSlot shipConfigurationSlot, Slot slot, ShipType shipType, boolean isCore) {
         final Optional<ShipModule> shipModule1 = ShipModule.getModules(slot.getSlotType()).stream().filter(shipModule -> shipModule.getId().equals(shipConfigurationSlot.getId())).findFirst();
         final Optional<ShipModule> oldShipModule = Optional.ofNullable(shipConfigurationSlot.getOldModule()).map(mod -> ShipModule.getModules(slot.getSlotType()).stream().filter(shipModule -> shipModule.getId().equals(mod.getId())).findFirst()).orElse(Optional.empty());
-        shipModule1.ifPresent(shipModule2 -> {
+        shipModule1.ifPresentOrElse(shipModule2 -> {
             ShipModule shipModule = shipModule2.Clone();
             shipConfigurationSlot.getModification().forEach(shipConfigurationModification -> {
                 if (!shipConfigurationModification.getType().isPreEngineered()) {// no need to double apply pre-engineering
@@ -124,6 +121,12 @@ public class ShipMapper {
 
             }
             slot.setShipModule(shipModule);
+        }, () -> {
+            if(isCore) {
+                Ship baseShip = Ship.ALL.stream().filter(ship -> ship.getShipType().equals(shipType)).findFirst().orElseThrow(IllegalArgumentException::new);
+                final Slot baseSlot = baseShip.getCoreSlots().get(shipConfigurationSlot.getIndex());
+                slot.setShipModule(baseSlot.getShipModule().Clone());
+            }
         });
         oldShipModule.ifPresentOrElse(shipModule2 -> {
             ShipModule shipModule = shipModule2.Clone();
