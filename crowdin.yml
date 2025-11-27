@@ -8,7 +8,7 @@ files:
   - source: "/application/src/main/resources/locale/**/*.csv"
     translation: "/application/src/main/resources/locale/**/%file_name%.%file_extension%"
     type: csv
-    scheme: identifier,source_phrase,,de,es-ES,fr,pt-PT,ru,zh-CN
+    scheme: identifier,source_phrase,,de,es-ES,fr,pt-PT,ru,zh-CN,ka
     first_line_contains_header: true
     languages_mapping:
       locale:
@@ -18,3 +18,4 @@ files:
         pt-PT: pt
         ru: ru
         zh-CN: zh
+        ka: ka
