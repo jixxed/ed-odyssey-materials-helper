@@ -11,5 +11,8 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Fixed stats for size 8 FSDs
+Add Capsian Explorer images and slot locations
+Finalized ship stats for Capsian Explorer
+Updated stats for new FSD's, gravity thrusters and armours
+Updated weapon damage, rate of fire and/or magazine size for AR-50, C-44, Eclipse and Oppressor
 ```
