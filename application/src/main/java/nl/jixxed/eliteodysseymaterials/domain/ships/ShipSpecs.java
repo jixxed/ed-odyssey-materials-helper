@@ -1897,8 +1897,8 @@ public class ShipSpecs {
     );
 
     public static final Map<HorizonsModifier, Object> EXPLORER_NX = Map.ofEntries(
-            Map.entry(HorizonsModifier.TOP_SPEED, 208.0),
-            Map.entry(HorizonsModifier.BOOST_SPEED, 287.0),
+            Map.entry(HorizonsModifier.TOP_SPEED, 210.0),
+            Map.entry(HorizonsModifier.BOOST_SPEED, 290.0),
             Map.entry(HorizonsModifier.MANOEUVRABILITY, 2.0),
             Map.entry(HorizonsModifier.SHIELDS, 500.0),
             Map.entry(HorizonsModifier.ARMOUR, 345.0),
