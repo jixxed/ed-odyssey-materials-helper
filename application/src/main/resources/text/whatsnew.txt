@@ -1,5 +1,6 @@
 Version 3.1.8
 -------------
+Updated finalized stats for new FSD's, gravity thrusters and armours
 Updated weapon damage, rate of fire and/or magazine size for AR-50, C-44, Eclipse and Oppressor
 
 Version 3.1.7
