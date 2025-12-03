@@ -1884,7 +1884,7 @@ public class Ship {
             ));
     public static final Ship EXPLORER_NX = new Ship(//Caspian Explorer
             ShipType.EXPLORER_NX,
-            0,
+            194322997,
             199857777,
             ShipSpecs.EXPLORER_NX,
             List.of(
@@ -2261,7 +2261,8 @@ public class Ship {
                 || this.shipType == ShipType.CORSAIR
                 || this.shipType == ShipType.PANTHER_CLIPPER_MK_II
                 || this.shipType == ShipType.TYPE_8
-                || this.shipType == ShipType.LAKONMINER;
+                || this.shipType == ShipType.LAKONMINER
+                || this.shipType == ShipType.EXPLORER_NX;
 
     }
 }

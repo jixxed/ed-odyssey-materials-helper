@@ -53,7 +53,7 @@ public enum ShipType {
     CORSAIR(0, "Corsair", ShipSize.M, false, 1),
     PANTHER_CLIPPER_MK_II(0, "PantherMkII", ShipSize.L, true, 3),
     LAKONMINER(0, "Lakonminer", ShipSize.M, true, 2),
-    EXPLORER_NX(0, "Explorer_nx", ShipSize.L, true, 2),;
+    EXPLORER_NX(0, "Explorer_nx", ShipSize.L, true, 3),;
 
     final long internalID;
     final String internalName;

@@ -210,15 +210,12 @@ public class CAPIService {
             this.oAuth2AccessToken = this.oAuth20Service.refreshAccessToken(this.oAuth2AccessToken.getRefreshToken());
             saveToken(this.oAuth2AccessToken);
             Platform.runLater(() -> this.active.set(true));
-        } catch (final InterruptedException e) {
-            log.error("InterruptedException", e);
-            Platform.runLater(() -> this.active.set(false));
-        } catch (final ExecutionException e) {
-            log.error("ExecutionException", e);
-            Platform.runLater(() -> this.active.set(false));
-        } catch (final IOException e) {
-            log.error("IOException", e);
-            Platform.runLater(() -> this.active.set(false));
+        } catch (final InterruptedException | ExecutionException | IOException e) {
+            log.error("Failed to refresh token", e);
+            Platform.runLater(() -> {
+                this.active.set(false);
+                NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.auth.fail"));
+            });
         }
     }
 
