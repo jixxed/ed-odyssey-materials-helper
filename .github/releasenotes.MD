@@ -11,8 +11,9 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Add Capsian Explorer images and slot locations
-Finalized ship stats for Capsian Explorer
-Updated stats for new FSD's, gravity thrusters and armours
-Updated weapon damage, rate of fire and/or magazine size for AR-50, C-44, Eclipse and Oppressor
+Correct Capsian Explorer top/boost speeds
+Fix Mk2 FSD fuel stats so it also calculates correctly when fuel < max fuel use
+Changed jump range to show actual range(as depicted in the maintenance panel)
+- Outfitting and the right hand panel show the wrong values and can be multiple Ly off.
+Added a tooltip to clarify this
 ```

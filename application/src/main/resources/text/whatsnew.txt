@@ -1,3 +1,11 @@
+Version 3.1.9
+-------------
+Correct Capsian Explorer top/boost speeds
+Fix Mk2 FSD fuel stats so it also calculates correctly when fuel < max fuel use
+Changed jump range to show actual range(as depicted in the maintenance panel)
+- Outfitting and the right hand panel show the wrong values and can be multiple Ly off.
+Added a tooltip to clarify this
+
 Version 3.1.8
 -------------
 Add Capsian Explorer images and slot locations

@@ -3,11 +3,12 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 import javafx.beans.binding.StringBinding;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.NumberAxisBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
+import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
 import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.FrameShiftDriveBooster;
@@ -18,9 +19,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.HoverableLineChart;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,7 +46,12 @@ public class JumpStats extends Stats implements DestroyableTemplate {
     public void initComponents() {
         this.getStyleClass().add("jump-stats");
         addTitle("ship.stats.jump");
-        jumpRangeIndicator = new RangeIndicator(calculateJumpRangeMin(), calculateJumpRangeCurrent(), calculateJumpRangeMax(), "ship.stats.jumprange", "ship.stats.jumprange.value");
+        jumpRangeIndicator = new RangeIndicator(calculateJumpRangeMinMaintenance(), calculateJumpRangeCurrentMaintenance(), calculateJumpRangeMaxMaintenance(), "ship.stats.jumprange", "ship.stats.jumprange.value");
+        DestroyableTooltip tooltip = TooltipBuilder.builder()
+                .withText("ship.stats.jumprange.explain")
+                .withShowDelay(Duration.ZERO)
+                .build();
+        tooltip.install(jumpRangeIndicator);
         totalJumpRangeIndicator = new RangeIndicator(calculateTotalJumpRangeMin(), calculateTotalJumpRangeCurrent(), calculateTotalJumpRangeMax(), "ship.stats.totaljumprange", "ship.stats.totaljumprange.value");
         totalJumpRangeIndicator2 = new RangeIndicator(calculateTotalJumpRangeMin(), calculateTotalJumpRangeCurrent(), calculateTotalJumpRangeMax(), "ship.stats.totaljumprange", "ship.stats.totaljumprange.value");
         DestroyableHBox box = BoxBuilder.builder()
@@ -127,18 +131,44 @@ public class JumpStats extends Stats implements DestroyableTemplate {
                 .orElse(0.0D);
     }
 
-    public double calculateJumpRangeMin() {
-        return getShip().map(ship -> calculateJumpRange(ship.getEmptyMass()/* + ship.getMaxFuelReserve()*/ + ship.getMaxCargo() + ship.getMaxFuel(), ship.getMaxFuel()) * getSynthesisBoost()).orElse(0.0D);
-    }
-
-    public double calculateJumpRangeCurrent() {
-        return getShip().map(ship -> calculateJumpRange(ship.getEmptyMass() + ship.getCurrentCargo() + ship.getCurrentFuel() + ship.getCurrentFuelReserve(), ship.getCurrentFuel()) * getSynthesisBoost()).orElse(0.0D);
-    }
-
-    public double calculateJumpRangeMax() {
+    public double calculateJumpRangeMinOutfitting() {
         return getShip().map(ship -> {
-            final double fuel = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().filter(Slot::isOccupied).map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.MAX_FUEL_PER_JUMP, 1D, true)).orElse(1D);
-            return calculateJumpRange(ship.getEmptyMass() + fuel, fuel) * getSynthesisBoost();
+            final double maxFuelPerJump = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().filter(Slot::isOccupied).map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.MAX_FUEL_PER_JUMP, 1D, true)).orElse(1D);
+            return calculateJumpRange(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo(), maxFuelPerJump) * getSynthesisBoost();
+        }).orElse(0.0D);
+    }
+
+    public double calculateJumpRangeCurrentOutfitting() {
+        return getShip().map(ship -> {
+            final double maxFuelPerJump = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().filter(Slot::isOccupied).map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.MAX_FUEL_PER_JUMP, 1D, true)).orElse(1D);
+            return calculateJumpRange(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), Math.min(ship.getCurrentFuel() + ship.getCurrentFuelReserve(), maxFuelPerJump)) * getSynthesisBoost();
+        }).orElse(0.0D);
+    }
+
+    public double calculateJumpRangeMaxOutfitting() {
+        return getShip().map(ship -> {
+            final double maxFuelPerJump = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().filter(Slot::isOccupied).map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.MAX_FUEL_PER_JUMP, 1D, true)).orElse(1D);
+            return calculateJumpRange(ship.getEmptyMass() + maxFuelPerJump, maxFuelPerJump) * getSynthesisBoost();
+        }).orElse(0.0D);
+    }
+
+    public double calculateJumpRangeMinMaintenance() {
+        return getShip().map(ship -> {
+            final double maxFuelPerJump = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().filter(Slot::isOccupied).map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.MAX_FUEL_PER_JUMP, 1D, true)).orElse(1D);
+            return calculateJumpRange(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getMaxCargo(), Math.min(ship.getCurrentFuel(), maxFuelPerJump)) * getSynthesisBoost();
+        }).orElse(0.0D);
+    }
+
+    public double calculateJumpRangeCurrentMaintenance() {
+        return getShip().map(ship -> {
+            final double maxFuelPerJump = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().filter(Slot::isOccupied).map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.MAX_FUEL_PER_JUMP, 1D, true)).orElse(1D);
+            return calculateJumpRange(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo(), Math.min(ship.getCurrentFuel(), maxFuelPerJump)) * getSynthesisBoost();
+        }).orElse(0.0D);    }
+
+    public double calculateJumpRangeMaxMaintenance() {
+        return getShip().map(ship -> {
+            final double maxFuelPerJump = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().filter(Slot::isOccupied).map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.MAX_FUEL_PER_JUMP, 1D, true)).orElse(1D);
+            return calculateJumpRange(ship.getEmptyMass() + ship.getCurrentFuel(), Math.min(ship.getCurrentFuel(), maxFuelPerJump)) * getSynthesisBoost();
         }).orElse(0.0D);
     }
 
@@ -156,10 +186,10 @@ public class JumpStats extends Stats implements DestroyableTemplate {
             final double fuelCap = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().filter(Slot::isOccupied).map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.MAX_FUEL_PER_JUMP, 1D, true)).orElse(1D);
             double fuel = ship.getCurrentFuel();
             while (fuel > fuelCap) {
-                range += calculateJumpRange(ship.getEmptyMass() + ship.getCurrentCargo() + fuel + ship.getCurrentFuelReserve(), fuel);
+                range += calculateJumpRange(ship.getEmptyMass() + fuel + ship.getCurrentCargo(), Math.min(fuel, fuelCap)) * getSynthesisBoost();
                 fuel -= fuelCap;
             }
-            return (range + calculateJumpRange(ship.getEmptyMass() + ship.getCurrentCargo() + fuel + ship.getCurrentFuelReserve(), fuel))  * getSynthesisBoost();
+            return range + calculateJumpRange(ship.getEmptyMass() + fuel + ship.getCurrentCargo(), Math.min(fuel, fuelCap)) * getSynthesisBoost();
         }).orElse(0.0D);
 
     }
@@ -170,10 +200,10 @@ public class JumpStats extends Stats implements DestroyableTemplate {
             final double fuelCap = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().filter(Slot::isOccupied).map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.MAX_FUEL_PER_JUMP, 1D, true)).orElse(1D);
             double fuel = ship.getMaxFuel();
             while (fuel > fuelCap) {
-                range += calculateJumpRange(ship.getEmptyMass() + fuel, fuel);
+                range += calculateJumpRange(ship.getEmptyMass() + fuel, Math.min(fuel, fuelCap)) * getSynthesisBoost();
                 fuel -= fuelCap;
             }
-            return (range + calculateJumpRange(ship.getEmptyMass() + fuel, fuel)) * getSynthesisBoost();
+            return (range + calculateJumpRange(ship.getEmptyMass() + fuel, Math.min(fuel, fuelCap))) * getSynthesisBoost();
         }).orElse(0.0D);
     }
 
@@ -188,7 +218,7 @@ public class JumpStats extends Stats implements DestroyableTemplate {
         }).orElse(0.0D);
     }
 
-    private double calculateJumpDistance(final double mass, final double fuel, final double optimisedMass, final double fuelMultiplier, final double fuelPower, final double jumpRangeIncrease) {
+    public double calculateJumpDistance(final double mass, final double fuel, final double optimisedMass, final double fuelMultiplier, final double fuelPower, final double jumpRangeIncrease) {
         if (fuel <= 0D) {
             return 0D;
         }
@@ -198,7 +228,7 @@ public class JumpStats extends Stats implements DestroyableTemplate {
 
     @Override
     protected void update() {
-        this.jumpRangeIndicator.updateValues(calculateJumpRangeMin(), calculateJumpRangeCurrent(), calculateJumpRangeMax());
+        this.jumpRangeIndicator.updateValues(calculateJumpRangeMinMaintenance(), calculateJumpRangeCurrentMaintenance(), calculateJumpRangeMaxMaintenance());
         this.totalJumpRangeIndicator.updateValues(calculateTotalJumpRangeMin(), calculateTotalJumpRangeCurrent(), calculateTotalJumpRangeMax());
         this.totalJumpRangeIndicator2.updateValues(calculateTotalJumpRangeMin(), calculateTotalJumpRangeCurrent(), calculateTotalJumpRangeMax());
 
