@@ -541,6 +541,8 @@ public class ARService {
                 case MAIN_CHEMICALS -> 10;
                 case NONE -> 0;
             };
+            boolean fuzzy = PreferencesService.getPreference(PreferenceConstants.AR_SEARCH_METHOD, "EXACT").equals("FUZZY");
+            int fuzzyScore = PreferencesService.getPreference(PreferenceConstants.AR_FUZZY_SCORE, 90);
             for (int index = 0; index < lines; index++) {
                 final nl.jixxed.eliteodysseymaterials.service.ar.Rectangle textArea = (bartenderMenu.getSubMenu().equals(BartenderMenuType.SUBMENU)) ? bartenderMenu.getSubMenuEntryText(index) : bartenderMenu.getMenuEntryText(index);
                 BufferedImage textImage = bartenderMenuCapture.getSubimage((int) textArea.getX(), (int) textArea.getY(), (int) textArea.getWidth(), (int) textArea.getHeight());
@@ -552,18 +554,19 @@ public class ARService {
                 Imgproc.threshold(image, temp, 50, 255, Imgproc.THRESH_BINARY_INV + THRESH_OTSU);
                 textImage = CvHelper.createBufferedImage(temp);
                 String textAsset = bartenderMenuItemToString(textImage);
-                Asset asset = Asset.forLocalizedName(textAsset, locale);
+                Asset asset;
+                asset = getAsset(fuzzy, textAsset, locale, fuzzyScore);
                 if (asset.isUnknown()) {
                     Imgproc.threshold(image, temp, 50, 255, Imgproc.THRESH_BINARY_INV + THRESH_OTSU);
                     textImage = CvHelper.createBufferedImage(temp);
                     textAsset = bartenderMenuItemToString(textImage);
-                    asset = Asset.forLocalizedName(textAsset, locale);
+                    asset = getAsset(fuzzy, textAsset, locale, fuzzyScore);
                 }
                 if (asset.isUnknown()) {
                     Imgproc.threshold(image, temp, 127, 255, Imgproc.THRESH_BINARY + THRESH_OTSU);
                     textImage = CvHelper.createBufferedImage(temp);
                     textAsset = bartenderMenuItemToString(textImage);
-                    asset = Asset.forLocalizedName(textAsset, locale);
+                    asset = getAsset(fuzzy, textAsset, locale, fuzzyScore);
                 }
                 image.release();
                 temp.release();
@@ -576,6 +579,22 @@ public class ARService {
             throw new RuntimeException(e);
         }
 
+    }
+
+    private static Asset getAsset(boolean fuzzy, String textAsset, Locale locale, int fuzzyScore) {
+        Asset asset;
+        if (fuzzy) {
+            BoundExtractedResult<Asset> extractedResult = Asset.forLocalizedNameSpaceInsensitiveFuzzy(textAsset, locale);
+            log.info("Fuzzy matched '{}' to '{}' with score {}", textAsset, extractedResult.getReferent(), extractedResult.getScore());
+            if (extractedResult.getScore() >= fuzzyScore) {
+                asset = extractedResult.getReferent();
+            } else {
+                throw new IllegalArgumentException("Fuzzy score too low");
+            }
+        } else {
+            asset = Asset.forLocalizedNameSpaceInsensitive(textAsset, locale);
+        }
+        return asset;
     }
 
     private static String bartenderMenuItemToString(final BufferedImage bartenderMenuCapture) throws TesseractException {

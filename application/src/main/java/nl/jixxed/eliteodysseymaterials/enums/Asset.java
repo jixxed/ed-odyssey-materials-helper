@@ -2,10 +2,13 @@ package nl.jixxed.eliteodysseymaterials.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import me.xdrop.fuzzywuzzy.FuzzySearch;
+import me.xdrop.fuzzywuzzy.model.BoundExtractedResult;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.stream.Stream;
 
 @AllArgsConstructor
 @Getter
@@ -99,6 +102,19 @@ public enum Asset implements OdysseyMaterial {
                 .filter((Asset asset) -> LocaleService.getLocalizedStringForLocale(locale, asset.getLocalizationKey()).equalsIgnoreCase(name))
                 .findFirst()
                 .orElse(Asset.UNKNOWN);
+    }
+
+    public static Asset forLocalizedNameSpaceInsensitive(final String name, final Locale locale) {
+        return Arrays.stream(Asset.values())
+                .filter((Asset asset) -> LocaleService.getLocalizedStringForLocale(locale, asset.getLocalizationKey()).replaceAll("\\s", "").equalsIgnoreCase(name.replaceAll("\\s", "")))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static BoundExtractedResult<Asset> forLocalizedNameSpaceInsensitiveFuzzy(final String name, final Locale locale) {
+        return (BoundExtractedResult<Asset>)(BoundExtractedResult<?>) FuzzySearch.extractOne(name.replaceAll("\\s", ""), Arrays.stream(Asset.values()).toList(),
+                asset -> LocaleService.getLocalizedStringForLocale(locale, asset.getLocalizationKey()).replaceAll("\\s", ""));
     }
 
     public boolean isType(final AssetType assetType) {
