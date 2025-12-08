@@ -35,10 +35,10 @@ public final class HorizonsModuleWishlistBlueprint extends HorizonsWishlistBluep
     }
 
     public void setBlueprintGradePercentageToComplete(final HorizonsBlueprintGrade grade, final Double percentage) {
-        if (percentage.equals(0D)) {
+        if (this.percentageToComplete != null && percentage.equals(0D)) {
             this.percentageToComplete.remove(grade);
             return;
-        } else if (percentage > 0D) {
+        } else if (this.percentageToComplete != null && percentage > 0D) {
             this.percentageToComplete.put(grade, percentage);
             return;
         }
