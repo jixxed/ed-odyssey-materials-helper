@@ -20,7 +20,7 @@ plugins {
     id 'io.freefair.lombok' version '9.1.0'
     id 'idea' // optional (to generate IntelliJ IDEA project files)
     id 'application'
-    id 'org.beryx.jlink' version '3.1.3'
+    id 'org.beryx.jlink' version '3.1.5'
     id 'org.gradlex.extra-java-module-info'
     id 'org.jsonschema2pojo' version '1.2.2'
     id 'net.rdrei.android.buildtimetracker' version '0.11.0'
