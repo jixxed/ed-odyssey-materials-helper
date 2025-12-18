@@ -184,9 +184,6 @@ public class ArmourStats extends Stats implements DestroyableTemplate {
                         .reduce(1D, (a, b) -> a *= 1 - b)
         ).orElse(1D);
         return (1 - protection) * 100;
-//        stats.integ_imrp += slot.getEffectiveAttrValue('integ');
-//        stats.dmgprot *= (1 - (slot.getEffectiveAttrValue('dmgprot') / 100));
-//        var mrpArmRes = (1 - dmgprot) * 100;
     }
 
     private double calculateMRPIntegrity() {
