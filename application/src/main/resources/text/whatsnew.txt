@@ -1,3 +1,8 @@
+Version 3.1.10
+-------------
+Add fuzzy text matching support to bartender menu
+Fix exporting things to xlsx
+
 Version 3.1.9
 -------------
 Correct Capsian Explorer top/boost speeds

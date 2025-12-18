@@ -11,9 +11,6 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Correct Capsian Explorer top/boost speeds
-Fix Mk2 FSD fuel stats so it also calculates correctly when fuel < max fuel use
-Changed jump range to show actual range(as depicted in the maintenance panel)
-- Outfitting and the right hand panel show the wrong values and can be multiple Ly off.
-Added a tooltip to clarify this
+Add fuzzy text matching support to bartender menu
+Fix exporting things to xlsx
 ```
