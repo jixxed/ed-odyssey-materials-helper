@@ -1,3 +1,7 @@
+Version 3.1.12
+-------------
+Fixed a bug where calculated module stats were used instead of existing stats from the journal
+
 Version 3.1.11
 -------------
 Updated armour resistance calculations to match ingame values
