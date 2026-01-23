@@ -2,8 +2,10 @@ package nl.jixxed.eliteodysseymaterials.domain.ships;
 
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Optional;
@@ -47,6 +49,14 @@ public abstract class HardpointModule extends ExternalModule {
 
     @Override
     public String toString() {
-        return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey()) + " " + getModuleSize().intValue() + getModuleClass().name() + "-" + getMounting().getShortName();
+        String name = LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey()) + " " + getModuleSize().intValue() + getModuleClass().name() + "-" + getMounting().getShortName();        //add engineered / experimental
+        if (!getModifications().isEmpty()) {
+            name += " [" + shortenName(getModifications().getFirst().getModification().name()) + " G" +getModifications().getFirst().getGrade().getGrade() + " @ " + Formatters.NUMBER_FORMAT_0.format(getModifications().getFirst().getModificationCompleteness().map(BigDecimal::doubleValue).orElse(0D) * 100)+ "%";
+            if (!getExperimentalEffects().isEmpty()) {
+                name += " + " + shortenName(getExperimentalEffects().getFirst().name());
+            }
+            name +=  "]";
+        }
+        return name;
     }
 }

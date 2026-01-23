@@ -7,8 +7,10 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -534,6 +536,15 @@ public class Armour extends CoreModule {
 
     @Override
     public String toString() {
-        return LocaleService.getLocalizedStringForCurrentLocale(shipType.getLocalizationKey()) + " " + LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey()) + " " + getModuleSize().intValue() + getModuleClass().name();
+        String name = LocaleService.getLocalizedStringForCurrentLocale(shipType.getLocalizationKey()) + " " + LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey()) + " " + getModuleSize().intValue() + getModuleClass().name();
+        //add engineered / experimental
+        if (!getModifications().isEmpty()) {
+            name += " [" + shortenName(getModifications().getFirst().getModification().name()) + " G" +getModifications().getFirst().getGrade().getGrade() + " @ " + Formatters.NUMBER_FORMAT_0.format(getModifications().getFirst().getModificationCompleteness().map(BigDecimal::doubleValue).orElse(0D) * 100)+ "%";
+            if (!getExperimentalEffects().isEmpty()) {
+                name += " + " + shortenName(getExperimentalEffects().getFirst().name());
+            }
+            name +=  "]";
+        }
+        return name;
     }
 }

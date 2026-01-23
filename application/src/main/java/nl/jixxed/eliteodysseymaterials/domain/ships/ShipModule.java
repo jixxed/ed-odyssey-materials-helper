@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.ShipModuleService;
 import nl.jixxed.eliteodysseymaterials.service.ships.PriceService;
@@ -539,7 +540,26 @@ public abstract class ShipModule implements Serializable {
 
     @Override
     public String toString() {
-        return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey()) + " " + getModuleSize().intValue() + getModuleClass().name();
+        String name = LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey()) + " " + getModuleSize().intValue() + getModuleClass().name();
+        //add engineered / experimental
+        if (!modifications.isEmpty()) {
+            name += " [" + shortenName(modifications.getFirst().getModification().name()) + " G" +modifications.getFirst().getGrade().getGrade() + " @ " + Formatters.NUMBER_FORMAT_0.format(modifications.getFirst().getModificationCompleteness().map(BigDecimal::doubleValue).orElse(0D) * 100)+ "%";
+            if (!experimentalEffects.isEmpty()) {
+                name += " + " + shortenName(experimentalEffects.getFirst().name());
+            }
+            name +=  "]";
+        }
+        return name;
+    }
+
+    protected String shortenName(String name){
+        // example: ANGLED_PLATING is converted to AP
+        StringBuilder sb = new StringBuilder();
+        String[] parts = name.split("_");
+        for (String part : parts) {
+            sb.append(part.charAt(0));
+        }
+        return sb.toString();
     }
 
     public boolean isSame(ShipModule other) {

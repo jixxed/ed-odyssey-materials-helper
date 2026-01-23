@@ -4,6 +4,7 @@ import javafx.css.PseudoClass;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
@@ -12,14 +13,6 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import java.text.NumberFormat;
 
 public class Shield extends DestroyableStackPane implements DestroyableTemplate {
-
-    private static final NumberFormat NUMBER_FORMAT_2 = NumberFormat.getNumberInstance();
-
-    static {
-        NUMBER_FORMAT_2.setMaximumFractionDigits(2);
-        NUMBER_FORMAT_2.setMinimumFractionDigits(2);
-        NUMBER_FORMAT_2.setGroupingUsed(false);
-    }
 
     private double raw;
     private double kinetic;
@@ -175,11 +168,11 @@ public class Shield extends DestroyableStackPane implements DestroyableTemplate 
 
     public void update() {
         if (!this.color.equals("blue")) {
-            rawLabel.setText(NUMBER_FORMAT_2.format(raw));
+            rawLabel.setText(Formatters.NUMBER_FORMAT_2_NO_GROUP.format(raw));
         }
-        kineticLabel.setText(NUMBER_FORMAT_2.format(kinetic));
-        thermalLabel.setText(NUMBER_FORMAT_2.format(thermal));
-        causticLabel.setText(NUMBER_FORMAT_2.format(caustic));
-        explosiveLabel.setText(NUMBER_FORMAT_2.format(explosive));
+        kineticLabel.setText(Formatters.NUMBER_FORMAT_2_NO_GROUP.format(kinetic));
+        thermalLabel.setText(Formatters.NUMBER_FORMAT_2_NO_GROUP.format(thermal));
+        causticLabel.setText(Formatters.NUMBER_FORMAT_2_NO_GROUP.format(caustic));
+        explosiveLabel.setText(Formatters.NUMBER_FORMAT_2_NO_GROUP.format(explosive));
     }
 }

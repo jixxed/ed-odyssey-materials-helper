@@ -6,7 +6,9 @@ import java.text.NumberFormat;
 public class Formatters {
 
 
+    public static final NumberFormat NUMBER_FORMAT_3 = NumberFormat.getNumberInstance();
     public static final NumberFormat NUMBER_FORMAT_2 = NumberFormat.getNumberInstance();
+    public static final NumberFormat NUMBER_FORMAT_2_NO_GROUP = NumberFormat.getNumberInstance();
     public static final NumberFormat NUMBER_FORMAT_2_DUAL_DECIMAL = NumberFormat.getNumberInstance();
     public static final NumberFormat NUMBER_FORMAT_1 = NumberFormat.getNumberInstance();
     public static final NumberFormat NUMBER_FORMAT_1_CEIL = NumberFormat.getNumberInstance();
@@ -22,5 +24,12 @@ public class Formatters {
         NUMBER_FORMAT_2_DUAL_DECIMAL.setMinimumFractionDigits(2);
         NUMBER_FORMAT_2_DUAL_DECIMAL.setGroupingUsed(false);
         NUMBER_FORMAT_1_CEIL.setRoundingMode(RoundingMode.UP);
+        NUMBER_FORMAT_3.setMaximumFractionDigits(3);
+        NUMBER_FORMAT_3.setMinimumFractionDigits(3);
+        NUMBER_FORMAT_3.setGroupingUsed(false);
+
+        NUMBER_FORMAT_2_NO_GROUP.setMaximumFractionDigits(2);
+        NUMBER_FORMAT_2_NO_GROUP.setMinimumFractionDigits(2);
+        NUMBER_FORMAT_2_NO_GROUP.setGroupingUsed(false);
     }
 }

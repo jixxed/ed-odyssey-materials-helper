@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
+import com.google.common.util.concurrent.AtomicDouble;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
@@ -20,8 +21,10 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplat
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTooltip;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
+import java.util.Comparator;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 @Slf4j
 public class ArmourStats extends Stats implements DestroyableTemplate {
@@ -86,15 +89,22 @@ public class ArmourStats extends Stats implements DestroyableTemplate {
         register(EventService.addListener(true, this, ShipConfigEvent.class, _ -> update()));
     }
 
-    public double getEffectiveDamageResistance(double baseResistance, double extraResistance, double bestResistance) {
+    public double stackDamageResistance(double baseResistance, double moduleResistance) {
         // https://forums.frontier.co.uk/threads/kinetic-resistance-calculation.266235/post-4230114
         // https://forums.frontier.co.uk/threads/shield-booster-mod-calculator.286097/post-4998592
 
-        double low = Math.max(Math.max(0.30D, baseResistance), bestResistance);
-        double high = 0.65D;
-        double expected = 1D - ((1D - baseResistance) * (1D - extraResistance));
-        double penalized = low + (expected - low) / (1D - low) * (high - low);
-        return (penalized >= 0.30D) ? penalized : expected;
+        double MIN_LOWER_BOUND = 0.30D;
+        double UPPER_BOUND = 0.65D;// MIN_LOWER_BOUND + ( 1 - MIN_LOWER_BOUND ) / 2;
+        // Lower bound for diminishing returns
+        double lowerBound = Math.max(MIN_LOWER_BOUND, baseResistance);
+        // Multiplicative stacking
+        double stackedResistance = 1D - ((1D - baseResistance) * (1D - moduleResistance));
+        // Apply diminishing returns so that 100% stacking → UPPER_BOUND
+        double cappedResistance = lowerBound + (stackedResistance - lowerBound) / (1D - lowerBound) * (UPPER_BOUND - lowerBound);
+        // use capped resistance if above minimum lower bound, otherwise use stacked resistance
+        double effectiveResistance = (cappedResistance >= MIN_LOWER_BOUND) ? cappedResistance : stackedResistance;
+
+        return effectiveResistance;
     }
 
     public double calculateResistanceRaw() {
@@ -106,25 +116,39 @@ public class ArmourStats extends Stats implements DestroyableTemplate {
 
     }
 
-    private double calculateResistance(HorizonsModifier horizonsModifier) {
+    protected double calculateResistance(HorizonsModifier horizonsModifier) {
+        Comparator<Slot> sort = Comparator.comparing((Slot slot) -> (double) slot.getShipModule().getAttributeValue(horizonsModifier, true));
+        return calculateResistance(horizonsModifier, sort);
+    }
+
+    protected double calculateResistance(HorizonsModifier horizonsModifier, Comparator<Slot> sort) {
         return getShip().map(ship -> {
-            final Optional<Slot> armourSlot = ship.getCoreSlots().stream().filter(slot -> SlotType.CORE_ARMOUR.equals(slot.getSlotType())).findFirst().filter(Slot::isOccupied);
-            AtomicReference<Double> totalModuleMultiplier = new AtomicReference<>(1D);
-            AtomicReference<Double> minimumMultiplier = new AtomicReference<>(1D);
+            final Optional<Slot> armourSlot = ship.getCoreSlots().stream()
+                    .filter(slot -> SlotType.CORE_ARMOUR.equals(slot.getSlotType()))
+                    .findFirst()
+                    .filter(Slot::isOccupied);
+            final AtomicDouble shipResistance = new AtomicDouble((double) armourSlot
+                    .map(Slot::getShipModule)
+                    .map(sm -> sm.getAttributeValue(horizonsModifier, true))
+                    .orElse(0D));
+
             ship.getOptionalSlots().stream()
                     .filter(slot -> slot.getShipModule() instanceof HullReinforcementPackage
                             || slot.getShipModule() instanceof GuardianHullReinforcementPackage
                             || slot.getShipModule() instanceof MetaAlloyHullReinforcementPackage)
+                    .sorted(sort)
                     .forEach(slot -> {
+//                                log.debug("Stacking module {} for {}", slot.getShipModule(), horizonsModifier);
                                 double moduleResistance = (double) slot.getShipModule().getAttributeValue(horizonsModifier, true);
-                                double multiplier = 1D - moduleResistance;
-                                totalModuleMultiplier.updateAndGet(v -> v * multiplier);
-                                minimumMultiplier.updateAndGet(v -> Math.min(v, multiplier));
+                                log.debug("moduleResistance for {} {}: {}", slot.getShipModule().getId(), horizonsModifier, moduleResistance);
+                                //anything over 30% gets a double bonus
+                                double adaptedModuleResistance = (moduleResistance > 0.3D ? moduleResistance * 2.0D - 0.3D : moduleResistance);
+                                shipResistance.set(stackDamageResistance(shipResistance.get(), adaptedModuleResistance));
+//                                log.debug("shipResistance for {}: {}", horizonsModifier, shipResistance.get());
                             }
                     );
-
-            double armourResistance = (double) armourSlot.map(slot -> slot.getShipModule()).map(sm -> sm.getAttributeValue(horizonsModifier, true)).orElse(0D);
-            return getEffectiveDamageResistance(armourResistance, (1 - totalModuleMultiplier.get()), (1 - minimumMultiplier.get()));
+            // Hard cap at 75%
+            return Math.min(0.75, shipResistance.get());
         }).orElse(0D) * 100D;
     }
 
