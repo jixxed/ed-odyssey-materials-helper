@@ -178,7 +178,6 @@ public class ArmourStats extends Stats implements DestroyableTemplate {
                     .sum();
             return (shipArmour * (1D + hullBoost)) + hullReinforcement;
         }).orElse(0D);
-
     }
 
     public double calculateIntegrityKinetic() {

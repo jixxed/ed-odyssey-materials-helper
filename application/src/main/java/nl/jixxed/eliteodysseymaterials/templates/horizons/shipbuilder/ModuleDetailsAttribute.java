@@ -65,7 +65,7 @@ public class ModuleDetailsAttribute extends DestroyableVBox implements Destroyab
             if (isModifiedAttribute() || isSynthesized(horizonsModifier)) {
                 addBaseValue(horizonsModifier, shipModule, values);
                 if(isModifiedAttribute()) {
-                    if (shipModule.isLegacy() && shipModule.getModifiers().containsKey(horizonsModifier)) {
+                    if (/*shipModule.isLegacy() &&*/ shipModule.getModifiers().containsKey(horizonsModifier)) {
                         final Double currentValue = Double.parseDouble(shipModule.getModifiers().get(horizonsModifier).toString());
                         addValues(horizonsModifier, shipModule, values, currentValue);
                     } else {
@@ -110,8 +110,14 @@ public class ModuleDetailsAttribute extends DestroyableVBox implements Destroyab
 //                final double currentValue = Double.parseDouble(shipModule.getModifiers().get(horizonsModifier).toString());
 //                addProgress(horizonsModifier, shipModule, currentValue);
 //            } else {
+            if (/*shipModule.isLegacy() &&*/ shipModule.getModifiers().containsKey(horizonsModifier)) {
+                final Double currentValue = Double.parseDouble(shipModule.getModifiers().get(horizonsModifier).toString());
+                addProgress(horizonsModifier, shipModule, currentValue);
+            }else{
                 final Double estimatedValue = (Double) shipModule.getAttributeValue(horizonsModifier, false);
                 addProgress(horizonsModifier, shipModule, estimatedValue);
+
+            }
 //            }
         }
     }

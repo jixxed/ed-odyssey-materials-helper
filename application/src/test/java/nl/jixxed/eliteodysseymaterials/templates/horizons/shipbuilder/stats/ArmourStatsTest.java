@@ -42,67 +42,62 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ArmourStatsTest {
 
     private ArmourStats armourStats;
-    private static HullReinforcementPackage DUMMY = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, null, null, 0.0, null);
-    private static HullReinforcementPackage MOD_5D_G5_KR_DP = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, DEEP_PLATING);
-    private static HullReinforcementPackage MOD_5D_BR_G5_DP = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, BLAST_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, DEEP_PLATING);
-    private static HullReinforcementPackage MOD_5D_HD_G5_DP = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, HEAVY_DUTY_HULL_REINFORCEMENT, GRADE_5, 1.0, DEEP_PLATING);
-
-    private static HullReinforcementPackage MOD_5D_BR_G4_DP = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, BLAST_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 1.0, DEEP_PLATING);
-    private static HullReinforcementPackage MOD_5D_TR_G5_RP = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, THERMAL_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, REFLECTIVE_PLATING);
-    private static HullReinforcementPackage MOD_5D_KR_G4_DP = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 1.0, DEEP_PLATING);
-    private static HullReinforcementPackage MOD_5D_BR_G5_AP = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, BLAST_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, ANGLED_PLATING);
-    private static HullReinforcementPackage MOD_5D_HD_G5_LP = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, HEAVY_DUTY_HULL_REINFORCEMENT, GRADE_5, 1.0, LAYERED_PLATING);
-    private static HullReinforcementPackage MOD_5D_BR_G5_LP = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, BLAST_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, LAYERED_PLATING);
-    private static HullReinforcementPackage MOD_5D_BR_G4_LP = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, BLAST_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 1.0, LAYERED_PLATING);
-    private static HullReinforcementPackage MOD_5D = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, null, null, 0.0, null);
-    private static HullReinforcementPackage MOD_2D_BR_G4_LP = createModule(HULL_REINFORCEMENT_PACKAGE_2_D, BLAST_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 1.0, LAYERED_PLATING);
-    private static HullReinforcementPackage MOD_4D_KR_G4_RP = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 1.0, REFLECTIVE_PLATING);
-    private static HullReinforcementPackage MOD_4D_KR_G4_AP = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 1.0, ANGLED_PLATING);
-    private static HullReinforcementPackage MOD_1D_TR_G4 = createModule(HULL_REINFORCEMENT_PACKAGE_1_D, THERMAL_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 1.0, null);
+    private static HullReinforcementPackage MOD_1D = createModule(HULL_REINFORCEMENT_PACKAGE_1_D, null, null, 0.0, null);
+    private static HullReinforcementPackage MOD_1D_BR_G5_DP = createModule(HULL_REINFORCEMENT_PACKAGE_1_D, BLAST_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, DEEP_PLATING);
+    private static HullReinforcementPackage MOD_1D_TR_G1 = createModule(HULL_REINFORCEMENT_PACKAGE_1_D, THERMAL_RESISTANT_HULL_REINFORCEMENT, GRADE_1, 1.0, null);
+    private static HullReinforcementPackage MOD_1D_TR_G1_DP = createModule(HULL_REINFORCEMENT_PACKAGE_1_D, THERMAL_RESISTANT_HULL_REINFORCEMENT, GRADE_1, 1.0, DEEP_PLATING);
+    private static HullReinforcementPackage MOD_1D_TR_G2 = createModule(HULL_REINFORCEMENT_PACKAGE_1_D, THERMAL_RESISTANT_HULL_REINFORCEMENT, GRADE_2, 1.0, null);
     private static HullReinforcementPackage MOD_1D_TR_G2_DP = createModule(HULL_REINFORCEMENT_PACKAGE_1_D, THERMAL_RESISTANT_HULL_REINFORCEMENT, GRADE_2, 1.0, DEEP_PLATING);
     private static HullReinforcementPackage MOD_1D_TR_G2_RP = createModule(HULL_REINFORCEMENT_PACKAGE_1_D, THERMAL_RESISTANT_HULL_REINFORCEMENT, GRADE_2, 1.0, REFLECTIVE_PLATING);
+    private static HullReinforcementPackage MOD_1D_TR_G4 = createModule(HULL_REINFORCEMENT_PACKAGE_1_D, THERMAL_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 1.0, null);
 
-    private static HullReinforcementPackage MOD_1D_TR_G2 = createModule(HULL_REINFORCEMENT_PACKAGE_1_D, THERMAL_RESISTANT_HULL_REINFORCEMENT, GRADE_2, 1.0, null);
-
-    private static HullReinforcementPackage MOD_4D_KR_G5_DP = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, DEEP_PLATING);
-    private static HullReinforcementPackage MOD_4D_BR_G5_DP = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, BLAST_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, DEEP_PLATING);
-    private static HullReinforcementPackage MOD_4D_HD_G5_DP = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, HEAVY_DUTY_HULL_REINFORCEMENT, GRADE_5, 1.0, DEEP_PLATING);
-
-    private static HullReinforcementPackage MOD_3D_HD_G5_DP = createModule(HULL_REINFORCEMENT_PACKAGE_3_D, HEAVY_DUTY_HULL_REINFORCEMENT, GRADE_5, 1.0, DEEP_PLATING);
-    private static HullReinforcementPackage MOD_3D = createModule(HULL_REINFORCEMENT_PACKAGE_3_D, null, null, 0.0, null);
-
-    private static HullReinforcementPackage MOD_2D_HD_G5_DP = createModule(HULL_REINFORCEMENT_PACKAGE_2_D, HEAVY_DUTY_HULL_REINFORCEMENT, GRADE_5, 1.0, DEEP_PLATING);
+    private static HullReinforcementPackage MOD_2D = createModule(HULL_REINFORCEMENT_PACKAGE_2_D, null, null, 0.0, null);
+    private static HullReinforcementPackage MOD_2D_BR_G4_LP = createModule(HULL_REINFORCEMENT_PACKAGE_2_D, BLAST_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 1.0, LAYERED_PLATING);
     private static HullReinforcementPackage MOD_2D_BR_G5_DP = createModule(HULL_REINFORCEMENT_PACKAGE_2_D, BLAST_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, DEEP_PLATING);
+    private static HullReinforcementPackage MOD_2D_HD_G5_DP = createModule(HULL_REINFORCEMENT_PACKAGE_2_D, HEAVY_DUTY_HULL_REINFORCEMENT, GRADE_5, 1.0, DEEP_PLATING);
+    private static HullReinforcementPackage MOD_2D_KR_G1 = createModule(HULL_REINFORCEMENT_PACKAGE_2_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_1, 1.0, null);
     private static HullReinforcementPackage MOD_2D_TR_G5_DP = createModule(HULL_REINFORCEMENT_PACKAGE_2_D, THERMAL_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, DEEP_PLATING);
 
-    private static HullReinforcementPackage MOD_1D_BR_G5_DP = createModule(HULL_REINFORCEMENT_PACKAGE_1_D, BLAST_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, DEEP_PLATING);
+    private static HullReinforcementPackage MOD_3D = createModule(HULL_REINFORCEMENT_PACKAGE_3_D, null, null, 0.0, null);
+    private static HullReinforcementPackage MOD_3D_HD_G5_DP = createModule(HULL_REINFORCEMENT_PACKAGE_3_D, HEAVY_DUTY_HULL_REINFORCEMENT, GRADE_5, 1.0, DEEP_PLATING);
 
-    private static HullReinforcementPackage MOD_5D_TR_G5 = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, THERMAL_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, null);
-    private static HullReinforcementPackage MOD_5D_BR_G5 = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, BLAST_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, null);
-    private static HullReinforcementPackage MOD_5D_KR_G5_DP = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, DEEP_PLATING);
     private static HullReinforcementPackage MOD_4D = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, null, null, 0.0, null);
+    private static HullReinforcementPackage MOD_4D_BR_G5_DP = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, BLAST_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, DEEP_PLATING);
+    private static HullReinforcementPackage MOD_4D_HD_G5_DP = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, HEAVY_DUTY_HULL_REINFORCEMENT, GRADE_5, 1.0, DEEP_PLATING);
+    private static HullReinforcementPackage MOD_4D_KR_G1 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_1, 1.0, null);
+    private static HullReinforcementPackage MOD_4D_KR_G2 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_2, 1.0, null);
+    private static HullReinforcementPackage MOD_4D_KR_G3 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_3, 1.0, null);
+    private static HullReinforcementPackage MOD_4D_KR_G4 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 1.0, null);
+    private static HullReinforcementPackage MOD_4D_KR_G4_25 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 0.25, null);
+    private static HullReinforcementPackage MOD_4D_KR_G4_50 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 0.50, null);
+    private static HullReinforcementPackage MOD_4D_KR_G4_75 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 0.75, null);
+    private static HullReinforcementPackage MOD_4D_KR_G4_AP = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 1.0, ANGLED_PLATING);
+    private static HullReinforcementPackage MOD_4D_KR_G4_RP = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 1.0, REFLECTIVE_PLATING);
+    private static HullReinforcementPackage MOD_4D_KR_G5 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, null);
+    private static HullReinforcementPackage MOD_4D_KR_G5_20 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 0.20, null);
+    private static HullReinforcementPackage MOD_4D_KR_G5_40 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 0.40, null);
+    private static HullReinforcementPackage MOD_4D_KR_G5_60 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 0.60, null);
+    private static HullReinforcementPackage MOD_4D_KR_G5_80 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 0.80, null);
+    private static HullReinforcementPackage MOD_4D_KR_G5_DP = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, DEEP_PLATING);
     private static HullReinforcementPackage MOD_4D_TR_G1 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, THERMAL_RESISTANT_HULL_REINFORCEMENT, GRADE_1, 1.0, null);
     private static HullReinforcementPackage MOD_4D_TR_G2 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, THERMAL_RESISTANT_HULL_REINFORCEMENT, GRADE_2, 1.0, null);
     private static HullReinforcementPackage MOD_4D_TR_G3 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, THERMAL_RESISTANT_HULL_REINFORCEMENT, GRADE_3, 1.0, null);
     private static HullReinforcementPackage MOD_4D_TR_G4 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, THERMAL_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 1.0, null);
     private static HullReinforcementPackage MOD_4D_TR_G5 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, THERMAL_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, null);
-    private static HullReinforcementPackage MOD_4D_KR_G1 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_1, 1.0, null);
-    private static HullReinforcementPackage MOD_4D_KR_G2 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_2, 1.0, null);
-    private static HullReinforcementPackage MOD_4D_KR_G3 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_3, 1.0, null);
-    private static HullReinforcementPackage MOD_4D_KR_G4 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 1.0, null);
-    private static HullReinforcementPackage MOD_4D_KR_G5 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, null);
-    private static HullReinforcementPackage MOD_4D_KR_G4_25 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 0.25, null);
-    private static HullReinforcementPackage MOD_4D_KR_G4_50 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 0.50, null);
-    private static HullReinforcementPackage MOD_4D_KR_G4_75 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 0.75, null);
-    private static HullReinforcementPackage MOD_4D_KR_G5_20 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 0.20, null);
-    private static HullReinforcementPackage MOD_4D_KR_G5_40 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 0.40, null);
-    private static HullReinforcementPackage MOD_4D_KR_G5_60 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 0.60, null);
-    private static HullReinforcementPackage MOD_4D_KR_G5_80 = createModule(HULL_REINFORCEMENT_PACKAGE_4_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 0.80, null);
-    private static HullReinforcementPackage MOD_1D_TR_G1 = createModule(HULL_REINFORCEMENT_PACKAGE_1_D, THERMAL_RESISTANT_HULL_REINFORCEMENT, GRADE_1, 1.0, null);
-    private static HullReinforcementPackage MOD_1D_TR_G1_DP = createModule(HULL_REINFORCEMENT_PACKAGE_1_D, THERMAL_RESISTANT_HULL_REINFORCEMENT, GRADE_1, 1.0, DEEP_PLATING);
-    private static HullReinforcementPackage MOD_1D = createModule(HULL_REINFORCEMENT_PACKAGE_1_D, null, null, 0.0, null);
-    private static HullReinforcementPackage MOD_2D = createModule(HULL_REINFORCEMENT_PACKAGE_2_D, null, null, 0.0, null);
-    private static HullReinforcementPackage MOD_2D_KR_G1 = createModule(HULL_REINFORCEMENT_PACKAGE_2_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_1, 1.0, null);
+
+    private static HullReinforcementPackage MOD_5D = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, null, null, 0.0, null);
+    private static HullReinforcementPackage MOD_5D_BR_G4_DP = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, BLAST_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 1.0, DEEP_PLATING);
+    private static HullReinforcementPackage MOD_5D_BR_G4_LP = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, BLAST_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 1.0, LAYERED_PLATING);
+    private static HullReinforcementPackage MOD_5D_BR_G5 = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, BLAST_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, null);
+    private static HullReinforcementPackage MOD_5D_BR_G5_AP = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, BLAST_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, ANGLED_PLATING);
+    private static HullReinforcementPackage MOD_5D_BR_G5_DP = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, BLAST_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, DEEP_PLATING);
+    private static HullReinforcementPackage MOD_5D_BR_G5_LP = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, BLAST_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, LAYERED_PLATING);
+    private static HullReinforcementPackage MOD_5D_HD_G5_DP = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, HEAVY_DUTY_HULL_REINFORCEMENT, GRADE_5, 1.0, DEEP_PLATING);
+    private static HullReinforcementPackage MOD_5D_HD_G5_LP = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, HEAVY_DUTY_HULL_REINFORCEMENT, GRADE_5, 1.0, LAYERED_PLATING);
+    private static HullReinforcementPackage MOD_5D_KR_G4_DP = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_4, 1.0, DEEP_PLATING);
+    private static HullReinforcementPackage MOD_5D_KR_G5_DP = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, KINETIC_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, DEEP_PLATING);
+    private static HullReinforcementPackage MOD_5D_TR_G5 = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, THERMAL_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, null);
+    private static HullReinforcementPackage MOD_5D_TR_G5_RP = createModule(HULL_REINFORCEMENT_PACKAGE_5_D, THERMAL_RESISTANT_HULL_REINFORCEMENT, GRADE_5, 1.0, REFLECTIVE_PLATING);
 
     private static Armour ANACONDA_ARMOUR_MIRRORED_TR_G5_RP = Armour.ANACONDA_ARMOUR_MIRRORED.Clone();
     private static Armour ANACONDA_ARMOUR_MIRRORED = Armour.ANACONDA_ARMOUR_MIRRORED.Clone();
@@ -114,7 +109,6 @@ class ArmourStatsTest {
         ScalingHelper.init();
         LocaleService.setCurrentLocale(Locale.ENGLISH);
         armourStats = new ArmourStats();
-        DUMMY.setCustomName("DUMMY");
 
         ANACONDA_ARMOUR_MIRRORED_TR_G5_RP.applyModification(THERMAL_RESISTANT, GRADE_5, ONE);
         ANACONDA_ARMOUR_MIRRORED_TR_G5_RP.applyExperimentalEffect(REFLECTIVE_PLATING);

@@ -238,10 +238,6 @@ public abstract class ShipModule implements Serializable {
         return this.attributes.get(moduleAttribute);
     }
 
-    public Object getAttributeValue(final HorizonsModifier moduleAttribute, boolean synthesized) {
-        return getAttributeValue(moduleAttribute, null, synthesized);
-    }
-
     public BigDecimal getAttributeCompleteness(final HorizonsModifier moduleAttribute, boolean synthesized) {
         Object currentValue = this.modifiers.get(moduleAttribute);
         if (currentValue != null) {
@@ -272,6 +268,10 @@ public abstract class ShipModule implements Serializable {
         }
     }
 
+    public Object getAttributeValue(final HorizonsModifier moduleAttribute, boolean synthesized) {
+        return getAttributeValue(moduleAttribute, null, synthesized);
+    }
+
     public Object getAttributeValue(final HorizonsModifier moduleAttribute, Double completeness, boolean synthesized) {
         if (HorizonsModifier.DAMAGE_PER_SECOND.equals(moduleAttribute) && this.attributes.containsKey(HorizonsModifier.DAMAGE)) {
             if ((double) this.attributes.get(HorizonsModifier.BURST_INTERVAL) == 0D) {
@@ -300,7 +300,7 @@ public abstract class ShipModule implements Serializable {
         if (!this.attributes.containsKey(moduleAttribute)) {
             throw new IllegalArgumentException("Unknown Module Attribute: " + moduleAttribute + " for module: " + this.name);
         }
-        if (modifiers.containsKey(moduleAttribute) && (/*completeness == null ||*/ isLegacy())) {
+        if (modifiers.containsKey(moduleAttribute) && (completeness == null || isLegacy())) {
             if (modifiers.get(moduleAttribute) instanceof Boolean) {
                 return modifiers.get(moduleAttribute);
             }
