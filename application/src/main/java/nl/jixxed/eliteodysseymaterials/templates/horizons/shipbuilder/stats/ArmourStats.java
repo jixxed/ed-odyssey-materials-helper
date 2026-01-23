@@ -138,13 +138,10 @@ public class ArmourStats extends Stats implements DestroyableTemplate {
                             || slot.getShipModule() instanceof MetaAlloyHullReinforcementPackage)
                     .sorted(sort)
                     .forEach(slot -> {
-//                                log.debug("Stacking module {} for {}", slot.getShipModule(), horizonsModifier);
                                 double moduleResistance = (double) slot.getShipModule().getAttributeValue(horizonsModifier, true);
-                                log.debug("moduleResistance for {} {}: {}", slot.getShipModule().getId(), horizonsModifier, moduleResistance);
                                 //anything over 30% gets a double bonus
                                 double adaptedModuleResistance = (moduleResistance > 0.3D ? moduleResistance * 2.0D - 0.3D : moduleResistance);
                                 shipResistance.set(stackDamageResistance(shipResistance.get(), adaptedModuleResistance));
-//                                log.debug("shipResistance for {}: {}", horizonsModifier, shipResistance.get());
                             }
                     );
             // Hard cap at 75%
