@@ -11,6 +11,5 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Add fuzzy text matching support to bartender menu
-Fix exporting things to xlsx
+Updated armour resistance calculations to match ingame values
 ```
