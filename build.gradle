@@ -144,7 +144,7 @@ ext {
     version_guava = "33.5.0-jre"
     version_j2objc_annotations = "3.1"
     version_mockito = "5.20.0"
-    version_sentry = "8.27.0"
+    version_sentry = "8.31.0"
     version_github_classgraph = "4.8.184"
 }
 allprojects {
