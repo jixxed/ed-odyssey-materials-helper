@@ -263,6 +263,8 @@ class ArmourStatsTest {
                 Arguments.of(23.3, 26.6, 18.2, ANACONDA_ARMOUR_REACTIVE, List.of(MOD_5D,MOD_5D,MOD_1D_TR_G2_RP,MOD_1D_TR_G2,MOD_1D_TR_G1,MOD_1D,MOD_1D)),
                 Arguments.of(25.2, 28.4, 20.2, ANACONDA_ARMOUR_REACTIVE, List.of(MOD_5D,MOD_5D,MOD_5D,MOD_1D_TR_G2_RP,MOD_1D_TR_G2,MOD_1D_TR_G1,MOD_1D,MOD_1D)),
                 Arguments.of(27.1, 30.1, 22.2, ANACONDA_ARMOUR_REACTIVE, List.of(MOD_5D,MOD_5D,MOD_5D,MOD_5D,MOD_1D_TR_G2_RP,MOD_1D_TR_G2,MOD_1D_TR_G1,MOD_1D,MOD_1D)),
+                Arguments.of(-110.2, 68.5, -80.2, ANACONDA_ARMOUR_MIRRORED_TR_G5_RP, List.of(MOD_5D_TR_G5)),
+                Arguments.of(-110.2, 72.9, 21.0, ANACONDA_ARMOUR_MIRRORED_TR_G5_RP, List.of(MOD_5D_BR_G5)),
 
 
                 Arguments.of(4.2, 56.8, 18.5, ANACONDA_ARMOUR_MIRRORED, List.of(MOD_4D_KR_G5, MOD_5D_BR_G5, MOD_5D_TR_G5))
