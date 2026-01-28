@@ -3777,7 +3777,11 @@
                   -fx-font-weight: bold;
                   -fx-alignment: center-left;
                   -fx-wrap-text: true;
-                  -fx-padding: 0.25em 0 0 0; }
+                  -fx-padding: 0 0 0 0; }
+                .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .category {
+                  -fx-text-fill: gray;
+                  -fx-alignment: center-left;
+                  -fx-wrap-text: true; }
               .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .text-lines {
                 -fx-padding: 0.25em; }
               .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .amount-line {
@@ -5968,6 +5972,64 @@
     -fx-font-size: 1.2em;
     -fx-padding: 0.25em;
     -fx-wrap-text: true; }
+
+.import-dialog {
+  -fx-background-color: #0f0f0f; }
+  .import-dialog .explain-text {
+    -fx-font-size: 1.2em;
+    -fx-padding: 0.25em;
+    -fx-wrap-text: true; }
+  .import-dialog .buttons {
+    -fx-spacing: 1em;
+    -fx-padding: 1em; }
+  .import-dialog .import-dialog-scrollpane {
+    -fx-fit-to-width: true;
+    -fx-fit-to-height: true; }
+    .import-dialog .import-dialog-scrollpane .scroll-pane-content {
+      -fx-padding: 0.25em; }
+    .import-dialog .import-dialog-scrollpane .wishlist .list {
+      -fx-hgap: 0.25em;
+      -fx-vgap: 0.25em; }
+      .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint {
+        -fx-background-color: #0f0f0f;
+        -fx-border-color: black;
+        -fx-padding: 0.25em;
+        -fx-spacing: 0.25em; }
+        .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .quantity-select {
+          -fx-spacing: 0.1em; }
+          .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .quantity-select .modifier-container {
+            -fx-alignment: center; }
+            .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .quantity-select .modifier-container .modifier {
+              -fx-cursor: hand;
+              -fx-font-size: 1.2em !important;
+              -fx-fill: white !important; }
+              .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .quantity-select .modifier-container .modifier:hover {
+                -fx-fill: #2e92df !important; }
+            .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .quantity-select .modifier-container.left {
+              -fx-alignment: center-left;
+              -fx-padding: 0 0.5em 0 0; }
+            .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .quantity-select .modifier-container.right {
+              -fx-alignment: center-right;
+              -fx-padding: 0 0 0 0.5em; }
+          .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .quantity-select .value {
+            -fx-font-size: 1.2em;
+            -fx-alignment: top-center;
+            -fx-text-fill: gray; }
+            .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .quantity-select .value:filled {
+              -fx-text-fill: white; }
+        .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .title-line {
+          -fx-spacing: 0.25em; }
+        .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .blueprint-line {
+          -fx-spacing: 1em; }
+        .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .quantity-text {
+          -fx-font-style: italic; }
+        .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .name {
+          -fx-text-fill: #2e92df;
+          -fx-alignment: center;
+          -fx-text-alignment: center;
+          -fx-content-display: right; }
+          .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .name .colonia-icon .glyph-icon {
+            -fx-fill: #2e92df; }
 
 .notification-bar.dark > .pane {
   -fx-background-color: #111111; }

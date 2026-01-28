@@ -702,6 +702,7 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.templates.components.slider to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.destroyables to javafx.graphics, java.desktop, javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.dialog to javafx.fxml, org.controlsfx.controls;
+    opens nl.jixxed.eliteodysseymaterials.templates.dialog.importdialog to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.generic to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.generic.menu to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.horizons to javafx.fxml, org.controlsfx.controls;

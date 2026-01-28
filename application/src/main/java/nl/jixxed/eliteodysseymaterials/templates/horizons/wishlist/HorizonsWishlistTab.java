@@ -8,7 +8,7 @@ import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -87,8 +87,8 @@ public class HorizonsWishlistTab extends HorizonsTab implements DestroyableEvent
     }
 
     @Override
-    public HorizonsTabs getTabType() {
-        return HorizonsTabs.WISHLIST;
+    public HorizonsTabType getTabType() {
+        return HorizonsTabType.WISHLIST;
     }
 
 

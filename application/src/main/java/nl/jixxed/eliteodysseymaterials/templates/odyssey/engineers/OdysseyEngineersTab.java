@@ -2,19 +2,15 @@ package nl.jixxed.eliteodysseymaterials.templates.odyssey.engineers;
 
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.OdysseyEngineerSearchEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableScrollPane;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyTab;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class OdysseyEngineersTab extends OdysseyTab implements DestroyableEventTemplate {
 
@@ -80,7 +76,7 @@ public class OdysseyEngineersTab extends OdysseyTab implements DestroyableEventT
 //    }
 
     @Override
-    public OdysseyTabs getTabType() {
-        return OdysseyTabs.ENGINEERS;
+    public OdysseyTabType getTabType() {
+        return OdysseyTabType.ENGINEERS;
     }
 }

@@ -7,7 +7,7 @@ import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.Expansion;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabType;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableButton;
@@ -91,17 +91,17 @@ class HorizonsSearchBar extends DestroyableHBox implements DestroyableEventTempl
                 .build();
     }
 
-    private void switchTab(HorizonsTabs selectedTab) {
+    private void switchTab(HorizonsTabType selectedTab) {
         this.getChildren().removeAll(this.materialSearchBar, this.commoditiesSearchBar, this.horizonsWishlistSearchBar, this.horizonsEngineerSearchBar, this.powerplaySearchBar, this.horizonsColonisationSearchBar);
-        if (HorizonsTabs.COMMODITIES.equals(selectedTab)) {
+        if (HorizonsTabType.COMMODITIES.equals(selectedTab)) {
             this.getChildren().add(this.commoditiesSearchBar);
-        } else if (HorizonsTabs.WISHLIST.equals(selectedTab)) {
+        } else if (HorizonsTabType.WISHLIST.equals(selectedTab)) {
             this.getChildren().add(this.horizonsWishlistSearchBar);
-        } else if (HorizonsTabs.ENGINEERS.equals(selectedTab)) {
+        } else if (HorizonsTabType.ENGINEERS.equals(selectedTab)) {
             this.getChildren().add(this.horizonsEngineerSearchBar);
-        } else if (HorizonsTabs.POWERPLAY.equals(selectedTab)) {
+        } else if (HorizonsTabType.POWERPLAY.equals(selectedTab)) {
             this.getChildren().add(this.powerplaySearchBar);
-        } else if (HorizonsTabs.COLONISATION.equals(selectedTab)) {
+        } else if (HorizonsTabType.COLONISATION.equals(selectedTab)) {
             this.getChildren().add(this.horizonsColonisationSearchBar);
         } else {
             this.getChildren().add(this.materialSearchBar);

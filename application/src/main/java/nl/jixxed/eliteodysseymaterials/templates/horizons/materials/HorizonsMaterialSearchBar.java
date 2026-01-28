@@ -17,7 +17,7 @@ import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsMaterialsSearch;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterialsShow;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
@@ -110,8 +110,8 @@ public class HorizonsMaterialSearchBar extends DestroyableHBox implements Destro
             this.textField.styleProperty().set(fontStyle);
         }));
         register(EventService.addListener(true, this, HorizonsTabSelectedEvent.class, event -> {
-            this.textField.setDisable(!HorizonsTabs.MATERIALS.equals(event.getSelectedTab()));
-            this.showMaterialsComboBox.setDisable(!HorizonsTabs.MATERIALS.equals(event.getSelectedTab()));
+            this.textField.setDisable(!HorizonsTabType.MATERIALS.equals(event.getSelectedTab()));
+            this.showMaterialsComboBox.setDisable(!HorizonsTabType.MATERIALS.equals(event.getSelectedTab()));
         }));
     }
 

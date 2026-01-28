@@ -68,6 +68,10 @@ public class ImportService {
         } else if ("coriolis/".equals(type)) {
             final String decoded = convertBase64CompressedToJson(data);
             return importCoriolis(decoded);
+        } else if ("pinconfig/".equals(type)) {
+            final String decoded = convertBase64CompressedToJson(data);
+            log.info(decoded);
+//            return importCoriolis(decoded);
         }
         return new ImportResult(ImportResult.ResultType.UNKNOWN_TYPE);
     }
@@ -336,7 +340,7 @@ public class ImportService {
         }
     }
 
-    private static String convertBase64CompressedToJson(final String compressedBase64) {
+    public static String convertBase64CompressedToJson(final String compressedBase64) {
         final Inflater inflater = new Inflater();
         inflater.setInput(Base64.getUrlDecoder().decode(compressedBase64.getBytes(StandardCharsets.UTF_8)));
         final byte[] uncompressedBuffer = new byte[1024];

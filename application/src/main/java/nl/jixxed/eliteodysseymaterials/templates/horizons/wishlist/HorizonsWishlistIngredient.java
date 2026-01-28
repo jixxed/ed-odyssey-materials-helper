@@ -103,8 +103,14 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
                 .withStyleClass("name")
                 .withText(this.horizonsMaterial.getLocalizationKey())
                 .build();
+        DestroyableLabel categoryLabel = LabelBuilder.builder()
+                .withStyleClass("category")
+                .withText(this.horizonsMaterial.getMaterialType().getLocalizationKey())
+                .build();
         VBox.setVgrow(nameLabel, Priority.ALWAYS);
         HBox.setHgrow(nameLabel, Priority.ALWAYS);
+        VBox.setVgrow(categoryLabel, Priority.ALWAYS);
+        HBox.setHgrow(categoryLabel, Priority.ALWAYS);
         initImage();
 
         this.requiredAmountLabel = LabelBuilder.builder()
@@ -150,7 +156,7 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
 
         DestroyableHBox firstLine = BoxBuilder.builder()
                 .withStyleClass("title-line")
-                .withNodes(this.image, nameLabel)
+                .withNodes(this.image, BoxBuilder.builder().withNodes(nameLabel, categoryLabel).buildVBox())
                 .buildHBox();
         DestroyableHBox secondLine = BoxBuilder.builder()
                 .withStyleClass("amount-line")

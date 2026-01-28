@@ -1,7 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.materials;
 
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableScrollPane;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
@@ -38,7 +38,7 @@ public class OdysseyMaterialTab extends OdysseyTab implements DestroyableTemplat
 
 
     @Override
-    public OdysseyTabs getTabType() {
-        return OdysseyTabs.OVERVIEW;
+    public OdysseyTabType getTabType() {
+        return OdysseyTabType.OVERVIEW;
     }
 }

@@ -1,0 +1,77 @@
+.wishlist {
+  .list {
+    @include hvGap(0.25em);
+
+    .blueprint {
+      -fx-background-color: $background-color-dark;
+      -fx-border-color: $border-color-black;
+      -fx-padding: 0.25em;
+      -fx-spacing: 0.25em;
+
+
+      .quantity-select {
+        -fx-spacing: 0.1em;
+
+        .modifier-container {
+          -fx-alignment: center;
+
+          .modifier {
+            -fx-cursor: hand;
+            -fx-font-size: 1.2em !important;
+            -fx-fill: $text-color-white !important;
+
+            &:hover {
+              -fx-fill: $text-color-blue !important;
+            }
+
+          }
+
+          &.left {
+            -fx-alignment: center-left;
+            -fx-padding: 0 0.5em 0 0;
+          }
+
+          &.right {
+            -fx-alignment: center-right;
+            -fx-padding: 0 0 0 0.5em;
+          }
+        }
+
+        .value {
+          -fx-font-size: 1.2em;
+          -fx-alignment: top-center;
+          -fx-text-fill: $text-color-grey;
+
+          &:filled {
+            -fx-text-fill: $text-color-white;
+          }
+        }
+      }
+
+      .title-line {
+        -fx-spacing: 0.25em;
+      }
+
+      .blueprint-line {
+        -fx-spacing: 1em;
+      }
+
+      .quantity-text {
+        -fx-font-style: italic;
+      }
+
+      .name {
+        -fx-text-fill: $text-color-blue;
+        -fx-alignment: center;
+        -fx-text-alignment: center;
+        -fx-content-display: right;
+
+        .colonia-icon {
+          .glyph-icon {
+            -fx-fill: $text-color-blue;
+          }
+        }
+      }
+    }
+  }
+}

@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
@@ -80,6 +81,13 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
                                 "tab.wishlist.rename", this.wishlistSelect.getSelectionModel().selectedItemProperty().isEqualTo(Wishlist.ALL),
                                 "tab.wishlist.copy", this.wishlistSelect.getSelectionModel().selectedItemProperty().isEqualTo(Wishlist.ALL),
                                 "tab.wishlist.delete", this.wishlistSelect.getSelectionModel().selectedItemProperty().isEqualTo(Wishlist.ALL)
+                        ),
+                        Map.of(
+                                "tab.wishlist.create", new KeyCodeCombination(KeyCode.N, KeyCodeCombination.CONTROL_DOWN),
+                                "tab.wishlist.rename", new KeyCodeCombination(KeyCode.F2),
+                                "tab.wishlist.delete", new KeyCodeCombination(KeyCode.DELETE),
+                                "tab.wishlist.copy", new KeyCodeCombination(KeyCode.C, KeyCodeCombination.CONTROL_DOWN),
+                                "tab.wishlist.export", new KeyCodeCombination(KeyCode.E, KeyCodeCombination.CONTROL_DOWN)
                         ))
                 .build();
         this.menuButton.setFocusTraversable(false);
@@ -147,9 +155,9 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
     private void showInputPopOver(String buttonLocaleKey, String textfieldPromptLocaleKey, BiConsumer<Commander, String> inputHandler) {
         final DestroyableTextField textField = TextFieldBuilder.builder()
                 .withStyleClasses("root", "wishlist-newname")
+                .withNonLocalizedText(this.wishlistSelect.getSelectionModel().getSelectedItem().getName())
                 .withPromptTextProperty(LocaleService.getStringBinding(textfieldPromptLocaleKey))
                 .build();
-
         final DestroyableButton button = ButtonBuilder.builder()
                 .withText(buttonLocaleKey)
                 .build();
@@ -166,6 +174,7 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
                 .withArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER)
                 .build();
         popOver.show(this.menuButton);
+        textField.selectAll();
         button.setOnAction(_ -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
             inputHandler.accept(commander, textField.getText());
             textField.clear();
@@ -228,6 +237,31 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
         register(EventService.addListener(true, this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_ODYSSEY_WISHLIST)) {
                 refreshWishlistSelect();
+            }
+        }));
+        register(EventService.addListener(true, this, DeleteSelectedItemEvent.class, event -> {
+            if (event.getSelectedTab() == MainTabType.ODYSSEY && event.getSelectedChildTab() == OdysseyTabType.WISHLIST && this.wishlistSelect.getSelectionModel().selectedItemProperty().isNotEqualTo(HorizonsWishlist.ALL).get()) {
+                getDeleteHandler().handle(null);
+            }
+        }));
+        register(EventService.addListener(true, this, RenameSelectedItemEvent.class, event -> {
+            if (event.getSelectedTab() == MainTabType.ODYSSEY && event.getSelectedChildTab() == OdysseyTabType.WISHLIST && this.wishlistSelect.getSelectionModel().selectedItemProperty().isNotEqualTo(HorizonsWishlist.ALL).get()) {
+                getRenameHandler().handle(null);
+            }
+        }));
+        register(EventService.addListener(true, this, CreateItemEvent.class, event -> {
+            if (event.getSelectedTab() == MainTabType.ODYSSEY && event.getSelectedChildTab() == OdysseyTabType.WISHLIST) {
+                getCreateHandler().handle(null);
+            }
+        }));
+        register(EventService.addListener(true, this, ExportSelectedItemEvent.class, event -> {
+            if (event.getSelectedTab() == MainTabType.ODYSSEY && event.getSelectedChildTab() == OdysseyTabType.WISHLIST) {
+                getExportHandler().handle(null);
+            }
+        }));
+        register(EventService.addListener(true, this, CopySelectedItemEvent.class, event -> {
+            if (event.getSelectedTab() == MainTabType.ODYSSEY && event.getSelectedChildTab() == OdysseyTabType.WISHLIST && this.wishlistSelect.getSelectionModel().selectedItemProperty().isNotEqualTo(HorizonsWishlist.ALL).get()) {
+                getCopyHandler().handle(null);
             }
         }));
     }

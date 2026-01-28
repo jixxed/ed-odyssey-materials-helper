@@ -3,7 +3,7 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.powerplay;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabType;
 import nl.jixxed.eliteodysseymaterials.enums.Power;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -82,7 +82,7 @@ public class PowerplayTab extends HorizonsTab implements DestroyableEventTemplat
     }
 
     @Override
-    public HorizonsTabs getTabType() {
-        return HorizonsTabs.POWERPLAY;
+    public HorizonsTabType getTabType() {
+        return HorizonsTabType.POWERPLAY;
     }
 }

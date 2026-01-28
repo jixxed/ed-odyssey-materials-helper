@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.builder;
 import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.input.KeyCombination;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableMenuButton;
@@ -40,6 +41,24 @@ public class MenuButtonBuilder extends AbstractButtonBaseBuilder<MenuButtonBuild
                     .withText(textLocaleKey);
             if (disableBindings.containsKey(textLocaleKey)) {
                 menuItemBuilder = menuItemBuilder.withDisableProperty(disableBindings.get(textLocaleKey));
+            }
+            return menuItemBuilder.build();
+        }).toList();
+        return this;
+    }
+
+    public MenuButtonBuilder withMenuItems(final Map<String, EventHandler<ActionEvent>> menuItems, final Map<String, BooleanBinding> disableBindings, final Map<String, KeyCombination> keyCombinations) {
+        this.items = menuItems.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(stringEventHandlerEntry -> {
+            final EventHandler<ActionEvent> eventHandler = stringEventHandlerEntry.getValue();
+            final String textLocaleKey = stringEventHandlerEntry.getKey();
+            MenuItemBuilder menuItemBuilder = MenuItemBuilder.builder()
+                    .withOnAction(eventHandler)
+                    .withText(textLocaleKey);
+            if (disableBindings.containsKey(textLocaleKey)) {
+                menuItemBuilder = menuItemBuilder.withDisableProperty(disableBindings.get(textLocaleKey));
+            }
+            if (keyCombinations.containsKey(textLocaleKey)) {
+                menuItemBuilder = menuItemBuilder.withKeyCombination(keyCombinations.get(textLocaleKey));
             }
             return menuItemBuilder.build();
         }).toList();

@@ -30,6 +30,7 @@
     -fx-fill: $text-color-white;
   }
 }
+
 .pipette-button{
   @include fixedHeight(2.5em);
   .glyph-icon {

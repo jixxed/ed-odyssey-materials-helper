@@ -4,16 +4,16 @@ import javafx.scene.control.ScrollPane;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
+import nl.jixxed.eliteodysseymaterials.enums.MainTabType;
 import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
-import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyTab;
+import nl.jixxed.eliteodysseymaterials.templates.generic.MainTab;
 import nl.jixxed.eliteodysseymaterials.templates.settings.sections.*;
 
 @Slf4j
-public class SettingsTab extends OdysseyTab implements DestroyableTemplate {
+public class SettingsTab extends MainTab implements DestroyableTemplate {
     public static final String SETTINGS_LABEL_CLASS = "settings-label";
     public static final String SETTINGS_LINK_CLASS = "settings-link";
     public static final String SETTINGS_DROPDOWN_CLASS = "settings-dropdown";
@@ -63,8 +63,8 @@ public class SettingsTab extends OdysseyTab implements DestroyableTemplate {
 
 
     @Override
-    public OdysseyTabs getTabType() {
-        return OdysseyTabs.SETTINGS;
+    public MainTabType getTabType() {
+        return MainTabType.SETTINGS;
     }
 
 }

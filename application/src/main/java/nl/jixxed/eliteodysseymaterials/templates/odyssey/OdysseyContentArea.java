@@ -9,10 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TabPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.enums.Action;
-import nl.jixxed.eliteodysseymaterials.enums.Expansion;
-import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -68,7 +65,7 @@ class OdysseyContentArea extends DestroyableAnchorPane implements DestroyableEve
                 .withSide(Side.LEFT)
                 .withSelectedItemListener((_, _, newValue) -> {
                     if (newValue != null) {
-                        final OdysseyTabs tabType = ((OdysseyTab) newValue).getTabType();
+                        final OdysseyTabType tabType = (OdysseyTabType) ((OdysseyTab) newValue).getTabType();
                         EventService.publish(new OdysseyTabSelectedEvent(tabType));
                     }
                     PreferencesService.setPreference(PreferenceConstants.SELECTED_TAB_ODYSSEY, this.tabs.getTabs().indexOf(newValue));
@@ -143,5 +140,8 @@ class OdysseyContentArea extends DestroyableAnchorPane implements DestroyableEve
         });
     }
 
-
+    public TabType getSelectedTab() {
+        final OdysseyTab selected = (OdysseyTab) this.tabs.getSelectionModel().getSelectedItem();
+        return selected.getTabType();
+    }
 }

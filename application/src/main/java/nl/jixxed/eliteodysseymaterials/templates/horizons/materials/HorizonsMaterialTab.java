@@ -2,7 +2,7 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.materials;
 
 import javafx.scene.control.ScrollPane;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsTab;
@@ -28,7 +28,7 @@ public class HorizonsMaterialTab extends HorizonsTab implements DestroyableTempl
     }
 
     @Override
-    public HorizonsTabs getTabType() {
-        return HorizonsTabs.MATERIALS;
+    public HorizonsTabType getTabType() {
+        return HorizonsTabType.MATERIALS;
     }
 }

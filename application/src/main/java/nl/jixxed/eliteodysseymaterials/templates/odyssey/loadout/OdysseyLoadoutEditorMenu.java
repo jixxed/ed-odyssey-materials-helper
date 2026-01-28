@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
@@ -57,6 +58,31 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
                 refreshLoadoutSetSelect();
             }
         }));
+        register(EventService.addListener(true, this, DeleteSelectedItemEvent.class, event -> {
+            if (event.getSelectedTab() == MainTabType.ODYSSEY && event.getSelectedChildTab() == OdysseyTabType.LOADOUT && this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isNotEqualTo(LoadoutSet.CURRENT).get()) {
+                getDeleteHandler().handle(null);
+            }
+        }));
+        register(EventService.addListener(true, this, RenameSelectedItemEvent.class, event -> {
+            if (event.getSelectedTab() == MainTabType.ODYSSEY && event.getSelectedChildTab() == OdysseyTabType.LOADOUT && this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isNotEqualTo(LoadoutSet.CURRENT).get()) {
+                getRenameHandler().handle(null);
+            }
+        }));
+        register(EventService.addListener(true, this, CreateItemEvent.class, event -> {
+            if (event.getSelectedTab() == MainTabType.ODYSSEY && event.getSelectedChildTab() == OdysseyTabType.LOADOUT) {
+                getCreateHandler().handle(null);
+            }
+        }));
+        register(EventService.addListener(true, this, CopySelectedItemEvent.class, event -> {
+            if (event.getSelectedTab() == MainTabType.ODYSSEY && event.getSelectedChildTab() == OdysseyTabType.LOADOUT && this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isNotEqualTo(LoadoutSet.CURRENT).get()) {
+                getCopyHandler().handle(null);
+            }
+        }));
+        register(EventService.addListener(true, this, CloneSelectedItemEvent.class, event -> {
+            if (event.getSelectedTab() == MainTabType.ODYSSEY && event.getSelectedChildTab() == OdysseyTabType.LOADOUT && this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isNotEqualTo(LoadoutSet.CURRENT).get()) {
+                getCloneHandler().handle(null);
+            }
+        }));
 
     }
 
@@ -86,6 +112,13 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
                                 "tab.loadout.delete", this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isEqualTo(LoadoutSet.CURRENT),
                                 "tab.loadout.copy", this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isEqualTo(LoadoutSet.CURRENT),
                                 "tab.loadout.rename", this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isEqualTo(LoadoutSet.CURRENT)
+                        ),
+                        Map.of(
+                                "tab.loadout.create", new KeyCodeCombination(KeyCode.N, KeyCodeCombination.CONTROL_DOWN),
+                                "tab.loadout.rename", new KeyCodeCombination(KeyCode.F2),
+                                "tab.loadout.delete", new KeyCodeCombination(KeyCode.DELETE),
+                                "tab.loadout.copy", new KeyCodeCombination(KeyCode.C, KeyCodeCombination.CONTROL_DOWN),
+                                "tab.loadout.clone", new KeyCodeCombination(KeyCode.D, KeyCodeCombination.CONTROL_DOWN)
                         ))
                 .withFocusTraversable(false)
                 .build();
@@ -149,6 +182,7 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
     private void showInputPopOver(String buttonLocaleKey, String textfieldPromptLocaleKey, BiConsumer<Commander, String> inputHandler) {
         final DestroyableTextField textField = TextFieldBuilder.builder()
                 .withStyleClasses("root", "loadout-newname")
+                .withNonLocalizedText(this.loadoutSetSelect.getSelectionModel().getSelectedItem().getName())
                 .withPromptTextProperty(LocaleService.getStringBinding(textfieldPromptLocaleKey))
                 .build();
 
@@ -168,6 +202,7 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
                 .withArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER)
                 .build();
         popOver.show(this.menuButton);
+        textField.selectAll();
         button.setOnAction(_ -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
             inputHandler.accept(commander, textField.getText());
             textField.clear();

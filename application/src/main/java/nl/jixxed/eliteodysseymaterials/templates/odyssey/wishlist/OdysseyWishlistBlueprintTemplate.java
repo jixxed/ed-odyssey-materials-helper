@@ -47,7 +47,7 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableVBox
     private QuantitySelectable quantityLine;
     private DestroyableFontAwesomeIconView eyeIcon;
 
-    OdysseyWishlistBlueprintTemplate(final String wishlistUUID, final WishlistBlueprint<OdysseyBlueprintName> wishlistBlueprint) {
+    public OdysseyWishlistBlueprintTemplate(final String wishlistUUID, final WishlistBlueprint<OdysseyBlueprintName> wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
         this.wishlistBlueprint = (OdysseyWishlistBlueprint) wishlistBlueprint;
         this.sequenceID = counter++;

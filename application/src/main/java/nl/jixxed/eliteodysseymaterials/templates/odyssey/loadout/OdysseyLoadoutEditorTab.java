@@ -6,7 +6,7 @@ import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.LoadoutSet;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabType;
 import nl.jixxed.eliteodysseymaterials.service.LoadoutService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -74,7 +74,7 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements DestroyableEv
     }
 
     @Override
-    public OdysseyTabs getTabType() {
-        return OdysseyTabs.LOADOUT;
+    public OdysseyTabType getTabType() {
+        return OdysseyTabType.LOADOUT;
     }
 }

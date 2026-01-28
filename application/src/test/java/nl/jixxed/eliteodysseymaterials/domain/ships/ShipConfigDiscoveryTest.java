@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.domain.ships;
 
 
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.FrameShiftDrive;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.FrameShiftDriveBooster;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.ShieldGenerator;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military.GuardianShieldReinforcementPackage;
@@ -17,32 +18,39 @@ import static nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier.*;
 
 @Slf4j
 public class ShipConfigDiscoveryTest {
-    @Disabled
+//    @Disabled
     @Test
     void findModuleStats() {
 
         ShipModule.getBasicModules();
         final Ship ship = Ship.EXPLORER_NX;
-        for (double optimisedMass = 2600.0; optimisedMass < 3200.0; optimisedMass+=10.0){
+        ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().ifPresent(slot ->
+                slot.setShipModule(FrameShiftDrive.FRAME_SHIFT_DRIVE_OVERCHARGE_8_A_MK_II));
+//        for (double optimisedMass = 2600.0; optimisedMass < 3200.0; optimisedMass+=10.0){
+        double optimisedMass = 4670.0;
+//        double fuelMultiplier = 0.013;
+        double maxFuelPerJump = 6.8;
+        double fuelPower = 2.9;
+//        for (double fuelPower = 6.0; fuelPower >= 1.0; fuelPower-=0.01){
+            for (double fuelMultiplier = 0.004; fuelMultiplier >= 0.00395; fuelMultiplier-=0.000001){
 
-            for (double fuelPower = 2.75; fuelPower < 3.2; fuelPower+=0.05){
-
-                double rangeCurrent = calculateJumpRangeCurrent(ship, optimisedMass, fuelPower);
-                if(rangeCurrent > 20.4 && rangeCurrent < 20.42)
-                log.info("Current jump range: {}, optimisedMass: {}, fuelPower: {}", rangeCurrent, optimisedMass,fuelPower);
+                double rangeCurrent = calculateJumpRangeCurrent(ship, optimisedMass, fuelPower, fuelMultiplier, maxFuelPerJump);
+//                if(rangeCurrent > 34.1 && rangeCurrent < 34.2)
+                log.info("Current jump range: {}, optimisedMass: {}, fuelMultiplier: {}", rangeCurrent, optimisedMass,fuelMultiplier);
             }
+//        }
 
-        }
+//        }
     }
 
-    public double calculateJumpRangeCurrent(final Ship ship, double optimisedMass, double fuelPower) {
-        return calculateJumpRange(ship, ship.getEmptyMass() + ship.getCurrentCargo() + ship.getCurrentFuel() + ship.getCurrentFuelReserve(), ship.getCurrentFuel(), optimisedMass, fuelPower);
+    public double calculateJumpRangeCurrent(final Ship ship, double optimisedMass, double fuelPower, double fuelMultiplier, double maxFuelPerJump) {
+        return calculateJumpRange(ship, ship.getEmptyMass() + ship.getCurrentCargo() + ship.getCurrentFuel() + ship.getCurrentFuelReserve(), ship.getCurrentFuel(), optimisedMass, fuelPower, fuelMultiplier,maxFuelPerJump);
     }
 
-    public double calculateJumpRange(final Ship ship, final double mass, final double fuel, double optimisedMass, double fuelPower) {
+    public double calculateJumpRange(final Ship ship, final double mass, final double fuel, double optimisedMass, double fuelPower, double fuelMultiplier, double maxFuelPerJump) {
 
-            final double maxFuelPerJump = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().filter(Slot::isOccupied).map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.MAX_FUEL_PER_JUMP, 1D, true)).orElse(1D);
-        final double fuelMultiplier = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().filter(Slot::isOccupied).map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.FUEL_MULTIPLIER, 1D, true)).orElse(1D);
+//            final double maxFuelPerJump = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().filter(Slot::isOccupied).map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.MAX_FUEL_PER_JUMP, 1D, true)).orElse(1D);
+//        final double fuelMultiplier = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().filter(Slot::isOccupied).map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.FUEL_MULTIPLIER, 1D, true)).orElse(1D);
         final double jumpRangeIncrease = ship.getOptionalSlots().stream().filter(slot -> slot.getShipModule() instanceof FrameShiftDriveBooster).findFirst().filter(Slot::isOccupied).map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.JUMP_RANGE_INCREASE, 1D, true)).orElse(0D);
             return calculateJumpDistance(mass, Math.min(fuel, maxFuelPerJump), optimisedMass, fuelMultiplier, fuelPower, jumpRangeIncrease);
     }

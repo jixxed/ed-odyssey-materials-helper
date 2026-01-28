@@ -8,7 +8,7 @@ import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.OdysseyWishlistBlueprint;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -91,8 +91,8 @@ public class OdysseyWishlistTab extends OdysseyTab implements DestroyableEventTe
     }
 
     @Override
-    public OdysseyTabs getTabType() {
-        return OdysseyTabs.WISHLIST;
+    public OdysseyTabType getTabType() {
+        return OdysseyTabType.WISHLIST;
     }
 
 
