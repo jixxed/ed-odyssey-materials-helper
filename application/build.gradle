@@ -423,6 +423,14 @@ extraJavaModuleInfo {
 
 compileJava {
     doFirst {
+        //bugfix for intelliJ adding cyclic dependency
+        def moduleInfo = file("src/main/java/module-info.java")
+        if (moduleInfo.exists()) {
+            moduleInfo.text = moduleInfo.text.replace(
+                    "    requires nl.jixxed.eliteodysseymaterials;\n",
+                    ""
+            )
+        }
         options.compilerArgs = [
                 '--module-path', classpath.asPath,
                 '--add-exports', "javafx.graphics/com.sun.javafx.tk=nl.jixxed.eliteodysseymaterials",
