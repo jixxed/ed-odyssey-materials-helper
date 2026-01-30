@@ -96,8 +96,14 @@ java {
     }
     modularity.inferModulePath = true
 }
+jpackage {
+    jpackageHome = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(25)
+        vendor = JvmVendorSpec.AZUL
+    }.get().metadata.installationPath.asFile.absolutePath
+}
 tasks.register('wrapper', Wrapper) {
-    gradleVersion = "9.1.0"
+    gradleVersion = "9.3.0"
 }
 OperatingSystem os = OperatingSystem.current()
 jar {
@@ -216,7 +222,7 @@ jlink {
 //    }
 //}
 tasks.register("jpackageSigned") {
-    dependsOn jpackage
+    dependsOn tasks.named("jpackage")
     // not signing exe until bug is fixed https://bugs.openjdk.org/browse/JDK-8326447
 //    dependsOn jpackageImage
 //    finalizedBy signAppExe
@@ -234,7 +240,7 @@ tasks.register('createSignCert') {
     }
 }
 tasks.register('signAppExe') {
-    dependsOn createSignCert
+    dependsOn tasks.named('createSignCert')
     finalizedBy jpackage
     doLast {
         File target = new File("application/build/jpackage/Elite Dangerous Odyssey Materials Helper/Elite Dangerous Odyssey Materials Helper.exe")
@@ -336,7 +342,7 @@ dependencies {
 }
 tasks.named("jpackage").configure {
     if (os.isWindows()) {
-        dependsOn test
+        dependsOn tasks.named('test')
     }
 }
 
@@ -761,8 +767,8 @@ afterEvaluate {
 //}
 
 // Ensure Sass compiles before Java compilation
-compileJava.dependsOn compileSassDefault
-compileJava.dependsOn compileSassColorblind
+compileJava.dependsOn tasks.named('compileSassDefault')
+compileJava.dependsOn tasks.named('compileSassColorblind')
 tasks.named('compileSass') {
     dependsOn tasks.named('compileSassDefault')
     dependsOn tasks.named('compileSassColorblind')

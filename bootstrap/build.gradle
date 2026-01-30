@@ -29,8 +29,14 @@ java {
     }
     modularity.inferModulePath = true
 }
+jpackage {
+    jpackageHome = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(25)
+        vendor = JvmVendorSpec.AZUL
+    }.get().metadata.installationPath.asFile.absolutePath
+}
 tasks.register('wrapper', Wrapper) {
-    gradleVersion = "9.1.0"
+    gradleVersion = "9.3.0"
 }
 
 OperatingSystem os = OperatingSystem.current();
@@ -111,7 +117,7 @@ jlink {
     }
 }
 tasks.register("patchShellScript") {
-    dependsOn jpackage
+    dependsOn tasks.named("jpackage")
     doLast {
         def launcherScript = file("$buildDir/jpackage/Elite Dangerous Odyssey Materials Helper Launcher/lib/runtime/bin/Elite Dangerous Odyssey Materials Helper Launcher")
         if (launcherScript.exists()) {
@@ -130,7 +136,7 @@ tasks.register("patchShellScript") {
 }
 
 tasks.register("jpackageSigned") {
-    dependsOn jpackageImage
+    dependsOn tasks.named("jpackageImage")
     // not signing exe until bug is fixed https://bugs.openjdk.org/browse/JDK-8326447
     finalizedBy signInstallerMsi
 }
@@ -152,7 +158,7 @@ tasks.register('createSignCert') {
 
 tasks.register('signInstallerExe') {
     // not signing exe until bug is fixed https://bugs.openjdk.org/browse/JDK-8326447
-    dependsOn createSignCert
+    dependsOn tasks.named("createSignCert")
     finalizedBy signInstallerMsi
     doLast {
         File target = new File("bootstrap/build/jpackage/Elite Dangerous Odyssey Materials Helper Launcher/Elite Dangerous Odyssey Materials Helper Launcher.exe")
@@ -168,7 +174,7 @@ tasks.register('signInstallerExe') {
 }
 
 tasks.register('signInstallerMsi') {
-    dependsOn createSignCert, jpackage
+    dependsOn tasks.named("createSignCert"), tasks.named("jpackage")
 
     doLast {
         File target = new File('bootstrap/build/jpackage/Elite Dangerous Odyssey Materials Helper-' + version + '.msi')
