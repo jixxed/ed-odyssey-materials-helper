@@ -8,6 +8,7 @@ import io.sentry.Hint;
 import io.sentry.Sentry;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.MapChangeListener;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
@@ -60,6 +61,7 @@ import java.awt.event.MouseListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -109,7 +111,7 @@ public class FXApplication extends Application {
     @Override
     public void start(final Stage primaryStage) {
         System.setProperty("de.jensd.fx.glyphs.fontawesome.disableCSS", "true");
-        DeeplinkHelper.setFxApplication(this);
+//        DeeplinkHelper.setFxApplication(this);
         NotificationService.init();
         LocationService.init();
         PinnedBlueprintService.init();
@@ -141,6 +143,7 @@ public class FXApplication extends Application {
 //            HighGradeEmissionService.initialize();
             CAPIService.getInstance();
             this.loadingScreen = new LoadingScreen();
+
             eventListeners.add(EventService.addListener(true, this, JournalInitEvent.class, event -> {
 
                 if (event.isInitialised() && getApplicationScreen() == null) {
@@ -271,16 +274,6 @@ public class FXApplication extends Application {
             setupDeeplinkWatcher();
             setupWatchers();
 
-            KeyCombination kc = new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN);
-            Runnable rn = () -> {
-                Platform.runLater(() -> {
-                    final String clipboard = Clipboard.getSystemClipboard().getString();
-                    if (clipboard != null && clipboard.startsWith("edomh://")) {
-                        deeplinkConsumer.accept(clipboard);
-                    }
-                });
-            };
-            scene.getAccelerators().put(kc, rn);
             setupStyling(scene);
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -309,6 +302,44 @@ public class FXApplication extends Application {
         }
     }
 
+    /**
+     * Whenever we add an accelerator to a button or menu item, it gets added to the scene's accelerator map.
+     * This will override the behavior to the event system instead. This allows the accelerator to be displayed on the button
+     * without actually triggering the button's action, but rather publishing an event that can be handled elsewhere.
+     */
+    private void configureHotKeys() {
+        Map<? extends KeyCombination, ? extends Runnable> keyCodeActions = Map.of(
+                new KeyCodeCombination(KeyCode.DELETE), () -> EventService.publish(new DeleteSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab())),
+                new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN), () -> EventService.publish(new CopySelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab())),
+                new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN), () -> EventService.publish(new ExportSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab())),
+                new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN), () -> EventService.publish(new CreateItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab())),
+                new KeyCodeCombination(KeyCode.R, KeyCombination.CONTROL_DOWN), () -> EventService.publish(new ResetSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab())),
+                new KeyCodeCombination(KeyCode.D, KeyCombination.CONTROL_DOWN), () -> EventService.publish(new CloneSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab())),
+                new KeyCodeCombination(KeyCode.F2), () -> EventService.publish(new RenameSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab())),
+                new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN), () -> {
+                    final String clipboard = Clipboard.getSystemClipboard().getString();
+                    if (clipboard != null && clipboard.startsWith("edomh://")) {
+                        deeplinkConsumer.accept(clipboard);
+                    }
+                }
+        );
+        //configure all accelerators
+        keyCodeActions.forEach(this::addKeyEvent);
+
+        //restore accelerator if it is globally handled
+        MapChangeListener<? super KeyCombination, ? super Runnable> mapChangeListener = change -> {
+            KeyCombination key = change.getKey();
+            if (keyCodeActions.containsKey(key) && change.getValueAdded() != null && !change.getValueAdded().equals(keyCodeActions.get(key))) {
+                scene.getAccelerators().put(key, keyCodeActions.get(key));
+            }
+        };
+        scene.getAccelerators().addListener(mapChangeListener);
+    }
+
+    private void addKeyEvent(KeyCombination keyCombination, Runnable runnable) {
+        scene.getAccelerators().put(keyCombination, () -> Platform.runLater(runnable));
+    }
+
     private void exit() {
         log.debug("Application closing");
         try {
@@ -317,6 +348,7 @@ public class FXApplication extends Application {
             if (subscribe != null) {
                 subscribe.dispose();
             }
+            DeeplinkHelper.destroy();
             EventService.publish(new TerminateApplicationEvent());
             EventService.shutdown();
 //                NativeLibrary.disposeAll();
@@ -461,6 +493,7 @@ public class FXApplication extends Application {
         }
 
     }
+
     private void setupSquadronWatcher(final Commander commander) {
 
         if (this.squadronWatcher != null) {
@@ -501,6 +534,10 @@ public class FXApplication extends Application {
         content = new StackPane(/*this.applicationLayout, this.loadingScreen*/);
         content.getStyleClass().add("app");
         scene = new Scene(content, PreferencesService.getPreference(PreferenceConstants.APP_WIDTH, 800D), PreferencesService.getPreference(PreferenceConstants.APP_HEIGHT, 600D));
+
+        // configureHotKeys() must be done before initApplicationScreen()
+        configureHotKeys();
+
 
         scene.widthProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(this.primaryStage, PreferenceConstants.APP_WIDTH, Math.max((Double) newValue, 175.0D)));
         scene.heightProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(this.primaryStage, PreferenceConstants.APP_HEIGHT, Math.max((Double) newValue, 175.0D)));
@@ -660,7 +697,7 @@ public class FXApplication extends Application {
     }
 
     private static void addIconsToStage(Stage stage) {
-        for (int res : new int[]{16,32,48,64,128,256,512}) {
+        for (int res : new int[]{16, 32, 48, 64, 128, 256, 512}) {
             stage.getIcons().add(new Image(FXApplication.class.getResourceAsStream("/images/application/appicon" + res + ".png")));
         }
     }

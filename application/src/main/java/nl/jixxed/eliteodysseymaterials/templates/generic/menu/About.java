@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.FXApplication;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.PinnedBlueprintService;
 import nl.jixxed.eliteodysseymaterials.service.VersionService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
@@ -22,6 +23,7 @@ class About extends DestroyableVBox implements DestroyableTemplate {
     private DestroyableLabel versionLabel;
     private DestroyableHyperlink link;
     private DestroyableHyperlink linkTutorial;
+    private DestroyableHyperlink linkPinPlanner;
     private DestroyableHyperlink donate;
     private DestroyableHyperlink donate2;
     private DestroyableHyperlink discord;
@@ -50,6 +52,12 @@ class About extends DestroyableVBox implements DestroyableTemplate {
                 .withText(LocaleService.getStringBinding("menu.about.tutorial"))
                 .withOnAction(actionEvent ->
                         FXApplication.getInstance().getHostServices().showDocument("https://www.youtube.com/playlist?list=PLg3S2KmbzGpPvHqMJrP2yFKEyUr8Axn0T"))
+                .build();
+        this.linkPinPlanner = HyperlinkBuilder.builder()
+                .withStyleClass("about-download-link")
+                .withText(LocaleService.getStringBinding("menu.about.pinplanner"))
+                .withOnAction(actionEvent ->
+                        FXApplication.getInstance().getHostServices().showDocument("https://jixxed.github.io/ed-pin-planner/?config=" + PinnedBlueprintService.getPinConfigForUrl()))
                 .build();
         this.donateImage = ResizableImageViewBuilder.builder()
                 .withStyleClass("about-donate-image")
@@ -88,7 +96,8 @@ class About extends DestroyableVBox implements DestroyableTemplate {
                 donateButtons(),
                 donateLabels(),
                 BoxBuilder.builder().withNodes(new GrowingRegion(), this.discord, new GrowingRegion()).buildHBox(),
-                BoxBuilder.builder().withNodes(new GrowingRegion(), this.linkTutorial, new GrowingRegion()).buildHBox()
+                BoxBuilder.builder().withNodes(new GrowingRegion(), this.linkTutorial, new GrowingRegion()).buildHBox(),
+                BoxBuilder.builder().withNodes(new GrowingRegion(), this.linkPinPlanner, new GrowingRegion()).buildHBox()
         );
     }
 

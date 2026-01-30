@@ -8,7 +8,7 @@ import javafx.scene.control.skin.ScrollPaneSkin;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.AssetType;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyBartenderMaterialSelectedEvent;
@@ -18,7 +18,7 @@ import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyTab;
 
 import java.util.*;
 
-import static nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs.BARTENDER;
+import static nl.jixxed.eliteodysseymaterials.enums.OdysseyTabType.BARTENDER;
 
 public class OdysseyBartenderTab extends OdysseyTab implements DestroyableEventTemplate {
     private OdysseyBartenderMaterial selectedMaterial;
@@ -186,7 +186,7 @@ public class OdysseyBartenderTab extends OdysseyTab implements DestroyableEventT
     }
 
     @Override
-    public OdysseyTabs getTabType() {
+    public OdysseyTabType getTabType() {
         return BARTENDER;
     }
 }

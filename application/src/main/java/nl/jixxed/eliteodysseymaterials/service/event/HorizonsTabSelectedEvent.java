@@ -2,10 +2,10 @@ package nl.jixxed.eliteodysseymaterials.service.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabType;
 
 @AllArgsConstructor
 @Getter
 public class HorizonsTabSelectedEvent implements Event {
-    private final HorizonsTabs selectedTab;
+    private final HorizonsTabType selectedTab;
 }

@@ -165,3 +165,7 @@
 "search.filter.not_delivered","Not delivered","","","","Non livré","","Не доставлено","未送达",""
 "search.colonisation.filter.placeholder","Filter commodities","","","","Filtrer les marchandises","","Фильтр товаров","过滤货物",""
 "segment.type.power_potential_overpower","","","","","","","","",""
+"dialog.import.text","Do you want to import the following {0}?","","","","","","","",""
+"dialog.import.name","Name: {0}","","","","","","","",""
+"dialog.import.yes","Import","","","","","","","",""
+"dialog.import.no","Cancel","","","","","","","",""

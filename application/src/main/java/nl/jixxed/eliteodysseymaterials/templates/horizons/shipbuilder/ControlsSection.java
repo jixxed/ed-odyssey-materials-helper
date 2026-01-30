@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.MouseEvent;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.*;
@@ -96,6 +97,14 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
                                 "tab.ships.copy", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT).or(Bindings.createBooleanBinding(() -> this.shipSelect.getSelectionModel().getSelectedItem() == null || this.shipSelect.getSelectionModel().getSelectedItem().getShipType() == null, this.shipSelect.getSelectionModel().selectedItemProperty())),
                                 "tab.ships.delete", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT),
                                 "tab.ships.reset", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT).or(Bindings.createBooleanBinding(() -> this.shipSelect.getSelectionModel().getSelectedItem() == null || this.shipSelect.getSelectionModel().getSelectedItem().getShipType() == null, this.shipSelect.getSelectionModel().selectedItemProperty()))
+                        ),
+                        Map.of(
+                                "tab.ships.create", new KeyCodeCombination(KeyCode.N, KeyCodeCombination.CONTROL_DOWN),
+                                "tab.ships.rename", new KeyCodeCombination(KeyCode.F2),
+                                "tab.ships.delete", new KeyCodeCombination(KeyCode.DELETE),
+                                "tab.ships.copy", new KeyCodeCombination(KeyCode.C, KeyCodeCombination.CONTROL_DOWN),
+                                "tab.ships.clone", new KeyCodeCombination(KeyCode.D, KeyCodeCombination.CONTROL_DOWN),
+                                "tab.ships.reset", new KeyCodeCombination(KeyCode.R, KeyCodeCombination.CONTROL_DOWN)
                         ))
                 .build();
         this.menuButton.setFocusTraversable(false);
@@ -471,6 +480,7 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
             textfieldPromptLocaleKey, BiConsumer<Commander, String> inputHandler) {
         final DestroyableTextField textField = TextFieldBuilder.builder()
                 .withStyleClasses("root", "ships-newname")
+                .withNonLocalizedText(this.shipSelect.getSelectionModel().getSelectedItem().getName())
                 .withPromptTextProperty(LocaleService.getStringBinding(textfieldPromptLocaleKey))
                 .build();
 
@@ -490,6 +500,7 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
                 .withArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER)
                 .build();
         popOver.show(this.menuButton);
+        textField.selectAll();
         button.setOnAction(_ -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
             inputHandler.accept(commander, textField.getText());
             textField.clear();
@@ -549,6 +560,37 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
                     || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_SLEF)) {
                 refreshShipSelect();
                 EventService.publish(new HorizonsShipChangedEvent(this.shipSelect.getSelectionModel().getSelectedItem().getUuid()));
+            }
+        }));
+
+        register(EventService.addListener(true, this, DeleteSelectedItemEvent.class, event -> {
+            if (event.getSelectedTab() == MainTabType.HORIZONS && event.getSelectedChildTab() == HorizonsTabType.SHIPBUILDER && this.shipSelect.getSelectionModel().selectedItemProperty().isNotEqualTo(ShipConfiguration.CURRENT).get()) {
+                getDeleteHandler().handle(null);
+            }
+        }));
+        register(EventService.addListener(true, this, RenameSelectedItemEvent.class, event -> {
+            if (event.getSelectedTab() == MainTabType.HORIZONS && event.getSelectedChildTab() == HorizonsTabType.SHIPBUILDER && this.shipSelect.getSelectionModel().selectedItemProperty().isNotEqualTo(ShipConfiguration.CURRENT).get()) {
+                getRenameHandler().handle(null);
+            }
+        }));
+        register(EventService.addListener(true, this, CreateItemEvent.class, event -> {
+            if (event.getSelectedTab() == MainTabType.HORIZONS && event.getSelectedChildTab() == HorizonsTabType.SHIPBUILDER) {
+                getCreateHandler().handle(null);
+            }
+        }));
+        register(EventService.addListener(true, this, CopySelectedItemEvent.class, event -> {
+            if (event.getSelectedTab() == MainTabType.HORIZONS && event.getSelectedChildTab() == HorizonsTabType.SHIPBUILDER && this.shipSelect.getSelectionModel().selectedItemProperty().isNotEqualTo(ShipConfiguration.CURRENT).and(Bindings.createBooleanBinding(() -> this.shipSelect.getSelectionModel().getSelectedItem() == null || this.shipSelect.getSelectionModel().getSelectedItem().getShipType() == null, this.shipSelect.getSelectionModel().selectedItemProperty()).not()).get()) {
+                getCopyHandler().handle(null);
+            }
+        }));
+        register(EventService.addListener(true, this, ResetSelectedItemEvent.class, event -> {
+            if (event.getSelectedTab() == MainTabType.HORIZONS && event.getSelectedChildTab() == HorizonsTabType.SHIPBUILDER && this.shipSelect.getSelectionModel().selectedItemProperty().isNotEqualTo(ShipConfiguration.CURRENT).and(Bindings.createBooleanBinding(() -> this.shipSelect.getSelectionModel().getSelectedItem() == null || this.shipSelect.getSelectionModel().getSelectedItem().getShipType() == null, this.shipSelect.getSelectionModel().selectedItemProperty()).not()).get()) {
+                getResetHandler().handle(null);
+            }
+        }));
+        register(EventService.addListener(true, this, CloneSelectedItemEvent.class, event -> {
+            if (event.getSelectedTab() == MainTabType.HORIZONS && event.getSelectedChildTab() == HorizonsTabType.SHIPBUILDER && Bindings.createBooleanBinding(() -> this.shipSelect.getSelectionModel().getSelectedItem() == null || this.shipSelect.getSelectionModel().getSelectedItem().getShipType() == null, this.shipSelect.getSelectionModel().selectedItemProperty()).not().get()) {
+                getCloneHandler().handle(null);
             }
         }));
 

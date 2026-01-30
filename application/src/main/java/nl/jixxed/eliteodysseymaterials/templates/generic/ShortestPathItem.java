@@ -67,13 +67,20 @@ public class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBo
                             //.orElse(Collections.emptyList());
 //                            final Integer amount = entry.getValue();
                             if (Expansion.HORIZONS.equals(this.expansion)) {
-                                final String localeKey = ((HorizonsBlueprintConstants.getRecipe(((HorizonsBlueprint) blueprint).getBlueprintName(), ((HorizonsBlueprint) blueprint).getHorizonsBlueprintType(), ((HorizonsBlueprint) blueprint).getHorizonsBlueprintGrade())) instanceof HorizonsExperimentalEffectBlueprint)
-                                        ? "tab.wishlist.travel.path.column.blueprints.blueprint.horizons.experimental"
-                                        : "tab.wishlist.travel.path.column.blueprints.blueprint.horizons";
-                                stringBinding = LocaleService.getStringBinding(localeKey,
-                                        LocaleService.LocalizationKey.of(blueprint.getBlueprintName().getLocalizationKey()),
-                                        LocaleService.LocalizationKey.of(getBlueprintType((EngineeringBlueprint<T>) blueprint).getLocalizationKey()),
-                                        amount);
+                                if((HorizonsBlueprintConstants.getRecipe(((HorizonsBlueprint) blueprint).getBlueprintName(), ((HorizonsBlueprint) blueprint).getHorizonsBlueprintType(), ((HorizonsBlueprint) blueprint).getHorizonsBlueprintGrade())) instanceof HorizonsExperimentalEffectBlueprint){
+                                    final String localeKey = "tab.wishlist.travel.path.column.blueprints.blueprint.horizons.experimental";
+                                    stringBinding = LocaleService.getStringBinding(localeKey,
+                                            LocaleService.LocalizationKey.of(blueprint.getBlueprintName().getLocalizationKey()),
+                                            LocaleService.LocalizationKey.of(getBlueprintType((EngineeringBlueprint<T>) blueprint).getLocalizationKey()),
+                                            amount);
+                                }else{
+                                    final String localeKey = "tab.wishlist.travel.path.column.blueprints.blueprint.horizons";
+                                    stringBinding = LocaleService.getStringBinding(localeKey,
+                                            LocaleService.LocalizationKey.of(blueprint.getBlueprintName().getLocalizationKey()),
+                                            LocaleService.LocalizationKey.of(getBlueprintType((EngineeringBlueprint<T>) blueprint).getLocalizationKey()),
+                                            amount,
+                                            ((HorizonsBlueprint) blueprint).getHorizonsBlueprintGrade().getGrade());
+                                }
                             } else {
                                 stringBinding = LocaleService.getStringBinding("tab.wishlist.travel.path.column.blueprints.blueprint.odyssey", LocaleService.LocalizationKey.of(blueprint.getBlueprintName().getLocalizationKey()), amount);
                             }
@@ -139,10 +146,22 @@ public class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBo
         return horizonsWishlist.getItems().stream()
                 .filter(bp -> bp.getRecipeName().equals(blueprint.getBlueprintName())
                         && bp.getBlueprint() != null // can be null if all grades are 0%
-                        && (((HorizonsBlueprint) bp.getBlueprint()).getHorizonsBlueprintType().equals(((HorizonsBlueprint) blueprint).getHorizonsBlueprintType())
-                        || (bp instanceof HorizonsModuleWishlistBlueprint hmwb && hmwb.getExperimentalEffect() != null && hmwb.getExperimentalEffect().equals(((HorizonsBlueprint) blueprint).getHorizonsBlueprintType()))))
+                        && ((sameType((HorizonsBlueprint) blueprint, bp) || sameEffect((HorizonsBlueprint) blueprint, bp)) && sameMaxGrade((HorizonsBlueprint) blueprint, bp))
+                )
                 .mapToInt(WishlistBlueprint::getQuantity)
                 .sum();
+    }
+
+    private static <T extends BlueprintName<T>> boolean sameMaxGrade(HorizonsBlueprint blueprint, WishlistBlueprint<HorizonsBlueprintName> bp) {
+        return bp instanceof HorizonsModuleWishlistBlueprint hmwb && hmwb.getMaxSelectedGrade().equals(blueprint.getHorizonsBlueprintGrade());
+    }
+
+    private static <T extends BlueprintName<T>> boolean sameEffect(HorizonsBlueprint blueprint, WishlistBlueprint<HorizonsBlueprintName> bp) {
+        return bp instanceof HorizonsModuleWishlistBlueprint hmwb && hmwb.getExperimentalEffect() != null && hmwb.getExperimentalEffect().equals(blueprint.getHorizonsBlueprintType());
+    }
+
+    private static <T extends BlueprintName<T>> boolean sameType(HorizonsBlueprint blueprint, WishlistBlueprint<HorizonsBlueprintName> bp) {
+        return ((HorizonsBlueprint) bp.getBlueprint()).getHorizonsBlueprintType().equals(blueprint.getHorizonsBlueprintType());
     }
 
     private static <T extends BlueprintName<T>> Integer calculateAmount(Wishlist odysseyWishlist, Blueprint<T> blueprint) {

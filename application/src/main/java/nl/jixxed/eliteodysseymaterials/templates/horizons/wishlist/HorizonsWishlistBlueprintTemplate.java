@@ -47,7 +47,7 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableVBo
     private QuantitySelectable quantityLine;
     private DestroyableFontAwesomeIconView eyeIcon;
 
-    HorizonsWishlistBlueprintTemplate(final String wishlistUUID, final WishlistBlueprint<HorizonsBlueprintName> wishlistBlueprint) {
+    public HorizonsWishlistBlueprintTemplate(final String wishlistUUID, final WishlistBlueprint<HorizonsBlueprintName> wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
         this.wishlistBlueprint = (HorizonsWishlistBlueprint) wishlistBlueprint;
         this.sequenceID = counter++;

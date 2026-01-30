@@ -7,7 +7,7 @@ import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.Expansion;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabType;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableButton;
@@ -84,7 +84,7 @@ class OdysseySearchBar extends DestroyableHBox implements DestroyableEventTempla
         return PreferencesService.getPreference(PreferenceConstants.RECIPES_VISIBLE, Boolean.TRUE);
     }
 
-    private void switchTab(OdysseyTabs selectedTab) {
+    private void switchTab(OdysseyTabType selectedTab) {
         this.getChildren().removeAll(this.materialSearchBar, this.wishlistSearchBar, this.engineerSearchBar);
         switch (selectedTab) {
             case WISHLIST -> this.getChildren().add(this.wishlistSearchBar);

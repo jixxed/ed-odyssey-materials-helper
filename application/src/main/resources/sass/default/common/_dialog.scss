@@ -1,4 +1,3 @@
-
 .start-dialog {
   -fx-background-color: $background-color-dark;
 
@@ -70,6 +69,28 @@
     -fx-font-size: 1.2em;
     -fx-padding: 0.25em;
     -fx-wrap-text: true;
+  }
+}
+
+.import-dialog {
+  -fx-background-color: $background-color-dark;
+
+  .explain-text {
+    -fx-padding: 0.5em;
+    -fx-wrap-text: true;
+  }
+
+  .buttons {
+    -fx-spacing: 0.5em;
+    -fx-padding: 0.5em;
+  }
+
+  .import-dialog-scrollpane {
+    @include scroll-pane-content;
+    @import "dialog/wishlist";
+    @import "dialog/ship";
+    @import "dialog/pin";
+    @import "dialog/loadout";
   }
 }
 

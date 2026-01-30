@@ -1,0 +1,83 @@
+.pin-config {
+  -fx-spacing: 0.25em;
+  -fx-padding: 0.25em;
+  .pin-item {
+    -fx-spacing: 0.25em;
+    -fx-padding: 0.25em;
+    -fx-border-width: 1px;
+    -fx-border-color: $border-color-black;
+    -fx-background-color: $background-color-dark;
+
+    .engineer {
+      -fx-text-fill: $text-color-grey;
+      -fx-font-size: 1.2em;
+      -fx-font-weight: bold;
+    }
+
+    .change {
+      .current-name {
+        -fx-text-fill: $text-color-grey;
+        -fx-font-weight: bold;
+        -fx-min-width: 20em;
+      }
+
+      .current-type {
+        -fx-text-fill: $text-color-grey;
+
+      }
+
+      .new-name {
+        -fx-text-fill: $text-color-grey;
+        -fx-font-weight: bold;
+
+        &:changed {
+          -fx-underline: true;
+        }
+      }
+
+      .new-type {
+        -fx-text-fill: $text-color-grey;
+
+        &:changed {
+          -fx-underline: true;
+        }
+      }
+      .icon-container {
+        -fx-padding: 0.25em 3em 0 3em;
+        @include fixedWidth(6em);
+        @include fixedHeight(2em);
+        .arrow {
+          -fx-font-size: 2em !important;
+          -fx-font-weight: bold;
+          -fx-fill: $text-color-grey !important;
+
+        }
+      }
+
+    }
+
+    &:changed {
+      .engineer {
+        -fx-text-fill: $text-color-green;
+      }
+      .change {
+        .current-name {
+          -fx-text-fill: $text-color-white;
+        }
+
+        .current-type {
+          -fx-text-fill: $text-color-white;
+        }
+
+        .new-name {
+          -fx-text-fill: $text-color-white;
+        }
+
+        .new-type {
+          -fx-text-fill: $text-color-white;
+        }
+
+      }
+    }
+  }
+}

@@ -48,6 +48,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires nl.jixxed.ed.confidential.api;
     requires org.apache.commons.codec;
     requires me.xdrop.fuzzywuzzy;
+    requires javafx.base;
 
     uses nl.jixxed.ed.awesome.api.FontLoader;
     uses nl.jixxed.ed.confidential.api.SecrecyLoader;
@@ -702,6 +703,7 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.templates.components.slider to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.destroyables to javafx.graphics, java.desktop, javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.dialog to javafx.fxml, org.controlsfx.controls;
+    opens nl.jixxed.eliteodysseymaterials.templates.dialog.importdialog to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.generic to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.generic.menu to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.horizons to javafx.fxml, org.controlsfx.controls;

@@ -59,7 +59,7 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
     private QuantitySelectable quantityLine;
     private DestroyableFontAwesomeIconView eyeIcon;
 
-    HorizonsWishlistModuleBlueprintTemplate(final String wishlistUUID, final HorizonsModuleWishlistBlueprint wishlistBlueprint) {
+    public HorizonsWishlistModuleBlueprintTemplate(final String wishlistUUID, final HorizonsModuleWishlistBlueprint wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
         this.wishlistBlueprint = wishlistBlueprint;
         this.sequenceID = counter++;
@@ -85,13 +85,7 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
                 .withStyleClasses("visible-container")
                 .withNode(eyeIcon)
                 .buildHBox();
-        if (Wishlist.ALL.getUuid().equals(this.wishlistUUID)) {
-            setVisibilityValue(true);
-            visibility.setVisible(false);
-            visibility.setManaged(false);
-        } else {
-            setVisibilityValue(this.wishlistBlueprint.isVisible());
-        }
+
         final String gradeList = this.wishlistBlueprint.getPercentageToComplete().keySet().stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(HorizonsBlueprintGrade::getGrade).map(String::valueOf).collect(Collectors.joining(","));
         this.title = LabelBuilder.builder()
                 .withStyleClass("module")
@@ -126,6 +120,15 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
                 .withIcon(FontAwesomeIcon.EXPAND)
                 .withOnMouseClicked(_ -> splitBlueprint())
                 .build();
+        if (Wishlist.ALL.getUuid().equals(this.wishlistUUID)) {
+            setVisibilityValue(true);
+            visibility.setVisible(false);
+            visibility.setManaged(false);
+            split.setVisible(false);
+            split.setManaged(false);
+        } else {
+            setVisibilityValue(this.wishlistBlueprint.isVisible());
+        }
         DestroyableTooltip splitTooltip = TooltipBuilder.builder()
                 .withStyleClass("action-tooltip")
                 .withShowDelay(Duration.millis(100))

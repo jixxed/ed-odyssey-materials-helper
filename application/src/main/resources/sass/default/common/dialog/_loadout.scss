@@ -1,0 +1,62 @@
+.list {
+  @include hvGap(0.25em);
+
+  .loadout-item {
+    -fx-spacing: 1.25em;
+    -fx-padding: 0.25em;
+    -fx-border-width: 1px;
+    -fx-border-color: $border-color-black;
+    -fx-background-color: $background-color-dark;
+
+    .image-pane {
+      @include fixedWidth(18em);
+      @include fixedHeight(16em);
+
+      .loadout-image {
+        @include fixedWidth(18em);
+      }
+    }
+
+    .content {
+      -fx-spacing: 0.25em;
+
+      .loadout-name {
+        -fx-font-size: 1.4em;
+      }
+
+      .title {
+        -fx-font-size: 1.1em;
+      }
+
+      .grade-line {
+        .grade-name {
+        }
+
+        .grade-value {
+          -fx-font-weight: bold;
+
+        }
+      }
+
+      .modifications {
+        -fx-spacing: 0.25em;
+        .mod-slot {
+          -fx-spacing: 0.25em;
+          .mod-image {
+            @include fixedWidth(5.5em);
+            @include fixedHeight(4.6em);
+
+          }
+
+          .mod-name {
+            @include fixedWidth(6.05em);
+            -fx-wrap-text: true;
+            -fx-text-alignment: center;
+            -fx-alignment: center;
+            -fx-font-size: 0.9em;
+          }
+        }
+      }
+    }
+  }
+}

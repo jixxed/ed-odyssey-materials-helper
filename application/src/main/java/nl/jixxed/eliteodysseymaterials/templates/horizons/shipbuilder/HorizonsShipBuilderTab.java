@@ -10,7 +10,7 @@ import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfigurations;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabType;
 import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -36,8 +36,8 @@ public class HorizonsShipBuilderTab extends HorizonsTab implements DestroyableEv
     private ShipViewPopover shipViewPopOver;
 
     @Override
-    public HorizonsTabs getTabType() {
-        return HorizonsTabs.SHIPBUILDER;
+    public HorizonsTabType getTabType() {
+        return HorizonsTabType.SHIPBUILDER;
     }
 
     public HorizonsShipBuilderTab() {
@@ -158,10 +158,6 @@ public class HorizonsShipBuilderTab extends HorizonsTab implements DestroyableEv
                     });
                 });
             }
-        }));
-
-        register(EventService.addListener(true, this, 9, ShipLoadoutEvent.class, event -> {
-
         }));
     }
 

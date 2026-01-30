@@ -1,7 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation;
 
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableScrollPane;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
@@ -27,7 +27,7 @@ public class HorizonsColonisationTab extends HorizonsTab implements DestroyableT
     }
 
     @Override
-    public HorizonsTabs getTabType() {
-        return HorizonsTabs.COLONISATION;
+    public HorizonsTabType getTabType() {
+        return HorizonsTabType.COLONISATION;
     }
 }

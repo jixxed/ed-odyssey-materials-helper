@@ -118,7 +118,7 @@ public class PathService {
                                         engineerPreference.put(engineer, engineerPreference.get(engineer) - 1);
                                     }
                                 });
-                        final List<? extends WishlistBlueprint<T>> blueprintsForEngineer = getBlueprintsForEngineer(wishlistBlueprints, pathItems, selectedEngineer, allowedEngineers);
+                        final List<? extends WishlistBlueprint<T>> blueprintsForEngineer = getBlueprintsForEngineer(wishlistBlueprints, pathItems, selectedEngineer, allowedEngineers, isOdyssey);
                         if (!blueprintsForEngineer.isEmpty()) {
                             final PathItem<T> e = new PathItem<>(engineers, blueprintsForEngineer.stream().map(WishlistBlueprint::getBlueprint).toList());
                             pathItems.add(e);
@@ -347,14 +347,14 @@ public class PathService {
         return paths;
     }
 
-    private static <T extends BlueprintName<T>> List<? extends WishlistBlueprint<T>> getBlueprintsForEngineer(final List<? extends WishlistBlueprint<T>> wishlistBlueprints, final List<PathItem<T>> pathItems, final Engineer engineer, final Set<Engineer> allowedEngineers) {
+    private static <T extends BlueprintName<T>> List<? extends WishlistBlueprint<T>> getBlueprintsForEngineer(final List<? extends WishlistBlueprint<T>> wishlistBlueprints, final List<PathItem<T>> pathItems, final Engineer engineer, final Set<Engineer> allowedEngineers, boolean isOdyssey) {
 
         return wishlistBlueprints.stream()
                 .filter(WishlistBlueprint::isVisible)
                 .filter(bp -> bp instanceof HorizonsModuleWishlistBlueprint || bp instanceof HorizonsExperimentalWishlistBlueprint || bp instanceof OdysseyWishlistBlueprint)
-                .filter(bp -> getEngineers(bp.getBlueprint()).contains(engineer))
+                .filter(bp -> getEngineers(bp.getBlueprint(), isOdyssey).contains(engineer))
                 .filter(bp -> pathItems.stream().noneMatch(pathItem -> pathItem.getRecipes().containsKey(bp.getBlueprint())))
-                .filter(bp -> engineer.equals(Engineer.REMOTE_WORKSHOP) || !(getEngineers((EngineeringBlueprint<?>) bp.getBlueprint()).contains(Engineer.REMOTE_WORKSHOP)))
+                .filter(bp -> engineer.equals(Engineer.REMOTE_WORKSHOP) || !(getEngineers((EngineeringBlueprint<?>) bp.getBlueprint(), isOdyssey).contains(Engineer.REMOTE_WORKSHOP)))
                 .filter(bp -> (wishlistBlueprints.stream().filter(wb -> wb.getBlueprint() != null).filter(WishlistBlueprint::isVisible).noneMatch(
                                 wbp -> (wbp instanceof HorizonsModuleWishlistBlueprint hmwbp)
                                         && hmwbp.getBlueprint().getBlueprintName().equals(bp.getBlueprint().getBlueprintName())
@@ -371,19 +371,23 @@ public class PathService {
 
     }
 
-    public static <E extends BlueprintName<E>> List<Engineer> getEngineers(Blueprint<E> blueprint) {
+    public static <E extends BlueprintName<E>> List<Engineer> getEngineers(Blueprint<E> blueprint, boolean isOdyssey) {
         List<Engineer> engineers = new ArrayList<>();
         if (blueprint instanceof EngineeringBlueprint<E> engineeringBlueprint) {
             engineers.addAll(engineeringBlueprint.getEngineers());
         }
-        if (blueprint instanceof HorizonsModuleBlueprint moduleBlueprint && hasBlueprintPinned(moduleBlueprint)) {
+        if (blueprint instanceof HorizonsModuleBlueprint moduleBlueprint && canCraftInRemoteWorkshop(moduleBlueprint, isOdyssey)) {
             engineers.add(Engineer.REMOTE_WORKSHOP);
         }
         return engineers;
     }
 
-    private static boolean hasBlueprintPinned(HorizonsModuleBlueprint moduleBlueprint) {
-        return moduleBlueprint.getEngineers().stream().anyMatch(engineer -> PinnedBlueprintService.isPinned(engineer, moduleBlueprint));
+    private static boolean canCraftInRemoteWorkshop(HorizonsModuleBlueprint moduleBlueprint, boolean isOdyssey) {
+        return moduleBlueprint.getEngineers().stream().anyMatch(engineer -> {
+            boolean isUnlocked = !isOdyssey && APPLICATION_STATE.isEngineerUnlockedExact(engineer);
+            boolean canCraft = moduleBlueprint.getHorizonsBlueprintGrade().getGrade() <= APPLICATION_STATE.getEngineerRank(engineer);
+            return isUnlocked && canCraft && PinnedBlueprintService.isPinned(engineer, moduleBlueprint);
+        });
     }
 
     private static <T extends BlueprintName<T>> List<Engineer> mostPreferredEngineers(final Map<Engineer, Integer> engineerPreference, final EngineeringBlueprint<T> recipe, final Set<Engineer> allowedEngineers) {

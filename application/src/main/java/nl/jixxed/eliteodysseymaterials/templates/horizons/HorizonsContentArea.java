@@ -8,10 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TabPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.enums.Action;
-import nl.jixxed.eliteodysseymaterials.enums.Expansion;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
-import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -67,7 +64,7 @@ public class HorizonsContentArea extends DestroyableAnchorPane implements Destro
                 .withStyleClass("horizons-tab-pane")
                 .withSelectedItemListener((_, _, newValue) -> {
                     if (newValue != null) {
-                        final HorizonsTabs tabType = ((HorizonsTab) newValue).getTabType();
+                        final HorizonsTabType tabType = (HorizonsTabType) ((HorizonsTab) newValue).getTabType();
                         EventService.publish(new HorizonsTabSelectedEvent(tabType));
                     }
                     PreferencesService.setPreference(PreferenceConstants.SELECTED_TAB_HORIZONS, this.tabs.getTabs().indexOf(newValue));
@@ -146,4 +143,8 @@ public class HorizonsContentArea extends DestroyableAnchorPane implements Destro
         AnchorPaneHelper.setAnchor(this.body, 0.0, 0.0, isRecipeBarVisible ? width : 0.0, 0.0);
     }
 
+    public TabType getSelectedTab() {
+        final HorizonsTab selected = (HorizonsTab) this.tabs.getSelectionModel().getSelectedItem();
+        return selected.getTabType();
+    }
 }

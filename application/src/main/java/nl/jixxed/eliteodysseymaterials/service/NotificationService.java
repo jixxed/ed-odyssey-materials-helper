@@ -83,7 +83,7 @@ public class NotificationService {
         showWarning(notificationType, title, text, false);
     }
 
-    static void showWarning(final NotificationType notificationType, final LocaleService.LocaleString title, final LocaleService.LocaleString text, final boolean silent) {
+    public static void showWarning(final NotificationType notificationType, final LocaleService.LocaleString title, final LocaleService.LocaleString text, final boolean silent) {
         final boolean active = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), notificationType.isDefaultEnabled());
         if (enabled && active) {
             log.warn("WARN: " + LocaleService.getLocalizedStringForLocale(Locale.ENGLISH, text.getKey(), text.getParameters()));

@@ -3777,7 +3777,11 @@
                   -fx-font-weight: bold;
                   -fx-alignment: center-left;
                   -fx-wrap-text: true;
-                  -fx-padding: 0.25em 0 0 0; }
+                  -fx-padding: 0 0 0 0; }
+                .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .category {
+                  -fx-text-fill: gray;
+                  -fx-alignment: center-left;
+                  -fx-wrap-text: true; }
               .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .text-lines {
                 -fx-padding: 0.25em; }
               .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .amount-line {
@@ -5968,6 +5972,455 @@
     -fx-font-size: 1.2em;
     -fx-padding: 0.25em;
     -fx-wrap-text: true; }
+
+.import-dialog {
+  -fx-background-color: #0f0f0f; }
+  .import-dialog .explain-text {
+    -fx-padding: 0.5em;
+    -fx-wrap-text: true; }
+  .import-dialog .buttons {
+    -fx-spacing: 0.5em;
+    -fx-padding: 0.5em; }
+  .import-dialog .import-dialog-scrollpane {
+    -fx-fit-to-width: true;
+    -fx-fit-to-height: true; }
+    .import-dialog .import-dialog-scrollpane .scroll-pane-content {
+      -fx-padding: 0.25em; }
+    .import-dialog .import-dialog-scrollpane .wishlist .list {
+      -fx-hgap: 0.25em;
+      -fx-vgap: 0.25em; }
+      .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint {
+        -fx-background-color: #0f0f0f;
+        -fx-border-color: black;
+        -fx-padding: 0.25em;
+        -fx-spacing: 0.25em; }
+        .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .quantity-select {
+          -fx-spacing: 0.1em; }
+          .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .quantity-select .modifier-container {
+            -fx-alignment: center; }
+            .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .quantity-select .modifier-container .modifier {
+              -fx-cursor: hand;
+              -fx-font-size: 1.2em !important;
+              -fx-fill: white !important; }
+              .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .quantity-select .modifier-container .modifier:hover {
+                -fx-fill: #2e92df !important; }
+            .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .quantity-select .modifier-container.left {
+              -fx-alignment: center-left;
+              -fx-padding: 0 0.5em 0 0; }
+            .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .quantity-select .modifier-container.right {
+              -fx-alignment: center-right;
+              -fx-padding: 0 0 0 0.5em; }
+          .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .quantity-select .value {
+            -fx-font-size: 1.2em;
+            -fx-alignment: top-center;
+            -fx-text-fill: gray; }
+            .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .quantity-select .value:filled {
+              -fx-text-fill: white; }
+        .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .title-line {
+          -fx-spacing: 0.25em; }
+        .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .blueprint-line {
+          -fx-spacing: 1em; }
+        .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .quantity-text {
+          -fx-font-style: italic; }
+        .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .name {
+          -fx-text-fill: #2e92df;
+          -fx-alignment: center;
+          -fx-text-alignment: center;
+          -fx-content-display: right; }
+          .import-dialog .import-dialog-scrollpane .wishlist .list .blueprint .name .colonia-icon .glyph-icon {
+            -fx-fill: #2e92df; }
+    .import-dialog .import-dialog-scrollpane .ship .list {
+      -fx-hgap: 1em;
+      -fx-vgap: 1em; }
+      .import-dialog .import-dialog-scrollpane .ship .list .ship-details {
+        -fx-padding: 0.25em;
+        -fx-border-color: white;
+        -fx-background-color: #0f0f0f; }
+        .import-dialog .import-dialog-scrollpane .ship .list .ship-details .ship-image {
+          -fx-min-width: 20em;
+          -fx-pref-width: 20em;
+          -fx-max-width: 20em; }
+        .import-dialog .import-dialog-scrollpane .ship .list .ship-details .details {
+          -fx-min-width: 19.25em;
+          -fx-pref-width: 19.25em;
+          -fx-max-width: 19.25em;
+          -fx-spacing: 0.25em; }
+          .import-dialog .import-dialog-scrollpane .ship .list .ship-details .details .type {
+            -fx-font-size: 1.4em; }
+      .import-dialog .import-dialog-scrollpane .ship .list .slots {
+        -fx-spacing: 0.25em; }
+        .import-dialog .import-dialog-scrollpane .ship .list .slots .slot-title {
+          -fx-min-width: 40em;
+          -fx-pref-width: 40em;
+          -fx-max-width: 40em;
+          -fx-alignment: center;
+          -fx-border-color: white;
+          -fx-padding: 0.25em;
+          -fx-background-color: #0f0f0f; }
+        .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot {
+          -fx-min-width: 40em;
+          -fx-pref-width: 40em;
+          -fx-max-width: 40em;
+          -fx-border-color: white;
+          -fx-background-color: #0f0f0f; }
+          .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .slot-size-box {
+            -fx-min-width: 1.5em;
+            -fx-pref-width: 1.5em;
+            -fx-max-width: 1.5em; }
+            .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .slot-size-box .slot-size {
+              -fx-padding: 0.3em 0 0 0;
+              -fx-min-width: 1.5em;
+              -fx-pref-width: 1.5em;
+              -fx-max-width: 1.5em;
+              -fx-min-height: 4.5em;
+              -fx-pref-height: 4.5em;
+              -fx-max-height: 4.5em;
+              -fx-alignment: center; }
+          .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .splitter .line {
+            -fx-border-color: white;
+            -fx-border-width: 0.05em;
+            -fx-border-insets: 0.0em 0 0.0em 0; }
+          .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box {
+            -fx-padding: 0.25em; }
+            .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box {
+              -fx-min-width: 37.5em;
+              -fx-pref-width: 37.5em;
+              -fx-max-width: 37.5em;
+              -fx-min-height: 1.5em;
+              -fx-pref-height: 1.5em;
+              -fx-max-height: 1.5em;
+              -fx-padding: 0 0 0 3em; }
+              .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon {
+                -fx-min-width: 1.5em;
+                -fx-pref-width: 1.5em;
+                -fx-max-width: 1.5em;
+                -fx-min-height: 1.5em;
+                -fx-pref-height: 1.5em;
+                -fx-max-height: 1.5em;
+                -fx-padding: 0em 0.2em 0em 0em; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .glyph-icon {
+                  -fx-font-size: 1.5em !important; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .ships-multicrew-radar {
+                  -fx-fill: #159ec2; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .other-powerplay-open {
+                  -fx-fill: #ffc600; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .ships-guardian-1 {
+                  -fx-fill: #026fa2; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .ships-guardian-2 {
+                  -fx-fill: #00aafc; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .other-communitygoal {
+                  -fx-fill: #ffeb00; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .other-arx {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .ships-engineer {
+                  -fx-font-size: 1.3em !important;
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .ships-gimballed {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .ships-turreted {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .ships-fixed {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .ships-synthesis-basic {
+                  -fx-fill: #2e92df; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .ships-synthesis-standard {
+                  -fx-fill: #2e92df; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .ships-synthesis-premium {
+                  -fx-fill: #2e92df; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .ships-preengineered {
+                  -fx-fill: #f2c80e; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .ships-advanced {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .ships-enhanced {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .ships-dumbfire {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .ships-seeker {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .ships-legacy {
+                  -fx-fill: #d16a0a; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .other-carrier-simple {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .ships-ship-1 {
+                  -fx-fill: #8e8e8e; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .ships-ship-2 {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .squadron-carrier {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .station-coriolis {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .onfoot-backpack-1 {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .onfoot-backpack-2 {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .other-wishlist {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .materials-good-1 {
+                  -fx-fill: #da9b10; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .materials-good-2 {
+                  -fx-fill: #dabe54; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .materials-data {
+                  -fx-fill: #2bb0c6; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .materials-tech-1 {
+                  -fx-fill: #c8f4f6; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .materials-tech-2 {
+                  -fx-fill: #97eef2; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .materials-circuit-1 {
+                  -fx-fill: #fbcec0; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .materials-circuit-2 {
+                  -fx-fill: #fa9778; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .materials-chemical-1 {
+                  -fx-fill: #c9e8b3; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .materials-chemical-2 {
+                  -fx-fill: #97e55d; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .onfoot-dynamic {
+                  -fx-fill: #ff00e7; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .onfoot-force {
+                  -fx-fill: #ff3c00; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .onfoot-strategic {
+                  -fx-fill: #7cd429; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .other-stock-bracket-low {
+                  -fx-fill: red; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .other-stock-bracket-high {
+                  -fx-fill: #709adc; }
+              .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide {
+                -fx-min-width: 2.7em;
+                -fx-pref-width: 2.7em;
+                -fx-max-width: 2.7em;
+                -fx-max-height: 1.5em;
+                -fx-padding: 0em 0.2em 0em 0em; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .glyph-icon {
+                  -fx-font-size: 1.5em !important; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .ships-multicrew-radar {
+                  -fx-fill: #159ec2; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .other-powerplay-open {
+                  -fx-fill: #ffc600; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .ships-guardian-1 {
+                  -fx-fill: #026fa2; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .ships-guardian-2 {
+                  -fx-fill: #00aafc; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .other-communitygoal {
+                  -fx-fill: #ffeb00; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .other-arx {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .ships-engineer {
+                  -fx-font-size: 1.3em !important;
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .ships-gimballed {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .ships-turreted {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .ships-fixed {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .ships-synthesis-basic {
+                  -fx-fill: #2e92df; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .ships-synthesis-standard {
+                  -fx-fill: #2e92df; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .ships-synthesis-premium {
+                  -fx-fill: #2e92df; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .ships-preengineered {
+                  -fx-fill: #f2c80e; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .ships-advanced {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .ships-enhanced {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .ships-dumbfire {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .ships-seeker {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .ships-legacy {
+                  -fx-fill: #d16a0a; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .other-carrier-simple {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .ships-ship-1 {
+                  -fx-fill: #8e8e8e; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .ships-ship-2 {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .squadron-carrier {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .station-coriolis {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .onfoot-backpack-1 {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .onfoot-backpack-2 {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .other-wishlist {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .materials-good-1 {
+                  -fx-fill: #da9b10; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .materials-good-2 {
+                  -fx-fill: #dabe54; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .materials-data {
+                  -fx-fill: #2bb0c6; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .materials-tech-1 {
+                  -fx-fill: #c8f4f6; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .materials-tech-2 {
+                  -fx-fill: #97eef2; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .materials-circuit-1 {
+                  -fx-fill: #fbcec0; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .materials-circuit-2 {
+                  -fx-fill: #fa9778; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .materials-chemical-1 {
+                  -fx-fill: #c9e8b3; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .materials-chemical-2 {
+                  -fx-fill: #97e55d; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .onfoot-dynamic {
+                  -fx-fill: #ff00e7; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .onfoot-force {
+                  -fx-fill: #ff3c00; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .onfoot-strategic {
+                  -fx-fill: #7cd429; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .other-stock-bracket-low {
+                  -fx-fill: red; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .other-stock-bracket-high {
+                  -fx-fill: #709adc; }
+            .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .name-box .icon {
+              -fx-alignment: center;
+              -fx-min-width: 1.5em;
+              -fx-pref-width: 1.5em;
+              -fx-max-width: 1.5em;
+              -fx-min-height: 1.5em;
+              -fx-pref-height: 1.5em;
+              -fx-max-height: 1.5em; }
+              .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .name-box .icon .glyph-icon {
+                -fx-font-size: 1.5em !important; }
+              .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .name-box .icon .ships-gimballed {
+                -fx-fill: white; }
+              .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .name-box .icon .ships-turreted {
+                -fx-fill: white; }
+              .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .name-box .icon .ships-fixed {
+                -fx-fill: white; }
+            .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .name-box .module-size {
+              -fx-alignment: center;
+              -fx-min-width: 1.5em;
+              -fx-pref-width: 1.5em;
+              -fx-max-width: 1.5em; }
+            .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .name-box .module-rating {
+              -fx-alignment: center;
+              -fx-min-width: 1.5em;
+              -fx-pref-width: 1.5em;
+              -fx-max-width: 1.5em; }
+            .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .blueprint-box {
+              -fx-padding: 0 0 0 3em; }
+              .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .blueprint-box .blueprints-flow {
+                -fx-max-width: 40em; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .blueprint-box .blueprints-flow .blueprint {
+                  -fx-font-style: italic;
+                  -fx-text-fill: #2e92df;
+                  -fx-wrap-text: true;
+                  -fx-max-height: 1em; }
+                  .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .blueprint-box .blueprints-flow .blueprint:same {
+                    -fx-text-fill: #dcc030; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .blueprint-box .blueprints-flow .separator-comma {
+                  -fx-max-width: 1em;
+                  -fx-font-style: italic;
+                  -fx-text-fill: #2e92df; }
+                  .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .blueprint-box .blueprints-flow .separator-comma:same {
+                    -fx-text-fill: #dcc030; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .blueprint-box .blueprints-flow .effect {
+                  -fx-font-style: italic;
+                  -fx-text-fill: #2e92df; }
+                  .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .blueprint-box .blueprints-flow .effect:same {
+                    -fx-text-fill: #dcc030; }
+                  .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .blueprint-box .blueprints-flow .effect:missing-blueprints > .text {
+                    -fx-strikethrough: true; }
+    .import-dialog .import-dialog-scrollpane .pin-config {
+      -fx-spacing: 0.25em;
+      -fx-padding: 0.25em; }
+      .import-dialog .import-dialog-scrollpane .pin-config .pin-item {
+        -fx-spacing: 0.25em;
+        -fx-padding: 0.25em;
+        -fx-border-width: 1px;
+        -fx-border-color: black;
+        -fx-background-color: #0f0f0f; }
+        .import-dialog .import-dialog-scrollpane .pin-config .pin-item .engineer {
+          -fx-text-fill: gray;
+          -fx-font-size: 1.2em;
+          -fx-font-weight: bold; }
+        .import-dialog .import-dialog-scrollpane .pin-config .pin-item .change .current-name {
+          -fx-text-fill: gray;
+          -fx-font-weight: bold;
+          -fx-min-width: 20em; }
+        .import-dialog .import-dialog-scrollpane .pin-config .pin-item .change .current-type {
+          -fx-text-fill: gray; }
+        .import-dialog .import-dialog-scrollpane .pin-config .pin-item .change .new-name {
+          -fx-text-fill: gray;
+          -fx-font-weight: bold; }
+          .import-dialog .import-dialog-scrollpane .pin-config .pin-item .change .new-name:changed {
+            -fx-underline: true; }
+        .import-dialog .import-dialog-scrollpane .pin-config .pin-item .change .new-type {
+          -fx-text-fill: gray; }
+          .import-dialog .import-dialog-scrollpane .pin-config .pin-item .change .new-type:changed {
+            -fx-underline: true; }
+        .import-dialog .import-dialog-scrollpane .pin-config .pin-item .change .icon-container {
+          -fx-padding: 0.25em 3em 0 3em;
+          -fx-min-width: 6em;
+          -fx-pref-width: 6em;
+          -fx-max-width: 6em;
+          -fx-min-height: 2em;
+          -fx-pref-height: 2em;
+          -fx-max-height: 2em; }
+          .import-dialog .import-dialog-scrollpane .pin-config .pin-item .change .icon-container .arrow {
+            -fx-font-size: 2em !important;
+            -fx-font-weight: bold;
+            -fx-fill: gray !important; }
+        .import-dialog .import-dialog-scrollpane .pin-config .pin-item:changed .engineer {
+          -fx-text-fill: #709adc; }
+        .import-dialog .import-dialog-scrollpane .pin-config .pin-item:changed .change .current-name {
+          -fx-text-fill: white; }
+        .import-dialog .import-dialog-scrollpane .pin-config .pin-item:changed .change .current-type {
+          -fx-text-fill: white; }
+        .import-dialog .import-dialog-scrollpane .pin-config .pin-item:changed .change .new-name {
+          -fx-text-fill: white; }
+        .import-dialog .import-dialog-scrollpane .pin-config .pin-item:changed .change .new-type {
+          -fx-text-fill: white; }
+    .import-dialog .import-dialog-scrollpane .list {
+      -fx-hgap: 0.25em;
+      -fx-vgap: 0.25em; }
+      .import-dialog .import-dialog-scrollpane .list .loadout-item {
+        -fx-spacing: 1.25em;
+        -fx-padding: 0.25em;
+        -fx-border-width: 1px;
+        -fx-border-color: black;
+        -fx-background-color: #0f0f0f; }
+        .import-dialog .import-dialog-scrollpane .list .loadout-item .image-pane {
+          -fx-min-width: 18em;
+          -fx-pref-width: 18em;
+          -fx-max-width: 18em;
+          -fx-min-height: 16em;
+          -fx-pref-height: 16em;
+          -fx-max-height: 16em; }
+          .import-dialog .import-dialog-scrollpane .list .loadout-item .image-pane .loadout-image {
+            -fx-min-width: 18em;
+            -fx-pref-width: 18em;
+            -fx-max-width: 18em; }
+        .import-dialog .import-dialog-scrollpane .list .loadout-item .content {
+          -fx-spacing: 0.25em; }
+          .import-dialog .import-dialog-scrollpane .list .loadout-item .content .loadout-name {
+            -fx-font-size: 1.4em; }
+          .import-dialog .import-dialog-scrollpane .list .loadout-item .content .title {
+            -fx-font-size: 1.1em; }
+          .import-dialog .import-dialog-scrollpane .list .loadout-item .content .grade-line .grade-value {
+            -fx-font-weight: bold; }
+          .import-dialog .import-dialog-scrollpane .list .loadout-item .content .modifications {
+            -fx-spacing: 0.25em; }
+            .import-dialog .import-dialog-scrollpane .list .loadout-item .content .modifications .mod-slot {
+              -fx-spacing: 0.25em; }
+              .import-dialog .import-dialog-scrollpane .list .loadout-item .content .modifications .mod-slot .mod-image {
+                -fx-min-width: 5.5em;
+                -fx-pref-width: 5.5em;
+                -fx-max-width: 5.5em;
+                -fx-min-height: 4.6em;
+                -fx-pref-height: 4.6em;
+                -fx-max-height: 4.6em; }
+              .import-dialog .import-dialog-scrollpane .list .loadout-item .content .modifications .mod-slot .mod-name {
+                -fx-min-width: 6.05em;
+                -fx-pref-width: 6.05em;
+                -fx-max-width: 6.05em;
+                -fx-wrap-text: true;
+                -fx-text-alignment: center;
+                -fx-alignment: center;
+                -fx-font-size: 0.9em; }
 
 .notification-bar.dark > .pane {
   -fx-background-color: #111111; }

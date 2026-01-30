@@ -4,6 +4,7 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.StringBinding;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.input.KeyCombination;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -23,7 +24,7 @@ public class MenuItemBuilder {
     private String nonLocalizedText;
     private DestroyableResizableImageView graphic;
     private BooleanBinding disabledBinding;
-
+    private KeyCombination keyCombination;
     public static MenuItemBuilder builder() {
         return new MenuItemBuilder();
     }
@@ -73,6 +74,11 @@ public class MenuItemBuilder {
         return this;
     }
 
+    public MenuItemBuilder withKeyCombination(KeyCombination keyCombination) {
+        this.keyCombination = keyCombination;
+        return this;
+    }
+
     public DestroyableMenuItem build() {
         final DestroyableMenuItem menuItem = new DestroyableMenuItem();
 
@@ -92,6 +98,9 @@ public class MenuItemBuilder {
         }
         if (this.disabledBinding != null) {
             menuItem.addBinding(menuItem.disableProperty(), this.disabledBinding);
+        }
+        if (this.keyCombination != null) {
+            menuItem.setAccelerator((keyCombination));
         }
         menuItem.setVisible(this.visibility);
 

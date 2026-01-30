@@ -3,11 +3,13 @@ package nl.jixxed.eliteodysseymaterials.templates;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Side;
-import nl.jixxed.eliteodysseymaterials.builder.TabBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.MainTabBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TabPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
+import nl.jixxed.eliteodysseymaterials.enums.MainTabType;
+import nl.jixxed.eliteodysseymaterials.enums.TabType;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -20,11 +22,15 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableAnchorP
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTab;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTabPane;
+import nl.jixxed.eliteodysseymaterials.templates.generic.MainTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsContentArea;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyContentArea;
 import nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab;
 
 import java.util.Set;
+
+import static nl.jixxed.eliteodysseymaterials.enums.MainTabType.HORIZONS;
+import static nl.jixxed.eliteodysseymaterials.enums.MainTabType.ODYSSEY;
 
 public class ApplicationScreen extends DestroyableAnchorPane implements DestroyableEventTemplate {
 
@@ -33,6 +39,8 @@ public class ApplicationScreen extends DestroyableAnchorPane implements Destroya
     private DestroyableTab horizons;
 
     private IntegerProperty fontSize = new SimpleIntegerProperty(14);
+    private OdysseyContentArea odysseyContentArea;
+    private HorizonsContentArea horizonsContentArea;
 
 
     public ApplicationScreen() {
@@ -55,21 +63,23 @@ public class ApplicationScreen extends DestroyableAnchorPane implements Destroya
     public void initComponents() {
         this.getStyleClass().add("application-screen");
         BottomBar bottomBar = new BottomBar();
-        OdysseyContentArea odysseyContentArea = new OdysseyContentArea();
-        HorizonsContentArea horizonsContentArea = new HorizonsContentArea();
+        odysseyContentArea = new OdysseyContentArea();
+        horizonsContentArea = new HorizonsContentArea();
 
         addChangeListener(bottomBar.heightProperty(), (_, _, _) -> AnchorPaneHelper.setAnchor(odysseyContentArea, 0.0, bottomBar.getHeight(), 0.0, 0.0));
         SettingsTab settingsTab = new SettingsTab();
         settingsTab.setClosable(false);
         AnchorPaneHelper.setAnchor(bottomBar, null, 0.0, 0.0, 0.0);
-        this.odyssey = TabBuilder.builder()
+        this.odyssey = MainTabBuilder.builder()
+                .withTabType(ODYSSEY)
                 .withStyleClass("odyssey-tab")
                 .withText(LocaleService.getStringBinding("tabs.onfoot"))
                 .withClosable(false)
                 .withContent(odysseyContentArea)
                 .withDisableProperty(ApplicationState.getInstance().getCommandersProperty().map(Set::isEmpty))
                 .build();
-        this.horizons = TabBuilder.builder()
+        this.horizons = MainTabBuilder.builder()
+                .withTabType(HORIZONS)
                 .withStyleClass("horizons-tab")
                 .withText(LocaleService.getStringBinding("tabs.ships"))
                 .withClosable(false)
@@ -92,13 +102,18 @@ public class ApplicationScreen extends DestroyableAnchorPane implements Destroya
     @Override
     public void destroyInternal() {
         super.destroyInternal();
+    }
 
-//        this.tabsMain.getTabs().clear();
-//        this.horizons.setContent(null);
-//        this.odyssey.setContent(null);
-//        this.fontSize = null;
-//        this.tabsMain = null;
-//        this.horizons = null;
-//        this.odyssey = null;
+    public TabType getSelectedTab() {
+        final MainTab selected = (MainTab) this.tabsMain.getSelectionModel().getSelectedItem();
+        return selected.getTabType();
+    }
+
+    public TabType getSelectedChildTab() {
+        return switch (getSelectedTab()){
+            case ODYSSEY -> odysseyContentArea.getSelectedTab();
+            case HORIZONS -> horizonsContentArea.getSelectedTab();
+            default -> MainTabType.NONE;
+        };
     }
 }

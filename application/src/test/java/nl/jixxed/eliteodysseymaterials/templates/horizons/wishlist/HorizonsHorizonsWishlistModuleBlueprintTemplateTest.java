@@ -33,7 +33,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
-class HorizonsWishlistModuleBlueprintTemplateTest {
+class HorizonsHorizonsWishlistModuleBlueprintTemplateTest {
 
     private static JFXPanel fxPanel;
 

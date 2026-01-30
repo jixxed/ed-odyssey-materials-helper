@@ -1,6 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
-public enum HorizonsTabs {
+public enum HorizonsTabType implements TabType {
     MATERIALS, COMMODITIES, BLUEPRINTS, ENGINEERS, WISHLIST, SHIPBUILDER, HGEFINDER, POWERPLAY, COLONISATION
 
 }
