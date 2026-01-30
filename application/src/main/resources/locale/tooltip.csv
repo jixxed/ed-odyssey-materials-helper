@@ -59,7 +59,7 @@
 "horizons.materials.commodity.stats","Statistics","","","Estadísticas","","","Статистика","数据",""
 "horizons.materials.commodity.stats.buy","Buy price (min/avg/max): {0} / {1} / {2}","","","Precio de compra (min/prom/max): {0} / {1} / {2}","","","Цена покупки (мин/сред/макс): {0} / {1} / {2}","购买价格 (最低/平均/最高): {0} / {1} / {2}",""
 "horizons.materials.commodity.stats.sell","Sell price (min/avg/max): {0} / {1} / {2}","","","Precio de venta (min/prom/max): {0} / {1} / {2}","","","Цена продажи (мин/сред/макс): {0} / {1} / {2}","出售价格 (最低/平均/最高): {0} / {1} / {2}",""
-"material.tooltip.squadroncarrier","Squadron carrier","","","","","","Носитель эскадрильи","中队航母",""
+"material.tooltip.squadroncarrier","Squadron carrier","","","Portanaves de flota","","","Носитель эскадрильи","中队航母",""
 "wishlist.tooltip.remove","Remove from wishlist","","","Eliminar de la lista de deseos","","","Удалить из списка желаний","从愿望单中删除",""
 "wishlist.tooltip.showhide","Show/hide blueprint","","","Mostrar/ocultar plano","","","Показать/скрыть чертёж","显示/隐藏蓝图",""
 "wishlist.tooltip.split","Split experimental effect","","","Dividir efecto experimental","","","Разделить экспериментальный эффект","分离实验效果",""
