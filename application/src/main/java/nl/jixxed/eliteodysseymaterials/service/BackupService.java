@@ -13,6 +13,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -44,8 +45,18 @@ public class BackupService {
         zipPath.toFile().mkdirs();
         try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(backupFile))) {
             Files.walkFileTree(sourceFolderPath, new SimpleFileVisitor<>() {
+
+                public static final List<String> EXCLUSIONS = List.of(
+                        "material-report.json",
+                        "lock",
+                        "brokers.jsonl",
+                        "traders.jsonl",
+                        "traders_brokers.zip",
+                        "commodities.json"
+                );
+
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                    if (!file.startsWith(zipPath) && !isExcluded(file.getFileName().toString())) {
+                    if (!file.startsWith(zipPath) && !file.startsWith(Path.of(OsConstants.getConfigDirectory() + "/tesseract")) && !isExcluded(file.getFileName().toString())) {
                         zos.putNextEntry(new ZipEntry(sourceFolderPath.relativize(file).toString()));
                         log.debug("backup: " + file.getFileName());
                         Files.copy(file, zos);
@@ -55,11 +66,10 @@ public class BackupService {
                 }
 
                 private boolean isExcluded(String fileName) {
-                    return fileName.equals("lock") || fileName.equals("material-report.json") || fileName.endsWith(".tmp") || fileName.startsWith("support.");
+                    return EXCLUSIONS.contains(fileName) || fileName.endsWith(".tmp") || fileName.startsWith("support.");
                 }
             });
         }
     }
-
 
 }
