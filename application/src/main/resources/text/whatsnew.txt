@@ -1,3 +1,7 @@
+Version 3.2.1
+-------------
+Fix CAPI authentication
+
 Version 3.2.0
 -------------
 New import windows that show you what is to be imported and allow you to accept/refuse

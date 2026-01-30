@@ -1,6 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.helper;
 
-import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -14,7 +13,10 @@ import jfxtras.styles.jmetro.Style;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.FXApplication;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
+import nl.jixxed.eliteodysseymaterials.enums.ImportType;
+import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
+import nl.jixxed.eliteodysseymaterials.enums.StyleSheet;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ImportResultEvent;
@@ -39,8 +41,8 @@ public class DeeplinkHelper {
             final String[] split = content.split("/\\?");
             final ImportType type = ImportType.forName(split[0]);
             final String data = split[1];
-            String json = ImportService.convertBase64CompressedToJson(data);
-            showImportDialog(type, json, () -> {
+
+            showImportDialog(type, data, () -> {
                 try {
                     final ImportResult importResult = ImportService.importDeeplink(deeplink);
                     EventService.publish(new ImportResultEvent(importResult));
@@ -118,11 +120,11 @@ public class DeeplinkHelper {
     }
 
 
-    private static void showImportDialog(ImportType type, String json, Runnable onImportAccepted) {
+    private static void showImportDialog(ImportType type, String data, Runnable onImportAccepted) {
         if(shouldSkipDialog(type)){
             onImportAccepted.run();
         }else{
-
+            String json = ImportService.convertBase64CompressedToJson(data);
             final Stage importStage = new Stage();
             addIconsToStage(importStage);
             final Scene importScene = new Scene(new ImportDialog(type, json, importStage, onImportAccepted), 640, 640);

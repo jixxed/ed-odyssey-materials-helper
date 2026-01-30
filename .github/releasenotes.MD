@@ -11,9 +11,5 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-New import windows that show you what is to be imported and allow you to accept/refuse
-Import windows added for: wishlists, ship builds, loadouts and engineer pin configuration
-Added link to About section for engineer pin planner. Clicking the link will open a webpage with you current pin configuration. You can then import your changes back into EDOMH.
-Added hotkeys to wishlists, ship build and loadout screens. These are listed under the Options button. CTRL + V is not listed, but works globally and will trigger the appropriate import window.
-Added category to ship wishlist ingredients
+Fix CAPI authentication
 ```
