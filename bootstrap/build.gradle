@@ -14,7 +14,7 @@ buildscript {
 plugins {
     id 'java'
     id 'application'
-    id 'io.freefair.lombok' version '9.1.0'
+    id 'io.freefair.lombok' version '9.2.0'
     id 'idea' // optional (to generate IntelliJ IDEA project files)
     id 'org.beryx.jlink' version '3.1.3'
 }
