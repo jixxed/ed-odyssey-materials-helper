@@ -48,6 +48,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires nl.jixxed.ed.confidential.api;
     requires org.apache.commons.codec;
     requires me.xdrop.fuzzywuzzy;
+    requires javafx.base;
 
     uses nl.jixxed.ed.awesome.api.FontLoader;
     uses nl.jixxed.ed.confidential.api.SecrecyLoader;

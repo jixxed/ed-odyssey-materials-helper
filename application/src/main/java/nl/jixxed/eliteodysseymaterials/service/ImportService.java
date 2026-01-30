@@ -70,10 +70,33 @@ public class ImportService {
             return importCoriolis(decoded);
         } else if ("pinconfig/".equals(type)) {
             final String decoded = convertBase64CompressedToJson(data);
-            log.info(decoded);
-//            return importCoriolis(decoded);
+            return importPinConfig(decoded);
         }
         return new ImportResult(ImportResult.ResultType.UNKNOWN_TYPE);
+    }
+
+    private static ImportResult importPinConfig(String decoded) {
+        final TypeReference<HashMap<Engineer, HorizonsBlueprintJson>> typeRef = new TypeReference<HashMap<Engineer, HorizonsBlueprintJson>>() {
+        };
+
+        try {
+            final HashMap<Engineer, HorizonsBlueprintJson> pinnedBlueprintsMap = OBJECT_MAPPER.readValue(decoded, typeRef);
+            pinnedBlueprintsMap.forEach((engineer, horizonsBlueprintJson) -> {
+                final Integer engineerRank = ApplicationState.getInstance().getEngineerRank(engineer);
+                final HorizonsBlueprintName name = HorizonsBlueprintName.forName(horizonsBlueprintJson.getName().equals("MISSILE_RACK") ? "DUMBFIRE_MISSILE_RACK" : horizonsBlueprintJson.getName());
+                final HorizonsBlueprintType horizonsBlueprintType = HorizonsBlueprintType.forName(horizonsBlueprintJson.getType());
+                final int maxBlueprintGrade = HorizonsBlueprintConstants.getBlueprintGrades(name, horizonsBlueprintType).stream().max(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).orElse(HorizonsBlueprintGrade.GRADE_1).getGrade();
+                PinnedBlueprintService.pinBlueprint(engineer, (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(
+                        name,
+                        horizonsBlueprintType,
+                        HorizonsBlueprintGrade.forDigit(Math.max(Math.min(engineerRank, maxBlueprintGrade), 1))
+                ));
+            });
+            return new ImportResult(ImportResult.ResultType.SUCCESS_PINCONFIG, LocaleService.LocaleString.of("notification.imported.success.pinconfig.text", ""));
+
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static ImportResult[] importSlef(final String slefJson) {
@@ -86,7 +109,7 @@ public class ImportService {
                     final Ship ship = LoadoutMapper.toShip(slef.getData());
                     APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                         final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
-                        final String name = LocaleService.getLocalizedStringForCurrentLocale(ship.getShipType().getLocalizationKey()) + LocaleService.LocaleString.of("imported.slef.partial.name");
+                        final String name = LocaleService.getLocalizedStringForCurrentLocale(ship.getShipType().getLocalizationKey()) + " " + LocaleService.getLocalizedStringForCurrentLocale("imported.slef.partial.name");
                         final ShipConfiguration shipConfiguration = shipConfigurations.createShipConfiguration(name);
                         ShipMapper.toShipConfiguration(ship, shipConfiguration, name);
                         ShipService.saveShipConfigurations(commander, shipConfigurations);

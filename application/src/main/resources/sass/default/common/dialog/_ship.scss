@@ -1,0 +1,186 @@
+.ship {
+  .list {
+    @include hvGap(1em);
+    .ship-details{
+      -fx-padding:0.25em;
+      -fx-border-color: white;
+      -fx-background-color: $background-color-dark ;
+      .ship-image{
+        @include fixedWidth(20em);
+      }
+      .details{
+        @include fixedWidth(19.25em);
+        -fx-spacing: 0.25em;
+        .type{
+          -fx-font-size: 1.4em;
+        }
+        .name{}
+      }
+    }
+    .slots {
+      -fx-spacing: 0.25em;
+
+      .slot-title {
+        @include fixedWidth(40em);
+        -fx-alignment: center;
+        -fx-border-color: white;
+        -fx-padding:0.25em;
+        -fx-background-color: $background-color-dark ;
+
+      }
+
+      .ship-slot {
+        @include fixedWidth(40em);
+        -fx-border-color: white;
+        -fx-background-color: $background-color-dark ;
+        .slot-size-box {
+          @include fixedWidth(1.5em);
+          //-fx-padding:0.25em;
+          .slot-size {
+            -fx-padding:0.3em 0 0 0;
+
+            @include fixedWidth(1.5em);
+            @include fixedHeight(4.5em);
+            -fx-alignment: center;
+          }
+        }
+
+        .splitter .line {
+          -fx-border-color: $border-color-white;
+          -fx-border-width: 0.05em;
+          -fx-border-insets: 0.0em 0 0.0em 0;
+        }
+
+        .label-box {
+          -fx-padding:0.25em;
+          .icon-box{
+            @include fixedWidth(37.5em);
+            //-fx-background-color: #123123;
+            @include fixedHeight(1.5em);
+            -fx-padding: 0 0 0 3em;
+
+            .module-icon {
+              @include fixedWidth(1.5em);
+              @include fixedHeight(1.5em);
+              -fx-padding: 0em 0.2em 0em 0em;
+
+              @include awesome-icons;
+
+            }
+
+            .module-icon-wide {
+              @include fixedWidth(2.7em);
+              -fx-max-height: 1.5em;
+              -fx-padding: 0em 0.2em 0em 0em;
+
+              @include awesome-icons;
+            }
+          }
+
+          .name-box {
+
+            .icon {
+              -fx-alignment: center;
+              @include fixedWidth(1.5em);
+              @include fixedHeight(1.5em);
+
+              .glyph-icon {
+                -fx-font-size: 1.5em !important;
+              }
+
+              .ships-gimballed {
+                -fx-fill: rgb(255, 255, 255);
+              }
+
+              .ships-turreted {
+                -fx-fill: rgb(255, 255, 255);
+              }
+
+              .ships-fixed {
+                -fx-fill: rgb(255, 255, 255);
+              }
+            }
+
+
+            .module-size {
+              -fx-alignment: center;
+              @include fixedWidth(1.5em);
+              //@include fixedHeight(1.5em);
+            }
+            .module-rating {
+              -fx-alignment: center;
+              @include fixedWidth(1.5em);
+              //@include fixedHeight(1.5em);
+            }
+
+
+            .module-name {
+            }
+          }
+          .blueprint-box {
+            -fx-padding: 0 0 0 3em;
+            //-fx-spacing: 0.5em;
+            //.blueprint {
+            //  -fx-text-fill: $text-color-blue;
+            //}
+            //
+            //.completion {
+            //  -fx-text-fill: $text-color-blue;
+            //}
+            //
+            //.grade {
+            //  -fx-text-fill: $text-color-blue;
+            //}
+            .blueprints-flow {
+              -fx-max-width: 40em;
+
+              .blueprint {
+                -fx-font-style: italic;
+                -fx-text-fill: $text-color-blue;
+                //-fx-max-width: 19.5em;
+                -fx-wrap-text: true;
+                -fx-max-height: 1em;
+
+                &:same {
+                  -fx-text-fill: $text-color-yellow;
+                }
+              }
+
+              .separator-comma {
+                -fx-max-width: 1em;
+                -fx-font-style: italic;
+                -fx-text-fill: $text-color-blue;
+
+                &:same {
+                  -fx-text-fill: $text-color-yellow;
+                }
+              }
+
+              .effect {
+                -fx-font-style: italic;
+                -fx-text-fill: $text-color-blue;
+
+                &:same {
+                  -fx-text-fill: $text-color-yellow;
+
+                }
+
+                &:missing-blueprints > .text {
+                  -fx-strikethrough: true;
+                }
+              }
+            }
+          }
+
+          //.effect {
+          //  -fx-padding: 0 0 0 3em;
+          //  -fx-text-fill: $text-color-blue;
+          //}
+
+        }
+
+      }
+    }
+
+  }
+}

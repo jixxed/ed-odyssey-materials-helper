@@ -16,6 +16,7 @@ import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
+import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
 import nl.jixxed.eliteodysseymaterials.service.event.CommanderSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
@@ -36,6 +37,7 @@ public class PinnedBlueprintService {
     private static final Map<Engineer, HorizonsBlueprint> pinnedBlueprints = new EnumMap<>(Engineer.class);
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
     private static LocalDateTime lastChange = LocalDateTime.now();
+
     static {
         EVENT_LISTENERS.add(EventService.addStaticListener(0, CommanderSelectedEvent.class, event -> {
             load(event.getCommander());
@@ -57,10 +59,13 @@ public class PinnedBlueprintService {
     }
 
     public static void pinBlueprint(final Engineer engineer, final HorizonsBlueprint blueprint) {
+        final var maxBlueprintGrade = HorizonsBlueprintConstants.getBlueprintGrades(blueprint.getHorizonsBlueprintName(), blueprint.getHorizonsBlueprintType()).stream()
+                .max(Comparator.comparing(HorizonsBlueprintGrade::getGrade))
+                .orElse(HorizonsBlueprintGrade.GRADE_1);
         final HorizonsBlueprint highestGradeBlueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(
                 blueprint.getHorizonsBlueprintName(),
                 blueprint.getHorizonsBlueprintType(),
-                HorizonsBlueprintGrade.forDigit(Math.min(HorizonsBlueprintConstants.getEngineerMaxGrade(blueprint, engineer), ApplicationState.getInstance().getEngineerRank(engineer)))
+                maxBlueprintGrade
         );
         pinnedBlueprints.put(engineer, highestGradeBlueprint);
         save();
@@ -75,7 +80,7 @@ public class PinnedBlueprintService {
         lastChange = LocalDateTime.now();
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             try {
-                final String wishlistsJson = OBJECT_MAPPER.writeValueAsString(pinnedBlueprints.entrySet().stream()
+                final String pinConfigJson = OBJECT_MAPPER.writeValueAsString(pinnedBlueprints.entrySet().stream()
                         .map(entry -> new Pair<>(entry.getKey(), new HorizonsBlueprintJson(entry.getValue().getHorizonsBlueprintName().name(), entry.getValue().getHorizonsBlueprintType().name())))
                         .collect(Collectors.toMap(Pair::getKey, Pair::getValue)));
                 final String pathname = commander.getCommanderFolder();
@@ -83,7 +88,7 @@ public class PinnedBlueprintService {
                 commanderFolder.mkdirs();
                 final File pinnedBlueprintsFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.HORIZONS_PINNED_BLUEPRINTS_FILE);
                 try (final FileOutputStream fileOutputStream = new FileOutputStream(pinnedBlueprintsFile)) {
-                    fileOutputStream.write(wishlistsJson.getBytes(StandardCharsets.UTF_8));
+                    fileOutputStream.write(pinConfigJson.getBytes(StandardCharsets.UTF_8));
                 }
             } catch (final JsonProcessingException e) {
                 log.error("Failed to save pinned blueprints", e);
@@ -148,14 +153,16 @@ public class PinnedBlueprintService {
     private static boolean typeMatch(HorizonsBlueprint blueprint, HorizonsBlueprint horizonsModuleBlueprint) {
         return horizonsModuleBlueprint != null
                 && blueprint.getHorizonsBlueprintType().equals(horizonsModuleBlueprint.getHorizonsBlueprintType())
-                && blueprint.getHorizonsBlueprintGrade().getGrade() <= horizonsModuleBlueprint.getHorizonsBlueprintGrade().getGrade();
+//                && blueprint.getHorizonsBlueprintGrade().getGrade() <= horizonsModuleBlueprint.getHorizonsBlueprintGrade().getGrade()
+                ;
     }
 
     private static boolean exactMatch(HorizonsBlueprint blueprint, HorizonsBlueprint horizonsModuleBlueprint) {
         return horizonsModuleBlueprint != null
                 && blueprint.getHorizonsBlueprintName().equals(horizonsModuleBlueprint.getBlueprintName())
                 && blueprint.getHorizonsBlueprintType().equals(horizonsModuleBlueprint.getHorizonsBlueprintType())
-                && blueprint.getHorizonsBlueprintGrade().getGrade() <= horizonsModuleBlueprint.getHorizonsBlueprintGrade().getGrade();
+//                && blueprint.getHorizonsBlueprintGrade().getGrade() <= horizonsModuleBlueprint.getHorizonsBlueprintGrade().getGrade()
+                ;
     }
 
     private static HorizonsBlueprintName getBlueprintName(HorizonsBlueprint horizonsModuleBlueprint) {
@@ -176,5 +183,23 @@ public class PinnedBlueprintService {
 
     public static boolean hasChangedSince(LocalDateTime instant) {
         return lastChange.isAfter(instant);
+    }
+
+    public static String getPinConfigForUrl() {
+        return ApplicationState.getInstance().getPreferredCommander().map(commander -> {
+            final String pathname = commander.getCommanderFolder();
+            final File commanderFolder = new File(pathname);
+            commanderFolder.mkdirs();
+            final File pinnedBlueprintsFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.HORIZONS_PINNED_BLUEPRINTS_FILE);
+            try {
+                if (pinnedBlueprintsFile.exists()) {
+                    String pinConfig = Files.readString(pinnedBlueprintsFile.toPath());
+                    return ClipboardHelper.convertJsonToBase64Compressed(pinConfig);
+                }
+            } catch (IOException e) {
+                log.error("Error reading pinned blueprint file!", e);
+            }
+            return "";
+        }).orElse("");
     }
 }

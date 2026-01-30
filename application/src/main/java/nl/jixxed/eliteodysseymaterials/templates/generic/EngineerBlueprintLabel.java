@@ -171,7 +171,7 @@ public class EngineerBlueprintLabel extends DestroyableStackPane implements Dest
         if (PinnedBlueprintService.isPinned(this.engineer, this.horizonsBlueprint)) {
             PinnedBlueprintService.unpinBlueprint(this.engineer);
             EventService.publish(new EngineerPinEvent(this.engineer, this.horizonsBlueprint, false));
-        } else if (this.currentEngineerRank >= this.horizonsBlueprint.getHorizonsBlueprintGrade().getGrade()) {
+        } else /*if (this.currentEngineerRank >= this.horizonsBlueprint.getHorizonsBlueprintGrade().getGrade()) */{
             PinnedBlueprintService.pinBlueprint(this.engineer, this.horizonsBlueprint);
             EventService.publish(new EngineerPinEvent(this.engineer, this.horizonsBlueprint, true));
         }

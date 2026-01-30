@@ -76,19 +76,21 @@
   -fx-background-color: $background-color-dark;
 
   .explain-text {
-    -fx-font-size: 1.2em;
-    -fx-padding: 0.25em;
+    -fx-padding: 0.5em;
     -fx-wrap-text: true;
   }
 
   .buttons {
-    -fx-spacing: 1em;
-    -fx-padding: 1em;
+    -fx-spacing: 0.5em;
+    -fx-padding: 0.5em;
   }
 
   .import-dialog-scrollpane {
     @include scroll-pane-content;
     @import "dialog/wishlist";
+    @import "dialog/ship";
+    @import "dialog/pin";
+    @import "dialog/loadout";
   }
 }
 

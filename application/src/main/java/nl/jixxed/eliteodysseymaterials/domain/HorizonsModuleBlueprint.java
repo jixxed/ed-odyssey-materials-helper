@@ -27,7 +27,12 @@ public class HorizonsModuleBlueprint extends HorizonsBlueprint implements Horizo
 
     @Override
     public List<Engineer> getEngineers() {
-        if (this.engineers.stream().anyMatch(engineer -> PinnedBlueprintService.isPinned(engineer,this))) {
+        boolean canCraftInRemoteWorkshop = this.engineers.stream().anyMatch(engineer -> {
+            boolean isUnlocked = ApplicationState.getInstance().isEngineerUnlockedExact(engineer);
+            boolean canCraft = this.getHorizonsBlueprintGrade().getGrade() <= ApplicationState.getInstance().getEngineerRank(engineer);
+            return isUnlocked && canCraft && PinnedBlueprintService.isPinned(engineer, this);
+        });
+        if (canCraftInRemoteWorkshop) {
             final List<Engineer> withRemote = new ArrayList<>(this.engineers);
             withRemote.add(Engineer.REMOTE_WORKSHOP);
             return withRemote;

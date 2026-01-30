@@ -7,16 +7,15 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.jixxed.eliteodysseymaterials.builder.*;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.ImportType;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
-import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
-import nl.jixxed.eliteodysseymaterials.templates.dialog.importdialog.CoriolisHorizonsWishlist;
-import nl.jixxed.eliteodysseymaterials.templates.dialog.importdialog.EdsyHorizonsWishlist;
-import nl.jixxed.eliteodysseymaterials.templates.dialog.importdialog.HorizonsWishlist;
-import nl.jixxed.eliteodysseymaterials.templates.dialog.importdialog.OdysseyWishlist;
+import nl.jixxed.eliteodysseymaterials.templates.dialog.importdialog.*;
 
 public class ImportDialog extends DestroyableVBox implements DestroyableTemplate {
 
@@ -43,6 +42,7 @@ public class ImportDialog extends DestroyableVBox implements DestroyableTemplate
     @Override
     public void initComponents() {
         this.getStyleClass().add("import-dialog");
+        this.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
         //labels
         final DestroyableLabel explain = LabelBuilder.builder()
                 .withStyleClass("explain-text")
@@ -52,15 +52,14 @@ public class ImportDialog extends DestroyableVBox implements DestroyableTemplate
         var content = switch (type) {
             case HORIZONSWISHLIST -> new HorizonsWishlist(json);
             case WISHLIST -> new OdysseyWishlist(json);
-            case LOADOUT -> null;
-            case SHIP -> null;
+            case LOADOUT -> new OdysseyLoadout(json);
+            case SHIP -> new HorizonsShip(json);
             case EDSY -> new EdsyHorizonsWishlist(json);
             case CORIOLIS -> new CoriolisHorizonsWishlist(json);
-            case PINCONFIG -> null;
+            case PINCONFIG -> new HorizonsPinConfig(json);
             case CAPI -> null;//skipped earlier
             case UNKNOWN -> null;//skipped earlier
         };
-//        DestroyableVBox destroyableVBox = BoxBuilder.builder().withStyleClass("vertical-box").withNodes(content, new GrowingRegion()).buildVBox();
         DestroyableScrollPane scrollPane = ScrollPaneBuilder.builder()
                 .withContent(content)
                 .withStyleClass("import-dialog-scrollpane")

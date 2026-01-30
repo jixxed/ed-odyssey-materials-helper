@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,6 +10,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 
+import java.util.Comparator;
 import java.util.Map;
 import java.util.stream.Collectors;
 @Slf4j
@@ -43,6 +45,16 @@ public final class HorizonsModuleWishlistBlueprint extends HorizonsWishlistBluep
             return;
         }
         throw new IllegalArgumentException("Cannot set percentage to complete for grade: " + grade.name() + "/" + percentage);
+    }
+
+    @JsonIgnore
+    public HorizonsBlueprintGrade getMaxSelectedGrade() {
+        //get the highest non-zero key
+        return percentageToComplete.entrySet().stream()
+                .filter(entry -> entry.getValue() > 0.0)
+                .max(Comparator.comparing(entry -> entry.getKey().getGrade()))
+                .map(Map.Entry::getKey)
+                .orElse(HorizonsBlueprintGrade.NONE);
     }
 
     public void setRecipeName(HorizonsBlueprintName recipeName) {
