@@ -334,8 +334,7 @@ dependencies {
         implementation 'nl.jixxed.ed.confidential:ed-confidential-impl:1.1'
     }
 }
-jpackage {
-
+tasks.named("jpackage").configure {
     if (os.isWindows()) {
         dependsOn test
     }
