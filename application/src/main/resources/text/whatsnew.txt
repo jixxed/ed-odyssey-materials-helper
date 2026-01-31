@@ -1,6 +1,8 @@
 Version 3.2.3
 -------------
 Improved reading journal updates
+Fixed legacy module save button on module details
+Added notification on legacy module save
 
 Version 3.2.2
 -------------

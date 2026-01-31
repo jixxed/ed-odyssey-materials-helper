@@ -90,3 +90,5 @@
 "notification.imported.failed.pinconfig.text","{0}","","","{0}","{0}","","{0}","{0}",""
 "notification.imported.success.pinconfig.title","Imported pin configuration","","","","","","","",""
 "notification.imported.failed.pinconfig.title","Failed to import pin configuration","","","","","","","",""
+"notification.legacy.saved.title","Legacy module","","","","","","","",""
+"notification.legacy.saved.text","Module has been saved","","","","","","","",""

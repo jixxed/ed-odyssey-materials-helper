@@ -44,7 +44,7 @@ public class ModuleDetailsPopover extends DestroyablePopOver implements Destroya
     @Override
     public void initEventHandling() {
 
-        register(EventService.addListener(true, this, /*9,*/ SlotboxOpenEvent.class, (event) -> {
+        register(EventService.addListener(true, this, SlotboxOpenEvent.class, (event) -> {
 //            log.debug("SlotboxOpenEvent {}", event);
             updateContent(event.getShipModule());
             slotBox = event.getSlotBox();
@@ -52,7 +52,7 @@ public class ModuleDetailsPopover extends DestroyablePopOver implements Destroya
             updateDetailsPopoverPosition();
 
         }));
-        register(EventService.addListener(true, this, /*9,*/ SlotboxHoverEvent.class, (event) -> {
+        register(EventService.addListener(true, this, SlotboxHoverEvent.class, (event) -> {
             //no updates if a menu is open
             if (slotBox != null && slotBox.isMenuOpen()) {
                 return;
@@ -66,13 +66,13 @@ public class ModuleDetailsPopover extends DestroyablePopOver implements Destroya
             updateDetailsPopoverPosition();
 
         }));
-        register(EventService.addListener(true, this, /*9,*/ SlotboxEngineeringEvent.class, (event) -> {
+        register(EventService.addListener(true, this, SlotboxEngineeringEvent.class, (event) -> {
             updateContent(event.getShipModule());
             slotBox = event.getSlotBox();
             showPopover(true, event.getShipModule());
             updateDetailsPopoverPosition();
         }));
-        register(EventService.addListener(true, this, /*9,*/ ModuleSelectHoverEvent.class, (event) -> {
+        register(EventService.addListener(true, this, ModuleSelectHoverEvent.class, (event) -> {
             //update content with the shipmodule from the event or the one from the slotbox, depending on whether the button is hovered
             ShipModule shipModule = event.isHover() ? event.getShipModule() : slotBox.getSlot().getShipModule();
             updateContent(shipModule);
@@ -108,7 +108,6 @@ public class ModuleDetailsPopover extends DestroyablePopOver implements Destroya
             destroyable.destroy();
         }
         this.setContentNode(this.register(moduleDetails));
-        this.getContentNode().setMouseTransparent(true);
     }
 
     private static boolean hasContent(ShipModule shipModule) {

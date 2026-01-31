@@ -7,8 +7,10 @@ import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ships.HardpointModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LegacyModuleSavedEvent;
 import nl.jixxed.eliteodysseymaterials.service.ships.LegacyModuleService;
@@ -49,9 +51,9 @@ public class ModuleDetails extends DestroyableVBox implements DestroyableEventTe
                 .withOnMouseClicked(_ -> {
                     LegacyModuleService.saveLegacyModule(shipModule);
                     EventService.publish(new LegacyModuleSavedEvent());
+                    NotificationService.showInformation(NotificationType.SUCCESS, LocaleService.LocaleString.of("notification.legacy.saved.title"), LocaleService.LocaleString.of("notification.legacy.saved.text"));
                 })
                 .build();
-        this.getNodes().add(legacySaveButton);
         moduleName = LabelBuilder.builder()
                 .withStyleClass("title")
                 .withNonLocalizedText("")

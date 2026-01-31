@@ -1462,9 +1462,8 @@
           .legacy-save {
             -fx-cursor: hand;
             -fx-text-fill: $text-color-blue;
-            //@include fixedHeight(1.4em);
             -fx-alignment: bottom-right;
-            -fx-padding: 0.25em 0.25em 0em 0em;
+            -fx-padding: 0.25em;
 
             &:hover {
               -fx-text-fill: lighten($text-color-blue, 10%);

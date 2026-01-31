@@ -12,4 +12,6 @@ The portable zip versions are used as update packages. You can run them standalo
 :page_facing_up: **Release notes for this version:**
 ```
 Improved reading journal updates
+Fixed legacy module save button on module details 
+Added notification on legacy module save
 ```
