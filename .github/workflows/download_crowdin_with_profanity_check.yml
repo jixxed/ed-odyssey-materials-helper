@@ -15,7 +15,7 @@ jobs:
       pr_branch: ${{ steps.crowdin.outputs.pull_request_branch }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.GHA_CUSTOM_PAT }}
 
@@ -48,7 +48,7 @@ jobs:
     if: needs.crowdin.outputs.pr_number != ''
     steps:
       - name: Checkout PR branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: 'crowdin-translations-${{ github.run_id }}'
