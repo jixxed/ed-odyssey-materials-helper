@@ -29,6 +29,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -234,22 +237,29 @@ public class FileProcessor {
 
     @SuppressWarnings("java:S2674")
     public static synchronized void processJournal(final File file) {
-        try (final CountingInputStream is = new CountingInputStream(Files.newInputStream(Paths.get(file.toURI()), StandardOpenOption.READ))) {
-            if (file.length() >= position) {
-                // Skip over already processed bytes.
-                is.skip(position);
+        try (final FileChannel channel = FileChannel.open(file.toPath(), StandardOpenOption.READ)) {
+            // If we've already processed the entire file, return early
+            if (position >= channel.size()) {
+                position = channel.size();//reset to end in case of removed lines
+                return;
             }
-            final InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
-            final BufferedReader lineReader = new BufferedReader(reader);
+            // Position the channel at the last known processed location
+            channel.position(position);
+            try (final ReadableByteChannel readableChannel = Channels.newChannel(Channels.newInputStream(channel))) {
+                // Use BufferedReader for line reading as before
+                try (final BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(Channels.newInputStream(readableChannel), StandardCharsets.UTF_8))) {
 
-            // Process all lines.
-            String line;
-            while ((line = lineReader.readLine()) != null) {
-                final String finalLine = line;
-                //try to read line as json, if exception occurs we get JsonProcessingException and can try to read again later
-                OBJECT_MAPPER.readTree(finalLine);
-                position = is.getCount();
-                Platform.runLater(() -> MessageHandler.handleMessage(finalLine, file));
+                    // Process all new lines.
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        final String finalLine = line;
+                        //try to read line as json, if exception occurs we get JsonProcessingException and can try to read again later
+                        OBJECT_MAPPER.readTree(finalLine);
+                        position = channel.position();
+                        Platform.runLater(() -> MessageHandler.handleMessage(finalLine, file));
+                    }
+                }
             }
         } catch (final JsonProcessingException e) {
             log.error("Read error", e);
@@ -257,7 +267,6 @@ public class FileProcessor {
             log.error("Error processing journal", e);
         }
     }
-
     public static synchronized void processCargoStateFile(final Optional<File> file, final JournalEventType journalEventType) {
         file.ifPresent(f -> Platform.runLater(() -> MessageHandler.handleMessage(f, journalEventType)));
     }
