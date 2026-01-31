@@ -6,11 +6,8 @@ import nl.jixxed.eliteodysseymaterials.enums.EngineerState;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsStorageType;
 import nl.jixxed.eliteodysseymaterials.enums.MaterialTrader;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-//currently listed as UNKNOWN
-@Disabled
 class MaterialTraderServiceTest {
 
     @Test
