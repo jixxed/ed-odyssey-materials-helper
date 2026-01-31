@@ -1,3 +1,7 @@
+Version 3.2.2
+-------------
+Fix potential nullpointer exception when you have blueprints with all grades at 0%.
+
 Version 3.2.1
 -------------
 Fix CAPI authentication

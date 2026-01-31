@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.reactivex.rxjava3.annotations.Nullable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 @Slf4j
 @NoArgsConstructor
-//@AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = true)
 public final class HorizonsModuleWishlistBlueprint extends HorizonsWishlistBlueprint {
@@ -24,6 +24,7 @@ public final class HorizonsModuleWishlistBlueprint extends HorizonsWishlistBluep
     //no longer persisting the data
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Map<HorizonsBlueprintGrade, Integer> blueprintGradeRolls;
+    @Nullable
     private Map<HorizonsBlueprintGrade, Double> percentageToComplete;
 
     public Map<HorizonsBlueprintGrade, Double> getPercentageToComplete() {
@@ -50,7 +51,7 @@ public final class HorizonsModuleWishlistBlueprint extends HorizonsWishlistBluep
     @JsonIgnore
     public HorizonsBlueprintGrade getMaxSelectedGrade() {
         //get the highest non-zero key
-        return percentageToComplete.entrySet().stream()
+        return getPercentageToComplete().entrySet().stream()
                 .filter(entry -> entry.getValue() > 0.0)
                 .max(Comparator.comparing(entry -> entry.getKey().getGrade()))
                 .map(Map.Entry::getKey)

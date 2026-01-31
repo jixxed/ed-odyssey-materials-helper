@@ -11,5 +11,5 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Fix CAPI authentication
+Fix potential nullpointer exception when you have blueprints with all grades at 0%.
 ```
