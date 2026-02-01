@@ -32,28 +32,63 @@
 .material-popover-content {
   -fx-background-color: #0f0f0f;
   -fx-padding: 0.3em;
-  .selling-stations{
-    .selling-stations-header{
+
+  .selling-stations {
+    .selling-stations-header {
       -fx-padding: 0 0.25em 0 0;
       //-fx-min-width: 10em;
       //-fx-text-alignment: left;
     }
-    .supply{
+
+    .supply {
       -fx-padding: 0 0.25em 0 0;
       //-fx-min-width: 10em;
       //-fx-text-alignment: left;
     }
-    .age{
+
+    .age {
       -fx-text-fill: $text-color-grey;
       -fx-padding: 0 0.25em 0 0;
-    //  -fx-min-width: 10em;
-    //  -fx-text-alignment: right;
+      //  -fx-min-width: 10em;
+      //  -fx-text-alignment: right;
     }
-    .copyable-location{
+
+    .copyable-location {
       @include fixedWidth(26em);
       @include copyable-location;
     }
+
   }
+  .title-row {
+    -fx-spacing: 0.25em;
+     .title-box {
+     }
+
+     .periodic-table-element {
+       -fx-border-color: $border-color-white;
+       @include fixedWidth(6em);
+       @include fixedHeight(7em);
+       -fx-spacing: 0.1em;
+       -fx-alignment: center;
+       .atomic-number {
+         -fx-font-size: 0.8em;
+       }
+
+       .atomic-symbol {
+         -fx-font-size: 2.5em;
+         -fx-font-weight: bold;
+       }
+
+       .atomic-name {
+         -fx-font-size: 0.8em;
+       }
+
+       .atomic-mass {
+         -fx-font-size: 0.8em;
+       }
+
+     }
+   }
 }
 
 .material-tooltip-location-line {

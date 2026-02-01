@@ -5840,6 +5840,27 @@
           -fx-font-size: 1em !important; }
       .app .material-popover-content .selling-stations .copyable-location .distance {
         -fx-text-fill: gray; }
+    .app .material-popover-content .title-row {
+      -fx-spacing: 0.25em; }
+      .app .material-popover-content .title-row .periodic-table-element {
+        -fx-border-color: white;
+        -fx-min-width: 6em;
+        -fx-pref-width: 6em;
+        -fx-max-width: 6em;
+        -fx-min-height: 7em;
+        -fx-pref-height: 7em;
+        -fx-max-height: 7em;
+        -fx-spacing: 0.1em;
+        -fx-alignment: center; }
+        .app .material-popover-content .title-row .periodic-table-element .atomic-number {
+          -fx-font-size: 0.8em; }
+        .app .material-popover-content .title-row .periodic-table-element .atomic-symbol {
+          -fx-font-size: 2.5em;
+          -fx-font-weight: bold; }
+        .app .material-popover-content .title-row .periodic-table-element .atomic-name {
+          -fx-font-size: 0.8em; }
+        .app .material-popover-content .title-row .periodic-table-element .atomic-mass {
+          -fx-font-size: 0.8em; }
   .app .material-tooltip-location-line {
     -fx-cursor: hand; }
   .app .material-tooltip-location-line:hover .label {

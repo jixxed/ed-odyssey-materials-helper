@@ -21,7 +21,6 @@ import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.helper.POIHelper;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
-import nl.jixxed.eliteodysseymaterials.schemas.commodity.CommodityStat;
 import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsBlueprintClickEvent;
@@ -67,16 +66,16 @@ public class MaterialService {
                     .withText(LocaleService.getStringBinding("material.tooltip.unknown"))
                     .build());
         } else {
-            vBox.getNodes().add(LabelBuilder.builder()
-                    .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_TITLE)
-                    .withText(LocaleService.getStringBinding(horizonsMaterial.getLocalizationKey()))
-                    .build());
-            if (GameVersion.LIVE.equals(horizonsMaterial.getGameVersion())) {
-                vBox.getNodes().add(LabelBuilder.builder()
-                        .withText(LocaleService.getStringBinding((horizonsMaterial instanceof Commodity) ? "material.tooltip.is.live.commodity" : "material.tooltip.is.live"))
-                        .build());
-            }
             if (horizonsMaterial instanceof Commodity commodity) {
+                vBox.getNodes().add(LabelBuilder.builder()
+                        .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_TITLE)
+                        .withText(LocaleService.getStringBinding(horizonsMaterial.getLocalizationKey()))
+                        .build());
+                if (GameVersion.LIVE.equals(horizonsMaterial.getGameVersion())) {
+                    vBox.getNodes().add(LabelBuilder.builder()
+                            .withText(LocaleService.getStringBinding("material.tooltip.is.live.commodity"))
+                            .build());
+                }
                 vBox.getNodes().add(
                         LabelBuilder.builder()
                                 .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_DESCRIPTION)
@@ -104,35 +103,66 @@ public class MaterialService {
                 if (requiredAmount.get() > 0 && commodity.isPurchasable()) {
                     addNearbyMarketsToTooltip(commodity, vBox, requiredAmount, hoverableNode);
                 }
-            } else if (horizonsMaterial instanceof Raw) {
-                vBox.getNodes().add(LabelBuilder.builder()
-                        .withText(LocaleService.getStringBinding("material.tooltip.type.raw"))
+            } else {
+                DestroyableVBox vBoxTitle = BoxBuilder.builder().withStyleClass("title-box").buildVBox();
+                DestroyableHBox hBox = BoxBuilder.builder().withStyleClass("title-row").buildHBox();
+                if(horizonsMaterial instanceof Raw raw){
+                    DestroyableVBox periodicTable = getPeriodicTable(raw);
+                    hBox.getNodes().add(periodicTable);
+                }
+                hBox.getNodes().add(vBoxTitle);
+                vBox.getNodes().add(hBox);
+                vBoxTitle.getNodes().add(LabelBuilder.builder()
+                        .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_TITLE)
+                        .withText(LocaleService.getStringBinding(horizonsMaterial.getLocalizationKey()))
                         .build());
-            } else if (horizonsMaterial instanceof Encoded) {
-                vBox.getNodes().add(LabelBuilder.builder()
-                        .withText(LocaleService.getStringBinding("material.tooltip.type.encoded"))
-                        .build());
-            } else if (horizonsMaterial instanceof Manufactured) {
-                vBox.getNodes().add(LabelBuilder.builder()
-                        .withText(LocaleService.getStringBinding("material.tooltip.type.manufactured"))
-                        .build());
-            }
-            if (horizonsMaterial instanceof EngineeringMaterial engineeringMaterial && engineeringMaterial.isHuman()) {
-                addClosestTraderToTooltip(horizonsMaterial, vBox);
-            }
-            addHorizonsSpawnLocationsToTooltip(SpawnConstants.HORIZONSMATERIAL_LOCATION.get(horizonsMaterial), vBox);
-            if (!(horizonsMaterial instanceof Commodity)) {
+                if (GameVersion.LIVE.equals(horizonsMaterial.getGameVersion())) {
+                    vBoxTitle.getNodes().add(LabelBuilder.builder()
+                            .withText(LocaleService.getStringBinding("material.tooltip.is.live"))
+                            .build());
+                }
+
+                switch (horizonsMaterial) {
+                    case Raw _ -> vBoxTitle.getNodes().add(LabelBuilder.builder()
+                            .withText(LocaleService.getStringBinding("material.tooltip.type.raw"))
+                            .build());
+                    case Encoded _ -> vBoxTitle.getNodes().add(LabelBuilder.builder()
+                            .withText(LocaleService.getStringBinding("material.tooltip.type.encoded"))
+                            .build());
+                    case Manufactured _ -> vBoxTitle.getNodes().add(LabelBuilder.builder()
+                            .withText(LocaleService.getStringBinding("material.tooltip.type.manufactured"))
+                            .build());
+                    default -> {
+                    }
+                }
+
+                if (horizonsMaterial instanceof EngineeringMaterial engineeringMaterial && engineeringMaterial.isHuman()) {
+                    addClosestTraderToTooltip(horizonsMaterial, vBox);
+                }
+
+                addHorizonsSpawnLocationsToTooltip(SpawnConstants.HORIZONSMATERIAL_LOCATION.get(horizonsMaterial), vBox);
+
                 if (wishlist && WishlistService.getCurrentWishlistCount(horizonsMaterial, false).max() - StorageService.getMaterialCount(horizonsMaterial) > 0) {
                     addHorizonsTradeToTooltip(horizonsMaterial, vBox);
                 } else {
                     addHorizonsTradeToTooltipClassic(horizonsMaterial, vBox);
                 }
+
             }
+
             addHorizonsBlueprintsToTooltip(HorizonsBlueprintConstants.findRecipesContaining(horizonsMaterial), vBox);
         }
         return vBox;
 
 
+    }
+
+    private static DestroyableVBox getPeriodicTable(Raw raw) {
+        DestroyableLabel atomicNumber = LabelBuilder.builder().withStyleClass("atomic-number").withNonLocalizedText(raw.getAtomicNumber().toString()).build();
+        DestroyableLabel symbol = LabelBuilder.builder().withStyleClass("atomic-symbol").withNonLocalizedText(raw.getAtomicSymbol()).build();
+        DestroyableLabel name = LabelBuilder.builder().withStyleClass("atomic-name").withText(raw.getLocalizationKey()).build();
+        DestroyableLabel mass = LabelBuilder.builder().withStyleClass("atomic-mass").withNonLocalizedText(raw.getAtomicMass().toString()).build();
+        return BoxBuilder.builder().withStyleClass("periodic-table-element").withNodes(atomicNumber, symbol, name, mass).buildVBox();
     }
 
     private static void addCommodityStatsToTooltip(Commodity commodity, DestroyableMaterialContent vBox) {
@@ -753,6 +783,7 @@ public class MaterialService {
         }
 
     }
+
     private static void addRecipesToTooltip(final Map<OdysseyBlueprintName, Integer> recipesContainingMaterial, final DestroyableVBox vBox) {
         if (!recipesContainingMaterial.isEmpty()) {
             vBox.getNodes().add(LabelBuilder.builder()
