@@ -43,4 +43,9 @@ public class StarSystem {
     public Double getDistance(StarSystem starSystem) {
         return getDistance(starSystem.getX(), starSystem.getY(), starSystem.getZ());
     }
+
+    @Override
+    public String toString() {
+        return "%s(%s, %s, %s)".formatted(name, x, y, z);
+    }
 }
