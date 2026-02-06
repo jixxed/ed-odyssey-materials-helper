@@ -22,6 +22,7 @@
     },
     "ServerId" : {
       "title" : "ServerId",
+      "description": "FDev ID for the module, not a unique identifier for the module instance",
       "type" : "integer",
       "examples" : [ 128064108, 128064118, 128064153 ]
     },
