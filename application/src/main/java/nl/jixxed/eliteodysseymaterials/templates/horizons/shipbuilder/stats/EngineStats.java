@@ -81,16 +81,16 @@ public class EngineStats extends Stats implements DestroyableTemplate {
 
     private double calculateMinSpeed(Ship ship, Double speed, ModuleProfile moduleProfile) {
         final Double minimumThrust = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MINIMUM_THRUST, 0.0D);
-        return speed * (getMassCurveMultiplier(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo() + ship.getMaxFuelReserve(), moduleProfile) / 100D) * (minimumThrust / 100D);
+        return speed * (moduleProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo() + ship.getMaxFuelReserve()) / 100D) * (minimumThrust / 100D);
     }
 
     private double calculateCurrentSpeed(Ship ship, Double speed, ModuleProfile moduleProfile, double multiplier) {
         final Double minimumThrust = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MINIMUM_THRUST, 0.0D);
-        return speed * (getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100D) * (multiplier + (minimumThrust / 100D) * (1D - multiplier));
+        return speed * (moduleProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve()) / 100D) * (multiplier + (minimumThrust / 100D) * (1D - multiplier));
     }
 
     private double calculateMaxSpeed(final Ship ship, final double speed, final ModuleProfile moduleProfile) {
-        return speed * getMassCurveMultiplier(ship.getEmptyMass(), moduleProfile) / 100D;
+        return speed * moduleProfile.getMassCurveMultiplier(ship.getEmptyMass()) / 100D;
     }
 
     private static Double getMaximumMultiplier(Optional<Slot> thrusters) {
@@ -115,15 +115,15 @@ public class EngineStats extends Stats implements DestroyableTemplate {
     }
 
     private Double calculateForwardAcceleration(Ship ship, final ModuleProfile moduleProfile) {
-        return (Double) ship.getAttributes().get(HorizonsModifier.FORWARD_ACCELERATION) * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100D;
+        return (Double) ship.getAttributes().get(HorizonsModifier.FORWARD_ACCELERATION) * moduleProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve()) / 100D;
     }
 
     private Double calculateReverseAcceleration(Ship ship, final ModuleProfile moduleProfile) {
-        return (Double) ship.getAttributes().get(HorizonsModifier.REVERSE_ACCELERATION) * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100D;
+        return (Double) ship.getAttributes().get(HorizonsModifier.REVERSE_ACCELERATION) * moduleProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve()) / 100D;
     }
 
     private Double calculateLateralAcceleration(Ship ship, final ModuleProfile moduleProfile) {
-        return (Double) ship.getAttributes().get(HorizonsModifier.LATERAL_ACCELERATION) * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100D;
+        return (Double) ship.getAttributes().get(HorizonsModifier.LATERAL_ACCELERATION) * moduleProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve()) / 100D;
     }
 
     @Override

@@ -182,9 +182,10 @@ public class ShieldStats extends Stats implements DestroyableEventTemplate {
                                     .filter(slot -> slot.getShipModule() instanceof ShieldBooster)
                                     .mapToDouble(slot -> (Double) slot.getShipModule().getAttributeValue(SHIELD_BOOST, true))
                                     .sum();
+                            var moduleProfile = new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumStrength, optimalStrength, maximumStrength);
                             return shieldReinforcement + (shields
                                     * getEffectiveShieldBoostMultiplier(totalShieldBoost)
-                                    * getMassCurveMultiplier((double) ship.getAttributes().getOrDefault(MASS, 0D), new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumStrength, optimalStrength, maximumStrength)));
+                                    * moduleProfile.getMassCurveMultiplier((double) ship.getAttributes().getOrDefault(MASS, 0D)));
                         }).orElse(0D))
                 .orElse(0D);
     }

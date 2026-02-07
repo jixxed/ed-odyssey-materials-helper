@@ -9,7 +9,6 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military.
 import nl.jixxed.eliteodysseymaterials.domain.ships.utility.ShieldBooster;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats.ModuleProfile;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -113,7 +112,7 @@ public class ShipConfigDiscoveryTest {
     }
 
     private double calculatePitchMinimum(Ship ship, double pitchSpeed, ModuleProfile moduleProfile) {
-        return pitchSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo() + ship.getMaxFuelReserve(), moduleProfile) / 100;
+        return pitchSpeed * moduleProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo() + ship.getMaxFuelReserve()) / 100;
     }
 
     protected void findMinPitch(Ship ship, Double expected, Double delta) {
@@ -143,7 +142,7 @@ public class ShipConfigDiscoveryTest {
 
 
     private double calculateMaxSpeed(final Ship ship, final double speed, final ModuleProfile moduleProfile) {
-        return speed * getMassCurveMultiplier(ship.getEmptyMass(), moduleProfile) / 100D;
+        return speed * moduleProfile.getMassCurveMultiplier(ship.getEmptyMass()) / 100D;
     }
 
     private static Double getMaximumMultiplier(Optional<Slot> thrusters) {
@@ -168,7 +167,7 @@ public class ShipConfigDiscoveryTest {
     }
 
     private double calculateMinSpeed(Ship ship, Double speed, Double minimumThrust, ModuleProfile moduleProfile) {
-        return speed * (getMassCurveMultiplier(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo() + ship.getMaxFuelReserve(), moduleProfile) / 100D) * (minimumThrust / 100D);
+        return speed * (moduleProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo() + ship.getMaxFuelReserve()) / 100D) * (minimumThrust / 100D);
     }
 
     protected void findMinThrust(Ship ship, Double expected, Double delta) {
@@ -270,33 +269,18 @@ public class ShipConfigDiscoveryTest {
         return value >= expected - v && value <= expected + v;
     }
 
-    protected double getMassCurveMultiplier(final double mass, final ModuleProfile moduleProfile) {
-        return (
-                moduleProfile.minimumMultiplier() + Math.pow(
-                        Math.min(
-                                1.0,
-                                (moduleProfile.maximumMass() - mass) / (moduleProfile.maximumMass() - moduleProfile.minimumMass())
-                        ),
-                        Math.log(
-                                (moduleProfile.optimalMultiplier() - moduleProfile.minimumMultiplier()) / (moduleProfile.maximumMultiplier() - moduleProfile.minimumMultiplier())
-                        ) / Math.log(
-                                (moduleProfile.maximumMass() - moduleProfile.optimalMass()) / (moduleProfile.maximumMass() - moduleProfile.minimumMass())
-                        )
-                ) * (moduleProfile.maximumMultiplier() - moduleProfile.minimumMultiplier())
-        );
-    }
 
 
     private double calculatePitchCurrent(Ship ship, double pitchSpeed, ModuleProfile moduleProfile) {
-        return pitchSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100;
+        return pitchSpeed * moduleProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve()) / 100;
     }
 
     private double calculateRollCurrent(Ship ship, double rollSpeed, ModuleProfile moduleProfile) {
-        return rollSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100;
+        return rollSpeed * moduleProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve()) / 100;
     }
 
     private double calculateYawCurrent(Ship ship, double yawSpeed, ModuleProfile moduleProfile) {
-        return yawSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100;
+        return yawSpeed * moduleProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve()) / 100;
     }
 
     protected void findPitch(Ship ship, Double expected, Double delta) {
@@ -399,12 +383,13 @@ public class ShipConfigDiscoveryTest {
 
                     Double value = 0D;
                     Double shields = 0D;
+                    ModuleProfile moduleProfile = new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumStrength, optimalStrength, maximumStrength);
                     while (!within(shields, expected, delta) && value < 1000D) {
 
                         final Double shieldValue = value = value + delta;
                         shields = shieldReinforcement + (shieldValue
                                 * getEffectiveShieldBoostMultiplier(totalShieldBoost)
-                                * getMassCurveMultiplier((double) ship.getAttributes().getOrDefault(MASS, 0D), new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumStrength, optimalStrength, maximumStrength)));
+                                * moduleProfile.getMassCurveMultiplier((double) ship.getAttributes().getOrDefault(MASS, 0D)));
 
                     }
                     log.info("Value of {} results in shields of {} which is within range", value, shields);
@@ -413,7 +398,7 @@ public class ShipConfigDiscoveryTest {
                         final Double shieldValue = value = value + delta;
                          shields2 = shieldReinforcement + (shieldValue
                                 * getEffectiveShieldBoostMultiplier(totalShieldBoost)
-                                * getMassCurveMultiplier((double) ship.getAttributes().getOrDefault(MASS, 0D), new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumStrength, optimalStrength, maximumStrength)));
+                                * moduleProfile.getMassCurveMultiplier((double) ship.getAttributes().getOrDefault(MASS, 0D)));
                         var inRange = within(shields2, expected, delta);
                         log.info("Value of {} results in shields of {} which is {}within range", value, shields2, (!inRange) ? "not " : "");
                     }
