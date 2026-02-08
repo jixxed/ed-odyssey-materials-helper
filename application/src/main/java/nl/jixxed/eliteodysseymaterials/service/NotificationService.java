@@ -158,7 +158,7 @@ public class NotificationService {
             try {
                 final URI resource;
                 if (Objects.equals(customSoundPath, "")) {
-                    resource = NotificationService.class.getResource("/audio/tweet.mp3").toURI();
+                    resource = NotificationService.class.getResource("/audio/pop.mp3").toURI();
                 } else {
                     resource = new File(customSoundPath).toURI();
                 }

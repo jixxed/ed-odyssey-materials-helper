@@ -144,7 +144,7 @@ public class Notifications extends DestroyableVBox implements DestroyableTemplat
                     try {
                         final URI resource;
                         if (Objects.equals(customSoundPath, "")) {
-                            resource = Objects.requireNonNull(NotificationService.class.getResource("/audio/tweet.mp3")).toURI();
+                            resource = Objects.requireNonNull(NotificationService.class.getResource("/audio/pop.mp3")).toURI();
                         } else {
                             resource = new File(customSoundPath).toURI();     // For example
                         }
