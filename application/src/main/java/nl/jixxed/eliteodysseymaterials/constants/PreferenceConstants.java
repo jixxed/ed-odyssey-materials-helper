@@ -73,6 +73,7 @@ public class PreferenceConstants {
     public static final String DOWNLOADED_HIGHLIGHT_DATAPORT_COLOR = "ar.dataport.color.downloaded.highlight";
     public static final String AR_SEARCH_METHOD = "ar.search.method";
     public static final String AR_FUZZY_SCORE = "ar.search.fuzzy.score.min";
+    public static final String PREFERRED_LANDING_PAD = "preferred.landing.pad";
 
 
 }

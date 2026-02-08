@@ -13,6 +13,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTooltip
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TooltipBuilder {
@@ -21,6 +22,8 @@ public class TooltipBuilder {
     private Duration showDelay;
     private Duration showDuration = Duration.seconds(30);
     private String nonLocalizedText;
+    private Supplier<Double> customX;
+    private Supplier<Double> customY;
 
     public static TooltipBuilder builder() {
         return new TooltipBuilder();
@@ -38,6 +41,16 @@ public class TooltipBuilder {
 
     public TooltipBuilder withText(final StringBinding stringBinding) {
         this.stringBinding = stringBinding;
+        return this;
+    }
+
+    public TooltipBuilder withCustomX(final Supplier<Double> customX) {
+        this.customX = customX;
+        return this;
+    }
+
+    public TooltipBuilder withCustomY(final Supplier<Double> customY) {
+        this.customY = customY;
         return this;
     }
 
@@ -74,6 +87,12 @@ public class TooltipBuilder {
         }
         if (this.showDuration != null) {
             tooltip.setShowDuration(this.showDuration);
+        }
+        if (this.customX != null) {
+            tooltip.setCustomX(this.customX);
+        }
+        if (this.customY != null) {
+            tooltip.setCustomY(this.customY);
         }
         tooltip.setWrapText(true);
         tooltip.setTextAlignment(TextAlignment.LEFT);

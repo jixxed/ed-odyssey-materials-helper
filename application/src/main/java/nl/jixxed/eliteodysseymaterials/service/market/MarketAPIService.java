@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipSize;
@@ -16,6 +16,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.market.save.response.MarketSaveRe
 import nl.jixxed.eliteodysseymaterials.schemas.market.search.MarketSearchResponse;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.Secrets;
+import nl.jixxed.eliteodysseymaterials.service.UserPreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.VersionService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -60,7 +61,8 @@ public class MarketAPIService {
     @SuppressWarnings("unchecked")
     public static void getNearbyStations(Commodity commodity, int amountRequired, StarSystem origin, Consumer<List<MarketStation>> resultConsumer, Supplier<Boolean> stillValid) {
         //clear cache if we are in a different system or switch to/from a large ship
-        boolean isCurrentShipLarge = ShipConfiguration.CURRENT.getShipType() != null && ShipConfiguration.CURRENT.getShipType().getShipSize().equals(ShipSize.L);
+        String prefPad = UserPreferencesService.getPreference(PreferenceConstants.PREFERRED_LANDING_PAD, "auto");
+        boolean isCurrentShipLarge = "large".equals(prefPad) || ("auto".equals(prefPad) && ShipConfiguration.CURRENT.getShipType() != null && ShipConfiguration.CURRENT.getShipType().getShipSize().equals(ShipSize.L));
         if (currentSystem != null && !currentSystem.equals(origin)) {
             log.info("Cleared Market cache, new system: {}", origin.getName());
             CACHE.clear();

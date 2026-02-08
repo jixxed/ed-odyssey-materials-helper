@@ -25,6 +25,8 @@ import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsBlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.service.market.MarketAPIService;
+import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.components.LandingPadSelect;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.CopyableLocation;
 import org.controlsfx.control.PopOver;
@@ -198,10 +200,11 @@ public class MaterialService {
                     }
                     vBox.getNodes().add(LabelBuilder.builder()
                             .build());
-                    vBox.getNodes().add(LabelBuilder.builder()
+                    DestroyableLabel title = LabelBuilder.builder()
                             .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE)
                             .withText("horizons.materials.nearest.markets")
-                            .build());
+                            .build();
+                    vBox.getNodes().add(BoxBuilder.builder().withNodes(title, new GrowingRegion(), new LandingPadSelect()).buildHBox());
                     DestroyableLabel supplyHeader = LabelBuilder.builder().withStyleClass("selling-stations-header").withText("horizons.materials.nearest.markets.supply.header").build();
                     DestroyableLabel ageHeader = LabelBuilder.builder().withStyleClass("selling-stations-header").withText("horizons.materials.nearest.markets.age.header").build();
                     DestroyableLabel locationsHeader = LabelBuilder.builder().withStyleClass("selling-stations-header").withText("horizons.materials.nearest.markets.location.header").build();

@@ -66,3 +66,7 @@
 "wishlist.tooltip.configure","Configure blueprint","","","Configurar plano","","","Настроить чертёж","配置蓝图",""
 "wishlist.tooltip.quantity.increase","Increase quantity","","","Aumentar cantidad","","","Увеличить количество","增加数量",""
 "wishlist.tooltip.quantity.decrease","Decrease quantity","","","Reducir cantidad","","","Уменьшить количество","减少数量",""
+"landing.pad.select","Pad size: medium/auto/large","","","","","","","",""
+"landing.pad.medium","M","","","","","","","",""
+"landing.pad.auto","A","","","","","","","",""
+"landing.pad.large","L","","","","","","","",""

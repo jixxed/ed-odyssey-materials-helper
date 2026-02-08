@@ -33,12 +33,43 @@
   -fx-background-color: #0f0f0f;
   -fx-padding: 0.3em;
 
+  .landing-pad-select {
+    //-fx-spacing: 0.25em;
+    -fx-cursor: hand;
+    .landing-pad-icon {
+      .glyph-icon {
+        -fx-font-size: 2em !important;
+      }
+
+      .ships-landing-pad-1 {
+
+        -fx-fill: $text-color-grey;
+      }
+
+      .ships-landing-pad-2 {
+
+        -fx-fill: $text-color-white;
+      }
+    }
+
+    .landing-pad-option {
+      @include fixedWidth(1.25em);
+      @include fixedHeight(2em);
+      -fx-text-fill: $text-color-white;
+      -fx-alignment: center;
+      &:selected {
+        -fx-font-weight: bold;
+        -fx-text-fill: $text-color-blue;
+      }
+    }
+  }
   .selling-stations {
     .selling-stations-header {
       -fx-padding: 0 0.25em 0 0;
       //-fx-min-width: 10em;
       //-fx-text-alignment: left;
     }
+
 
     .supply {
       -fx-padding: 0 0.25em 0 0;
@@ -59,36 +90,39 @@
     }
 
   }
+
   .title-row {
     -fx-spacing: 0.25em;
-     .title-box {
-     }
 
-     .periodic-table-element {
-       -fx-border-color: $border-color-white;
-       @include fixedWidth(6em);
-       @include fixedHeight(7em);
-       -fx-spacing: 0.1em;
-       -fx-alignment: center;
-       .atomic-number {
-         -fx-font-size: 0.8em;
-       }
+    .title-box {
+    }
 
-       .atomic-symbol {
-         -fx-font-size: 2.5em;
-         -fx-font-weight: bold;
-       }
+    .periodic-table-element {
+      -fx-border-color: $border-color-white;
+      @include fixedWidth(6em);
+      @include fixedHeight(7em);
+      -fx-spacing: 0.1em;
+      -fx-alignment: center;
 
-       .atomic-name {
-         -fx-font-size: 0.8em;
-       }
+      .atomic-number {
+        -fx-font-size: 0.8em;
+      }
 
-       .atomic-mass {
-         -fx-font-size: 0.8em;
-       }
+      .atomic-symbol {
+        -fx-font-size: 2.5em;
+        -fx-font-weight: bold;
+      }
 
-     }
-   }
+      .atomic-name {
+        -fx-font-size: 0.8em;
+      }
+
+      .atomic-mass {
+        -fx-font-size: 0.8em;
+      }
+
+    }
+  }
 }
 
 .material-tooltip-location-line {
