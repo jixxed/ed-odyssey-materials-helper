@@ -1,3 +1,7 @@
+Version 3.3.3
+-------------
+Performance fix for wishlists with a lot of items
+
 Version 3.3.2
 -------------
 Fix handling some journal entries
