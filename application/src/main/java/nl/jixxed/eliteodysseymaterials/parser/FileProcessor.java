@@ -7,6 +7,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.common.io.CountingInputStream;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import javafx.application.Platform;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -42,6 +45,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -50,6 +54,7 @@ public class FileProcessor {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final ObjectMapper OBJECT_MAPPER2 = new ObjectMapper();
     private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private static final Validator validator =  Validation.buildDefaultValidatorFactory().getValidator();
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
     private static TimerTask timerTask;
     private static Timer timer;
@@ -78,7 +83,6 @@ public class FileProcessor {
         OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         OBJECT_MAPPER.registerModule(new JavaTimeModule());
         OBJECT_MAPPER2.registerModule(new JavaTimeModule());
-
     }
 
 
@@ -119,9 +123,9 @@ public class FileProcessor {
                     JsonNode jsonNode = OBJECT_MAPPER.readTree(line);
                     if (jsonNode.get(EVENT) != null) {
                         final String newLine = removeBugs(jsonNode);
-                        testAndReport(newLine, JournalEventTypes.EVENT_TYPES.get(jsonNode.get(EVENT).asText()));
-                        final JournalEventType journalEventType = JournalEventType.forName(jsonNode.get(EVENT).asText());
-                        messages.add(newLine);
+                        if(testAndReport(newLine, JournalEventTypes.EVENT_TYPES.get(jsonNode.get(EVENT).asText()))) {
+                            messages.add(newLine);
+                        }
                     }
                     position = is.getCount();
                 }
@@ -223,15 +227,28 @@ public class FileProcessor {
         }).orElse(false);
     }
 
-    private static void testAndReport(String message, Class<? extends Event> messageClass) {
+    private static boolean testAndReport(String message, Class<? extends Event> messageClass) {
         try {
-            OBJECT_MAPPER2.readValue(message, messageClass);
+            validate(OBJECT_MAPPER2.readValue(message, messageClass));
+            return true;
         } catch (final Exception e) {
             //report
             log.error("unknown journal event", e);
             log.error(message);
 
             ReportService.reportJournal("journal", message, "unknown journal event: " + e.getMessage());
+        }
+        return false;
+    }
+
+    private static <T> void validate(T object) {
+        Set<ConstraintViolation<T>> violations = validator.validate(object);
+        if (!violations.isEmpty()) {
+            throw new IllegalArgumentException(
+                    violations.stream()
+                            .map(v -> v.getPropertyPath() + ": " + v.getMessage())
+                            .collect(Collectors.joining(", "))
+            );
         }
     }
 
@@ -255,9 +272,14 @@ public class FileProcessor {
                     while ((line = reader.readLine()) != null) {
                         final String finalLine = line;
                         //try to read line as json, if exception occurs we get JsonProcessingException and can try to read again later
-                        OBJECT_MAPPER.readTree(finalLine);
+                        var jsonNode = OBJECT_MAPPER.readTree(finalLine);
                         position = channel.position();
-                        Platform.runLater(() -> MessageHandler.handleMessage(finalLine, file));
+                        if (jsonNode.get(EVENT) != null) {
+                            final String newLine = removeBugs(jsonNode);
+                            if(testAndReport(newLine, JournalEventTypes.EVENT_TYPES.get(jsonNode.get(EVENT).asText()))) {
+                                Platform.runLater(() -> MessageHandler.handleMessage(finalLine, file));
+                            }
+                        }
                     }
                 }
             }
@@ -267,6 +289,7 @@ public class FileProcessor {
             log.error("Error processing journal", e);
         }
     }
+
     public static synchronized void processCargoStateFile(final Optional<File> file, final JournalEventType journalEventType) {
         file.ifPresent(f -> Platform.runLater(() -> MessageHandler.handleMessage(f, journalEventType)));
     }

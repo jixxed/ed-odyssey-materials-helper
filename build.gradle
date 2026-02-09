@@ -184,6 +184,10 @@ allprojects {
                 implementation "org.apache.xmlbeans:xmlbeans:${version_apache_xmlbeans}"
                 implementation "org.apache.poi:poi-ooxml:${version_apache_poi}"
                 implementation "org.eclipse.parsson:jakarta.json:1.1.7"
+                implementation "org.hibernate.validator:hibernate-validator:9.1.0.Final"
+                implementation "jakarta.el:jakarta.el-api:6.0.1"
+                implementation "org.glassfish.expressly:expressly:6.0.0"
+                compileOnly "org.jboss.logging:jboss-logging-annotations:3.0.4.Final"
                 implementation "org.leadpony.justify:justify:3.1.0"
                 implementation "org.slf4j:slf4j-api:2.0.17"
                 implementation "org.openjfx:javafx-base:${version_javafx}:${platform}"
@@ -196,8 +200,8 @@ allprojects {
                 implementation "org.controlsfx:controlsfx:${version_controlsfx}"
                 implementation "org.jfxtras:jmetro:11.6.16"
                 implementation "io.github.classgraph:classgraph:${version_github_classgraph}"
-                implementation 'de.jensd:fontawesomefx-commons:9.1.2'
-                implementation 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2'
+                implementation "de.jensd:fontawesomefx-commons:9.1.2"
+                implementation "de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2"
 
                 testImplementation "de.saxsys:mvvmfx-testing-utils:1.8.0"
                 testImplementation "io.github.secretx33:path-matching-resource-pattern-resolver:0.1"

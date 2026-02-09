@@ -1,3 +1,7 @@
+Version 3.3.1
+-------------
+Improved handling of undecodable journal entries
+
 Version 3.3.0
 -------------
 Added carrier info and location in the statusbar

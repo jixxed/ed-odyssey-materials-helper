@@ -20,7 +20,7 @@ public class EDDNCarrierJumpMapper extends EDDNMapper {
                 .withBodyID(carrierJump.getBodyID())
                 .withBody(carrierJump.getBody())
                 .withBodyType(carrierJump.getBodyType())
-                .withMarketID(carrierJump.getMarketID())
+                .withMarketID(carrierJump.getMarketID().orElse(null))
                 .withDocked(carrierJump.getDocked())
                 .withTaxi(carrierJump.getTaxi().orElse(null))
                 .withMulticrew(carrierJump.getMulticrew().orElse(null))
