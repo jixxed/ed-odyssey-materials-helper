@@ -11,5 +11,6 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Improved handling of undecodable journal entries
+Fix handling some journal entries
+Fix resetting carrier fuel level when switching accounts
 ```

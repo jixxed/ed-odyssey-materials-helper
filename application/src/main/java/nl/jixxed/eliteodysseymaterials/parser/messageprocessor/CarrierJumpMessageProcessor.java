@@ -37,12 +37,16 @@ public class CarrierJumpMessageProcessor implements MessageProcessor<CarrierJump
         if(marketID.toString().equals(UserPreferencesService.getPreference(PreferenceConstants.FLEET_CARRIER_ID, "none"))) {
             LocationService.setFleetCarrierLocation(Optional.of(new StarSystem(event.getStarSystem(), event.getStarPos().get(0).doubleValue(), event.getStarPos().get(1).doubleValue(), event.getStarPos().get(2).doubleValue())));
             CarrierService.carrierExistsProperty(CarrierType.FLEETCARRIER).set(true);
-            CarrierService.setCarrierCallSign(CarrierType.FLEETCARRIER, event.getStationName());
+            event.getStationName().ifPresent(stationName -> {
+                CarrierService.setCarrierCallSign(CarrierType.FLEETCARRIER, stationName);
+            });
 
         } else if(marketID.toString().equals(UserPreferencesService.getPreference(PreferenceConstants.SQUADRON_CARRIER_ID, "none"))) {
             LocationService.setSquadronCarrierLocation(Optional.of(new StarSystem(event.getStarSystem(), event.getStarPos().get(0).doubleValue(), event.getStarPos().get(1).doubleValue(), event.getStarPos().get(2).doubleValue())));
             CarrierService.carrierExistsProperty(CarrierType.SQUADRONCARRIER).set(false);
-            CarrierService.setCarrierCallSign(CarrierType.SQUADRONCARRIER, event.getStationName());
+            event.getStationName().ifPresent(stationName -> {
+                CarrierService.setCarrierCallSign(CarrierType.SQUADRONCARRIER, stationName);
+            });
         }
         });
     }

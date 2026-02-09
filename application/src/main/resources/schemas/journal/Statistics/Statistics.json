@@ -1125,7 +1125,7 @@
         }
       },
       "additionalProperties" : false,
-      "required" : [ "TG_ENCOUNTER_TOTAL", "TG_ENCOUNTER_TOTAL_LAST_SYSTEM", "TG_ENCOUNTER_TOTAL_LAST_TIMESTAMP", "TG_ENCOUNTER_TOTAL_LAST_SHIP" ]
+      "required" : [  ]
     },
     "CQC" : {
       "title" : "CQC",

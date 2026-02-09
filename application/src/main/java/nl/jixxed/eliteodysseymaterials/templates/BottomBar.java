@@ -220,6 +220,11 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
                 .withIcons(CarrierService.getCarrierIcon(carrierType))
                 .build();
 
+        name.addBinding(name.visibleProperty(), name.textProperty().isNotEmpty());
+        name.addBinding(name.managedProperty(), name.textProperty().isNotEmpty());
+        callSign.addBinding(callSign.visibleProperty(), callSign.textProperty().isNotEmpty());
+        callSign.addBinding(callSign.managedProperty(), callSign.textProperty().isNotEmpty());
+
         DestroyableVBox labels = BoxBuilder.builder().withStyleClass("carrier-labels").withNodes(type, name, callSign).buildVBox();
         DestroyableHBox titleLine = BoxBuilder.builder().withStyleClass("carrier-title-line").withNodes(icon, labels).buildHBox();
 

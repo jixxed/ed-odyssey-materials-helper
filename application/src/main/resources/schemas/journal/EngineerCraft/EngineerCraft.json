@@ -111,13 +111,13 @@
           },
           "LessIsGood" : {
             "title" : "LessIsGood",
-            "description": "Either 0 or 1",
+            "description": "Either 0 or 1. Visible on number types of modifiers",
             "type" : "integer",
             "examples" : [ 1, 0 ]
           }
         },
         "additionalProperties" : false,
-        "required" : [ "Label", "LessIsGood" ]
+        "required" : [ "Label" ]
       }
     },
     "ApplyExperimentalEffect" : {

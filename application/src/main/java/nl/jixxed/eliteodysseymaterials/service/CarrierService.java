@@ -44,6 +44,7 @@ public class CarrierService {
             carrierInfoProvider.setCarrierDockingAccess(null);
             carrierInfoProvider.setCarrierBalance(null);
             carrierInfoProvider.setCarrierBankBalance(null);
+            carrierInfoProvider.setCarrierFuel(null);
 
             carrierInfoProvider.setShipPacks(null);
             carrierInfoProvider.setModulePacks(null);

@@ -5837,14 +5837,8 @@
             -fx-spacing: 0em;
             -fx-border-color: white;
             -fx-padding: 0.25em; }
-            .carrier-info-popover .carrier-info .info-node-list .info-node:unavailable .info-node-icon-title .info-node-icon .glyph-icon {
-              -fx-fill: gray; }
-            .carrier-info-popover .carrier-info .info-node-list .info-node:unavailable .info-node-icon-title .info-node-title {
-              -fx-text-fill: gray;
-              -fx-strikethrough: true; }
-            .carrier-info-popover .carrier-info .info-node-list .info-node:unavailable .info-node-value {
-              -fx-text-fill: gray;
-              -fx-strikethrough: true; }
+            .carrier-info-popover .carrier-info .info-node-list .info-node:unavailable {
+              -fx-opacity: 0.3; }
             .carrier-info-popover .carrier-info .info-node-list .info-node .info-node-icon-title {
               -fx-min-width: 6em;
               -fx-pref-width: 6em;
