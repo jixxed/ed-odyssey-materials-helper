@@ -5727,20 +5727,163 @@
         -fx-min-width: 4em;
         -fx-max-width: 4em; }
   .app .application-screen .bottombar {
+    -fx-min-height: 2.5em;
+    -fx-pref-height: 2.5em;
+    -fx-max-height: 2.5em;
     -fx-alignment: center-left;
-    -fx-spacing: 10;
-    -fx-padding: 0 0 0 10;
-    -fx-border-width: 1;
-    -fx-border-color: #2e2e2e;
-    -fx-min-height: 2em;
-    -fx-pref-height: 2em;
-    -fx-max-height: 2em; }
+    -fx-spacing: 0.25em;
+    -fx-padding: 0 0 0 0.25em;
+    -fx-border-width: 1 0 0 0;
+    -fx-border-color: #2e2e2e; }
+    .app .application-screen .bottombar .separator .line {
+      -fx-border-width: 0.1em;
+      -fx-border-insets: 0em 0 0em 0; }
     .app .application-screen .bottombar .bottombar-dropdown {
-      -fx-min-height: 2em;
-      -fx-pref-height: 2em;
-      -fx-max-height: 2em; }
+      -fx-min-height: 2.5em;
+      -fx-pref-height: 2.5em;
+      -fx-max-height: 2.5em; }
       .app .application-screen .bottombar .bottombar-dropdown .list-cell {
-        -fx-font-size: 0.9em; }
+        -fx-font-size: 1em; }
+    .app .application-screen .bottombar .carrier-icon {
+      -fx-cursor: hand; }
+      .app .application-screen .bottombar .carrier-icon .glyph-icon {
+        -fx-fill: #2e92df;
+        -fx-font-size: 2em !important; }
+      .app .application-screen .bottombar .carrier-icon:hover .glyph-icon {
+        -fx-fill: #5aa9e6; }
+    .carrier-info-popover {
+      -fx-background-color: transparent !important;
+      -fx-border-width: 0;
+      -fx-background-insets: 0 !important;
+      -fx-border-insets: 0em;
+      -fx-padding: 0em;
+      -fx-min-width: 27.5em;
+      -fx-pref-width: 27.5em;
+      -fx-max-width: 27.5em;
+      -fx-padding: 0.25em; }
+      .carrier-info-popover > .border {
+        -fx-stroke: #fff !important;
+        -fx-stroke-width: 1px !important;
+        -fx-fill: #0f0f0f !important;
+        -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
+      .carrier-info-popover .carrier-info {
+        -fx-spacing: 0.5em; }
+        .carrier-info-popover .carrier-info .carrier-title-line {
+          -fx-min-width: 27em;
+          -fx-pref-width: 27em;
+          -fx-max-width: 27em;
+          -fx-spacing: 0.25em; }
+          .carrier-info-popover .carrier-info .carrier-title-line .carrier-logo .glyph-icon {
+            -fx-font-size: 4em !important;
+            -fx-fill: white; }
+          .carrier-info-popover .carrier-info .carrier-title-line .carrier-labels {
+            -fx-spacing: 0.25em; }
+            .carrier-info-popover .carrier-info .carrier-title-line .carrier-labels .carrier-type {
+              -fx-font-size: 1.2em;
+              -fx-font-weight: bold; }
+            .carrier-info-popover .carrier-info .carrier-title-line .carrier-labels .carrier-name {
+              -fx-font-size: 1em;
+              -fx-min-width: 22.5em;
+              -fx-pref-width: 22.5em;
+              -fx-max-width: 22.5em;
+              -fx-wrap-text: true; }
+            .carrier-info-popover .carrier-info .carrier-title-line .carrier-labels .carrier-call-sign {
+              -fx-font-size: 1em;
+              -fx-min-width: 22.5em;
+              -fx-pref-width: 22.5em;
+              -fx-max-width: 22.5em;
+              -fx-wrap-text: true; }
+            .carrier-info-popover .carrier-info .carrier-title-line .carrier-labels .copyable-location {
+              -fx-font-weight: normal;
+              -fx-hgap: 0.25em;
+              -fx-min-width: 22.5em;
+              -fx-pref-width: 22.5em;
+              -fx-max-width: 22.5em; }
+              .carrier-info-popover .carrier-info .carrier-title-line .carrier-labels .copyable-location:hover {
+                -fx-cursor: hand; }
+                .carrier-info-popover .carrier-info .carrier-title-line .carrier-labels .copyable-location:hover .location {
+                  -fx-text-fill: #5aa9e6; }
+              .carrier-info-popover .carrier-info .carrier-title-line .carrier-labels .copyable-location .location {
+                -fx-text-fill: #2e92df; }
+              .carrier-info-popover .carrier-info .carrier-title-line .carrier-labels .copyable-location .copy-icon {
+                -fx-min-width: 1em;
+                -fx-pref-width: 1em;
+                -fx-max-width: 1em;
+                -fx-min-height: 1em;
+                -fx-pref-height: 1em;
+                -fx-max-height: 1em;
+                -fx-fill: gray; }
+              .carrier-info-popover .carrier-info .carrier-title-line .carrier-labels .copyable-location .permit-icon {
+                -fx-min-height: 1em;
+                -fx-pref-height: 1em;
+                -fx-max-height: 1em; }
+                .carrier-info-popover .carrier-info .carrier-title-line .carrier-labels .copyable-location .permit-icon .glyph-icon {
+                  -fx-fill: red;
+                  -fx-font-size: 1em !important; }
+              .carrier-info-popover .carrier-info .carrier-title-line .carrier-labels .copyable-location .distance {
+                -fx-text-fill: gray; }
+              .carrier-info-popover .carrier-info .carrier-title-line .carrier-labels .copyable-location .glyph-icon {
+                -fx-font-size: 1em !important; }
+        .carrier-info-popover .carrier-info .info-node-list {
+          -fx-hgap: 0.25em;
+          -fx-vgap: 0.25em; }
+          .carrier-info-popover .carrier-info .info-node-list .info-node {
+            -fx-min-width: 6.5em;
+            -fx-pref-width: 6.5em;
+            -fx-max-width: 6.5em;
+            -fx-min-height: 8.5em;
+            -fx-pref-height: 8.5em;
+            -fx-max-height: 8.5em;
+            -fx-spacing: 0em;
+            -fx-border-color: white;
+            -fx-padding: 0.25em; }
+            .carrier-info-popover .carrier-info .info-node-list .info-node:unavailable .info-node-icon-title .info-node-icon .glyph-icon {
+              -fx-fill: gray; }
+            .carrier-info-popover .carrier-info .info-node-list .info-node:unavailable .info-node-icon-title .info-node-title {
+              -fx-text-fill: gray;
+              -fx-strikethrough: true; }
+            .carrier-info-popover .carrier-info .info-node-list .info-node:unavailable .info-node-value {
+              -fx-text-fill: gray;
+              -fx-strikethrough: true; }
+            .carrier-info-popover .carrier-info .info-node-list .info-node .info-node-icon-title {
+              -fx-min-width: 6em;
+              -fx-pref-width: 6em;
+              -fx-max-width: 6em;
+              -fx-min-height: 5em;
+              -fx-pref-height: 5em;
+              -fx-max-height: 5em; }
+              .carrier-info-popover .carrier-info .info-node-list .info-node .info-node-icon-title .info-node-title {
+                -fx-min-width: 6em;
+                -fx-pref-width: 6em;
+                -fx-max-width: 6em;
+                -fx-alignment: center;
+                -fx-text-alignment: center;
+                -fx-wrap-text: true; }
+              .carrier-info-popover .carrier-info .info-node-list .info-node .info-node-icon-title .info-node-icon .glyph-icon {
+                -fx-font-size: 5.0em !important;
+                -fx-fill: white; }
+              .carrier-info-popover .carrier-info .info-node-list .info-node .info-node-icon-title .info-node-icon .ships-fsdunladen-1 {
+                -fx-fill: gray; }
+              .carrier-info-popover .carrier-info .info-node-list .info-node .info-node-icon-title .info-node-icon .other-carrier-packs-1 {
+                -fx-fill: gray; }
+              .carrier-info-popover .carrier-info .info-node-list .info-node .info-node-icon-title .info-node-icon .ships-multicrew-1 {
+                -fx-fill: gray; }
+              .carrier-info-popover .carrier-info .info-node-list .info-node .info-node-icon-title .info-node-icon .other-cargo-used-1 {
+                -fx-fill: gray; }
+              .carrier-info-popover .carrier-info .info-node-list .info-node .info-node-icon-title .info-node-icon .other-cargo-reserved-1 {
+                -fx-fill: gray; }
+              .carrier-info-popover .carrier-info .info-node-list .info-node .info-node-icon-title .info-node-icon .other-cargo-free-1 {
+                -fx-fill: gray; }
+              .carrier-info-popover .carrier-info .info-node-list .info-node .info-node-icon-title .info-node-icon .ships-landing-pad-1 {
+                -fx-fill: gray; }
+            .carrier-info-popover .carrier-info .info-node-list .info-node .info-node-value {
+              -fx-min-width: 6em;
+              -fx-pref-width: 6em;
+              -fx-max-width: 6em;
+              -fx-text-fill: gray;
+              -fx-alignment: center;
+              -fx-text-alignment: center;
+              -fx-wrap-text: true; }
   .app .application-screen .tab-main {
     -fx-background-insets: 0; }
     .app .application-screen .tab-main:left > .tab-header-area {
@@ -5804,6 +5947,26 @@
   .app .material-popover-content {
     -fx-background-color: #0f0f0f;
     -fx-padding: 0.3em; }
+    .app .material-popover-content .landing-pad-select {
+      -fx-cursor: hand; }
+      .app .material-popover-content .landing-pad-select .landing-pad-icon .glyph-icon {
+        -fx-font-size: 2em !important; }
+      .app .material-popover-content .landing-pad-select .landing-pad-icon .ships-landing-pad-1 {
+        -fx-fill: gray; }
+      .app .material-popover-content .landing-pad-select .landing-pad-icon .ships-landing-pad-2 {
+        -fx-fill: white; }
+      .app .material-popover-content .landing-pad-select .landing-pad-option {
+        -fx-min-width: 1.25em;
+        -fx-pref-width: 1.25em;
+        -fx-max-width: 1.25em;
+        -fx-min-height: 2em;
+        -fx-pref-height: 2em;
+        -fx-max-height: 2em;
+        -fx-text-fill: white;
+        -fx-alignment: center; }
+        .app .material-popover-content .landing-pad-select .landing-pad-option:selected {
+          -fx-font-weight: bold;
+          -fx-text-fill: #2e92df; }
     .app .material-popover-content .selling-stations .selling-stations-header {
       -fx-padding: 0 0.25em 0 0; }
     .app .material-popover-content .selling-stations .supply {

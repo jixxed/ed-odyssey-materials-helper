@@ -2,12 +2,13 @@ package nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi;
 
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.enums.CarrierDockingAccess;
+import nl.jixxed.eliteodysseymaterials.enums.CarrierState;
+import nl.jixxed.eliteodysseymaterials.enums.CarrierType;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.parser.*;
 import nl.jixxed.eliteodysseymaterials.schemas.capi.fleetcarrier.CapiFleetcarrier;
-import nl.jixxed.eliteodysseymaterials.service.OrderService;
-import nl.jixxed.eliteodysseymaterials.service.StorageService;
-import nl.jixxed.eliteodysseymaterials.service.UserPreferencesService;
+import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 
@@ -45,7 +46,20 @@ public class CapiFleetCarrierMessageProcessor implements CapiMessageProcessor<Ca
             log.error("Fleet carrier market id not found in CAPI message", e);
         }
         EventService.publish(new StorageEvent(StoragePool.FLEETCARRIER));
-
+        CarrierService.carrierExistsProperty(CarrierType.FLEETCARRIER).set(true);
+        String encodedName = capiFleetcarrier.getName().getFilteredVanityName();
+        String decodedName = new String(new java.math.BigInteger(encodedName, 16).toByteArray());
+        CarrierService.setCarrierName(CarrierType.FLEETCARRIER, decodedName);
+        CarrierService.setCarrierCallSign(CarrierType.FLEETCARRIER, capiFleetcarrier.getName().getCallsign());
+        CarrierService.setCarrierState(CarrierType.FLEETCARRIER, CarrierState.forKey(capiFleetcarrier.getState()));
+        CarrierService.setCarrierDockingAccess(CarrierType.FLEETCARRIER, CarrierDockingAccess.forKey(capiFleetcarrier.getDockingAccess()));
+        CarrierService.setCarrierNotoriousAccess(CarrierType.FLEETCARRIER, capiFleetcarrier.getNotoriousAccess());
+        CarrierService.setCarrierBalance(CarrierType.FLEETCARRIER, new BigInteger(capiFleetcarrier.getBalance()));
+        CarrierService.setCarrierFuel(CarrierType.FLEETCARRIER, Integer.valueOf(capiFleetcarrier.getFuel()));
+        CarrierService.setCarrierCapacity(CarrierType.FLEETCARRIER, capiFleetcarrier.getCapacity());
+        if(CarrierState.forKey(capiFleetcarrier.getState()) == CarrierState.UNKNOWN){
+            ReportService.reportJournal("module", capiFleetcarrier.getState(), "Unknown carrier state");
+        }
     }
 
     @Override

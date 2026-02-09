@@ -336,7 +336,7 @@ dependencies {
     implementation 'me.xdrop:fuzzywuzzy'
 
     if (proprietary) {
-        implementation 'nl.jixxed.ed.awesome:ed-awesome-impl:1.22'
+        implementation 'nl.jixxed.ed.awesome:ed-awesome-impl:1.23'
         implementation 'nl.jixxed.ed.confidential:ed-confidential-impl:1.1'
     }
 }

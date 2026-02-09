@@ -3,28 +3,40 @@ package nl.jixxed.eliteodysseymaterials.templates;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.geometry.Orientation;
+import javafx.scene.input.MouseEvent;
 import jfxtras.styles.jmetro.JMetroStyleClass;
-import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
-import nl.jixxed.eliteodysseymaterials.enums.FontSize;
-import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
+import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
+import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.helper.CarrierJumpCostHelper;
+import nl.jixxed.eliteodysseymaterials.helper.Formatters;
+import nl.jixxed.eliteodysseymaterials.helper.MoneyFormatter;
 import nl.jixxed.eliteodysseymaterials.helper.POIHelper;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.components.InfoNode;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.jixxed.eliteodysseymaterials.templates.generic.CopyableLocation;
+import org.controlsfx.control.PopOver;
 
 import java.io.File;
+import java.math.BigInteger;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -51,6 +63,8 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
     private DestroyableSeparator apiLabelSeparator;
     private AtomicBoolean eddnTransmitting = new AtomicBoolean(false);
     private ScheduledExecutorService executorService;
+    private EdAwesomeIconViewPane fleetCarrierIcon;
+    private EdAwesomeIconViewPane squadronCarrierIcon;
 
     BottomBar() {
         executorService = new ScheduledThreadPoolExecutor(1);
@@ -69,6 +83,7 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
         this.eddnQueueLabel = LabelBuilder.builder()
                 .build();
         this.gameModeLabel = LabelBuilder.builder()
+                .withText(ApplicationState.getInstance().getExpansion().getLocalizationKey())
                 .build();
         this.commanderLabel = LabelBuilder.builder()
                 .withText(LocaleService.getStringBinding("tab.settings.commander"))
@@ -111,7 +126,21 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
         this.apiLabelSeparator = new DestroyableSeparator(Orientation.VERTICAL);
         this.apiLabelSeparator.addBinding(this.apiLabelSeparator.visibleProperty(), CAPIService.getInstance().getActive().or(ApplicationState.getInstance().getFcMaterials()));
         this.apiLabel.addBinding(this.apiLabel.visibleProperty(), CAPIService.getInstance().getActive().or(ApplicationState.getInstance().getFcMaterials()));
-        this.getNodes().addAll(this.watchedFileLabel, new DestroyableSeparator(Orientation.VERTICAL), this.gameModeLabel, this.apiLabelSeparator, this.apiLabel, this.login, this.eddnQueueLabel, new GrowingRegion(), this.locationLabel, new DestroyableSeparator(Orientation.VERTICAL), this.commanderLabel, this.commanderSelect);
+        this.fleetCarrierIcon = EdAwesomeIconViewPaneBuilder.builder()
+                .withStyleClass("carrier-icon")
+                .withIcons(EdAwesomeIcon.OTHER_CARRIER_SIMPLE)
+                .withOnMouseClicked(event -> showCarrierInfo(event, CarrierType.FLEETCARRIER))
+                .withVisibilityProperty(CarrierService.carrierExistsProperty(CarrierType.FLEETCARRIER))
+                .withManagedProperty(CarrierService.carrierExistsProperty(CarrierType.FLEETCARRIER))
+                .build();
+        this.squadronCarrierIcon = EdAwesomeIconViewPaneBuilder.builder()
+                .withStyleClass("carrier-icon")
+                .withIcons(EdAwesomeIcon.SQUADRON_CARRIER)
+                .withOnMouseClicked(event -> showCarrierInfo(event, CarrierType.SQUADRONCARRIER))
+                .withVisibilityProperty(CarrierService.carrierExistsProperty(CarrierType.SQUADRONCARRIER))
+                .withManagedProperty(CarrierService.carrierExistsProperty(CarrierType.SQUADRONCARRIER))
+                .build();
+        this.getNodes().addAll(this.watchedFileLabel, new DestroyableSeparator(Orientation.VERTICAL), this.gameModeLabel, this.apiLabelSeparator, this.apiLabel, this.login, this.eddnQueueLabel, new GrowingRegion(), this.fleetCarrierIcon, this.squadronCarrierIcon, this.locationLabel, new DestroyableSeparator(Orientation.VERTICAL), this.commanderLabel, this.commanderSelect);
 
         executorService.scheduleAtFixedRate(() -> {
             if (eddnTransmitting.get()) {
@@ -150,6 +179,96 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
         register(EventService.addListener(true, this, CapiSquadronEvent.class, event -> updateApiLabel()));
         register(EventService.addListener(true, this, EDDNQueueEvent.class, event -> eddnTransmitting.set(true)));
         register(EventService.addListener(true, this, TerminateApplicationEvent.class, event -> executorService.shutdown()));
+    }
+
+    Map<CarrierType, DestroyablePopOver> carrierInfoPopOvers = new HashMap<>();
+
+    private void showCarrierInfo(MouseEvent event, CarrierType carrierType) {
+        if (carrierInfoPopOvers.containsKey(carrierType) && carrierInfoPopOvers.get(carrierType) != null && carrierInfoPopOvers.get(carrierType).isShowing()) {
+            return;
+        }
+        final DestroyablePopOver popOver = PopOverBuilder.builder()
+                .withStyleClass("carrier-info-popover")
+                .withContent(getCarrierInfo(carrierType))
+                .withDetachable(false)
+                .withHeaderAlwaysVisible(false)
+                .withCornerRadius(0)
+                .withArrowIndent(0)
+                .withArrowSize(0)
+                .withArrowLocation(PopOver.ArrowLocation.BOTTOM_RIGHT)
+                .withDestroyOnHide(true)
+                .build();
+        carrierInfoPopOvers.put(carrierType, popOver);
+        popOver.show(carrierType == CarrierType.FLEETCARRIER ? fleetCarrierIcon : squadronCarrierIcon, event.getScreenX(), event.getScreenY());
+    }
+
+    private DestroyableVBox getCarrierInfo(CarrierType carrierType) {
+        DestroyableLabel type = LabelBuilder.builder()
+                .withStyleClass("carrier-type")
+                .withText(CarrierService.getCarrierTitle(carrierType))
+                .build();
+        DestroyableLabel name = LabelBuilder.builder()
+                .withStyleClass("carrier-name")
+                .withNonLocalizedText(CarrierService.getCarrierName(carrierType))
+                .build();
+        DestroyableLabel callSign = LabelBuilder.builder()
+                .withStyleClass("carrier-call-sign")
+                .withNonLocalizedText(CarrierService.getCarrierCallSign(carrierType))
+                .build();
+        var icon = EdAwesomeIconViewPaneBuilder.builder()
+                .withStyleClass("carrier-logo")
+                .withIcons(CarrierService.getCarrierIcon(carrierType))
+                .build();
+
+        DestroyableVBox labels = BoxBuilder.builder().withStyleClass("carrier-labels").withNodes(type, name, callSign).buildVBox();
+        DestroyableHBox titleLine = BoxBuilder.builder().withStyleClass("carrier-title-line").withNodes(icon, labels).buildHBox();
+
+
+        InfoNode fuel = new InfoNode(LocaleService.getStringBinding("statusbar.info.fuel"), LocaleService.getStringBinding("statusbar.info.fuel.value",
+                CarrierService.getCarrierFuel(carrierType).orElse(0),
+                StorageService.getCommodityCount(RegularCommodity.TRITIUM, carrierType == CarrierType.FLEETCARRIER ? StoragePool.FLEETCARRIER : StoragePool.SQUADRONCARRIER)),
+                CarrierService.getCarrierFuel(carrierType).isPresent(), EdAwesomeIcon.OTHER_CARRIER_FUEL);
+
+        Double jumpRangeTank = CarrierJumpCostHelper.calculateJumpRange(
+                CarrierService.getCarrierFuel(carrierType).orElse(0),
+                0,
+                carrierType == CarrierType.FLEETCARRIER ? 25000 : 15000,
+                CarrierService.getUsedSpace(carrierType).orElse(0)
+        );
+        Double jumpRangeTotal = CarrierJumpCostHelper.calculateJumpRange(
+                CarrierService.getCarrierFuel(carrierType).orElse(0),
+                StorageService.getCommodityCount(RegularCommodity.TRITIUM, carrierType == CarrierType.FLEETCARRIER ? StoragePool.FLEETCARRIER : StoragePool.SQUADRONCARRIER),
+                carrierType == CarrierType.FLEETCARRIER ? 25000 : 15000,
+                CarrierService.getUsedSpace(carrierType).orElse(0)
+        );
+        InfoNode jumpRange = new InfoNode(LocaleService.getStringBinding("statusbar.info.jump.range"), LocaleService.getStringBinding("statusbar.info.jump.range.value", Formatters.NUMBER_FORMAT_2.format(jumpRangeTank), Formatters.NUMBER_FORMAT_2.format(jumpRangeTotal)), CarrierService.getCarrierFuel(carrierType).isPresent(), EdAwesomeIcon.SHIPS_FSDUNLADEN_1, EdAwesomeIcon.SHIPS_FSDUNLADEN_2);
+        InfoNode packs = new InfoNode(LocaleService.getStringBinding("statusbar.info.packs"), LocaleService.getStringBinding("statusbar.info.packs.value", CarrierService.getShipPacks(carrierType).orElse(0) + CarrierService.getModulePacks(carrierType).orElse(0)), CarrierService.getShipPacks(carrierType).isPresent(), EdAwesomeIcon.OTHER_CARRIER_PACKS_1, EdAwesomeIcon.OTHER_CARRIER_PACKS_2);
+        InfoNode crew = new InfoNode(LocaleService.getStringBinding("statusbar.info.crew"), LocaleService.getStringBinding("statusbar.info.crew.value", CarrierService.getCrew(carrierType).orElse(0)), CarrierService.getCrew(carrierType).isPresent(), EdAwesomeIcon.SHIPS_MULTICREW_1,  EdAwesomeIcon.SHIPS_MULTICREW_2);
+        InfoNode cargo = new InfoNode(LocaleService.getStringBinding("statusbar.info.cargo"), LocaleService.getStringBinding("statusbar.info.cargo.value", CarrierService.getCargo(carrierType).orElse(0)), CarrierService.getCargo(carrierType).isPresent(), EdAwesomeIcon.OTHER_CARGO_USED_1, EdAwesomeIcon.OTHER_CARGO_USED_2);
+        InfoNode cargoReserved = new InfoNode(LocaleService.getStringBinding("statusbar.info.cargo.reserved"), LocaleService.getStringBinding("statusbar.info.cargo.reserved.value", CarrierService.getCargoSpaceReserved(carrierType).orElse(0)), CarrierService.getCargoSpaceReserved(carrierType).isPresent(), EdAwesomeIcon.OTHER_CARGO_RESERVED_1, EdAwesomeIcon.OTHER_CARGO_RESERVED_2);
+        InfoNode freeSpace = new InfoNode(LocaleService.getStringBinding("statusbar.info.cargo.free"), LocaleService.getStringBinding("statusbar.info.cargo.free.value", CarrierService.getFreeSpace(carrierType).orElse(0)), CarrierService.getFreeSpace(carrierType).isPresent(), EdAwesomeIcon.OTHER_CARGO_FREE_1, EdAwesomeIcon.OTHER_CARGO_FREE_2);
+        InfoNode balance = new InfoNode(LocaleService.getStringBinding("statusbar.info.balance"), LocaleService.getStringBinding("statusbar.info.balance.value", MoneyFormatter.formatMoney(CarrierService.getCarrierBalance(carrierType).orElse(BigInteger.ZERO))), CarrierService.getCarrierBalance(carrierType).isPresent(), EdAwesomeIcon.OTHER_CREDITS);
+        InfoNode dockingAccess = new InfoNode(LocaleService.getStringBinding("statusbar.info.docking.access"), LocaleService.getStringBinding("statusbar.info.docking.access.value", LocaleService.LocalizationKey.of(CarrierService.getCarrierDockingAccess(carrierType).map(CarrierDockingAccess::getLocalizationKey).orElse("blank"))), CarrierService.getCarrierDockingAccess(carrierType).isPresent(), EdAwesomeIcon.SHIPS_LANDING_PAD_1, EdAwesomeIcon.SHIPS_LANDING_PAD_2);
+        InfoNode state = new InfoNode(LocaleService.getStringBinding("statusbar.info.state"), LocaleService.getStringBinding("statusbar.info.state.value", LocaleService.LocalizationKey.of(CarrierService.getCarrierState(carrierType).map(CarrierState::getLocalizationKey).orElse("blank"))), CarrierService.getCarrierState(carrierType).isPresent(), EdAwesomeIcon.OTHER_OPERATIONAL);
+        InfoNode notoriousAccess = new InfoNode(LocaleService.getStringBinding("statusbar.info.notorious.access"), LocaleService.getStringBinding("statusbar.info.notorious.access.value", LocaleService.LocalizationKey.of(CarrierService.getCarrierNotoriousAccess(carrierType).orElse(false) ? "statusbar.info.notorious.access.yes" : "statusbar.info.notorious.access.no")), CarrierService.getCarrierNotoriousAccess(carrierType).isPresent(), EdAwesomeIcon.OTHER_NOTORIOUS);
+
+        DestroyableFlowPane infoNodes = FlowPaneBuilder.builder().withStyleClass("info-node-list").withNodes(fuel, jumpRange, cargo, freeSpace, packs, crew, cargoReserved, dockingAccess, state, notoriousAccess, balance).build();
+        if (carrierType == CarrierType.SQUADRONCARRIER) {
+            InfoNode bankBalance = new InfoNode(LocaleService.getStringBinding("statusbar.info.bank.balance"), LocaleService.getStringBinding("statusbar.info.bank.balance.value", MoneyFormatter.formatMoney(CarrierService.getCarrierBankBalance(carrierType).orElse(BigInteger.ZERO))), CarrierService.getCarrierBankBalance(carrierType).isPresent(), EdAwesomeIcon.SQUADRON_BANK);
+            infoNodes.getNodes().add(bankBalance);
+        }
+        final DestroyableVBox contentNode = BoxBuilder.builder()
+                .withStyleClass("carrier-info")
+                .withNodes(titleLine, infoNodes)
+                .buildVBox();
+
+
+        Optional<StarSystem> carrierLocation = carrierType == CarrierType.FLEETCARRIER ? LocationService.getFleetCarrierLocation() : LocationService.getSquadronCarrierLocation();
+        carrierLocation.ifPresent(location -> {
+            CopyableLocation copyableLocation = new CopyableLocation(location);
+            labels.getNodes().add(copyableLocation);
+        });
+        return contentNode;
     }
 
     private void updateCommanderList() {

@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
-import nl.jixxed.eliteodysseymaterials.enums.SquadronPerk;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.*;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiFleetCarrierMessageProcessor;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiMessageProcessor;
@@ -20,7 +19,10 @@ import nl.jixxed.eliteodysseymaterials.schemas.capi.fleetcarrier.CapiFleetcarrie
 import nl.jixxed.eliteodysseymaterials.schemas.capi.squadron.CapiSquadron;
 import nl.jixxed.eliteodysseymaterials.schemas.capi.squadron.ShipItem;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Event;
-import nl.jixxed.eliteodysseymaterials.service.*;
+import nl.jixxed.eliteodysseymaterials.service.EDDNService;
+import nl.jixxed.eliteodysseymaterials.service.ReportService;
+import nl.jixxed.eliteodysseymaterials.service.ShipsDeserializer;
+import nl.jixxed.eliteodysseymaterials.service.VersionService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
 
@@ -144,6 +146,7 @@ class MessageHandler {
             Map.entry(JournalEventType.SUPERCRUISEEXIT, new SupercruiseExitMessageProcessor()),
             Map.entry(JournalEventType.PROSPECTEDASTEROID, new ProspectedAsteroidMessageProcessor()),
             Map.entry(JournalEventType.CARRIERLOCATION, new CarrierLocationMessageProcessor()),
+            Map.entry(JournalEventType.CARRIERSTATS, new CarrierStatsMessageProcessor()),
             Map.entry(JournalEventType.CARRIERTRADEORDER, new CarrierTradeOrderMessageProcessor()),
             Map.entry(JournalEventType.MODULEBUY, new ModuleBuyMessageProcessor()),
             Map.entry(JournalEventType.MODULERETRIEVE, new ModuleRetrieveMessageProcessor()),

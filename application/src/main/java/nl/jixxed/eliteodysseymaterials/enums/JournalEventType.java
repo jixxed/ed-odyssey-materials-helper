@@ -84,6 +84,7 @@ public enum JournalEventType {
     SUPERCRUISEEXIT("SupercruiseExit"),
     PROSPECTEDASTEROID("ProspectedAsteroid"),
     CARRIERLOCATION("CarrierLocation"),
+    CARRIERSTATS("CarrierStats"),
     CARRIERTRADEORDER("CarrierTradeOrder"),
     MODULEBUY("ModuleBuy"),
     MODULERETRIEVE("ModuleRetrieve"),

@@ -1,14 +1,167 @@
 .bottombar {
+  @include fixedHeight(2.5em);
   -fx-alignment: center-left;
-  -fx-spacing: 10;
-  -fx-padding: 0 0 0 10;
-  -fx-border-width: 1;
+  -fx-spacing: 0.25em;
+  -fx-padding: 0 0 0 0.25em;
+  -fx-border-width: 1 0 0 0;
   -fx-border-color: $background-color-lighter;
-  @include fixedHeight(2em);
-  .bottombar-dropdown{
-    @include fixedHeight(2em);
+
+  .separator {
+    .line {
+      -fx-border-width: 0.1em;
+      -fx-border-insets: 0em 0 0em 0;
+    }
+  }
+
+  .bottombar-dropdown {
+    @include fixedHeight(2.5em);
+
     .list-cell {
-      -fx-font-size: 0.9em;
+      -fx-font-size: 1em;
+    }
+  }
+
+  .carrier-icon {
+    -fx-cursor: hand;
+
+
+    .glyph-icon {
+      -fx-fill: $text-color-blue;
+      -fx-font-size: 2em !important;
+    }
+
+    &:hover {
+      .glyph-icon {
+        -fx-fill: lighten($text-color-blue, 10%);
+      }
+    }
+  }
+
+
+  @at-root {
+    .carrier-info-popover {
+      @include popover-style;
+      @include fixedWidth(27.5em);
+      -fx-padding: 0.25em;
+
+      .carrier-info {
+        -fx-spacing: 0.5em;
+
+
+        .carrier-title-line {
+          @include fixedWidth(27em);
+          -fx-spacing: 0.25em;
+
+          .carrier-logo {
+            .glyph-icon {
+              -fx-font-size: 4em !important;
+              -fx-fill: $text-color-white;
+            }
+          }
+
+          .carrier-labels {
+            -fx-spacing: 0.25em;
+
+            .carrier-type {
+              -fx-font-size: 1.2em;
+              -fx-font-weight: bold;
+            }
+
+            .carrier-name {
+              -fx-font-size: 1em;
+              @include fixedWidth(22.5em);
+              -fx-wrap-text: true;
+            }
+
+            .carrier-call-sign {
+              -fx-font-size: 1em;
+              @include fixedWidth(22.5em);
+              -fx-wrap-text: true;
+            }
+
+            .copyable-location {
+              @include copyable-location;
+              @include fixedWidth(22.5em);
+
+              .glyph-icon {
+                -fx-font-size: 1em !important;
+              }
+
+            }
+          }
+
+
+        }
+
+        .info-node-list {
+          @include hvGap(0.25em);
+
+          .info-node {
+            &:unavailable {
+
+              .info-node-icon-title {
+                .info-node-icon {
+                  .glyph-icon {
+                    -fx-fill: $text-color-grey;
+                  }
+                }
+                .info-node-title {
+                  -fx-text-fill: $text-color-grey;
+                  -fx-strikethrough: true;
+                }
+              }
+
+              .info-node-value {
+                -fx-text-fill: $text-color-grey;
+                -fx-strikethrough: true;
+              }
+            }
+
+            @include fixedWidth(6.5em);
+            @include fixedHeight(8.5em);
+            -fx-spacing: 0em;
+            -fx-border-color: $border-color-white;
+            -fx-padding: 0.25em;
+
+            .info-node-icon-title {
+              @include fixedWidth(6.0em);
+              @include fixedHeight(5.0em);
+
+              .info-node-title {
+                @include fixedWidth(6.0em);
+                -fx-alignment: center;
+                -fx-text-alignment: center;
+                -fx-wrap-text: true;
+
+              }
+
+              .info-node-icon {
+                .glyph-icon {
+                  -fx-font-size: 5.0em !important;
+                  -fx-fill: $text-color-white;
+                }
+                .ships-fsdunladen-1{-fx-fill: $text-color-grey;}
+                .other-carrier-packs-1{-fx-fill: $text-color-grey;}
+                .ships-multicrew-1{-fx-fill: $text-color-grey;}
+                .other-cargo-used-1{-fx-fill: $text-color-grey;}
+                .other-cargo-reserved-1{-fx-fill: $text-color-grey;}
+                .other-cargo-free-1{-fx-fill: $text-color-grey;}
+                .ships-landing-pad-1{-fx-fill: $text-color-grey;}
+              }
+            }
+
+            .info-node-value {
+              @include fixedWidth(6.0em);
+              -fx-text-fill: $text-color-grey;
+              -fx-alignment: center;
+              -fx-text-alignment: center;
+              -fx-wrap-text: true;
+            }
+
+
+          }
+        }
+      }
     }
   }
 }

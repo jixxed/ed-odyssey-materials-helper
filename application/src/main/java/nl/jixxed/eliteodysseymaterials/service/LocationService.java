@@ -1,20 +1,40 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.subjects.PublishSubject;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.Location;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
+import nl.jixxed.eliteodysseymaterials.helper.DnsHelper;
+import nl.jixxed.eliteodysseymaterials.schemas.system.SystemInfo;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 
+import javax.naming.NamingException;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class LocationService {
+
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
     private static final Double DEFAULT_LATITUDE = 999.9;
     private static final Double DEFAULT_LONGITUDE = 999.9;
     @Getter
@@ -32,11 +52,38 @@ public class LocationService {
     @Setter
     private static Optional<String> statusBodyName;
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
-    @Getter
-    private static Optional<String> fleetCarrierLocation = Optional.empty();
-    @Getter
-    private static Optional<String> squadronCarrierLocation = Optional.empty();
 
+    private static final PublishSubject<BigInteger> modifyFleetCarrier = PublishSubject.create();
+    private static Disposable subscriptionFleetCarrier;
+    private static final PublishSubject<BigInteger> modifySquadronCarrier = PublishSubject.create();
+    private static Disposable subscriptionSquadronCarrier;
+
+    private static Map<BigInteger, StarSystem> SYSTEM_CACHE = new ConcurrentHashMap<>();
+    @Getter
+    @Setter
+    private static Optional<StarSystem> fleetCarrierLocation = Optional.empty();
+    @Getter
+    @Setter
+    private static Optional<StarSystem> squadronCarrierLocation = Optional.empty();
+
+    static {
+        //ignore unknown properties to avoid crashes on api changes
+        OBJECT_MAPPER.configure(com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        OBJECT_MAPPER.setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
+        OBJECT_MAPPER.registerModule(new JavaTimeModule());
+        OBJECT_MAPPER.registerModule(new Jdk8Module().configureAbsentsAsNulls(true));
+
+        EVENT_LISTENERS.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
+            destroy();
+        }));
+
+        Observable<BigInteger> debouncedFleetCarrier = modifyFleetCarrier.debounce(2500, TimeUnit.MILLISECONDS);
+        subscriptionFleetCarrier = debouncedFleetCarrier.subscribe((BigInteger systemAddress) -> LocationService.setFleetCarrierLocation(Optional.ofNullable(getStarSystem(systemAddress))), throwable ->
+                log.error("Error updating fleet carrier location", throwable));
+        Observable<BigInteger> debouncedSquadronCarrier = modifySquadronCarrier.debounce(2500, TimeUnit.MILLISECONDS);
+        subscriptionSquadronCarrier = debouncedSquadronCarrier.subscribe((BigInteger systemAddress) -> LocationService.setSquadronCarrierLocation(Optional.ofNullable(getStarSystem(systemAddress))), throwable ->
+                log.error("Error updating squadron carrier location", throwable));
+    }
 
     private LocationService() {
     }
@@ -194,21 +241,56 @@ public class LocationService {
         return null;
     }
 
-    public static void setFleetCarrierLocation(String starSystem) {
-        fleetCarrierLocation = Optional.of(starSystem);
+    public static void setFleetCarrierLocationByAddress(BigInteger systemAddress) {
+        modifyFleetCarrier.onNext(systemAddress);
     }
 
-    public static void setSquadronCarrierLocation(String starSystem) {
-        squadronCarrierLocation = Optional.of(starSystem);
+    public static void setSquadronCarrierLocationByAddress(BigInteger systemAddress) {
+        modifySquadronCarrier.onNext(systemAddress);
     }
 
-    public static boolean isAtSquadronCarrier(){
+    public static boolean isAtSquadronCarrier() {
         String squadronCarrierID = UserPreferencesService.getPreference(PreferenceConstants.SQUADRON_CARRIER_ID, "-1");
         return squadronCarrierID.equals(marketID.toString());
     }
 
-    public static boolean isAtFleetCarrier(){
+    public static boolean isAtFleetCarrier() {
         String fleetCarrierID = UserPreferencesService.getPreference(PreferenceConstants.FLEET_CARRIER_ID, "-1");
         return fleetCarrierID.equals(marketID.toString());
+    }
+
+    private static StarSystem getStarSystem(BigInteger systemAddress) {
+        if (SYSTEM_CACHE.containsKey(systemAddress)) {
+            return SYSTEM_CACHE.get(systemAddress);
+        }
+        //{"systemAddress":1732985787106,"systemName":"LHS 3388","systemX":-72.9375,"systemY":18.59375,"systemZ":92.9375,"systemSector":"5e1c706716a61e41","updatedAt":"2023-04-29T21:58:50.000Z"}
+        //{"error":"Not Found","message":"System not found"}
+        try (HttpClient httpClient = HttpClient.newHttpClient()) {
+            log.debug("Fetching system data for systemAddress {}", systemAddress);
+            final String systemDomainName = DnsHelper.resolveCname(Secrets.getOrDefault("system.host", "localhost"));
+            final HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://" + systemDomainName + "/v2/system/address/" + systemAddress.toString()))
+                    .header("User-Agent", VersionService.getUserAgent())
+                    .GET()
+                    .build();
+            final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            if (send.statusCode() == 200) {
+                SystemInfo systemInfo = OBJECT_MAPPER.readValue(send.body(), SystemInfo.class);
+                StarSystem starSystem = new StarSystem(systemInfo.getSystemName(), systemInfo.getSystemX().doubleValue(), systemInfo.getSystemY().doubleValue(), systemInfo.getSystemZ().doubleValue());
+                SYSTEM_CACHE.put(systemAddress, starSystem);
+                return starSystem;
+            } else {
+                log.error("Failed fetching system data for systemAddress {}", systemAddress);
+            }
+        } catch (InterruptedException | IOException | NamingException | IllegalArgumentException e) {
+            log.error(e.getMessage(), e);
+        }
+        return null;
+
+    }
+
+    private static void destroy() {
+        subscriptionFleetCarrier.dispose();
+        subscriptionSquadronCarrier.dispose();
     }
 }

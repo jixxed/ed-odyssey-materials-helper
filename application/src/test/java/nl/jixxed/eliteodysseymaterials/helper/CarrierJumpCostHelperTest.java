@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.data.Offset;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -50,5 +51,28 @@ public class CarrierJumpCostHelperTest {
         var fuelConsumed = CarrierJumpCostHelper.requiredFuelForJump(distance, carrierMass, carrierCapacity - freeSpace, fuelInReservoirBeforeJump);
         log.debug("Distance {}Ly with {} cargo consumes {}T Fuel", distance, carrierCapacity - freeSpace, fuelConsumed);
         Assertions.assertThat(fuelConsumed).isEqualTo(fuelInReservoirBeforeJump - fuelInReservoirAfterJump);
+    }
+
+    private static Stream<Arguments> totalJumpRanges() {
+        return Stream.of(
+                Arguments.of(SQUADRONCARRIER_MASS, 5, 0, 0, 6.66),
+                Arguments.of(SQUADRONCARRIER_MASS, 48, 0, 0, 506.66),
+                Arguments.of(SQUADRONCARRIER_MASS, 1000, 50, 0, 11972.07),
+                Arguments.of(SQUADRONCARRIER_MASS, 1000, 60000, 0, 304312.75),
+                Arguments.of(SQUADRONCARRIER_MASS, 1000,  0,60000, 2565.31),
+                Arguments.of(FLEETCARRIER_MASS, 5, 0, 0, 4.00),
+                Arguments.of(FLEETCARRIER_MASS, 48, 0, 0, 347.33),
+                Arguments.of(FLEETCARRIER_MASS, 1000, 50, 0, 7591.94),
+                Arguments.of(FLEETCARRIER_MASS, 1000, 25000, 0, 134687.79),
+                Arguments.of(FLEETCARRIER_MASS, 1000, 0, 25000, 3793.54)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("totalJumpRanges")
+    public void testCalculateJumpRange(Integer carrierMass, Integer fuelInReservoir, Integer additionalFuel, Integer additionalStorageCapacityUsed, Double expectedJumpRange) {
+         var jumpRange = CarrierJumpCostHelper.calculateJumpRange(fuelInReservoir, additionalFuel, carrierMass, additionalStorageCapacityUsed + additionalFuel);
+         log.debug("With {}T fuel in reservoir, {}T additional fuel, {}T used capacity and {}T mass, the jump range is {}Ly", fuelInReservoir, additionalFuel, additionalStorageCapacityUsed + additionalFuel, carrierMass, jumpRange);
+         Assertions.assertThat(jumpRange).isEqualTo(expectedJumpRange, Offset.offset(0.005));
     }
 }

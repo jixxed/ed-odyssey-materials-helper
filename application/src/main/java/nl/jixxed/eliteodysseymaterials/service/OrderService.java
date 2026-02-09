@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.BuyOrder;
 import nl.jixxed.eliteodysseymaterials.domain.SellOrder;
+import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
@@ -72,6 +73,10 @@ public class OrderService {
 
     static SellOrder getSellOrder(final Material material, StoragePool storagePool) {
         return SELL_ORDERS.get(storagePool).get(material);
+    }
+
+    public static Integer getBuyOrderOutstandingCount(final StoragePool storagePool) {
+        return BUY_ORDERS.get(storagePool).entrySet().stream().filter(entry -> entry.getKey() instanceof Commodity).map(Map.Entry::getValue).mapToInt(BuyOrder::getOutstanding).sum();
     }
 
 }

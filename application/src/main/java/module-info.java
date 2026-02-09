@@ -49,6 +49,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires org.apache.commons.codec;
     requires me.xdrop.fuzzywuzzy;
     requires javafx.base;
+    requires com.fasterxml.jackson.annotation;
 
     uses nl.jixxed.ed.awesome.api.FontLoader;
     uses nl.jixxed.ed.confidential.api.SecrecyLoader;
@@ -354,6 +355,7 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.WingJoin;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.WingLeave;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal;
+    exports nl.jixxed.eliteodysseymaterials.schemas.system;
     exports nl.jixxed.eliteodysseymaterials.schemas.market.save.request;
     exports nl.jixxed.eliteodysseymaterials.schemas.market.save.response;
     exports nl.jixxed.eliteodysseymaterials.schemas.market.search;
@@ -390,6 +392,7 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics, java.desktop;
     opens nl.jixxed.eliteodysseymaterials.builder to javafx.graphics, java.desktop, javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.domain to com.fasterxml.jackson.databind, javafx.fxml, org.controlsfx.controls;
+    opens nl.jixxed.eliteodysseymaterials.schemas.system to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.domain.ships to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.enums to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.parser to com.fasterxml.jackson.databind;

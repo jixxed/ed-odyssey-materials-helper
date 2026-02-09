@@ -139,6 +139,19 @@ public class StorageService {
         throw new IllegalArgumentException("Unknown storagePool for commodity");
     }
 
+    public static Integer getCommodityCount(final StoragePool storagePool) {
+        if (StoragePool.SQUADRONCARRIER.equals(storagePool)) {
+            return commoditiesSquadroncarrier.values().stream().mapToInt(Integer::intValue).sum();
+        } else if (StoragePool.FLEETCARRIER.equals(storagePool)) {
+            return commoditiesFleetcarrier.values().stream().mapToInt(Integer::intValue).sum();
+        } else if (StoragePool.SHIP.equals(storagePool)) {
+            return commoditiesShip.values().stream().mapToInt(Integer::intValue).sum();
+        } else if (StoragePool.SRV.equals(storagePool)) {
+            return commoditiesSrv.values().stream().mapToInt(Integer::intValue).sum();
+        }
+        throw new IllegalArgumentException("Unknown storagePool");
+    }
+
     public static void resetShipLockerCounts() {
         assets.values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
         data.values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));

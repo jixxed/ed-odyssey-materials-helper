@@ -11,7 +11,6 @@ import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
 import nl.jixxed.eliteodysseymaterials.enums.MainTabType;
 import nl.jixxed.eliteodysseymaterials.enums.TabType;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
-import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
@@ -41,6 +40,7 @@ public class ApplicationScreen extends DestroyableAnchorPane implements Destroya
     private IntegerProperty fontSize = new SimpleIntegerProperty(14);
     private OdysseyContentArea odysseyContentArea;
     private HorizonsContentArea horizonsContentArea;
+    private BottomBar bottomBar;
 
 
     public ApplicationScreen() {
@@ -50,7 +50,7 @@ public class ApplicationScreen extends DestroyableAnchorPane implements Destroya
 
     public void initEventHandling() {
         register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> this.fontSize.set(fontSizeEvent.getFontSize())));
-        register(EventService.addListener(true, this, FontSizeEvent.class, applicationLifeCycleEvent -> AnchorPaneHelper.setAnchor(this.tabsMain, 0.0, ScalingHelper.getPixelDoubleFromEm(2D), 0.0, 0.0)));
+        register(EventService.addListener(true, this, FontSizeEvent.class, applicationLifeCycleEvent -> AnchorPaneHelper.setAnchor(this.tabsMain, 0.0, bottomBar.getHeight(), 0.0, 0.0)));
         register(EventService.addListener(true, this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_WISHLIST) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_EDSY_WISHLIST) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_CORIOLIS_WISHLIST) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_SHIP)) {
                 this.tabsMain.getSelectionModel().select(this.horizons);
@@ -62,11 +62,15 @@ public class ApplicationScreen extends DestroyableAnchorPane implements Destroya
 
     public void initComponents() {
         this.getStyleClass().add("application-screen");
-        BottomBar bottomBar = new BottomBar();
+        bottomBar = new BottomBar();
         odysseyContentArea = new OdysseyContentArea();
         horizonsContentArea = new HorizonsContentArea();
 
-        addChangeListener(bottomBar.heightProperty(), (_, _, _) -> AnchorPaneHelper.setAnchor(odysseyContentArea, 0.0, bottomBar.getHeight(), 0.0, 0.0));
+        addChangeListener(bottomBar.heightProperty(), (_, _, _) -> {
+            AnchorPaneHelper.setAnchor(odysseyContentArea, 0.0, bottomBar.getHeight(), 0.0, 0.0);
+            AnchorPaneHelper.setAnchor(horizonsContentArea, 0.0, bottomBar.getHeight(), 0.0, 0.0);
+            AnchorPaneHelper.setAnchor(this.tabsMain, 0.0, bottomBar.getHeight(), 0.0, 0.0);
+        });
         SettingsTab settingsTab = new SettingsTab();
         settingsTab.setClosable(false);
         AnchorPaneHelper.setAnchor(bottomBar, null, 0.0, 0.0, 0.0);
@@ -95,7 +99,7 @@ public class ApplicationScreen extends DestroyableAnchorPane implements Destroya
                 .build();
         this.tabsMain.addBinding(this.tabsMain.tabMinWidthProperty(), this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)));
         this.tabsMain.addBinding(this.tabsMain.tabMaxWidthProperty(), this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)));
-        AnchorPaneHelper.setAnchor(this.tabsMain, 0.0, ScalingHelper.getPixelDoubleFromEm(2D), 0.0, 0.0);
+        AnchorPaneHelper.setAnchor(this.tabsMain, 0.0, bottomBar.getHeight(), 0.0, 0.0);
         this.getNodes().addAll(this.tabsMain, bottomBar);
     }
 
