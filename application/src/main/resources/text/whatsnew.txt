@@ -1,3 +1,11 @@
+Version 3.3.0
+-------------
+Added carrier info and location in the statusbar
+Added periodic table info to raw materials
+Added landing pad select for commodities nearby selling stations
+Fixed mass curve multiplier that affected ship speed/handling and shields. Some cases would show N/A.
+New notification sound
+
 Version 3.2.3
 -------------
 Improved reading journal updates

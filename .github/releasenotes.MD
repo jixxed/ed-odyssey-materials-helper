@@ -11,7 +11,9 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Improved reading journal updates
-Fixed legacy module save button on module details 
-Added notification on legacy module save
+Added carrier info and location in the statusbar
+Added periodic table info to raw materials
+Added landing pad select for commodities nearby selling stations
+Fixed mass curve multiplier that affected ship speed/handling and shields. Some cases would show N/A.
+New notification sound
 ```
