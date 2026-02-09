@@ -52,5 +52,5 @@
     }
   },
   "additionalProperties" : false,
-  "required" : [ "Success", "Interdicted", "IsPlayer" ]
+  "required" : [ "Success", "IsPlayer" ]
 }
