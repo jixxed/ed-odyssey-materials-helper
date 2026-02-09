@@ -99,22 +99,6 @@
           .info-node {
             &:unavailable {
               -fx-opacity: 0.3;
-              //.info-node-icon-title {
-              //  .info-node-icon {
-              //    .glyph-icon {
-              //      -fx-fill: $text-color-grey;
-              //    }
-              //  }
-              //  .info-node-title {
-              //    -fx-text-fill: $text-color-grey;
-              //    -fx-strikethrough: true;
-              //  }
-              //}
-              //
-              //.info-node-value {
-              //  -fx-text-fill: $text-color-grey;
-              //  -fx-strikethrough: true;
-              //}
             }
 
             @include fixedWidth(6.5em);
