@@ -1,5 +1,10 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist;
 
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.rxjava3.subjects.PublishSubject;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
@@ -27,6 +32,8 @@ import java.util.Optional;
 public class OdysseyWishlistShortestPath extends DestroyableVBox implements DestroyableEventTemplate {
 
     private ShortestPathFlow<OdysseyBlueprintName> shortestPathFlow;
+    private static final PublishSubject<Boolean> updatePathItems = PublishSubject.create();
+    private Disposable subscribe;
 
     public OdysseyWishlistShortestPath() {
         initComponents();
@@ -53,6 +60,17 @@ public class OdysseyWishlistShortestPath extends DestroyableVBox implements Dest
                 .build();
 
         this.getNodes().addAll(travelPathLabel, this.shortestPathFlow);
+
+        Observable<Boolean> debouncedFleetCarrier = updatePathItems.observeOn(Schedulers.computation());
+        subscribe = debouncedFleetCarrier.subscribe(force -> {
+            final List<PathItem<OdysseyBlueprintName>> pathItems2 = getPathItems();
+            Platform.runLater(() -> {
+                if (force || this.shortestPathFlow.getItems().size() != pathItems2.size() || !this.shortestPathFlow.getItems().stream().map(ShortestPathItem::getPathItem).allMatch(pathItems2::contains)) {
+                    this.shortestPathFlow.setItems(pathItems2);
+                    EventService.publish(new OdysseyShortestPathChangedEvent(pathItems2));
+                }
+            });
+        }, throwable -> log.error("Error updating path items", throwable));
     }
 
     @Override
@@ -66,11 +84,7 @@ public class OdysseyWishlistShortestPath extends DestroyableVBox implements Dest
     }
 
     private void update(boolean force) {
-        final List<PathItem<OdysseyBlueprintName>> pathItems = getPathItems();
-        if (force || this.shortestPathFlow.getItems().size() != pathItems.size() || !this.shortestPathFlow.getItems().stream().map(ShortestPathItem::getPathItem).allMatch(pathItems::contains)) {
-            this.shortestPathFlow.setItems(pathItems);
-            EventService.publish(new OdysseyShortestPathChangedEvent(pathItems));
-        }
+        updatePathItems.onNext(force);
     }
 
     @SuppressWarnings("unchecked")
@@ -80,5 +94,11 @@ public class OdysseyWishlistShortestPath extends DestroyableVBox implements Dest
         return odysseyWishlist
                 .map(wishlist -> PathService.calculateOdysseyShortestPath((List<OdysseyWishlistBlueprint>) (List<?>) wishlist.getItems()))
                 .orElse(Collections.emptyList());
+    }
+
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        subscribe.dispose();
     }
 }

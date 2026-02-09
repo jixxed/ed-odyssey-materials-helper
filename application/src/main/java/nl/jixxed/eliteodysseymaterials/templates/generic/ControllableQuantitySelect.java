@@ -12,7 +12,9 @@ import javafx.scene.layout.Priority;
 import javafx.util.Duration;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.*;
+import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.FontAwesomeIconViewBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsWishlistBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.OdysseyWishlistBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint;
@@ -21,7 +23,6 @@ import nl.jixxed.eliteodysseymaterials.service.event.HorizonsWishlistHighlightEv
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyWishlistHighlightEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTooltip;
 
@@ -74,43 +75,34 @@ public class ControllableQuantitySelect extends DestroyableHBox implements Destr
                         int quantity2 = i;
                         circle.hoverProperty().addListener((_, _, newValue) -> {
                             if (this.visible.get()) {
-                                if (Boolean.TRUE.equals(newValue)) {
-                                    if (circle.isFilled()) {
-                                        emitter.onNext(circle);
-                                    }
-                                } else {
-                                    if (wishlistBlueprint instanceof HorizonsWishlistBlueprint hwbp) {
-                                        EventService.publish(new HorizonsWishlistHighlightEvent(hwbp, quantity2, false));
-                                    }
-                                    if (wishlistBlueprint instanceof OdysseyWishlistBlueprint owbp) {
-                                        EventService.publish(new OdysseyWishlistHighlightEvent(owbp, quantity2, false));
-                                    }
-                                }
+                                emitter.onNext(circle);
                             }
                         });
                         this.getNodes().add(circle);
                     }
                 })
-                .delay(250, TimeUnit.MILLISECONDS)
-                .observeOn(Schedulers.io())
+                .debounce(100, TimeUnit.MILLISECONDS)
+                .observeOn(Schedulers.computation())
                 .subscribe(circle -> {
-                    if (circle.isHover()) {
+                    if (circle.isHover() && circle.isFilled()) {
                         if (wishlistBlueprint instanceof HorizonsWishlistBlueprint hwbp) {
                             EventService.publish(new HorizonsWishlistHighlightEvent(hwbp, circle.getIndex(), true));
                         }
                         if (wishlistBlueprint instanceof OdysseyWishlistBlueprint owbp) {
                             EventService.publish(new OdysseyWishlistHighlightEvent(owbp, circle.getIndex(), true));
                         }
+                    }else {
+                        if (wishlistBlueprint instanceof HorizonsWishlistBlueprint hwbp) {
+                            EventService.publish(new HorizonsWishlistHighlightEvent(hwbp, circle.getIndex(), false));
+                        }
+                        if (wishlistBlueprint instanceof OdysseyWishlistBlueprint owbp) {
+                            EventService.publish(new OdysseyWishlistHighlightEvent(owbp, circle.getIndex(), false));
+                        }
                     }
                 }, t -> log.error(t.getMessage(), t));
 
         this.getNodes().add(new GrowingRegion());
 
-//        DestroyableLabel right = LabelBuilder.builder()
-//                .withStyleClasses("arrow", "right")
-//                .withNonLocalizedText("▶")
-//                .withOnMouseClicked(_ -> increase())
-//                .build();
         var right = BoxBuilder.builder()
                 .withStyleClasses("modifier-container", "right")
                 .withNode(FontAwesomeIconViewBuilder.builder()

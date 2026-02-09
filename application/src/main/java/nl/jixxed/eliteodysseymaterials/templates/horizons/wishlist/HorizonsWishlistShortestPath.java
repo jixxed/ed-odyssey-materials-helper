@@ -1,5 +1,10 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.rxjava3.subjects.PublishSubject;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.IntegerBinding;
@@ -26,6 +31,8 @@ public class HorizonsWishlistShortestPath extends DestroyableVBox implements Des
 
     private ShortestPathFlow<HorizonsBlueprintName> shortestPathFlow;
 
+    private static final PublishSubject<Object> updatePathItems = PublishSubject.create();
+    private Disposable subscribe;
     public HorizonsWishlistShortestPath() {
         initComponents();
         initEventHandling();
@@ -54,6 +61,14 @@ public class HorizonsWishlistShortestPath extends DestroyableVBox implements Des
                 .build();
 
         this.getNodes().addAll(travelPathLabel, this.shortestPathFlow);
+        Observable<Object> debouncedFleetCarrier = updatePathItems.observeOn(Schedulers.computation());
+        subscribe = debouncedFleetCarrier.subscribe(_ -> {
+            final List<PathItem<HorizonsBlueprintName>> pathItems2 = getPathItems();
+            Platform.runLater(() ->{
+                this.shortestPathFlow.setItems(pathItems2);
+                EventService.publish(new HorizonsShortestPathChangedEvent(pathItems2));
+            });
+        }, throwable -> log.error("Error updating path items", throwable));
     }
 
     @Override
@@ -67,11 +82,7 @@ public class HorizonsWishlistShortestPath extends DestroyableVBox implements Des
     }
 
     private void update() {
-        final List<PathItem<HorizonsBlueprintName>> pathItems = getPathItems();
-//        if (this.shortestPathFlow.getItems().size() != pathItems.size() || !this.shortestPathFlow.getItems().stream().map(ShortestPathItem::getPathItem).allMatch(pathItems::contains)) {
-        this.shortestPathFlow.setItems(pathItems);
-        EventService.publish(new HorizonsShortestPathChangedEvent(pathItems));
-//        }
+        updatePathItems.onNext(new Object());
     }
 
     @SuppressWarnings("unchecked")
@@ -83,4 +94,9 @@ public class HorizonsWishlistShortestPath extends DestroyableVBox implements Des
                 .orElse(Collections.emptyList());
     }
 
+    @Override
+    public void destroyInternal() {
+        super.destroyInternal();
+        subscribe.dispose();
+    }
 }

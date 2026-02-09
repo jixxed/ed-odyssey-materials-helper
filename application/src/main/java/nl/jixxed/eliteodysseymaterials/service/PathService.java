@@ -36,11 +36,11 @@ public class PathService {
     private static LocalDateTime lastPinnedCheck = LocalDateTime.MIN;
 
     public static List<PathItem<HorizonsBlueprintName>> calculateHorizonsShortestPath(final List<HorizonsWishlistBlueprint> wishlistBlueprints) {
-        if (LocationService.getCurrentStarSystem().equals(lastHorizonsStarSystem) && wishlistBlueprints.equals(lastHorizonsWishlistBlueprints) && lastHorizonsCalculation != null && !PinnedBlueprintService.hasChangedSince(lastPinnedCheck)) {
-            lastPinnedCheck = LocalDateTime.now();
+        if (lastHorizonsCalculation != null && !PinnedBlueprintService.hasChangedSince(lastPinnedCheck) && LocationService.getCurrentStarSystem().equals(lastHorizonsStarSystem) && sameBlueprints(wishlistBlueprints, lastHorizonsWishlistBlueprints)) {
 //            log.info("Shortest path horizons cache hit");
             return lastHorizonsCalculation;
         }
+        lastPinnedCheck = LocalDateTime.now();
         var splittedBlueprints = new ArrayList<>(wishlistBlueprints);
         final List<HorizonsExperimentalWishlistBlueprint> collect = wishlistBlueprints.stream()
                 .filter(HorizonsModuleWishlistBlueprint.class::isInstance)
@@ -70,6 +70,14 @@ public class PathService {
         lastHorizonsWishlistBlueprints = wishlistBlueprints;
         lastHorizonsCalculation = calculateShortestPath(splittedBlueprints, distinctRecipes, false);
         return lastHorizonsCalculation;
+    }
+
+    private static boolean sameBlueprints(List<HorizonsWishlistBlueprint> wishlistBlueprints, List<HorizonsWishlistBlueprint> lastHorizonsWishlistBlueprints) {
+        return lastHorizonsWishlistBlueprints.size() == wishlistBlueprints.size()
+                && lastHorizonsWishlistBlueprints.stream()
+                .filter(element -> !wishlistBlueprints.contains(element))
+                .toList()
+                .isEmpty();
     }
 
     @SuppressWarnings("java:S1640")

@@ -56,32 +56,28 @@ public class QuantitySelect extends DestroyableHBox implements DestroyableTempla
                         int quantity2 = i;
                         circle.hoverProperty().addListener((_, _, newValue) -> {
                             if (this.visible.get()) {
-                                if (Boolean.TRUE.equals(newValue)) {
-                                    if (circle.isFilled()) {
-                                        emitter.onNext(circle);
-                                    }
-                                } else {
-                                    if (wishlistBlueprint instanceof HorizonsWishlistBlueprint hwbp) {
-                                        EventService.publish(new HorizonsWishlistHighlightEvent(hwbp, quantity2, false));
-                                    }
-                                    if (wishlistBlueprint instanceof OdysseyWishlistBlueprint owbp) {
-                                        EventService.publish(new OdysseyWishlistHighlightEvent(owbp, quantity2, false));
-                                    }
-                                }
+                                emitter.onNext(circle);
                             }
                         });
                         this.getNodes().add(circle);
                     }
                 })
-                .delay(250, TimeUnit.MILLISECONDS)
-                .observeOn(Schedulers.io())
+                .debounce(100, TimeUnit.MILLISECONDS)
+                .observeOn(Schedulers.computation())
                 .subscribe(circle -> {
-                    if (circle.isHover()) {
+                    if (circle.isHover() && circle.isFilled()) {
                         if (wishlistBlueprint instanceof HorizonsWishlistBlueprint hwbp) {
                             EventService.publish(new HorizonsWishlistHighlightEvent(hwbp, circle.getIndex(), true));
                         }
                         if (wishlistBlueprint instanceof OdysseyWishlistBlueprint owbp) {
                             EventService.publish(new OdysseyWishlistHighlightEvent(owbp, circle.getIndex(), true));
+                        }
+                    } else {
+                        if (wishlistBlueprint instanceof HorizonsWishlistBlueprint hwbp) {
+                            EventService.publish(new HorizonsWishlistHighlightEvent(hwbp, circle.getIndex(), false));
+                        }
+                        if (wishlistBlueprint instanceof OdysseyWishlistBlueprint owbp) {
+                            EventService.publish(new OdysseyWishlistHighlightEvent(owbp, circle.getIndex(), false));
                         }
                     }
                 }, t -> log.error(t.getMessage(), t));
