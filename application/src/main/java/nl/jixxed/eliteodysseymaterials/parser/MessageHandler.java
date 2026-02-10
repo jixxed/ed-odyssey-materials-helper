@@ -253,7 +253,7 @@ class MessageHandler {
     static void handleCapiMessage(final File file, final JournalEventType journalEventType) {
         try {
             final String message = Files.readString(file.toPath());
-            if(testAndReportCapi(message, journalEventType)){
+            if(testAndReportCapi(message, journalEventType) || true){
                 log.info("event: " + journalEventType);
                 final CapiMessageProcessor messageProcessor = capiMessageProcessors.get(journalEventType);
                 if (messageProcessor != null) {
