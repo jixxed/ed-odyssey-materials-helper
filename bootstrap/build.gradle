@@ -7,7 +7,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "org.beryx:badass-jlink-plugin:3.2.0"
+        classpath "org.beryx:badass-jlink-plugin:3.2.1"
     }
 }
 
@@ -16,7 +16,7 @@ plugins {
     id 'application'
     id 'io.freefair.lombok' version '9.2.0'
     id 'idea' // optional (to generate IntelliJ IDEA project files)
-    id 'org.beryx.jlink' version '3.2.0'
+    id 'org.beryx.jlink' version '3.2.1'
 }
 
 group 'nl.jixxed'
