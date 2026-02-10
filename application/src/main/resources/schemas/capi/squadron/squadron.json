@@ -85,10 +85,10 @@
           "type": "object",
           "properties": {
             "primary": {
-              "type": "integer"
+              "type": ["integer", "null"]
             },
             "secondary": {
-              "type": "integer"
+              "type": ["integer", "null"]
             }
           },
           "required": [
