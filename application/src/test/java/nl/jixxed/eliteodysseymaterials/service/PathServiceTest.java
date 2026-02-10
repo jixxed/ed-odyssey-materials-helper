@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Locale;
@@ -68,7 +69,7 @@ class PathServiceTest {
                 .withBody("A")
                 .withBodyID(BigInteger.valueOf(1L))
                 .withSystemAddress(BigInteger.valueOf(123L))
-                .withStarPos(List.of(Engineer.ODEN_GEIGER.getStarSystem().getX(), Engineer.ODEN_GEIGER.getStarSystem().getY(), Engineer.ODEN_GEIGER.getStarSystem().getZ()))
+                .withStarPos(List.of(BigDecimal.valueOf(Engineer.ODEN_GEIGER.getStarSystem().getX()), BigDecimal.valueOf(Engineer.ODEN_GEIGER.getStarSystem().getY()), BigDecimal.valueOf(Engineer.ODEN_GEIGER.getStarSystem().getZ())))
                 .withStarSystem(Engineer.ODEN_GEIGER.getStarSystem().getName())
                 .build(), Engineer.ODEN_GEIGER.getStarSystem(), "", "", true));
 
@@ -103,7 +104,7 @@ class PathServiceTest {
                 .withBody("A")
                 .withBodyID(BigInteger.valueOf(1L))
                 .withSystemAddress(BigInteger.valueOf(123L))
-                .withStarPos(List.of(Engineer.DOMINO_GREEN.getStarSystem().getX(), Engineer.DOMINO_GREEN.getStarSystem().getY(), Engineer.DOMINO_GREEN.getStarSystem().getZ()))
+                .withStarPos(List.of(BigDecimal.valueOf(Engineer.DOMINO_GREEN.getStarSystem().getX()), BigDecimal.valueOf(Engineer.DOMINO_GREEN.getStarSystem().getY()), BigDecimal.valueOf(Engineer.DOMINO_GREEN.getStarSystem().getZ())))
                 .withStarSystem(Engineer.DOMINO_GREEN.getStarSystem().getName())
                 .build(), Engineer.DOMINO_GREEN.getStarSystem(), "", "", true));
         final List<PathItem<OdysseyBlueprintName>> pathItems = PathService.calculateOdysseyShortestPath(wishlistBlueprints);
