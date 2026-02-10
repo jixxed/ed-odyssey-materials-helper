@@ -925,11 +925,11 @@
       "type": "object",
       "properties": {
         "shipyard_list": {
-          "type": "object",
+          "type": ["object", "null"],
           "existingJavaType": "java.util.Map<String,Ship>"
         },
         "discount_list": {
-          "type": "object",
+          "type": ["object", "null"],
           "existingJavaType": "java.util.Map<String,java.math.BigDecimal>"
         }
       },
@@ -938,7 +938,7 @@
       ]
     },
     "modules": {
-      "type": "object",
+      "type": ["object", "null"],
       "existingJavaType": "java.util.Map<String,Module>"
     }
   },
