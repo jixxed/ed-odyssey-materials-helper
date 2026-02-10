@@ -1,3 +1,7 @@
+Version 3.3.6
+-------------
+Fix handling EngineerProgress event with Odyssey engineers while in Horizons game mode
+
 Version 3.3.5
 -------------
 Fix handling CAPI messages anyways that contain validation errors

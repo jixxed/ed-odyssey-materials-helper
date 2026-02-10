@@ -1,7 +1,7 @@
 {
   "$schema" : "https://json-schema.org/draft/2020-12/schema",
   "type" : "object",
-  "description": "When Written: when a player increases their access to an engineer",
+  "description": "When Written: when a player increases their access to an engineer or at startup. At startup the Engineers array is written.",
   "extends" : { "$ref": "../_Event.json"},
   "allOf": [{ "$ref": "../_Event.json"}],
   "properties" : {
@@ -15,32 +15,37 @@
         "properties" : {
           "Engineer" : {
             "title" : "Engineer",
+            "description": "This property might not show up if it is an Odyssey engineer and the game is in Horizons mode",
             "type" : "string",
             "examples" : [ "Hera Tani", "The Sarge", "Professor Palin" ]
           },
           "EngineerID" : {
             "title" : "EngineerID",
+            "description": "This property might not show up if it is an Odyssey engineer and the game is in Horizons mode",
             "type" : "integer",
             "examples" : [ 300090, 300040, 300220 ]
           },
           "Progress" : {
             "title" : "Progress",
+            "description": "This property might not show up if it is an Odyssey engineer and the game is in Horizons mode",
             "type" : "string",
             "examples" : [ "Unlocked", "Invited", "Known" ]
           },
           "RankProgress" : {
             "title" : "RankProgress",
+            "description": "This property might not show up if it is an Odyssey engineer and the game is in Horizons mode",
             "type" : "integer",
             "examples" : [ 0, 36, 3 ]
           },
           "Rank" : {
             "title" : "Rank",
+            "description": "This property might not show up if it is an Odyssey engineer and the game is in Horizons mode",
             "type" : "integer",
             "examples" : [ 5, 0, 3 ]
           }
         },
         "additionalProperties" : false,
-        "required" : [ "Engineer", "EngineerID", "Progress" ]
+        "required" : [ ]
       }
     },
     "Engineer" : {

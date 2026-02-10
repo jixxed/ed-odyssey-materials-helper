@@ -40,16 +40,20 @@
       "type": "string"
     },
     "factionId": {
-      "type": "integer"
+      "type": "integer",
+      "description": "0 if none"
     },
     "factionName": {
-      "type": "string"
+      "type": "string",
+      "description": "None if none"
     },
     "factionHomeSystemId": {
-      "type": "integer"
+      "type": ["integer", "null"],
+      "description": "null if none"
     },
     "factionHomeSystemName": {
-      "type": "string"
+      "type": ["string", "null"],
+      "description": "null if none"
     },
     "userTags": {
       "type": "array",
@@ -85,10 +89,12 @@
           "type": "object",
           "properties": {
             "primary": {
-              "type": ["integer", "null"]
+              "type": ["integer", "null"],
+              "description": "null if initial"
             },
             "secondary": {
-              "type": ["integer", "null"]
+              "type": ["integer", "null"],
+              "description": "null if initial"
             }
           },
           "required": [

@@ -19,7 +19,7 @@ public class EngineerProgressMessageProcessor implements MessageProcessor<Engine
     @Override
     public void process(final EngineerProgress engineerProgress) {
         if (engineerProgress.getEngineers().isPresent()) {
-            engineerProgress.getEngineers().get().forEach(engineer -> processEngineerProgressItem(Optional.ofNullable(engineer.getEngineer()), Optional.ofNullable(engineer.getProgress()), engineer.getRankProgress(), engineer.getRank()));
+            engineerProgress.getEngineers().get().forEach(engineer -> processEngineerProgressItem(engineer.getEngineer(), engineer.getProgress(), engineer.getRankProgress(), engineer.getRank()));
         } else if (engineerProgress.getEngineer().isPresent()) {
             processEngineerProgressItem(engineerProgress.getEngineer(), engineerProgress.getProgress(), engineerProgress.getRankProgress(), engineerProgress.getRank());
         }

@@ -4,7 +4,7 @@
   "type": "object",
   "definitions": {
     "crewMember": {
-      "type": "object",
+      "type": ["object", "null"],
       "properties": {
         "name": {
           "type": "string"
@@ -71,6 +71,7 @@
       "type": "object",
       "properties": {
         "crewMember": {
+          "type": ["object", "null"],
           "$ref": "#/definitions/crewMember"
         },
         "invoicesWeekToDate": {
@@ -416,7 +417,7 @@
       ]
     },
     "servicesCrew": {
-      "type": "object",
+      "type": ["object", "null"],
       "properties": {
         "refuel": {
           "$ref": "#/definitions/crewService"
@@ -841,7 +842,7 @@
           "existingJavaType": "java.util.Map<String,Economy>"
         },
         "prohibited": {
-          "type": "object",
+          "type": ["object", "null"],
           "existingJavaType": "java.util.Map<String,String>"
         },
         "commodities": {
