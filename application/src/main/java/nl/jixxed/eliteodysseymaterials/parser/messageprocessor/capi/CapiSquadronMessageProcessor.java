@@ -33,20 +33,17 @@ public class CapiSquadronMessageProcessor implements CapiMessageProcessor<CapiSq
         StorageService.resetSquadronCarrierCounts();
         OrderService.clearOrders(StoragePool.SQUADRONCARRIER);
         data.getSquadronCarrier().ifPresent(squadronCarrier -> {
-            SELL_ORDER_PARSER.parseOdyssey(squadronCarrier.getOrders().getOnfootmicroresources().getSales(), StoragePool.SQUADRONCARRIER);
-            BUY_ORDER_PARSER.parseOdyssey(squadronCarrier.getOrders().getOnfootmicroresources().getPurchases(), StoragePool.SQUADRONCARRIER);
-            SELL_ORDER_PARSER.parse(squadronCarrier.getOrders().getCommodities().getSales(), StoragePool.SQUADRONCARRIER);
-            BUY_ORDER_PARSER.parse(squadronCarrier.getOrders().getCommodities().getPurchases(), StoragePool.SQUADRONCARRIER);
+            squadronCarrier.getOrders().getOnfootmicroresources().getSales().ifPresent(sales -> SELL_ORDER_PARSER.parseOdyssey(sales, StoragePool.SQUADRONCARRIER));
+            squadronCarrier.getOrders().getOnfootmicroresources().getPurchases().ifPresent(purchases -> BUY_ORDER_PARSER.parseOdyssey(purchases, StoragePool.SQUADRONCARRIER));
+            squadronCarrier.getOrders().getCommodities().getSales().ifPresent(sales -> SELL_ORDER_PARSER.parse(sales, StoragePool.SQUADRONCARRIER));
+            squadronCarrier.getOrders().getCommodities().getPurchases().ifPresent(purchases -> BUY_ORDER_PARSER.parse(purchases, StoragePool.SQUADRONCARRIER));
 
             if (UserPreferencesService.getPreference(PreferenceConstants.CAPI_ENABLE_ODYSSEY_MATERIALS, true)) {
                 ASSET_PARSER.parse(squadronCarrier.getCarrierLocker().getAssets(), StoragePool.SQUADRONCARRIER);
                 GOOD_PARSER.parse(squadronCarrier.getCarrierLocker().getGoods(), StoragePool.SQUADRONCARRIER);
                 DATA_PARSER.parse(squadronCarrier.getCarrierLocker().getData(), StoragePool.SQUADRONCARRIER);
             }
-
-            if (UserPreferencesService.getPreference(PreferenceConstants.CAPI_ENABLE_HORIZONS_MATERIALS, true)) {
-                COMMODITY_PARSER.parse(squadronCarrier.getCargo(), StoragePool.SQUADRONCARRIER);
-            }
+            squadronCarrier.getCargo().ifPresent(cargos -> COMMODITY_PARSER.parse(cargos, StoragePool.SQUADRONCARRIER));
 
             CarrierService.carrierExistsProperty(CarrierType.SQUADRONCARRIER).set(true);
             String encodedName = squadronCarrier.getName().getFilteredVanityName();
@@ -57,12 +54,14 @@ public class CapiSquadronMessageProcessor implements CapiMessageProcessor<CapiSq
             CarrierService.setCarrierDockingAccess(CarrierType.SQUADRONCARRIER, CarrierDockingAccess.forKey(squadronCarrier.getDockingAccess()));
             CarrierService.setCarrierNotoriousAccess(CarrierType.SQUADRONCARRIER, squadronCarrier.getNotoriousAccess());
             CarrierService.setCarrierBalance(CarrierType.SQUADRONCARRIER, new BigInteger(squadronCarrier.getBalance()));
-            BigInteger carrierBankBalance = data.getBank().getCredits().entrySet().stream()
-                    .filter(entry -> !"Carrier Balance".equals(entry.getKey()))
-                    .flatMap(entry -> Arrays.stream(entry.getValue()))
-                    .map(bankItem -> new BigInteger(bankItem.getQty()))
-                    .reduce(BigInteger.ZERO, BigInteger::add);
-            CarrierService.setCarrierBankBalance(CarrierType.SQUADRONCARRIER, carrierBankBalance);
+            data.getBank().ifPresent(bank -> {
+                BigInteger carrierBankBalance = bank.getCredits().entrySet().stream()
+                        .filter(entry -> !"Carrier Balance".equals(entry.getKey()))
+                        .flatMap(entry -> Arrays.stream(entry.getValue()))
+                        .map(bankItem -> new BigInteger(bankItem.getQty()))
+                        .reduce(BigInteger.ZERO, BigInteger::add);
+                CarrierService.setCarrierBankBalance(CarrierType.SQUADRONCARRIER, carrierBankBalance);
+            });
             CarrierService.setCarrierFuel(CarrierType.SQUADRONCARRIER, Integer.valueOf(squadronCarrier.getFuel()));
             CarrierService.setCarrierCapacity(CarrierType.SQUADRONCARRIER, squadronCarrier.getCapacity());
 //            "capacity": {
@@ -97,8 +96,9 @@ public class CapiSquadronMessageProcessor implements CapiMessageProcessor<CapiSq
                 ReportService.reportJournal("capi", squadronCarrier.getState(), "Unknown carrier state");
             }
         });
-        //this probably still requires a carrier?
-        BANK_PARSER.parse(data.getBank(), StoragePool.SQUADRONCARRIER);
+
+        data.getBank().ifPresent(bank -> BANK_PARSER.parse(bank, StoragePool.SQUADRONCARRIER));
+
         //currently there is no market on the carrier
 //        try {
 //            final BigInteger marketId = data.getSquadronCarrier().getMarket().getId();

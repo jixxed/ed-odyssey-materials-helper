@@ -10,6 +10,10 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.ApproachSettlement.Approa
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ApproachSettlement.StationFaction;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EDDNApproachSettlementMapper extends EDDNMapper {
 
@@ -20,7 +24,11 @@ public class EDDNApproachSettlementMapper extends EDDNMapper {
                 .withEvent(approachSettlement.getEvent())
                 .withBodyID(approachSettlement.getBodyID())
                 .withBodyName(approachSettlement.getBodyName())
-                .withStarPos(LocationService.getCurrentStarPos(approachSettlement.getSystemAddress()))
+                .withStarPos(Optional.ofNullable(LocationService.getCurrentStarPos(approachSettlement.getSystemAddress()))
+                        .map(coordinates -> coordinates.stream()
+                                .map(BigDecimal::new)
+                                .collect(Collectors.toList()))
+                        .orElse(null))
                 .withStarSystem(LocationService.getCurrentStarSystemName(approachSettlement.getSystemAddress()))
                 .withSystemAddress(approachSettlement.getSystemAddress())
                 .withHorizons(expansion.equals(Expansion.HORIZONS) || expansion.equals(Expansion.ODYSSEY))

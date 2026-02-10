@@ -210,6 +210,7 @@
               }
             },
             "required": [
+              "departureTime",
               "arrivalTime",
               "state",
               "visitDurationSeconds",
@@ -220,7 +221,9 @@
         "totalDistanceJumpedLY": {
           "type": "integer"
         },
-        "currentJump": {}
+        "currentJump": {
+          "type": ["string", "null"]
+        }
       },
       "required": [
         "completed",
@@ -499,7 +502,7 @@
           "type": "object",
           "properties": {
             "sales": {
-              "type": "array",
+              "type": ["array", "null"],
               "items": {
                 "type": "object",
                 "properties": {
@@ -525,7 +528,7 @@
               }
             },
             "purchases": {
-              "type": "array",
+              "type": ["array", "null"],
               "items": {
                 "type": "object",
                 "properties": {
@@ -564,11 +567,11 @@
           "type": "object",
           "properties": {
             "sales": {
-              "type": "object",
+              "type": ["object", "null"],
               "existingJavaType": "java.util.Map<String,SaleItem>"
             },
             "purchases": {
-              "type": "array",
+              "type": ["array", "null"],
               "items": {
                 "type": "object",
                 "properties": {
@@ -954,12 +957,8 @@
     "blackmarketFinances",
     "finance",
     "servicesCrew",
-    "cargo",
     "orders",
     "carrierLocker",
-    "reputation",
-    "market",
-    "ships",
-    "modules"
+    "reputation"
   ]
 }

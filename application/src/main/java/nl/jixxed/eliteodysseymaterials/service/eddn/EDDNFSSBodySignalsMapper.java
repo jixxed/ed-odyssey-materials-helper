@@ -6,13 +6,21 @@ import nl.jixxed.eliteodysseymaterials.schemas.eddn.fssbodysignals.Signal;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.FSSBodySignals.FSSBodySignals;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 public class EDDNFSSBodySignalsMapper extends EDDNMapper {
     @SuppressWarnings("unchecked")
     public static Message mapToEDDN(final FSSBodySignals fssBodySignals, final Expansion expansion) {
         return new Message.MessageBuilder()
                 .withTimestamp(fssBodySignals.getTimestamp())
                 .withEvent(fssBodySignals.getEvent())
-                .withStarPos(LocationService.getCurrentStarPos(fssBodySignals.getSystemAddress()))
+                .withStarPos(Optional.ofNullable(LocationService.getCurrentStarPos(fssBodySignals.getSystemAddress()))
+                        .map(coordinates -> coordinates.stream()
+                                .map(BigDecimal::new)
+                                .collect(Collectors.toList()))
+                        .orElse(null))
                 .withStarSystem(LocationService.getCurrentStarSystemName(fssBodySignals.getSystemAddress()))
                 .withSystemAddress(fssBodySignals.getSystemAddress())
                 .withHorizons(expansion.equals(Expansion.HORIZONS) || expansion.equals(Expansion.ODYSSEY))

@@ -9,6 +9,10 @@ import nl.jixxed.eliteodysseymaterials.schemas.eddn.docked.LandingPads;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Docked.Docked;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EDDNDockedMapper extends EDDNMapper {
 
@@ -17,7 +21,11 @@ public class EDDNDockedMapper extends EDDNMapper {
         return new nl.jixxed.eliteodysseymaterials.schemas.eddn.docked.Message.MessageBuilder()
                 .withTimestamp(docked.getTimestamp())
                 .withEvent(docked.getEvent())
-                .withStarPos(LocationService.getCurrentStarPos(docked.getSystemAddress()))
+                .withStarPos(Optional.ofNullable(LocationService.getCurrentStarPos(docked.getSystemAddress()))
+                        .map(coordinates -> coordinates.stream()
+                                .map(BigDecimal::new)
+                                .collect(Collectors.toList()))
+                        .orElse(null))
                 .withStarSystem(docked.getStarSystem())
                 .withSystemAddress(docked.getSystemAddress())
                 .withHorizons(expansion.equals(Expansion.HORIZONS) || expansion.equals(Expansion.ODYSSEY))

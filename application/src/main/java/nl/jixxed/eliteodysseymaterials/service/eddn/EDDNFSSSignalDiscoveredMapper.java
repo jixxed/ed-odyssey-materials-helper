@@ -7,7 +7,10 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.Event;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.FSSSignalDiscovered.FSSSignalDiscovered;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class EDDNFSSSignalDiscoveredMapper extends EDDNMapper {
     @SuppressWarnings("unchecked")
@@ -38,7 +41,11 @@ public class EDDNFSSSignalDiscoveredMapper extends EDDNMapper {
                         .orElse(null))
                 .withHorizons(expansion.equals(Expansion.HORIZONS) || expansion.equals(Expansion.ODYSSEY))
                 .withOdyssey(expansion.equals(Expansion.ODYSSEY))
-                .withStarPos(LocationService.getCurrentStarPos())
+                .withStarPos(Optional.of(LocationService.getCurrentStarPos())
+                        .map(coordinates -> coordinates.stream()
+                                .map(BigDecimal::new)
+                                .collect(Collectors.toList()))
+                        .orElse(null))
                 .withStarSystem(LocationService.getCurrentStarSystemName())
                 .withSystemAddress(LocationService.getCurrentSystemAddress())
                 .withSignals(signals)

@@ -26,7 +26,7 @@
             "value": {
               "type": "array",
               "items": {
-                "type": "number"
+                "type": "integer"
               }
             },
             "comparison": {
@@ -67,7 +67,7 @@
                   "value": {
                     "type": "array",
                     "items": {
-                      "type": "number"
+                      "type": "integer"
                     }
                   },
                   "comparison": {

@@ -209,7 +209,7 @@
             "type": "string"
           },
           "lastLocationId": {
-            "type": "integer"
+            "type": ["integer", "null"]
           },
           "lastLocation": {
             "type": "string"
@@ -254,7 +254,6 @@
           "lastOnline",
           "lastOnline_ts",
           "name",
-          "lastLocationId",
           "lastLocation",
           "shipName",
           "shipModel",
@@ -264,7 +263,7 @@
       }
     },
     "bank": {
-      "type": "object",
+      "type": ["object", "null"],
       "properties": {
         "credits": {
           "type": "object",

@@ -1,3 +1,8 @@
+Version 3.3.4
+-------------
+Fix processing squadron information when bank is missing
+Fix showing reauthentication notification when CAPI is failing to authenticate
+
 Version 3.3.3
 -------------
 Performance fix for wishlists with a lot of items

@@ -133,7 +133,11 @@ public class SquadronEndpointHandler implements EndpointHandler {
                             } catch (final Exception e) {
                                 log.error("Exception", e);
                                 log.warn("Frontier API returned an error. Disabling service.");
+                                Platform.runLater(() -> {
+                                    NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.auth.fail"));
+                                });
                                 disable();
+                                CAPIService.getInstance().getActive().set(false);
                                 final boolean delete = endpointFile.delete();
                                 if (delete) log.info("Deleted squadron file");
                             }

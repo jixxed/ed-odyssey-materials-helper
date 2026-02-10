@@ -23,6 +23,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.TerminateApplicationEvent;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -103,7 +104,7 @@ public class MarketAPIService {
                             .withName(LocaleService.getLocalizedStringForLocale(Locale.ENGLISH, commodity.getLocalizationKey()))
                             .withSupply(Supply.builder()
                                     .withComparison("<=>")
-                                    .withValue(List.of(amountRequired, 99999999))
+                                    .withValue(List.of(BigInteger.valueOf(amountRequired), BigInteger.valueOf(99999999)))
                                     .build())
                             .build();
                     Primary_economy economy = Primary_economy.builder()
@@ -117,7 +118,7 @@ public class MarketAPIService {
                     if (largeShip) {
                         filtersBuilder.withLarge_pads(Large_pads.builder()
                                 .withComparison("<=>")
-                                .withValue(List.of(1, 100))
+                                .withValue(List.of(BigInteger.valueOf(1), BigInteger.valueOf(100)))
                                 .build());
                     }
                     var filters = filtersBuilder.build();

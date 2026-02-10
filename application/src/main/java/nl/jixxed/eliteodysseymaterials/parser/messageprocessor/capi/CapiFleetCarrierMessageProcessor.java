@@ -29,22 +29,24 @@ public class CapiFleetCarrierMessageProcessor implements CapiMessageProcessor<Ca
         StorageService.resetFleetCarrierCounts();
         OrderService.clearOrders(StoragePool.FLEETCARRIER);
 
-        SELL_ORDER_PARSER.parseOdyssey(capiFleetcarrier.getOrders().getOnfootmicroresources().getSales(), StoragePool.FLEETCARRIER);
-        BUY_ORDER_PARSER.parseOdyssey(capiFleetcarrier.getOrders().getOnfootmicroresources().getPurchases(), StoragePool.FLEETCARRIER);
-        SELL_ORDER_PARSER.parse(capiFleetcarrier.getOrders().getCommodities().getSales(), StoragePool.FLEETCARRIER);
-        BUY_ORDER_PARSER.parse(capiFleetcarrier.getOrders().getCommodities().getPurchases(), StoragePool.FLEETCARRIER);
+        capiFleetcarrier.getOrders().getOnfootmicroresources().getSales().ifPresent(sales -> SELL_ORDER_PARSER.parseOdyssey(sales, StoragePool.FLEETCARRIER));
+        capiFleetcarrier.getOrders().getOnfootmicroresources().getPurchases().ifPresent(sales -> BUY_ORDER_PARSER.parseOdyssey(sales, StoragePool.FLEETCARRIER));
+        capiFleetcarrier.getOrders().getCommodities().getSales().ifPresent(sales -> SELL_ORDER_PARSER.parse(sales, StoragePool.FLEETCARRIER));
+        capiFleetcarrier.getOrders().getCommodities().getPurchases().ifPresent(purchases -> BUY_ORDER_PARSER.parse(purchases, StoragePool.FLEETCARRIER));
 
         ASSET_PARSER.parse(capiFleetcarrier.getCarrierLocker().getAssets(), StoragePool.FLEETCARRIER);
         GOOD_PARSER.parse(capiFleetcarrier.getCarrierLocker().getGoods(), StoragePool.FLEETCARRIER);
         DATA_PARSER.parse(capiFleetcarrier.getCarrierLocker().getData(), StoragePool.FLEETCARRIER);
+        capiFleetcarrier.getCargo().ifPresent(cargos -> COMMODITY_PARSER.parse(cargos, StoragePool.FLEETCARRIER));
 
-        COMMODITY_PARSER.parse(capiFleetcarrier.getCargo(), StoragePool.FLEETCARRIER);
-        try {
-            final BigInteger marketId = capiFleetcarrier.getMarket().getId();
-            UserPreferencesService.setPreference(PreferenceConstants.FLEET_CARRIER_ID, marketId.toString());
-        } catch (NullPointerException e) {
-            log.error("Fleet carrier market id not found in CAPI message", e);
-        }
+            capiFleetcarrier.getMarket().ifPresent(market -> {
+                try {final BigInteger marketId = market.getId();
+                    UserPreferencesService.setPreference(PreferenceConstants.FLEET_CARRIER_ID, marketId.toString());
+                } catch (NullPointerException e) {
+                    log.error("Fleet carrier market id not found in CAPI message", e);
+                }
+            });
+
         EventService.publish(new StorageEvent(StoragePool.FLEETCARRIER));
         CarrierService.carrierExistsProperty(CarrierType.FLEETCARRIER).set(true);
         String encodedName = capiFleetcarrier.getName().getFilteredVanityName();

@@ -248,7 +248,7 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
         );
         InfoNode jumpRange = new InfoNode(LocaleService.getStringBinding("statusbar.info.jump.range"), LocaleService.getStringBinding("statusbar.info.jump.range.value", Formatters.NUMBER_FORMAT_2.format(jumpRangeTank), Formatters.NUMBER_FORMAT_2.format(jumpRangeTotal)), CarrierService.getCarrierFuel(carrierType).isPresent(), EdAwesomeIcon.SHIPS_FSDUNLADEN_1, EdAwesomeIcon.SHIPS_FSDUNLADEN_2);
         InfoNode packs = new InfoNode(LocaleService.getStringBinding("statusbar.info.packs"), LocaleService.getStringBinding("statusbar.info.packs.value", CarrierService.getShipPacks(carrierType).orElse(0) + CarrierService.getModulePacks(carrierType).orElse(0)), CarrierService.getShipPacks(carrierType).isPresent(), EdAwesomeIcon.OTHER_CARRIER_PACKS_1, EdAwesomeIcon.OTHER_CARRIER_PACKS_2);
-        InfoNode crew = new InfoNode(LocaleService.getStringBinding("statusbar.info.crew"), LocaleService.getStringBinding("statusbar.info.crew.value", CarrierService.getCrew(carrierType).orElse(0)), CarrierService.getCrew(carrierType).isPresent(), EdAwesomeIcon.SHIPS_MULTICREW_1,  EdAwesomeIcon.SHIPS_MULTICREW_2);
+        InfoNode crew = new InfoNode(LocaleService.getStringBinding("statusbar.info.crew"), LocaleService.getStringBinding("statusbar.info.crew.value", CarrierService.getCrew(carrierType).orElse(0)), CarrierService.getCrew(carrierType).isPresent(), EdAwesomeIcon.SHIPS_MULTICREW_1, EdAwesomeIcon.SHIPS_MULTICREW_2);
         InfoNode cargo = new InfoNode(LocaleService.getStringBinding("statusbar.info.cargo"), LocaleService.getStringBinding("statusbar.info.cargo.value", CarrierService.getCargo(carrierType).orElse(0)), CarrierService.getCargo(carrierType).isPresent(), EdAwesomeIcon.OTHER_CARGO_USED_1, EdAwesomeIcon.OTHER_CARGO_USED_2);
         InfoNode cargoReserved = new InfoNode(LocaleService.getStringBinding("statusbar.info.cargo.reserved"), LocaleService.getStringBinding("statusbar.info.cargo.reserved.value", CarrierService.getCargoSpaceReserved(carrierType).orElse(0)), CarrierService.getCargoSpaceReserved(carrierType).isPresent(), EdAwesomeIcon.OTHER_CARGO_RESERVED_1, EdAwesomeIcon.OTHER_CARGO_RESERVED_2);
         InfoNode freeSpace = new InfoNode(LocaleService.getStringBinding("statusbar.info.cargo.free"), LocaleService.getStringBinding("statusbar.info.cargo.free.value", CarrierService.getFreeSpace(carrierType).orElse(0)), CarrierService.getFreeSpace(carrierType).isPresent(), EdAwesomeIcon.OTHER_CARGO_FREE_1, EdAwesomeIcon.OTHER_CARGO_FREE_2);
@@ -258,10 +258,10 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
         InfoNode notoriousAccess = new InfoNode(LocaleService.getStringBinding("statusbar.info.notorious.access"), LocaleService.getStringBinding("statusbar.info.notorious.access.value", LocaleService.LocalizationKey.of(CarrierService.getCarrierNotoriousAccess(carrierType).orElse(false) ? "statusbar.info.notorious.access.yes" : "statusbar.info.notorious.access.no")), CarrierService.getCarrierNotoriousAccess(carrierType).isPresent(), EdAwesomeIcon.OTHER_NOTORIOUS);
 
         DestroyableFlowPane infoNodes = FlowPaneBuilder.builder().withStyleClass("info-node-list").withNodes(fuel, jumpRange, cargo, freeSpace, packs, crew, cargoReserved, dockingAccess, state, notoriousAccess, balance).build();
-        if (carrierType == CarrierType.SQUADRONCARRIER) {
-            InfoNode bankBalance = new InfoNode(LocaleService.getStringBinding("statusbar.info.bank.balance"), LocaleService.getStringBinding("statusbar.info.bank.balance.value", MoneyFormatter.formatMoney(CarrierService.getCarrierBankBalance(carrierType).orElse(BigInteger.ZERO))), CarrierService.getCarrierBankBalance(carrierType).isPresent(), EdAwesomeIcon.SQUADRON_BANK);
+        CarrierService.getCarrierBankBalance(carrierType).ifPresent(bankBalanceValue -> {
+            InfoNode bankBalance = new InfoNode(LocaleService.getStringBinding("statusbar.info.bank.balance"), LocaleService.getStringBinding("statusbar.info.bank.balance.value", MoneyFormatter.formatMoney(bankBalanceValue)), CarrierService.getCarrierBankBalance(carrierType).isPresent(), EdAwesomeIcon.SQUADRON_BANK);
             infoNodes.getNodes().add(bankBalance);
-        }
+        });
         final DestroyableVBox contentNode = BoxBuilder.builder()
                 .withStyleClass("carrier-info")
                 .withNodes(titleLine, infoNodes)

@@ -11,5 +11,6 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Performance fix for wishlists with a lot of items
+Fix processing squadron information when bank is missing
+Fix showing reauthentication notification when CAPI is failing to authenticate
 ```

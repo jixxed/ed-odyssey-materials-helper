@@ -7,13 +7,21 @@ import nl.jixxed.eliteodysseymaterials.schemas.eddn.saasignalsfound.Signal;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.SAASignalsFound.SAASignalsFound;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 public class EDDNSAASignalsFoundMapper extends EDDNMapper {
     @SuppressWarnings("unchecked")
     public static Message mapToEDDN(final SAASignalsFound saaSignalsFound, final Expansion expansion) {
         return new Message.MessageBuilder()
                 .withTimestamp(saaSignalsFound.getTimestamp())
                 .withEvent(saaSignalsFound.getEvent())
-                .withStarPos(LocationService.getCurrentStarPos(saaSignalsFound.getSystemAddress()))
+                .withStarPos(Optional.ofNullable(LocationService.getCurrentStarPos(saaSignalsFound.getSystemAddress()))
+                        .map(coordinates -> coordinates.stream()
+                                .map(BigDecimal::new)
+                                .collect(Collectors.toList()))
+                        .orElse(null))
                 .withStarSystem(LocationService.getCurrentStarSystemName(saaSignalsFound.getSystemAddress()))
                 .withSystemAddress(saaSignalsFound.getSystemAddress())
                 .withHorizons(expansion.equals(Expansion.HORIZONS) || expansion.equals(Expansion.ODYSSEY))

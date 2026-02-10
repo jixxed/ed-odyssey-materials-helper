@@ -5,6 +5,10 @@ import nl.jixxed.eliteodysseymaterials.schemas.eddn.scan.*;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Scan.Scan;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 public class EDDNScanMapper extends EDDNMapper {
     @SuppressWarnings("unchecked")
     public static Message mapToEDDN(final Scan scan, final Expansion expansion) {
@@ -13,7 +17,11 @@ public class EDDNScanMapper extends EDDNMapper {
                 .withEvent(scan.getEvent())
                 .withStarSystem(scan.getStarSystem())
                 .withSystemAddress(scan.getSystemAddress())
-                .withStarPos(LocationService.getCurrentStarPos(scan.getSystemAddress()))
+                .withStarPos(Optional.ofNullable(LocationService.getCurrentStarPos(scan.getSystemAddress()))
+                        .map(coordinates -> coordinates.stream()
+                                .map(BigDecimal::new)
+                                .collect(Collectors.toList()))
+                        .orElse(null))
                 .withHorizons(expansion.equals(Expansion.HORIZONS) || expansion.equals(Expansion.ODYSSEY))
                 .withOdyssey(expansion.equals(Expansion.ODYSSEY))
                 .withScanType(scan.getScanType())

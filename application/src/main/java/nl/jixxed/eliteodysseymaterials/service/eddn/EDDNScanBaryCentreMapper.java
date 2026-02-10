@@ -5,6 +5,10 @@ import nl.jixxed.eliteodysseymaterials.schemas.eddn.scanbarycentre.Message;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ScanBaryCentre.ScanBaryCentre;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 public class EDDNScanBaryCentreMapper extends EDDNMapper {
     @SuppressWarnings("unchecked")
     public static Message mapToEDDN(final ScanBaryCentre scanBaryCentre, final Expansion expansion) {
@@ -14,7 +18,11 @@ public class EDDNScanBaryCentreMapper extends EDDNMapper {
                 .withHorizons(expansion.equals(Expansion.HORIZONS) || expansion.equals(Expansion.ODYSSEY))
                 .withOdyssey(expansion.equals(Expansion.ODYSSEY))
                 .withStarSystem(scanBaryCentre.getStarSystem())
-                .withStarPos(LocationService.getCurrentStarPos(scanBaryCentre.getSystemAddress()))
+                .withStarPos(Optional.ofNullable(LocationService.getCurrentStarPos(scanBaryCentre.getSystemAddress()))
+                        .map(coordinates -> coordinates.stream()
+                                .map(BigDecimal::new)
+                                .collect(Collectors.toList()))
+                        .orElse(null))
                 .withSystemAddress(scanBaryCentre.getSystemAddress())
                 .withBodyID(scanBaryCentre.getBodyID())
                 .withSemiMajorAxis(scanBaryCentre.getSemiMajorAxis())

@@ -72,7 +72,6 @@ public class ControllableQuantitySelect extends DestroyableHBox implements Destr
         subscribe = Observable.create((ObservableEmitter<AmountCircle> emitter) -> {
                     for (int i = 1; i <= 10; i++) {
                         AmountCircle circle = addValue(i);
-                        int quantity2 = i;
                         circle.hoverProperty().addListener((_, _, newValue) -> {
                             if (this.visible.get()) {
                                 emitter.onNext(circle);
@@ -84,20 +83,10 @@ public class ControllableQuantitySelect extends DestroyableHBox implements Destr
                 .debounce(100, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.computation())
                 .subscribe(circle -> {
-                    if (circle.isHover() && circle.isFilled()) {
-                        if (wishlistBlueprint instanceof HorizonsWishlistBlueprint hwbp) {
-                            EventService.publish(new HorizonsWishlistHighlightEvent(hwbp, circle.getIndex(), true));
-                        }
-                        if (wishlistBlueprint instanceof OdysseyWishlistBlueprint owbp) {
-                            EventService.publish(new OdysseyWishlistHighlightEvent(owbp, circle.getIndex(), true));
-                        }
-                    }else {
-                        if (wishlistBlueprint instanceof HorizonsWishlistBlueprint hwbp) {
-                            EventService.publish(new HorizonsWishlistHighlightEvent(hwbp, circle.getIndex(), false));
-                        }
-                        if (wishlistBlueprint instanceof OdysseyWishlistBlueprint owbp) {
-                            EventService.publish(new OdysseyWishlistHighlightEvent(owbp, circle.getIndex(), false));
-                        }
+                    if (wishlistBlueprint instanceof HorizonsWishlistBlueprint hwbp) {
+                        EventService.publish(new HorizonsWishlistHighlightEvent(hwbp, circle.getIndex(), circle.isHover() && circle.isFilled()));
+                    }else if (wishlistBlueprint instanceof OdysseyWishlistBlueprint owbp) {
+                        EventService.publish(new OdysseyWishlistHighlightEvent(owbp, circle.getIndex(), circle.isHover() && circle.isFilled()));
                     }
                 }, t -> log.error(t.getMessage(), t));
 
