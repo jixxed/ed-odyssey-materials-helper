@@ -1,3 +1,7 @@
+Version 3.3.5
+-------------
+Fix handling CAPI messages anyways that contain validation errors
+
 Version 3.3.4
 -------------
 Fix processing squadron information when bank is missing

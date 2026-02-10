@@ -11,6 +11,5 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Fix processing squadron information when bank is missing
-Fix showing reauthentication notification when CAPI is failing to authenticate
+Fix handling CAPI messages anyways that contain validation errors
 ```
