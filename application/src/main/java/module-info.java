@@ -53,6 +53,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires me.xdrop.fuzzywuzzy;
     requires javafx.base;
     requires com.fasterxml.jackson.annotation;
+    requires maven.artifact;
 
     uses nl.jixxed.ed.awesome.api.FontLoader;
     uses nl.jixxed.ed.confidential.api.SecrecyLoader;

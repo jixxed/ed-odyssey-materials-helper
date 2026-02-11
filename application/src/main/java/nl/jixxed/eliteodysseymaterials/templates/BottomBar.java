@@ -54,6 +54,7 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
     private DestroyableLabel apiLabel;
     private DestroyableLabel watchedFileLabel;
     private DestroyableLabel eddnQueueLabel;
+    private DestroyableLabel updateLabel;
     private DestroyableLabel login;
     private DestroyableLabel commanderLabel;
     private DestroyableLabel locationLabel;
@@ -61,6 +62,9 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
     private Double latitude;
     private Double longitude;
     private DestroyableSeparator apiLabelSeparator;
+    private DestroyableSeparator loginSeparator;
+    private DestroyableSeparator eddnQueueSeparator;
+    private DestroyableSeparator updateSeparator;
     private AtomicBoolean eddnTransmitting = new AtomicBoolean(false);
     private ScheduledExecutorService executorService;
     private EdAwesomeIconViewPane fleetCarrierIcon;
@@ -82,6 +86,14 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
         updateApiLabel();
         this.eddnQueueLabel = LabelBuilder.builder()
                 .build();
+        this.eddnQueueLabel.addBinding(this.eddnQueueLabel.visibleProperty(), this.eddnQueueLabel.textProperty().isNotEmpty());
+        this.eddnQueueLabel.addBinding(this.eddnQueueLabel.managedProperty(), this.eddnQueueLabel.textProperty().isNotEmpty());
+        this.updateLabel = LabelBuilder.builder()
+                .withStyleClass("update")
+                .withText( VersionService.isOutdated() ? "application.please.update" : "blank")
+                .build();
+        this.updateLabel.addBinding(this.updateLabel.visibleProperty(), this.updateLabel.textProperty().isNotEmpty());
+        this.updateLabel.addBinding(this.updateLabel.managedProperty(), this.updateLabel.textProperty().isNotEmpty());
         this.gameModeLabel = LabelBuilder.builder()
                 .withText(ApplicationState.getInstance().getExpansion().getLocalizationKey())
                 .build();
@@ -91,6 +103,7 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
         this.login = LabelBuilder.builder()
                 .withText(LocaleService.getStringBinding("statusbar.login"))
                 .build();
+        this.login.addBinding(this.login.managedProperty(), this.login.visibleProperty());
         if (ApplicationState.getInstance().isEngineerProcessed()) {
             hideLoginRequest();
         }
@@ -126,6 +139,7 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
         this.apiLabelSeparator = new DestroyableSeparator(Orientation.VERTICAL);
         this.apiLabelSeparator.addBinding(this.apiLabelSeparator.visibleProperty(), CAPIService.getInstance().getActive().or(ApplicationState.getInstance().getFcMaterials()));
         this.apiLabel.addBinding(this.apiLabel.visibleProperty(), CAPIService.getInstance().getActive().or(ApplicationState.getInstance().getFcMaterials()));
+        this.apiLabel.addBinding(this.apiLabel.managedProperty(), CAPIService.getInstance().getActive().or(ApplicationState.getInstance().getFcMaterials()));
         this.fleetCarrierIcon = EdAwesomeIconViewPaneBuilder.builder()
                 .withStyleClass("carrier-icon")
                 .withIcons(EdAwesomeIcon.OTHER_CARRIER_SIMPLE)
@@ -140,7 +154,19 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
                 .withVisibilityProperty(CarrierService.carrierExistsProperty(CarrierType.SQUADRONCARRIER))
                 .withManagedProperty(CarrierService.carrierExistsProperty(CarrierType.SQUADRONCARRIER))
                 .build();
-        this.getNodes().addAll(this.watchedFileLabel, new DestroyableSeparator(Orientation.VERTICAL), this.gameModeLabel, this.apiLabelSeparator, this.apiLabel, this.login, this.eddnQueueLabel, new GrowingRegion(), this.fleetCarrierIcon, this.squadronCarrierIcon, this.locationLabel, new DestroyableSeparator(Orientation.VERTICAL), this.commanderLabel, this.commanderSelect);
+        this.loginSeparator = new DestroyableSeparator(Orientation.VERTICAL);
+        this.loginSeparator.addBinding(this.loginSeparator.visibleProperty(), this.login.visibleProperty());
+        this.loginSeparator.addBinding(this.loginSeparator.managedProperty(), this.login.visibleProperty());
+        this.eddnQueueSeparator = new DestroyableSeparator(Orientation.VERTICAL);
+        this.eddnQueueSeparator.addBinding(this.eddnQueueSeparator.visibleProperty(), this.eddnQueueLabel.textProperty().isNotEmpty());
+        this.eddnQueueSeparator.addBinding(this.eddnQueueSeparator.managedProperty(), this.eddnQueueLabel.textProperty().isNotEmpty());
+        this.updateSeparator = new DestroyableSeparator(Orientation.VERTICAL);
+        this.updateSeparator.addBinding(this.updateSeparator.visibleProperty(), this.updateLabel.textProperty().isNotEmpty());
+        this.updateSeparator.addBinding(this.updateSeparator.managedProperty(), this.updateLabel.textProperty().isNotEmpty());
+        this.getNodes().addAll(
+                this.watchedFileLabel, new DestroyableSeparator(Orientation.VERTICAL), this.gameModeLabel, this.apiLabelSeparator, this.apiLabel, this.loginSeparator, this.login, this.eddnQueueSeparator, this.eddnQueueLabel, this.updateSeparator, this.updateLabel,
+                new GrowingRegion(),
+                this.fleetCarrierIcon, this.squadronCarrierIcon, this.locationLabel, new DestroyableSeparator(Orientation.VERTICAL), this.commanderLabel, this.commanderSelect);
 
         executorService.scheduleAtFixedRate(() -> {
             if (eddnTransmitting.get()) {

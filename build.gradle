@@ -230,6 +230,7 @@ allprojects {
 
                 implementation "com.github.wille:oslib:master-SNAPSHOT"
                 implementation 'me.xdrop:fuzzywuzzy:1.4.0'
+                implementation 'org.apache.maven:maven-artifact:3.9.12'
             }
         }
     }

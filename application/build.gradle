@@ -337,10 +337,11 @@ dependencies {
     implementation 'nl.jixxed.ed.awesome:ed-awesome-api:1.5'
     implementation 'nl.jixxed.ed.confidential:ed-confidential-api:1.3'
     implementation 'me.xdrop:fuzzywuzzy'
+    implementation 'org.apache.maven:maven-artifact'
 
     if (proprietary) {
         implementation 'nl.jixxed.ed.awesome:ed-awesome-impl:1.23'
-        implementation 'nl.jixxed.ed.confidential:ed-confidential-impl:1.1'
+        implementation 'nl.jixxed.ed.confidential:ed-confidential-impl:1.2'
     }
 
 }

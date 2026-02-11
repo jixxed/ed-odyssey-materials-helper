@@ -3,8 +3,8 @@ package nl.jixxed.eliteodysseymaterials.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nu.redpois0n.oslib.OperatingSystem;
+import org.apache.maven.artifact.versioning.ComparableVersion;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,5 +57,19 @@ public class VersionService {
     public static String getUserAgent() {
         OperatingSystem.getOperatingSystem().getDetailedString();
         return USER_AGENT.formatted(getBuildVersion(), OperatingSystem.getOperatingSystem().getDetailedString(), OperatingSystem.getOperatingSystem().getArch(), OperatingSystem.getOperatingSystem().getDesktopEnvironment());
+    }
+
+    public static boolean isOutdated() {
+        if(isDev()){
+            return false;
+        }
+        String minVersion = Secrets.getOrDefault("min.version", "1.0.0");
+        return !isEqualOrNewer(getBuildVersion(), minVersion);
+    }
+
+    protected static boolean isEqualOrNewer(String current, String min) {
+        ComparableVersion requiredVersion = new ComparableVersion(min);
+        ComparableVersion currentVersion = new ComparableVersion(current);
+        return currentVersion.compareTo(requiredVersion) >= 0;
     }
 }

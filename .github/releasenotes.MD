@@ -11,5 +11,5 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Fix handling EngineerProgress event with Odyssey engineers while in Horizons game mode
+Add version outdated warning
 ```

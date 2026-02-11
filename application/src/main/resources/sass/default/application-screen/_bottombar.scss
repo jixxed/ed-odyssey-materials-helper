@@ -6,6 +6,10 @@
   -fx-border-width: 1 0 0 0;
   -fx-border-color: $background-color-lighter;
 
+  .update {
+    -fx-text-fill: $text-color-red;
+  }
+
   .separator {
     .line {
       -fx-border-width: 0.1em;
@@ -124,13 +128,34 @@
                   -fx-font-size: 5.0em !important;
                   -fx-fill: $text-color-white;
                 }
-                .ships-fsdunladen-1{-fx-fill: $text-color-grey;}
-                .other-carrier-packs-1{-fx-fill: $text-color-grey;}
-                .ships-multicrew-1{-fx-fill: $text-color-grey;}
-                .other-cargo-used-1{-fx-fill: $text-color-grey;}
-                .other-cargo-reserved-1{-fx-fill: $text-color-grey;}
-                .other-cargo-free-1{-fx-fill: $text-color-grey;}
-                .ships-landing-pad-1{-fx-fill: $text-color-grey;}
+
+                .ships-fsdunladen-1 {
+                  -fx-fill: $text-color-grey;
+                }
+
+                .other-carrier-packs-1 {
+                  -fx-fill: $text-color-grey;
+                }
+
+                .ships-multicrew-1 {
+                  -fx-fill: $text-color-grey;
+                }
+
+                .other-cargo-used-1 {
+                  -fx-fill: $text-color-grey;
+                }
+
+                .other-cargo-reserved-1 {
+                  -fx-fill: $text-color-grey;
+                }
+
+                .other-cargo-free-1 {
+                  -fx-fill: $text-color-grey;
+                }
+
+                .ships-landing-pad-1 {
+                  -fx-fill: $text-color-grey;
+                }
               }
             }
 

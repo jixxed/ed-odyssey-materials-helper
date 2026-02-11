@@ -197,3 +197,4 @@
 "statusbar.info.cargo.reserved.value","{0}T","","","","","","","",""
 "statusbar.info.bank.balance","Bank balance","","","","","","","",""
 "statusbar.info.bank.balance.value","{0} Cr","","","","","","","",""
+"application.please.update","Application outdated. Services degraded.","","","","","","","",""

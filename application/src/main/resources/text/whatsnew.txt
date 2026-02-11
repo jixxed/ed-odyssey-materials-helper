@@ -1,3 +1,7 @@
+Version 3.3.7
+-------------
+Add version outdated warning
+
 Version 3.3.6
 -------------
 Fix handling EngineerProgress event with Odyssey engineers while in Horizons game mode
