@@ -7,6 +7,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public enum CarrierState {
     NORMAL_OPERATION("normalOperation"),
+    DEBT("debtState"),
     UNKNOWN("unknown$");
 
     private final String key;
