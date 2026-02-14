@@ -16,10 +16,7 @@ import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
-import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIconView;
@@ -62,8 +59,8 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
         this.horizonsBlueprint = horizonsBlueprint;
         this.storageType = storageType;
         if (horizonsBlueprint instanceof HorizonsModuleBlueprint) {
-            this.minRequired = horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getBestEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintType());
-            this.maxRequired = horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getWorstEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintType());
+            this.minRequired = horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getBestEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintName(), horizonsBlueprint.getHorizonsBlueprintType());
+            this.maxRequired = horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getWorstEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintName(), horizonsBlueprint.getHorizonsBlueprintType());
         } else {
             this.minRequired = required;
             this.maxRequired = required;
@@ -83,11 +80,14 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
         }));
         register(EventService.addListener(true, this, EngineerEvent.class, _ -> {
             if (horizonsBlueprint instanceof HorizonsModuleBlueprint) {
-                this.minRequired = horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getBestEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintType());
-                this.maxRequired = horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getWorstEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintType());
+                this.minRequired = horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getBestEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintName(), horizonsBlueprint.getHorizonsBlueprintType());
+                this.maxRequired = horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getWorstEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintName(), horizonsBlueprint.getHorizonsBlueprintType());
             }
             String required = Objects.equals(minRequired, maxRequired) ? minRequired.toString() : minRequired + " - " + maxRequired;
             this.requiredLabel.setText(required);
+        }));
+        register(EventService.addListener(true, this, EngineerPinEvent.class, _ -> {
+            this.update();
         }));
     }
 

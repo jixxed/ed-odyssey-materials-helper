@@ -2,10 +2,15 @@ package nl.jixxed.eliteodysseymaterials.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
+import nl.jixxed.eliteodysseymaterials.service.PinnedBlueprintService;
 
 import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Getter
@@ -35,12 +40,20 @@ public enum HorizonsBlueprintGrade {
         return String.valueOf(grade);
     }
 
-    public int getNumberOfRolls(Engineer engineer, HorizonsBlueprintType type) {
+    public int getNumberOfRolls(Engineer engineer, HorizonsBlueprintName name, HorizonsBlueprintType type) {
         if (engineer == null) {
             return 1;
         }
-        final Integer engineerRank = ApplicationState.getInstance().getEngineerRank(engineer);
-        return getNumberOfRolls(engineerRank, type);
+        Optional<Engineer> bestRemoteEngineer = Optional.empty();
+        if (engineer == Engineer.REMOTE_WORKSHOP) {
+            bestRemoteEngineer = Arrays.stream(Engineer.values())
+                    .filter(eng -> eng.isHorizons() && eng != Engineer.REMOTE_WORKSHOP)
+                    .filter(eng -> PinnedBlueprintService.isPinned(eng, (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(name, type, GRADE_1)))
+                    .max(Comparator.comparing(eng -> ApplicationState.getInstance().getEngineerRank(eng)));
+        }
+        return bestRemoteEngineer
+                .map(remoteEngineer -> getNumberOfRolls(ApplicationState.getInstance().getEngineerRank(remoteEngineer), type))
+                .orElseGet(() -> getNumberOfRolls(ApplicationState.getInstance().getEngineerRank(engineer), type));
     }
 
     public int getNumberOfRolls(Integer engineerRank, HorizonsBlueprintType type) {

@@ -215,6 +215,9 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
         register(EventService.addListener(true, this, HorizonsWishlistChangedEvent.class, event -> {
             update();
         }));
+        register(EventService.addListener(true, this, EngineerPinEvent.class, _ -> {
+            this.update();
+        }));
 
     }
 
@@ -334,17 +337,19 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
         final Integer amount = materials.get(this.horizonsMaterial);
         if (blueprint instanceof HorizonsModuleBlueprint moduleBlueprint) {
             final Integer minRank = blueprint.getEngineers().stream()
+                    .filter(engineer -> engineer != Engineer.REMOTE_WORKSHOP)
                     .map(eng -> ApplicationState.getInstance().getEngineerRank(eng))
                     .min(Comparator.comparingInt(Integer::intValue))
                     .orElse(0);
             final Integer maxRank = blueprint.getEngineers().stream()
+                    .filter(engineer -> engineer != Engineer.REMOTE_WORKSHOP)
                     .map(eng -> ApplicationState.getInstance().getEngineerRank(eng))
                     .max(Comparator.comparingInt(Integer::intValue))
                     .orElse(0);
 
             final Engineer engineer = getCurrentEngineerForBlueprint(blueprint, pathItems).orElseGet(() -> getWorstEngineer(blueprint));
             minimum += (int) Math.ceil(amount * percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(maxRank, moduleBlueprint.getHorizonsBlueprintType())) * (quantityOverride == -1 ? quantity : quantityOverride);
-            required.set(required.get() + (int) Math.ceil(amount * percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(engineer, moduleBlueprint.getHorizonsBlueprintType())) * (quantityOverride == -1 ? quantity : quantityOverride));
+            required.set(required.get() + (int) Math.ceil(amount * percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(engineer, moduleBlueprint.getHorizonsBlueprintName(), moduleBlueprint.getHorizonsBlueprintType())) * (quantityOverride == -1 ? quantity : quantityOverride));
             maximum += (int) Math.ceil(amount * percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(minRank, moduleBlueprint.getHorizonsBlueprintType())) * (quantityOverride == -1 ? quantity : quantityOverride);
         } else {
             minimum += amount * (quantityOverride == -1 ? quantity : quantityOverride);

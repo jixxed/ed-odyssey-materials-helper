@@ -213,7 +213,7 @@ public abstract class HorizonsBlueprintConstants {
             final AtomicBoolean hasManufactured = new AtomicBoolean(true);
             final AtomicBoolean hasCommodity = new AtomicBoolean(true);
             final Double percentageToComplete = gradePercentageToComplete.getValue();
-            int numberOfRolls = blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(engineer, horizonsBlueprintType);
+            int numberOfRolls = blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(engineer, horizonsBlueprintName, horizonsBlueprintType);
             blueprint.getMaterialCollection(Raw.class).forEach((material, amountRequired) -> hasRaw.set(hasRaw.get() && (StorageService.getMaterialCount(material) - Math.ceil(percentageToComplete * (amountRequired * quantity * numberOfRolls))) >= 0));
             blueprint.getMaterialCollection(Encoded.class).forEach((material, amountRequired) -> hasEncoded.set(hasEncoded.get() && (StorageService.getMaterialCount(material) - Math.ceil(percentageToComplete * (amountRequired * quantity * numberOfRolls))) >= 0));
             blueprint.getMaterialCollection(Manufactured.class).forEach((material, amountRequired) -> hasManufactured.set(hasManufactured.get() && (StorageService.getMaterialCount(material) - Math.ceil(percentageToComplete * (amountRequired * quantity * numberOfRolls))) >= 0));

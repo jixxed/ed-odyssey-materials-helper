@@ -112,7 +112,7 @@ public class HorizonsBlueprint implements Blueprint<HorizonsBlueprintName> {
     }
 
     private int getNumberOfRolls(Engineer engineer) {
-        return this instanceof HorizonsModuleBlueprint ? horizonsBlueprintGrade.getNumberOfRolls(engineer, horizonsBlueprintType) : 1;
+        return this instanceof HorizonsModuleBlueprint ? horizonsBlueprintGrade.getNumberOfRolls(engineer, horizonsBlueprintName, horizonsBlueprintType) : 1;
     }
 
     @Override
