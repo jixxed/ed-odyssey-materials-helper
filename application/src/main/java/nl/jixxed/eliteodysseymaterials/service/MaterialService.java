@@ -431,8 +431,6 @@ public class MaterialService {
                         .build());
             }
         }
-
-
     }
 
     private static void addHorizonsSpawnLocationsToTooltip(final List<HorizonsMaterialSpawnLocation> horizonsMaterialSpawnLocations, final DestroyableVBox vBox) {
@@ -443,11 +441,13 @@ public class MaterialService {
                     .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE)
                     .withText(LocaleService.getStringBinding("material.tooltip.spawnlocations"))
                     .build());
-            horizonsMaterialSpawnLocations.stream().forEach(spawn -> {
+            horizonsMaterialSpawnLocations.forEach(spawn -> {
                 if (spawn.hasLocations()) {
                     Location closest = spawn.getClosest();
-                    final CopyableLocation copyableLocation = new CopyableLocation(closest.getStarSystem(), LocaleService.getLocalizedStringForCurrentLocale(spawn.getLocalizationKey(), closest.getBody()));
-                    vBox.getNodes().add(copyableLocation);
+                    if(closest!=null) {
+                        final CopyableLocation copyableLocation = new CopyableLocation(closest.getStarSystem(), LocaleService.getLocalizedStringForCurrentLocale(spawn.getLocalizationKey(), closest.getBody()));
+                        vBox.getNodes().add(copyableLocation);
+                    }
                 } else {
                     final DestroyableLabel location = LabelBuilder.builder()
                             .withText(LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale(spawn.getLocalizationKey())))

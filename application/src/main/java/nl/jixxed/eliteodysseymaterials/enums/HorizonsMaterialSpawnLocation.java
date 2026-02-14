@@ -2,29 +2,30 @@ package nl.jixxed.eliteodysseymaterials.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.Location;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.stream.StreamSupport;
+@Slf4j
 @RequiredArgsConstructor
 public enum HorizonsMaterialSpawnLocation implements SpawnLocation {
     HOT_JUPITER(List.of(new Location(new StarSystem("Col 285 Sector RF-C b14-7", -164.0625, 12.84375, -55.90625), "B1", null, null, null, null))),
     DAVS_HOPE(List.of(new Location(new StarSystem("Hyades Sector DR-V c2-23", -104.625, -0.8125, -151.90625), "A5", null, null, null, null))),
-    BRAIN_TREES_SELENIUM(List.of(
-            new Location(new StarSystem("HR 3230", 394.15625, 19.25, -152.375), "3AA", null, null, null, null),
-            new Location(new StarSystem("Synuefe SE-V b49-4", 387.78125, -180.90625, -4.5625), "B3A @ -51.48, 63.90", null, null, null, null))),
-    BRAIN_TREES_POLONIUM(List.of(new Location(new StarSystem("Synuefe AA-P c22-7", 420.75, -172.78125, -75.0625), "5C", null, null, null, null))),
-    BRAIN_TREES_RUTHENIUM(List.of(new Location(new StarSystem("35 G. Carinae", 395.5, -126.59375, -44.3125), "2C", null, null, null, null))),
-    BRAIN_TREES_TELLURIUM(List.of(new Location(new StarSystem("Synuefe SE-V b49-4", 387.78125, -180.90625, -4.5625), "B3A @ -50.97, 63.98", null, null, null, null))),
-    BRAIN_TREES_TECHNETIUM(List.of(
-            new Location(new StarSystem("35 G. Carinae", 395.5, -126.59375, -44.3125), "2A", null, null, null, null),
-            new Location(new StarSystem("HR 3230", 394.15625, 19.25, -152.375), "3AA", null, null, null, null))),
-    BRAIN_TREES_YTTRIUM(List.of(new Location(new StarSystem("35 G. Carinae", 395.5, -126.59375, -44.3125), "2D", null, null, null, null))),
-    BRAIN_TREES_ANTIMONY(List.of(new Location(new StarSystem("35 G. Carinae", 395.5, -126.59375, -44.3125), "1E", null, null, null, null))),
+    BRAIN_TREES_SELENIUM(loadFromCSV(Raw.SELENIUM, "braintrees.csv")),
+    BRAIN_TREES_POLONIUM(loadFromCSV(Raw.POLONIUM, "braintrees.csv")),
+    BRAIN_TREES_RUTHENIUM(loadFromCSV(Raw.RUTHENIUM, "braintrees.csv")),
+    BRAIN_TREES_TELLURIUM(loadFromCSV(Raw.TELLURIUM, "braintrees.csv")),
+    BRAIN_TREES_TECHNETIUM(loadFromCSV(Raw.TECHNETIUM, "braintrees.csv")),
+    BRAIN_TREES_YTTRIUM(loadFromCSV(Raw.YTTRIUM, "braintrees.csv")),
+    BRAIN_TREES_ANTIMONY(loadFromCSV(Raw.ANTIMONY, "braintrees.csv")),
     JAMESON_CRASH_SITE(List.of(new Location(new StarSystem("HIP 12099", -101.90625, -95.46875, -165.59375), "1B", null, null, null, null))),
     MISSION_REWARD(null),
     SCAN_MISSIONS(null),
@@ -36,19 +37,25 @@ public enum HorizonsMaterialSpawnLocation implements SpawnLocation {
     HGE_BOOM_EXPANSION(null),
     HGE_OUTBREAK(null),
 
-    CRYSTAL_SHARDS_POLONIUM(List.of(new Location(new StarSystem("HIP 36601", 337.8125, 562.96875, -1457.84375), "C1A", null, null, null, null))),
-    CRYSTAL_SHARDS_RUTHENIUM(List.of(
-            new Location(new StarSystem("HIP 36601", 337.8125, 562.96875, -1457.84375), "C1D", null, null, null, null),
-            new Location(new StarSystem("Outotz LS-K d8-3", 526.3125, 238.46875, -1613.75), "B7B", null, null, null, null))),
-    CRYSTAL_SHARDS_TELLURIUM(List.of(new Location(new StarSystem("HIP 36601", 337.8125, 562.96875, -1457.84375), "C3B", null, null, null, null))),
-    CRYSTAL_SHARDS_TECHNETIUM(List.of(new Location(new StarSystem("HIP 36601", 337.8125, 562.96875, -1457.84375), "C5A", null, null, null, null))),
-    CRYSTAL_SHARDS_YTTRIUM(List.of(new Location(new StarSystem("Outotz LS-K d8-3", 526.3125, 238.46875, -1613.75), "B5A", null, null, null, null))),
-    CRYSTAL_SHARDS_ANTIMONY(List.of(new Location(new StarSystem("Outotz LS-K d8-3", 526.3125, 238.46875, -1613.75), "B5C", null, null, null, null))),
+    CRYSTAL_SHARDS_POLONIUM(loadFromCSV(Raw.POLONIUM, "crystalshards.csv")),
+    CRYSTAL_SHARDS_RUTHENIUM(loadFromCSV(Raw.RUTHENIUM, "crystalshards.csv")),
+    CRYSTAL_SHARDS_TELLURIUM(loadFromCSV(Raw.TELLURIUM, "crystalshards.csv")),
+    CRYSTAL_SHARDS_TECHNETIUM(loadFromCSV(Raw.TECHNETIUM, "crystalshards.csv")),
+    CRYSTAL_SHARDS_YTTRIUM(loadFromCSV(Raw.YTTRIUM, "crystalshards.csv")),
+    CRYSTAL_SHARDS_ANTIMONY(loadFromCSV(Raw.ANTIMONY, "crystalshards.csv")),
     RING_ICE(null),
     RING_ALL(null),
     RING_PRISTINE(null),
     ASTEROIDS(null),
     SURFACE_PROSPECTING(null),
+    FIXED_CRYSTAL_SHARDS_POLONIUM(List.of(new Location(new StarSystem("HIP 36601", 337.8125, 562.96875, -1457.84375), "C1A", null, null, null, null))),
+    FIXED_CRYSTAL_SHARDS_RUTHENIUM(List.of(
+            new Location(new StarSystem("HIP 36601", 337.8125, 562.96875, -1457.84375), "C1D", null, null, null, null),
+            new Location(new StarSystem("Outotz LS-K d8-3", 526.3125, 238.46875, -1613.75), "B7B", null, null, null, null))),
+    FIXED_CRYSTAL_SHARDS_TELLURIUM(List.of(new Location(new StarSystem("HIP 36601", 337.8125, 562.96875, -1457.84375), "C3B", null, null, null, null))),
+    FIXED_CRYSTAL_SHARDS_TECHNETIUM(List.of(new Location(new StarSystem("HIP 36601", 337.8125, 562.96875, -1457.84375), "C5A", null, null, null, null))),
+    FIXED_CRYSTAL_SHARDS_YTTRIUM(List.of(new Location(new StarSystem("Outotz LS-K d8-3", 526.3125, 238.46875, -1613.75), "B5A", null, null, null, null))),
+    FIXED_CRYSTAL_SHARDS_ANTIMONY(List.of(new Location(new StarSystem("Outotz LS-K d8-3", 526.3125, 238.46875, -1613.75), "B5C", null, null, null, null))),
     BASIC_SCAN_COMBAT_PIRATE(null),
     BASIC_SCAN_HAULAGE(null),
     BASIC_SCAN_AUTHORITY_MILITARY(null),
@@ -122,13 +129,44 @@ public enum HorizonsMaterialSpawnLocation implements SpawnLocation {
     }
 
     public boolean hasLocations() {
-        return this.locations != null && !this.locations.isEmpty();
+        return this.locations != null /*&& !this.locations.isEmpty()*/;
     }
 
     public Location getClosest() {
         if (!hasLocations()) return null;
         final StarSystem currentSystem = LocationService.getCurrentLocation().getStarSystem();
-        Optional<Location> closest = locations.stream().min(Comparator.comparing(location -> currentSystem.getDistance(location.getStarSystem())));
-        return closest.orElse(null);
+        try{
+            Optional<Location> closest = locations.stream().filter(Objects::nonNull).min(Comparator.comparing(location -> currentSystem.getDistance(location.getStarSystem())));
+            return closest.orElse(null);
+        }catch (Exception e){
+            log.error("Exception", e);
+        }
+        return null;
+
+    }
+
+    private static List<Location> loadFromCSV(Raw raw, String file) {
+        List<Location> locations = new ArrayList<>();
+        //load csv file with format
+        // braintrees.csv: system,body,distance,material,x,y,z
+        // crystalshards.csv: system,body,distance,x,y,z,material
+        try (final CSVParser csvParser = CSVFormat.DEFAULT.withHeader().parse(new InputStreamReader(Objects.requireNonNull(HorizonsMaterialSpawnLocation.class.getResourceAsStream("/poi/" + file)), StandardCharsets.UTF_8))) {
+
+            StreamSupport.stream(csvParser.spliterator(), false).forEach(csvRecord -> {
+                final String material = csvRecord.get("material");
+                if (raw == Raw.SELENIUM || material.equalsIgnoreCase(raw.name())) {
+                    final String system = csvRecord.get("system");
+                    final String body = csvRecord.get("body");
+                    final double x = Double.parseDouble(csvRecord.get("x"));
+                    final double y = Double.parseDouble(csvRecord.get("y"));
+                    final double z = Double.parseDouble(csvRecord.get("z"));
+                    final Location location = new Location(new StarSystem(system, x, y, z), body, null, null, null, null);
+                    locations.add(location);
+                }
+            });
+        } catch (final IOException e) {
+            throw new IllegalArgumentException(e);
+        }
+        return locations;
     }
 }

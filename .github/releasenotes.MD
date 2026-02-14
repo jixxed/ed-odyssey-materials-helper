@@ -11,6 +11,5 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Added Colonia/Bubble filter to engineers
-Fix for falsely reported minimum material required quantities due to implied remote workshop rank of 5
+Added around 6.8K brain trees and crystal shard locations so material popups show closest locations galaxy wide
 ```
