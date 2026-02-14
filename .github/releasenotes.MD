@@ -11,5 +11,6 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Add debt state for carriers
+Added Colonia/Bubble filter to engineers
+Fix for falsely reported minimum material required quantities due to implied remote workshop rank of 5
 ```

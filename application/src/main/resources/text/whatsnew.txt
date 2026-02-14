@@ -1,3 +1,8 @@
+Version 3.3.9
+-------------
+Added Colonia/Bubble filter to engineers
+Fix for falsely reported minimum material required quantities due to implied remote workshop rank of 5
+
 Version 3.3.8
 -------------
 Add debt state for carriers
