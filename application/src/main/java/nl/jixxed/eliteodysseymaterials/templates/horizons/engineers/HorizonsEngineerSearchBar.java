@@ -5,21 +5,24 @@ import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.application.Platform;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TextFieldBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsEngineersSearch;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsEngineersShow;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsEngineerSearchEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTextField;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.concurrent.TimeUnit;
 
@@ -29,6 +32,7 @@ public class HorizonsEngineerSearchBar extends DestroyableHBox implements Destro
     private static final String FX_FONT_SIZE_DPX = "-fx-font-size: %dpx";
     private DestroyableTextField textField;
     private Disposable subscribe;
+    private DestroyableComboBox<HorizonsEngineersShow> showEngineersComboBox;
 
 
     public HorizonsEngineerSearchBar() {
@@ -39,11 +43,12 @@ public class HorizonsEngineerSearchBar extends DestroyableHBox implements Destro
     public void initComponents() {
         this.getStyleClass().add("root");
         initSearchTextField();
+        initSearchTextFilter();
         applyFontSizingHack();
 
         HBox.setHgrow(this.textField, Priority.ALWAYS);
 
-        this.getNodes().addAll(this.textField);
+        this.getNodes().addAll(this.textField, this.showEngineersComboBox);
     }
 
     public void initEventHandling() {
@@ -63,6 +68,30 @@ public class HorizonsEngineerSearchBar extends DestroyableHBox implements Destro
         this.textField.styleProperty().set(fontStyle);
     }
 
+    private void initSearchTextFilter() {
+        final DestroyableTooltip showMaterialsTooltip = TooltipBuilder.builder()
+                .withText("search.filter.placeholder")
+                .build();
+        this.showEngineersComboBox = ComboBoxBuilder.builder(HorizonsEngineersShow.class)
+                .withStyleClasses("root", "filter-and-sort")
+                .withSelected(HorizonsEngineersShow.valueOf(PreferencesService.getPreference("search.horizons.engineers.filter", "ALL")))
+                .withItemsProperty(LocaleService.getListBinding(
+                        HorizonsEngineersShow.ALL,
+                        HorizonsEngineersShow.COLONIA,
+                        HorizonsEngineersShow.BUBBLE
+                ))
+                .withValueChangeListener((_, _, newValue) -> {
+                    if (newValue != null) {
+                        EventService.publish(new HorizonsEngineerSearchEvent(new HorizonsEngineersSearch(getQueryOrDefault(this.textField),getShowOrDefault(this.showEngineersComboBox))));
+                        PreferencesService.setPreference("search.horizons.engineers.filter", newValue.name());
+                    }
+                })
+                .asLocalized()
+                .withPromptTextProperty(LocaleService.getStringBinding("search.filter.placeholder"))
+                .withToolTip(showMaterialsTooltip)
+                .build();
+    }
+
     private void initSearchTextField() {
         this.textField = TextFieldBuilder.builder()
                 .withStyleClasses("root", "search-input")
@@ -73,13 +102,17 @@ public class HorizonsEngineerSearchBar extends DestroyableHBox implements Destro
                 .create((ObservableEmitter<String> emitter) -> this.textField.textProperty().addListener((_, _, newValue) -> emitter.onNext(newValue)))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
-                .subscribe(newValue -> Platform.runLater(() -> EventService.publish(new HorizonsEngineerSearchEvent(newValue))));
+                .subscribe(newValue -> Platform.runLater(() -> EventService.publish(new HorizonsEngineerSearchEvent(new HorizonsEngineersSearch(getQueryOrDefault(this.textField),getShowOrDefault(this.showEngineersComboBox))))));
     }
 
     @SuppressWarnings("java:S1144")
     private String getQueryOrDefault(final TextField textField) {
         return (textField.getText() != null) ? textField.getText() : "";
     }
+    private HorizonsEngineersShow getShowOrDefault(final ComboBox<HorizonsEngineersShow> showEngineersComboBox) {
+        return (showEngineersComboBox.getValue() != null) ? showEngineersComboBox.getValue() : HorizonsEngineersShow.ALL;
+    }
+
 
     @Override
     public void destroyInternal() {

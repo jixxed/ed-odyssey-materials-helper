@@ -10,13 +10,12 @@ import javafx.util.Callback;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
-import nl.jixxed.eliteodysseymaterials.enums.Engineer;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsEngineersSearch;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsEngineerSearchEvent;
@@ -30,10 +29,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("java:S2177")
-class HorizonsEngineerCard extends EngineerCard implements DestroyableEventTemplate {
+public class HorizonsEngineerCard extends EngineerCard implements DestroyableEventTemplate {
 
     protected DestroyableResizableImageView grade;
     private DestroyableResizableImageView gradeIcon;
+    private HorizonsEngineersSearch currentSearch;
 
     private TypeSegment present;
     private TypeSegment notPresent;
@@ -44,6 +44,8 @@ class HorizonsEngineerCard extends EngineerCard implements DestroyableEventTempl
 
 
     HorizonsEngineerCard(final Engineer engineer) {
+        final HorizonsEngineersShow filter = HorizonsEngineersShow.valueOf(PreferencesService.getPreference("search.horizons.engineers.filter", "ALL"));
+        currentSearch = new HorizonsEngineersSearch("", filter);
         super(engineer);
     }
 
@@ -108,14 +110,17 @@ class HorizonsEngineerCard extends EngineerCard implements DestroyableEventTempl
             text.getNodes().addAll(optionalInternalBlueprintLabels);
         }
         text.getNodes().add(this.unlockSection);
-
+        update();
     }
 
     @Override
     public void initEventHandling() {
         super.initEventHandling();
         register(EventService.addListener(true, this, EngineerEvent.class, _ -> updateProgress()));
-        register(EventService.addListener(true, this, HorizonsEngineerSearchEvent.class, horizonsEngineerSearchEvent -> update(horizonsEngineerSearchEvent.getSearch())));
+        register(EventService.addListener(true, this, HorizonsEngineerSearchEvent.class, horizonsEngineerSearchEvent -> {
+            this.currentSearch = horizonsEngineerSearchEvent.getSearch();
+            update();
+        }));
     }
 
     private void updateProgress() {
@@ -144,12 +149,12 @@ class HorizonsEngineerCard extends EngineerCard implements DestroyableEventTempl
         return imageString;
     }
 
-    private void update(final String search) {
-        boolean visible = search.isBlank()
-                || engineer.getSettlement().getSettlementName().toLowerCase().contains(search.toLowerCase())
-                || engineer.getStarSystem().getName().toLowerCase().contains(search.toLowerCase())
-                || LocaleService.getLocalizedStringForCurrentLocale(engineer.getLocalizationKey()).toLowerCase().contains(search.toLowerCase())
-                || hasBlueprintLike(engineer, search);
+    private void update() {
+        boolean visible = HorizonsEngineersShow.getFilter(this.currentSearch).test(this) && (this.currentSearch.getQuery().isBlank()
+                || engineer.getSettlement().getSettlementName().toLowerCase().contains(this.currentSearch.getQuery().toLowerCase())
+                || engineer.getStarSystem().getName().toLowerCase().contains(this.currentSearch.getQuery().toLowerCase())
+                || LocaleService.getLocalizedStringForCurrentLocale(engineer.getLocalizationKey()).toLowerCase().contains(this.currentSearch.getQuery().toLowerCase())
+                || hasBlueprintLike(engineer, this.currentSearch.getQuery()));
         this.setVisible(visible);
         this.setManaged(visible);
     }

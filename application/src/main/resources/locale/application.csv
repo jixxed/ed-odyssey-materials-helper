@@ -47,6 +47,8 @@
 "search.filter.guardian","Guardian","Guardian","","Guardián","","","Материалы Стражей","守护者",""
 "search.filter.thargoid","Thargoid","Thargoid","","Thargoide","","","Материалы Таргоидов","Thargoid",""
 "search.filter.human","Human","Human","","Humano","Humain","","Материалы Человеческие","人类",""
+"search.filter.colonia","Colonia","","","","","","","",""
+"search.filter.bubble","Bubble","","","","","","","",""
 "search.sort.alphabetical","Alphabetical (default)","Alphabetical (default)","Alphabetisch (Standard)","Alfabético (predeterminado)","Alphabétique (par défaut)","Alfabético (padrão)","По алфавиту (по умолчанию)","按字母排序 (默认)",""
 "search.sort.engineer_blueprint_irrelevant","Engineer unlocking, blueprint, irrelevant","Engineer unlocking, blueprint, irrelevant","Entsperrung durch Ingenieur, Blaupause, irrelevant","Desbloqueo del ingeniero, plano, irrelevante","Déverrouillage d’ingénieur, plan, non pertinent","Desbloqueio do engenheiro, planta, irrelevante","Разблокировка инженера, чертеж, нерелевантно","工程师解锁，蓝图，无用依次排序",""
 "search.sort.placeholder","Sort materials","Sort materials","Materialien sortieren","Clasificar materiales","Trier les matériaux","Classificar materiais","Сортировать материалы","分类材料",""

@@ -199,7 +199,8 @@ jlink {
                 '--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls',
                 '--add-exports=jdk.naming.dns/com.sun.jndi.dns=java.naming',
                 '--add-exports=javafx.graphics/com.sun.glass.ui=nl.jixxed.eliteodysseymaterials',
-                '--add-exports=javafx.graphics/com.sun.javafx.tk=nl.jixxed.eliteodysseymaterials'
+                '--add-exports=javafx.graphics/com.sun.javafx.tk=nl.jixxed.eliteodysseymaterials',
+                '--enable-preview'
         ]
     }
 }
@@ -458,7 +459,8 @@ run {
             '--add-exports=javafx.graphics/com.sun.javafx.tk=nl.jixxed.eliteodysseymaterials',
             '--add-exports=javafx.controls/com.sun.javafx.scene.control=nl.jixxed.eliteodysseymaterials',
             '--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls',
-            '--add-exports=jdk.naming.dns/com.sun.jndi.dns=java.naming'
+            '--add-exports=jdk.naming.dns/com.sun.jndi.dns=java.naming',
+            '--enable-preview'
     ]
     //, '-Xmx1G', '-XX:+UseCompressedOops', '-XX:+PrintGCDetails', '-XX:SoftRefLRUPolicyMSPerMB=100'
 }
