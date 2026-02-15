@@ -30,5 +30,5 @@
 "blueprint.engineer.pin","Pin","","","Anclar","Épingler","","Закрепить","固定",""
 "blueprint.engineer.unpin","Unpin","","","Desanclar","Désépingler","","Открепить","取消固定",""
 "blueprint.label.nearest.guardian.structure","Closest Guardian Structure","","","Estructura Guardián más cercana","","","Ближайшая Структура Стражей","最近的守护者结构 (Guardian Structure)",""
-"blueprint.header.permit","Permit required","","","","","","","",""
-"blueprint.text.permit","The system where the engineer resides requires a permit to visit.","","","","","","","",""
+"blueprint.header.permit","Permit required","","","","","","Требуется разрешение","",""
+"blueprint.text.permit","The system where the engineer resides requires a permit to visit.","","","","","","Система, в которой находится инженер, требует разрешения на посещение.","",""
