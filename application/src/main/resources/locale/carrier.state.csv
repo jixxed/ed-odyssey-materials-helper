@@ -1,4 +1,4 @@
 "messageKey","","en","de","es","fr","pt","ru","zh","ka"
-"carrier.state.normal_operation","Normal","","","","","","","",""
-"carrier.state.debt","Debt","","","","","","","",""
-"carrier.state.unknown","Unknown","","","","","","","",""
+"carrier.state.normal_operation","Normal","","","","","","Нормальное","",""
+"carrier.state.debt","Debt","","","","","","Задолженность","",""
+"carrier.state.unknown","Unknown","","","","","","Неизвестное","",""
