@@ -56,6 +56,9 @@
     @include fixedWidth(35.75em);
 
     //controls
+    .copyable-location{
+      @include copyable-location;
+    }
 
     .switch {
       @include fixedWidth(35.20em);

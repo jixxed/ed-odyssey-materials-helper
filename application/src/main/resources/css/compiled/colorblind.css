@@ -100,6 +100,8 @@
                   .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .project-view .contents .copyable-location .permit-icon .glyph-icon {
                     -fx-fill: red;
                     -fx-font-size: 1em !important; }
+                  .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .project-view .contents .copyable-location .permit-icon:obtained .glyph-icon {
+                    -fx-fill: #709adc; }
                 .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .project-view .contents .copyable-location .distance {
                   -fx-text-fill: gray; }
             .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .project-view .buttons-contents {
@@ -154,6 +156,8 @@
                   .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .stats-blazers .trailblazers .copyable-location .permit-icon .glyph-icon {
                     -fx-fill: red;
                     -fx-font-size: 1em !important; }
+                  .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .stats-blazers .trailblazers .copyable-location .permit-icon:obtained .glyph-icon {
+                    -fx-fill: #709adc; }
                 .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .project-info .stats-blazers .trailblazers .copyable-location .distance {
                   -fx-text-fill: gray; }
         .app .application-screen .horizons-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials {
@@ -967,6 +971,8 @@
               .app .application-screen .horizons-tab-content .engineers-tab-content .engineer-grid .engineer-card .copyable-location .permit-icon .glyph-icon {
                 -fx-fill: red;
                 -fx-font-size: 1em !important; }
+              .app .application-screen .horizons-tab-content .engineers-tab-content .engineer-grid .engineer-card .copyable-location .permit-icon:obtained .glyph-icon {
+                -fx-fill: #709adc; }
             .app .application-screen .horizons-tab-content .engineers-tab-content .engineer-grid .engineer-card .copyable-location .distance {
               -fx-text-fill: gray; }
           .app .application-screen .horizons-tab-content .engineers-tab-content .engineer-grid .engineer-card .segmented-bar {
@@ -1195,6 +1201,8 @@
               .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .nearest-trader .copyable-location .permit-icon .glyph-icon {
                 -fx-fill: red;
                 -fx-font-size: 1em !important; }
+              .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .nearest-trader .copyable-location .permit-icon:obtained .glyph-icon {
+                -fx-fill: #709adc; }
             .app .application-screen .horizons-tab-content .materials-tab-content .horizons-material-overview .nearest-trader .copyable-location .distance {
               -fx-text-fill: gray; }
     .app .application-screen .horizons-tab-content .blueprint-menu {
@@ -1240,6 +1248,34 @@
         -fx-min-width: 35.75em;
         -fx-pref-width: 35.75em;
         -fx-max-width: 35.75em; }
+        .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .copyable-location {
+          -fx-font-weight: normal;
+          -fx-hgap: 0.25em; }
+          .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .copyable-location:hover {
+            -fx-cursor: hand; }
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .copyable-location:hover .location {
+              -fx-text-fill: #5aa9e6; }
+          .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .copyable-location .location {
+            -fx-text-fill: #2e92df; }
+          .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .copyable-location .copy-icon {
+            -fx-min-width: 1em;
+            -fx-pref-width: 1em;
+            -fx-max-width: 1em;
+            -fx-min-height: 1em;
+            -fx-pref-height: 1em;
+            -fx-max-height: 1em;
+            -fx-fill: gray; }
+          .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .copyable-location .permit-icon {
+            -fx-min-height: 1em;
+            -fx-pref-height: 1em;
+            -fx-max-height: 1em; }
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .copyable-location .permit-icon .glyph-icon {
+              -fx-fill: red;
+              -fx-font-size: 1em !important; }
+            .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .copyable-location .permit-icon:obtained .glyph-icon {
+              -fx-fill: #709adc; }
+          .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .copyable-location .distance {
+            -fx-text-fill: gray; }
         .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .switch {
           -fx-min-width: 35.2em;
           -fx-pref-width: 35.2em;
@@ -1487,6 +1523,8 @@
               .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-broker .copyable-location .permit-icon .glyph-icon {
                 -fx-fill: red;
                 -fx-font-size: 1em !important; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-broker .copyable-location .permit-icon:obtained .glyph-icon {
+                -fx-fill: #709adc; }
             .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-broker .copyable-location .distance {
               -fx-text-fill: gray; }
         .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure {
@@ -1526,6 +1564,8 @@
               .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure .copyable-location .permit-icon .glyph-icon {
                 -fx-fill: red;
                 -fx-font-size: 1em !important; }
+              .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure .copyable-location .permit-icon:obtained .glyph-icon {
+                -fx-fill: #709adc; }
             .app .application-screen .horizons-tab-content .blueprint-menu .blueprint-content .nearest-guardian-structure .copyable-location .distance {
               -fx-text-fill: gray; }
       .app .application-screen .horizons-tab-content .blueprint-menu .about-title-pane {
@@ -1696,6 +1736,8 @@
               .app .application-screen .horizons-tab-content .powerplay-tab-content .powerplay-flow .powerplay-card .copyable-location .permit-icon .glyph-icon {
                 -fx-fill: red;
                 -fx-font-size: 1em !important; }
+              .app .application-screen .horizons-tab-content .powerplay-tab-content .powerplay-flow .powerplay-card .copyable-location .permit-icon:obtained .glyph-icon {
+                -fx-fill: #709adc; }
             .app .application-screen .horizons-tab-content .powerplay-tab-content .powerplay-flow .powerplay-card .copyable-location .distance {
               -fx-text-fill: gray; }
     .app .application-screen .horizons-tab-content .search .filter-and-sort {
@@ -3829,6 +3871,8 @@
                 .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .copyable-location .permit-icon .glyph-icon {
                   -fx-fill: red;
                   -fx-font-size: 1em !important; }
+                .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .copyable-location .permit-icon:obtained .glyph-icon {
+                  -fx-fill: #709adc; }
               .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .copyable-location .distance {
                 -fx-text-fill: gray; }
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .distance-line {
@@ -3861,6 +3905,79 @@
             .app .application-screen .horizons-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .buttons {
               -fx-padding: 1em 0 0 0;
               -fx-spacing: 0.25em; }
+    .app .application-screen .horizons-tab-content .permit-tab {
+      -fx-background-insets: 0 0 0 0;
+      -fx-effect: none;
+      -fx-font-size: 1.35em; }
+    .app .application-screen .horizons-tab-content .permit-tab-content {
+      -fx-fit-to-width: true;
+      -fx-fit-to-height: true; }
+      .app .application-screen .horizons-tab-content .permit-tab-content .scroll-pane-content {
+        -fx-padding: 0.25em; }
+      .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow {
+        -fx-hgap: 0.25em;
+        -fx-vgap: 0.25em; }
+        .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card {
+          -fx-min-width: 32em;
+          -fx-pref-width: 32em;
+          -fx-max-width: 32em;
+          -fx-background-color: #0f0f0f; }
+          .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card:obtained .permit-content .permit-image .glyph-icon {
+            -fx-fill: #709adc; }
+            .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card:obtained .permit-content .permit-image .glyph-icon:hover {
+              -fx-fill: #2e92df; }
+          .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content {
+            -fx-spacing: 0.25em;
+            -fx-padding: 0.25em; }
+            .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-image {
+              -fx-cursor: hand;
+              -fx-min-width: 4em;
+              -fx-pref-width: 4em;
+              -fx-max-width: 4em;
+              -fx-min-height: 4em;
+              -fx-pref-height: 4em;
+              -fx-max-height: 4em; }
+              .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-image .glyph-icon {
+                -fx-fill: red;
+                -fx-font-size: 3.5em !important; }
+                .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-image .glyph-icon:hover {
+                  -fx-fill: #2e92df; }
+            .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-labels {
+              -fx-spacing: 0.25em; }
+              .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-labels .permit-title {
+                -fx-min-width: 27em;
+                -fx-pref-width: 27em;
+                -fx-max-width: 27em;
+                -fx-font-size: 1.2em;
+                -fx-font-weight: bold; }
+              .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-labels .copyable-location {
+                -fx-font-weight: normal;
+                -fx-hgap: 0.25em; }
+                .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-labels .copyable-location:hover {
+                  -fx-cursor: hand; }
+                  .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-labels .copyable-location:hover .location {
+                    -fx-text-fill: #5aa9e6; }
+                .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-labels .copyable-location .location {
+                  -fx-text-fill: #2e92df; }
+                .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-labels .copyable-location .copy-icon {
+                  -fx-min-width: 1em;
+                  -fx-pref-width: 1em;
+                  -fx-max-width: 1em;
+                  -fx-min-height: 1em;
+                  -fx-pref-height: 1em;
+                  -fx-max-height: 1em;
+                  -fx-fill: gray; }
+                .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-labels .copyable-location .permit-icon {
+                  -fx-min-height: 1em;
+                  -fx-pref-height: 1em;
+                  -fx-max-height: 1em; }
+                  .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-labels .copyable-location .permit-icon .glyph-icon {
+                    -fx-fill: red;
+                    -fx-font-size: 1em !important; }
+                  .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-labels .copyable-location .permit-icon:obtained .glyph-icon {
+                    -fx-fill: #709adc; }
+                .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-labels .copyable-location .distance {
+                  -fx-text-fill: gray; }
     .app .application-screen .horizons-tab-content .horizons-tab-pane {
       -fx-background-insets: 0; }
       .app .application-screen .horizons-tab-content .horizons-tab-pane:left > .tab-header-area {
@@ -4205,6 +4322,8 @@
               .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .copyable-location .permit-icon .glyph-icon {
                 -fx-fill: red;
                 -fx-font-size: 1em !important; }
+              .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .copyable-location .permit-icon:obtained .glyph-icon {
+                -fx-fill: #709adc; }
             .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .copyable-location .distance {
               -fx-text-fill: gray; }
           .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .name {
@@ -5564,6 +5683,8 @@
                 .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .copyable-location .permit-icon .glyph-icon {
                   -fx-fill: red;
                   -fx-font-size: 1em !important; }
+                .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .copyable-location .permit-icon:obtained .glyph-icon {
+                  -fx-fill: #709adc; }
               .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .copyable-location .distance {
                 -fx-text-fill: gray; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .shortest-path .shortest-path-flow .shortest-path-item .distance-line {
@@ -5822,6 +5943,8 @@
                 .carrier-info-popover .carrier-info .carrier-title-line .carrier-labels .copyable-location .permit-icon .glyph-icon {
                   -fx-fill: red;
                   -fx-font-size: 1em !important; }
+                .carrier-info-popover .carrier-info .carrier-title-line .carrier-labels .copyable-location .permit-icon:obtained .glyph-icon {
+                  -fx-fill: #709adc; }
               .carrier-info-popover .carrier-info .carrier-title-line .carrier-labels .copyable-location .distance {
                 -fx-text-fill: gray; }
               .carrier-info-popover .carrier-info .carrier-title-line .carrier-labels .copyable-location .glyph-icon {
@@ -5935,6 +6058,8 @@
       .app .material-popover .copyable-location .permit-icon .glyph-icon {
         -fx-fill: red;
         -fx-font-size: 1em !important; }
+      .app .material-popover .copyable-location .permit-icon:obtained .glyph-icon {
+        -fx-fill: #709adc; }
     .app .material-popover .copyable-location .distance {
       -fx-text-fill: gray; }
   .app .material-popover .label {
@@ -5997,6 +6122,8 @@
         .app .material-popover-content .selling-stations .copyable-location .permit-icon .glyph-icon {
           -fx-fill: red;
           -fx-font-size: 1em !important; }
+        .app .material-popover-content .selling-stations .copyable-location .permit-icon:obtained .glyph-icon {
+          -fx-fill: #709adc; }
       .app .material-popover-content .selling-stations .copyable-location .distance {
         -fx-text-fill: gray; }
     .app .material-popover-content .title-row {

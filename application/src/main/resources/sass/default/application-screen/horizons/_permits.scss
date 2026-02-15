@@ -1,0 +1,71 @@
+.permit-tab {
+  @include tab;
+}
+
+.permit-tab-content {
+
+
+  @include scroll-pane-content;
+
+  .permit-flow {
+    @include hvGap(0.25em);
+
+
+    .permit-card {
+      @include fixedWidth(32em);
+      -fx-background-color: $background-color-dark;
+
+      &:obtained {
+        .permit-content {
+          .permit-image {
+            .glyph-icon {
+              -fx-fill: $text-color-green;
+              &:hover {
+                -fx-fill: $text-color-blue;
+              }
+            }
+          }
+        }
+      }
+
+      .permit-content {
+        -fx-spacing: 0.25em;
+        -fx-padding: 0.25em;
+
+        .permit-image {
+          -fx-cursor: hand;
+
+          @include fixedWidth(4em);
+          @include fixedHeight(4em);
+
+          .glyph-icon {
+            -fx-fill: $text-color-dark-red;
+            -fx-font-size: 3.5em !important;
+
+            &:hover {
+              -fx-fill: $text-color-blue;
+            }
+          }
+        }
+
+        .permit-labels {
+          -fx-spacing: 0.25em;
+
+          .permit-title {
+            @include fixedWidth(27em);
+            -fx-font-size: 1.2em;
+            -fx-font-weight: bold;
+          }
+
+          .copyable-location {
+            @include copyable-location;
+          }
+
+          .permit-allegiance {
+          }
+        }
+
+      }
+    }
+  }
+}

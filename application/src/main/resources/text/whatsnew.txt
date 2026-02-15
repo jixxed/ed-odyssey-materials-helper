@@ -1,3 +1,9 @@
+Version 3.4.0
+-------------
+New permits tab where you can configure the permits you collected. (this can not be automated currently)
+Added permit warning to engineer unlock information
+Permit location will show in green when you have the permit set as unlocked
+
 Version 3.3.10
 -------------
 Added around 6.8K brain trees and crystal shard locations so material popups show closest locations galaxy wide

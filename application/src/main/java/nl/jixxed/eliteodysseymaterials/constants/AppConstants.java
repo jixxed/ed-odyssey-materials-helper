@@ -25,6 +25,7 @@ public class AppConstants {
     public static final String SHIP_LEGACY_MODULES_FILE = "horizons_ships_legacy_modules.json";
     public static final String HORIZONS_PINNED_BLUEPRINTS_FILE = "horizons_pinned_blueprints.json";
     public static final String ODYSSEY_FAVOURITES_FILE = "odyssey_favourites.json";
+    public static final String PERMITS_FILE = "permits.json";
     public static final String CARGO_FILE = "Cargo.json";
     public static final String STATUS_FILE = "Status.json";
 

@@ -11,6 +11,7 @@ import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.PermitService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -19,6 +20,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.HorizonsWishlistChangedEven
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsWishlistSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.jixxed.eliteodysseymaterials.templates.generic.CopyableLocation;
 import nl.jixxed.eliteodysseymaterials.templates.generic.EngineerBlueprintLabel;
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
 import nl.jixxed.eliteodysseymaterials.templates.generic.MissionIngredient;
@@ -59,7 +61,8 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
 
 
         initDescription();
-        if (this.blueprint instanceof HorizonsEngineerBlueprint) {
+        if (this.blueprint instanceof HorizonsEngineerBlueprint engineerBlueprint) {
+            initPermit(engineerBlueprint);
             initObjectivesLabel();
             initObjectives();
         }
@@ -196,6 +199,20 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
                         .toList())
                 .build();
         this.getNodes().add(levelingFlow);
+    }
+    private void initPermit(final HorizonsEngineerBlueprint engineerBlueprint) {
+        if (PermitService.isPermitSystem(engineerBlueprint.getEngineer().getStarSystem())) {
+            CopyableLocation location = new CopyableLocation(engineerBlueprint.getEngineer().getStarSystem());
+            final DestroyableLabel permitHeader = LabelBuilder.builder()
+                    .withStyleClasses(TITLE_STYLE_CLASS, SPACING)
+                    .withText("blueprint.header.permit")
+                    .build();
+            final DestroyableLabel permitText = LabelBuilder.builder()
+                    .withStyleClasses(SPACING)
+                    .withText("blueprint.text.permit")
+                    .build();
+            this.getNodes().addAll(permitHeader, permitText, location);
+        }
     }
 
 

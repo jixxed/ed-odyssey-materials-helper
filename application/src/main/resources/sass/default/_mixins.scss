@@ -214,6 +214,11 @@
       -fx-fill: $text-color-dark-red;
       -fx-font-size: 1em !important;
     }
+    &:obtained{
+      .glyph-icon {
+        -fx-fill: $text-color-green;
+      }
+    }
   }
 
   .distance {

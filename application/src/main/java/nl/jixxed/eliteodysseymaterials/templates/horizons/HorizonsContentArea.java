@@ -21,6 +21,7 @@ import nl.jixxed.eliteodysseymaterials.templates.horizons.commodities.HorizonsCo
 import nl.jixxed.eliteodysseymaterials.templates.horizons.engineers.HorizonsEngineersTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.materials.HorizonsMaterialTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.menu.HorizonsBlueprintBar;
+import nl.jixxed.eliteodysseymaterials.templates.horizons.permits.HorizonsPermitsTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.powerplay.PowerplayTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.HorizonsShipBuilderTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishlistTab;
@@ -34,6 +35,7 @@ public class HorizonsContentArea extends DestroyableAnchorPane implements Destro
     private DestroyableVBox body;
     private HorizonsWishlistTab horizonsWishlistTab;
     private HorizonsShipBuilderTab horizonsShipBuilderTab;
+    private HorizonsPermitsTab horizonsPermitsTab;
 
     public HorizonsContentArea() {
         initComponents();
@@ -55,12 +57,14 @@ public class HorizonsContentArea extends DestroyableAnchorPane implements Destro
         this.horizonsWishlistTab.setClosable(false);
         this.horizonsShipBuilderTab = new HorizonsShipBuilderTab();
         this.horizonsShipBuilderTab.setClosable(false);
+        horizonsPermitsTab = new HorizonsPermitsTab();
+        horizonsPermitsTab.setClosable(false);
         HorizonsColonisationTab horizonsColonisationTab = new HorizonsColonisationTab();
         horizonsColonisationTab.setClosable(false);
 
         HorizonsSearchBar searchBar = new HorizonsSearchBar();
         this.tabs = TabPaneBuilder.builder()
-                .withTabs(horizonsMaterialOverview, horizonsCommoditiesOverview, this.horizonsWishlistTab, this.horizonsShipBuilderTab, horizonsEngineersTab, powerplayTab, horizonsColonisationTab)
+                .withTabs(horizonsMaterialOverview, horizonsCommoditiesOverview, this.horizonsWishlistTab, this.horizonsShipBuilderTab, horizonsEngineersTab, powerplayTab, horizonsColonisationTab, horizonsPermitsTab)
                 .withStyleClass("horizons-tab-pane")
                 .withSelectedItemListener((_, _, newValue) -> {
                     if (newValue != null) {

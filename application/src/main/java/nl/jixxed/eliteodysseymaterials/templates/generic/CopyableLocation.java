@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.generic;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import javafx.css.PseudoClass;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import lombok.Getter;
@@ -17,6 +18,7 @@ import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.PermitService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationChangedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.PermitEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.FontAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
@@ -93,6 +95,7 @@ public class CopyableLocation extends DestroyableFlowPane implements Destroyable
     @Override
     public void initEventHandling() {
         register(EventService.addListener(true, this, LocationChangedEvent.class, _ -> update()));
+        register(EventService.addListener(true, this, PermitEvent.class, _ -> update()));
     }
 
     private void update() {
@@ -100,6 +103,7 @@ public class CopyableLocation extends DestroyableFlowPane implements Destroyable
         boolean permitSystem = PermitService.isPermitSystem(starSystem);
         permitIcon.setVisible(permitSystem);
         permitIcon.setManaged(permitSystem);
+        permitIcon.pseudoClassStateChanged(PseudoClass.getPseudoClass("obtained"), PermitService.havePermit(starSystem));
         location.setText(this.station.isEmpty() ? starSystem.getName() : this.station + " | " + starSystem.getName());
         final Double starDistance = starSystem.getDistance(currentLocation.getStarSystem());
         if (starDistance > 0D || distanceFromStar == 0D) {
