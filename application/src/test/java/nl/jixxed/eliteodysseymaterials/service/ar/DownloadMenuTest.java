@@ -1,10 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.service.ar;
 
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 import nu.pattern.OpenCV;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -17,9 +15,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
-@Disabled
+@Tag("manual")
 class DownloadMenuTest {
     private static Object[][] heightTests() {
         return new Object[][]{

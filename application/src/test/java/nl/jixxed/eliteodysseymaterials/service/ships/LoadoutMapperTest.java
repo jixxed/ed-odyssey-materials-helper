@@ -26,6 +26,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module;
 import nl.jixxed.eliteodysseymaterials.service.ShipModuleService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -645,7 +646,7 @@ class LoadoutMapperTest {
     }
 
     @Test
-    @Disabled
+    @Tag("manual")
     public void rebuy() {
 //        "HullValue": 6136672,
 //        "ModulesValue": 38003650,

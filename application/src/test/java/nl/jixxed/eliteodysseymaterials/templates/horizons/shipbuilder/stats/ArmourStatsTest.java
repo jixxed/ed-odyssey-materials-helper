@@ -16,6 +16,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -294,7 +295,7 @@ class ArmourStatsTest {
      * Tests that start with EXP or MOD_REV are still failing
      * @param sorts
      */
-    @Disabled
+    @Tag("manual")
     @ParameterizedTest
     @MethodSource("sorts")
     void testResistanceSort(List<Comp> sorts) {

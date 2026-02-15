@@ -3,7 +3,7 @@ import org.gradle.internal.os.OperatingSystem;
 buildscript {
     repositories {
         maven {
-            url "https://plugins.gradle.org/m2/"
+            url = "https://plugins.gradle.org/m2/"
         }
     }
     dependencies {
@@ -19,7 +19,7 @@ plugins {
     id 'org.beryx.jlink' version '3.2.0'
 }
 
-group 'nl.jixxed'
+group = 'nl.jixxed'
 
 
 java {
@@ -210,10 +210,10 @@ dependencies {
     implementation "ch.qos.logback:logback-classic"
     implementation "org.slf4j:slf4j-api"
 
-    implementation group: "org.openjfx", name: "javafx-base", classifier: "${platform}"
-    implementation group: "org.openjfx", name: "javafx-controls", classifier: "${platform}"
-    implementation group: "org.openjfx", name: "javafx-fxml", classifier: "${platform}"
-    implementation group: "org.openjfx", name: "javafx-graphics", classifier: "${platform}"
+    implementation "org.openjfx:javafx-base::${platform}"
+    implementation "org.openjfx:javafx-controls::${platform}"
+    implementation "org.openjfx:javafx-fxml::${platform}"
+    implementation "org.openjfx:javafx-graphics::${platform}"
 }
 
 tasks.withType(JavaExec).configureEach {

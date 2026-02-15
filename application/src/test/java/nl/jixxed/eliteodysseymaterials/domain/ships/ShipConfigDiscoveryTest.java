@@ -9,6 +9,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military.
 import nl.jixxed.eliteodysseymaterials.domain.ships.utility.ShieldBooster;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats.ModuleProfile;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -17,8 +18,9 @@ import static nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier.*;
 
 @Slf4j
 public class ShipConfigDiscoveryTest {
-//    @Disabled
+
     @Test
+    @Tag("manual")
     void findModuleStats() {
 
         ShipModule.getBasicModules();

@@ -8,6 +8,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -15,7 +16,7 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class HorizonsEngineerCardTest {
-    @Disabled
+    @Tag("manual")
     @Test
     void listBlueprints() {
         for (Engineer engineer : Arrays.stream(Engineer.values()).filter(Engineer::isHorizons).toList()) {

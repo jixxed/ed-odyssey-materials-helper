@@ -69,7 +69,7 @@ tasks.register('compileSassColorblind', compileSass.getClass()) {
     sourceMapEmbed = false
     sourceMapEnabled = false
 }
-tasks.register("generateSecrets")  {
+tasks.register("generateSecrets") {
     doLast {
         def secretFile = file("src/main/resources/secret.properties")
         secretFile.parentFile.mkdirs()
@@ -135,12 +135,13 @@ def isRepoReachable(String url) {
         return false
     }
 }
+
 repositories {
     mavenCentral {
     }
     maven {
-        name 'repsy'
-        url "https://repo.repsy.io/mvn/jixxed/maven/"
+        name = 'repsy'
+        url = "https://repo.repsy.io/mvn/jixxed/maven/"
     }
     maven { url = 'https://jitpack.io' }
     if (proprietary) {
@@ -151,11 +152,11 @@ repositories {
     }
     if (proprietaryUser && proprietaryPass) {
         maven {
-            name 'repsy'
-            url "https://repo.repsy.io/mvn/jixxed/proprietary/"
+            name = 'repsy'
+            url = "https://repo.repsy.io/mvn/jixxed/proprietary/"
             credentials {
-                username proprietaryUser
-                password proprietaryPass
+                username = proprietaryUser
+                password = proprietaryPass
             }
         }
     }
@@ -318,12 +319,12 @@ dependencies {
     implementation("org.jfxtras:jmetro") {
         exclude group: "org.openjfx"
     }
-    implementation group: "org.openjfx", name: "javafx-base", classifier: "${platform}"
-    implementation group: "org.openjfx", name: "javafx-controls", classifier: "${platform}"
-    implementation group: "org.openjfx", name: "javafx-fxml", classifier: "${platform}"
-    implementation group: "org.openjfx", name: "javafx-graphics", classifier: "${platform}"
-    implementation group: "org.openjfx", name: "javafx-media", classifier: "${platform}"
-    implementation group: "org.openjfx", name: "javafx-swing", classifier: "${platform}"
+    implementation "org.openjfx:javafx-base::${platform}"
+    implementation "org.openjfx:javafx-controls::${platform}"
+    implementation "org.openjfx:javafx-fxml::${platform}"
+    implementation "org.openjfx:javafx-graphics::${platform}"
+    implementation "org.openjfx:javafx-media::${platform}"
+    implementation "org.openjfx:javafx-swing::${platform}"
     implementation "org.controlsfx:controlsfx"
     testImplementation "de.saxsys:mvvmfx-testing-utils"
     testImplementation "org.openjfx:javafx-swing"
@@ -464,8 +465,25 @@ run {
     ]
     //, '-Xmx1G', '-XX:+UseCompressedOops', '-XX:+PrintGCDetails', '-XX:SoftRefLRUPolicyMSPerMB=100'
 }
+
 test {
     useJUnitPlatform()
+    doFirst {
+        // starting a specific test allows ones with the "manual" tag to be executed
+        // if the entire suite is ran, the "manual" tagged tests are excluded
+        def runningSingleTest = !filter.getIncludePatterns().isEmpty()
+        runningSingleTest = runningSingleTest || !filter.getCommandLineIncludePatterns().isEmpty()
+
+        println "Running tests in " + (runningSingleTest ? "single-test mode" : "full-suite mode")
+
+        useJUnitPlatform {
+            if (runningSingleTest) {
+                includeTags 'manual'
+            } else {
+                excludeTags 'manual'
+            }
+        }
+    }
     jvmArgs += [
             "-javaagent:${configurations.testRuntimeClasspath.find { it.name.contains('mockito-core') }}"
     ]

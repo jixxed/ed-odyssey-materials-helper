@@ -8,7 +8,7 @@ import nl.jixxed.eliteodysseymaterials.service.ar.*;
 import nl.jixxed.tess4j.TesseractException;
 import nu.pattern.OpenCV;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -29,7 +29,7 @@ import java.util.Map;
 //tests fail due to colors
 @Slf4j
 public class ARServiceTest {
-    @Disabled
+    @Tag("manual")
     @Test
     public void isBartenderMenu() {
         // Load the test image resource
@@ -56,7 +56,7 @@ public class ARServiceTest {
         }
     }
 
-    @Disabled
+    @Tag("manual")
     @Test
     public void isNotBartenderMenu() {
         // Load the test image resource
@@ -92,7 +92,7 @@ public class ARServiceTest {
                 // Add more test cases as needed
         };
     }
-    @Disabled
+    @Tag("manual")
     @ParameterizedTest()
     @MethodSource("downloadPortTests")
     public void testForMaterials(ApplicationLocale locale, String image, OdysseyMaterial[] expected) {

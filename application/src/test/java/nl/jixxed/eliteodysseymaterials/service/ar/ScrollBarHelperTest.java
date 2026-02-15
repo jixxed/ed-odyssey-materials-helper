@@ -1,12 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.service.ar;
 
-import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
-import nl.jixxed.eliteodysseymaterials.enums.Data;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nu.pattern.OpenCV;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -18,8 +14,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 
 import static org.assertj.core.data.Offset.offset;
-import static org.junit.jupiter.api.Assertions.*;
-@Disabled
+@Tag("manual")
 class ScrollBarHelperTest {
     private static Object[][] scrollBarHeightTests() {
         return new Object[][]{
