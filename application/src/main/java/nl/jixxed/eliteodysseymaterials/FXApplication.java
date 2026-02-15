@@ -62,6 +62,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -309,13 +310,13 @@ public class FXApplication extends Application {
      */
     private void configureHotKeys() {
         Map<? extends KeyCombination, ? extends Runnable> keyCodeActions = Map.of(
-                new KeyCodeCombination(KeyCode.DELETE), () -> EventService.publish(new DeleteSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab())),
-                new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN), () -> EventService.publish(new CopySelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab())),
-                new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN), () -> EventService.publish(new ExportSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab())),
-                new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN), () -> EventService.publish(new CreateItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab())),
-                new KeyCodeCombination(KeyCode.R, KeyCombination.CONTROL_DOWN), () -> EventService.publish(new ResetSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab())),
-                new KeyCodeCombination(KeyCode.D, KeyCombination.CONTROL_DOWN), () -> EventService.publish(new CloneSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab())),
-                new KeyCodeCombination(KeyCode.F2), () -> EventService.publish(new RenameSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab())),
+                new KeyCodeCombination(KeyCode.DELETE),                         () -> Optional.ofNullable(applicationScreen).ifPresent(applicationScreen -> EventService.publish(new DeleteSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab()))),
+                new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN), () -> Optional.ofNullable(applicationScreen).ifPresent(applicationScreen -> EventService.publish(new CopySelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab()))),
+                new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN), () -> Optional.ofNullable(applicationScreen).ifPresent(applicationScreen -> EventService.publish(new ExportSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab()))),
+                new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN), () -> Optional.ofNullable(applicationScreen).ifPresent(applicationScreen -> EventService.publish(new CreateItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab()))),
+                new KeyCodeCombination(KeyCode.R, KeyCombination.CONTROL_DOWN), () -> Optional.ofNullable(applicationScreen).ifPresent(applicationScreen -> EventService.publish(new ResetSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab()))),
+                new KeyCodeCombination(KeyCode.D, KeyCombination.CONTROL_DOWN), () -> Optional.ofNullable(applicationScreen).ifPresent(applicationScreen -> EventService.publish(new CloneSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab()))),
+                new KeyCodeCombination(KeyCode.F2),                             () -> Optional.ofNullable(applicationScreen).ifPresent(applicationScreen -> EventService.publish(new RenameSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab()))),
                 new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN), () -> {
                     final String clipboard = Clipboard.getSystemClipboard().getString();
                     if (clipboard != null && clipboard.startsWith("edomh://")) {
