@@ -8,7 +8,7 @@ repositories {
 
 dependencies {
     // Jackson (needed for JsonNode)
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.21.0'
 
     // jsonschema2pojo core (needed for AbstractAnnotator)
     implementation 'org.jsonschema2pojo:jsonschema2pojo-core:1.3.3'
