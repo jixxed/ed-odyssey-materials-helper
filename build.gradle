@@ -142,7 +142,7 @@ ext {
     version_jackson = "2.21.0"
     version_jna = "5.18.1"
     version_junit_jupiter = "6.0.3"
-    version_junit_platform = "1.14.2"
+    version_junit_platform = "1.14.3"
     version_javafx = "24.0.1" //25.0.2 still breaks powerplay tab, regression from https://bugs.openjdk.org/browse/JDK-8350149
     version_controlsfx = "11.2.3"
     version_scribejava = "8.3.3"
