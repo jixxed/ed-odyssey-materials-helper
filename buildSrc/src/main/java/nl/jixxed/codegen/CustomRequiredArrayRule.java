@@ -23,7 +23,7 @@ public class CustomRequiredArrayRule extends RequiredArrayRule {
     }
 
     public JDefinedClass apply(String nodeName, JsonNode node, JsonNode parent, JDefinedClass jclass, Schema schema) {
-        List<String> requiredFieldMethods = new ArrayList();
+        List<String> requiredFieldMethods = new ArrayList<>();
         JsonNode properties = schema.getContent().get("properties");
         Iterator<JsonNode> iterator = node.elements();
 
