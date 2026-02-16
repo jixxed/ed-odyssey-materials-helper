@@ -1,3 +1,7 @@
+Version 3.4.1
+-------------
+Added an additional 15K brain trees
+
 Version 3.4.0
 -------------
 New permits tab where you can configure the permits you collected. (this can not be automated currently)

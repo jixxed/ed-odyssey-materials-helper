@@ -798,3 +798,32 @@ tasks.named('compileSass') {
     dependsOn tasks.named('compileSassDefault')
     dependsOn tasks.named('compileSassColorblind')
 }
+
+
+tasks.register('updateBrainTrees', UpdatePOI) {
+    type = "Brain Trees"
+    materials = new String[]{
+            "Selenium",
+            "Polonium",
+            "Ruthenium",
+            "Tellurium",
+            "Technetium",
+            "Yttrium",
+            "Antimony"
+    }
+    outputFile = layout.buildDirectory.file("${project.projectDir}/src/main/resources/poi/braintrees.jsonl")
+    outputs.upToDateWhen { false }
+}
+tasks.register('updateCrystalShards', UpdatePOI) {
+    type = "Crystalline Shards"
+    materials = new String[]{
+            "Polonium",
+            "Ruthenium",
+            "Tellurium",
+            "Technetium",
+            "Yttrium",
+            "Antimony"
+    }
+    outputFile = layout.buildDirectory.file("${project.projectDir}/src/main/resources/poi/crystalshards.jsonl")
+    outputs.upToDateWhen { false }
+}

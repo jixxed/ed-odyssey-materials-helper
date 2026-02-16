@@ -11,7 +11,5 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-New permits tab where you can configure the permits you collected. (this can not be automated currently)
-Added permit warning to engineer unlock information
-Permit location will show in green when you have the permit set as unlocked
+Added an additional 15K brain trees
 ```

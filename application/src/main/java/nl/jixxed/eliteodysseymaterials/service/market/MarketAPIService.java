@@ -141,8 +141,8 @@ public class MarketAPIService {
                                 .build();
                         final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-                        MarketSaveResponse MarketSaveResponse = OBJECT_MAPPER.readValue(send.body(), MarketSaveResponse.class);
-                        String recallUrl = "https://" + domainName + "/api/stations/search/recall/" + MarketSaveResponse.getSearch_reference();
+                        MarketSaveResponse marketSaveResponse = OBJECT_MAPPER.readValue(send.body(), MarketSaveResponse.class);
+                        String recallUrl = "https://" + domainName + "/api/stations/search/recall/" + marketSaveResponse.getSearch_reference();
                         final HttpRequest request2 = HttpRequest.newBuilder()
                                 .uri(URI.create(recallUrl))
                                 .header("User-Agent", VersionService.getUserAgent())
