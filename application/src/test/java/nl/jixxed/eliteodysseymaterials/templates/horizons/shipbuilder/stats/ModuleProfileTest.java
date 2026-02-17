@@ -1,8 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ModuleProfileTest {
 
@@ -54,15 +55,28 @@ class ModuleProfileTest {
         assertEquals(maximumMultiplier, moduleProfile.getMassCurveMultiplier(minimumMass));
 
         // Test at optimal mass
-        assertEquals(optimalMultiplier, moduleProfile.getMassCurveMultiplier(optimalMass));
+        assertEquals(maximumMultiplier, moduleProfile.getMassCurveMultiplier(optimalMass));
 
         // Test at maximum mass
         assertEquals(minimumMultiplier, moduleProfile.getMassCurveMultiplier(maximumMass));
 
         // Test at a mass between optimal and maximum
-        assertEquals(0.706, moduleProfile.getMassCurveMultiplier(400), 0.0005);
+        Assertions.assertAll(
+                () -> assertEquals(0.5, moduleProfile.getMassCurveMultiplier(150), 0.0005),
+                () -> assertEquals(0.5, moduleProfile.getMassCurveMultiplier(200), 0.0005),
+                () -> assertEquals(0.5, moduleProfile.getMassCurveMultiplier(250), 0.0005),
+                () -> assertEquals(0.5, moduleProfile.getMassCurveMultiplier(300), 0.0005),
+                () -> assertEquals(0.5, moduleProfile.getMassCurveMultiplier(350), 0.0005),
+                () -> assertEquals(0.5, moduleProfile.getMassCurveMultiplier(400), 0.0005),
+                () -> assertEquals(0.5, moduleProfile.getMassCurveMultiplier(450), 0.0005),
+                () -> assertEquals(0.5, moduleProfile.getMassCurveMultiplier(500), 0.0005),
+                () -> assertEquals(0.5, moduleProfile.getMassCurveMultiplier(550), 0.0005),
+                () -> assertEquals(0.5, moduleProfile.getMassCurveMultiplier(600), 0.0005),
+                () -> assertEquals(0.5, moduleProfile.getMassCurveMultiplier(650), 0.0005),
+                () -> assertEquals(0.5, moduleProfile.getMassCurveMultiplier(700), 0.0005),
+                () -> assertEquals(0.5, moduleProfile.getMassCurveMultiplier(750), 0.0005)
+        );
         // Test at a mass between optimal and minimum
-        assertEquals(1.095, moduleProfile.getMassCurveMultiplier(150), 0.0005);
 
         // Test below minimum mass
         assertEquals(maximumMultiplier, moduleProfile.getMassCurveMultiplier(minimumMass - 50));

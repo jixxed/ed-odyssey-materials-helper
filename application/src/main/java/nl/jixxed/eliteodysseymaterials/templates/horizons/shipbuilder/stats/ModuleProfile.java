@@ -9,14 +9,14 @@ public record ModuleProfile(Double minimumMass, Double optimalMass, Double maxim
         double log = Math.log(
                 (maximumMass - optimalMass) / (maximumMass - minimumMass)
         );
-        log = log == 0.0 ? Precision.EPSILON : log;
-        return (
+        log = log == 0.0 ? -Precision.EPSILON : log;
+        return Math.clamp((
                 minimumMultiplier + Math.pow(
                         Math.clamp((maximumMass - mass) / (maximumMass - minimumMass), 0.0, 1.0),
                         Math.log(
                                 (optimalMultiplier - minimumMultiplier) / (maximumMultiplier - minimumMultiplier)
                         ) / log
                 ) * (maximumMultiplier - minimumMultiplier)
-        );
+        ), minimumMultiplier, maximumMultiplier);
     }
 }
