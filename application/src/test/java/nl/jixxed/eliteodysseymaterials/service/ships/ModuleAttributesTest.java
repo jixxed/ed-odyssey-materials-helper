@@ -6,7 +6,6 @@ import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsExperimentalEffectBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
@@ -15,7 +14,6 @@ import nl.jixxed.eliteodysseymaterials.service.ShipModuleService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -73,7 +71,10 @@ public class ModuleAttributesTest {
                 HorizonsModifier.MAXIMUM_MULTIPLIER_SPEED,
                 HorizonsModifier.OPTIMAL_MULTIPLIER_ROTATION,
                 HorizonsModifier.MINIMUM_MULTIPLIER_ROTATION,
-                HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION
+                HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION,
+                HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER,
+                HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER,
+                HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER
         ).contains(attr);
     }
 }
