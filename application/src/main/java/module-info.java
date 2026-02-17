@@ -54,6 +54,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires javafx.base;
     requires com.fasterxml.jackson.annotation;
     requires maven.artifact;
+    requires org.apache.commons.math3;
 
     uses nl.jixxed.ed.awesome.api.FontLoader;
     uses nl.jixxed.ed.confidential.api.SecrecyLoader;

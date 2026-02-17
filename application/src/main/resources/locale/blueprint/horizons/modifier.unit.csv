@@ -231,3 +231,6 @@
 "modifier.horizons.unit.neutron_boost","x","","","","","","x","倍",""
 "modifier.horizons.unit.max_glide_angle","°","","","","","","°","°",""
 "modifier.horizons.unit.max_glide_speed","m/s","","","","","","м/с","米/秒",""
+"modifier.horizons.unit.minimum_boosted_multiplier","x","","","","x","","x","x","x"
+"modifier.horizons.unit.optimal_boosted_multiplier","x","","","","x","","x","x","x"
+"modifier.horizons.unit.maximum_boosted_multiplier","x","","","","x","","x","x","x"

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.*;
+import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.MultiCannon;
 import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.PulseLaser;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.special.CargoHatch;
@@ -1930,6 +1931,46 @@ public class Ship {
                     Slot.builder().slotType(SlotType.OPTIONAL).index(12).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build(),//Slot13_Size1
                     Slot.builder().slotType(SlotType.OPTIONAL).index(13).slotSize(1).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build()//Slot14_Size1
             ));
+
+    public static final Ship KESTREL_MK_II = new Ship(//Kestrel Mk II
+            ShipType.KESTREL_MK_II,
+            0,
+            0,
+            ShipSpecs.KESTREL_MK_II,
+            List.of(
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(926).y(657).index(0).slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1212).y(389).index(1).slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1365).y(428).index(2).slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1333).y(360).index(3).slotSize(2).shipModule(MultiCannon.MULTI_CANNON_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1054).y(340).index(4).slotSize(2).shipModule(MultiCannon.MULTI_CANNON_1_F_F).build()
+            ),
+            List.of(
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1146).y(590).index(0).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1082).y(509).index(1).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(938).y(261).index(2).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(765).y(403).index(3).slotSize(0).build()
+            ),
+            List.of(
+                    Slot.builder().slotType(SlotType.CORE_ARMOUR).index(0).slotSize(1).shipModule(Armour.SMALLCOMBAT01_NX_ARMOUR_GRADE_1).build(),
+                    Slot.builder().slotType(SlotType.CORE_POWER_PLANT).index(1).slotSize(5).shipModule(PowerPlant.POWER_PLANT_5_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_THRUSTERS).index(2).slotSize(5).shipModule(Thrusters.THRUSTERS_5_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_FRAME_SHIFT_DRIVE).index(3).slotSize(4).shipModule(FrameShiftDrive.FRAME_SHIFT_DRIVE_OVERCHARGE_4_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_LIFE_SUPPORT).index(4).slotSize(1).shipModule(LifeSupport.LIFE_SUPPORT_1_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_POWER_DISTRIBUTION).index(5).slotSize(5).shipModule(PowerDistributor.POWER_DISTRIBUTOR_5_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_SENSORS).index(6).slotSize(2).shipModule(Sensors.SENSORS_2_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(4).shipModule(FuelTank.FUEL_TANK_4_C).build()
+            ),
+            List.of(
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(5).shipModule(ShieldGenerator.SHIELD_GENERATOR_5_E).build(),//Slot01_Size5
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(4).build(),//Slot02_Size4
+                    Slot.builder().slotType(SlotType.MILITARY).index(2).slotSize(4).build(),//Military01
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).namedIndex(3).slotSize(3).shipModule(CargoRack.CARGO_RACK_2_E).build(),//Slot03_Size3
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).namedIndex(4).slotSize(2).build(),//Slot04_Size2
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).namedIndex(5).slotSize(2).build(),//Slot05_Size2
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).namedIndex(6).slotSize(2).shipModule(Computer.SUPERCRUISE_ASSIST).build(),//Slot06_Size2
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).namedIndex(7).slotSize(1).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build()//Slot07_Size1
+
+            ));
     public static final List<Ship> ALL = List.of(
             SIDE_WINDER,
             EAGLE,
@@ -1976,7 +2017,8 @@ public class Ship {
             CORSAIR,
             PANTHER_CLIPPER_MK_II,
             LAKONMINER,
-            EXPLORER_NX
+            EXPLORER_NX,
+            KESTREL_MK_II
     );
 
 

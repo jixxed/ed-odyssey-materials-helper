@@ -11,5 +11,7 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Added an additional 15K brain trees
+Added Kestrel Mk II - Still WIP, but armour, shields, jumprange, basic handling and speed should be alright
+Added Mk II Agile Boost Thrusters - Kestrel Mk II
+Added Mk II Plasma Shock Accelerator - Kestrel Mk II
 ```

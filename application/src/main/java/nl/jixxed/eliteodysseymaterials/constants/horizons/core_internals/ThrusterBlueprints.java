@@ -35,6 +35,9 @@ public class ThrusterBlueprints {
                                     Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.03, 0.08))),
                                     Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.03, 0.08))),
                                     Map.entry(HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.03, 0.08))),
+                                    Map.entry(HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.03, 0.08))),
+                                    Map.entry(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.03, 0.08))),
+                                    Map.entry(HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.03, 0.08))),
                                     Map.entry(HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("-20%", true, percentageNegative(0.1, 0.20)))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
@@ -62,6 +65,9 @@ public class ThrusterBlueprints {
                                     Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+13%", true, percentagePositive(0.08, 0.13))),
                                     Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+13%", true, percentagePositive(0.08, 0.13))),
                                     Map.entry(HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+13%", true, percentagePositive(0.08, 0.13))),
+                                    Map.entry(HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+13%", true, percentagePositive(0.08, 0.13))),
+                                    Map.entry(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+13%", true, percentagePositive(0.08, 0.13))),
+                                    Map.entry(HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+13%", true, percentagePositive(0.08, 0.13))),
                                     Map.entry(HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("-30%", true, percentageNegative(0.20, 0.30)))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
@@ -90,6 +96,9 @@ public class ThrusterBlueprints {
                                     Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+18%", true, percentagePositive(0.13, 0.18))),
                                     Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+18%", true, percentagePositive(0.13, 0.18))),
                                     Map.entry(HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+18%", true, percentagePositive(0.13, 0.18))),
+                                    Map.entry(HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+18%", true, percentagePositive(0.13, 0.18))),
+                                    Map.entry(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+18%", true, percentagePositive(0.13, 0.18))),
+                                    Map.entry(HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+18%", true, percentagePositive(0.13, 0.18))),
                                     Map.entry(HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("-40%", true, percentageNegative(0.30, 0.40)))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
@@ -118,6 +127,9 @@ public class ThrusterBlueprints {
                                     Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+23%", true, percentagePositive(0.18, 0.23))),
                                     Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+23%", true, percentagePositive(0.18, 0.23))),
                                     Map.entry(HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+23%", true, percentagePositive(0.18, 0.23))),
+                                    Map.entry(HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+23%", true, percentagePositive(0.18, 0.23))),
+                                    Map.entry(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+23%", true, percentagePositive(0.18, 0.23))),
+                                    Map.entry(HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+23%", true, percentagePositive(0.18, 0.23))),
                                     Map.entry(HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("-50%", true, percentageNegative(0.40, 0.50)))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
@@ -146,6 +158,9 @@ public class ThrusterBlueprints {
                                     Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+28%", true, percentagePositive(0.23, 0.28))),
                                     Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+28%", true, percentagePositive(0.23, 0.28))),
                                     Map.entry(HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+28%", true, percentagePositive(0.23, 0.28))),
+                                    Map.entry(HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+28%", true, percentagePositive(0.23, 0.28))),
+                                    Map.entry(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+28%", true, percentagePositive(0.23, 0.28))),
+                                    Map.entry(HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+28%", true, percentagePositive(0.23, 0.28))),
                                     Map.entry(HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("-60%", true, percentageNegative(0.50, 0.60)))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI))
@@ -174,6 +189,9 @@ public class ThrusterBlueprints {
                                     Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.05, 0.12))),
                                     Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.05, 0.12))),
                                     Map.entry(HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.05, 0.12))),
+                                    Map.entry(HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.05, 0.12))),
+                                    Map.entry(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.05, 0.12))),
+                                    Map.entry(HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.05, 0.12))),
                                     Map.entry(HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.1, 0.20)))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
@@ -201,6 +219,9 @@ public class ThrusterBlueprints {
                                     Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+19%", true, percentagePositive(0.12, 0.19))),
                                     Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+19%", true, percentagePositive(0.12, 0.19))),
                                     Map.entry(HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+19%", true, percentagePositive(0.12, 0.19))),
+                                    Map.entry(HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+19%", true, percentagePositive(0.12, 0.19))),
+                                    Map.entry(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+19%", true, percentagePositive(0.12, 0.19))),
+                                    Map.entry(HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+19%", true, percentagePositive(0.12, 0.19))),
                                     Map.entry(HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.20, 0.30)))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
@@ -229,6 +250,9 @@ public class ThrusterBlueprints {
                                     Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+26%", true, percentagePositive(0.19, 0.26))),
                                     Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+26%", true, percentagePositive(0.19, 0.26))),
                                     Map.entry(HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+26%", true, percentagePositive(0.19, 0.26))),
+                                    Map.entry(HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+26%", true, percentagePositive(0.19, 0.26))),
+                                    Map.entry(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+26%", true, percentagePositive(0.19, 0.26))),
+                                    Map.entry(HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+26%", true, percentagePositive(0.19, 0.26))),
                                     Map.entry(HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("+40%", false, percentagePositive(0.30, 0.40)))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
@@ -257,6 +281,9 @@ public class ThrusterBlueprints {
                                     Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+33%", true, percentagePositive(0.26, 0.33))),
                                     Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+33%", true, percentagePositive(0.26, 0.33))),
                                     Map.entry(HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+33%", true, percentagePositive(0.26, 0.33))),
+                                    Map.entry(HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+33%", true, percentagePositive(0.26, 0.33))),
+                                    Map.entry(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+33%", true, percentagePositive(0.26, 0.33))),
+                                    Map.entry(HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+33%", true, percentagePositive(0.26, 0.33))),
                                     Map.entry(HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("+50%", false, percentagePositive(0.40, 0.50)))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
@@ -285,6 +312,9 @@ public class ThrusterBlueprints {
                                     Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.33, 0.40))),
                                     Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.33, 0.40))),
                                     Map.entry(HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.33, 0.40))),
+                                    Map.entry(HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.33, 0.40))),
+                                    Map.entry(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.33, 0.40))),
+                                    Map.entry(HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.33, 0.40))),
                                     Map.entry(HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("+60%", false, percentagePositive(0.50, 0.60)))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI))

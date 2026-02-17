@@ -62,11 +62,13 @@ public class ShipConfigDiscoveryTest {
         }
         return Math.pow(fuel / fuelMultiplier, 1 / fuelPower) * optimisedMass / mass + jumpRangeIncrease;
     }
+
     @Test
+    @Tag("manual")
     void findShipStats() {
 
         ShipModule.getBasicModules();
-        final Ship ship = Ship.EXPLORER_NX;
+        final Ship ship = Ship.KESTREL_MK_II;
         //Fill in MASS and FUEL_RESERVE on the ship
 //        Ship.ALL.stream().forEach(sheep -> log.debug(sheep.getShipType() + " " + (sheep.getEmptyMass() + sheep.getCurrentFuel() + sheep.getCurrentFuelReserve())));
 
@@ -91,13 +93,13 @@ public class ShipConfigDiscoveryTest {
 //            Double manoeuver = (Double)sheep.getAttributes().get(MANOEUVRABILITY);
 //            log.debug(sheep.getShipType() + ": " + manoeuver + " sum: " + (pitch*roll*yaw) + " fwd: " + pitch + " rev: " + roll + " lat: " + yaw);
 //        });
-        findTopSpeed(ship, 205.0, 0.5);
-        findBoostSpeed(ship, 283.0, 0.5);
-        findPitch(ship, 29.28, 0.5);
-        findRoll(ship, 73.21, 0.5);
-        findYaw(ship, 13.67, 0.5);
-        findShieldStrength(ship, 195.7, 0.5);
-        findArmourStrength(ship, 621.0, 0.5);
+        findTopSpeed(ship, 278.0, 0.5);
+        findBoostSpeed(ship, 370.0, 0.5);
+        findPitch(ship, 51.4, 0.5);
+        findRoll(ship, 123.36, 0.5);
+        findYaw(ship, 24.67, 0.5);
+        findShieldStrength(ship, 338.0, 0.5);
+        findArmourStrength(ship, 135.0, 0.5);
 // Requires TOP_SPEED to be set
         findMinThrust(ship, 190.0, 0.5);
 //        findMinPitch(ship, 14.12, 0.5D);
@@ -301,6 +303,7 @@ public class ShipConfigDiscoveryTest {
             final Double pitchSpeed = value = value + delta;
 
             maximumPitch = calculatePitchCurrent(ship, pitchSpeed, moduleProfile);
+//            log.info("Value of {} results in max pitch of {} which is {}within range", value, maximumPitch, (!within(maximumPitch, expected, delta / 10D)) ? "not " : "");
 
         }
         log.info("Value of {} results in max pitch of {} which is {}within range", value, maximumPitch, (!within(maximumPitch, expected, delta / 10D)) ? "not " : "");
@@ -327,6 +330,7 @@ public class ShipConfigDiscoveryTest {
             final Double rollSpeed = value = value + delta;
 
             maximumRoll = calculateRollCurrent(ship, rollSpeed, moduleProfile);
+//            log.info("Value of {} results in max roll of {} which is {}within range", value, maximumRoll, (!within(maximumRoll, expected, delta / 10D)) ? "not " : "");
 
         }
         log.info("Value of {} results in max roll of {} which is {}within range", value, maximumRoll, (!within(maximumRoll, expected, delta / 10D)) ? "not " : "");
@@ -353,6 +357,7 @@ public class ShipConfigDiscoveryTest {
             final Double yawSpeed = value = value + delta;
 
             maximumYaw = calculateYawCurrent(ship, yawSpeed, moduleProfile);
+            log.info("Value of {} results in max yaw of {} which is {}within range", value, maximumYaw, (!within(maximumYaw, expected, delta / 10D)) ? "not " : "");
 
         }
         log.info("Value of {} results in max yaw of {} which is {}within range", value, maximumYaw, (!within(maximumYaw, expected, delta / 10D)) ? "not " : "");

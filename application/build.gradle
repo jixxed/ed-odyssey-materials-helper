@@ -477,9 +477,7 @@ test {
         println "Running tests in " + (runningSingleTest ? "single-test mode" : "full-suite mode")
 
         useJUnitPlatform {
-            if (runningSingleTest) {
-                includeTags 'manual'
-            } else {
+            if (!runningSingleTest) {
                 excludeTags 'manual'
             }
         }

@@ -22,6 +22,8 @@ public class ShockCannon extends HardpointModule {
     public static final ShockCannon SHOCK_CANNON_3_C_F = new ShockCannon("SHOCK_CANNON_3_C_F", HorizonsBlueprintName.SHOCK_CANNON, ModuleSize.SIZE_3, ModuleClass.C, Origin.TECHBROKER,false, Mounting.FIXED, 1015750, "Hpt_PlasmaShockCannon_Fixed_Large", Map.ofEntries(Map.entry(HorizonsModifier.MASS,  8.0), Map.entry(HorizonsModifier.INTEGRITY,  64.0), Map.entry(HorizonsModifier.POWER_DRAW,  0.89), Map.entry(HorizonsModifier.BOOT_TIME,  0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND,  181.4), Map.entry(HorizonsModifier.DAMAGE,  18.14), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW,  0.92), Map.entry(HorizonsModifier.THERMAL_LOAD,  2.66), Map.entry(HorizonsModifier.ARMOUR_PIERCING,  60.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE,  3000.0), Map.entry(HorizonsModifier.SHOT_SPEED,  1200.0), Map.entry(HorizonsModifier.RATE_OF_FIRE,  10.0), Map.entry(HorizonsModifier.BURST_INTERVAL,  0.1), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE,  16.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM,  240.0), Map.entry(HorizonsModifier.RELOAD_TIME,  6.0), Map.entry(HorizonsModifier.BREACH_DAMAGE,  0.7), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE,  0.40), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE,  0.60), Map.entry(HorizonsModifier.KINETIC_DAMAGE_RATIO,  1.0), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START,  2500.0), Map.entry(HorizonsModifier.AMMO_COST,  9.0)));
     public static final ShockCannon SHOCK_CANNON_3_C_G = new ShockCannon("SHOCK_CANNON_3_C_G", HorizonsBlueprintName.SHOCK_CANNON, ModuleSize.SIZE_3, ModuleClass.C, Origin.TECHBROKER,false, Mounting.GIMBALLED, 2249050, "Hpt_PlasmaShockCannon_Gimbal_Large", Map.ofEntries(Map.entry(HorizonsModifier.MASS,  8.0), Map.entry(HorizonsModifier.INTEGRITY,  64.0), Map.entry(HorizonsModifier.POWER_DRAW,  0.89), Map.entry(HorizonsModifier.BOOT_TIME,  0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND,  148.7), Map.entry(HorizonsModifier.DAMAGE,  14.87), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW,  1.07), Map.entry(HorizonsModifier.THERMAL_LOAD,  3.12), Map.entry(HorizonsModifier.ARMOUR_PIERCING,  60.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE,  3000.0), Map.entry(HorizonsModifier.SHOT_SPEED,  1200.0), Map.entry(HorizonsModifier.RATE_OF_FIRE,  10.0), Map.entry(HorizonsModifier.BURST_INTERVAL,  0.1), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE,  16.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM,  240.0), Map.entry(HorizonsModifier.RELOAD_TIME,  6.0), Map.entry(HorizonsModifier.BREACH_DAMAGE,  0.7), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE,  0.40), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE,  0.80), Map.entry(HorizonsModifier.KINETIC_DAMAGE_RATIO,  1.0), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START,  2500.0), Map.entry(HorizonsModifier.AMMO_COST,  9.0)));
     public static final ShockCannon SHOCK_CANNON_3_D_T = new ShockCannon("SHOCK_CANNON_3_D_T", HorizonsBlueprintName.SHOCK_CANNON, ModuleSize.SIZE_3, ModuleClass.D, Origin.TECHBROKER,true, Mounting.TURRETED, 6050200, "Hpt_PlasmaShockCannon_Turret_Large", Map.ofEntries(Map.entry(HorizonsModifier.MASS,  8.0), Map.entry(HorizonsModifier.INTEGRITY,  64.0), Map.entry(HorizonsModifier.POWER_DRAW,  0.64), Map.entry(HorizonsModifier.BOOT_TIME,  0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND,  122.6), Map.entry(HorizonsModifier.DAMAGE,  12.26), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW,  0.79), Map.entry(HorizonsModifier.THERMAL_LOAD,  2.2), Map.entry(HorizonsModifier.ARMOUR_PIERCING,  60.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE,  3000.0), Map.entry(HorizonsModifier.SHOT_SPEED,  1200.0), Map.entry(HorizonsModifier.RATE_OF_FIRE,  10.0), Map.entry(HorizonsModifier.BURST_INTERVAL,  0.1), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE,  16.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM,  240.0), Map.entry(HorizonsModifier.RELOAD_TIME,  6.0), Map.entry(HorizonsModifier.BREACH_DAMAGE,  0.7), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE,  0.40), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE,  0.80), Map.entry(HorizonsModifier.KINETIC_DAMAGE_RATIO,  1.0), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START,  2500.0), Map.entry(HorizonsModifier.AMMO_COST,  9.0)));
+    public static final ShockCannon SHOCK_CANNON_3_C_F_MK_II = new ShockCannon("SHOCK_CANNON_3_C_F_MK_II", HorizonsBlueprintName.SHOCK_CANNON, ModuleSize.SIZE_3, ModuleClass.D,true, Mounting.FIXED, 0, "hpt_mkiiplasmashockautocannon_fixed_large", Map.ofEntries(Map.entry(HorizonsModifier.MASS,  8.0), Map.entry(HorizonsModifier.INTEGRITY,  64.0), Map.entry(HorizonsModifier.POWER_DRAW,  1.51), Map.entry(HorizonsModifier.BOOT_TIME,  0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND,  109.3), Map.entry(HorizonsModifier.DAMAGE,  13.94), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW,  0.92), Map.entry(HorizonsModifier.THERMAL_LOAD,  1.7), Map.entry(HorizonsModifier.ARMOUR_PIERCING,  60.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE,  3000.0), Map.entry(HorizonsModifier.SHOT_SPEED,  1200.0), Map.entry(HorizonsModifier.RATE_OF_FIRE,  7.84), Map.entry(HorizonsModifier.BURST_INTERVAL,  0.352), Map.entry(HorizonsModifier.BURST_RATE_OF_FIRE,28.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE,  18.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM,  Double.POSITIVE_INFINITY), Map.entry(HorizonsModifier.RELOAD_TIME,  5.0), Map.entry(HorizonsModifier.ROUNDS_PER_SHOT, 1.0), Map.entry(HorizonsModifier.BURST_SIZE, 4.0), Map.entry(HorizonsModifier.BREACH_DAMAGE,  0.7), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE,  0.40), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE,  0.60), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO,  1.0), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START,  2500.0)));
+
     public static final List<ShockCannon> SHOCK_CANNONS = List.of(
             SHOCK_CANNON_1_D_F,
             SHOCK_CANNON_1_E_G,
@@ -31,8 +33,10 @@ public class ShockCannon extends HardpointModule {
             SHOCK_CANNON_2_E_T,
             SHOCK_CANNON_3_C_F,
             SHOCK_CANNON_3_C_G,
-            SHOCK_CANNON_3_D_T
+            SHOCK_CANNON_3_D_T,
+            SHOCK_CANNON_3_C_F_MK_II
     );
+
     public ShockCannon(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, Mounting mounting, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, multiCrew, mounting, basePrice, internalName, attributes);
     }
@@ -63,5 +67,13 @@ public class ShockCannon extends HardpointModule {
     @Override
     public Collection<HorizonsSynthesisBlueprint> synthesisBlueprints() {
         return SynthesisBlueprints.SHOCK_CANNON_MUNITIONS.values();
+    }
+
+    @Override
+    public boolean isAllowed(ShipType shipType) {
+        if(SHOCK_CANNON_3_C_F_MK_II.equals(this)) {
+            return shipType.equals(ShipType.KESTREL_MK_II);
+        }
+        return true;
     }
 }

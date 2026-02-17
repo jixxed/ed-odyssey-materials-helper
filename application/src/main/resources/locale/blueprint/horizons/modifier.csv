@@ -233,3 +233,6 @@
 "modifier.horizons.name.neutron_boost","Neutron boost","","","","","","Ускорение от нейтронной звезды","中子星增幅",""
 "modifier.horizons.name.max_glide_angle","Maximum Glide Angle","","","","","","Максимальный угол планирования","最大滑翔角度",""
 "modifier.horizons.name.max_glide_speed","Glide speed","","","","","","Скорость планирования","滑翔速度",""
+"modifier.horizons.name.minimum_boosted_multiplier","Minimum Boosted Multiplier","","","","","","","",""
+"modifier.horizons.name.optimal_boosted_multiplier","Optimal Boosted Multiplier","","","","","","","",""
+"modifier.horizons.name.maximum_boosted_multiplier","Maximum Boosted Multiplier","","","","","","","",""

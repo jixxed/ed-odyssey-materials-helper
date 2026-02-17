@@ -2684,7 +2684,10 @@ public class ExperimentalEffectBlueprints {
                             Map.entry(HorizonsModifier.MAXIMUM_MULTIPLIER_ACCELERATION, new HorizonsNumberModifierValue("+4%", true, percentagePositive(0.0, 0.04))),
                             Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+4%", true, percentagePositive(0.0, 0.04))),
                             Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+4%", true, percentagePositive(0.0, 0.04))),
-                            Map.entry(HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+4%", true, percentagePositive(0.0, 0.04)))
+                            Map.entry(HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION, new HorizonsNumberModifierValue("+4%", true, percentagePositive(0.0, 0.04))),
+                            Map.entry(HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+4%", true, percentagePositive(0.0, 0.04))),
+                            Map.entry(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+4%", true, percentagePositive(0.0, 0.04))),
+                            Map.entry(HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER, new HorizonsNumberModifierValue("+4%", true, percentagePositive(0.0, 0.04)))
                     ),
                     List.of(
                             Engineer.MEL_BRANDON,
