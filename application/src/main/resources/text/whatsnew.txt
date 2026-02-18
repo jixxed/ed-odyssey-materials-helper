@@ -1,3 +1,7 @@
+Version 3.5.5
+-------------
+Added some heat characteristics for the Kestrel Mk II
+
 Version 3.5.4
 -------------
 Fix permits not loading after start

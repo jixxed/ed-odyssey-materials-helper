@@ -1971,9 +1971,9 @@ public class ShipSpecs {
             Map.entry(HorizonsModifier.MAX_YAW_SPEED, 24.0),//24.67
             Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 120.0),//123.36
             Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 40.0),//TODO
-            Map.entry(HorizonsModifier.HEAT_CAPACITY, Double.NaN),
+            Map.entry(HorizonsModifier.HEAT_CAPACITY, 263.0),
             Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, Double.NaN),
-            Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, Double.NaN),
+            Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 38.0),
             Map.entry(HorizonsModifier.FUEL_RESERVE, 0.61),
             Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 55.0),
             Map.entry(HorizonsModifier.MASS_LOCK, Double.NaN),
