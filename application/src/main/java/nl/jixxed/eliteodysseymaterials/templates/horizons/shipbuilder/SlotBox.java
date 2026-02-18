@@ -16,7 +16,6 @@ import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
-import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.Armour;
 import nl.jixxed.eliteodysseymaterials.enums.HardpointGroup;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
@@ -188,6 +187,12 @@ public class SlotBox extends DestroyableStackPane {
                         .orElse(0))
                 .orElse(0));
         mouseBehaviour(slot);
+        if (this.slot.getShipModule() != null && this.slot.getShipModule().getModuleSize().intValue() > this.slot.getSlotSize()) {
+            if (this.slot.getOldShipModule() != null && this.slot.getOldShipModule().getModuleSize().intValue() > this.slot.getSlotSize()) {
+                this.slot.setOldShipModule(null);
+            }
+            this.slot.getShipModule().findLowerSize(this.slot.getSlotSize()).ifPresent(this::replaceModule);
+        }
         this.refresh();
     }
 

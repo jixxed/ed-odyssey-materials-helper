@@ -1941,8 +1941,8 @@ public class Ship {
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(866).y(326).index(0).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(4).x(949).y(464).index(1).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(972).y(464).index(2).slotSize(3).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1303).y(678).index(3).slotSize(2).shipModule(MultiCannon.MULTI_CANNON_1_F_F).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1393).y(620).index(4).slotSize(2).shipModule(MultiCannon.MULTI_CANNON_1_F_F).build()
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1303).y(678).index(3).slotSize(1).shipModule(MultiCannon.MULTI_CANNON_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1393).y(620).index(4).slotSize(1).shipModule(MultiCannon.MULTI_CANNON_1_F_F).build()
             ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(785).y(407).index(0).slotSize(0).build(),

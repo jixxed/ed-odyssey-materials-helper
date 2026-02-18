@@ -14,9 +14,6 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTe
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ShipStats extends Stats implements DestroyableEventTemplate {
     private DestroyableLabel price;
     private DestroyableLabel rebuy;
@@ -52,9 +49,8 @@ public class ShipStats extends Stats implements DestroyableEventTemplate {
         this.sensorRange = createValueLabel("ship.stats.ship.sensorrange.value", Formatters.NUMBER_FORMAT_0.format(0D), Formatters.NUMBER_FORMAT_0.format(0D));
         this.effectiveSensorRange = createValueLabel("ship.stats.ship.effectivesensorrange.value", Formatters.NUMBER_FORMAT_0.format(0D), Formatters.NUMBER_FORMAT_0.format(0D));
 
-
         this.getNodes().add(BoxBuilder.builder()
-                        .withStyleClass("stat-line")
+                .withStyleClass("stat-line")
                 .withNodes(createLabel("ship.stats.price.price"), new GrowingRegion(), this.price)
                 .buildHBox());
         this.getNodes().add(BoxBuilder.builder()
