@@ -27,5 +27,5 @@
     }
   },
   "additionalProperties" : false,
-  "required" : [ "Ship", "ShipID", "UserShipName", "UserShipId" ]
+  "required" : [ "Ship", "ShipID", "UserShipName" ]
 }
