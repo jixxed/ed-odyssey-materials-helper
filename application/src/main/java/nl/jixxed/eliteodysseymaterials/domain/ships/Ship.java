@@ -1938,17 +1938,17 @@ public class Ship {
             0,
             ShipSpecs.KESTREL_MK_II,
             List.of(
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(926).y(657).index(0).slotSize(3).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1212).y(389).index(1).slotSize(3).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1365).y(428).index(2).slotSize(3).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1333).y(360).index(3).slotSize(2).shipModule(MultiCannon.MULTI_CANNON_1_F_F).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1054).y(340).index(4).slotSize(2).shipModule(MultiCannon.MULTI_CANNON_1_F_F).build()
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(866).y(326).index(0).slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(4).x(949).y(464).index(1).slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(972).y(464).index(2).slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1303).y(678).index(3).slotSize(2).shipModule(MultiCannon.MULTI_CANNON_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1393).y(620).index(4).slotSize(2).shipModule(MultiCannon.MULTI_CANNON_1_F_F).build()
             ),
             List.of(
-                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1146).y(590).index(0).slotSize(0).build(),
-                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1082).y(509).index(1).slotSize(0).build(),
-                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(938).y(261).index(2).slotSize(0).build(),
-                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(765).y(403).index(3).slotSize(0).build()
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(785).y(407).index(0).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(3).x(1141).y(407).index(1).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1072).y(594).index(2).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(637).y(830).index(3).slotSize(0).build()
             ),
             List.of(
                     Slot.builder().slotType(SlotType.CORE_ARMOUR).index(0).slotSize(1).shipModule(Armour.SMALLCOMBAT01_NX_ARMOUR_GRADE_1).build(),
@@ -1969,7 +1969,6 @@ public class Ship {
                     Slot.builder().slotType(SlotType.OPTIONAL).index(5).namedIndex(5).slotSize(2).build(),//Slot05_Size2
                     Slot.builder().slotType(SlotType.OPTIONAL).index(6).namedIndex(6).slotSize(2).shipModule(Computer.SUPERCRUISE_ASSIST).build(),//Slot06_Size2
                     Slot.builder().slotType(SlotType.OPTIONAL).index(7).namedIndex(7).slotSize(1).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build()//Slot07_Size1
-
             ));
     public static final List<Ship> ALL = List.of(
             SIDE_WINDER,
