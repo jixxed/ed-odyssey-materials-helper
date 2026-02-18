@@ -90,7 +90,7 @@ public class ModuleDetailsAttribute extends DestroyableVBox implements Destroyab
 
         double keyWidth = computeTextWidth(name);
         double valueWidth = computeValuesWidth(values);
-        double maxWidth = 21 * name.getFont().getSize();
+        double maxWidth = 21 * name.getFont().getSize() - ScalingHelper.getPixelDoubleFromEm(1D);
         var texts = BoxBuilder.builder()
                 .withStyleClass("texts")
                 .buildVBox();

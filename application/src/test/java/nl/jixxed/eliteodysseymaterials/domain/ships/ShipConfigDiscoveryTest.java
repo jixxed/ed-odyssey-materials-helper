@@ -101,7 +101,7 @@ public class ShipConfigDiscoveryTest {
         findShieldStrength(ship, 338.0, 0.5);
         findArmourStrength(ship, 135.0, 0.5);
 // Requires TOP_SPEED to be set
-        findMinThrust(ship, 190.0, 0.5);
+        findMinThrust(ship, 247.0, 0.5);
 //        findMinPitch(ship, 14.12, 0.5D);
 //findprice(ship);
 
@@ -357,7 +357,7 @@ public class ShipConfigDiscoveryTest {
             final Double yawSpeed = value = value + delta;
 
             maximumYaw = calculateYawCurrent(ship, yawSpeed, moduleProfile);
-            log.info("Value of {} results in max yaw of {} which is {}within range", value, maximumYaw, (!within(maximumYaw, expected, delta / 10D)) ? "not " : "");
+//            log.info("Value of {} results in max yaw of {} which is {}within range", value, maximumYaw, (!within(maximumYaw, expected, delta / 10D)) ? "not " : "");
 
         }
         log.info("Value of {} results in max yaw of {} which is {}within range", value, maximumYaw, (!within(maximumYaw, expected, delta / 10D)) ? "not " : "");

@@ -69,6 +69,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     AX_MISSILE_RACK_PRE(BlueprintGroup.AX_MISSILE_RACKS, BlueprintCategory.HARDPOINT, false),
     ENHANCED_AX_MISSILE_RACK(BlueprintGroup.AX_MISSILE_RACKS, BlueprintCategory.HARDPOINT, false),
     SHOCK_CANNON(BlueprintGroup.SHOCK_CANNONS, BlueprintCategory.HARDPOINT),
+    SHOCK_CANNON_MK_II_PLASMA(BlueprintGroup.SHOCK_CANNONS, BlueprintCategory.HARDPOINT, false),
     GUARDIAN_SHARD_CANNON(BlueprintGroup.GUARDIAN_SHARD_CANNONS, BlueprintCategory.HARDPOINT),
     GUARDIAN_SHARD_CANNON_PRE(BlueprintGroup.GUARDIAN_SHARD_CANNONS, BlueprintCategory.HARDPOINT, false),
     GUARDIAN_SHARD_CANNON_PRE_GOD(BlueprintGroup.GUARDIAN_SHARD_CANNONS, BlueprintCategory.HARDPOINT, false),
@@ -149,6 +150,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     THRUSTERS(BlueprintGroup.THRUSTERS, BlueprintCategory.CORE_INTERNAL),
     ENHANCED_THRUSTERS(BlueprintGroup.THRUSTERS, BlueprintCategory.CORE_INTERNAL, false),
     THRUSTERS_MK_II(BlueprintGroup.THRUSTERS, BlueprintCategory.CORE_INTERNAL, false),
+    THRUSTERS_MK_II_AGILE(BlueprintGroup.THRUSTERS, BlueprintCategory.CORE_INTERNAL, false),
     //optional
     ANTI_CORROSION_CARGO_RACK(BlueprintGroup.ANTI_CORROSION_CARGO_RACKS, BlueprintCategory.OPTIONAL_INTERNAL),
     AUTO_FIELD_MAINTENANCE_UNIT(BlueprintGroup.AUTO_FIELD_MAINTENANCE_UNITS, BlueprintCategory.OPTIONAL_INTERNAL),

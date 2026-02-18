@@ -1945,9 +1945,9 @@ public class ShipSpecs {
             Map.entry(HorizonsModifier.SHIELDS, 260.0),
             Map.entry(HorizonsModifier.ARMOUR, 75.0),
             Map.entry(HorizonsModifier.MASS, 190.0),
-            Map.entry(HorizonsModifier.MINIMUM_THRUST, 75.0),//TODO
-            Map.entry(HorizonsModifier.BOOST_INTERVAL, 5.0),//TODO
-            Map.entry(HorizonsModifier.BOOST_COST, 5.0),//TODO
+            Map.entry(HorizonsModifier.MINIMUM_THRUST, 89.0),
+            Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.5),
+            Map.entry(HorizonsModifier.BOOST_COST, 14.0),
             Map.entry(HorizonsModifier.FORWARD_ACCELERATION, Double.NaN),
             Map.entry(HorizonsModifier.REVERSE_ACCELERATION, Double.NaN),
             Map.entry(HorizonsModifier.LATERAL_ACCELERATION, Double.NaN),

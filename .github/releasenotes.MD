@@ -11,5 +11,8 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Added Kestrel Mk II Armours
+Added Kestrel Mk II images and weapon slot locations (Special thanks to Fireytoad for the photoshoot)
+Added Kestrel Mk II minimum thrust, boost interval and boost cost
+Fixed name for Mk II Agile Boost Thrusters in ship builder showing as gravity optimized instead
+Fixed name for Mk II Plasma Shock Accelerator in ship builder showing as Shock Cannon instead
 ```

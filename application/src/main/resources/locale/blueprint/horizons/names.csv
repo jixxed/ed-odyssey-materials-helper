@@ -247,3 +247,5 @@
 "blueprint.horizons.name.frame_shift_drive_overcharge_mk_ii","Mk II Frame Shift Drive (SO+SCO)","","","","","","Оптимизированный двигатель FSD (ПГР) Mk II","",""
 "blueprint.horizons.name.frame_shift_drive_overcharge_mk_ii","Mk II Frame Shift Drive (SO+SCO)","","","","","","Оптимизированный двигатель FSD (ПГР) Mk II","",""
 "blueprint.horizons.name.thrusters_mk_ii","Mk II Gravity Optimised Thrusters","","","","","","Маневровые двигатели Mk II для полетов при действии гравитации","",""
+"blueprint.horizons.name.thrusters_mk_ii_agile","Mk II Agile Boost Thrusters","","","","","","","",""
+"blueprint.horizons.name.shock_cannon_mk_ii_plasma","Mk II Plasma Shock Accelerator","","","","","","","",""
