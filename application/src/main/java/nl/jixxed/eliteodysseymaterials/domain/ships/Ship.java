@@ -1934,8 +1934,8 @@ public class Ship {
 
     public static final Ship KESTREL_MK_II = new Ship(//Kestrel Mk II
             ShipType.KESTREL_MK_II,
-            0,
-            0,
+            13776383,
+            14273818,
             ShipSpecs.KESTREL_MK_II,
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(866).y(326).index(0).slotSize(3).build(),

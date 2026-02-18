@@ -70,29 +70,6 @@ public class ShipConfigDiscoveryTest {
         ShipModule.getBasicModules();
         final Ship ship = Ship.KESTREL_MK_II;
         //Fill in MASS and FUEL_RESERVE on the ship
-//        Ship.ALL.stream().forEach(sheep -> log.debug(sheep.getShipType() + " " + (sheep.getEmptyMass() + sheep.getCurrentFuel() + sheep.getCurrentFuelReserve())));
-
-
-//        System.out.println(OperatingSystem.getOperatingSystem().getDetailedString());
-//        System.out.println(OperatingSystem.getOperatingSystem().getArch());
-//        System.out.println(OperatingSystem.getOperatingSystem().getDesktopEnvironment());
-//        System.out.println(OperatingSystem.getOperatingSystem().getDisplayString());
-//        System.out.println(OperatingSystem.getOperatingSystem().getType());
-//        Ship.ALL.stream().sorted(Comparator.comparing(sheep -> (Double)sheep.getAttributes().get(MANOEUVRABILITY))).forEach(sheep ->  {
-//            Double pitch = (Double) sheep.getAttributes().get(MAX_PITCH_SPEED);
-//            Double roll = (Double) sheep.getAttributes().get(MAX_ROLL_SPEED);
-//            Double yaw = (Double) sheep.getAttributes().get(MAX_YAW_SPEED);
-//            Double manoeuver = (Double)sheep.getAttributes().get(MANOEUVRABILITY);
-//            log.debug(sheep.getShipType() + ": " + manoeuver + " sum: " + (pitch*roll*yaw) + " Pitch: " + pitch + " Roll: " + roll + " Yaw: " + yaw);
-//        });
-//
-//        Ship.ALL.stream().sorted(Comparator.comparing(sheep -> (Double)sheep.getAttributes().get(MANOEUVRABILITY))).forEach(sheep ->  {
-//            Double pitch = (Double) sheep.getAttributes().get(FORWARD_ACCELERATION);
-//            Double roll = (Double) sheep.getAttributes().get(REVERSE_ACCELERATION);
-//            Double yaw = (Double) sheep.getAttributes().get(LATERAL_ACCELERATION);
-//            Double manoeuver = (Double)sheep.getAttributes().get(MANOEUVRABILITY);
-//            log.debug(sheep.getShipType() + ": " + manoeuver + " sum: " + (pitch*roll*yaw) + " fwd: " + pitch + " rev: " + roll + " lat: " + yaw);
-//        });
         findTopSpeed(ship, 278.0, 0.5);
         findBoostSpeed(ship, 370.0, 0.5);
         findPitch(ship, 51.4, 0.5);
@@ -103,7 +80,7 @@ public class ShipConfigDiscoveryTest {
 // Requires TOP_SPEED to be set
         findMinThrust(ship, 247.0, 0.5);
 //        findMinPitch(ship, 14.12, 0.5D);
-//findprice(ship);
+        findprice(ship);
 
     }
 
