@@ -10,10 +10,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.enums.Permit;
-import nl.jixxed.eliteodysseymaterials.service.event.CommanderAllListedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.CommanderSelectedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,7 +29,7 @@ public class PermitService {
     private static final List<Permit> PERMITS = new ArrayList<>();
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
 
-    static {
+    public static void init() {
         EVENT_LISTENERS.add(EventService.addStaticListener(0, CommanderSelectedEvent.class, commanderSelectedEvent ->
                 load(commanderSelectedEvent.getCommander())));
         EVENT_LISTENERS.add(EventService.addStaticListener(0, CommanderAllListedEvent.class, _ ->

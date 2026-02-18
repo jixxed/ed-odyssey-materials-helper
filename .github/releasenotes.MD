@@ -11,5 +11,5 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Fix Kestrel Mk II small slots listed as medium
+Fix permits not loading after start
 ```
