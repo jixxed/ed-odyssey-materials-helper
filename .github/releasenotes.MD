@@ -12,4 +12,5 @@ The portable zip versions are used as update packages. You can run them standalo
 :page_facing_up: **Release notes for this version:**
 ```
 Fix permits not loading after start
+Add Kestrel and module prices
 ```

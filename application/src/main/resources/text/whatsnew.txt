@@ -1,6 +1,7 @@
 Version 3.5.4
 -------------
 Fix permits not loading after start
+Add Kestrel and module prices
 
 Version 3.5.3
 -------------
