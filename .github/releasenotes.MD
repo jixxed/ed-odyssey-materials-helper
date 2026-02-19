@@ -11,5 +11,11 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Added some heat characteristics for the Kestrel Mk II
+Permits
+- Updated permits to include unlock requirements
+- Renamed Shinrarta Dezhra to Founders world
+- Removed/hidden unobtainable permits
+- Combined Starter world permits into a single permit
+- Added search and filtering
+Fix multi-pin check that could falsely report a pin on the sinks if chaff was pinned.
 ```

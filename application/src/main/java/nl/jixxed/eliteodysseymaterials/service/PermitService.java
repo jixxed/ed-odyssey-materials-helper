@@ -10,23 +10,23 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.enums.Permit;
+import nl.jixxed.eliteodysseymaterials.enums.PermitType;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.function.Predicate;
 
 @Slf4j
 public class PermitService {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    private static final List<Permit> PERMITS = new ArrayList<>();
+    private static final Set<Permit> PERMITS = new HashSet<>();
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
 
     public static void init() {
@@ -37,14 +37,15 @@ public class PermitService {
     }
 
     public static boolean isPermitSystem(final StarSystem starSystem) {
-        return Arrays.stream(Permit.values()).anyMatch(permit -> permit.getSystem().equals(starSystem));
+        return Arrays.stream(Permit.values()).anyMatch(permit -> Arrays.asList(permit.getSystems()).contains(starSystem));
     }
 
     public static boolean havePermit(final Permit permit) {
         return PERMITS.contains(permit);
     }
+
     public static boolean havePermit(StarSystem starSystem) {
-        return PERMITS.stream().anyMatch(permit -> permit.getSystem().equals(starSystem));
+        return PERMITS.stream().anyMatch(permit -> Arrays.asList(permit.getSystems()).contains(starSystem));
     }
 
     public static boolean togglePermit(final Permit permit) {
@@ -76,10 +77,10 @@ public class PermitService {
             if (permitsFile.exists()) {//load from file if exists
                 permitsFileContents = Files.readString(permitsFile.toPath());
                 if (permitsFileContents.isEmpty()) {//create default if empty
-                    save(commander, new ArrayList<>());
+                    save(commander, new HashSet<>());
                 }
             } else {//save to file from preferences
-                save(commander, new ArrayList<>());
+                save(commander, new HashSet<>());
             }
             permitsFileContents = Files.readString(permitsFile.toPath());
             permits = OBJECT_MAPPER.readValue(permitsFileContents, typeRef);
@@ -87,10 +88,11 @@ public class PermitService {
         } catch (final IOException e) {
             log.warn("Unable to load permits from configuration. WIll initialize empty", e);
         }
-        PERMITS.addAll(permits.stream().map(Permit::forName).toList());
+        PERMITS.addAll(permits.stream().map(Permit::forName).filter(Predicate.not(Permit::isUnknown)).toList());
+        PERMITS.addAll(Arrays.stream(Permit.values()).filter(permit -> PermitType.FREE.equals(permit.getType())).toList());
     }
 
-    private static void save(final Commander commander, final List<Permit> favourites) {
+    private static void save(final Commander commander, final Set<Permit> favourites) {
         try {
             final String permitsJson = OBJECT_MAPPER.writeValueAsString(favourites.stream().map(Permit::name).toList());
             final String pathname = commander.getCommanderFolder();

@@ -123,7 +123,7 @@ public class Ship {
     public static final Ship ADDER = new Ship(
             ShipType.ADDER,
             18710,
-            87810,
+            87808,
             ShipSpecs.ADDER,
 
             List.of(
@@ -194,7 +194,7 @@ public class Ship {
     public static final Ship VIPER_MK_III = new Ship(//viper MK III
             ShipType.VIPER_MK_III,
             74610,
-            142930,
+            142931,
             ShipSpecs.VIPER_MK_III,
 
             List.of(
@@ -231,7 +231,7 @@ public class Ship {
     public static final Ship COBRA_MK_III = new Ship(
             ShipType.COBRA_MK_III,
             186260,
-            349720,
+            349718,
             ShipSpecs.COBRA_MK_III,
 
             List.of(
@@ -269,7 +269,7 @@ public class Ship {
     public static final Ship VIPER_MK_IV = new Ship(
             ShipType.VIPER_MK_IV,
             290680,
-            437930,
+            437931,
             ShipSpecs.VIPER_MK_IV,
 
             List.of(
@@ -308,7 +308,7 @@ public class Ship {
     public static final Ship DIAMOND_BACK = new Ship(//scout
             ShipType.DIAMOND_BACK,
             441800,
-            564330,
+            564329,
             ShipSpecs.DIAMOND_BACK,
 
             List.of(
@@ -387,7 +387,7 @@ public class Ship {
     public static final Ship TYPE_6 = new Ship(
             ShipType.TYPE_6,
             858010,
-            1045950,
+            1045945,
             ShipSpecs.TYPE_6,
 
             List.of(
@@ -424,7 +424,7 @@ public class Ship {
     public static final Ship DOLPHIN = new Ship(
             ShipType.DOLPHIN,
             1095780,
-            1337320,
+            1337323,
             ShipSpecs.DOLPHIN,
 
             List.of(
@@ -540,7 +540,7 @@ public class Ship {
     public static final Ship INDEPENDANT_TRADER = new Ship(//keelback
             ShipType.INDEPENDANT_TRADER,
             2937840,
-            3126150,
+            3126154,
             ShipSpecs.INDEPENDANT_TRADER,
 
             List.of(
@@ -578,7 +578,7 @@ public class Ship {
     public static final Ship ASP_SCOUT = new Ship(
             ShipType.ASP_SCOUT,
             3811220,
-            3961160,
+            3961154,
             ShipSpecs.ASP_SCOUT,
 
             List.of(
@@ -615,7 +615,7 @@ public class Ship {
     public static final Ship VULTURE = new Ship(
             ShipType.VULTURE,
             4670100,
-            4925620,
+            4925615,
             ShipSpecs.VULTURE,
 
             List.of(
@@ -653,7 +653,7 @@ public class Ship {
     public static final Ship ASP = new Ship(//asp explorer
             ShipType.ASP,
             6137180,
-            6661160,
+            6661154,
             ShipSpecs.ASP,
 
             List.of(
@@ -738,7 +738,7 @@ public class Ship {
     public static final Ship TYPE_7 = new Ship(
             ShipType.TYPE_7,
             16774470,
-            17472250,
+            17472252,
             ShipSpecs.TYPE_7,
 
             List.of(
@@ -780,7 +780,7 @@ public class Ship {
     public static final Ship TYPE_X = new Ship(//chieftan
             ShipType.TYPE_X,
             18603850,
-            19382250,
+            19382252,
             ShipSpecs.TYPE_X,
 
             List.of(
@@ -1626,7 +1626,7 @@ public class Ship {
     public static final Ship TYPE_8 = new Ship(
             ShipType.TYPE_8,
             36238840,
-            38453970,
+            38453967,
             ShipSpecs.TYPE_8,
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(732).y(816).index(0).namedIndex(1).slotSize(2).build(),
@@ -1667,7 +1667,7 @@ public class Ship {
     public static final Ship MANDALAY = new Ship(
             ShipType.MANDALAY,
             16527690,
-            17639221,
+            17639220,
             ShipSpecs.MANDALAY,
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1117).y(403).index(0).namedIndex(1).slotSize(2).build(),
@@ -1710,7 +1710,7 @@ public class Ship {
     public static final Ship COBRA_MK_V = new Ship(
             ShipType.COBRA_MK_V,
             1473191,
-            1989461,
+            1989460,
             ShipSpecs.COBRA_MK_V,
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1430).y(427).index(0).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -1750,7 +1750,7 @@ public class Ship {
     public static final Ship CORSAIR = new Ship(
             ShipType.CORSAIR,
             76884160,
-            79304748,
+            79304746,
             ShipSpecs.CORSAIR,
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1055).y(504).index(0).slotSize(3).build(),

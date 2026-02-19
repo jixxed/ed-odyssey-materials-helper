@@ -3934,9 +3934,9 @@
               -fx-min-width: 4em;
               -fx-pref-width: 4em;
               -fx-max-width: 4em;
-              -fx-min-height: 4em;
-              -fx-pref-height: 4em;
-              -fx-max-height: 4em; }
+              -fx-min-height: 3.3em;
+              -fx-pref-height: 3.3em;
+              -fx-max-height: 3.3em; }
               .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-image .glyph-icon {
                 -fx-fill: red;
                 -fx-font-size: 3.5em !important; }
@@ -3950,34 +3950,44 @@
                 -fx-max-width: 27em;
                 -fx-font-size: 1.2em;
                 -fx-font-weight: bold; }
-              .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-labels .copyable-location {
-                -fx-font-weight: normal;
-                -fx-hgap: 0.25em; }
-                .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-labels .copyable-location:hover {
-                  -fx-cursor: hand; }
-                  .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-labels .copyable-location:hover .location {
-                    -fx-text-fill: #5aa9e6; }
-                .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-labels .copyable-location .location {
-                  -fx-text-fill: #2e92df; }
-                .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-labels .copyable-location .copy-icon {
-                  -fx-min-width: 1em;
-                  -fx-pref-width: 1em;
-                  -fx-max-width: 1em;
-                  -fx-min-height: 1em;
-                  -fx-pref-height: 1em;
-                  -fx-max-height: 1em;
-                  -fx-fill: gray; }
-                .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-labels .copyable-location .permit-icon {
-                  -fx-min-height: 1em;
-                  -fx-pref-height: 1em;
-                  -fx-max-height: 1em; }
-                  .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-labels .copyable-location .permit-icon .glyph-icon {
-                    -fx-fill: red;
-                    -fx-font-size: 1em !important; }
-                  .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-labels .copyable-location .permit-icon:obtained .glyph-icon {
-                    -fx-fill: #709adc; }
-                .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-labels .copyable-location .distance {
-                  -fx-text-fill: gray; }
+              .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .permit-content .permit-labels .permit-description {
+                -fx-text-fill: gray;
+                -fx-min-width: 27em;
+                -fx-pref-width: 27em;
+                -fx-max-width: 27em;
+                -fx-wrap-text: true; }
+          .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .locations .copyable-location {
+            -fx-padding: 0.25em;
+            -fx-min-width: 16em;
+            -fx-pref-width: 16em;
+            -fx-max-width: 16em;
+            -fx-font-weight: normal;
+            -fx-hgap: 0.25em; }
+            .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .locations .copyable-location:hover {
+              -fx-cursor: hand; }
+              .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .locations .copyable-location:hover .location {
+                -fx-text-fill: #5aa9e6; }
+            .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .locations .copyable-location .location {
+              -fx-text-fill: #2e92df; }
+            .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .locations .copyable-location .copy-icon {
+              -fx-min-width: 1em;
+              -fx-pref-width: 1em;
+              -fx-max-width: 1em;
+              -fx-min-height: 1em;
+              -fx-pref-height: 1em;
+              -fx-max-height: 1em;
+              -fx-fill: gray; }
+            .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .locations .copyable-location .permit-icon {
+              -fx-min-height: 1em;
+              -fx-pref-height: 1em;
+              -fx-max-height: 1em; }
+              .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .locations .copyable-location .permit-icon .glyph-icon {
+                -fx-fill: red;
+                -fx-font-size: 1em !important; }
+              .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .locations .copyable-location .permit-icon:obtained .glyph-icon {
+                -fx-fill: #709adc; }
+            .app .application-screen .horizons-tab-content .permit-tab-content .permit-flow .permit-card .locations .copyable-location .distance {
+              -fx-text-fill: gray; }
     .app .application-screen .horizons-tab-content .horizons-tab-pane {
       -fx-background-insets: 0; }
       .app .application-screen .horizons-tab-content .horizons-tab-pane:left > .tab-header-area {

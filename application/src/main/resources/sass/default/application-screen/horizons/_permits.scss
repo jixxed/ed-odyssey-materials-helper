@@ -20,6 +20,7 @@
           .permit-image {
             .glyph-icon {
               -fx-fill: $text-color-green;
+
               &:hover {
                 -fx-fill: $text-color-blue;
               }
@@ -36,7 +37,7 @@
           -fx-cursor: hand;
 
           @include fixedWidth(4em);
-          @include fixedHeight(4em);
+          @include fixedHeight(3.3em);
 
           .glyph-icon {
             -fx-fill: $text-color-dark-red;
@@ -57,14 +58,26 @@
             -fx-font-weight: bold;
           }
 
-          .copyable-location {
-            @include copyable-location;
+          .permit-description {
+            -fx-text-fill: $text-color-grey;
+            @include fixedWidth(27em);
+            -fx-wrap-text: true;
+            //-fx-padding: 0.25em;
           }
 
           .permit-allegiance {
           }
+
         }
 
+      }
+
+      .locations {
+        .copyable-location {
+          -fx-padding: 0.25em;
+          @include fixedWidth(16em);
+          @include copyable-location;
+        }
       }
     }
   }

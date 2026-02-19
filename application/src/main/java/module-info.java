@@ -382,12 +382,17 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.templates.horizons.commodities;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons.engineers;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons.materials;
+    exports nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
+    exports nl.jixxed.eliteodysseymaterials.templates.horizons.powerplay;
+    exports nl.jixxed.eliteodysseymaterials.templates.horizons.permits;
+    exports nl.jixxed.eliteodysseymaterials.templates.horizons.menu;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons;
     exports nl.jixxed.eliteodysseymaterials.templates.odyssey.engineers;
     exports nl.jixxed.eliteodysseymaterials.templates.odyssey.loadout;
     exports nl.jixxed.eliteodysseymaterials.templates.odyssey.materials;
     exports nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist;
+    exports nl.jixxed.eliteodysseymaterials.templates.odyssey.menu;
     exports nl.jixxed.eliteodysseymaterials.templates.odyssey;
     exports nl.jixxed.eliteodysseymaterials.templates.overlay.ar;
     exports nl.jixxed.eliteodysseymaterials.templates.settings.sections;
