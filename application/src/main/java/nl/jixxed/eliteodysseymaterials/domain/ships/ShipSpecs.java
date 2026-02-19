@@ -1976,7 +1976,7 @@ public class ShipSpecs {
             Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 38.0),
             Map.entry(HorizonsModifier.FUEL_RESERVE, 0.61),
             Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 55.0),
-            Map.entry(HorizonsModifier.MASS_LOCK, Double.NaN),
+            Map.entry(HorizonsModifier.MASS_LOCK, 11.0),
             Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, Double.NaN)
     );
 
