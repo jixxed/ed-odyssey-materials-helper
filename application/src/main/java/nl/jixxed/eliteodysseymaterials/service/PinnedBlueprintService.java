@@ -131,7 +131,15 @@ public class PinnedBlueprintService {
 
     public static boolean isPinned(final Engineer engineer, final HorizonsBlueprint blueprint) {
         final HorizonsBlueprint horizonsModuleBlueprint = pinnedBlueprints.get(engineer);
-        if (blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.CAUSTIC_SINK_LAUNCHER)
+        if (validForTypeMatch(blueprint) && validForTypeMatch(horizonsModuleBlueprint)) {
+            return typeMatch(blueprint, horizonsModuleBlueprint);
+        }
+        return exactMatch(blueprint, horizonsModuleBlueprint);
+    }
+
+    private static boolean validForTypeMatch(HorizonsBlueprint blueprint) {
+        return blueprint != null
+                && (blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.CAUSTIC_SINK_LAUNCHER)
                 || blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.HEAT_SINK_LAUNCHER)
                 || (blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.POWER_PLANT) && blueprint.getHorizonsBlueprintType().equals(HorizonsBlueprintType.ANTI_GUARDIAN_ZONE_RESISTANCE))
                 || (blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.POWER_DISTRIBUTOR) && blueprint.getHorizonsBlueprintType().equals(HorizonsBlueprintType.ANTI_GUARDIAN_ZONE_RESISTANCE))
@@ -143,11 +151,7 @@ public class PinnedBlueprintService {
                 || blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.GUARDIAN_SHARD_CANNON)
                 || blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_BOOSTER)
                 || blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK)
-                || blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.SEEKER_MISSILE_RACK)
-        ) {
-            return typeMatch(blueprint, horizonsModuleBlueprint);
-        }
-        return exactMatch(blueprint, horizonsModuleBlueprint);
+                || blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.SEEKER_MISSILE_RACK));
     }
 
     private static boolean typeMatch(HorizonsBlueprint blueprint, HorizonsBlueprint horizonsModuleBlueprint) {
