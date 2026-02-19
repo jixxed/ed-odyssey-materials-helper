@@ -14,6 +14,7 @@ import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.NumberAxisBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
+import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
 import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
@@ -353,9 +354,14 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
         register(EventService.addListener(true, this, ShipConfigEvent.class, event -> update()));
     }
 
-    private static Double getMaximumMultiplier(Optional<Slot> thrusters) {
+    private static Double getMaximumMultiplier(Optional<Slot> thrusters, Ship ship) {
         return thrusters.map(Slot::getShipModule)
                 .flatMap(shipModule -> { //enhanced thrusters
+                    if (shipModule.getAttibutes().contains(HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER) && isOverMinimumMass(shipModule, ship)) {
+                        final Double base = (Double) shipModule.getAttributeValue(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER, true);
+                        final Double boosted = (Double) shipModule.getAttributeValue(HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER, true);
+                        return Optional.of(boosted * ModuleProfile.MAGIC_NUMBER);
+                    }
                     if (shipModule.getAttibutes().contains(HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION)) {
                         final Double rotation = (Double) shipModule.getAttributeValue(HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION, true);
                         return Optional.of(rotation);
@@ -365,9 +371,14 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
                 .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MAXIMUM_MULIPLIER, true)).orElse(0D));
     }
 
-    private static Double getOptimalMultiplier(Optional<Slot> thrusters) {
+    private static Double getOptimalMultiplier(Optional<Slot> thrusters, Ship ship) {
         return thrusters.map(Slot::getShipModule)
                 .flatMap(shipModule -> { //enhanced thrusters
+                    if (shipModule.getAttibutes().contains(HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER) && isOverMinimumMass(shipModule, ship)) {
+                        final Double base = (Double) shipModule.getAttributeValue(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER, true);
+                        final Double boosted = (Double) shipModule.getAttributeValue(HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER, true);
+                        return Optional.of(boosted * ModuleProfile.MAGIC_NUMBER);
+                    }
                     if (shipModule.getAttibutes().contains(HorizonsModifier.OPTIMAL_MULTIPLIER_ROTATION)) {
                         final Double rotation = (Double) shipModule.getAttributeValue(HorizonsModifier.OPTIMAL_MULTIPLIER_ROTATION, true);
                         return Optional.of(rotation);
@@ -377,9 +388,14 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
                 .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.OPTIMAL_MULTIPLIER, true)).orElse(0D));
     }
 
-    private static Double getMinimumMultiplier(Optional<Slot> thrusters) {
+    private static Double getMinimumMultiplier(Optional<Slot> thrusters, Ship ship) {
         return thrusters.map(Slot::getShipModule)
                 .flatMap(shipModule -> { //enhanced thrusters
+                    if (shipModule.getAttibutes().contains(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER) && isOverMinimumMass(shipModule, ship)) {
+                        final Double base = (Double) shipModule.getOriginalAttributeValue(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER);
+                        final Double boosted = (Double) shipModule.getAttributeValue(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER, true);
+                        return Optional.of(boosted * ModuleProfile.MAGIC_NUMBER);
+                    }
                     if (shipModule.getAttibutes().contains(HorizonsModifier.MINIMUM_MULTIPLIER_ROTATION)) {
                         final Double rotation = (Double) shipModule.getAttributeValue(HorizonsModifier.MINIMUM_MULTIPLIER_ROTATION, true);
                         return Optional.of(rotation);
@@ -387,6 +403,11 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
                     return Optional.empty();
                 })
                 .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MINIMUM_MULTIPLIER, true)).orElse(0D));
+    }
+    private static boolean isOverMinimumMass(ShipModule shipModule, Ship ship) {
+        var mass = ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve();
+        var minMass = (Double) shipModule.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS, true);
+        return mass > minMass;
     }
 
     @Override
@@ -396,9 +417,9 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
             final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS, true)).orElse(0D);
             final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS, true)).orElse(0D);
             final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS, true)).orElse(0D);
-            final Double minimumMultiplier = getMinimumMultiplier(thrusters);
-            final Double optimalMultiplier = getOptimalMultiplier(thrusters);
-            final Double maximumMultiplier = getMaximumMultiplier(thrusters);
+            final Double minimumMultiplier = getMinimumMultiplier(thrusters, ship);
+            final Double optimalMultiplier = getOptimalMultiplier(thrusters, ship);
+            final Double maximumMultiplier = getMaximumMultiplier(thrusters, ship);
             final Double pitchSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MAX_PITCH_SPEED, 0.0D);
             final Double yawSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MAX_YAW_SPEED, 0.0D);
             final Double rollSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MAX_ROLL_SPEED, 0.0D);

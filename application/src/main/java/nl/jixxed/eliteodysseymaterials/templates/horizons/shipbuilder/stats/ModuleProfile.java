@@ -4,7 +4,8 @@ import org.apache.commons.math3.util.Precision;
 
 public record ModuleProfile(Double minimumMass, Double optimalMass, Double maximumMass, Double minimumMultiplier,
                             Double optimalMultiplier, Double maximumMultiplier) {
-
+    //1.0 / 111.0 * 112.83
+    public static final double MAGIC_NUMBER = 1.0164864864864864;
     public double getMassCurveMultiplier(final double mass) {
         double log = Math.log(
                 (maximumMass - optimalMass) / (maximumMass - minimumMass)
