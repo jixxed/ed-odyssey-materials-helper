@@ -1,3 +1,7 @@
+Version 3.5.8
+-------------
+Added missing Starter permit systems (thanks to LilacLight)
+
 Version 3.5.7
 -------------
 Fix (attempt) for Mk2 agile thrusters multiplier when going over minimum mass

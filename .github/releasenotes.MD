@@ -11,7 +11,5 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Fix (attempt) for Mk2 agile thrusters multiplier when going over minimum mass 
-Add Kestrel Mk II Mass Lock Factor
-(Special thanks to RainmanGames and Brother_Sabathius)
+Added missing Starter permit systems (thanks to LilacLight)
 ```
