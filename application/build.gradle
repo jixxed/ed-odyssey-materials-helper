@@ -461,6 +461,7 @@ run {
             '--add-exports=javafx.controls/com.sun.javafx.scene.control=nl.jixxed.eliteodysseymaterials',
             '--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls',
             '--add-exports=jdk.naming.dns/com.sun.jndi.dns=java.naming',
+            '--add-opens=javafx.graphics/javafx.scene.layout=nl.jixxed.eliteodysseymaterials',//TODO removeme. when 25.0.3 or later fixes the flowpane https://bugs.openjdk.org/browse/JDK-8377153
             '--enable-preview'
     ]
     //, '-Xmx1G', '-XX:+UseCompressedOops', '-XX:+PrintGCDetails', '-XX:SoftRefLRUPolicyMSPerMB=100'

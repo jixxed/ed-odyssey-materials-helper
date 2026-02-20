@@ -9,7 +9,6 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
-import javafx.scene.layout.FlowPane;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -212,7 +211,7 @@ public class OdysseyMaterialOverview extends DestroyableVBox implements Destroya
         flowPane.setManaged(numberOfCards > 0);
     }
 
-    private void resetFlowPaneHeight(final FlowPane flowPane) {
+    private void resetFlowPaneHeight(final DestroyableFlowPane flowPane) {
         flowPane.setMaxHeight(USE_COMPUTED_SIZE);
         flowPane.setPrefHeight(USE_COMPUTED_SIZE);
         flowPane.setMinHeight(USE_COMPUTED_SIZE);

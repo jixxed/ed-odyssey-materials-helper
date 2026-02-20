@@ -1,9 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.templates.destroyables;
 
-import javafx.scene.layout.FlowPane;
 import lombok.Getter;
+import nl.jixxed.eliteodysseymaterials.templates.PatchedFlowPane;
 
 @Getter
-public class DestroyableFlowPane extends FlowPane implements DestroyableParent {
+public class DestroyableFlowPane extends PatchedFlowPane implements DestroyableParent {
 
 }
