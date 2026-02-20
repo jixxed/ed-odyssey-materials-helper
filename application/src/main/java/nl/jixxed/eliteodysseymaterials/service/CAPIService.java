@@ -119,9 +119,9 @@ public class CAPIService {
             if (event.isInitialised()) {
                 Platform.runLater(() -> {
                             this.active.set(this.loadToken(APPLICATION_STATE.getPreferredCommander().orElse(null)));
-                            if(this.active.get()){
+                            if (this.active.get()) {
                                 endpointHandlers.forEach(EndpointHandler::enable);
-                            }else{
+                            } else {
                                 endpointHandlers.forEach(EndpointHandler::disable);
                             }
                             APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
@@ -226,8 +226,8 @@ public class CAPIService {
             final File capiTokenDir = new File(pathname);
             capiTokenDir.mkdirs();
             final File capiTokenFile = new File(pathname + OsConstants.getOsSlash() + AppConstants.CAPI_FILE);
-            if (capiTokenFile.exists()) {
-                try {
+            try {
+                if (capiTokenFile.exists() && isNotEmpty(capiTokenFile)) {
                     final JsonNode tokenJson = OBJECT_MAPPER.readTree(Files.readString(capiTokenFile.toPath()));
                     final String accessToken = tokenJson.get("accessToken").asText();
                     final String tokenType = tokenJson.get("tokenType").asText();
@@ -236,14 +236,19 @@ public class CAPIService {
                     final String scope = tokenJson.get("scope").asText();
                     final String rawResponse = tokenJson.get("rawResponse").asText();
                     this.oAuth2AccessToken = new OAuth2AccessToken(accessToken, tokenType, expiresIn, refreshToken, scope, rawResponse);
-                } catch (final IOException | NullPointerException e) {
-                    log.error("Failed to process CAPI token file", e);
-                    return false;
+                    return true;
                 }
-                return true;
+            } catch (final IOException | NullPointerException e) {
+                log.error("Failed to process CAPI token file", e);
+                return false;
             }
         }
         return false;
+    }
+
+    private boolean isNotEmpty(File file) throws IOException {
+        //check file size
+        return Files.size(file.toPath()) > 0L;
     }
 
     private void saveToken(final OAuth2AccessToken accessToken) {
@@ -275,16 +280,19 @@ public class CAPIService {
             }
         });
     }
-    private record CommanderCheck(String expected, String actual){
-        boolean isValid(){
+
+    private record CommanderCheck(String expected, String actual) {
+        boolean isValid() {
             return expected != null && expected.equalsIgnoreCase(actual);
         }
     }
+
     public synchronized Response request(OAuthRequest oAuthRequest) throws IOException, ExecutionException, InterruptedException {
         return request(oAuthRequest, false);
     }
+
     private synchronized Response request(OAuthRequest oAuthRequest, boolean skipActiveCheck) throws IOException, ExecutionException, InterruptedException {
-        if(skipActiveCheck || active.get()) {
+        if (skipActiveCheck || active.get()) {
             oAuth20Service.signRequest(oAuth2AccessToken, oAuthRequest);
             log.info("requesting data from CAPI: " + oAuthRequest.getUrl());
             Response response = oAuth20Service.execute(oAuthRequest);
@@ -301,10 +309,10 @@ public class CAPIService {
                 Platform.runLater(() -> {
                     NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.auth.fail"));
                 });
-            }else{
+            } else {
                 return response;
             }
         }
-        return new Response(501,"CAPI service disabled", Map.of(), "");
+        return new Response(501, "CAPI service disabled", Map.of(), "");
     }
 }
