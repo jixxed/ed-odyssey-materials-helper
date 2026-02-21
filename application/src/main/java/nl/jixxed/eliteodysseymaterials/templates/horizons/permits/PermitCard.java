@@ -74,6 +74,16 @@ public class PermitCard extends DestroyableVBox implements DestroyableTemplate {
         if(!PermitType.FREE.equals(permit.getType())) {
             icon.addEventBinding(icon.onMouseClickedProperty(), _ -> togglePermit());
         }
+
+        if(permit.getPermitLocation() != null) {
+            var locationTitle = LabelBuilder.builder()
+                    .withStyleClass("permit-location-title")
+                    .withText("tab.permit.permitlocation")
+                    .build();
+            CopyableLocation permitLocation = new CopyableLocation(permit.getPermitLocation().getStarSystem(), permit.getPermitLocation().getStation());
+            permitLocation.getStyleClass().add("permit-location");
+            this.getNodes().addAll(locationTitle, permitLocation);
+        }
     }
 
     public void togglePermit() {

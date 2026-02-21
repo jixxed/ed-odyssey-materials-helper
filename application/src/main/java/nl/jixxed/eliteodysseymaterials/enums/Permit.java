@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
 import lombok.Getter;
+import nl.jixxed.eliteodysseymaterials.domain.Location;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 
 @Getter
@@ -21,7 +22,7 @@ public enum Permit {
     HORS(Allegiance.FEDERATION, PermitType.FEDERAL_NAVY_RANK, new StarSystem("Hors", 37.1875, -34.71875, 25.84375)),
     HR_4413(Allegiance.NONE, PermitType.UNKNOWN, new StarSystem("HR 4413", 80.96875, -4.40625, 36.0625)),
     ISINOR(Allegiance.INDEPENDENT, PermitType.ALLIED, new StarSystem("Isinor", 67.125, 68.1875, 54.96875)),
-    JOTUN(Allegiance.INDEPENDENT, PermitType.ALLIED, new StarSystem("Jotun", -11.03125, -79.21875, -92.3125)),
+    JOTUN(Allegiance.INDEPENDENT, PermitType.ALLIED, new Location(new StarSystem("38 Arietis", -27.5625, -78.125, -84.78125), null, null, "The Indefatigable", null, null), new StarSystem("Jotun", -11.03125, -79.21875, -92.3125)),
     LTT_198(Allegiance.EMPIRE, PermitType.ALLIED, new StarSystem("LTT 198", 2.53125, -71.625, 9.71875)),
     LUYTEN_347_14(Allegiance.INDEPENDENT, PermitType.ALLIED, new StarSystem("Luyten 347-14", 2.21875, -7.53125, 16.8125)),
     MBOONI(Allegiance.NONE, PermitType.ALLIED, new StarSystem("MBooni", 10.53125, -49.96875, 7.46875)),
@@ -60,11 +61,18 @@ public enum Permit {
     private final StarSystem[] systems;
     private final Allegiance allegiance;
     private final PermitType type;
+    private Location permitLocation;
 
     Permit(Allegiance allegiance, PermitType type, StarSystem... systems) {
         this.systems = systems;
         this.allegiance = allegiance;
         this.type = type;
+
+    }
+    Permit(Allegiance allegiance, PermitType type, Location permitLocation, StarSystem... systems) {
+        this(allegiance, type, systems);
+        this.permitLocation = permitLocation;
+
     }
 
     public static Permit forName(String name) {

@@ -12,7 +12,9 @@
 
 
     .permit-card {
-      @include fixedWidth(32em);
+      -fx-spacing: 0.25em;
+      -fx-padding: 0.25em;
+      @include fixedWidth(33em);
       -fx-background-color: $background-color-dark;
 
       &:obtained {
@@ -31,7 +33,6 @@
 
       .permit-content {
         -fx-spacing: 0.25em;
-        -fx-padding: 0.25em;
 
         .permit-image {
           -fx-cursor: hand;
@@ -73,11 +74,23 @@
       }
 
       .locations {
+        @include hvGap(0.25em);
+        //-fx-background-color: #123123;
         .copyable-location {
-          -fx-padding: 0.25em;
-          @include fixedWidth(16em);
+          -fx-min-width: 16em;
+          -fx-pref-width: 16em;
+          //-fx-pref-height: 1.25em;
           @include copyable-location;
+          //-fx-background-color: #321321;
         }
+      }
+      .permit-location-title{
+
+      }
+      .permit-location {
+        //-fx-padding: 0.25em;
+        @include copyable-location;
+        //@include fixedHeight(1.2em);
       }
     }
   }
