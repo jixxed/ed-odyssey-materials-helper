@@ -11,11 +11,11 @@ import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TextAreaBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.jixxed.eliteodysseymaterials.service.VersionService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -38,13 +38,12 @@ public class StartDialog extends DestroyableVBox implements DestroyableTemplate 
     @Override
     public void initComponents() {
         this.getStyleClass().add("start-dialog");
-        PreferencesService.setPreference(PreferenceConstants.WHATS_NEW_VERSION, PreferencesService.getPreference(PreferenceConstants.APP_SETTINGS_VERSION, "0"));
         //what new
         final DestroyableLabel whatsNewTitle = LabelBuilder.builder()
                 .withStyleClass("title")
-                .withText("dialog.start.whatsnew")
+                .withText("dialog.start.whatsnew", PreferencesService.getPreference(PreferenceConstants.WHATS_NEW_VERSION, "3.0.0"))
                 .build();
-        final DestroyableTextArea whatsNewContent = getTextFromFile("/text/whatsnew.txt");
+        final DestroyableTextArea whatsNewContent = getWhatsNewFromFile("/text/whatsnew.txt");
         //policy
         final DestroyableLabel policyTitle = LabelBuilder.builder()
                 .withStyleClass("title")
@@ -63,6 +62,9 @@ public class StartDialog extends DestroyableVBox implements DestroyableTemplate 
                 .withNodes(createButtons())
                 .buildHBox();
         this.getNodes().addAll(whatsNewTitle, whatsNewContent, policyTitle, policyContent, eulaTitle, eulaContent, buttonsBox);
+        if(!VersionService.isDev()){
+            PreferencesService.setPreference(PreferenceConstants.WHATS_NEW_VERSION, VersionService.getBuildVersion());
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -73,10 +75,29 @@ public class StartDialog extends DestroyableVBox implements DestroyableTemplate 
     }
 
     private DestroyableTextArea getTextFromFile(String name) {
+        String text;
+        try (final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(getClass().getResource(name)).openStream(), StandardCharsets.UTF_8))) {
+            text = bufferedReader.lines().collect(Collectors.joining("\n"));
+        } catch (final Exception e) {
+            log.error("failed to load {}", name, e);
+            text = "";
+        }
+        final DestroyableTextArea whatsNewContent = TextAreaBuilder.builder()
+                .withStyleClass("text-content")
+                .withNonLocalizedText(text)
+                .withFocusTraversable(false)
+                .withEditable(false)
+                .build();
+        VBox.setVgrow(whatsNewContent, Priority.ALWAYS);
+        return whatsNewContent;
+    }
+
+    private DestroyableTextArea getWhatsNewFromFile(String name) {
         String whatsnew;
         try (final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(getClass().getResource(name)).openStream(), StandardCharsets.UTF_8))) {
             whatsnew = bufferedReader.lines().collect(Collectors.joining("\n"));
-        } catch (final IOException e) {
+            whatsnew = ChangelogParser.getWhatsNew(whatsnew, PreferencesService.getPreference(PreferenceConstants.WHATS_NEW_VERSION, "3.0.0"));
+        } catch (final Exception e) {
             log.error("failed to load {}", name, e);
             whatsnew = "";
         }
@@ -93,14 +114,14 @@ public class StartDialog extends DestroyableVBox implements DestroyableTemplate 
     private DestroyableButton continueButton() {
         return ButtonBuilder.builder()
                 .withText("dialog.start.continue")
-                .withOnAction(event -> this.stage.close())
+                .withOnAction(_ -> this.stage.close())
                 .build();
     }
 
     private DestroyableButton closeButton() {
         return ButtonBuilder.builder()
                 .withText("dialog.start.close")
-                .withOnAction(event -> this.stage.close())
+                .withOnAction(_ -> this.stage.close())
                 .build();
     }
 
@@ -114,5 +135,4 @@ public class StartDialog extends DestroyableVBox implements DestroyableTemplate 
                 })
                 .build();
     }
-
 }

@@ -133,7 +133,7 @@
 "notification.type.ship_wishlist_pickup","Ship Wishlist Pickup","","","Recogída de Lista de Deseos de Naves","Collecte liste de souhaits du vaisseau","","Взятие материала для корабля","拾取飞船愿望单上的材料",""
 "search.filter.sold_at_station","Sold at current market","","","Vendido en mercado actual","","","Продано на данном рынке","在当前市场出售",""
 "search.filter.bought_at_station","Bought at current market","","","Comprado en mercado actual","","","Куплено на данном рынке","在当前市场购买",""
-"dialog.start.whatsnew","What’s new?","","","¿Que hay de nuevo?","","","Что нового","新内容",""
+"dialog.start.whatsnew","What’s new since {0}?","","","","","","","",""
 "dialog.start.privacypolicy","Privacy policy","","","Política de privacidad","","","Политика конфиденциальности","隐私条款",""
 "dialog.start.eula","End User License Agreement (EULA)","","","","","","Лицензионное соглашение (EULA)","最终用户许可协议 (EULA)",""
 "dialog.start.accept","Accept & continue","","","Acceptar y continuar","","","Принять и продолжить","接受并继续",""
