@@ -100,7 +100,7 @@ public class DownloadMenu {
     }
 
     private boolean matchesColor(byte[] colorToTest, byte[] colorToMatch) {
-        int range = 8;
+        int range = 16;
         return colorToTest[0] >= colorToMatch[0] - range && colorToTest[0] <= colorToMatch[0] + range
                 && colorToTest[1] >= colorToMatch[1] - range && colorToTest[1] <= colorToMatch[1] + range
                 && colorToTest[2] >= colorToMatch[2] - range && colorToTest[2] <= colorToMatch[2] + range
