@@ -1,3 +1,10 @@
+Version 3.5.10
+-------------
+Added optional permit location (WIP)
+Increased sensitivity in AR dataport menu item detection
+Fix button row of loadout modules not being visible (temporary patch)
+Updated whatsnew to only show changed items since last used version
+
 Version 3.5.9
 -------------
 Fixed a bug with launching the app

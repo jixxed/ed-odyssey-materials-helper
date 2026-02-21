@@ -11,5 +11,8 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Fixed a bug with launching the app
+Added optional permit location (WIP)
+Increased sensitivity in AR dataport menu item detection
+Fix button row of loadout modules not being visible (temporary patch)
+Updated whatsnew to only show changed items since last used version
 ```
