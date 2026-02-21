@@ -142,6 +142,8 @@
                 -fx-background-color: $background-color-dark;
                 -fx-padding: 0.25em;
                 @include hvGap(0.25em);
+                @include fixedHeight(31em);
+                //-fx-fit-to-height: true;
               }
 
               .name {
