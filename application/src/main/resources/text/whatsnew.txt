@@ -1,6 +1,7 @@
 Version 3.5.8
 -------------
 Added missing Starter permit systems (thanks to LilacLight)
+Fix (attempt 2) for Mk2 agile thrusters speeds
 
 Version 3.5.7
 -------------
