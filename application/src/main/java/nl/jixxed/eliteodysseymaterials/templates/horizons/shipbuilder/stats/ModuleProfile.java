@@ -1,22 +1,19 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
-import org.apache.commons.math3.util.Precision;
+import static java.lang.Math.pow;
 
 public record ModuleProfile(Double minimumMass, Double optimalMass, Double maximumMass, Double minimumMultiplier,
                             Double optimalMultiplier, Double maximumMultiplier) {
-    //1.0 / 111.0 * 112.83
-    public static final double MAGIC_NUMBER = 1.0164864864864864;
     public double getMassCurveMultiplier(final double mass) {
-        double log = Math.log(
-                (maximumMass - optimalMass) / (maximumMass - minimumMass)
+        double exponent = Math.log(
+                (optimalMultiplier - minimumMultiplier) / (maximumMultiplier - minimumMultiplier)
+        ) / Math.log(
+                (maximumMass - (minimumMass.equals(optimalMass) ? maximumMass - minimumMass : optimalMass)) / (maximumMass - minimumMass)
         );
-        log = log == 0.0 ? -Precision.EPSILON : log;
         return Math.clamp((
-                minimumMultiplier + Math.pow(
+                minimumMultiplier + pow(
                         Math.clamp((maximumMass - mass) / (maximumMass - minimumMass), 0.0, 1.0),
-                        Math.log(
-                                (optimalMultiplier - minimumMultiplier) / (maximumMultiplier - minimumMultiplier)
-                        ) / log
+                        exponent
                 ) * (maximumMultiplier - minimumMultiplier)
         ), minimumMultiplier, maximumMultiplier);
     }

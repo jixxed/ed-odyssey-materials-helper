@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
 import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
@@ -93,51 +92,47 @@ public class EngineStats extends Stats implements DestroyableTemplate {
     private double calculateMaxSpeed(final Ship ship, final double speed, final ModuleProfile moduleProfile) {
         return speed * moduleProfile.getMassCurveMultiplier(ship.getEmptyMass()) / 100D;
     }
-    private static Double getMaximumMultiplier(Optional<Slot> thrusters, Ship ship) {
+
+    private static Double getMaximumMultiplier(Optional<Slot> thrusters) {
         return thrusters
                 .map(Slot::getShipModule)
-                .flatMap(shipModule -> {
-                    if (shipModule.getAttibutes().contains(HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER) && isOverMinimumMass(shipModule, ship)) {
-                        final Double boosted = (Double) shipModule.getAttributeValue(HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER, true);
-                        return Optional.of(boosted * ModuleProfile.MAGIC_NUMBER);
-                    } else{
-                        return Optional.ofNullable((Double) shipModule.getAttributeValueOrDefault(HorizonsModifier.MAXIMUM_MULTIPLIER_SPEED, null, true));
-                    }
-                })
+                .flatMap(shipModule -> Optional.ofNullable((Double) shipModule.getAttributeValueOrDefault(HorizonsModifier.MAXIMUM_MULTIPLIER_SPEED, null, true)))
                 .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MAXIMUM_MULIPLIER, true)).orElse(0D));
     }
 
-    private static Double getOptimalMultiplier(Optional<Slot> thrusters, Ship ship) {
+    private static Double getOptimalMultiplier(Optional<Slot> thrusters) {
         return thrusters
                 .map(Slot::getShipModule)
-                .flatMap(shipModule -> {
-                    if (shipModule.getAttibutes().contains(HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER) && isOverMinimumMass(shipModule, ship)) {
-                        final Double boosted = (Double) shipModule.getAttributeValue(HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER, true);
-                        return Optional.of(boosted * ModuleProfile.MAGIC_NUMBER);
-                    } else{
-                        return Optional.ofNullable((Double) shipModule.getAttributeValueOrDefault(HorizonsModifier.OPTIMAL_MULTIPLIER_SPEED, null, true));
-                    }
-                })
+                .flatMap(shipModule -> Optional.ofNullable((Double) shipModule.getAttributeValueOrDefault(HorizonsModifier.OPTIMAL_MULTIPLIER_SPEED, null, true)))
                 .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.OPTIMAL_MULTIPLIER, true)).orElse(0D));
     }
 
-    private static Double getMinimumMultiplier(Optional<Slot> thrusters, Ship ship) {
+    private static Double getMinimumMultiplier(Optional<Slot> thrusters) {
         return thrusters
                 .map(Slot::getShipModule)
-                .flatMap(shipModule -> {
-                    if (shipModule.getAttibutes().contains(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER) && isOverMinimumMass(shipModule, ship)) {
-                        final Double boosted = (Double) shipModule.getAttributeValue(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER, true);
-                        return Optional.of(boosted * ModuleProfile.MAGIC_NUMBER);
-                    } else{
-                        return Optional.ofNullable((Double) shipModule.getAttributeValueOrDefault(HorizonsModifier.MINIMUM_MULTIPLIER_SPEED, null, true));
-                    }
-                })
+                .flatMap(shipModule -> Optional.ofNullable((Double) shipModule.getAttributeValueOrDefault(HorizonsModifier.MINIMUM_MULTIPLIER_SPEED, null, true)))
                 .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MINIMUM_MULTIPLIER, true)).orElse(0D));
     }
-    private static boolean isOverMinimumMass(ShipModule shipModule, Ship ship) {
-        var mass = ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve();
-        var minMass = (Double) shipModule.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS, true);
-        return mass > minMass;
+
+    private static Double getMaximumAccelerationMultiplier(Optional<Slot> thrusters) {
+        return thrusters
+                .map(Slot::getShipModule)
+                .flatMap(shipModule -> Optional.ofNullable((Double) shipModule.getAttributeValueOrDefault(HorizonsModifier.MAXIMUM_MULTIPLIER_ACCELERATION, null, true)))
+                .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MAXIMUM_MULIPLIER, true)).orElse(0D));
+    }
+
+    private static Double getOptimalAccelerationMultiplier(Optional<Slot> thrusters) {
+        return thrusters
+                .map(Slot::getShipModule)
+                .flatMap(shipModule -> Optional.ofNullable((Double) shipModule.getAttributeValueOrDefault(HorizonsModifier.OPTIMAL_MULTIPLIER_ACCELERATION, null, true)))
+                .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.OPTIMAL_MULTIPLIER, true)).orElse(0D));
+    }
+
+    private static Double getMinimumAccelerationMultiplier(Optional<Slot> thrusters) {
+        return thrusters
+                .map(Slot::getShipModule)
+                .flatMap(shipModule -> Optional.ofNullable((Double) shipModule.getAttributeValueOrDefault(HorizonsModifier.MINIMUM_MULTIPLIER_ACCELERATION, null, true)))
+                .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MINIMUM_MULTIPLIER, true)).orElse(0D));
     }
 
     private Double calculateForwardAcceleration(Ship ship, final ModuleProfile moduleProfile) {
@@ -161,9 +156,9 @@ public class EngineStats extends Stats implements DestroyableTemplate {
             final Double minimumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS, true)).orElse(0D);
             final Double optimalMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINE_OPTIMAL_MASS, true)).orElse(0D);
             final Double maximumMass = (Double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS, true)).orElse(0D);
-            final Double minimumMultiplier = getMinimumMultiplier(thrusters, ship);
-            final Double optimalMultiplier = getOptimalMultiplier(thrusters, ship);
-            final Double maximumMultiplier = getMaximumMultiplier(thrusters, ship);
+            final Double minimumMultiplier = getMinimumMultiplier(thrusters);
+            final Double optimalMultiplier = getOptimalMultiplier(thrusters);
+            final Double maximumMultiplier = getMaximumMultiplier(thrusters);
             final Double topSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.TOP_SPEED, 0.0D);
             final Double boostSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.BOOST_SPEED, 0.0D);
             final Double boostInterval = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.BOOST_INTERVAL, 0.0D);
@@ -189,9 +184,13 @@ public class EngineStats extends Stats implements DestroyableTemplate {
             this.speedIndicator.updateValues(minSpeed, currentSpeed, maxSpeed);
             this.boostIndicator.updateValues(minBoost, currentBoost, maxBoost);
             this.rechargeIndicator.updateValues(minRecharge, currentRecharge, maxRecharge, boostInterval);
-            this.forwardAcceleration.addBinding(this.forwardAcceleration.textProperty(), LocaleService.getStringBinding("ship.stats.engine.acceleration.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(calculateForwardAcceleration(ship, moduleProfile))));
-            this.reverseAcceleration.addBinding(this.reverseAcceleration.textProperty(), LocaleService.getStringBinding("ship.stats.engine.acceleration.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(calculateReverseAcceleration(ship, moduleProfile))));
-            this.lateralAcceleration.addBinding(this.lateralAcceleration.textProperty(), LocaleService.getStringBinding("ship.stats.engine.acceleration.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(calculateLateralAcceleration(ship, moduleProfile))));
+            final Double minimumAccelerationMultiplier = getMinimumAccelerationMultiplier(thrusters);
+            final Double optimalAccelerationMultiplier = getOptimalAccelerationMultiplier(thrusters);
+            final Double maximumAccelerationMultiplier = getMaximumAccelerationMultiplier(thrusters);
+            final ModuleProfile accelerationModuleProfile = new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumAccelerationMultiplier, optimalAccelerationMultiplier, maximumAccelerationMultiplier);
+            this.forwardAcceleration.addBinding(this.forwardAcceleration.textProperty(), LocaleService.getStringBinding("ship.stats.engine.acceleration.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(calculateForwardAcceleration(ship, accelerationModuleProfile))));
+            this.reverseAcceleration.addBinding(this.reverseAcceleration.textProperty(), LocaleService.getStringBinding("ship.stats.engine.acceleration.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(calculateReverseAcceleration(ship, accelerationModuleProfile))));
+            this.lateralAcceleration.addBinding(this.lateralAcceleration.textProperty(), LocaleService.getStringBinding("ship.stats.engine.acceleration.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(calculateLateralAcceleration(ship, accelerationModuleProfile))));
         });
     }
 
