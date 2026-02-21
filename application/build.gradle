@@ -201,6 +201,7 @@ jlink {
                 '--add-exports=jdk.naming.dns/com.sun.jndi.dns=java.naming',
                 '--add-exports=javafx.graphics/com.sun.glass.ui=nl.jixxed.eliteodysseymaterials',
                 '--add-exports=javafx.graphics/com.sun.javafx.tk=nl.jixxed.eliteodysseymaterials',
+                '--add-opens=javafx.graphics/javafx.scene.layout=nl.jixxed.eliteodysseymaterials',
                 '--enable-preview'
         ]
     }
