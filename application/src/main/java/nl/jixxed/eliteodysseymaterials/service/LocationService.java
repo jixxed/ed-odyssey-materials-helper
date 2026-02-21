@@ -105,7 +105,7 @@ public class LocationService {
         }));
         EVENT_LISTENERS.add(EventService.addStaticListener(DockedJournalEvent.class, event -> {//Always player controlled
             station = event.getDocked().getStationName_Localised().orElseGet(() -> event.getDocked().getStationName());
-            marketID = event.getDocked().getMarketID();
+            marketID = event.getDocked().getMarketID().orElse(BigInteger.ZERO);
             notifyListeners();
         }));
         EVENT_LISTENERS.add(EventService.addStaticListener(FSDJumpJournalEvent.class, event -> {//After jump to other system

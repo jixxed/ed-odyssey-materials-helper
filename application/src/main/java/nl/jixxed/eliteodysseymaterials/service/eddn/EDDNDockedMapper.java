@@ -10,7 +10,6 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.Docked.Docked;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -21,13 +20,13 @@ public class EDDNDockedMapper extends EDDNMapper {
         return new nl.jixxed.eliteodysseymaterials.schemas.eddn.docked.Message.MessageBuilder()
                 .withTimestamp(docked.getTimestamp())
                 .withEvent(docked.getEvent())
-                .withStarPos(Optional.ofNullable(LocationService.getCurrentStarPos(docked.getSystemAddress()))
+                .withStarPos(docked.getSystemAddress().map(LocationService::getCurrentStarPos)
                         .map(coordinates -> coordinates.stream()
                                 .map(BigDecimal::new)
                                 .collect(Collectors.toList()))
                         .orElse(null))
-                .withStarSystem(docked.getStarSystem())
-                .withSystemAddress(docked.getSystemAddress())
+                .withStarSystem(docked.getStarSystem().orElse(null))
+                .withSystemAddress(docked.getSystemAddress().orElse(null))
                 .withHorizons(expansion.equals(Expansion.HORIZONS) || expansion.equals(Expansion.ODYSSEY))
                 .withOdyssey(expansion.equals(Expansion.ODYSSEY))
                 .withDistFromStarLS(docked.getDistFromStarLS())
@@ -36,7 +35,7 @@ public class EDDNDockedMapper extends EDDNMapper {
                         .withMedium(landingPads.getMedium())
                         .withLarge(landingPads.getLarge())
                         .build()).orElse(null))
-                .withMarketID(docked.getMarketID())
+                .withMarketID(docked.getMarketID().orElse(null))
                 .withStationAllegiance(docked.getStationAllegiance().orElse(null))
                 .withStationEconomies(mapToOptionalEmptyIfEmptyList(docked.getStationEconomies()).map(stationEconomies -> stationEconomies.stream()
                                 .map(stationEconomy -> new StationEconomy.StationEconomyBuilder()
@@ -50,9 +49,9 @@ public class EDDNDockedMapper extends EDDNMapper {
                                 .withName(stationFaction.getName())
                                 .withFactionState(stationFaction.getFactionState().orElse(null))
                                 .build()).orElse(null))
-                .withStationGovernment(docked.getStationGovernment())
+                .withStationGovernment(docked.getStationGovernment().orElse(null))
                 .withStationName(docked.getStationName())
-                .withStationServices(docked.getStationServices())
+                .withStationServices(docked.getStationServices().orElse(null))
                 .withStationState(docked.getStationState().orElse(null))
                 .withStationType(docked.getStationType())
                 .build();
