@@ -86,7 +86,7 @@ public class EngineStats extends Stats implements DestroyableTemplate {
 
     private double calculateCurrentSpeed(Ship ship, Double speed, ModuleProfile moduleProfile, double multiplier) {
         final Double minimumThrust = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MINIMUM_THRUST, 0.0D);
-        return speed * (moduleProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve()) / 100D) * (multiplier + (minimumThrust / 100D) * (1D - multiplier));
+        return speed * (moduleProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo()) / 100D) * (multiplier + (minimumThrust / 100D) * (1D - multiplier));
     }
 
     private double calculateMaxSpeed(final Ship ship, final double speed, final ModuleProfile moduleProfile) {
