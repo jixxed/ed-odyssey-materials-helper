@@ -11,8 +11,8 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Added optional permit location (WIP)
-Increased sensitivity in AR dataport menu item detection
-Fix button row of loadout modules not being visible (temporary patch)
-Updated whatsnew to only show changed items since last used version
+Fix: Don't count fuel reserve in handling stats, noticeable wrong stats on smallest ships
+Added all permit mission locations
+Added guardian beacon locations for guardian fighters
+Fixed layout issues with loadout modules
 ```

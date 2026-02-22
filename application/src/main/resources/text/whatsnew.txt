@@ -1,3 +1,10 @@
+Version 3.5.11
+-------------
+Fix: Don't count fuel reserve in handling stats, noticeable wrong stats on smallest ships
+Added all permit mission locations
+Added guardian beacon locations for guardian fighters
+Fixed layout issues with loadout modules
+
 Version 3.5.10
 -------------
 Added optional permit location (WIP)
