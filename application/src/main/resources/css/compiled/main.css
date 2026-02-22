@@ -4582,25 +4582,37 @@
                   -fx-max-width: 7.25em;
                   -fx-text-alignment: center;
                   -fx-alignment: center; }
-                .loadout-modification-popover > .border {
-                  -fx-stroke: white !important;
-                  -fx-stroke-width: 0.1em !important;
-                  -fx-fill: #0f0f0f !important; }
-                .loadout-modification-popover .grid {
-                  -fx-background-color: #0f0f0f;
-                  -fx-padding: 0.25em;
-                  -fx-hgap: 0.25em;
-                  -fx-vgap: 0.25em;
-                  -fx-min-height: 31em;
-                  -fx-pref-height: 31em;
-                  -fx-max-height: 31em; }
-                .loadout-modification-popover .name {
-                  -fx-wrap-text: true;
-                  -fx-min-width: 7.25em;
-                  -fx-pref-width: 7.25em;
-                  -fx-max-width: 7.25em;
-                  -fx-text-alignment: center;
-                  -fx-alignment: center; }
+                .loadout-modification-popover {
+                  -fx-padding: 0.25em; }
+                  .loadout-modification-popover > .border {
+                    -fx-stroke: white !important;
+                    -fx-stroke-width: 0.1em !important;
+                    -fx-fill: #0f0f0f !important; }
+                  .loadout-modification-popover .grid-weapon {
+                    -fx-background-color: #0f0f0f;
+                    -fx-hgap: 0.25em;
+                    -fx-vgap: 0.25em;
+                    -fx-min-width: 30em;
+                    -fx-pref-width: 30em;
+                    -fx-max-width: 30em; }
+                  .loadout-modification-popover .grid-suit {
+                    -fx-background-color: #0f0f0f;
+                    -fx-hgap: 0.25em;
+                    -fx-vgap: 0.25em;
+                    -fx-min-width: 37.5725em;
+                    -fx-pref-width: 37.5725em;
+                    -fx-max-width: 37.5725em; }
+                  .loadout-modification-popover .name {
+                    -fx-wrap-text: true;
+                    -fx-min-width: 7.25em;
+                    -fx-pref-width: 7.25em;
+                    -fx-max-width: 7.25em;
+                    -fx-text-alignment: center;
+                    -fx-alignment: center; }
+                  .loadout-modification-popover .mod-image {
+                    -fx-min-width: 7.25em;
+                    -fx-pref-width: 7.25em;
+                    -fx-max-width: 7.25em; }
             .app .application-screen .odyssey-tab-content .loadout-tab-content .contents .loadouts .loadout-item .stats .title {
               -fx-font-size: 1.2em; }
             .app .application-screen .odyssey-tab-content .loadout-tab-content .contents .loadouts .loadout-item .stats .header .value {

@@ -6,7 +6,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
@@ -156,47 +155,48 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
     }
 
 
-    private DestroyablePane createModificationOptionsGrid() {
-        final DestroyableGridPane gridPane = GridPaneBuilder.builder().build();
-        final DestroyablePane pane = PaneBuilder.builder().withNode(gridPane).build();
-        gridPane.getStyleClass().add("grid");
+    private DestroyableFlowPane createModificationOptionsGrid() {
+        final var flowPane = FlowPaneBuilder.builder().build();
+//        final DestroyablePane pane = PaneBuilder.builder().withNode(flowPane).build();
 
         if (this.loadout.getEquipment() instanceof Weapon) {
-            createGridPaneCell(getHeadshotDamageModification(), 0, 0, gridPane);
-            createGridPaneCell(WeaponModification.MAGAZINE_SIZE, 1, 0, gridPane);
-            createGridPaneCell(WeaponModification.STOWED_RELOADING, 2, 0, gridPane);
-            createGridPaneCell(WeaponModification.SCOPE, 3, 0, gridPane);
+            flowPane.getStyleClass().add("grid-weapon");
+            addMod(getHeadshotDamageModification(), flowPane);
+            addMod(WeaponModification.MAGAZINE_SIZE, flowPane);
+            addMod(WeaponModification.STOWED_RELOADING, flowPane);
+            addMod(WeaponModification.SCOPE, flowPane);
 
-            createGridPaneCell(WeaponModification.NOISE_SUPPRESSOR, 0, 1, gridPane);
-            createGridPaneCell(WeaponModification.AUDIO_MASKING, 1, 1, gridPane);
-            createGridPaneCell(WeaponModification.FASTER_HANDLING, 2, 1, gridPane);
-            createGridPaneCell(getGreaterRangeModification(), 3, 1, gridPane);
+            addMod(WeaponModification.NOISE_SUPPRESSOR, flowPane);
+            addMod(WeaponModification.AUDIO_MASKING, flowPane);
+            addMod(WeaponModification.FASTER_HANDLING, flowPane);
+            addMod(getGreaterRangeModification(), flowPane);
 
-            createGridPaneCell(WeaponModification.RELOAD_SPEED, 0, 2, gridPane);
-            createGridPaneCell(WeaponModification.STABILITY, 1, 2, gridPane);
-            createGridPaneCell(getHigherAccuracyModification(), 2, 2, gridPane);
-            createCancelCell(3, 2, gridPane);
+            addMod(WeaponModification.RELOAD_SPEED, flowPane);
+            addMod(WeaponModification.STABILITY, flowPane);
+            addMod(getHigherAccuracyModification(), flowPane);
+            createCancelCell(flowPane);
         } else if (this.loadout.getEquipment() instanceof Suit) {
-            createGridPaneCell(SuitModification.ADDED_MELEE_DAMAGE, 0, 0, gridPane);
-            createGridPaneCell(SuitModification.COMBAT_MOVEMENT_SPEED, 1, 0, gridPane);
-            createGridPaneCell(SuitModification.DAMAGE_RESISTANCE, 2, 0, gridPane);
-            createGridPaneCell(SuitModification.ENHANCED_TRACKING, 3, 0, gridPane);
-            createGridPaneCell(SuitModification.QUIETER_FOOTSTEPS, 4, 0, gridPane);
+            flowPane.getStyleClass().add("grid-suit");
+            addMod(SuitModification.ADDED_MELEE_DAMAGE, flowPane);
+            addMod(SuitModification.COMBAT_MOVEMENT_SPEED, flowPane);
+            addMod(SuitModification.DAMAGE_RESISTANCE, flowPane);
+            addMod(SuitModification.ENHANCED_TRACKING, flowPane);
+            addMod(SuitModification.QUIETER_FOOTSTEPS, flowPane);
 
-            createGridPaneCell(SuitModification.EXTRA_AMMO_CAPACITY, 0, 1, gridPane);
-            createGridPaneCell(SuitModification.EXTRA_BACKPACK_CAPACITY, 1, 1, gridPane);
-            createGridPaneCell(SuitModification.IMPROVED_BATTERY_CAPACITY, 2, 1, gridPane);
-            createGridPaneCell(SuitModification.FASTER_SHIELD_REGEN, 3, 1, gridPane);
-            createGridPaneCell(SuitModification.REDUCED_TOOL_BATTERY_CONSUMPTION, 4, 1, gridPane);
+            addMod(SuitModification.EXTRA_AMMO_CAPACITY, flowPane);
+            addMod(SuitModification.EXTRA_BACKPACK_CAPACITY, flowPane);
+            addMod(SuitModification.IMPROVED_BATTERY_CAPACITY, flowPane);
+            addMod(SuitModification.FASTER_SHIELD_REGEN, flowPane);
+            addMod(SuitModification.REDUCED_TOOL_BATTERY_CONSUMPTION, flowPane);
 
-            createGridPaneCell(SuitModification.IMPROVED_JUMP_ASSIST, 0, 2, gridPane);
-            createGridPaneCell(SuitModification.INCREASED_AIR_RESERVES, 1, 2, gridPane);
-            createGridPaneCell(SuitModification.INCREASED_SPRINT_DURATION, 2, 2, gridPane);
-            createGridPaneCell(SuitModification.NIGHT_VISION, 3, 2, gridPane);
-            createCancelCell(4, 2, gridPane);
+            addMod(SuitModification.IMPROVED_JUMP_ASSIST, flowPane);
+            addMod(SuitModification.INCREASED_AIR_RESERVES, flowPane);
+            addMod(SuitModification.INCREASED_SPRINT_DURATION, flowPane);
+            addMod(SuitModification.NIGHT_VISION, flowPane);
+            createCancelCell(flowPane);
 
         }
-        return pane;
+        return flowPane;
     }
 
     private WeaponModification getHigherAccuracyModification() {
@@ -232,7 +232,7 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
         }
     }
 
-    private void createGridPaneCell(@NonNull final Modification modification, final int col, final int row, final GridPane gridPane) {
+    private void addMod(@NonNull final Modification modification, final DestroyableFlowPane flowPane) {
         final DestroyableResizableImageView modSelectImage = ResizableImageViewBuilder.builder()
                 .withStyleClass(LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS)
                 .withImage(modification.getImage(false))
@@ -247,26 +247,27 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
                 .withStyleClass(LOADOUT_MODIFICATION_LABEL_STYLE_CLASS)
                 .withText(modification.getLocalizationKey())
                 .build();
-        final VBox modVBox = BoxBuilder.builder()
+        final DestroyableVBox modVBox = BoxBuilder.builder()
                 .withStyleClass(LOADOUT_MODIFICATION_STYLE_CLASS)
                 .withNodes(modSelectImage, modLabel).buildVBox();
-        gridPane.add(modVBox, col, row);
+        flowPane.getNodes().add(modVBox);
     }
 
-    private void createCancelCell(final int col, final int row, final GridPane gridPane) {
+    private void createCancelCell(final DestroyableFlowPane flowPane) {
         final DestroyableResizableImageView modSelectImage = ResizableImageViewBuilder.builder()
                 .withStyleClass(LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS)
                 .withImage("/images/modification/cancel.png")
                 .withOnMouseClicked(getClearEventHandler())
                 .build();
+        modSelectImage.pseudoClassStateChanged(PseudoClass.getPseudoClass("modifiable"), true);
         final DestroyableLabel modLabel = LabelBuilder.builder()
                 .withStyleClass(LOADOUT_MODIFICATION_LABEL_STYLE_CLASS)
                 .withText("loadout.modification.clear")
                 .build();
-        final VBox modVBox = BoxBuilder.builder()
+        final DestroyableVBox modVBox = BoxBuilder.builder()
                 .withStyleClass(LOADOUT_MODIFICATION_STYLE_CLASS)
                 .withNodes(modSelectImage, modLabel).buildVBox();
-        gridPane.add(modVBox, col, row);
+        flowPane.getNodes().add(modVBox);
     }
 
     private EventHandler<MouseEvent> getClearEventHandler() {
