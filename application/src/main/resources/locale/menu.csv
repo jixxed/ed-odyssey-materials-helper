@@ -26,5 +26,6 @@
 "system.copy.distance.in.system","({0}Ls ±{1}Ls)","","","({0}sl ±{1}sl)","({0}sl ±{1}sl)","","({0}Св.с ±{1}Св.с)","({0}Ls ±{1}Ls)",""
 "system.copy.distance.in.system.no.variance","({0}Ls)","","","({0}Sl)","","","({0}Св.с.)","({0}Ls)",""
 "guardian.structure.title","{0} - {1}","","","{0} - {1}","{0} - {1}","","{0} - {1}","{0} - {1}",""
+"guardian.structure.title.beacon","Beacon for ancient key","","","","","","","",""
 "horizons.materials.nearest.markets","Nearby selling markets","","","Mercados de venta cercanos","","","Ближайшие рынки","附近出售该货物的市场",""
 "menu.about.pinplanner","Engineer pin planner","","","","","","Планировщик закрепленных инженеров","蓝图固定规划器",""

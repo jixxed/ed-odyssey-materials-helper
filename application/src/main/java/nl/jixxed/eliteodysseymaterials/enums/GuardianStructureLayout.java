@@ -11,7 +11,8 @@ public enum GuardianStructureLayout {
     BOWL(GuardianStructureLayoutType.WEAPON),
     SQUID(GuardianStructureLayoutType.VESSEL),
     ROBOLOBSTER(GuardianStructureLayoutType.VESSEL),
-    HAMMERBOT(GuardianStructureLayoutType.WEAPON);
+    HAMMERBOT(GuardianStructureLayoutType.WEAPON),
+    BEACON(GuardianStructureLayoutType.BEACON);
     @Getter
     private final GuardianStructureLayoutType type;
 

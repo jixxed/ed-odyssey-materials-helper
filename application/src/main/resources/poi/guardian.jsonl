@@ -97,3 +97,33 @@
 {"name":"Wregoe IM-Z b41-2","coords":{"x":820.71875,"y":55.78125,"z":-164.09375},"body":"B2","layout":"Turtle"}
 {"name":"Wregoe JR-A b41-3","coords":{"x":801.34375,"y":-3.0625,"z":-166.46875},"body":"F2","layout":"Bowl"}
 {"name":"Wregoe JR-L c21-1","coords":{"x":855.25,"y":17.34375,"z":-137.90625},"body":"C2","layout":"Bowl"}
+{"name":"IC 2391 Sector CQ-Y c16","coords":{"x":559.875,"y":-87.15625,"z":-33.15625},"body":"2","layout":"Beacon"}
+{"name":"IC 2391 Sector FG-X b1-9","coords":{"x":563.75,"y":-100.03125,"z":-59.3125},"body":"8","layout":"Beacon"}
+{"name":"IC 2391 Sector MX-T b3-6","coords":{"x":582.9375,"y":-72.28125,"z":-19.40625},"body":"A 1","layout":"Beacon"}
+{"name":"IC 2391 Sector HG-X b1-7","coords":{"x":604.5625,"y":-101.78125,"z":-58.65625},"body":"4","layout":"Beacon"}
+{"name":"Synuefe AS-H d11-9","coords":{"x":610.3125,"y":-65.125,"z":-101.84375},"body":"A 2","layout":"Beacon"}
+{"name":"Synuefe DK-D b46-12","coords":{"x":636.3125,"y":-53.65625,"z":-68.8125},"body":"2","layout":"Beacon"}
+{"name":"Synuefe HL-N c23-4","coords":{"x":649.9375,"y":-114.78125,"z":-57.0625},"body":"1 a + 1 b","layout":"Beacon"}
+{"name":"HIP 36823","coords":{"x":640.4375,"y":-143.90625,"z":-118.3125},"body":"1","layout":"Beacon"}
+{"name":"Synuefe WL-J d10-113","coords":{"x":645.0625,"y":-95.46875,"z":-142.4375},"body":"3","layout":"Beacon"}
+{"name":"Synuefe IL-N c23-15","coords":{"x":658.28125,"y":-117.96875,"z":-46.3125},"body":"2 a","layout":"Beacon"}
+{"name":"Synuefe HP-E b45-4","coords":{"x":678.59375,"y":-118.75,"z":-94.78125},"body":"4","layout":"Beacon"}
+{"name":"Synuefe FU-E b45-5","coords":{"x":682.28125,"y":-102.59375,"z":-104.5625},"body":"A 3","layout":"Beacon"}
+{"name":"Synuefe BO-G b44-6","coords":{"x":687.3125,"y":-96.75,"z":-112.125},"body":"1","layout":"Beacon"}
+{"name":"Synuefe FF-P c22-35","coords":{"x":700.03125,"y":-129.5,"z":-96.375},"body":"4 a","layout":"Beacon"}
+{"name":"Synuefe DK-P c22-35","coords":{"x":711.46875,"y":-102.6875,"z":-89.53125},"body":"3","layout":"Beacon"}
+{"name":"Synuefe HA-P c22-22","coords":{"x":701.5,"y":-168.125,"z":-104.40625},"body":"2","layout":"Beacon"}
+{"name":"Synuefe KU-F b44-4","coords":{"x":714.34375,"y":-173.84375,"z":-113.59375},"body":"4","layout":"Beacon"}
+{"name":"Synuefe JZ-F b44-8","coords":{"x":720.625,"y":-163.59375,"z":-112.90625},"body":"8","layout":"Beacon"}
+{"name":"Synuefe RL-C b46-6","coords":{"x":727.90625,"y":-157.1875,"z":-67.1875},"body":"3","layout":"Beacon"}
+{"name":"Synuefe IT-F d12-5","coords":{"x":739.46875,"y":-140.53125,"z":-13.375},"body":"A 2","layout":"Beacon"}
+{"name":"Synuefe ZG-J d10-49","coords":{"x":723.8125,"y":-156.71875,"z":-152.3125},"body":"2 a","layout":"Beacon"}
+{"name":"Synuefe CS-H d11-121","coords":{"x":746.09375,"y":-100.78125,"z":-86.625},"body":"3","layout":"Beacon"}
+{"name":"NGC 2451A Sector LX-U d2-25","coords":{"x":726.0625,"y":-163.5625,"z":-171.78125},"body":"3","layout":"Beacon"}
+{"name":"Synuefe QA-E b45-4","coords":{"x":738.0625,"y":-174.375,"z":-103.25},"body":"3","layout":"Beacon"}
+{"name":"Synuefe GJ-G b44-9","coords":{"x":747.84375,"y":-109.28125,"z":-121.65625},"body":"3 c","layout":"Beacon"}
+{"name":"NGC 2451A Sector TO-R c4-3","coords":{"x":739.46875,"y":-127.875,"z":-156.1875},"body":"3","layout":"Beacon"}
+{"name":"Synuefe OF-E b45-4","coords":{"x":751.0625,"y":-157.71875,"z":-86.09375},"body":"1 b","layout":"Beacon"}
+{"name":"NGC 2451A Sector RT-R c4-19","coords":{"x":753.03125,"y":-84.03125,"z":-153.75},"body":"2","layout":"Beacon"}
+{"name":"Synuefe RA-E b45-5","coords":{"x":755.53125,"y":-169.125,"z":-88.28125},"body":"2","layout":"Beacon"}
+{"name":"Synuefe IJ-G b44-5","coords":{"x":790.0625,"y":-124.8125,"z":-120.40625},"body":"3","layout":"Beacon"}

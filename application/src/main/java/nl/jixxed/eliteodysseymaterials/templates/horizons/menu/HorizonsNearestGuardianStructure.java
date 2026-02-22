@@ -29,6 +29,11 @@ public class HorizonsNearestGuardianStructure extends DestroyableVBox implements
         initComponents();
         initEventHandling();
     }
+    HorizonsNearestGuardianStructure(final GuardianStructureLayout guardianStructureLayout) {
+        this.guardianStructureLayouts = List.of(guardianStructureLayout);
+        initComponents();
+        initEventHandling();
+    }
 
     @Override
     public void initComponents() {
@@ -50,7 +55,11 @@ public class HorizonsNearestGuardianStructure extends DestroyableVBox implements
         try {
             final Location currentLocation = LocationService.getCurrentLocation();
             final GuardianStructure closestGuardianStructure = GuardianStructureService.findClosest(currentLocation.getStarSystem(), this.guardianStructureLayouts);
-            this.title.addBinding(this.title.textProperty(), LocaleService.getStringBinding("guardian.structure.title", LocaleService.LocalizationKey.of(closestGuardianStructure.getLayout().getType().getLocalizationKey()), LocaleService.LocalizationKey.of(closestGuardianStructure.getLayout().getLocalizationKey())));
+            if(GuardianStructureLayout.BEACON.equals(closestGuardianStructure.getLayout())) {
+                this.title.addBinding(this.title.textProperty(), LocaleService.getStringBinding("guardian.structure.title.beacon"));
+            }else {
+                this.title.addBinding(this.title.textProperty(), LocaleService.getStringBinding("guardian.structure.title", LocaleService.LocalizationKey.of(closestGuardianStructure.getLayout().getType().getLocalizationKey()), LocaleService.LocalizationKey.of(closestGuardianStructure.getLayout().getLocalizationKey())));
+            }
             //replace system if null or changed
             if (copyableLocation == null || !closestGuardianStructure.getStarSystem().equals(copyableLocation.getStarSystem())) {
                 this.getNodes().remove(copyableLocation);

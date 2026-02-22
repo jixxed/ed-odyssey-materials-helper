@@ -81,6 +81,9 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
         if (this.blueprint instanceof HorizonsTechBrokerBlueprint blueprint) {
             initClosestTrader(blueprint.getHorizonsBrokerTypes());
         }
+        if(this.blueprint instanceof HorizonsTechBrokerBlueprint blueprint && HorizonsBlueprintName.GUARDIAN_FIGHTERS.equals(blueprint.getBlueprintName())){
+            initClosestGuardianBeacon();
+        }
         if (this.blueprint instanceof HorizonsTechBrokerBlueprint blueprint &&
                 List.of(HorizonsBlueprintName.GUARDIAN_FIGHTERS,
                         HorizonsBlueprintName.GUARDIAN_MODULES,
@@ -140,6 +143,14 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
                 .withText("blueprint.label.nearest")
                 .build();
         this.getNodes().addAll(title, new HorizonsNearestBroker(horizonsBrokerTypes));
+    }
+
+    private void initClosestGuardianBeacon() {
+        final DestroyableLabel title = LabelBuilder.builder()
+                .withStyleClasses(TITLE_STYLE_CLASS, SPACING)
+                .withText("blueprint.label.nearest.guardian.beacon")
+                .build();
+        this.getNodes().addAll(title, new HorizonsNearestGuardianStructure(GuardianStructureLayout.BEACON));
     }
 
     private void initClosestGuardianStructure(final List<GuardianStructureLayout> guardianStructureLayouts) {

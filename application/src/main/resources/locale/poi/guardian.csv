@@ -6,6 +6,8 @@
 "guardian.structure.layout.squid","Squid","","","","","","Squid","","Squid"
 "guardian.structure.layout.robolobster","Robolobster","","","","","","Robolobster","","Robolobster"
 "guardian.structure.layout.hammerbot","Hammerbot","","","","","","Hammerbot","","Hammerbot"
+"guardian.structure.layout.beacon","Beacon","","","","","","","",""
 "guardian.structure.type.vessel","Vessel","","","","","","Судно","舰船","გემი"
 "guardian.structure.type.weapon","Weapon","","","","","","Оружие","武器","იარაღი"
 "guardian.structure.type.module","Module","","","","","","Модуль","模块","მოდული"
+"guardian.structure.type.beacon","Beacon","","","","","","","",""
