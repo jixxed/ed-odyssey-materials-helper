@@ -832,9 +832,7 @@
             "stationmenu",
             "dock",
             "crewlounge",
-            "engineer",
-            "contacts",
-            "livery"
+            "engineer"
           ]
         },
         "economies": {
