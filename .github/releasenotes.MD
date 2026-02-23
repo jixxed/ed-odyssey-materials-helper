@@ -11,8 +11,6 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Fix: Don't count fuel reserve in handling stats, noticeable wrong stats on smallest ships
-Added all permit mission locations
-Added guardian beacon locations for guardian fighters
-Fixed layout issues with loadout modules
+Put back the Kestrel Mk II restriction for the Agile Thrusters
+Added boost speeds to Ship Editor
 ```
