@@ -151,9 +151,9 @@ public class Thrusters extends CoreModule {
         if(THRUSTERS_7_A_MK_II.equals(this)) {
             return shipType.equals(ShipType.EXPLORER_NX);
         }
-//        if(THRUSTERS_5_A_MK_II.equals(this)) {
-//            return shipType.equals(ShipType.KESTREL_MK_II);
-//        }
+        if(THRUSTERS_5_A_MK_II.equals(this)) {
+            return shipType.equals(ShipType.KESTREL_MK_II);
+        }
         return true;
     }
 }
