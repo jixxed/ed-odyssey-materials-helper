@@ -8,10 +8,12 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.NumberAxisBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
@@ -23,10 +25,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.HoverableLineChart;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableSeparator;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -36,9 +35,9 @@ import java.util.function.Function;
 
 @Slf4j
 public class HandlingStats extends Stats implements DestroyableTemplate {
-    private RangeIndicator pitchIndicator;
-    private RangeIndicator rollIndicator;
-    private RangeIndicator yawIndicator;
+    private HandlingRangeIndicator pitchIndicator;
+    private HandlingRangeIndicator rollIndicator;
+    private HandlingRangeIndicator yawIndicator;
     private Map<Integer, XYChart.Data<Number, Number>> minPitchMap;
     private Map<Integer, XYChart.Data<Number, Number>> maxPitchMap;
     private Map<Integer, XYChart.Data<Number, Number>> currentPitchMap;
@@ -60,6 +59,9 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
     private DestroyableLabel pitchMaxValue;
     private DestroyableLabel rollMaxValue;
     private DestroyableLabel yawMaxValue;
+    private DestroyableLabel pitchMaxBoostValue;
+    private DestroyableLabel rollMaxBoostValue;
+    private DestroyableLabel yawMaxBoostValue;
     private DestroyableSeparator separator;
 
     public HandlingStats() {
@@ -67,6 +69,18 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
         initComponents();
         initEventHandling();
 
+    }
+
+    private double calculateBoostedPitchCurrent(Ship ship, double pitchSpeed, ModuleProfile moduleProfile, ModuleProfile boostProfile) {
+        return calculatePitchCurrent(ship, pitchSpeed, moduleProfile) * boostProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo())/ 100;
+    }
+
+    private double calculateBoostedRollCurrent(Ship ship, double rollSpeed, ModuleProfile moduleProfile, ModuleProfile boostProfile) {
+        return calculatePitchCurrent(ship, rollSpeed, moduleProfile) * boostProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo())/ 100;
+    }
+
+    private double calculateBoostedYawCurrent(Ship ship, double yawSpeed, ModuleProfile moduleProfile, ModuleProfile boostProfile) {
+        return calculatePitchCurrent(ship, yawSpeed, moduleProfile) * boostProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo())/ 100;
     }
 
     private double calculatePitchCurrent(Ship ship, double pitchSpeed, ModuleProfile moduleProfile) {
@@ -109,11 +123,11 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
     public void initComponents() {
         this.getStyleClass().add("handling-stats");
         addTitle("ship.stats.handling");
-        pitchIndicator = new RangeIndicator(0D, 0D, 0D, "ship.stats.handling.pitch", "ship.stats.handling.pitch.value");
+        pitchIndicator = new HandlingRangeIndicator(0D, 0D, 0D, 0D, "ship.stats.handling.pitch", "ship.stats.handling.pitch.value");
         this.getNodes().add(pitchIndicator);
-        rollIndicator = new RangeIndicator(0D, 0D, 0D, "ship.stats.handling.roll", "ship.stats.handling.roll.value");
+        rollIndicator = new HandlingRangeIndicator(0D, 0D, 0D, 0D, "ship.stats.handling.roll", "ship.stats.handling.roll.value");
         this.getNodes().add(rollIndicator);
-        yawIndicator = new RangeIndicator(0D, 0D, 0D, "ship.stats.handling.yaw", "ship.stats.handling.yaw.value");
+        yawIndicator = new HandlingRangeIndicator(0D, 0D, 0D, 0D, "ship.stats.handling.yaw", "ship.stats.handling.yaw.value");
         this.getNodes().add(yawIndicator);
         pitchButton = LabelBuilder.builder()
                 .withStyleClass("handling-button")
@@ -185,9 +199,43 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
                 .withStyleClass("max-value")
                 .withText("ship.stats.handling.yaw.value", 0)
                 .build();
+        pitchMaxBoostValue = LabelBuilder.builder()
+                .withStyleClass("max-value-boost")
+                .withText("ship.stats.handling.pitch.value", 0)
+                .build();
+        rollMaxBoostValue = LabelBuilder.builder()
+                .withStyleClass("max-value-boost")
+                .withText("ship.stats.handling.roll.value", 0)
+                .build();
+        yawMaxBoostValue = LabelBuilder.builder()
+                .withStyleClass("max-value-boost")
+                .withText("ship.stats.handling.yaw.value", 0)
+                .build();
+
+        DestroyableTooltip pitchBoostTooltip = TooltipBuilder.builder()
+                .withStyleClass("handling-tooltip")
+                .withShowDelay(Duration.millis(100))
+                .withText("handling.tooltip.boost")
+                .build();
+        pitchBoostTooltip.install(pitchMaxBoostValue);
+        DestroyableTooltip rollBoostTooltip = TooltipBuilder.builder()
+                .withStyleClass("handling-tooltip")
+                .withShowDelay(Duration.millis(100))
+                .withText("handling.tooltip.boost")
+                .build();
+        rollBoostTooltip.install(rollMaxBoostValue);
+        DestroyableTooltip yawBoostTooltip = TooltipBuilder.builder()
+                .withStyleClass("handling-tooltip")
+                .withShowDelay(Duration.millis(100))
+                .withText("handling.tooltip.boost")
+                .build();
+        yawBoostTooltip.install(yawMaxBoostValue);
+
         maxValues = BoxBuilder.builder()
                 .withStyleClass("max-values")
-                .withNodes(pitchMaxValue, rollMaxValue, yawMaxValue)
+                .withNodes(BoxBuilder.builder().withStyleClass("max-value-box").withNodes(pitchMaxValue, pitchMaxBoostValue).buildVBox(),
+                        BoxBuilder.builder().withStyleClass("max-value-box").withNodes(rollMaxValue, rollMaxBoostValue).buildVBox(),
+                        BoxBuilder.builder().withStyleClass("max-value-box").withNodes(yawMaxValue, yawMaxBoostValue).buildVBox())
                 .buildHBox();
         HBox.setHgrow(pitchMaxValue, Priority.ALWAYS);
         HBox.setHgrow(rollMaxValue, Priority.ALWAYS);
@@ -389,6 +437,23 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
                 .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MINIMUM_MULTIPLIER, true)).orElse(0D));
     }
 
+    private static Double getMaximumBoostedMultiplier(Optional<Slot> thrusters) {
+        return thrusters.map(Slot::getShipModule)
+                .map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER, true))
+                .orElse(0D);
+    }
+
+    private static Double getOptimalBoostedMultiplier(Optional<Slot> thrusters) {
+        return thrusters.map(Slot::getShipModule)
+                .map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER, true))
+                .orElse(0D);
+    }
+
+    private static Double getMinimumBoostedMultiplier(Optional<Slot> thrusters) {
+        return thrusters.map(Slot::getShipModule)
+                .map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER, true))
+                .orElse(0D);
+    }
     @Override
     protected void update() {
         getShip().ifPresent(ship -> {
@@ -399,6 +464,9 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
             final Double minimumMultiplier = getMinimumMultiplier(thrusters);
             final Double optimalMultiplier = getOptimalMultiplier(thrusters);
             final Double maximumMultiplier = getMaximumMultiplier(thrusters);
+            final Double minimumBoostedMultiplier = getMinimumBoostedMultiplier(thrusters);
+            final Double optimalBoostedMultiplier = getOptimalBoostedMultiplier(thrusters);
+            final Double maximumBoostedMultiplier = getMaximumBoostedMultiplier(thrusters);
             final Double pitchSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MAX_PITCH_SPEED, 0.0D);
             final Double yawSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MAX_YAW_SPEED, 0.0D);
             final Double rollSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MAX_ROLL_SPEED, 0.0D);
@@ -407,6 +475,7 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
             final Double minRollSpeed = rollSpeed;//reported to be unaffected by pips
             final double multiplier = ApplicationState.getInstance().getEnginePips() / 8.0;
             final ModuleProfile moduleProfile = new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumMultiplier, optimalMultiplier, maximumMultiplier);
+            final ModuleProfile boostProfile = new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumBoostedMultiplier, optimalBoostedMultiplier, maximumBoostedMultiplier);
             var currentPitch = calculatePitchCurrent(ship, (pitchSpeed * multiplier + minPitchSpeed * (1 - multiplier)), moduleProfile);
             var currentRoll = calculateRollCurrent(ship, (rollSpeed * multiplier + minRollSpeed * (1 - multiplier)), moduleProfile);
             var currentYaw = calculateYawCurrent(ship, (yawSpeed * multiplier + minYawSpeed * (1 - multiplier)), moduleProfile);
@@ -417,14 +486,21 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
             var maximumRoll = calculateRollMaximum(ship, rollSpeed, moduleProfile);
             var maximumYaw = calculateYawMaximum(ship, yawSpeed, moduleProfile);
 
+            var currentBoostedPitch = calculateBoostedPitchCurrent(ship, (pitchSpeed * multiplier + minPitchSpeed * (1 - multiplier)), moduleProfile, boostProfile);
+            var currentBoostedRoll = calculateBoostedRollCurrent(ship, (rollSpeed * multiplier + minRollSpeed * (1 - multiplier)), moduleProfile, boostProfile);
+            var currentBoostedYaw = calculateBoostedYawCurrent(ship, (yawSpeed * multiplier + minYawSpeed * (1 - multiplier)), moduleProfile, boostProfile);
 
-            this.pitchIndicator.updateValues(minimumPitch, currentPitch, maximumPitch);
-            this.rollIndicator.updateValues(minimumRoll, currentRoll, maximumRoll);
-            this.yawIndicator.updateValues(minimumYaw, currentYaw, maximumYaw);
+            this.pitchIndicator.updateValues(minimumPitch, currentPitch, currentBoostedPitch, maximumPitch);
+            this.rollIndicator.updateValues(minimumRoll, currentRoll, currentBoostedRoll, maximumRoll);
+            this.yawIndicator.updateValues(minimumYaw, currentYaw, currentBoostedYaw, maximumYaw);
 
             pitchMaxValue.textProperty().bind(LocaleService.getStringBinding("ship.stats.handling.pitch.value", Formatters.NUMBER_FORMAT_2.format(mapProfile(50, ApplicationState.getInstance().getEnginePips(), (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_PITCH_PROFILE), moduleProfile, ship))));
             rollMaxValue.textProperty().bind(LocaleService.getStringBinding("ship.stats.handling.roll.value", Formatters.NUMBER_FORMAT_2.format(mapProfile(50, ApplicationState.getInstance().getEnginePips(), (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_ROLL_PROFILE), moduleProfile, ship))));
             yawMaxValue.textProperty().bind(LocaleService.getStringBinding("ship.stats.handling.yaw.value", Formatters.NUMBER_FORMAT_2.format(mapProfile(50, ApplicationState.getInstance().getEnginePips(), (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_YAW_PROFILE), moduleProfile, ship))));
+
+            pitchMaxBoostValue.textProperty().bind(LocaleService.getStringBinding("ship.stats.handling.pitch.value", Formatters.NUMBER_FORMAT_2.format(mapBoostedProfile(50, ApplicationState.getInstance().getEnginePips(), (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_PITCH_PROFILE), moduleProfile, boostProfile, ship))));
+            rollMaxBoostValue.textProperty().bind(LocaleService.getStringBinding("ship.stats.handling.roll.value", Formatters.NUMBER_FORMAT_2.format(mapBoostedProfile(50, ApplicationState.getInstance().getEnginePips(), (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_ROLL_PROFILE), moduleProfile, boostProfile, ship))));
+            yawMaxBoostValue.textProperty().bind(LocaleService.getStringBinding("ship.stats.handling.yaw.value", Formatters.NUMBER_FORMAT_2.format(mapBoostedProfile(50, ApplicationState.getInstance().getEnginePips(), (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_YAW_PROFILE), moduleProfile, boostProfile, ship))));
 
             if (ship.supportsGraphs()) {
                 setVisibility(true, buttons, maxValues, separator);
@@ -506,6 +582,30 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
             double pivotMin = pivot;
             double pivotMax = pivotMin * (max / 100);
             double y = (pivotMin + (pivotMax - pivotMin) * (distance / 100.0)) * moduleProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() /*+ ship.getCurrentFuelReserve()*/) / 100D;
+            return (Double.isNaN(y) || Double.isInfinite(y)) ? 0 : y;
+        }
+    }
+    //    private static void mapProfile(Integer key, XYChart.Data<Number, Number> value, Double pivot, Double min, Double max) {
+    private double mapBoostedProfile(Integer key, int pips, Double[][] profile, ModuleProfile moduleProfile,  ModuleProfile boostProfile, Ship ship) {
+
+//        Final	0	    8
+//        0%	38,93	39,81
+//        50%	27,52	35,68
+//        100%	30,02	42,22
+//        calculatePitchCurrent(ship, (pitchSpeed * multiplier + minPitchSpeed * (1 - multiplier)), moduleProfile);
+        Double pivot = profile[1][0] + ((profile[1][1] - profile[1][0]) * (pips / 8D));
+        Double min = profile[0][0] + ((profile[0][1] - profile[0][0]) * (pips / 8D));
+        Double max = profile[2][0] + ((profile[2][1] - profile[2][0]) * (pips / 8D));
+        int distance = Math.abs(key - 50) * 2;
+        if (key <= 50) {
+            double pivotMax = pivot;
+            double pivotMin = pivotMax * (min / 100);
+            double y = (pivotMax - (pivotMax - pivotMin) * (distance / 100.0)) * moduleProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() /*+ ship.getCurrentFuelReserve()*/) / 100D * boostProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() /*+ ship.getCurrentFuelReserve()*/) / 100D;
+            return (Double.isNaN(y) || Double.isInfinite(y)) ? 0 : y;
+        } else {
+            double pivotMin = pivot;
+            double pivotMax = pivotMin * (max / 100);
+            double y = (pivotMin + (pivotMax - pivotMin) * (distance / 100.0)) * moduleProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() /*+ ship.getCurrentFuelReserve()*/) / 100D * boostProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() /*+ ship.getCurrentFuelReserve()*/) / 100D;
             return (Double.isNaN(y) || Double.isInfinite(y)) ? 0 : y;
         }
     }

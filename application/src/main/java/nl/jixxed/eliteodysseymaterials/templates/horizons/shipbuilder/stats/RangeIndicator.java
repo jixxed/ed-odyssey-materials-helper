@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
+import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.PaneBuilder;
@@ -29,6 +30,7 @@ public class RangeIndicator extends DestroyableVBox implements DestroyableEventT
     private double currentValue;
 
     private final String title;
+    @Getter
     private String currentValueLocalizationKey;
 
     public RangeIndicator(double startValue, double endValue, double currentValue, String title, String currentValueLocalizationKey) {
@@ -88,7 +90,7 @@ public class RangeIndicator extends DestroyableVBox implements DestroyableEventT
         update();
     }
 
-    public void update() {
+    private void update() {
         this.startValueLabel.setText(Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(startValue));
         this.endValueLabel.setText(Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(endValue));
         this.currentValueLabel.addBinding(this.currentValueLabel.textProperty(), LocaleService.getStringBinding(currentValueLocalizationKey, Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(currentValue)));

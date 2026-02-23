@@ -742,14 +742,23 @@
           @include fixedHeight(2.00em);
           @include fixedWidth(30.00em);
 
-          .max-value {
+          .max-value-box {
+            @include fixedWidth(10.00em);
+            .max-value {
 
-            -fx-max-height: infinity;
-            -fx-max-width: infinity;
-            -fx-alignment: center;
-            -fx-text-fill: $text-color-blue;
+              -fx-max-height: infinity;
+              -fx-max-width: infinity;
+              -fx-alignment: center;
+              -fx-text-fill: $text-color-blue;
+            }
+            .max-value-boost {
+
+              -fx-max-height: infinity;
+              -fx-max-width: infinity;
+              -fx-alignment: center;
+              -fx-text-fill: $text-color-yellow;
+            }
           }
-
         }
       }
 
@@ -854,6 +863,7 @@
         .shield-armour {
           @include fixedWidth(5em);
           @include fixedHeight(6.2em);
+
           .glyph-icon {
             -fx-font-size: 7em !important;
           }
@@ -882,6 +892,7 @@
         .shield-shields {
           @include fixedWidth(5em);
           @include fixedHeight(6.2em);
+
           .glyph-icon {
             -fx-font-size: 7em !important;
           }
@@ -948,6 +959,7 @@
           -fx-text-fill: $text-color-red;
           -fx-font-weight: bold;
         }
+
         .shield-label-blue {
           -fx-text-fill: $text-color-blue;
           -fx-font-weight: bold;
@@ -973,6 +985,11 @@
         }
       }
 
+      .handling-range-indicator {
+        .current-boost {
+          -fx-text-fill: $text-color-yellow;
+        }
+      }
       .range-indicator {
         -fx-min-height: 3em;
         @include fixedWidth(15em);
@@ -1021,6 +1038,7 @@
 
         .slot-box {
           -fx-background-color: $background-color-dark;
+
           &:military {
             $altcolor: $background-color-medium;
             -fx-background-color: linear-gradient(from 0px 7px to 7px 0px, repeat, $background-color-dark 0%, $altcolor 25%, $background-color-dark 50%, $altcolor 75%, $background-color-dark 100%);
@@ -1045,19 +1063,23 @@
             $altcolor: $background-color-medium;
             -fx-background-color: linear-gradient(from 0px 7px to 7px 0px, repeat, $background-color-dark 0%, $altcolor 25%, $background-color-dark 50%, $altcolor 75%, $background-color-dark 100%);
           }
+
           .slot-background {
             @include fixedHeight(4em);
-            .background-image{
+
+            .background-image {
               -fx-padding: 0 3em 0 0;
               @include fixedWidth(4em);
               @include fixedHeight(4em);
-                -fx-opacity: 0.2;
-              .glyph-icon{
+              -fx-opacity: 0.2;
+
+              .glyph-icon {
                 -fx-fill: $text-color-grey;
                 -fx-font-size: 4em !important;
               }
             }
           }
+
           .slot-content {
             @include fixedWidth(27em);
             //@include fixedHeight(6em);
@@ -1066,7 +1088,6 @@
             -fx-spacing: 0.2em;
 
             -fx-border-color: white;
-
 
 
             &:hover {
