@@ -41,14 +41,17 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
     private Map<Integer, XYChart.Data<Number, Number>> minPitchMap;
     private Map<Integer, XYChart.Data<Number, Number>> maxPitchMap;
     private Map<Integer, XYChart.Data<Number, Number>> currentPitchMap;
+    private Map<Integer, XYChart.Data<Number, Number>> currentBoostPitchMap;
     private HoverableLineChart pitchChart;
     private Map<Integer, XYChart.Data<Number, Number>> minRollMap;
     private Map<Integer, XYChart.Data<Number, Number>> maxRollMap;
     private Map<Integer, XYChart.Data<Number, Number>> currentRollMap;
+    private Map<Integer, XYChart.Data<Number, Number>> currentBoostRollMap;
     private HoverableLineChart rollChart;
     private Map<Integer, XYChart.Data<Number, Number>> minYawMap;
     private Map<Integer, XYChart.Data<Number, Number>> maxYawMap;
     private Map<Integer, XYChart.Data<Number, Number>> currentYawMap;
+    private Map<Integer, XYChart.Data<Number, Number>> currentBoostYawMap;
     private HoverableLineChart yawChart;
     private DestroyableHBox buttons;
     private DestroyableHBox maxValues;
@@ -265,6 +268,8 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
         minPitchSeries.nameProperty().bind(LocaleService.getStringBinding("ship.stats.handling.chart.min"));
         XYChart.Series<Number, Number> currentPitchSeries = new XYChart.Series<>();
         currentPitchSeries.nameProperty().bind(LocaleService.getStringBinding("ship.stats.handling.chart.current"));
+        XYChart.Series<Number, Number> currentBoostPitchSeries = new XYChart.Series<>();
+        currentBoostPitchSeries.nameProperty().bind(LocaleService.getStringBinding("ship.stats.handling.chart.boost.current"));
         XYChart.Series<Number, Number> maxPitchSeries = new XYChart.Series<>();
         maxPitchSeries.nameProperty().bind(LocaleService.getStringBinding("ship.stats.handling.chart.max"));
 
@@ -272,7 +277,8 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
                 LocaleService.LocalizationKey.of("ship.stats.handling.chart.throttle"), Formatters.NUMBER_FORMAT_0.format(data.get("x")),
                 LocaleService.LocalizationKey.of("ship.stats.handling.chart.min"), Formatters.NUMBER_FORMAT_2.format(data.get(minPitchSeries)),
                 LocaleService.LocalizationKey.of("ship.stats.handling.chart.current"), Formatters.NUMBER_FORMAT_2.format(data.get(currentPitchSeries)),
-                LocaleService.LocalizationKey.of("ship.stats.handling.chart.max"), Formatters.NUMBER_FORMAT_2.format(data.get(maxPitchSeries))
+                LocaleService.LocalizationKey.of("ship.stats.handling.chart.max"), Formatters.NUMBER_FORMAT_2.format(data.get(maxPitchSeries)),
+                LocaleService.LocalizationKey.of("ship.stats.handling.chart.boost.current"), Formatters.NUMBER_FORMAT_2.format(data.get(currentBoostPitchSeries))
         );
 
         pitchChart = new HoverableLineChart(xAxis, yAxis, tooltipFunction);
@@ -283,17 +289,21 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
         minPitchMap = new HashMap<>();
         maxPitchMap = new HashMap<>();
         currentPitchMap = new HashMap<>();
+        currentBoostPitchMap = new HashMap<>();
         for (int index = 0; index <= 100; index++) {
             minPitchMap.put(index, new XYChart.Data<>(index, 0));
             maxPitchMap.put(index, new XYChart.Data<>(index, 0));
             currentPitchMap.put(index, new XYChart.Data<>(index, 0));
+            currentBoostPitchMap.put(index, new XYChart.Data<>(index, 0));
         }
         minPitchSeries.getData().addAll(minPitchMap.values());
         maxPitchSeries.getData().addAll(maxPitchMap.values());
         currentPitchSeries.getData().addAll(currentPitchMap.values());
+        currentBoostPitchSeries.getData().addAll(currentBoostPitchMap.values());
         pitchChart.getData().add(minPitchSeries);
         pitchChart.getData().add(maxPitchSeries);
         pitchChart.getData().add(currentPitchSeries);
+        pitchChart.getData().add(currentBoostPitchSeries);
 
         this.getNodes().add(pitchChart);
     }
@@ -314,6 +324,8 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
         minRollSeries.nameProperty().bind(LocaleService.getStringBinding("ship.stats.handling.chart.min"));
         XYChart.Series<Number, Number> currentRollSeries = new XYChart.Series<>();
         currentRollSeries.nameProperty().bind(LocaleService.getStringBinding("ship.stats.handling.chart.current"));
+        XYChart.Series<Number, Number> currentBoostRollSeries = new XYChart.Series<>();
+        currentBoostRollSeries.nameProperty().bind(LocaleService.getStringBinding("ship.stats.handling.chart.boost.current"));
         XYChart.Series<Number, Number> maxRollSeries = new XYChart.Series<>();
         maxRollSeries.nameProperty().bind(LocaleService.getStringBinding("ship.stats.handling.chart.max"));
 
@@ -321,7 +333,8 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
                 LocaleService.LocalizationKey.of("ship.stats.handling.chart.throttle"), Formatters.NUMBER_FORMAT_0.format(data.get("x")),
                 LocaleService.LocalizationKey.of("ship.stats.handling.chart.min"), Formatters.NUMBER_FORMAT_2.format(data.get(minRollSeries)),
                 LocaleService.LocalizationKey.of("ship.stats.handling.chart.current"), Formatters.NUMBER_FORMAT_2.format(data.get(currentRollSeries)),
-                LocaleService.LocalizationKey.of("ship.stats.handling.chart.max"), Formatters.NUMBER_FORMAT_2.format(data.get(maxRollSeries))
+                LocaleService.LocalizationKey.of("ship.stats.handling.chart.max"), Formatters.NUMBER_FORMAT_2.format(data.get(maxRollSeries)),
+                LocaleService.LocalizationKey.of("ship.stats.handling.chart.boost.current"), Formatters.NUMBER_FORMAT_2.format(data.get(currentBoostRollSeries))
         );
 
         rollChart = new HoverableLineChart(xAxis, yAxis, tooltipFunction);
@@ -332,17 +345,21 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
         minRollMap = new HashMap<>();
         maxRollMap = new HashMap<>();
         currentRollMap = new HashMap<>();
+        currentBoostRollMap = new HashMap<>();
         for (int index = 0; index <= 100; index++) {
             minRollMap.put(index, new XYChart.Data<>(index, 0));
             maxRollMap.put(index, new XYChart.Data<>(index, 0));
             currentRollMap.put(index, new XYChart.Data<>(index, 0));
+            currentBoostRollMap.put(index, new XYChart.Data<>(index, 0));
         }
         minRollSeries.getData().addAll(minRollMap.values());
         maxRollSeries.getData().addAll(maxRollMap.values());
         currentRollSeries.getData().addAll(currentRollMap.values());
+        currentBoostRollSeries.getData().addAll(currentBoostRollMap.values());
         rollChart.getData().add(minRollSeries);
         rollChart.getData().add(maxRollSeries);
         rollChart.getData().add(currentRollSeries);
+        rollChart.getData().add(currentBoostRollSeries);
 
         this.getNodes().add(rollChart);
     }
@@ -363,6 +380,8 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
         minYawSeries.nameProperty().bind(LocaleService.getStringBinding("ship.stats.handling.chart.min"));
         XYChart.Series<Number, Number> currentYawSeries = new XYChart.Series<>();
         currentYawSeries.nameProperty().bind(LocaleService.getStringBinding("ship.stats.handling.chart.current"));
+        XYChart.Series<Number, Number> currentBoostYawSeries = new XYChart.Series<>();
+        currentBoostYawSeries.nameProperty().bind(LocaleService.getStringBinding("ship.stats.handling.chart.boost.current"));
         XYChart.Series<Number, Number> maxYawSeries = new XYChart.Series<>();
         maxYawSeries.nameProperty().bind(LocaleService.getStringBinding("ship.stats.handling.chart.max"));
 
@@ -370,7 +389,8 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
                 LocaleService.LocalizationKey.of("ship.stats.handling.chart.throttle"), Formatters.NUMBER_FORMAT_0.format(data.get("x")),
                 LocaleService.LocalizationKey.of("ship.stats.handling.chart.min"), Formatters.NUMBER_FORMAT_2.format(data.get(minYawSeries)),
                 LocaleService.LocalizationKey.of("ship.stats.handling.chart.current"), Formatters.NUMBER_FORMAT_2.format(data.get(currentYawSeries)),
-                LocaleService.LocalizationKey.of("ship.stats.handling.chart.max"), Formatters.NUMBER_FORMAT_2.format(data.get(maxYawSeries))
+                LocaleService.LocalizationKey.of("ship.stats.handling.chart.max"), Formatters.NUMBER_FORMAT_2.format(data.get(maxYawSeries)),
+                LocaleService.LocalizationKey.of("ship.stats.handling.chart.boost.current"), Formatters.NUMBER_FORMAT_2.format(data.get(currentBoostYawSeries))
         );
 
         yawChart = new HoverableLineChart(xAxis, yAxis, tooltipFunction);
@@ -381,17 +401,21 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
         minYawMap = new HashMap<>();
         maxYawMap = new HashMap<>();
         currentYawMap = new HashMap<>();
+        currentBoostYawMap = new HashMap<>();
         for (int index = 0; index <= 100; index++) {
             minYawMap.put(index, new XYChart.Data<>(index, 0));
             maxYawMap.put(index, new XYChart.Data<>(index, 0));
             currentYawMap.put(index, new XYChart.Data<>(index, 0));
+            currentBoostYawMap.put(index, new XYChart.Data<>(index, 0));
         }
         minYawSeries.getData().addAll(minYawMap.values());
         maxYawSeries.getData().addAll(maxYawMap.values());
         currentYawSeries.getData().addAll(currentYawMap.values());
+        currentBoostYawSeries.getData().addAll(currentBoostYawMap.values());
         yawChart.getData().add(minYawSeries);
         yawChart.getData().add(maxYawSeries);
         yawChart.getData().add(currentYawSeries);
+        yawChart.getData().add(currentBoostYawSeries);
 
         this.getNodes().add(yawChart);
     }
@@ -530,6 +554,10 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
                     Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_PITCH_PROFILE);
                     value.setYValue(mapProfile(key, ApplicationState.getInstance().getEnginePips(), profile, moduleProfile, ship));
                 });
+                currentBoostPitchMap.forEach((key, value) -> {
+                    Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_PITCH_PROFILE);
+                    value.setYValue(mapBoostedProfile(key, ApplicationState.getInstance().getEnginePips(), profile, moduleProfile, boostProfile, ship));
+                });
                 minRollMap.forEach((key, value) -> {
                     Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_ROLL_PROFILE);
                     value.setYValue(mapProfile(key, 0, profile, moduleProfile, ship));
@@ -542,6 +570,10 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
                     Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_ROLL_PROFILE);
                     value.setYValue(mapProfile(key, ApplicationState.getInstance().getEnginePips(), profile, moduleProfile, ship));
                 });
+                currentBoostRollMap.forEach((key, value) -> {
+                    Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_ROLL_PROFILE);
+                    value.setYValue(mapBoostedProfile(key, ApplicationState.getInstance().getEnginePips(), profile, moduleProfile, boostProfile, ship));
+                });
                 minYawMap.forEach((key, value) -> {
                     Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_YAW_PROFILE);
                     value.setYValue(mapProfile(key, 0, profile, moduleProfile, ship));
@@ -553,6 +585,10 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
                 currentYawMap.forEach((key, value) -> {
                     Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_YAW_PROFILE);
                     value.setYValue(mapProfile(key, ApplicationState.getInstance().getEnginePips(), profile, moduleProfile, ship));
+                });
+                currentBoostYawMap.forEach((key, value) -> {
+                    Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_YAW_PROFILE);
+                    value.setYValue(mapBoostedProfile(key, ApplicationState.getInstance().getEnginePips(), profile, moduleProfile, boostProfile, ship));
                 });
             } else {
                 setVisibility(false, buttons, maxValues, pitchChart, rollChart, yawChart, separator);

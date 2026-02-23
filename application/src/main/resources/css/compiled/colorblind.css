@@ -2247,6 +2247,8 @@
               -fx-opacity: 0.2; }
             .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .handling-stats .hoverable-line-chart .default-color2.chart-series-line {
               -fx-stroke: #2e92df; }
+            .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .handling-stats .hoverable-line-chart .default-color3.chart-series-line {
+              -fx-stroke: #dcc030; }
             .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .handling-stats .hoverable-line-chart .chart-plot-background {
               -fx-background-color: transparent; }
           .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .handling-stats .handling-buttons {

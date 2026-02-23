@@ -700,6 +700,10 @@
             -fx-stroke: $border-color-blue;
             //-fx-opacity: 0.2;
           }
+          .default-color3.chart-series-line {
+            -fx-stroke: $border-color-yellow;
+            //-fx-opacity: 0.2;
+          }
 
           .chart-plot-background {
             -fx-background-color: transparent;
