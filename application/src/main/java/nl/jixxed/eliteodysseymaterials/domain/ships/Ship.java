@@ -1985,7 +1985,6 @@ public class Ship {
             EMPIRE_TRADER,
             FEDERATION_DROPSHIP,
             ORCA,
-            TYPE_8,
             TYPE_9,
             PYTHON,
             BELUGA_LINER,
@@ -2010,14 +2009,15 @@ public class Ship {
             TYPE_X_3,
             KRAIT_LIGHT,
             MAMBA,
-            PYTHON_NX,
-            MANDALAY,
-            COBRA_MK_V,
-            CORSAIR,
-            PANTHER_CLIPPER_MK_II,
-            LAKONMINER,
-            EXPLORER_NX,
-            KESTREL_MK_II
+            PYTHON_NX,//7 May 2024 - M
+            TYPE_8,//6 Aug 2024 - M
+            MANDALAY,//22 Oct 204 - M
+            COBRA_MK_V,//12 Dec 2024 - S
+            CORSAIR,//8 Apr 2025 - M
+            PANTHER_CLIPPER_MK_II,//22 Jul 2025 - L
+            LAKONMINER,//29 Sep 2025 - M
+            EXPLORER_NX,// 2 Dec 2025 - L
+            KESTREL_MK_II//24 Feb 2026 - S
     );
 
 
@@ -2303,7 +2303,8 @@ public class Ship {
                 || this.shipType == ShipType.PANTHER_CLIPPER_MK_II
                 || this.shipType == ShipType.TYPE_8
                 || this.shipType == ShipType.LAKONMINER
-                || this.shipType == ShipType.EXPLORER_NX;
+                || this.shipType == ShipType.EXPLORER_NX
+                || this.shipType == ShipType.KESTREL_MK_II;
 
     }
 }
