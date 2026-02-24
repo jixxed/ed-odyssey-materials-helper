@@ -17,6 +17,9 @@
         &:disabled {
           -fx-fill: $text-color-red;
         }
+        &:underline {
+          -fx-fill: $text-color-orange;
+        }
       }
     }
 

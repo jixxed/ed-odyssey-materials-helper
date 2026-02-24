@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.enums.EndpointState;
 import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.service.CAPIService;
@@ -46,6 +47,8 @@ public class FleetCarrierEndpointHandler implements EndpointHandler {
 
     @Getter
     private static final AtomicBoolean endpointEnabled = new AtomicBoolean(true);
+    @Getter
+    private static final AtomicBoolean endpointPaused = new AtomicBoolean(false);
 
     public FleetCarrierEndpointHandler(CAPIService capiService) {
         this.capiService = capiService;
@@ -57,13 +60,25 @@ public class FleetCarrierEndpointHandler implements EndpointHandler {
     @Override
     public void enable() {
         endpointEnabled.set(true);
-        APPLICATION_STATE.setFleetCarrierEndpoint(true);
+        APPLICATION_STATE.setSquadronEndpoint(EndpointState.ENABLED);
     }
 
     @Override
     public void disable() {
         endpointEnabled.set(false);
-        APPLICATION_STATE.setFleetCarrierEndpoint(false);
+        APPLICATION_STATE.setSquadronEndpoint(EndpointState.DISABLED);
+    }
+
+    @Override
+    public void pause() {
+        endpointEnabled.set(false);
+        APPLICATION_STATE.setSquadronEndpoint(EndpointState.PAUSED);
+    }
+
+    @Override
+    public void unpause() {
+        endpointPaused.set(false);
+        APPLICATION_STATE.setSquadronEndpoint(endpointEnabled.get() ? EndpointState.ENABLED : EndpointState.DISABLED);
     }
 
     @Override
@@ -80,7 +95,7 @@ public class FleetCarrierEndpointHandler implements EndpointHandler {
 
     @Override
     public void requestData() {
-        if (CAPIService.getInstance().getActive().get() && endpointEnabled.get()) {
+        if (CAPIService.getInstance().getActive().get() && endpointEnabled.get() && !endpointPaused.get()) {
             APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                 final String pathname = commander.getCommanderFolder();
                 final File endpointFileDir = new File(pathname);
@@ -112,6 +127,9 @@ public class FleetCarrierEndpointHandler implements EndpointHandler {
                                         try (final FileOutputStream fileOutputStream = new FileOutputStream(endpointFile)) {
                                             fileOutputStream.write(response.getBody().getBytes(StandardCharsets.UTF_8));
                                         }
+                                    } else if (response.getCode() == 418) {
+                                            log.warn("Frontier API returned a " + response.getCode() + ". Pausing endpoint.");
+                                            pause();
                                     } else {
                                         log.warn("Frontier API returned a " + response.getCode() + ". Disabling endpoint.");
                                         disable();

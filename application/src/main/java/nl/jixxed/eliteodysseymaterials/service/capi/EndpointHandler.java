@@ -19,11 +19,15 @@ public interface EndpointHandler {
         return delayed > delay;
     }
 
+    void unpause();
+
     void cleanup();
 
     void enable();
 
     void disable();
+
+    void pause();
 
     int getFrequency();
 

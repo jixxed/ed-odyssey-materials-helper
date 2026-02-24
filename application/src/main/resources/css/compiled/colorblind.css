@@ -5818,6 +5818,8 @@
           -fx-fill: #709adc; }
           .app .application-screen .settings-tab-content .settings-vbox .settingsblock .capi-status:disabled {
             -fx-fill: red; }
+          .app .application-screen .settings-tab-content .settings-vbox .settingsblock .capi-status:underline {
+            -fx-fill: orange; }
       .app .application-screen .settings-tab-content .settings-vbox .settings-header {
         -fx-font-size: 1.35em;
         -fx-font-weight: bold; }

@@ -7,6 +7,7 @@ import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
+import nl.jixxed.eliteodysseymaterials.enums.EndpointState;
 import nl.jixxed.eliteodysseymaterials.service.CAPIService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.RegistryService;
@@ -68,13 +69,15 @@ public class FrontierAPI extends DestroyableVBox implements DestroyableEventTemp
         DestroyableFontAwesomeIconView capiFleetCarrierStatusCircle = FontAwesomeIconViewBuilder.builder()
                 .withStyleClass("capi-status")
                 .withIcon(FontAwesomeIcon.CIRCLE)
-                .withDisableProperty(ApplicationState.getInstance().getFleetCarrierEndpoint().not())
+                .withDisableProperty(ApplicationState.getInstance().getFleetCarrierEndpoint().isEqualTo(EndpointState.DISABLED))
                 .build();
+        capiFleetCarrierStatusCircle.underlineProperty().bind(ApplicationState.getInstance().getFleetCarrierEndpoint().isEqualTo(EndpointState.PAUSED));
         DestroyableFontAwesomeIconView capiSquadronStatusCircle = FontAwesomeIconViewBuilder.builder()
                 .withStyleClass("capi-status")
                 .withIcon(FontAwesomeIcon.CIRCLE)
-                .withDisableProperty(ApplicationState.getInstance().getSquadronEndpoint().not())
+                .withDisableProperty(ApplicationState.getInstance().getSquadronEndpoint().isEqualTo(EndpointState.DISABLED))
                 .build();
+        capiSquadronStatusCircle.underlineProperty().bind(ApplicationState.getInstance().getSquadronEndpoint().isEqualTo(EndpointState.PAUSED));
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(capiStatusLabel, capiFleetCarrierStatusCircle, capiFleetCarrierStatusLabel, capiSquadronStatusCircle, capiSquadronStatusLabel)

@@ -175,8 +175,13 @@ public class CAPIService {
                 if (response.getCode() == 400) {
                     Platform.runLater(() -> {
                         endpointHandlers.forEach(EndpointHandler::disable);
-//                        this.fcEndpointEnabled.set(false);
                         NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.400"));
+                    });
+                }
+                if (response.getCode() == 418) {
+                    Platform.runLater(() -> {
+                        endpointHandlers.forEach(EndpointHandler::pause);
+                        NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.418"));
                     });
                 }
             } catch (final InterruptedException e) {

@@ -130,9 +130,9 @@ public class ApplicationState {
     @Getter
     private final BooleanProperty powerplay = new SimpleBooleanProperty(false);
     @Getter
-    private final BooleanProperty fleetCarrierEndpoint = new SimpleBooleanProperty(false);
+    private final SimpleObjectProperty<EndpointState> fleetCarrierEndpoint = new SimpleObjectProperty<>(EndpointState.DISABLED);
     @Getter
-    private final BooleanProperty squadronEndpoint = new SimpleBooleanProperty(false);
+    private final SimpleObjectProperty<EndpointState> squadronEndpoint = new SimpleObjectProperty<>(EndpointState.DISABLED);
     @Getter
     private SquadronPerk primaryPerk = SquadronPerk.UNKNOWN;
     @Getter
@@ -168,12 +168,12 @@ public class ApplicationState {
         return applicationState;
     }
 
-    public void setFleetCarrierEndpoint(boolean enabled) {
-        Platform.runLater(()-> this.fleetCarrierEndpoint.set(enabled));
+    public void setFleetCarrierEndpoint(EndpointState state) {
+        Platform.runLater(()-> this.fleetCarrierEndpoint.set(state));
     }
 
-    public void setSquadronEndpoint(boolean enabled) {
-        Platform.runLater(()-> this.squadronEndpoint.set(enabled));
+    public void setSquadronEndpoint(EndpointState state) {
+        Platform.runLater(()-> this.squadronEndpoint.set(state));
     }
 
     public void setPower(Power power) {
