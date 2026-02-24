@@ -1948,25 +1948,25 @@ public class ShipSpecs {
             Map.entry(HorizonsModifier.MINIMUM_THRUST, 89.0),
             Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.5),
             Map.entry(HorizonsModifier.BOOST_COST, 14.0),
-            Map.entry(HorizonsModifier.FORWARD_ACCELERATION, Double.NaN),
-            Map.entry(HorizonsModifier.REVERSE_ACCELERATION, Double.NaN),
-            Map.entry(HorizonsModifier.LATERAL_ACCELERATION, Double.NaN),
+            Map.entry(HorizonsModifier.FORWARD_ACCELERATION, 55.0),
+            Map.entry(HorizonsModifier.REVERSE_ACCELERATION, 40.0),
+            Map.entry(HorizonsModifier.LATERAL_ACCELERATION, 40.0),
             Map.entry(HorizonsModifier.SUPERCRUISE_PROFILE, new Double[][]{
-                    {Double.NaN, Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN, Double.NaN}}),
+                    {50.0, 33.0, 60.0},
+                    {80.0, 100.0, 80.0},
+                    {50.0, 19.0, 60.0}}),
             Map.entry(HorizonsModifier.CRUISE_PITCH_PROFILE, new Double[][]{
-                    {Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN}}),
+                    {50.0, 45.0},
+                    {40.5, 50.0},
+                    {35.0, 35.0}}),
             Map.entry(HorizonsModifier.CRUISE_ROLL_PROFILE, new Double[][]{
-                    {Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN}}),
+                    {80.0, 80.0},
+                    {121.0, 120.0},
+                    {80.0, 85.0}}),
             Map.entry(HorizonsModifier.CRUISE_YAW_PROFILE, new Double[][]{
-                    {Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN},
-                    {Double.NaN, Double.NaN}}),
+                    {50.0, 45.0},
+                    {18.5, 24.0},
+                    {35.0, 35.0}}),
             Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 50.0),//51.4
             Map.entry(HorizonsModifier.MAX_YAW_SPEED, 24.0),//24.67
             Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 120.0),//123.36
