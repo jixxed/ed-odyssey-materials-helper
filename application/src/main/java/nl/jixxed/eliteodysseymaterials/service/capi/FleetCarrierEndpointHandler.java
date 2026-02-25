@@ -60,25 +60,25 @@ public class FleetCarrierEndpointHandler implements EndpointHandler {
     @Override
     public void enable() {
         endpointEnabled.set(true);
-        APPLICATION_STATE.setSquadronEndpoint(EndpointState.ENABLED);
+        APPLICATION_STATE.setFleetCarrierEndpoint(EndpointState.ENABLED);
     }
 
     @Override
     public void disable() {
         endpointEnabled.set(false);
-        APPLICATION_STATE.setSquadronEndpoint(EndpointState.DISABLED);
+        APPLICATION_STATE.setFleetCarrierEndpoint(EndpointState.DISABLED);
     }
 
     @Override
     public void pause() {
-        endpointEnabled.set(false);
-        APPLICATION_STATE.setSquadronEndpoint(EndpointState.PAUSED);
+        endpointPaused.set(true);
+        APPLICATION_STATE.setFleetCarrierEndpoint(EndpointState.PAUSED);
     }
 
     @Override
     public void unpause() {
         endpointPaused.set(false);
-        APPLICATION_STATE.setSquadronEndpoint(endpointEnabled.get() ? EndpointState.ENABLED : EndpointState.DISABLED);
+        APPLICATION_STATE.setFleetCarrierEndpoint(endpointEnabled.get() ? EndpointState.ENABLED : EndpointState.DISABLED);
     }
 
     @Override

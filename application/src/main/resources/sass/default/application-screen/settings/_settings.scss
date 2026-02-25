@@ -17,7 +17,7 @@
         &:disabled {
           -fx-fill: $text-color-red;
         }
-        &:underline {
+        &:paused {
           -fx-fill: $text-color-orange;
         }
       }
