@@ -11,6 +11,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.MouseEvent;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
@@ -32,7 +33,7 @@ import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
+@Slf4j
 public class ControlsSection extends DestroyableHBox implements DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String FX_FONT_SIZE_DPX = "-fx-font-size: %dpx";
@@ -688,9 +689,12 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
                                 Stream.concat(shipConfiguration.getOptionalSlots().stream(), shipConfiguration.getHardpointSlots().stream()))
                         .filter(slot -> !slot.isLegacy())
                         .forEach(slot -> {
-                            final HorizonsBlueprintName name = ShipModule.getModule(slot.getId()).getName().getPrimary();
-                            wishlistBlueprints.addAll(getModuleBlueprints(all, slot, name));
-//                            wishlistBlueprints.addAll(getExperimentalEffectBlueprints(all, slot, name));
+                            try{
+                                final HorizonsBlueprintName name = ShipModule.getModule(slot.getId()).getName().getPrimary();
+                                wishlistBlueprints.addAll(getModuleBlueprints(all, slot, name));
+                            }catch (IllegalArgumentException e){
+                                log.error("Failed to add module", e);
+                            }
                         })));
         return wishlistBlueprints;
     }
