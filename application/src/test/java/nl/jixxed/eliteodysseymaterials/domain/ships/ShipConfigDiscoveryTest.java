@@ -253,15 +253,15 @@ public class ShipConfigDiscoveryTest {
 
 
     private double calculatePitchCurrent(Ship ship, double pitchSpeed, ModuleProfile moduleProfile) {
-        return pitchSpeed * moduleProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve()) / 100;
+        return pitchSpeed * moduleProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() /*+ ship.getCurrentFuelReserve()*/) / 100;
     }
 
     private double calculateRollCurrent(Ship ship, double rollSpeed, ModuleProfile moduleProfile) {
-        return rollSpeed * moduleProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve()) / 100;
+        return rollSpeed * moduleProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo()/* + ship.getCurrentFuelReserve()*/) / 100;
     }
 
     private double calculateYawCurrent(Ship ship, double yawSpeed, ModuleProfile moduleProfile) {
-        return yawSpeed * moduleProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve()) / 100;
+        return yawSpeed * moduleProfile.getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() /*+ ship.getCurrentFuelReserve()*/) / 100;
     }
 
     protected void findPitch(Ship ship, Double expected, Double delta) {
