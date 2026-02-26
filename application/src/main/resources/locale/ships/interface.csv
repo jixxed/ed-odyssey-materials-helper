@@ -202,3 +202,5 @@
 "ship.stats.ship.boostcost.value","{0} MW","","","","{0} MW","","{0} MW","{0} MW","{0} მვ"
 "ship.stats.jumprange.explain","True jump range as shown in the maintenance panel.\nOutfitting and the right hand panel show the wrong values.","","","","","","Настоящее расстояние прыжка, как показано в панели обслуживания.\nВ Снаряжении и на правой панели указаны неверные данные.","与Maintenance界面数值一致的正确跳跃距离。\nOutfitting界面与右侧面板显示的跳跃距离有误。",""
 "ship.stats.handling.chart.boost.current","Boost","","","","","","","",""
+"ship.stats.thermal.weapons.full.tooltip","Heat level or time to overheat while firing weapons,\nwith full throttle and a full weapon capacitor","","","","","","","",""
+"ship.stats.thermal.weapons.empty.tooltip","Heat level or time to overheat while firing weapons,\nwith full throttle and a nearly empty weapon capacitor","","","","","","","",""

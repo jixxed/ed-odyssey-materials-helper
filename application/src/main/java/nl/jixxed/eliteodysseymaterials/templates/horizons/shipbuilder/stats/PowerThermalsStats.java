@@ -1,7 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
-import com.google.common.primitives.Doubles;
-import com.google.common.util.concurrent.AtomicDouble;
 import javafx.beans.binding.StringBinding;
 import javafx.util.Duration;
 import lombok.AllArgsConstructor;
@@ -45,7 +43,8 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
     private DestroyableLabel thrusterThermals;
     private DestroyableLabel fsdThermals;
     private DestroyableLabel silentRunTime;
-//    private DestroyableLabel weaponThermals;
+    private DestroyableLabel weaponThermalsFull;
+    private DestroyableLabel weaponThermalsEmpty;
 
     public PowerThermalsStats() {
         super();
@@ -62,8 +61,8 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
         this.thrusterThermals = createValueLabel("ship.stats.thermal.thruster.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
         this.fsdThermals = createValueLabel("ship.stats.thermal.fsd.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
         this.silentRunTime = createValueLabel("ship.stats.thermal.thruster.silentruntime.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
-//        this.weaponThermals = createValueLabel("ship.stats.thermal.weapon.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
-
+        this.weaponThermalsFull = createValueLabel("ship.stats.thermal.weapon.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
+        this.weaponThermalsEmpty = createValueLabel("ship.stats.thermal.weapon.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
 
         DestroyableHBox idleLine = BoxBuilder.builder()
                 .withStyleClass("thermal-line")
@@ -81,10 +80,14 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
                 .withStyleClass("thermal-line")
                 .withNodes(createLabel("ship.stats.thermal.thruster.silentruntime"), new GrowingRegion(), this.silentRunTime)
                 .buildHBox();
-//        DestroyableHBox weaponLine = BoxBuilder.builder()
-//                .withStyleClass("thermal-line")
-//                .withNodes(createLabel("ship.stats.thermal.weapon.thermals"), new GrowingRegion(), this.weaponThermals)
-//                .buildHBox();
+        DestroyableHBox weaponLine = BoxBuilder.builder()
+                .withStyleClass("thermal-line")
+                .withNodes(createLabel("ship.stats.thermal.weapon.thermals"), new GrowingRegion(), this.weaponThermalsFull)
+                .buildHBox();
+        DestroyableHBox weaponLine2 = BoxBuilder.builder()
+                .withStyleClass("thermal-line")
+                .withNodes(new GrowingRegion(), this.weaponThermalsEmpty)
+                .buildHBox();
 
         final DestroyableTooltip idleThermalsTooltip = TooltipBuilder.builder()
                 .withShowDelay(Duration.ZERO)
@@ -106,8 +109,18 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
                 .withText("ship.stats.thermal.thruster.silentruntime.tooltip")
                 .build();
         silentRunTimeTooltip.install(silentRunningLine);
+        final DestroyableTooltip weaponThermalsFullTooltip = TooltipBuilder.builder()
+                .withShowDelay(Duration.ZERO)
+                .withText("ship.stats.thermal.weapons.full.tooltip")
+                .build();
+        weaponThermalsFullTooltip.install(weaponThermalsFull);
+        final DestroyableTooltip weaponThermalsEmptyTooltip = TooltipBuilder.builder()
+                .withShowDelay(Duration.ZERO)
+                .withText("ship.stats.thermal.weapons.empty.tooltip")
+                .build();
+        weaponThermalsEmptyTooltip.install(weaponThermalsEmpty);
 
-        this.getNodes().addAll(idleLine, thrusterLine, fsdLine, silentRunningLine/*, weaponLine*/);
+        this.getNodes().addAll(idleLine, thrusterLine, fsdLine, silentRunningLine, weaponLine, weaponLine2);
 
 
         this.getNodes().add(new GrowingRegion());
@@ -199,13 +212,15 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
         this.thrusterThermals.addBinding(this.thrusterThermals.textProperty(), calculateThrusterThermals().format());
         this.fsdThermals.addBinding(this.fsdThermals.textProperty(), calculateFsdThermals().format());
         this.silentRunTime.addBinding(this.silentRunTime.textProperty(), calculateSilentRunTime().format());
-//        this.weaponThermals.addBinding(this.weaponThermals.textProperty(), calculateWeaponThermals().format());
+        this.weaponThermalsFull.addBinding(this.weaponThermalsFull.textProperty(), calculateWeaponThermalsFull().format());
+        this.weaponThermalsEmpty.addBinding(this.weaponThermalsEmpty.textProperty(), calculateWeaponThermalsEmpty().format());
     }
 
     private Value calculateSilentRunTime() {
         return getShip().map(ship -> {
             final double heatCapacity = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_CAPACITY, 0d);
             final double maximumHeatDissipation = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_DISSIPATION_MAX, 0d);
+            final double minimumHeatDissipation = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_DISSIPATION_MIN, 0d);
             final double powerCapacity = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
                     .filter(Slot::isOccupied)
@@ -230,8 +245,9 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
 
             final double powerForHeat = getPowerForHeat(powerCapacity, heatEfficiency);
 
-            PowerThermalsStats.Value heatLevelForDuration = getHeatLevelForDuration(engineHeat, powerForHeat, maximumHeatDissipation, heatCapacity, 60);
-            return new Value((heatCapacity - heatCapacity * heatLevelForDuration.getValue() / 100) / (powerForHeat + engineHeat), Value.ValueType.SECONDS);// expect 25s
+            double equilibriumHeatLevel = getEquilibriumHeatLevel(maximumHeatDissipation, powerForHeat + engineHeat) / 1.5;
+            return new Value((heatCapacity * 1.5 - heatCapacity * 1.5 * equilibriumHeatLevel / 100D) / (powerForHeat + engineHeat), Value.ValueType.SECONDS);
+
         }).orElse(new Value(0D, Value.ValueType.SECONDS));
     }
 
@@ -252,81 +268,117 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
         return new Value(Double.NaN, Value.ValueType.ERROR);
     }
 
-    Value getHeatLevelForDuration(double thermalLoad, double baseThermalLoad, double maximumHeatDissipation, double heatCapacity, double duration) {
+    Value getHeatLevelForDuration(double addedThermalLoad, double baseThermalLoad, double maximumHeatDissipation, double heatCapacity, double duration) {
+        double thermalLoad = addedThermalLoad + baseThermalLoad;
         if (thermalLoad > 0) {
-            thermalLoad += baseThermalLoad;
             if (baseThermalLoad > maximumHeatDissipation) {
                 return new Value(Double.NaN, Value.ValueType.ERROR);//error
             } else if (thermalLoad > maximumHeatDissipation) {
                 var baseHeatLevel = getEquilibriumHeatLevel(maximumHeatDissipation, baseThermalLoad);
-                var time10 = getTimeUntilHeatLevel(heatCapacity, maximumHeatDissipation, thermalLoad, baseHeatLevel, 1.0);
-                if ((time10 > duration)) {
+                var timeTo66 = getTimeUntilHeatLevel(heatCapacity, maximumHeatDissipation, thermalLoad, baseHeatLevel, 1.0);//time to get to 66%
+                if ((timeTo66 > duration)) {//If the time to get to 66% exceeds the requested duration
                     return new Value(getHeatLevelAtTime(heatCapacity, maximumHeatDissipation, thermalLoad, baseHeatLevel, duration) / 1.5 * 100, Value.ValueType.PERCENTAGE);
-                } else {
-                    var time15 = (heatCapacity / 2) / (thermalLoad - maximumHeatDissipation); // displayed heatlevel 66% -> 100% is actual heatlevel 1.0 -> 1.5
-                    if ((time10 + time15) > duration) {
-                        return new Value((2 + ((duration - time10) / time15)) / 3 * 100, Value.ValueType.SECONDS);
-                    } else {
-                        duration -= time10 + time15;
-                        var peakHeatLevel = 1.5 + (duration * (thermalLoad - maximumHeatDissipation) / heatCapacity);
-                        var timeToCool = (peakHeatLevel - 1.5) / ((maximumHeatDissipation - baseThermalLoad) / heatCapacity);
-                    }
+                } else {//We reached 66% before requested duration
+                    double remaining33 = heatCapacity / 2;
+                    double notDissipatedHeat = thermalLoad - maximumHeatDissipation;
+                    var time15 = remaining33 / notDissipatedHeat;
+                    return new Value(timeTo66 + time15, Value.ValueType.SECONDS);
                 }
             } else {
                 return new Value(getEquilibriumHeatLevel(maximumHeatDissipation, thermalLoad) / 1.5 * 100, Value.ValueType.PERCENTAGE);
             }
         }
-        return new Value(Double.NaN, Value.ValueType.ERROR);
+        return new Value(0.0, Value.ValueType.PERCENTAGE);
     }
+    static double getTimeUntilHeatLevel(
+            double heatCapacity,
+            double maximumHeatDissipation,
+            double thermalLoad,
+            double heatLevelAtStart,
+            double heatLevelTarget) {
 
-    double getTimeUntilHeatLevel(double heatCapacity, double maximumHeatDissipation, double thermalLoad, double heatLevelAtStart, double heatLevel) {
-        // https://forums.frontier.co.uk/threads/research-detailed-heat-mechanics.286628/post-6519883
-        maximumHeatDissipation /= heatCapacity;
-        if (thermalLoad == 0D) {
-            var C = -1 / (maximumHeatDissipation * heatLevelAtStart);
-            return ((1 / (maximumHeatDissipation * heatLevel)) + C);
-        } else if (thermalLoad < 0D) {
-            thermalLoad /= heatCapacity;
-            var sqrtAdivB = Math.sqrt(-maximumHeatDissipation / thermalLoad);
-            var sqrtAmulB = Math.sqrt(-maximumHeatDissipation * thermalLoad);
+        // Normalize by heat capacity
+        double L = thermalLoad / heatCapacity;
+        double D = maximumHeatDissipation / heatCapacity;
 
-            var c = 1 / sqrtAmulB * Math.atan(sqrtAdivB * heatLevelAtStart);
+        // Equilibrium heat level
+        double H_eq = Math.sqrt(L / D);
 
-            return -1 / sqrtAmulB * Math.atan(sqrtAdivB * heatLevel) + c;
-
+        // Safety check (physics requirement)
+        if (Math.abs(heatLevelAtStart) >= H_eq ||
+                Math.abs(heatLevelTarget) >= H_eq) {
+            throw new IllegalArgumentException(
+                    "Heat levels must be below equilibrium.");
         }
-        thermalLoad /= heatCapacity;
-        var sqrtAdivB = Math.sqrt(maximumHeatDissipation / thermalLoad);
-        var sqrtAmulB = Math.sqrt(maximumHeatDissipation * thermalLoad);
-        var cReal = 1D / sqrtAmulB * 1D / 2D * (Math.log(1D + sqrtAdivB * heatLevelAtStart) - Math.log(Math.abs(1D - sqrtAdivB * heatLevelAtStart)));
-        return 1D / sqrtAmulB * 1D / 2D * (Math.log(1D + sqrtAdivB * heatLevel) - Math.log(Math.abs(1D - sqrtAdivB * heatLevel))) - cReal;
+
+        double rate = Math.sqrt(L * D);
+
+        return (
+                atanh(heatLevelTarget / H_eq)
+                        - atanh(heatLevelAtStart / H_eq)
+        ) / rate;
     }
+//    double getTimeUntilHeatLevel(double heatCapacity, double maximumHeatDissipation, double thermalLoad, double heatLevelAtStart, double heatLevel) {
+//        // https://forums.frontier.co.uk/threads/research-detailed-heat-mechanics.286628/post-6519883
+//        maximumHeatDissipation /= heatCapacity;
+//
+//
+//        thermalLoad /= heatCapacity;
+//        var sqrtAdivB = Math.sqrt(maximumHeatDissipation / thermalLoad);
+//        var sqrtAmulB = Math.sqrt(maximumHeatDissipation * thermalLoad);
+//        var C = -atanh(heatLevelAtStart * sqrtAdivB) / sqrtAmulB;
+//        return ((atanh(heatLevel * sqrtAdivB) / sqrtAmulB) + C);
+//
+////        if (thermalLoad == 0D) {
+////            var C = -1 / (maximumHeatDissipation * heatLevelAtStart);
+////            return ((1 / (maximumHeatDissipation * heatLevel)) + C);
+////        } else if (thermalLoad > 0D) {
+////            thermalLoad /= heatCapacity;
+////            var sqrtAdivB = Math.sqrt(-maximumHeatDissipation / thermalLoad);
+////            var sqrtAmulB = Math.sqrt(-maximumHeatDissipation * thermalLoad);
+////
+////            var c = 1 / sqrtAmulB * Math.atan(sqrtAdivB * heatLevelAtStart);
+////
+////            return -1 / sqrtAmulB * Math.atan(sqrtAdivB * heatLevel) + c;
+////
+////        }
+////        thermalLoad /= heatCapacity;
+////        var sqrtAdivB = Math.sqrt(maximumHeatDissipation / thermalLoad);
+////        var sqrtAmulB = Math.sqrt(maximumHeatDissipation * thermalLoad);
+////        var cReal = 1D / sqrtAmulB * 1D / 2D * (Math.log(1D + sqrtAdivB * heatLevelAtStart) - Math.log(Math.abs(1D - sqrtAdivB * heatLevelAtStart)));
+////        return 1D / sqrtAmulB * 1D / 2D * (Math.log(1D + sqrtAdivB * heatLevel) - Math.log(Math.abs(1D - sqrtAdivB * heatLevel))) - cReal;
+//    }
 
 
     double getHeatLevelAtTime(double heatCapacity, double maximumHeatDissipation, double thermalLoad, double heatLevelAtStart, double seconds) {
         maximumHeatDissipation /= heatCapacity;
-        if (thermalLoad == 0D) {
-            var C = -1 / (maximumHeatDissipation * heatLevelAtStart);
-            return ((1 / (seconds - C)) / maximumHeatDissipation);
-        } else if (thermalLoad < 0) {
-            thermalLoad /= heatCapacity;
-            var sqrtAdivB = Math.sqrt(-maximumHeatDissipation / thermalLoad);
-            var sqrtAmulB = Math.sqrt(-maximumHeatDissipation * thermalLoad);
-
-            var c = 1 / sqrtAmulB * Math.atan(sqrtAdivB * heatLevelAtStart);
-            return 1 / sqrtAdivB * Math.tan(sqrtAmulB * (-seconds + c));
-
-        }
         thermalLoad /= heatCapacity;
         var sqrtAdivB = Math.sqrt(maximumHeatDissipation / thermalLoad);
         var sqrtAmulB = Math.sqrt(maximumHeatDissipation * thermalLoad);
-        var cReal = 1 / sqrtAmulB * 1 / 2 * (Math.log(1 + sqrtAdivB * heatLevelAtStart) - Math.log(Math.abs(1 - sqrtAdivB * heatLevelAtStart)));
-        var cImag = 1 / sqrtAmulB * 1 / 2 * (-Math.atan2(0, 1 - sqrtAdivB * heatLevelAtStart));
-        return Math.sqrt(thermalLoad / maximumHeatDissipation) * (Math.exp(4 * sqrtAmulB * (seconds + cReal)) - 1) / (Math.exp(4 * sqrtAmulB * (seconds + cReal)) + 2 * Math.exp(2 * sqrtAmulB * (seconds + cReal)) * Math.cos(2 * sqrtAmulB * cImag) + 1);
+        var C = -atanh(heatLevelAtStart * sqrtAdivB) / sqrtAmulB;
+        return (tanh((seconds - C) * sqrtAmulB) / sqrtAdivB);
+//        if (thermalLoad == 0D) {
+//            var C = -1 / (maximumHeatDissipation * heatLevelAtStart);
+//            return ((1 / (seconds - C)) / maximumHeatDissipation);
+//        } else if (thermalLoad > 0) {
+//            thermalLoad /= heatCapacity;
+//            var sqrtAdivB = Math.sqrt(-maximumHeatDissipation / thermalLoad);
+//            var sqrtAmulB = Math.sqrt(-maximumHeatDissipation * thermalLoad);
+//
+//            var c = 1 / sqrtAmulB * Math.atan(sqrtAdivB * heatLevelAtStart);
+//            return 1 / sqrtAdivB * Math.tan(sqrtAmulB * (-seconds + c));
+//
+//        }
+//        thermalLoad /= heatCapacity;
+//        var sqrtAdivB = Math.sqrt(maximumHeatDissipation / thermalLoad);
+//        var sqrtAmulB = Math.sqrt(maximumHeatDissipation * thermalLoad);
+//        var cReal = 1 / sqrtAmulB * 1 / 2 * (Math.log(1 + sqrtAdivB * heatLevelAtStart) - Math.log(Math.abs(1 - sqrtAdivB * heatLevelAtStart)));
+//        var cImag = 1 / sqrtAmulB * 1 / 2 * (-Math.atan2(0, 1 - sqrtAdivB * heatLevelAtStart));
+//        return Math.sqrt(thermalLoad / maximumHeatDissipation) * (Math.exp(4 * sqrtAmulB * (seconds + cReal)) - 1) / (Math.exp(4 * sqrtAmulB * (seconds + cReal)) + 2 * Math.exp(2 * sqrtAmulB * (seconds + cReal)) * Math.cos(2 * sqrtAmulB * cImag) + 1);
     }
 
-    double atanh(double x) {
-        return (Math.log((1 + x) / (1 - x)) / 2);
+    static double atanh(double x) {
+        return 0.5 * Math.log((1.0 + x) / (1.0 - x));
     }
 
     double tanh(double x) {
@@ -364,10 +416,20 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
         }).orElse(new Value(0D, Value.ValueType.PERCENTAGE));
     }
 
+    private double getDeployedPowerForHeat(double powerCapacity, double heatEfficiency) {
+        final Map<Integer, Double> powerPerGroup = calculateDeployedPowerThermal();
+        double powerForHeat = powerPerGroup.values().stream().reduce(0D, Double::sum);
+        //iterating over power groups, disabling groups while we are overpower
+        for (var p = 5; p >= 1 && powerForHeat > powerCapacity; p--) {
+            powerForHeat -= powerPerGroup.get(p);
+        }
+        powerForHeat *= heatEfficiency;
+        return powerForHeat;
+    }
     private double getPowerForHeat(double powerCapacity, double heatEfficiency) {
         final Map<Integer, Double> powerPerGroup = calculateRetractedPowerThermal();
         double powerForHeat = powerPerGroup.values().stream().reduce(0D, Double::sum);
-        //iterating over power groups
+        //iterating over power groups, disabling groups while we are overpower
         for (var p = 5; p >= 1 && powerForHeat > powerCapacity; p--) {
             powerForHeat -= powerPerGroup.get(p);
         }
@@ -375,7 +437,13 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
         return powerForHeat;
     }
 
-    private Value calculateWeaponThermals() {
+    private Value calculateWeaponThermalsFull() {
+        return calculateWeaponThermalsBase(1.0);
+    }
+    private Value calculateWeaponThermalsEmpty() {
+        return calculateWeaponThermalsBase(0.0);
+    }
+    private Value calculateWeaponThermalsBase(final double usedCapacityPercentage) {
         return getShip().map(ship -> {
             final double heatCapacity = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_CAPACITY, 0d);
             final double maximumHeatDissipation = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_DISSIPATION_MAX, 0d);
@@ -407,7 +475,14 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
                     .findFirst()
                     .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.WEAPONS_CAPACITY, true))
                     .orElse(Double.NaN);
-            AtomicDouble currentWeaponCapacity = new AtomicDouble(0);
+            final double weaponRecharge = (double) ship.getCoreSlots().stream()
+                    .filter(slot -> SlotType.CORE_POWER_DISTRIBUTION.equals(slot.getSlotType()))
+                    .filter(Slot::isOccupied)
+                    .filter(slot -> slot.getShipModule().isPowered())
+                    .findFirst()
+                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.WEAPONS_RECHARGE, true))
+                    .orElse(Double.NaN);
+
             final double weaponHeat = ship.getHardpointSlots().stream()
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPowered())
@@ -415,24 +490,20 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
                     .mapToDouble(slot -> {
                         double thermalLoad = (double) slot.getShipModule().getAttributeValue(HorizonsModifier.THERMAL_LOAD, true);
                         double distDraw = (double) slot.getShipModule().getAttributeValue(HorizonsModifier.DISTRIBUTOR_DRAW, true);
-                        currentWeaponCapacity.set(currentWeaponCapacity.get() - distDraw);
-                        return thermalLoad * Doubles.constrainToRange(1 + 4 * (weaponCapacity - currentWeaponCapacity.get() + distDraw) / weaponCapacity, 0D, 1D);
+                        double heat = thermalLoad * (1 + 4 * Math.clamp(1 - ((weaponCapacity * usedCapacityPercentage) - distDraw) / weaponCapacity, 0D, 1D));
+                        log.debug("Adding heat: {}", heat);
+                        return heat;
                     })
                     .sum();
 
-            final double powerForHeat = getPowerForHeat(powerCapacity, heatEfficiency);
-
+            final double powerForHeat = getDeployedPowerForHeat(powerCapacity, heatEfficiency);
+            //powerForHeat should never be 0, since that would mean everything is unpowered
+            if(powerForHeat == 0.0){
+                return new Value(Double.NaN, Value.ValueType.ERROR);
+            }
             return getHeatLevelForDuration(weaponHeat, powerForHeat + engineHeat, maximumHeatDissipation, heatCapacity, 60);
         }).orElse(new Value(0D, Value.ValueType.PERCENTAGE));
-
-
-//        stats.thmload_hardpoint_wepfull += getEffectiveWeaponThermalLoad(thmload, distdraw, wepcap, 1.0);
-//        stats.thmload_hardpoint_wepempty += getEffectiveWeaponThermalLoad(thmload, distdraw, wepcap, 0.0);
     }
-//    var getEffectiveWeaponThermalLoad = function(thmload, distdraw, wepcap, weplvl) {
-//         https://forums.frontier.co.uk/threads/research-detailed-heat-mechanics.286628/post-6408594
-//        return (thmload * (1 + 4 * min(max(1 - (wepcap * weplvl - distdraw) / wepcap, 0), 1)));
-//    }; // getEffectiveWeaponThermalLoad()
 
     private Value calculateThrusterThermals() {
         return getShip().map(ship -> {
