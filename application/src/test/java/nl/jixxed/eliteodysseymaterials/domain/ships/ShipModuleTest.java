@@ -97,4 +97,20 @@ class ShipModuleTest {
                         .map(shipModule ->
                                 () -> Assertions.assertTrue(shipModule.getAttributeValue(HorizonsModifier.DAMAGE, false) !=null && shipModule.getAttributeValue(HorizonsModifier.DAMAGE_PER_SECOND, false) !=null, "Hardpoint module must have DAMAGE and DAMAGE_PER_SECOND: " + shipModule.getId())));
     }
+    @Test
+    void validDistDraw() {
+        Assertions.assertAll(
+                ShipModule.getBasicModules().stream()
+                        .filter(shipModule -> shipModule instanceof HardpointModule)
+                        .map(shipModule ->
+                                () -> Assertions.assertTrue(shipModule.getAttributeValue(HorizonsModifier.DISTRIBUTOR_DRAW, false) !=null, "Hardpoint module must have DISTRIBUTOR_DRAW: " + shipModule.getId())));
+    }
+    @Test
+    void validThermal() {
+        Assertions.assertAll(
+                ShipModule.getBasicModules().stream()
+                        .filter(shipModule -> shipModule instanceof HardpointModule)
+                        .map(shipModule ->
+                                () -> Assertions.assertTrue(shipModule.getAttributeValue(HorizonsModifier.THERMAL_LOAD, false) !=null, "Hardpoint module must have THERMAL_LOAD: " + shipModule.getId())));
+    }
 }

@@ -11,9 +11,5 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Added weapon thermal stats
-Include power boost from guardian Power Distributor
-Updated post release changed stats for Kestrel Mk II (shield/armour/thrusters)
-Add pending decommission state for carrier states
-Fix fleetcarrier API status icon
+Add hidden distributor draw to torpedo pylons and mine launchers fix thermal calculations
 ```

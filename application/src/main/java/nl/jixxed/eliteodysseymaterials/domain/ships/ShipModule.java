@@ -557,6 +557,9 @@ public abstract class ShipModule implements Serializable {
         if (HorizonsModifier.POWER_DRAW.equals(modifier) && (this.getAttributeValue(modifier, false).equals(0D) && this.getOriginalAttributeValue(modifier).equals(0D))) {
             return true;
         }
+        if (HorizonsModifier.DISTRIBUTOR_DRAW.equals(modifier) && (this.getAttributeValue(modifier, false).equals(0D) && this.getOriginalAttributeValue(modifier).equals(0D))) {
+            return true;
+        }
         return false;
     }
 
