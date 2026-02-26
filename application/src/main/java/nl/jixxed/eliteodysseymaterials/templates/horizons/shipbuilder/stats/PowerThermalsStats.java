@@ -220,13 +220,7 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
         return getShip().map(ship -> {
             final double heatCapacity = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_CAPACITY, 0d);
             final double maximumHeatDissipation = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_DISSIPATION_MAX, 0d);
-            final double powerCapacity = (double) ship.getCoreSlots().stream()
-                    .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
-                    .filter(Slot::isOccupied)
-                    .filter(slot -> slot.getShipModule().isPowered())
-                    .findFirst()
-                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY, true))
-                    .orElse(Double.NaN);
+            final double powerCapacity = ship.getPowerCapacity();
             final double heatEfficiency = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
                     .filter(Slot::isOccupied)
@@ -394,13 +388,7 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
         return getShip().map(ship -> {
             final double heatCapacity = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_CAPACITY, 0d);
             final double maximumHeatDissipation = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_DISSIPATION_MAX, 0d);
-            final double powerCapacity = (double) ship.getCoreSlots().stream()
-                    .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
-                    .filter(Slot::isOccupied)
-                    .filter(slot -> slot.getShipModule().isPowered())
-                    .findFirst()
-                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY, true))
-                    .orElse(Double.NaN);
+            final double powerCapacity = ship.getPowerCapacity();
             final double heatEfficiency = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
                     .filter(Slot::isOccupied)
@@ -446,13 +434,7 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
         return getShip().map(ship -> {
             final double heatCapacity = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_CAPACITY, 0d);
             final double maximumHeatDissipation = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_DISSIPATION_MAX, 0d);
-            final double powerCapacity = (double) ship.getCoreSlots().stream()
-                    .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
-                    .filter(Slot::isOccupied)
-                    .filter(slot -> slot.getShipModule().isPowered())
-                    .findFirst()
-                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY, true))
-                    .orElse(Double.NaN);
+            final double powerCapacity = ship.getPowerCapacity();
             final double heatEfficiency = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
                     .filter(Slot::isOccupied)
@@ -508,13 +490,7 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
         return getShip().map(ship -> {
             final double heatCapacity = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_CAPACITY, 0d);
             final double maximumHeatDissipation = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_DISSIPATION_MAX, 0d);
-            final double powerCapacity = (double) ship.getCoreSlots().stream()
-                    .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
-                    .filter(Slot::isOccupied)
-                    .filter(slot -> slot.getShipModule().isPowered())
-                    .findFirst()
-                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY, true))
-                    .orElse(Double.NaN);
+            final double powerCapacity = ship.getPowerCapacity();
             final double heatEfficiency = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
                     .filter(Slot::isOccupied)
@@ -540,13 +516,7 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
         return getShip().map(ship -> {
             final double heatCapacity = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_CAPACITY, 0d);
             final double maximumHeatDissipation = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_DISSIPATION_MAX, 0d);
-            final double powerCapacity = (double) ship.getCoreSlots().stream()
-                    .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
-                    .filter(Slot::isOccupied)
-                    .filter(slot -> slot.getShipModule().isPowered())
-                    .findFirst()
-                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY, true))
-                    .orElse(Double.NaN);
+            final double powerCapacity = ship.getPowerCapacity();
             final double heatEfficiency = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
                     .filter(Slot::isOccupied)
