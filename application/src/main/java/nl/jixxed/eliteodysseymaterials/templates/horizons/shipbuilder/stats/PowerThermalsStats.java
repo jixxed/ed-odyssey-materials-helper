@@ -220,7 +220,6 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
         return getShip().map(ship -> {
             final double heatCapacity = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_CAPACITY, 0d);
             final double maximumHeatDissipation = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_DISSIPATION_MAX, 0d);
-            final double minimumHeatDissipation = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_DISSIPATION_MIN, 0d);
             final double powerCapacity = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
                     .filter(Slot::isOccupied)
@@ -281,8 +280,8 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
                 } else {//We reached 66% before requested duration
                     double remaining33 = heatCapacity / 2;
                     double notDissipatedHeat = thermalLoad - maximumHeatDissipation;
-                    var time15 = remaining33 / notDissipatedHeat;
-                    return new Value(timeTo66 + time15, Value.ValueType.SECONDS);
+                    var timeFrom66to100 = remaining33 / notDissipatedHeat;
+                    return new Value(timeTo66 + timeFrom66to100, Value.ValueType.SECONDS);
                 }
             } else {
                 return new Value(getEquilibriumHeatLevel(maximumHeatDissipation, thermalLoad) / 1.5 * 100, Value.ValueType.PERCENTAGE);
