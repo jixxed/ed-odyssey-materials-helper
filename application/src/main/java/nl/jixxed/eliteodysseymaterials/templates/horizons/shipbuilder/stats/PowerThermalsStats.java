@@ -471,8 +471,9 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
                     .mapToDouble(slot -> {
                         double thermalLoad = (double) slot.getShipModule().getAttributeValue(HorizonsModifier.THERMAL_LOAD, true);
                         double distDraw = (double) slot.getShipModule().getAttributeValue(HorizonsModifier.DISTRIBUTOR_DRAW, true);
+                        double rateOfFire = (double) slot.getShipModule().getAttributeValue(HorizonsModifier.RATE_OF_FIRE, true);
                         double heat = thermalLoad * (1 + 4 * Math.clamp(1 - ((weaponCapacity * usedCapacityPercentage) - distDraw) / weaponCapacity, 0D, 1D));
-                        log.debug("Adding heat: {}", heat);
+                        heat *= (Double.POSITIVE_INFINITY == rateOfFire) ? 1 : rateOfFire;
                         return heat;
                     })
                     .sum();
