@@ -2202,7 +2202,15 @@ public class Ship {
 //        ));
 
 
-        powerProfile.setPowerCapacity((Double) getCoreSlots().stream().filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType())).findFirst().filter(Slot::isOccupied).map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY, true)).orElse(0.0D));
+        Double powerCapacity = (Double) getCoreSlots().stream().filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType())).findFirst().filter(Slot::isOccupied).map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY, true)).orElse(0.0D);
+        final double powerBoostFactor = getCoreSlots().stream()
+                .filter(slot -> SlotType.CORE_POWER_DISTRIBUTION.equals(slot.getSlotType()))
+                .filter(Slot::isOccupied)
+                .filter(slot -> Origin.GUARDIAN.equals(slot.getShipModule().getOrigin()))
+                .findFirst()
+                .map(_ -> 1.04)
+                .orElse(1.0);
+        powerProfile.setPowerCapacity(powerCapacity * powerBoostFactor);
         if (getCargoHatch().isOccupied() && getCargoHatch().getShipModule().isPowered()) {
             int group = getCargoHatch().getShipModule().isPassivePowerWithoutToggle() ? -1 : getCargoHatch().getShipModule().getPowerGroup();
             powerProfile.increasePowerGroup(group, (double) getCargoHatch().getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW, true));
@@ -2229,6 +2237,7 @@ public class Ship {
                     int group = slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup();
                     powerProfile.increasePowerGroup(group, (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW, true));
                 });
+
         return powerProfile;
     }
 
