@@ -2,3 +2,4 @@
 "carrier.state.normal_operation","Normal","","","","","","Нормальное","",""
 "carrier.state.debt","Debt","","","","","","Задолженность","",""
 "carrier.state.unknown","Unknown","","","","","","Неизвестное","",""
+"carrier.state.pending_decommission","Pending decom.","","","","","","","",""

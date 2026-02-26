@@ -7,9 +7,9 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public enum CarrierState {
     NORMAL_OPERATION("normalOperation"),
+    PENDING_DECOMMISSION("pendingDecommission"),
     DEBT("debtState"),
     UNKNOWN("unknown$");
-
     private final String key;
 
     public static CarrierState forKey(final String name) {
