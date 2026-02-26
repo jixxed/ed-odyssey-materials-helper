@@ -33,6 +33,7 @@ import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 @Slf4j
 public class ControlsSection extends DestroyableHBox implements DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
@@ -161,12 +162,16 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
     }
 
     private static void setArmourFavourite() {
-        APPLICATION_STATE.getShip().getCoreSlots().stream().filter(slot -> SlotType.CORE_ARMOUR.equals(slot.getSlotType())).findFirst().ifPresent(slot -> {
+        Ship ship = APPLICATION_STATE.getShip();
+        ship.getCoreSlots().stream().filter(slot -> SlotType.CORE_ARMOUR.equals(slot.getSlotType())).findFirst().ifPresent(slot -> {
             List<ShipModule> armours = ShipModule.getModules(SlotType.CORE_ARMOUR);
+            Boolean preferMkII = UserPreferencesService.getPreference("ships.favourite.armour.module.mkii", false);
             armours.stream()
                     .map(Armour.class::cast)
-                    .filter(armour -> armour.getShipType().equals(APPLICATION_STATE.getShip().getShipType()))
-                    .filter(armour -> armour.getArmourType().equals(UserPreferencesService.getPreference("ships.favourite.armour.module", ArmourType.LIGHTWEIGHT_ALLOY)))
+                    .filter(armour -> armour.getShipType().equals(ship.getShipType()))
+                    .filter(armour -> armour.isAllowed(ship.getShipType()))
+                    .filter(armour -> armour.getArmourType().getMainType().equals(UserPreferencesService.getPreference("ships.favourite.armour.module", ArmourMainType.LIGHTWEIGHT_ALLOY)))
+                    .sorted(Comparator.comparing((Armour armour) -> armour.getArmourType().getSubType().equals((preferMkII) ? ArmourSubType.ABLATIVE : ArmourSubType.NORMAL)).reversed())
                     .findFirst().ifPresent(armour -> {
                         slot.setShipModule(armour.Clone());
                     });
@@ -188,50 +193,49 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
     private static void setPowerPlantFavourite() {
         APPLICATION_STATE.getShip().getCoreSlots().stream().filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType())).findFirst().ifPresent(slot -> {
             List<ShipModule> powerPlants = ShipModule.getModules(SlotType.CORE_POWER_PLANT);
-            if (UserPreferencesService.getPreference("ships.favourite.powerplant.guardian", false)) {
-                powerPlants.stream()
-                        .map(PowerPlant.class::cast)
-                        .filter(module -> module.getOrigin().equals(Origin.GUARDIAN))
-                        .filter(module -> module.getModuleSize().intValue() == slot.getSlotSize())
-                        .findFirst()
-                        .ifPresent(powerPlant -> {
-                            slot.setShipModule(powerPlant.Clone());
-                        });
+            Boolean preferGuardian = UserPreferencesService.getPreference("ships.favourite.powerplant.guardian", false);
+            ModuleClass preferedModuleClass = UserPreferencesService.getPreference("ships.favourite.powerplant.class", ModuleClass.E);
+            powerPlants.stream()
+                    .map(PowerPlant.class::cast)
+                    .filter(module -> module.getModuleSize().intValue() == slot.getSlotSize())
+                    .sorted(Comparator.comparing((PowerPlant powerPlant) -> preferGuardian == Origin.GUARDIAN.equals(powerPlant.getOrigin()))
+                            .thenComparing((PowerPlant powerPlant) -> preferedModuleClass.equals(powerPlant.getModuleClass()))
+                            .reversed())
+                    .findFirst()
+                    .ifPresent(powerPlant -> {
+                        slot.setShipModule(powerPlant.Clone());
+                    });
+            HorizonsBlueprintType blueprint = UserPreferencesService.getPreference("ships.favourite.powerplant.blueprint", HorizonsBlueprintType.NONE);
+            if (!blueprint.equals(HorizonsBlueprintType.NONE)) {
+                slot.getShipModule().applyModification(blueprint, HorizonsBlueprintGrade.GRADE_5, BigDecimal.ONE);
             } else {
-                powerPlants.stream()
-                        .map(PowerPlant.class::cast)
-                        .filter(module -> !module.getOrigin().equals(Origin.GUARDIAN))
-                        .filter(module -> module.getModuleSize().intValue() == slot.getSlotSize())
-                        .filter(module -> module.getModuleClass().equals(UserPreferencesService.getPreference("ships.favourite.powerplant.class", ModuleClass.E)))
-                        .findFirst()
-                        .ifPresent(powerPlant -> {
-                            slot.setShipModule(powerPlant.Clone());
-                        });
-                HorizonsBlueprintType blueprint = UserPreferencesService.getPreference("ships.favourite.powerplant.blueprint", HorizonsBlueprintType.NONE);
-                if (!blueprint.equals(HorizonsBlueprintType.NONE)) {
-                    slot.getShipModule().applyModification(blueprint, HorizonsBlueprintGrade.GRADE_5, BigDecimal.ONE);
-                } else {
-                    slot.getShipModule().removeModifications();
-                }
-                HorizonsBlueprintType effect = UserPreferencesService.getPreference("ships.favourite.powerplant.experimental", HorizonsBlueprintType.NONE);
-                if (!effect.equals(HorizonsBlueprintType.NONE)) {
-                    slot.getShipModule().applyExperimentalEffect(effect);
-                } else {
-                    slot.getShipModule().removeExperimentalEffects();
-                }
+                slot.getShipModule().removeModifications();
             }
+            HorizonsBlueprintType effect = UserPreferencesService.getPreference("ships.favourite.powerplant.experimental", HorizonsBlueprintType.NONE);
+            if (!effect.equals(HorizonsBlueprintType.NONE)) {
+                slot.getShipModule().applyExperimentalEffect(effect);
+            } else {
+                slot.getShipModule().removeExperimentalEffects();
+            }
+
         });
     }
 
     private static void setThrustersFavourite() {
-        APPLICATION_STATE.getShip().getCoreSlots().stream().filter(slot -> SlotType.CORE_THRUSTERS.equals(slot.getSlotType())).findFirst().ifPresent(slot -> {
+        Ship ship = APPLICATION_STATE.getShip();
+        boolean preferMkII = UserPreferencesService.getPreference("ships.favourite.thruster.mkii", false);
+        boolean preferEnhanced = UserPreferencesService.getPreference("ships.favourite.thruster.enhanced", false);
+        ship.getCoreSlots().stream().filter(slot -> SlotType.CORE_THRUSTERS.equals(slot.getSlotType())).findFirst().ifPresent(slot -> {
             List<ShipModule> thrusters = ShipModule.getModules(SlotType.CORE_THRUSTERS);
-            boolean selectEnhanced = UserPreferencesService.getPreference("ships.favourite.thruster.enhanced", false) && (slot.getSlotSize() == 2 || slot.getSlotSize() == 3);
+            ModuleClass preferedModuleClass = UserPreferencesService.getPreference("ships.favourite.thruster.class", ModuleClass.E);
             thrusters.stream()
                     .map(Thrusters.class::cast)
-                    .filter(module -> selectEnhanced ? module.getName().equals(HorizonsBlueprintName.ENHANCED_THRUSTERS) : module.getName().equals(HorizonsBlueprintName.THRUSTERS))
                     .filter(module -> module.getModuleSize().intValue() == slot.getSlotSize())
-                    .filter(module -> selectEnhanced || module.getModuleClass().equals(UserPreferencesService.getPreference("ships.favourite.thruster.class", ModuleClass.E)))
+                    .filter(module -> module.isAllowed(ship.getShipType()))
+                    .sorted(Comparator.comparing((Thrusters module) -> preferMkII == (HorizonsBlueprintName.THRUSTERS_MK_II_AGILE.equals(module.getName()) || HorizonsBlueprintName.THRUSTERS_MK_II.equals(module.getName())))
+                            .thenComparing((Thrusters module) -> preferEnhanced == HorizonsBlueprintName.ENHANCED_THRUSTERS.equals(module.getName()))
+                            .thenComparing((Thrusters module) -> preferedModuleClass.equals(module.getModuleClass()))
+                            .reversed())
                     .findFirst()
                     .ifPresent(thruster -> {
                         slot.setShipModule(thruster.Clone());
@@ -252,22 +256,24 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
     }
 
     private static void setFrameShiftDriveFavourite() {
-        APPLICATION_STATE.getShip().getCoreSlots().stream().filter(slot -> SlotType.CORE_FRAME_SHIFT_DRIVE.equals(slot.getSlotType())).findFirst().ifPresent(slot -> {
-            boolean selectSCO = UserPreferencesService.getPreference("ships.favourite.fsd.sco", false);
-            boolean selectPreengineered = UserPreferencesService.getPreference("ships.favourite.fsd.preengineered", false);
+        Ship ship = APPLICATION_STATE.getShip();
+        ship.getCoreSlots().stream().filter(slot -> SlotType.CORE_FRAME_SHIFT_DRIVE.equals(slot.getSlotType())).findFirst().ifPresent(slot -> {
+            boolean preferSCO = UserPreferencesService.getPreference("ships.favourite.fsd.sco", false);
+            boolean preferPreEngineered = UserPreferencesService.getPreference("ships.favourite.fsd.preengineered", false);
+            boolean preferMkII = UserPreferencesService.getPreference("ships.favourite.fsd.mkii", false);
+            ModuleClass preferedModuleClass = UserPreferencesService.getPreference("ships.favourite.fsd.class", ModuleClass.E);
 
             ShipModule.getModules(SlotType.CORE_FRAME_SHIFT_DRIVE).stream()
                     .map(FrameShiftDrive.class::cast)
                     .filter(module -> !module.isCGExclusive())
+                    .filter(module -> module.isAllowed(ship.getShipType()))
                     .filter(module -> module.getModuleSize().intValue() == slot.getSlotSize())
-                    .sorted(Comparator.comparing(ShipModule::getName))
-                    .filter(module -> selectPreengineered
-                            ? module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_PRE) || module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE_PRE)
-                            : module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE) || module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE))
-                    .filter(module -> selectSCO
-                            ? module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE) || module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE_PRE)
-                            : module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE) || module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_PRE) || module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE_PRE))
-                    .filter(module -> selectPreengineered || module.getModuleClass().equals(UserPreferencesService.getPreference("ships.favourite.fsd.class", ModuleClass.E)))
+                    .sorted(Comparator.comparing((FrameShiftDrive module) -> preferMkII == module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE_MK_II))
+                            .thenComparing((FrameShiftDrive module) -> preferPreEngineered == (module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_PRE) || module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE_PRE)))
+                            .thenComparing((FrameShiftDrive module) -> preferSCO == (module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE) || module.getName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE_PRE)))
+                            .thenComparing((FrameShiftDrive module) -> preferedModuleClass.equals(module.getModuleClass()))
+                            .reversed()
+                    )
                     .findFirst()
                     .ifPresent(frameShiftDrive -> {
                         slot.setShipModule(frameShiftDrive.Clone());
@@ -292,11 +298,13 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
 
     private static void setLifeSupportFavourite() {
         APPLICATION_STATE.getShip().getCoreSlots().stream().filter(slot -> SlotType.CORE_LIFE_SUPPORT.equals(slot.getSlotType())).findFirst().ifPresent(slot -> {
+            ModuleClass preferedModuleClass = UserPreferencesService.getPreference("ships.favourite.lifesupport.class", ModuleClass.E);
             List<ShipModule> lifesupports = ShipModule.getModules(SlotType.CORE_LIFE_SUPPORT);
             lifesupports.stream()
                     .map(LifeSupport.class::cast)
                     .filter(module -> module.getModuleSize().intValue() == slot.getSlotSize())
-                    .filter(module -> module.getModuleClass().equals(UserPreferencesService.getPreference("ships.favourite.lifesupport.class", ModuleClass.E)))
+                    .sorted(Comparator.comparing((LifeSupport module) -> preferedModuleClass.equals(module.getModuleClass()))
+                            .reversed())
                     .findFirst()
                     .ifPresent(lifesupport -> {
                         slot.setShipModule(lifesupport.Clone());
@@ -312,49 +320,45 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
 
     private static void setPowerDistributorFavourite() {
         APPLICATION_STATE.getShip().getCoreSlots().stream().filter(slot -> SlotType.CORE_POWER_DISTRIBUTION.equals(slot.getSlotType())).findFirst().ifPresent(slot -> {
+            Boolean preferGuardian = UserPreferencesService.getPreference("ships.favourite.powerdistributor.guardian", false);
+            ModuleClass preferedModuleClass = UserPreferencesService.getPreference("ships.favourite.powerdistributor.class", ModuleClass.E);
             List<ShipModule> powerDistributors = ShipModule.getModules(SlotType.CORE_POWER_DISTRIBUTION);
-            if (UserPreferencesService.getPreference("ships.favourite.powerdistributor.guardian", false)) {
-                powerDistributors.stream()
-                        .map(PowerDistributor.class::cast)
-                        .filter(module -> module.getOrigin().equals(Origin.GUARDIAN))
-                        .filter(module -> module.getModuleSize().intValue() == slot.getSlotSize())
-                        .findFirst()
-                        .ifPresent(powerDistributor -> {
-                            slot.setShipModule(powerDistributor.Clone());
-                        });
+            powerDistributors.stream()
+                    .map(PowerDistributor.class::cast)
+                    .filter(module -> module.getModuleSize().intValue() == slot.getSlotSize())
+                    .sorted(Comparator.comparing((PowerDistributor powerPlant) -> preferGuardian == Origin.GUARDIAN.equals(powerPlant.getOrigin()))
+                            .thenComparing((PowerDistributor powerPlant) -> preferedModuleClass.equals(powerPlant.getModuleClass()))
+                            .reversed())
+                    .findFirst()
+                    .ifPresent(powerDistributor -> {
+                        slot.setShipModule(powerDistributor.Clone());
+                    });
+
+            HorizonsBlueprintType blueprint = UserPreferencesService.getPreference("ships.favourite.powerdistributor.blueprint", HorizonsBlueprintType.NONE);
+            if (!blueprint.equals(HorizonsBlueprintType.NONE)) {
+                slot.getShipModule().applyModification(blueprint, HorizonsBlueprintGrade.GRADE_5, BigDecimal.ONE);
             } else {
-                powerDistributors.stream()
-                        .map(PowerDistributor.class::cast)
-                        .filter(module -> !module.getOrigin().equals(Origin.GUARDIAN))
-                        .filter(module -> module.getModuleSize().intValue() == slot.getSlotSize())
-                        .filter(module -> module.getModuleClass().equals(UserPreferencesService.getPreference("ships.favourite.powerdistributor.class", ModuleClass.E)))
-                        .findFirst()
-                        .ifPresent(powerDistributor -> {
-                            slot.setShipModule(powerDistributor.Clone());
-                        });
-                HorizonsBlueprintType blueprint = UserPreferencesService.getPreference("ships.favourite.powerdistributor.blueprint", HorizonsBlueprintType.NONE);
-                if (!blueprint.equals(HorizonsBlueprintType.NONE)) {
-                    slot.getShipModule().applyModification(blueprint, HorizonsBlueprintGrade.GRADE_5, BigDecimal.ONE);
-                } else {
-                    slot.getShipModule().removeModifications();
-                }
-                HorizonsBlueprintType effect = UserPreferencesService.getPreference("ships.favourite.powerdistributor.experimental", HorizonsBlueprintType.NONE);
-                if (!effect.equals(HorizonsBlueprintType.NONE)) {
-                    slot.getShipModule().applyExperimentalEffect(effect);
-                } else {
-                    slot.getShipModule().removeExperimentalEffects();
-                }
+                slot.getShipModule().removeModifications();
             }
+            HorizonsBlueprintType effect = UserPreferencesService.getPreference("ships.favourite.powerdistributor.experimental", HorizonsBlueprintType.NONE);
+            if (!effect.equals(HorizonsBlueprintType.NONE)) {
+                slot.getShipModule().applyExperimentalEffect(effect);
+            } else {
+                slot.getShipModule().removeExperimentalEffects();
+            }
+
         });
     }
 
     private static void setSensorFavourite() {
         APPLICATION_STATE.getShip().getCoreSlots().stream().filter(slot -> SlotType.CORE_SENSORS.equals(slot.getSlotType())).findFirst().ifPresent(slot -> {
+            ModuleClass preferedModuleClass = UserPreferencesService.getPreference("ships.favourite.sensors.class", ModuleClass.E);
             List<ShipModule> sensors = ShipModule.getModules(SlotType.CORE_SENSORS);
             sensors.stream()
                     .map(Sensors.class::cast)
                     .filter(module -> module.getModuleSize().intValue() == slot.getSlotSize())
-                    .filter(module -> module.getModuleClass().equals(UserPreferencesService.getPreference("ships.favourite.sensors.class", ModuleClass.E)))
+                    .sorted(Comparator.comparing((Sensors module) -> preferedModuleClass.equals(module.getModuleClass()))
+                            .reversed())
                     .findFirst()
                     .ifPresent(sensor -> {
                         slot.setShipModule(sensor.Clone());
@@ -689,10 +693,10 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
                                 Stream.concat(shipConfiguration.getOptionalSlots().stream(), shipConfiguration.getHardpointSlots().stream()))
                         .filter(slot -> !slot.isLegacy())
                         .forEach(slot -> {
-                            try{
+                            try {
                                 final HorizonsBlueprintName name = ShipModule.getModule(slot.getId()).getName().getPrimary();
                                 wishlistBlueprints.addAll(getModuleBlueprints(all, slot, name));
-                            }catch (IllegalArgumentException e){
+                            } catch (IllegalArgumentException e) {
                                 log.error("Failed to add module", e);
                             }
                         })));

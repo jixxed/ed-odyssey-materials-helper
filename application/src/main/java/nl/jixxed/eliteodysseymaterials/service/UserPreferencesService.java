@@ -11,6 +11,7 @@ import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
+import nl.jixxed.eliteodysseymaterials.domain.ships.ArmourMainType;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ArmourType;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleClass;
 import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
@@ -161,6 +162,9 @@ public class UserPreferencesService {
             }
             if (defaultValue instanceof ArmourType) {
                 return (T) ArmourType.valueOf(value);
+            }
+            if (defaultValue instanceof ArmourMainType) {
+                return (T) ArmourMainType.forName(value);
             }
             if (defaultValue instanceof HorizonsBlueprintType) {
                 return (T) HorizonsBlueprintType.valueOf(value);

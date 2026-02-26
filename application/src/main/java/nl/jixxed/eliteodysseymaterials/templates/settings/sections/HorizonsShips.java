@@ -54,8 +54,6 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
     private final IntegerProperty maxGrade = new SimpleIntegerProperty(0);
     private DestroyableVBox blueprints;
     private DestroyableVBox effects;
-    //    private DestroyableLabel blueprintLabel;
-//    private DestroyableLabel effectLabel;
     private BooleanBinding selectedNull;
 
     private Callback<ListView<ShipLegacyModule>, ListCell<ShipLegacyModule>> createDestroyableCellFactory(Destroyable destroyable) {
@@ -132,12 +130,20 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
                 .withText("tab.settings.ships.favourite.armour")
                 .build();
 
-        DestroyableComboBox<ArmourType> moduleComboBox = ComboBoxBuilder.builder(ArmourType.class)
+        DestroyableComboBox<ArmourMainType> moduleComboBox = ComboBoxBuilder.builder(ArmourMainType.class)
                 .withStyleClass(SETTINGS_DROPDOWN_CLASS)
-                .withItemsProperty(FXCollections.observableList(Arrays.stream(ArmourType.values()).toList()))
-                .withSelected(UserPreferencesService.getPreference("ships.favourite.armour.module", ArmourType.LIGHTWEIGHT_ALLOY))
+                .withItemsProperty(FXCollections.observableList(Arrays.stream(ArmourMainType.values()).toList()))
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.armour.module", ArmourMainType.LIGHTWEIGHT_ALLOY))
                 .withValueChangeListener((_, _, newValue) -> {
                     UserPreferencesService.setPreference("ships.favourite.armour.module", newValue.name());
+                })
+                .build();
+        DestroyableCheckBox ablativeCheckBox = CheckBoxBuilder.builder()
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withText("tab.settings.ships.favourite.armour.mkii")
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.armour.module.mkii", false))
+                .withSelectedProperty((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.armour.module.mkii", newValue);
                 })
                 .build();
         List<HorizonsBlueprintType> blueprintTypes = new ArrayList<>(ArmourBlueprints.BLUEPRINTS.keySet().stream().toList());
@@ -160,9 +166,10 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
                     UserPreferencesService.setPreference("ships.favourite.armour.experimental", newValue.name());
                 })
                 .build();
+
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
-                .withNodes(moduleLabel, moduleComboBox, engineeringComboBox, experimentalComboBox)
+                .withNodes(moduleLabel, ablativeCheckBox, moduleComboBox, engineeringComboBox, experimentalComboBox)
                 .buildHBox();
     }
 
@@ -187,7 +194,6 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
                 .withValueChangeListener((_, _, newValue) -> {
                     UserPreferencesService.setPreference("ships.favourite.powerplant.class", newValue.name());
                 })
-                .withDisableProperty(guardianCheckBox.selectedProperty())
                 .build();
         List<HorizonsBlueprintType> blueprintTypes = new ArrayList<>(PowerPlantBlueprints.BLUEPRINTS.keySet().stream().toList());
         blueprintTypes.addFirst(HorizonsBlueprintType.NONE);
@@ -198,7 +204,6 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
                 .withValueChangeListener((_, _, newValue) -> {
                     UserPreferencesService.setPreference("ships.favourite.powerplant.blueprint", newValue.name());
                 })
-                .withDisableProperty(guardianCheckBox.selectedProperty())
                 .build();
         List<HorizonsBlueprintType> effectTypes = new ArrayList<>(ExperimentalEffectBlueprints.POWER_PLANT.keySet().stream().toList());
         effectTypes.addFirst(HorizonsBlueprintType.NONE);
@@ -209,7 +214,6 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
                 .withValueChangeListener((_, _, newValue) -> {
                     UserPreferencesService.setPreference("ships.favourite.powerplant.experimental", newValue.name());
                 })
-                .withDisableProperty(guardianCheckBox.selectedProperty())
                 .build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
@@ -224,6 +228,14 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
                 .withText("tab.settings.ships.favourite.thruster")
                 .build();
 
+        DestroyableCheckBox mkIICheckBox = CheckBoxBuilder.builder()
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withText("tab.settings.ships.favourite.thruster.mkii")
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.thruster.mkii", false))
+                .withSelectedProperty((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.thruster.mkii", newValue);
+                })
+                .build();
         DestroyableCheckBox enhancedCheckBox = CheckBoxBuilder.builder()
                 .withStyleClass(SETTINGS_DROPDOWN_CLASS)
                 .withText("tab.settings.ships.favourite.thruster.enhanced")
@@ -262,7 +274,7 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
                 .build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
-                .withNodes(moduleLabel, enhancedCheckBox, moduleClassComboBox, engineeringComboBox, experimentalComboBox)
+                .withNodes(moduleLabel, mkIICheckBox, enhancedCheckBox, moduleClassComboBox, engineeringComboBox, experimentalComboBox)
                 .buildHBox();
     }
 
@@ -272,6 +284,14 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
                 .withText("tab.settings.ships.favourite.fsd")
                 .build();
 
+        DestroyableCheckBox mkIICheckBox = CheckBoxBuilder.builder()
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withText("tab.settings.ships.favourite.fsd.mkii")
+                .withSelected(UserPreferencesService.getPreference("ships.favourite.fsd.mkii", false))
+                .withSelectedProperty((_, _, newValue) -> {
+                    UserPreferencesService.setPreference("ships.favourite.fsd.mkii", newValue);
+                })
+                .build();
         DestroyableCheckBox preEngineeredCheckBox = CheckBoxBuilder.builder()
                 .withStyleClass(SETTINGS_DROPDOWN_CLASS)
                 .withText("tab.settings.ships.favourite.fsd.preengineered")
@@ -295,7 +315,6 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
                 .withValueChangeListener((_, _, newValue) -> {
                     UserPreferencesService.setPreference("ships.favourite.fsd.class", newValue.name());
                 })
-                .withDisableProperty(preEngineeredCheckBox.selectedProperty())
                 .build();
         List<HorizonsBlueprintType> blueprintTypes = new ArrayList<>(FSDBlueprints.BLUEPRINTS.keySet().stream().toList());
         blueprintTypes.addFirst(HorizonsBlueprintType.NONE);
@@ -306,7 +325,6 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
                 .withValueChangeListener((_, _, newValue) -> {
                     UserPreferencesService.setPreference("ships.favourite.fsd.blueprint", newValue.name());
                 })
-                .withDisableProperty(preEngineeredCheckBox.selectedProperty())
                 .build();
         List<HorizonsBlueprintType> effectTypes = new ArrayList<>(ExperimentalEffectBlueprints.FRAME_SHIFT_DRIVE.keySet().stream().toList());
         effectTypes.addFirst(HorizonsBlueprintType.NONE);
@@ -320,7 +338,7 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
                 .build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
-                .withNodes(moduleLabel, preEngineeredCheckBox, scoCheckBox, moduleClassComboBox, engineeringComboBox, experimentalComboBox)
+                .withNodes(moduleLabel, mkIICheckBox, preEngineeredCheckBox, scoCheckBox, moduleClassComboBox, engineeringComboBox, experimentalComboBox)
                 .buildHBox();
     }
 
@@ -375,7 +393,6 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
                 .withValueChangeListener((_, _, newValue) -> {
                     UserPreferencesService.setPreference("ships.favourite.powerdistributor.class", newValue.name());
                 })
-                .withDisableProperty(guardianCheckBox.selectedProperty())
                 .build();
         List<HorizonsBlueprintType> blueprintTypes = new ArrayList<>(PowerDistributorBlueprints.BLUEPRINTS.keySet().stream().toList());
         blueprintTypes.addFirst(HorizonsBlueprintType.NONE);
@@ -386,7 +403,6 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
                 .withValueChangeListener((_, _, newValue) -> {
                     UserPreferencesService.setPreference("ships.favourite.powerdistributor.blueprint", newValue.name());
                 })
-                .withDisableProperty(guardianCheckBox.selectedProperty())
                 .build();
         List<HorizonsBlueprintType> effectTypes = new ArrayList<>(ExperimentalEffectBlueprints.POWER_DISTRIBUTOR.keySet().stream().toList());
         effectTypes.addFirst(HorizonsBlueprintType.NONE);
@@ -397,7 +413,6 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
                 .withValueChangeListener((_, _, newValue) -> {
                     UserPreferencesService.setPreference("ships.favourite.powerdistributor.experimental", newValue.name());
                 })
-                .withDisableProperty(guardianCheckBox.selectedProperty())
                 .build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
