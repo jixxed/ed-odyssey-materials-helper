@@ -11,8 +11,9 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Better handling of CAPI connections during downtime
-Finalized testing on Kestrel Mk II stats, enabled graphs
-Made Mk II Plasma Shock Accelerator a Plasma Accelerator instead of a Shock Cannon
-Set Shock Cannon Ammo from 240 to 880
+Added weapon thermal stats
+Include power boost from guardian Power Distributor
+Updated post release changed stats for Kestrel Mk II (shield/armour/thrusters)
+Add pending decommission state for carrier states
+Fix fleetcarrier API status icon
 ```
