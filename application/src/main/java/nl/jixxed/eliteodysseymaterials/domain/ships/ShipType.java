@@ -22,7 +22,7 @@ public enum ShipType {
     EMPIRE_TRADER(128049315, "Empire_Trader", ShipSize.L, false, 1),
     FEDERATION_DROPSHIP(128049321, "Federation_Dropship", ShipSize.M, false, 1),
     ORCA(128049327, "Orca", ShipSize.L, false, 1),
-    TYPE_8(0, "Type8", ShipSize.M, false, 0),
+    TYPE_8(129030534, "Type8", ShipSize.M, false, 0),
     TYPE_9(128049333, "Type9", ShipSize.L, true, 3),
     PYTHON(128049339, "Python", ShipSize.M, false, 1),
     PYTHON_NX(190658840, "Python_nx", ShipSize.M, false, 1),
@@ -47,14 +47,14 @@ public enum ShipType {
     TYPE_X_2(128816581, "TypeX_2", ShipSize.M, true, 3),
     TYPE_X_3(128816588, "TypeX_3", ShipSize.M, false, 1),
     KRAIT_LIGHT(128839281, "Krait_Light", ShipSize.M, false, 1),
-    MANDALAY(0, "Mandalay", ShipSize.M, false, 1),
+    MANDALAY(129030680, "Mandalay", ShipSize.M, false, 1),
     MAMBA(128915979, "Mamba", ShipSize.M, false, 1),
     COBRA_MK_V(128947462, "CobraMkV", ShipSize.S, false, 2),
-    CORSAIR(0, "Corsair", ShipSize.M, false, 1),
-    PANTHER_CLIPPER_MK_II(0, "PantherMkII", ShipSize.L, true, 3),
-    LAKONMINER(0, "Lakonminer", ShipSize.M, true, 2),
-    EXPLORER_NX(0, "Explorer_nx", ShipSize.L, true, 3),
-    KESTREL_MK_II(0, "smallcombat01_nx", ShipSize.S, false, 0);
+    CORSAIR(129031320, "Corsair", ShipSize.M, false, 1),
+    PANTHER_CLIPPER_MK_II(129034269, "PantherMkII", ShipSize.L, true, 3),
+    LAKONMINER(129036130, "Lakonminer", ShipSize.M, true, 2),
+    EXPLORER_NX(129036569, "Explorer_nx", ShipSize.L, true, 3),
+    KESTREL_MK_II(129039241, "smallcombat01_nx", ShipSize.S, false, 0);
 
     final long internalID;
     final String internalName;
