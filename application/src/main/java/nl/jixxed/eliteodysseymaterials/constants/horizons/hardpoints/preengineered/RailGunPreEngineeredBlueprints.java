@@ -36,7 +36,8 @@ public class RailGunPreEngineeredBlueprints {
                                     Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.0, 1.0))),
                                     Map.entry(HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.0, 1.0))),
                                     Map.entry(HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("+25%", false, percentagePositive(0.0, 0.25))),
-                                    Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+500%", true, percentagePositive(0.0, 5.0)))
+                                    Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+500%", true, percentagePositive(0.0, 5.0))),
+                                    Map.entry(HorizonsModifier.TARGET_SHIELD_CELL_DISRUPTED, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)))
                             ),
                             List.of(
                             ),
@@ -56,7 +57,8 @@ public class RailGunPreEngineeredBlueprints {
                                     Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.0, 1.0))),
                                     Map.entry(HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.0, 1.0))),
                                     Map.entry(HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("+50%", false, percentagePositive(0.0, 0.5))),
-                                    Map.entry(HorizonsModifier.TARGET_MODULE_DAMAGE, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)))
+                                    Map.entry(HorizonsModifier.TARGET_MODULE_DAMAGE, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE))),
+                                    Map.entry(HorizonsModifier.TARGET_SHIELD_CELL_DISRUPTED, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)))
                             ),
                             List.of(
                             ),

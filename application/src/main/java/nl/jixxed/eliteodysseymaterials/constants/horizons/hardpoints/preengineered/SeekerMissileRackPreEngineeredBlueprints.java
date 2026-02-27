@@ -34,7 +34,8 @@ public class SeekerMissileRackPreEngineeredBlueprints {
                                     HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-40%", true, percentageNegative(0.0, 0.4)),
                                     HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("-10%", true, percentageNegative(0.0, 0.1)),
                                     HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.0, 1.0)),
-                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.0, 1.0))
+                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.0, 1.0)),
+                                    HorizonsModifier.SHIELDED_TARGET_HEAT_INCREASED, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE))
                             ),
                             List.of(
                             ),

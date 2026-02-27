@@ -2,7 +2,9 @@ package nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints.preenginee
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.constants.UTF8Constants;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsBooleanModifierValue;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsNumberModifierValue;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
@@ -35,7 +37,8 @@ public class GuardianShardCannonPreEngineeredBlueprints {
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+76.5%", true, percentagePositive(0.0, 2999.998291 / 1700.0 - 1.0)),
                                     HorizonsModifier.SHOT_SPEED, new HorizonsNumberModifierValue("+455.8%", true, percentagePositive(0.0, 6299.208984 / 1133.333374 - 1.0)),
                                     HorizonsModifier.JITTER, new HorizonsNumberModifierValue("-3.5°", true, minus(3.5)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("-11.8%", false, percentageNegative(0.0, 1499.999146 / 1700.0 - 1.0))
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("-11.8%", false, percentageNegative(0.0, 1499.999146 / 1700.0 - 1.0)),
+                                    HorizonsModifier.TARGET_MODULE_DAMAGE, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE))
                             ),
                             List.of(
                             ),

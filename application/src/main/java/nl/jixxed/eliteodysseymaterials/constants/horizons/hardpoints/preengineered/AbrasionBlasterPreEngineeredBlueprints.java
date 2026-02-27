@@ -2,7 +2,9 @@ package nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints.preenginee
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.constants.UTF8Constants;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsBooleanModifierValue;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsNumberModifierValue;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
@@ -13,8 +15,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import java.util.List;
 import java.util.Map;
 
-import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.percentageNegative;
-import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.percentagePositive;
+import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AbrasionBlasterPreEngineeredBlueprints {
@@ -34,7 +35,8 @@ public class AbrasionBlasterPreEngineeredBlueprints {
                                     HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+400%", true, percentagePositive(0.0, 4.0)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-50%", false, percentageNegative(0.0, 0.5)),
                                     HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-50%", true, percentageNegative(0.0, 0.5)),
-                                    HorizonsModifier.SHOT_SPEED, new HorizonsNumberModifierValue("+400%", false, percentagePositive(0.0, 4.0))
+                                    HorizonsModifier.SHOT_SPEED, new HorizonsNumberModifierValue("+400%", false, percentagePositive(0.0, 4.0)),
+                                    HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE))
                             ),
                             List.of(
                             ),

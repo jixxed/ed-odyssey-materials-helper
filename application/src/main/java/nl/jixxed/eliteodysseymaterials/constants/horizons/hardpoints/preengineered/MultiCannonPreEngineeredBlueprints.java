@@ -2,7 +2,9 @@ package nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints.preenginee
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.constants.UTF8Constants;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsBooleanModifierValue;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsNumberModifierValue;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
@@ -32,7 +34,8 @@ public class MultiCannonPreEngineeredBlueprints {
                                     HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+4300", true, plus(4300.0)),
                                     HorizonsModifier.ROUNDS_PER_SHOT, new HorizonsNumberModifierValue("+200%", true, percentagePositive(0.0, 2.0)),
                                     HorizonsModifier.JITTER, new HorizonsNumberModifierValue("3", false, plus(3.0)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1))
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
+                                    HorizonsModifier.PART_OF_DAMAGE_THROUGH_SHIELDS, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE))
                             ),
                             List.of(
                             ),
