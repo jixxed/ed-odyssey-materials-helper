@@ -53,7 +53,8 @@ public class MiningLaserPreEngineeredBlueprints {
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.05, 0.05)),
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+200%", false, percentagePositive(2.0, 2.0)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+400%", true, percentagePositive(4.0, 4.0)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+733.3%", true, percentagePositive(0.0, 2200.0 / 300.0))
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+733.3%", true, percentagePositive(0.0, 2200.0 / 300.0)),
+                                    HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE))
                             ),
                             List.of(
                             ),
