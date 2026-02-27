@@ -28,7 +28,7 @@ public class RailGun extends HardpointModule {
                 new Modification(HorizonsBlueprintType.LONG_RANGE_WEAPON_HIGH_CAPACITY_MAGAZINE_FEEDBACK_CASCADE, 1.0, HorizonsBlueprintGrade.GRADE_5)
         );
         IMPERIAL_HAMMER_RAIL_GUN_2_B_F_PRE.getModifications().add(
-                new Modification(HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR_FEEDBACK_CASCADE, 1.0, HorizonsBlueprintGrade.GRADE_5)
+                new Modification(HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR, 1.0, HorizonsBlueprintGrade.GRADE_5)
         );
     }
 

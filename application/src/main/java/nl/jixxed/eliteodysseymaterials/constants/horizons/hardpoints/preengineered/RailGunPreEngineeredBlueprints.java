@@ -44,9 +44,9 @@ public class RailGunPreEngineeredBlueprints {
                             true
                     )
             ),
-            HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR_FEEDBACK_CASCADE,
+            HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.RAIL_GUN, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR_FEEDBACK_CASCADE, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.RAIL_GUN, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                             ),
                             Map.ofEntries(
@@ -57,8 +57,7 @@ public class RailGunPreEngineeredBlueprints {
                                     Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.0, 1.0))),
                                     Map.entry(HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.0, 1.0))),
                                     Map.entry(HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("+50%", false, percentagePositive(0.0, 0.5))),
-                                    Map.entry(HorizonsModifier.TARGET_MODULE_DAMAGE, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE))),
-                                    Map.entry(HorizonsModifier.TARGET_SHIELD_CELL_DISRUPTED, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)))
+                                    Map.entry(HorizonsModifier.TARGET_MODULE_DAMAGE, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)))
                             ),
                             List.of(
                             ),

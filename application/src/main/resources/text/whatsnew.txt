@@ -1,3 +1,7 @@
+Version 3.5.17
+-------------
+Remove feedback cascade from pre-engineered Imperial Hammer Rail Gun
+
 Version 3.5.16
 -------------
 Add pre-engineered Imperial Hammer Rail Gun

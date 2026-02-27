@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -194,7 +195,7 @@ public enum HorizonsBlueprintType {
     AMMO_CAPACITY_X2(false, true),
     LIGHTWEIGHT_FOCUSED(false, true),
     LONG_RANGE_WEAPON_HIGH_CAPACITY_MAGAZINE_FEEDBACK_CASCADE(false, true),
-    HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR_FEEDBACK_CASCADE(false, true),
+    HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR(false, true),
     OVERCHARGED_WEAPON_AUTO_LOADER(false, true),
     HIGH_CAPACITY_MAGAZINE_INCREASED_DAMAGE(false, true),
     RAPID_FIRE_MODIFICATION_PHASING_SEQUENCE(false, true),
@@ -493,5 +494,16 @@ public enum HorizonsBlueprintType {
         return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
     }
 
+    @JsonCreator
+    public static HorizonsBlueprintType fromString(String value) {
+        if (value == null) {
+            return null;
+        }
+
+        return switch (value) {
+            case "HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR_FEEDBACK_CASCADE" -> HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR; // HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR_FEEDBACK_CASCADE renamed to HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR
+            default -> HorizonsBlueprintType.valueOf(value);
+        };
+    }
 
 }
