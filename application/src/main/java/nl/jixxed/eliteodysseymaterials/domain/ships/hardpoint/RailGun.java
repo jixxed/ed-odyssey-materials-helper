@@ -96,6 +96,11 @@ public class RailGun extends HardpointModule {
     }
 
     @Override
+    public int getGrouping() {
+        return getModuleSize().intValue() * 10 + (getOrigin().equals(Origin.POWERPLAY) ? 5 : 0) + (isPreEngineered() ? 2 : 0);
+    }
+
+    @Override
     public Collection<HorizonsSynthesisBlueprint> synthesisBlueprints() {
         return SynthesisBlueprints.HIGH_VELOCITY_MUNITIONS.values();
     }
