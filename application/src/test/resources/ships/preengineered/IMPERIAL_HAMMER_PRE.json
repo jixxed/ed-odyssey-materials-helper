@@ -1,0 +1,68 @@
+{
+  "Slot": "MediumHardpoint2",
+  "Item": "hpt_railgun_fixed_medium_burst",
+  "On": true,
+  "Priority": 0,
+  "AmmoInClip": 3,
+  "AmmoInHopper": 240,
+  "Health": 1.0,
+  "Engineering": {
+    "EngineerID": 399999,
+    "BlueprintID": 129041439,
+    "BlueprintName": "Weapon_HighCapacity",
+    "Level": 5,
+    "Quality": 1.0,
+    "ExperimentalEffect": "special_super_penetrator",
+    "ExperimentalEffect_Localised": "Super Penetrator",
+    "Modifiers": [
+      {
+        "Label": "Mass",
+        "Value": 6.8,
+        "OriginalValue": 4.0,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "PowerDraw",
+        "Value": 2.0375,
+        "OriginalValue": 1.63,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "DamagePerSecond",
+        "Value": 51.923073,
+        "OriginalValue": 61.363636,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "Damage",
+        "Value": 12.0,
+        "OriginalValue": 15.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "RateOfFire",
+        "Value": 4.326923,
+        "OriginalValue": 4.090909,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "AmmoClipSize",
+        "Value": 6.0,
+        "OriginalValue": 3.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "AmmoMaximum",
+        "Value": 480.0,
+        "OriginalValue": 240.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "ReloadTime",
+        "Value": 1.8,
+        "OriginalValue": 1.2,
+        "LessIsGood": 1
+      }
+    ]
+  }
+}

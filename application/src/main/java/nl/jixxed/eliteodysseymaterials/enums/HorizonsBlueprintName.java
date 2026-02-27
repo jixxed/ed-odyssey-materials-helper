@@ -97,6 +97,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     RAIL_GUN(BlueprintGroup.RAIL_GUNS, BlueprintCategory.HARDPOINT),
     RAIL_GUN_PRE(BlueprintGroup.RAIL_GUNS, BlueprintCategory.HARDPOINT, false),
     IMPERIAL_HAMMER_RAIL_GUN(BlueprintGroup.RAIL_GUNS, BlueprintCategory.HARDPOINT, false),
+    IMPERIAL_HAMMER_RAIL_GUN_PRE(BlueprintGroup.RAIL_GUNS, BlueprintCategory.HARDPOINT, false),
     TORPEDO_PYLON(BlueprintGroup.TORPEDO_PYLONS, BlueprintCategory.HARDPOINT),
     MINING_VOLLEY_REPEATER(BlueprintGroup.MINING_VOLLEY_REPEATERS, BlueprintCategory.HARDPOINT),
     //utility

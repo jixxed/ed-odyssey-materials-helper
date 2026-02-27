@@ -11,6 +11,7 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
+Add pre-engineered Imperial Hammer Rail Gun
 Expanded favourite module selection with Mk2 modules (Armour preference might have been reset to lightweight)
 Removed Ablative armours from the favourites list
 Don't disable favourite fields on selecting a checkbox

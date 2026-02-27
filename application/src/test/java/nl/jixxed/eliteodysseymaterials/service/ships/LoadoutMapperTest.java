@@ -25,7 +25,6 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Loadout;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module;
 import nl.jixxed.eliteodysseymaterials.service.ShipModuleService;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -35,7 +34,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -178,6 +180,7 @@ class LoadoutMapperTest {
                 Arguments.of("FRAGMENT_CANNON_1_E_G_PRE.json", FragmentCannon.FRAGMENT_CANNON_1_E_G_PRE, SlotType.HARDPOINT),
                 Arguments.of("FRAGMENT_CANNON_3_C_G_PRE.json", FragmentCannon.FRAGMENT_CANNON_3_C_G_PRE, SlotType.HARDPOINT),
                 Arguments.of("MULTI_CANNON_2_E_F_PRE.json", MultiCannon.MULTI_CANNON_2_E_F_PRE, SlotType.HARDPOINT),
+                Arguments.of("IMPERIAL_HAMMER.json", RailGun.IMPERIAL_HAMMER_RAIL_GUN_2_B_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("RAIL_GUN_2_B_F_PRE.json", RailGun.RAIL_GUN_2_B_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_PINK.json", RemoteReleaseFlakLauncher.REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_PINK, SlotType.HARDPOINT),
                 Arguments.of("REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_GREEN.json", RemoteReleaseFlakLauncher.REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_GREEN, SlotType.HARDPOINT),
