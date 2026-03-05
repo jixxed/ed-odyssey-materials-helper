@@ -417,12 +417,16 @@ public class SlotBox extends DestroyableStackPane {
 
     public void replaceModule(ShipModule shipModule) {
         final ShipModule clone = shipModule.Clone();
+        ShipModule currentModule = this.getSlot().getShipModule();
         if (!clone.isPreEngineered()) {//already pre-applied
-            clone.getModifications().addAll(this.getSlot().getShipModule().getModifications());
+            clone.getModifications().addAll(currentModule.getModifications());
         }
-        clone.getExperimentalEffects().addAll(this.getSlot().getShipModule().getExperimentalEffects());
+        clone.getExperimentalEffects().addAll(currentModule.getExperimentalEffects());
         if (this.getSlot().getOldShipModule() != null && isSimilar(clone, this.getSlot().getOldShipModule())) {
             clone.setBuyPrice(this.getSlot().getOldShipModule().getBuyPrice());
+        }
+        if (currentModule.hasPowerToggle() && !currentModule.isPassivePower() && shipModule.hasPowerToggle() && !shipModule.isPassivePower()) {
+            clone.setPowerGroup(currentModule.getPowerGroup());
         }
         this.getSlot().setShipModule(clone);
         notifyChanged();
