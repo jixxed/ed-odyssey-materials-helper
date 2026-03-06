@@ -1,13 +1,22 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.util.Duration;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.StackPaneBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.PowerProfile;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
+import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -28,6 +37,7 @@ public class PowerStats extends DestroyableVBox implements DestroyableEventTempl
     private DestroyableLabel deployedPowerLabel;
     private PowerBar retractedPowerBar;
     private PowerBar deployedPowerBar;
+    private final DoubleProperty guardianBoost = new SimpleDoubleProperty(0.0);
 
 
     public PowerStats() {
@@ -62,17 +72,26 @@ public class PowerStats extends DestroyableVBox implements DestroyableEventTempl
 //        HBox.setHgrow(this.deployedPowerBar, Priority.ALWAYS);
         DestroyableLabel retractedKey = createLabel("ship.stats.power.retracted.power");
         DestroyableLabel deployedKey = createLabel("ship.stats.power.deployed.power");
+        var percentLabels = StackPaneBuilder.builder()
+                .withNodes(
+                        createPercentageLabel(0.2, "power.level.reason.destroyed.and.malfunctioning"),
+                        createPercentageLabel(0.4, "power.level.reason.malfunctioning"),
+                        createPercentageLabel(0.5, "power.level.reason.destroyed"),
+                        createPercentageLabel(1.0, "power.level.reason.normal")
+                )
+                .build();
+        percentLabels.setAlignment(Pos.BASELINE_LEFT);
         DestroyableVBox labels = BoxBuilder.builder()
                 .withStyleClass("power-stats-labels")
-                .withNodes(retractedKey,deployedKey)
+                .withNodes(new GrowingRegion(), retractedKey,deployedKey)
                 .buildVBox();
         DestroyableVBox bars = BoxBuilder.builder()
                 .withStyleClass("power-stats-powerbars")
-                .withNodes(retractedPowerBar, deployedPowerBar)
+                .withNodes(percentLabels, retractedPowerBar, deployedPowerBar)
                 .buildVBox();
         DestroyableVBox values = BoxBuilder.builder()
                 .withStyleClass("power-stats-values")
-                .withNodes(this.retractedPowerLabel, this.deployedPowerLabel)
+                .withNodes(new GrowingRegion(), this.retractedPowerLabel, this.deployedPowerLabel)
                 .buildVBox();
 //        DestroyableHBox l1 = BoxBuilder.builder().withStyleClass("power-stats-line").withNodes(retractedKey, retractedPowerBar, this.retractedPowerLabel).buildHBox();
 //        DestroyableHBox l2 = BoxBuilder.builder().withStyleClass("power-stats-line").withNodes(deployedKey, deployedPowerBar, this.deployedPowerLabel).buildHBox();
@@ -112,6 +131,19 @@ public class PowerStats extends DestroyableVBox implements DestroyableEventTempl
                         createLegend("5")
                 ).buildHBox());
 
+    }
+
+    private DestroyableLabel createPercentageLabel(Double percentage, String tooltipLocalizationKey) {
+
+        DestroyableLabel label = LabelBuilder.builder().withNonLocalizedText(Formatters.NUMBER_FORMAT_1.format((percentage + (guardianBoost.getValue() * percentage)) * 100D) + "%").build();
+        label.addBinding(label.translateXProperty(), Bindings.createDoubleBinding(() -> (guardianBoost.getValue() + 1D) * percentage / 1.1 * this.retractedPowerBar.widthProperty().get() - label.getWidth() / 2D, guardianBoost, this.retractedPowerBar.widthProperty(), label.widthProperty()));
+        label.addBinding(label.textProperty(), Bindings.createStringBinding(() -> Formatters.NUMBER_FORMAT_1.format((percentage + (guardianBoost.getValue() * percentage)) * 100D) + "%", guardianBoost, this.retractedPowerBar.widthProperty()));
+        final DestroyableTooltip percentageLabelTooltip = TooltipBuilder.builder()
+                .withText(tooltipLocalizationKey)
+                .withShowDelay(Duration.millis(100))
+                .build();
+        percentageLabelTooltip.install(label);
+        return label;
     }
 
     private DestroyableHBox createLegend(String number) {
@@ -161,6 +193,17 @@ public class PowerStats extends DestroyableVBox implements DestroyableEventTempl
         this.retractedPowerBar.update();
         this.deployedPowerBar.update();
 
+        this.guardianBoost.set(getPowerBoost());
+    }
+
+    private double getPowerBoost() {
+        return getShip()
+                .map(ship -> ship.getCoreSlots().stream()
+                        .filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION))
+                        .findFirst()
+                        .map(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_BOOST, true))
+                        .orElse(0.0))
+                .orElse(0.0);
     }
 
     private PowerProfile calculateRetractedPower() {

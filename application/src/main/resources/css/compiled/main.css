@@ -2475,9 +2475,9 @@
               -fx-background-color: #f01414;
               -fx-opacity: 0.2; }
           .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .power-stats .power-stats-powerbars {
-            -fx-min-height: 3.1em;
-            -fx-pref-height: 3.1em;
-            -fx-max-height: 3.1em;
+            -fx-min-height: 4.1em;
+            -fx-pref-height: 4.1em;
+            -fx-max-height: 4.1em;
             /*-fx-spacing: 0.2em;*/ }
           .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .power-stats .power-stats-overpower {
             -fx-text-fill: #ff7c7c; }
