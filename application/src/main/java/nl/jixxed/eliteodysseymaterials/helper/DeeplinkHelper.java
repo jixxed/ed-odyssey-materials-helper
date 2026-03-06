@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
+
 @Slf4j
 public class DeeplinkHelper {
     //    @Setter
@@ -121,76 +122,82 @@ public class DeeplinkHelper {
 
 
     private static void showImportDialog(ImportType type, String data, Runnable onImportAccepted) {
-        if(shouldSkipDialog(type)){
+        if (shouldSkipDialog(type)) {
             onImportAccepted.run();
-        }else{
-            String json = ImportService.convertBase64CompressedToJson(data);
-            final Stage importStage = new Stage();
-            addIconsToStage(importStage);
-            final Scene importScene = new Scene(new ImportDialog(type, json, importStage, onImportAccepted), 640, 640);
-            importStage.initModality(Modality.APPLICATION_MODAL);
-            final JMetro jMetro = new JMetro(Style.DARK);
-            jMetro.setScene(importScene);
+        } else {
+            try {
+                String json = ImportService.convertBase64CompressedToJson(data);
+                final Stage importStage = new Stage();
+                addIconsToStage(importStage);
+                final Scene importScene = new Scene(new ImportDialog(type, json, importStage, onImportAccepted), 640, 640);
+                importStage.initModality(Modality.APPLICATION_MODAL);
+                final JMetro jMetro = new JMetro(Style.DARK);
+                jMetro.setScene(importScene);
 
-            if (VersionService.isDev()) {//dev mode for hotswap css
-                try {
-                    final String currentWorkingDirectory = new File(".").getCanonicalPath();
-                    final File mainCss = new File(currentWorkingDirectory + "/src/main/resources/css/compiled/main.css");
-                    final File colorblindCss = new File(currentWorkingDirectory + "/src/main/resources/css/compiled/colorblind.css");
+                if (VersionService.isDev()) {//dev mode for hotswap css
+                    try {
+                        final String currentWorkingDirectory = new File(".").getCanonicalPath();
+                        final File mainCss = new File(currentWorkingDirectory + "/src/main/resources/css/compiled/main.css");
+                        final File colorblindCss = new File(currentWorkingDirectory + "/src/main/resources/css/compiled/colorblind.css");
 
-                    switch (StyleSheet.valueOf(PreferencesService.getPreference(PreferenceConstants.STYLESHEET, "DEFAULT"))) {
-                        case DEFAULT -> importScene.getStylesheets().add(mainCss.toURI().toURL().toExternalForm());
-                        case COLORBLIND -> importScene.getStylesheets().add(colorblindCss.toURI().toURL().toExternalForm());
-                    }
+                        switch (StyleSheet.valueOf(PreferencesService.getPreference(PreferenceConstants.STYLESHEET, "DEFAULT"))) {
+                            case DEFAULT -> importScene.getStylesheets().add(mainCss.toURI().toURL().toExternalForm());
+                            case COLORBLIND ->
+                                    importScene.getStylesheets().add(colorblindCss.toURI().toURL().toExternalForm());
+                        }
 
-                    AtomicReference<FileListener> fileListenerRef = new AtomicReference<>();
-                    subscribe = Observable.<String>create(emitter -> {
-                                fileListenerRef.set(new FileListener() {
-                                    @Override
-                                    public void onCreated(FileEvent event) {
+                        AtomicReference<FileListener> fileListenerRef = new AtomicReference<>();
+                        subscribe = Observable.<String>create(emitter -> {
+                                    fileListenerRef.set(new FileListener() {
+                                        @Override
+                                        public void onCreated(FileEvent event) {
 
-                                    }
-
-                                    @Override
-                                    public void onModified(FileEvent event) {
-                                        var pathToCss = "";
-                                        try {
-                                            pathToCss = event.getFile().toURI().toURL().toExternalForm();//compiledCss.toURI().toURL().toExternalForm();
-                                        } catch (final IOException e) {
-                                            log.error("Error loading modified css", e);
                                         }
-                                        emitter.onNext(pathToCss);
-                                    }
 
-                                    @Override
-                                    public void onDeleted(FileEvent event) {
+                                        @Override
+                                        public void onModified(FileEvent event) {
+                                            var pathToCss = "";
+                                            try {
+                                                pathToCss = event.getFile().toURI().toURL().toExternalForm();//compiledCss.toURI().toURL().toExternalForm();
+                                            } catch (final IOException e) {
+                                                log.error("Error loading modified css", e);
+                                            }
+                                            emitter.onNext(pathToCss);
+                                        }
 
+                                        @Override
+                                        public void onDeleted(FileEvent event) {
+
+                                        }
+                                    });
+                                })
+                                .debounce(100, TimeUnit.MILLISECONDS)
+                                .observeOn(Schedulers.io())
+                                .subscribe(cssFile -> Platform.runLater(() -> {
+                                    log.info("reloading stylesheet {}", cssFile);
+                                    try {
+                                        importScene.getStylesheets().remove(mainCss.toURI().toURL().toExternalForm());
+                                        importScene.getStylesheets().remove(colorblindCss.toURI().toURL().toExternalForm());
+                                    } catch (final IOException e) {
+                                        log.error("Error loading modified css", e);
                                     }
-                                });
-                            })
-                            .debounce(100, TimeUnit.MILLISECONDS)
-                            .observeOn(Schedulers.io())
-                            .subscribe(cssFile -> Platform.runLater(() -> {
-                                log.info("reloading stylesheet {}", cssFile);
-                                try {
-                                    importScene.getStylesheets().remove(mainCss.toURI().toURL().toExternalForm());
-                                    importScene.getStylesheets().remove(colorblindCss.toURI().toURL().toExternalForm());
-                                } catch (final IOException e) {
-                                    log.error("Error loading modified css", e);
-                                }
-                                log.info("reloaded stylesheet {}", cssFile);
-                                importScene.getStylesheets().add(cssFile);
-                            }));
-                    FileService.subscribe(currentWorkingDirectory + "/src/main/resources/css/compiled", false, fileListenerRef.get());
-                } catch (final IOException e) {
-                    log.error("Error loading stylesheet", e);
+                                    log.info("reloaded stylesheet {}", cssFile);
+                                    importScene.getStylesheets().add(cssFile);
+                                }));
+                        FileService.subscribe(currentWorkingDirectory + "/src/main/resources/css/compiled", false, fileListenerRef.get());
+                    } catch (final IOException e) {
+                        log.error("Error loading stylesheet", e);
+                    }
+                } else {
+                    importScene.getStylesheets().add(DeeplinkHelper.class.getResource(StyleSheet.valueOf(PreferencesService.getPreference(PreferenceConstants.STYLESHEET, "DEFAULT")).getStyleSheet()).toExternalForm());
                 }
-            } else {
-                importScene.getStylesheets().add(DeeplinkHelper.class.getResource(StyleSheet.valueOf(PreferencesService.getPreference(PreferenceConstants.STYLESHEET, "DEFAULT")).getStyleSheet()).toExternalForm());
+                importStage.setScene(importScene);
+                importStage.titleProperty().set("Import");
+                importStage.showAndWait();
+            } catch (RuntimeException ex) {
+                NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.imported.failed.generic"), LocaleService.LocaleString.of("notification.imported.failed.generic.text", ex.getMessage()));
+                EventService.publish(new ImportResultEvent(new ImportResult(ImportResult.ResultType.OTHER_ERROR)));
             }
-            importStage.setScene(importScene);
-            importStage.titleProperty().set("Import");
-            importStage.showAndWait();
         }
     }
 
