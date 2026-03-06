@@ -1,7 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
+import javafx.css.PseudoClass;
 import javafx.scene.Node;
-import javafx.scene.control.ScrollPane;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.FXApplication;
@@ -12,11 +12,13 @@ import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfigurations;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabType;
 import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
+import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableScrollPane;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsTab;
 
@@ -30,6 +32,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab implements DestroyableEv
 
     private ControlsSection controlsSection;
     private StatsSection statsSection;
+    private PowerStats powerStats;
     private ModulesSection modulesSection;
     private ShipSelectView shipSelectView;
     private ModuleDetailsPopover detailsPopOver;
@@ -56,8 +59,9 @@ public class HorizonsShipBuilderTab extends HorizonsTab implements DestroyableEv
         controlsSection = new ControlsSection();
         statsSection = new StatsSection();
         modulesSection = new ModulesSection();
-
-
+        powerStats = new PowerStats();
+//        powerStats.maxWidthProperty().bind(modulesSection.widthProperty().map(width -> (width.doubleValue() < modulesSection.getPrefWidth()) ? modulesSection.getPrefWidth() / 2.0 : modulesSection.getPrefWidth()));
+//        powerStats.minWidthProperty().bind(modulesSection.widthProperty());
         detailsPopOver = new ModuleDetailsPopover();
         shipViewPopOver = new ShipViewPopover();
         FXApplication.getInstance().getPrimaryStage().focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
@@ -71,6 +75,8 @@ public class HorizonsShipBuilderTab extends HorizonsTab implements DestroyableEv
         this.register(shipViewPopOver);
         shipSelectView = new ShipSelectView();
         statsSection.setVisible(false);
+        powerStats.setVisible(false);
+
         modulesSection.setVisible(false);
         shipSelectView.setVisible(false);
         DestroyableVBox content = BoxBuilder.builder()
@@ -78,15 +84,20 @@ public class HorizonsShipBuilderTab extends HorizonsTab implements DestroyableEv
                 .withNodes(
                         controlsSection,
                         statsSection,
+                        powerStats,
                         modulesSection,
                         shipSelectView)
                 .buildVBox();
         this.setClosable(false);
-        ScrollPane scrollPane = register(ScrollPaneBuilder.builder()
+        DestroyableScrollPane scrollPane = register(ScrollPaneBuilder.builder()
                 .withStyleClass("shipbuilder-tab-content")
                 .withContent(content)
                 .build());
         this.setContent(scrollPane);
+
+        scrollPane.addChangeListener(scrollPane.widthProperty(), (observableValue, oldValue, newValue) -> {
+            this.powerStats.pseudoClassStateChanged(PseudoClass.getPseudoClass("half"), newValue.doubleValue() - ScalingHelper.getPixelDoubleFromEm(2.0) < ScalingHelper.getPixelDoubleFromEm(27.0 + 27.0 +27.0 +27.0 + 0.75));
+        });
         refreshContent();
         EventService.publish(new ShipConfigEvent(NONE));
     }
@@ -109,12 +120,14 @@ public class HorizonsShipBuilderTab extends HorizonsTab implements DestroyableEv
 
     private void showNoShip() {
         setVisible(statsSection, false);
+        setVisible(powerStats, false);
         setVisible(modulesSection, false);
         setVisible(shipSelectView, false);
     }
 
     private void showShip() {
         setVisible(statsSection, true);
+        setVisible(powerStats, true);
         setVisible(modulesSection, true);
         setVisible(shipSelectView, false);
 
@@ -122,6 +135,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab implements DestroyableEv
 
     private void showShipSelect() {
         setVisible(statsSection, false);
+        setVisible(powerStats, false);
         setVisible(modulesSection, false);
         setVisible(shipSelectView, true);
 

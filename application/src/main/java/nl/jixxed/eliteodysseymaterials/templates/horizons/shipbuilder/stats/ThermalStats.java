@@ -31,13 +31,8 @@ import java.util.Map;
 import java.util.Set;
 
 @Slf4j
-public class PowerThermalsStats extends Stats implements DestroyableEventTemplate {
+public class ThermalStats extends Stats implements DestroyableEventTemplate {
     Set<HardpointGroup> selectedHardpointGroups = new HashSet<>(Set.of(HardpointGroup.A, HardpointGroup.B, HardpointGroup.C, HardpointGroup.D));
-
-    private DestroyableLabel retractedPowerLabel;
-    private DestroyableLabel deployedPowerLabel;
-    private PowerBar retractedPowerBar;
-    private PowerBar deployedPowerBar;
 
     private DestroyableLabel idleThermals;
     private DestroyableLabel thrusterThermals;
@@ -45,8 +40,10 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
     private DestroyableLabel silentRunTime;
     private DestroyableLabel weaponThermalsFull;
     private DestroyableLabel weaponThermalsEmpty;
+    private DestroyableLabel sensorRange;
+    private DestroyableLabel effectiveSensorRange;
 
-    public PowerThermalsStats() {
+    public ThermalStats() {
         super();
         initComponents();
         initEventHandling();
@@ -54,8 +51,8 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
 
     @Override
     public void initComponents() {
-        this.getStyleClass().add("power-thermal-stats");
-        addTitle("ship.stats.thermalpower");
+        this.getStyleClass().add("thermal-stats");
+        addTitle("ship.stats.thermal");
 
         this.idleThermals = createValueLabel("ship.stats.thermal.idle.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
         this.thrusterThermals = createValueLabel("ship.stats.thermal.thruster.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
@@ -63,6 +60,8 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
         this.silentRunTime = createValueLabel("ship.stats.thermal.thruster.silentruntime.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
         this.weaponThermalsFull = createValueLabel("ship.stats.thermal.weapon.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
         this.weaponThermalsEmpty = createValueLabel("ship.stats.thermal.weapon.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
+        this.sensorRange = createValueLabel("ship.stats.ship.sensorrange.value", Formatters.NUMBER_FORMAT_0.format(0D), Formatters.NUMBER_FORMAT_0.format(0D));
+        this.effectiveSensorRange = createValueLabel("ship.stats.ship.effectivesensorrange.value", Formatters.NUMBER_FORMAT_0.format(0D), Formatters.NUMBER_FORMAT_0.format(0D));
 
         DestroyableHBox idleLine = BoxBuilder.builder()
                 .withStyleClass("thermal-line")
@@ -120,39 +119,29 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
                 .build();
         weaponThermalsEmptyTooltip.install(weaponThermalsEmpty);
 
-        this.getNodes().addAll(idleLine, thrusterLine, fsdLine, silentRunningLine, weaponLine, weaponLine2);
-
-
-        this.getNodes().add(new GrowingRegion());
-        this.retractedPowerLabel = createValueLabel("ship.stats.power.retracted.power.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D), Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
-        this.deployedPowerLabel = createValueLabel("ship.stats.power.deployed.power.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D), Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
-        this.retractedPowerBar = new PowerBar(true);
-        this.deployedPowerBar = new PowerBar(false);
-
-        this.getNodes().add(BoxBuilder.builder()
-                .withNodes(createLabel("ship.stats.power.retracted.power"), new GrowingRegion(), this.retractedPowerLabel)
-                .buildHBox());
-        this.getNodes().add(BoxBuilder.builder()
-                .withStyleClass("power-stats-powerbars")
-                .withNodes(retractedPowerBar, deployedPowerBar).buildVBox());
-        this.getNodes().add(BoxBuilder.builder()
-                .withNodes(createLabel("ship.stats.power.deployed.power"), new GrowingRegion(), this.deployedPowerLabel)
-                .buildHBox());
-        this.getNodes().add(BoxBuilder.builder()
-                .withNodes(
-                        createLegend("P"),
-                        new GrowingRegion(),
-                        createLegend("1"),
-                        new GrowingRegion(),
-                        createLegend("2"),
-                        new GrowingRegion(),
-                        createLegend("3"),
-                        new GrowingRegion(),
-                        createLegend("4"),
-                        new GrowingRegion(),
-                        createLegend("5")
-                ).buildHBox());
-
+        this.getNodes().addAll(idleLine, thrusterLine, fsdLine, silentRunningLine, weaponLine, weaponLine2, new GrowingRegion());
+        DestroyableHBox sensorRangeLine = BoxBuilder.builder()
+                .withStyleClass("thermal-line")
+                .withNodes(createLabel("ship.stats.ship.sensorrange"), new GrowingRegion(), this.sensorRange)
+                .buildHBox();
+        var sensorRangeLineTooltip = TooltipBuilder.builder()
+                .withStyleClass("stats-tooltip")
+                .withText(LocaleService.getStringBinding("ship.stats.ship.sensorrange.tooltip"))
+                .withShowDelay(Duration.millis(100))
+                .build();
+        sensorRangeLineTooltip.install(sensorRangeLine);
+        this.getNodes().add(sensorRangeLine);
+        DestroyableHBox effectiveSensorRangeLine = BoxBuilder.builder()
+                .withStyleClass("thermal-line")
+                .withNodes(createLabel("ship.stats.ship.effectivesensorrange"), new GrowingRegion(), this.effectiveSensorRange)
+                .buildHBox();
+        var effectiveSensorRangeLineTooltip = TooltipBuilder.builder()
+                .withStyleClass("stats-tooltip")
+                .withText(LocaleService.getStringBinding("ship.stats.ship.effectivesensorrange.tooltip"))
+                .withShowDelay(Duration.millis(100))
+                .build();
+        effectiveSensorRangeLineTooltip.install(effectiveSensorRangeLine);
+        this.getNodes().add(effectiveSensorRangeLine);
     }
 
     private DestroyableHBox createLegend(String number) {
@@ -187,33 +176,59 @@ public class PowerThermalsStats extends Stats implements DestroyableEventTemplat
 
     @Override
     protected void update() {
-        final PowerProfile retractedPower = calculateRetractedPower();
-        final Double retractedUsage = retractedPower.usedPower();
-        final Double powerBudget = retractedPower.getPowerCapacity();
-        final Double deployedUsage = calculateDeployedPower().usedPower();
-        this.retractedPowerLabel.addBinding(this.retractedPowerLabel.textProperty(), LocaleService.getStringBinding("ship.stats.power.retracted.power.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(retractedUsage), Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(powerBudget)));
-        this.deployedPowerLabel.addBinding(this.deployedPowerLabel.textProperty(), LocaleService.getStringBinding("ship.stats.power.deployed.power.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(deployedUsage), Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(powerBudget)));
-        if (retractedUsage > powerBudget) {
-            if (!this.retractedPowerLabel.getStyleClass().contains("power-stats-overpower"))
-                this.retractedPowerLabel.getStyleClass().add("power-stats-overpower");
-        } else {
-            this.retractedPowerLabel.getStyleClass().removeAll("power-stats-overpower");
-        }
-        if (deployedUsage > powerBudget) {
-            if (!this.deployedPowerLabel.getStyleClass().contains("power-stats-overpower"))
-                this.deployedPowerLabel.getStyleClass().add("power-stats-overpower");
-        } else {
-            this.deployedPowerLabel.getStyleClass().removeAll("power-stats-overpower");
-        }
-        this.retractedPowerBar.update();
-        this.deployedPowerBar.update();
-
         this.idleThermals.addBinding(this.idleThermals.textProperty(), calculateIdleThermals().format());
         this.thrusterThermals.addBinding(this.thrusterThermals.textProperty(), calculateThrusterThermals().format());
         this.fsdThermals.addBinding(this.fsdThermals.textProperty(), calculateFsdThermals().format());
         this.silentRunTime.addBinding(this.silentRunTime.textProperty(), calculateSilentRunTime().format());
         this.weaponThermalsFull.addBinding(this.weaponThermalsFull.textProperty(), calculateWeaponThermalsFull().format());
         this.weaponThermalsEmpty.addBinding(this.weaponThermalsEmpty.textProperty(), calculateWeaponThermalsEmpty().format());
+        this.sensorRange.addBinding(this.sensorRange.textProperty(), LocaleService.getStringBinding("ship.stats.ship.sensorrange.value", Formatters.NUMBER_FORMAT_0.format(calculateSensorRangeMin()), Formatters.NUMBER_FORMAT_0.format(calculateSensorRangeMax())));
+        this.effectiveSensorRange.addBinding(this.effectiveSensorRange.textProperty(), LocaleService.getStringBinding("ship.stats.ship.effectivesensorrange.value", Formatters.NUMBER_FORMAT_0.format(calculateEffectiveSensorRangeMin()), Formatters.NUMBER_FORMAT_0.format(calculateEffectiveSensorRangeMax())));
+    }
+
+    private double calculateEffectiveSensorRangeMax() {
+        final PowerProfile retractedPower = calculateRetractedPower();
+        double powerPlantEfficiency = getPowerPlantEfficiency();
+        final double retractedUsage = retractedPower.usedPower();
+        final double thermalLoad = retractedUsage * powerPlantEfficiency;
+        return Math.min(14000D, Math.max(getShipSensorRangeMax(), getShip()
+                .map(ship -> 1.75 * getShipSensorRangeMax() * Math.pow((1D + (thermalLoad - (double)ship.getAttributes().get(HorizonsModifier.HEAT_DISSIPATION_MIN)) / (double)ship.getAttributes().get(HorizonsModifier.HEAT_DISSIPATION_MIN)), 2D))
+                .orElse(0D)));
+    }
+
+    private double calculateEffectiveSensorRangeMin() {
+        final PowerProfile retractedPower = calculateRetractedPower();
+        double powerPlantEfficiency = getPowerPlantEfficiency();
+        final double retractedUsage = retractedPower.usedPower();
+        final double thermalLoad = retractedUsage * powerPlantEfficiency;
+        return Math.min(14000D, Math.max(getShipSensorRangeMin(), getShip()
+                .map(ship -> getShipSensorRangeMin() * Math.pow((1D + (thermalLoad - (double)ship.getAttributes().get(HorizonsModifier.HEAT_DISSIPATION_MIN)) / (double)ship.getAttributes().get(HorizonsModifier.HEAT_DISSIPATION_MIN)), 2D))
+                .orElse(0D)));
+    }
+    private double getPowerPlantEfficiency() {
+        return (double) getShip().map(ship -> ship.getCoreSlots().stream()
+                .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
+                .filter(Slot::isOccupied)
+                .filter(slot -> slot.getShipModule().isPowered())
+                .findFirst()
+                .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.HEAT_EFFICIENCY, true))
+                .orElse(Double.NaN)).orElse(1D);
+    }
+
+    private double calculateSensorRangeMax() {
+        return getShipSensorRangeMax();
+    }
+
+    private double calculateSensorRangeMin() {
+        return getShipSensorRangeMin();
+    }
+
+    private double getShipSensorRangeMax() {
+        return getShipSensorRangeMin() / 4000D * 7680D * 1.75;
+    }
+
+    private Double getShipSensorRangeMin() {
+        return getShip().map(ship -> (double) ship.getAttributes().get(HorizonsModifier.SENSOR_LOCK_MIN)).orElse(0D);
     }
 
     private Value calculateSilentRunTime() {

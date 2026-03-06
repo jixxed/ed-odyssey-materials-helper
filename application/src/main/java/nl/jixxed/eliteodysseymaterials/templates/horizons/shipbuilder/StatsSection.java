@@ -41,7 +41,7 @@ public class StatsSection extends DestroyableFlowPane implements DestroyableEven
 
     public void initStats() {
         this.getNodes().clear();
-        final PowerThermalsStats powerThermalsStats = new PowerThermalsStats();
+        final ThermalStats thermalStats = new ThermalStats();
 //        final ThermalStats thermalStats = new ThermalStats();
 //        final PowerStats powerStats = new PowerStats();
         final JumpStats jumpStats = new JumpStats();
@@ -57,7 +57,7 @@ public class StatsSection extends DestroyableFlowPane implements DestroyableEven
                 jumpStats,
                 engineStats,
                 handlingStats,
-                powerThermalsStats,
+                thermalStats,
 //                thermalStats,
 //                powerStats,
                 armourStats,
@@ -81,7 +81,7 @@ public class StatsSection extends DestroyableFlowPane implements DestroyableEven
                         createLabel("tab.ships.stats.jump", jumpStats),
                         createLabel("tab.ships.stats.engine", engineStats),
                         createLabel("tab.ships.stats.handling", handlingStats),
-                        createLabel("tab.ships.stats.powerthermals", powerThermalsStats),
+                        createLabel("tab.ships.stats.thermals", thermalStats),
                         createLabel("tab.ships.stats.armour", armourStats),
                         createLabel("tab.ships.stats.shield", shieldStats),
                         createLabel("tab.ships.stats.weapon", weaponStats)

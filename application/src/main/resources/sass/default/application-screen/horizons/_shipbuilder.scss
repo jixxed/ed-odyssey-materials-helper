@@ -529,7 +529,7 @@
 
       }
 
-      .power-thermal-stats {
+      .thermal-stats {
 
         .percentage-line {
           -fx-min-height: 2em;
@@ -546,107 +546,12 @@
 
         -fx-min-width: 15em;
 
-        .power-progressbar {
-
-          @include segmented-bar-straight;
-
-          .bar-container {
-          }
-
-          //-fx-fill-width: true;
-          //-fx-fit-to-width: true;
-          -fx-min-height: 1em;
-          -fx-pref-height: 2em;
-          -fx-max-height: 2em;
-          -fx-padding: 0.1em 0em 0.1em 0em;
-          -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.PowerSegmentedBarSkin";
-
-
-          .power-group-p {
-            -fx-background-color: $progress-bar-color-power-passive;
-          }
-
-          .power-group-1 {
-            -fx-background-color: $progress-bar-color-power-1;
-          }
-
-          .power-group-2 {
-            -fx-background-color: $progress-bar-color-power-2;
-          }
-
-          .power-group-3 {
-            -fx-background-color: $progress-bar-color-power-3;
-          }
-
-          .power-group-4 {
-            -fx-background-color: $progress-bar-color-power-4;
-          }
-
-          .power-group-5 {
-            -fx-background-color: $progress-bar-color-power-5;
-          }
-
-          .power-group-none {
-            -fx-background-color: $progress-bar-color-power-none;
-          }
-
-          .power-overpower {
-            -fx-background-color: $progress-bar-color-power-overpower;
-          }
-
-          .power-potential-overpower {
-            -fx-background-color: $progress-bar-color-power-overpower;
-            -fx-opacity: 0.2;
-          }
-        }
-
-        .power-stats-powerbars {
-          -fx-min-height: 4.2em;
-          -fx-pref-height: 4.2em;
-          -fx-max-height: 4.2em;
-          /*-fx-spacing: 0.2em;*/
-        }
-
-        .power-stats-overpower {
-          -fx-text-fill: $text-color-red;
-        }
-
         .tooltip-text {
           -fx-background-color: $background-color-dark;
           -fx-border-color: $border-color-white;
           -fx-text-fill: $text-color-white;
           -fx-border-width: 1px;
           -fx-padding: 0.25em;
-        }
-
-        .power-legend {
-          -fx-alignment: center-left;
-          -fx-spacing: 0.5em;
-
-
-          .power-group-p {
-            -fx-fill: $progress-bar-color-power-passive;
-          }
-
-          .power-group-1 {
-            -fx-fill: $progress-bar-color-power-1;
-          }
-
-          .power-group-2 {
-            -fx-fill: $progress-bar-color-power-2;
-          }
-
-          .power-group-3 {
-            -fx-fill: $progress-bar-color-power-3;
-          }
-
-          .power-group-4 {
-            -fx-fill: $progress-bar-color-power-4;
-          }
-
-          .power-group-5 {
-            -fx-fill: $progress-bar-color-power-5;
-          }
         }
       }
 
@@ -700,6 +605,7 @@
             -fx-stroke: $border-color-blue;
             //-fx-opacity: 0.2;
           }
+
           .default-color3.chart-series-line {
             -fx-stroke: $border-color-yellow;
             //-fx-opacity: 0.2;
@@ -748,6 +654,7 @@
 
           .max-value-box {
             @include fixedWidth(10.00em);
+
             .max-value {
 
               -fx-max-height: infinity;
@@ -755,6 +662,7 @@
               -fx-alignment: center;
               -fx-text-fill: $text-color-blue;
             }
+
             .max-value-boost {
 
               -fx-max-height: infinity;
@@ -994,6 +902,7 @@
           -fx-text-fill: $text-color-yellow;
         }
       }
+
       .range-indicator {
         -fx-min-height: 3em;
         @include fixedWidth(15em);
@@ -1027,6 +936,175 @@
           -fx-min-height: 1em;
           -fx-stroke: $text-color-blue;
           -fx-stroke-width: 0.2em;
+        }
+      }
+    }
+
+    .power-stats {
+      -fx-background-color: $background-color-dark;
+      -fx-border-color: $border-color-white;
+      -fx-border-width: 1px;
+      -fx-padding: 0.25em;
+//      108 = 27*4
+//      0.75 = 0.25*3
+      -fx-min-width: 108.75em;
+      -fx-max-width: 108.75em;
+
+      &:half {
+        -fx-min-width: 54.25em;
+        -fx-max-width: 54.25em;
+      }
+
+      .power-stats-labels {
+        //-fx-pref-width: 400;
+        .key {
+          //-fx-background-color: #123123;
+          @include fixedHeight(1.5em);
+          -fx-text-alignment: left;
+          -fx-fill-width: true;
+
+          //-fx-min-width: 10em;
+          //-fx-fit-to-width: true;
+          //-fx-label-padding: 0 0.25em 0 0.25em;
+        }
+      }
+
+      .power-stats-values {
+        //-fx-pref-width: 400;
+        .value {
+          //-fx-background-color: #123123;
+          //-fx-min-width: 10em;
+          @include fixedHeight(1.5em);
+          -fx-text-alignment: right;
+          -fx-fill-width: true;
+          -fx-font-weight: bold;
+          //-fx-min-width: -fx-width;
+          //-fx-fit-to-width: true;
+          //-fx-label-padding: 0 0.25em 0 0.25em;
+        }
+      }
+
+      .power-stats-line {
+        -fx-spacing: 0.25em;
+      }
+
+      .percentage-line {
+        -fx-min-height: 3em;
+        -fx-pref-height: 3em;
+        -fx-max-height: 3em;
+        //-fx-max-width: 15em;
+        -fx-stroke: $border-color-white;
+        -fx-stroke-width: 0.1em;
+      }
+
+      .thermal-line {
+        -fx-spacing: 1em;
+      }
+
+      //.anchorpane-container {
+        .bar-container {
+          .power-progressbar {
+
+            @include segmented-bar-straight;
+            -fx-min-height: 1.5em;
+            -fx-pref-height: 1.5em;
+            -fx-max-height: 1.5em;
+            -fx-padding: 0.1em 0em 0.1em 0em;
+            -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.PowerSegmentedBarSkin";
+
+
+            .power-group-p {
+              -fx-background-color: $progress-bar-color-power-passive;
+            }
+
+            .power-group-1 {
+              -fx-background-color: $progress-bar-color-power-1;
+            }
+
+            .power-group-2 {
+              -fx-background-color: $progress-bar-color-power-2;
+            }
+
+            .power-group-3 {
+              -fx-background-color: $progress-bar-color-power-3;
+            }
+
+            .power-group-4 {
+              -fx-background-color: $progress-bar-color-power-4;
+            }
+
+            .power-group-5 {
+              -fx-background-color: $progress-bar-color-power-5;
+            }
+
+            .power-group-none {
+              -fx-background-color: $progress-bar-color-power-none;
+            }
+
+            .power-overpower {
+              -fx-background-color: $progress-bar-color-power-overpower;
+            }
+
+            .power-potential-overpower {
+              -fx-background-color: $progress-bar-color-power-overpower;
+              -fx-opacity: 0.2;
+            }
+          }
+        //}
+
+      }
+
+      .power-stats-powerbars {
+        -fx-min-height: 3.1em;
+        -fx-pref-height: 3.1em;
+        -fx-max-height: 3.1em;
+        /*-fx-spacing: 0.2em;*/
+      }
+
+      .power-stats-overpower {
+        -fx-text-fill: $text-color-red;
+      }
+
+      .tooltip-text {
+        -fx-background-color: $background-color-dark;
+        -fx-border-color: $border-color-white;
+        -fx-text-fill: $text-color-white;
+        -fx-border-width: 0.1em;
+        -fx-padding: 0.25em;
+      }
+
+      .power-legends {
+        -fx-spacing: .75em;
+        -fx-padding: 0.25em;
+
+        .power-legend {
+          -fx-alignment: center-left;
+          -fx-spacing: 0.25em;
+
+          .power-group-p {
+
+            -fx-fill: $progress-bar-color-power-passive;
+          }
+
+          .power-group-1 {
+            -fx-fill: $progress-bar-color-power-1;
+          }
+
+          .power-group-2 {
+            -fx-fill: $progress-bar-color-power-2;
+          }
+
+          .power-group-3 {
+            -fx-fill: $progress-bar-color-power-3;
+          }
+
+          .power-group-4 {
+            -fx-fill: $progress-bar-color-power-4;
+          }
+
+          .power-group-5 {
+            -fx-fill: $progress-bar-color-power-5;
+          }
         }
       }
     }
@@ -1450,6 +1528,7 @@
         @include fixedHeight(2em);
         -fx-background-color: $background-color-dark;
         -fx-border-color: $border-color-white;
+        -fx-border-width: 1px;
         -fx-alignment: center;
       }
 
