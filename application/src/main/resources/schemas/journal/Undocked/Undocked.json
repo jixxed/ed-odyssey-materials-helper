@@ -37,5 +37,5 @@
     }
   },
   "additionalProperties" : false,
-  "required" : [ "StationName", "StationType", "MarketID" ]
+  "required" : [ "StationName", "StationType" ]
 }
