@@ -92,4 +92,4 @@
 "notification.imported.failed.pinconfig.title","Failed to import pin configuration","","","","","","Не удалось импортировать конфигурацию закрепления","导入蓝图固定配置失败",""
 "notification.legacy.saved.title","Legacy module","","","","","","Модуль Legacy","Legacy 模块",""
 "notification.legacy.saved.text","Module has been saved","","","","","","Модуль был сохранен","模块已保存",""
-"notification.capi.message.418","The servers are currently down and your account can't be verfied. Try connecting again when the servers are back online.","","","","","","","",""
+"notification.capi.message.418","The servers are currently down and your account can't be verfied. Try connecting again when the servers are back online.","","","","","","Серверы сейчас недоступны, и ваш аккаунт не может быть подтвержден. Попробуйте подключиться снова, когда серверы вернутся к работе.","",""
