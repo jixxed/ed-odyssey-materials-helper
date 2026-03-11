@@ -37,8 +37,7 @@ public class LoadoutMapper {
     private static final Set<String> SLF_SLOT_NAMES = Set.of("FighterBay");
     private static final Set<String> LIMPET_SLOT_NAMES = Set.of("LimpetController");
     private static final Set<String> OPTIONAL_SLOT_NAMES = Set.of("Slot");
-    private static final double EPSILON = 0.0001;
-//LargeMiningHardpoint1 MediumMiningHardpoint1 MediumMiningHardpoint2 SmallMiningHardpoint1 LimpetController01
+
     public static Ship toShip(Loadout loadout) {
         final ShipType shipType;
         try {
@@ -219,22 +218,22 @@ public class LoadoutMapper {
             }
             if (MILITARY_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
                 final List<Slot> militarySlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.MILITARY)).toList();
-                return getMilitarySlot(militarySlots, slotName);
+                return getRestrictedOptionalSlot(militarySlots, slotName);
             }
             if ("CargoHatch".equals(slotName)) {
                 return ship.getCargoHatch();
             }
             if (CARGO_SLOT_NAMES.stream().anyMatch(slotName::startsWith)) {//Cargo
                 final List<Slot> cargoSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CARGO)).toList();
-                return getCargoSlot(cargoSlots, slotName);
+                return getRestrictedOptionalSlot(cargoSlots, slotName);
             }
             if (SLF_SLOT_NAMES.stream().anyMatch(slotName::startsWith)) {//FighterBay
-                final List<Slot> cargoSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.SLF)).toList();
-                return getCargoSlot(cargoSlots, slotName);
+                final List<Slot> slfSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.SLF)).toList();
+                return getRestrictedOptionalSlot(slfSlots, slotName);
             }
             if (LIMPET_SLOT_NAMES.stream().anyMatch(slotName::startsWith)) {//Limpet
-                final List<Slot> cargoSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.LIMPET)).toList();
-                return getCargoSlot(cargoSlots, slotName);
+                final List<Slot> limpetSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.LIMPET)).toList();
+                return getRestrictedOptionalSlot(limpetSlots, slotName);
             }
         } catch (IndexOutOfBoundsException | IllegalArgumentException e) {
             log.error(e.getMessage(), e);
@@ -311,14 +310,9 @@ public class LoadoutMapper {
         }
     }
 
-    private static Slot getMilitarySlot(List<Slot> militarySlots, String slotName) {
+    private static Slot getRestrictedOptionalSlot(List<Slot> restrictedOptionalSlots, String slotName) {
         final int slotNumber = Integer.parseInt(slotName.substring(slotName.length() - 2));
-        return militarySlots.get(slotNumber - 1);
-    }
-
-    private static Slot getCargoSlot(List<Slot> cargoSlots, String slotName) {
-        final int slotNumber = Integer.parseInt(slotName.substring(slotName.length() - 2));
-        return cargoSlots.get(slotNumber - 1);
+        return restrictedOptionalSlots.get(slotNumber - 1);
     }
 
     private static Slot getCoreSlot(List<Slot> coreSlots, String slotName) {

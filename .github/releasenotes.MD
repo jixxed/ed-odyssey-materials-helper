@@ -11,10 +11,6 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Splitted power and thermals in ship editor
-Added 20%/40%/50%/100% lines, labels and tooltips. Scaled with the guardian power distributor
-Include power boost from guardian power distributor in power calculations
-Moved sensor ranges to thermals (since those are thermal related and there is now some space for it) 
-Handle a failed import due to corruption with a notification
-Try to keep power group when switching modules size/class 
+Update blueprint labels on language change in ship editor
+Enforce presence of core modules on ships
 ```

@@ -1,3 +1,8 @@
+Version 3.5.19
+-------------
+Update blueprint labels on language change in ship editor
+Enforce presence of core modules on ships
+
 Version 3.5.18
 -------------
 Splitted power and thermals in ship editor
