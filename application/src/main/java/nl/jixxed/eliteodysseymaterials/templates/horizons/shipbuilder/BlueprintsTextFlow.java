@@ -3,25 +3,36 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 import javafx.beans.binding.StringBinding;
 import javafx.css.PseudoClass;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ExternalModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.LanguageChangedEvent;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class BlueprintsTextFlow extends DestroyableFlowPane implements DestroyableTemplate {
-    List<DestroyableLabel> blueprints = new ArrayList<>();
-    DestroyableLabel effects;
-    DestroyableLabel separator;
+public class BlueprintsTextFlow extends DestroyableFlowPane implements DestroyableEventTemplate {
+    private final List<DestroyableLabel> blueprints = new ArrayList<>();
+    private DestroyableLabel effects;
+    private DestroyableLabel separator;
+    private ShipModule shipModule;
+    private ShipModule oldShipModule;
 
     public BlueprintsTextFlow() {
         initComponents();
+        initEventHandling();
+    }
+
+    @Override
+    public void initEventHandling() {
+        register(EventService.addListener(this, LanguageChangedEvent.class, event -> {
+            update(shipModule, oldShipModule);
+        }));
     }
 
     @Override
@@ -31,6 +42,8 @@ public class BlueprintsTextFlow extends DestroyableFlowPane implements Destroyab
 
     public void update(final ShipModule shipModule, final ShipModule oldShipModule) {
         this.getNodes().clear();
+        this.shipModule = shipModule;
+        this.oldShipModule = oldShipModule;
         setBlueprints(LocaleService.getStringBinding(() -> Optional.ofNullable(shipModule).map(mod ->
                 mod.getModifications().stream()
                         .map(modification -> LocaleService.getLocalizedStringForCurrentLocale(modification.getModification().getLocalizationKey(true)))
@@ -59,7 +72,7 @@ public class BlueprintsTextFlow extends DestroyableFlowPane implements Destroyab
         }
     }
 
-    public void setBlueprints(final StringBinding blueprintStringBinding) {
+    private void setBlueprints(final StringBinding blueprintStringBinding) {
         blueprints.clear();
         String[] words = blueprintStringBinding.getValue().splitWithDelimiters(" ", 0);
         for (String word : words) {
@@ -72,7 +85,7 @@ public class BlueprintsTextFlow extends DestroyableFlowPane implements Destroyab
         }
     }
 
-    public void setEffects(final StringBinding effectsBinding) {
+    private void setEffects(final StringBinding effectsBinding) {
         separator = LabelBuilder.builder()
                 .withStyleClass("separator-comma")
                 .withNonLocalizedText(", ")
