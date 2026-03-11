@@ -124,8 +124,9 @@ public class ShipService {
         final Ship blankShip = createShip(shipType);
         blankShip.getUtilitySlots().forEach(imageSlot -> imageSlot.setShipModule(null));
         blankShip.getHardpointSlots().forEach(imageSlot -> imageSlot.setShipModule(null));
-        blankShip.getCoreSlots().forEach(slot -> slot.setShipModule(null));
         blankShip.getOptionalSlots().forEach(slot -> slot.setShipModule(null));
+        //core modules must be present at all times
+        blankShip.getCoreSlots().forEach(slot -> slot.setOldShipModule(slot.getShipModule()));
         return blankShip;
     }
 

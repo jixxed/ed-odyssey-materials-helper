@@ -12,6 +12,7 @@ import nl.jixxed.eliteodysseymaterials.builder.SegmentedBarBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.PowerProfile;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
+import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
 import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
@@ -191,7 +192,8 @@ public class PowerBar extends DestroyableHBox implements DestroyableEventTemplat
                 .map(ship -> ship.getCoreSlots().stream()
                         .filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION))
                         .findFirst()
-                        .map(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_BOOST, true))
+                        .map(Slot::getShipModule)
+                        .map(module -> (double) module.getAttributeValue(HorizonsModifier.POWER_BOOST, true))
                         .orElse(0.0))
                 .orElse(0.0);
     }
