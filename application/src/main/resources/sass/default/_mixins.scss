@@ -37,7 +37,7 @@
       }
 
       > .headers-region > .tab {
-        -fx-border-width: 1px;
+        -fx-border-width: 0em 0.05em 0em 0.05em;
         -fx-border-color: black;
 
         &:armed,
@@ -54,17 +54,17 @@
 @mixin searchbar {
   .filter-and-sort {
     @include fixedHeight(2.5em);
-    -fx-background-insets: 1px;
+    -fx-background-insets: 0.1em;
     -fx-background-radius: 0, 0;
-    -fx-border-width: 1px;
+    -fx-border-width: 0.1em;
     -fx-border-color: $border-color-grey;
   }
 
   .search-input {
     @include fixedHeight(2.5em);
-    -fx-background-insets: 1px;
+    -fx-background-insets: 0.1em;
     -fx-background-radius: 0, 0;
-    -fx-border-width: 1px;
+    -fx-border-width: 0.1em;
     -fx-border-color: $border-color-grey;
   }
 
@@ -74,7 +74,7 @@
     -fx-background-insets: 0;
     -fx-background-color: $background-color-input;
     -fx-text-fill: $text-color-white;
-    -fx-border-width: 1px;
+    -fx-border-width: 0.1em;
     -fx-border-style: solid;
     -fx-border-color: $border-color-grey;
     -fx-border-insets: 0;
@@ -339,7 +339,7 @@
 
   & > .border {
     -fx-stroke: #fff !important;
-    -fx-stroke-width: 1px !important;
+    -fx-stroke-width: 0.1em !important;
     -fx-fill: #0f0f0f !important;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important;
   }
@@ -353,7 +353,7 @@
   -fx-background: #1e1e1e;
   -fx-text-fill: white;
   -fx-background-color: #1e1e1e;
-  -fx-background-radius: 0px;
+  -fx-background-radius: 0;
   -fx-background-insets: 0;
   -fx-padding: 0.667em 0.75em 0.667em 0.75em;
   /* 10px */

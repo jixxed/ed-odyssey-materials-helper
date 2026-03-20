@@ -13,7 +13,7 @@
     -fx-fill: white; }
   .hoverable-line-chart .text-background {
     -fx-fill: #0f0f0f;
-    -fx-stroke-width: 1px;
+    -fx-stroke-width: 0.1em;
     -fx-stroke: white; }
   .hoverable-line-chart .tooltip-text {
     -fx-fill: white; }
@@ -1744,17 +1744,17 @@
       -fx-min-height: 2.5em;
       -fx-pref-height: 2.5em;
       -fx-max-height: 2.5em;
-      -fx-background-insets: 1px;
+      -fx-background-insets: 0.1em;
       -fx-background-radius: 0, 0;
-      -fx-border-width: 1px;
+      -fx-border-width: 0.1em;
       -fx-border-color: #252525; }
     .app .application-screen .horizons-tab-content .search .search-input {
       -fx-min-height: 2.5em;
       -fx-pref-height: 2.5em;
       -fx-max-height: 2.5em;
-      -fx-background-insets: 1px;
+      -fx-background-insets: 0.1em;
       -fx-background-radius: 0, 0;
-      -fx-border-width: 1px;
+      -fx-border-width: 0.1em;
       -fx-border-color: #252525; }
     .app .application-screen .horizons-tab-content .search .menubutton {
       -fx-min-width: 3.5em;
@@ -1766,7 +1766,7 @@
       -fx-background-insets: 0;
       -fx-background-color: #111111;
       -fx-text-fill: white;
-      -fx-border-width: 1px;
+      -fx-border-width: 0.1em;
       -fx-border-style: solid;
       -fx-border-color: #252525;
       -fx-border-insets: 0;
@@ -1955,7 +1955,7 @@
             -fx-padding: 0em; }
             .horizons-shipbuilder-help-popover > .border {
               -fx-stroke: #fff !important;
-              -fx-stroke-width: 1px !important;
+              -fx-stroke-width: 0.1em !important;
               -fx-fill: #0f0f0f !important;
               -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
             .horizons-shipbuilder-help-popover .help-popover .hint-line {
@@ -1982,7 +1982,7 @@
             .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .selectors .stat-select {
               -fx-background-color: #0f0f0f;
               -fx-border-color: white;
-              -fx-border-width: 1px 0 0 0;
+              -fx-border-width: 0.1em 0 0 0;
               -fx-max-height: infinity;
               -fx-max-width: infinity;
               -fx-alignment: center; }
@@ -1998,7 +1998,7 @@
             -fx-max-height: 24.75em;
             -fx-background-color: #0f0f0f;
             -fx-border-color: white;
-            -fx-border-width: 1px 0 1px 1px; }
+            -fx-border-width: 0.1em 0 0.1em 0.1em; }
             .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .config .config-controls {
               -fx-padding: 0.25em;
               -fx-spacing: 0.25em; }
@@ -2115,7 +2115,7 @@
             -fx-min-height: 22.6em;
             -fx-background-color: #0f0f0f;
             -fx-border-color: white;
-            -fx-border-width: 1px 1px 1px 1px;
+            -fx-border-width: 0.1em 0.1em 0.1em 0.1em;
             -fx-padding: 0.25em;
             -fx-min-width: 15.8em; }
             .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .stats .title {
@@ -2156,7 +2156,7 @@
               -fx-background-color: #0f0f0f;
               -fx-border-color: white;
               -fx-text-fill: white;
-              -fx-border-width: 1px;
+              -fx-border-width: 0.1em;
               -fx-padding: 0.25em; }
           .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .jump-stats .ranges {
             -fx-spacing: 0.25em; }
@@ -2201,7 +2201,7 @@
             .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .handling-stats .handling-buttons .handling-button {
               -fx-background-color: #0f0f0f;
               -fx-border-color: white;
-              -fx-border-width: 0 0 0 1px;
+              -fx-border-width: 0 0 0 0.1em;
               -fx-max-height: infinity;
               -fx-max-width: infinity;
               -fx-alignment: center; }
@@ -2270,13 +2270,13 @@
               -fx-background-color: gray; }
           .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .weapon-stats .weapon-progressbar-popover {
             -fx-background-color: black;
-            -fx-border-width: 1px;
+            -fx-border-width: 0.1em;
             -fx-border-color: white; }
           .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .weapon-stats .tooltip-text {
             -fx-background-color: #0f0f0f;
             -fx-border-color: white;
             -fx-text-fill: white;
-            -fx-border-width: 1px;
+            -fx-border-width: 0.1em;
             -fx-padding: 0.25em; }
           .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .stats-section .weapon-stats .legend-box {
             -fx-min-width: 15em;
@@ -2405,7 +2405,7 @@
         .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .power-stats {
           -fx-background-color: #0f0f0f;
           -fx-border-color: white;
-          -fx-border-width: 1px;
+          -fx-border-width: 0.1em;
           -fx-padding: 0.25em;
           -fx-min-width: 108.75em;
           -fx-max-width: 108.75em; }
@@ -2514,15 +2514,15 @@
             .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box {
               -fx-background-color: #0f0f0f; }
               .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box:military {
-                -fx-background-color: linear-gradient(from 0px 7px to 7px 0px, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%); }
+                -fx-background-color: linear-gradient(from 0em 0.5em to 0.5em 0em, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%); }
               .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box:cargo {
-                -fx-background-color: linear-gradient(from 0px 7px to 7px 0px, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%); }
+                -fx-background-color: linear-gradient(from 0em 0.5em to 0.5em 0em, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%); }
               .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box:fighter {
-                -fx-background-color: linear-gradient(from 0px 7px to 7px 0px, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%); }
+                -fx-background-color: linear-gradient(from 0em 0.5em to 0.5em 0em, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%); }
               .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box:limpet {
-                -fx-background-color: linear-gradient(from 0px 7px to 7px 0px, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%); }
+                -fx-background-color: linear-gradient(from 0em 0.5em to 0.5em 0em, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%); }
               .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box:mining-hardpoint {
-                -fx-background-color: linear-gradient(from 0px 7px to 7px 0px, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%); }
+                -fx-background-color: linear-gradient(from 0em 0.5em to 0.5em 0em, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%); }
               .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-background {
                 -fx-min-height: 4em;
                 -fx-pref-height: 4em;
@@ -2950,7 +2950,7 @@
             -fx-max-height: 2em;
             -fx-background-color: #0f0f0f;
             -fx-border-color: white;
-            -fx-border-width: 1px;
+            -fx-border-width: 0.1em;
             -fx-alignment: center; }
         .shipbuilder-details-popover {
           -fx-background-color: transparent !important;
@@ -2963,21 +2963,21 @@
           -fx-padding: 0em; }
           .shipbuilder-details-popover > .border {
             -fx-stroke: #fff !important;
-            -fx-stroke-width: 1px !important;
+            -fx-stroke-width: 0.1em !important;
             -fx-fill: #0f0f0f !important;
             -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
           .shipbuilder-details-popover > .border {
             -fx-stroke: white !important;
-            -fx-stroke-width: 1px !important;
+            -fx-stroke-width: 0.1em !important;
             -fx-fill: #0f0f0f !important;
             -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
           .shipbuilder-details-popover .module-details {
             -fx-background-color: #0f0f0f;
-            -fx-min-width: 42.1em;
-            -fx-pref-width: 42.1em;
-            -fx-max-width: 42.1em;
+            -fx-min-width: 42.02em;
+            -fx-pref-width: 42.02em;
+            -fx-max-width: 42.02em;
             -fx-border-color: white;
-            -fx-border-width: 1px; }
+            -fx-border-width: 0.1em; }
             .shipbuilder-details-popover .module-details .title {
               -fx-padding: 0.25em;
               -fx-font-size: 1.2em;
@@ -2995,12 +2995,13 @@
               -fx-pref-width: 42em;
               -fx-max-width: 42em;
               -fx-border-width: 0.1em 0 0.1em 0;
-              -fx-border-color: white; }
+              -fx-border-color: white;
+              -fx-border-insets: -0.1em 0 0em 0; }
               .shipbuilder-details-popover .module-details .properties .property {
                 -fx-padding: 0.25em;
-                -fx-min-width: 21em;
-                -fx-pref-width: 21em;
-                -fx-max-width: 21em;
+                -fx-min-width: 20.9em;
+                -fx-pref-width: 20.9em;
+                -fx-max-width: 20.9em;
                 -fx-border-width: 0 0.1em 0.1em 0;
                 -fx-border-color: #252525; }
                 .shipbuilder-details-popover .module-details .properties .property:left-column {
@@ -3016,21 +3017,22 @@
                 .shipbuilder-details-popover .module-details .properties .property:last-row:right-column {
                   -fx-border-width: 0 0 0 0; }
                 .shipbuilder-details-popover .module-details .properties .property .name {
-                  -fx-min-height: 1.45em;
+                  -fx-min-height: 1em;
                   -fx-alignment: center-left; }
                 .shipbuilder-details-popover .module-details .properties .property .value {
-                  -fx-min-height: 1.45em;
+                  -fx-min-height: 1em;
                   -fx-alignment: center-right; }
             .shipbuilder-details-popover .module-details .attributes {
               -fx-min-width: 42em;
               -fx-pref-width: 42em;
               -fx-max-width: 42em;
               -fx-border-width: 0.1em 0 0 0;
-              -fx-border-color: white; }
+              -fx-border-color: white;
+              -fx-border-insets: -0.1em 0 0em 0; }
               .shipbuilder-details-popover .module-details .attributes .attribute {
-                -fx-min-width: 21em;
-                -fx-pref-width: 21em;
-                -fx-max-width: 21em;
+                -fx-min-width: 20.9em;
+                -fx-pref-width: 20.9em;
+                -fx-max-width: 20.9em;
                 -fx-border-width: 0 0.1em 0.1em 0;
                 -fx-border-color: #252525; }
                 .shipbuilder-details-popover .module-details .attributes .attribute:left-column {
@@ -3068,11 +3070,15 @@
                   .shipbuilder-details-popover .module-details .attributes .attribute .texts .arrow {
                     -fx-alignment: center-left;
                     -fx-font-size: 1.3em; }
-                .shipbuilder-details-popover .module-details .attributes .attribute .progress {
-                  -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentedBarSkin";
+                .shipbuilder-details-popover .module-details .attributes .attribute:right-column .progress {
                   -fx-min-width: 20.9em;
                   -fx-pref-width: 20.9em;
-                  -fx-max-width: 20.9em;
+                  -fx-max-width: 20.9em; }
+                .shipbuilder-details-popover .module-details .attributes .attribute .progress {
+                  -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentedBarSkin";
+                  -fx-min-width: 20.8em;
+                  -fx-pref-width: 20.8em;
+                  -fx-max-width: 20.8em;
                   -fx-min-height: 0.2em;
                   -fx-pref-height: 0.2em;
                   -fx-max-height: 0.2em; }
@@ -3096,13 +3102,13 @@
                   .shipbuilder-details-popover .module-details .attributes .attribute .progress .not-present {
                     -fx-background-color: gray; }
         .stats-column {
-          -fx-border-width: 1px;
+          -fx-border-width: 0.1em;
           -fx-border-color: white; }
         .stats-column-left {
-          -fx-border-width: 1px 1px 1px 1px;
+          -fx-border-width: 0.1em 0.1em 0.1em 0.1em;
           -fx-border-color: white; }
         .stats-column-right {
-          -fx-border-width: 1px 1px 1px 0;
+          -fx-border-width: 0.1em 0.1em 0.1em 0;
           -fx-border-color: white; }
         .shipbuilder-ship-view-popover {
           -fx-background-color: transparent !important;
@@ -3121,12 +3127,12 @@
           -fx-padding: 0em; }
           .shipbuilder-ship-view-popover > .border {
             -fx-stroke: #fff !important;
-            -fx-stroke-width: 1px !important;
+            -fx-stroke-width: 0.1em !important;
             -fx-fill: #0f0f0f !important;
             -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
           .shipbuilder-ship-view-popover > .border {
             -fx-stroke: white !important;
-            -fx-stroke-width: 0px !important;
+            -fx-stroke-width: 0em !important;
             -fx-fill: #0f0f0f !important;
             -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
           .shipbuilder-ship-view-popover .ship-view {
@@ -3155,8 +3161,7 @@
               -fx-min-height: 15.1875em;
               -fx-pref-height: 15.1875em;
               -fx-max-height: 15.1875em;
-              -fx-border-insets: -1px;
-              -fx-border-width: 2px;
+              -fx-border-width: 0.1em;
               -fx-border-color: white; }
               .shipbuilder-ship-view-popover .ship-view .container .viewport {
                 -fx-padding: 1em;
@@ -3483,7 +3488,7 @@
             -fx-padding: 0em; }
             .horizons-wishlist-blueprints-help-popover > .border {
               -fx-stroke: #fff !important;
-              -fx-stroke-width: 1px !important;
+              -fx-stroke-width: 0.1em !important;
               -fx-fill: #0f0f0f !important;
               -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
             .horizons-wishlist-blueprints-help-popover .help-popover .hint-line {
@@ -3651,7 +3656,7 @@
               -fx-background: #1e1e1e;
               -fx-text-fill: white;
               -fx-background-color: #1e1e1e;
-              -fx-background-radius: 0px;
+              -fx-background-radius: 0;
               -fx-background-insets: 0;
               -fx-padding: 0.667em 0.75em 0.667em 0.75em;
               /* 10px */
@@ -3660,7 +3665,6 @@
               -fx-font-weight: normal;
               -fx-font-style: normal; }
             .horizons-wishlist-blueprints-module-popover {
-              -fx-font-size: 14px;
               -fx-font-size: 1em;
               -fx-background-color: transparent !important;
               -fx-border-width: 0;
@@ -3669,7 +3673,7 @@
               -fx-padding: 0em; }
               .horizons-wishlist-blueprints-module-popover > .border {
                 -fx-stroke: #fff !important;
-                -fx-stroke-width: 1px !important;
+                -fx-stroke-width: 0.1em !important;
                 -fx-fill: #0f0f0f !important;
                 -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
               .horizons-wishlist-blueprints-module-popover .content {
@@ -3738,7 +3742,7 @@
             -fx-padding: 0em; }
             .horizons-wishlist-materials-help-popover > .border {
               -fx-stroke: #fff !important;
-              -fx-stroke-width: 1px !important;
+              -fx-stroke-width: 0.1em !important;
               -fx-fill: #0f0f0f !important;
               -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
             .horizons-wishlist-materials-help-popover .help-popover .hint-line {
@@ -4084,7 +4088,7 @@
           -fx-background-color: #111111;
           -fx-effect: none; }
         .app .application-screen .horizons-tab-content .horizons-tab-pane:left > .tab-header-area > .headers-region > .tab {
-          -fx-border-width: 1px;
+          -fx-border-width: 0em 0.05em 0em 0.05em;
           -fx-border-color: black; }
           .app .application-screen .horizons-tab-content .horizons-tab-pane:left > .tab-header-area > .headers-region > .tab:armed, .app .application-screen .horizons-tab-content .horizons-tab-pane:left > .tab-header-area > .headers-region > .tab:selected, .app .application-screen .horizons-tab-content .horizons-tab-pane:left > .tab-header-area > .headers-region > .tab:focused {
             -fx-background-color: #252525;
@@ -4763,16 +4767,16 @@
           -fx-hgap: 0.25em;
           -fx-vgap: 0.25em; }
           .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .totals-flow-pane .material-total {
-            -fx-border-width: 1px;
+            -fx-border-width: 0.1em;
             -fx-border-color: black;
             -fx-background-color: #0f0f0f;
-            -fx-padding: 5px;
+            -fx-padding: 0.25em;
             -fx-min-width: 32em;
             -fx-pref-width: 32em;
             -fx-max-width: 32em; }
             .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .totals-flow-pane .material-total .separator *.line {
               -fx-border-style: solid;
-              -fx-border-width: 1px;
+              -fx-border-width: 0.05em;
               -fx-border-color: white; }
             .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .totals-flow-pane .material-total .text {
               -fx-text-fill: white; }
@@ -4785,13 +4789,13 @@
               -fx-text-fill: white; }
             .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .totals-flow-pane .material-total .material-total-value-row {
               -fx-text-fill: white;
-              -fx-label-padding: 2px; }
+              -fx-label-padding: 0.2em; }
             .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .totals-flow-pane .material-total .material-total-value-irrelevant-row {
               -fx-text-fill: #2e92df;
-              -fx-label-padding: 2px; }
+              -fx-label-padding: 0.2em; }
             .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .totals-flow-pane .material-total .material-total-value-powerplay-row {
               -fx-text-fill: orange;
-              -fx-label-padding: 2px; }
+              -fx-label-padding: 0.2em; }
         .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card {
           -fx-min-height: 2em;
           -fx-pref-height: 2em;
@@ -5214,17 +5218,17 @@
       -fx-min-height: 2.5em;
       -fx-pref-height: 2.5em;
       -fx-max-height: 2.5em;
-      -fx-background-insets: 1px;
+      -fx-background-insets: 0.1em;
       -fx-background-radius: 0, 0;
-      -fx-border-width: 1px;
+      -fx-border-width: 0.1em;
       -fx-border-color: #252525; }
     .app .application-screen .odyssey-tab-content .search .search-input {
       -fx-min-height: 2.5em;
       -fx-pref-height: 2.5em;
       -fx-max-height: 2.5em;
-      -fx-background-insets: 1px;
+      -fx-background-insets: 0.1em;
       -fx-background-radius: 0, 0;
-      -fx-border-width: 1px;
+      -fx-border-width: 0.1em;
       -fx-border-color: #252525; }
     .app .application-screen .odyssey-tab-content .search .menubutton {
       -fx-min-width: 3.5em;
@@ -5236,7 +5240,7 @@
       -fx-background-insets: 0;
       -fx-background-color: #111111;
       -fx-text-fill: white;
-      -fx-border-width: 1px;
+      -fx-border-width: 0.1em;
       -fx-border-style: solid;
       -fx-border-color: #252525;
       -fx-border-insets: 0;
@@ -5270,16 +5274,16 @@
           -fx-hgap: 0.25em;
           -fx-vgap: 0.25em; }
           .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .totals-flow-pane .material-total {
-            -fx-border-width: 1px;
+            -fx-border-width: 0.1em;
             -fx-border-color: black;
             -fx-background-color: #0f0f0f;
-            -fx-padding: 5px;
+            -fx-padding: 0.25em;
             -fx-min-width: 32em;
             -fx-pref-width: 32em;
             -fx-max-width: 32em; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .totals-flow-pane .material-total .separator *.line {
               -fx-border-style: solid;
-              -fx-border-width: 1px;
+              -fx-border-width: 0.05em;
               -fx-border-color: white; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .totals-flow-pane .material-total .text {
               -fx-text-fill: white; }
@@ -5292,13 +5296,13 @@
               -fx-text-fill: white; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .totals-flow-pane .material-total .material-total-value-row {
               -fx-text-fill: white;
-              -fx-label-padding: 2px; }
+              -fx-label-padding: 0.1em; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .totals-flow-pane .material-total .material-total-value-irrelevant-row {
               -fx-text-fill: #2e92df;
-              -fx-label-padding: 2px; }
+              -fx-label-padding: 0.2em; }
             .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .totals-flow-pane .material-total .material-total-value-powerplay-row {
               -fx-text-fill: orange;
-              -fx-label-padding: 2px; }
+              -fx-label-padding: 0.2em; }
         .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .wishlist-blueprints {
           -fx-spacing: 0.5em; }
         .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .blueprints .title-bar {
@@ -5327,7 +5331,7 @@
             -fx-padding: 0em; }
             .odyssey-wishlist-blueprints-help-popover > .border {
               -fx-stroke: #fff !important;
-              -fx-stroke-width: 1px !important;
+              -fx-stroke-width: 0.1em !important;
               -fx-fill: #0f0f0f !important;
               -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
             .odyssey-wishlist-blueprints-help-popover .help-popover .hint-line {
@@ -5483,7 +5487,7 @@
               -fx-background: #1e1e1e;
               -fx-text-fill: white;
               -fx-background-color: #1e1e1e;
-              -fx-background-radius: 0px;
+              -fx-background-radius: 0;
               -fx-background-insets: 0;
               -fx-padding: 0.667em 0.75em 0.667em 0.75em;
               /* 10px */
@@ -5499,7 +5503,7 @@
               -fx-padding: 0em; }
               .odyssey-wishlist-blueprints-module-popover > .border {
                 -fx-stroke: #fff !important;
-                -fx-stroke-width: 1px !important;
+                -fx-stroke-width: 0.1em !important;
                 -fx-fill: #0f0f0f !important;
                 -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
               .odyssey-wishlist-blueprints-module-popover .content {
@@ -5563,7 +5567,7 @@
             -fx-padding: 0em; }
             .odyssey-wishlist-materials-help-popover > .border {
               -fx-stroke: #fff !important;
-              -fx-stroke-width: 1px !important;
+              -fx-stroke-width: 0.1em !important;
               -fx-fill: #0f0f0f !important;
               -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
             .odyssey-wishlist-materials-help-popover .help-popover .hint-line {
@@ -5838,7 +5842,7 @@
           -fx-background-color: #111111;
           -fx-effect: none; }
         .app .application-screen .odyssey-tab-content .odyssey-tab-pane:left > .tab-header-area > .headers-region > .tab {
-          -fx-border-width: 1px;
+          -fx-border-width: 0em 0.05em 0em 0.05em;
           -fx-border-color: black; }
           .app .application-screen .odyssey-tab-content .odyssey-tab-pane:left > .tab-header-area > .headers-region > .tab:armed, .app .application-screen .odyssey-tab-content .odyssey-tab-pane:left > .tab-header-area > .headers-region > .tab:selected, .app .application-screen .odyssey-tab-content .odyssey-tab-pane:left > .tab-header-area > .headers-region > .tab:focused {
             -fx-background-color: #252525;
@@ -5999,7 +6003,7 @@
       -fx-padding: 0.25em; }
       .carrier-info-popover > .border {
         -fx-stroke: #fff !important;
-        -fx-stroke-width: 1px !important;
+        -fx-stroke-width: 0.1em !important;
         -fx-fill: #0f0f0f !important;
         -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
       .carrier-info-popover .carrier-info {
@@ -6126,7 +6130,7 @@
         -fx-background-color: #111111;
         -fx-effect: none; }
       .app .application-screen .tab-main:left > .tab-header-area > .headers-region > .tab {
-        -fx-border-width: 1px;
+        -fx-border-width: 0em 0.05em 0em 0.05em;
         -fx-border-color: black; }
         .app .application-screen .tab-main:left > .tab-header-area > .headers-region > .tab:armed, .app .application-screen .tab-main:left > .tab-header-area > .headers-region > .tab:selected, .app .application-screen .tab-main:left > .tab-header-area > .headers-region > .tab:focused {
           -fx-background-color: #252525;
@@ -6311,7 +6315,7 @@
     -fx-padding: 0.3em; }
   .app .help-popover {
     -fx-background-color: #0f0f0f;
-    -fx-padding: 5px; }
+    -fx-padding: 0.25em; }
   .app .shipbuilder-slots-slotbox-popover {
     -fx-stroke-width: 0; }
   .app .shipbuilder-slots-slotbox-popover-content {
@@ -6330,7 +6334,7 @@
   .app .blueprint-listing-label {
     -fx-background-color: #4f4f4f;
     -fx-border-color: #000000;
-    -fx-border-width: 1px;
+    -fx-border-width: 0.1em;
     -fx-label-padding: 0.2em;
     -fx-cursor: hand; }
   .app .blueprint-listing-label-experimental {
@@ -6750,7 +6754,7 @@
       .import-dialog .import-dialog-scrollpane .pin-config .pin-item {
         -fx-spacing: 0.25em;
         -fx-padding: 0.25em;
-        -fx-border-width: 1px;
+        -fx-border-width: 0.1em;
         -fx-border-color: black;
         -fx-background-color: #0f0f0f; }
         .import-dialog .import-dialog-scrollpane .pin-config .pin-item .engineer {
@@ -6800,7 +6804,7 @@
       .import-dialog .import-dialog-scrollpane .list .loadout-item {
         -fx-spacing: 1.25em;
         -fx-padding: 0.25em;
-        -fx-border-width: 1px;
+        -fx-border-width: 0.1em;
         -fx-border-color: black;
         -fx-background-color: #0f0f0f; }
         .import-dialog .import-dialog-scrollpane .list .loadout-item .image-pane {

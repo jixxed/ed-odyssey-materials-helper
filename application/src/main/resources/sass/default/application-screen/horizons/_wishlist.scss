@@ -267,8 +267,6 @@
 
             @at-root {
               .horizons-wishlist-blueprints-module-popover {
-                //-fx-font-family: 'System';
-                -fx-font-size: 14px;
                 -fx-font-size: 1em;
 
                 @include popover-style;

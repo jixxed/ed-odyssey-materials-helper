@@ -234,7 +234,7 @@
         .stat-select {
           -fx-background-color: $background-color-dark;
           -fx-border-color: $border-color-white;
-          -fx-border-width: 1px 0 0 0;
+          -fx-border-width: 0.1em 0 0 0;
           -fx-max-height: infinity;
           -fx-max-width: infinity;
           -fx-alignment: center;
@@ -259,7 +259,7 @@
         @include fixedHeight(24.75em);
         -fx-background-color: $background-color-dark;
         -fx-border-color: $border-color-white;
-        -fx-border-width: 1px 0 1px 1px;
+        -fx-border-width: 0.1em 0 0.1em 0.1em;
 
         .weapon-group-title {
           //-fx-background-color: #3e0255;
@@ -487,7 +487,7 @@
         -fx-min-height: 22.6em;
         -fx-background-color: $background-color-dark;
         -fx-border-color: $border-color-white;
-        -fx-border-width: 1px 1px 1px 1px;
+        -fx-border-width: 0.1em 0.1em 0.1em 0.1em;
         -fx-padding: 0.25em;
         -fx-min-width: 15.8em;
 
@@ -550,7 +550,7 @@
           -fx-background-color: $background-color-dark;
           -fx-border-color: $border-color-white;
           -fx-text-fill: $text-color-white;
-          -fx-border-width: 1px;
+          -fx-border-width: 0.1em;
           -fx-padding: 0.25em;
         }
       }
@@ -627,7 +627,7 @@
           .handling-button {
             -fx-background-color: $background-color-dark;
             -fx-border-color: $border-color-white;
-            -fx-border-width: 0 0 0 1px;
+            -fx-border-width: 0 0 0 0.1em;
             -fx-max-height: infinity;
             -fx-max-width: infinity;
             -fx-alignment: center;
@@ -717,7 +717,7 @@
 
         .weapon-progressbar-popover {
           -fx-background-color: black;
-          -fx-border-width: 1px;
+          -fx-border-width: 0.1em;
           -fx-border-color: $border-color-white;
         }
 
@@ -726,7 +726,7 @@
           -fx-background-color: $background-color-dark;
           -fx-border-color: $border-color-white;
           -fx-text-fill: $text-color-white;
-          -fx-border-width: 1px;
+          -fx-border-width: 0.1em;
           -fx-padding: 0.25em;
         }
 
@@ -943,7 +943,7 @@
     .power-stats {
       -fx-background-color: $background-color-dark;
       -fx-border-color: $border-color-white;
-      -fx-border-width: 1px;
+      -fx-border-width: 0.1em;
       -fx-padding: 0.25em;
 //      108 = 27*4
 //      0.75 = 0.25*3
@@ -1123,27 +1123,27 @@
 
           &:military {
             $altcolor: $background-color-medium;
-            -fx-background-color: linear-gradient(from 0px 7px to 7px 0px, repeat, $background-color-dark 0%, $altcolor 25%, $background-color-dark 50%, $altcolor 75%, $background-color-dark 100%);
+            -fx-background-color: linear-gradient(from 0em 0.5em to 0.5em 0em, repeat, $background-color-dark 0%, $altcolor 25%, $background-color-dark 50%, $altcolor 75%, $background-color-dark 100%);
           }
 
           &:cargo {
             $altcolor: $background-color-medium;
-            -fx-background-color: linear-gradient(from 0px 7px to 7px 0px, repeat, $background-color-dark 0%, $altcolor 25%, $background-color-dark 50%, $altcolor 75%, $background-color-dark 100%);
+            -fx-background-color: linear-gradient(from 0em 0.5em to 0.5em 0em, repeat, $background-color-dark 0%, $altcolor 25%, $background-color-dark 50%, $altcolor 75%, $background-color-dark 100%);
           }
 
           &:fighter {
             $altcolor: $background-color-medium;
-            -fx-background-color: linear-gradient(from 0px 7px to 7px 0px, repeat, $background-color-dark 0%, $altcolor 25%, $background-color-dark 50%, $altcolor 75%, $background-color-dark 100%);
+            -fx-background-color: linear-gradient(from 0em 0.5em to 0.5em 0em, repeat, $background-color-dark 0%, $altcolor 25%, $background-color-dark 50%, $altcolor 75%, $background-color-dark 100%);
           }
 
           &:limpet {
             $altcolor: $background-color-medium;
-            -fx-background-color: linear-gradient(from 0px 7px to 7px 0px, repeat, $background-color-dark 0%, $altcolor 25%, $background-color-dark 50%, $altcolor 75%, $background-color-dark 100%);
+            -fx-background-color: linear-gradient(from 0em 0.5em to 0.5em 0em, repeat, $background-color-dark 0%, $altcolor 25%, $background-color-dark 50%, $altcolor 75%, $background-color-dark 100%);
           }
 
           &:mining-hardpoint {
             $altcolor: $background-color-medium;
-            -fx-background-color: linear-gradient(from 0px 7px to 7px 0px, repeat, $background-color-dark 0%, $altcolor 25%, $background-color-dark 50%, $altcolor 75%, $background-color-dark 100%);
+            -fx-background-color: linear-gradient(from 0em 0.5em to 0.5em 0em, repeat, $background-color-dark 0%, $altcolor 25%, $background-color-dark 50%, $altcolor 75%, $background-color-dark 100%);
           }
 
           .slot-background {
@@ -1528,7 +1528,7 @@
         @include fixedHeight(2em);
         -fx-background-color: $background-color-dark;
         -fx-border-color: $border-color-white;
-        -fx-border-width: 1px;
+        -fx-border-width: 0.1em;
         -fx-alignment: center;
       }
 
@@ -1543,18 +1543,16 @@
 
         & > .border {
           -fx-stroke: $border-color-white !important;
-          -fx-stroke-width: 1px !important;
+          -fx-stroke-width: 0.1em !important;
           -fx-fill: $background-color-dark !important;
           -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important;
         }
 
         .module-details {
           -fx-background-color: $background-color-dark;
-          @include fixedWidth(42.1em);
-          //-fx-min-width: 42.1em;
-          //-fx-max-width: 42.2em;
+          @include fixedWidth(42.02em);
           -fx-border-color: $border-color-white;
-          -fx-border-width: 1px;
+          -fx-border-width: 0.1em;
 
           .title {
             -fx-padding: 0.25em;
@@ -1578,10 +1576,11 @@
             @include fixedWidth(42em);
             -fx-border-width: 0.1em 0 0.1em 0;
             -fx-border-color: $border-color-white;
+            -fx-border-insets: -0.1em 0 0em 0;
 
             .property {
               -fx-padding: 0.25em;
-              @include fixedWidth(21em);
+              @include fixedWidth(20.9em);
               -fx-border-width: 0 0.1em 0.1em 0;
               -fx-border-color: $border-color-grey;
 
@@ -1609,14 +1608,13 @@
                 -fx-border-width: 0 0 0 0;
               }
 
-
               .name {
-                -fx-min-height: 1.45em;
+                -fx-min-height: 1em;
                 -fx-alignment: center-left;
               }
 
               .value {
-                -fx-min-height: 1.45em;
+                -fx-min-height: 1em;
                 -fx-alignment: center-right;
               }
             }
@@ -1626,9 +1624,12 @@
             @include fixedWidth(42em);
             -fx-border-width: 0.1em 0 0 0;
             -fx-border-color: $border-color-white;
+            -fx-border-insets: -0.1em 0 0em 0;
+            //-fx-border-insets: -0.1em 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0 ;
+            //-fx-border-insets: -0.1em 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0 ;
 
             .attribute {
-              @include fixedWidth(21em);
+              @include fixedWidth(20.9em);
               -fx-border-width: 0 0.1em 0.1em 0;
               -fx-border-color: $border-color-grey;
 
@@ -1690,9 +1691,14 @@
 
               }
 
+              &:right-column {
+                .progress {
+                  @include fixedWidth(20.9em);
+                }
+              }
               .progress {
                 @include segmented-bar-straight();
-                @include fixedWidth(20.9em);
+                @include fixedWidth(20.8em);
                 @include fixedHeight(0.2em);
 
                 .present {
@@ -1714,17 +1720,17 @@
       }
 
       .stats-column {
-        -fx-border-width: 1px;
+        -fx-border-width: 0.1em;
         -fx-border-color: $border-color-white;
       }
 
       .stats-column-left {
-        -fx-border-width: 1px 1px 1px 1px;
+        -fx-border-width: 0.1em 0.1em 0.1em 0.1em;
         -fx-border-color: $border-color-white;
       }
 
       .stats-column-right {
-        -fx-border-width: 1px 1px 1px 0;
+        -fx-border-width: 0.1em 0.1em 0.1em 0;
         -fx-border-color: $border-color-white;
       }
     }
@@ -1739,7 +1745,7 @@
 
         & > .border {
           -fx-stroke: $border-color-white !important;
-          -fx-stroke-width: 0px !important;
+          -fx-stroke-width: 0em !important;
           -fx-fill: $background-color-dark !important;
           -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important;
         }
@@ -1763,8 +1769,8 @@
           .container {
             @include fixedWidth(27em);
             @include fixedHeight(15.1875em);
-            -fx-border-insets: -1px;
-            -fx-border-width: 2px;
+            //-fx-border-insets: 0.1em;
+            -fx-border-width: 0.1em;
             -fx-border-color: $border-color-white;
 
             .viewport {

@@ -290,7 +290,7 @@
 
 .help-popover {
   -fx-background-color: #0f0f0f;
-  -fx-padding: 5px;
+  -fx-padding: 0.25em;
 }
 
 
@@ -320,7 +320,7 @@
 .blueprint-listing-label {
   -fx-background-color: #4f4f4f;
   -fx-border-color: #000000;
-  -fx-border-width: 1px;
+  -fx-border-width: 0.1em;
   -fx-label-padding: 0.2em;
   -fx-cursor: hand;
 }
