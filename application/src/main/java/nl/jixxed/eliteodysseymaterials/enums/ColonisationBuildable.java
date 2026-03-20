@@ -16,6 +16,7 @@ public enum ColonisationBuildable {
     STAR_PORT_ASTEROID_BASE(2, ColonisationCategory.STAR_PORT, ColonisationLocation.ORBITAL, List.of(ColonisationLayout.ASTEROID), Economy.EXTRACTION, Economy.NONE, 1, 0, 3, 5, -4, 7, 1),
     STAR_PORT_OCELLUS(3, ColonisationCategory.STAR_PORT, ColonisationLocation.ORBITAL, List.of(ColonisationLayout.OCELLUS), Economy.COLONY, Economy.NONE, 5, 1, 6, 7, 5, 8, 5),
     STAR_PORT_ORBIS(3, ColonisationCategory.STAR_PORT, ColonisationLocation.ORBITAL, List.of(ColonisationLayout.APOLLO, ColonisationLayout.ARTEMIS), Economy.COLONY, Economy.NONE, 5, 1, 6, 7, 5, 8, 5),
+    STAR_PORT_DODEC(3, ColonisationCategory.STAR_PORT, ColonisationLocation.ORBITAL, List.of(ColonisationLayout.NO_TRUSS, ColonisationLayout.QUINT_TRUSS, ColonisationLayout.DEC_TRUSS), Economy.COLONY, Economy.NONE, 8, 4, -4, 8, 9, 7, 10),
     OUTPOST_COMMERCIAL(1, ColonisationCategory.OUTPOST, ColonisationLocation.ORBITAL, List.of(ColonisationLayout.PLUTUS), Economy.COLONY, Economy.NONE, 0, 0, 0, 2, 5, 0, 0),
     OUTPOST_INDUSTRIAL(1, ColonisationCategory.OUTPOST, ColonisationLocation.ORBITAL, List.of(ColonisationLayout.VULCAN), Economy.INDUSTRIAL, Economy.NONE, 0, 0, 3, 0, 0, 2, 0),
     OUTPOST_CRIMINAL(1, ColonisationCategory.OUTPOST, ColonisationLocation.ORBITAL, List.of(ColonisationLayout.DYSNOMIA), Economy.COLONY, Economy.CONTRABAND, 0, 0, 0, 2, 0, 0, 0),
@@ -128,6 +129,27 @@ public enum ColonisationBuildable {
                     Map.entry(RegularCommodity.NONLETHALWEAPONS, 25),
                     Map.entry(RegularCommodity.POWERGENERATORS, 65),
                     Map.entry(RegularCommodity.WATERPURIFIERS, 105)
+            );
+            case STAR_PORT_DODEC -> Map.ofEntries(
+                    Map.entry(RegularCommodity.ALUMINIUM, 45248),
+                    Map.entry(RegularCommodity.AUTOFABRICATORS, 314),
+                    Map.entry(RegularCommodity.CERAMICCOMPOSITES, 5432),
+                    Map.entry(RegularCommodity.CMMCOMPOSITE, 50675),
+                    Map.entry(RegularCommodity.COMPUTERCOMPONENTS, 363),
+                    Map.entry(RegularCommodity.COPPER, 2898),
+                    Map.entry(RegularCommodity.FOODCARTRIDGES, 605),
+                    Map.entry(RegularCommodity.FRUITANDVEGETABLES, 363),
+                    Map.entry(RegularCommodity.INSULATINGMEMBRANE, 1610),
+                    Map.entry(RegularCommodity.LIQUIDOXYGEN, 17015),
+                    Map.entry(RegularCommodity.MEDICALDIAGNOSTICEQUIPMENT, 63),
+                    Map.entry(RegularCommodity.NONLETHALWEAPONS, 63),
+                    Map.entry(RegularCommodity.POLYMERS, 2615),
+                    Map.entry(RegularCommodity.POWERGENERATORS, 163),
+                    Map.entry(RegularCommodity.SEMICONDUCTORS, 403),
+                    Map.entry(RegularCommodity.STEEL, 63342),
+                    Map.entry(RegularCommodity.SUPERCONDUCTORS, 705),
+                    Map.entry(RegularCommodity.TITANIUM, 36923),
+                    Map.entry(RegularCommodity.WATER, 7241)
             );
             case STAR_PORT_OCELLUS, STAR_PORT_ORBIS -> Map.ofEntries(
                     Map.entry(RegularCommodity.LIQUIDOXYGEN, 15124),

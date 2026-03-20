@@ -7,6 +7,8 @@ public enum ColonisationLayout {
     NO_TRUSS,
     DUAL_TRUSS,
     QUAD_TRUSS,
+    QUINT_TRUSS,
+    DEC_TRUSS,
     ASTEROID,
     OCELLUS,
     APOLLO,
