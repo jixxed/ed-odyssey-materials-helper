@@ -8,6 +8,7 @@ public class AppConstants {
 
     public static final String APP_TITLE = "ED Odyssey Materials Helper";
     public static final String FLEETCARRIER_FILE = "fleetcarrier.json";
+    public static final String ARX_FILE = "arx.json";
     public static final String SQUADRON_FILE = "squadron.json";
     public static final String SHIPLOCKER_FILE = "ShipLocker.json";
     public static final String BACKPACK_FILE = "Backpack.json";

@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 import nl.jixxed.eliteodysseymaterials.enums.Expansion;
 import nl.jixxed.eliteodysseymaterials.enums.GameMode;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.LoadGame.LoadGame;
+import nl.jixxed.eliteodysseymaterials.service.LedgerService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LoadGameEvent;
 
@@ -35,6 +36,7 @@ public class LoadGameMessageProcessor implements MessageProcessor<LoadGame> {
         final String gameMode = event.getGameMode().orElse("none");
         final Expansion horizonsExpansion = event.getHorizons() ? Expansion.HORIZONS : Expansion.NONE;
         final Expansion expansion = event.getOdyssey().orElse(false) ? Expansion.ODYSSEY : horizonsExpansion;
+        LedgerService.setCredits(event.getCredits().longValue());
         EventService.publish(new LoadGameEvent(GameMode.valueOf(gameMode.toUpperCase()), expansion));
     }
 

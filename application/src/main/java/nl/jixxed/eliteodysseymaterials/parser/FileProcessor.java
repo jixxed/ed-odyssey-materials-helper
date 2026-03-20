@@ -332,6 +332,23 @@ public class FileProcessor {
         }
     }
 
+    public static synchronized void processCapiArxFile(final Optional<File> file, final JournalEventType journalEventType) {
+        if (journalEventType.equals(JournalEventType.CAPIARX)) {
+            file.ifPresentOrElse(
+                    f -> Platform.runLater(() -> {
+                        MessageHandler.handleCapiMessage(f, journalEventType);
+                        ApplicationState.getInstance().getArx().set(true);
+                        EventService.publish(new CapiArxEvent());
+                    }),
+                    () -> Platform.runLater(() -> {
+                        MessageHandler.clearCapi(journalEventType);
+                        ApplicationState.getInstance().getArx().set(false);
+                        EventService.publish(new CapiArxEvent());
+                    }));
+
+        }
+    }
+
 
     public static synchronized void processStatusFile(final File file) {
         try {

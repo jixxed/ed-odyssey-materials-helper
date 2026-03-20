@@ -50,6 +50,9 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
     private String body = "";
     private String station = "";
 
+    private Map<CarrierType, DestroyablePopOver> carrierInfoPopOvers = new HashMap<>();
+    private DestroyablePopOver commanderInfoPopOver;
+
     private DestroyableLabel gameModeLabel;
     private DestroyableLabel apiLabel;
     private DestroyableLabel watchedFileLabel;
@@ -69,6 +72,7 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
     private ScheduledExecutorService executorService;
     private EdAwesomeIconViewPane fleetCarrierIcon;
     private EdAwesomeIconViewPane squadronCarrierIcon;
+    private EdAwesomeIconViewPane commanderIcon;
 
     BottomBar() {
         executorService = new ScheduledThreadPoolExecutor(1);
@@ -90,7 +94,7 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
         this.eddnQueueLabel.addBinding(this.eddnQueueLabel.managedProperty(), this.eddnQueueLabel.textProperty().isNotEmpty());
         this.updateLabel = LabelBuilder.builder()
                 .withStyleClass("update")
-                .withText( VersionService.isOutdated() ? "application.please.update" : "blank")
+                .withText(VersionService.isOutdated() ? "application.please.update" : "blank")
                 .build();
         this.updateLabel.addBinding(this.updateLabel.visibleProperty(), this.updateLabel.textProperty().isNotEmpty());
         this.updateLabel.addBinding(this.updateLabel.managedProperty(), this.updateLabel.textProperty().isNotEmpty());
@@ -154,6 +158,13 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
                 .withVisibilityProperty(CarrierService.carrierExistsProperty(CarrierType.SQUADRONCARRIER))
                 .withManagedProperty(CarrierService.carrierExistsProperty(CarrierType.SQUADRONCARRIER))
                 .build();
+        this.commanderIcon = EdAwesomeIconViewPaneBuilder.builder()
+                .withStyleClass("commander-icon")
+                .withIcons(EdAwesomeIcon.OTHER_COMMANDER)
+                .withOnMouseClicked(event -> showCommanderInfo(event))
+                .withVisibilityProperty(ApplicationState.getInstance().getInitializedProperty())
+                .withManagedProperty(ApplicationState.getInstance().getInitializedProperty())
+                .build();
         this.loginSeparator = new DestroyableSeparator(Orientation.VERTICAL);
         this.loginSeparator.addBinding(this.loginSeparator.visibleProperty(), this.login.visibleProperty());
         this.loginSeparator.addBinding(this.loginSeparator.managedProperty(), this.login.visibleProperty());
@@ -166,7 +177,7 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
         this.getNodes().addAll(
                 this.watchedFileLabel, new DestroyableSeparator(Orientation.VERTICAL), this.gameModeLabel, this.apiLabelSeparator, this.apiLabel, this.loginSeparator, this.login, this.eddnQueueSeparator, this.eddnQueueLabel, this.updateSeparator, this.updateLabel,
                 new GrowingRegion(),
-                this.fleetCarrierIcon, this.squadronCarrierIcon, this.locationLabel, new DestroyableSeparator(Orientation.VERTICAL), this.commanderLabel, this.commanderSelect);
+                this.fleetCarrierIcon, this.squadronCarrierIcon, this.locationLabel, new DestroyableSeparator(Orientation.VERTICAL), this.commanderIcon, this.commanderLabel, this.commanderSelect);
 
         executorService.scheduleAtFixedRate(() -> {
             if (eddnTransmitting.get()) {
@@ -207,8 +218,6 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
         register(EventService.addListener(true, this, TerminateApplicationEvent.class, event -> executorService.shutdown()));
     }
 
-    Map<CarrierType, DestroyablePopOver> carrierInfoPopOvers = new HashMap<>();
-
     private void showCarrierInfo(MouseEvent event, CarrierType carrierType) {
         if (carrierInfoPopOvers.containsKey(carrierType) && carrierInfoPopOvers.get(carrierType) != null && carrierInfoPopOvers.get(carrierType).isShowing()) {
             return;
@@ -226,6 +235,105 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
                 .build();
         carrierInfoPopOvers.put(carrierType, popOver);
         popOver.show(carrierType == CarrierType.FLEETCARRIER ? fleetCarrierIcon : squadronCarrierIcon, event.getScreenX(), event.getScreenY());
+    }
+
+    private void showCommanderInfo(MouseEvent event) {
+        if (commanderInfoPopOver != null && commanderInfoPopOver.isShowing()) {
+            return;
+        }
+        commanderInfoPopOver = PopOverBuilder.builder()
+                .withStyleClass("commander-info-popover")
+                .withContent(getCommanderInfo())
+                .withDetachable(false)
+                .withHeaderAlwaysVisible(false)
+                .withCornerRadius(0)
+                .withArrowIndent(0)
+                .withArrowSize(0)
+                .withArrowLocation(PopOver.ArrowLocation.BOTTOM_RIGHT)
+                .withDestroyOnHide(true)
+                .build();
+        commanderInfoPopOver.show(commanderIcon, event.getScreenX(), event.getScreenY());
+    }
+
+    private DestroyableVBox getCommanderInfo() {
+
+//        { "timestamp":"2026-03-04T15:16:48Z", "event":"Rank", "Combat":2, "Trade":8, "Explore":5, "Soldier":1, "Exobiologist":0, "Empire":1, "Federation":0, "CQC":0 }
+//        { "timestamp":"2026-03-04T15:16:48Z", "event":"Progress", "Combat":38, "Trade":36, "Explore":30, "Soldier":9, "Exobiologist":0, "Empire":25, "Federation":100, "CQC":5 }
+//        { "timestamp":"2026-03-04T15:16:48Z", "event":"Reputation", "Empire":14.424700, "Federation":15.157100, "Independent":0.000000, "Alliance":75.000000 }
+//        { "timestamp":"2026-03-04T11:37:53Z", "event":"Rank", "Combat":7, "Trade":13, "Explore":10, "Soldier":6, "Exobiologist":0, "Empire":12, "Federation":13, "CQC":0 }
+//        { "timestamp":"2026-03-04T11:37:53Z", "event":"Progress", "Combat":57, "Trade":100, "Explore":54, "Soldier":30, "Exobiologist":11, "Empire":62, "Federation":83, "CQC":33 }
+//        { "timestamp":"2026-03-04T11:37:53Z", "event":"Reputation", "Empire":75.000000, "Federation":94.491798, "Independent":0.000000, "Alliance":63.599998 }
+
+
+        InfoNode credits = new InfoNode(LocaleService.getStringBinding("statusbar.info.credits"),
+                LocaleService.getStringBinding("statusbar.info.credits.value", MoneyFormatter.formatMoney(BigInteger.valueOf(LedgerService.getCredits()))),
+                true,
+                EdAwesomeIcon.OTHER_CREDITS);
+
+        InfoNode arx = new InfoNode(
+                LocaleService.getStringBinding("statusbar.info.arx"),
+                LocaleService.getStringBinding("statusbar.info.arx.value", Formatters.NUMBER_FORMAT_0.format(LedgerService.getArx())),
+                CAPIService.getInstance().getActive().get(),
+                EdAwesomeIcon.OTHER_ARX);
+
+        InfoNode federationNavyRank = new InfoNode(LocaleService.getStringBinding("statusbar.info.federation.rank"),
+                LocaleService.getStringBinding("statusbar.info.federation.rank.value", LocaleService.LocalizationKey.of(FederationRank.forRank(APPLICATION_STATE.getCommanderRank(CommanderRank.FEDERATION)).getLocalizationKey()), Formatters.NUMBER_FORMAT_0.format(APPLICATION_STATE.getCommanderRank(CommanderRank.FEDERATION)), Formatters.NUMBER_FORMAT_0.format(APPLICATION_STATE.getCommanderRankProgress(CommanderRank.FEDERATION))),
+                true,
+                EdAwesomeIcon.SHIPS_SHIELDS_1, EdAwesomeIcon.SUPERPOWER_FEDERATION);
+        federationNavyRank.getStyleClass().add("rank");
+
+        InfoNode empireNavyRank = new InfoNode(
+                LocaleService.getStringBinding("statusbar.info.empire.rank"),
+                LocaleService.getStringBinding("statusbar.info.empire.rank.value", LocaleService.LocalizationKey.of(EmpireRank.forRank(APPLICATION_STATE.getCommanderRank(CommanderRank.EMPIRE)).getLocalizationKey()), Formatters.NUMBER_FORMAT_0.format(APPLICATION_STATE.getCommanderRank(CommanderRank.EMPIRE)), Formatters.NUMBER_FORMAT_0.format(APPLICATION_STATE.getCommanderRankProgress(CommanderRank.EMPIRE))),
+                true,
+                EdAwesomeIcon.SHIPS_SHIELDS_1, EdAwesomeIcon.SUPERPOWER_EMPIRE);
+        empireNavyRank.getStyleClass().add("rank");
+
+        InfoNode federationReputation = new InfoNode(
+                LocaleService.getStringBinding("statusbar.info.federation.reputation"),
+                LocaleService.getStringBinding("statusbar.info.federation.reputation.value", LocaleService.LocalizationKey.of(CommanderReputationLevel.forReputation(APPLICATION_STATE.getCommanderReputation(CommanderReputation.FEDERATION)).getLocalizationKey()), Formatters.NUMBER_FORMAT_1.format(APPLICATION_STATE.getCommanderReputation(CommanderReputation.FEDERATION))),
+                true,
+                EdAwesomeIcon.SUPERPOWER_FEDERATION);
+
+        InfoNode empireReputation = new InfoNode(
+                LocaleService.getStringBinding("statusbar.info.empire.reputation"),
+                LocaleService.getStringBinding("statusbar.info.empire.reputation.value", LocaleService.LocalizationKey.of(CommanderReputationLevel.forReputation(APPLICATION_STATE.getCommanderReputation(CommanderReputation.EMPIRE)).getLocalizationKey()), Formatters.NUMBER_FORMAT_1.format(APPLICATION_STATE.getCommanderReputation(CommanderReputation.EMPIRE))),
+                true,
+                EdAwesomeIcon.SUPERPOWER_EMPIRE);
+
+        InfoNode allianceReputation = new InfoNode(
+                LocaleService.getStringBinding("statusbar.info.alliance.reputation"),
+                LocaleService.getStringBinding("statusbar.info.alliance.reputation.value", LocaleService.LocalizationKey.of(CommanderReputationLevel.forReputation(APPLICATION_STATE.getCommanderReputation(CommanderReputation.ALLIANCE)).getLocalizationKey()), Formatters.NUMBER_FORMAT_1.format(APPLICATION_STATE.getCommanderReputation(CommanderReputation.ALLIANCE))),
+                true,
+                EdAwesomeIcon.SUPERPOWER_ALLIANCE);
+
+        InfoNode independentReputation = new InfoNode(
+                LocaleService.getStringBinding("statusbar.info.independent.reputation"),
+                LocaleService.getStringBinding("statusbar.info.independent.reputation.value", LocaleService.LocalizationKey.of(CommanderReputationLevel.forReputation(APPLICATION_STATE.getCommanderReputation(CommanderReputation.INDEPENDENT)).getLocalizationKey()), Formatters.NUMBER_FORMAT_1.format(APPLICATION_STATE.getCommanderReputation(CommanderReputation.INDEPENDENT))),
+                true,
+                EdAwesomeIcon.SUPERPOWER_INDEPENDENT);
+
+
+        DestroyableFlowPane infoNodes = FlowPaneBuilder.builder()
+                .withStyleClass("info-node-list")
+                .withNodes(
+                        credits,
+                        arx,
+                        federationNavyRank,
+                        empireNavyRank,
+                        federationReputation,
+                        empireReputation,
+                        allianceReputation,
+                        independentReputation
+                )
+                .build();
+
+
+        final DestroyableVBox contentNode = BoxBuilder.builder()
+                .withStyleClass("commander-info")
+                .withNodes(infoNodes)
+                .buildVBox();
+        return contentNode;
     }
 
     private DestroyableVBox getCarrierInfo(CarrierType carrierType) {

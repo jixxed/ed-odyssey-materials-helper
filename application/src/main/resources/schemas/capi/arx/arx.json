@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CapiArx",
+  "type": "object",
+  "properties": {
+    "balance": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "balance"
+  ]
+}

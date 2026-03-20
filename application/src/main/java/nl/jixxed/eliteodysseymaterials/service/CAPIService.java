@@ -22,6 +22,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
+import nl.jixxed.eliteodysseymaterials.service.capi.CommanderEndpointHandler;
 import nl.jixxed.eliteodysseymaterials.service.capi.EndpointHandler;
 import nl.jixxed.eliteodysseymaterials.service.capi.FleetCarrierEndpointHandler;
 import nl.jixxed.eliteodysseymaterials.service.capi.SquadronEndpointHandler;
@@ -60,6 +61,8 @@ public class CAPIService {
     private CAPIService() {
         endpointHandlers.add(new FleetCarrierEndpointHandler(this));
         endpointHandlers.add(new SquadronEndpointHandler(this));
+        endpointHandlers.add(new CommanderEndpointHandler(this));
+
         this.oAuth20Service = new ServiceBuilder(CapiOAuth20Service.CLIENT_ID)
                 .defaultScope("auth capi")
                 .callback("edomh://capi/")

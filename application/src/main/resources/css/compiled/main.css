@@ -5991,6 +5991,13 @@
         -fx-font-size: 2em !important; }
       .app .application-screen .bottombar .carrier-icon:hover .glyph-icon {
         -fx-fill: #5aa9e6; }
+    .app .application-screen .bottombar .commander-icon {
+      -fx-cursor: hand; }
+      .app .application-screen .bottombar .commander-icon .glyph-icon {
+        -fx-fill: #2e92df;
+        -fx-font-size: 2em !important; }
+      .app .application-screen .bottombar .commander-icon:hover .glyph-icon {
+        -fx-fill: #5aa9e6; }
     .carrier-info-popover {
       -fx-background-color: transparent !important;
       -fx-border-width: 0;
@@ -6120,6 +6127,85 @@
               -fx-alignment: center;
               -fx-text-alignment: center;
               -fx-wrap-text: true; }
+    .commander-info-popover {
+      -fx-background-color: transparent !important;
+      -fx-border-width: 0;
+      -fx-background-insets: 0 !important;
+      -fx-border-insets: 0em;
+      -fx-padding: 0em;
+      -fx-min-width: 27.5em;
+      -fx-pref-width: 27.5em;
+      -fx-max-width: 27.5em;
+      -fx-padding: 0.25em; }
+      .commander-info-popover > .border {
+        -fx-stroke: #fff !important;
+        -fx-stroke-width: 0.1em !important;
+        -fx-fill: #0f0f0f !important;
+        -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0), 0, 0, 0, 0) !important; }
+      .commander-info-popover .commander-info {
+        -fx-spacing: 0.5em; }
+        .commander-info-popover .commander-info .info-node-list {
+          -fx-hgap: 0.25em;
+          -fx-vgap: 0.25em; }
+          .commander-info-popover .commander-info .info-node-list .info-node {
+            -fx-min-width: 6.5em;
+            -fx-pref-width: 6.5em;
+            -fx-max-width: 6.5em;
+            -fx-min-height: 8.5em;
+            -fx-pref-height: 8.5em;
+            -fx-max-height: 8.5em;
+            -fx-spacing: 0em;
+            -fx-border-color: white;
+            -fx-padding: 0.25em; }
+            .commander-info-popover .commander-info .info-node-list .info-node:unavailable {
+              -fx-opacity: 0.3; }
+            .commander-info-popover .commander-info .info-node-list .info-node .info-node-icon-title {
+              -fx-min-width: 6em;
+              -fx-pref-width: 6em;
+              -fx-max-width: 6em;
+              -fx-min-height: 5em;
+              -fx-pref-height: 5em;
+              -fx-max-height: 5em; }
+              .commander-info-popover .commander-info .info-node-list .info-node .info-node-icon-title .info-node-title {
+                -fx-min-width: 6em;
+                -fx-pref-width: 6em;
+                -fx-max-width: 6em;
+                -fx-alignment: center;
+                -fx-text-alignment: center;
+                -fx-wrap-text: true; }
+              .commander-info-popover .commander-info .info-node-list .info-node .info-node-icon-title .info-node-icon .glyph-icon {
+                -fx-font-size: 5.0em !important;
+                -fx-fill: white; }
+              .commander-info-popover .commander-info .info-node-list .info-node .info-node-icon-title .info-node-icon .ships-fsdunladen-1 {
+                -fx-fill: gray; }
+              .commander-info-popover .commander-info .info-node-list .info-node .info-node-icon-title .info-node-icon .other-carrier-packs-1 {
+                -fx-fill: gray; }
+              .commander-info-popover .commander-info .info-node-list .info-node .info-node-icon-title .info-node-icon .ships-multicrew-1 {
+                -fx-fill: gray; }
+              .commander-info-popover .commander-info .info-node-list .info-node .info-node-icon-title .info-node-icon .other-cargo-used-1 {
+                -fx-fill: gray; }
+              .commander-info-popover .commander-info .info-node-list .info-node .info-node-icon-title .info-node-icon .other-cargo-reserved-1 {
+                -fx-fill: gray; }
+              .commander-info-popover .commander-info .info-node-list .info-node .info-node-icon-title .info-node-icon .other-cargo-free-1 {
+                -fx-fill: gray; }
+              .commander-info-popover .commander-info .info-node-list .info-node .info-node-icon-title .info-node-icon .ships-landing-pad-1 {
+                -fx-fill: gray; }
+            .commander-info-popover .commander-info .info-node-list .info-node .info-node-value {
+              -fx-min-width: 6em;
+              -fx-pref-width: 6em;
+              -fx-max-width: 6em;
+              -fx-text-fill: gray;
+              -fx-alignment: center;
+              -fx-text-alignment: center;
+              -fx-wrap-text: true; }
+          .commander-info-popover .commander-info .info-node-list .rank .info-node-icon-title .info-node-icon .superpower-federation {
+            -fx-font-size: 2.5em !important;
+            -fx-fill: white;
+            -fx-translate-y: -0.15em; }
+          .commander-info-popover .commander-info .info-node-list .rank .info-node-icon-title .info-node-icon .superpower-empire {
+            -fx-font-size: 2.5em !important;
+            -fx-fill: white;
+            -fx-translate-y: -0.15em; }
   .app .application-screen .tab-main {
     -fx-background-insets: 0; }
     .app .application-screen .tab-main:left > .tab-header-area {

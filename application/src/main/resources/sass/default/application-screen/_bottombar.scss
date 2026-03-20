@@ -40,6 +40,21 @@
       }
     }
   }
+  .commander-icon {
+    -fx-cursor: hand;
+
+
+    .glyph-icon {
+      -fx-fill: $text-color-blue;
+      -fx-font-size: 2em !important;
+    }
+
+    &:hover {
+      .glyph-icon {
+        -fx-fill: lighten($text-color-blue, 10%);
+      }
+    }
+  }
 
 
   @at-root {
@@ -168,6 +183,103 @@
             }
 
 
+          }
+        }
+      }
+    }
+    .commander-info-popover {
+      @include popover-style;
+      @include fixedWidth(27.5em);
+      -fx-padding: 0.25em;
+
+      .commander-info {
+        -fx-spacing: 0.5em;
+        .info-node-list {
+          @include hvGap(0.25em);
+          .info-node {
+            &:unavailable {
+              -fx-opacity: 0.3;
+            }
+
+            @include fixedWidth(6.5em);
+            @include fixedHeight(8.5em);
+            -fx-spacing: 0em;
+            -fx-border-color: $border-color-white;
+            -fx-padding: 0.25em;
+
+            .info-node-icon-title {
+              @include fixedWidth(6.0em);
+              @include fixedHeight(5.0em);
+
+              .info-node-title {
+                @include fixedWidth(6.0em);
+                -fx-alignment: center;
+                -fx-text-alignment: center;
+                -fx-wrap-text: true;
+
+              }
+
+              .info-node-icon {
+                .glyph-icon {
+                  -fx-font-size: 5.0em !important;
+                  -fx-fill: $text-color-white;
+                }
+
+                .ships-fsdunladen-1 {
+                  -fx-fill: $text-color-grey;
+                }
+
+                .other-carrier-packs-1 {
+                  -fx-fill: $text-color-grey;
+                }
+
+                .ships-multicrew-1 {
+                  -fx-fill: $text-color-grey;
+                }
+
+                .other-cargo-used-1 {
+                  -fx-fill: $text-color-grey;
+                }
+
+                .other-cargo-reserved-1 {
+                  -fx-fill: $text-color-grey;
+                }
+
+                .other-cargo-free-1 {
+                  -fx-fill: $text-color-grey;
+                }
+
+                .ships-landing-pad-1 {
+                  -fx-fill: $text-color-grey;
+                }
+              }
+            }
+
+            .info-node-value {
+              @include fixedWidth(6.0em);
+              -fx-text-fill: $text-color-grey;
+              -fx-alignment: center;
+              -fx-text-alignment: center;
+              -fx-wrap-text: true;
+            }
+
+
+          }
+          .rank{
+            .info-node-icon-title{
+              .info-node-icon {
+                .superpower-federation {
+                  -fx-font-size: 2.5em !important;
+                  -fx-fill: $text-color-white;
+                  -fx-translate-y: -0.15em ;
+                }
+                .superpower-empire {
+                  -fx-font-size: 2.5em !important;
+                  -fx-fill: $text-color-white;
+                  -fx-translate-y: -0.15em ;
+                }
+              }
+            }
           }
         }
       }

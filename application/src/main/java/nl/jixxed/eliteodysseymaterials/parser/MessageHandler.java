@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.*;
+import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiArxMessageProcessor;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiFleetCarrierMessageProcessor;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiMessageProcessor;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiSquadronMessageProcessor;
@@ -159,12 +160,17 @@ class MessageHandler {
             Map.entry(JournalEventType.MODULESELL, new ModuleSellMessageProcessor()),
             Map.entry(JournalEventType.MODULESTORE, new ModuleStoreMessageProcessor()),
             Map.entry(JournalEventType.MODULESWAP, new ModuleSwapMessageProcessor()),
+            Map.entry(JournalEventType.REPUTATION, new ReputationMessageProcessor()),
+            Map.entry(JournalEventType.RANK, new RankMessageProcessor()),
+            Map.entry(JournalEventType.PROGRESS, new ProgressMessageProcessor()),
+
 
             Map.entry(JournalEventType.LOADGAME, new LoadGameMessageProcessor())
     );
     private static final Map<JournalEventType, CapiMessageProcessor<?>> capiMessageProcessors = Map.ofEntries(
             Map.entry(JournalEventType.CAPIFLEETCARRIER, new CapiFleetCarrierMessageProcessor()),
-            Map.entry(JournalEventType.CAPISQUADRON, new CapiSquadronMessageProcessor())
+            Map.entry(JournalEventType.CAPISQUADRON, new CapiSquadronMessageProcessor()),
+            Map.entry(JournalEventType.CAPIARX, new CapiArxMessageProcessor())
     );
     private static final String EVENT = "event";
     private static final String TIMESTAMP = "timestamp";

@@ -66,6 +66,7 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.log.listener to ch.qos.logback.core;
     exports nl.jixxed.eliteodysseymaterials.parser.mapping;
     exports nl.jixxed.eliteodysseymaterials.parser;
+    exports nl.jixxed.eliteodysseymaterials.schemas.capi.arx;
     exports nl.jixxed.eliteodysseymaterials.schemas.capi.fleetcarrier;
     exports nl.jixxed.eliteodysseymaterials.schemas.capi.squadron;
     exports nl.jixxed.eliteodysseymaterials.schemas.commodity;
@@ -407,6 +408,7 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.enums to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.parser to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.parser.mapping to com.fasterxml.jackson.databind, org.hibernate.validator;
+    opens nl.jixxed.eliteodysseymaterials.schemas.capi.arx to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.schemas.capi.fleetcarrier to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.schemas.capi.squadron to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.schemas.commodity to com.fasterxml.jackson.databind, org.hibernate.validator;

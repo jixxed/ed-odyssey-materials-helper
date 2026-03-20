@@ -13,6 +13,7 @@ public enum JournalEventType {
     BACKPACK("Backpack"),
     CAPIFLEETCARRIER("CapiFleetCarrier"),//CAPI Resource
     CAPISQUADRON("CapiSquadron"),//CAPI Resource
+    CAPIARX("CapiArx"),//CAPI Resource
     BACKPACKCHANGE("BackpackChange"),
     RESUPPLY("Resupply"),
     FSDJUMP("FSDJump"),
@@ -91,7 +92,9 @@ public enum JournalEventType {
     MODULESELL("ModuleSell"),
     MODULESTORE("ModuleStore"),
     MODULESWAP("ModuleSwap"),
-
+    REPUTATION("Reputation"),
+    RANK("Rank"),
+    PROGRESS("Progress"),
     ;
     private final String name;
 

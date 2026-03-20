@@ -36,6 +36,8 @@ public class ApplicationState {
     private static FileLock fileLock;
     private static ApplicationState applicationState;
     private final ObjectProperty<Set<Commander>> commanders = new SimpleObjectProperty<>(new HashSet<>());
+    @Getter
+    private final BooleanProperty initializedProperty = new SimpleBooleanProperty(false);
     private final List<EventListener<?>> eventListeners = new ArrayList<>();
     private final Map<Engineer, EngineerStatus> engineerStates = new EnumMap<>(Map.ofEntries(
             Map.entry(Engineer.DOMINO_GREEN, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
@@ -79,6 +81,13 @@ public class ApplicationState {
             Map.entry(Engineer.REMOTE_WORKSHOP, new EngineerStatus(EngineerState.UNLOCKED, 5, 0)),
             Map.entry(Engineer.UNKNOWN, new EngineerStatus(EngineerState.UNKNOWN, 0, 0))
     ));
+
+    @Getter
+    private final Map<CommanderRank, Integer> commanderRanks = new EnumMap<>(CommanderRank.class);
+    @Getter
+    private final Map<CommanderRank, Integer> commanderRankProgress = new EnumMap<>(CommanderRank.class);
+    @Getter
+    private final Map<CommanderReputation, Double> commanderReputation = new EnumMap<>(CommanderReputation.class);
     @Getter
     @Setter
     private String watchedFolder = "";
@@ -128,11 +137,15 @@ public class ApplicationState {
     @Getter
     private final BooleanProperty squadronCarrierMaterials = new SimpleBooleanProperty(false);
     @Getter
+    private final BooleanProperty arx = new SimpleBooleanProperty(false);
+    @Getter
     private final BooleanProperty powerplay = new SimpleBooleanProperty(false);
     @Getter
     private final SimpleObjectProperty<EndpointState> fleetCarrierEndpoint = new SimpleObjectProperty<>(EndpointState.DISABLED);
     @Getter
     private final SimpleObjectProperty<EndpointState> squadronEndpoint = new SimpleObjectProperty<>(EndpointState.DISABLED);
+    @Getter
+    private final SimpleObjectProperty<EndpointState> commanderEndpoint = new SimpleObjectProperty<>(EndpointState.DISABLED);
     @Getter
     private SquadronPerk primaryPerk = SquadronPerk.UNKNOWN;
     @Getter
@@ -159,6 +172,9 @@ public class ApplicationState {
             this.gameMode = event.getGameMode();
             this.expansion = event.getExpansion();
         }));
+        this.eventListeners.add(EventService.addListener(this, JournalInitEvent.class, event -> {
+            this.initializedProperty.set(event.isInitialised());
+        }));
     }
 
     public static ApplicationState getInstance() {
@@ -174,6 +190,10 @@ public class ApplicationState {
 
     public void setSquadronEndpoint(EndpointState state) {
         Platform.runLater(()-> this.squadronEndpoint.set(state));
+    }
+
+    public void setCommanderEndpoint(EndpointState state) {
+        Platform.runLater(()-> this.commanderEndpoint.set(state));
     }
 
     public void setPower(Power power) {
@@ -238,6 +258,35 @@ public class ApplicationState {
         return this.engineerStates.get(engineer).getProgress();
     }
 
+    public void resetRanks() {
+        this.commanderRanks.clear();
+        this.commanderRankProgress.clear();
+        this.commanderReputation.clear();
+    }
+
+    public Integer getCommanderRank(final CommanderRank commanderRank) {
+        return this.commanderRanks.getOrDefault(commanderRank, 0);
+    }
+
+    public Integer getCommanderRankProgress(final CommanderRank commanderRank) {
+        return this.commanderRankProgress.getOrDefault(commanderRank, 0);
+    }
+
+    public Double getCommanderReputation(final CommanderReputation commanderReputation) {
+        return this.commanderReputation.getOrDefault(commanderReputation, 0D);
+    }
+
+    public void setCommanderRank(final CommanderRank commanderRank, final Integer rank) {
+        this.commanderRanks.put(commanderRank, rank);
+    }
+
+    public void setCommanderRankProgress(final CommanderRank commanderRank, final Integer rankProgress) {
+        this.commanderRankProgress.put(commanderRank, rankProgress);
+    }
+
+    public void setCommanderReputation(final CommanderReputation commanderReputation, final Double reputation) {
+        this.commanderReputation.put(commanderReputation, reputation);
+    }
 
     public void resetPowerplay() {
         Platform.runLater(() -> {

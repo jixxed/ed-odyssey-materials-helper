@@ -79,6 +79,7 @@ public class FXApplication extends Application {
     private TimeStampedGameStateWatcher timeStampedBackPackWatcher;
     private GameStateWatcher fleetCarrierWatcher;
     private GameStateWatcher squadronWatcher;
+    private GameStateWatcher arxWatcher;
     private StateFileWatcher statusWatcher;
     private final JournalWatcher journalWatcher = new JournalWatcher();
     private final DeeplinkWatcher deeplinkWatcher = new DeeplinkWatcher();
@@ -121,6 +122,7 @@ public class FXApplication extends Application {
         ColonisationService.init();
         MiningService.init();
         PermitService.init();
+        LedgerService.init();
         if (Boolean.FALSE.equals(PreferencesService.getPreference(PreferenceConstants.TRACKING_OPT_OUT, false))) {
 //            HighGradeEmissionService.initialize();
         }
@@ -171,6 +173,8 @@ public class FXApplication extends Application {
                     setupFleetCarrierWatcher(APPLICATION_STATE.getPreferredCommander().orElse(null));
                     log.debug("setupSquadronWatcher");
                     setupSquadronWatcher(APPLICATION_STATE.getPreferredCommander().orElse(null));
+                    log.debug("setupArxWatcher");
+                    setupArxWatcher(APPLICATION_STATE.getPreferredCommander().orElse(null));
 //                    );
                     log.debug("loadingScreen");
 //                    Platform.runLater(                            () ->
@@ -519,6 +523,29 @@ public class FXApplication extends Application {
 
     }
 
+    private void setupArxWatcher(final Commander commander) {
+
+        if (this.arxWatcher != null) {
+            this.arxWatcher.stop();
+        }
+        if (commander != null) {
+            final String pathname = commander.getCommanderFolder();
+            final File watchedFolderArx = new File(pathname);
+            if (!watchedFolderArx.exists()) {
+                watchedFolderArx.mkdirs();
+            }
+
+            this.arxWatcher = new GameStateWatcher();
+            ApplicationState.getInstance().getArx().set(false);
+            this.arxWatcher.watch(watchedFolderArx, file -> {
+                if (CAPIService.getInstance().getActive().get()) {
+                    FileProcessor.processCapiArxFile(file, JournalEventType.CAPIARX);
+                }
+            }, AppConstants.ARX_FILE, false, 1000, JournalEventType.CAPIARX);
+        }
+
+    }
+
     private void setupDeeplinkWatcher() {
 
         this.deeplinkReference.set(EventService.addListener(this, CommanderAllListedEvent.class, event -> {
@@ -783,6 +810,7 @@ public class FXApplication extends Application {
         log.debug("resetting");
         APPLICATION_STATE.resetEngineerStates();
         APPLICATION_STATE.resetPowerplay();
+        APPLICATION_STATE.resetRanks();
         StorageService.resetShipLockerCounts();
         StorageService.resetBackPackCounts();
         StorageService.resetFleetCarrierCounts();
