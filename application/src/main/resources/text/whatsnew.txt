@@ -1,3 +1,10 @@
+Version 3.6.0
+-------------
+Added commander stats (WIP, currently requires relog for most stats)
+- Shows credits, arx, ranks and reputations
+Added Dodec to colonisation options
+Fixed layout issues on small text with 125% scaling
+
 Version 3.5.19
 -------------
 Update blueprint labels on language change in ship editor
