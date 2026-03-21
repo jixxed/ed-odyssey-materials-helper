@@ -1,3 +1,7 @@
+Version 3.6.2
+-------------
+Update Java and JavaFX
+
 Version 3.6.1
 -------------
 Fix Dodec not showing up in list

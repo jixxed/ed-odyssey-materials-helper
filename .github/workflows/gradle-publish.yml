@@ -28,10 +28,10 @@ jobs:
         uses: actions/setup-java@v5
         with:
           java-version: |
-            25
-            21.0.1
+            26+35
           distribution: 'zulu'
           architecture: x64
+          check-latest: true
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
@@ -82,10 +82,10 @@ jobs:
         uses: actions/setup-java@v5
         with:
           java-version: |
-            25
-            21.0.1
+            26+35
           distribution: 'zulu'
           architecture: x64
+          check-latest: true
 
       #      - name: Setup Gradle
       #        uses: gradle/actions/setup-gradle@v3
@@ -102,62 +102,62 @@ jobs:
           bodyFile: ".github/releasenotes.MD"
           artifacts: "output/*.*"
           name: "Elite Dangerous Odyssey Materials Helper ${{ steps.tagName.outputs.tag }}"
-      - name: VirusTotal Scan
-        id: virustotal
-        uses: crazy-max/ghaction-virustotal@v4
-        with:
-          vt_api_key: ${{ secrets.VIRUS_TOTAL_API_KEY }}
-          files: |
-            output/*.*
+#      - name: VirusTotal Scan
+#        id: virustotal
+#        uses: crazy-max/ghaction-virustotal@v4
+#        with:
+#          vt_api_key: ${{ secrets.VIRUS_TOTAL_API_KEY }}
+#          files: |
+#            output/*.*
+#
+#      - name: Append VirusTotal links to release notes
+#        env:
+#          ANALYSIS: ${{ steps.virustotal.outputs.analysis }}
+#        run: |
+#          echo "$ANALYSIS"
+#          echo -e "\n\n🛡 **VirusTotal Analysis:**\n$(echo "$ANALYSIS" | tr ',' '\n' | awk -F= '{fname=$1; sub(/^output\//, "", fname); sub(/^[^=]+=*/, "", $0); printf "[%s](%s)\n", fname, $0}')" >> .github/releasenotes.MD
+#        shell: bash
+#
+#      - name: Update Release with VirusTotal links
+#        uses: ncipollo/release-action@v1.20.0
+#        with:
+#          allowUpdates: true
+#          draft: true
+#          bodyFile: ".github/releasenotes.MD"
+#          name: "Elite Dangerous Odyssey Materials Helper ${{ steps.tagName.outputs.tag }}"
 
-      - name: Append VirusTotal links to release notes
-        env:
-          ANALYSIS: ${{ steps.virustotal.outputs.analysis }}
-        run: |
-          echo "$ANALYSIS"
-          echo -e "\n\n🛡 **VirusTotal Analysis:**\n$(echo "$ANALYSIS" | tr ',' '\n' | awk -F= '{fname=$1; sub(/^output\//, "", fname); sub(/^[^=]+=*/, "", $0); printf "[%s](%s)\n", fname, $0}')" >> .github/releasenotes.MD
-        shell: bash
-
-      - name: Update Release with VirusTotal links
-        uses: ncipollo/release-action@v1.20.0
-        with:
-          allowUpdates: true
-          draft: true
-          bodyFile: ".github/releasenotes.MD"
-          name: "Elite Dangerous Odyssey Materials Helper ${{ steps.tagName.outputs.tag }}"
-
-  publish-release:
-    runs-on: ubuntu-latest
-    needs: [ build-windows, build-ubuntu ]
-    permissions:
-      contents: write
-    steps:
-      - name: Publish Release
-        uses: ncipollo/release-action@v1.20.0
-        with:
-          allowUpdates: true
-          draft: false
-          omitBodyDuringUpdate: true
-          omitNameDuringUpdate: true
-          makeLatest: true
-
-  sentry-release:
-    runs-on: ubuntu-latest
-    needs: [ build-windows, build-ubuntu ]
-    permissions:
-      contents: write
-    steps:
-      - uses: olegtarasov/get-tag@v2.1.4
-        id: tagName
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-      - name: Create Sentry release
-        uses: getsentry/action-release@v3
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-        with:
-          environment: Production
-          version: "edomh-app@${{ steps.tagName.outputs.tag }}"
+#  publish-release:
+#    runs-on: ubuntu-latest
+#    needs: [ build-windows, build-ubuntu ]
+#    permissions:
+#      contents: write
+#    steps:
+#      - name: Publish Release
+#        uses: ncipollo/release-action@v1.20.0
+#        with:
+#          allowUpdates: true
+#          draft: false
+#          omitBodyDuringUpdate: true
+#          omitNameDuringUpdate: true
+#          makeLatest: true
+#
+#  sentry-release:
+#    runs-on: ubuntu-latest
+#    needs: [ build-windows, build-ubuntu ]
+#    permissions:
+#      contents: write
+#    steps:
+#      - uses: olegtarasov/get-tag@v2.1.4
+#        id: tagName
+#      - uses: actions/checkout@v6
+#        with:
+#          fetch-depth: 0
+#      - name: Create Sentry release
+#        uses: getsentry/action-release@v3
+#        env:
+#          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+#          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+#          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+#        with:
+#          environment: Production
+#          version: "edomh-app@${{ steps.tagName.outputs.tag }}"

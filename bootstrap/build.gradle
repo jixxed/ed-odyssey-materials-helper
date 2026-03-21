@@ -24,14 +24,14 @@ group = 'nl.jixxed'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
+        languageVersion = JavaLanguageVersion.of(26)
         vendor = JvmVendorSpec.AZUL
     }
     modularity.inferModulePath = true
 }
 jpackage {
     jpackageHome = javaToolchains.launcherFor {
-        languageVersion = JavaLanguageVersion.of(25)
+        languageVersion = JavaLanguageVersion.of(26)
         vendor = JvmVendorSpec.AZUL
     }.get().metadata.installationPath.asFile.absolutePath
 }

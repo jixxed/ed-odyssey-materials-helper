@@ -18,8 +18,7 @@ jobs:
         uses: actions/setup-java@v5
         with:
           java-version: |
-            23.0.1
-            21.0.1
+            26+35
           distribution: 'zulu'
           architecture: x64
 
