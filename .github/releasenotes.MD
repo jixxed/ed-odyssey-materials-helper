@@ -11,8 +11,6 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Added commander stats (WIP, currently requires relog for most stats)
-- Shows credits, arx, ranks and reputations
-Added Dodec to colonisation options
-Fixed layout issues on small text with 125% scaling
+Fix Dodec not showing up in list
+Colored superpower icons and rescaled some
 ```
