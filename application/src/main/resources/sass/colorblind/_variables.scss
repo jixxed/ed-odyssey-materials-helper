@@ -25,6 +25,11 @@ $powerplay: rgb(255, 165, 0);
 $thargoid: rgb(59, 27, 0);
 $guardian: rgb(39, 1, 54);
 
+$federation: rgb(208, 83, 86);
+$empire: rgb(104, 206, 221);
+$alliance: rgb(126, 206, 143);
+$independent: rgb(255, 113, 0);
+
 // Background Colors
 $background-color-dark: rgb(15, 15, 15);
 $background-color-medium: rgb(31, 31, 31);
@@ -65,6 +70,10 @@ $text-color-orange: $powerplay;
 $text-color-force: $force;
 $text-color-dynamic: $dynamic;
 $text-color-strategic: $strategic;
+$text-color-federation: $federation;
+$text-color-empire: $empire;
+$text-color-alliance: $alliance;
+$text-color-independent: $independent;
 
 // Progress Bar Colors
 $progress-bar-color-black: $black;

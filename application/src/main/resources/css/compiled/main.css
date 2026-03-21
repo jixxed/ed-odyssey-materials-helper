@@ -6176,20 +6176,14 @@
               .commander-info-popover .commander-info .info-node-list .info-node .info-node-icon-title .info-node-icon .glyph-icon {
                 -fx-font-size: 5.0em !important;
                 -fx-fill: white; }
-              .commander-info-popover .commander-info .info-node-list .info-node .info-node-icon-title .info-node-icon .ships-fsdunladen-1 {
-                -fx-fill: gray; }
-              .commander-info-popover .commander-info .info-node-list .info-node .info-node-icon-title .info-node-icon .other-carrier-packs-1 {
-                -fx-fill: gray; }
-              .commander-info-popover .commander-info .info-node-list .info-node .info-node-icon-title .info-node-icon .ships-multicrew-1 {
-                -fx-fill: gray; }
-              .commander-info-popover .commander-info .info-node-list .info-node .info-node-icon-title .info-node-icon .other-cargo-used-1 {
-                -fx-fill: gray; }
-              .commander-info-popover .commander-info .info-node-list .info-node .info-node-icon-title .info-node-icon .other-cargo-reserved-1 {
-                -fx-fill: gray; }
-              .commander-info-popover .commander-info .info-node-list .info-node .info-node-icon-title .info-node-icon .other-cargo-free-1 {
-                -fx-fill: gray; }
-              .commander-info-popover .commander-info .info-node-list .info-node .info-node-icon-title .info-node-icon .ships-landing-pad-1 {
-                -fx-fill: gray; }
+              .commander-info-popover .commander-info .info-node-list .info-node .info-node-icon-title .info-node-icon .superpower-federation {
+                -fx-fill: #d05356; }
+              .commander-info-popover .commander-info .info-node-list .info-node .info-node-icon-title .info-node-icon .superpower-empire {
+                -fx-fill: #68cedd; }
+              .commander-info-popover .commander-info .info-node-list .info-node .info-node-icon-title .info-node-icon .superpower-alliance {
+                -fx-fill: #7ece8f; }
+              .commander-info-popover .commander-info .info-node-list .info-node .info-node-icon-title .info-node-icon .superpower-independent {
+                -fx-fill: #ff7100; }
             .commander-info-popover .commander-info .info-node-list .info-node .info-node-value {
               -fx-min-width: 6em;
               -fx-pref-width: 6em;
@@ -6200,11 +6194,11 @@
               -fx-wrap-text: true; }
           .commander-info-popover .commander-info .info-node-list .rank .info-node-icon-title .info-node-icon .superpower-federation {
             -fx-font-size: 2.5em !important;
-            -fx-fill: white;
+            -fx-fill: #d05356;
             -fx-translate-y: -0.15em; }
           .commander-info-popover .commander-info .info-node-list .rank .info-node-icon-title .info-node-icon .superpower-empire {
             -fx-font-size: 2.5em !important;
-            -fx-fill: white;
+            -fx-fill: #68cedd;
             -fx-translate-y: -0.15em; }
   .app .application-screen .tab-main {
     -fx-background-insets: 0; }

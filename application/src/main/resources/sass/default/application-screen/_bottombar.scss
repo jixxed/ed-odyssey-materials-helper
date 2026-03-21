@@ -225,32 +225,17 @@
                   -fx-fill: $text-color-white;
                 }
 
-                .ships-fsdunladen-1 {
-                  -fx-fill: $text-color-grey;
+                .superpower-federation {
+                  -fx-fill: $text-color-federation;
                 }
-
-                .other-carrier-packs-1 {
-                  -fx-fill: $text-color-grey;
+                .superpower-empire {
+                  -fx-fill: $text-color-empire;
                 }
-
-                .ships-multicrew-1 {
-                  -fx-fill: $text-color-grey;
+                .superpower-alliance {
+                  -fx-fill: $text-color-alliance;
                 }
-
-                .other-cargo-used-1 {
-                  -fx-fill: $text-color-grey;
-                }
-
-                .other-cargo-reserved-1 {
-                  -fx-fill: $text-color-grey;
-                }
-
-                .other-cargo-free-1 {
-                  -fx-fill: $text-color-grey;
-                }
-
-                .ships-landing-pad-1 {
-                  -fx-fill: $text-color-grey;
+                .superpower-independent {
+                  -fx-fill: $text-color-independent;
                 }
               }
             }
@@ -270,12 +255,12 @@
               .info-node-icon {
                 .superpower-federation {
                   -fx-font-size: 2.5em !important;
-                  -fx-fill: $text-color-white;
+                  -fx-fill: $text-color-federation;
                   -fx-translate-y: -0.15em ;
                 }
                 .superpower-empire {
                   -fx-font-size: 2.5em !important;
-                  -fx-fill: $text-color-white;
+                  -fx-fill: $text-color-empire;
                   -fx-translate-y: -0.15em ;
                 }
               }
