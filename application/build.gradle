@@ -343,7 +343,7 @@ dependencies {
     implementation 'org.apache.maven:maven-artifact'
 
     if (proprietary) {
-        implementation 'nl.jixxed.ed.awesome:ed-awesome-impl:1.24'
+        implementation 'nl.jixxed.ed.awesome:ed-awesome-impl:1.25'
         implementation 'nl.jixxed.ed.confidential:ed-confidential-impl:1.2'
     }
 
@@ -767,7 +767,9 @@ tasks.jpackageImage.doFirst {
 }
 tasks.withType(JavaCompile).configureEach {
     options.compilerArgs += "--enable-preview"
+    options.forkOptions.jvmArgs << '--sun-misc-unsafe-memory-access=allow' //lombok warnings https://github.com/projectlombok/lombok/issues/3852
 }
+
 tasks.withType(Test).configureEach {
     jvmArgs += "--enable-preview"
     jvmArgs += "--enable-native-access=ALL-UNNAMED"
