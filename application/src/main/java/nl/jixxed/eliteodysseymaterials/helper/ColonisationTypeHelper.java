@@ -235,7 +235,7 @@ public class ColonisationTypeHelper {
 
     private static List<ColonisationBuildable> getOrbitalPorts(int totalMaterials) {
         if (totalMaterials > 100_000) {
-            return List.of(ColonisationBuildable.STAR_PORT_OCELLUS, ColonisationBuildable.STAR_PORT_ORBIS);
+            return List.of(ColonisationBuildable.STAR_PORT_OCELLUS, ColonisationBuildable.STAR_PORT_ORBIS, ColonisationBuildable.STAR_PORT_DODEC);
         }
         if (totalMaterials > 40_000) {
             return List.of(ColonisationBuildable.STAR_PORT_CORIOLIS, ColonisationBuildable.STAR_PORT_ASTEROID_BASE);
