@@ -320,6 +320,9 @@ public class ARService {
         cocktailCaptureMat = CvHelper.convertToMat(capture, cocktailCaptureMat);
         final int result_cols = cocktailCaptureMat.cols() - cocktailTemplateScaled.cols() + 1;
         final int result_rows = cocktailCaptureMat.rows() - cocktailTemplateScaled.rows() + 1;
+        if(result_cols <= 0 || result_rows <= 0) {
+            return false;
+        }
         if (bartenderMenuResult == null || bartenderMenuResult.cols() != result_cols || bartenderMenuResult.rows() != result_rows) {
             if (bartenderMenuResult != null) {
                 bartenderMenuResult.release();
@@ -1007,6 +1010,9 @@ public class ARService {
         arrowCaptureMat = CvHelper.convertToMat(capture, arrowCaptureMat);
         final int result_cols = arrowCaptureMat.cols() - arrowTemplateScaled.cols() + 1;
         final int result_rows = arrowCaptureMat.rows() - arrowTemplateScaled.rows() + 1;
+        if(result_cols <= 0 || result_rows <= 0) {
+            return false;
+        }
         if (downloadMenuResult == null || downloadMenuResult.cols() != result_cols || downloadMenuResult.rows() != result_rows) {
             if (downloadMenuResult != null) {
                 downloadMenuResult.release();

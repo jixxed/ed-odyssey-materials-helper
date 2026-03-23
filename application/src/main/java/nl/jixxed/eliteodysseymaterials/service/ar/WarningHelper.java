@@ -39,6 +39,9 @@ public class WarningHelper {
         alertCaptureMat = CvHelper.convertToMat(alertCapture, alertCaptureMat);
         final int result_cols = alertCaptureMat.cols() - alertTemplateScaled.cols() + 1;
         final int result_rows = alertCaptureMat.rows() - alertTemplateScaled.rows() + 1;
+        if(result_cols <= 0 || result_rows <= 0) {
+            return false;
+        }
         if (menuWarningResult == null || menuWarningResult.cols() != result_cols || menuWarningResult.rows() != result_rows) {
             if (menuWarningResult != null) {
                 menuWarningResult.release();
