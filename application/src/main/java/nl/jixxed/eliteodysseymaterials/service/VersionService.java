@@ -16,14 +16,19 @@ public class VersionService {
 
     private static final boolean BETA = false;
     public static final String USER_AGENT = "EDOMH/%s (%s; %s; %s)";
+    private static String LATEST_VERSION;
 
     public static boolean isBeta() {
         return BETA;
     }
 
     public static String getLatestVersion() throws IOException {
+        if(LATEST_VERSION != null) {
+            return LATEST_VERSION;
+        }
         if (isDev()) {
-            return "dev";
+            LATEST_VERSION = "dev";
+            return LATEST_VERSION;
         }
         final URL url = new URL("https://api.github.com/repos/jixxed/ed-odyssey-materials-helper/releases/latest");
         final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -31,7 +36,8 @@ public class VersionService {
         final InputStream responseStream = connection.getInputStream();
         final ObjectMapper objectMapper = new ObjectMapper();
         final JsonNode response = objectMapper.readTree(responseStream);
-        return response.get("tag_name").asText();
+        LATEST_VERSION = response.get("tag_name").asText();
+        return LATEST_VERSION;
     }
 
     public static String getBuildVersion() {
