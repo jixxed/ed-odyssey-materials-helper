@@ -94,7 +94,7 @@ class MessageHandler {
             Map.entry(JournalEventType.MODULEINFO, new ModuleInfoMessageProcessor()),
             Map.entry(JournalEventType.FCMATERIALS, new FCMaterialsMessageProcessor()),
 
-            Map.entry(JournalEventType.COMMANDER, new CommanderMessageProcessor()),
+//            Map.entry(JournalEventType.COMMANDER, new CommanderMessageProcessor()),
             Map.entry(JournalEventType.ENGINEERPROGRESS, new EngineerProgressMessageProcessor()),
             Map.entry(JournalEventType.EMBARK, new EmbarkMessageProcessor()),
             Map.entry(JournalEventType.SHIPLOCKER, new ShipLockerMessageProcessor()),

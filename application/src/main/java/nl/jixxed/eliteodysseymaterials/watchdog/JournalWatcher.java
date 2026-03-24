@@ -148,8 +148,6 @@ public class JournalWatcher {
                     }
                 } else if (eventNode.asText().equals("Commander") && !gameVersion.equals(GameVersion.UNKNOWN)) {
                     nl.jixxed.eliteodysseymaterials.schemas.journal.Commander.Commander commander = objectMapper.readValue(line, nl.jixxed.eliteodysseymaterials.schemas.journal.Commander.Commander.class);
-                    final JsonNode nameNode = journalMessage.get("Name");
-                    final JsonNode fidNode = journalMessage.get("FID");
                     APPLICATION_STATE.addCommander(commander.getName(), commander.getFid(), gameVersion, commander.getTimestamp());
                     break;
                 }
