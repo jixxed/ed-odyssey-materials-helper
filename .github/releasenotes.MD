@@ -11,6 +11,5 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Downgrade Java due to an increase in OutOfMemory errors
-Prevent reloading UI on relog, this should not be required
+Fix MkII Gravity Thrusters stats
 ```

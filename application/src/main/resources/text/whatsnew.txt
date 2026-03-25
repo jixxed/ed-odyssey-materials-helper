@@ -1,3 +1,7 @@
+Version 3.6.4
+-------------
+Fix MkII Gravity Thrusters stats
+
 Version 3.6.3
 -------------
 Downgrade Java due to an increase in OutOfMemory errors
