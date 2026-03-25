@@ -32,7 +32,7 @@ jobs:
         shell: bash
         run: |
           cd $RUNNER_TEMP
-          jdk_archive_filename=$(curl -LOs -w '%{filename_effective}' "$(curl -s -X GET 'https://api.azul.com/metadata/v1/zulu/packages/?os=linux&arch=x64&archive_type=zip&java_package_type=jdk&javafx_bundled=false&crac_supported=false&release_status=ga&availability_types=CA&certifications=tck' --data-urlencode "java_version=$JAVA_VERSION" -H  'accept: application/json' | jq -r '.[0].download_url')")
+          jdk_archive_filename=$(curl -LOs -w '%{filename_effective}' "$(curl -s -X GET 'https://api.azul.com/metadata/v1/zulu/packages/?os=linux&arch=x64&archive_type=zip&java_package_type=jdk&javafx_bundled=false&crac_supported=false&release_status=ga&availability_types=CA&certifications=tck&java_version=${JAVA_VERSION}' -H  'accept: application/json' | jq -r '.[0].download_url')")
           echo "jdk_archive_filename=$jdk_archive_filename" >> $GITHUB_OUTPUT
       - name: Set up JDKS
         uses: actions/setup-java@v5
@@ -53,7 +53,7 @@ jobs:
       - name: Build rpm Gradle
         run: ./gradlew createReleaseLinuxRpm -DpackageType=rpm -PskipSass
       - name: Create Release
-        uses: ncipollo/release-action@v1.20.0
+        uses: ncipollo/release-action@v1.21.0
         with:
           allowUpdates: true
           draft: true
@@ -92,7 +92,7 @@ jobs:
         shell: bash
         run: |
           cd $RUNNER_TEMP
-          jdk_archive_filename=$(curl -LOs -w '%{filename_effective}' "$(curl -s -X GET 'https://api.azul.com/metadata/v1/zulu/packages/?os=windows&arch=x64&archive_type=zip&java_package_type=jdk&javafx_bundled=false&crac_supported=false&release_status=ga&availability_types=CA&certifications=tck' --data-urlencode "java_version=$JAVA_VERSION" -H  'accept: application/json' | jq -r '.[0].download_url')")
+          jdk_archive_filename=$(curl -LOs -w '%{filename_effective}' "$(curl -s -X GET 'https://api.azul.com/metadata/v1/zulu/packages/?os=windows&arch=x64&archive_type=zip&java_package_type=jdk&javafx_bundled=false&crac_supported=false&release_status=ga&availability_types=CA&certifications=tck&java_version=${JAVA_VERSION}' -H  'accept: application/json' | jq -r '.[0].download_url')")
           echo "jdk_archive_filename=$jdk_archive_filename" >> $GITHUB_OUTPUT
       - name: Set up JDKS
         uses: actions/setup-java@v5
@@ -110,7 +110,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew createReleaseSigned -DpackageType=msi -Dpfx_alias="${{secrets.CODE_SIGN_CERT_ALIAS}}" -Dpfx_password='"${{secrets.CODE_SIGN_PASSWORD}}"' -Dbase64_pfx="${{secrets.CODE_SIGN_BASE64}}" -PskipSass
       - name: Create Release
-        uses: ncipollo/release-action@v1.20.0
+        uses: ncipollo/release-action@v1.21.0
         with:
           allowUpdates: true
           draft: true
@@ -119,7 +119,7 @@ jobs:
           name: "Elite Dangerous Odyssey Materials Helper ${{ steps.tagName.outputs.tag }}"
       - name: VirusTotal Scan
         id: virustotal
-        uses: crazy-max/ghaction-virustotal@v4
+        uses: crazy-max/ghaction-virustotal@v5
         with:
           vt_api_key: ${{ secrets.VIRUS_TOTAL_API_KEY }}
           files: |
@@ -134,7 +134,7 @@ jobs:
         shell: bash
 
       - name: Update Release with VirusTotal links
-        uses: ncipollo/release-action@v1.20.0
+        uses: ncipollo/release-action@v1.21.0
         with:
           allowUpdates: true
           draft: true
@@ -148,7 +148,7 @@ jobs:
       contents: write
     steps:
       - name: Publish Release
-        uses: ncipollo/release-action@v1.20.0
+        uses: ncipollo/release-action@v1.21.0
         with:
           allowUpdates: true
           draft: false
@@ -175,4 +175,4 @@ jobs:
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
         with:
           environment: Production
-          version: "edomh-app@${{ steps.tagName.outputs.tag }}"
+          release: "edomh-app@${{ steps.tagName.outputs.tag }}"
