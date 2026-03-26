@@ -22,6 +22,7 @@ jobs:
       CCID: "${{secrets.CCID}}"
       PROPRIETARY_REPO_USER: "${{secrets.PROPRIETARY_REPO_USER}}"
       PROPRIETARY_REPO_PASS: "${{secrets.PROPRIETARY_REPO_PASS}}"
+      JAVA_VERSION: "${{env.JAVA_VERSION}}"
 
     steps:
       - uses: olegtarasov/get-tag@v2.1.4
@@ -32,7 +33,10 @@ jobs:
         shell: bash
         run: |
           cd $RUNNER_TEMP
-          jdk_archive_filename=$(curl -LOs -w '%{filename_effective}' "$(curl -s -X GET 'https://api.azul.com/metadata/v1/zulu/packages/?os=linux&arch=x64&archive_type=zip&java_package_type=jdk&javafx_bundled=false&crac_supported=false&release_status=ga&availability_types=CA&certifications=tck&java_version=${JAVA_VERSION}' -H  'accept: application/json' | jq -r '.[0].download_url')")
+          url="https://api.azul.com/metadata/v1/zulu/packages/?os=linux&arch=x64&archive_type=zip&java_package_type=jdk&javafx_bundled=false&crac_supported=false&release_status=ga&availability_types=CA&certifications=tck&java_version=${JAVA_VERSION}"
+          download_url=$(curl -s "$url" -H 'accept: application/json' | jq -r '.[0].download_url')
+          echo "Downloading JDK from: $download_url"
+          jdk_archive_filename=$(curl -LOs -w '%{filename_effective}' "$download_url")
           echo "jdk_archive_filename=$jdk_archive_filename" >> $GITHUB_OUTPUT
       - name: Set up JDKS
         uses: actions/setup-java@v5
@@ -82,6 +86,7 @@ jobs:
       CCID: "${{secrets.CCID}}"
       PROPRIETARY_REPO_USER: "${{secrets.PROPRIETARY_REPO_USER}}"
       PROPRIETARY_REPO_PASS: "${{secrets.PROPRIETARY_REPO_PASS}}"
+      JAVA_VERSION: "${{env.JAVA_VERSION}}"
 
     steps:
       - uses: olegtarasov/get-tag@v2.1.4
@@ -92,7 +97,10 @@ jobs:
         shell: bash
         run: |
           cd $RUNNER_TEMP
-          jdk_archive_filename=$(curl -LOs -w '%{filename_effective}' "$(curl -s -X GET 'https://api.azul.com/metadata/v1/zulu/packages/?os=windows&arch=x64&archive_type=zip&java_package_type=jdk&javafx_bundled=false&crac_supported=false&release_status=ga&availability_types=CA&certifications=tck&java_version=${JAVA_VERSION}' -H  'accept: application/json' | jq -r '.[0].download_url')")
+          url="https://api.azul.com/metadata/v1/zulu/packages/?os=windows&arch=x64&archive_type=zip&java_package_type=jdk&javafx_bundled=false&crac_supported=false&release_status=ga&availability_types=CA&certifications=tck&java_version=${JAVA_VERSION}"
+          download_url=$(curl -s "$url" -H 'accept: application/json' | jq -r '.[0].download_url')
+          echo "Downloading JDK from: $download_url"
+          jdk_archive_filename=$(curl -LOs -w '%{filename_effective}' "$download_url")
           echo "jdk_archive_filename=$jdk_archive_filename" >> $GITHUB_OUTPUT
       - name: Set up JDKS
         uses: actions/setup-java@v5
@@ -130,7 +138,7 @@ jobs:
           ANALYSIS: ${{ steps.virustotal.outputs.analysis }}
         run: |
           echo "$ANALYSIS"
-          echo -e "\n\n🛡 **VirusTotal Analysis:**\n$(echo "$ANALYSIS" | tr ',' '\n' | awk -F= '{fname=$1; sub(/^output\//, "", fname); sub(/^[^=]+=*/, "", $0); printf "[%s](%s)\n", fname, $0}')" >> .github/releasenotes.MD
+          echo -e "\n\n🛡 **VirusTotal Analysis:**\n$(echo "$ANALYSIS" | tr '\\' '/' | tr ',' '\n' | awk -F= '{fname=$1; sub(/^output\//, "", fname); sub(/^[^=]+=*/, "", $0); printf "[%s](%s)\n", fname, $0}')" >> .github/releasenotes.MD
         shell: bash
 
       - name: Update Release with VirusTotal links
