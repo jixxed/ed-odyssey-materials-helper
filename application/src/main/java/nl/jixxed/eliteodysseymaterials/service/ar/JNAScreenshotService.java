@@ -6,8 +6,8 @@ import com.sun.jna.platform.win32.WinNT;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import java.awt.Rectangle;
 import java.awt.*;
+import java.awt.Rectangle;
 import java.awt.image.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

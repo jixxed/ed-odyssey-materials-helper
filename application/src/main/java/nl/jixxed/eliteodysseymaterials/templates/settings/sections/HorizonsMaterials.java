@@ -1,12 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
-import javafx.application.Platform;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ToggleSwitchBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
-import nl.jixxed.eliteodysseymaterials.service.ARService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.CollectorModeEvent;

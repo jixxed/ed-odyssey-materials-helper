@@ -6,7 +6,6 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.util.Collections;
 import java.util.List;

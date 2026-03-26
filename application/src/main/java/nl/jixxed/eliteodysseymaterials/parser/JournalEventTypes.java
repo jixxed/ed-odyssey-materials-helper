@@ -5,7 +5,8 @@ import io.github.classgraph.ClassInfo;
 import io.github.classgraph.ScanResult;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Event;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class JournalEventTypes {

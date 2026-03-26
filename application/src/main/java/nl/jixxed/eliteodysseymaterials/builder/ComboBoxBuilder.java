@@ -1,9 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.builder;
 
-import javafx.application.Platform;
-import javafx.scene.control.ListView;
-import javafx.scene.control.skin.ComboBoxListViewSkin;
-import javafx.scene.layout.Region;
 import javafx.util.StringConverter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

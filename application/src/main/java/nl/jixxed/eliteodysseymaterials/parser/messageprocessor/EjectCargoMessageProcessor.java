@@ -1,11 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
-import nl.jixxed.eliteodysseymaterials.schemas.journal.ApproachSettlement.ApproachSettlement;
-import nl.jixxed.eliteodysseymaterials.schemas.journal.CargoTransfer.CargoTransfer;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.EjectCargo.EjectCargo;
-import nl.jixxed.eliteodysseymaterials.service.EDDNService;
-import nl.jixxed.eliteodysseymaterials.service.event.ApproachSettlementJournalEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
 import java.time.LocalDateTime;
 

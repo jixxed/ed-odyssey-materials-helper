@@ -2,8 +2,8 @@ package nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint;
 
 import nl.jixxed.eliteodysseymaterials.constants.horizons.SynthesisBlueprints;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsSynthesisBlueprint;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Modification;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
+import nl.jixxed.eliteodysseymaterials.domain.ships.Modification;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 

@@ -14,8 +14,6 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 
-import java.util.List;
-
 public class PinnedBlueprint extends Blueprint implements DestroyableEventTemplate {
 
     private final Engineer engineer;

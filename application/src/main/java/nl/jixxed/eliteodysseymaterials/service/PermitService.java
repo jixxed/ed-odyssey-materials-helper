@@ -11,8 +11,10 @@ import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.enums.Permit;
 import nl.jixxed.eliteodysseymaterials.enums.PermitType;
-import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.event.CommanderAllListedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.CommanderSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
 import java.io.File;
 import java.io.FileOutputStream;

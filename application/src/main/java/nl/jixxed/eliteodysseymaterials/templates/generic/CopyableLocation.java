@@ -6,7 +6,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import lombok.Getter;
 import lombok.NonNull;
-import nl.jixxed.eliteodysseymaterials.builder.*;
+import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.FontAwesomeIconViewBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.Location;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
@@ -23,7 +26,10 @@ import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPan
 import nl.jixxed.eliteodysseymaterials.templates.components.FontAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIconView;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTooltip;
 
 
 public class CopyableLocation extends DestroyableFlowPane implements DestroyableEventTemplate {

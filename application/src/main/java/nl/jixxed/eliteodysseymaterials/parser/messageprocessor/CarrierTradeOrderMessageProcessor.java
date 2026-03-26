@@ -5,7 +5,6 @@ import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierTradeOrder.CarrierTradeOrder;
-import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.OrderService;
 import nl.jixxed.eliteodysseymaterials.service.UserPreferencesService;
 

@@ -11,7 +11,8 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import java.util.List;
 import java.util.Map;
 
-import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.*;
+import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.percentageNegative;
+import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.percentagePositive;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @SuppressWarnings("java:S1192")

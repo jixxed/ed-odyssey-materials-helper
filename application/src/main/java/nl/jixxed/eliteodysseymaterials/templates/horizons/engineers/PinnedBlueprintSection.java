@@ -13,8 +13,6 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableSeparat
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
-import java.util.List;
-
 public class PinnedBlueprintSection extends DestroyableVBox implements DestroyableTemplate {
 
     private DestroyableSeparator pinnedBlueprintSeparator;

@@ -2,9 +2,6 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.materials;
 
 import javafx.application.Platform;
 import javafx.geometry.Orientation;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.SpawnConstants;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsMaterialsSearch;
@@ -13,7 +10,10 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsMaterialSearchEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableSeparator;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
 import java.util.ArrayList;
 import java.util.Arrays;

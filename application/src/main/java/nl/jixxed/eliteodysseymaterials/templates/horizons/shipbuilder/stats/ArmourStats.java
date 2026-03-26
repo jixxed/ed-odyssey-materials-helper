@@ -23,8 +23,6 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
 import java.util.Comparator;
 import java.util.Optional;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 
 @Slf4j
 public class ArmourStats extends Stats implements DestroyableTemplate {

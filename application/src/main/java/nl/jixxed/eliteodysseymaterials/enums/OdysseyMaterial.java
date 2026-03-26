@@ -1,9 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
-import lombok.extern.slf4j.Slf4j;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 import me.xdrop.fuzzywuzzy.model.BoundExtractedResult;
-import me.xdrop.fuzzywuzzy.model.ExtractedResult;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 

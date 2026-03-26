@@ -7,7 +7,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public abstract class AbstractLabeledBuilder<T extends AbstractLabeledBuilder<T>> extends AbstractControlBuilder<T> {

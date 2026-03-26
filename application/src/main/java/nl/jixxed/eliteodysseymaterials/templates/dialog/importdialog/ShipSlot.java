@@ -2,7 +2,10 @@ package nl.jixxed.eliteodysseymaterials.templates.dialog.importdialog;
 
 import javafx.geometry.Orientation;
 import javafx.util.Duration;
-import nl.jixxed.eliteodysseymaterials.builder.*;
+import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;

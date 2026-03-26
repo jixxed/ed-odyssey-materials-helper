@@ -8,9 +8,10 @@ import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
-
-import java.text.NumberFormat;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableStackPane;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
 public class Shield extends DestroyableStackPane implements DestroyableTemplate {
 

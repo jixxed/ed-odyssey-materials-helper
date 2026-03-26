@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;

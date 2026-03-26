@@ -8,7 +8,6 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.util.Arrays;
 import java.util.Locale;
-import java.util.stream.Stream;
 
 @AllArgsConstructor
 @Getter

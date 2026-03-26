@@ -1,13 +1,11 @@
 package nl.jixxed.eliteodysseymaterials.templates.components.edfont;
 
 import de.jensd.fx.glyphs.GlyphIcon;
-import javafx.scene.text.Font;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.ed.awesome.api.FontLoader;
 import nl.jixxed.ed.awesome.api.NoOpFontLoader;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 
-import java.io.IOException;
 import java.util.ServiceLoader;
 
 @Slf4j

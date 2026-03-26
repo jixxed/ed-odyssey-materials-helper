@@ -4,7 +4,6 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.FontAwesomeIconViewBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.ships.HardpointModule;

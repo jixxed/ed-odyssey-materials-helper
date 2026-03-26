@@ -5,14 +5,11 @@ import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
-import nl.jixxed.eliteodysseymaterials.schemas.journal.ModuleBuy.ModuleBuy;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ModuleSwap.ModuleSwap;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipLoadoutEvent;
 import nl.jixxed.eliteodysseymaterials.service.ships.LoadoutMapper;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
-
-import java.util.function.Predicate;
 
 @Slf4j
 public class ModuleSwapMessageProcessor implements MessageProcessor<ModuleSwap> {

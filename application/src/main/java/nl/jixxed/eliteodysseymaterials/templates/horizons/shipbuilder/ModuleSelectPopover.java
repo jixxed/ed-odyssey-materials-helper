@@ -28,7 +28,6 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipBuilderEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.SlotboxEngineeringEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.SlotboxHoverEvent;
-import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 

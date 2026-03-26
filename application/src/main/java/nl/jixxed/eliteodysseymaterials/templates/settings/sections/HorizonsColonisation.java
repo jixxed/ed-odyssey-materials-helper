@@ -4,15 +4,15 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ToggleSwitchBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.UserPreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.CollectorModeEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.ColonisationStockStateEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
-import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.SETTINGS_SPACING_10_CLASS;
 
 public class HorizonsColonisation extends DestroyableVBox implements DestroyableTemplate {
 

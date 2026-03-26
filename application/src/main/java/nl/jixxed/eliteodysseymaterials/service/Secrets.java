@@ -9,7 +9,6 @@ import nl.jixxed.ed.confidential.api.SecrecyLoader;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.ServiceLoader;
-import java.util.function.Supplier;
 
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

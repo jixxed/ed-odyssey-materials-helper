@@ -12,7 +12,6 @@ import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
-import nl.jixxed.eliteodysseymaterials.templates.settings.sections.OdysseyWishlist;
 
 import java.io.File;
 import java.io.FileOutputStream;

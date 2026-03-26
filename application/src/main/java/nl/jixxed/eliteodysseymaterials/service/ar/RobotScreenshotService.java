@@ -3,8 +3,8 @@ package nl.jixxed.eliteodysseymaterials.service.ar;
 import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 
-import java.awt.Rectangle;
 import java.awt.*;
+import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;

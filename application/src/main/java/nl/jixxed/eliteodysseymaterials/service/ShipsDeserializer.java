@@ -5,7 +5,10 @@ import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 import nl.jixxed.eliteodysseymaterials.schemas.capi.squadron.ShipItem;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ShipsDeserializer extends JsonDeserializer<Map<String, ShipItem[]>> implements ContextualDeserializer {
     private final ObjectMapper mapper = new ObjectMapper();

@@ -4,10 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
-import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.enums.GuardianStructure;
+import nl.jixxed.eliteodysseymaterials.enums.GuardianStructureJson;
+import nl.jixxed.eliteodysseymaterials.enums.GuardianStructureLayout;
 
 import java.io.*;
 import java.util.ArrayList;

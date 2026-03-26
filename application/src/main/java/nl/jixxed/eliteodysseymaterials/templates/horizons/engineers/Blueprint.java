@@ -3,7 +3,6 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.engineers;
 import javafx.beans.binding.StringBinding;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsBlueprintClickEvent;

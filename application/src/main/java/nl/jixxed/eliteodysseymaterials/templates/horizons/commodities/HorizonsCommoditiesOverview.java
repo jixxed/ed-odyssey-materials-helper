@@ -8,7 +8,6 @@ import javafx.beans.InvalidationListener;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.CommoditiesSearch;
 import nl.jixxed.eliteodysseymaterials.enums.*;
@@ -19,7 +18,6 @@ import nl.jixxed.eliteodysseymaterials.service.event.MarketUpdatedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
 import java.util.ArrayList;

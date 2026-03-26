@@ -1,7 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.css.PseudoClass;
 import javafx.scene.Node;
@@ -15,9 +14,11 @@ import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.Action;
 import nl.jixxed.eliteodysseymaterials.enums.Craftability;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
-import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.OdysseyWishlistBlueprintEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;

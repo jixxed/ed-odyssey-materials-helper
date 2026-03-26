@@ -3,12 +3,10 @@ package nl.jixxed.eliteodysseymaterials.constants.horizons;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.constants.UTF8Constants;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsNumberModifierValue;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsSynthesisBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
-import java.util.List;
 import java.util.Map;
 
 import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.*;

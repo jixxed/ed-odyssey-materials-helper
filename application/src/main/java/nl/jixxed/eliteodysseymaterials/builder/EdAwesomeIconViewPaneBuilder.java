@@ -1,6 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.builder;
 
-import javafx.scene.Node;
 import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIconView;

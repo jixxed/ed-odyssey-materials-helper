@@ -15,7 +15,10 @@ import nl.jixxed.eliteodysseymaterials.service.ARService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.event.ARDisableEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.ARLocaleChangeEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.ARWhitelistChangeEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.io.*;

@@ -5,8 +5,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import nl.jixxed.eliteodysseymaterials.enums.MainTabType;
 import nl.jixxed.eliteodysseymaterials.enums.TabType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;

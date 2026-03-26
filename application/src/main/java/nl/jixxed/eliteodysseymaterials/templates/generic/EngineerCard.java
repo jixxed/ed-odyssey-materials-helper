@@ -17,11 +17,9 @@ import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
-import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIconView;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 

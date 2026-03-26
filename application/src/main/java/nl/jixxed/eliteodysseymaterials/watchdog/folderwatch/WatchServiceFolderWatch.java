@@ -1,13 +1,10 @@
 package nl.jixxed.eliteodysseymaterials.watchdog.folderwatch;
 
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.subjects.PublishSubject;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.watchdog.FileEvent;
 
 import java.nio.file.*;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import static java.nio.file.StandardWatchEventKinds.*;
