@@ -78,7 +78,14 @@ public class TabPaneBuilder extends AbstractControlBuilder<TabPaneBuilder> {
         if (selectedItemListener != null) {
             tabPane.addChangeListener(tabPane.getSelectionModel().selectedItemProperty(), selectedItemListener);
         }
-
+        //invert scrolling for vertical tabs header area
+        if(side == Side.LEFT ||  side == Side.RIGHT) {
+            tabPane.addChangeListener(tabPane.skinProperty(), (_, _, newSkin) -> {
+                if (newSkin != null) {
+                    DestroyableTabPane.reverseTabPaneScrollingDirection(tabPane);
+                }
+            });
+        }
         return tabPane;
     }
 }
