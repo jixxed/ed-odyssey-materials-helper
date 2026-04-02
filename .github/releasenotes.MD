@@ -11,5 +11,6 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Fix MkII Gravity Thrusters stats
+Add Unica Seed material(On foot Good)
+Invert scrolling of tab headers
 ```

@@ -1,3 +1,8 @@
+Version 3.6.5
+-------------
+Add Unica Seed material(On foot Good)
+Invert scrolling of tab headers
+
 Version 3.6.4
 -------------
 Fix MkII Gravity Thrusters stats
