@@ -31,6 +31,7 @@ public enum Good implements OdysseyMaterial {
     LAZARUS(true),
     MICROBIALINHIBITOR(false),
     MUTAGENICCATALYST(true),
+    NM_SEED(false),
     NUTRITIONALCONCENTRATE(false),
     PERSONALCOMPUTER(false),
     PERSONALDOCUMENTS(false),
