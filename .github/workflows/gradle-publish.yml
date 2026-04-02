@@ -5,7 +5,7 @@ on:
     tags:
       - '*'
 
-env:
+vars:
   JAVA_VERSION: 25.0.2
 
 jobs:
@@ -22,7 +22,7 @@ jobs:
       CCID: "${{secrets.CCID}}"
       PROPRIETARY_REPO_USER: "${{secrets.PROPRIETARY_REPO_USER}}"
       PROPRIETARY_REPO_PASS: "${{secrets.PROPRIETARY_REPO_PASS}}"
-      JAVA_VERSION: "${{env.JAVA_VERSION}}"
+      JAVA_VERSION: "${{vars.JAVA_VERSION}}"
 
     steps:
       - uses: olegtarasov/get-tag@v2.1.4
@@ -86,7 +86,7 @@ jobs:
       CCID: "${{secrets.CCID}}"
       PROPRIETARY_REPO_USER: "${{secrets.PROPRIETARY_REPO_USER}}"
       PROPRIETARY_REPO_PASS: "${{secrets.PROPRIETARY_REPO_PASS}}"
-      JAVA_VERSION: "${{env.JAVA_VERSION}}"
+      JAVA_VERSION: "${{vars.JAVA_VERSION}}"
 
     steps:
       - uses: olegtarasov/get-tag@v2.1.4
