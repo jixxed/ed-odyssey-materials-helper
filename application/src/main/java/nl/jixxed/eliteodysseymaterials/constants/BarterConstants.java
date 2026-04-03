@@ -73,6 +73,7 @@ public class BarterConstants {
             Map.entry(Good.LAZARUS, 125_000),
             Map.entry(Good.MICROBIALINHIBITOR, 20_000),
             Map.entry(Good.MUTAGENICCATALYST, 75_000),
+            Map.entry(Good.NM_SEED, 250_000),
             Map.entry(Good.NUTRITIONALCONCENTRATE, 10_000),
             Map.entry(Good.PERSONALCOMPUTER, 15_000),
             Map.entry(Good.PERSONALDOCUMENTS, 10_000),
