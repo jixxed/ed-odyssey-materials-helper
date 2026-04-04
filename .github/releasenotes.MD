@@ -11,6 +11,7 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Add Unica Seed material(On foot Good)
-Invert scrolling of tab headers
+Add barter price for Unica Seed
+Consider permit locks when showing material traders and tech brokers
+- Make sure to configure your permits!
 ```
