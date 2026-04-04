@@ -10,6 +10,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.TechnologyBrokerService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationChangedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.PermitEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
@@ -44,6 +45,7 @@ public class HorizonsNearestBroker extends DestroyableVBox implements Destroyabl
     @Override
     public void initEventHandling() {
         register(EventService.addListener(true, this, LocationChangedEvent.class, _ -> update()));
+        register(EventService.addListener(true, this, PermitEvent.class, _ -> update()));
     }
 
     private void update() {

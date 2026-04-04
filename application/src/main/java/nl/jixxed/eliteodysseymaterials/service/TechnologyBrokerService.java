@@ -56,6 +56,7 @@ public class TechnologyBrokerService {
                     return engineerAtLocation.map(engineer -> (engineer.isOdyssey()) ? ApplicationState.getInstance().isEngineerUnlocked(engineer) : ApplicationState.getInstance().isEngineerUnlockedExact(engineer))//only allow unlocked engineer stations
                             .orElse(true);// trader allowed if there is no engineer
                 })
+                .filter(technologyBroker -> !PermitService.isPermitSystem(technologyBroker.getStarSystem()) || PermitService.havePermit(technologyBroker.getStarSystem()))// only allow permit unlocked systems
                 .min(Comparator.comparing(technologyBroker -> getDistance(technologyBroker.getStarSystem(), currentLocation)))
                 .orElseThrow(IllegalArgumentException::new);
     }
