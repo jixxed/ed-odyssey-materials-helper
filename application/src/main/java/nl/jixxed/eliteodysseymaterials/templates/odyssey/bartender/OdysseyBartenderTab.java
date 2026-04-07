@@ -70,7 +70,7 @@ public class OdysseyBartenderTab extends OdysseyTab implements DestroyableEventT
                 .withStyleClass("top-section")
                 .buildVBox();
         //materials
-        for (final AssetType assetType : Arrays.stream(AssetType.values()).sorted().toArray(AssetType[]::new)) {
+        for (final AssetType assetType : Arrays.stream(AssetType.values()).sorted(Comparator.comparing(Enum::name)).toList()) {
             for (final Asset asset : Asset.values()) {
                 if (assetType.equals(asset.getType()) && !asset.isUnknown()) {
                     this.bartenderMaterials.get(assetType).add(register(new OdysseyBartenderMaterial(asset)));
