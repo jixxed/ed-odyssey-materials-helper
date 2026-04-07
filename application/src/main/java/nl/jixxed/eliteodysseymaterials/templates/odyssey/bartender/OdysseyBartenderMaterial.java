@@ -120,7 +120,7 @@ public class OdysseyBartenderMaterial extends DestroyableHBox implements Destroy
                 .build();
         this.wishlistLabel = LabelBuilder.builder()
                 .withStyleClass("storage-value")
-                .withNonLocalizedText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.asset)).mapToInt(Integer::intValue).sum()))
+                .withNonLocalizedText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.asset) * bp.getQuantity()).mapToInt(Integer::intValue).sum()))
                 .build();
         this.backpackLabel = LabelBuilder.builder()
                 .withStyleClass("storage-value")
@@ -267,7 +267,7 @@ public class OdysseyBartenderMaterial extends DestroyableHBox implements Destroy
         }));
         register(EventService.addListener(true, this, 9, OdysseyWishlistBlueprintEvent.class, event -> {
             Platform.runLater(() -> {
-                this.wishlistLabel.setText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.asset)).mapToInt(Integer::intValue).sum()));
+                this.wishlistLabel.setText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.asset) * bp.getQuantity()).mapToInt(Integer::intValue).sum()));
                 updateStyle();
             });
         }));
