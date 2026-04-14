@@ -1,3 +1,13 @@
+/*
+ * Copyright (c) 2026 Jixxed
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
 package nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints;
 
 import lombok.AccessLevel;
@@ -108,10 +118,10 @@ public class PulseLaserBlueprints {
                                     Raw.IRON, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.2, 0.4)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+1%", false, percentagePositive(0.0, 0.01)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.2, 0.36)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.2, 0.36))
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.2, 0.36)),
+                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.2, 0.4)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+1%", false, percentagePositive(0.0, 0.01))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -125,10 +135,10 @@ public class PulseLaserBlueprints {
                                     Manufactured.CONDUCTIVECOMPONENTS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.4, 0.6)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+2%", false, percentagePositive(0.01, 0.02)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+52%", true, percentagePositive(0.36, 0.52)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+52%", true, percentagePositive(0.36, 0.52))
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+52%", true, percentagePositive(0.36, 0.52)),
+                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.4, 0.6)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+2%", false, percentagePositive(0.01, 0.02))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -143,10 +153,10 @@ public class PulseLaserBlueprints {
                                     Manufactured.CONDUCTIVECERAMICS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+80%", true, percentagePositive(0.6, 0.8)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+3%", false, percentagePositive(0.02, 0.03)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+68%", true, percentagePositive(0.52, 0.68)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+68%", true, percentagePositive(0.52, 0.68))
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+68%", true, percentagePositive(0.52, 0.68)),
+                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+80%", true, percentagePositive(0.6, 0.8)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+3%", false, percentagePositive(0.02, 0.03))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -161,10 +171,10 @@ public class PulseLaserBlueprints {
                                     Manufactured.POLYMERCAPACITORS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.8, 1.0)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+4%", false, percentagePositive(0.03, 0.04)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+84%", true, percentagePositive(0.68, 0.84)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+84%", true, percentagePositive(0.68, 0.84))
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+84%", true, percentagePositive(0.68, 0.84)),
+                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.8, 1.0)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+4%", false, percentagePositive(0.03, 0.04))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -179,11 +189,10 @@ public class PulseLaserBlueprints {
                                     Manufactured.REFINEDFOCUSCRYSTALS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+120%", true, percentagePositive(1.0, 1.2)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.04, 0.05)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.84, 1.0)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.84, 1.0))
-
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.84, 1.0)),
+                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+120%", true, percentagePositive(1.0, 1.2)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.04, 0.05))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
