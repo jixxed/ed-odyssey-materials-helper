@@ -274,8 +274,8 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableEven
                 .withStyleClass("settings-multiline")
                 .withText(LocaleService.getStringBinding("tab.settings.ar.color.dataport.explain"))
                 .build();
-        DestroyableVBox availableColorPicker = createColorPicker("tab.settings.ar.color.dataport.available", PreferenceConstants.AVAILABLE_DATAPORT_COLOR, Color.web("#ff9500ff"));
-        DestroyableVBox availableHighlightColorPicker = createColorPicker("tab.settings.ar.color.dataport.available.highlight", PreferenceConstants.AVAILABLE_HIGHLIGHT_DATAPORT_COLOR, Color.web("#452801ff"));
+        DestroyableVBox availableColorPicker = createColorPicker("tab.settings.ar.color.dataport.available", PreferenceConstants.AVAILABLE_DATAPORT_COLOR, Color.web("#452801ff"));
+        DestroyableVBox availableHighlightColorPicker = createColorPicker("tab.settings.ar.color.dataport.available.highlight", PreferenceConstants.AVAILABLE_HIGHLIGHT_DATAPORT_COLOR, Color.web("#ff9500ff"));
         DestroyableVBox downloadedColorPicker = createColorPicker("tab.settings.ar.color.dataport.downloaded", PreferenceConstants.DOWNLOADED_DATAPORT_COLOR, Color.web("#3d3d3dff"));
         DestroyableVBox downloadedHighlightColorPicker = createColorPicker("tab.settings.ar.color.dataport.downloaded.highlight", PreferenceConstants.DOWNLOADED_HIGHLIGHT_DATAPORT_COLOR, Color.web("#d6d6d6ff"));
 
