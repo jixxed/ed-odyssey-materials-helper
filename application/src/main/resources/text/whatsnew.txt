@@ -2,6 +2,9 @@ Version 3.6.7
 -------------
 Add Lynx Highliner (WIP)
 Add Mk II Passenger Cabins (restricted to Lynx Highliner)
+Fix category order shifting on bartender tab
+Fix wishlist quantity on bartender tab
+Fix swapped AR color setting defaults
 
 Version 3.6.6
 -------------

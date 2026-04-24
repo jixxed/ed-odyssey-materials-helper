@@ -13,4 +13,7 @@ The portable zip versions are used as update packages. You can run them standalo
 ```
 Add Lynx Highliner (WIP)
 Add Mk II Passenger Cabins (restricted to Lynx Highliner)
+Fix category order shifting on bartender tab
+Fix wishlist quantity on bartender tab
+Fix swapped AR color setting defaults
 ```
