@@ -1993,7 +1993,7 @@ public class ShipSpecs {
     public static final Map<HorizonsModifier, Object> LYNX_HIGHLINER = Map.ofEntries(
             Map.entry(HorizonsModifier.TOP_SPEED, 285.0),
             Map.entry(HorizonsModifier.BOOST_SPEED, 350.0),
-            Map.entry(HorizonsModifier.MANOEUVRABILITY, Double.NaN),
+            Map.entry(HorizonsModifier.MANOEUVRABILITY, 3.0),
             Map.entry(HorizonsModifier.SHIELDS, 200.0),
             Map.entry(HorizonsModifier.ARMOUR, 350.0),
             Map.entry(HorizonsModifier.MASS, 260.0),
