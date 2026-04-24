@@ -48,7 +48,8 @@ public enum SlotType {
             ResearchLimpetController.class,
             MultiLimpetController.class,
             LimpetOptionalModule.class), false),
-    CARGO(List.of(CargoOptionalModule.class, CargoRack.class, AntiCorrosionCargoRack.class, FuelTank.class), false);
+    CARGO(List.of(CargoOptionalModule.class, CargoRack.class, AntiCorrosionCargoRack.class, FuelTank.class), false),
+    PASSENGER(List.of(PassengerCabin.class), false);
     @Getter
     private final List<Class<? extends ShipModule>> moduleClasses;
     @Getter

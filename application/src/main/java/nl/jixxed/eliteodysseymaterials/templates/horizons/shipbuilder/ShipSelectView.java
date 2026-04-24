@@ -139,6 +139,7 @@ public class ShipSelectView extends DestroyableVBox implements DestroyableTempla
 
     private static String getSlotSizeName(Slot slot) {
         return switch (slot.getSlotType()) {
+            case PASSENGER -> "P" + slot.getSlotSizeName();
             case CARGO -> "C" + slot.getSlotSizeName();
             case MILITARY -> "M" + slot.getSlotSizeName();
             default -> slot.getSlotSizeName();

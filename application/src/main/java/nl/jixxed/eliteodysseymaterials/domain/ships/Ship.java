@@ -1980,6 +1980,47 @@ public class Ship {
                     Slot.builder().slotType(SlotType.OPTIONAL).index(6).namedIndex(6).slotSize(2).shipModule(Computer.SUPERCRUISE_ASSIST).build(),//Slot06_Size2
                     Slot.builder().slotType(SlotType.OPTIONAL).index(7).namedIndex(7).slotSize(1).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build()//Slot07_Size1
             ));
+
+    public static final Ship LYNX_HIGHLINER = new Ship(
+            ShipType.LYNX_HIGHLINER,
+            0,
+            0,
+            ShipSpecs.LYNX_HIGHLINER,
+            List.of(
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1354).y(351).index(0).slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1023).y(672).index(1).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(651).y(329).index(2).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1273).y(328).index(3).slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(813).y(558).index(4).slotSize(2).build()
+            ),
+            List.of(
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1140).y(479).index(0).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(779).y(479).index(1).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1158).y(672).index(2).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(761).y(672).index(3).slotSize(0).build()
+            ),
+            List.of(
+                    Slot.builder().slotType(SlotType.CORE_ARMOUR).index(0).slotSize(1).shipModule(Armour.MEDIUMTRANSPORT01_ARMOUR_GRADE_1).build(),
+                    Slot.builder().slotType(SlotType.CORE_POWER_PLANT).index(1).slotSize(5).shipModule(PowerPlant.POWER_PLANT_5_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_THRUSTERS).index(2).slotSize(6).shipModule(Thrusters.THRUSTERS_6_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_FRAME_SHIFT_DRIVE).index(3).slotSize(5).shipModule(FrameShiftDrive.FRAME_SHIFT_DRIVE_OVERCHARGE_5_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_LIFE_SUPPORT).index(4).slotSize(6).shipModule(LifeSupport.LIFE_SUPPORT_6_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_POWER_DISTRIBUTION).index(5).slotSize(5).shipModule(PowerDistributor.POWER_DISTRIBUTOR_5_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_SENSORS).index(6).slotSize(3).shipModule(Sensors.SENSORS_3_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(5).shipModule(FuelTank.FUEL_TANK_5_C).build()
+            ),
+            List.of(
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(6).namedIndex(1).shipModule(ShieldGenerator.SHIELD_GENERATOR_5_E).build(),
+                    Slot.builder().slotType(SlotType.PASSENGER).index(1).slotSize(6).namedIndex(1).shipModule(PassengerCabin.ECONOMY_CLASS_PASSENGER_CABIN_5_E).build(),
+                    Slot.builder().slotType(SlotType.PASSENGER).index(2).slotSize(6).namedIndex(2).shipModule(PassengerCabin.ECONOMY_CLASS_PASSENGER_CABIN_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(5).namedIndex(2).shipModule(PassengerCabin.ECONOMY_CLASS_PASSENGER_CABIN_4_E).build(),
+                    Slot.builder().slotType(SlotType.PASSENGER).index(4).slotSize(5).namedIndex(3).shipModule(PassengerCabin.ECONOMY_CLASS_PASSENGER_CABIN_4_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(4).namedIndex(3).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(4).namedIndex(4).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(3).namedIndex(5).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(2).namedIndex(6).shipModule(Computer.SUPERCRUISE_ASSIST).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(1).namedIndex(7).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build()
+            ));
     public static final List<Ship> ALL = List.of(
             SIDE_WINDER,
             EAGLE,
@@ -2021,13 +2062,14 @@ public class Ship {
             MAMBA,
             PYTHON_NX,//7 May 2024 - M
             TYPE_8,//6 Aug 2024 - M
-            MANDALAY,//22 Oct 204 - M
+            MANDALAY,//22 Oct 2024 - M
             COBRA_MK_V,//12 Dec 2024 - S
             CORSAIR,//8 Apr 2025 - M
             PANTHER_CLIPPER_MK_II,//22 Jul 2025 - L
             LAKONMINER,//29 Sep 2025 - M
             EXPLORER_NX,// 2 Dec 2025 - L
-            KESTREL_MK_II//24 Feb 2026 - S
+            KESTREL_MK_II,//24 Feb 2026 - S
+            LYNX_HIGHLINER//28 Apr 2026 - M
     );
 
 
@@ -2122,8 +2164,9 @@ public class Ship {
             return 0;
         }
         return this.getOptionalSlots().stream()
+                .filter(slot -> slot.getSlotType().equals(SlotType.OPTIONAL) || slot.getSlotType().equals(SlotType.PASSENGER))
                 .filter(slot -> slot.getSlotSize() >= cabinType.getMinSize())
-                .mapToInt(slot -> cabinType.getPassengerCount(slot.getSlotSize()))
+                .mapToInt(slot -> (int) Math.floor(cabinType.getPassengerCount(slot.getSlotSize()) * ((this == LYNX_HIGHLINER && (cabinType == PassengerCabinType.ECONOMY || cabinType == PassengerCabinType.BUSINESS)) ? 1.5 : 1.0)))
                 .sum();
     }
 

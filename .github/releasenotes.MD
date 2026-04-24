@@ -11,7 +11,6 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Add barter price for Unica Seed
-Consider permit locks when showing material traders and tech brokers
-- Make sure to configure your permits!
+Add Lynx Highliner (WIP)
+Add Mk II Passenger Cabins (restricted to Lynx Highliner)
 ```

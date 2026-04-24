@@ -64,7 +64,8 @@ public enum ShipType {
     PANTHER_CLIPPER_MK_II(129034269, "PantherMkII", ShipSize.L, true, 3),
     LAKONMINER(129036130, "Lakonminer", ShipSize.M, true, 2),
     EXPLORER_NX(129036569, "Explorer_nx", ShipSize.L, true, 3),
-    KESTREL_MK_II(129039241, "smallcombat01_nx", ShipSize.S, false, 0);
+    KESTREL_MK_II(129039241, "smallcombat01_nx", ShipSize.S, false, 0),
+    LYNX_HIGHLINER(0, "mediumtransport01", ShipSize.M, false, 1);
 
     final long internalID;
     final String internalName;

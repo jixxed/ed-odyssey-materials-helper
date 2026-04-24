@@ -93,6 +93,7 @@ public class SlotBox extends DestroyableStackPane {
         this.getNodes().addAll(bg, layer1, layer2);
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("military"), SlotType.MILITARY.equals(slot.getSlotType()));
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("cargo"), SlotType.CARGO.equals(slot.getSlotType()));
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("passenger"), SlotType.PASSENGER.equals(slot.getSlotType()));
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("fighter"), SlotType.SLF.equals(slot.getSlotType()));
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("limpet"), SlotType.LIMPET.equals(slot.getSlotType()));
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("mining-hardpoint"), SlotType.MINING_HARDPOINT.equals(slot.getSlotType()));
@@ -159,6 +160,13 @@ public class SlotBox extends DestroyableStackPane {
             EdAwesomeIconViewPane image = EdAwesomeIconViewPaneBuilder.builder()
                     .withStyleClass("background-image")
                     .withIcons(EdAwesomeIcon.COMMODITIES_CONSUMER_ITEMS)
+                    .build();
+            bg.getNodes().addAll(new GrowingRegion(), image);
+        }else if (SlotType.PASSENGER.equals(slot.getSlotType())) {
+//            tagKey = "ships.slot.type.passenger";
+            EdAwesomeIconViewPane image = EdAwesomeIconViewPaneBuilder.builder()
+                    .withStyleClass("background-image")
+                    .withIcons(EdAwesomeIcon.SHIPS_MULTICREW)
                     .build();
             bg.getNodes().addAll(new GrowingRegion(), image);
         } else if (SlotType.SLF.equals(slot.getSlotType())) {

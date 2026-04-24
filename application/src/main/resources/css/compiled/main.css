@@ -2517,6 +2517,8 @@
                 -fx-background-color: linear-gradient(from 0em 0.5em to 0.5em 0em, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%); }
               .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box:cargo {
                 -fx-background-color: linear-gradient(from 0em 0.5em to 0.5em 0em, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%); }
+              .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box:passenger {
+                -fx-background-color: linear-gradient(from 0em 0.5em to 0.5em 0em, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%); }
               .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box:fighter {
                 -fx-background-color: linear-gradient(from 0em 0.5em to 0.5em 0em, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%, #0f0f0f 100%); }
               .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box:limpet {

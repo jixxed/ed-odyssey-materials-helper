@@ -44,6 +44,7 @@ public class LoadoutMapper {
     private static final Set<String> CORE_SLOT_NAMES = Set.of("Armour", "PowerPlant", "MainEngines", "FrameShiftDrive", "LifeSupport", "PowerDistributor", "Radar", "FuelTank");
     private static final Set<String> MILITARY_SLOT_NAMES = Set.of("Military");
     private static final Set<String> CARGO_SLOT_NAMES = Set.of("Cargo");
+    private static final Set<String> PASSENGER_SLOT_NAMES = Set.of("Passenger");
     private static final Set<String> SLF_SLOT_NAMES = Set.of("FighterBay");
     private static final Set<String> LIMPET_SLOT_NAMES = Set.of("LimpetController");
     private static final Set<String> OPTIONAL_SLOT_NAMES = Set.of("Slot");
@@ -235,6 +236,10 @@ public class LoadoutMapper {
             }
             if (CARGO_SLOT_NAMES.stream().anyMatch(slotName::startsWith)) {//Cargo
                 final List<Slot> cargoSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CARGO)).toList();
+                return getRestrictedOptionalSlot(cargoSlots, slotName);
+            }
+            if (PASSENGER_SLOT_NAMES.stream().anyMatch(slotName::startsWith)) {//Cargo
+                final List<Slot> cargoSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.PASSENGER)).toList();
                 return getRestrictedOptionalSlot(cargoSlots, slotName);
             }
             if (SLF_SLOT_NAMES.stream().anyMatch(slotName::startsWith)) {//FighterBay

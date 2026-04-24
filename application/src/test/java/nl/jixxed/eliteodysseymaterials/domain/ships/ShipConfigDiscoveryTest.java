@@ -78,15 +78,15 @@ public class ShipConfigDiscoveryTest {
     void findShipStats() {
 
         ShipModule.getBasicModules();
-        final Ship ship = Ship.KESTREL_MK_II;
+        final Ship ship = Ship.LYNX_HIGHLINER;
         //Fill in MASS and FUEL_RESERVE on the ship
-        findTopSpeed(ship, 278.0, 0.5);
-        findBoostSpeed(ship, 370.0, 0.5);
-        findPitch(ship, 51.4, 0.5);
-        findRoll(ship, 123.36, 0.5);
-        findYaw(ship, 24.67, 0.5);
-        findShieldStrength(ship, 338.0, 0.5);
-        findArmourStrength(ship, 135.0, 0.5);
+        findTopSpeed(ship, 293.0, 0.5);
+        findBoostSpeed(ship, 360.0, 0.5);
+        findPitch(ship, 26.73, 0.5);
+        findRoll(ship, 61.68, 0.5);
+        findYaw(ship, 19.53, 0.5);
+        findShieldStrength(ship, 227.7, 0.5);
+        findArmourStrength(ship, 630.0, 0.5);
 // Requires TOP_SPEED to be set
         findMinThrust(ship, 247.0, 0.5);
 //        findMinPitch(ship, 14.12, 0.5D);

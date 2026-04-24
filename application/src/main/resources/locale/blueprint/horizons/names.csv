@@ -250,3 +250,8 @@
 "blueprint.horizons.name.thrusters_mk_ii_agile","Mk II Agile Boost Thrusters","","","","","","Маневровые двигатели ускорения Mk II","",""
 "blueprint.horizons.name.plasma_shock_accelerator_mk_ii","Mk II Plasma Shock Accelerator","","","","","","Плазменный шоковый ускоритель Mk II","",""
 "blueprint.horizons.name.imperial_hammer_rail_gun_pre","Imperial Hammer Rail Gun","Imperial Hammer Rail Gun","","","","","Имперский молот","",""
+"blueprint.horizons.name.mk_ii_economy_class_passenger_cabin.short","(ECO MkII)","","","","","","","",""
+"blueprint.horizons.name.mk_ii_business_class_passenger_cabin.short","(BUS MkII)","","","","","","","",""
+"blueprint.horizons.name.business_class_passenger_cabin","Business Class Passenger Cabin","","","Cabina de pasajeros de clase preferente","","Cabine de Passageiro Classe Executiva","Пассажирские каюты бизнес-класса","商务客运舱(Business Class Passenger Cabin)","ბიზნეს კლასის სალონი"
+"blueprint.horizons.name.mk_ii_economy_class_passenger_cabin","MK II Economy Class Passenger Cabin","","","","","","","",""
+"blueprint.horizons.name.mk_ii_business_class_passenger_cabin","MK II Business Class Passenger Cabin","","","","","","","",""

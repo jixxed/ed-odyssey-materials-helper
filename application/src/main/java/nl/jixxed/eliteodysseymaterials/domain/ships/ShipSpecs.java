@@ -1990,4 +1990,87 @@ public class ShipSpecs {
             Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, 342.0)
     );
 
+    public static final Map<HorizonsModifier, Object> LYNX_HIGHLINER = Map.ofEntries(
+            Map.entry(HorizonsModifier.TOP_SPEED, 285.0),
+            Map.entry(HorizonsModifier.BOOST_SPEED, 350.0),
+            Map.entry(HorizonsModifier.MANOEUVRABILITY, Double.NaN),
+            Map.entry(HorizonsModifier.SHIELDS, 200.0),
+            Map.entry(HorizonsModifier.ARMOUR, 350.0),
+            Map.entry(HorizonsModifier.MASS, 260.0),
+            Map.entry(HorizonsModifier.MINIMUM_THRUST, Double.NaN),
+            Map.entry(HorizonsModifier.BOOST_INTERVAL, Double.NaN),
+            Map.entry(HorizonsModifier.BOOST_COST, Double.NaN),
+            Map.entry(HorizonsModifier.FORWARD_ACCELERATION, Double.NaN),
+            Map.entry(HorizonsModifier.REVERSE_ACCELERATION, Double.NaN),
+            Map.entry(HorizonsModifier.LATERAL_ACCELERATION, Double.NaN),
+            Map.entry(HorizonsModifier.SUPERCRUISE_PROFILE, new Double[][]{
+                    {Double.NaN, Double.NaN, Double.NaN},
+                    {Double.NaN, Double.NaN, Double.NaN},
+                    {Double.NaN, Double.NaN, Double.NaN}}),
+            Map.entry(HorizonsModifier.CRUISE_PITCH_PROFILE, new Double[][]{
+                    {Double.NaN, Double.NaN},
+                    {Double.NaN, Double.NaN},
+                    {Double.NaN, Double.NaN}}),
+            Map.entry(HorizonsModifier.CRUISE_ROLL_PROFILE, new Double[][]{
+                    {Double.NaN, Double.NaN},
+                    {Double.NaN, Double.NaN},
+                    {Double.NaN, Double.NaN}}),
+            Map.entry(HorizonsModifier.CRUISE_YAW_PROFILE, new Double[][]{
+                    {Double.NaN, Double.NaN},
+                    {Double.NaN, Double.NaN},
+                    {Double.NaN, Double.NaN}}),
+            Map.entry(HorizonsModifier.MAX_PITCH_SPEED, 26.0),
+            Map.entry(HorizonsModifier.MAX_YAW_SPEED, 19.0),
+            Map.entry(HorizonsModifier.MAX_ROLL_SPEED, 60.0),
+            Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 18.0),
+            Map.entry(HorizonsModifier.HEAT_CAPACITY, Double.NaN),
+            Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, Double.NaN),
+            Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, Double.NaN),
+            Map.entry(HorizonsModifier.FUEL_RESERVE, 0.75),
+            Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 55.0),
+            Map.entry(HorizonsModifier.MASS_LOCK, Double.NaN),
+            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, Double.NaN)
+    );
+
+//    public static final Map<HorizonsModifier, Object> NEW_SHIP = Map.ofEntries(
+//            Map.entry(HorizonsModifier.TOP_SPEED, Double.NaN),
+//            Map.entry(HorizonsModifier.BOOST_SPEED, Double.NaN),
+//            Map.entry(HorizonsModifier.MANOEUVRABILITY, Double.NaN),
+//            Map.entry(HorizonsModifier.SHIELDS, Double.NaN),
+//            Map.entry(HorizonsModifier.ARMOUR, Double.NaN),
+//            Map.entry(HorizonsModifier.MASS, Double.NaN),
+//            Map.entry(HorizonsModifier.MINIMUM_THRUST, Double.NaN),
+//            Map.entry(HorizonsModifier.BOOST_INTERVAL, Double.NaN),
+//            Map.entry(HorizonsModifier.BOOST_COST, Double.NaN),
+//            Map.entry(HorizonsModifier.FORWARD_ACCELERATION, Double.NaN),
+//            Map.entry(HorizonsModifier.REVERSE_ACCELERATION, Double.NaN),
+//            Map.entry(HorizonsModifier.LATERAL_ACCELERATION, Double.NaN),
+//            Map.entry(HorizonsModifier.SUPERCRUISE_PROFILE, new Double[][]{
+//                    {Double.NaN, Double.NaN, Double.NaN},
+//                    {Double.NaN, Double.NaN, Double.NaN},
+//                    {Double.NaN, Double.NaN, Double.NaN}}),
+//            Map.entry(HorizonsModifier.CRUISE_PITCH_PROFILE, new Double[][]{
+//                    {Double.NaN, Double.NaN},
+//                    {Double.NaN, Double.NaN},
+//                    {Double.NaN, Double.NaN}}),
+//            Map.entry(HorizonsModifier.CRUISE_ROLL_PROFILE, new Double[][]{
+//                    {Double.NaN, Double.NaN},
+//                    {Double.NaN, Double.NaN},
+//                    {Double.NaN, Double.NaN}}),
+//            Map.entry(HorizonsModifier.CRUISE_YAW_PROFILE, new Double[][]{
+//                    {Double.NaN, Double.NaN},
+//                    {Double.NaN, Double.NaN},
+//                    {Double.NaN, Double.NaN}}),
+//            Map.entry(HorizonsModifier.MAX_PITCH_SPEED, Double.NaN),
+//            Map.entry(HorizonsModifier.MAX_YAW_SPEED, Double.NaN),
+//            Map.entry(HorizonsModifier.MAX_ROLL_SPEED, Double.NaN),
+//            Map.entry(HorizonsModifier.MIN_PITCH_SPEED, Double.NaN),
+//            Map.entry(HorizonsModifier.HEAT_CAPACITY, Double.NaN),
+//            Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, Double.NaN),
+//            Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, Double.NaN),
+//            Map.entry(HorizonsModifier.FUEL_RESERVE, Double.NaN),
+//            Map.entry(HorizonsModifier.ARMOUR_HARDNESS, Double.NaN),
+//            Map.entry(HorizonsModifier.MASS_LOCK, Double.NaN),
+//            Map.entry(HorizonsModifier.SENSOR_LOCK_MIN, Double.NaN)
+//    );
 }
