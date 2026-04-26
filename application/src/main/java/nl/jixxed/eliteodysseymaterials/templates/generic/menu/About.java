@@ -67,7 +67,7 @@ class About extends DestroyableVBox implements DestroyableTemplate {
                 .withStyleClass("about-download-link")
                 .withText(LocaleService.getStringBinding("menu.about.pinplanner"))
                 .withOnAction(actionEvent ->
-                        FXApplication.getInstance().getHostServices().showDocument("https://jixxed.github.io/ed-pin-planner/?config=" + PinnedBlueprintService.getPinConfigForUrl()))
+                        FXApplication.getInstance().getHostServices().showDocument("https://pinplanner.edomh.nl/?config=" + PinnedBlueprintService.getPinConfigForUrl()))
                 .build();
         this.donateImage = ResizableImageViewBuilder.builder()
                 .withStyleClass("about-donate-image")
