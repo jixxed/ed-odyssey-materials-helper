@@ -26,7 +26,6 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
-import javafx.scene.input.Clipboard;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -48,6 +47,7 @@ import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
 import nl.jixxed.eliteodysseymaterials.enums.StyleSheet;
+import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
 import nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper;
 import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
@@ -325,20 +325,14 @@ public class FXApplication extends Application {
      */
     private void configureHotKeys() {
         Map<? extends KeyCombination, ? extends Runnable> keyCodeActions = Map.of(
-                new KeyCodeCombination(KeyCode.DELETE),                         () -> Optional.ofNullable(applicationScreen).ifPresent(applicationScreen -> EventService.publish(new DeleteSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab()))),
+                new KeyCodeCombination(KeyCode.DELETE), () -> Optional.ofNullable(applicationScreen).ifPresent(applicationScreen -> EventService.publish(new DeleteSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab()))),
                 new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN), () -> Optional.ofNullable(applicationScreen).ifPresent(applicationScreen -> EventService.publish(new CopySelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab()))),
                 new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN), () -> Optional.ofNullable(applicationScreen).ifPresent(applicationScreen -> EventService.publish(new ExportSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab()))),
                 new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN), () -> Optional.ofNullable(applicationScreen).ifPresent(applicationScreen -> EventService.publish(new CreateItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab()))),
                 new KeyCodeCombination(KeyCode.R, KeyCombination.CONTROL_DOWN), () -> Optional.ofNullable(applicationScreen).ifPresent(applicationScreen -> EventService.publish(new ResetSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab()))),
                 new KeyCodeCombination(KeyCode.D, KeyCombination.CONTROL_DOWN), () -> Optional.ofNullable(applicationScreen).ifPresent(applicationScreen -> EventService.publish(new CloneSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab()))),
-                new KeyCodeCombination(KeyCode.F2),                             () -> Optional.ofNullable(applicationScreen).ifPresent(applicationScreen -> EventService.publish(new RenameSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab()))),
-                new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN), () -> {
-                    final String clipboard = Clipboard.getSystemClipboard().getString();
-                    if (clipboard != null && clipboard.startsWith("edomh://")) {
-                        deeplinkConsumer.accept(clipboard);
-                    }
-                }
-        );
+                new KeyCodeCombination(KeyCode.F2), () -> Optional.ofNullable(applicationScreen).ifPresent(applicationScreen -> EventService.publish(new RenameSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab()))),
+                new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN), ClipboardHelper::importFromClipboard);
         //configure all accelerators
         keyCodeActions.forEach(this::addKeyEvent);
 

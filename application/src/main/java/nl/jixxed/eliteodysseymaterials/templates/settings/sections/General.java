@@ -29,6 +29,7 @@ import nl.jixxed.eliteodysseymaterials.enums.StyleSheet;
 import nl.jixxed.eliteodysseymaterials.export.CsvExporter;
 import nl.jixxed.eliteodysseymaterials.export.TextExporter;
 import nl.jixxed.eliteodysseymaterials.export.XlsExporter;
+import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
 import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
@@ -45,7 +46,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import static nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper.deeplinkConsumer;
 import static nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper.slefConsumer;
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 
@@ -448,13 +448,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 .build();
         final DestroyableButton importClipboard = ButtonBuilder.builder()
                 .withText("settings.button.import.clipboard.import")
-                .withOnAction(_ ->
-                        Platform.runLater(() -> {
-                            final String clipboard = Clipboard.getSystemClipboard().getString();
-                            if (clipboard != null && clipboard.startsWith("edomh://")) {
-                                deeplinkConsumer.accept(clipboard);
-                            }
-                        }))
+                .withOnAction(_ -> ClipboardHelper.importFromClipboard())
                 .build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)

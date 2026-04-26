@@ -712,6 +712,7 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.schemas.market.search to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.schemas.slef to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.service.message to com.fasterxml.jackson.databind, org.hibernate.validator;
+    opens nl.jixxed.eliteodysseymaterials.service.shortlink to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.templates to java.desktop, javafx.fxml, javafx.graphics, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.components to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.components.segmentbar to javafx.fxml, org.controlsfx.controls;

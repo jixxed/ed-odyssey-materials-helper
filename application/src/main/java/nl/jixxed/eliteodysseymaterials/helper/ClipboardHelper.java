@@ -14,6 +14,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.introspect.AnnotatedMember;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
+import javafx.application.Platform;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import lombok.AccessLevel;
@@ -21,15 +22,20 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
-import nl.jixxed.eliteodysseymaterials.service.LoadoutService;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.NotificationService;
-import nl.jixxed.eliteodysseymaterials.service.WishlistService;
+import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
+import nl.jixxed.eliteodysseymaterials.service.shortlink.ShortLinkService;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.zip.Deflater;
+
+import static nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper.deeplinkConsumer;
 
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -133,7 +139,34 @@ public class ClipboardHelper {
     public static void copyToClipboard(final String text) {
         final Clipboard clipboard = Clipboard.getSystemClipboard();
         final ClipboardContent content = new ClipboardContent();
-        content.putString(text);
+        content.putString(text.startsWith("edomh://") ? ShortLinkService.requestShortLink(text) : text);
         clipboard.setContent(content);
+    }
+
+    public static void importFromClipboard() {
+        Platform.runLater(() -> {
+            final String clipboard = Clipboard.getSystemClipboard().getString();
+            if (clipboard != null && clipboard.startsWith("edomh://")) {
+                deeplinkConsumer.accept(clipboard);
+            }
+            if (clipboard != null && clipboard.startsWith("https://link.edomh.nl/")) {
+                try (HttpClient httpClient = HttpClient.newBuilder()
+                        .followRedirects(HttpClient.Redirect.NEVER)
+                        .build()) {
+                    final HttpRequest request = HttpRequest.newBuilder()
+                            .uri(URI.create(clipboard))
+                            .header("User-Agent", VersionService.getUserAgent())
+                            .GET()
+                            .build();
+                    final HttpResponse<Void> response = httpClient.send(request, HttpResponse.BodyHandlers.discarding());
+                    String edomhUrl = response.headers()
+                            .firstValue("location")
+                            .orElse(null);
+                    deeplinkConsumer.accept(edomhUrl);
+                } catch (InterruptedException | IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 }
