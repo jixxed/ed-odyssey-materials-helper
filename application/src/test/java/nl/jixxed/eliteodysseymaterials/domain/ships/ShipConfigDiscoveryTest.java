@@ -88,7 +88,7 @@ public class ShipConfigDiscoveryTest {
         findShieldStrength(ship, 227.7, 0.5);
         findArmourStrength(ship, 630.0, 0.5);
 // Requires TOP_SPEED to be set
-        findMinThrust(ship, 247.0, 0.5);
+        findMinThrust(ship, 216.0, 0.5);
 //        findMinPitch(ship, 14.12, 0.5D);
         findprice(ship);
 
@@ -179,6 +179,7 @@ public class ShipConfigDiscoveryTest {
             final Double minThrust = value = value + delta;
 
             thrust = calculateMinSpeed(ship, topSpeed, minThrust, moduleProfile);
+            log.info("Value of {} results in min thrust of {} which is within range", value, thrust);
 
         }
         log.info("Value of {} results in min thrust of {} which is within range", value, thrust);

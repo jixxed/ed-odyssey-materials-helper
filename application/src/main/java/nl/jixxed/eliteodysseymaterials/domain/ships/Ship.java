@@ -1987,17 +1987,17 @@ public class Ship {
             0,
             ShipSpecs.LYNX_HIGHLINER,
             List.of(
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1354).y(351).index(0).slotSize(3).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1023).y(672).index(1).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(651).y(329).index(2).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1273).y(328).index(3).slotSize(2).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(813).y(558).index(4).slotSize(2).build()
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(985).y(426).index(0).slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(3).x(514).y(895).index(1).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1407).y(894).index(2).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(3).x(1373).y(631).index(3).slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(549).y(629).index(4).slotSize(2).build()
             ),
             List.of(
-                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1140).y(479).index(0).slotSize(0).build(),
-                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(779).y(479).index(1).slotSize(0).build(),
-                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1158).y(672).index(2).slotSize(0).build(),
-                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(761).y(672).index(3).slotSize(0).build()
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1262).y(462).index(0).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(663).y(333).index(1).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(3).x(1080).y(498).index(2).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(840).y(498).index(3).slotSize(0).build()
             ),
             List.of(
                     Slot.builder().slotType(SlotType.CORE_ARMOUR).index(0).slotSize(1).shipModule(Armour.MEDIUMTRANSPORT01_ARMOUR_GRADE_1).build(),
@@ -2371,7 +2371,8 @@ public class Ship {
                 || this.shipType == ShipType.TYPE_8
                 || this.shipType == ShipType.LAKONMINER
                 || this.shipType == ShipType.EXPLORER_NX
-                || this.shipType == ShipType.KESTREL_MK_II;
+                || this.shipType == ShipType.KESTREL_MK_II
+                || this.shipType == ShipType.LYNX_HIGHLINER;
 
     }
 }
