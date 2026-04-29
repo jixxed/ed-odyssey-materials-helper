@@ -11,9 +11,13 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Add Lynx Highliner (WIP)
-Add Mk II Passenger Cabins (restricted to Lynx Highliner)
-Fix category order shifting on bartender tab
-Fix wishlist quantity on bartender tab
-Fix swapped AR color setting defaults
+Finished Lynx Highliner stats
+Added price info to Lynx Highliner, Lynx Highliner Armours and Mk II Passenger Cabins
+Implemented community goal tracking
+Implemented shortlinks
+- When you copy a wishlist or loadout to clipboard, the app will automatically attempt to generate a shortlink (link.edomh.nl)
+- This will upload the edomh:// url to link.edomh.nl and give you a https:// shortlink to it. You can also import from shortlinks by pasting them directly in the app (CTRL + V)
+- If the app fails to generate a shortlink, it will fallback to the edomh:// url, which can still be imported by pasting it directly in the app (CTRL + V)
+Ship Editor now shows passenger capacity per class
+Pinplanner url has now been moved to https://pinplanner.edomh.nl/
 ```
