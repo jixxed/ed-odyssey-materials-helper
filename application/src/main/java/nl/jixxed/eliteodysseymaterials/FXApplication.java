@@ -133,6 +133,7 @@ public class FXApplication extends Application {
         MiningService.init();
         PermitService.init();
         LedgerService.init();
+        EliteMQService.init();
         if (Boolean.FALSE.equals(PreferencesService.getPreference(PreferenceConstants.TRACKING_OPT_OUT, false))) {
 //            HighGradeEmissionService.initialize();
         }
@@ -468,6 +469,7 @@ public class FXApplication extends Application {
     }
 
     private void setupStorageWatchers(final File watchedFolder) {
+        //run scraper, then continue
         this.timeStampedCargoWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processCargoStateFile(file, JournalEventType.CARGO), AppConstants.CARGO_FILE, true, JournalEventType.CARGO);
         this.timeStampedShipLockerWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processCargoStateFile(file, JournalEventType.SHIPLOCKER), AppConstants.SHIPLOCKER_FILE, true, JournalEventType.SHIPLOCKER);
         this.timeStampedBackPackWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processCargoStateFile(file, JournalEventType.BACKPACK), AppConstants.BACKPACK_FILE, true, JournalEventType.BACKPACK);

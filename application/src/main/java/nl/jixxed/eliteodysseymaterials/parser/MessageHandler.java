@@ -173,7 +173,7 @@ class MessageHandler {
             Map.entry(JournalEventType.REPUTATION, new ReputationMessageProcessor()),
             Map.entry(JournalEventType.RANK, new RankMessageProcessor()),
             Map.entry(JournalEventType.PROGRESS, new ProgressMessageProcessor()),
-
+            Map.entry(JournalEventType.COMMUNITYGOAL, new CommunityGoalMessageProcessor()),
 
             Map.entry(JournalEventType.LOADGAME, new LoadGameMessageProcessor())
     );

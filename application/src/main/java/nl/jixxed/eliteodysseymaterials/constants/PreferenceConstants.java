@@ -58,6 +58,7 @@ public class PreferenceConstants {
     public static final String MARKETPLACE_TOKEN_PREFIX = "marketplace.token.";
     public static final String ENABLE_BARTENDER_AR = "ar.bartender.enabled";
     public static final String USER_LATEST_EVENT = "latest.event";
+    public static final String MQ_LATEST_CG = "mq.latest.cg.event";
     public static final String EDDN_ENABLED = "eddn.enabled";
     public static final String EDDN_ASKED = "eddn.asked";
     public static final String SELECTED_TAB_MAIN = "selected.tab.main";
@@ -84,6 +85,7 @@ public class PreferenceConstants {
     public static final String AR_SEARCH_METHOD = "ar.search.method";
     public static final String AR_FUZZY_SCORE = "ar.search.fuzzy.score.min";
     public static final String PREFERRED_LANDING_PAD = "preferred.landing.pad";
+    public static final String SCRAPE_LATEST_CG = "scrape.latest.cg";
 
 
 }

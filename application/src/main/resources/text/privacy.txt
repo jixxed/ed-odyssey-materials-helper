@@ -7,6 +7,9 @@ When using the application the following information can be shared
 - Application settings
 - Application runtime environment
 
+UPLOADING AND DOWNLOADING OF DATA TO EDOMH.NL.
+- For generating shortlinks the application send edomh links. For collective information like community goals it sends journal events and downloads aggregated data from edomh.nl to display in the application.
+
 UPLOADING OF DATA TO AWS/DISCORD.
 - For detection of new journal events, ships, modules, etc. the application sends data about failed processed journal entries to AWS(Lambda) to inform the developer on Discord of changes in the game.
 

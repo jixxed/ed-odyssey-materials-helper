@@ -105,6 +105,7 @@ public enum JournalEventType {
     REPUTATION("Reputation"),
     RANK("Rank"),
     PROGRESS("Progress"),
+    COMMUNITYGOAL("CommunityGoal"),
     ;
     private final String name;
 
