@@ -2170,10 +2170,11 @@ public class Ship {
                 .sum();
     }
 
-    public double getMaxPassenger() {
+    public double getMaxPassenger(PassengerCabinType cabinType) {
         return this.getOptionalSlots().stream()
-                .filter(slot -> slot.getShipModule() instanceof PassengerCabin)
                 .map(Slot::getShipModule)
+                .filter(shipModule -> shipModule instanceof PassengerCabin)
+                .filter(shipModule -> ((PassengerCabin)shipModule).getCabinType().equals(cabinType))
                 .map(shipModule -> (double) shipModule.getAttributeValue(HorizonsModifier.CABIN_CAPACITY, true))
                 .mapToDouble(Double::doubleValue)
                 .sum();

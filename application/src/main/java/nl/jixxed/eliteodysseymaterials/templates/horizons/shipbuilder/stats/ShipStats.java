@@ -15,6 +15,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.PowerProfile;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.enums.PassengerCabinType;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -52,7 +53,7 @@ public class ShipStats extends Stats implements DestroyableEventTemplate {
         this.crew = createValueLabel("ship.stats.ship.crew.value", Formatters.NUMBER_FORMAT_0.format(0D));
         this.boostCost = createValueLabel("ship.stats.ship.boostcost.value", Formatters.NUMBER_FORMAT_0.format(0D));
         this.manoeuvrability = createValueLabel("ship.stats.ship.manoeuvrability.value", Formatters.NUMBER_FORMAT_0.format(0D));
-        this.cabinCapacity = createValueLabel("ship.stats.ship.cabincapacity.value", Formatters.NUMBER_FORMAT_0.format(0D));
+        this.cabinCapacity = createValueLabel("ship.stats.ship.cabincapacity.value", Formatters.NUMBER_FORMAT_0.format(0D), Formatters.NUMBER_FORMAT_0.format(0D), Formatters.NUMBER_FORMAT_0.format(0D), Formatters.NUMBER_FORMAT_0.format(0D));
 
         this.getNodes().add(BoxBuilder.builder()
                 .withStyleClass("stat-line")
@@ -131,7 +132,11 @@ public class ShipStats extends Stats implements DestroyableEventTemplate {
         this.crew.addBinding(this.crew.textProperty(), LocaleService.getStringBinding("ship.stats.ship.crew.value", Formatters.NUMBER_FORMAT_0.format(calculateCrew())));
         this.boostCost.addBinding(this.boostCost.textProperty(), LocaleService.getStringBinding("ship.stats.ship.boostcost.value", Formatters.NUMBER_FORMAT_0.format(calculateBoostCost())));
         this.manoeuvrability.addBinding(this.manoeuvrability.textProperty(), LocaleService.getStringBinding("ship.stats.ship.manoeuvrability.value", Formatters.NUMBER_FORMAT_0.format(calculateManoeuvrability())));
-        this.cabinCapacity.addBinding(this.cabinCapacity.textProperty(), LocaleService.getStringBinding("ship.stats.ship.cabincapacity.value", Formatters.NUMBER_FORMAT_0.format(calculateCabinCapacity())));
+        this.cabinCapacity.addBinding(this.cabinCapacity.textProperty(), LocaleService.getStringBinding("ship.stats.ship.cabincapacity.value",
+                Formatters.NUMBER_FORMAT_0.format(calculateCabinCapacity(PassengerCabinType.ECONOMY)),
+                Formatters.NUMBER_FORMAT_0.format(calculateCabinCapacity(PassengerCabinType.BUSINESS)),
+                Formatters.NUMBER_FORMAT_0.format(calculateCabinCapacity(PassengerCabinType.FIRSTCLASS)),
+                Formatters.NUMBER_FORMAT_0.format(calculateCabinCapacity(PassengerCabinType.LUXURY))));
     }
 
     private double calculateBoostCost() {
@@ -143,8 +148,8 @@ public class ShipStats extends Stats implements DestroyableEventTemplate {
         return getShip().map(Ship::getRetractedPower).orElseGet(PowerProfile::new);
     }
 
-    private double calculateCabinCapacity() {
-        return getShip().map(Ship::getMaxPassenger).orElse(0D);
+    private double calculateCabinCapacity(PassengerCabinType cabinType) {
+        return getShip().map(ship -> ship.getMaxPassenger(cabinType)).orElse(0D);
     }
 
     private long calculateRebuy() {

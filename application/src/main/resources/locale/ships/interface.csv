@@ -141,7 +141,7 @@
 "ship.stats.ship.slf","Fighter bay","","","","","","Отсек для истребителей","舰载机机库",""
 "ship.stats.ship.crew","Seats","","","","","","Кресел пилотов","乘员",""
 "ship.stats.ship.manoeuvrability","Manoeuvrability","","","","Manœuvrabilité","","Маневренность","机动性",""
-"ship.stats.ship.cabincapacity.value","{0}","","","","{0}","","{0}","{0}","{0}"
+"ship.stats.ship.cabincapacity.value","{0}/{1}/{2}/{3}","","","","","","","",""
 "ship.stats.ship.cabincapacity","Cabin capacity","","","","","","Пассажировместимость","客舱容量",""
 "ship.validation.error.max.experimental.weapon","Maximum number of experimental weapons exceeded.","","","","Nombre maximum d'armes expérimentales dépassé.","","Превышено максимальное количество экспериментальных вооружений.","实验性武器数量超出限制。",""
 "ship.validation.error.max.fighter.hangar","Maximum number of fighter hangars exceeded.","","","","Nombre maximum de hangars pour chasseur dépassé.","","Превышено максимальное количество ангаров истребителей.","舰载机机库数量超出限制。",""
