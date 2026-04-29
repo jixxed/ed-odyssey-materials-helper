@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class StartDialog extends DestroyableVBox implements DestroyableTemplate {
-    public static final String POLICY_LEVEL_REQUIRED = "v3";
+    public static final String POLICY_LEVEL_REQUIRED = "v4";
     public static final String EULA_LEVEL_REQUIRED = "v1";
 
     private final Stage stage;
