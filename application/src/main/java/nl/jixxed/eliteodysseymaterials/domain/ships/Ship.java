@@ -1983,8 +1983,8 @@ public class Ship {
 
     public static final Ship LYNX_HIGHLINER = new Ship(
             ShipType.LYNX_HIGHLINER,
-            0,
-            0,
+            67992080,
+            69289468,
             ShipSpecs.LYNX_HIGHLINER,
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(985).y(426).index(0).slotSize(3).build(),
