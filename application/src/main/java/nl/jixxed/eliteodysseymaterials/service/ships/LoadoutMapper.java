@@ -238,9 +238,9 @@ public class LoadoutMapper {
                 final List<Slot> cargoSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CARGO)).toList();
                 return getRestrictedOptionalSlot(cargoSlots, slotName);
             }
-            if (PASSENGER_SLOT_NAMES.stream().anyMatch(slotName::startsWith)) {//Cargo
-                final List<Slot> cargoSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.PASSENGER)).toList();
-                return getRestrictedOptionalSlot(cargoSlots, slotName);
+            if (PASSENGER_SLOT_NAMES.stream().anyMatch(slotName::startsWith)) {//Passenger
+                final List<Slot> passengerSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.PASSENGER)).toList();
+                return getRestrictedOptionalSlot(passengerSlots, slotName);
             }
             if (SLF_SLOT_NAMES.stream().anyMatch(slotName::startsWith)) {//FighterBay
                 final List<Slot> slfSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.SLF)).toList();
