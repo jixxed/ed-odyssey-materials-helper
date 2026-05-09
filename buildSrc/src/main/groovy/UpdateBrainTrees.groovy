@@ -1,5 +1,6 @@
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
+import groovy.util.logging.Slf4j
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.tasks.Input
@@ -9,7 +10,7 @@ import org.gradle.api.tasks.TaskAction
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
-
+@Slf4j
 abstract class UpdatePOI extends DefaultTask {
 
     @Input
@@ -81,6 +82,8 @@ abstract class UpdatePOI extends DefaultTask {
                     logger.info("Page " + page + " of " + recallResponse.count + " " + material + " " + type + " results over " + totalPages + " pages");
                     Thread.sleep(2000)
                 }
+            }catch (Exception ex){
+                log.error("Failed to update braintrees", ex);
             }
         }
     }
