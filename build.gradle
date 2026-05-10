@@ -231,7 +231,7 @@ allprojects {
 
                 implementation "com.github.wille:oslib:master-SNAPSHOT"
                 implementation 'me.xdrop:fuzzywuzzy:1.4.0'
-                implementation 'org.apache.maven:maven-artifact:3.9.14'
+                implementation 'org.apache.maven:maven-artifact:3.9.15'
                 implementation 'org.xerial:sqlite-jdbc:3.53.1.0'
                 implementation "io.ebean:ebean:${version_ebean}"
                 implementation "io.ebean:ebean-migration:14.3.0"
