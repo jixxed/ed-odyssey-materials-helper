@@ -1,3 +1,8 @@
+Version 3.8.1
+-------------
+Hotfix for database initialization not working
+Added trigger to rescrape if database is uninitialized
+
 Version 3.8.0
 -------------
 Added databases to the app

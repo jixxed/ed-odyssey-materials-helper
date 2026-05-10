@@ -13,7 +13,12 @@ package nl.jixxed.eliteodysseymaterials.service;
 import io.ebean.Database;
 import io.ebean.datasource.DataSourceConfig;
 import io.ebean.migration.MigrationConfig;
+import io.ebean.migration.MigrationResource;
 import io.ebean.migration.MigrationRunner;
+import io.github.classgraph.ClassGraph;
+import io.github.classgraph.Resource;
+import io.github.classgraph.ResourceList;
+import io.github.classgraph.ScanResult;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,11 +26,19 @@ import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
+import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
 import nl.jixxed.eliteodysseymaterials.service.event.CommanderAllListedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.watchdog.ScrapeState;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,9 +51,15 @@ public class DatabaseService {
     private static Database commonDatabase;
     private static boolean initialized = false;
     private static boolean initializedCommon = false;
+    private static boolean resetCommonDates = false;
+    private static final List<String> commonResets = new ArrayList<>();
+    private static boolean resetCommanderDates = false;
 
     public static void init() {
-        EVENT_LISTENERS.add(EventService.addStaticListener(1, CommanderAllListedEvent.class, event -> ApplicationState.getInstance().getPreferredCommander().ifPresentOrElse(DatabaseService::linkDatabase, DatabaseService::disconnect)));
+        EVENT_LISTENERS.add(EventService.addStaticListener(1, CommanderAllListedEvent.class, event -> {
+            ApplicationState.getInstance().getPreferredCommander().ifPresentOrElse(DatabaseService::linkDatabase, DatabaseService::disconnect);
+            ApplicationState.getInstance().getPreferredCommander().ifPresent(DatabaseService::reset);
+        }));
 
         initializedCommon = false;
         final File databaseFileDir = new File(OsConstants.getConfigDirectory());
@@ -53,27 +72,43 @@ public class DatabaseService {
                 .setUrl(url)
                 .setUsername("")
                 .setPassword("");
-//        DatabaseConfig config = new DatabaseConfig();
-//        config.setDataSourceConfig(dataSourceConfig);
-//        config.setDefaultServer(true);
-//        config.setName("common");
-        // create database instance
-//        commonDatabase = DatabaseFactory.create(config);
         commonDatabase = Database.builder()
                 .name("common")
                 .defaultDatabase(true)
                 .dataSourceBuilder(dataSourceConfig)
                 .build();
-        MigrationConfig cfg = new MigrationConfig();
+        try {
+            MigrationConfig cfg = new MigrationConfig();
+            Path path = extractMigrations("database/common");
+            cfg.setDbUrl(url);
+            cfg.setMigrationPath("filesystem:" + path.toAbsolutePath().toString());
+            cfg.setDbUsername("");
+            cfg.setDbPassword("");
 
-        cfg.setDbUrl(url);
-        cfg.setMigrationPath("database/common");
-        cfg.setDbUsername("");
-        cfg.setDbPassword("");
+            MigrationRunner runner = new MigrationRunner(cfg);
+            List<MigrationResource> migrationResources = runner.checkState();
+            //scrape everything again if initial migration is ran
+            if (migrationResources.stream().anyMatch(state -> state.key().equals("1"))) {
+                resetCommonDates = true;
+            }
+            runner.run();
+            initializedCommon = true;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-        MigrationRunner runner = new MigrationRunner(cfg);
-        runner.run();
-        initializedCommon = true;
+    private static void reset(Commander commander) {
+        if (resetCommonDates && !commonResets.contains(commander.getFid())) {
+            ScrapeState.updateLatestTimestamp(JournalEventType.LOCATION, LocalDateTime.of(1970, 1, 1, 0, 0, 0));
+            ScrapeState.updateLatestTimestamp(JournalEventType.FSDJUMP, LocalDateTime.of(1970, 1, 1, 0, 0, 0));
+            ScrapeState.updateLatestTimestamp(JournalEventType.CARRIERJUMP, LocalDateTime.of(1970, 1, 1, 0, 0, 0));
+            commonResets.add(commander.getFid());
+        }
+        if (resetCommanderDates) {
+            ScrapeState.updateLatestTimestamp(JournalEventType.COMMUNITYGOAL, LocalDateTime.of(1970, 1, 1, 0, 0, 0));
+            resetCommanderDates = false;
+        }
     }
 
     private static void linkDatabase(Commander commander) {
@@ -93,28 +128,31 @@ public class DatabaseService {
                     .setUrl(url)
                     .setUsername(commander.getFid())
                     .setPassword(commander.getFid());
-//            DatabaseConfig config = new DatabaseConfig();
-//            config.setDefaultServer(false);
-//            config.setDataSourceConfig(dataSourceConfig);
-//            config.setName("commander");
-
-            // create database instance
-//            commanderDatabase = DatabaseFactory.create(config);
             commanderDatabase = Database.builder()
                     .name("commander")
                     .defaultDatabase(false)
                     .dataSourceBuilder(dataSourceConfig)
                     .build();
-            MigrationConfig cfg = new MigrationConfig();
 
-            cfg.setDbUrl(url);
-            cfg.setMigrationPath("database/commander");
-            cfg.setDbUsername(commander.getFid());
-            cfg.setDbPassword(commander.getFid());
+            try {
+                MigrationConfig cfg = new MigrationConfig();
+                Path path = extractMigrations("database/commander");
+                cfg.setDbUrl(url);
+                cfg.setMigrationPath("filesystem:" + path.toAbsolutePath().toString());
+                cfg.setDbUsername("");
+                cfg.setDbPassword("");
 
-            MigrationRunner runner = new MigrationRunner(cfg);
-            runner.run();
-            initialized = true;
+                MigrationRunner runner = new MigrationRunner(cfg);
+                List<MigrationResource> migrationResources = runner.checkState();
+                //scrape everything again if initial migration is ran
+                if (migrationResources.stream().anyMatch(state -> state.key().equals("1"))) {
+                    resetCommanderDates = true;
+                }
+                runner.run();
+                initialized = true;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
         } catch (Exception e) {
             throw new DatabaseException("Database initialization error", e);
@@ -151,5 +189,36 @@ public class DatabaseService {
             throw new DatabaseException("Database not available due to initialization failure");
         }
         return commonDatabase;
+    }
+
+    /**
+     * Extracts all resources from resources
+     * into a temporary filesystem directory and returns the path.
+     */
+    public static Path extractMigrations(String path) throws IOException {
+
+        Path tempDir = Files.createTempDirectory("ebean-migrations-");
+        tempDir.toFile().deleteOnExit();
+
+        try (ScanResult scanResult = new ClassGraph().acceptPaths(path).scan()) {
+            ResourceList resources = scanResult.getAllResources();
+
+            for (Resource resource : resources) {
+                // Skip directories
+                if (resource.getPath().endsWith("/")) {
+                    continue;
+                }
+                String relativePath = resource.getPath().substring((path + "/").length());
+                Path target = tempDir.resolve(relativePath);
+                Files.createDirectories(target.getParent());
+                try (InputStream in = resource.open()) {
+                    Files.copy(in, target, StandardCopyOption.REPLACE_EXISTING);
+                }
+
+                target.toFile().deleteOnExit();
+            }
+        }
+
+        return tempDir;
     }
 }

@@ -11,10 +11,6 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Added databases to the app
-- Journals will be scraped for relevant events when loading a commander. This can take a while the first time.
-- Known star systems are stored in the database for distance calculations
-- Community goal progress is stored in the database for tracking personal progress (no UI yet)
-- A future version will allow for recording owned ships and modules, but this is not implemented yet
-Updated locations for braintrees and crystalline shards
+Hotfix for database initialization not working
+Added trigger to rescrape if database is uninitialized
 ```
