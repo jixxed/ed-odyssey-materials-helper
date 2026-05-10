@@ -5,6 +5,7 @@ Added databases to the app
 - Known star systems are stored in the database for distance calculations
 - Community goal progress is stored in the database for tracking personal progress (no UI yet)
 - A future version will allow for recording owned ships and modules, but this is not implemented yet
+Updated locations for braintrees and crystalline shards
 
 Version 3.7.0
 -------------
