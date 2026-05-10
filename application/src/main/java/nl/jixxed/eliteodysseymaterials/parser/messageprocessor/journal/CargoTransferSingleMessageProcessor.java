@@ -1,0 +1,76 @@
+/*
+ * Copyright (c) 2026 Jixxed
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+package nl.jixxed.eliteodysseymaterials.parser.messageprocessor.journal;
+
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.enums.Commodity;
+import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
+import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.SingleMessageProcessor;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.CargoTransfer.CargoTransfer;
+import nl.jixxed.eliteodysseymaterials.service.LocationService;
+import nl.jixxed.eliteodysseymaterials.service.ReportService;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
+
+import java.time.LocalDateTime;
+
+public class CargoTransferSingleMessageProcessor implements SingleMessageProcessor<CargoTransfer> {
+
+    public static LocalDateTime lastCargoTransfer = null;
+    @Override
+    @SuppressWarnings("java:S1192")
+    public void process(final CargoTransfer event) {
+        lastCargoTransfer = event.getTimestamp();
+        event.getTransfers().forEach(transfer -> {
+            final Commodity commodity = Commodity.forName(transfer.getType());
+            if (commodity.isUnknown()) {
+                ReportService.reportMaterial(event);
+            } else {
+                if ("tocarrier".equals(transfer.getDirection())) {
+                    StorageService.removeCommodity(commodity, StoragePool.SHIP, transfer.getCount().intValue());
+                    EventService.publish(new StorageEvent(StoragePool.SHIP));
+                    if (LocationService.isAtSquadronCarrier()) {
+                        StorageService.addCommodity(commodity, StoragePool.SQUADRONCARRIER, transfer.getCount().intValue());
+                        EventService.publish(new StorageEvent(StoragePool.SQUADRONCARRIER));
+                    } else if (LocationService.isAtFleetCarrier()) {
+                        StorageService.addCommodity(commodity, StoragePool.FLEETCARRIER, transfer.getCount().intValue());
+                        EventService.publish(new StorageEvent(StoragePool.FLEETCARRIER));
+                    }
+                } else if ("tosrv".equals(transfer.getDirection())) {
+                    StorageService.removeCommodity(commodity, StoragePool.SHIP, transfer.getCount().intValue());
+                    StorageService.addCommodity(commodity, StoragePool.SRV, transfer.getCount().intValue());
+                    EventService.publish(new StorageEvent(StoragePool.SHIP));
+                    EventService.publish(new StorageEvent(StoragePool.SRV));
+                } else if ("toship".equals(transfer.getDirection())) {
+                    if (ApplicationState.getInstance().playerInSrv()) {
+                        StorageService.removeCommodity(commodity, StoragePool.SRV, transfer.getCount().intValue());
+                        EventService.publish(new StorageEvent(StoragePool.SRV));
+                    } else if (LocationService.isAtSquadronCarrier()) {
+                        StorageService.removeCommodity(commodity, StoragePool.SQUADRONCARRIER, transfer.getCount().intValue());
+                        EventService.publish(new StorageEvent(StoragePool.SQUADRONCARRIER));
+                    } else if (LocationService.isAtFleetCarrier()) {
+                        StorageService.removeCommodity(commodity, StoragePool.FLEETCARRIER, transfer.getCount().intValue());
+                        EventService.publish(new StorageEvent(StoragePool.FLEETCARRIER));
+                    }
+                    StorageService.addCommodity(commodity, StoragePool.SHIP, transfer.getCount().intValue());
+                    EventService.publish(new StorageEvent(StoragePool.SHIP));
+                }
+            }
+        });
+    }
+
+    @Override
+    public Class<CargoTransfer> getMessageClass() {
+        return CargoTransfer.class;
+    }
+
+}

@@ -2021,6 +2021,7 @@ public class Ship {
                     Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(2).namedIndex(6).shipModule(Computer.SUPERCRUISE_ASSIST).build(),
                     Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(1).namedIndex(7).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build()
             ));
+
     public static final List<Ship> ALL = List.of(
             SIDE_WINDER,
             EAGLE,

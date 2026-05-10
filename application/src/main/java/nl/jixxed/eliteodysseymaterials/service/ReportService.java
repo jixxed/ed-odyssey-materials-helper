@@ -44,15 +44,16 @@ public class ReportService {
                     final String data = OBJECT_MAPPER.writeValueAsString(new Report(buildVersion, ApplicationState.getInstance().getFileheader(), material));
                     log.info(data);
                     final HttpResponse<String> send;
-                    try (HttpClient httpClient = HttpClient.newHttpClient()) {
-                        final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
-                        final HttpRequest request = HttpRequest.newBuilder()
-                                .uri(URI.create("https://" + domainName + "/Prod/v2/submit-unknown-material"))
-                                .header("User-Agent", VersionService.getUserAgent())
-                                .POST(HttpRequest.BodyPublishers.ofString(data))
-                                .build();
-                        send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-                    }
+
+                    HttpClient httpClient = HttpClientService.getHttpClient();
+                    final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
+                    final HttpRequest request = HttpRequest.newBuilder()
+                            .uri(URI.create("https://" + domainName + "/Prod/v2/submit-unknown-material"))
+                            .header("User-Agent", VersionService.getUserAgent())
+                            .POST(HttpRequest.BodyPublishers.ofString(data))
+                            .build();
+                    send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
                     log.info(send.body());
                 } catch (final InterruptedException e) {
                     Thread.currentThread().interrupt();
@@ -72,15 +73,16 @@ public class ReportService {
                     final String data = OBJECT_MAPPER.writeValueAsString(new ReportUnknownJournal(channel, buildVersion, ApplicationState.getInstance().getFileheader(), journalLine, error));
                     log.info(data);
                     final HttpResponse<String> send;
-                    try (HttpClient httpClient = HttpClient.newHttpClient()) {
-                        final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
-                        final HttpRequest request = HttpRequest.newBuilder()
-                                .uri(URI.create("https://" + domainName + "/Prod/v2/submit-unknown-journal"))
-                                .header("User-Agent", VersionService.getUserAgent())
-                                .POST(HttpRequest.BodyPublishers.ofString(data))
-                                .build();
-                        send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-                    }
+
+                    HttpClient httpClient = HttpClientService.getHttpClient();
+                    final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
+                    final HttpRequest request = HttpRequest.newBuilder()
+                            .uri(URI.create("https://" + domainName + "/Prod/v2/submit-unknown-journal"))
+                            .header("User-Agent", VersionService.getUserAgent())
+                            .POST(HttpRequest.BodyPublishers.ofString(data))
+                            .build();
+                    send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
                     log.info(send.body());
                 } catch (final InterruptedException e) {
                     Thread.currentThread().interrupt();

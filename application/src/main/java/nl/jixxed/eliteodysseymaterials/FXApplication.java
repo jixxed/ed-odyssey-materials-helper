@@ -91,6 +91,7 @@ public class FXApplication extends Application {
     private GameStateWatcher squadronWatcher;
     private GameStateWatcher arxWatcher;
     private StateFileWatcher statusWatcher;
+    private final CommanderWatcher commanderWatcher = new CommanderWatcher();
     private final JournalWatcher journalWatcher = new JournalWatcher();
     private final DeeplinkWatcher deeplinkWatcher = new DeeplinkWatcher();
     private Stage primaryStage;
@@ -124,6 +125,8 @@ public class FXApplication extends Application {
     public void start(final Stage primaryStage) {
         System.setProperty("de.jensd.fx.glyphs.fontawesome.disableCSS", "true");
 //        DeeplinkHelper.setFxApplication(this);
+        DatabaseService.init();
+        ScrapeState.init();
         NotificationService.init();
         LocationService.init();
         PinnedBlueprintService.init();
@@ -159,6 +162,16 @@ public class FXApplication extends Application {
             CAPIService.getInstance();
             this.loadingScreen = new LoadingScreen();
 
+            eventListeners.add(EventService.addListener(true, this, ScrapeEvent.class, event -> {
+                if (!event.isCompleted()) {
+                    this.content.getChildren().remove(this.applicationScreen);
+                    if (!this.content.getChildren().contains(this.loadingScreen)) {
+                        this.content.getChildren().add(this.loadingScreen);
+                    }
+                    destroyApplicationScreen();
+                }
+            }));
+
             eventListeners.add(EventService.addListener(true, this, JournalInitEvent.class, event -> {
 
                 if (event.isInitialised() && getApplicationScreen() == null) {
@@ -191,13 +204,6 @@ public class FXApplication extends Application {
 //                    Platform.runLater(                            () ->
                     this.content.getChildren().remove(this.loadingScreen);
 //                    );
-
-                } else if (!event.isInitialised()) {
-                    this.content.getChildren().remove(this.applicationScreen);
-                    if (!this.content.getChildren().contains(this.loadingScreen)) {
-                        this.content.getChildren().add(this.loadingScreen);
-                    }
-                    destroyApplicationScreen();
 
                 }
             }));
@@ -400,18 +406,18 @@ public class FXApplication extends Application {
     }
 
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, WatchedFolderChangedEvent.class, event -> resetWatchedFolder(new File(event.getPath()))));
+        this.eventListeners.add(EventService.addListener(this, WatchedFolderChangedEvent.class, event -> resetWatchedFolder()));
         this.eventListeners.add(EventService.addListener(this, CommanderSelectedEvent.class, event -> {
 //            UserPreferencesService.loadUserPreferences(event.getCommander());
             log.debug("CommanderSelectedEvent " + this.initialized);
             if (this.initialized) {
-                reset(this.journalWatcher.getWatchedFolder());
+                reset();
             }
         }));
         this.eventListeners.add(EventService.addListener(this, CommanderAllListedEvent.class, event -> {
             this.initialized = true;
         }));
-        this.eventListeners.add(EventService.addListener(true, this, 0, JournalInitEvent.class, event -> {//highest priority
+        this.eventListeners.add(EventService.addListener(this, 0, CommanderAllListedEvent.class, event -> {//highest priority
             ApplicationState.getInstance().getPreferredCommander().ifPresent(UserPreferencesService::loadUserPreferences);
         }));
         this.eventListeners.add(EventService.addListener(this, FontSizeEvent.class, fontSizeEvent -> {
@@ -464,23 +470,34 @@ public class FXApplication extends Application {
     }
 
     private void setupWatchers() {
-        final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.getDefaultWatchedFolder()));
-        setupStorageWatchers(watchedFolder);
+        this.eventListeners.add(EventService.addListener(true, this, ScrapeEvent.class, event -> {
+            if (event.isCompleted()) {
+                final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.getDefaultWatchedFolder()));
+                this.timeStampedCargoWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processCargoStateFile(file, JournalEventType.CARGO), AppConstants.CARGO_FILE, true, JournalEventType.CARGO);
+                this.timeStampedShipLockerWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processCargoStateFile(file, JournalEventType.SHIPLOCKER), AppConstants.SHIPLOCKER_FILE, true, JournalEventType.SHIPLOCKER);
+                this.timeStampedBackPackWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processCargoStateFile(file, JournalEventType.BACKPACK), AppConstants.BACKPACK_FILE, true, JournalEventType.BACKPACK);
+                this.journalWatcher.watch(watchedFolder, FileProcessor::processJournal, FileProcessor::resetAndProcessJournal);
+                this.statusWatcher = new StateFileWatcher(watchedFolder, FileProcessor::processStatusFile, AppConstants.STATUS_FILE);
+                this.shipyardWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.SHIPYARD_FILE, true, JournalEventType.SHIPYARD);
+                this.outfittingWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.OUTFITTING_FILE, true, JournalEventType.OUTFITTING);
+                this.marketWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.MARKET_FILE, true, JournalEventType.MARKET);
+                this.navrouteWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.NAVROUTE_FILE, true, JournalEventType.NAVROUTE);
+                this.modulesinfoWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.MODULESINFO_FILE, true, JournalEventType.MODULEINFO);
+                this.fcMaterialsWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.FCMATERIALS_FILE, true, JournalEventType.FCMATERIALS);
+            }
+        }));
+        setupStorageWatchers();
     }
 
-    private void setupStorageWatchers(final File watchedFolder) {
+    private void setupStorageWatchers() {
+        loadCommanders();
         //run scraper, then continue
-        this.timeStampedCargoWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processCargoStateFile(file, JournalEventType.CARGO), AppConstants.CARGO_FILE, true, JournalEventType.CARGO);
-        this.timeStampedShipLockerWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processCargoStateFile(file, JournalEventType.SHIPLOCKER), AppConstants.SHIPLOCKER_FILE, true, JournalEventType.SHIPLOCKER);
-        this.timeStampedBackPackWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processCargoStateFile(file, JournalEventType.BACKPACK), AppConstants.BACKPACK_FILE, true, JournalEventType.BACKPACK);
-        this.journalWatcher.watch(watchedFolder, FileProcessor::processJournal, FileProcessor::resetAndProcessJournal);
-        this.statusWatcher = new StateFileWatcher(watchedFolder, FileProcessor::processStatusFile, AppConstants.STATUS_FILE);
-        this.shipyardWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.SHIPYARD_FILE, true, JournalEventType.SHIPYARD);
-        this.outfittingWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.OUTFITTING_FILE, true, JournalEventType.OUTFITTING);
-        this.marketWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.MARKET_FILE, true, JournalEventType.MARKET);
-        this.navrouteWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.NAVROUTE_FILE, true, JournalEventType.NAVROUTE);
-        this.modulesinfoWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.MODULESINFO_FILE, true, JournalEventType.MODULEINFO);
-        this.fcMaterialsWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.FCMATERIALS_FILE, true, JournalEventType.FCMATERIALS);
+        JournalScraper.scrape();
+    }
+
+    private void loadCommanders() {
+        final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.getDefaultWatchedFolder()));
+        this.commanderWatcher.watch(watchedFolder);
     }
 
     private void setupFleetCarrierWatcher(final Commander commander) {
@@ -566,7 +583,7 @@ public class FXApplication extends Application {
     }
 
     private Scene createApplicationScene() {
-        content = new StackPane(/*this.applicationLayout, this.loadingScreen*/);
+        content = new StackPane(/*this.applicationLayout,*/ this.loadingScreen);
         content.getStyleClass().add("app");
         scene = new Scene(content, PreferencesService.getPreference(PreferenceConstants.APP_WIDTH, 800D), PreferencesService.getPreference(PreferenceConstants.APP_HEIGHT, 600D));
 
@@ -797,16 +814,16 @@ public class FXApplication extends Application {
         }
     }
 
-    private void resetWatchedFolder(final File watchedFolder) {
+    private void resetWatchedFolder() {
         APPLICATION_STATE.resetCommanders();
         EventService.publish(new CommanderResetEvent());
-        reset(watchedFolder);
+        reset();
     }
 
-    private void reset(final File watchedFolder) {
+    private void reset() {
 //        Semaphore semaphore = new Semaphore(0);
-        EventService.publish(new JournalInitEvent(false));
-        log.debug("JournalInitEvent false");
+        EventService.publish(new ScrapeEvent(false));
+//        log.debug("JournalInitEvent false");
 //        Platform.runLater(semaphore::release);
 //        try {
 //            semaphore.acquire();
@@ -833,6 +850,7 @@ public class FXApplication extends Application {
         this.timeStampedCargoWatcher.stop();
         this.timeStampedShipLockerWatcher.stop();
         this.timeStampedBackPackWatcher.stop();
+        this.commanderWatcher.stop();
         this.journalWatcher.stop();
         this.deeplinkWatcher.stop();
         this.statusWatcher.stop();
@@ -844,7 +862,7 @@ public class FXApplication extends Application {
         this.modulesinfoWatcher.stop();
         this.fcMaterialsWatcher.stop();
         setupDeeplinkWatcher();
-        setupStorageWatchers(watchedFolder);
+        setupStorageWatchers();
     }
 
     private void setPreferenceIfNotMaximized(final Stage primaryStage, final String setting, final Double value) {

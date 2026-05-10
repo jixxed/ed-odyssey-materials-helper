@@ -198,15 +198,16 @@ public class MaterialTrackingService {
                     final String data = OBJECT_MAPPER.writeValueAsString(new MaterialTrackingMessage(items));
                     log.info(data);
                     final HttpResponse<String> send;
-                    try (HttpClient httpClient = HttpClient.newHttpClient()) {
-                        final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
-                        final HttpRequest request = HttpRequest.newBuilder()
-                                .uri(URI.create("https://" + domainName + "/Prod/v2/submit-material-tracking"))
-                                .header("User-Agent", VersionService.getUserAgent())
-                                .POST(HttpRequest.BodyPublishers.ofString(data))
-                                .build();
-                        send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-                    }
+
+                    HttpClient httpClient = HttpClientService.getHttpClient();
+                    final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
+                    final HttpRequest request = HttpRequest.newBuilder()
+                            .uri(URI.create("https://" + domainName + "/Prod/v2/submit-material-tracking"))
+                            .header("User-Agent", VersionService.getUserAgent())
+                            .POST(HttpRequest.BodyPublishers.ofString(data))
+                            .build();
+                    send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
                     log.info(send.body());
                 } catch (final InterruptedException e) {
                     Thread.currentThread().interrupt();
@@ -241,15 +242,16 @@ public class MaterialTrackingService {
                     final String datax = OBJECT_MAPPER.writeValueAsString(new DataTrackingMessage(items));
                     log.info(datax);
                     final HttpResponse<String> send;
-                    try (HttpClient httpClient = HttpClient.newHttpClient()) {
-                        final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
-                        final HttpRequest request = HttpRequest.newBuilder()
-                                .uri(URI.create("https://" + domainName + "/Prod/v2/submit-data-tracking"))
-                                .header("User-Agent", VersionService.getUserAgent())
-                                .POST(HttpRequest.BodyPublishers.ofString(datax))
-                                .build();
-                        send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-                    }
+
+                    HttpClient httpClient = HttpClientService.getHttpClient();
+                    final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
+                    final HttpRequest request = HttpRequest.newBuilder()
+                            .uri(URI.create("https://" + domainName + "/Prod/v2/submit-data-tracking"))
+                            .header("User-Agent", VersionService.getUserAgent())
+                            .POST(HttpRequest.BodyPublishers.ofString(datax))
+                            .build();
+                    send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
                     log.info(send.body());
                 } catch (final InterruptedException e) {
                     Thread.currentThread().interrupt();

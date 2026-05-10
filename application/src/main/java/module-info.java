@@ -55,10 +55,14 @@ module nl.jixxed.eliteodysseymaterials {
     requires com.fasterxml.jackson.annotation;
     requires maven.artifact;
     requires org.apache.commons.math3;
+    requires jakarta.persistence.api;
+    requires io.ebean;
+    requires io.ebean.migration;
 
     uses nl.jixxed.ed.awesome.api.FontLoader;
     uses nl.jixxed.ed.confidential.api.SecrecyLoader;
-
+    exports nl.jixxed.eliteodysseymaterials.persistence.commander.model;
+    exports nl.jixxed.eliteodysseymaterials.persistence.common.model;
     exports nl.jixxed.eliteodysseymaterials.domain.ships;
     exports nl.jixxed.eliteodysseymaterials.domain;
     exports nl.jixxed.eliteodysseymaterials.enums;
@@ -735,4 +739,7 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.templates.overlay.ar to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.settings to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.settings.sections to javafx.fxml, org.controlsfx.controls;
+    opens database.commander;
+    opens database.common;
+    provides io.ebean.config.EntityClassRegister with nl.jixxed.eliteodysseymaterials.persistence.common.model.EbeanEntityRegister;
 }

@@ -66,15 +66,16 @@ public class TraderBrokerService {
                 final String data = OBJECT_MAPPER.writeValueAsString(brokerTraderJournalEvent);
                 log.info(data);
                 final HttpResponse<String> send;
-                try (HttpClient httpClient = HttpClient.newHttpClient()) {
-                    final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
-                    final HttpRequest request = HttpRequest.newBuilder()
-                            .uri(URI.create("https://" + domainName + "/Prod/v2/submit-broker-trader"))
-                            .header("User-Agent", VersionService.getUserAgent())
-                            .POST(HttpRequest.BodyPublishers.ofString(data))
-                            .build();
-                    send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-                }
+
+                HttpClient httpClient = HttpClientService.getHttpClient();
+                final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
+                final HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create("https://" + domainName + "/Prod/v2/submit-broker-trader"))
+                        .header("User-Agent", VersionService.getUserAgent())
+                        .POST(HttpRequest.BodyPublishers.ofString(data))
+                        .build();
+                send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
                 log.info(send.body());
             } catch (final InterruptedException e) {
                 Thread.currentThread().interrupt();

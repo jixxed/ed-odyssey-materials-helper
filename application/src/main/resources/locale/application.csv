@@ -223,3 +223,6 @@
 "statusbar.info.empire.reputation.value","{0}\n{1}%","","","","","","{0}\n{1}%","",""
 "statusbar.info.alliance.reputation.value","{0}\n{1}%","","","","","","{0}\n{1}%","",""
 "statusbar.info.independent.reputation.value","{0}\n{1}%","","","","","","{0}\n{1}%","",""
+"loading.screen.status.journal","Loading journal files...","","","","","","","",""
+"loading.screen.status.ui","Loading UI...","","","","","","","",""
+"loading.screen.status.database","Building database...","","","","","","","",""

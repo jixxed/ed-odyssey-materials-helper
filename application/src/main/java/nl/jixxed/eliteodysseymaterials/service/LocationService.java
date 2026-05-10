@@ -24,6 +24,8 @@ import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.Location;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.helper.DnsHelper;
+import nl.jixxed.eliteodysseymaterials.persistence.common.model.StarSystemModel;
+import nl.jixxed.eliteodysseymaterials.persistence.common.model.query.QStarSystemModel;
 import nl.jixxed.eliteodysseymaterials.schemas.system.SystemInfo;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
@@ -270,12 +272,15 @@ public class LocationService {
     }
 
     private static StarSystem getStarSystem(BigInteger systemAddress) {
-        if (SYSTEM_CACHE.containsKey(systemAddress)) {
-            return SYSTEM_CACHE.get(systemAddress);
+        QStarSystemModel starSystemModel = new QStarSystemModel().address.eq(systemAddress);
+        if (starSystemModel.exists()) {
+            StarSystemModel systemModel = starSystemModel.findOne();
+            return new StarSystem(systemModel.getName(), systemModel.getX(), systemModel.getY(), systemModel.getZ()) ;
         }
         //{"systemAddress":1732985787106,"systemName":"LHS 3388","systemX":-72.9375,"systemY":18.59375,"systemZ":92.9375,"systemSector":"5e1c706716a61e41","updatedAt":"2023-04-29T21:58:50.000Z"}
         //{"error":"Not Found","message":"System not found"}
-        try (HttpClient httpClient = HttpClient.newHttpClient()) {
+        try {
+            HttpClient httpClient = HttpClientService.getHttpClient();
             log.debug("Fetching system data for systemAddress {}", systemAddress);
             final String systemDomainName = DnsHelper.resolveCname(Secrets.getOrDefault("system.host", "localhost"));
             final HttpRequest request = HttpRequest.newBuilder()
@@ -287,7 +292,8 @@ public class LocationService {
             if (send.statusCode() == 200) {
                 SystemInfo systemInfo = OBJECT_MAPPER.readValue(send.body(), SystemInfo.class);
                 StarSystem starSystem = new StarSystem(systemInfo.getSystemName(), systemInfo.getSystemX().doubleValue(), systemInfo.getSystemY().doubleValue(), systemInfo.getSystemZ().doubleValue());
-                SYSTEM_CACHE.put(systemAddress, starSystem);
+//                DatabaseService.getCommonDatabase().save(new StarSystemModel(systemAddress, systemInfo.getSystemName(), systemInfo.getSystemX().doubleValue(), systemInfo.getSystemY().doubleValue(), systemInfo.getSystemZ().doubleValue()));
+                upsert(new StarSystemModel(systemAddress, systemInfo.getSystemName(), systemInfo.getSystemX().doubleValue(), systemInfo.getSystemY().doubleValue(), systemInfo.getSystemZ().doubleValue()));
                 return starSystem;
             } else {
                 log.error("Failed fetching system data for systemAddress {}", systemAddress);
@@ -298,6 +304,56 @@ public class LocationService {
         return null;
 
     }
+    private static void upsert(StarSystemModel starSystemModel) {
+        String sql = """
+                INSERT INTO star_system(address, name, x, y, z)
+                VALUES (:address, :name, :x, :y, :z)
+                ON CONFLICT(address) DO UPDATE SET
+                  name = excluded.name,
+                  x = excluded.x,
+                  y = excluded.y,
+                  z = excluded.z
+                """;
+
+        DatabaseService.getCommonDatabase().sqlUpdate(sql)
+                .setParameter("address", starSystemModel.getAddress())
+                .setParameter("name", starSystemModel.getName())
+                .setParameter("x", starSystemModel.getX())
+                .setParameter("y", starSystemModel.getY())
+                .setParameter("z", starSystemModel.getZ())
+                .execute();
+    }
+
+//    private static StarSystem getStarSystem(BigInteger systemAddress) {
+//        if (SYSTEM_CACHE.containsKey(systemAddress)) {
+//            return SYSTEM_CACHE.get(systemAddress);
+//        }
+//        //{"systemAddress":1732985787106,"systemName":"LHS 3388","systemX":-72.9375,"systemY":18.59375,"systemZ":92.9375,"systemSector":"5e1c706716a61e41","updatedAt":"2023-04-29T21:58:50.000Z"}
+//        //{"error":"Not Found","message":"System not found"}
+//        try {
+//            HttpClient httpClient = HttpClientService.getHttpClient();
+//            log.debug("Fetching system data for systemAddress {}", systemAddress);
+//            final String systemDomainName = DnsHelper.resolveCname(Secrets.getOrDefault("system.host", "localhost"));
+//            final HttpRequest request = HttpRequest.newBuilder()
+//                    .uri(URI.create("https://" + systemDomainName + "/v2/system/address/" + systemAddress.toString()))
+//                    .header("User-Agent", VersionService.getUserAgent())
+//                    .GET()
+//                    .build();
+//            final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+//            if (send.statusCode() == 200) {
+//                SystemInfo systemInfo = OBJECT_MAPPER.readValue(send.body(), SystemInfo.class);
+//                StarSystem starSystem = new StarSystem(systemInfo.getSystemName(), systemInfo.getSystemX().doubleValue(), systemInfo.getSystemY().doubleValue(), systemInfo.getSystemZ().doubleValue());
+//                SYSTEM_CACHE.put(systemAddress, starSystem);
+//                return starSystem;
+//            } else {
+//                log.error("Failed fetching system data for systemAddress {}", systemAddress);
+//            }
+//        } catch (InterruptedException | IOException | NamingException | IllegalArgumentException e) {
+//            log.error(e.getMessage(), e);
+//        }
+//        return null;
+//
+//    }
 
     private static void destroy() {
         subscriptionFleetCarrier.dispose();

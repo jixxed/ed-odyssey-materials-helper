@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.google.common.collect.Iterables;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
@@ -28,13 +29,17 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.StreamSupport;
 
 @Slf4j
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
@@ -45,7 +50,7 @@ public class EliteMQService {
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
     private static final ThreadPoolExecutor EXECUTOR_SERVICE = new ThreadPoolExecutor(1, 1,
             0L, TimeUnit.MILLISECONDS,
-            new LinkedBlockingQueue<Runnable>());
+            new LinkedBlockingQueue<>());
 
     static {
         OBJECT_MAPPER.setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
@@ -59,18 +64,28 @@ public class EliteMQService {
     }
 
     public static void init() {
-        EVENT_LISTENERS.add(EventService.addStaticListener(TerminateApplicationEvent.class, terminateApplicationEvent -> {
+        EVENT_LISTENERS.add(EventService.addStaticListener(TerminateApplicationEvent.class, _ -> {
             EXECUTOR_SERVICE.shutdown();
         }));
     }
 
 
     public static void sendCommunityGoal(CommunityGoal communityGoal) {
-        if (!VersionService.isDev()) {
-            try {
-                final String data = OBJECT_MAPPER.writeValueAsString(communityGoal);
+        if (VersionService.isDev()) {
+            return;
+        }
+        try {
+            LocalDateTime maxAge = LocalDateTime.parse(Secrets.getOrDefault("cg.age", Instant.now().toString()));
+            final String data = OBJECT_MAPPER.writeValueAsString(communityGoal);
+            final LocalDateTime lastTimestamp = UserPreferencesService.getPreference(PreferenceConstants.MQ_LATEST_CG, MIN_DATETIME);
+            var timestamp = communityGoal.getTimestamp();
+            if(timestamp.isBefore(maxAge)) {
+                return;
+            }
+            if (timestamp.isAfter(lastTimestamp)) {
                 final Runnable run = () -> {
-                    try (final HttpClient httpClient = HttpClient.newHttpClient()) {
+                    try {
+                        HttpClient httpClient = HttpClientService.getHttpClient();
                         final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("elite.mq.host", "localhost"));
                         final HttpRequest request = HttpRequest.newBuilder()
                                 .uri(URI.create("https://" + domainName + "/communitygoal"))
@@ -81,14 +96,9 @@ public class EliteMQService {
                                 .build();
                         SEMAPHORE.acquire();
                         try {
-                            final LocalDateTime lastTimestamp = UserPreferencesService.getPreference(PreferenceConstants.MQ_LATEST_CG, MIN_DATETIME);
-                            var timestamp = communityGoal.getTimestamp();
-                            if (timestamp.isAfter(lastTimestamp)) {
-                                UserPreferencesService.setPreference(PreferenceConstants.MQ_LATEST_CG, timestamp);
-                                final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-                            }
+                            httpClient.send(request, HttpResponse.BodyHandlers.ofString());
                         } finally {
-                            SEMAPHORE.release(); // Release the permit after the request is completed
+                            SEMAPHORE.release();
                         }
                     } catch (final InterruptedException e) {
                         Thread.currentThread().interrupt();
@@ -97,10 +107,63 @@ public class EliteMQService {
                     }
                 };
                 EXECUTOR_SERVICE.submit(run);
-            } catch (Exception e) {
-                log.error("publish cg error", e);
+                UserPreferencesService.setPreference(PreferenceConstants.MQ_LATEST_CG, timestamp);
             }
+        } catch (Exception e) {
+            log.error("publish cg error", e);
+        }
 
+    }
+
+    public static void sendCommunityGoal(List<CommunityGoal> communityGoals) {
+        if (VersionService.isDev() || communityGoals == null || communityGoals.isEmpty()) {
+            return;
+        }
+
+        try {
+            LocalDateTime maxAge = LocalDateTime.parse(Secrets.getOrDefault("cg.age", Instant.now().toString()));
+            final LocalDateTime lastTimestamp = UserPreferencesService.getPreference(PreferenceConstants.MQ_LATEST_CG, MIN_DATETIME);
+            List<CommunityGoal> toSend = communityGoals.stream().filter(communityGoal -> communityGoal.getTimestamp().isAfter(lastTimestamp)).toList();
+            Optional<LocalDateTime> latest = toSend.stream().max(Comparator.comparing(CommunityGoal::getTimestamp)).map(CommunityGoal::getTimestamp);
+            latest.ifPresent(timestamp -> {
+                if(timestamp.isBefore(maxAge)) {
+                    return;
+                }
+                final Runnable run = () -> {
+                    HttpClient httpClient = HttpClientService.getHttpClient();
+                    StreamSupport.stream(Iterables.partition(toSend, 50).spliterator(), false).forEach(subList -> {
+                        try {
+                            final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("elite.mq.host", "localhost"));
+
+                            final String data = OBJECT_MAPPER.writeValueAsString(subList);
+                            final HttpRequest request = HttpRequest.newBuilder()
+                                    .uri(URI.create("https://" + domainName + "/communitygoal/batch"))
+                                    .header("User-Agent", VersionService.getUserAgent())
+                                    .header("X-API-Key", Secrets.getOrDefault("elite.mq.api.key", "none"))
+                                    .header("Content-Type", "application/json")
+                                    .POST(HttpRequest.BodyPublishers.ofString(data))
+                                    .build();
+
+                            try {
+                                SEMAPHORE.acquire();
+                                httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+                            } catch (final InterruptedException e) {
+                                Thread.currentThread().interrupt();
+                            } catch (final Exception e) {
+                                log.error("batch publish cg error", e);
+                            } finally {
+                                SEMAPHORE.release();
+                            }
+                        } catch (final Exception e) {
+                            log.error("batch sendCommunityGoal error", e);
+                        }
+                    });
+                };
+                EXECUTOR_SERVICE.submit(run);
+                UserPreferencesService.setPreference(PreferenceConstants.MQ_LATEST_CG, timestamp);
+            });
+        } catch (Exception e) {
+            log.error("batch sendCommunityGoal serialization error", e);
         }
     }
-} 
+}

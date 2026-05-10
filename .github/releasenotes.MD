@@ -11,13 +11,9 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Finished Lynx Highliner stats
-Added price info to Lynx Highliner, Lynx Highliner Armours and Mk II Passenger Cabins
-Implemented community goal tracking
-Implemented shortlinks
-- When you copy a wishlist or loadout to clipboard, the app will automatically attempt to generate a shortlink (link.edomh.nl)
-- This will upload the edomh:// url to link.edomh.nl and give you a https:// shortlink to it. You can also import from shortlinks by pasting them directly in the app (CTRL + V)
-- If the app fails to generate a shortlink, it will fallback to the edomh:// url, which can still be imported by pasting it directly in the app (CTRL + V)
-Ship Editor now shows passenger capacity per class
-Pinplanner url has now been moved to https://pinplanner.edomh.nl/
+Added databases to the app
+- Journals will be scraped for relevant events when loading a commander. This can take a while the first time.
+- Known star systems are stored in the database for distance calculations
+- Community goal progress is stored in the database for tracking personal progress (no UI yet)
+- A future version will allow for recording owned ships and modules, but this is not implemented yet
 ```

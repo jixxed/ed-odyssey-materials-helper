@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.enums.LoadingStage;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventProcessedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LoadingEvent;
@@ -41,7 +42,7 @@ public class LoadingScreen extends DestroyableAnchorPane implements DestroyableE
         initProgressBar();
         text = LabelBuilder.builder()
                 .withStyleClass("text-status")
-                .withNonLocalizedText("Loading journal files...")
+                .withText("loading.screen.status.database")
                 .build();
         final DestroyableHBox hBox = BoxBuilder.builder()
                 .withNodes(new GrowingRegion(), BoxBuilder.builder()
@@ -62,12 +63,16 @@ public class LoadingScreen extends DestroyableAnchorPane implements DestroyableE
 
     private void setState(LoadingStage loadingStage) {
         switch (loadingStage) {
+            case DATABASE -> {
+                progressBar.setProgress(0);
+                this.text.addBinding(this.text.textProperty(), LocaleService.getStringBinding("loading.screen.status.database"));
+            }
             case EVENTS -> {
                 progressBar.setProgress(0);
-                text.setText("Loading journal files...");
+                this.text.addBinding(this.text.textProperty(), LocaleService.getStringBinding("loading.screen.status.journal"));
             }
             case UI -> {
-                text.setText("Loading UI...");
+                this.text.addBinding(this.text.textProperty(), LocaleService.getStringBinding("loading.screen.status.ui"));
             }
         }
     }

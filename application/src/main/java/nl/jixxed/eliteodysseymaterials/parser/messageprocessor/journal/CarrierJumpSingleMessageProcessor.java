@@ -1,0 +1,78 @@
+/*
+ * Copyright (c) 2026 Jixxed
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+package nl.jixxed.eliteodysseymaterials.parser.messageprocessor.journal;
+
+import io.ebean.InsertOptions;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
+import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.SingleMessageProcessor;
+import nl.jixxed.eliteodysseymaterials.persistence.common.model.StarSystemModel;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierJump.CarrierJump;
+import nl.jixxed.eliteodysseymaterials.service.*;
+import nl.jixxed.eliteodysseymaterials.service.event.CarrierJumpJournalEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+
+import java.util.Optional;
+
+public class CarrierJumpSingleMessageProcessor implements SingleMessageProcessor<CarrierJump> {
+    @Override
+    public void process(final CarrierJump event) {
+        final String body = event.getBody();
+        final String starSystem = event.getStarSystem();
+        final Economy economy = Economy.forKey(event.getSystemEconomy());
+        final Economy secondEconomy = Economy.forKey(event.getSystemSecondEconomy());
+        final Government government = Government.forId(event.getSystemGovernment());
+        final Security security = Security.forId(event.getSystemSecurity());
+        final Allegiance allegiance = Allegiance.forKey(event.getSystemAllegiance());
+        final State factionState = event.getSystemFaction().map(systemFaction -> State.forName(systemFaction.getFactionState().orElse(""))).orElse(State.NONE);
+
+        if (!starSystem.isBlank()) {
+            final double x = event.getStarPos().get(0).doubleValue();
+            final double y = event.getStarPos().get(1).doubleValue();
+            final double z = event.getStarPos().get(2).doubleValue();
+            EventService.publish(new CarrierJumpJournalEvent(event, new StarSystem(starSystem, economy, secondEconomy, government, security, allegiance, event.getPopulation(), factionState, x, y, z), body));
+            StarSystemModel starSystemModel = new StarSystemModel(
+                    event.getSystemAddress(),
+                    event.getStarSystem(),
+                    event.getStarPos().get(0).doubleValue(),
+                    event.getStarPos().get(1).doubleValue(),
+                    event.getStarPos().get(2).doubleValue()
+            );
+//            DatabaseService.getCommonDatabase().insert(starSystemModel, InsertOptions.ON_CONFLICT_UPDATE);
+            upsert(starSystemModel);
+        }
+        EDDNService.carrierjump(event);
+        event.getMarketID().ifPresent(marketID -> {
+
+            if (marketID.toString().equals(UserPreferencesService.getPreference(PreferenceConstants.FLEET_CARRIER_ID, "none"))) {
+                LocationService.setFleetCarrierLocation(Optional.of(new StarSystem(event.getStarSystem(), event.getStarPos().get(0).doubleValue(), event.getStarPos().get(1).doubleValue(), event.getStarPos().get(2).doubleValue())));
+                CarrierService.carrierExistsProperty(CarrierType.FLEETCARRIER).set(true);
+                event.getStationName().ifPresent(stationName -> {
+                    CarrierService.setCarrierCallSign(CarrierType.FLEETCARRIER, stationName);
+                });
+
+            } else if (marketID.toString().equals(UserPreferencesService.getPreference(PreferenceConstants.SQUADRON_CARRIER_ID, "none"))) {
+                LocationService.setSquadronCarrierLocation(Optional.of(new StarSystem(event.getStarSystem(), event.getStarPos().get(0).doubleValue(), event.getStarPos().get(1).doubleValue(), event.getStarPos().get(2).doubleValue())));
+                CarrierService.carrierExistsProperty(CarrierType.SQUADRONCARRIER).set(false);
+                event.getStationName().ifPresent(stationName -> {
+                    CarrierService.setCarrierCallSign(CarrierType.SQUADRONCARRIER, stationName);
+                });
+            }
+        });
+    }
+
+    @Override
+    public Class<CarrierJump> getMessageClass() {
+        return CarrierJump.class;
+    }
+
+}

@@ -1,0 +1,39 @@
+/*
+ * Copyright (c) 2026 Jixxed
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+package nl.jixxed.eliteodysseymaterials.parser.messageprocessor.journal;
+
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.enums.CarrierType;
+import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.SingleMessageProcessor;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierLocation.CarrierLocation;
+import nl.jixxed.eliteodysseymaterials.service.CarrierService;
+import nl.jixxed.eliteodysseymaterials.service.LocationService;
+import nl.jixxed.eliteodysseymaterials.service.UserPreferencesService;
+
+public class CarrierLocationSingleMessageProcessor implements SingleMessageProcessor<CarrierLocation> {
+    @Override
+    public void process(final CarrierLocation event) {
+        if (event.getCarrierType().map("FleetCarrier"::equals).orElse(false)) {
+            UserPreferencesService.setPreference(PreferenceConstants.FLEET_CARRIER_ID, event.getCarrierID().toString());
+            LocationService.setFleetCarrierLocationByAddress(event.getSystemAddress());
+            CarrierService.carrierExistsProperty(CarrierType.FLEETCARRIER).set(true);
+        } else if (event.getCarrierType().map("SquadronCarrier"::equals).orElse(false)) {
+            UserPreferencesService.setPreference(PreferenceConstants.SQUADRON_CARRIER_ID, event.getCarrierID().toString());
+            LocationService.setSquadronCarrierLocationByAddress(event.getSystemAddress());
+            CarrierService.carrierExistsProperty(CarrierType.SQUADRONCARRIER).set(true);
+        }
+    }
+
+    @Override
+    public Class<CarrierLocation> getMessageClass() {
+        return CarrierLocation.class;
+    }
+}

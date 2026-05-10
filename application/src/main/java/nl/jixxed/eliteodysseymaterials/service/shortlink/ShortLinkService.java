@@ -13,6 +13,7 @@ package nl.jixxed.eliteodysseymaterials.service.shortlink;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.helper.DnsHelper;
+import nl.jixxed.eliteodysseymaterials.service.HttpClientService;
 import nl.jixxed.eliteodysseymaterials.service.Secrets;
 import nl.jixxed.eliteodysseymaterials.service.VersionService;
 
@@ -29,7 +30,8 @@ public class ShortLinkService {
     public static String requestShortLink(String edomhUrl) {
         ShortLinkRequest shortLinkRequest = new ShortLinkRequest();
         shortLinkRequest.setUrl(edomhUrl);
-        try (HttpClient httpClient = HttpClient.newHttpClient()) {
+        try {
+            HttpClient httpClient = HttpClientService.getHttpClient();
             final String data = OBJECT_MAPPER.writeValueAsString(shortLinkRequest);
             final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("shortlink.host", "localhost"));
             final HttpRequest request = HttpRequest.newBuilder()

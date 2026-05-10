@@ -29,6 +29,7 @@ import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiArxMessa
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiFleetCarrierMessageProcessor;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiMessageProcessor;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiSquadronMessageProcessor;
+import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.journal.*;
 import nl.jixxed.eliteodysseymaterials.schemas.capi.fleetcarrier.CapiFleetcarrier;
 import nl.jixxed.eliteodysseymaterials.schemas.capi.squadron.CapiSquadron;
 import nl.jixxed.eliteodysseymaterials.schemas.capi.squadron.ShipItem;
@@ -81,101 +82,101 @@ class MessageHandler {
 
     }
 
-    private static final Map<JournalEventType, MessageProcessor<? extends Event>> messageProcessors = Map.ofEntries(
-            Map.entry(JournalEventType.FILEHEADER, new FileHeaderMessageProcessor()),
-            Map.entry(JournalEventType.CARRIERJUMP, new CarrierJumpMessageProcessor()),
-            Map.entry(JournalEventType.CODEXENTRY, new CodexEntryMessageProcessor()),
-            Map.entry(JournalEventType.SHIPYARD, new ShipyardMessageProcessor()),
-            Map.entry(JournalEventType.SCAN, new ScanMessageProcessor()),
-            Map.entry(JournalEventType.SAASIGNALSFOUND, new SAASignalsFoundMessageProcessor()),
-            Map.entry(JournalEventType.MARKET, new MarketMessageProcessor()),
-            Map.entry(JournalEventType.FSSALLBODIESFOUND, new FSSAllBodiesFoundMessageProcessor()),
-            Map.entry(JournalEventType.FSSSIGNALDISCOVERED, new FSSSignalDiscoveredMessageProcessor()),
-            Map.entry(JournalEventType.USSDROP, new USSDropMessageProcessor()),
+    private static final Map<JournalEventType, SingleMessageProcessor<? extends Event>> messageProcessors = Map.ofEntries(
+            Map.entry(JournalEventType.FILEHEADER, new FileHeaderSingleMessageProcessor()),
+            Map.entry(JournalEventType.CARRIERJUMP, new CarrierJumpSingleMessageProcessor()),
+            Map.entry(JournalEventType.CODEXENTRY, new CodexEntrySingleMessageProcessor()),
+            Map.entry(JournalEventType.SHIPYARD, new ShipyardSingleMessageProcessor()),
+            Map.entry(JournalEventType.SCAN, new ScanSingleMessageProcessor()),
+            Map.entry(JournalEventType.SAASIGNALSFOUND, new SAASignalsFoundSingleMessageProcessor()),
+            Map.entry(JournalEventType.MARKET, new MarketSingleMessageProcessor()),
+            Map.entry(JournalEventType.FSSALLBODIESFOUND, new FSSAllBodiesFoundSingleMessageProcessor()),
+            Map.entry(JournalEventType.FSSSIGNALDISCOVERED, new FSSSignalDiscoveredSingleMessageProcessor()),
+            Map.entry(JournalEventType.USSDROP, new USSDropSingleMessageProcessor()),
 
-            Map.entry(JournalEventType.FSSBODYSIGNALS, new FSSBodySignalsMessageProcessor()),
-            Map.entry(JournalEventType.FSSDISCOVERYSCAN, new FSSDiscoveryScanMessageProcessor()),
-            Map.entry(JournalEventType.NAVBEACONSCAN, new NavBeaconScanMessageProcessor()),
-            Map.entry(JournalEventType.SCANBARYCENTRE, new ScanBaryCentreMessageProcessor()),
+            Map.entry(JournalEventType.FSSBODYSIGNALS, new FSSBodySignalsSingleMessageProcessor()),
+            Map.entry(JournalEventType.FSSDISCOVERYSCAN, new FSSDiscoveryScanSingleMessageProcessor()),
+            Map.entry(JournalEventType.NAVBEACONSCAN, new NavBeaconScanSingleMessageProcessor()),
+            Map.entry(JournalEventType.SCANBARYCENTRE, new ScanBaryCentreSingleMessageProcessor()),
 
-            Map.entry(JournalEventType.NAVROUTE, new NavRouteMessageProcessor()),
-            Map.entry(JournalEventType.NAVROUTECLEAR, new NavRouteClearMessageProcessor()),
-            Map.entry(JournalEventType.OUTFITTING, new OutfittingMessageProcessor()),
-            Map.entry(JournalEventType.MODULEINFO, new ModuleInfoMessageProcessor()),
-            Map.entry(JournalEventType.FCMATERIALS, new FCMaterialsMessageProcessor()),
+            Map.entry(JournalEventType.NAVROUTE, new NavRouteSingleMessageProcessor()),
+            Map.entry(JournalEventType.NAVROUTECLEAR, new NavRouteClearSingleMessageProcessor()),
+            Map.entry(JournalEventType.OUTFITTING, new OutfittingSingleMessageProcessor()),
+            Map.entry(JournalEventType.MODULEINFO, new ModuleInfoSingleMessageProcessor()),
+            Map.entry(JournalEventType.FCMATERIALS, new FCMaterialsSingleMessageProcessor()),
 
 //            Map.entry(JournalEventType.COMMANDER, new CommanderMessageProcessor()),
-            Map.entry(JournalEventType.ENGINEERPROGRESS, new EngineerProgressMessageProcessor()),
-            Map.entry(JournalEventType.EMBARK, new EmbarkMessageProcessor()),
-            Map.entry(JournalEventType.SHIPLOCKER, new ShipLockerMessageProcessor()),
-            Map.entry(JournalEventType.BACKPACK, new BackpackMessageProcessor()),
-            Map.entry(JournalEventType.BACKPACKCHANGE, new BackpackChangeMessageProcessor()),
-            Map.entry(JournalEventType.RESUPPLY, new ResupplyMessageProcessor()),
-            Map.entry(JournalEventType.FSDJUMP, new FSDJumpMessageProcessor()),
-            Map.entry(JournalEventType.LOADOUT, new LoadoutMessageProcessor()),
-            Map.entry(JournalEventType.LOCATION, new LocationMessageProcessor()),
-            Map.entry(JournalEventType.TOUCHDOWN, new TouchdownMessageProcessor()),
-            Map.entry(JournalEventType.SCIENTIFICRESEARCH, new ScientificResearchMessageProcessor()),
+            Map.entry(JournalEventType.ENGINEERPROGRESS, new EngineerProgressSingleMessageProcessor()),
+            Map.entry(JournalEventType.EMBARK, new EmbarkSingleMessageProcessor()),
+            Map.entry(JournalEventType.SHIPLOCKER, new ShipLockerSingleMessageProcessor()),
+            Map.entry(JournalEventType.BACKPACK, new BackpackSingleMessageProcessor()),
+            Map.entry(JournalEventType.BACKPACKCHANGE, new BackpackChangeSingleMessageProcessor()),
+            Map.entry(JournalEventType.RESUPPLY, new ResupplySingleMessageProcessor()),
+            Map.entry(JournalEventType.FSDJUMP, new FSDJumpSingleMessageProcessor()),
+            Map.entry(JournalEventType.LOADOUT, new LoadoutSingleMessageProcessor()),
+            Map.entry(JournalEventType.LOCATION, new LocationSingleMessageProcessor()),
+            Map.entry(JournalEventType.TOUCHDOWN, new TouchdownSingleMessageProcessor()),
+            Map.entry(JournalEventType.SCIENTIFICRESEARCH, new ScientificResearchSingleMessageProcessor()),
 
-            Map.entry(JournalEventType.UNDOCKED, new UndockedMessageProcessor()),
-            Map.entry(JournalEventType.LIFTOFF, new LiftOffMessageProcessor()),
-            Map.entry(JournalEventType.APPROACHBODY, new ApproachBodyMessageProcessor()),
-            Map.entry(JournalEventType.APPROACHSETTLEMENT, new ApproachSettlementMessageProcessor()),
-            Map.entry(JournalEventType.SUPERCRUISEENTRY, new SupercruiseEntryMessageProcessor()),
-            Map.entry(JournalEventType.LEAVEBODY, new LeaveBodyMessageProcessor()),
-            Map.entry(JournalEventType.DOCKED, new DockedMessageProcessor()),
-            Map.entry(JournalEventType.DOCKINGDENIED, new DockingDeniedMessageProcessor()),
-            Map.entry(JournalEventType.DOCKINGGRANTED, new DockingGrantedMessageProcessor()),
-            Map.entry(JournalEventType.MATERIALS, new MaterialsMessageProcessor()),
-            Map.entry(JournalEventType.CARGO, new CargoMessageProcessor()),
-            Map.entry(JournalEventType.CARGOTRANSFER, new CargoTransferMessageProcessor()),
-            Map.entry(JournalEventType.EJECTCARGO, new EjectCargoMessageProcessor()),
+            Map.entry(JournalEventType.UNDOCKED, new UndockedSingleMessageProcessor()),
+            Map.entry(JournalEventType.LIFTOFF, new LiftOffSingleMessageProcessor()),
+            Map.entry(JournalEventType.APPROACHBODY, new ApproachBodySingleMessageProcessor()),
+            Map.entry(JournalEventType.APPROACHSETTLEMENT, new ApproachSettlementSingleMessageProcessor()),
+            Map.entry(JournalEventType.SUPERCRUISEENTRY, new SupercruiseEntrySingleMessageProcessor()),
+            Map.entry(JournalEventType.LEAVEBODY, new LeaveBodySingleMessageProcessor()),
+            Map.entry(JournalEventType.DOCKED, new DockedSingleMessageProcessor()),
+            Map.entry(JournalEventType.DOCKINGDENIED, new DockingDeniedSingleMessageProcessor()),
+            Map.entry(JournalEventType.DOCKINGGRANTED, new DockingGrantedSingleMessageProcessor()),
+            Map.entry(JournalEventType.MATERIALS, new MaterialsSingleMessageProcessor()),
+            Map.entry(JournalEventType.CARGO, new CargoSingleMessageProcessor()),
+            Map.entry(JournalEventType.CARGOTRANSFER, new CargoTransferSingleMessageProcessor()),
+            Map.entry(JournalEventType.EJECTCARGO, new EjectCargoSingleMessageProcessor()),
 
-            Map.entry(JournalEventType.SUITLOADOUT, new SuitLoadoutMessageProcessor()),
-            Map.entry(JournalEventType.SWITCHSUITLOADOUT, new SuitLoadoutMessageProcessor()),
+            Map.entry(JournalEventType.SUITLOADOUT, new SuitLoadoutSingleMessageProcessor()),
+            Map.entry(JournalEventType.SWITCHSUITLOADOUT, new SuitLoadoutSingleMessageProcessor()),
 
-            Map.entry(JournalEventType.MATERIALCOLLECTED, new MaterialCollectedMessageProcessor()),
-            Map.entry(JournalEventType.MATERIALTRADE, new MaterialTradeMessageProcessor()),
-            Map.entry(JournalEventType.MATERIALDISCARDED, new MaterialDiscardedMessageProcessor()),
-            Map.entry(JournalEventType.ENGINEERCONTRIBUTION, new EngineerContributionMessageProcessor()),
-            Map.entry(JournalEventType.ENGINEERCRAFT, new EngineerCraftMessageProcessor()),
-            Map.entry(JournalEventType.MISSIONCOMPLETED, new MissionCompletedMessageProcessor()),
-            Map.entry(JournalEventType.SYNTHESIS, new SynthesisMessageProcessor()),
-            Map.entry(JournalEventType.TECHNOLOGYBROKER, new TechnologyBrokerMessageProcessor()),
-            Map.entry(JournalEventType.UPGRADESUIT, new UpgradeSuitMessageProcessor()),
-            Map.entry(JournalEventType.UPGRADEWEAPON, new UpgradeWeaponMessageProcessor()),
-            Map.entry(JournalEventType.RECEIVETEXT, new ReceiveTextMessageProcessor()),
-            Map.entry(JournalEventType.SENDTEXT, new SendTextMessageProcessor()),
-            Map.entry(JournalEventType.BUYMICRORESOURCES, new BuyMicroResourcesMessageProcessor()),
-            Map.entry(JournalEventType.MARKETBUY, new MarketBuyMessageProcessor()),
-            Map.entry(JournalEventType.MARKETSELL, new MarketSellMessageProcessor()),
-            Map.entry(JournalEventType.SHUTDOWN, new ShutdownMessageProcessor()),
-            Map.entry(JournalEventType.STARTJUMP, new StartJumpMessageProcessor()),
-            Map.entry(JournalEventType.POWERPLAY, new PowerplayMessageProcessor()),
-            Map.entry(JournalEventType.POWERPLAYLEAVE, new PowerplayLeaveMessageProcessor()),
-            Map.entry(JournalEventType.POWERPLAYRANK, new PowerplayRankMessageProcessor()),
-            Map.entry(JournalEventType.POWERPLAYMERITS, new PowerplayMeritsMessageProcessor()),
-            Map.entry(JournalEventType.MUSIC, new MusicMessageProcessor()),
-            Map.entry(JournalEventType.DELIVERPOWERMICRORESOURCES, new DeliverPowerMicroResourcesMessageProcessor()),
-            Map.entry(JournalEventType.COLONISATIONCONTRIBUTION, new ColonisationContributionMessageProcessor()),
-            Map.entry(JournalEventType.COLONISATIONCONSTRUCTIONDEPOT, new ColonisationConstructionDepotMessageProcessor()),
-            Map.entry(JournalEventType.SUPERCRUISEDESTINATIONDROP, new SupercruiseDestinationDropMessageProcessor()),
-            Map.entry(JournalEventType.SUPERCRUISEEXIT, new SupercruiseExitMessageProcessor()),
-            Map.entry(JournalEventType.PROSPECTEDASTEROID, new ProspectedAsteroidMessageProcessor()),
-            Map.entry(JournalEventType.CARRIERLOCATION, new CarrierLocationMessageProcessor()),
-            Map.entry(JournalEventType.CARRIERSTATS, new CarrierStatsMessageProcessor()),
-            Map.entry(JournalEventType.CARRIERTRADEORDER, new CarrierTradeOrderMessageProcessor()),
-            Map.entry(JournalEventType.MODULEBUY, new ModuleBuyMessageProcessor()),
-            Map.entry(JournalEventType.MODULERETRIEVE, new ModuleRetrieveMessageProcessor()),
-            Map.entry(JournalEventType.MODULESELL, new ModuleSellMessageProcessor()),
-            Map.entry(JournalEventType.MODULESTORE, new ModuleStoreMessageProcessor()),
-            Map.entry(JournalEventType.MODULESWAP, new ModuleSwapMessageProcessor()),
-            Map.entry(JournalEventType.REPUTATION, new ReputationMessageProcessor()),
-            Map.entry(JournalEventType.RANK, new RankMessageProcessor()),
-            Map.entry(JournalEventType.PROGRESS, new ProgressMessageProcessor()),
-            Map.entry(JournalEventType.COMMUNITYGOAL, new CommunityGoalMessageProcessor()),
+            Map.entry(JournalEventType.MATERIALCOLLECTED, new MaterialCollectedSingleMessageProcessor()),
+            Map.entry(JournalEventType.MATERIALTRADE, new MaterialTradeSingleMessageProcessor()),
+            Map.entry(JournalEventType.MATERIALDISCARDED, new MaterialDiscardedSingleMessageProcessor()),
+            Map.entry(JournalEventType.ENGINEERCONTRIBUTION, new EngineerContributionSingleMessageProcessor()),
+            Map.entry(JournalEventType.ENGINEERCRAFT, new EngineerCraftSingleMessageProcessor()),
+            Map.entry(JournalEventType.MISSIONCOMPLETED, new MissionCompletedSingleMessageProcessor()),
+            Map.entry(JournalEventType.SYNTHESIS, new SynthesisSingleMessageProcessor()),
+            Map.entry(JournalEventType.TECHNOLOGYBROKER, new TechnologyBrokerSingleMessageProcessor()),
+            Map.entry(JournalEventType.UPGRADESUIT, new UpgradeSuitSingleMessageProcessor()),
+            Map.entry(JournalEventType.UPGRADEWEAPON, new UpgradeWeaponSingleMessageProcessor()),
+            Map.entry(JournalEventType.RECEIVETEXT, new ReceiveTextSingleMessageProcessor()),
+            Map.entry(JournalEventType.SENDTEXT, new SendTextSingleMessageProcessor()),
+            Map.entry(JournalEventType.BUYMICRORESOURCES, new BuyMicroResourcesSingleMessageProcessor()),
+            Map.entry(JournalEventType.MARKETBUY, new MarketBuySingleMessageProcessor()),
+            Map.entry(JournalEventType.MARKETSELL, new MarketSellSingleMessageProcessor()),
+            Map.entry(JournalEventType.SHUTDOWN, new ShutdownSingleMessageProcessor()),
+            Map.entry(JournalEventType.STARTJUMP, new StartJumpSingleMessageProcessor()),
+            Map.entry(JournalEventType.POWERPLAY, new PowerplaySingleMessageProcessor()),
+            Map.entry(JournalEventType.POWERPLAYLEAVE, new PowerplayLeaveSingleMessageProcessor()),
+            Map.entry(JournalEventType.POWERPLAYRANK, new PowerplayRankSingleMessageProcessor()),
+            Map.entry(JournalEventType.POWERPLAYMERITS, new PowerplayMeritsSingleMessageProcessor()),
+            Map.entry(JournalEventType.MUSIC, new MusicSingleMessageProcessor()),
+            Map.entry(JournalEventType.DELIVERPOWERMICRORESOURCES, new DeliverPowerMicroResourcesSingleMessageProcessor()),
+            Map.entry(JournalEventType.COLONISATIONCONTRIBUTION, new ColonisationContributionSingleMessageProcessor()),
+            Map.entry(JournalEventType.COLONISATIONCONSTRUCTIONDEPOT, new ColonisationConstructionDepotSingleMessageProcessor()),
+            Map.entry(JournalEventType.SUPERCRUISEDESTINATIONDROP, new SupercruiseDestinationDropSingleMessageProcessor()),
+            Map.entry(JournalEventType.SUPERCRUISEEXIT, new SupercruiseExitSingleMessageProcessor()),
+            Map.entry(JournalEventType.PROSPECTEDASTEROID, new ProspectedAsteroidSingleMessageProcessor()),
+            Map.entry(JournalEventType.CARRIERLOCATION, new CarrierLocationSingleMessageProcessor()),
+            Map.entry(JournalEventType.CARRIERSTATS, new CarrierStatsSingleMessageProcessor()),
+            Map.entry(JournalEventType.CARRIERTRADEORDER, new CarrierTradeOrderSingleMessageProcessor()),
+            Map.entry(JournalEventType.MODULEBUY, new ModuleBuySingleMessageProcessor()),
+            Map.entry(JournalEventType.MODULERETRIEVE, new ModuleRetrieveSingleMessageProcessor()),
+            Map.entry(JournalEventType.MODULESELL, new ModuleSellSingleMessageProcessor()),
+            Map.entry(JournalEventType.MODULESTORE, new ModuleStoreSingleMessageProcessor()),
+            Map.entry(JournalEventType.MODULESWAP, new ModuleSwapSingleMessageProcessor()),
+            Map.entry(JournalEventType.REPUTATION, new ReputationSingleMessageProcessor()),
+            Map.entry(JournalEventType.RANK, new RankSingleMessageProcessor()),
+            Map.entry(JournalEventType.PROGRESS, new ProgressSingleMessageProcessor()),
+            Map.entry(JournalEventType.COMMUNITYGOAL, new CommunityGoalSingleMessageProcessor()),
 
-            Map.entry(JournalEventType.LOADGAME, new LoadGameMessageProcessor())
+            Map.entry(JournalEventType.LOADGAME, new LoadGameSingleMessageProcessor())
     );
     private static final Map<JournalEventType, CapiMessageProcessor<?>> capiMessageProcessors = Map.ofEntries(
             Map.entry(JournalEventType.CAPIFLEETCARRIER, new CapiFleetCarrierMessageProcessor()),
@@ -192,11 +193,11 @@ class MessageHandler {
                 final String eventName = jsonNode.get(EVENT).asText();
                 log.info("event: " + eventName + "(" + jsonNode.get(TIMESTAMP).asText() + ")");
                 final JournalEventType journalEventType = JournalEventType.forName(jsonNode.get(EVENT).asText());
-                final MessageProcessor<Event> messageProcessor = (MessageProcessor<Event>) messageProcessors.get(journalEventType);
-                if (messageProcessor != null) {
-                    final Class<? extends Event> messageClass = messageProcessor.getMessageClass();
+                final SingleMessageProcessor<Event> singleMessageProcessor = (SingleMessageProcessor<Event>) messageProcessors.get(journalEventType);
+                if (singleMessageProcessor != null) {
+                    final Class<? extends Event> messageClass = singleMessageProcessor.getMessageClass();
                     final Event event = OBJECT_MAPPER.readValue(message, messageClass);
-                    messageProcessor.process(event);
+                    singleMessageProcessor.process(event);
                     EventService.publish(new JournalLineProcessedEvent(jsonNode.get("timestamp").asText(), journalEventType, file));
                     ApplicationState.getInstance().setWatchedFile(file.getName());
                 }
@@ -224,11 +225,11 @@ class MessageHandler {
             if (jsonNode.has(EVENT) && jsonNode.has(TIMESTAMP)) {
                 final String eventName = jsonNode.get(EVENT).asText();
                 log.info("event: " + eventName + "(" + jsonNode.get(TIMESTAMP).asText() + ")");
-                final MessageProcessor<Event> messageProcessor = (MessageProcessor<Event>) messageProcessors.get(journalEventType);
-                if (messageProcessor != null) {
-                    final Class<? extends Event> messageClass = messageProcessor.getMessageClass();
+                final SingleMessageProcessor<Event> singleMessageProcessor = (SingleMessageProcessor<Event>) messageProcessors.get(journalEventType);
+                if (singleMessageProcessor != null) {
+                    final Class<? extends Event> messageClass = singleMessageProcessor.getMessageClass();
                     final Event event = OBJECT_MAPPER.readValue(message, messageClass);
-                    messageProcessor.process(event);
+                    singleMessageProcessor.process(event);
                     EventService.publish(new JournalLineProcessedEvent("now", journalEventType, file));
                 }
                 final LocalDateTime timestamp = LocalDateTime.parse(jsonNode.get(TIMESTAMP).asText(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
@@ -249,11 +250,11 @@ class MessageHandler {
                 final String eventName = jsonNode.get(EVENT).asText();
                 log.info("event: " + eventName + "(" + jsonNode.get(TIMESTAMP).asText() + ")");
                 final JournalEventType journalEventType = JournalEventType.forName(jsonNode.get(EVENT).asText());
-                final MessageProcessor<Event> messageProcessor = (MessageProcessor<Event>) messageProcessors.get(journalEventType);
-                if (messageProcessor != null) {
-                    final Class<? extends Event> messageClass = messageProcessor.getMessageClass();
+                final SingleMessageProcessor<Event> singleMessageProcessor = (SingleMessageProcessor<Event>) messageProcessors.get(journalEventType);
+                if (singleMessageProcessor != null) {
+                    final Class<? extends Event> messageClass = singleMessageProcessor.getMessageClass();
                     final Event event = OBJECT_MAPPER.readValue(message, messageClass);
-                    messageProcessor.process(event);
+                    singleMessageProcessor.process(event);
                     EventService.publish(new JournalLineProcessedEvent("now", JournalEventType.forName(eventName), file));
                 }
                 final LocalDateTime timestamp = LocalDateTime.parse(jsonNode.get(TIMESTAMP).asText(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));

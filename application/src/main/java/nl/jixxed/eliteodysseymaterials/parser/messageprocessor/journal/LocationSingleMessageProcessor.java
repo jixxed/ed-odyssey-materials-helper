@@ -1,0 +1,78 @@
+/*
+ * Copyright (c) 2026 Jixxed
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+package nl.jixxed.eliteodysseymaterials.parser.messageprocessor.journal;
+
+import io.ebean.InsertOptions;
+import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
+import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.SingleMessageProcessor;
+import nl.jixxed.eliteodysseymaterials.persistence.common.model.StarSystemModel;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Location.Location;
+import nl.jixxed.eliteodysseymaterials.service.DatabaseService;
+import nl.jixxed.eliteodysseymaterials.service.EDDNService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.LocationJournalEvent;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Slf4j
+public class LocationSingleMessageProcessor implements SingleMessageProcessor<Location> {
+    private Boolean isFirstLocationEventInJournal = Boolean.TRUE;
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
+    public LocationSingleMessageProcessor() {
+        eventListeners.add(EventService.addListener(this, JournalInitEvent.class, journalInitEvent -> {
+            if (!journalInitEvent.isInitialised()) {
+                this.isFirstLocationEventInJournal = Boolean.FALSE;
+            }
+        }));
+    }
+
+    @Override
+    public void process(final Location event) {
+        final String station = event.getStationName_Localised().orElseGet(() -> event.getStationName().orElse(""));
+        final String body = event.getBody();
+        final String starSystem = event.getStarSystem();
+        final Economy economy = Economy.forKey(event.getSystemEconomy());
+        final Economy secondEconomy = Economy.forKey(event.getSystemSecondEconomy());
+        final Government government = Government.forId(event.getSystemGovernment());
+        final Security security = Security.forId(event.getSystemSecurity());
+        final Allegiance allegiance = Allegiance.forKey(event.getSystemAllegiance());
+        final State factionState = event.getSystemFaction().map(systemFaction -> State.forName(systemFaction.getFactionState().orElse(""))).orElse(State.NONE);
+        if (!starSystem.isBlank()) {
+            final double x = event.getStarPos().get(0).doubleValue();
+            final double y = event.getStarPos().get(1).doubleValue();
+            final double z = event.getStarPos().get(2).doubleValue();
+            EventService.publish(new LocationJournalEvent(event, new StarSystem(starSystem, economy, secondEconomy, government, security, allegiance, event.getPopulation(), factionState, x, y, z), body, station, this.isFirstLocationEventInJournal));
+            this.isFirstLocationEventInJournal = Boolean.FALSE;
+            StarSystemModel starSystemModel = new StarSystemModel(
+                    event.getSystemAddress(),
+                    event.getStarSystem(),
+                    event.getStarPos().get(0).doubleValue(),
+                    event.getStarPos().get(1).doubleValue(),
+                    event.getStarPos().get(2).doubleValue()
+            );
+//            DatabaseService.getCommonDatabase().insert(starSystemModel, InsertOptions.ON_CONFLICT_UPDATE);
+            upsert(starSystemModel);
+
+        }
+        EDDNService.location(event);
+    }
+
+    @Override
+    public Class<Location> getMessageClass() {
+        return Location.class;
+    }
+}

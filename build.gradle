@@ -162,6 +162,7 @@ ext {
     version_mockito = "5.23.0"
     version_sentry = "8.36.0"
     version_github_classgraph = "4.8.184"
+    version_ebean = "17.5.0"
 }
 allprojects {
     plugins.withType(JavaPlugin).whenPluginAdded {
@@ -231,6 +232,14 @@ allprojects {
                 implementation "com.github.wille:oslib:master-SNAPSHOT"
                 implementation 'me.xdrop:fuzzywuzzy:1.4.0'
                 implementation 'org.apache.maven:maven-artifact:3.9.14'
+                implementation 'org.xerial:sqlite-jdbc:3.53.1.0'
+                implementation "io.ebean:ebean:${version_ebean}"
+                implementation "io.ebean:ebean-migration:14.3.0"
+
+                annotationProcessor "io.ebean:querybean-generator:${version_ebean}"
+
+                testImplementation 'io.avaje:junit:1.1'
+                testImplementation "io.ebean:ebean-test:${version_ebean}"
             }
         }
     }

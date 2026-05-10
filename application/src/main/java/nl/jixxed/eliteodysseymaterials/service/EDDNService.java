@@ -447,7 +447,8 @@ public class EDDNService {
         try (final JsonReader jsonReader = JSON_VALIDATION_SERVICE.createReader(new CharSequenceInputStream(data, StandardCharsets.UTF_8), schema, PROBLEM_HANDLER)) {
 //            log.info("Attempt to send: " + data);
             jsonReader.readValue();
-            try (HttpClient httpClient = HttpClient.newHttpClient()) {
+            try {
+                HttpClient httpClient = HttpClientService.getHttpClient();
                 final HttpRequest request = HttpRequest.newBuilder()
                         .uri(URI.create("https://eddn.edcd.io:4430/upload/"))
                         .header("User-Agent", VersionService.getUserAgent())
@@ -462,6 +463,8 @@ public class EDDNService {
                 } finally {
                     SEMAPHORE.release(); // Release the permit after the request is completed
                 }
+            } catch (Exception e) {
+                log.error("Failed to send EDDN message", e);
             }
             // Do something useful here
         } catch (final JsonValidatingException ex) {

@@ -24,10 +24,7 @@ import nl.jixxed.eliteodysseymaterials.helper.DnsHelper;
 import nl.jixxed.eliteodysseymaterials.schemas.market.save.request.*;
 import nl.jixxed.eliteodysseymaterials.schemas.market.save.response.MarketSaveResponse;
 import nl.jixxed.eliteodysseymaterials.schemas.market.search.MarketSearchResponse;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.Secrets;
-import nl.jixxed.eliteodysseymaterials.service.UserPreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.VersionService;
+import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.TerminateApplicationEvent;
@@ -141,25 +138,26 @@ public class MarketAPIService {
                             .withSort(List.of(sort))
                             .build();
                     final String data = OBJECT_MAPPER.writeValueAsString(saveRequest);
-                    final HttpResponse<String> recall;
-                    try (HttpClient httpClient = HttpClient.newHttpClient()) {
-                        final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("market.services.host", "localhost"));
-                        final HttpRequest request = HttpRequest.newBuilder()
-                                .uri(URI.create("https://" + domainName + "/api/stations/search/save"))
-                                .header("User-Agent", VersionService.getUserAgent())
-                                .POST(HttpRequest.BodyPublishers.ofString(data))
-                                .build();
-                        final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-                        MarketSaveResponse marketSaveResponse = OBJECT_MAPPER.readValue(send.body(), MarketSaveResponse.class);
-                        String recallUrl = "https://" + domainName + "/api/stations/search/recall/" + marketSaveResponse.getSearch_reference();
-                        final HttpRequest request2 = HttpRequest.newBuilder()
-                                .uri(URI.create(recallUrl))
-                                .header("User-Agent", VersionService.getUserAgent())
-                                .GET()
-                                .build();
-                        recall = httpClient.send(request2, HttpResponse.BodyHandlers.ofString());
-                    }
+
+                    HttpClient httpClient = HttpClientService.getHttpClient();
+                    final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("market.services.host", "localhost"));
+                    final HttpRequest request = HttpRequest.newBuilder()
+                            .uri(URI.create("https://" + domainName + "/api/stations/search/save"))
+                            .header("User-Agent", VersionService.getUserAgent())
+                            .POST(HttpRequest.BodyPublishers.ofString(data))
+                            .build();
+                    final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+                    MarketSaveResponse marketSaveResponse = OBJECT_MAPPER.readValue(send.body(), MarketSaveResponse.class);
+                    String recallUrl = "https://" + domainName + "/api/stations/search/recall/" + marketSaveResponse.getSearch_reference();
+                    final HttpRequest request2 = HttpRequest.newBuilder()
+                            .uri(URI.create(recallUrl))
+                            .header("User-Agent", VersionService.getUserAgent())
+                            .GET()
+                            .build();
+                    final HttpResponse<String> recall = httpClient.send(request2, HttpResponse.BodyHandlers.ofString());
+
                     if (recall.statusCode() == 200) {
                         MarketSearchResponse MarketSearchResponse = OBJECT_MAPPER.readValue(recall.body(), MarketSearchResponse.class);
                         List<MarketStation> MarketStations = MarketSearchResponseMapper.mapToStations(MarketSearchResponse);

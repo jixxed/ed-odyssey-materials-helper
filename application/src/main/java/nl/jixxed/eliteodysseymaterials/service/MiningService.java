@@ -94,7 +94,8 @@ public class MiningService {
                 try {
                     final String data = OBJECT_MAPPER.writeValueAsString(new Report(buildVersion, ApplicationState.getInstance().getFileheader(), new MiningEvent(LocationService.getCurrentStarSystem(), supercruiseDestinationDrop, supercruiseExit, prospectedAsteroids)));
                     final Runnable run = () -> {
-                        try (final HttpClient httpClient = HttpClient.newHttpClient()) {
+                        try {
+                            HttpClient httpClient = HttpClientService.getHttpClient();
                             log.info(data);
                             final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
                             final HttpRequest request = HttpRequest.newBuilder()

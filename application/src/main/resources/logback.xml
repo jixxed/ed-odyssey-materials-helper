@@ -35,6 +35,7 @@
 <!--            <dsn>https://1aacf97280717f749dfc93a1713f9551@o4507814449774592.ingest.de.sentry.io/4507814504759376</dsn>-->
 <!--        </options>-->
 <!--    </appender>-->
+    <logger name="io.ebean" level="INFO"/>
     <logger name="edomh" level="DEBUG"/>
     <root level="DEBUG">
         <appender-ref ref="CONSOLE"/>

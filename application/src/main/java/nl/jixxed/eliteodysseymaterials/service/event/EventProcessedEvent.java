@@ -16,6 +16,6 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class EventProcessedEvent implements Event {
-    private final Integer current;
-    private final Integer total;
+    private final Long current;
+    private final Long total;
 }

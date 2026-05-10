@@ -54,7 +54,7 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -140,9 +140,9 @@ public class FileProcessor {
                     position = is.getCount();
                 }
 
-                AtomicInteger index = new AtomicInteger(1);
-                Integer total = messages.size();
-                Semaphore semaphore2 = new Semaphore(Math.max(1, total / 25));
+                AtomicLong index = new AtomicLong(1);
+                Long total = (long)messages.size();
+                Semaphore semaphore2 = new Semaphore((int)Math.max(1, total / 25));
                 messages.stream()
                         .sorted(Comparator.comparing(event -> {
                             try {
@@ -166,8 +166,12 @@ public class FileProcessor {
                             }
                         })
                         .forEach(message -> {
-                            MessageHandler.handleMessage(message, file);
-                            Platform.runLater(() -> semaphore2.release());
+                            try{
+                                MessageHandler.handleMessage(message, file);
+                            } catch (Exception e) {
+                                log.error("Error processing event", e);
+                            }
+                            Platform.runLater(semaphore2::release);
                             try {
                                 semaphore2.acquire();
                             } catch (InterruptedException e) {

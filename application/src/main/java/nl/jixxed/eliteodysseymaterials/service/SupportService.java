@@ -83,7 +83,13 @@ public class SupportService {
                 }
 
                 private boolean isExcluded(String fileName) {
-                    return fileName.equals("lock") || fileName.equals("material-report.json") || fileName.endsWith(".tmp") || fileName.equals("capi.json");
+                    return fileName.equals("lock")
+                            || fileName.equals("material-report.json")
+                            || fileName.equals("capi.json")
+                            || fileName.endsWith(".tmp")
+                            || fileName.endsWith(".db")
+                            || fileName.endsWith(".zip")
+                            || fileName.endsWith(".jsonl");
                 }
             });
 
