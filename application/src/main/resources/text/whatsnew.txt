@@ -1,3 +1,7 @@
+Version 3.8.2
+-------------
+Bugfix for app hanging on startup due to non-existent journal folder
+
 Version 3.8.1
 -------------
 Hotfix for database initialization not working

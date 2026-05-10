@@ -11,6 +11,5 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Hotfix for database initialization not working
-Added trigger to rescrape if database is uninitialized
+Bugfix for app hanging on startup due to non-existent journal folder
 ```

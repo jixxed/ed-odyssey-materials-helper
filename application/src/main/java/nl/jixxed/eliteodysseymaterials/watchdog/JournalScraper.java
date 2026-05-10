@@ -80,7 +80,7 @@ public class JournalScraper {
             final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.getDefaultWatchedFolder()));
 
 
-            Map<File, Long> files = countTotalLines(findFilesToScrape(watchedFolder));//TODO slow, filter files out before latest timestamp
+            Map<File, Long> files = (watchedFolder.exists()) ? countTotalLines(findFilesToScrape(watchedFolder)) : Collections.emptyMap();
             long totalLines = files.values().stream().mapToLong(Long::longValue).sum();
             log.debug("{} files to scrape with a total of {} lines", files.size(), totalLines);
             AtomicLong position = new AtomicLong(0);
