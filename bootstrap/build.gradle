@@ -137,27 +137,27 @@ tasks.register("patchShellScript") {
 
 tasks.register("jpackageSigned") {
     dependsOn tasks.named("jpackageImage")
-    // not signing exe until bug is fixed https://bugs.openjdk.org/browse/JDK-8326447
     finalizedBy signInstallerMsi
 }
 
 tasks.register('createSignCert') {
     doLast {
-        String base64 = System.getProperty("base64_pfx") ?: ""
+        if(!new File("./edomh_codesigning.pfx").exists()) {
+            String base64 = System.getProperty("base64_pfx") ?: ""
 
-        final ByteArrayOutputStream ostr = new ByteArrayOutputStream()
-        ostr.withCloseable {
-            it << Base64.decoder.decode(base64.getBytes())
-        }
+            final ByteArrayOutputStream ostr = new ByteArrayOutputStream()
+            ostr.withCloseable {
+                it << Base64.decoder.decode(base64.getBytes())
+            }
 
-        new File("./edomh_codesigning.pfx").withOutputStream { stream ->
-            ostr.writeTo(stream)
+            new File("./edomh_codesigning.pfx").withOutputStream { stream ->
+                ostr.writeTo(stream)
+            }
         }
     }
 }
 
 tasks.register('signInstallerExe') {
-    // not signing exe until bug is fixed https://bugs.openjdk.org/browse/JDK-8326447
     dependsOn tasks.named("createSignCert")
     finalizedBy signInstallerMsi
     doLast {

@@ -212,50 +212,34 @@ jlink {
         ]
     }
 }
-//tasks.register("patchShellScript") {
-//    dependsOn jpackage
-//    doLast {
-//        def launcherScript = file("$buildDir/jpackage/Elite Dangerous Odyssey Materials Helper/lib/runtime/bin/Elite Dangerous Odyssey Materials Helper")
-//        if (launcherScript.exists()) {
-//            def text = launcherScript.text
-//            // Replace the unescaped version with escaped version
-//            text = text.replace(
-//                    '-Dlogging.config=${user.home}/.ed-odyssey-materials-helper/log',
-//                    '-Dlogging.config=\\${user.home}/.ed-odyssey-materials-helper/log'
-//            )
-//            launcherScript.text = text
-//            println "Patched shell launcher for escaped logging.config"
-//        } else {
-//            println "Launcher script not found at: ${launcherScript}"
-//        }
-//    }
-//}
+
 tasks.register("jpackageSigned") {
     dependsOn tasks.named("jpackage")
-    // not signing exe until bug is fixed https://bugs.openjdk.org/browse/JDK-8326447
-//    dependsOn jpackageImage
-//    finalizedBy signAppExe
+    dependsOn jpackageImage
+    finalizedBy signAppExe
 }
+
 tasks.register('createSignCert') {
-    String base64 = System.getProperty("base64_pfx") ?: ""
+    doLast {
+        if(!new File("./edomh_codesigning.pfx").exists()) {
+            String base64 = System.getProperty("base64_pfx") ?: ""
 
-    final ByteArrayOutputStream ostr = new ByteArrayOutputStream()
-    ostr.withCloseable {
-        it << Base64.decoder.decode(base64.getBytes())
-    }
+            final ByteArrayOutputStream ostr = new ByteArrayOutputStream()
+            ostr.withCloseable {
+                it << Base64.decoder.decode(base64.getBytes())
+            }
 
-    new File("./edomh_codesigning.pfx").withOutputStream { stream ->
-        ostr.writeTo(stream)
+            new File("./edomh_codesigning.pfx").withOutputStream { stream ->
+                ostr.writeTo(stream)
+            }
+        }
     }
 }
 tasks.register('signAppExe') {
-    dependsOn tasks.named('createSignCert')
-    finalizedBy jpackage
+    dependsOn tasks.named("createSignCert"), tasks.named("jpackage")
     doLast {
         File target = new File("application/build/jpackage/Elite Dangerous Odyssey Materials Helper/Elite Dangerous Odyssey Materials Helper.exe")
         target.setWritable(true)
-        println System.getProperty("pfx_password")
-        println System.getProperty("pfx_alias")
         jsign(file: 'application/build/jpackage/Elite Dangerous Odyssey Materials Helper/Elite Dangerous Odyssey Materials Helper.exe',
                 name: 'Elite Dangerous Odyssey Materials Helper',
                 url: 'https://github.com/jixxed/ed-odyssey-materials-helper',
