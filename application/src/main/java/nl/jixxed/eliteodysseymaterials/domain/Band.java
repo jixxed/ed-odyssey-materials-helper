@@ -8,29 +8,41 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation;
+package nl.jixxed.eliteodysseymaterials.domain;
 
-import nl.jixxed.eliteodysseymaterials.templates.other.colonisation.BillOfMaterialsEntry;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
-import static org.junit.jupiter.api.Assertions.*;
+@Getter
+@EqualsAndHashCode
+public class Band implements Comparable<Band> {
+    private final String name;
 
-class BillOfMaterialsEntryTest {
+    public Band(final String name) {
+        this.name = name;
+    }
 
-    @ParameterizedTest
-    @CsvSource({
-            "0, 0, 0",
-            "0, 100, 0",
-            "1, 100, 1",
-            "99, 100, 1",
-            "100, 100, 1",
-            "101, 100, 2",
-            "200, 100, 2",
-            "200, 0, Infinity"
-    })
-    void calculateTrips(int quantity, int cargoCapacity, Double expectedTrips) {
-        Double actualTrips = BillOfMaterialsEntry.calculateTrips(quantity, cargoCapacity);
-        assertEquals(expectedTrips, actualTrips);
+    @Override
+    public int compareTo(Band b) {
+        Band a = this;
+        var aIsTopX = a.name.startsWith("top");
+        var bIsTopX = b.name.startsWith("top");
+
+        // If both are topX, sort alphabetically/numerically
+        if (aIsTopX && bIsTopX) {
+            // Extract numbers and sort: top1, top5, top10, etc.
+            var aNum = Integer.parseInt(a.name.replace("top",""));
+            var bNum = Integer.parseInt(b.name.replace("top",""));
+            return aNum - bNum;
+        }
+
+        // topX bands come first
+        if (aIsTopX) return -1;
+        if (bIsTopX) return 1;
+
+        // For percentage bands, sort from lowest to highest
+        var aPercent = Integer.parseInt(a.name);
+        var bPercent = Integer.parseInt(b.name);
+        return aPercent - bPercent;
     }
 }

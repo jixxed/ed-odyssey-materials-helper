@@ -58,6 +58,9 @@ module nl.jixxed.eliteodysseymaterials {
     requires jakarta.persistence.api;
     requires io.ebean;
     requires io.ebean.migration;
+    requires org.joda.time;
+    requires io.fair_acc.chartfx;
+    requires io.fair_acc.dataset;
 
     uses nl.jixxed.ed.awesome.api.FontLoader;
     uses nl.jixxed.ed.confidential.api.SecrecyLoader;
@@ -374,6 +377,7 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.service.event;
     exports nl.jixxed.eliteodysseymaterials.service.market;
     exports nl.jixxed.eliteodysseymaterials.service.ships;
+    exports nl.jixxed.eliteodysseymaterials.service.cg;
     exports nl.jixxed.eliteodysseymaterials.service;
     exports nl.jixxed.eliteodysseymaterials.templates.components.edfont;
     exports nl.jixxed.eliteodysseymaterials.templates.components.segmentbar;
@@ -383,14 +387,14 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.templates.dialog;
     exports nl.jixxed.eliteodysseymaterials.templates.generic.menu;
     exports nl.jixxed.eliteodysseymaterials.templates.generic;
-    exports nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation;
+    exports nl.jixxed.eliteodysseymaterials.templates.other.colonisation;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons.commodities;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons.engineers;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons.materials;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
-    exports nl.jixxed.eliteodysseymaterials.templates.horizons.powerplay;
-    exports nl.jixxed.eliteodysseymaterials.templates.horizons.permits;
+    exports nl.jixxed.eliteodysseymaterials.templates.other.powerplay;
+    exports nl.jixxed.eliteodysseymaterials.templates.other.permits;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons.menu;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons;
     exports nl.jixxed.eliteodysseymaterials.templates.odyssey.engineers;
@@ -399,6 +403,8 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist;
     exports nl.jixxed.eliteodysseymaterials.templates.odyssey.menu;
     exports nl.jixxed.eliteodysseymaterials.templates.odyssey;
+    exports nl.jixxed.eliteodysseymaterials.templates.other.communitygoal;
+    exports nl.jixxed.eliteodysseymaterials.templates.other;
     exports nl.jixxed.eliteodysseymaterials.templates.overlay.ar;
     exports nl.jixxed.eliteodysseymaterials.templates.settings.sections;
     exports nl.jixxed.eliteodysseymaterials.templates.settings;
@@ -717,6 +723,7 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.schemas.slef to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.service.message to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.service.shortlink to com.fasterxml.jackson.databind, org.hibernate.validator;
+    opens nl.jixxed.eliteodysseymaterials.service.cg to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.templates to java.desktop, javafx.fxml, javafx.graphics, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.components to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.components.segmentbar to javafx.fxml, org.controlsfx.controls;
@@ -736,6 +743,8 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.templates.odyssey.loadout to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.odyssey.materials to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist to javafx.fxml, org.controlsfx.controls;
+    opens nl.jixxed.eliteodysseymaterials.templates.other to javafx.fxml, org.controlsfx.controls;
+    opens nl.jixxed.eliteodysseymaterials.templates.other.communitygoal to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.overlay.ar to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.settings to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.settings.sections to javafx.fxml, org.controlsfx.controls;

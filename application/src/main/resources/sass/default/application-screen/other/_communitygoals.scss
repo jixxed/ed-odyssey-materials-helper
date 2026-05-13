@@ -1,0 +1,251 @@
+/*!
+ * Copyright (c) 2026 Jixxed
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+.community-goal-tab {
+  @include tab;
+}
+
+.community-goal-tab-content {
+
+  @include scroll-pane-content;
+
+  .contents {
+    -fx-spacing: 0.25em;
+
+    .community-goal-menu {
+      .community-goal-select {
+
+      }
+    }
+
+    .community-goals {
+      -fx-spacing: 0.25em;
+
+      .community-goal {
+        -fx-background-color: $background-color-dark;
+        -fx-border-color: $border-color-black;
+        -fx-padding: 0.25em;
+        -fx-spacing: 0.25em;
+
+        .header {
+          -fx-spacing: 1em;
+
+          .cg-title {
+            -fx-font-size: 1.4em;
+            -fx-font-weight: bold;
+            @include fixedHeight(2em);
+          }
+
+
+          .current-tier {
+            -fx-alignment: center;
+
+            .tier-label {
+            }
+
+            .tier-value {
+              -fx-font-size: 1.4em;
+              -fx-font-weight: bold;
+            }
+          }
+
+          .max-tier {
+            -fx-alignment: center;
+
+            .tier-label {
+            }
+
+            .tier-value {
+              -fx-font-size: 1.4em;
+              -fx-font-weight: bold;
+            }
+          }
+        }
+
+        .splitter .line {
+          -fx-border-color: $border-color-white;
+          -fx-border-width: 0.05em;
+          -fx-border-insets: 0.0em -0.25em 0.0em -0.25em;
+        }
+
+        .information {
+          -fx-fit-to-height: true;
+          -fx-fill-height: true;
+          -fx-spacing: 1em;
+
+          .cg-data {
+            -fx-min-width: 15em;
+            -fx-spacing: 1em;
+
+            .cg-data-entry {
+              .value {
+                -fx-wrap-text: true;
+              }
+
+              .name {
+                -fx-font-weight: bold;
+              }
+            }
+          }
+
+          .cg-text {
+            -fx-wrap-text: true;
+            //-fx-max-width: 40em;
+            //-fx-fit-to-height: true;
+            //-fx-fill-height: true;
+          }
+        }
+
+        .community-goal-progress-chart {
+          .x-value-indicator-line{
+            -fx-stroke: $border-color-white;
+          }
+          .chart-datapoint-tooltip-label{
+            -fx-background-color: $background-color-dark;
+            -fx-border-color: $border-color-white;
+            -fx-border-radius: 0;
+            -fx-font-size: 1em;
+            -fx-font-weight: normal;
+            -fx-text-fill: $text-color-white;
+            -fx-text-alignment: left;
+            -fx-label-padding: 0.25em;
+          }
+          .chart {
+            -fx-pref-width: 999em;
+            -fx-max-width: 135em;
+            @include fixedHeight(30em);
+            -fx-background-color: $background-color-light;
+
+          }
+
+          .dataset {
+            -fx-marker-type: circle;
+            -fx-marker-size: 0;
+            -fx-marker-line-width: 0;
+            -fx-line-width: 2;
+            -fx-line-miter-limit: 0;
+            -fx-line-cap: butt !important;
+            -fx-line-join: round !important;
+          }
+
+          .dataset.default-color0 {
+            -color-dataset: $border-color-green;
+          }
+          .dataset.default-color1 {
+            -color-dataset: $border-color-blue;
+          }
+          .dataset.default-color2 {
+            -color-dataset: $border-color-red;
+          }
+
+          .chart-plot-background {
+            -fx-background-color: transparent;
+          }
+
+          .chart-major-vertical-lines{
+            visibility: false;
+          }
+          .chart-major-horizontal-lines{
+            -fx-stroke:  $border-color-light-grey;
+            -fx-stroke-dash-array: 0.01;
+            -fx-stroke-dash-offset: 0.01;
+            -fx-border-style: solid;
+          }
+
+          .axis {
+            visibility: false;
+          }
+
+          .time-axis {
+            visibility: true;
+
+            .axis-tick-label {
+              -fx-stroke: $text-color-white;
+            }
+            .axis-label {
+              visibility: false;
+            }
+          }
+
+          .chart-legend {
+            -fx-background-color: transparent;
+
+            .chart-legend-item {
+              -fx-text-fill: $text-color-white;
+
+            }
+          }
+
+        }
+
+        .cg-rewards-table {
+          .rewards-title {
+            -fx-font-size: 1.4em;
+            -fx-font-weight: bold;
+          }
+
+          -fx-spacing: 0.25em;
+
+          .reward-table-box {
+            -fx-background-color: $background-color-light;
+
+            .reward-table {
+              //-fx-background-color: $background-color-light;
+              -fx-background-insets: 2.6em 0 0 0;
+              -fx-background-color: $background-color-lighter;
+
+              .reward-tiers {
+                .cg-reward-title {
+                  -fx-font-weight: bold;
+                  -fx-font-size: 1.2em;
+                  -fx-padding: 0.5em;
+                }
+
+                .cg-reward-tier {
+                  -fx-font-size: 1.2em;
+                  -fx-padding: 0.5em;
+                  //-fx-background-color: $background-color-lighter;
+                }
+              }
+
+              .reward-values {
+                //-fx-border-color: $border-color-white;
+                //-fx-border-width: 0 0 0 0.1em;
+                -fx-fill-width: true;
+
+                .cg-reward-title {
+                  -fx-font-weight: bold;
+                  -fx-font-size: 1.2em;
+                  -fx-padding: 0.5em;
+                }
+
+                .cg-reward-value {
+                  -fx-padding: 0.5em;
+                  -fx-font-size: 1.2em;
+                  //-fx-background-color: $background-color-lighter;
+
+                }
+              }
+
+              .cg-spacer {
+                //-fx-background-color: $background-color-lighter;
+                -fx-fit-to-width: true;
+                //-fx-fit-to-height: true;
+                //-fx-background-insets: 3.15em 0 0 0;
+                //@include fixedHeight(-2.4em);
+                //@include fixedWidth(2.2em);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

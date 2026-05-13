@@ -8,7 +8,7 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation;
+package nl.jixxed.eliteodysseymaterials.templates.other.colonisation;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableEmitter;
@@ -36,7 +36,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public class HorizonsColonisationSearchBar extends DestroyableHBox implements DestroyableEventTemplate {
+public class ColonisationSearchBar extends DestroyableHBox implements DestroyableEventTemplate {
 
     private static final String FX_FONT_SIZE_DPX = "-fx-font-size: %dpx";
     private DestroyableTextField textField;
@@ -45,7 +45,7 @@ public class HorizonsColonisationSearchBar extends DestroyableHBox implements De
     private Disposable subscribe;
 
 
-    public HorizonsColonisationSearchBar() {
+    public ColonisationSearchBar() {
         initComponents();
         initEventHandling();
     }

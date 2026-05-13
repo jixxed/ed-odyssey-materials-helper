@@ -8,29 +8,42 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation;
+package nl.jixxed.eliteodysseymaterials.domain;
 
-import nl.jixxed.eliteodysseymaterials.templates.other.colonisation.BillOfMaterialsEntry;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import lombok.*;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Objects;
 
-class BillOfMaterialsEntryTest {
+@Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Goal {
+    public static final Goal ACTIVE = new Goal(9999999, "Active", true);
+    private Integer id;
+    private String name;
+    private Boolean active;
 
-    @ParameterizedTest
-    @CsvSource({
-            "0, 0, 0",
-            "0, 100, 0",
-            "1, 100, 1",
-            "99, 100, 1",
-            "100, 100, 1",
-            "101, 100, 2",
-            "200, 100, 2",
-            "200, 0, Infinity"
-    })
-    void calculateTrips(int quantity, int cargoCapacity, Double expectedTrips) {
-        Double actualTrips = BillOfMaterialsEntry.calculateTrips(quantity, cargoCapacity);
-        assertEquals(expectedTrips, actualTrips);
+
+    @Override
+    public String toString() {
+        if(ACTIVE == this){
+            return LocaleService.getLocalizedStringForCurrentLocale("tab.community.goals.active.goal");
+        }
+        return id + " - " + name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Goal goal = (Goal) o;
+        return Objects.equals(id, goal.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }

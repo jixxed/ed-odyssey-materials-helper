@@ -17,6 +17,8 @@ import nl.jixxed.eliteodysseymaterials.persistence.commander.model.CommunityGoal
 import nl.jixxed.eliteodysseymaterials.schemas.journal.CommunityGoal.CommunityGoal;
 import nl.jixxed.eliteodysseymaterials.service.DatabaseException;
 import nl.jixxed.eliteodysseymaterials.service.EliteMQService;
+import nl.jixxed.eliteodysseymaterials.service.event.CommunityGoalEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
 import java.math.BigInteger;
 
@@ -56,6 +58,7 @@ public class CommunityGoalSingleMessageProcessor implements SingleMessageProcess
             }
         });
         EliteMQService.sendCommunityGoal(communityGoal);
+        EventService.publish(new CommunityGoalEvent());
     }
 
     @Override

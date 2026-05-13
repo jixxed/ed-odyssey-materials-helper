@@ -34,22 +34,24 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTabPane
 import nl.jixxed.eliteodysseymaterials.templates.generic.MainTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsContentArea;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyContentArea;
+import nl.jixxed.eliteodysseymaterials.templates.other.OtherContentArea;
 import nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab;
 
 import java.util.Set;
 
-import static nl.jixxed.eliteodysseymaterials.enums.MainTabType.HORIZONS;
-import static nl.jixxed.eliteodysseymaterials.enums.MainTabType.ODYSSEY;
+import static nl.jixxed.eliteodysseymaterials.enums.MainTabType.*;
 
 public class ApplicationScreen extends DestroyableAnchorPane implements DestroyableEventTemplate {
 
     private DestroyableTabPane tabsMain;
     private DestroyableTab odyssey;
     private DestroyableTab horizons;
+    private DestroyableTab other;
 
     private IntegerProperty fontSize = new SimpleIntegerProperty(14);
     private OdysseyContentArea odysseyContentArea;
     private HorizonsContentArea horizonsContentArea;
+    private OtherContentArea otherContentArea;
     private BottomBar bottomBar;
 
 
@@ -75,10 +77,12 @@ public class ApplicationScreen extends DestroyableAnchorPane implements Destroya
         bottomBar = new BottomBar();
         odysseyContentArea = new OdysseyContentArea();
         horizonsContentArea = new HorizonsContentArea();
+        otherContentArea = new OtherContentArea();
 
         addChangeListener(bottomBar.heightProperty(), (_, _, _) -> {
             AnchorPaneHelper.setAnchor(odysseyContentArea, 0.0, bottomBar.getHeight(), 0.0, 0.0);
             AnchorPaneHelper.setAnchor(horizonsContentArea, 0.0, bottomBar.getHeight(), 0.0, 0.0);
+            AnchorPaneHelper.setAnchor(otherContentArea, 0.0, bottomBar.getHeight(), 0.0, 0.0);
             AnchorPaneHelper.setAnchor(this.tabsMain, 0.0, bottomBar.getHeight(), 0.0, 0.0);
         });
         SettingsTab settingsTab = new SettingsTab();
@@ -100,15 +104,23 @@ public class ApplicationScreen extends DestroyableAnchorPane implements Destroya
                 .withContent(horizonsContentArea)
                 .withDisableProperty(ApplicationState.getInstance().getCommandersProperty().map(Set::isEmpty))
                 .build();
+        this.other = MainTabBuilder.builder()
+                .withTabType(OTHER)
+                .withStyleClass("other-tab")
+                .withText(LocaleService.getStringBinding("tabs.other"))
+                .withClosable(false)
+                .withContent(otherContentArea)
+                .withDisableProperty(ApplicationState.getInstance().getCommandersProperty().map(Set::isEmpty))
+                .build();
         this.tabsMain = TabPaneBuilder.builder()
-                .withTabs(this.odyssey, this.horizons, settingsTab)
+                .withTabs(this.odyssey, this.horizons, this.other, settingsTab)
                 .withStyleClass("tab-main")
                 .withSide(Side.LEFT)
-                .withSelectedTab(PreferencesService.getPreference(PreferenceConstants.SELECTED_TAB_MAIN, 2))
+                .withSelectedTab(PreferencesService.getPreference(PreferenceConstants.SELECTED_TAB_MAIN, 3))
                 .withSelectedItemListener((_, _, newValue) -> PreferencesService.setPreference(PreferenceConstants.SELECTED_TAB_MAIN, this.tabsMain.getTabs().indexOf(newValue)))
                 .build();
-        this.tabsMain.addBinding(this.tabsMain.tabMinWidthProperty(), this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)));
-        this.tabsMain.addBinding(this.tabsMain.tabMaxWidthProperty(), this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)));
+        this.tabsMain.addBinding(this.tabsMain.tabMinWidthProperty(), this.tabsMain.heightProperty().divide(4).subtract(this.fontSize.multiply(5.14)));
+        this.tabsMain.addBinding(this.tabsMain.tabMaxWidthProperty(), this.tabsMain.heightProperty().divide(4).subtract(this.fontSize.multiply(5.14)));
         AnchorPaneHelper.setAnchor(this.tabsMain, 0.0, bottomBar.getHeight(), 0.0, 0.0);
         this.getNodes().addAll(this.tabsMain, bottomBar);
     }
@@ -127,6 +139,7 @@ public class ApplicationScreen extends DestroyableAnchorPane implements Destroya
         return switch (getSelectedTab()){
             case ODYSSEY -> odysseyContentArea.getSelectedTab();
             case HORIZONS -> horizonsContentArea.getSelectedTab();
+            case OTHER -> otherContentArea.getSelectedTab();
             default -> MainTabType.NONE;
         };
     }

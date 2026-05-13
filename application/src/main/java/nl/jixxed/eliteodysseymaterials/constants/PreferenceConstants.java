@@ -64,6 +64,7 @@ public class PreferenceConstants {
     public static final String SELECTED_TAB_MAIN = "selected.tab.main";
     public static final String SELECTED_TAB_HORIZONS = "selected.tab.horizons";
     public static final String SELECTED_TAB_ODYSSEY = "selected.tab.odyssey";
+    public static final String SELECTED_TAB_OTHER = "selected.tab.other";
     public static final String FLIP_WISHLIST_REMAINING_AVAILABLE_HORIZONS = "flip.wishlist.remaining.available.horizons";
     public static final String FLIP_WISHLIST_REMAINING_AVAILABLE_ODYSSEY = "flip.wishlist.remaining.available.odyssey";
     public static final String TOOLTIP_BLUEPRINT_EXPANDED = "tooltip.blueprint.expanded";
@@ -86,6 +87,5 @@ public class PreferenceConstants {
     public static final String AR_FUZZY_SCORE = "ar.search.fuzzy.score.min";
     public static final String PREFERRED_LANDING_PAD = "preferred.landing.pad";
     public static final String SCRAPE_LATEST_PREFIX = "scrape.latest.";
-
 
 }

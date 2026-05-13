@@ -8,13 +8,13 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package nl.jixxed.eliteodysseymaterials.templates.horizons.permits;
+package nl.jixxed.eliteodysseymaterials.templates.other.permits;
 
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.PermitsSearch;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsPermitsShow;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabType;
+import nl.jixxed.eliteodysseymaterials.enums.OtherTabType;
 import nl.jixxed.eliteodysseymaterials.enums.Permit;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
@@ -23,19 +23,19 @@ import nl.jixxed.eliteodysseymaterials.service.event.PermitSearchEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableScrollPane;
-import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsTab;
+import nl.jixxed.eliteodysseymaterials.templates.other.OtherTab;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-public class HorizonsPermitsTab extends HorizonsTab implements DestroyableEventTemplate {
+public class PermitsTab extends OtherTab implements DestroyableEventTemplate {
     private DestroyableFlowPane flowPane;
     private PermitCard[] permitCards;
 
     private PermitsSearch currentSearch;
 
-    public HorizonsPermitsTab() {
+    public PermitsTab() {
         final HorizonsPermitsShow filter = HorizonsPermitsShow.valueOf(PreferencesService.getPreference("search.horizons.permits.filter", "ALL"));
         currentSearch = new PermitsSearch("", filter);
         initComponents();
@@ -88,7 +88,7 @@ public class HorizonsPermitsTab extends HorizonsTab implements DestroyableEventT
     }
 
     @Override
-    public HorizonsTabType getTabType() {
-        return HorizonsTabType.PERMIT;
+    public OtherTabType getTabType() {
+        return OtherTabType.PERMIT;
     }
 }

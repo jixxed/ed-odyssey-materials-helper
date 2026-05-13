@@ -8,29 +8,16 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation;
+package nl.jixxed.eliteodysseymaterials.service.event;
 
-import nl.jixxed.eliteodysseymaterials.templates.other.colonisation.BillOfMaterialsEntry;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import nl.jixxed.eliteodysseymaterials.service.cg.ReportModels;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class BillOfMaterialsEntryTest {
-
-    @ParameterizedTest
-    @CsvSource({
-            "0, 0, 0",
-            "0, 100, 0",
-            "1, 100, 1",
-            "99, 100, 1",
-            "100, 100, 1",
-            "101, 100, 2",
-            "200, 100, 2",
-            "200, 0, Infinity"
-    })
-    void calculateTrips(int quantity, int cargoCapacity, Double expectedTrips) {
-        Double actualTrips = BillOfMaterialsEntry.calculateTrips(quantity, cargoCapacity);
-        assertEquals(expectedTrips, actualTrips);
-    }
+@Getter
+@Setter
+@AllArgsConstructor
+public class CommunityGoalReportEvent implements Event {
+    private final ReportModels.ReportResponse report;
 }

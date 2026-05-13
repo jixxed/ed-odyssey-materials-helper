@@ -12,7 +12,7 @@ package nl.jixxed.eliteodysseymaterials.enums;
 
 import nl.jixxed.eliteodysseymaterials.domain.PermitsSearch;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.templates.horizons.permits.PermitCard;
+import nl.jixxed.eliteodysseymaterials.templates.other.permits.PermitCard;
 
 import java.util.function.Predicate;
 

@@ -8,53 +8,49 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package nl.jixxed.eliteodysseymaterials.templates.horizons.powerplay;
+package nl.jixxed.eliteodysseymaterials.templates.other;
 
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.ObservableEmitter;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-import javafx.application.Platform;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.TextFieldBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.enums.OtherTabType;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.PowerSearchEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.OtherTabSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTextField;
-
-import java.util.concurrent.TimeUnit;
+import nl.jixxed.eliteodysseymaterials.templates.other.colonisation.ColonisationSearchBar;
+import nl.jixxed.eliteodysseymaterials.templates.other.permits.PermitsSearchBar;
+import nl.jixxed.eliteodysseymaterials.templates.other.powerplay.PowerplaySearchBar;
 
 @Slf4j
-public
-class PowerplaySearchBar extends DestroyableHBox implements DestroyableEventTemplate {
+class OtherSearchBar extends DestroyableHBox implements DestroyableEventTemplate {
 
     private static final String FX_FONT_SIZE_DPX = "-fx-font-size: %dpx";
-    private DestroyableTextField textField;
-    private Disposable subscribe;
+    private PowerplaySearchBar powerplaySearchBar;
+    private PermitsSearchBar permitsSearchBar;
+    private ColonisationSearchBar colonisationSearchBar;
 
-
-    public PowerplaySearchBar() {
+    OtherSearchBar() {
         initComponents();
         initEventHandling();
     }
 
     public void initComponents() {
-        this.getStyleClass().add("root");
-        initSearchTextField();
+        this.getStyleClass().add("search");
+        this.powerplaySearchBar = register(new PowerplaySearchBar());
+        this.permitsSearchBar = register(new PermitsSearchBar());
+        this.colonisationSearchBar = register(new ColonisationSearchBar());
+
         applyFontSizingHack();
 
-        HBox.setHgrow(this.textField, Priority.ALWAYS);
-
-        this.getNodes().addAll(this.textField);
+        HBox.setHgrow(this.powerplaySearchBar, Priority.ALWAYS);
+        HBox.setHgrow(this.permitsSearchBar, Priority.ALWAYS);
+        HBox.setHgrow(this.colonisationSearchBar, Priority.ALWAYS);
+        this.getNodes().addAll(this.powerplaySearchBar);
     }
 
     public void initEventHandling() {
@@ -62,43 +58,28 @@ class PowerplaySearchBar extends DestroyableHBox implements DestroyableEventTemp
         register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
             this.styleProperty().set(fontStyle);
-            this.textField.styleProperty().set(fontStyle);
         }));
+        register(EventService.addListener(true, this, OtherTabSelectedEvent.class, event -> switchTab(event.getSelectedTab())));
     }
+
 
     private void applyFontSizingHack() {
         //hack for component resizing on other fontsizes
         final Integer fontSize = FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize();
         final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSize);
         this.styleProperty().set(fontStyle);
-        this.textField.styleProperty().set(fontStyle);
     }
 
-
-    private void initSearchTextField() {
-        this.textField = TextFieldBuilder.builder()
-                .withStyleClasses("root", "search-input")
-                .withPromptTextProperty(LocaleService.getStringBinding("search.text.placeholder"))
-                .withFocusTraversable(false)
-                .build();
-        subscribe = Observable.create((ObservableEmitter<String> emitter) -> this.textField.textProperty().addListener((_, _, newValue) -> emitter.onNext(newValue)))
-                .debounce(500, TimeUnit.MILLISECONDS)
-                .observeOn(Schedulers.io())
-                .subscribe(newValue -> Platform.runLater(() -> EventService.publish(new PowerSearchEvent(newValue))),
-                        t -> log.error(t.getMessage(), t));
-    }
-
-
-    @SuppressWarnings("java:S1144")
-    private String getQueryOrDefault(final TextField textField) {
-        return (textField.getText() != null) ? textField.getText() : "";
-    }
-
-    @Override
-    public void destroyInternal() {
-        super.destroyInternal();
-        if (subscribe != null) {
-            subscribe.dispose();
+    private void switchTab(OtherTabType selectedTab) {
+        this.getChildren().removeAll(this.permitsSearchBar, this.powerplaySearchBar, this.colonisationSearchBar);
+        if (OtherTabType.POWERPLAY.equals(selectedTab)) {
+            this.getChildren().add(this.powerplaySearchBar);
+        } else if (OtherTabType.COLONISATION.equals(selectedTab)) {
+            this.getChildren().add(this.colonisationSearchBar);
+        } else if (OtherTabType.PERMIT.equals(selectedTab)) {
+            this.getChildren().add(this.permitsSearchBar);
+        } else {
+            this.getChildren().add(this.powerplaySearchBar);
         }
     }
 }

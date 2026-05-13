@@ -23,12 +23,9 @@ import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableButton;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation.HorizonsColonisationSearchBar;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.commodities.HorizonsCommoditiesSearchBar;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.engineers.HorizonsEngineerSearchBar;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.materials.HorizonsMaterialSearchBar;
-import nl.jixxed.eliteodysseymaterials.templates.horizons.permits.PermitsSearchBar;
-import nl.jixxed.eliteodysseymaterials.templates.horizons.powerplay.PowerplaySearchBar;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishlistSearchBar;
 
 @Slf4j
@@ -40,10 +37,6 @@ class HorizonsSearchBar extends DestroyableHBox implements DestroyableEventTempl
     private HorizonsCommoditiesSearchBar commoditiesSearchBar;
     private HorizonsWishlistSearchBar horizonsWishlistSearchBar;
     private HorizonsEngineerSearchBar horizonsEngineerSearchBar;
-    private PowerplaySearchBar powerplaySearchBar;
-    private PermitsSearchBar permitsSearchBar;
-    private HorizonsColonisationSearchBar horizonsColonisationSearchBar;
-
     HorizonsSearchBar() {
         initComponents();
         initEventHandling();
@@ -57,9 +50,6 @@ class HorizonsSearchBar extends DestroyableHBox implements DestroyableEventTempl
         this.commoditiesSearchBar = register(new HorizonsCommoditiesSearchBar());
         this.horizonsWishlistSearchBar = register(new HorizonsWishlistSearchBar());
         this.horizonsEngineerSearchBar = register(new HorizonsEngineerSearchBar());
-        this.powerplaySearchBar = register(new PowerplaySearchBar());
-        this.permitsSearchBar = register(new PermitsSearchBar());
-        this.horizonsColonisationSearchBar = register(new HorizonsColonisationSearchBar());
 
         applyFontSizingHack();
 
@@ -67,9 +57,6 @@ class HorizonsSearchBar extends DestroyableHBox implements DestroyableEventTempl
         HBox.setHgrow(this.commoditiesSearchBar, Priority.ALWAYS);
         HBox.setHgrow(this.horizonsWishlistSearchBar, Priority.ALWAYS);
         HBox.setHgrow(this.horizonsEngineerSearchBar, Priority.ALWAYS);
-        HBox.setHgrow(this.powerplaySearchBar, Priority.ALWAYS);
-        HBox.setHgrow(this.permitsSearchBar, Priority.ALWAYS);
-        HBox.setHgrow(this.horizonsColonisationSearchBar, Priority.ALWAYS);
         this.getNodes().addAll(this.button, this.materialSearchBar);
     }
 
@@ -106,20 +93,14 @@ class HorizonsSearchBar extends DestroyableHBox implements DestroyableEventTempl
     }
 
     private void switchTab(HorizonsTabType selectedTab) {
-        this.getChildren().removeAll(this.materialSearchBar, this.commoditiesSearchBar, this.horizonsWishlistSearchBar, this.horizonsEngineerSearchBar ,this.permitsSearchBar, this.powerplaySearchBar, this.horizonsColonisationSearchBar);
+        this.getChildren().removeAll(this.materialSearchBar, this.commoditiesSearchBar, this.horizonsWishlistSearchBar, this.horizonsEngineerSearchBar);
         if (HorizonsTabType.COMMODITIES.equals(selectedTab)) {
             this.getChildren().add(this.commoditiesSearchBar);
         } else if (HorizonsTabType.WISHLIST.equals(selectedTab)) {
             this.getChildren().add(this.horizonsWishlistSearchBar);
         } else if (HorizonsTabType.ENGINEERS.equals(selectedTab)) {
             this.getChildren().add(this.horizonsEngineerSearchBar);
-        } else if (HorizonsTabType.POWERPLAY.equals(selectedTab)) {
-            this.getChildren().add(this.powerplaySearchBar);
-        } else if (HorizonsTabType.COLONISATION.equals(selectedTab)) {
-            this.getChildren().add(this.horizonsColonisationSearchBar);
-        } else if (HorizonsTabType.PERMIT.equals(selectedTab)) {
-            this.getChildren().add(this.permitsSearchBar);
-        } else {
+        }  else {
             this.getChildren().add(this.materialSearchBar);
         }
     }

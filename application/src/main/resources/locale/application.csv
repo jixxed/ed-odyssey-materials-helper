@@ -226,3 +226,5 @@
 "loading.screen.status.journal","Loading journal files...","","","","","","","",""
 "loading.screen.status.ui","Loading UI...","","","","","","","",""
 "loading.screen.status.database","Building database...","","","","","","","",""
+"tabs.other","Other","","","","","","","",""
+"tabs.communitygoal","Community Goals","","","","","","","",""

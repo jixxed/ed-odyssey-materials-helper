@@ -124,33 +124,17 @@ public class HoverableLineChart extends LineChart<Number, Number> implements Des
                     double gridOffsetX = 0;//-4; // Half-pixel offset for grid alignment
                     double gridOffsetY = -4;
                     double distanceX = Math.abs(dataX - (mouseX + gridOffsetX) * (maxX - minX) / plotWidth + minX);
-//                    double distanceY = plotHeight - Math.abs(dataY - (mouseY + gridOffsetY) * (maxY - minY) / plotHeight + minY);
-//                    double distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
                     double distanceY = Math.abs((mouseY + gridOffsetY) - ((maxY - dataY) / maxY * plotHeight));
                     if (distanceX < minDistanceX) {
-//                        if (distanceX <= minDistanceX) {
-//                            log.debug("double {} = {} - Math.abs({} - ({} + {}) * ({} - {}) / {} + {});", distanceY, plotHeight, dataY, mouseY, gridOffsetY, maxY, minY, plotHeight, minY);
-//                        log.debug("series: {}, distanceX: {}, distanceY: {}, minDistanceY: {}", series.getName(), distanceX, distanceY, minDistanceY);
-//                        }
                         minDistanceX = distanceX;
                         minDistanceY = distanceY;
                         nearestSeries = series;
                     } else if (distanceX == minDistanceX) {
-//                        if (distanceX <= minDistanceX) {
-//                            log.debug("double {} = {} - Math.abs({} - ({} + {}) * ({} - {}) / {} + {});", distanceY, plotHeight, dataY, mouseY, gridOffsetY, maxY, minY, plotHeight, minY);
-//                        log.debug("series: {}, distanceX: {}, distanceY: {}, minDistanceY: {}", series.getName(), distanceX, distanceY, minDistanceY);
-//                        }
-//                        minDistanceX = distanceX;
                         if (distanceY < minDistanceY) {
                             minDistanceY = distanceY;
                             nearestSeries = series;
                         }
                     }
-                    //                if (distanceY < minDistanceY) {
-                    //                    minDistanceY = distanceY;
-                    //                    nearestY = (int)dataY;
-                    //                    nearestDataY = (int)dataY;
-                    //                }
                 }
             }
             nearestX = Double.MAX_VALUE;
@@ -177,11 +161,6 @@ public class HoverableLineChart extends LineChart<Number, Number> implements Des
                     nearestDataY = dataY;
                     nearestDataX = dataX;
                 }
-//                if (distanceY < minDistanceY) {
-//                    minDistanceY = distanceY;
-//                    nearestY = (int)dataY;
-//                    nearestDataY = (int)dataY;
-//                }
             }
 
             // Snap to nearest data point if within plot area and we found a valid point
@@ -221,18 +200,8 @@ public class HoverableLineChart extends LineChart<Number, Number> implements Des
                 circle.setVisible(false);
                 rect.setVisible(false);
                 tooltip.setVisible(false);
-//                verticalLine.setStartX(-1); // Hide the line if outside plot area
-//                verticalLine.setEndX(-1);
-//                circle.setCenterX(-100); // Hide the line if outside plot area
-//                circle.setCenterY(-100);
-//
-//                // Hide tooltip when line is hidden
-//                tooltip.setLayoutX(-1000);
-//                tooltip.setLayoutY(-1000);
             }
 
-            // Find nearest data point
-//            XYChart.Series<Number, Number> series = chart.getData().get(0);
             nearestX = Double.MAX_VALUE;
             nearestY = Double.MAX_VALUE;
             minDistanceX = Double.MAX_VALUE;
@@ -255,27 +224,16 @@ public class HoverableLineChart extends LineChart<Number, Number> implements Des
                     nearestY = dataY;
                     nearestDataX = dataX;
                 }
-//                if (distanceY < minDistanceY) {
-//                    minDistanceY = distanceY;
-//                    nearestY = (int)dataY;
-//                    nearestDataY = (int)dataY;
-//                }
             }
 
             // Update tooltip with proper X axis scaling
             double mouseXValue = mouseX * (maxX - minX) / plotWidth + minX;
-//            tooltip.setText(String.format("Speed: %.1f%%\n%s: %.1f °/s", nearestX, nearestSeries.getName(), nearestY));
             int finalNearestX = (int) nearestX;
             Map<Object, Number> values = this.getData().stream()
                     .map(series -> Map.entry(series, series.getData().get(finalNearestX).getYValue()))
                     .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
             values.put("x", nearestX);
             tooltip.textProperty().bind(tooltipFunction.apply(values));
-//            LocaleService.getStringBinding(tooltipLocaleKey,
-//                    LocaleService.LocalizationKey.of(xAxis.tooltipLocaleKey()), Formatters.NUMBER_FORMAT_0.format(nearestX),
-//                    this.getData().get(0).getName(), Formatters.NUMBER_FORMAT_1.format(this.getData().get(0).getData().get((int) nearestX).getYValue()),
-//                    this.getData().get(1).getName(), Formatters.NUMBER_FORMAT_1.format(this.getData().get(1).getData().get((int) nearestX).getYValue()),
-//                    this.getData().get(2).getName(), Formatters.NUMBER_FORMAT_1.format(this.getData().get(2).getData().get((int) nearestX).getYValue())
         });
     }
 }

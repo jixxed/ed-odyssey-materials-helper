@@ -14,7 +14,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ColonisationSearch;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
-import nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation.BillOfMaterialsEntry;
+import nl.jixxed.eliteodysseymaterials.templates.other.colonisation.BillOfMaterialsEntry;
 
 import java.util.function.Predicate;
 

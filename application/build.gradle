@@ -334,6 +334,7 @@ dependencies {
     implementation 'org.xerial:sqlite-jdbc'
     implementation "io.ebean:ebean"
     implementation 'io.ebean:ebean-migration'
+    implementation 'io.fair-acc:chartfx:11.3.1'
 
     annotationProcessor 'io.ebean:querybean-generator'
 

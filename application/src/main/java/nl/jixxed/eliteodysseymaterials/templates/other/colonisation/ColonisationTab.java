@@ -8,18 +8,18 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation;
+package nl.jixxed.eliteodysseymaterials.templates.other.colonisation;
 
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabType;
+import nl.jixxed.eliteodysseymaterials.enums.OtherTabType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableScrollPane;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsTab;
+import nl.jixxed.eliteodysseymaterials.templates.other.OtherTab;
 
-public class HorizonsColonisationTab extends HorizonsTab implements DestroyableTemplate {
+public class ColonisationTab extends OtherTab implements DestroyableTemplate {
 
-    public HorizonsColonisationTab() {
+    public ColonisationTab() {
         initComponents();
     }
 
@@ -37,7 +37,7 @@ public class HorizonsColonisationTab extends HorizonsTab implements DestroyableT
     }
 
     @Override
-    public HorizonsTabType getTabType() {
-        return HorizonsTabType.COLONISATION;
+    public OtherTabType getTabType() {
+        return OtherTabType.COLONISATION;
     }
 }
