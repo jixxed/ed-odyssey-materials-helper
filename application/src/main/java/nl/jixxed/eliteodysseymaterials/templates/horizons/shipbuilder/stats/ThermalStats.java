@@ -288,23 +288,28 @@ public class ThermalStats extends Stats implements DestroyableEventTemplate {
 
     Value getHeatLevelForDuration(double addedThermalLoad, double baseThermalLoad, double maximumHeatDissipation, double heatCapacity, double duration) {
         double thermalLoad = addedThermalLoad + baseThermalLoad;
-        if (thermalLoad > 0) {
-            if (baseThermalLoad > maximumHeatDissipation) {
-                return new Value(Double.NaN, Value.ValueType.ERROR);//error
-            } else if (thermalLoad > maximumHeatDissipation) {
-                var baseHeatLevel = getEquilibriumHeatLevel(maximumHeatDissipation, baseThermalLoad);
-                var timeTo66 = getTimeUntilHeatLevel(heatCapacity, maximumHeatDissipation, thermalLoad, baseHeatLevel, 1.0);//time to get to 66%
-                if ((timeTo66 > duration)) {//If the time to get to 66% exceeds the requested duration
-                    return new Value(getHeatLevelAtTime(heatCapacity, maximumHeatDissipation, thermalLoad, baseHeatLevel, duration) / 1.5 * 100, Value.ValueType.PERCENTAGE);
-                } else {//We reached 66% before requested duration
-                    double remaining33 = heatCapacity / 2;
-                    double notDissipatedHeat = thermalLoad - maximumHeatDissipation;
-                    var timeFrom66to100 = remaining33 / notDissipatedHeat;
-                    return new Value(timeTo66 + timeFrom66to100, Value.ValueType.SECONDS);
+        try {
+            if (thermalLoad > 0) {
+                if (baseThermalLoad > maximumHeatDissipation) {
+                    return new Value(Double.NaN, Value.ValueType.ERROR);//error
+                } else if (thermalLoad > maximumHeatDissipation) {
+                    var baseHeatLevel = getEquilibriumHeatLevel(maximumHeatDissipation, baseThermalLoad);
+                    var timeTo66 = getTimeUntilHeatLevel(heatCapacity, maximumHeatDissipation, thermalLoad, baseHeatLevel, 1.0);//time to get to 66%
+                    if ((timeTo66 > duration)) {//If the time to get to 66% exceeds the requested duration
+                        return new Value(getHeatLevelAtTime(heatCapacity, maximumHeatDissipation, thermalLoad, baseHeatLevel, duration) / 1.5 * 100, Value.ValueType.PERCENTAGE);
+                    } else {//We reached 66% before requested duration
+                        double remaining33 = heatCapacity / 2;
+                        double notDissipatedHeat = thermalLoad - maximumHeatDissipation;
+                        var timeFrom66to100 = remaining33 / notDissipatedHeat;
+                        return new Value(timeTo66 + timeFrom66to100, Value.ValueType.SECONDS);
+                    }
+                } else {
+                    return new Value(getEquilibriumHeatLevel(maximumHeatDissipation, thermalLoad) / 1.5 * 100, Value.ValueType.PERCENTAGE);
                 }
-            } else {
-                return new Value(getEquilibriumHeatLevel(maximumHeatDissipation, thermalLoad) / 1.5 * 100, Value.ValueType.PERCENTAGE);
             }
+        }catch (IllegalArgumentException ex){
+            log.error("Failed to calculate heat level for duration", ex);
+            return new Value(Double.NaN, Value.ValueType.ERROR);
         }
         return new Value(0.0, Value.ValueType.PERCENTAGE);
     }
