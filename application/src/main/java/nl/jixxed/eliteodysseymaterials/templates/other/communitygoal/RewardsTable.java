@@ -66,7 +66,7 @@ public class RewardsTable extends DestroyableVBox implements DestroyableTemplate
                         })
                         .getNodes()
                         .add(LabelBuilder.builder().withStyleClass("cg-reward-value")
-                                .withNonLocalizedText(reward
+                                .withText("community.goal.reward.table.credits", reward
                                         .map(ReportModels.BandReward::reward)
                                         .map(Formatters.NUMBER_FORMAT_0::format)
                                         .orElse("?"))

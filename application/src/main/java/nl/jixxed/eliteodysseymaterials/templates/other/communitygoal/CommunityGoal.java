@@ -73,14 +73,14 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                                 .withStyleClass("current-tier")
                                 .withNodes(
                                         currentTier,
-                                        LabelBuilder.builder().withStyleClass("tier-label").withNonLocalizedText("Tier reached").build()
+                                        LabelBuilder.builder().withStyleClass("tier-label").withText("community.goal.information.tierreached").build()
                                 )
                                 .buildVBox(),
                         BoxBuilder.builder()
                                 .withStyleClass("max-tier")
                                 .withNodes(
                                         maxTier,
-                                        LabelBuilder.builder().withStyleClass("tier-label").withNonLocalizedText("Max tier").build()
+                                        LabelBuilder.builder().withStyleClass("tier-label").withText("community.goal.information.maxtier").build()
                                 )
                                 .buildVBox()
                 )
@@ -94,23 +94,23 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                 .withStyleClass("cg-data")
                 .withNodes(
                         BoxBuilder.builder().withStyleClass("cg-data-entry").withNodes(
-                                LabelBuilder.builder().withStyleClass("name").withNonLocalizedText("System").build(),
+                                LabelBuilder.builder().withStyleClass("name").withText("community.goal.information.system").build(),
                                 system
                         ).buildVBox(),
                         BoxBuilder.builder().withStyleClass("cg-data-entry").withNodes(
-                                LabelBuilder.builder().withStyleClass("name").withNonLocalizedText("Station").build(),
+                                LabelBuilder.builder().withStyleClass("name").withText("community.goal.information.station").build(),
                                 station
                         ).buildVBox(),
                         BoxBuilder.builder().withStyleClass("cg-data-entry").withNodes(
-                                LabelBuilder.builder().withStyleClass("name").withNonLocalizedText("Commodity list").build(),
+                                LabelBuilder.builder().withStyleClass("name").withText("community.goal.information.commoditylist").build(),
                                 commodityList
                         ).buildVBox(),
                         BoxBuilder.builder().withStyleClass("cg-data-entry").withNodes(
-                                LabelBuilder.builder().withStyleClass("name").withNonLocalizedText("Expires").build(),
+                                LabelBuilder.builder().withStyleClass("name").withText("community.goal.information.expires").build(),
                                 expires
                         ).buildVBox(),
                         BoxBuilder.builder().withStyleClass("cg-data-entry").withNodes(
-                                LabelBuilder.builder().withStyleClass("name").withNonLocalizedText("Activity type").build(),
+                                LabelBuilder.builder().withStyleClass("name").withText("community.goal.information.activitytype").build(),
                                 activityType
                         ).buildVBox()
                 )
