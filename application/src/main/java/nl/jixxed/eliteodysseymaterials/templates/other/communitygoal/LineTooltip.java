@@ -61,7 +61,7 @@ public class LineTooltip extends AbstractDataFormattingPlugin {
      * The default distance between the data point coordinates and mouse cursor that triggers showing the tool tip
      * label.
      */
-    public static final int DEFAULT_PICKING_DISTANCE = 5;
+    public static final int DEFAULT_PICKING_DISTANCE = 100;
 
     private static final int LABEL_X_OFFSET = 15;
     private static final int LABEL_Y_OFFSET = 5;
@@ -297,7 +297,7 @@ public class LineTooltip extends AbstractDataFormattingPlugin {
             getChartChildren().remove(label);
             return;
         }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LLL d HH:mm");
         Optional<DataPoint> x = dataPoint.stream().findFirst();
         String xValue = x.map(dataPoint1 -> formatter.format(LocalDateTime.ofInstant(Instant.ofEpochMilli((long) dataPoint1.x), ZoneOffset.systemDefault())) + "\n").orElse("");
         updateLabel(event, plotAreaBounds, x, xValue + dataPoint.stream().map(dataPoint1 -> dataPoint1.formattedLabel).collect(Collectors.joining("\n")));

@@ -1,0 +1,51 @@
+{
+  "generatedAtUtc": "2026-05-14T09:04:07.381754Z",
+  "goals": [
+    {
+      "cgid": 848,
+      "title": "Lhou Mans Starport Repairs Initiative",
+      "hourlyData": [
+        {
+          "hourUtc": "2026-05-14T08:00:00Z",
+          "numContributors": 0,
+          "currentTotal": 0,
+          "delta": 0,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 0
+            }
+          ]
+        }
+      ],
+      "tierRewards": [],
+      "tierUnlocks": [],
+      "progress": {
+        "currentAmount": 0,
+        "requiredAmount": 300000000,
+        "startDate": "2026-05-14T08:53:16Z",
+        "endDate": "2026-05-21T07:00:00Z",
+        "estimatedCompletion": "insufficient-data"
+      },
+      "currentTopTier": 5,
+      "currentAchievedTier": 0,
+      "integrityFlags": [],
+      "metadata": {
+        "id": "848",
+        "title": "Lhou Mans Starport Repairs Initiative",
+        "expiry": "2026-05-21 07:00:00",
+        "market_name": "Ryman Enterprise",
+        "starsystem_name": "Lhou Mans",
+        "activityType": "tradelist",
+        "target_commodity_list": "Titanium, Aluminium, Power Generators",
+        "target_qty": "300000000",
+        "qty": "0",
+        "objective": "Titanium, Aluminium, Power Generators",
+        "images": "NewsImageMarket",
+        "news": "Lhou Mans Starport Repairs Initiative\n\nFollowing emergency evacuation efforts in Lhou Mans, attention has turned to repairing all ports damaged in the recent pirate attacks. \n\nLhou Mans system authorities have placed an open order for quantities of Power Generators, Titanium and Aluminium, and have promised to reward pilots who deliver these commodities to Ryman Enterprise.\n\nPilots who register at least 1 contribution will receive the following rewards:\n\n- 1x class 5 cargo rack pre-engineered with increased cargo capacity.\n- 1x class 6 cargo rack pre-engineered with increased cargo capacity.\n- Credits, depending on success tier achieved and individual contribution level.\n- Panther Clipper Mk II ZPG Red paint job\n\nThe campaign begins on the 14th May 3312 and will run for one week. If the final target is met earlier than planned, the campaign will end immediately.\n\n{{top5}}",
+        "bulletin": "Following emergency evacuation efforts in Lhou Mans, attention has turned to repairing all ports damaged in the recent pirate attacks. \n\nLhou Mans system authorities have placed an open order for quantities of Power Generators, Titanium and Aluminium, and have promised to reward pilots who deliver these commodities to Ryman Enterprise.\n\nPilots who register at least 1 contribution will receive the following rewards:\n\n- 1x class 5 cargo rack pre-engineered with increased cargo capacity.\n- 1x class 6 cargo rack pre-engineered with increased cargo capacity.\n- Credits, depending on success tier achieved and individual contribution level.\n- Panther Clipper Mk II ZPG Red paint job\n\nThe campaign begins on the 14th May 3312 and will run for one week. If the final target is met earlier than planned, the campaign will end immediately.\n"
+      }
+    }
+  ]
+}

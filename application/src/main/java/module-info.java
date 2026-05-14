@@ -61,6 +61,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires org.joda.time;
     requires io.fair_acc.chartfx;
     requires io.fair_acc.dataset;
+    requires io.fair_acc.bench;
 
     uses nl.jixxed.ed.awesome.api.FontLoader;
     uses nl.jixxed.ed.confidential.api.SecrecyLoader;
@@ -744,11 +745,12 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.templates.odyssey.materials to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.other to javafx.fxml, org.controlsfx.controls;
-    opens nl.jixxed.eliteodysseymaterials.templates.other.communitygoal to javafx.fxml, org.controlsfx.controls;
+    opens nl.jixxed.eliteodysseymaterials.templates.other.communitygoal to javafx.fxml, org.controlsfx.controls, io.fair_acc.chartfx;
     opens nl.jixxed.eliteodysseymaterials.templates.overlay.ar to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.settings to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.settings.sections to javafx.fxml, org.controlsfx.controls;
     opens database.commander;
     opens database.common;
     provides io.ebean.config.EntityClassRegister with nl.jixxed.eliteodysseymaterials.persistence.common.model.EbeanEntityRegister;
+
 }

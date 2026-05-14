@@ -5293,8 +5293,34 @@
                     -fx-font-weight: bold; }
                 .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .information .cg-text {
                   -fx-wrap-text: true; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .progress-stats {
+                -fx-spacing: 0.25em;
+                -fx-background-color: #252525;
+                -fx-padding: 0.25em; }
+                .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .progress-stats .progress {
+                  -fx-min-height: 2em;
+                  -fx-pref-height: 2em;
+                  -fx-max-height: 2em; }
               .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .x-value-indicator-line {
                 -fx-stroke: white; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .x-value-indicator-label {
+                -fx-border-color: white;
+                -fx-background-color: #0f0f0f;
+                -fx-text-fill: white; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .x-tier-indicator-line-odd {
+                -fx-stroke: #dcc030; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .x-tier-indicator-label-odd {
+                -fx-border-color: #dcc030;
+                -fx-background-color: #0f0f0f;
+                -fx-text-fill: white;
+                -fx-label-padding: 0.1em; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .x-tier-indicator-line-even {
+                -fx-stroke: #2e92df; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .x-tier-indicator-label-even {
+                -fx-border-color: #2e92df;
+                -fx-background-color: #0f0f0f;
+                -fx-text-fill: white;
+                -fx-label-padding: 0.1em; }
               .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .chart-datapoint-tooltip-label {
                 -fx-background-color: #0f0f0f;
                 -fx-border-color: white;
@@ -5311,6 +5337,9 @@
                 -fx-pref-height: 30em;
                 -fx-max-height: 30em;
                 -fx-background-color: #252525; }
+                .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .chart .axis .axis-tick-label {
+                  -fx-fill: white;
+                  -fx-font-size: 1em; }
               .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .dataset {
                 -fx-marker-type: circle;
                 -fx-marker-size: 0;
@@ -5345,6 +5374,86 @@
               .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .chart-legend {
                 -fx-background-color: transparent; }
                 .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .chart-legend .chart-legend-item {
+                  -fx-text-fill: white; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .x-value-indicator-line {
+                -fx-stroke: white; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .x-value-indicator-label {
+                -fx-border-color: white;
+                -fx-background-color: #0f0f0f;
+                -fx-text-fill: white; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .x-tier-indicator-line-odd {
+                -fx-stroke: #dcc030; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .x-tier-indicator-label-odd {
+                -fx-border-color: #dcc030;
+                -fx-background-color: #0f0f0f;
+                -fx-text-fill: white;
+                -fx-label-padding: 0.1em; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .x-tier-indicator-line-even {
+                -fx-stroke: #2e92df; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .x-tier-indicator-label-even {
+                -fx-border-color: #2e92df;
+                -fx-background-color: #0f0f0f;
+                -fx-text-fill: white;
+                -fx-label-padding: 0.1em; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .chart-datapoint-tooltip-label {
+                -fx-background-color: #0f0f0f;
+                -fx-border-color: white;
+                -fx-border-radius: 0;
+                -fx-font-size: 1em;
+                -fx-font-weight: normal;
+                -fx-text-fill: white;
+                -fx-text-alignment: left;
+                -fx-label-padding: 0.25em; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .chart {
+                -fx-pref-width: 999em;
+                -fx-max-width: 135em;
+                -fx-min-height: 30em;
+                -fx-pref-height: 30em;
+                -fx-max-height: 30em;
+                -fx-background-color: #252525; }
+                .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .chart .axis .axis-tick-label {
+                  -fx-fill: white;
+                  -fx-font-size: 1em; }
+                .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .chart .my-progress {
+                  -fx-poly-line-style: normal;
+                  -fx-fill: white !important;
+                  -fx-stroke: white !important;
+                  -fx-stroke-dash-array: 10;
+                  -fx-stroke-dash-offset: 10; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .dataset {
+                -fx-marker-type: circle;
+                -fx-marker-size: 0;
+                -fx-marker-line-width: 0;
+                -fx-line-width: 2;
+                -fx-line-miter-limit: 0;
+                -fx-line-cap: butt !important;
+                -fx-line-join: round !important; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .dataset.default-color0 {
+                -color-dataset: #709adc; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .dataset.default-color1 {
+                -color-dataset: #2e92df; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .dataset.default-color2 {
+                -color-dataset: red; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .chart-plot-background {
+                -fx-background-color: transparent; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .chart-major-vertical-lines {
+                visibility: false; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .chart-major-horizontal-lines {
+                -fx-stroke: silver;
+                -fx-stroke-dash-array: 0.01;
+                -fx-stroke-dash-offset: 0.01;
+                -fx-border-style: solid; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .axis {
+                visibility: false; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .time-axis {
+                visibility: true; }
+                .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .time-axis .axis-tick-label {
+                  -fx-stroke: white; }
+                .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .time-axis .axis-label {
+                  visibility: false; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .chart-legend {
+                -fx-background-color: transparent; }
+                .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .chart-legend .chart-legend-item {
                   -fx-text-fill: white; }
               .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .cg-rewards-table {
                 -fx-spacing: 0.25em; }

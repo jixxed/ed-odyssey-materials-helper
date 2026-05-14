@@ -17,7 +17,6 @@ import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.cg.ReportModels;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
@@ -33,8 +32,8 @@ public class RewardsTable extends DestroyableVBox implements DestroyableTemplate
     public void initComponents() {
         this.getStyleClass().add("cg-rewards-table");
         table = BoxBuilder.builder().withStyleClass("reward-table").buildHBox();
-        DestroyableLabel title = LabelBuilder.builder().withStyleClass("rewards-title").withNonLocalizedText("Tier rewards").build();
-        this.getNodes().addAll(title, BoxBuilder.builder().withStyleClass("reward-table-box").withNode(table).buildVBox());
+//        DestroyableLabel title = LabelBuilder.builder().withStyleClass("rewards-title").withNonLocalizedText("Tier rewards").build();
+        this.getNodes().addAll(/*title,*/ BoxBuilder.builder().withStyleClass("reward-table-box").withNode(table).buildVBox());
     }
 
     public void update(ReportModels.CommunityGoalReport report) {
@@ -72,5 +71,8 @@ public class RewardsTable extends DestroyableVBox implements DestroyableTemplate
             table.getNodes().addAll(new GrowingRegion("cg-spacer"), rewardsBox);
         });
         table.getNodes().add(new GrowingRegion("cg-spacer"));
+        boolean emptyDataset = !report.tierRewards().isEmpty();
+        this.setVisible(emptyDataset);
+        this.setManaged(emptyDataset);
     }
 }

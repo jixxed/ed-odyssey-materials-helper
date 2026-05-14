@@ -12,12 +12,11 @@ package nl.jixxed.eliteodysseymaterials.templates.other.communitygoal;
 
 import io.fair_acc.chartfx.axes.AxisLabelOverlapPolicy;
 import io.fair_acc.chartfx.axes.spi.DefaultNumericAxis;
+import io.fair_acc.chartfx.plugins.XValueIndicator;
 import io.fair_acc.chartfx.renderer.spi.BasicDataSetRenderer;
 import io.fair_acc.chartfx.ui.HiddenSidesPane;
-import io.fair_acc.chartfx.ui.ToolBarFlowPane;
 import io.fair_acc.dataset.events.ChartBits;
 import io.fair_acc.dataset.spi.DoubleDataSet;
-import javafx.scene.paint.Color;
 import javafx.util.StringConverter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -32,20 +31,14 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
-//import javafx.scene.chart.CategoryAxis;
-//import javafx.scene.chart.NumberAxis;
-//import javafx.scene.chart.XYChart;
-
 @Slf4j
 public class ProgressChart extends DestroyableHBox implements DestroyableTemplate {
 
-    DoubleDataSet commanders =
-            new DoubleDataSet("Commanders");
-    DoubleDataSet progress =
-            new DoubleDataSet("Total progress");
-    DoubleDataSet delta =
-            new DoubleDataSet("Hourly contribution");
+    DoubleDataSet totalProgress = new DoubleDataSet("Total progress");
+    DoubleDataSet commanders = new DoubleDataSet("Commanders");
+    DoubleDataSet hourlyContribution = new DoubleDataSet("Hourly contribution");
     private DestroyableChart chart;
+    private TimeNumericAxis xAxis;
 
     public ProgressChart() {
         initComponents();
@@ -55,12 +48,13 @@ public class ProgressChart extends DestroyableHBox implements DestroyableTemplat
     public void initComponents() {
         this.getStyleClass().add("community-goal-progress-chart");
         // prepare axis
-        final TimeNumericAxis xAxis1 = new TimeNumericAxis("time", "iso");
-        xAxis1.setOverlapPolicy(AxisLabelOverlapPolicy.SKIP_ALT);
-        xAxis1.setAutoRangeRounding(false);
-        xAxis1.setTimeAxis(true);
-        xAxis1.getStyleClass().add("time-axis");
-        xAxis1.setTickLabelFormatter(new StringConverter<>() {
+        xAxis = new TimeNumericAxis("time", "iso");
+        xAxis.setOverlapPolicy(AxisLabelOverlapPolicy.SKIP_ALT);
+        xAxis.setAutoRangeRounding(false);
+        xAxis.setTimeAxis(true);
+        xAxis.getStyleClass().add("time-axis");
+        xAxis.nameProperty().bind(LocaleService.getStringBinding("community.goal.progress.chart.xaxis"));
+        xAxis.setTickLabelFormatter(new StringConverter<>() {
             @Override
             public String toString(Number object) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LLL d");
@@ -73,84 +67,66 @@ public class ProgressChart extends DestroyableHBox implements DestroyableTemplat
                 return Instant.parse(string).toEpochMilli();
             }
         });
-        xAxis1.nameProperty().bind(LocaleService.getStringBinding("community.goal.progress.chart.xaxis"));
-        final DefaultNumericAxis yAxis1 = new DefaultNumericAxis("commanders", "points");
-        final DefaultNumericAxis yAxis2 = new DefaultNumericAxis("progress", "points");
-        final DefaultNumericAxis yAxis3 = new DefaultNumericAxis("delta", "points");
-        yAxis1.getStyleClass().add("commanders-axis");
-        yAxis2.getStyleClass().add("progress-axis");
-        yAxis3.getStyleClass().add("delta-axis");
-        yAxis1.nameProperty().bind(LocaleService.getStringBinding("community.goal.progress.chart.commanders"));
-        yAxis2.nameProperty().bind(LocaleService.getStringBinding("community.goal.progress.chart.progress"));
-        yAxis3.nameProperty().bind(LocaleService.getStringBinding("community.goal.progress.chart.delta"));
-        chart = new DestroyableChart(xAxis1, yAxis1, yAxis2, yAxis3);
+        final DefaultNumericAxis yAxisTotalProgress = new DefaultNumericAxis("progress", "points");
+        final DefaultNumericAxis yAxisCommanders = new DefaultNumericAxis("commanders", "points");
+        final DefaultNumericAxis yAxisHourlyContribution = new DefaultNumericAxis("delta", "points");
+        yAxisTotalProgress.getStyleClass().add("progress-axis");
+        yAxisCommanders.getStyleClass().add("commanders-axis");
+        yAxisHourlyContribution.getStyleClass().add("delta-axis");
+        yAxisTotalProgress.nameProperty().bind(LocaleService.getStringBinding("community.goal.progress.chart.progress"));
+        yAxisCommanders.nameProperty().bind(LocaleService.getStringBinding("community.goal.progress.chart.commanders"));
+        yAxisHourlyContribution.nameProperty().bind(LocaleService.getStringBinding("community.goal.progress.chart.delta"));
+        totalProgress.setName(LocaleService.getLocalizedStringForCurrentLocale("community.goal.progress.chart.progress"));
+        commanders.setName(LocaleService.getLocalizedStringForCurrentLocale("community.goal.progress.chart.commanders"));
+        hourlyContribution.setName(LocaleService.getLocalizedStringForCurrentLocale("community.goal.progress.chart.delta"));
+        chart = new DestroyableChart(xAxis, yAxisTotalProgress, yAxisCommanders, yAxisHourlyContribution);
         // Add renderers to chart
 
-        // -------------------------
-        // Renderer for LEFT axis
-        // -------------------------
-        BasicDataSetRenderer leftRenderer = new BasicDataSetRenderer();
-        leftRenderer.getAxes().setAll(xAxis1, yAxis1);
+        BasicDataSetRenderer totalProgressRenderer = new BasicDataSetRenderer(totalProgress);
+        totalProgressRenderer.getAxes().setAll(xAxis, yAxisTotalProgress);
 
-        // -------------------------
-        // Renderer for RIGHT axis
-        // -------------------------
-        BasicDataSetRenderer rightRenderer = new BasicDataSetRenderer();
-        rightRenderer.getAxes().setAll(xAxis1, yAxis2);
-        // -------------------------
-        // Renderer for RIGHT axis
-        // -------------------------
-        BasicDataSetRenderer rightRenderer2 = new BasicDataSetRenderer();
-        rightRenderer2.getAxes().setAll(xAxis1, yAxis3);
-        chart.getRenderers().add(leftRenderer);
-        chart.getRenderers().add(rightRenderer);
-        chart.getRenderers().add(rightRenderer2);
-        ((ToolBarFlowPane) chart.getToolBar()).setToolBarDefaultColor(Color.color(0, 0, 0, 0));
-        ((ToolBarFlowPane) chart.getToolBar()).setToolBarSelectedColor(Color.color(0, 0, 0, 0));
-        leftRenderer.getDatasets().add(commanders);
-        rightRenderer.getDatasets().add(progress);
-        rightRenderer2.getDatasets().add(delta);
-        commanders.getStyleClasses().add("ddataset");
-        progress.getStyleClasses().add("ddataset");
-        delta.getStyleClasses().add("ddataset");
+        BasicDataSetRenderer commandersRenderer = new BasicDataSetRenderer(commanders);
+        commandersRenderer.getAxes().setAll(xAxis, yAxisCommanders);
+
+        BasicDataSetRenderer hourlyContributionRenderer = new BasicDataSetRenderer(hourlyContribution);
+        hourlyContributionRenderer.getAxes().setAll(xAxis, yAxisHourlyContribution);
+
+        chart.getRenderers().addAll(totalProgressRenderer, commandersRenderer, hourlyContributionRenderer);
+
+        //prevent empty menu popout
         final HiddenSidesPane hiddenSidePane = chart.getPlotArea();
         hiddenSidePane.setTriggerDistance(0);
-        XValueLine indicator = new XValueLine(chart, xAxis1, 0);
-        chart.getPlugins().add(indicator);
+
+        chart.getPlugins().add(new XIndicatorLine(chart, xAxis, 0));
         chart.getPlugins().add(new LineTooltip(chart));
+
         this.getNodes().add(chart);
         chart.setVisible(false);
         chart.setManaged(false);
     }
 
     public void update(ReportModels.CommunityGoalReport report) {
-//        xAxis.setLowerBound(report.hourlyData().stream().mapToDouble(data -> data.hourUtc().toEpochMilli()).min().orElse(0L));
-//        xAxis.setUpperBound(report.hourlyData().stream().mapToDouble(data -> data.hourUtc().toEpochMilli()).max().orElse(0L));
-//        yAxis.setLowerBound(0);
 
+        chart.getPlugins().removeIf(plugin -> plugin instanceof XValueIndicator);
+        for (var unlock : report.tierUnlocks()) {
+            TierIndicator tierLine = new TierIndicator(xAxis, unlock.tier(), unlock.earliestOccurrence().toEpochMilli());
+            chart.getPlugins().addFirst(tierLine);
+        }
+        totalProgress.clearData();
         commanders.clearData();
-        progress.clearData();
-        delta.clearData();
+        hourlyContribution.clearData();
         report.hourlyData().forEach(data -> {
-//            LocalDateTime hourUtc =LocalDateTime.ofInstant( data.hourUtc(), ZoneOffset.UTC);
-//            String x = "";
-//            if (hourUtc.getHour() == 0) {
-//                DateTimeFormatter format = DateTimeFormatter.ofPattern("LLL d");
-//                x = format.format(hourUtc);
-//            }
+
             var x = data.hourUtc().toEpochMilli();
+            totalProgress.add(x, data.currentTotal());
             commanders.add(x, data.numContributors());
-            progress.add(x, data.currentTotal());
-            delta.add(x, data.delta());
+            hourlyContribution.add(x, data.delta());
         });
         chart.fireInvalidated(() -> Arrays.stream(ChartBits.values()).mapToInt(ChartBits::getAsInt).reduce(0, (a, b) -> a | b));
-        chart.setVisible(true);
-        chart.setManaged(true);
-//        chart.getGridRenderer().setDrawOnTop(true);
-//        chart.getGridRenderer().getHorizontalMajorGrid().setVisible(false);
-//        Platform.runLater(() -> {
-//            chart.getGridRenderer().getHorizontalMajorGrid().setVisible(true);
-//        });
-//
+
+        boolean emptyDataset = !report.hourlyData().isEmpty() && report.hourlyData().size() != 1;
+        chart.setVisible(emptyDataset);
+        chart.setManaged(emptyDataset);
+
     }
 }

@@ -27,18 +27,17 @@ import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class XValueLine extends AbstractSingleValueIndicator implements ValueIndicator {
+public class XIndicatorLine extends AbstractSingleValueIndicator implements ValueIndicator {
     /**
      * Creates a new instance of the indicator.
      *
      * @param axis  the axis this indicator is associated with
      * @param value a X value to be indicated
      */
-    public XValueLine(final Chart chart, final Axis axis, final double value) {
+    public XIndicatorLine(final Chart chart, final Axis axis, final double value) {
         this(chart, axis, value, null);
     }
 
@@ -49,32 +48,23 @@ public class XValueLine extends AbstractSingleValueIndicator implements ValueInd
      * @param value a X value to be indicated
      * @param text  the text to be shown by the label. Value of {@link #textProperty()}.
      */
-    public XValueLine(final Chart chart, final Axis axis, final double value, final String text) {
+    public XIndicatorLine(final Chart chart, final Axis axis, final double value, final String text) {
         super(axis, value, text);
         setLabelPosition(0.04);
         chart.getPlotArea().addEventHandler(MouseEvent.MOUSE_MOVED, this::handleMouseEvent);
         chart.getPlotArea().addEventHandler(MouseEvent.MOUSE_EXITED, this::handleMouseEvent);
         chart.addEventHandler(MouseEvent.MOUSE_EXITED, this::handleMouseEvent);
-//        pickLine.setOnMouseDragged(this::handleDragMouseEvent);
-//        triangle.setOnMouseDragged(this::handleDragMouseEvent);
-//        label.setOnMouseDragged(this::handleDragMouseEvent);
+        setPickingDistance(100);
     }
 
     protected void handleMouseEvent(final MouseEvent mouseEvent) {
         if (!isEditable()) {
             return;
         }
-//        Point2D c = getChart().getPlotArea().sceneToLocal(mouseEvent.getSceneX(), mouseEvent.getSceneY());
-//        final double xPosData = getAxis().getValueForDisplay(c.getX());
-//        final Point2D mouseLocation = getLocationInPlotArea(mouseEvent);
-        // Snapping logic: find closest X value from all datasets
-//        findNearestDataPointWithinPickingDistance(mouseLocation);
 
         final Bounds plotAreaBounds = getChart().getPlotArea().getBoundsInLocal();
         Optional<DataPoint> dataPoints = findDataPoints(mouseEvent, plotAreaBounds);
-        if (dataPoints.isPresent()) {
-            valueProperty().set(dataPoints.get().x);
-        }
+        dataPoints.ifPresent(dataPoint -> valueProperty().set(dataPoint.x));
 
         if (mouseOOB(mouseEvent)) {
             getChartChildren().clear();
@@ -138,7 +128,7 @@ public class XValueLine extends AbstractSingleValueIndicator implements ValueInd
                     .mapToObj(i -> getDataPointFromDataSet(renderer, dataset, xAxis, yAxis, mouseLocation, i)) // get points with distance to mouse
                     .filter(p -> p.distanceFromMouse <= getPickingDistance()) // filter out points which are too far away
                     .map(dataPoint -> dataPoint.withFormattedLabel(formatLabel(dataPoint)))
-                    .collect(Collectors.toList()) // Realize list so that calculations are done within the data set lock
+                    .toList() // Realize list so that calculations are done within the data set lock
                     .stream();
         });
     }
@@ -156,16 +146,11 @@ public class XValueLine extends AbstractSingleValueIndicator implements ValueInd
 
         final Bounds plotAreaBounds = getChart().getCanvas().getBoundsInLocal();
         final double minX = plotAreaBounds.getMinX();
-        final double maxX = plotAreaBounds.getMaxX();
         final double minY = plotAreaBounds.getMinY();
         final double maxY = plotAreaBounds.getMaxY();
         final double xPos = minX + getAxis().getDisplayPosition(getValue());
 
-//        if (xPos < minX || xPos > maxX) {
-//            getChartChildren().clear();
-//        } else {
-            layoutLine(xPos, minY, xPos, maxY);
-//        }
+        layoutLine(xPos, minY, xPos, maxY);
     }
 
     private boolean isDataSorted(final Renderer renderer) {
@@ -185,7 +170,6 @@ public class XValueLine extends AbstractSingleValueIndicator implements ValueInd
         final double yValue = dataset.get(DataSet.DIM_Y, index);
 
         final double displayPositionX = xAxis.getDisplayPosition(xValue);
-//        final double displayPositionY = yAxis.getDisplayPosition(yValue);
         final double distanceFromMouseLocation = new Point2D(displayPositionX, 0).distance(new Point2D(mouseLocation.getX(), 0));
 
         final String dataLabelSafe = getDataLabelSafe(dataset, index);
@@ -248,8 +232,6 @@ public class XValueLine extends AbstractSingleValueIndicator implements ValueInd
 
     @Override
     public void updateStyleClass() {
-//        setStyleClasses(label, "x-", AbstractSingleValueIndicator.STYLE_CLASS_LABEL);
         setStyleClasses(line, "x-", AbstractSingleValueIndicator.STYLE_CLASS_LINE);
-//        setStyleClasses(triangle, "x-", AbstractSingleValueIndicator.STYLE_CLASS_MARKER);
     }
 }

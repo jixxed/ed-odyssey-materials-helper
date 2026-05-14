@@ -102,10 +102,52 @@
             //-fx-fill-height: true;
           }
         }
+.progress-stats{
+  -fx-spacing: 0.25em;
+  -fx-background-color: $background-color-light;
+  -fx-padding: 0.25em;
+  .progress{
+    @include fixedHeight(2em);
+  }
+  .progress-values{
 
+  }
+  .progress-number{
+
+  }
+  .progress-percent{
+
+  }
+  .estimate{
+
+  }
+}
         .community-goal-progress-chart {
           .x-value-indicator-line{
             -fx-stroke: $border-color-white;
+          }
+          .x-value-indicator-label{
+            -fx-border-color: $border-color-white;
+            -fx-background-color: $background-color-dark;
+            -fx-text-fill: $text-color-white;
+          }
+          .x-tier-indicator-line-odd{
+            -fx-stroke: $border-color-yellow;
+          }
+          .x-tier-indicator-label-odd{
+            -fx-border-color: $border-color-yellow;
+            -fx-background-color: $background-color-dark;
+            -fx-text-fill: $text-color-white;
+            -fx-label-padding: 0.1em;
+          }
+          .x-tier-indicator-line-even{
+            -fx-stroke: $border-color-blue;
+          }
+          .x-tier-indicator-label-even{
+            -fx-border-color: $border-color-blue;
+            -fx-background-color: $background-color-dark;
+            -fx-text-fill: $text-color-white;
+            -fx-label-padding: 0.1em;
           }
           .chart-datapoint-tooltip-label{
             -fx-background-color: $background-color-dark;
@@ -118,6 +160,10 @@
             -fx-label-padding: 0.25em;
           }
           .chart {
+            .axis .axis-tick-label {
+              -fx-fill: $text-color-white;
+              -fx-font-size: 1em;
+            }
             -fx-pref-width: 999em;
             -fx-max-width: 135em;
             @include fixedHeight(30em);
@@ -185,6 +231,121 @@
 
         }
 
+        .community-goal-band-chart {
+          .x-value-indicator-line{
+            -fx-stroke: $border-color-white;
+          }
+          .x-value-indicator-label{
+            -fx-border-color: $border-color-white;
+            -fx-background-color: $background-color-dark;
+            -fx-text-fill: $text-color-white;
+          }
+          .x-tier-indicator-line-odd{
+            -fx-stroke: $border-color-yellow;
+          }
+          .x-tier-indicator-label-odd{
+            -fx-border-color: $border-color-yellow;
+            -fx-background-color: $background-color-dark;
+            -fx-text-fill: $text-color-white;
+            -fx-label-padding: 0.1em;
+          }
+          .x-tier-indicator-line-even{
+            -fx-stroke: $border-color-blue;
+          }
+          .x-tier-indicator-label-even{
+            -fx-border-color: $border-color-blue;
+            -fx-background-color: $background-color-dark;
+            -fx-text-fill: $text-color-white;
+            -fx-label-padding: 0.1em;
+          }
+          .chart-datapoint-tooltip-label{
+            -fx-background-color: $background-color-dark;
+            -fx-border-color: $border-color-white;
+            -fx-border-radius: 0;
+            -fx-font-size: 1em;
+            -fx-font-weight: normal;
+            -fx-text-fill: $text-color-white;
+            -fx-text-alignment: left;
+            -fx-label-padding: 0.25em;
+          }
+          .chart {
+            .axis .axis-tick-label {
+              -fx-fill: $text-color-white;
+              -fx-font-size: 1em;
+            }
+            -fx-pref-width: 999em;
+            -fx-max-width: 135em;
+            @include fixedHeight(30em);
+            -fx-background-color: $background-color-light;
+            .my-progress {
+              -fx-poly-line-style: normal;
+              -fx-fill: $text-color-white !important;
+              -fx-stroke: $text-color-white !important;
+              -fx-stroke-dash-array: 10;
+              -fx-stroke-dash-offset: 10;
+
+            }
+          }
+
+          .dataset {
+            -fx-marker-type: circle;
+            -fx-marker-size: 0;
+            -fx-marker-line-width: 0;
+            -fx-line-width: 2;
+            -fx-line-miter-limit: 0;
+            -fx-line-cap: butt !important;
+            -fx-line-join: round !important;
+          }
+
+          .dataset.default-color0 {
+            -color-dataset: $border-color-green;
+          }
+          .dataset.default-color1 {
+            -color-dataset: $border-color-blue;
+          }
+          .dataset.default-color2 {
+            -color-dataset: $border-color-red;
+          }
+
+          .chart-plot-background {
+            -fx-background-color: transparent;
+          }
+
+          .chart-major-vertical-lines{
+            visibility: false;
+          }
+          .chart-major-horizontal-lines{
+            -fx-stroke:  $border-color-light-grey;
+            -fx-stroke-dash-array: 0.01;
+            -fx-stroke-dash-offset: 0.01;
+            -fx-border-style: solid;
+          }
+
+          .axis {
+            visibility: false;
+          }
+
+          .time-axis {
+            visibility: true;
+
+            .axis-tick-label {
+              -fx-stroke: $text-color-white;
+            }
+            .axis-label {
+              visibility: false;
+            }
+          }
+
+          .chart-legend {
+            -fx-background-color: transparent;
+
+            .chart-legend-item {
+              -fx-text-fill: $text-color-white;
+
+            }
+          }
+
+        }
         .cg-rewards-table {
           .rewards-title {
             -fx-font-size: 1.4em;

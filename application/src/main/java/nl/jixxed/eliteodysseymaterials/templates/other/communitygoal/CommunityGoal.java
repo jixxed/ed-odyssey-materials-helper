@@ -23,6 +23,12 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class CommunityGoal extends DestroyableVBox implements DestroyableEventTemplate {
 
     private final Goal goal;
@@ -39,6 +45,7 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
     private DestroyableLabel system;
     private DestroyableLabel goalText;
     private DestroyableLabel title;
+    private ProgressStats progressStats;
 
     public CommunityGoal(Goal goal) {
         this.goal = goal;
@@ -120,9 +127,10 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
         progressChart = new ProgressChart();
         bandChart = new BandChart();
         rewardsTable = new RewardsTable();
+        progressStats = new ProgressStats();
         DestroyableSeparator destroyableSeparator = new DestroyableSeparator(Orientation.HORIZONTAL);
         destroyableSeparator.getStyleClass().add("splitter");
-        this.getNodes().addAll(header, destroyableSeparator, info, progressChart, bandChart, rewardsTable);
+        this.getNodes().addAll(header, destroyableSeparator, info, progressStats, progressChart, bandChart, rewardsTable);
     }
 
     @Override
@@ -146,10 +154,18 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                         progressChart.update(goalReport);
                         bandChart.update(goalReport);
                         rewardsTable.update(goalReport);
+                        progressStats.update(goalReport);
                         currentTier.setText(goalReport.currentAchievedTier().toString());
                         maxTier.setText(goalReport.currentTopTier().toString());
                         activityType.setText(goalReport.metadata().get("activityType").toString());
-                        expires.setText(goalReport.metadata().get("expiry").toString());
+                        LocalDateTime expiryUtc = LocalDateTime.parse(goalReport.metadata().get("expiry").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                        ZonedDateTime localExpiry = expiryUtc
+                                .atZone(ZoneOffset.UTC)
+                                .withZoneSameInstant(ZoneId.systemDefault());
+                        DateTimeFormatter formatter = (expiryUtc.getYear() == LocalDateTime.now().getYear())
+                                ? DateTimeFormatter.ofPattern("LLLL d, HH:mm")
+                                : DateTimeFormatter.ofPattern("LLLL d yyyy, HH:mm");
+                        expires.setText(formatter.format(localExpiry));
                         commodityList.setText(goalReport.metadata().get("target_commodity_list").toString());
                         system.setText(goalReport.metadata().get("starsystem_name").toString());
                         station.setText(goalReport.metadata().get("market_name").toString());
