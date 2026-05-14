@@ -17,6 +17,7 @@ import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.cg.ReportModels;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
@@ -24,6 +25,7 @@ import java.util.*;
 
 public class RewardsTable extends DestroyableVBox implements DestroyableTemplate {
     DestroyableHBox table;
+
     public RewardsTable() {
         initComponents();
     }
@@ -43,7 +45,7 @@ public class RewardsTable extends DestroyableVBox implements DestroyableTemplate
 //            List<ReportModels.BandReward> bandReward = tierReward.bands();
 //            this.getNodes().add(BoxBuilder.builder().buildVBox());
 //        });
-        DestroyableVBox tierBox = BoxBuilder.builder().withStyleClass("reward-tiers").withNode(LabelBuilder.builder().withStyleClass("cg-reward-title").withNonLocalizedText("Tier").build()).buildVBox();//TODO localize
+        DestroyableVBox tierBox = BoxBuilder.builder().withStyleClass("reward-tiers").withNode(LabelBuilder.builder().withStyleClass("cg-reward-title").withText("community.goal.reward.table.tier").build()).buildVBox();//TODO localize
         Map<Band, DestroyableVBox> rewards = new HashMap<>();
         Set<Band> bands = new HashSet<>();
         report.tierRewards().stream().sorted(Comparator.comparingInt(ReportModels.TierReward::tier).reversed()).forEach(tierReward -> {
@@ -57,7 +59,11 @@ public class RewardsTable extends DestroyableVBox implements DestroyableTemplate
             bands.stream().sorted().forEach(band -> {
                 Optional<ReportModels.BandReward> reward = report.tierRewards().stream().filter(tierReward -> tierReward.tier() == finalI)
                         .findFirst().flatMap(tierReward -> tierReward.bands().stream().filter(bandReward -> new Band(bandReward.band()).equals(band)).findFirst());
-                rewards.computeIfAbsent(band, k -> BoxBuilder.builder().withStyleClass("reward-values").withNode(LabelBuilder.builder().withStyleClass("cg-reward-title").withNonLocalizedText(band.getName()).build()).buildVBox())
+                rewards.computeIfAbsent(band, k -> {
+                            String label = (band.getName().contains("top")) ? "community.goal.reward.table.top" : "community.goal.reward.table.percent";
+                            DestroyableLabel title = LabelBuilder.builder().withStyleClass("cg-reward-title").withText(label, band.getName().replace("top", "")).build();
+                            return BoxBuilder.builder().withStyleClass("reward-values").withNode(title).buildVBox();
+                        })
                         .getNodes()
                         .add(LabelBuilder.builder().withStyleClass("cg-reward-value")
                                 .withNonLocalizedText(reward

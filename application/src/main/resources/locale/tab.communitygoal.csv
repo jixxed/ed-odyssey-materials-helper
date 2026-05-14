@@ -14,3 +14,6 @@
 "community.goal.progress.value","Progress: {0} / {1}","","","","","","","",""
 "community.goal.progress.percent","{0}%","","","","","","","",""
 "community.goal.progress.estimate","Estimated completion: {0}","","","","","","","",""
+"community.goal.reward.table.top","Top {0}","","","","","","","",""
+"community.goal.reward.table.percent","{0}%","","","","","","","",""
+"community.goal.reward.table.tier","Tier","","","","","","","",""
