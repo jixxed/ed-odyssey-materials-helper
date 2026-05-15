@@ -8,7 +8,7 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package nl.jixxed.eliteodysseymaterials.templates.horizons.commodities;
+package nl.jixxed.eliteodysseymaterials.templates.other.communitygoal;
 
 import javafx.css.PseudoClass;
 import javafx.geometry.Pos;
@@ -22,11 +22,19 @@ import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.CommoditiesSearch;
-import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.enums.Commodity;
+import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
+import nl.jixxed.eliteodysseymaterials.enums.RareCommodity;
+import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
-import nl.jixxed.eliteodysseymaterials.service.*;
-import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.ImageService;
+import nl.jixxed.eliteodysseymaterials.service.MarketService;
+import nl.jixxed.eliteodysseymaterials.service.MaterialService;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.MarketUpdatedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
@@ -37,8 +45,7 @@ import java.math.BigInteger;
 import java.util.Arrays;
 
 @Slf4j
-public class HorizonsCommodityCard extends DestroyableStackPane implements DestroyableEventTemplate {
-    private CommoditiesSearch commoditiesSearch;
+public class MaterialCard extends DestroyableStackPane implements DestroyableEventTemplate {
     @Getter
     private Integer fleetCarrierAmount;
     @Getter
@@ -62,31 +69,24 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
     private DestroyableLabel stationSellArrow;
     private DestroyableResizableImageView rareImage;
 
-    public HorizonsCommodityCard(final Commodity commodity) {
+    public MaterialCard(final Commodity commodity) {
         this.commodity = commodity;
-        final HorizonsCommoditiesSort materialSort = HorizonsCommoditiesSort.valueOf(PreferencesService.getPreference("search.commodities.sort", "ALPHABETICAL"));
-        final HorizonsCommoditiesShow filter = HorizonsCommoditiesShow.valueOf(PreferencesService.getPreference("search.commodities.filter", "ALL"));
-        commoditiesSearch = new CommoditiesSearch("", materialSort, filter);
         initComponents();
         initEventHandling();
     }
 
     @Override
     public void initComponents() {
-        this.getStyleClass().add("commodity-card");
+        this.getStyleClass().add("material-card");
         if (GameVersion.LIVE.equals(this.commodity.getGameVersion())) {
             this.pseudoClassStateChanged(PseudoClass.getPseudoClass("live"), true);
         }
+
         EdAwesomeIconViewPane typeImage = EdAwesomeIconViewPaneBuilder.builder()
                 .withStyleClass("commodity-image")
                 .withIcons(Arrays.stream(this.commodity.getCommodityType().getIcons()).map(icon -> new EdAwesomeIconView(icon, "2.5em")).toArray(EdAwesomeIconView[]::new))
                 .build();
-//        typeImage.getCssMetaData().forEach(System.out::println);
-//        typeImage.getChildren().getFirst().getCssMetaData().forEach(System.out::println);
-//        DestroyableResizableImageView typeImage = ResizableImageViewBuilder.builder()
-//                .withStyleClass("image")
-//                .withImage(this.commodity.getCommodityType().getImagePath())
-//                .build();
+
         DestroyableLabel nameLabel = LabelBuilder.builder()
                 .withStyleClass("name")
                 .withText(this.commodity.getLocalizationKey())
@@ -216,20 +216,13 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
         updateStyle();
         this.setOnMouseEntered(event -> log.info("Mouse entered"));
         MaterialService.addMaterialInfoPopOver(this, this.commodity, false, () -> 1);
-        update();
     }
 
     @Override
     public void initEventHandling() {
-        register(EventService.addListener(true, this, HorizonsCommoditiesSearchEvent.class, horizonsCommoditiesSearchEvent -> {
-            commoditiesSearch = horizonsCommoditiesSearchEvent.getSearch();
-            this.update();
-        }));
-
         register(EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
             if (storageEvent.getStoragePool().equals(StoragePool.FLEETCARRIER) || storageEvent.getStoragePool().equals(StoragePool.SQUADRONCARRIER) || storageEvent.getStoragePool().equals(StoragePool.SHIP)) {
                 updateQuantity();
-                this.update();
             }
         }));
 
@@ -244,15 +237,6 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
                 rareImage.requestLayout();
             }
         }));
-    }
-
-    private void update() {
-        boolean visible = HorizonsCommoditiesShow.getFilter(commoditiesSearch).test(this) &&
-                (commoditiesSearch.getQuery().isBlank()
-                        || LocaleService.getLocalizedStringForCurrentLocale(commodity.getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(commoditiesSearch.getQuery().toLowerCase(LocaleService.getCurrentLocale()))
-                        || LocaleService.getLocalizedStringForCurrentLocale(commodity.getCommodityType().getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(commoditiesSearch.getQuery().toLowerCase(LocaleService.getCurrentLocale())));
-        this.setVisible(visible);
-        this.setManaged(visible);
     }
 
     private void updateQuantity() {

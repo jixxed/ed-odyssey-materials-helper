@@ -12,7 +12,6 @@ package nl.jixxed.eliteodysseymaterials.templates.other.communitygoal;
 
 import io.fair_acc.chartfx.axes.AxisLabelOverlapPolicy;
 import io.fair_acc.chartfx.axes.spi.DefaultNumericAxis;
-import io.fair_acc.chartfx.plugins.XValueIndicator;
 import io.fair_acc.chartfx.renderer.spi.BasicDataSetRenderer;
 import io.fair_acc.chartfx.ui.HiddenSidesPane;
 import io.fair_acc.dataset.events.ChartBits;
@@ -107,7 +106,7 @@ public class ProgressChart extends DestroyableHBox implements DestroyableTemplat
 
     public void update(ReportModels.CommunityGoalReport report) {
 
-        chart.getPlugins().removeIf(plugin -> plugin instanceof XValueIndicator);
+        chart.getPlugins().removeIf(plugin -> plugin instanceof TierIndicator);
         for (var unlock : report.tierUnlocks()) {
             TierIndicator tierLine = new TierIndicator(xAxis, unlock.tier(), unlock.earliestOccurrence().toEpochMilli());
             chart.getPlugins().addFirst(tierLine);

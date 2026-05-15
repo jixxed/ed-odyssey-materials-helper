@@ -12,6 +12,11 @@ package nl.jixxed.eliteodysseymaterials.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Optional;
 
 @Getter
 @RequiredArgsConstructor
@@ -338,6 +343,17 @@ public enum RegularCommodity implements Commodity {
         } catch (final IllegalArgumentException ex) {
             return RegularCommodity.UNKNOWN;
         }
+    }
+
+    public static RegularCommodity forLocalizedName(final String name) {
+        Optional<RegularCommodity> first = Arrays.stream(values())
+                .filter(commodity -> LocaleService.getLocalizedStringForLocale(Locale.ENGLISH, commodity.getLocalizationKey()).equalsIgnoreCase(name))
+                .findFirst();
+        return first.orElseGet(() -> switch (name) {
+            case "Ancient Key" -> ANCIENTKEY;
+            case "Caustic Tissue Sample" -> THARGOIDGENERATORTISSUESAMPLE;
+            default -> RegularCommodity.UNKNOWN;
+        });
     }
 
     @Override

@@ -12,9 +12,7 @@ package nl.jixxed.eliteodysseymaterials.templates.other.communitygoal;
 
 import io.fair_acc.chartfx.axes.AxisLabelOverlapPolicy;
 import io.fair_acc.chartfx.axes.spi.DefaultNumericAxis;
-import io.fair_acc.chartfx.plugins.XValueIndicator;
 import io.fair_acc.chartfx.renderer.spi.AbstractRendererXY;
-import io.fair_acc.chartfx.renderer.spi.BasicDataSetRenderer;
 import io.fair_acc.chartfx.ui.HiddenSidesPane;
 import io.fair_acc.dataset.DataSet;
 import io.fair_acc.dataset.events.ChartBits;
@@ -34,9 +32,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
@@ -101,20 +99,26 @@ public class BandChart extends DestroyableHBox implements DestroyableTemplate {
     public void update(ReportModels.CommunityGoalReport report) {
         datasets.values().forEach(Dataset::clearData);
 
-
+        BandComparator bandComparator = new BandComparator();
         report.hourlyData().forEach(data -> {
-            data.bandMax().forEach(bandMax -> {
+            List<ReportModels.BandMax> max = data.bandMax().stream().sorted(bandComparator.reversed()).toList();
+            long previous = 1;
+            for (int i = 0; i < max.size(); i++) {
+                ReportModels.BandMax bandMax = max.get(i);
                 var x = data.hourUtc().toEpochMilli();
-                Dataset dataset = datasets.computeIfAbsent(bandMax.band(), (band) -> this.create(band, BasicDataSetRenderer::new));
-                dataset.dataSet.add(x, bandMax.max());
-            });
+                Dataset dataset = datasets.computeIfAbsent(bandMax.band(), (band) -> this.create(band, BandDataSetRenderer::new));
+                long bandMaxVal = Math.max(previous, bandMax.max());
+                dataset.dataSet.add(x, previous, bandMaxVal);
+                previous = bandMaxVal + 1;
+            }
         });
-        Dataset myProgress = datasets.computeIfAbsent("My progress", (band) -> this.create(band, ProgressDataSetRenderer::new));
+        Dataset myContribution = datasets.computeIfAbsent("My progress", (band) -> this.create(band, ProgressDataSetRenderer::new));
+        myContribution.dataSet.getStyleClasses().add("dataset-progress");
         AtomicLong progress = new AtomicLong(-1);
         AtomicLong lastTimestampEntry = new AtomicLong(-1);
         AtomicReference<CommunityGoalModel> lastModel = new AtomicReference<>();
 
-        LocalDateTime expiry = LocalDateTime.parse(report.metadata().get("expiry").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime expiry = LocalDateTime.parse(report.metadata().get("expiry").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).plusHours(2);
         new QCommunityGoalModel()
                 .cgid.eq((int) report.cgid())
                 .timestamp.le(expiry)
@@ -127,8 +131,9 @@ public class BandChart extends DestroyableHBox implements DestroyableTemplate {
                         progress.set(model.getPlayerContribution().longValue());
                         long timestampMilli = model.getTimestamp().toInstant(ZoneOffset.UTC).toEpochMilli();
                         lastTimestampEntry.set(timestampMilli);
-                        myProgress.dataSet.add(
+                        myContribution.dataSet.add(
                                 timestampMilli,
+                                model.getPlayerContribution().longValue(),
                                 model.getPlayerContribution().longValue()
                         );
                     }
@@ -138,25 +143,19 @@ public class BandChart extends DestroyableHBox implements DestroyableTemplate {
             long lastTimestamp = last.getTimestamp().toInstant(ZoneOffset.UTC).toEpochMilli();
             if (lastTimestampEntry.get() < lastTimestamp) {
 
-                long timestampMilli = Math.min(Instant.now().toEpochMilli(), expiry.toInstant(ZoneOffset.UTC).plus(2, ChronoUnit.HOURS).toEpochMilli());
+                long timestampMilli = Math.min(Instant.now().toEpochMilli(), expiry.toInstant(ZoneOffset.UTC).toEpochMilli());
                 long lastContribution = last.getPlayerContribution().longValue();
-                myProgress.dataSet.add(timestampMilli, lastContribution);
+                myContribution.dataSet.add(timestampMilli, lastContribution, lastContribution);
             }
         }
 
-        chart.getPlugins().removeIf(plugin -> plugin instanceof XValueIndicator);
+        chart.getPlugins().removeIf(plugin -> plugin instanceof TierIndicator);
 //        chart.getPlugins().clear();
 
         for (var unlock : report.tierUnlocks()) {
             TierIndicator tierLine = new TierIndicator(xAxis, unlock.tier(), unlock.earliestOccurrence().toEpochMilli());
             chart.getPlugins().addFirst(tierLine);
         }
-//        XIndicatorLine e = new XIndicatorLine(chart, xAxis, 0);
-//        chart.getPlugins().add(e);
-//        LineTooltip e1 = new LineTooltip(chart);
-//        chart.getPlugins().add(e1);
-//        e.chartProperty().set(chart);
-//        e1.chartProperty().set(chart);
         chart.fireInvalidated(() -> Arrays.stream(ChartBits.values()).mapToInt(ChartBits::getAsInt).reduce(0, (a, b) -> a | b));
 
         boolean emptyDataset = !report.hourlyData().isEmpty() && report.hourlyData().size() != 1;
@@ -172,9 +171,9 @@ public class BandChart extends DestroyableHBox implements DestroyableTemplate {
         } else if (band.contains("%")) {
             dataSet.nameProperty().bind(LocaleService.getStringBinding("community.goal.band.chart.percent", band.replace("%", "")));
         } else {
-            dataSet.nameProperty().bind(LocaleService.getStringBinding("community.goal.band.chart.myprogress"));
+            dataSet.nameProperty().bind(LocaleService.getStringBinding("community.goal.band.chart.mycontribution"));
         }
-        AbstractRendererXY<?> renderer =rendererFunction.apply(dataSet);// new BasicDataSetRenderer(dataSet);
+        AbstractRendererXY<?> renderer = rendererFunction.apply(dataSet);// new BasicDataSetRenderer(dataSet);
 //        renderer.getDatasetNodes().forEach(dataSetNode -> dataSetNode.getStyleClass().add(band.toLowerCase().replace(" ", "-").replace("%", "percent")));
 //        renderer.getStyleClass().add(band.toLowerCase().replace(" ", "-").replace("%", "percent"));
 //        dataSet.getStyleClasses().add(band.toLowerCase().replace(" ", "-").replace("%", "percent"));

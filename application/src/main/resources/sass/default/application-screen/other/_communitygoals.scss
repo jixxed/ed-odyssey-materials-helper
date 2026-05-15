@@ -29,6 +29,7 @@
       -fx-spacing: 0.25em;
 
       .community-goal {
+        -fx-max-width: 133.25em;
         -fx-background-color: $background-color-dark;
         -fx-border-color: $border-color-black;
         -fx-padding: 0.25em;
@@ -81,7 +82,7 @@
           -fx-spacing: 1em;
 
           .cg-data {
-            -fx-min-width: 15em;
+            -fx-min-width: 20em;
             -fx-spacing: 1em;
 
             .cg-data-entry {
@@ -93,6 +94,11 @@
                 -fx-font-weight: bold;
               }
             }
+
+            .copyable-location {
+              @include copyable-location;
+              @include fixedWidth(20em);
+            }
           }
 
           .cg-text {
@@ -102,70 +108,279 @@
             //-fx-fill-height: true;
           }
         }
-.progress-stats{
-  -fx-spacing: 0.25em;
-  -fx-background-color: $background-color-light;
-  -fx-padding: 0.25em;
-  .progress{
-    @include fixedHeight(2em);
-  }
-  .progress-values{
 
-  }
-  .progress-number{
+        .commodity-list {
+          //-fx-background-color: $background-color-light;
+          @include hvGap(0.25em);
+          //-fx-padding: 0.25em;
+          .material-card {
+            -fx-background-color: $background-color-light;
+            //-fx-border-color: $border-color-black;
 
-  }
-  .progress-percent{
+            //&:live {
+            //  -fx-background-color: linear-gradient(from 0 0 to 0.5em 0.5em, repeat, $background-color-dark 0%, lighten($background-color-dark, 6.25%) 25%, $background-color-dark 50%, lighten($background-color-dark, 6.25%) 75%, $background-color-dark 100%);
+            //}
 
-  }
-  .estimate{
+            &:buys {
+              -fx-border-color: $border-color-green;
+            }
 
-  }
-}
+            &:sells {
+              -fx-border-color: $border-color-yellow;
+            }
+
+            &:buys:sells {
+              -fx-border-color: $border-color-blue;
+            }
+
+            .rare-container {
+
+              .rare-image {
+                @include fixedWidth(5.6em);
+                -fx-opacity: 0.3;
+
+              }
+            }
+
+            .card-content {
+              -fx-padding: 0.25em;
+              -fx-spacing: 0.25em;
+              -fx-alignment: center-left;
+              @include fixedWidth(32.9em);
+
+              .name-line {
+                @include fixedHeight(2.5em);
+
+                .commodity-image {
+                  @include fixedWidth(2.5em);
+                  @include fixedHeight(2.5em);
+                  -fx-alignment: center-left;
+                  @include commodities;
+
+                  .glyph-icon {
+                    -fx-font-size: 2.5em !important;
+                  }
+                }
+
+                .name {
+                  @include fixedWidth(21.5em);
+                  //-fx-label-padding: 0.5em, 0, 0, 0;
+                  -fx-alignment: center-left;
+                  -fx-wrap-text: true;
+                }
+
+                .category {
+                  @include fixedWidth(21.5em);
+                  //-fx-label-padding: 0.5em, 0, 0, 0;
+                  -fx-alignment: center-left;
+                  -fx-wrap-text: true;
+                  -fx-text-fill: $text-color-grey;
+                }
+
+                .ship-amount {
+                  -fx-pref-width: 6.5em;
+                  -fx-padding: 0, 0, 0, 1em;
+                  -fx-min-height: 2em;
+                  -fx-alignment: center-right;
+                  -fx-text-alignment: right;
+                }
+
+                .ingredient-quantity-section {
+                  -fx-spacing: 1em;
+                }
+
+                .icon {
+                  @include fixedWidth(2em);
+                  @include fixedHeight(2em);
+                  @include awesome-icons;
+
+                  .glyph-icon {
+                    -fx-font-size: 2em !important;
+                  }
+                }
+              }
+
+              .quantity-line {
+
+                .icon {
+                  @include fixedWidth(2em);
+                  @include fixedHeight(2em);
+                  @include awesome-icons;
+
+                  .glyph-icon {
+                    -fx-font-size: 2em !important;
+                  }
+                }
+
+                .ingredient-quantity-section {
+                  -fx-spacing: 1em;
+                }
+
+                .fleetcarrier-amount {
+                  -fx-pref-width: 6.5em;
+                  -fx-padding: 0, 0, 0, 1em;
+                  -fx-min-height: 2em;
+                  -fx-alignment: center-left;
+                  -fx-text-alignment: left;
+                }
+
+                .squadroncarrier-amount {
+                  -fx-pref-width: 6.5em;
+                  -fx-padding: 0, 1em, 0, 0;
+                  -fx-min-height: 2em;
+                  -fx-alignment: center-right;
+                  -fx-text-alignment: right;
+                }
+              }
+
+
+            }
+
+            .market {
+              .icon {
+                @include fixedWidth(2em);
+                @include fixedHeight(2em);
+                @include awesome-icons;
+
+                .glyph-icon {
+                  -fx-font-size: 2em !important;
+                }
+              }
+
+              @include fixedWidth(32.8em);
+              -fx-pref-height: 100%;
+              -fx-alignment: bottom-center;
+              -fx-padding: 0 0em 0.25em 0;
+
+              .station-box {
+                @include fixedWidth(12em);
+                -fx-pref-height: 100%;
+                -fx-alignment: bottom-center;
+              }
+
+              .station-arrow {
+                -fx-padding: 0 0.25em 0.45em 0.25em;
+                @include fixedWidth(2em);
+                -fx-pref-height: 100%;
+                -fx-alignment: bottom-center;
+              }
+
+              .station-amount-sell, .station-amount-buy {
+                -fx-padding: 0 0em 0.45em 0.25em;
+                -fx-min-height: 2em;
+              }
+
+              .station-amount-buy {
+                -fx-alignment: bottom-right;
+                -fx-text-alignment: right;
+              }
+
+              .station-amount-sell {
+                -fx-alignment: bottom-left;
+                -fx-text-alignment: left;
+              }
+            }
+
+          }
+        }
+
+        .progress-stats {
+          -fx-spacing: 0.25em;
+          -fx-background-color: $background-color-light;
+          -fx-padding: 0.25em;
+
+          .progress {
+            @include fixedHeight(2em);
+          }
+
+          .progress-values {
+
+          }
+
+          .progress-number {
+
+          }
+
+          .progress-percent {
+
+          }
+
+          .estimate {
+
+          }
+        }
+
         .community-goal-progress-chart {
-          .x-value-indicator-line{
+          .x-value-indicator-line {
             -fx-stroke: $border-color-white;
           }
-          .x-value-indicator-label{
+
+          .x-value-indicator-label {
             -fx-border-color: $border-color-white;
             -fx-background-color: $background-color-dark;
             -fx-text-fill: $text-color-white;
           }
-          .x-tier-indicator-line-odd{
+
+          .x-tier-indicator-line-odd {
             -fx-stroke: $border-color-yellow;
           }
-          .x-tier-indicator-label-odd{
+
+          .x-tier-indicator-label-odd {
             -fx-border-color: $border-color-yellow;
             -fx-background-color: $background-color-dark;
             -fx-text-fill: $text-color-white;
             -fx-label-padding: 0.1em;
           }
-          .x-tier-indicator-line-even{
+
+          .x-tier-indicator-line-even {
             -fx-stroke: $border-color-blue;
           }
-          .x-tier-indicator-label-even{
+
+          .x-tier-indicator-label-even {
             -fx-border-color: $border-color-blue;
             -fx-background-color: $background-color-dark;
             -fx-text-fill: $text-color-white;
             -fx-label-padding: 0.1em;
           }
-          .chart-datapoint-tooltip-label{
+
+          .line-tooltip {
             -fx-background-color: $background-color-dark;
             -fx-border-color: $border-color-white;
-            -fx-border-radius: 0;
-            -fx-font-size: 1em;
-            -fx-font-weight: normal;
-            -fx-text-fill: $text-color-white;
-            -fx-text-alignment: left;
-            -fx-label-padding: 0.25em;
+            -fx-padding: 0.25em;
+            -fx-spacing: 0.25em;
+            .tooltip-x {
+              -fx-font-size: 1em;
+              -fx-font-weight: bold;
+              -fx-text-fill: $text-color-white;
+            }
+
+            .tooltip-list {
+              -fx-spacing: 1em;
+              .tooltip-y-name {
+                -fx-wrap-text: true;
+                -fx-font-size: 1em;
+                -fx-font-weight: normal;
+                -fx-text-fill: $text-color-white;
+                -fx-text-alignment: left;
+              }
+
+              .tooltip-y-value {
+                -fx-wrap-text: true;
+                -fx-font-size: 1em;
+                -fx-font-weight: normal;
+                -fx-text-fill: $text-color-white;
+                -fx-text-alignment: right;
+              }
+            }
           }
+
           .chart {
             .axis .axis-tick-label {
               -fx-fill: $text-color-white;
               -fx-font-size: 1em;
             }
+
             -fx-pref-width: 999em;
-            -fx-max-width: 135em;
             @include fixedHeight(30em);
             -fx-background-color: $background-color-light;
 
@@ -184,9 +399,11 @@
           .dataset.default-color0 {
             -color-dataset: $border-color-green;
           }
+
           .dataset.default-color1 {
             -color-dataset: $border-color-blue;
           }
+
           .dataset.default-color2 {
             -color-dataset: $border-color-red;
           }
@@ -195,11 +412,12 @@
             -fx-background-color: transparent;
           }
 
-          .chart-major-vertical-lines{
+          .chart-major-vertical-lines {
             visibility: false;
           }
-          .chart-major-horizontal-lines{
-            -fx-stroke:  $border-color-light-grey;
+
+          .chart-major-horizontal-lines {
+            -fx-stroke: $border-color-light-grey;
             -fx-stroke-dash-array: 0.01;
             -fx-stroke-dash-offset: 0.01;
             -fx-border-style: solid;
@@ -215,6 +433,7 @@
             .axis-tick-label {
               -fx-stroke: $text-color-white;
             }
+
             .axis-label {
               visibility: false;
             }
@@ -232,59 +451,86 @@
         }
 
         .community-goal-band-chart {
-          .x-value-indicator-line{
+          .x-value-indicator-line {
             -fx-stroke: $border-color-white;
           }
-          .x-value-indicator-label{
+
+          .x-value-indicator-label {
             -fx-border-color: $border-color-white;
             -fx-background-color: $background-color-dark;
             -fx-text-fill: $text-color-white;
           }
-          .x-tier-indicator-line-odd{
+
+          .x-tier-indicator-line-odd {
             -fx-stroke: $border-color-yellow;
           }
-          .x-tier-indicator-label-odd{
+
+          .x-tier-indicator-label-odd {
             -fx-border-color: $border-color-yellow;
             -fx-background-color: $background-color-dark;
             -fx-text-fill: $text-color-white;
             -fx-label-padding: 0.1em;
           }
-          .x-tier-indicator-line-even{
+
+          .x-tier-indicator-line-even {
             -fx-stroke: $border-color-blue;
           }
-          .x-tier-indicator-label-even{
+
+          .x-tier-indicator-label-even {
             -fx-border-color: $border-color-blue;
             -fx-background-color: $background-color-dark;
             -fx-text-fill: $text-color-white;
             -fx-label-padding: 0.1em;
           }
-          .chart-datapoint-tooltip-label{
+
+          .line-tooltip {
             -fx-background-color: $background-color-dark;
             -fx-border-color: $border-color-white;
-            -fx-border-radius: 0;
-            -fx-font-size: 1em;
-            -fx-font-weight: normal;
-            -fx-text-fill: $text-color-white;
-            -fx-text-alignment: left;
-            -fx-label-padding: 0.25em;
+            -fx-padding: 0.25em;
+            -fx-spacing: 0.25em;
+            .tooltip-x {
+              -fx-font-size: 1em;
+              -fx-font-weight: bold;
+              -fx-text-fill: $text-color-white;
+            }
+
+            .tooltip-list {
+              -fx-spacing: 1em;
+              .tooltip-y-name {
+                -fx-wrap-text: true;
+                -fx-font-size: 1em;
+                -fx-font-weight: normal;
+                -fx-text-fill: $text-color-white;
+                -fx-text-alignment: left;
+              }
+
+              .tooltip-y-value {
+                -fx-wrap-text: true;
+                -fx-font-size: 1em;
+                -fx-font-weight: normal;
+                -fx-text-fill: $text-color-white;
+                -fx-text-alignment: right;
+              }
+            }
           }
+
           .chart {
             .axis .axis-tick-label {
               -fx-fill: $text-color-white;
               -fx-font-size: 1em;
             }
+
             -fx-pref-width: 999em;
-            -fx-max-width: 135em;
             @include fixedHeight(30em);
             -fx-background-color: $background-color-light;
-            .my-progress {
-              -fx-poly-line-style: normal;
-              -fx-fill: $text-color-white !important;
-              -fx-stroke: $text-color-white !important;
-              -fx-stroke-dash-array: 10;
-              -fx-stroke-dash-offset: 10;
-
-            }
+            //.my-progress {
+            //  -fx-poly-line-style: normal;
+            //  -fx-fill: $text-color-white !important;
+            //  -fx-stroke: $text-color-white !important;
+            //  -fx-stroke-dash-array: 10;
+            //  -fx-stroke-dash-offset: 10;
+            //
+            //}
           }
 
           .dataset {
@@ -295,27 +541,36 @@
             -fx-line-miter-limit: 0;
             -fx-line-cap: butt !important;
             -fx-line-join: round !important;
+
+            -fx-fill: derive(-color-dataset, 10%);
           }
 
           .dataset.default-color0 {
             -color-dataset: $border-color-green;
           }
+
           .dataset.default-color1 {
             -color-dataset: $border-color-blue;
           }
+
           .dataset.default-color2 {
             -color-dataset: $border-color-red;
+          }
+
+          .dataset-progress {
+            -color-dataset: $border-color-white;
           }
 
           .chart-plot-background {
             -fx-background-color: transparent;
           }
 
-          .chart-major-vertical-lines{
+          .chart-major-vertical-lines {
             visibility: false;
           }
-          .chart-major-horizontal-lines{
-            -fx-stroke:  $border-color-light-grey;
+
+          .chart-major-horizontal-lines {
+            -fx-stroke: $border-color-light-grey;
             -fx-stroke-dash-array: 0.01;
             -fx-stroke-dash-offset: 0.01;
             -fx-border-style: solid;
@@ -331,6 +586,7 @@
             .axis-tick-label {
               -fx-stroke: $text-color-white;
             }
+
             .axis-label {
               visibility: false;
             }
@@ -346,6 +602,7 @@
           }
 
         }
+
         .cg-rewards-table {
           .rewards-title {
             -fx-font-size: 1.4em;

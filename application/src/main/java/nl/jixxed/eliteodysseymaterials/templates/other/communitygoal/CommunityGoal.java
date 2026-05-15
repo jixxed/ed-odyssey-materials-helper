@@ -10,11 +10,19 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.other.communitygoal;
 
+import javafx.application.Platform;
+import javafx.beans.binding.StringBinding;
 import javafx.geometry.Orientation;
 import javafx.scene.layout.Region;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.Goal;
+import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
+import nl.jixxed.eliteodysseymaterials.helper.Formatters;
+import nl.jixxed.eliteodysseymaterials.persistence.commander.model.CommunityGoalModel;
+import nl.jixxed.eliteodysseymaterials.persistence.commander.model.query.QCommunityGoalModel;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.cg.CommunityGoalsService;
 import nl.jixxed.eliteodysseymaterials.service.cg.ReportModels;
 import nl.jixxed.eliteodysseymaterials.service.event.CommunityGoalEvent;
@@ -22,12 +30,18 @@ import nl.jixxed.eliteodysseymaterials.service.event.CommunityGoalReportEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.jixxed.eliteodysseymaterials.templates.generic.CopyableLocation;
 
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class CommunityGoal extends DestroyableVBox implements DestroyableEventTemplate {
 
@@ -40,12 +54,17 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
     private DestroyableLabel maxTier;
     private DestroyableLabel activityType;
     private DestroyableLabel expires;
-    private DestroyableLabel commodityList;
-    private DestroyableLabel station;
-    private DestroyableLabel system;
+    private DestroyableLabel expiresTimer;
+    private DestroyableHBox location;
     private DestroyableLabel goalText;
     private DestroyableLabel title;
     private ProgressStats progressStats;
+    private CommodityList commodityList;
+    private DestroyableLabel expiresTitle;
+    private DestroyableLabel currentBand;
+    private DestroyableLabel contribution;
+
+    private final ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
 
     public CommunityGoal(Goal goal) {
         this.goal = goal;
@@ -56,6 +75,7 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
             refreshContent();
         });
 
+        scheduledExecutor.scheduleWithFixedDelay(this::smallUpdate, 1, 1, TimeUnit.MINUTES);
     }
 
     @Override
@@ -86,32 +106,36 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                 )
                 .buildHBox();
         activityType = LabelBuilder.builder().withStyleClass("value").build();
+        contribution = LabelBuilder.builder().withStyleClass("value").build();
+        currentBand = LabelBuilder.builder().withStyleClass("value").build();
         expires = LabelBuilder.builder().withStyleClass("value").build();
-        commodityList = LabelBuilder.builder().withStyleClass("value").build();
-        station = LabelBuilder.builder().withStyleClass("value").build();
-        system = LabelBuilder.builder().withStyleClass("value").build();
+        expiresTimer = LabelBuilder.builder().withStyleClass("value").build();
+        location = BoxBuilder.builder().withStyleClass("system").buildHBox();
+        expiresTitle = LabelBuilder.builder().withStyleClass("name").withText("community.goal.information.expires").build();
+
         DestroyableVBox cgData = BoxBuilder.builder()
                 .withStyleClass("cg-data")
                 .withNodes(
                         BoxBuilder.builder().withStyleClass("cg-data-entry").withNodes(
-                                LabelBuilder.builder().withStyleClass("name").withText("community.goal.information.system").build(),
-                                system
+                                LabelBuilder.builder().withStyleClass("name").withText("community.goal.information.location").build(),
+                                location
                         ).buildVBox(),
                         BoxBuilder.builder().withStyleClass("cg-data-entry").withNodes(
-                                LabelBuilder.builder().withStyleClass("name").withText("community.goal.information.station").build(),
-                                station
-                        ).buildVBox(),
-                        BoxBuilder.builder().withStyleClass("cg-data-entry").withNodes(
-                                LabelBuilder.builder().withStyleClass("name").withText("community.goal.information.commoditylist").build(),
-                                commodityList
-                        ).buildVBox(),
-                        BoxBuilder.builder().withStyleClass("cg-data-entry").withNodes(
-                                LabelBuilder.builder().withStyleClass("name").withText("community.goal.information.expires").build(),
-                                expires
+                                expiresTitle,
+                                expires,
+                                expiresTimer
                         ).buildVBox(),
                         BoxBuilder.builder().withStyleClass("cg-data-entry").withNodes(
                                 LabelBuilder.builder().withStyleClass("name").withText("community.goal.information.activitytype").build(),
                                 activityType
+                        ).buildVBox(),
+                        BoxBuilder.builder().withStyleClass("cg-data-entry").withNodes(
+                                LabelBuilder.builder().withStyleClass("name").withText("community.goal.information.contribution").build(),
+                                contribution
+                        ).buildVBox(),
+                        BoxBuilder.builder().withStyleClass("cg-data-entry").withNodes(
+                                LabelBuilder.builder().withStyleClass("name").withText("community.goal.information.currentband").build(),
+                                currentBand
                         ).buildVBox()
                 )
                 .buildVBox();
@@ -124,13 +148,16 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                 .withStyleClass("information")
                 .withNodes(cgData, destroyableVBox)
                 .buildHBox();
+        commodityList = new CommodityList();
         progressChart = new ProgressChart();
         bandChart = new BandChart();
         rewardsTable = new RewardsTable();
         progressStats = new ProgressStats();
         DestroyableSeparator destroyableSeparator = new DestroyableSeparator(Orientation.HORIZONTAL);
         destroyableSeparator.getStyleClass().add("splitter");
-        this.getNodes().addAll(header, destroyableSeparator, info, progressStats, progressChart, bandChart, rewardsTable);
+        this.getNodes().addAll(header, destroyableSeparator, info, commodityList, progressStats, progressChart, bandChart, rewardsTable);
+        this.setManaged(false);
+        this.setVisible(false);
     }
 
     @Override
@@ -151,6 +178,7 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                     .filter(g -> goal.getId().equals((int) g.cgid()))
                     .findFirst()
                     .ifPresent(goalReport -> {
+                        commodityList.update(goalReport);
                         progressChart.update(goalReport);
                         bandChart.update(goalReport);
                         rewardsTable.update(goalReport);
@@ -158,6 +186,8 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                         currentTier.setText(goalReport.currentAchievedTier().toString());
                         maxTier.setText(goalReport.currentTopTier().toString());
                         activityType.setText(goalReport.metadata().get("activityType").toString());
+
+
                         LocalDateTime expiryUtc = LocalDateTime.parse(goalReport.metadata().get("expiry").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                         ZonedDateTime localExpiry = expiryUtc
                                 .atZone(ZoneOffset.UTC)
@@ -165,13 +195,96 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                         DateTimeFormatter formatter = (expiryUtc.getYear() == LocalDateTime.now().getYear())
                                 ? DateTimeFormatter.ofPattern("LLLL d, HH:mm")
                                 : DateTimeFormatter.ofPattern("LLLL d yyyy, HH:mm");
+
                         expires.setText(formatter.format(localExpiry));
-                        commodityList.setText(goalReport.metadata().get("target_commodity_list").toString());
-                        system.setText(goalReport.metadata().get("starsystem_name").toString());
-                        station.setText(goalReport.metadata().get("market_name").toString());
+                        if (localExpiry.isAfter(ZonedDateTime.now())) {
+                            expiresTimer.setText(Formatters.timeUntil(localExpiry));
+                            expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expires"));
+                        } else {
+                            expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expired"));
+                            expiresTimer.setVisible(false);
+                            expiresTimer.setManaged(false);
+                        }
+
+                        StarSystem starSystem = LocationService.getStarSystem(goalReport.metadata().get("starsystem_name").toString());
+                        location.getNodes().clear();
+                        location.setVisible(false);
+                        location.setManaged(false);
+                        if (starSystem != null) {
+                            location.getNodes().add(new CopyableLocation(starSystem, goalReport.metadata().get("market_name").toString()));
+                            location.setVisible(true);
+                            location.setManaged(true);
+                        }
                         goalText.setText(goalReport.metadata().get("bulletin").toString());
                         title.setText(goalReport.metadata().get("title").toString());
+                        Optional<CommunityGoalModel> communityGoalModel = new QCommunityGoalModel()
+                                .cgid.eq((int) goalReport.cgid())
+                                .orderBy()
+                                .timestamp.desc()
+                                .setMaxRows(1)
+                                .findOneOrEmpty();
+                        Long contributionValue = communityGoalModel
+                                .map(CommunityGoalModel::getPlayerContribution)
+                                .map(BigInteger::longValue)
+                                .orElse(-1L);
+                        Long currentBandValue = communityGoalModel
+                                .map(CommunityGoalModel::getPlayerPercentileBand)
+                                .map(BigInteger::longValue)
+                                .orElse(-1L);
+
+                        if (currentBandValue < 0L) {//no journal events, not signed up
+                            currentBand.addBinding(currentBand.textProperty(), LocaleService.getStringBinding("community.goal.information.currentband.none"));
+                        } else if (goalReport.hourlyData().isEmpty()) {//no data, set to highest from journal
+                            String band = currentBandValue.toString();
+                            String label = (band.contains("top")) ? "community.goal.reward.table.top" : "community.goal.reward.table.percent";
+                            StringBinding title = LocaleService.getStringBinding(label, band.replace("top", ""));
+                            currentBand.addBinding(currentBand.textProperty(), title);
+                        } else {
+                            Optional<ReportModels.BandMax> lowestMax = goalReport.hourlyData().getLast().bandMax().stream()
+                                    .filter(bandMax -> bandMax.max() >= contributionValue)
+                                    .max(new BandComparator());
+                            String band = lowestMax.map(ReportModels.BandMax::band).orElse("top10");
+                            String label = (band.contains("top")) ? "community.goal.reward.table.top" : "community.goal.reward.table.percent";
+                            StringBinding title = LocaleService.getStringBinding(label, band.replace("top", "").replace("%", ""));
+                            currentBand.addBinding(currentBand.textProperty(), title);
+                        }
+
+                        if (contributionValue < 0L) {//no journal events, not signed up
+                            contribution.setText("-");
+                        } else {//no data, set to highest from journal
+                            contribution.setText(Formatters.NUMBER_FORMAT_0.format(contributionValue));
+                        }
+                        this.setManaged(true);
+                        this.setVisible(true);
                     });
         }
+    }
+
+    private void smallUpdate() {
+        Platform.runLater(() -> {
+            report.goals().stream()
+                    .filter(g -> goal.getId().equals((int) g.cgid()))
+                    .findFirst()
+                    .ifPresent(goalReport -> {
+                        LocalDateTime expiryUtc = LocalDateTime.parse(goalReport.metadata().get("expiry").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                        ZonedDateTime localExpiry = expiryUtc
+                                .atZone(ZoneOffset.UTC)
+                                .withZoneSameInstant(ZoneId.systemDefault());
+                        if (localExpiry.isAfter(ZonedDateTime.now())) {
+                            expiresTimer.setText(Formatters.timeUntil(localExpiry));
+                            expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expires"));
+                        } else {
+                            expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expired"));
+                            expiresTimer.setVisible(false);
+                            expiresTimer.setManaged(false);
+                        }
+                        bandChart.update(goalReport);
+                    });
+        });
+    }
+
+    @Override
+    public void destroyTemplate() {
+        scheduledExecutor.shutdownNow();
     }
 }

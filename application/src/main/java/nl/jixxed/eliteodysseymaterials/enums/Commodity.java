@@ -34,6 +34,14 @@ public sealed interface Commodity extends HorizonsMaterial permits RegularCommod
         }
     }
 
+    static Commodity forLocalizedName(final String name) {
+        RareCommodity rareCommodity = RareCommodity.forLocalizedName(name);
+        if (rareCommodity.isUnknown()) {
+            return RegularCommodity.forLocalizedName(name);
+        }
+        return rareCommodity;
+    }
+
     @Override
     default Rarity getRarity() {
         return Rarity.UNKNOWN;
@@ -48,6 +56,7 @@ public sealed interface Commodity extends HorizonsMaterial permits RegularCommod
     default HorizonsStorageType getStorageType() {
         return HorizonsStorageType.COMMODITY;
     }
+
     CommodityType getCommodityType();
 
     boolean isPurchasable();

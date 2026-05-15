@@ -5254,6 +5254,7 @@
           .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals {
             -fx-spacing: 0.25em; }
             .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal {
+              -fx-max-width: 133.25em;
               -fx-background-color: #0f0f0f;
               -fx-border-color: black;
               -fx-padding: 0.25em;
@@ -5285,14 +5286,464 @@
                 -fx-fill-height: true;
                 -fx-spacing: 1em; }
                 .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .information .cg-data {
-                  -fx-min-width: 15em;
+                  -fx-min-width: 20em;
                   -fx-spacing: 1em; }
                   .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .information .cg-data .cg-data-entry .value {
                     -fx-wrap-text: true; }
                   .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .information .cg-data .cg-data-entry .name {
                     -fx-font-weight: bold; }
+                  .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .information .cg-data .copyable-location {
+                    -fx-font-weight: normal;
+                    -fx-hgap: 0.25em;
+                    -fx-min-width: 20em;
+                    -fx-pref-width: 20em;
+                    -fx-max-width: 20em; }
+                    .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .information .cg-data .copyable-location:hover {
+                      -fx-cursor: hand; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .information .cg-data .copyable-location:hover .location {
+                        -fx-text-fill: #5aa9e6; }
+                    .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .information .cg-data .copyable-location .location {
+                      -fx-text-fill: #2e92df; }
+                    .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .information .cg-data .copyable-location .copy-icon {
+                      -fx-min-width: 1em;
+                      -fx-pref-width: 1em;
+                      -fx-max-width: 1em;
+                      -fx-min-height: 1em;
+                      -fx-pref-height: 1em;
+                      -fx-max-height: 1em;
+                      -fx-fill: gray; }
+                    .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .information .cg-data .copyable-location .permit-icon {
+                      -fx-min-height: 1em;
+                      -fx-pref-height: 1em;
+                      -fx-max-height: 1em; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .information .cg-data .copyable-location .permit-icon .glyph-icon {
+                        -fx-fill: red;
+                        -fx-font-size: 1em !important; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .information .cg-data .copyable-location .permit-icon:obtained .glyph-icon {
+                        -fx-fill: #709adc; }
+                    .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .information .cg-data .copyable-location .distance {
+                      -fx-text-fill: gray; }
                 .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .information .cg-text {
                   -fx-wrap-text: true; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list {
+                -fx-hgap: 0.25em;
+                -fx-vgap: 0.25em; }
+                .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card {
+                  -fx-background-color: #252525; }
+                  .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card:buys {
+                    -fx-border-color: #709adc; }
+                  .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card:sells {
+                    -fx-border-color: #dcc030; }
+                  .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card:buys:sells {
+                    -fx-border-color: #2e92df; }
+                  .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .rare-container .rare-image {
+                    -fx-min-width: 5.6em;
+                    -fx-pref-width: 5.6em;
+                    -fx-max-width: 5.6em;
+                    -fx-opacity: 0.3; }
+                  .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content {
+                    -fx-padding: 0.25em;
+                    -fx-spacing: 0.25em;
+                    -fx-alignment: center-left;
+                    -fx-min-width: 32.9em;
+                    -fx-pref-width: 32.9em;
+                    -fx-max-width: 32.9em; }
+                    .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line {
+                      -fx-min-height: 2.5em;
+                      -fx-pref-height: 2.5em;
+                      -fx-max-height: 2.5em; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image {
+                        -fx-min-width: 2.5em;
+                        -fx-pref-width: 2.5em;
+                        -fx-max-width: 2.5em;
+                        -fx-min-height: 2.5em;
+                        -fx-pref-height: 2.5em;
+                        -fx-max-height: 2.5em;
+                        -fx-alignment: center-left; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .commodities-chemicals {
+                          -fx-fill: #a0db83; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .commodities-consumer-items {
+                          -fx-fill: #ffec95; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .commodities-foods {
+                          -fx-fill: #ffe45e; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .commodities-industrial-materials {
+                          -fx-fill: #d9ec00; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .commodities-legal-drugs {
+                          -fx-fill: #7efc00; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .commodities-limpets {
+                          -fx-fill: #ffffff; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .commodities-limpets-1 {
+                          -fx-fill: #a6a6a6; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .commodities-limpets-2 {
+                          -fx-fill: #ffffff; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .commodities-machinery {
+                          -fx-fill: #ffeb70; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .commodities-medicines {
+                          -fx-fill: #ff2a00; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .commodities-metals {
+                          -fx-fill: #ff9a15; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .commodities-minerals {
+                          -fx-fill: #fff08a; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .commodities-salvage {
+                          -fx-fill: #4ba1ff; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .commodities-slavery {
+                          -fx-fill: #fef8b3; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .commodities-technology {
+                          -fx-fill: #b9ff00; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .commodities-textiles {
+                          -fx-fill: #ffd44a; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .commodities-waste {
+                          -fx-fill: #99ff00; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .commodities-weapons {
+                          -fx-fill: #ff5800; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .glyph-icon {
+                          -fx-font-size: 2.5em !important; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .name {
+                        -fx-min-width: 21.5em;
+                        -fx-pref-width: 21.5em;
+                        -fx-max-width: 21.5em;
+                        -fx-alignment: center-left;
+                        -fx-wrap-text: true; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .category {
+                        -fx-min-width: 21.5em;
+                        -fx-pref-width: 21.5em;
+                        -fx-max-width: 21.5em;
+                        -fx-alignment: center-left;
+                        -fx-wrap-text: true;
+                        -fx-text-fill: gray; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .ship-amount {
+                        -fx-pref-width: 6.5em;
+                        -fx-padding: 0, 0, 0, 1em;
+                        -fx-min-height: 2em;
+                        -fx-alignment: center-right;
+                        -fx-text-alignment: right; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .ingredient-quantity-section {
+                        -fx-spacing: 1em; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon {
+                        -fx-min-width: 2em;
+                        -fx-pref-width: 2em;
+                        -fx-max-width: 2em;
+                        -fx-min-height: 2em;
+                        -fx-pref-height: 2em;
+                        -fx-max-height: 2em; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .glyph-icon {
+                          -fx-font-size: 1.5em !important; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .ships-multicrew-radar {
+                          -fx-fill: #159ec2; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .other-powerplay-open {
+                          -fx-fill: #ffc600; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .ships-guardian-1 {
+                          -fx-fill: #026fa2; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .ships-guardian-2 {
+                          -fx-fill: #00aafc; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .other-communitygoal {
+                          -fx-fill: #ffeb00; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .other-arx {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .ships-engineer {
+                          -fx-font-size: 1.3em !important;
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .ships-gimballed {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .ships-turreted {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .ships-fixed {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .ships-synthesis-basic {
+                          -fx-fill: #2e92df; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .ships-synthesis-standard {
+                          -fx-fill: #2e92df; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .ships-synthesis-premium {
+                          -fx-fill: #2e92df; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .ships-preengineered {
+                          -fx-fill: #f2c80e; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .ships-advanced {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .ships-enhanced {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .ships-dumbfire {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .ships-seeker {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .ships-legacy {
+                          -fx-fill: #d16a0a; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .other-carrier-simple {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .ships-ship-1 {
+                          -fx-fill: #8e8e8e; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .ships-ship-2 {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .squadron-carrier {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .station-coriolis {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .onfoot-backpack-1 {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .onfoot-backpack-2 {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .other-wishlist {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .materials-good-1 {
+                          -fx-fill: #da9b10; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .materials-good-2 {
+                          -fx-fill: #dabe54; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .materials-data {
+                          -fx-fill: #2bb0c6; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .materials-tech-1 {
+                          -fx-fill: #c8f4f6; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .materials-tech-2 {
+                          -fx-fill: #97eef2; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .materials-circuit-1 {
+                          -fx-fill: #fbcec0; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .materials-circuit-2 {
+                          -fx-fill: #fa9778; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .materials-chemical-1 {
+                          -fx-fill: #c9e8b3; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .materials-chemical-2 {
+                          -fx-fill: #97e55d; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .onfoot-dynamic {
+                          -fx-fill: #ff00e7; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .onfoot-force {
+                          -fx-fill: #ff3c00; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .onfoot-strategic {
+                          -fx-fill: #7cd429; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .other-stock-bracket-low {
+                          -fx-fill: red; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .other-stock-bracket-high {
+                          -fx-fill: #709adc; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .glyph-icon {
+                          -fx-font-size: 2em !important; }
+                    .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon {
+                      -fx-min-width: 2em;
+                      -fx-pref-width: 2em;
+                      -fx-max-width: 2em;
+                      -fx-min-height: 2em;
+                      -fx-pref-height: 2em;
+                      -fx-max-height: 2em; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .glyph-icon {
+                        -fx-font-size: 1.5em !important; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .ships-multicrew-radar {
+                        -fx-fill: #159ec2; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .other-powerplay-open {
+                        -fx-fill: #ffc600; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .ships-guardian-1 {
+                        -fx-fill: #026fa2; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .ships-guardian-2 {
+                        -fx-fill: #00aafc; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .other-communitygoal {
+                        -fx-fill: #ffeb00; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .other-arx {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .ships-engineer {
+                        -fx-font-size: 1.3em !important;
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .ships-gimballed {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .ships-turreted {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .ships-fixed {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .ships-synthesis-basic {
+                        -fx-fill: #2e92df; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .ships-synthesis-standard {
+                        -fx-fill: #2e92df; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .ships-synthesis-premium {
+                        -fx-fill: #2e92df; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .ships-preengineered {
+                        -fx-fill: #f2c80e; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .ships-advanced {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .ships-enhanced {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .ships-dumbfire {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .ships-seeker {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .ships-legacy {
+                        -fx-fill: #d16a0a; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .other-carrier-simple {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .ships-ship-1 {
+                        -fx-fill: #8e8e8e; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .ships-ship-2 {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .squadron-carrier {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .station-coriolis {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .onfoot-backpack-1 {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .onfoot-backpack-2 {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .other-wishlist {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .materials-good-1 {
+                        -fx-fill: #da9b10; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .materials-good-2 {
+                        -fx-fill: #dabe54; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .materials-data {
+                        -fx-fill: #2bb0c6; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .materials-tech-1 {
+                        -fx-fill: #c8f4f6; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .materials-tech-2 {
+                        -fx-fill: #97eef2; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .materials-circuit-1 {
+                        -fx-fill: #fbcec0; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .materials-circuit-2 {
+                        -fx-fill: #fa9778; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .materials-chemical-1 {
+                        -fx-fill: #c9e8b3; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .materials-chemical-2 {
+                        -fx-fill: #97e55d; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .onfoot-dynamic {
+                        -fx-fill: #ff00e7; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .onfoot-force {
+                        -fx-fill: #ff3c00; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .onfoot-strategic {
+                        -fx-fill: #7cd429; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .other-stock-bracket-low {
+                        -fx-fill: red; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .other-stock-bracket-high {
+                        -fx-fill: #709adc; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .glyph-icon {
+                        -fx-font-size: 2em !important; }
+                    .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .ingredient-quantity-section {
+                      -fx-spacing: 1em; }
+                    .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .fleetcarrier-amount {
+                      -fx-pref-width: 6.5em;
+                      -fx-padding: 0, 0, 0, 1em;
+                      -fx-min-height: 2em;
+                      -fx-alignment: center-left;
+                      -fx-text-alignment: left; }
+                    .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .squadroncarrier-amount {
+                      -fx-pref-width: 6.5em;
+                      -fx-padding: 0, 1em, 0, 0;
+                      -fx-min-height: 2em;
+                      -fx-alignment: center-right;
+                      -fx-text-alignment: right; }
+                  .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market {
+                    -fx-min-width: 32.8em;
+                    -fx-pref-width: 32.8em;
+                    -fx-max-width: 32.8em;
+                    -fx-pref-height: 100%;
+                    -fx-alignment: bottom-center;
+                    -fx-padding: 0 0em 0.25em 0; }
+                    .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon {
+                      -fx-min-width: 2em;
+                      -fx-pref-width: 2em;
+                      -fx-max-width: 2em;
+                      -fx-min-height: 2em;
+                      -fx-pref-height: 2em;
+                      -fx-max-height: 2em; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .glyph-icon {
+                        -fx-font-size: 1.5em !important; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .ships-multicrew-radar {
+                        -fx-fill: #159ec2; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .other-powerplay-open {
+                        -fx-fill: #ffc600; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .ships-guardian-1 {
+                        -fx-fill: #026fa2; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .ships-guardian-2 {
+                        -fx-fill: #00aafc; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .other-communitygoal {
+                        -fx-fill: #ffeb00; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .other-arx {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .ships-engineer {
+                        -fx-font-size: 1.3em !important;
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .ships-gimballed {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .ships-turreted {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .ships-fixed {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .ships-synthesis-basic {
+                        -fx-fill: #2e92df; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .ships-synthesis-standard {
+                        -fx-fill: #2e92df; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .ships-synthesis-premium {
+                        -fx-fill: #2e92df; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .ships-preengineered {
+                        -fx-fill: #f2c80e; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .ships-advanced {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .ships-enhanced {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .ships-dumbfire {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .ships-seeker {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .ships-legacy {
+                        -fx-fill: #d16a0a; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .other-carrier-simple {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .ships-ship-1 {
+                        -fx-fill: #8e8e8e; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .ships-ship-2 {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .squadron-carrier {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .station-coriolis {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .onfoot-backpack-1 {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .onfoot-backpack-2 {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .other-wishlist {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .materials-good-1 {
+                        -fx-fill: #da9b10; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .materials-good-2 {
+                        -fx-fill: #dabe54; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .materials-data {
+                        -fx-fill: #2bb0c6; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .materials-tech-1 {
+                        -fx-fill: #c8f4f6; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .materials-tech-2 {
+                        -fx-fill: #97eef2; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .materials-circuit-1 {
+                        -fx-fill: #fbcec0; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .materials-circuit-2 {
+                        -fx-fill: #fa9778; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .materials-chemical-1 {
+                        -fx-fill: #c9e8b3; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .materials-chemical-2 {
+                        -fx-fill: #97e55d; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .onfoot-dynamic {
+                        -fx-fill: #ff00e7; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .onfoot-force {
+                        -fx-fill: #ff3c00; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .onfoot-strategic {
+                        -fx-fill: #7cd429; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .other-stock-bracket-low {
+                        -fx-fill: red; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .other-stock-bracket-high {
+                        -fx-fill: #709adc; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .glyph-icon {
+                        -fx-font-size: 2em !important; }
+                    .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .station-box {
+                      -fx-min-width: 12em;
+                      -fx-pref-width: 12em;
+                      -fx-max-width: 12em;
+                      -fx-pref-height: 100%;
+                      -fx-alignment: bottom-center; }
+                    .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .station-arrow {
+                      -fx-padding: 0 0.25em 0.45em 0.25em;
+                      -fx-min-width: 2em;
+                      -fx-pref-width: 2em;
+                      -fx-max-width: 2em;
+                      -fx-pref-height: 100%;
+                      -fx-alignment: bottom-center; }
+                    .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .station-amount-sell, .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .station-amount-buy {
+                      -fx-padding: 0 0em 0.45em 0.25em;
+                      -fx-min-height: 2em; }
+                    .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .station-amount-buy {
+                      -fx-alignment: bottom-right;
+                      -fx-text-alignment: right; }
+                    .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .station-amount-sell {
+                      -fx-alignment: bottom-left;
+                      -fx-text-alignment: left; }
               .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .progress-stats {
                 -fx-spacing: 0.25em;
                 -fx-background-color: #252525;
@@ -5321,18 +5772,31 @@
                 -fx-background-color: #0f0f0f;
                 -fx-text-fill: white;
                 -fx-label-padding: 0.1em; }
-              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .chart-datapoint-tooltip-label {
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .line-tooltip {
                 -fx-background-color: #0f0f0f;
                 -fx-border-color: white;
-                -fx-border-radius: 0;
-                -fx-font-size: 1em;
-                -fx-font-weight: normal;
-                -fx-text-fill: white;
-                -fx-text-alignment: left;
-                -fx-label-padding: 0.25em; }
+                -fx-padding: 0.25em;
+                -fx-spacing: 0.25em; }
+                .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .line-tooltip .tooltip-x {
+                  -fx-font-size: 1em;
+                  -fx-font-weight: bold;
+                  -fx-text-fill: white; }
+                .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .line-tooltip .tooltip-list {
+                  -fx-spacing: 1em; }
+                  .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .line-tooltip .tooltip-list .tooltip-y-name {
+                    -fx-wrap-text: true;
+                    -fx-font-size: 1em;
+                    -fx-font-weight: normal;
+                    -fx-text-fill: white;
+                    -fx-text-alignment: left; }
+                  .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .line-tooltip .tooltip-list .tooltip-y-value {
+                    -fx-wrap-text: true;
+                    -fx-font-size: 1em;
+                    -fx-font-weight: normal;
+                    -fx-text-fill: white;
+                    -fx-text-alignment: right; }
               .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .chart {
                 -fx-pref-width: 999em;
-                -fx-max-width: 135em;
                 -fx-min-height: 30em;
                 -fx-pref-height: 30em;
                 -fx-max-height: 30em;
@@ -5395,18 +5859,31 @@
                 -fx-background-color: #0f0f0f;
                 -fx-text-fill: white;
                 -fx-label-padding: 0.1em; }
-              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .chart-datapoint-tooltip-label {
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .line-tooltip {
                 -fx-background-color: #0f0f0f;
                 -fx-border-color: white;
-                -fx-border-radius: 0;
-                -fx-font-size: 1em;
-                -fx-font-weight: normal;
-                -fx-text-fill: white;
-                -fx-text-alignment: left;
-                -fx-label-padding: 0.25em; }
+                -fx-padding: 0.25em;
+                -fx-spacing: 0.25em; }
+                .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .line-tooltip .tooltip-x {
+                  -fx-font-size: 1em;
+                  -fx-font-weight: bold;
+                  -fx-text-fill: white; }
+                .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .line-tooltip .tooltip-list {
+                  -fx-spacing: 1em; }
+                  .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .line-tooltip .tooltip-list .tooltip-y-name {
+                    -fx-wrap-text: true;
+                    -fx-font-size: 1em;
+                    -fx-font-weight: normal;
+                    -fx-text-fill: white;
+                    -fx-text-alignment: left; }
+                  .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .line-tooltip .tooltip-list .tooltip-y-value {
+                    -fx-wrap-text: true;
+                    -fx-font-size: 1em;
+                    -fx-font-weight: normal;
+                    -fx-text-fill: white;
+                    -fx-text-alignment: right; }
               .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .chart {
                 -fx-pref-width: 999em;
-                -fx-max-width: 135em;
                 -fx-min-height: 30em;
                 -fx-pref-height: 30em;
                 -fx-max-height: 30em;
@@ -5414,12 +5891,6 @@
                 .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .chart .axis .axis-tick-label {
                   -fx-fill: white;
                   -fx-font-size: 1em; }
-                .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .chart .my-progress {
-                  -fx-poly-line-style: normal;
-                  -fx-fill: white !important;
-                  -fx-stroke: white !important;
-                  -fx-stroke-dash-array: 10;
-                  -fx-stroke-dash-offset: 10; }
               .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .dataset {
                 -fx-marker-type: circle;
                 -fx-marker-size: 0;
@@ -5427,13 +5898,16 @@
                 -fx-line-width: 2;
                 -fx-line-miter-limit: 0;
                 -fx-line-cap: butt !important;
-                -fx-line-join: round !important; }
+                -fx-line-join: round !important;
+                -fx-fill: derive(-color-dataset, 10%); }
               .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .dataset.default-color0 {
                 -color-dataset: #709adc; }
               .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .dataset.default-color1 {
                 -color-dataset: #2e92df; }
               .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .dataset.default-color2 {
                 -color-dataset: red; }
+              .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .dataset-progress {
+                -color-dataset: white; }
               .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .chart-plot-background {
                 -fx-background-color: transparent; }
               .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .chart-major-vertical-lines {

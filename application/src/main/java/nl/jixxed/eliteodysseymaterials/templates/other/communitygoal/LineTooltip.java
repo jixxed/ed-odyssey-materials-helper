@@ -24,9 +24,13 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -61,12 +65,16 @@ public class LineTooltip extends AbstractDataFormattingPlugin {
      * The default distance between the data point coordinates and mouse cursor that triggers showing the tool tip
      * label.
      */
-    public static final int DEFAULT_PICKING_DISTANCE = 100;
+    public static final int DEFAULT_PICKING_DISTANCE = 10000;
 
     private static final int LABEL_X_OFFSET = 15;
     private static final int LABEL_Y_OFFSET = 5;
 
-    private final Label label = new Label();
+    private final DestroyableLabel xValue = LabelBuilder.builder().withStyleClass("tooltip-x").build();
+    private final DestroyableLabel yNames = LabelBuilder.builder().withStyleClass("tooltip-y-name").build();
+    private final DestroyableLabel yValues = LabelBuilder.builder().withStyleClass("tooltip-y-value").build();
+    private final DestroyableHBox tooltipValueList = BoxBuilder.builder().withStyleClass("tooltip-list").withNodes(yNames, yValues).buildHBox();
+    private final DestroyableVBox tooltip = BoxBuilder.builder().withStyleClass("line-tooltip").withNodes(xValue,tooltipValueList).buildVBox();
 
     private final DoubleProperty pickingDistance = new SimpleDoubleProperty(this, "pickingDistance", DEFAULT_PICKING_DISTANCE) {
         @Override
@@ -84,10 +92,7 @@ public class LineTooltip extends AbstractDataFormattingPlugin {
      * initialized to {@value #DEFAULT_PICKING_DISTANCE}.
      */
     public LineTooltip(final Chart chart) {
-        label.getStyleClass().add(STYLE_CLASS_LABEL);
-        label.setWrapText(true);
-        label.setMinWidth(0);
-        label.setManaged(false);
+        tooltip.setManaged(false);
         registerInputEventHandler(MouseEvent.MOUSE_MOVED, mouseMoveHandler);
         registerInputEventHandler(MouseEvent.MOUSE_EXITED, mouseMoveHandler);
         chart.addEventHandler(MouseEvent.MOUSE_EXITED, mouseMoveHandler);
@@ -121,22 +126,34 @@ public class LineTooltip extends AbstractDataFormattingPlugin {
 
         final XYChart xyChart = (XYChart) chart;
         final ObservableList<DataSet> xyChartDatasets = xyChart.getDatasets();
-        return xyChart.getRenderers().stream() // for all renderers
+        List<DataPoint> closestPoints = xyChart.getRenderers().stream() // for all renderers
                 .flatMap(renderer -> Stream.of(renderer.getDatasets(), xyChartDatasets) //
                         .flatMap(List::stream) // combine global and renderer specific Datasets
-                        .map(dataset -> getPointsCloseToCursor(dataset, renderer, mouseLocation)
+                        .map(dataset -> getPointsCloseToCursor(dataset, renderer, mouseLocation, -1D)
                                 .reduce((p1, p2) -> p1.distanceFromMouse <= p2.distanceFromMouse ? p1 : p2))) // get points in range of cursor
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .toList()
-                ; // find closest point, tie-breaking in favor of earlier data sets to match rendering order
+                .toList();
+//                .reduce((p1, p2) -> p1.distanceFromMouse <= p2.distanceFromMouse ? p1 : p2);
+        Double maxX = closestPoints.stream()
+                .reduce((p1, p2) -> p1.distanceFromMouse <= p2.distanceFromMouse ? p1 : p2)//closest point to the mouse
+                .map(dp -> dp.x)
+                .orElse(-1D);
+        return xyChart.getRenderers().stream() // for all renderers
+                .flatMap(renderer -> Stream.of(renderer.getDatasets(), xyChartDatasets) //
+                        .flatMap(List::stream) // combine global and renderer specific Datasets
+                        .map(dataset -> getPointsCloseToCursor(dataset, renderer, mouseLocation, maxX)
+                                .reduce((p1, p2) -> p1.distanceFromMouse <= p2.distanceFromMouse ? p1 : p2))) // get points in range of cursor
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toList();
+
     }
 
-    protected Stream<DataPoint> getPointsCloseToCursor(final DataSet dataset, final Renderer renderer, final Point2D mouseLocation) {
+    protected Stream<DataPoint> getPointsCloseToCursor(final DataSet dataset, final Renderer renderer, final Point2D mouseLocation, final double maxX) {
         // Get Axes for the Renderer
         final Axis xAxis = findXAxis(renderer);
-        final Axis yAxis = findYAxis(renderer);
-        if (xAxis == null || yAxis == null) {
+        if (xAxis == null) {
             return Stream.empty(); // ignore this renderer because there are no valid axes available
         }
 
@@ -158,11 +175,12 @@ public class LineTooltip extends AbstractDataFormattingPlugin {
             }
 
             return IntStream.range(minIdx, maxIdx) // loop over all candidate points
-                    .mapToObj(i -> getDataPointFromDataSet(renderer, dataset, xAxis, yAxis, mouseLocation, i)) // get points with distance to mouse
+                    .mapToObj(i -> getDataPointFromDataSet(renderer, dataset, xAxis, mouseLocation, i)) // get points with distance to mouse
+                    .filter(p -> maxX == -1D || p.x <= maxX) // filter out points which are after maxX
                     .filter(p -> p.distanceFromMouse <= getPickingDistance()) // filter out points which are too far away
-                    .map(dataPoint -> dataPoint.withFormattedLabel(formatLabel(dataPoint)))
-                    .collect(Collectors.toList()) // Realize list so that calculations are done within the data set lock
-                    .stream();
+                    .map(dataPoint -> dataPoint.withFormattedLabel(formatValueLabel(dataPoint), formatNameLabel(dataPoint)));
+//                    .collect(Collectors.toList()) // Realize list so that calculations are done within the data set lock
+//                    .stream();
         });
     }
 
@@ -178,12 +196,12 @@ public class LineTooltip extends AbstractDataFormattingPlugin {
         return renderer.getAxes().stream().filter(ax -> ax.getSide().isHorizontal()).findFirst().orElse(null);
     }
 
-    protected DataPoint getDataPointFromDataSet(final Renderer renderer, final DataSet dataset, final Axis xAxis, final Axis yAxis, final Point2D mouseLocation, final int index) {
+    protected DataPoint getDataPointFromDataSet(final Renderer renderer, final DataSet dataset, final Axis xAxis, final Point2D mouseLocation, final int index) {
         final double xValue = dataset.get(DataSet.DIM_X, index);
-        final double yValue = dataset.get(DataSet.DIM_Y, index);
+        final double yMaxValue = dataset.get(DataSet.DIM_Y, index);
+        final double yMinValue = dataset.get(DataSet.DIM_Z, index);
 
         final double displayPositionX = xAxis.getDisplayPosition(xValue);
-//        final double displayPositionY = yAxis.getDisplayPosition(yValue);
         final double distanceFromMouseLocation = new Point2D(displayPositionX, 0).distance(new Point2D(mouseLocation.getX(), 0));
 
         final String dataLabelSafe = getDataLabelSafe(dataset, index);
@@ -191,19 +209,23 @@ public class LineTooltip extends AbstractDataFormattingPlugin {
         return new DataPoint( //
                 renderer, //
                 xValue, //
-                yValue, //
+                yMinValue, //
+                yMaxValue, //
                 dataset.getName(), //
                 dataLabelSafe, //
                 displayPositionX,
                 distanceFromMouseLocation);
     }
 
-    protected String formatDataPoint(final DataPoint dataPoint) {
-        return Formatters.NUMBER_FORMAT_0.format(dataPoint.y);
+    protected String formatValueLabel(DataPoint dataPoint) {
+        if(dataPoint.yMin == dataPoint.yMax) {
+            return String.format("%s",  Formatters.NUMBER_FORMAT_0.format(dataPoint.yMin));
+        }else{
+            return String.format("%s - %s",  Formatters.NUMBER_FORMAT_0.format(dataPoint.yMin), Formatters.NUMBER_FORMAT_0.format(dataPoint.yMax));
+        }
     }
-
-    protected String formatLabel(DataPoint dataPoint) {
-        return String.format("%s: %s", dataPoint.datasetName, formatDataPoint(dataPoint));
+    protected String formatNameLabel(DataPoint dataPoint) {
+            return String.format("%s:", dataPoint.datasetName);
     }
 
     protected String getDataLabelSafe(final DataSet dataSet, final int index) {
@@ -242,12 +264,14 @@ public class LineTooltip extends AbstractDataFormattingPlugin {
         pickingDistanceProperty().set(distance);
     }
 
-    protected void updateLabel(final MouseEvent event, final Bounds plotAreaBounds, Optional<DataPoint> x, final String text) {
-        label.setText(text);
+    protected void updateLabel(final MouseEvent event, final Bounds plotAreaBounds, Optional<DataPoint> x, final String xText, final String names, final String values) {
+        xValue.setText(xText);
+        yValues.setText(values);
+        yNames.setText(names);
         final double mouseX = x.map(dataPoint -> dataPoint.xPos).orElse(event.getX());
         final double spaceLeft = mouseX - plotAreaBounds.getMinX();
         final double spaceRight = plotAreaBounds.getWidth() - spaceLeft;
-        double width = label.prefWidth(-1);
+        double width = tooltip.prefWidth(-1);
         boolean atSide = true; // set to false if we cannot print the tooltip beside the point
 
         double xLocation;
@@ -267,7 +291,7 @@ public class LineTooltip extends AbstractDataFormattingPlugin {
         final double mouseY = event.getY();
         final double spaceTop = mouseY - plotAreaBounds.getMinY();
         final double spaceBottom = plotAreaBounds.getHeight() - spaceTop;
-        double height = label.prefHeight(width);
+        double height = tooltip.prefHeight(width);
 
         double yLocation;
         if (height < spaceBottom) {
@@ -286,54 +310,64 @@ public class LineTooltip extends AbstractDataFormattingPlugin {
             yLocation = plotAreaBounds.getMinY();
             height = spaceTop - LABEL_Y_OFFSET;
         }
-        label.resizeRelocate(xLocation, yLocation, width, height);
+        tooltip.resizeRelocate(xLocation, yLocation, width, height);
     }
 
     private void updateToolTip(final MouseEvent event) {
         final Bounds plotAreaBounds = getChart().getPlotArea().getBoundsInLocal();
         final List<DataPoint> dataPoint = findDataPoints(event, plotAreaBounds);
 
-        if (dataPoint.isEmpty()) {
-            getChartChildren().remove(label);
+        if (dataPoint.isEmpty() || mouseOOB(event)) {
+            getChartChildren().remove(tooltip);
             return;
         }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LLL d HH:mm");
-        Optional<DataPoint> x = dataPoint.stream().findFirst();
-        String xValue = x.map(dataPoint1 -> formatter.format(LocalDateTime.ofInstant(Instant.ofEpochMilli((long) dataPoint1.x), ZoneOffset.systemDefault())) + "\n").orElse("");
-        updateLabel(event, plotAreaBounds, x, xValue + dataPoint.stream().map(dataPoint1 -> dataPoint1.formattedLabel).collect(Collectors.joining("\n")));
-        if (!getChartChildren().contains(label)) {
-            getChartChildren().add(label);
-            label.requestLayout();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LLLL d, HH:mm");
+        Optional<DataPoint> x = dataPoint.stream().reduce((p1, p2) -> p1.distanceFromMouse <= p2.distanceFromMouse ? p1 : p2); // get points in range of cursor
+        String xValue = x.map(dataPoint1 -> formatter.format(LocalDateTime.ofInstant(Instant.ofEpochMilli((long) dataPoint1.x), ZoneOffset.systemDefault()))).orElse("");
+        String names = dataPoint.stream().map(dataPoint1 -> dataPoint1.formattedNamesLabel).collect(Collectors.joining("\n"));
+        String values = dataPoint.stream().map(dataPoint1 -> dataPoint1.formattedValuesLabel).collect(Collectors.joining("\n"));
+        updateLabel(event, plotAreaBounds, x, xValue, names, values);
+        if (!getChartChildren().contains(tooltip)) {
+            getChartChildren().add(tooltip);
+            tooltip.requestLayout();
         }
+    }
+    private boolean mouseOOB(MouseEvent mouseEvent) {
+        Point2D point2D = getChart().getCanvas().sceneToLocal(mouseEvent.getSceneX(), mouseEvent.getSceneY());
+        return !getChart().getCanvas().getLayoutBounds().contains(point2D);
     }
 
     public static class DataPoint {
         public final Renderer renderer;
         public final double x;
-        public final double y;
+        public final double yMin;
+        public final double yMax;
         public final double xPos;
         public final String datasetName;
         public final String label;
-        public final String formattedLabel; // may be empty
+        public final String formattedValuesLabel; // may be empty
+        public final String formattedNamesLabel; // may be empty
         public final double distanceFromMouse;
 
-        public DataPoint(Renderer renderer, double x, double y, String datasetName, String label, double xPos, double distanceFromMouse, String formattedLabel) {
+        public DataPoint(Renderer renderer, double x, double yMin,double yMax, String datasetName, String label, double xPos, double distanceFromMouse, String formattedValuesLabel, String formattedNamesLabel) {
             this.renderer = renderer;
             this.x = x;
-            this.y = y;
+            this.yMin = yMin;
+            this.yMax = yMax;
             this.xPos = xPos;
             this.datasetName = datasetName;
             this.label = label;
             this.distanceFromMouse = distanceFromMouse;
-            this.formattedLabel = formattedLabel;
+            this.formattedValuesLabel = formattedValuesLabel;
+            this.formattedNamesLabel = formattedNamesLabel;
         }
 
-        public DataPoint(Renderer renderer, double x, double y, String datasetName, String label,  double xPos, double distanceFromMouse) {
-            this(renderer, x, y, datasetName, label, xPos, distanceFromMouse, "");
+        public DataPoint(Renderer renderer, double x, double yMin,double yMax, String datasetName, String label,  double xPos, double distanceFromMouse) {
+            this(renderer, x, yMin,yMax, datasetName, label, xPos, distanceFromMouse, "", "");
         }
 
-        public DataPoint withFormattedLabel(String formattedLabel) {
-            return new DataPoint(renderer, x, y, datasetName,formattedLabel, xPos, distanceFromMouse, formattedLabel);
+        public DataPoint withFormattedLabel(String formattedValuesLabel, String formattedNamesLabel) {
+            return new DataPoint(renderer, x, yMin,yMax, datasetName,formattedValuesLabel, xPos, distanceFromMouse, formattedValuesLabel, formattedNamesLabel);
         }
     }
 }

@@ -10,8 +10,12 @@
 
 package nl.jixxed.eliteodysseymaterials.helper;
 
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+
 import java.math.RoundingMode;
 import java.text.NumberFormat;
+import java.time.Duration;
+import java.time.ZonedDateTime;
 
 public class Formatters {
 
@@ -41,5 +45,30 @@ public class Formatters {
         NUMBER_FORMAT_2_NO_GROUP.setMaximumFractionDigits(2);
         NUMBER_FORMAT_2_NO_GROUP.setMinimumFractionDigits(2);
         NUMBER_FORMAT_2_NO_GROUP.setGroupingUsed(false);
+    }
+
+
+    public static String timeUntil(ZonedDateTime future) {
+        ZonedDateTime now = ZonedDateTime.now(future.getZone());
+
+        if (future.isBefore(now)) {
+            return "0m";
+        }
+
+        Duration duration = Duration.between(now, future);
+
+        long totalMinutes = duration.toMinutes();
+
+        long days = totalMinutes / (60 * 24);
+        long hours = (totalMinutes % (60 * 24)) / 60;
+        long minutes = totalMinutes % 60;
+
+        StringBuilder sb = new StringBuilder();
+
+        if (days > 0) sb.append(LocaleService.getLocalizedStringForCurrentLocale("time.until.days", days));
+        if (hours > 0 || days > 0) sb.append(LocaleService.getLocalizedStringForCurrentLocale("time.until.hours", hours));
+        sb.append(LocaleService.getLocalizedStringForCurrentLocale("time.until.minutes", minutes));
+
+        return sb.toString().trim();
     }
 }

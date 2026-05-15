@@ -13,6 +13,11 @@ package nl.jixxed.eliteodysseymaterials.enums;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Optional;
 
 @Getter
 @RequiredArgsConstructor
@@ -176,6 +181,13 @@ public enum RareCommodity implements Commodity {
         } catch (final IllegalArgumentException ex) {
             return RareCommodity.UNKNOWN;
         }
+    }
+
+    public static RareCommodity forLocalizedName(final String name) {
+        Optional<RareCommodity> first = Arrays.stream(values())
+                .filter(commodity -> LocaleService.getLocalizedStringForLocale(Locale.ENGLISH, commodity.getLocalizationKey()).equalsIgnoreCase(name))
+                .findFirst();
+        return first.orElse(RareCommodity.UNKNOWN);
     }
 
     @Override

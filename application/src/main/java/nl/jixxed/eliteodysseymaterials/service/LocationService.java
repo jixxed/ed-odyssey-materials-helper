@@ -271,11 +271,46 @@ public class LocationService {
         return fleetCarrierID.equals(marketID.toString());
     }
 
+    public static StarSystem getStarSystem(String name) {
+        QStarSystemModel starSystemModel = new QStarSystemModel().name.eq(name);
+        if (starSystemModel.exists()) {
+            StarSystemModel systemModel = starSystemModel.findOne();
+            return new StarSystem(systemModel.getName(), systemModel.getX(), systemModel.getY(), systemModel.getZ());
+        }
+        //{"systemAddress":1732985787106,"systemName":"LHS 3388","systemX":-72.9375,"systemY":18.59375,"systemZ":92.9375,"systemSector":"5e1c706716a61e41","updatedAt":"2023-04-29T21:58:50.000Z"}
+        //{"error":"Not Found","message":"System not found"}
+        try {
+            HttpClient httpClient = HttpClientService.getHttpClient();
+            String encodedName = name.replaceAll("\\s", "%20");
+            log.debug("Fetching system data for systemName {}, {}", name, encodedName);
+            final String systemDomainName = DnsHelper.resolveCname(Secrets.getOrDefault("system.host", "localhost"));
+            final HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://" + systemDomainName + "/v2/system/name/" + encodedName))
+                    .header("User-Agent", VersionService.getUserAgent())
+                    .GET()
+                    .build();
+            final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            if (send.statusCode() == 200) {
+                SystemInfo systemInfo = OBJECT_MAPPER.readValue(send.body(), SystemInfo.class);
+                StarSystem starSystem = new StarSystem(systemInfo.getSystemName(), systemInfo.getSystemX().doubleValue(), systemInfo.getSystemY().doubleValue(), systemInfo.getSystemZ().doubleValue());
+//                DatabaseService.getCommonDatabase().save(new StarSystemModel(systemAddress, systemInfo.getSystemName(), systemInfo.getSystemX().doubleValue(), systemInfo.getSystemY().doubleValue(), systemInfo.getSystemZ().doubleValue()));
+                upsert(new StarSystemModel(systemInfo.getSystemAddress().toBigInteger(), systemInfo.getSystemName(), systemInfo.getSystemX().doubleValue(), systemInfo.getSystemY().doubleValue(), systemInfo.getSystemZ().doubleValue()));
+                return starSystem;
+            } else {
+                log.error("Failed fetching system data for systemName {}", name);
+                log.error(send.body());
+            }
+        } catch (InterruptedException | IOException | NamingException | IllegalArgumentException e) {
+            log.error(e.getMessage(), e);
+        }
+        return null;
+
+    }
     private static StarSystem getStarSystem(BigInteger systemAddress) {
         QStarSystemModel starSystemModel = new QStarSystemModel().address.eq(systemAddress);
         if (starSystemModel.exists()) {
             StarSystemModel systemModel = starSystemModel.findOne();
-            return new StarSystem(systemModel.getName(), systemModel.getX(), systemModel.getY(), systemModel.getZ()) ;
+            return new StarSystem(systemModel.getName(), systemModel.getX(), systemModel.getY(), systemModel.getZ());
         }
         //{"systemAddress":1732985787106,"systemName":"LHS 3388","systemX":-72.9375,"systemY":18.59375,"systemZ":92.9375,"systemSector":"5e1c706716a61e41","updatedAt":"2023-04-29T21:58:50.000Z"}
         //{"error":"Not Found","message":"System not found"}
@@ -297,6 +332,7 @@ public class LocationService {
                 return starSystem;
             } else {
                 log.error("Failed fetching system data for systemAddress {}", systemAddress);
+                log.error(send.body());
             }
         } catch (InterruptedException | IOException | NamingException | IllegalArgumentException e) {
             log.error(e.getMessage(), e);
@@ -304,6 +340,7 @@ public class LocationService {
         return null;
 
     }
+
     private static void upsert(StarSystemModel starSystemModel) {
         String sql = """
                 INSERT INTO star_system(address, name, x, y, z)

@@ -22,6 +22,12 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableProgres
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class ProgressStats extends DestroyableVBox implements DestroyableTemplate {
 
     private DestroyableLabel progressNumber;
@@ -49,8 +55,27 @@ public class ProgressStats extends DestroyableVBox implements DestroyableTemplat
     public void update(ReportModels.CommunityGoalReport report) {
         progressNumber.addBinding(progressNumber.textProperty(), LocaleService.getStringBinding("community.goal.progress.value", Formatters.NUMBER_FORMAT_0.format(report.progress().currentAmount()), Formatters.NUMBER_FORMAT_0.format(report.progress().requiredAmount())));
         double completion = (double) report.progress().currentAmount() / report.progress().requiredAmount();
-        progressPercent.addBinding(progressPercent.textProperty(), LocaleService.getStringBinding("community.goal.progress.percent", Formatters.NUMBER_FORMAT_1.format(Math.clamp(completion * 100D, 0D, 100D))));
+        String currentPercentage = Formatters.NUMBER_FORMAT_1.format(Math.clamp(completion * 100D, 0D, 100D));
+        progressPercent.addBinding(progressPercent.textProperty(), LocaleService.getStringBinding("community.goal.progress.percent", currentPercentage));
         progress.setProgress(completion);
-        this.estimate.addBinding(this.estimate.textProperty(), LocaleService.getStringBinding("community.goal.progress.estimate", report.progress().estimatedCompletion()));
+        String estimatedCompletion = report.progress().estimatedCompletion();
+        this.estimate.setVisible(false);
+        this.estimate.setManaged(false);
+        if (estimatedCompletion.equals("current-value")) {
+            this.estimate.addBinding(this.estimate.textProperty(), LocaleService.getStringBinding("community.goal.progress.percent", currentPercentage));
+            this.estimate.setVisible(true);
+            this.estimate.setManaged(true);
+        } else if(!estimatedCompletion.equals("insufficient-data") && !estimatedCompletion.equals("expired")) {//date or percentage
+            try {
+                LocalDateTime parsed = LocalDateTime.parse(estimatedCompletion);
+                ZonedDateTime zoned = ZonedDateTime.from(parsed).withZoneSameInstant(ZoneId.systemDefault());
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LLLL dd, HH:mm");
+                this.estimate.addBinding(this.estimate.textProperty(), LocaleService.getStringBinding("community.goal.progress.estimate", formatter.format(zoned)));
+            } catch (DateTimeParseException ex) {
+                this.estimate.addBinding(this.estimate.textProperty(), LocaleService.getStringBinding("community.goal.progress.estimate", estimatedCompletion));
+            }
+            this.estimate.setVisible(true);
+            this.estimate.setManaged(true);
+        }
     }
 }
