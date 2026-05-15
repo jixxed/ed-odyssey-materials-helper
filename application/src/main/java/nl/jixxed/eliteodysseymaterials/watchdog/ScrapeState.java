@@ -10,6 +10,7 @@
 
 package nl.jixxed.eliteodysseymaterials.watchdog;
 
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
 import nl.jixxed.eliteodysseymaterials.service.UserPreferencesService;
@@ -19,11 +20,13 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
 import java.io.File;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public class ScrapeState {
     private static final LocalDateTime MIN_DATETIME = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
     private static final Map<JournalEventType, LocalDateTime> TIMESTAMPS = new HashMap<>();
@@ -86,20 +89,26 @@ public class ScrapeState {
      */
     public static boolean hasEntriesToScrape(File file, LocalDateTime latest) {
         LocalDateTime latestTimestamp = getOldestDate();
-        LocalDateTime fileDate = JournalUtils.getFileDate(file);
-        //the file date is later than our registered date
-        if (fileDate.isAfter(latestTimestamp)) {
-            return true;
-        }
         try {
-            //if the file is older than the latest old file
-            if (fileDate.isBefore(latest)) {
+            LocalDateTime fileDate = JournalUtils.getFileDate(file);
+            //the file date is later than our registered date
+            if (fileDate.isAfter(latestTimestamp)) {
+                return true;
+            }
+            try {
+                //if the file is older than the latest old file
+                if (fileDate.isBefore(latest)) {
+                    return false;
+                }
+                //the latest entry in the file is later than our registered date
+                LocalDateTime latestEntryDate = JournalUtils.getLatestEntryDate(file);
+                return latestTimestamp.isBefore(latestEntryDate);
+            } catch (IllegalArgumentException ex) {
                 return false;
             }
-            //the latest entry in the file is later than our registered date
-            LocalDateTime latestEntryDate = JournalUtils.getLatestEntryDate(file);
-            return latestTimestamp.isBefore(latestEntryDate);
-        } catch (IllegalArgumentException ex) {
+
+        } catch (DateTimeParseException ex) {
+            log.error("Failed to parse file, skip", ex);
             return false;
         }
     }

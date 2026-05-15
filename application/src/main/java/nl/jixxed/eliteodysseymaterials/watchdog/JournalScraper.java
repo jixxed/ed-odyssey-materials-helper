@@ -43,6 +43,7 @@ import java.nio.file.StandardOpenOption;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -105,8 +106,13 @@ public class JournalScraper {
     private static long scrape(final File file, long position, long fileLines, long total) {
 
         log.debug("Start events processing: " + file.getName());
-        LocalDateTime fileDate = JournalUtils.getFileDate(file);
-        ScrapeState.updateAllLatestTimestamp(fileDate);
+        try {
+            LocalDateTime fileDate = JournalUtils.getFileDate(file);
+            ScrapeState.updateAllLatestTimestamp(fileDate);
+        } catch (DateTimeParseException ex) {
+            log.error("Failed to parse file, skip", ex);
+            return position + fileLines;
+        }
         try (final CountingInputStream is = new CountingInputStream(newInputStream(Paths.get(file.toURI()), StandardOpenOption.READ))) {
             final InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
             final BufferedReader lineReader = new BufferedReader(reader);
@@ -207,6 +213,7 @@ public class JournalScraper {
     /**
      * Find the latest file date before the oldest scraped date
      * Defaults to now if there is no file
+     *
      * @param folder
      * @return
      */
@@ -218,9 +225,22 @@ public class JournalScraper {
                 .filter(JournalUtils::hasFileHeader)
                 .filter(JournalUtils::hasCommanderHeader)
                 .filter(JournalUtils::isSelectedCommander)
-                .filter(file -> JournalUtils.getFileDate(file).isBefore(ScrapeState.getOldestDate()))//only files before the late
+                .filter(file -> {
+                    try {
+                        return JournalUtils.getFileDate(file).isBefore(ScrapeState.getOldestDate());
+                    } catch (DateTimeParseException ex) {
+                        return false;
+                    }
+                })//only files before the late
                 .max(Comparator.comparingLong(JournalUtils::getFileTimestamp))
-                .map(JournalUtils::getFileDate)
+                .map(x -> {
+                    try {
+                        return JournalUtils.getFileDate(x);
+                    } catch (DateTimeParseException ex) {
+                        log.error("Failed to parse file, skip", ex);
+                        return null;
+                    }
+                })
                 .orElse(LocalDateTime.now());
     }
 

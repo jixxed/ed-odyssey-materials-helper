@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -89,7 +90,12 @@ public class JournalUtils {
     }
 
     public static synchronized boolean isSinceOdysseyRelease(final File file) {
-        return getFileDate(file).isAfter(ODYSSEY_RELEASE);
+        try {
+            return getFileDate(file).isAfter(ODYSSEY_RELEASE);
+        } catch (DateTimeParseException ex) {
+            log.error("Failed to parse file, skip", ex);
+        }
+        return false;
     }
 
     public static synchronized boolean hasCommanderHeader(final File file) {
