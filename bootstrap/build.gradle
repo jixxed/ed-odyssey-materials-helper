@@ -140,7 +140,7 @@ tasks.register("jpackageSigned") {
     finalizedBy signInstallerMsi
 }
 
-tasks.register('createSignCert') {
+tasks.register('createSignCertBootstrap') {
     doLast {
         if(!new File("./edomh_codesigning.pfx").exists()) {
             String base64 = System.getProperty("base64_pfx") ?: ""
@@ -158,7 +158,7 @@ tasks.register('createSignCert') {
 }
 
 tasks.register('signInstallerExe') {
-    dependsOn tasks.named("createSignCert")
+    dependsOn tasks.named("createSignCertBootstrap")
     finalizedBy signInstallerMsi
     doLast {
         File target = new File("bootstrap/build/jpackage/Elite Dangerous Odyssey Materials Helper Launcher/Elite Dangerous Odyssey Materials Helper Launcher.exe")
@@ -174,7 +174,7 @@ tasks.register('signInstallerExe') {
 }
 
 tasks.register('signInstallerMsi') {
-    dependsOn tasks.named("createSignCert"), tasks.named("jpackage")
+    dependsOn tasks.named("createSignCertBootstrap"), tasks.named("jpackage")
 
     doLast {
         File target = new File('bootstrap/build/jpackage/Elite Dangerous Odyssey Materials Helper-' + version + '.msi')
