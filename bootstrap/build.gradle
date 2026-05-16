@@ -143,11 +143,14 @@ tasks.register("jpackageSigned") {
 tasks.register('createSignCert') {
     doLast {
         String base64 = System.getProperty("base64_pfx") ?: ""
+        if(base64.isEmpty()){
+            println("base64_pfx is empty")
+        }else {
+            byte[] decoded = Base64.getDecoder().decode(base64)
 
-        byte[] decoded = Base64.getDecoder().decode(base64)
-
-        new File("./edomh_codesigning.pfx").withOutputStream { stream ->
-            stream.write(decoded)
+            new File("./edomh_codesigning.pfx").withOutputStream { stream ->
+                stream.write(decoded)
+            }
         }
     }
 }
