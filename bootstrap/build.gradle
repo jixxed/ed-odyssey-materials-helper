@@ -103,7 +103,7 @@ jlink {
             ] as List<String>
         }
         if (packageType == 'rpm') {
-            imageOptions += ['--icon', 'src/main/resources/images/appicon512.png']
+            imageOptions.addAll('--icon', 'src/main/resources/images/appicon512.png')
             installerOptions = [
                     '--resource-dir', 'build/jpackage/Elite Dangerous Odyssey Materials Helper Launcher/lib',
                     '--description', 'Installer for ED Odyssey Materials Helper',
@@ -137,23 +137,18 @@ tasks.register("patchShellScript") {
 
 tasks.register("jpackageSigned") {
     dependsOn tasks.named("jpackageImage")
-    finalizedBy signInstallerMsi
+    finalizedBy tasks.named("signInstallerMsi")
 }
 
 tasks.register('createSignCert') {
     doLast {
-//        if(!new File("./edomh_codesigning.pfx").exists()) {
         String base64 = System.getProperty("base64_pfx") ?: ""
 
-        final ByteArrayOutputStream ostr = new ByteArrayOutputStream()
-        ostr.withCloseable {
-            it << Base64.decoder.decode(base64.getBytes())
-        }
+        byte[] decoded = Base64.getDecoder().decode(base64)
 
         new File("./edomh_codesigning.pfx").withOutputStream { stream ->
-            ostr.writeTo(stream)
+            stream.write(decoded)
         }
-//        }
     }
 }
 
