@@ -40,6 +40,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.Optional;
 
 @Slf4j
 public class MaterialCard extends DestroyableStackPane implements DestroyableEventTemplate {
@@ -260,7 +261,7 @@ public class MaterialCard extends DestroyableStackPane implements DestroyableEve
         }
         this.getNodes().add(content);
         updateQuantity();
-        MaterialService.addMaterialInfoPopOver(this, this.material, false, () -> 1);
+        MaterialService.addMaterialInfoPopOver(this, this.material, false, () -> Math.max(1, Optional.ofNullable(ApplicationState.getInstance().getShip()).map(ship -> (int) ship.getMaxCargo() * 2).orElse(1)));
     }
 
     @Override
