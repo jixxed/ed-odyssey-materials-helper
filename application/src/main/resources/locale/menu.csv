@@ -3,8 +3,7 @@
 "menu.about.disclaimer.1","DISCLAIMER: not all information under the tooltips","DISCLAIMER: not all information under the tooltips","DISCLAIMER: nicht alle Informationen unter den Tooltips","DESCARGO DE RESPONSABILIDAD: no toda la información en los consejos","AVERTISSEMENT : Toutes les informations contenues dans les info-bulles","AVISO LEGAL: nem todas as informações nas dicas de ferramentas","ОТКАЗ ОТ ОТВЕТСТВЕННОСТИ: не вся информация во всплывающих подсказках","免责声明：并非所有工具提示下的信息","გაფრთხილება: ყველა ინფორმაცია რჩევებში"
 "menu.about.disclaimer.2","are guaranteed to be complete or correct.","are guaranteed to be complete or correct.","sind garantiert vollständig und richtig.","se garantizan que estén completos o sean correcto.","ne sont pas garanties comme étant complètes ou correctes.","são garantidos como completos ou corretos.","гарантированно является полной или правильной.","都保证是完整或正确的。","არ არის სრული ან სწორი."
 "menu.about.download","Download","Download","Herunterladen","Descargar","Télécharger","Baixar","Скачать","下载","გადმოწერა"
-"menu.about.report","Report a bug","Report a bug","Fehler melden","Informar de un error","Signaler un bogue","Reportar um problema","Сообщить об ошибке","报告错误
-","შეცდომის შეტყობინება"
+"menu.about.report","Report a bug","Report a bug","Fehler melden","Informar de un error","Signaler un bogue","Reportar um problema","Сообщить об ошибке","报告错误","შეცდომის შეტყობინება"
 "menu.about.version.new","Version: {0} ({1} available!)","Version: {0} ({1} available!)","Version: {0} ({1} verfügbar!)","Versión: {0} ({1} disponible!)","Version : {0} ({1} disponible !)","Versão: {0} ({1} disponível!)","Версия: {0} (доступна {1}!)","版本: {0} ({1} 可供下载！)","ვერსია: {0} ({1} ხელმისაწვდომია!)"
 "menu.about.version","Version: {0}","Version: {0}","","Versión: {0}","Version : {0}","Versão: {0}","Версия: {0}","版本: {0}","ვერსია {0}"
 "menu.about","About","About","Über","Acerca de","À propos","Sobre","О приложении","关于","შესახებ"
@@ -26,6 +25,6 @@
 "system.copy.distance.in.system","({0}Ls ±{1}Ls)","","","({0}sl ±{1}sl)","({0}sl ±{1}sl)","","({0}Св.с ±{1}Св.с)","({0}Ls ±{1}Ls)","({0}ს.წ. ±{1}ს.წ.)"
 "system.copy.distance.in.system.no.variance","({0}Ls)","","","({0}Sl)","","","({0}Св.с.)","({0}Ls)","({0} ს.წ.)"
 "guardian.structure.title","{0} - {1}","","","{0} - {1}","{0} - {1}","","{0} - {1}","{0} - {1}","{0} - {1}"
-"guardian.structure.title.beacon","Beacon for ancient key","","","","","","Древний ключ","",""
+"guardian.structure.title.beacon","Beacon for ancient key","","","","","","Древний ключ","","ძველი გასაღები"
 "horizons.materials.nearest.markets","Nearby selling markets","","","Mercados de venta cercanos","","","Ближайшие рынки","附近出售该货物的市场","ახლომდებარე ბაზრები"
 "menu.about.pinplanner","Engineer pin planner","","","","","","Планировщик закрепленных инженеров","蓝图固定规划器","დამახსოვრებული ინჟინრების დამგეგმავი"
