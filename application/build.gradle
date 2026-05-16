@@ -107,6 +107,18 @@ jpackage {
         languageVersion = JavaLanguageVersion.of(25)
         vendor = JvmVendorSpec.AZUL
     }.get().metadata.installationPath.asFile.absolutePath
+
+    jvmArgs = [
+            '-Dapp.version=' + project.version,
+            '-Xmx2048M',
+            '--add-exports=java.base/jdk.internal.misc=nl.jixxed.merged.module',
+            '--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls',
+            '--add-exports=jdk.naming.dns/com.sun.jndi.dns=java.naming',
+            '--add-exports=javafx.graphics/com.sun.glass.ui=nl.jixxed.eliteodysseymaterials',
+            '--add-exports=javafx.graphics/com.sun.javafx.tk=nl.jixxed.eliteodysseymaterials',
+            '--add-opens=javafx.graphics/javafx.scene.layout=nl.jixxed.eliteodysseymaterials',
+            '--enable-preview'
+    ]
 }
 tasks.register('wrapper', Wrapper) {
     gradleVersion = "9.3.0"
@@ -184,9 +196,9 @@ jlink {
     jpackage {
         skipInstaller = true
         if (OperatingSystem.current().isLinux()) {
-            imageOptions += ['--icon', 'src/main/resources/images/application/appicon512.png']
+            imageOptions.addAll('--icon', 'src/main/resources/images/application/appicon512.png')
         } else {
-            imageOptions += ['--icon', 'src/main/resources/images/application/appicon.ico']
+            imageOptions.addAll('--icon', 'src/main/resources/images/application/appicon.ico')
         }
     }
     addExtraDependencies("javafx", "jackson", "log4j", "jdk.accessibility")
@@ -334,11 +346,11 @@ dependencies {
     implementation 'org.xerial:sqlite-jdbc'
     implementation "io.ebean:ebean"
     implementation 'io.ebean:ebean-migration'
-    implementation 'io.fair-acc:chartfx:11.3.1'
+    implementation 'io.fair-acc:chartfx'
 
     annotationProcessor 'io.ebean:querybean-generator'
 
-    testImplementation 'io.avaje:junit:1.8'
+    testImplementation 'io.avaje:junit'
     testImplementation 'io.ebean:ebean-test'
 
     if (proprietary) {

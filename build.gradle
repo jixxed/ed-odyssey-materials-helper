@@ -142,7 +142,8 @@ ext {
     version_jackson = "2.21.3"
     version_jna = "5.18.1"
     version_junit_jupiter = "6.0.3"
-    version_junit_platform = "1.84.4"
+    version_junit_platform = "1.14.4"
+    version_avaje_junit = "1.8"
     version_javafx = "26" //25.0.2/26 still breaks powerplay tab, regression from https://bugs.openjdk.org/browse/JDK-8350149
     version_controlsfx = "11.2.3"
     version_scribejava = "8.3.3"
@@ -236,9 +237,10 @@ allprojects {
                 implementation "io.ebean:ebean:${version_ebean}"
                 implementation "io.ebean:ebean-migration:14.3.0"
 
+                implementation 'io.fair-acc:chartfx:11.3.1'
                 annotationProcessor "io.ebean:querybean-generator:${version_ebean}"
 
-                testImplementation 'io.avaje:junit:1.8'
+                testImplementation "io.avaje:junit:${version_avaje_junit}"
                 testImplementation "io.ebean:ebean-test:${version_ebean}"
             }
         }
