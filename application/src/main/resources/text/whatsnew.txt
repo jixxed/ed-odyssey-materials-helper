@@ -1,3 +1,15 @@
+Version 3.9.0
+-------------
+Added Other/Community goals tab
+- View community goal data back to the start of 2024
+- View historic and current data. This is commander provided data, so less reliable. sufficient for 50% and lower tiers.
+- Direct access to related commodities, quick lookup for selling stations
+- Tracking of personal progress during the community goal
+- View rewards at each unlocked tier
+- View when tiers were unlocked
+Moved Powerplay, Colonisation and Permits tabs to Other tab
+Handle bad journal file names gracefully
+
 Version 3.8.2
 -------------
 Bugfix for app hanging on startup due to non-existent journal folder

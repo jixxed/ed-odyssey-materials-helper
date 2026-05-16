@@ -5371,6 +5371,8 @@
           -fx-padding: 0.25em; }
         .app .application-screen .other-tab-content .community-goal-tab-content .contents {
           -fx-spacing: 0.25em; }
+          .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goal-menu .community-goal-select {
+            -fx-focus-traversable: false; }
           .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals {
             -fx-spacing: 0.25em; }
             .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal {

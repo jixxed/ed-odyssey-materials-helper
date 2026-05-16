@@ -11,5 +11,11 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Bugfix for app hanging on startup due to non-existent journal folder
+Added Other/Community goals tab
+- View community goal data back to the start of 2024
+- View historic and current data. This is commander provided data, so less reliable. sufficient for 50% and lower tiers.
+- Direct access to related commodities, quick lookup for selling stations
+- Tracking of personal progress during the community goal
+Moved Powerplay, Colonisation and Permits tabs to Other tab
+Handle bad journal file names gracefully
 ```
