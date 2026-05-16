@@ -338,7 +338,7 @@ dependencies {
 
     annotationProcessor 'io.ebean:querybean-generator'
 
-    testImplementation 'io.avaje:junit:1.1'
+    testImplementation 'io.avaje:junit:1.8'
     testImplementation 'io.ebean:ebean-test'
 
     if (proprietary) {
