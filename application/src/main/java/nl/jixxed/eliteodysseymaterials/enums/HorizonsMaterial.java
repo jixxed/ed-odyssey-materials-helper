@@ -10,8 +10,6 @@
 
 package nl.jixxed.eliteodysseymaterials.enums;
 
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +20,10 @@ public sealed interface HorizonsMaterial extends Material permits EngineeringMat
 
     default HorizonsStorageType getStorageType() {
         return HorizonsStorageType.OTHER;
+    }
+
+    default String getCategoryLocalizationKey(){
+        return getMaterialType().getLocalizationKey();
     }
 
     static HorizonsMaterial subtypeForName(final String name) {
@@ -42,21 +44,26 @@ public sealed interface HorizonsMaterial extends Material permits EngineeringMat
         return material;
     }
 
+    static HorizonsMaterial forLocalizedName(final String name) {
+        HorizonsMaterial material = Raw.forLocalizedName(name);
+        if (material.isUnknown()) {
+            material = Encoded.forLocalizedName(name);
+            if (material.isUnknown()) {
+                material = Manufactured.forLocalizedName(name);
+                if (material.isUnknown()) {
+                    material = Commodity.forLocalizedName(name);
+                }
+            }
+        }
+        return material;
+    }
+
     static List<HorizonsMaterial> getAllMaterials() {
         return Stream.concat(Arrays.stream(Raw.values()), Stream.concat(Arrays.stream(Encoded.values()), Arrays.stream(Manufactured.values())))
                 .filter(material -> !material.isUnknown())
                 .map(HorizonsMaterial.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
-
-    static HorizonsMaterial forLocalizedName(final String name) {
-        return Stream.concat(Arrays.stream(Raw.values()), Stream.concat(Arrays.stream(Encoded.values()), Arrays.stream(Manufactured.values())))
-                .filter((HorizonsMaterial material) -> LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()).equals(name))
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
-    }
-
-    String getLocalizationKey();
 
     HorizonsMaterialType getMaterialType();
 

@@ -24,20 +24,22 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableChart;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class XIndicatorLine extends AbstractSingleValueIndicator implements ValueIndicator {
+public class XIndicatorLine extends AbstractSingleValueIndicator implements ValueIndicator, Destroyable {
     /**
      * Creates a new instance of the indicator.
      *
      * @param axis  the axis this indicator is associated with
      * @param value a X value to be indicated
      */
-    public XIndicatorLine(final Chart chart, final Axis axis, final double value) {
+    public XIndicatorLine(final DestroyableChart chart, final Axis axis, final double value) {
         this(chart, axis, value, null);
     }
 
@@ -48,12 +50,12 @@ public class XIndicatorLine extends AbstractSingleValueIndicator implements Valu
      * @param value a X value to be indicated
      * @param text  the text to be shown by the label. Value of {@link #textProperty()}.
      */
-    public XIndicatorLine(final Chart chart, final Axis axis, final double value, final String text) {
+    public XIndicatorLine(final DestroyableChart chart, final Axis axis, final double value, final String text) {
         super(axis, value, text);
         setLabelPosition(0.04);
         chart.getPlotArea().addEventHandler(MouseEvent.MOUSE_MOVED, this::handleMouseEvent);
         chart.getPlotArea().addEventHandler(MouseEvent.MOUSE_EXITED, this::handleMouseEvent);
-        chart.addEventHandler(MouseEvent.MOUSE_EXITED, this::handleMouseEvent);
+        chart.registerEventHandler(MouseEvent.MOUSE_EXITED, this::handleMouseEvent);
         setPickingDistance(100);
     }
 

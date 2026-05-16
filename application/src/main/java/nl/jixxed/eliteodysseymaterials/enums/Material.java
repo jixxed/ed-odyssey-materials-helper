@@ -11,4 +11,22 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
 public sealed interface Material permits HorizonsMaterial, OdysseyMaterial {
+
+    String getLocalizationKey();
+    String getCategoryLocalizationKey();
+
+    static Material forLocalizedName(final String name) {
+        Material material = HorizonsMaterial.forLocalizedName(name);
+        if (material.isUnknown()) {
+            try{
+                material = OdysseyMaterial.forLocalizedName(name);
+            }catch (IllegalArgumentException ex){
+                //noop
+            }
+        }
+        return material;
+    }
+
+    boolean isUnknown();
+
 }

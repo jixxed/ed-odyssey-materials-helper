@@ -96,9 +96,10 @@ public class ProgressChart extends DestroyableHBox implements DestroyableTemplat
         final HiddenSidesPane hiddenSidePane = chart.getPlotArea();
         hiddenSidePane.setTriggerDistance(0);
 
-        chart.getPlugins().add(new XIndicatorLine(chart, xAxis, 0));
-        chart.getPlugins().add(new LineTooltip(chart));
-
+        XIndicatorLine indicatorLine = chart.register(new XIndicatorLine(chart, xAxis, 0));
+        LineTooltip lineTooltip = chart.register(new LineTooltip(chart));
+        chart.getPlugins().add(indicatorLine);
+        chart.getPlugins().add(lineTooltip);
         this.getNodes().add(chart);
         chart.setVisible(false);
         chart.setManaged(false);
@@ -127,5 +128,10 @@ public class ProgressChart extends DestroyableHBox implements DestroyableTemplat
         chart.setVisible(emptyDataset);
         chart.setManaged(emptyDataset);
 
+    }
+
+    @Override
+    public void destroyTemplate() {
+        super.destroy();
     }
 }

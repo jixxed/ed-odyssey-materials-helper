@@ -259,6 +259,16 @@
                     -fx-fill: #ff7c7c; }
                   .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .other-stock-bracket-high {
                     -fx-fill: #89d07f; }
+                  .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .materials-grade-1 {
+                    -fx-fill: white; }
+                  .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .materials-grade-2 {
+                    -fx-fill: white; }
+                  .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .materials-grade-3 {
+                    -fx-fill: white; }
+                  .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .materials-grade-4 {
+                    -fx-fill: white; }
+                  .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .materials-grade-5 {
+                    -fx-fill: white; }
                   .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .name-line .icon .glyph-icon {
                     -fx-font-size: 2em !important; }
               .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon {
@@ -353,6 +363,16 @@
                   -fx-fill: #ff7c7c; }
                 .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .other-stock-bracket-high {
                   -fx-fill: #89d07f; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .materials-grade-1 {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .materials-grade-2 {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .materials-grade-3 {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .materials-grade-4 {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .materials-grade-5 {
+                  -fx-fill: white; }
                 .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .icon .glyph-icon {
                   -fx-font-size: 2em !important; }
               .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .card-content .quantity-line .ingredient-quantity-section {
@@ -468,6 +488,16 @@
                   -fx-fill: #ff7c7c; }
                 .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .other-stock-bracket-high {
                   -fx-fill: #89d07f; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .materials-grade-1 {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .materials-grade-2 {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .materials-grade-3 {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .materials-grade-4 {
+                  -fx-fill: white; }
+                .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .materials-grade-5 {
+                  -fx-fill: white; }
                 .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .icon .glyph-icon {
                   -fx-font-size: 2em !important; }
               .app .application-screen .horizons-tab-content .commodities-tab-content .horizons-commodities-overview .commodity-card .market .station-box {
@@ -2174,6 +2204,16 @@
                           -fx-fill: #ff7c7c; }
                         .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .other-stock-bracket-high {
                           -fx-fill: #89d07f; }
+                        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .materials-grade-1 {
+                          -fx-fill: white; }
+                        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .materials-grade-2 {
+                          -fx-fill: white; }
+                        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .materials-grade-3 {
+                          -fx-fill: white; }
+                        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .materials-grade-4 {
+                          -fx-fill: white; }
+                        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon .materials-grade-5 {
+                          -fx-fill: white; }
                       .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide {
                         -fx-min-width: 2.7em;
                         -fx-pref-width: 2.7em;
@@ -2265,6 +2305,16 @@
                           -fx-fill: #ff7c7c; }
                         .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .other-stock-bracket-high {
                           -fx-fill: #89d07f; }
+                        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .materials-grade-1 {
+                          -fx-fill: white; }
+                        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .materials-grade-2 {
+                          -fx-fill: white; }
+                        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .materials-grade-3 {
+                          -fx-fill: white; }
+                        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .materials-grade-4 {
+                          -fx-fill: white; }
+                        .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .module-icons .module-icon-wide .materials-grade-5 {
+                          -fx-fill: white; }
                     .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .name {
                       -fx-max-width: 20em; }
                       .app .application-screen .horizons-tab-content .shipbuilder-tab-content .contents .modules-section .slots-column .slot-box .slot-content .module-data .name:changed {
@@ -2838,6 +2888,16 @@
                           -fx-fill: #ff7c7c; }
                         .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .other-stock-bracket-high {
                           -fx-fill: #89d07f; }
+                        .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .materials-grade-1 {
+                          -fx-fill: white; }
+                        .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .materials-grade-2 {
+                          -fx-fill: white; }
+                        .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .materials-grade-3 {
+                          -fx-fill: white; }
+                        .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .materials-grade-4 {
+                          -fx-fill: white; }
+                        .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image .materials-grade-5 {
+                          -fx-fill: white; }
                       .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide {
                         -fx-min-width: 2.7em;
                         -fx-pref-width: 2.7em;
@@ -2931,6 +2991,16 @@
                           -fx-fill: #ff7c7c; }
                         .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .other-stock-bracket-high {
                           -fx-fill: #89d07f; }
+                        .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .materials-grade-1 {
+                          -fx-fill: white; }
+                        .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .materials-grade-2 {
+                          -fx-fill: white; }
+                        .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .materials-grade-3 {
+                          -fx-fill: white; }
+                        .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .materials-grade-4 {
+                          -fx-fill: white; }
+                        .shipbuilder-module-select-popover .scroll-pane2 .module-select-content .section .module-buttons .module-button .image-box .module-image-wide .materials-grade-5 {
+                          -fx-fill: white; }
       .app .application-screen .horizons-tab-content .wishlist-tab {
         -fx-background-insets: 0 0 0 0;
         -fx-effect: none;
@@ -3624,6 +3694,16 @@
                 -fx-fill: #ff7c7c; }
               .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .other-stock-bracket-high, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .other-stock-bracket-high {
                 -fx-fill: #89d07f; }
+              .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .materials-grade-1, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .materials-grade-1 {
+                -fx-fill: white; }
+              .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .materials-grade-2, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .materials-grade-2 {
+                -fx-fill: white; }
+              .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .materials-grade-3, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .materials-grade-3 {
+                -fx-fill: white; }
+              .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .materials-grade-4, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .materials-grade-4 {
+                -fx-fill: white; }
+              .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .materials-grade-5, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .materials-grade-5 {
+                -fx-fill: white; }
               .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .storage-image .glyph-icon, .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .material-image .glyph-icon {
                 -fx-font-size: 2em !important; }
             .app .application-screen .odyssey-tab-content .bartender-tab-content .bartender-layout .left-section .bartender-material .selected-label {
@@ -3900,6 +3980,16 @@
                 -fx-fill: #ff7c7c; }
               .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .other-stock-bracket-high {
                 -fx-fill: #89d07f; }
+              .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .materials-grade-1 {
+                -fx-fill: white; }
+              .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .materials-grade-2 {
+                -fx-fill: white; }
+              .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .materials-grade-3 {
+                -fx-fill: white; }
+              .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .materials-grade-4 {
+                -fx-fill: white; }
+              .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .materials-grade-5 {
+                -fx-fill: white; }
               .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation .spec-image .glyph-icon {
                 -fx-font-size: 2.2em !important; }
             .app .application-screen .odyssey-tab-content .engineers-tab-content .engineer-grid .engineer-card .specialisation:force .name {
@@ -4281,6 +4371,16 @@
                 -fx-fill: #ff7c7c; }
               .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .other-stock-bracket-high, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .other-stock-bracket-high, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .other-stock-bracket-high, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .other-stock-bracket-high, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .other-stock-bracket-high, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .other-stock-bracket-high {
                 -fx-fill: #89d07f; }
+              .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .materials-grade-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .materials-grade-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .materials-grade-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .materials-grade-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .materials-grade-1, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .materials-grade-1 {
+                -fx-fill: white; }
+              .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .materials-grade-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .materials-grade-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .materials-grade-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .materials-grade-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .materials-grade-2, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .materials-grade-2 {
+                -fx-fill: white; }
+              .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .materials-grade-3, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .materials-grade-3, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .materials-grade-3, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .materials-grade-3, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .materials-grade-3, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .materials-grade-3 {
+                -fx-fill: white; }
+              .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .materials-grade-4, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .materials-grade-4, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .materials-grade-4, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .materials-grade-4, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .materials-grade-4, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .materials-grade-4 {
+                -fx-fill: white; }
+              .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .materials-grade-5, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .materials-grade-5, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .materials-grade-5, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .materials-grade-5, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .materials-grade-5, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .materials-grade-5 {
+                -fx-fill: white; }
               .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .glyph-icon, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .glyph-icon, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .glyph-icon, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .glyph-icon, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .glyph-icon, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .glyph-icon {
                 -fx-font-size: 2em !important; }
               .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .material-image .ships-engineer, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .fleetcarrier-image .ships-engineer, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .squadroncarrier-image .ships-engineer, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .wishlist-image .ships-engineer, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .backpack-image .ships-engineer, .app .application-screen .odyssey-tab-content .materials-tab-content .material-overview .material-card .ship-image .ships-engineer {
@@ -4493,6 +4593,16 @@
                 -fx-fill: #ff7c7c; }
               .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .other-stock-bracket-high {
                 -fx-fill: #89d07f; }
+              .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .materials-grade-1 {
+                -fx-fill: white; }
+              .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .materials-grade-2 {
+                -fx-fill: white; }
+              .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .materials-grade-3 {
+                -fx-fill: white; }
+              .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .materials-grade-4 {
+                -fx-fill: white; }
+              .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .materials-grade-5 {
+                -fx-fill: white; }
               .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .ingredient .ingredient-image .glyph-icon {
                 -fx-font-size: 2em !important; }
           .app .application-screen .odyssey-tab-content .blueprint-menu .blueprint-content .engineer-flow {
@@ -5122,6 +5232,16 @@
                       -fx-fill: #ff7c7c; }
                     .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .other-stock-bracket-high {
                       -fx-fill: #89d07f; }
+                    .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .materials-grade-1 {
+                      -fx-fill: white; }
+                    .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .materials-grade-2 {
+                      -fx-fill: white; }
+                    .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .materials-grade-3 {
+                      -fx-fill: white; }
+                    .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .materials-grade-4 {
+                      -fx-fill: white; }
+                    .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .materials-grade-5 {
+                      -fx-fill: white; }
                     .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .image .glyph-icon {
                       -fx-font-size: 2em !important; }
                   .app .application-screen .odyssey-tab-content .wishlist-tab-content .wishlist-content .materials .flows .materials-flow .material .title-line .name {
@@ -5360,6 +5480,101 @@
                         -fx-pref-height: 2.5em;
                         -fx-max-height: 2.5em;
                         -fx-alignment: center-left; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .glyph-icon {
+                          -fx-font-size: 1.5em !important; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .ships-multicrew-radar {
+                          -fx-fill: #159ec2; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .other-powerplay-open {
+                          -fx-fill: #ffc600; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .ships-guardian-1 {
+                          -fx-fill: #026fa2; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .ships-guardian-2 {
+                          -fx-fill: #00aafc; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .other-communitygoal {
+                          -fx-fill: #ffeb00; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .other-arx {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .ships-engineer {
+                          -fx-font-size: 1.3em !important;
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .ships-gimballed {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .ships-turreted {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .ships-fixed {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .ships-synthesis-basic {
+                          -fx-fill: #2e92df; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .ships-synthesis-standard {
+                          -fx-fill: #2e92df; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .ships-synthesis-premium {
+                          -fx-fill: #2e92df; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .ships-preengineered {
+                          -fx-fill: #f2c80e; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .ships-advanced {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .ships-enhanced {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .ships-dumbfire {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .ships-seeker {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .ships-legacy {
+                          -fx-fill: #d16a0a; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .other-carrier-simple {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .ships-ship-1 {
+                          -fx-fill: #8e8e8e; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .ships-ship-2 {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .squadron-carrier {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .station-coriolis {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .onfoot-backpack-1 {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .onfoot-backpack-2 {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .other-wishlist {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .materials-good-1 {
+                          -fx-fill: #da9b10; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .materials-good-2 {
+                          -fx-fill: #dabe54; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .materials-data {
+                          -fx-fill: #2bb0c6; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .materials-tech-1 {
+                          -fx-fill: #c8f4f6; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .materials-tech-2 {
+                          -fx-fill: #97eef2; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .materials-circuit-1 {
+                          -fx-fill: #fbcec0; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .materials-circuit-2 {
+                          -fx-fill: #fa9778; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .materials-chemical-1 {
+                          -fx-fill: #c9e8b3; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .materials-chemical-2 {
+                          -fx-fill: #97e55d; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .onfoot-dynamic {
+                          -fx-fill: #ff00e7; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .onfoot-force {
+                          -fx-fill: #ff3c00; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .onfoot-strategic {
+                          -fx-fill: #7cd429; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .other-stock-bracket-low {
+                          -fx-fill: #ff7c7c; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .other-stock-bracket-high {
+                          -fx-fill: #89d07f; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .materials-grade-1 {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .materials-grade-2 {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .materials-grade-3 {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .materials-grade-4 {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .materials-grade-5 {
+                          -fx-fill: white; }
                         .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .commodities-chemicals {
                           -fx-fill: #a0db83; }
                         .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .commodity-image .commodities-consumer-items {
@@ -5511,6 +5726,16 @@
                           -fx-fill: #ff7c7c; }
                         .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .other-stock-bracket-high {
                           -fx-fill: #89d07f; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .materials-grade-1 {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .materials-grade-2 {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .materials-grade-3 {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .materials-grade-4 {
+                          -fx-fill: white; }
+                        .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .materials-grade-5 {
+                          -fx-fill: white; }
                         .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .name-line .icon .glyph-icon {
                           -fx-font-size: 2em !important; }
                     .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon {
@@ -5605,10 +5830,26 @@
                         -fx-fill: #ff7c7c; }
                       .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .other-stock-bracket-high {
                         -fx-fill: #89d07f; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .materials-grade-1 {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .materials-grade-2 {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .materials-grade-3 {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .materials-grade-4 {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .materials-grade-5 {
+                        -fx-fill: white; }
                       .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .icon .glyph-icon {
                         -fx-font-size: 2em !important; }
                     .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .ingredient-quantity-section {
                       -fx-spacing: 1em; }
+                    .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .ship-amount {
+                      -fx-pref-width: 6.5em;
+                      -fx-padding: 0, 0, 0, 1em;
+                      -fx-min-height: 2em;
+                      -fx-alignment: center-right;
+                      -fx-text-alignment: right; }
                     .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .fleetcarrier-amount {
                       -fx-pref-width: 6.5em;
                       -fx-padding: 0, 0, 0, 1em;
@@ -5621,6 +5862,12 @@
                       -fx-min-height: 2em;
                       -fx-alignment: center-right;
                       -fx-text-alignment: right; }
+                    .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .card-content .quantity-line .backpack-amount {
+                      -fx-pref-width: 6.5em;
+                      -fx-padding: 0, 0, 0, 1em;
+                      -fx-min-height: 2em;
+                      -fx-alignment: center-left;
+                      -fx-text-alignment: left; }
                   .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market {
                     -fx-min-width: 32.8em;
                     -fx-pref-width: 32.8em;
@@ -5720,6 +5967,16 @@
                         -fx-fill: #ff7c7c; }
                       .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .other-stock-bracket-high {
                         -fx-fill: #89d07f; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .materials-grade-1 {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .materials-grade-2 {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .materials-grade-3 {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .materials-grade-4 {
+                        -fx-fill: white; }
+                      .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .materials-grade-5 {
+                        -fx-fill: white; }
                       .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .icon .glyph-icon {
                         -fx-font-size: 2em !important; }
                     .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .commodity-list .material-card .market .station-box {
@@ -5804,6 +6061,8 @@
                 .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .chart .axis .axis-tick-label {
                   -fx-fill: white;
                   -fx-font-size: 1em; }
+                .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .chart .progress-axis, .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .chart .commanders-axis, .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .chart .delta-axis {
+                  -fx-auto-range-padding: 0.1; }
               .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-progress-chart .dataset {
                 -fx-marker-type: circle;
                 -fx-marker-size: 0;
@@ -5891,6 +6150,8 @@
                 .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .chart .axis .axis-tick-label {
                   -fx-fill: white;
                   -fx-font-size: 1em; }
+                .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .chart .y-axis {
+                  -fx-auto-range-padding: 0.1 !important; }
               .app .application-screen .other-tab-content .community-goal-tab-content .contents .community-goals .community-goal .community-goal-band-chart .dataset {
                 -fx-marker-type: circle;
                 -fx-marker-size: 0;
@@ -6328,6 +6589,16 @@
                     -fx-fill: #ff7c7c; }
                   .app .application-screen .other-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .other-stock-bracket-high {
                     -fx-fill: #89d07f; }
+                  .app .application-screen .other-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .materials-grade-1 {
+                    -fx-fill: white; }
+                  .app .application-screen .other-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .materials-grade-2 {
+                    -fx-fill: white; }
+                  .app .application-screen .other-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .materials-grade-3 {
+                    -fx-fill: white; }
+                  .app .application-screen .other-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .materials-grade-4 {
+                    -fx-fill: white; }
+                  .app .application-screen .other-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .materials-grade-5 {
+                    -fx-fill: white; }
                   .app .application-screen .other-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-content .icon .glyph-icon {
                     -fx-font-size: 2em !important; }
               .app .application-screen .other-tab-content .colonisation-tab-content .colonisation-view .bill-of-materials .bom-entry .bom-entry-progressbar {
@@ -7482,6 +7753,16 @@
                   -fx-fill: #ff7c7c; }
                 .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .other-stock-bracket-high {
                   -fx-fill: #89d07f; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .materials-grade-1 {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .materials-grade-2 {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .materials-grade-3 {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .materials-grade-4 {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon .materials-grade-5 {
+                  -fx-fill: white; }
               .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide {
                 -fx-min-width: 2.7em;
                 -fx-pref-width: 2.7em;
@@ -7573,6 +7854,16 @@
                   -fx-fill: #ff7c7c; }
                 .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .other-stock-bracket-high {
                   -fx-fill: #89d07f; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .materials-grade-1 {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .materials-grade-2 {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .materials-grade-3 {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .materials-grade-4 {
+                  -fx-fill: white; }
+                .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .icon-box .module-icon-wide .materials-grade-5 {
+                  -fx-fill: white; }
             .import-dialog .import-dialog-scrollpane .ship .list .slots .ship-slot .label-box .name-box .icon {
               -fx-alignment: center;
               -fx-min-width: 1.5em;

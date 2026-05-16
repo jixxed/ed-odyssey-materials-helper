@@ -24,6 +24,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTe
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 import nl.jixxed.eliteodysseymaterials.templates.other.OtherTab;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CommunityGoalTab extends OtherTab implements DestroyableEventTemplate {
@@ -67,9 +68,19 @@ public class CommunityGoalTab extends OtherTab implements DestroyableEventTempla
 
     private void refreshContent() {
 
-        List<CommunityGoal> communityGoals = (selectedGoal.equals(Goal.ACTIVE))
-                ? getActiveGoals().stream().map(CommunityGoal::new).toList()
-                : List.of(new CommunityGoal(selectedGoal));
+        List<CommunityGoal> communityGoals;
+        if ((selectedGoal.equals(Goal.ACTIVE))) {
+            List<CommunityGoal> list = new ArrayList<>();
+            List<Goal> activeGoals = getActiveGoals();
+            for (int i = 0; i < activeGoals.size(); i++) {
+                Goal g = activeGoals.get(i);
+                CommunityGoal communityGoal = new CommunityGoal(g, i + 1);
+                list.add(communityGoal);
+            }
+            communityGoals = list;
+        } else {
+            communityGoals = List.of(new CommunityGoal(selectedGoal, 1));
+        }
         this.communityGoalsBox.getNodes().clear();
         this.communityGoalsBox.getNodes().addAll(communityGoals);
     }

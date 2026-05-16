@@ -21,6 +21,10 @@ public sealed interface Commodity extends HorizonsMaterial permits RegularCommod
         return "material.commodity.description." + this.name().toLowerCase();
     }
 
+    default String getCategoryLocalizationKey(){
+        return getCommodityType().getLocalizationKey();
+    }
+
     @Override
     default HorizonsMaterialType getMaterialType() {
         return HorizonsMaterialType.COMMODITY;

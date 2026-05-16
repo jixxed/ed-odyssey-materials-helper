@@ -155,6 +155,7 @@
                   @include fixedWidth(2.5em);
                   @include fixedHeight(2.5em);
                   -fx-alignment: center-left;
+                  @include awesome-icons;
                   @include commodities;
 
                   .glyph-icon {
@@ -216,6 +217,14 @@
                   -fx-spacing: 1em;
                 }
 
+                .ship-amount {
+                  -fx-pref-width: 6.5em;
+                  -fx-padding: 0, 0, 0, 1em;
+                  -fx-min-height: 2em;
+                  -fx-alignment: center-right;
+                  -fx-text-alignment: right;
+                }
+
                 .fleetcarrier-amount {
                   -fx-pref-width: 6.5em;
                   -fx-padding: 0, 0, 0, 1em;
@@ -230,6 +239,14 @@
                   -fx-min-height: 2em;
                   -fx-alignment: center-right;
                   -fx-text-alignment: right;
+                }
+
+                .backpack-amount {
+                  -fx-pref-width: 6.5em;
+                  -fx-padding: 0, 0, 0, 1em;
+                  -fx-min-height: 2em;
+                  -fx-alignment: center-left;
+                  -fx-text-alignment: left;
                 }
               }
 
@@ -375,15 +392,18 @@
           }
 
           .chart {
+
+            -fx-pref-width: 999em;
+            @include fixedHeight(30em);
+            -fx-background-color: $background-color-light;
             .axis .axis-tick-label {
               -fx-fill: $text-color-white;
               -fx-font-size: 1em;
             }
 
-            -fx-pref-width: 999em;
-            @include fixedHeight(30em);
-            -fx-background-color: $background-color-light;
-
+            .progress-axis, .commanders-axis, .delta-axis {
+              -fx-auto-range-padding: 0.1;
+            }
           }
 
           .dataset {
@@ -515,22 +535,18 @@
           }
 
           .chart {
+            -fx-pref-width: 999em;
+            @include fixedHeight(30em);
+            -fx-background-color: $background-color-light;
+
             .axis .axis-tick-label {
               -fx-fill: $text-color-white;
               -fx-font-size: 1em;
             }
 
-            -fx-pref-width: 999em;
-            @include fixedHeight(30em);
-            -fx-background-color: $background-color-light;
-            //.my-progress {
-            //  -fx-poly-line-style: normal;
-            //  -fx-fill: $text-color-white !important;
-            //  -fx-stroke: $text-color-white !important;
-            //  -fx-stroke-dash-array: 10;
-            //  -fx-stroke-dash-offset: 10;
-            //
-            //}
+            .y-axis {
+              -fx-auto-range-padding: 0.1 !important;
+            }
           }
 
           .dataset {

@@ -84,12 +84,13 @@ public class BandChart extends DestroyableHBox implements DestroyableTemplate {
         final HiddenSidesPane hiddenSidePane = chart.getPlotArea();
         hiddenSidePane.setTriggerDistance(0);
 
-        XIndicatorLine e = new XIndicatorLine(chart, xAxis, 0);
-        chart.getPlugins().add(e);
-        LineTooltip e1 = new LineTooltip(chart);
-        chart.getPlugins().add(e1);
-        e.chartProperty().set(chart);
-        e1.chartProperty().set(chart);
+
+        XIndicatorLine indicatorLine = chart.register(new XIndicatorLine(chart, xAxis, 0));
+        LineTooltip lineTooltip = chart.register(new LineTooltip(chart));
+        chart.getPlugins().add(indicatorLine);
+        chart.getPlugins().add(lineTooltip);
+        indicatorLine.chartProperty().set(chart);
+        lineTooltip.chartProperty().set(chart);
 
         this.getNodes().add(chart);
         this.setVisible(false);

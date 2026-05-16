@@ -28,9 +28,7 @@ import javafx.scene.input.MouseEvent;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -55,7 +53,7 @@ import java.util.stream.Stream;
  *
  * @author Grzegorz Kruk
  */
-public class LineTooltip extends AbstractDataFormattingPlugin {
+public class LineTooltip extends AbstractDataFormattingPlugin implements Destroyable {
     /**
      * Name of the CSS class of the tool tip label.
      */
@@ -91,11 +89,11 @@ public class LineTooltip extends AbstractDataFormattingPlugin {
      * Creates a new instance of DataPointTooltip class with {{@link #pickingDistanceProperty() picking distance}
      * initialized to {@value #DEFAULT_PICKING_DISTANCE}.
      */
-    public LineTooltip(final Chart chart) {
+    public LineTooltip(final DestroyableChart chart) {
         tooltip.setManaged(false);
         registerInputEventHandler(MouseEvent.MOUSE_MOVED, mouseMoveHandler);
         registerInputEventHandler(MouseEvent.MOUSE_EXITED, mouseMoveHandler);
-        chart.addEventHandler(MouseEvent.MOUSE_EXITED, mouseMoveHandler);
+        chart.registerEventHandler(MouseEvent.MOUSE_EXITED, mouseMoveHandler);
     }
 
     /**
@@ -103,7 +101,7 @@ public class LineTooltip extends AbstractDataFormattingPlugin {
      *
      * @param pickingDistance the initial value for the {@link #pickingDistanceProperty() pickingDistance} property
      */
-    public LineTooltip(final Chart chart, final double pickingDistance) {
+    public LineTooltip(final DestroyableChart chart, final double pickingDistance) {
         this(chart);
         setPickingDistance(pickingDistance);
     }

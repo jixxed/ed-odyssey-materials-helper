@@ -10,7 +10,7 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.other.communitygoal;
 
-import nl.jixxed.eliteodysseymaterials.enums.Commodity;
+import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.service.cg.ReportModels;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
@@ -33,13 +33,13 @@ public class CommodityList extends DestroyableFlowPane implements DestroyableTem
         this.setVisible(false);
         this.setManaged(false);
 
-        String commodityList = (String) report.metadata().get("target_commodity_list");
-        if(commodityList != null && !commodityList.isEmpty()){
-            String[] split = commodityList.split(",");
-            Arrays.stream(split).forEach(commodityText -> {
-                Commodity commodity = Commodity.forLocalizedName(commodityText.trim());
-                if(!commodity.isUnknown()){
-                    this.getNodes().add(new MaterialCard(commodity));
+        String materialList = (String) report.metadata().get("target_commodity_list");
+        if(materialList != null && !materialList.isEmpty()){
+            String[] split = materialList.split(",");
+            Arrays.stream(split).forEach(materialText -> {
+                Material material = Material.forLocalizedName(materialText.trim());
+                if(!material.isUnknown()){
+                    this.getNodes().add(new MaterialCard(material));
                     this.setVisible(true);
                     this.setManaged(true);
                 }

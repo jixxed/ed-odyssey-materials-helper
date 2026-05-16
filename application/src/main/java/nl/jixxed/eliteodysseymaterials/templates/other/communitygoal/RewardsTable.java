@@ -34,17 +34,11 @@ public class RewardsTable extends DestroyableVBox implements DestroyableTemplate
     public void initComponents() {
         this.getStyleClass().add("cg-rewards-table");
         table = BoxBuilder.builder().withStyleClass("reward-table").buildHBox();
-//        DestroyableLabel title = LabelBuilder.builder().withStyleClass("rewards-title").withNonLocalizedText("Tier rewards").build();
-        this.getNodes().addAll(/*title,*/ BoxBuilder.builder().withStyleClass("reward-table-box").withNode(table).buildVBox());
+        this.getNodes().addAll(BoxBuilder.builder().withStyleClass("reward-table-box").withNode(table).buildVBox());
     }
 
     public void update(ReportModels.CommunityGoalReport report) {
         table.getNodes().clear();
-//        report.tierRewards().stream().findFirst().ifPresent(tierReward -> {
-//            final int tier = tierReward.tier();
-//            List<ReportModels.BandReward> bandReward = tierReward.bands();
-//            this.getNodes().add(BoxBuilder.builder().buildVBox());
-//        });
         DestroyableVBox tierBox = BoxBuilder.builder().withStyleClass("reward-tiers").withNode(LabelBuilder.builder().withStyleClass("cg-reward-title").withText("community.goal.reward.table.tier").build()).buildVBox();//TODO localize
         Map<Band, DestroyableVBox> rewards = new HashMap<>();
         Set<Band> bands = new HashSet<>();

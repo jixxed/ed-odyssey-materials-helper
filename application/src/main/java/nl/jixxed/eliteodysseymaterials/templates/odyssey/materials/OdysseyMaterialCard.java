@@ -27,7 +27,10 @@ import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.domain.Wishlist;
-import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.enums.Asset;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterialShow;
+import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.service.FavouriteService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
@@ -36,9 +39,6 @@ import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 public class OdysseyMaterialCard extends DestroyableVBox implements DestroyableEventTemplate {
@@ -140,7 +140,7 @@ public class OdysseyMaterialCard extends DestroyableVBox implements DestroyableE
 
         this.image = EdAwesomeIconViewPaneBuilder.builder()
                 .withStyleClass("material-image")
-                .withIcons(getMaterialIcons(this.odysseyMaterial))
+                .withIcons(this.odysseyMaterial.getMaterialIcons())
                 .build();
 
         final DestroyableRegion region = new DestroyableRegion();
@@ -245,7 +245,7 @@ public class OdysseyMaterialCard extends DestroyableVBox implements DestroyableE
     }
 
     private void updateMaterialCardStyle() {
-        this.image.setIcons(getMaterialIcons(this.odysseyMaterial));
+        this.image.setIcons(this.odysseyMaterial.getMaterialIcons());
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass(MATERIAL_IRRELEVANT_CLASS), false);
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass(MATERIAL_RELEVANT_CLASS), false);
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass(MATERIAL_POWERPLAY_CLASS), false);
@@ -267,41 +267,6 @@ public class OdysseyMaterialCard extends DestroyableVBox implements DestroyableE
         } else {
             this.pseudoClassStateChanged(PseudoClass.getPseudoClass(MATERIAL_IRRELEVANT_CLASS), true);
         }
-    }
-
-    private EdAwesomeIcon[] getMaterialIcons(OdysseyMaterial odysseyMaterial) {
-        final boolean isEngineerUnlockMaterial = (APPLICATION_STATE.getSoloMode()) ? OdysseyBlueprintConstants.isEngineeringIngredientAndNotCompleted(odysseyMaterial) : OdysseyBlueprintConstants.isEngineeringIngredient(odysseyMaterial);
-
-        List<EdAwesomeIcon> edAwesomeIcons = new ArrayList<>();
-        if (odysseyMaterial.isUnknown()) {
-            edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_DATA);
-        } else if (odysseyMaterial instanceof Data) {
-            edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_DATA);
-        } else if (odysseyMaterial instanceof Good) {
-            edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_GOOD_1);
-            edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_GOOD_2);
-        } else if (odysseyMaterial instanceof Asset asset) {
-            switch (asset.getType()) {
-                case TECH -> {
-                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_TECH_1);
-                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_TECH_2);
-                }
-                case CIRCUIT -> {
-                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_CIRCUIT_1);
-                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_CIRCUIT_2);
-                }
-                case CHEMICAL -> {
-                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_CHEMICAL_1);
-                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_CHEMICAL_2);
-                }
-            }
-        }
-        if (isEngineerUnlockMaterial) {
-            edAwesomeIcons.add(EdAwesomeIcon.SHIPS_ENGINEER);
-        }else if (odysseyMaterial.isPowerplay()) {
-            edAwesomeIcons.add(EdAwesomeIcon.OTHER_POWERPLAY_OPEN);
-        }
-        return edAwesomeIcons.toArray(EdAwesomeIcon[]::new);
     }
 
     private void setFavourite(final OdysseyMaterial odysseyMaterial, final boolean isFavourite) {

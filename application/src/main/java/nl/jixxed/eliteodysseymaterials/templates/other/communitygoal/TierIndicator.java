@@ -85,8 +85,10 @@ public class TierIndicator extends AbstractSingleValueIndicator implements Value
             getChartChildren().clear();
         } else {
             layoutLine(xPos, minY, xPos, maxY);
+            label.layout();
             layoutLabel(new BoundingBox((tier % 2 == 0)? xPos+ ScalingHelper.scalePixel(10D) : xPos-ScalingHelper.scalePixel(10D), minY, 0, maxY - minY), (tier % 2 == 0)? 1 : 0,
                     (tier % 2 == 0)?getLabelPosition(): 1-getLabelPosition());
+
         }
     }
 

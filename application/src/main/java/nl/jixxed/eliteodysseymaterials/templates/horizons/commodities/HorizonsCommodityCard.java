@@ -214,7 +214,6 @@ public class HorizonsCommodityCard extends DestroyableStackPane implements Destr
         this.getNodes().add(this.market);
         StackPane.setAlignment(market, Pos.BOTTOM_CENTER);
         updateStyle();
-        this.setOnMouseEntered(event -> log.info("Mouse entered"));
         MaterialService.addMaterialInfoPopOver(this, this.commodity, false, () -> 1);
         update();
     }

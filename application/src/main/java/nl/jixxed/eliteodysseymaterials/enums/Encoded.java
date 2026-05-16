@@ -12,8 +12,11 @@ package nl.jixxed.eliteodysseymaterials.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.util.Arrays;
+import java.util.Locale;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Getter
@@ -93,6 +96,13 @@ public enum Encoded implements EngineeringMaterial {
         } catch (final IllegalArgumentException ex) {
             return Encoded.UNKNOWN;
         }
+    }
+
+    public static Encoded forLocalizedName(final String name) {
+        Optional<Encoded> first = Arrays.stream(values())
+                .filter(encoded -> LocaleService.getLocalizedStringForLocale(Locale.ENGLISH, encoded.getLocalizationKey()).equalsIgnoreCase(name))
+                .findFirst();
+        return first.orElse(Encoded.UNKNOWN);
     }
 
     public static Encoded[] materialsForType(final HorizonsMaterialType materialType) {

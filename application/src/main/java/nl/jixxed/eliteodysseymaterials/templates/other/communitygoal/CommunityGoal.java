@@ -46,6 +46,7 @@ import java.util.concurrent.TimeUnit;
 public class CommunityGoal extends DestroyableVBox implements DestroyableEventTemplate {
 
     private final Goal goal;
+    private final int index;
     private ReportModels.ReportResponse report;
     private ProgressChart progressChart;
     private BandChart bandChart;
@@ -66,8 +67,9 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
 
     private final ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
 
-    public CommunityGoal(Goal goal) {
+    public CommunityGoal(Goal goal, int index) {
         this.goal = goal;
+        this.index = index;
         initComponents();
         initEventHandling();
         CommunityGoalsService.getReport(goal.getId()).ifPresent(report -> {
@@ -286,5 +288,6 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
     @Override
     public void destroyTemplate() {
         scheduledExecutor.shutdownNow();
+        super.destroy();
     }
 }

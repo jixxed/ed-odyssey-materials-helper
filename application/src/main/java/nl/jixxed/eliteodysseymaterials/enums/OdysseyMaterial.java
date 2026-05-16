@@ -13,7 +13,9 @@ package nl.jixxed.eliteodysseymaterials.enums;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 import me.xdrop.fuzzywuzzy.model.BoundExtractedResult;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +28,45 @@ public sealed interface OdysseyMaterial extends Material permits Asset, Consumab
 
     default OdysseyStorageType getStorageType() {
         return OdysseyStorageType.OTHER;
+    }
+
+    default String getCategoryLocalizationKey(){
+        return getStorageType().getLocalizationKey();
+    }
+
+    default EdAwesomeIcon[] getMaterialIcons() {
+        final boolean isEngineerUnlockMaterial = (ApplicationState.getInstance().getSoloMode()) ? OdysseyBlueprintConstants.isEngineeringIngredientAndNotCompleted(this) : OdysseyBlueprintConstants.isEngineeringIngredient(this);
+
+        List<EdAwesomeIcon> edAwesomeIcons = new ArrayList<>();
+        if (this.isUnknown()) {
+            edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_DATA);
+        } else if (this instanceof Data) {
+            edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_DATA);
+        } else if (this instanceof Good) {
+            edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_GOOD_1);
+            edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_GOOD_2);
+        } else if (this instanceof Asset asset) {
+            switch (asset.getType()) {
+                case TECH -> {
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_TECH_1);
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_TECH_2);
+                }
+                case CIRCUIT -> {
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_CIRCUIT_1);
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_CIRCUIT_2);
+                }
+                case CHEMICAL -> {
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_CHEMICAL_1);
+                    edAwesomeIcons.add(EdAwesomeIcon.MATERIALS_CHEMICAL_2);
+                }
+            }
+        }
+        if (isEngineerUnlockMaterial) {
+            edAwesomeIcons.add(EdAwesomeIcon.SHIPS_ENGINEER);
+        }else if (this.isPowerplay()) {
+            edAwesomeIcons.add(EdAwesomeIcon.OTHER_POWERPLAY_OPEN);
+        }
+        return edAwesomeIcons.toArray(EdAwesomeIcon[]::new);
     }
 
     static OdysseyMaterial subtypeForName(final String name) {
@@ -97,8 +138,6 @@ public sealed interface OdysseyMaterial extends Material permits Asset, Consumab
        return (BoundExtractedResult<OdysseyMaterial>)(BoundExtractedResult<?>)FuzzySearch.extractOne(name.replaceAll("\\s", ""), Stream.concat(Arrays.stream(Data.values()), Stream.concat(Arrays.stream(Asset.values()), Arrays.stream(Good.values()))).toList(),
                 odysseyMaterial -> LocaleService.getLocalizedStringForLocale(locale, odysseyMaterial.getLocalizationKey()).replaceAll("\\s", ""));
     }
-
-    String getLocalizationKey();
 
     boolean isUnknown();
 
