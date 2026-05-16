@@ -140,25 +140,25 @@ tasks.register("jpackageSigned") {
     finalizedBy signInstallerMsi
 }
 
-tasks.register('createSignCertBootstrap') {
+tasks.register('createSignCert') {
     doLast {
-        if(!new File("./edomh_codesigning.pfx").exists()) {
-            String base64 = System.getProperty("base64_pfx") ?: ""
+//        if(!new File("./edomh_codesigning.pfx").exists()) {
+        String base64 = System.getProperty("base64_pfx") ?: ""
 
-            final ByteArrayOutputStream ostr = new ByteArrayOutputStream()
-            ostr.withCloseable {
-                it << Base64.decoder.decode(base64.getBytes())
-            }
-
-            new File("./edomh_codesigning.pfx").withOutputStream { stream ->
-                ostr.writeTo(stream)
-            }
+        final ByteArrayOutputStream ostr = new ByteArrayOutputStream()
+        ostr.withCloseable {
+            it << Base64.decoder.decode(base64.getBytes())
         }
+
+        new File("./edomh_codesigning.pfx").withOutputStream { stream ->
+            ostr.writeTo(stream)
+        }
+//        }
     }
 }
 
 tasks.register('signInstallerExe') {
-    dependsOn tasks.named("createSignCertBootstrap")
+    dependsOn tasks.named("createSignCert")
     finalizedBy signInstallerMsi
     doLast {
         File target = new File("bootstrap/build/jpackage/Elite Dangerous Odyssey Materials Helper Launcher/Elite Dangerous Odyssey Materials Helper Launcher.exe")
@@ -174,7 +174,7 @@ tasks.register('signInstallerExe') {
 }
 
 tasks.register('signInstallerMsi') {
-    dependsOn tasks.named("createSignCertBootstrap"), tasks.named("jpackage")
+    dependsOn tasks.named("createSignCert"), tasks.named("jpackage")
 
     doLast {
         File target = new File('bootstrap/build/jpackage/Elite Dangerous Odyssey Materials Helper-' + version + '.msi')

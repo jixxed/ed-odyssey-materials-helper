@@ -125,7 +125,6 @@ tasks.register("createReleaseLinuxRpm") {
     finalizedBy copyRpm
 }
 
-
 OperatingSystem os = OperatingSystem.current()
 def arch = System.getProperty("os.arch")
 def platform = 'linux'

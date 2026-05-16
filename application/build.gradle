@@ -231,22 +231,24 @@ tasks.register("jpackageSigned") {
     finalizedBy signAppExe
 }
 
+
 tasks.register('createSignCert') {
     doLast {
-        if(!new File("./edomh_codesigning.pfx").exists()) {
-            String base64 = System.getProperty("base64_pfx") ?: ""
+//        if(!new File("./edomh_codesigning.pfx").exists()) {
+        String base64 = System.getProperty("base64_pfx") ?: ""
 
-            final ByteArrayOutputStream ostr = new ByteArrayOutputStream()
-            ostr.withCloseable {
-                it << Base64.decoder.decode(base64.getBytes())
-            }
-
-            new File("./edomh_codesigning.pfx").withOutputStream { stream ->
-                ostr.writeTo(stream)
-            }
+        final ByteArrayOutputStream ostr = new ByteArrayOutputStream()
+        ostr.withCloseable {
+            it << Base64.decoder.decode(base64.getBytes())
         }
+
+        new File("./edomh_codesigning.pfx").withOutputStream { stream ->
+            ostr.writeTo(stream)
+        }
+//        }
     }
 }
+
 tasks.register('signAppExe') {
     dependsOn tasks.named("createSignCert"), tasks.named("jpackage")
     doLast {
