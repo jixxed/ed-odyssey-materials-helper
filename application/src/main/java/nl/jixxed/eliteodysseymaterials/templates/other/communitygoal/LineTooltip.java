@@ -322,8 +322,9 @@ public class LineTooltip extends AbstractDataFormattingPlugin implements Destroy
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LLLL d, HH:mm");
         Optional<DataPoint> x = dataPoint.stream().reduce((p1, p2) -> p1.distanceFromMouse <= p2.distanceFromMouse ? p1 : p2); // get points in range of cursor
         String xValue = x.map(dataPoint1 -> formatter.format(LocalDateTime.ofInstant(Instant.ofEpochMilli((long) dataPoint1.x), ZoneOffset.systemDefault()))).orElse("");
-        String names = dataPoint.stream().map(dataPoint1 -> dataPoint1.formattedNamesLabel).collect(Collectors.joining("\n"));
-        String values = dataPoint.stream().map(dataPoint1 -> dataPoint1.formattedValuesLabel).collect(Collectors.joining("\n"));
+        DatapointComparator comparator = new DatapointComparator();
+        String names = dataPoint.stream().sorted(comparator).map(dataPoint1 -> dataPoint1.formattedNamesLabel).collect(Collectors.joining("\n"));
+        String values = dataPoint.stream().sorted(comparator).map(dataPoint1 -> dataPoint1.formattedValuesLabel).collect(Collectors.joining("\n"));
         updateLabel(event, plotAreaBounds, x, xValue, names, values);
         if (!getChartChildren().contains(tooltip)) {
             getChartChildren().add(tooltip);
