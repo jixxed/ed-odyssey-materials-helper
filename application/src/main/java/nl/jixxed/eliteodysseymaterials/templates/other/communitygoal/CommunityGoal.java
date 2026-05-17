@@ -264,24 +264,26 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
 
     private void smallUpdate() {
         Platform.runLater(() -> {
-            report.goals().stream()
-                    .filter(g -> goal.getId().equals((int) g.cgid()))
-                    .findFirst()
-                    .ifPresent(goalReport -> {
-                        LocalDateTime expiryUtc = LocalDateTime.parse(goalReport.metadata().get("expiry").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-                        ZonedDateTime localExpiry = expiryUtc
-                                .atZone(ZoneOffset.UTC)
-                                .withZoneSameInstant(ZoneId.systemDefault());
-                        if (localExpiry.isAfter(ZonedDateTime.now())) {
-                            expiresTimer.setText(Formatters.timeUntil(localExpiry));
-                            expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expires"));
-                        } else {
-                            expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expired"));
-                            expiresTimer.setVisible(false);
-                            expiresTimer.setManaged(false);
-                        }
-                        bandChart.update(goalReport);
-                    });
+            if (report != null) {
+                report.goals().stream()
+                        .filter(g -> goal.getId().equals((int) g.cgid()))
+                        .findFirst()
+                        .ifPresent(goalReport -> {
+                            LocalDateTime expiryUtc = LocalDateTime.parse(goalReport.metadata().get("expiry").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                            ZonedDateTime localExpiry = expiryUtc
+                                    .atZone(ZoneOffset.UTC)
+                                    .withZoneSameInstant(ZoneId.systemDefault());
+                            if (localExpiry.isAfter(ZonedDateTime.now())) {
+                                expiresTimer.setText(Formatters.timeUntil(localExpiry));
+                                expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expires"));
+                            } else {
+                                expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expired"));
+                                expiresTimer.setVisible(false);
+                                expiresTimer.setManaged(false);
+                            }
+                            bandChart.update(goalReport);
+                        });
+            }
         });
     }
 
