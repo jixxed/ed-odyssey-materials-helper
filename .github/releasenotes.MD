@@ -11,11 +11,8 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Added Other/Community goals tab
-- View community goal data back to the start of 2024
-- View historic and current data. This is commander provided data, so less reliable. sufficient for 50% and lower tiers.
-- Direct access to related commodities, quick lookup for selling stations
-- Tracking of personal progress during the community goal
-Moved Powerplay, Colonisation and Permits tabs to Other tab
-Handle bad journal file names gracefully
+Added cargo multiplier configuration for community goal selling stations.
+- You can lookup nearby selling stations that have at least X times the cargo capacity of your ship available
+Added station icons so you can distinguish planetary from space
+Bugfix initializing for when no valid journal folder is selected
 ```
