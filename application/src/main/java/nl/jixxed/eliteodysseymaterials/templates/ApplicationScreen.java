@@ -116,7 +116,7 @@ public class ApplicationScreen extends DestroyableAnchorPane implements Destroya
                 .withTabs(this.odyssey, this.horizons, this.other, settingsTab)
                 .withStyleClass("tab-main")
                 .withSide(Side.LEFT)
-                .withSelectedTab(PreferencesService.getPreference(PreferenceConstants.SELECTED_TAB_MAIN, 3))
+                .withSelectedTab(PreferencesService.getPreference(PreferenceConstants.SELECTED_TAB_MAIN, 4))
                 .withSelectedItemListener((_, _, newValue) -> PreferencesService.setPreference(PreferenceConstants.SELECTED_TAB_MAIN, this.tabsMain.getTabs().indexOf(newValue)))
                 .build();
         this.tabsMain.addBinding(this.tabsMain.tabMinWidthProperty(), this.tabsMain.heightProperty().divide(4).subtract(this.fontSize.multiply(5.14)));
