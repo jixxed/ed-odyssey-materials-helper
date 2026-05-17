@@ -74,6 +74,7 @@ public class OtherContentArea extends DestroyableAnchorPane implements Destroyab
                 })
                 .build();
         this.tabs.getSelectionModel().select(Math.min(PreferencesService.getPreference(PreferenceConstants.SELECTED_TAB_OTHER, 0), this.tabs.getTabs().size() - 1));
+        EventService.publish(new OtherTabSelectedEvent((OtherTabType) ((OtherTab) this.tabs.getSelectionModel().getSelectedItem()).getTabType()));
         VBox.setVgrow(this.tabs, Priority.ALWAYS);
 
         this.body = BoxBuilder.builder().withNodes(searchBar, this.tabs).buildVBox();

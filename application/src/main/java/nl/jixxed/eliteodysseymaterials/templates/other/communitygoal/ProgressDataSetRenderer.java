@@ -63,8 +63,8 @@ public class ProgressDataSetRenderer extends AbstractRendererXY<ProgressDataSetR
         }
 
         // Store intermediate coordinates in a temporary array
-        double[] xCoords = SHARED_ARRAYS.getArray(0, count);
-        double[] yCoords = SHARED_ARRAYS.getArray(1, count);
+        double[] xCoords = SHARED_ARRAYS.getArray(0, 2 * count);
+        double[] yCoords = SHARED_ARRAYS.getArray(1, 2 * count);
         int numCoords;
 
         gc.save();

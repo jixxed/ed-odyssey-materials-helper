@@ -1,3 +1,7 @@
+Version 3.9.2
+-------------
+Bugfix for lots of datapoints in community goal progress
+
 Version 3.9.1
 -------------
 Added cargo multiplier configuration for community goal selling stations.

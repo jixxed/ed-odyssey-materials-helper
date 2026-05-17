@@ -11,8 +11,5 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Added cargo multiplier configuration for community goal selling stations.
-- You can lookup nearby selling stations that have at least X times the cargo capacity of your ship available
-Added station icons so you can distinguish planetary from space
-Bugfix initializing for when no valid journal folder is selected
+Bugfix for lots of datapoints in community goal progress
 ```
