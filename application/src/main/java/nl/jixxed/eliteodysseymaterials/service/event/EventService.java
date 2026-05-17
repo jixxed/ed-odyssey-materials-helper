@@ -38,17 +38,23 @@ public class EventService {
         LISTENERS_MAP.getOrDefault(event.getClass(), Collections.emptyList()).removeIf(ref -> ref.get() == null);
         LISTENERS_MAP.getOrDefault(event.getClass(), Collections.emptyList()).stream()
                 .filter(ref -> ref.get() != null)
-                .sorted(Comparator.comparingInt(ref -> ref.get().getPriority()))
+                .sorted(Comparator.comparingInt(ref -> {
+                    EventListener<? extends Event> eventListener = ref.get();
+                    return eventListener != null ? eventListener.getPriority() : 999;
+                }))
                 .forEachOrdered(ref -> {
+                    EventListener<T> eventListener = (EventListener<T>) ref.get();
                     if (event instanceof TerminateApplicationEvent) {
                         //make sure we call each TerminateApplicationEvent listener and try to close all running threads
                         try {
-                            ((EventListener<T>) ref.get()).handleEvent(event);
+                            if (eventListener != null) {
+                                eventListener.handleEvent(event);
+                            }
                         } catch (final Exception ex) {
                             log.error(ex.getMessage(), ex);
                         }
-                    } else if (ref.get() != null) {
-                        ((EventListener<T>) ref.get()).handleEvent(event);
+                    } else if (eventListener != null) {
+                        eventListener.handleEvent(event);
                     }
                 });
     }
