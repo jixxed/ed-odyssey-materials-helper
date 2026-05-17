@@ -36,7 +36,8 @@ public class MarketSearchResponseMapper {
                                 result.getDistance_to_arrival().doubleValue(),
                                 marketData.map(market -> market.getBuy_price().longValue()).orElse(0L),
                                 marketData.map(market -> market.getSupply().longValue()).orElse(0L),
-                                getLastMarketUpdate(result.getMarket_updated_at())
+                                getLastMarketUpdate(result.getMarket_updated_at()),
+                                result.getType().orElse("")
                         );
 
                     }catch (final Exception e) {

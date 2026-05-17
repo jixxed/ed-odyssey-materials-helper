@@ -30,4 +30,9 @@ public class MarketStation {
     private final Long supply;
     @Getter
     private final ZonedDateTime lastMarketUpdate;
+    @Getter
+    private final String type;
+    //          "enum": ["Asteroid base","Coriolis Starport","Dockable Planet Station","Dodec Starport","Drake-Class Carrier","Mega ship","Ocellus Starport","Orbis Starport","Outpost","Planetary Construction Depot","Planetary Outpost","Planetary Port","Settlement","Space Construction Depot","Surface Settlement"]
+
+
 }

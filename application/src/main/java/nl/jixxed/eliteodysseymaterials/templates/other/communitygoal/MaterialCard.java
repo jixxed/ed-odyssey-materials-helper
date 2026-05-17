@@ -21,13 +21,11 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
-import nl.jixxed.eliteodysseymaterials.service.ImageService;
-import nl.jixxed.eliteodysseymaterials.service.MarketService;
-import nl.jixxed.eliteodysseymaterials.service.MaterialService;
-import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.MarketUpdatedEvent;
@@ -200,6 +198,7 @@ public class MaterialCard extends DestroyableStackPane implements DestroyableEve
                     .withNodes(new GrowingRegion(), rareImage).buildHBox();
             this.getNodes().add(rareContainer);
         }
+        this.getNodes().add(content);
         if (material instanceof Commodity) {
 
             var coriolisImage = EdAwesomeIconViewPaneBuilder.builder()
@@ -257,11 +256,12 @@ public class MaterialCard extends DestroyableStackPane implements DestroyableEve
                     .buildHBox();
             this.getNodes().add(this.market);
             StackPane.setAlignment(market, Pos.BOTTOM_CENTER);
+            updateQuantity();
             updateStyle();
+        }else{
+            updateQuantity();
         }
-        this.getNodes().add(content);
-        updateQuantity();
-        MaterialService.addMaterialInfoPopOver(this, this.material, false, () -> Math.max(1, Optional.ofNullable(ApplicationState.getInstance().getShip()).map(ship -> (int) ship.getMaxCargo() * 2).orElse(1)));
+        MaterialService.addMaterialInfoPopOver(this, this.material, false, () -> Math.max(1, Optional.ofNullable(ApplicationState.getInstance().getShip()).map(ship -> (int) ship.getMaxCargo() * PreferencesService.getPreference(PreferenceConstants.OTHER_COMMUNITY_GOAL_CARGO_MULTIPLIER, 2)).orElse(1)));
     }
 
     @Override

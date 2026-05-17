@@ -351,7 +351,7 @@ dependencies {
     testImplementation 'io.ebean:ebean-test'
 
     if (proprietary) {
-        implementation 'nl.jixxed.ed.awesome:ed-awesome-impl:1.25'
+        implementation 'nl.jixxed.ed.awesome:ed-awesome-impl:1.26'
         implementation 'nl.jixxed.ed.confidential:ed-confidential-impl:1.2'
     }
 

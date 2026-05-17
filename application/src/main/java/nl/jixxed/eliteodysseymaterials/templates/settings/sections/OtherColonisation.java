@@ -24,23 +24,23 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 
-public class HorizonsColonisation extends DestroyableVBox implements DestroyableTemplate {
+public class OtherColonisation extends DestroyableVBox implements DestroyableTemplate {
 
-    public HorizonsColonisation() {
+    public OtherColonisation() {
         this.initComponents();
     }
 
     @Override
     public void initComponents() {
-        final DestroyableLabel overviewHorizonsLabel = LabelBuilder.builder()
+        final DestroyableLabel overviewOtherLabel = LabelBuilder.builder()
                 .withStyleClass("settings-header")
-                .withText("tab.settings.title.horizons.colonisation")
+                .withText("tab.settings.title.other.colonisation")
                 .build();
 
         final DestroyableHBox fcEnabled = createEnableFCSetting();
         final DestroyableHBox scEnabled = createEnableSCSetting();
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
-        this.getNodes().addAll(overviewHorizonsLabel, fcEnabled, scEnabled);
+        this.getNodes().addAll(overviewOtherLabel, fcEnabled, scEnabled);
 
     }
 

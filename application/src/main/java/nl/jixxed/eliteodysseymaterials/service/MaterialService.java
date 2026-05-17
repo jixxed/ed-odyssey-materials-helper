@@ -37,6 +37,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.HorizonsBlueprintClickEvent
 import nl.jixxed.eliteodysseymaterials.service.market.MarketAPIService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.LandingPadSelect;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.CopyableLocation;
 import org.controlsfx.control.PopOver;
@@ -118,7 +119,7 @@ public class MaterialService {
             } else {
                 DestroyableVBox vBoxTitle = BoxBuilder.builder().withStyleClass("title-box").buildVBox();
                 DestroyableHBox hBox = BoxBuilder.builder().withStyleClass("title-row").buildHBox();
-                if(horizonsMaterial instanceof Raw raw){
+                if (horizonsMaterial instanceof Raw raw) {
                     DestroyableVBox periodicTable = getPeriodicTable(raw);
                     hBox.getNodes().add(periodicTable);
                 }
@@ -220,7 +221,7 @@ public class MaterialService {
                     DestroyableLabel locationsHeader = LabelBuilder.builder().withStyleClass("selling-stations-header").withText("horizons.materials.nearest.markets.location.header").build();
                     GridPane.setConstraints(supplyHeader, 0, 0);
                     GridPane.setConstraints(ageHeader, 1, 0);
-                    GridPane.setConstraints(locationsHeader, 2, 0);
+                    GridPane.setConstraints(locationsHeader, 3, 0);
 
 
                     DestroyableGridPane gridpane = GridPaneBuilder.builder()
@@ -232,16 +233,35 @@ public class MaterialService {
                         var station = marketStations.get(i);
                         DestroyableLabel supply = LabelBuilder.builder().withStyleClass("supply").withText("horizons.materials.nearest.markets.supply", Formatters.NUMBER_FORMAT_0.format(station.getSupply()), Formatters.NUMBER_FORMAT_0.format(station.getSellPrice())).build();
                         DestroyableLabel age = LabelBuilder.builder().withStyleClass("age").withText(convertToAgeString(station.getLastMarketUpdate())).build();
+                        var icon = EdAwesomeIconViewPaneBuilder.builder().withStyleClass("station-icon").withIcons(getIcon(station.getType())).build();
                         CopyableLocation copyableLocation = new CopyableLocation(station.getStarSystem(), station.getName(), station.getDistanceFromStar(), 0);
                         GridPane.setConstraints(supply, 0, i + 1);
                         GridPane.setConstraints(age, 1, i + 1);
-                        GridPane.setConstraints(copyableLocation, 2, i + 1);
-                        gridpane.getNodes().addAll(supply, age, copyableLocation);
+                        GridPane.setConstraints(icon, 2, i + 1);
+                        GridPane.setConstraints(copyableLocation, 3, i + 1);
+                        gridpane.getNodes().addAll(supply, age, icon, copyableLocation);
                     }
                     vBox.getNodes().add(gridpane);
                 });
             }, () -> POPOVERS.containsKey(hoverableNode));
         });
+    }
+
+    private static EdAwesomeIcon getIcon(String type) {
+        return switch (type) {
+            case "Asteroid base" -> EdAwesomeIcon.STATION_ASTEROIDBASE;
+            case "Coriolis Starport" -> EdAwesomeIcon.STATION_CORIOLIS;
+            case "Dockable Planet Station", "Planetary Outpost", "Settlement", "Surface Settlement" -> EdAwesomeIcon.STATION_SETTLEMENT_SIMPLE;
+            case "Dodec Starport" -> EdAwesomeIcon.STATION_DODEC;
+            case "Drake-Class Carrier" -> EdAwesomeIcon.STATION_FLEETCARRIER;
+            case "Mega ship" -> EdAwesomeIcon.STATION_MEGASHIP;
+            case "Ocellus Starport" -> EdAwesomeIcon.STATION_OCELLUS;
+            case "Orbis Starport" -> EdAwesomeIcon.STATION_ORBIS;
+            case "Outpost" -> EdAwesomeIcon.STATION_OUTPOST;
+            case "Planetary Construction Depot", "Space Construction Depot" -> EdAwesomeIcon.STATION_CONSTRUCTION;
+            case "Planetary Port" -> EdAwesomeIcon.STATION_SURFACE_PORT;
+            default -> EdAwesomeIcon.STATION_CORIOLIS;
+        };
     }
 
     private static StringBinding convertToAgeString(ZonedDateTime lastMarketUpdate) {
@@ -454,7 +474,7 @@ public class MaterialService {
             horizonsMaterialSpawnLocations.forEach(spawn -> {
                 if (spawn.hasLocations()) {
                     Location closest = spawn.getClosest();
-                    if(closest!=null) {
+                    if (closest != null) {
                         final CopyableLocation copyableLocation = new CopyableLocation(closest.getStarSystem(), LocaleService.getLocalizedStringForCurrentLocale(spawn.getLocalizationKey(), closest.getBody()));
                         vBox.getNodes().add(copyableLocation);
                     }

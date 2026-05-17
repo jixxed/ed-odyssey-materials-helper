@@ -19,6 +19,7 @@ import io.fair_acc.dataset.events.ChartBits;
 import javafx.util.StringConverter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.persistence.commander.model.CommunityGoalModel;
 import nl.jixxed.eliteodysseymaterials.persistence.commander.model.query.QCommunityGoalModel;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -120,35 +121,37 @@ public class BandChart extends DestroyableHBox implements DestroyableTemplate {
         AtomicReference<CommunityGoalModel> lastModel = new AtomicReference<>();
 
         LocalDateTime expiry = LocalDateTime.parse(report.metadata().get("expiry").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).plusHours(2);
-        new QCommunityGoalModel()
-                .cgid.eq((int) report.cgid())
-                .timestamp.le(expiry)
-                .orderBy("timestamp")
-                .findStream()
-                .forEach(model -> {
-                    lastModel.set(model);
+        ApplicationState.getInstance().getPreferredCommander().ifPresent(_ -> {//database must be initialized with a commander
+            new QCommunityGoalModel()
+                    .cgid.eq((int) report.cgid())
+                    .timestamp.le(expiry)
+                    .orderBy("timestamp")
+                    .findStream()
+                    .forEach(model -> {
+                        lastModel.set(model);
 
-                    if (model.getPlayerContribution().longValue() > progress.get()) { // remove duplicates
-                        progress.set(model.getPlayerContribution().longValue());
-                        long timestampMilli = model.getTimestamp().toInstant(ZoneOffset.UTC).toEpochMilli();
-                        lastTimestampEntry.set(timestampMilli);
-                        myContribution.dataSet.add(
-                                timestampMilli,
-                                model.getPlayerContribution().longValue(),
-                                model.getPlayerContribution().longValue()
-                        );
-                    }
-                });
-        CommunityGoalModel last = lastModel.get();
-        if (last != null) {
-            long lastTimestamp = last.getTimestamp().toInstant(ZoneOffset.UTC).toEpochMilli();
-            if (lastTimestampEntry.get() < lastTimestamp) {
+                        if (model.getPlayerContribution().longValue() > progress.get()) { // remove duplicates
+                            progress.set(model.getPlayerContribution().longValue());
+                            long timestampMilli = model.getTimestamp().toInstant(ZoneOffset.UTC).toEpochMilli();
+                            lastTimestampEntry.set(timestampMilli);
+                            myContribution.dataSet.add(
+                                    timestampMilli,
+                                    model.getPlayerContribution().longValue(),
+                                    model.getPlayerContribution().longValue()
+                            );
+                        }
+                    });
+            CommunityGoalModel last = lastModel.get();
+            if (last != null) {
+                long lastTimestamp = last.getTimestamp().toInstant(ZoneOffset.UTC).toEpochMilli();
+                if (lastTimestampEntry.get() < lastTimestamp) {
 
-                long timestampMilli = Math.min(Instant.now().toEpochMilli(), expiry.toInstant(ZoneOffset.UTC).toEpochMilli());
-                long lastContribution = last.getPlayerContribution().longValue();
-                myContribution.dataSet.add(timestampMilli, lastContribution, lastContribution);
+                    long timestampMilli = Math.min(Instant.now().toEpochMilli(), expiry.toInstant(ZoneOffset.UTC).toEpochMilli());
+                    long lastContribution = last.getPlayerContribution().longValue();
+                    myContribution.dataSet.add(timestampMilli, lastContribution, lastContribution);
+                }
             }
-        }
+        });
 
         chart.getPlugins().removeIf(plugin -> plugin instanceof TierIndicator);
 //        chart.getPlugins().clear();

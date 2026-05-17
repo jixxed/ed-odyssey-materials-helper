@@ -16,6 +16,7 @@ import javafx.geometry.Orientation;
 import javafx.scene.layout.Region;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Goal;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
@@ -219,43 +220,44 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                         }
                         goalText.setText(goalReport.metadata().get("bulletin").toString());
                         title.setText(goalReport.metadata().get("title").toString());
-                        Optional<CommunityGoalModel> communityGoalModel = new QCommunityGoalModel()
-                                .cgid.eq((int) goalReport.cgid())
-                                .orderBy()
-                                .timestamp.desc()
-                                .setMaxRows(1)
-                                .findOneOrEmpty();
-                        Long contributionValue = communityGoalModel
-                                .map(CommunityGoalModel::getPlayerContribution)
-                                .map(BigInteger::longValue)
-                                .orElse(-1L);
-                        Long currentBandValue = communityGoalModel
-                                .map(CommunityGoalModel::getPlayerPercentileBand)
-                                .map(BigInteger::longValue)
-                                .orElse(-1L);
+                        ApplicationState.getInstance().getPreferredCommander().ifPresent(_ -> {//database must be initialized with a commander
+                            Optional<CommunityGoalModel> communityGoalModel = new QCommunityGoalModel()
+                                    .cgid.eq((int) goalReport.cgid())
+                                    .orderBy()
+                                    .timestamp.desc()
+                                    .setMaxRows(1)
+                                    .findOneOrEmpty();
+                            Long contributionValue = communityGoalModel
+                                    .map(CommunityGoalModel::getPlayerContribution)
+                                    .map(BigInteger::longValue)
+                                    .orElse(-1L);
+                            Long currentBandValue = communityGoalModel
+                                    .map(CommunityGoalModel::getPlayerPercentileBand)
+                                    .map(BigInteger::longValue)
+                                    .orElse(-1L);
+                            if (currentBandValue < 0L) {//no journal events, not signed up
+                                currentBand.addBinding(currentBand.textProperty(), LocaleService.getStringBinding("community.goal.information.currentband.none"));
+                            } else if (goalReport.hourlyData().isEmpty()) {//no data, set to highest from journal
+                                String band = currentBandValue.toString();
+                                String label = (band.contains("top")) ? "community.goal.reward.table.top" : "community.goal.reward.table.percent";
+                                StringBinding title = LocaleService.getStringBinding(label, band.replace("top", ""));
+                                currentBand.addBinding(currentBand.textProperty(), title);
+                            } else {
+                                Optional<ReportModels.BandMax> lowestMax = goalReport.hourlyData().getLast().bandMax().stream()
+                                        .filter(bandMax -> bandMax.max() >= contributionValue)
+                                        .max(new BandComparator());
+                                String band = lowestMax.map(ReportModels.BandMax::band).orElse("top10");
+                                String label = (band.contains("top")) ? "community.goal.reward.table.top" : "community.goal.reward.table.percent";
+                                StringBinding title = LocaleService.getStringBinding(label, band.replace("top", "").replace("%", ""));
+                                currentBand.addBinding(currentBand.textProperty(), title);
+                            }
 
-                        if (currentBandValue < 0L) {//no journal events, not signed up
-                            currentBand.addBinding(currentBand.textProperty(), LocaleService.getStringBinding("community.goal.information.currentband.none"));
-                        } else if (goalReport.hourlyData().isEmpty()) {//no data, set to highest from journal
-                            String band = currentBandValue.toString();
-                            String label = (band.contains("top")) ? "community.goal.reward.table.top" : "community.goal.reward.table.percent";
-                            StringBinding title = LocaleService.getStringBinding(label, band.replace("top", ""));
-                            currentBand.addBinding(currentBand.textProperty(), title);
-                        } else {
-                            Optional<ReportModels.BandMax> lowestMax = goalReport.hourlyData().getLast().bandMax().stream()
-                                    .filter(bandMax -> bandMax.max() >= contributionValue)
-                                    .max(new BandComparator());
-                            String band = lowestMax.map(ReportModels.BandMax::band).orElse("top10");
-                            String label = (band.contains("top")) ? "community.goal.reward.table.top" : "community.goal.reward.table.percent";
-                            StringBinding title = LocaleService.getStringBinding(label, band.replace("top", "").replace("%", ""));
-                            currentBand.addBinding(currentBand.textProperty(), title);
-                        }
-
-                        if (contributionValue < 0L) {//no journal events, not signed up
-                            contribution.setText("-");
-                        } else {//no data, set to highest from journal
-                            contribution.setText(Formatters.NUMBER_FORMAT_0.format(contributionValue));
-                        }
+                            if (contributionValue < 0L) {//no journal events, not signed up
+                                contribution.setText("-");
+                            } else {//no data, set to highest from journal
+                                contribution.setText(Formatters.NUMBER_FORMAT_0.format(contributionValue));
+                            }
+                        });
                         this.setManaged(true);
                         this.setVisible(true);
                     });

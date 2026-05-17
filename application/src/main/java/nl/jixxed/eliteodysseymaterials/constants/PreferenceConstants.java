@@ -87,5 +87,6 @@ public class PreferenceConstants {
     public static final String AR_FUZZY_SCORE = "ar.search.fuzzy.score.min";
     public static final String PREFERRED_LANDING_PAD = "preferred.landing.pad";
     public static final String SCRAPE_LATEST_PREFIX = "scrape.latest.";
+    public static final String OTHER_COMMUNITY_GOAL_CARGO_MULTIPLIER = "community.goal.cargo.multiplier";
 
 }
