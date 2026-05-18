@@ -197,7 +197,7 @@ allprojects {
                 implementation "org.glassfish.expressly:expressly:6.0.0"
                 compileOnly "org.jboss.logging:jboss-logging-annotations:3.0.4.Final"
                 implementation "org.leadpony.justify:justify:3.1.0"
-                implementation "org.slf4j:slf4j-api:2.0.17"
+                implementation "org.slf4j:slf4j-api:2.0.18"
                 implementation "org.openjfx:javafx-base:${version_javafx}:${platform}"
                 implementation "org.openjfx:javafx-controls:${version_javafx}:${platform}"
                 implementation "org.openjfx:javafx-fxml:${version_javafx}:${platform}"
