@@ -11,5 +11,6 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Bugfix for lots of datapoints in community goal progress
+Invert community goal band order in tooltip
+Added option to the community goal nearby selling market lookup to prefer space stations
 ```
