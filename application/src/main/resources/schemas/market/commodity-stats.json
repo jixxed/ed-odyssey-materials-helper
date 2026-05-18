@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Commodity Stats Response",
+  "type": "object",
+  "properties": {
+    "min_max": {
+      "type": "object"
+    },
+    "values": {
+      "type": "object",
+      "properties": {
+        "Asteroid base": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Coriolis Starport": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Dodec Starport": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Drake-Class Carrier": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Mega ship": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Ocellus Starport": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Orbis Starport": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Outpost": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Planetary Construction Depot": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Planetary Outpost": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Planetary Port": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Settlement": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Surface Settlement": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "min_max",
+    "values"
+  ]
+}

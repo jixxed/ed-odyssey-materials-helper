@@ -88,5 +88,7 @@ public class PreferenceConstants {
     public static final String PREFERRED_LANDING_PAD = "preferred.landing.pad";
     public static final String SCRAPE_LATEST_PREFIX = "scrape.latest.";
     public static final String OTHER_COMMUNITY_GOAL_CARGO_MULTIPLIER = "community.goal.cargo.multiplier";
+    public static final String OTHER_COMMUNITY_GOAL_SPACE_ONLY = "community.goal.space.only";
+
 
 }

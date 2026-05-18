@@ -358,11 +358,9 @@ public enum RegularCommodity implements Commodity {
 
     @Override
     public boolean isPurchasable() {
-        return !(
-                commodityType.equals(CommodityType.POWERPLAY)
-                        || commodityType.equals(CommodityType.SALVAGE)
-                        || !purchasable
-        );
+        return !commodityType.equals(CommodityType.POWERPLAY)
+                && !commodityType.equals(CommodityType.SALVAGE)
+                && purchasable;
     }
 
     @Override

@@ -21,6 +21,7 @@ import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipSize;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.helper.DnsHelper;
+import nl.jixxed.eliteodysseymaterials.schemas.market.CommodityStatsResponse;
 import nl.jixxed.eliteodysseymaterials.schemas.market.save.request.*;
 import nl.jixxed.eliteodysseymaterials.schemas.market.save.response.MarketSaveResponse;
 import nl.jixxed.eliteodysseymaterials.schemas.market.search.MarketSearchResponse;
@@ -29,6 +30,8 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.TerminateApplicationEvent;
 
+import javax.naming.NamingException;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.URI;
@@ -52,6 +55,7 @@ public class MarketAPIService {
             new LinkedBlockingQueue<>());
     private static final ScheduledExecutorService SCHEDULED_EXECUTOR_SERVICE = Executors.newSingleThreadScheduledExecutor();
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
+    private static CommodityStatsResponse commodityStats;
 
     static {
         //ignore unknown properties to avoid crashes on api changes
@@ -66,8 +70,13 @@ public class MarketAPIService {
         }));
     }
 
-    @SuppressWarnings("unchecked")
     public static void getNearbyStations(Commodity commodity, int amountRequired, StarSystem origin, Consumer<List<MarketStation>> resultConsumer, Supplier<Boolean> stillValid) {
+        getNearbyStations(commodity, amountRequired, origin, resultConsumer, stillValid, false);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void getNearbyStations(Commodity commodity, int amountRequired, StarSystem origin, Consumer<List<MarketStation>> resultConsumer, Supplier<Boolean> stillValid, boolean spaceOnlyPref) {
+        boolean spaceOnly = spaceOnlyPref && isAvailableInSpace(commodity);
         //clear cache if we are in a different system or switch to/from a large ship
         String prefPad = UserPreferencesService.getPreference(PreferenceConstants.PREFERRED_LANDING_PAD, "auto");
         boolean isCurrentShipLarge = "large".equals(prefPad) || ("auto".equals(prefPad) && ShipConfiguration.CURRENT.getShipType() != null && ShipConfiguration.CURRENT.getShipType().getShipSize().equals(ShipSize.L));
@@ -82,7 +91,7 @@ public class MarketAPIService {
         largeShip = isCurrentShipLarge;
         currentSystem = origin;
         //check cache
-        Result result = CACHE.get(new Search(commodity, amountRequired));
+        Result result = CACHE.get(new Search(commodity, amountRequired, spaceOnly));
         if (result != null) {
             log.info("Cache hit for {}", commodity);
             resultConsumer.accept(result.results());
@@ -121,6 +130,29 @@ public class MarketAPIService {
                             .withDistance(distance)
                             .withMarket(List.of(market))
                             .withPrimary_economy(economy);
+                    if (spaceOnly) {
+                        filtersBuilder = filtersBuilder.withType(Type.builder().withValue(List.of(
+                                "Asteroid base",
+                                "Coriolis Starport",
+                                "Dodec Starport",
+                                "Mega ship",
+                                "Ocellus Starport",
+                                "Orbis Starport",
+                                "Outpost")).build());
+//                        "type": {
+//                            "value": [
+//                            "Asteroid base",
+//                                    "Coriolis Starport",
+//                                    "Dodec Starport",
+//                                    "Mega ship",
+//                                    "Ocellus Starport",
+//                                    "Orbis Starport",
+//                                    "Outpost",
+//                                    "Planetary Port",
+//                                    "Space Construction Depot"
+//                ]
+//                        }
+                    }
                     //add large landing pad filter if we are in a large ship
                     if (largeShip) {
                         filtersBuilder.withLarge_pads(Large_pads.builder()
@@ -161,7 +193,7 @@ public class MarketAPIService {
                     if (recall.statusCode() == 200) {
                         MarketSearchResponse MarketSearchResponse = OBJECT_MAPPER.readValue(recall.body(), MarketSearchResponse.class);
                         List<MarketStation> MarketStations = MarketSearchResponseMapper.mapToStations(MarketSearchResponse);
-                        CACHE.put(new Search(commodity, amountRequired), new Result(MarketStations));
+                        CACHE.put(new Search(commodity, amountRequired, spaceOnly), new Result(MarketStations));
                         resultConsumer.accept(MarketStations);
                     }
                 } else {
@@ -182,7 +214,42 @@ public class MarketAPIService {
         EXECUTOR_SERVICE.submit(run);
     }
 
-    record Search(Commodity commodity, Integer quantity) {
+    private static boolean isAvailableInSpace(Commodity commodity) {
+
+        try {
+            if (commodityStats == null) {
+                commodityStats = fetchStats();
+            }
+            String commodityName = LocaleService.getLocalizedStringForLocale(Locale.ENGLISH, commodity.getLocalizationKey());
+            boolean isSpaceAvailable = commodityStats.getValues().getAsteroid_base().map(commodities -> commodities.stream().anyMatch(c -> c.equalsIgnoreCase(commodityName))).orElse(false);
+            isSpaceAvailable = isSpaceAvailable || commodityStats.getValues().getCoriolis_Starport().map(commodities -> commodities.stream().anyMatch(c -> c.equalsIgnoreCase(commodityName))).orElse(false);
+            isSpaceAvailable = isSpaceAvailable || commodityStats.getValues().getDodec_Starport().map(commodities -> commodities.stream().anyMatch(c -> c.equalsIgnoreCase(commodityName))).orElse(false);
+            isSpaceAvailable = isSpaceAvailable || commodityStats.getValues().getMega_ship().map(commodities -> commodities.stream().anyMatch(c -> c.equalsIgnoreCase(commodityName))).orElse(false);
+            isSpaceAvailable = isSpaceAvailable || commodityStats.getValues().getOcellus_Starport().map(commodities -> commodities.stream().anyMatch(c -> c.equalsIgnoreCase(commodityName))).orElse(false);
+            isSpaceAvailable = isSpaceAvailable || commodityStats.getValues().getOrbis_Starport().map(commodities -> commodities.stream().anyMatch(c -> c.equalsIgnoreCase(commodityName))).orElse(false);
+            isSpaceAvailable = isSpaceAvailable || commodityStats.getValues().getOutpost().map(commodities -> commodities.stream().anyMatch(c -> c.equalsIgnoreCase(commodityName))).orElse(false);
+            return isSpaceAvailable;
+        } catch (Exception ex) {
+            log.error("Failed to ", ex);
+            //NOOP
+        }
+        return false;
+    }
+
+    private static CommodityStatsResponse fetchStats() throws NamingException, IOException, InterruptedException {
+            HttpClient httpClient = HttpClientService.getHttpClient();
+            final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("market.services.host", "localhost"));
+            final HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://" + domainName + "/api/stations/field_values/station_type_supply_commodities"))
+                    .header("User-Agent", VersionService.getUserAgent())
+                    .GET()
+                    .build();
+            final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            return OBJECT_MAPPER.readValue(send.body(), CommodityStatsResponse.class);
+    }
+
+    record Search(Commodity commodity, Integer quantity, Boolean spaceOnly) {
     }
 
     record Result(List<MarketStation> results) {

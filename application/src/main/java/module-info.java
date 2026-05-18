@@ -372,6 +372,7 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.schemas.system;
     exports nl.jixxed.eliteodysseymaterials.schemas.market.save.request;
     exports nl.jixxed.eliteodysseymaterials.schemas.market.save.response;
+    exports nl.jixxed.eliteodysseymaterials.schemas.market;
     exports nl.jixxed.eliteodysseymaterials.schemas.market.search;
     exports nl.jixxed.eliteodysseymaterials.schemas.slef;
     exports nl.jixxed.eliteodysseymaterials.service.ar;
@@ -718,6 +719,7 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.WingInvite to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.WingJoin to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.WingLeave to com.fasterxml.jackson.databind, org.hibernate.validator;
+    opens nl.jixxed.eliteodysseymaterials.schemas.market to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.schemas.market.save.request to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.schemas.market.save.response to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.schemas.market.search to com.fasterxml.jackson.databind, org.hibernate.validator;

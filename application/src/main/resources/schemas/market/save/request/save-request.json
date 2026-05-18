@@ -20,6 +20,20 @@
             "value"
           ]
         },
+        "type": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "value"
+          ]
+        },
         "large_pads": {
           "type": "object",
           "properties": {

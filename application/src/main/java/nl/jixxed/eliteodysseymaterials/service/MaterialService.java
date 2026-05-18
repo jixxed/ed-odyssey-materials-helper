@@ -69,7 +69,7 @@ public class MaterialService {
         NUMBER_FORMAT.setMaximumFractionDigits(2);
     }
 
-    private static <E extends Node & DestroyableComponent> DestroyableMaterialContent getMaterialPopOverContent(final HorizonsMaterial horizonsMaterial, final boolean wishlist, Supplier<Integer> requiredAmount, final E hoverableNode) {
+    private static <E extends Node & DestroyableComponent> DestroyableMaterialContent getMaterialPopOverContent(final HorizonsMaterial horizonsMaterial, final boolean wishlist, Supplier<Integer> requiredAmount, final Supplier<Boolean> spaceOnlyMarkets, final E hoverableNode) {
         final DestroyableMaterialContent vBox = new DestroyableMaterialContent();
         vBox.getStyleClass().add("material-popover-content");
 //                .withStyleClass("material-popover-content").buildVBox();
@@ -114,7 +114,7 @@ public class MaterialService {
                 addFleetCarrierOrdersToTooltip(commodity, vBox);
                 addSquadronCarrierOrdersToTooltip(commodity, vBox);
                 if (requiredAmount.get() > 0 && commodity.isPurchasable()) {
-                    addNearbyMarketsToTooltip(commodity, vBox, requiredAmount, hoverableNode);
+                    addNearbyMarketsToTooltip(commodity, vBox, requiredAmount, spaceOnlyMarkets, hoverableNode);
                 }
             } else {
                 DestroyableVBox vBoxTitle = BoxBuilder.builder().withStyleClass("title-box").buildVBox();
@@ -201,7 +201,7 @@ public class MaterialService {
         });
     }
 
-    private static <E extends Node & DestroyableComponent> void addNearbyMarketsToTooltip(Commodity commodity, DestroyableMaterialContent vBox, Supplier<Integer> requiredAmount, final E hoverableNode) {
+    private static <E extends Node & DestroyableComponent> void addNearbyMarketsToTooltip(Commodity commodity, DestroyableMaterialContent vBox, Supplier<Integer> requiredAmount, Supplier<Boolean> spaceOnlyMarkets, final E hoverableNode) {
         vBox.addSecondaryAction(() -> {
             Integer requiredAmountValue = requiredAmount.get();
             MarketAPIService.getNearbyStations(commodity, requiredAmountValue, LocationService.getCurrentStarSystem(), marketStations -> {
@@ -243,7 +243,7 @@ public class MaterialService {
                     }
                     vBox.getNodes().add(gridpane);
                 });
-            }, () -> POPOVERS.containsKey(hoverableNode));
+            }, () -> POPOVERS.containsKey(hoverableNode), spaceOnlyMarkets.get());
         });
     }
 
@@ -548,6 +548,10 @@ public class MaterialService {
     }
 
     public static <E extends Node & DestroyableComponent> void addMaterialInfoPopOver(final E hoverableNode, final Material material, final boolean wishlist, Supplier<Integer> requiredAmount) {
+        addMaterialInfoPopOver(hoverableNode, material, wishlist, () -> false, requiredAmount);
+    }
+
+    public static <E extends Node & DestroyableComponent> void addMaterialInfoPopOver(final E hoverableNode, final Material material, final boolean wishlist, final Supplier<Boolean> spaceOnlyMarkets, Supplier<Integer> requiredAmount) {
         hoverableNode.addEventBinding(hoverableNode.onMouseEnteredProperty(), mouseEvent -> {
             if (POPOVERS.containsKey(hoverableNode)) {
                 return;
@@ -561,7 +565,7 @@ public class MaterialService {
                 timelineShow.setOnFinished(_ -> {
                     DestroyableMaterialContent content = switch (material) {
                         case HorizonsMaterial horizonsMaterial ->
-                                getMaterialPopOverContent(horizonsMaterial, wishlist, requiredAmount, hoverableNode);
+                                getMaterialPopOverContent(horizonsMaterial, wishlist, requiredAmount, spaceOnlyMarkets, hoverableNode);
                         case OdysseyMaterial odysseyMaterial -> getMaterialPopOverContent(odysseyMaterial);
                     };
                     contentNode.set(content);

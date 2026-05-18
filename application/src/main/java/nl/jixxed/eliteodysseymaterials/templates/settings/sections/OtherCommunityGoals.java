@@ -12,6 +12,7 @@ package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.ToggleSwitchBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.templates.components.ButtonIntField;
@@ -36,8 +37,9 @@ public class OtherCommunityGoals extends DestroyableVBox implements DestroyableT
                 .build();
 
         final DestroyableHBox quantityMultiplierSetting = createQuantityMultiplierSetting();
+        DestroyableHBox spaceOnlySetting = createSpaceOnlySetting();
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
-        this.getNodes().addAll(overviewOtherLabel, quantityMultiplierSetting);
+        this.getNodes().addAll(overviewOtherLabel, quantityMultiplierSetting,spaceOnlySetting);
 
     }
 
@@ -59,6 +61,27 @@ public class OtherCommunityGoals extends DestroyableVBox implements DestroyableT
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(fcEnabledLabel, rangeField, explainLabel)
+                .buildHBox();
+    }
+    private DestroyableHBox createSpaceOnlySetting() {
+        var spaceOnlyLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.communitygoals.space.only")
+                .build();
+        var spaceOnly = ToggleSwitchBuilder.builder()
+                .withSelectedChangeListener((_, _, newValue) -> {
+                    PreferencesService.setPreference(PreferenceConstants.OTHER_COMMUNITY_GOAL_SPACE_ONLY, Boolean.TRUE.equals(newValue));
+                })
+                .withSelected(PreferencesService.getPreference(PreferenceConstants.OTHER_COMMUNITY_GOAL_SPACE_ONLY, false))
+                .build();
+
+        DestroyableLabel spaceOnlyLabelExplainLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.communitygoals.space.only.explain")
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(spaceOnlyLabel, spaceOnly, spaceOnlyLabelExplainLabel)
                 .buildHBox();
     }
 }

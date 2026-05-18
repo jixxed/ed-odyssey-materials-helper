@@ -261,7 +261,7 @@ public class MaterialCard extends DestroyableStackPane implements DestroyableEve
         }else{
             updateQuantity();
         }
-        MaterialService.addMaterialInfoPopOver(this, this.material, false, () -> Math.max(1, Optional.ofNullable(ApplicationState.getInstance().getShip()).map(ship -> (int) ship.getMaxCargo() * PreferencesService.getPreference(PreferenceConstants.OTHER_COMMUNITY_GOAL_CARGO_MULTIPLIER, 2)).orElse(1)));
+        MaterialService.addMaterialInfoPopOver(this, this.material, false, () -> PreferencesService.getPreference(PreferenceConstants.OTHER_COMMUNITY_GOAL_SPACE_ONLY, false), () -> Math.max(1, Optional.ofNullable(ApplicationState.getInstance().getShip()).map(ship -> (int) ship.getMaxCargo() * PreferencesService.getPreference(PreferenceConstants.OTHER_COMMUNITY_GOAL_CARGO_MULTIPLIER, 2)).orElse(1)));
     }
 
     @Override
