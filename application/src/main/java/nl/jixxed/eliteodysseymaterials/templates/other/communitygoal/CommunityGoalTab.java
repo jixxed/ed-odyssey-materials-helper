@@ -17,7 +17,6 @@ import nl.jixxed.eliteodysseymaterials.domain.Goal;
 import nl.jixxed.eliteodysseymaterials.enums.OtherTabType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.cg.CommunityGoalsService;
-import nl.jixxed.eliteodysseymaterials.service.event.CommunityGoalEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.GoalSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
@@ -25,12 +24,14 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 import nl.jixxed.eliteodysseymaterials.templates.other.OtherTab;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class CommunityGoalTab extends OtherTab implements DestroyableEventTemplate {
 
     private DestroyableVBox communityGoalsBox;
-    private Goal selectedGoal = Goal.ACTIVE;
+    private Goal selectedGoal;
 
     public CommunityGoalTab() {
         initComponents();
@@ -59,17 +60,19 @@ public class CommunityGoalTab extends OtherTab implements DestroyableEventTempla
 
     @Override
     public void initEventHandling() {
-        register(EventService.addListener(true, this, CommunityGoalEvent.class, _ -> refreshContent()));
+//        register(EventService.addListener(true, this, CommunityGoalEvent.class, _ -> refreshContent()));
         register(EventService.addListener(true, this, GoalSelectedEvent.class, event -> {
-            selectedGoal = event.getSelected();
-            refreshContent();
+            if(!Objects.equals(selectedGoal, event.getSelected())) {
+                selectedGoal = event.getSelected();
+                refreshContent();
+            }
         }));
     }
 
     private void refreshContent() {
 
         List<CommunityGoal> communityGoals;
-        if ((selectedGoal.equals(Goal.ACTIVE))) {
+        if ((Goal.ACTIVE.equals(selectedGoal))) {
             List<CommunityGoal> list = new ArrayList<>();
             List<Goal> activeGoals = getActiveGoals();
             for (int i = 0; i < activeGoals.size(); i++) {
@@ -78,8 +81,10 @@ public class CommunityGoalTab extends OtherTab implements DestroyableEventTempla
                 list.add(communityGoal);
             }
             communityGoals = list;
-        } else {
+        } else if(selectedGoal != null) {
             communityGoals = List.of(new CommunityGoal(selectedGoal, 1));
+        } else{
+            communityGoals = Collections.emptyList();
         }
         this.communityGoalsBox.getNodes().clear();
         this.communityGoalsBox.getNodes().addAll(communityGoals);

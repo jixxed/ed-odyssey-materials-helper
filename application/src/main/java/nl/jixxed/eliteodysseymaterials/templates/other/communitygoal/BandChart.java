@@ -16,6 +16,7 @@ import io.fair_acc.chartfx.renderer.spi.AbstractRendererXY;
 import io.fair_acc.chartfx.ui.HiddenSidesPane;
 import io.fair_acc.dataset.DataSet;
 import io.fair_acc.dataset.events.ChartBits;
+import javafx.scene.Node;
 import javafx.util.StringConverter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -99,6 +100,7 @@ public class BandChart extends DestroyableHBox implements DestroyableTemplate {
     }
 
     public void update(ReportModels.CommunityGoalReport report) {
+        List<String> previouslyEnabledBands = visibleBands();
         datasets.values().forEach(Dataset::clearData);
 
         BandComparator bandComparator = new BandComparator();
@@ -108,13 +110,13 @@ public class BandChart extends DestroyableHBox implements DestroyableTemplate {
             for (int i = 0; i < max.size(); i++) {
                 ReportModels.BandMax bandMax = max.get(i);
                 var x = data.hourUtc().toEpochMilli();
-                Dataset dataset = datasets.computeIfAbsent(bandMax.band(), (band) -> this.create(band, BandDataSetRenderer::new));
+                Dataset dataset = datasets.computeIfAbsent(bandMax.band(), (band) -> this.create(band, BandDataSetRenderer::new, previouslyEnabledBands));
                 long bandMaxVal = Math.max(previous, bandMax.max());
                 dataset.dataSet.add(x, previous, bandMaxVal);
                 previous = bandMaxVal + 1;
             }
         });
-        Dataset myContribution = datasets.computeIfAbsent("My progress", (band) -> this.create(band, ProgressDataSetRenderer::new));
+        Dataset myContribution = datasets.computeIfAbsent("My progress", (band) -> this.create(band, ProgressDataSetRenderer::new, previouslyEnabledBands));
         myContribution.dataSet.getStyleClasses().add("dataset-progress");
         AtomicLong progress = new AtomicLong(-1);
         AtomicLong lastTimestampEntry = new AtomicLong(-1);
@@ -154,7 +156,6 @@ public class BandChart extends DestroyableHBox implements DestroyableTemplate {
         });
 
         chart.getPlugins().removeIf(plugin -> plugin instanceof TierIndicator);
-//        chart.getPlugins().clear();
 
         for (var unlock : report.tierUnlocks()) {
             TierIndicator tierLine = new TierIndicator(xAxis, unlock.tier(), unlock.earliestOccurrence().toEpochMilli());
@@ -168,7 +169,17 @@ public class BandChart extends DestroyableHBox implements DestroyableTemplate {
 
     }
 
-    private Dataset create(String band, Function<DataSet, AbstractRendererXY<?>> rendererFunction) {
+    private List<String> visibleBands() {
+        if (datasets.isEmpty()) {
+            return null;
+        }
+        return datasets.values().stream()
+                .filter(dataset -> dataset.getRenderer().getDatasetNodes().stream().anyMatch(Node::isVisible))
+                .map(dataset -> dataset.dataSet.getName())
+                .toList();
+    }
+
+    private Dataset create(String band, Function<DataSet, AbstractRendererXY<?>> rendererFunction, List<String> previouslyEnabledBands) {
         BandDataSet dataSet = new BandDataSet(band);
         if (band.contains("top")) {
             dataSet.nameProperty().bind(LocaleService.getStringBinding("community.goal.band.chart.top", band.replace("top", "")));
@@ -177,16 +188,18 @@ public class BandChart extends DestroyableHBox implements DestroyableTemplate {
         } else {
             dataSet.nameProperty().bind(LocaleService.getStringBinding("community.goal.band.chart.mycontribution"));
         }
-        AbstractRendererXY<?> renderer = rendererFunction.apply(dataSet);// new BasicDataSetRenderer(dataSet);
-//        renderer.getDatasetNodes().forEach(dataSetNode -> dataSetNode.getStyleClass().add(band.toLowerCase().replace(" ", "-").replace("%", "percent")));
-//        renderer.getStyleClass().add(band.toLowerCase().replace(" ", "-").replace("%", "percent"));
-//        dataSet.getStyleClasses().add(band.toLowerCase().replace(" ", "-").replace("%", "percent"));
-        if (band.startsWith("top") || band.equals("25%") || band.equals("10%")) {
+        AbstractRendererXY<?> renderer = rendererFunction.apply(dataSet);
+
+        if (previouslyEnabledBands == null) {//first render, set defaults
+            if ((band.startsWith("top") || band.equals("25%") || band.equals("10%"))) {
+                renderer.getDatasetNodes().forEach(dataSetNode -> dataSetNode.setVisible(false));
+            }
+        } else if (!previouslyEnabledBands.contains(band)) {//subsequent render, set previous selected
             renderer.getDatasetNodes().forEach(dataSetNode -> dataSetNode.setVisible(false));
         }
+
         renderer.getAxes().setAll(xAxis, yAxis);
         chart.getRenderers().add(renderer);
-//        chart.getAxes().add(yAxis);
         return new Dataset(dataSet, renderer, yAxis);
     }
 

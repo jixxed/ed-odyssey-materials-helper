@@ -48,7 +48,6 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
 
     private final Goal goal;
     private final int index;
-    private ReportModels.ReportResponse report;
     private ProgressChart progressChart;
     private BandChart bandChart;
     private RewardsTable rewardsTable;
@@ -73,10 +72,7 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
         this.index = index;
         initComponents();
         initEventHandling();
-        CommunityGoalsService.getReport(goal.getId()).ifPresent(report -> {
-            this.report = report;
-            refreshContent();
-        });
+        refreshContent();
 
         scheduledExecutor.scheduleWithFixedDelay(this::smallUpdate, 1, 1, TimeUnit.MINUTES);
     }
@@ -168,7 +164,7 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
         register(EventService.addListener(true, this, CommunityGoalEvent.class, _ -> refreshContent()));
         register(EventService.addListener(true, this, CommunityGoalReportEvent.class, event -> {
             if (event.getReport() != null && event.getReport().goals().stream().anyMatch(g -> goal.getId().equals((int) g.cgid()))) {
-                report = event.getReport();
+//                report = event.getReport();
                 refreshContent();
             }
         }));
@@ -176,30 +172,104 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
     }
 
     private void refreshContent() {
-        if (report != null) {
-            report.goals().stream()
-                    .filter(g -> goal.getId().equals((int) g.cgid()))
-                    .findFirst()
+        CommunityGoalsService.getReport(goal.getId())
+                .flatMap(report -> report.goals().stream()
+                        .filter(g -> goal.getId().equals((int) g.cgid()))
+                        .findFirst())
+                .ifPresent(goalReport -> {
+                    commodityList.update(goalReport);
+                    progressChart.update(goalReport);
+                    bandChart.update(goalReport);
+                    rewardsTable.update(goalReport);
+                    progressStats.update(goalReport);
+                    currentTier.setText(goalReport.currentAchievedTier().toString());
+                    maxTier.setText(goalReport.currentTopTier().toString());
+                    activityType.setText(goalReport.metadata().get("activityType").toString());
+
+
+                    LocalDateTime expiryUtc = LocalDateTime.parse(goalReport.metadata().get("expiry").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                    ZonedDateTime localExpiry = expiryUtc
+                            .atZone(ZoneOffset.UTC)
+                            .withZoneSameInstant(ZoneId.systemDefault());
+                    DateTimeFormatter formatter = (expiryUtc.getYear() == LocalDateTime.now().getYear())
+                            ? DateTimeFormatter.ofPattern("LLLL d, HH:mm")
+                            : DateTimeFormatter.ofPattern("LLLL d yyyy, HH:mm");
+
+                    expires.setText(formatter.format(localExpiry));
+                    if (localExpiry.isAfter(ZonedDateTime.now())) {
+                        expiresTimer.setText(Formatters.timeUntil(localExpiry));
+                        expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expires"));
+                    } else {
+                        expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expired"));
+                        expiresTimer.setVisible(false);
+                        expiresTimer.setManaged(false);
+                    }
+
+                    StarSystem starSystem = LocationService.getStarSystem(goalReport.metadata().get("starsystem_name").toString());
+                    location.getNodes().clear();
+                    location.setVisible(false);
+                    location.setManaged(false);
+                    if (starSystem != null) {
+                        location.getNodes().add(new CopyableLocation(starSystem, goalReport.metadata().get("market_name").toString()));
+                        location.setVisible(true);
+                        location.setManaged(true);
+                    }
+                    goalText.setText(goalReport.metadata().get("bulletin").toString());
+                    title.setText(goalReport.metadata().get("title").toString());
+                    ApplicationState.getInstance().getPreferredCommander().ifPresent(_ -> {//database must be initialized with a commander
+                        Optional<CommunityGoalModel> communityGoalModel = new QCommunityGoalModel()
+                                .cgid.eq((int) goalReport.cgid())
+                                .orderBy()
+                                .timestamp.desc()
+                                .setMaxRows(1)
+                                .findOneOrEmpty();
+                        Long contributionValue = communityGoalModel
+                                .map(CommunityGoalModel::getPlayerContribution)
+                                .map(BigInteger::longValue)
+                                .orElse(-1L);
+                        Long currentBandValue = communityGoalModel
+                                .map(CommunityGoalModel::getPlayerPercentileBand)
+                                .map(BigInteger::longValue)
+                                .orElse(-1L);
+                        if (currentBandValue < 0L) {//no journal events, not signed up
+                            currentBand.addBinding(currentBand.textProperty(), LocaleService.getStringBinding("community.goal.information.currentband.none"));
+                        } else if (goalReport.hourlyData().isEmpty()) {//no data, set to highest from journal
+                            String band = currentBandValue.toString();
+                            String label = (band.contains("top")) ? "community.goal.reward.table.top" : "community.goal.reward.table.percent";
+                            StringBinding title = LocaleService.getStringBinding(label, band.replace("top", ""));
+                            currentBand.addBinding(currentBand.textProperty(), title);
+                        } else {
+                            Optional<ReportModels.BandMax> lowestMax = goalReport.hourlyData().getLast().bandMax().stream()
+                                    .filter(bandMax -> bandMax.max() >= contributionValue)
+                                    .max(new BandComparator());
+                            String band = lowestMax.map(ReportModels.BandMax::band).orElse("top10");
+                            String label = (band.contains("top")) ? "community.goal.reward.table.top" : "community.goal.reward.table.percent";
+                            StringBinding title = LocaleService.getStringBinding(label, band.replace("top", "").replace("%", ""));
+                            currentBand.addBinding(currentBand.textProperty(), title);
+                        }
+
+                        if (contributionValue < 0L) {//no journal events, not signed up
+                            contribution.setText("-");
+                        } else {//no data, set to highest from journal
+                            contribution.setText(Formatters.NUMBER_FORMAT_0.format(contributionValue));
+                        }
+                    });
+                    this.setManaged(true);
+                    this.setVisible(true);
+                });
+    }
+
+    private void smallUpdate() {
+        Platform.runLater(() -> {
+            CommunityGoalsService.getReport(goal.getId())
+                    .flatMap(report -> report.goals().stream()
+                            .filter(g -> goal.getId().equals((int) g.cgid()))
+                            .findFirst())
                     .ifPresent(goalReport -> {
-                        commodityList.update(goalReport);
-                        progressChart.update(goalReport);
-                        bandChart.update(goalReport);
-                        rewardsTable.update(goalReport);
-                        progressStats.update(goalReport);
-                        currentTier.setText(goalReport.currentAchievedTier().toString());
-                        maxTier.setText(goalReport.currentTopTier().toString());
-                        activityType.setText(goalReport.metadata().get("activityType").toString());
-
-
                         LocalDateTime expiryUtc = LocalDateTime.parse(goalReport.metadata().get("expiry").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                         ZonedDateTime localExpiry = expiryUtc
                                 .atZone(ZoneOffset.UTC)
                                 .withZoneSameInstant(ZoneId.systemDefault());
-                        DateTimeFormatter formatter = (expiryUtc.getYear() == LocalDateTime.now().getYear())
-                                ? DateTimeFormatter.ofPattern("LLLL d, HH:mm")
-                                : DateTimeFormatter.ofPattern("LLLL d yyyy, HH:mm");
-
-                        expires.setText(formatter.format(localExpiry));
                         if (localExpiry.isAfter(ZonedDateTime.now())) {
                             expiresTimer.setText(Formatters.timeUntil(localExpiry));
                             expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expires"));
@@ -208,84 +278,8 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                             expiresTimer.setVisible(false);
                             expiresTimer.setManaged(false);
                         }
-
-                        StarSystem starSystem = LocationService.getStarSystem(goalReport.metadata().get("starsystem_name").toString());
-                        location.getNodes().clear();
-                        location.setVisible(false);
-                        location.setManaged(false);
-                        if (starSystem != null) {
-                            location.getNodes().add(new CopyableLocation(starSystem, goalReport.metadata().get("market_name").toString()));
-                            location.setVisible(true);
-                            location.setManaged(true);
-                        }
-                        goalText.setText(goalReport.metadata().get("bulletin").toString());
-                        title.setText(goalReport.metadata().get("title").toString());
-                        ApplicationState.getInstance().getPreferredCommander().ifPresent(_ -> {//database must be initialized with a commander
-                            Optional<CommunityGoalModel> communityGoalModel = new QCommunityGoalModel()
-                                    .cgid.eq((int) goalReport.cgid())
-                                    .orderBy()
-                                    .timestamp.desc()
-                                    .setMaxRows(1)
-                                    .findOneOrEmpty();
-                            Long contributionValue = communityGoalModel
-                                    .map(CommunityGoalModel::getPlayerContribution)
-                                    .map(BigInteger::longValue)
-                                    .orElse(-1L);
-                            Long currentBandValue = communityGoalModel
-                                    .map(CommunityGoalModel::getPlayerPercentileBand)
-                                    .map(BigInteger::longValue)
-                                    .orElse(-1L);
-                            if (currentBandValue < 0L) {//no journal events, not signed up
-                                currentBand.addBinding(currentBand.textProperty(), LocaleService.getStringBinding("community.goal.information.currentband.none"));
-                            } else if (goalReport.hourlyData().isEmpty()) {//no data, set to highest from journal
-                                String band = currentBandValue.toString();
-                                String label = (band.contains("top")) ? "community.goal.reward.table.top" : "community.goal.reward.table.percent";
-                                StringBinding title = LocaleService.getStringBinding(label, band.replace("top", ""));
-                                currentBand.addBinding(currentBand.textProperty(), title);
-                            } else {
-                                Optional<ReportModels.BandMax> lowestMax = goalReport.hourlyData().getLast().bandMax().stream()
-                                        .filter(bandMax -> bandMax.max() >= contributionValue)
-                                        .max(new BandComparator());
-                                String band = lowestMax.map(ReportModels.BandMax::band).orElse("top10");
-                                String label = (band.contains("top")) ? "community.goal.reward.table.top" : "community.goal.reward.table.percent";
-                                StringBinding title = LocaleService.getStringBinding(label, band.replace("top", "").replace("%", ""));
-                                currentBand.addBinding(currentBand.textProperty(), title);
-                            }
-
-                            if (contributionValue < 0L) {//no journal events, not signed up
-                                contribution.setText("-");
-                            } else {//no data, set to highest from journal
-                                contribution.setText(Formatters.NUMBER_FORMAT_0.format(contributionValue));
-                            }
-                        });
-                        this.setManaged(true);
-                        this.setVisible(true);
+                        bandChart.update(goalReport);
                     });
-        }
-    }
-
-    private void smallUpdate() {
-        Platform.runLater(() -> {
-            if (report != null) {
-                report.goals().stream()
-                        .filter(g -> goal.getId().equals((int) g.cgid()))
-                        .findFirst()
-                        .ifPresent(goalReport -> {
-                            LocalDateTime expiryUtc = LocalDateTime.parse(goalReport.metadata().get("expiry").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-                            ZonedDateTime localExpiry = expiryUtc
-                                    .atZone(ZoneOffset.UTC)
-                                    .withZoneSameInstant(ZoneId.systemDefault());
-                            if (localExpiry.isAfter(ZonedDateTime.now())) {
-                                expiresTimer.setText(Formatters.timeUntil(localExpiry));
-                                expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expires"));
-                            } else {
-                                expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expired"));
-                                expiresTimer.setVisible(false);
-                                expiresTimer.setManaged(false);
-                            }
-                            bandChart.update(goalReport);
-                        });
-            }
         });
     }
 

@@ -1,3 +1,9 @@
+Version 3.9.4
+-------------
+Align nearest stations top
+Add distance from star to nearest stations
+Remember selected band after band graph refeshes
+
 Version 3.9.3
 -------------
 Invert community goal band order in tooltip

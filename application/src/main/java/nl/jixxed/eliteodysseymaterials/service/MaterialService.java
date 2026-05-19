@@ -15,6 +15,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.binding.StringBinding;
 import javafx.geometry.Rectangle2D;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Screen;
@@ -233,12 +234,16 @@ public class MaterialService {
                         var station = marketStations.get(i);
                         DestroyableLabel supply = LabelBuilder.builder().withStyleClass("supply").withText("horizons.materials.nearest.markets.supply", Formatters.NUMBER_FORMAT_0.format(station.getSupply()), Formatters.NUMBER_FORMAT_0.format(station.getSellPrice())).build();
                         DestroyableLabel age = LabelBuilder.builder().withStyleClass("age").withText(convertToAgeString(station.getLastMarketUpdate())).build();
-                        var icon = EdAwesomeIconViewPaneBuilder.builder().withStyleClass("station-icon").withIcons(getIcon(station.getType())).build();
-                        CopyableLocation copyableLocation = new CopyableLocation(station.getStarSystem(), station.getName(), station.getDistanceFromStar(), 0);
+                        var icon = PaneBuilder.builder().withNode(EdAwesomeIconViewPaneBuilder.builder().withStyleClass("station-icon").withIcons(getIcon(station.getType())).build()).build();
+                        CopyableLocation copyableLocation = new CopyableLocation(station.getStarSystem(), station.getName(), station.getDistanceFromStar(), 0, true);
                         GridPane.setConstraints(supply, 0, i + 1);
                         GridPane.setConstraints(age, 1, i + 1);
                         GridPane.setConstraints(icon, 2, i + 1);
                         GridPane.setConstraints(copyableLocation, 3, i + 1);
+                        GridPane.setValignment(supply, VPos.TOP);
+                        GridPane.setValignment(age, VPos.TOP);
+                        GridPane.setValignment(icon, VPos.TOP);
+                        GridPane.setValignment(copyableLocation, VPos.TOP);
                         gridpane.getNodes().addAll(supply, age, icon, copyableLocation);
                     }
                     vBox.getNodes().add(gridpane);

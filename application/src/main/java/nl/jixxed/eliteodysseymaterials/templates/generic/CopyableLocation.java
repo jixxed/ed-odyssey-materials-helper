@@ -52,15 +52,21 @@ public class CopyableLocation extends DestroyableFlowPane implements Destroyable
     private Double distanceFromStar;
     private DestroyableLabel location;
     private EdAwesomeIconViewPane permitIcon;
+    private boolean previewDistanceFromStar;
 
-
-    public CopyableLocation(@NonNull StarSystem starSystem, @NonNull String station, double distanceFromStar, double distanceFromStarVariance) {
+    public CopyableLocation(@NonNull StarSystem starSystem, @NonNull String station, double distanceFromStar, double distanceFromStarVariance, boolean previewDistanceFromStar) {
         this.starSystem = starSystem;
         this.station = station;
         this.distanceFromStar = distanceFromStar;
         this.distanceFromStarVariance = distanceFromStarVariance;
+        this.previewDistanceFromStar = previewDistanceFromStar;
         initComponents();
         initEventHandling();
+    }
+
+    public CopyableLocation(@NonNull StarSystem starSystem, @NonNull String station, double distanceFromStar, double distanceFromStarVariance) {
+
+        this(starSystem, station, distanceFromStar, distanceFromStarVariance, false);
     }
 
     public CopyableLocation(@NonNull StarSystem starSystem, @NonNull String station) {
@@ -122,7 +128,9 @@ public class CopyableLocation extends DestroyableFlowPane implements Destroyable
         permitIcon.pseudoClassStateChanged(PseudoClass.getPseudoClass("obtained"), PermitService.havePermit(starSystem));
         location.setText(this.station.isEmpty() ? starSystem.getName() : this.station + " | " + starSystem.getName());
         final Double starDistance = starSystem.getDistance(currentLocation.getStarSystem());
-        if (starDistance > 0D || distanceFromStar == 0D) {
+        if (starDistance > 0D && distanceFromStar != 0D && previewDistanceFromStar) {
+            this.distance.addBinding(this.distance.textProperty(), LocaleService.getStringBinding("system.copy.distance.with.distance.from.star", Formatters.NUMBER_FORMAT_2.format(starDistance), Formatters.NUMBER_FORMAT_2.format(distanceFromStar)));
+        } else if (starDistance > 0D) {
             this.distance.addBinding(this.distance.textProperty(), LocaleService.getStringBinding("system.copy.distance", Formatters.NUMBER_FORMAT_2.format(starDistance)));
         } else if (distanceFromStarVariance > 0D) {
             this.distance.addBinding(this.distance.textProperty(), LocaleService.getStringBinding("system.copy.distance.in.system", Formatters.NUMBER_FORMAT_2.format(distanceFromStar), Formatters.NUMBER_FORMAT_2.format(distanceFromStarVariance)));

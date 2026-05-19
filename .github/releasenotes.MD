@@ -11,6 +11,7 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Invert community goal band order in tooltip
-Added option to the community goal nearby selling market lookup to prefer space stations
+Align nearest stations top
+Add distance from star to nearest stations
+Remember selected band after band graph refeshes
 ```
