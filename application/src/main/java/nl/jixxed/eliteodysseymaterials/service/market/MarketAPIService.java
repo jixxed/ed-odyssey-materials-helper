@@ -38,6 +38,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
@@ -92,7 +93,7 @@ public class MarketAPIService {
         currentSystem = origin;
         //check cache
         Result result = CACHE.get(new Search(commodity, amountRequired, spaceOnly));
-        if (result != null) {
+        if (result != null && result.timestamp.isAfter(Instant.now().minusSeconds(300))) {
             log.info("Cache hit for {}", commodity);
             resultConsumer.accept(result.results());
             return;
@@ -193,7 +194,7 @@ public class MarketAPIService {
                     if (recall.statusCode() == 200) {
                         MarketSearchResponse MarketSearchResponse = OBJECT_MAPPER.readValue(recall.body(), MarketSearchResponse.class);
                         List<MarketStation> MarketStations = MarketSearchResponseMapper.mapToStations(MarketSearchResponse);
-                        CACHE.put(new Search(commodity, amountRequired, spaceOnly), new Result(MarketStations));
+                        CACHE.put(new Search(commodity, amountRequired, spaceOnly), new Result(MarketStations, Instant.now()));
                         resultConsumer.accept(MarketStations);
                     }
                 } else {
@@ -252,6 +253,6 @@ public class MarketAPIService {
     record Search(Commodity commodity, Integer quantity, Boolean spaceOnly) {
     }
 
-    record Result(List<MarketStation> results) {
+    record Result(List<MarketStation> results, Instant timestamp) {
     }
 }
