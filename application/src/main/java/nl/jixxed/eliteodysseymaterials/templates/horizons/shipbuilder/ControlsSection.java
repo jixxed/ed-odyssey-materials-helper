@@ -621,9 +621,14 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
             final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
             final Set<ShipConfiguration> allShipConfigurations = shipConfigurations.getAllShipConfigurations();
+            int selectedIndex = this.shipSelect.getSelectionModel().getSelectedIndex();
             this.shipSelect.clear();
             this.shipSelect.addAll(allShipConfigurations.stream().sorted(Comparator.comparing(ShipConfiguration::getName)).toList());
-            shipConfigurations.getSelectedShipConfiguration().ifPresent(configuration -> this.shipSelect.getSelectionModel().select(configuration));
+            if (selectedIndex != -1) {
+                this.shipSelect.getSelectionModel().select(Math.min(selectedIndex, this.shipSelect.getItems().size() - 1));
+            } else {
+                shipConfigurations.getSelectedShipConfiguration().ifPresent(configuration -> this.shipSelect.getSelectionModel().select(configuration));
+            }
         });
     }
 
