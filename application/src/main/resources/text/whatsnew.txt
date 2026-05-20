@@ -1,3 +1,9 @@
+Version 3.9.5
+-------------
+Compressed images shrinking app size down by 16MB
+Fix first notification taking a long time to appear and causing the app to freeze
+Remember selected index of ship select on refresh, for example after deleting a ship
+
 Version 3.9.4
 -------------
 Align nearest stations top
