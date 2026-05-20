@@ -64,11 +64,15 @@ import nl.jixxed.eliteodysseymaterials.templates.dialog.VersionDialog;
 import nl.jixxed.eliteodysseymaterials.watchdog.*;
 import nl.jixxed.eliteodysseymaterials.watchdog.FileService;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.controlsfx.control.Notifications;
+import org.controlsfx.control.SegmentedBar;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
@@ -125,9 +129,9 @@ public class FXApplication extends Application {
     public void start(final Stage primaryStage) {
         System.setProperty("de.jensd.fx.glyphs.fontawesome.disableCSS", "true");
 //        DeeplinkHelper.setFxApplication(this);
+        NotificationService.init();
         DatabaseService.init();
         ScrapeState.init();
-        NotificationService.init();
         LocationService.init();
         PinnedBlueprintService.init();
         ScalingHelper.init();
@@ -647,6 +651,14 @@ public class FXApplication extends Application {
         }
         final JMetro jMetro = new JMetro(Style.DARK);
         jMetro.setScene(scene);
+        try {
+            log.error("Load controlsfx notifications css");
+            String stylesheetUrl = getControlsFxNotificationsCssUrl();
+            scene.getStylesheets().add(stylesheetUrl);
+            log.error("Loaded controlsfx notifications css");
+        } catch (Exception e) {
+            log.error("Failed to load controlsfx notifications css", e);
+        }
         if (VersionService.isDev()) {//dev mode for hotswap css
             try {
                 final String currentWorkingDirectory = new File(".").getCanonicalPath();
@@ -702,9 +714,18 @@ public class FXApplication extends Application {
             }
         } else {
             scene.getStylesheets().add(getClass().getResource(StyleSheet.valueOf(PreferencesService.getPreference(PreferenceConstants.STYLESHEET, "DEFAULT")).getStyleSheet()).toExternalForm());
-            scene.getStylesheets().add(getClass().getResource("/notificationpopup.css").toExternalForm());
+//            scene.getStylesheets().add(getClass().getResource("/notificationpopup.css").toExternalForm());
         }
         addCustomCss(scene);
+    }
+
+    private static String getControlsFxNotificationsCssUrl() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        SegmentedBar<SegmentedBar.Segment> source = new SegmentedBar<>();
+        Class<?> c = Class.forName("org.controlsfx.control.ControlsFXControl");
+        Method method = c.getDeclaredMethod("getUserAgentStylesheet", Class.class, String.class);
+        method.setAccessible(true);
+        String stylesheetUrl = (String) method.invoke(source, Notifications.class, "notificationpopup.css");
+        return stylesheetUrl;
     }
 
     @SuppressWarnings("java:S899")
