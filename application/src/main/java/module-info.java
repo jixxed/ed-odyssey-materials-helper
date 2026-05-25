@@ -62,6 +62,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires io.fair_acc.chartfx;
     requires io.fair_acc.dataset;
     requires io.fair_acc.bench;
+    requires mp3spi;
 
     uses nl.jixxed.ed.awesome.api.FontLoader;
     uses nl.jixxed.ed.confidential.api.SecrecyLoader;

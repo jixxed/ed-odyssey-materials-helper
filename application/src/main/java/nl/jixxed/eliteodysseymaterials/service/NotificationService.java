@@ -10,9 +10,6 @@
 
 package nl.jixxed.eliteodysseymaterials.service;
 
-import javafx.application.Platform;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
 import javafx.util.Duration;
@@ -26,9 +23,11 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
 import org.controlsfx.control.Notifications;
 
-import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
+import javax.sound.sampled.*;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -41,7 +40,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class NotificationService {
     private static boolean enabled = false;
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
-    private static final BlockingQueue<String> soundQueue = new LinkedBlockingQueue<>();
+    private static final BlockingQueue<InputStream> soundQueue = new LinkedBlockingQueue<>();
     private static boolean isPlaying = false;
     private static MediaPlayer mediaPlayer;
     private static boolean mediaServicesAvailable;
@@ -166,43 +165,88 @@ public class NotificationService {
         final String customSoundPath = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_SOUND_CUSTOM_FILE_PREFIX + notificationType.name(), "");
         if (playSounds) {
             try {
-                final URI resource;
+                final InputStream resource;
                 if (Objects.equals(customSoundPath, "")) {
-                    resource = NotificationService.class.getResource("/audio/pop.mp3").toURI();
+                    resource = NotificationService.class.getResourceAsStream("/audio/pop.mp3");
                 } else {
-                    resource = new File(customSoundPath).toURI();
+                    resource = new FileInputStream(customSoundPath);
                 }
 
-                soundQueue.add(resource.toString());
+                soundQueue.add(resource);
                 if (!isPlaying) {
                     playNextSound(volume);
                 }
-            } catch (final URISyntaxException | NullPointerException ex) {
+            } catch (final NullPointerException | FileNotFoundException ex) {
                 log.error("Failed to play notification sound", ex);
             }
         }
     }
 
     private static synchronized void playNextSound(final double volume) {
-        String nextSoundPath = soundQueue.poll();
-        if (nextSoundPath != null) {
-            isPlaying = true;
-            try {
-                final Media sound = new Media(nextSoundPath);
-                mediaPlayer = new MediaPlayer(sound);
-                mediaPlayer.setVolume(volume / 100);
-                mediaPlayer.setOnEndOfMedia(() -> {
-                    mediaPlayer.dispose();
-                    Platform.runLater(() -> playNextSound(volume));
-                });
-                mediaPlayer.play();
-            } catch (final MediaException ex) {
-                log.error("Failed to play notification sound", ex);
-                isPlaying = false;
-            }
-        } else {
-            isPlaying = false;
-        }
-    }
 
+        InputStream nextSound = soundQueue.poll();
+
+        if (nextSound == null) {
+            isPlaying = false;
+            return;
+        }
+
+        isPlaying = true;
+
+        Thread.startVirtualThread(() -> {
+            try (InputStream fileStream = nextSound;
+                 BufferedInputStream buffered = new BufferedInputStream(fileStream);
+                 AudioInputStream input = AudioSystem.getAudioInputStream(buffered)) {
+
+                AudioFormat baseFormat = input.getFormat();
+
+                AudioFormat decodedFormat = new AudioFormat(
+                        AudioFormat.Encoding.PCM_SIGNED,
+                        baseFormat.getSampleRate(),
+                        16,
+                        baseFormat.getChannels(),
+                        baseFormat.getChannels() * 2,
+                        baseFormat.getSampleRate(),
+                        false
+                );
+
+                try (AudioInputStream decoded = AudioSystem.getAudioInputStream(decodedFormat, input)) {
+
+                    SourceDataLine line = AudioSystem.getSourceDataLine(decodedFormat);
+
+                    line.open(decodedFormat);
+
+                    // volume
+                    if (line.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+                        FloatControl gainControl = (FloatControl) line.getControl(FloatControl.Type.MASTER_GAIN);
+                        double gain = Math.max(0.0001, volume / 100.0);
+                        float dB = (float) (20.0 * Math.log10(gain));
+                        gainControl.setValue(dB);
+                    }
+
+                    line.start();
+
+                    byte[] buffer = new byte[4096];
+
+                    int bytesRead;
+
+                    while ((bytesRead = decoded.read(buffer, 0, buffer.length)) != -1) {
+                        line.write(buffer, 0, bytesRead);
+                    }
+
+                    line.drain();
+                    line.stop();
+                    line.close();
+                }
+
+            } catch (Exception ex) {
+                log.error("Failed to play notification sound", ex);
+            } finally {
+                synchronized (Notifications.class) {
+                    isPlaying = false;
+                    playNextSound(volume);
+                }
+            }
+        });
+    }
 }
