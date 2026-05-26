@@ -11,7 +11,10 @@ The portable zip versions are used as update packages. You can run them standalo
 
 :page_facing_up: **Release notes for this version:**
 ```
-Compressed images shrinking app size down by 10MB
-Fix first notification taking a long time to appear and causing the app to freeze
-Remember selected index of ship select on refresh, for example after deleting a ship
+Add Commander CAPI endpoint status indicator
+Auto unpause endpoints after game server downtime
+Add gameservers downtime indicator in the bottom bar
+Switch audio backend to play notifications
+Add 5 minute cache timeout to market data
+Fix gaps in bandchart which are obvious on low numbers
 ```

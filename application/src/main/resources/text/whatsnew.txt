@@ -1,3 +1,12 @@
+Version 3.9.6
+-------------
+Add Commander CAPI endpoint status indicator
+Auto unpause endpoints after game server downtime
+Add gameservers downtime indicator in the bottom bar
+Switch audio backend to play notifications
+Add 5 minute cache timeout to market data
+Fix gaps in bandchart which are obvious on low numbers
+
 Version 3.9.5
 -------------
 Compressed images shrinking app size down by 16MB
