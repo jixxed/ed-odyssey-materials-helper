@@ -40,16 +40,21 @@ public class FrontierAPI extends DestroyableVBox implements DestroyableEventTemp
 
     private DestroyableFontAwesomeIconView capiFleetCarrierStatusCircle;
     private DestroyableFontAwesomeIconView capiSquadronStatusCircle;
+    private DestroyableFontAwesomeIconView capiCommanderStatusCircle;
 
     public final BooleanProperty registered = new SimpleBooleanProperty(RegistryService.isRegistered());
     private final ChangeListener<Boolean> pauseFleetCarrierIcon = (_, _, newVal) ->
             capiFleetCarrierStatusCircle.pseudoClassStateChanged(PseudoClass.getPseudoClass("paused"), newVal);
     private final ChangeListener<Boolean> pauseSquadronIcon = (_, _, newVal) ->
             capiSquadronStatusCircle.pseudoClassStateChanged(PseudoClass.getPseudoClass("paused"), newVal);
+    private final ChangeListener<Boolean> pauseCommanderIcon = (_, _, newVal) ->
+            capiCommanderStatusCircle.pseudoClassStateChanged(PseudoClass.getPseudoClass("paused"), newVal);
     private final BooleanBinding
             fleetCarrierEndpointPaused = ApplicationState.getInstance().getFleetCarrierEndpoint().isEqualTo(EndpointState.PAUSED);
     private final BooleanBinding
             squadronCarrierEndpointPaused = ApplicationState.getInstance().getSquadronEndpoint().isEqualTo(EndpointState.PAUSED);
+    private final BooleanBinding
+            commanderEndpointPaused = ApplicationState.getInstance().getCommanderEndpoint().isEqualTo(EndpointState.PAUSED);
 
 
     public FrontierAPI() {
@@ -91,6 +96,9 @@ public class FrontierAPI extends DestroyableVBox implements DestroyableEventTemp
         final DestroyableLabel capiSquadronStatusLabel = LabelBuilder.builder()
                 .withText("tab.settings.capi.status.squadron")
                 .build();
+        final DestroyableLabel capiCommanderStatusLabel = LabelBuilder.builder()
+                .withText("tab.settings.capi.status.commander")
+                .build();
         capiFleetCarrierStatusCircle = FontAwesomeIconViewBuilder.builder()
                 .withStyleClass("capi-status")
                 .withIcon(FontAwesomeIcon.CIRCLE)
@@ -101,11 +109,17 @@ public class FrontierAPI extends DestroyableVBox implements DestroyableEventTemp
                 .withIcon(FontAwesomeIcon.CIRCLE)
                 .withDisableProperty(ApplicationState.getInstance().getSquadronEndpoint().isEqualTo(EndpointState.DISABLED))
                 .build();
+        capiCommanderStatusCircle = FontAwesomeIconViewBuilder.builder()
+                .withStyleClass("capi-status")
+                .withIcon(FontAwesomeIcon.CIRCLE)
+                .withDisableProperty(ApplicationState.getInstance().getCommanderEndpoint().isEqualTo(EndpointState.DISABLED))
+                .build();
         fleetCarrierEndpointPaused.addListener(pauseFleetCarrierIcon);
         squadronCarrierEndpointPaused.addListener(pauseSquadronIcon);
+        commanderEndpointPaused.addListener(pauseCommanderIcon);
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
-                .withNodes(capiStatusLabel, capiFleetCarrierStatusCircle, capiFleetCarrierStatusLabel, capiSquadronStatusCircle, capiSquadronStatusLabel)
+                .withNodes(capiStatusLabel, capiFleetCarrierStatusCircle, capiFleetCarrierStatusLabel, capiSquadronStatusCircle, capiSquadronStatusLabel, capiCommanderStatusCircle, capiCommanderStatusLabel)
                 .buildHBox();
     }
 
@@ -211,5 +225,6 @@ public class FrontierAPI extends DestroyableVBox implements DestroyableEventTemp
         registered.unbind();
         fleetCarrierEndpointPaused.removeListener(pauseFleetCarrierIcon);
         squadronCarrierEndpointPaused.removeListener(pauseSquadronIcon);
+        commanderEndpointPaused.removeListener(pauseCommanderIcon);
     }
 }

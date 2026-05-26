@@ -89,6 +89,10 @@ tasks.register("generateSecrets") {
             shortlink.host=${System.getenv('SL_HOST') ?: 'localhost'}
             elite.mq.api.key=${System.getenv('MQ_KEY') ?: 'localhost'}
             elite.mq.host=${System.getenv('MQ_HOST') ?: 'localhost'}
+            cg.age=${System.getenv('CG_AGE') ?: '2026-01-01T00:00:00'}
+            cg.services.host=${System.getenv('CG_HOST') ?: 'localhost'}
+            cg.services.api.key=${System.getenv('CG_KEY') ?: 'localhost'}
+            ed.status.host=${System.getenv('STAT_HOST') ?: 'localhost'}
         """.stripIndent().stripLeading().stripTrailing()
     }
 }

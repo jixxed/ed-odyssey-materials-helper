@@ -83,6 +83,7 @@ public class FleetCarrierEndpointHandler implements EndpointHandler {
     public void pause() {
         endpointPaused.set(true);
         APPLICATION_STATE.setFleetCarrierEndpoint(EndpointState.PAUSED);
+        CapiServerHealthChecker.getInstance().startIfNotRunning();
     }
 
     @Override
@@ -139,7 +140,7 @@ public class FleetCarrierEndpointHandler implements EndpointHandler {
                                         }
                                     } else if (response.getCode() == 418) {
                                             log.warn("Frontier API returned a " + response.getCode() + ". Pausing endpoint.");
-                                            pause();
+                                            CAPIService.getInstance().pauseAll();
                                     } else {
                                         log.warn("Frontier API returned a " + response.getCode() + ". Disabling endpoint.");
                                         disable();

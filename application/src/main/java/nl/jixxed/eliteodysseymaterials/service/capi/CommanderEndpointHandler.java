@@ -83,6 +83,7 @@ public class CommanderEndpointHandler implements EndpointHandler {
     public void pause() {
         endpointPaused.set(true);
         APPLICATION_STATE.setCommanderEndpoint(EndpointState.PAUSED);
+        CapiServerHealthChecker.getInstance().startIfNotRunning();
     }
 
     @Override
@@ -138,7 +139,7 @@ public class CommanderEndpointHandler implements EndpointHandler {
                                     }
                                 } else if (response.getCode() == 418) {
                                     log.warn("Frontier API returned a " + response.getCode() + ". Pausing endpoint.");
-                                    pause();
+                                    CAPIService.getInstance().pauseAll();
                                 } else {
                                     log.warn("Frontier API returned a " + response.getCode() + ". Disabling service.");
                                     disable();

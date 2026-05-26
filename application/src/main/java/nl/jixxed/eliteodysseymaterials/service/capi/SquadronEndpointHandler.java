@@ -82,6 +82,7 @@ public class SquadronEndpointHandler implements EndpointHandler {
     public void pause() {
         endpointPaused.set(true);
         APPLICATION_STATE.setSquadronEndpoint(EndpointState.PAUSED);
+        CapiServerHealthChecker.getInstance().startIfNotRunning();
     }
 
     @Override
@@ -145,7 +146,7 @@ public class SquadronEndpointHandler implements EndpointHandler {
                                     }
                                 } else if (response.getCode() == 418) {
                                     log.warn("Frontier API returned a " + response.getCode() + ". Pausing endpoint.");
-                                    pause();
+                                    CAPIService.getInstance().pauseAll();
                                 } else {
                                     log.warn("Frontier API returned a " + response.getCode() + ". Disabling service.");
                                     disable();

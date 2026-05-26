@@ -107,6 +107,7 @@
 "tab.settings.capi.status.endpoints","Endpoints","","","","","","Конечные точки","端点","Endpoints"
 "tab.settings.capi.status.fleetcarrier","Fleetcarrier (1h)","","","","","","Флотоносец (1 ч)","航母 (1h)","Fleetcarrier (1სთ)"
 "tab.settings.capi.status.squadron","Squadron (5m)","","","","","","Носитель эскадрильи (5 мин)","中队 (5m)",""
+"tab.settings.capi.status.commander","Commander (5m)","","","","","","","",""
 "tab.settings.capi.explain2","Endpoints that return an error or empty responses are automatically disabled. This can happen when you don’t own a fleetcarrier or aren’t a member of a squadron.","","","","","","Конечные точки, которые возвращают ошибку или пустые ответы, автоматически отключены. Это может произойти, если у вас нет флотоносца или вы не в составе эскадрильи.","返回错误或空响应的端点会被自动禁用。这会在你没有航母或不是中队成员的时候发生。",""
 "tab.settings.title.ships.horizons.favourites","Ships - Favourite modules","","","","","","Корабли - Избранные модули","舰船 - 收藏模块",""
 "tab.settings.ships.favourite.armour","Favourite armour","","","","","","Избранная броня","收藏Armor",""

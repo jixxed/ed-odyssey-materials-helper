@@ -71,6 +71,7 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
     private DestroyableLabel login;
     private DestroyableLabel commanderLabel;
     private DestroyableLabel locationLabel;
+    private DestroyableLabel statusLabel;
     private DestroyableComboBox<Commander> commanderSelect;
     private Double latitude;
     private Double longitude;
@@ -78,6 +79,7 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
     private DestroyableSeparator loginSeparator;
     private DestroyableSeparator eddnQueueSeparator;
     private DestroyableSeparator updateSeparator;
+    private DestroyableSeparator statusSeparator;
     private AtomicBoolean eddnTransmitting = new AtomicBoolean(false);
     private ScheduledExecutorService executorService;
     private EdAwesomeIconViewPane fleetCarrierIcon;
@@ -94,6 +96,12 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
         this.getStyleClass().add("bottombar");
         this.getStyleClass().add(JMetroStyleClass.BACKGROUND);
         this.locationLabel = LabelBuilder.builder()
+                .build();
+        this.statusLabel = LabelBuilder.builder()
+                .withStyleClass("game-status")
+                .withVisibility(false)
+                .withManaged(false)
+                .withText("application.game.down")
                 .build();
         this.apiLabel = LabelBuilder.builder()
                 .build();
@@ -184,8 +192,11 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
         this.updateSeparator = new DestroyableSeparator(Orientation.VERTICAL);
         this.updateSeparator.addBinding(this.updateSeparator.visibleProperty(), this.updateLabel.textProperty().isNotEmpty());
         this.updateSeparator.addBinding(this.updateSeparator.managedProperty(), this.updateLabel.textProperty().isNotEmpty());
+        this.statusSeparator = new DestroyableSeparator(Orientation.VERTICAL);
+        this.statusSeparator.addBinding(this.statusSeparator.visibleProperty(), this.statusLabel.visibleProperty());
+        this.statusSeparator.addBinding(this.statusSeparator.managedProperty(), this.statusLabel.managedProperty());
         this.getNodes().addAll(
-                this.watchedFileLabel, new DestroyableSeparator(Orientation.VERTICAL), this.gameModeLabel, this.apiLabelSeparator, this.apiLabel, this.loginSeparator, this.login, this.eddnQueueSeparator, this.eddnQueueLabel, this.updateSeparator, this.updateLabel,
+                this.watchedFileLabel, new DestroyableSeparator(Orientation.VERTICAL), this.gameModeLabel, this.apiLabelSeparator, this.apiLabel, this.loginSeparator, this.login, this.eddnQueueSeparator, this.eddnQueueLabel, this.updateSeparator, this.updateLabel, this.statusSeparator, this.statusLabel,
                 new GrowingRegion(),
                 this.fleetCarrierIcon, this.squadronCarrierIcon, this.locationLabel, new DestroyableSeparator(Orientation.VERTICAL), this.commanderIcon, this.commanderLabel, this.commanderSelect);
 
@@ -226,6 +237,7 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
         register(EventService.addListener(true, this, CapiSquadronEvent.class, event -> updateApiLabel()));
         register(EventService.addListener(true, this, EDDNQueueEvent.class, event -> eddnTransmitting.set(true)));
         register(EventService.addListener(true, this, TerminateApplicationEvent.class, event -> executorService.shutdown()));
+        register(EventService.addListener(true, this, GameStatusEvent.class, this::updateStatusLabel));
     }
 
     private void showCarrierInfo(MouseEvent event, CarrierType carrierType) {
@@ -534,6 +546,10 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
                 (this.station.isBlank() || this.station.equals(this.body) ? "" : " | " + POIHelper.map(this.station)) +
                 (this.latitude != null && !this.latitude.equals(999.9) ? " (" + this.latitude + ", " + this.longitude + ")" : "")
         ));
+    }
+
+    private void updateStatusLabel(GameStatusEvent gameStatusEvent) {
+        Platform.runLater(() -> this.statusLabel.setVisible(!gameStatusEvent.isOnline()));
     }
 
     @Override

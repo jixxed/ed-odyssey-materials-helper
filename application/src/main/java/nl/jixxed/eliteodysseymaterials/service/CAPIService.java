@@ -68,6 +68,7 @@ public class CAPIService {
     private Timer timer;
     private final List<EndpointHandler> endpointHandlers = new ArrayList<>();
 
+
     private CAPIService() {
         endpointHandlers.add(new FleetCarrierEndpointHandler(this));
         endpointHandlers.add(new SquadronEndpointHandler(this));
@@ -193,7 +194,7 @@ public class CAPIService {
                 }
                 if (response.getCode() == 418) {
                     Platform.runLater(() -> {
-                        endpointHandlers.forEach(EndpointHandler::pause);
+                        pauseAll();
                         NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.418"));
                     });
                 }
@@ -333,4 +334,12 @@ public class CAPIService {
         }
         return new Response(501, "CAPI service disabled", Map.of(), "");
     }
+
+    public void unpauseAll() {
+        endpointHandlers.forEach(EndpointHandler::unpause);
+    }
+    public void pauseAll() {
+        endpointHandlers.forEach(EndpointHandler::pause);
+    }
 }
+

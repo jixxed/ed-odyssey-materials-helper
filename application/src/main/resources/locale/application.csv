@@ -231,3 +231,4 @@
 "time.until.days","{0}d ","","","","","","","",""
 "time.until.hours","{0}h ","","","","","","","",""
 "time.until.minutes","{0}m","","","","","","","",""
+"application.game.down","The gameservers are currently down!","","","","","","","",""
