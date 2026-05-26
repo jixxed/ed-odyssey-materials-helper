@@ -106,14 +106,14 @@ public class BandChart extends DestroyableHBox implements DestroyableTemplate {
         BandComparator bandComparator = new BandComparator();
         report.hourlyData().forEach(data -> {
             List<ReportModels.BandMax> max = data.bandMax().stream().sorted(bandComparator.reversed()).toList();
-            long previous = 1;
+            long previous = 0;
             for (int i = 0; i < max.size(); i++) {
                 ReportModels.BandMax bandMax = max.get(i);
                 var x = data.hourUtc().toEpochMilli();
                 Dataset dataset = datasets.computeIfAbsent(bandMax.band(), (band) -> this.create(band, BandDataSetRenderer::new, previouslyEnabledBands));
                 long bandMaxVal = Math.max(previous, bandMax.max());
                 dataset.dataSet.add(x, previous, bandMaxVal);
-                previous = bandMaxVal + 1;
+                previous = bandMaxVal;
             }
         });
         Dataset myContribution = datasets.computeIfAbsent("My progress", (band) -> this.create(band, ProgressDataSetRenderer::new, previouslyEnabledBands));

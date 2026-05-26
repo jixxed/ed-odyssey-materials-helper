@@ -216,10 +216,10 @@ public class LineTooltip extends AbstractDataFormattingPlugin implements Destroy
     }
 
     protected String formatValueLabel(DataPoint dataPoint) {
-        if(dataPoint.yMin == dataPoint.yMax) {
-            return String.format("%s",  Formatters.NUMBER_FORMAT_0.format(dataPoint.yMin));
+        if(dataPoint.yMin+1 >= dataPoint.yMax) {
+            return String.format("%s",  Formatters.NUMBER_FORMAT_0.format(dataPoint.yMax));
         }else{
-            return String.format("%s - %s",  Formatters.NUMBER_FORMAT_0.format(dataPoint.yMin), Formatters.NUMBER_FORMAT_0.format(dataPoint.yMax));
+            return String.format("%s - %s",  Formatters.NUMBER_FORMAT_0.format(dataPoint.yMin+1), Formatters.NUMBER_FORMAT_0.format(dataPoint.yMax));
         }
     }
     protected String formatNameLabel(DataPoint dataPoint) {
