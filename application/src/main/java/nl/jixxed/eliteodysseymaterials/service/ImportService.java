@@ -156,7 +156,7 @@ public class ImportService {
                 ShipService.saveShipConfigurations(commander, shipConfigurations);
                 return new ImportResult(ImportResult.ResultType.SUCCESS_HORIZONS_SHIP, LocaleService.LocaleString.of("notification.imported.success.ship.text", shipConfiguration.getName()));
             } else {
-                throw new ShipDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.", "notification.imported.exception.newer.version");
+                throw new ShipDeeplinkException("The ship could not be imported because the link was made with a newer version of the app.", "notification.imported.ship.exception.newer.version");
             }
 
         } catch (final RuntimeException | JsonProcessingException ex) {
@@ -211,7 +211,7 @@ public class ImportService {
                 WishlistService.saveHorizonsWishlists(commander, wishlists);
                 return new ImportResult(ImportResult.ResultType.SUCCESS_EDSY_WISHLIST, LocaleService.LocaleString.of("notification.imported.success.edsy.text", name));
             } else {
-                throw new EdsyDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.", "notification.imported.exception.newer.version");
+                throw new EdsyDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.", "notification.imported.edsy.exception.newer.version");
             }
 
         } catch (final RuntimeException | JsonProcessingException ex) {
@@ -267,7 +267,7 @@ public class ImportService {
                 WishlistService.saveHorizonsWishlists(commander, wishlists);
                 return new ImportResult(ImportResult.ResultType.SUCCESS_CORIOLIS_WISHLIST, LocaleService.LocaleString.of("notification.imported.success.coriolis.text", name));
             } else {
-                throw new CoriolisDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.", "notification.imported.exception.newer.version");
+                throw new CoriolisDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.", "notification.imported.coriolis.exception.newer.version");
             }
 
         } catch (final RuntimeException | JsonProcessingException ex) {
@@ -307,7 +307,7 @@ public class ImportService {
                 return new ImportResult(ImportResult.ResultType.SUCCESS_LOADOUT, LocaleService.LocaleString.of("notification.imported.success.loadout.text", loadoutSetName));
 
             } else {
-                throw new LoadoutDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.", "notification.imported.exception.newer.version");
+                throw new LoadoutDeeplinkException("The loadout could not be imported because the link was made with a newer version of the app.", "notification.imported.loadout.exception.newer.version");
             }
         } catch (final RuntimeException | JsonProcessingException ex) {
             log.error("Failed to import loadout", ex);
@@ -336,7 +336,7 @@ public class ImportService {
                 WishlistService.saveOdysseyWishlists(commander, wishlists);
                 return new ImportResult(ImportResult.ResultType.SUCCESS_ODYSSEY_WISHLIST, LocaleService.LocaleString.of("notification.imported.success.wishlist.text", name));
             } else {
-                throw new OdysseyWishlistDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.", "notification.imported.exception.newer.version");
+                throw new OdysseyWishlistDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.", "notification.imported.odyssey.wishlist.exception.newer.version");
             }
         } catch (final RuntimeException | JsonProcessingException ex) {
             log.error("Failed to import wishlist", ex);
@@ -365,7 +365,7 @@ public class ImportService {
                 WishlistService.saveHorizonsWishlists(commander, wishlists);
                 return new ImportResult(ImportResult.ResultType.SUCCESS_HORIZONS_WISHLIST, LocaleService.LocaleString.of("notification.imported.success.wishlist.text", name));
             } else {
-                throw new OdysseyWishlistDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.", "notification.imported.exception.newer.version");
+                throw new OdysseyWishlistDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.", "notification.imported.horizons.wishlist.exception.newer.version");
             }
         } catch (final RuntimeException | JsonProcessingException ex) {
             log.error("Failed to import horizons wishlist", ex);
