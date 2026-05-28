@@ -659,13 +659,16 @@ public class FXApplication extends Application {
         } catch (Exception e) {
             log.error("Failed to load controlsfx notifications css", e);
         }
-        if (VersionService.isDev()) {//dev mode for hotswap css
-            try {
-                final String currentWorkingDirectory = new File(".").getCanonicalPath();
-                final File mainCss = new File(currentWorkingDirectory + "/src/main/resources/css/compiled/main.css");
-                final File colorblindCss = new File(currentWorkingDirectory + "/src/main/resources/css/compiled/colorblind.css");
 
-                switch (StyleSheet.valueOf(PreferencesService.getPreference(PreferenceConstants.STYLESHEET, "DEFAULT"))) {
+        final StyleSheet currentStyle = StyleSheet.valueOf(PreferencesService.getPreference(PreferenceConstants.STYLESHEET, "DEFAULT"));
+
+        if (VersionService.isDev() && getClass().getResource("/css/compiled/main.css").getProtocol().equals("file")) {//dev mode for hotswap css
+            try {
+                final File mainCss = new File(getClass().getResource("/css/compiled/main.css").toURI());
+                final File colorblindCss = new File(getClass().getResource("/css/compiled/colorblind.css").toURI());
+                final String watchDirectoryPath = mainCss.getParentFile().getCanonicalPath();
+
+                switch (currentStyle) {
                     case DEFAULT -> scene.getStylesheets().add(mainCss.toURI().toURL().toExternalForm());
                     case COLORBLIND -> scene.getStylesheets().add(colorblindCss.toURI().toURL().toExternalForm());
                 }
@@ -682,7 +685,7 @@ public class FXApplication extends Application {
                                 public void onModified(FileEvent event) {
                                     var pathToCss = "";
                                     try {
-                                        pathToCss = event.getFile().toURI().toURL().toExternalForm();//compiledCss.toURI().toURL().toExternalForm();
+                                        pathToCss = event.getFile().toURI().toURL().toExternalForm();
                                     } catch (final IOException e) {
                                         log.error("Error loading modified css", e);
                                     }
@@ -702,18 +705,18 @@ public class FXApplication extends Application {
                             try {
                                 scene.getStylesheets().remove(mainCss.toURI().toURL().toExternalForm());
                                 scene.getStylesheets().remove(colorblindCss.toURI().toURL().toExternalForm());
-                            } catch (final IOException e) {
+                            } catch (final Exception e) {
                                 log.error("Error loading modified css", e);
                             }
                             log.info("reloaded stylesheet {}", cssFile);
                             scene.getStylesheets().add(cssFile);
                         }));
-                FileService.subscribe(currentWorkingDirectory + "/src/main/resources/css/compiled", false, fileListenerRef.get());
-            } catch (final IOException e) {
+                FileService.subscribe(watchDirectoryPath, false, fileListenerRef.get());
+            } catch (final Exception e) {
                 log.error("Error loading stylesheet", e);
             }
         } else {
-            scene.getStylesheets().add(getClass().getResource(StyleSheet.valueOf(PreferencesService.getPreference(PreferenceConstants.STYLESHEET, "DEFAULT")).getStyleSheet()).toExternalForm());
+            scene.getStylesheets().add(getClass().getResource(currentStyle.getStyleSheet()).toExternalForm());
 //            scene.getStylesheets().add(getClass().getResource("/notificationpopup.css").toExternalForm());
         }
         addCustomCss(scene);
