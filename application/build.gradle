@@ -156,10 +156,17 @@ jlink {
     }
     jpackage {
         skipInstaller = true
+
+        if (OperatingSystem.current().isMacOsX()) {
+            resourceDir = file("src/jpackage/mac")
+        }
+
         if (OperatingSystem.current().isLinux()) {
             imageOptions.addAll('--icon', 'src/main/resources/images/application/appicon512.png')
         } else if (OperatingSystem.current().isMacOsX()) {
-            imageOptions.addAll('--icon', 'src/main/resources/images/application/appicon.icns')
+            imageOptions.addAll(
+                '--icon', 'src/main/resources/images/application/appicon.icns',
+            )
         } else {
             imageOptions.addAll('--icon', 'src/main/resources/images/application/appicon.ico')
         }
