@@ -164,7 +164,7 @@ public class Launcher extends Application {
                         } else {
                             updateFile = new File(
                                 System.getProperty("user.home") +
-                                    "Library/Caches" +
+                                    "/Library/Caches/" +
                                     "Elite Dangerous Odyssey Materials Helper.update.zip"
                             );
                         }
@@ -263,6 +263,22 @@ public class Launcher extends Application {
                                 });
                                 //                                final File file = new File(this.appFolder + "/bin/Elite Dangerous Odyssey Materials Helper");
                                 //                                file.setExecutable(true);
+                            } else if (
+                                OsCheck.getOperatingSystemType().equals(
+                                    OsCheck.OSType.MacOS
+                                )
+                            ) {
+                                File macBinary = new File(
+                                    this.appFolder,
+                                    "Elite Dangerous Odyssey Materials Helper.app/Contents/MacOS/Elite Dangerous Odyssey Materials Helper"
+                                );
+
+                                if (!macBinary.setExecutable(true, false)) {
+                                    throw new IOException(
+                                        "Failed to set executable bit for macOS binary: " +
+                                            macBinary
+                                    );
+                                }
                             }
                         } catch (final IOException ex) {
                             log.error("Failed to install the update.", ex);
@@ -296,9 +312,12 @@ public class Launcher extends Application {
                     Platform.runLater(() ->
                         label.setText("Launching the application...")
                     );
-                    runCommand(
-                        String.format(OsConstants.START_COMMAND, this.appFolder)
+                    String command = String.format(
+                        OsConstants.START_COMMAND,
+                        this.appFolder
                     );
+                    runCommand(command);
+                    log.debug("Executing: {}", command);
                     //close this launcher
                     log.info("Bye! ;)");
                     System.exit(0);
@@ -322,6 +341,14 @@ public class Launcher extends Application {
             final String[] linuxCMD = new String[1];
             linuxCMD[0] = cmd;
             Runtime.getRuntime().exec(linuxCMD, null, this.appFolder);
+        } else if (
+            OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)
+        ) {
+            Runtime.getRuntime().exec(
+                new String[] { "/bin/sh", "-c", cmd },
+                null,
+                this.appFolder
+            );
         } else {
             Runtime.getRuntime().exec(cmd, null, this.appFolder);
         }
@@ -495,6 +522,7 @@ public class Launcher extends Application {
             final InputStream responseStream = connection.getInputStream();
             final ObjectMapper objectMapper = new ObjectMapper();
             this.response = objectMapper.readTree(responseStream);
+            log.debug("get latest response: {}", this.response);
         }
         return this.response;
     }

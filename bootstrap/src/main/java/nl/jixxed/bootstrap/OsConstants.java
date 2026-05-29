@@ -50,7 +50,7 @@ class OsConstants {
     }
 
     private static void setMacOs(String arch) {
-        UPDATE_FILE_SUFFIX = ".portable.macos.zip";
+        UPDATE_FILE_SUFFIX = "portable.macos.zip";
         KILL_COMMAND = "pkill -f \"Elite Dangerous Odyssey Materials Helper\"";
         START_COMMAND =
             "open \"%s/Elite Dangerous Odyssey Materials Helper.app\"";
