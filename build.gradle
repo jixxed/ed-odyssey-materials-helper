@@ -106,7 +106,7 @@ tasks.register('makeLinuxAutoUpdaterPortable', Zip) {
 }
 
 tasks.register('makeMacOsPortable', Zip) {
-    dependsOn(project(":application").tasks.named("jpackage"))
+    dependsOn(project(":application").tasks.named("jpackage"), project(":application").tasks.named("patchInfoPlist"))
     from 'application/build/jpackage'
     include '*'
     include '**/*' //to include contents of a folder present inside Reports directory
@@ -118,11 +118,11 @@ tasks.register('makeMacOsPortable', Zip) {
 
 tasks.register("createRelease") {
     dependsOn(
-            subprojects.findAll { p ->
-                p.tasks.findByName("jpackage") != null
-            }.collect { p ->
-                p.tasks.named("jpackage")
-            }
+        subprojects.findAll { p ->
+            p.tasks.findByName("jpackage") != null
+        }.collect { p ->
+            p.tasks.named("jpackage")
+        }
     )
     finalizedBy makePortable, copyMsi
 }
@@ -143,21 +143,21 @@ tasks.register("createPortableRelease") {
 
 tasks.register("createReleaseLinux") {
     dependsOn(
-            subprojects.findAll { p ->
-                p.tasks.findByName("jpackage") != null
-            }.collect { p ->
-                p.tasks.named("jpackage")
-            }, "bootstrap:patchShellScript")
+        subprojects.findAll { p ->
+            p.tasks.findByName("jpackage") != null
+        }.collect { p ->
+            p.tasks.named("jpackage")
+        }, "bootstrap:patchShellScript")
     finalizedBy makeLinuxPortable, makeLinuxAutoUpdaterPortable, copyDeb
 }
 
 tasks.register("createReleaseMacOs") {
     dependsOn(
-            subprojects.findAll { p ->
-                p.tasks.findByName("jpackage") != null
-            }.collect { p ->
-                p.tasks.named("jpackage")
-            })
+        subprojects.findAll { p ->
+            p.tasks.findByName("jpackage") != null
+        }.collect { p ->
+            p.tasks.named("jpackage")
+        })
     finalizedBy makeMacOsPortable, copyDmg
 }
 

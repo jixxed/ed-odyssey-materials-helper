@@ -157,22 +157,18 @@ jlink {
     jpackage {
         skipInstaller = true
 
-        if (OperatingSystem.current().isMacOsX()) {
-            resourceDir = file("src/jpackage/mac")
-        }
-
         if (OperatingSystem.current().isLinux()) {
             imageOptions.addAll('--icon', 'src/main/resources/images/application/appicon512.png')
         } else if (OperatingSystem.current().isMacOsX()) {
             imageOptions.addAll(
                 '--icon', 'src/main/resources/images/application/appicon.icns',
+                '--mac-package-identifier', 'nl.jixxed.ed.edomh'
             )
         } else {
             imageOptions.addAll('--icon', 'src/main/resources/images/application/appicon.ico')
         }
     }
     addExtraDependencies("javafx", "jackson", "log4j", "sqlite", "jdk.accessibility")
-
     forceMerge("sqlite-jdbc")
     forceMerge("j2objc"/*, "logback"*/)
     if (proprietary) {
@@ -198,12 +194,55 @@ jlink {
     }
 }
 
+tasks.register("patchInfoPlist") {
+    dependsOn tasks.named("jpackage")
+
+    doLast {
+        def plistFile = file(
+            "$buildDir/jpackage/Elite Dangerous Odyssey Materials Helper.app/Contents/Info.plist"
+        )
+
+        if (!plistFile.exists()) {
+            println "Info.plist not found: $plistFile"
+            return
+        }
+
+        def marker = "</dict>\n</plist>"
+
+        def urlTypes = """
+  <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleURLName</key>
+        <string>edomh</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+        <string>edomh</string>
+        </array>
+    </dict>
+  </array>
+"""
+
+        def text = plistFile.text
+
+        if (text.contains("<key>CFBundleURLTypes</key>")) {
+            println "Info.plist already patched"
+            return
+        }
+
+        if (!text.contains(marker)) {
+            throw new GradleException("Could not find plist closing marker")
+        }
+
+        plistFile.text = text.replace(marker, urlTypes + marker)
+    }
+}
+
 tasks.register("jpackageSigned") {
     dependsOn tasks.named("jpackage")
     dependsOn tasks.named("jpackageImage")
     finalizedBy tasks.named("signAppExe")
 }
-
 
 tasks.register('createSignCert') {
     doLast {
@@ -232,6 +271,22 @@ tasks.register('signAppExe') {
                 tsaurl: 'http://timestamp.sectigo.com')
     }
 }
+
+tasks.register("signAppMacOs") {
+    dependsOn "patchInfoPlist"
+    doLast {
+        def app = file("$buildDir/jpackage/Elite Dangerous Odyssey Materials Helper.app")
+
+        exec {
+            commandLine "codesign",
+                    "--force",
+                    "--deep",
+                    "--sign", System.getenv("MAC_CODESIGN_IDENTITY"),
+                    app
+        }
+    }
+}
+
 def arch = System.getProperty("os.arch")
 def platform = 'linux'
 if (os.isWindows()) {

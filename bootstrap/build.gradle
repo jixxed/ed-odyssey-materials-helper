@@ -125,6 +125,7 @@ jlink {
         }
     }
 }
+
 tasks.register("patchShellScript") {
     dependsOn tasks.named("jpackage")
     doLast {
