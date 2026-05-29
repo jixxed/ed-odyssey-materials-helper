@@ -50,7 +50,7 @@ class OsConstants {
     }
 
     private static void setMacOs() {
-        UPDATE_FILE_SUFFIX = ".app.zip";
+        UPDATE_FILE_SUFFIX = ".macos.zip";
         KILL_COMMAND = "pkill -f \"Elite Dangerous Odyssey Materials Helper\"";
         START_COMMAND =
             "open \"%s/Elite Dangerous Odyssey Materials Helper.app\"";
