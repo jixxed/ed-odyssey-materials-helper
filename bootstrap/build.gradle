@@ -58,7 +58,7 @@ application {
     mainClass = "nl.jixxed.bootstrap.Main"
 }
 
-def packageType = System.getProperty("packageType") ?: 'msi' // default to windows
+def packageType = project.getProperty("packageType") ?: 'msi' // default to windows
 
 jlink {
     addExtraDependencies("javafx")
@@ -112,6 +112,15 @@ jlink {
                     '--app-version', project.version,
                     '--linux-menu-group', 'Other',
                     '--linux-shortcut'
+            ] as List<String>
+        }
+        if (packageType == 'dmg') {
+            imageOptions.addAll('--icon', 'src/main/resources/images/appicon.icns')
+            installerOptions = [
+                '--description', 'Installer for ED Odyssey Materials Helper',
+                '--copyright', 'Copyright 2021 CMDR Jixxed',
+                '--name', 'Elite Dangerous Odyssey Materials Helper',
+                '--app-version', project.version,
             ] as List<String>
         }
     }
