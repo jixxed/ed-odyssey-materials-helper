@@ -69,8 +69,8 @@ tasks.register('copyDmg', Copy) {
     dependsOn(project(":bootstrap").tasks.named("jpackage"))
     from 'bootstrap/build/jpackage/'
     into 'output'
-    include('Elite Dangerous Odyssey Materials Helper Launcher-' + version + '.dmg')
-    rename('Elite Dangerous Odyssey Materials Helper Launcher-' + version + '.dmg', 'Elite.Dangerous.Odyssey.Materials.Helper-' + version + '.launcher.macos.dmg')
+    include('Elite Dangerous Odyssey Materials Helper-' + project.version + '.dmg')
+    rename('Elite Dangerous Odyssey Materials Helper-' + project.version + '.dmg', 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.launcher.macos.dmg')
 }
 
 tasks.register('makePortable', Zip) {
@@ -107,21 +107,10 @@ tasks.register('makeLinuxAutoUpdaterPortable', Zip) {
 
 tasks.register('makeMacOsPortable', Zip) {
     dependsOn(project(":application").tasks.named("jpackage"))
-    from 'application/build/jpackage/Elite Dangerous Odyssey Materials Helper'
+    from 'application/build/jpackage'
     include '*'
     include '**/*' //to include contents of a folder present inside Reports directory
     archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.macos.zip'
-    destinationDirectory = file('./output/')
-    preserveFileTimestamps = true
-    useFileSystemPermissions()
-}
-
-tasks.register('makeMacOsLauncher', Zip) {
-    dependsOn(project(":bootstrap").tasks.named("jpackage"))
-    from 'bootstrap/build/jpackage/Elite Dangerous Odyssey Materials Helper Launcher'
-    include '*'
-    include '**/*' //to include contents of a folder present inside Reports directory
-    archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.launcher.macos.dmg'
     destinationDirectory = file('./output/')
     preserveFileTimestamps = true
     useFileSystemPermissions()
@@ -169,7 +158,7 @@ tasks.register("createReleaseMacOs") {
             }.collect { p ->
                 p.tasks.named("jpackage")
             })
-    finalizedBy makeMacOsPortable, makeMacOsLauncher, copyDmg
+    finalizedBy makeMacOsPortable, copyDmg
 }
 
 tasks.register("createReleaseLinuxRpm") {
