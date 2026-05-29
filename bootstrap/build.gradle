@@ -58,7 +58,7 @@ application {
     mainClass = "nl.jixxed.bootstrap.Main"
 }
 
-def packageType = project.getProperty("packageType") ?: 'msi' // default to windows
+def packageType = System.getProperty("packageType") ?: 'msi' // default to windows
 
 jlink {
     addExtraDependencies("javafx")
