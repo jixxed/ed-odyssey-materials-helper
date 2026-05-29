@@ -97,7 +97,7 @@ public class Launcher extends Application {
             if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)) {
                 this.appFolder = new File(
                     System.getProperty("user.home") +
-                        "/Library/Application Support/Elite Dangerous Odyssey Materials Helper"
+                        "/Library/Application Support/Elite Dangerous Odyssey Materials Helper/bin"
                 );
             } else {
                 this.appFolder = new File(
@@ -514,7 +514,7 @@ public class Launcher extends Application {
     private JsonNode getLatest() throws IOException {
         if (this.response == null) {
             final URL url = new URL(
-                "https://api.github.com/repos/jixxed/ed-odyssey-materials-helper/releases/latest"
+                "https://api.github.com/repos/stefanlight8/ed-odyssey-materials-helper/releases/latest"
             );
             final HttpURLConnection connection =
                 (HttpURLConnection) url.openConnection();
