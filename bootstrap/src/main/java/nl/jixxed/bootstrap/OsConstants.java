@@ -10,8 +10,8 @@
 
 package nl.jixxed.bootstrap;
 
-
 class OsConstants {
+
     static String KILL_COMMAND;
     static String START_COMMAND;
     static String UPDATE_FILE_SUFFIX;
@@ -19,14 +19,16 @@ class OsConstants {
 
     static {
         switch (OsCheck.getOperatingSystemType()) {
-            case MacOS, Other -> throw new IllegalArgumentException("OS not supported.");
+            case Other -> throw new IllegalArgumentException(
+                "OS not supported."
+            );
             case Linux -> setLinux();
             case Windows -> setWindows();
+            case MacOS -> setMacOs();
         }
     }
 
-    private OsConstants() {
-    }
+    private OsConstants() {}
 
     private static void setWindows() {
         UPDATE_FILE_SUFFIX = "portable.zip";
@@ -40,5 +42,12 @@ class OsConstants {
         KILL_COMMAND = "ps aux | grep 'Elite Dangerous Odyssey Materials Helper' | grep -v 'grep' | awk '{ print $2 }' | xargs kill -SIGTERM";
         START_COMMAND = "%s/lib/runtime/bin/Elite Dangerous Odyssey Materials Helper";
         VERSION_FILE = "%s/lib/app/Elite Dangerous Odyssey Materials Helper.cfg";
+    }
+
+    private static void setMacOs() {
+        UPDATE_FILE_SUFFIX = "portable.macos.arm64.zip";
+        KILL_COMMAND = "pkill -f \"Elite Dangerous Odyssey Materials Helper\"";
+        START_COMMAND = "open \"%s/Elite Dangerous Odyssey Materials Helper.app\"";
+        VERSION_FILE = "%s/Elite Dangerous Odyssey Materials Helper.app/Contents/app/Elite Dangerous Odyssey Materials Helper.cfg";
     }
 }

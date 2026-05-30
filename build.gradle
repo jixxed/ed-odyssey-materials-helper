@@ -29,6 +29,18 @@ wrapper {
     gradleVersion = "9.3.0"
 }
 
+OperatingSystem os = OperatingSystem.current()
+def arch = System.getProperty("os.arch")
+def platform = 'linux'
+if (os.isWindows()) {
+    platform = 'win'
+} else if (os.isMacOsX()) {
+    platform = 'mac'
+}
+if (arch == "aarch64") {
+    platform += "-aarch64"
+}
+
 tasks.register('copyMsi', Copy) {
     dependsOn(project(":bootstrap").tasks.named("jpackage"))
     from 'bootstrap/build/jpackage/'
@@ -51,6 +63,14 @@ tasks.register('copyRpm', Copy) {
     into 'output'
     include('elite-dangerous-odyssey-materials-helper-' + version + '-1.x86_64.rpm')
     rename('elite-dangerous-odyssey-materials-helper-' + version + '-1.x86_64.rpm', 'elite-dangerous-odyssey-materials-helper-auto-updater_' + version + '.rpm')
+}
+
+tasks.register('copyDmg', Copy) {
+    dependsOn(project(":bootstrap").tasks.named("jpackage"))
+    from 'bootstrap/build/jpackage/'
+    into 'output'
+    include('Elite Dangerous Odyssey Materials Helper-' + project.version + '.dmg')
+    rename('Elite Dangerous Odyssey Materials Helper-' + project.version + '.dmg', 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.launcher.macos.arm64.dmg')
 }
 
 tasks.register('makePortable', Zip) {
@@ -85,13 +105,24 @@ tasks.register('makeLinuxAutoUpdaterPortable', Zip) {
     useFileSystemPermissions()
 }
 
+tasks.register('makeMacOsPortable', Zip) {
+    dependsOn(project(":application").tasks.named("jpackage"), project(":application").tasks.named("patchInfoPlist"))
+    from 'application/build/jpackage'
+    include '*'
+    include '**/*' //to include contents of a folder present inside Reports directory
+    archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.macos.arm64.zip'
+    destinationDirectory = file('./output/')
+    preserveFileTimestamps = true
+    useFileSystemPermissions()
+}
+
 tasks.register("createRelease") {
     dependsOn(
-            subprojects.findAll { p ->
-                p.tasks.findByName("jpackage") != null
-            }.collect { p ->
-                p.tasks.named("jpackage")
-            }
+        subprojects.findAll { p ->
+            p.tasks.findByName("jpackage") != null
+        }.collect { p ->
+            p.tasks.named("jpackage")
+        }
     )
     finalizedBy makePortable, copyMsi
 }
@@ -112,12 +143,22 @@ tasks.register("createPortableRelease") {
 
 tasks.register("createReleaseLinux") {
     dependsOn(
-            subprojects.findAll { p ->
-                p.tasks.findByName("jpackage") != null
-            }.collect { p ->
-                p.tasks.named("jpackage")
-            }, "bootstrap:patchShellScript")
+        subprojects.findAll { p ->
+            p.tasks.findByName("jpackage") != null
+        }.collect { p ->
+            p.tasks.named("jpackage")
+        }, "bootstrap:patchShellScript")
     finalizedBy makeLinuxPortable, makeLinuxAutoUpdaterPortable, copyDeb
+}
+
+tasks.register("createReleaseMacOs") {
+    dependsOn(
+        subprojects.findAll { p ->
+            p.tasks.findByName("jpackage") != null
+        }.collect { p ->
+            p.tasks.named("jpackage")
+        })
+    finalizedBy makeMacOsPortable, copyDmg
 }
 
 tasks.register("createReleaseLinuxRpm") {
@@ -125,17 +166,6 @@ tasks.register("createReleaseLinuxRpm") {
     finalizedBy copyRpm
 }
 
-OperatingSystem os = OperatingSystem.current()
-def arch = System.getProperty("os.arch")
-def platform = 'linux'
-if (os.isWindows()) {
-    platform = 'win'
-} else if (os.isMacOsX()) {
-    platform = 'mac'
-}
-if (arch == "aarch64") {
-    platform += "-aarch64"
-}
 ext {
     version_logback = "1.5.32"
     version_jackson = "2.21.3"

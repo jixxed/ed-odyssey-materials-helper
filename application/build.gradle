@@ -2,6 +2,7 @@ import org.gradle.internal.os.OperatingSystem;
 
 buildscript {
     repositories {
+        maven { url "https://repo.repsy.io/mvn/jixxed/maven/" }
         mavenLocal()
         mavenCentral()
         gradlePluginPortal()
@@ -10,13 +11,13 @@ buildscript {
         classpath "org.beryx:badass-jlink-plugin:4.0.0"
         classpath 'org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:1.3.3'
         classpath "net.rdrei.android.buildtimetracker:gradle-plugin:0.11.1"
-        classpath("io.freefair.jsass-java:io.freefair.jsass-java.gradle.plugin:6.5.0.2")
+        classpath "nl.jixxed.gradle:jsass-gradle-plugin:1.0.1"
     }
 }
 
 plugins {
     id 'java'
-    id("io.freefair.jsass-java") version "6.5.0.2"
+    id("nl.jixxed.gradle.jsass-java") version "1.0.1"
     id 'io.freefair.lombok' version '9.5.0'
     id 'idea' // optional (to generate IntelliJ IDEA project files)
     id 'application'
@@ -37,9 +38,11 @@ tasks.register('compileSassDefault', compileSass.getClass()) {
     onlyIf("there is no property skipSass") {
         !skipProvider.present
     }
-    source = fileTree('src/main/resources/sass/default') {
-        include '**/*.scss'
-    }
+    //    source = fileTree('src/main/resources/sass/default') {
+    //        include '**/*.scss'
+    //    }
+    sourceDir = file('src/main/resources/sass/default')
+    sassPath = ''
     destinationDir = file("src/main/resources/css/compiled")
     indent = "  "
     linefeed = "\n";
@@ -56,9 +59,11 @@ tasks.register('compileSassColorblind', compileSass.getClass()) {
     outputs.upToDateWhen { false }
     group = 'build'
     description = 'Compiles Sass files to CSS'
-    source = fileTree('src/main/resources/sass/colorblind') {
-        include '**/*.scss'
-    }
+    //    source = fileTree('src/main/resources/sass/colorblind') {
+    //        include '**/*.scss'
+    //    }
+    sourceDir = file('src/main/resources/sass/colorblind')
+    sassPath = ''
     destinationDir = file('src/main/resources/css/compiled')
     indent = '  '
     linefeed = '\n'
@@ -70,6 +75,7 @@ tasks.register('compileSassColorblind', compileSass.getClass()) {
     sourceMapEmbed = false
     sourceMapEnabled = false
 }
+
 tasks.register("generateSecrets") {
     doLast {
         def secretFile = file("src/main/resources/secret.properties")
@@ -200,14 +206,20 @@ jlink {
     }
     jpackage {
         skipInstaller = true
+
         if (OperatingSystem.current().isLinux()) {
             imageOptions.addAll('--icon', 'src/main/resources/images/application/appicon512.png')
+        } else if (OperatingSystem.current().isMacOsX()) {
+            imageOptions.addAll(
+                '--icon', 'src/main/resources/images/application/appicon.icns',
+                '--mac-package-identifier', 'nl.jixxed.ed.edomh'
+            )
         } else {
             imageOptions.addAll('--icon', 'src/main/resources/images/application/appicon.ico')
         }
     }
     addExtraDependencies("javafx", "jackson", "log4j", "jdk.accessibility")
-    forceMerge("j2objc"/*, "logback"*/)
+    forceMerge("j2objc", "sqlite-jdbc"/*, "logback"*/)
     if (proprietary) {
 //        addExtraDependencies("nl.jixxed.ed.awesome.impl")
 //        forceMerge("nl.jixxed.ed.awesome.impl")
@@ -231,12 +243,55 @@ jlink {
     }
 }
 
+tasks.register("patchInfoPlist") {
+    dependsOn tasks.named("jpackage")
+
+    doLast {
+        def plistFile = file(
+            "$buildDir/jpackage/Elite Dangerous Odyssey Materials Helper.app/Contents/Info.plist"
+        )
+
+        if (!plistFile.exists()) {
+            println "Info.plist not found: $plistFile"
+            return
+        }
+
+        def marker = "</dict>\n</plist>"
+
+        def urlTypes = """
+  <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleURLName</key>
+        <string>edomh</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+        <string>edomh</string>
+        </array>
+    </dict>
+  </array>
+"""
+
+        def text = plistFile.text
+
+        if (text.contains("<key>CFBundleURLTypes</key>")) {
+            println "Info.plist already patched"
+            return
+        }
+
+        if (!text.contains(marker)) {
+            throw new GradleException("Could not find plist closing marker")
+        }
+
+        plistFile.text = text.replace(marker, urlTypes + marker)
+    }
+}
+
 tasks.register("jpackageSigned") {
     dependsOn tasks.named("jpackage")
     dependsOn tasks.named("jpackageImage")
     finalizedBy tasks.named("signAppExe")
 }
-
 
 tasks.register('createSignCert') {
     doLast {
@@ -265,6 +320,22 @@ tasks.register('signAppExe') {
                 tsaurl: 'http://timestamp.sectigo.com')
     }
 }
+
+tasks.register("signAppMacOs") {
+    dependsOn "patchInfoPlist"
+    doLast {
+        def app = file("$buildDir/jpackage/Elite Dangerous Odyssey Materials Helper.app")
+
+        exec {
+            commandLine "codesign",
+                    "--force",
+                    "--deep",
+                    "--sign", System.getenv("MAC_CODESIGN_IDENTITY"),
+                    app
+        }
+    }
+}
+
 def arch = System.getProperty("os.arch")
 def platform = 'linux'
 if (os.isWindows()) {

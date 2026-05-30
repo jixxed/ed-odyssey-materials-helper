@@ -16,12 +16,15 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.service.registry.RegistrationHandler;
 import nl.jixxed.eliteodysseymaterials.service.registry.UbuntuRegistrationHandler;
 import nl.jixxed.eliteodysseymaterials.service.registry.WindowsRegistrationHandler;
+import nl.jixxed.eliteodysseymaterials.service.registry.MacOSRegistrationHandler;
 import nu.redpois0n.oslib.AbstractOperatingSystem;
 import nu.redpois0n.oslib.OperatingSystem;
 import nu.redpois0n.oslib.linux.Distro;
 import nu.redpois0n.oslib.linux.LinuxOperatingSystem;
 import nu.redpois0n.oslib.windows.WindowsOperatingSystem;
 import nu.redpois0n.oslib.windows.WindowsVersion;
+import nu.redpois0n.oslib.macos.MacOSOperatingSystem;
+import nu.redpois0n.oslib.macos.MacOSVersion;
 
 import java.util.Map;
 import java.util.Optional;
@@ -57,6 +60,8 @@ public class RegistryService {
         if (CURRENT_OS.getType() == OperatingSystem.WINDOWS) {
             WindowsOperatingSystem wos = (WindowsOperatingSystem) CURRENT_OS;
             return Optional.of(windowsRegistrationHandlers.getOrDefault(wos.getVersion(), WindowsRegistrationHandler::new).get());
+        } else if (CURRENT_OS.getType() == OperatingSystem.MACOS) {
+            return Optional.of(new MacOSRegistrationHandler());
         } else if (CURRENT_OS.getType() == OperatingSystem.LINUX) {
             LinuxOperatingSystem los = (LinuxOperatingSystem) CURRENT_OS;
             return Optional.of(linuxRegistrationHandlers.getOrDefault(los.getDistro(), UbuntuRegistrationHandler::new).get());
