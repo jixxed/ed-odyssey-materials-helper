@@ -82,9 +82,6 @@ public class JNAWindowsPollingFolderWatch implements Runnable, FolderWatch {
                 .filter(path -> {
                     final Long date = this.previousFilesModifiedDates.get(path.fileName());
                     final boolean modified = date == null || date < path.fileTime().toMillis();
-                    if (modified) {
-                        log.info("File modification detected: " + path.fileName());
-                    }
                     return modified;
                 })
                 .forEach(path -> {
