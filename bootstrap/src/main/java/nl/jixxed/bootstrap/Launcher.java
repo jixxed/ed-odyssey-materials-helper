@@ -337,7 +337,7 @@ public class Launcher extends Application {
 
     private JsonNode getLatest() throws IOException {
         if (this.response == null) {
-            final URL url = new URL("https://api.github.com/repos/stefanlight8/ed-odyssey-materials-helper/releases/latest");
+            final URL url = new URL("https://api.github.com/repos/jixxed/ed-odyssey-materials-helper/releases/latest");
             final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("accept", "application/json");
             final InputStream responseStream = connection.getInputStream();
