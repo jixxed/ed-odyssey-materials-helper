@@ -19,7 +19,7 @@ public class MacOSPathConfiguration implements PathConfiguration {
     static {
         String userHome = System.getProperty("user.home");
         CONFIG_DIRECTORY = userHome + "/Library/Application Support/Elite Dangerous Odyssey Materials Helper/";
-        DEFAULT_WATCHED_FOLDER = userHome + "/configure/your/journal/folder";
+        DEFAULT_WATCHED_FOLDER = userHome + "/Documents/Saved Games/Frontier Developments/Elite Dangerous";
         OS_SLASH = "/";
     }
 
