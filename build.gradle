@@ -70,7 +70,7 @@ tasks.register('copyDmg', Copy) {
     from 'bootstrap/build/jpackage/'
     into 'output'
     include('Elite Dangerous Odyssey Materials Helper-' + project.version + '.dmg')
-    rename('Elite Dangerous Odyssey Materials Helper-' + project.version + '.dmg', 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.launcher.macos.dmg')
+    rename('Elite Dangerous Odyssey Materials Helper-' + project.version + '.dmg', 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.launcher.macos.arm64.dmg')
 }
 
 tasks.register('makePortable', Zip) {
@@ -110,7 +110,7 @@ tasks.register('makeMacOsPortable', Zip) {
     from 'application/build/jpackage'
     include '*'
     include '**/*' //to include contents of a folder present inside Reports directory
-    archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.macos.zip'
+    archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.macos.arm64.zip'
     destinationDirectory = file('./output/')
     preserveFileTimestamps = true
     useFileSystemPermissions()
