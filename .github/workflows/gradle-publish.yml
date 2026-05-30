@@ -148,7 +148,7 @@ jobs:
           name: "Elite Dangerous Odyssey Materials Helper ${{ steps.tagName.outputs.tag }}"
 
   build-macos:
-    runs-on: macos-14
+    runs-on: macos-latest
     permissions:
       contents: write
     env:
