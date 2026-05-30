@@ -16,6 +16,7 @@ buildscript {
 
 plugins {
     id 'java'
+    id("io.freefair.jsass-java") version "6.5.0.2"
     id 'io.freefair.lombok' version '9.5.0'
     id 'idea' // optional (to generate IntelliJ IDEA project files)
     id 'application'
@@ -26,6 +27,49 @@ plugins {
     id('io.ebean') version "$version_ebean"
 }
 
+//compileSass.configure {
+//    options.compilerArgs += ['-Xdoclint:none', '-Xlint:none', '-nowarn']
+//}
+tasks.register('compileSassDefault', compileSass.getClass()) {
+    outputs.upToDateWhen { false }
+    group = 'build'
+    def skipProvider = providers.gradleProperty("skipSass")
+    onlyIf("there is no property skipSass") {
+        !skipProvider.present
+    }
+    source = fileTree('src/main/resources/sass/default') {
+        include '**/*.scss'
+    }
+    destinationDir = file("src/main/resources/css/compiled")
+    indent = "  "
+    linefeed = "\n";
+    omitSourceMapUrl = false
+    outputStyle = "NESTED";
+    precision = 8
+    sourceComments = false
+    sourceMapContents = false
+    sourceMapEmbed = false
+    sourceMapEnabled = false
+}
+
+tasks.register('compileSassColorblind', compileSass.getClass()) {
+    outputs.upToDateWhen { false }
+    group = 'build'
+    description = 'Compiles Sass files to CSS'
+    source = fileTree('src/main/resources/sass/colorblind') {
+        include '**/*.scss'
+    }
+    destinationDir = file('src/main/resources/css/compiled')
+    indent = '  '
+    linefeed = '\n'
+    omitSourceMapUrl = false
+    outputStyle = 'NESTED'
+    precision = 8
+    sourceComments = false
+    sourceMapContents = false
+    sourceMapEmbed = false
+    sourceMapEnabled = false
+}
 tasks.register("generateSecrets") {
     doLast {
         def secretFile = file("src/main/resources/secret.properties")
@@ -168,8 +212,7 @@ jlink {
             imageOptions.addAll('--icon', 'src/main/resources/images/application/appicon.ico')
         }
     }
-    addExtraDependencies("javafx", "jackson", "log4j", "sqlite", "jdk.accessibility")
-    forceMerge("sqlite-jdbc")
+    addExtraDependencies("javafx", "jackson", "log4j", "jdk.accessibility")
     forceMerge("j2objc"/*, "logback"*/)
     if (proprietary) {
 //        addExtraDependencies("nl.jixxed.ed.awesome.impl")
@@ -842,58 +885,13 @@ afterEvaluate {
 //}
 
 // Ensure Sass compiles before Java compilation
-def skipSass = project.hasProperty("skipSass")
-if (!skipSass) {
-//compileSass.configure {
-//    options.compilerArgs += ['-Xdoclint:none', '-Xlint:none', '-nowarn']
-//}
-    apply plugin: "io.freefair.jsass-java"
-
-    tasks.register('compileSassDefault', compileSass.getClass()) {
-        outputs.upToDateWhen { false }
-        group = 'build'
-        source = fileTree('src/main/resources/sass/default') {
-            include '**/*.scss'
-        }
-        destinationDir = file("src/main/resources/css/compiled")
-        indent = "  "
-        linefeed = "\n";
-        omitSourceMapUrl = false
-        outputStyle = "NESTED";
-        precision = 8
-        sourceComments = false
-        sourceMapContents = false
-        sourceMapEmbed = false
-        sourceMapEnabled = false
-    }
-
-    tasks.register('compileSassColorblind', compileSass.getClass()) {
-        outputs.upToDateWhen { false }
-        group = 'build'
-        description = 'Compiles Sass files to CSS'
-        source = fileTree('src/main/resources/sass/colorblind') {
-            include '**/*.scss'
-        }
-        destinationDir = file('src/main/resources/css/compiled')
-        indent = '  '
-        linefeed = '\n'
-        omitSourceMapUrl = false
-        outputStyle = 'NESTED'
-        precision = 8
-        sourceComments = false
-        sourceMapContents = false
-        sourceMapEmbed = false
-        sourceMapEnabled = false
-    }
-
-    compileJava.dependsOn tasks.named('compileSassDefault')
-    compileJava.dependsOn tasks.named('compileSassColorblind')
-
-    tasks.named('compileSass') {
-        dependsOn tasks.named('compileSassDefault')
-        dependsOn tasks.named('compileSassColorblind')
-    }
+compileJava.dependsOn tasks.named('compileSassDefault')
+compileJava.dependsOn tasks.named('compileSassColorblind')
+tasks.named('compileSass') {
+    dependsOn tasks.named('compileSassDefault')
+    dependsOn tasks.named('compileSassColorblind')
 }
+
 
 tasks.register('updateBrainTrees', UpdatePOI) {
     type = "Brain Trees"
