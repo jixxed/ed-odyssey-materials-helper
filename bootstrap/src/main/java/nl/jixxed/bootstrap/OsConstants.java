@@ -32,29 +32,22 @@ class OsConstants {
 
     private static void setWindows() {
         UPDATE_FILE_SUFFIX = "portable.zip";
-        KILL_COMMAND =
-            "taskkill /F /IM \"Elite Dangerous Odyssey Materials Helper.exe\"";
-        START_COMMAND =
-            "cmd /c \"\"%s\\Elite Dangerous Odyssey Materials Helper.exe\"\"";
+        KILL_COMMAND = "taskkill /F /IM \"Elite Dangerous Odyssey Materials Helper.exe\"";
+        START_COMMAND = "cmd /c \"\"%s\\Elite Dangerous Odyssey Materials Helper.exe\"\"";
         VERSION_FILE = "%s\\app\\Elite Dangerous Odyssey Materials Helper.cfg";
     }
 
     private static void setLinux() {
         UPDATE_FILE_SUFFIX = ".portable.linux.zip";
-        KILL_COMMAND =
-            "ps aux | grep 'Elite Dangerous Odyssey Materials Helper' | grep -v 'grep' | awk '{ print $2 }' | xargs kill -SIGTERM";
-        START_COMMAND =
-            "%s/lib/runtime/bin/Elite Dangerous Odyssey Materials Helper";
-        VERSION_FILE =
-            "%s/lib/app/Elite Dangerous Odyssey Materials Helper.cfg";
+        KILL_COMMAND = "ps aux | grep 'Elite Dangerous Odyssey Materials Helper' | grep -v 'grep' | awk '{ print $2 }' | xargs kill -SIGTERM";
+        START_COMMAND = "%s/lib/runtime/bin/Elite Dangerous Odyssey Materials Helper";
+        VERSION_FILE = "%s/lib/app/Elite Dangerous Odyssey Materials Helper.cfg";
     }
 
     private static void setMacOs(String arch) {
         UPDATE_FILE_SUFFIX = "portable.macos.zip";
         KILL_COMMAND = "pkill -f \"Elite Dangerous Odyssey Materials Helper\"";
-        START_COMMAND =
-            "open \"%s/Elite Dangerous Odyssey Materials Helper.app\"";
-        VERSION_FILE =
-            "%s/Elite Dangerous Odyssey Materials Helper.app/Contents/app/Elite Dangerous Odyssey Materials Helper.cfg";
+        START_COMMAND = "open \"%s/Elite Dangerous Odyssey Materials Helper.app\"";
+        VERSION_FILE = "%s/Elite Dangerous Odyssey Materials Helper.app/Contents/app/Elite Dangerous Odyssey Materials Helper.cfg";
     }
 }
