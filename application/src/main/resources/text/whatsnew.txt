@@ -1,3 +1,9 @@
+Version 3.10.0
+-------------
+MacOs on Apple Silicon support has been added thanks to @stefanlight8!
+Added ship links V2. when you share a ship build on discord, it will preview a lot of ship data.
+Fixed notifications not showing after import, while still making a sound
+
 Version 3.9.6
 -------------
 Add Commander CAPI endpoint status indicator
