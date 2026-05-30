@@ -685,7 +685,7 @@ public class FXApplication extends Application {
                                 public void onModified(FileEvent event) {
                                     var pathToCss = "";
                                     try {
-                                        pathToCss = event.getFile().toURI().toURL().toExternalForm();
+                                        pathToCss = event.getFile().toURI().toURL().toExternalForm();//compiledCss.toURI().toURL().toExternalForm();
                                     } catch (final IOException e) {
                                         log.error("Error loading modified css", e);
                                     }
