@@ -213,7 +213,7 @@ jlink {
         }
     }
     addExtraDependencies("javafx", "jackson", "log4j", "jdk.accessibility")
-    forceMerge("j2objc"/*, "logback"*/)
+    forceMerge("j2objc", "sqlite-jdbc"/*, "logback"*/)
     if (proprietary) {
 //        addExtraDependencies("nl.jixxed.ed.awesome.impl")
 //        forceMerge("nl.jixxed.ed.awesome.impl")
