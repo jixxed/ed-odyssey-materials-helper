@@ -104,7 +104,8 @@ public class Launcher extends Application {
                         if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Windows)) {
                             updateFile = new File(currentDir + "update.zip");
                         } else if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)) {
-                            updateFile = new File(System.getProperty("user.home") + "/Library/Caches/Elite Dangerous Odyssey Materials Helper.zip");
+                            updateFile = new File(System.getProperty("user.home") + "/Library/Caches/Elite Dangerous Odyssey Materials Helper/update.zip");
+                            updateFile.getParentFile().mkdirs();
                         } else {
                             updateFile = new File(System.getProperty("user.home") + "/.ed-odyssey-materials-helper/update.zip");
                         }
