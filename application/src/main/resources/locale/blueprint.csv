@@ -32,4 +32,4 @@
 "blueprint.label.nearest.guardian.structure","Closest Guardian Structure","","","Estructura Guardián más cercana","","","Ближайшая Структура Стражей","最近的守护者结构 (Guardian Structure)",""
 "blueprint.header.permit","Permit required","","","","","","Требуется разрешение","需要许可",""
 "blueprint.text.permit","The system where the engineer resides requires a permit to visit.","","","","","","Система, в которой находится инженер, требует разрешения на посещение.","进入该工程师所在的星系需要许可。",""
-"blueprint.label.nearest.guardian.beacon","Closest Guardian Beacon","","","","","","Ближайший маяк Стражей","",""
+"blueprint.label.nearest.guardian.beacon","Closest Guardian Beacon","","","","","","Ближайший маяк Стражей","最近的守护者信标 (Guardian Beacon)",""

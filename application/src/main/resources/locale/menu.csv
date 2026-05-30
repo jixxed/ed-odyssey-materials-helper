@@ -23,7 +23,7 @@
 "menu.about.commission","Commission","","","Comisión","","","Комиссия","手续费","Commission"
 "system.copy.distance","({0}Ly)","","","({0}Al)","({0}al)","","({0}Св.л.)","({0}Ly)","({0} ს.წ.)"
 "system.copy.distance.in.system","({0}Ls ±{1}Ls)","","","({0}sl ±{1}sl)","({0}sl ±{1}sl)","","({0}Св.с ±{1}Св.с)","({0}Ls ±{1}Ls)","({0}ს.წ. ±{1}ს.წ.)"
-"system.copy.distance.with.distance.from.star","({0}Ly + {1}Ls)","","","","","","","",""
+"system.copy.distance.with.distance.from.star","({0}Ly + {1}Ls)","","","","","","({0}Св.л + {1}Св.с)","",""
 "system.copy.distance.in.system.no.variance","({0}Ls)","","","({0}Sl)","","","({0}Св.с.)","({0}Ls)","({0} ს.წ.)"
 "guardian.structure.title","{0} - {1}","","","{0} - {1}","{0} - {1}","","{0} - {1}","{0} - {1}","{0} - {1}"
 "guardian.structure.title.beacon","Beacon for ancient key","","","","","","Древний ключ","","ძველი გასაღები"
