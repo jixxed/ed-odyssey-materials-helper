@@ -12,6 +12,19 @@ package nl.jixxed.bootstrap;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -26,58 +39,30 @@ import java.util.concurrent.Executors;
 import java.util.stream.StreamSupport;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
-
 @Slf4j
 public class Launcher extends Application {
-
     private JsonNode response;
     private File appFolder;
 
+
     @Override
     public void start(final Stage primaryStage) {
+
+
         primaryStage.setTitle("Elite Dangerous Odyssey Materials Helper");
 
-        for (int res : new int[] { 16, 32, 48, 64, 128, 256, 512 }) {
-            primaryStage
-                .getIcons()
-                .add(
-                    new Image(
-                        Launcher.class.getResourceAsStream(
-                            "/images/appicon" + res + ".png"
-                        )
-                    )
-                );
+        for (int res : new int[]{16,32,48,64,128,256,512}) {
+            primaryStage.getIcons().add(new Image(Launcher.class.getResourceAsStream("/images/appicon" + res + ".png")));
         }
 
-        final String binDir = Paths.get(
-            ProcessHandle.current()
-                .info()
-                .command()
-                .orElseThrow(IllegalArgumentException::new)
-        )
-            .getParent()
-            .toString();
+        final String binDir = Paths.get(ProcessHandle.current().info().command().orElseThrow(IllegalArgumentException::new)).getParent().toString();
         final String currentDir = binDir.trim().replace("\"", "") + "\\";
         log.info("Current directory: {}", currentDir);
         final StackPane root = new StackPane();
         root.setAlignment(Pos.CENTER);
         log.info("Checking for updates...");
         final Label label = new Label("Checking for updates...");
-        final Image pacmanEating = new Image(
-            getClass().getResourceAsStream("/images/pacman.gif")
-        );
+        final Image pacmanEating = new Image(getClass().getResourceAsStream("/images/pacman.gif"));
         final ImageView animation = new ImageView(pacmanEating);
         animation.setFitWidth(150);
         animation.setFitHeight(150);
@@ -89,235 +74,113 @@ public class Launcher extends Application {
         primaryStage.show();
 
         final Runnable r = () -> {
-            if (
-                OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Windows)
-            ) {
+            if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Windows)) {
                 this.appFolder = new File(currentDir + "program");
-            }
-            if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)) {
-                this.appFolder = new File(
-                    System.getProperty("user.home") +
-                        "/Library/Application Support/Elite Dangerous Odyssey Materials Helper/bin"
-                );
+            } else if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)) {
+                this.appFolder = new File(System.getProperty("user.home") + "/Library/Application Support/Elite Dangerous Odyssey Materials Helper/bin");
             } else {
-                this.appFolder = new File(
-                    System.getProperty("user.home") +
-                        "/.ed-odyssey-materials-helper/program"
-                );
+                this.appFolder = new File(System.getProperty("user.home") + "/.ed-odyssey-materials-helper/program");
             }
             try {
                 this.appFolder.mkdirs();
                 final String latestVersion = getLatestVersion();
-                log.debug("latest version: {}", latestVersion);
                 if ("ERROR".equals(latestVersion)) {
-                    log.error(
-                        "Unable to determine latest version. Trying to launch application..."
-                    );
-                    error(
-                        label,
-                        animation,
-                        "Unable to determine latest version. Trying to launch application...",
-                        true
-                    );
+                    log.error("Unable to determine latest version. Trying to launch application...");
+                    error(label, animation, "Unable to determine latest version. Trying to launch application...", true);
                 } else {
-                    if (
-                        !getCurrentVersion(this.appFolder).equals(latestVersion)
-                    ) {
+                    if (!getCurrentVersion(this.appFolder).equals(latestVersion)) {
                         //update
                         log.info("Downloading update...");
-                        Platform.runLater(() ->
-                            label.setText("Downloading update...")
-                        );
+                        Platform.runLater(() -> label.setText("Downloading update..."));
                         //download zip
                         final String latestUpdateUrl = getLatestUpdateUrl();
-                        log.debug("latestUpdateUrl={}", latestUpdateUrl);
                         if (!latestUpdateUrl.endsWith("zip")) {
-                            log.error(
-                                "Update file is invalid. Trying to launch application..."
-                            );
-                            error(
-                                label,
-                                animation,
-                                "Update file is invalid. Trying to launch application...",
-                                true
-                            );
+                            log.error("Update file is invalid. Trying to launch application...");
+                            error(label, animation, "Update file is invalid. Trying to launch application...", true);
                         }
                         final URL url = new URL(latestUpdateUrl);
-                        final ReadableByteChannel readableByteChannel =
-                            Channels.newChannel(url.openStream());
+                        final ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream());
                         final File updateFile;
-                        if (
-                            OsCheck.getOperatingSystemType().equals(
-                                OsCheck.OSType.Windows
-                            )
-                        ) {
+                        if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Windows)) {
                             updateFile = new File(currentDir + "update.zip");
-                        } else if (
-                            OsCheck.getOperatingSystemType().equals(
-                                OsCheck.OSType.Windows
-                            )
-                        ) {
-                            updateFile = new File(
-                                System.getProperty("user.home") +
-                                    "/.ed-odyssey-materials-helper/update.zip"
-                            );
+                        } else if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)) {
+                            updateFile = new File(System.getProperty("user.home") + "/Library/Caches/Elite Dangerous Odyssey Materials Helper.zip");
                         } else {
-                            updateFile = new File(
-                                System.getProperty("user.home") +
-                                    "/Library/Caches/" +
-                                    "Elite Dangerous Odyssey Materials Helper.update.zip"
-                            );
+                            updateFile = new File(System.getProperty("user.home") + "/.ed-odyssey-materials-helper/update.zip");
                         }
-                        try (
-                            final FileOutputStream fileOutputStream =
-                                new FileOutputStream(updateFile)
-                        ) {
-                            final FileChannel fileChannel =
-                                fileOutputStream.getChannel();
-                            fileChannel.transferFrom(
-                                readableByteChannel,
-                                0,
-                                Long.MAX_VALUE
-                            );
+                        try (final FileOutputStream fileOutputStream = new FileOutputStream(updateFile)) {
+                            final FileChannel fileChannel = fileOutputStream.getChannel();
+                            fileChannel.transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
                         }
                         final long expectedSize = getLatestUpdateSize();
                         final long actualSize = updateFile.length();
                         if (actualSize != expectedSize) {
-                            log.error(
-                                "Downloaded update integrity check failed. Please try again.(" +
-                                    actualSize +
-                                    ")"
-                            );
-                            error(
-                                label,
-                                animation,
-                                "Downloaded update integrity check failed. Please try again.(" +
-                                    actualSize +
-                                    ")",
-                                false
-                            );
+                            log.error("Downloaded update integrity check failed. Please try again.(" + actualSize + ")");
+                            error(label, animation, "Downloaded update integrity check failed. Please try again.(" + actualSize + ")", false);
                         }
                         //remove old
                         log.info("Cleaning old files...");
-                        Platform.runLater(() ->
-                            label.setText("Cleaning old files...")
-                        );
+                        Platform.runLater(() -> label.setText("Cleaning old files..."));
                         try {
                             //linux does not put files in use so always kill existing instances
-                            if (
-                                OsCheck.getOperatingSystemType().equals(
-                                    OsCheck.OSType.Linux
-                                )
-                            ) {
+                            if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux)) {
+
                                 try {
                                     runCommand(OsConstants.KILL_COMMAND);
                                     Thread.sleep(3000);
-                                } catch (final Exception ex) {}
+                                } catch (final Exception ex) {
+
+                                }
                             }
                             FileUtils.deleteDirectory(this.appFolder);
+
                         } catch (final IOException ex) {
                             log.info("Terminating running application...");
-                            Platform.runLater(() ->
-                                label.setText(
-                                    "Terminating running application..."
-                                )
-                            );
+                            Platform.runLater(() -> label.setText("Terminating running application..."));
                             runCommand(OsConstants.KILL_COMMAND);
                             Thread.sleep(3000);
                             log.info("Cleaning old files...");
-                            Platform.runLater(() ->
-                                label.setText("Cleaning old files...")
-                            );
+                            Platform.runLater(() -> label.setText("Cleaning old files..."));
                             try {
                                 FileUtils.deleteDirectory(this.appFolder);
                             } catch (final IOException exAgain) {
-                                log.error(
-                                    "Unable to clean old files. Files in use.",
-                                    exAgain
-                                );
-                                error(
-                                    label,
-                                    animation,
-                                    "Unable to clean old files. Files in use.",
-                                    false
-                                );
+                                log.error("Unable to clean old files. Files in use.", exAgain);
+                                error(label, animation, "Unable to clean old files. Files in use.", false);
                             }
                         }
                         //extract new
                         log.info("Installing the update...");
-                        Platform.runLater(() ->
-                            label.setText("Installing the update...")
-                        );
+                        Platform.runLater(() -> label.setText("Installing the update..."));
                         try {
                             unzipFile(updateFile, this.appFolder);
-                            if (
-                                OsCheck.getOperatingSystemType().equals(
-                                    OsCheck.OSType.Linux
-                                )
-                            ) {
-                                Runtime.getRuntime().exec(new String[] {
-                                    "chmod",
-                                    "-R",
-                                    "777",
-                                    this.appFolder.getCanonicalPath(),
-                                });
-                                //                                final File file = new File(this.appFolder + "/bin/Elite Dangerous Odyssey Materials Helper");
-                                //                                file.setExecutable(true);
-                            } else if (
-                                OsCheck.getOperatingSystemType().equals(
-                                    OsCheck.OSType.MacOS
-                                )
-                            ) {
-                                File macBinary = new File(
+                            if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux)) {
+                                Runtime.getRuntime().exec(new String[] { "chmod", "-R", "777", this.appFolder.getCanonicalPath() });
+//                                final File file = new File(this.appFolder + "/bin/Elite Dangerous Odyssey Materials Helper");
+//                                file.setExecutable(true);
+                            } else if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)) {
+                                File file = new File(
                                     this.appFolder,
                                     "Elite Dangerous Odyssey Materials Helper.app/Contents/MacOS/Elite Dangerous Odyssey Materials Helper"
                                 );
-
-                                if (!macBinary.setExecutable(true, false)) {
-                                    throw new IOException(
-                                        "Failed to set executable bit for macOS binary: " +
-                                            macBinary
-                                    );
-                                }
+                                file.setExecutable(true, false);
                             }
                         } catch (final IOException ex) {
                             log.error("Failed to install the update.", ex);
-                            error(
-                                label,
-                                animation,
-                                "Failed to install the update.",
-                                false
-                            );
+                            error(label, animation, "Failed to install the update.", false);
                         }
                         //remove zip
                         log.info("Wiping the evidence...");
-                        Platform.runLater(() ->
-                            label.setText("Wiping the evidence...")
-                        );
+                        Platform.runLater(() -> label.setText("Wiping the evidence..."));
 
                         if (!updateFile.delete()) {
-                            log.error(
-                                "Failed to get rid of the evidence. Trying to launch app..."
-                            );
-                            error(
-                                label,
-                                animation,
-                                "Failed to get rid of the evidence. Trying to launch app...",
-                                true
-                            );
+                            log.error("Failed to get rid of the evidence. Trying to launch app...");
+                            error(label, animation, "Failed to get rid of the evidence. Trying to launch app...", true);
                         }
                     }
                     //launch app
                     log.info("Launching the application...");
-                    Platform.runLater(() ->
-                        label.setText("Launching the application...")
-                    );
-                    String command = String.format(
-                        OsConstants.START_COMMAND,
-                        this.appFolder
-                    );
-                    runCommand(command);
-                    log.debug("Executing: {}", command);
+                    Platform.runLater(() -> label.setText("Launching the application..."));
+                    runCommand(String.format(OsConstants.START_COMMAND, this.appFolder));
                     //close this launcher
                     log.info("Bye! ;)");
                     System.exit(0);
@@ -332,8 +195,11 @@ public class Launcher extends Application {
                 }
                 System.exit(0);
             }
+
         };
         Executors.newSingleThreadExecutor().execute(r);
+
+
     }
 
     private void runCommand(final String cmd) throws IOException {
@@ -341,67 +207,45 @@ public class Launcher extends Application {
             final String[] linuxCMD = new String[1];
             linuxCMD[0] = cmd;
             Runtime.getRuntime().exec(linuxCMD, null, this.appFolder);
-        } else if (
-            OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)
-        ) {
-            Runtime.getRuntime().exec(
-                new String[] { "/bin/sh", "-c", cmd },
-                null,
-                this.appFolder
-            );
+        } else if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)) {
+            final String[] macCMD = new String[] {"/bin/sh", "-c", cmd};
+            Runtime.getRuntime().exec(macCMD, null, this.appFolder);
         } else {
             Runtime.getRuntime().exec(cmd, null, this.appFolder);
         }
     }
 
-    private void error(
-        final Label label,
-        final ImageView animation,
-        final String errorMessage,
-        final boolean launch
-    ) throws InterruptedException, IOException {
+    private void error(final Label label, final ImageView animation, final String errorMessage, final boolean launch) throws InterruptedException, IOException {
         Platform.runLater(() -> {
             label.setText(errorMessage);
-            animation.setImage(
-                new Image(getClass().getResourceAsStream("/images/ghost.png"))
-            );
+            animation.setImage(new Image(getClass().getResourceAsStream("/images/ghost.png")));
         });
         Thread.sleep(3000);
         if (launch) {
-            Runtime.getRuntime().exec(
-                String.format(OsConstants.START_COMMAND, this.appFolder),
-                null,
-                this.appFolder
-            );
+            Runtime.getRuntime().exec(String.format(OsConstants.START_COMMAND, this.appFolder), null, this.appFolder);
             //close this launcher
+
         }
         System.exit(0);
     }
 
-    private void unzipFile(final File updateFile, final File destDir)
-        throws IOException {
+
+    private void unzipFile(final File updateFile, final File destDir) throws IOException {
+
         final byte[] buffer = new byte[1024];
-        try (
-            final ZipInputStream zis = new ZipInputStream(
-                new FileInputStream(updateFile)
-            )
-        ) {
+        try (final ZipInputStream zis = new ZipInputStream(new FileInputStream(updateFile))) {
             ZipEntry zipEntry = zis.getNextEntry();
             while (zipEntry != null) {
                 final File newFile = newFile(destDir, zipEntry);
                 if (zipEntry.isDirectory()) {
                     if (!newFile.isDirectory() && !newFile.mkdirs()) {
-                        throw new IOException(
-                            "Failed to create directory " + newFile
-                        );
+                        throw new IOException("Failed to create directory " + newFile);
                     }
                 } else {
                     // fix for Windows-created archives
                     final File parent = newFile.getParentFile();
                     if (!parent.isDirectory() && !parent.mkdirs()) {
-                        throw new IOException(
-                            "Failed to create directory " + parent
-                        );
+                        throw new IOException("Failed to create directory " + parent);
                     }
 
                     // write file content
@@ -416,21 +260,17 @@ public class Launcher extends Application {
             }
             zis.closeEntry();
         }
+
     }
 
-    private static File newFile(
-        final File destinationDir,
-        final ZipEntry zipEntry
-    ) throws IOException {
+    private static File newFile(final File destinationDir, final ZipEntry zipEntry) throws IOException {
         final File destFile = new File(destinationDir, zipEntry.getName());
 
         final String destDirPath = destinationDir.getCanonicalPath();
         final String destFilePath = destFile.getCanonicalPath();
 
         if (!destFilePath.startsWith(destDirPath + File.separator)) {
-            throw new IOException(
-                "Entry is outside of the target dir: " + zipEntry.getName()
-            );
+            throw new IOException("Entry is outside of the target dir: " + zipEntry.getName());
         }
 
         return destFile;
@@ -449,18 +289,8 @@ public class Launcher extends Application {
 
     private String getCurrentVersion(final File appFolder) {
         try {
-            final File config = new File(
-                String.format(
-                    OsConstants.VERSION_FILE,
-                    appFolder.getAbsolutePath()
-                )
-            );
-            try (
-                final Scanner scanner = new Scanner(
-                    config,
-                    StandardCharsets.UTF_8
-                )
-            ) {
+            final File config = new File(String.format(OsConstants.VERSION_FILE, appFolder.getAbsolutePath()));
+            try (final Scanner scanner = new Scanner(config, StandardCharsets.UTF_8)) {
                 while (scanner.hasNext()) {
                     final String line = scanner.next();
                     if (line.contains("app.version=")) {
@@ -480,13 +310,11 @@ public class Launcher extends Application {
             final Iterator<JsonNode> assets = response.get("assets").elements();
             final Iterable<JsonNode> iterable = () -> assets;
             return StreamSupport.stream(iterable.spliterator(), false)
-                .map(node -> node.get("browser_download_url").asText())
-                .filter(url -> url.endsWith(OsConstants.UPDATE_FILE_SUFFIX))
-                .findFirst()
-                .orElse("ERROR");
+                    .map(node -> node.get("browser_download_url").asText())
+                    .filter(url -> url.endsWith(OsConstants.UPDATE_FILE_SUFFIX))
+                    .findFirst()
+                    .orElse("ERROR");
         } catch (final NullPointerException ex) {
-            log.error("failed to fetch latest update: {}", ex);
-
             return "ERROR";
         }
     }
@@ -497,15 +325,10 @@ public class Launcher extends Application {
             final Iterator<JsonNode> assets = response.get("assets").elements();
             final Iterable<JsonNode> iterable = () -> assets;
             return StreamSupport.stream(iterable.spliterator(), false)
-                .filter(node ->
-                    node
-                        .get("browser_download_url")
-                        .asText()
-                        .endsWith(OsConstants.UPDATE_FILE_SUFFIX)
-                )
-                .map(node -> node.get("size").asLong())
-                .findFirst()
-                .orElse(-1L);
+                    .filter(node -> node.get("browser_download_url").asText().endsWith(OsConstants.UPDATE_FILE_SUFFIX))
+                    .map(node -> node.get("size").asLong())
+                    .findFirst()
+                    .orElse(-1L);
         } catch (final NullPointerException ex) {
             return -1L;
         }
@@ -513,20 +336,15 @@ public class Launcher extends Application {
 
     private JsonNode getLatest() throws IOException {
         if (this.response == null) {
-            final URL url = new URL(
-                "https://api.github.com/repos/stefanlight8/ed-odyssey-materials-helper/releases/latest"
-            );
-            final HttpURLConnection connection =
-                (HttpURLConnection) url.openConnection();
+            final URL url = new URL("https://api.github.com/repos/stefanlight8/ed-odyssey-materials-helper/releases/latest");
+            final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("accept", "application/json");
             final InputStream responseStream = connection.getInputStream();
             final ObjectMapper objectMapper = new ObjectMapper();
             this.response = objectMapper.readTree(responseStream);
-            log.debug("get latest response: {}", this.response);
         }
         return this.response;
     }
-
     static void launchFx(final String[] args) {
         launch(args);
     }
