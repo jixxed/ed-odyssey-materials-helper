@@ -3,7 +3,7 @@ name: Gradle Package
 on:
   push:
     tags:
-      - '*'
+      - "*"
 
 env:
   JAVA_VERSION: 25.0.2
@@ -147,9 +147,63 @@ jobs:
           bodyFile: ".github/releasenotes.MD"
           name: "Elite Dangerous Odyssey Materials Helper ${{ steps.tagName.outputs.tag }}"
 
+  build-macos:
+    runs-on: macos-latest
+    permissions:
+      contents: write
+    env:
+      SENTRY_DSN: "${{secrets.SENTRY_DSN}}"
+      EDDN_SOFTWARE_NAME: "${{secrets.EDDN_SOFTWARE_NAME}}"
+      API_SERVICES_HOST: "${{secrets.API_SERVICES_HOST}}"
+      BROKER_HOST: "${{secrets.BROKER_HOST}}"
+      COMMODITY_HOST: "${{secrets.COMMODITY_HOST}}"
+      CCID: "${{secrets.CCID}}"
+      PROPRIETARY_REPO_USER: "${{secrets.PROPRIETARY_REPO_USER}}"
+      PROPRIETARY_REPO_PASS: "${{secrets.PROPRIETARY_REPO_PASS}}"
+
+    steps:
+      - uses: olegtarasov/get-tag@v2.1.4
+        id: tagName
+      - uses: actions/checkout@v6
+      - name: Download Zulu (without CRaC)
+        id: download_zulu
+        shell: bash
+        run: |
+          cd $RUNNER_TEMP
+          url="https://api.azul.com/metadata/v1/zulu/packages/?os=macos&arch=aarch64&archive_type=zip&java_package_type=jdk&javafx_bundled=false&crac_supported=false&release_status=ga&availability_types=CA&certifications=tck&java_version=${JAVA_VERSION}"
+          download_url=$(curl -s "$url" -H 'accept: application/json' | jq -r '.[0].download_url')
+          echo "Downloading JDK from: $download_url"
+          jdk_archive_filename=$(curl -LOs -w '%{filename_effective}' "$download_url")
+          echo "jdk_archive_filename=$jdk_archive_filename" >> $GITHUB_OUTPUT
+      - name: Set up JDKS
+        uses: actions/setup-java@v5
+        with:
+          java-version: |
+            ${{ env.JAVA_VERSION }}
+          distribution: jdkfile
+          jdkFile: ${{ runner.temp }}/${{ steps.download_zulu.outputs.jdk_archive_filename }}
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+      #      - name: Setup Gradle
+      #        uses: gradle/actions/setup-gradle@v3
+      - name: Generate secrets file
+        run: ./gradlew application:generateSecrets
+      - name: Build release with Gradle
+        run: ./gradlew createReleaseMacOs -DpackageType=dmg -PskipSass
+      - name: Create Release
+        uses: ncipollo/release-action@v1.21.0
+        with:
+          allowUpdates: true
+          draft: true
+          omitBodyDuringUpdate: true
+          bodyFile: ".github/releasenotes.MD"
+          artifacts: "output/*.*"
+          name: "Elite Dangerous Odyssey Materials Helper ${{ steps.tagName.outputs.tag }}"
+
   publish-release:
     runs-on: ubuntu-latest
-    needs: [ build-windows, build-ubuntu ]
+    needs: [build-windows, build-ubuntu, build-macos]
     permissions:
       contents: write
     steps:
@@ -164,7 +218,7 @@ jobs:
 
   sentry-release:
     runs-on: ubuntu-latest
-    needs: [ build-windows, build-ubuntu ]
+    needs: [build-windows, build-ubuntu, build-macos]
     permissions:
       contents: write
     steps:

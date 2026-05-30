@@ -76,6 +76,8 @@ public class Launcher extends Application {
         final Runnable r = () -> {
             if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Windows)) {
                 this.appFolder = new File(currentDir + "program");
+            } else if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)) {
+                this.appFolder = new File(System.getProperty("user.home") + "/Library/Application Support/Elite Dangerous Odyssey Materials Helper/bin");
             } else {
                 this.appFolder = new File(System.getProperty("user.home") + "/.ed-odyssey-materials-helper/program");
             }
@@ -101,6 +103,9 @@ public class Launcher extends Application {
                         final File updateFile;
                         if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Windows)) {
                             updateFile = new File(currentDir + "update.zip");
+                        } else if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)) {
+                            updateFile = new File(System.getProperty("user.home") + "/Library/Caches/Elite Dangerous Odyssey Materials Helper/update.zip");
+                            updateFile.getParentFile().mkdirs();
                         } else {
                             updateFile = new File(System.getProperty("user.home") + "/.ed-odyssey-materials-helper/update.zip");
                         }
@@ -153,6 +158,12 @@ public class Launcher extends Application {
                                 Runtime.getRuntime().exec(new String[] { "chmod", "-R", "777", this.appFolder.getCanonicalPath() });
 //                                final File file = new File(this.appFolder + "/bin/Elite Dangerous Odyssey Materials Helper");
 //                                file.setExecutable(true);
+                            } else if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)) {
+                                File file = new File(
+                                    this.appFolder,
+                                    "Elite Dangerous Odyssey Materials Helper.app/Contents/MacOS/Elite Dangerous Odyssey Materials Helper"
+                                );
+                                file.setExecutable(true, false);
                             }
                         } catch (final IOException ex) {
                             log.error("Failed to install the update.", ex);
@@ -197,6 +208,9 @@ public class Launcher extends Application {
             final String[] linuxCMD = new String[1];
             linuxCMD[0] = cmd;
             Runtime.getRuntime().exec(linuxCMD, null, this.appFolder);
+        } else if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.MacOS)) {
+            final String[] macCMD = new String[] {"/bin/sh", "-c", cmd};
+            Runtime.getRuntime().exec(macCMD, null, this.appFolder);
         } else {
             Runtime.getRuntime().exec(cmd, null, this.appFolder);
         }

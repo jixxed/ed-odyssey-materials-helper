@@ -12,6 +12,7 @@ application/src/main/resources/secret.properties
 application/.idea
 application/build
 application/out
+application/javafx-cache-program
 /output/
 /application/lombok.config
 /application/log/
@@ -20,3 +21,5 @@ application/out
 todo.txt
 ship.full
 edomh_codesigning.pfx
+.DS_Store
+*.log
