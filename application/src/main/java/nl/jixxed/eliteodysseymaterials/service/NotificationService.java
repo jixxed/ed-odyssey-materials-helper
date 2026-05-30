@@ -10,7 +10,6 @@
 
 package nl.jixxed.eliteodysseymaterials.service;
 
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 import lombok.AccessLevel;
@@ -42,12 +41,9 @@ public class NotificationService {
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
     private static final BlockingQueue<InputStream> soundQueue = new LinkedBlockingQueue<>();
     private static boolean isPlaying = false;
-    private static MediaPlayer mediaPlayer;
-    private static boolean mediaServicesAvailable;
 
     public static void init() {
         EVENT_LISTENERS.add(EventService.addStaticListener(JournalInitEvent.class, journalInitEvent -> enabled = journalInitEvent.isInitialised()));
-        mediaServicesAvailable = RegistryService.hasMediaServices();
     }
 
     public static void showInformation(final NotificationType notificationType, final LocaleService.LocaleString title, final LocaleService.LocaleString text) {
@@ -103,6 +99,7 @@ public class NotificationService {
                             .darkStyle()
                             .title(LocaleService.getLocalizedStringForCurrentLocale(title.getKey(), title.getParameters()))
                             .text(LocaleService.getLocalizedStringForCurrentLocale(text.getKey(), text.getParameters()))
+                            .hideAfter(Duration.seconds(10))
                             .owner(screen)
                             .showWarning();
                 }
@@ -130,6 +127,7 @@ public class NotificationService {
                             .darkStyle()
                             .title(LocaleService.getLocalizedStringForCurrentLocale(title.getKey(), title.getParameters()))
                             .text(LocaleService.getLocalizedStringForCurrentLocale(text.getKey(), text.getParameters()))
+                            .hideAfter(Duration.seconds(10))
                             .owner(screen)
                             .showError();
                 }
@@ -143,23 +141,7 @@ public class NotificationService {
     }
 
 
-    private static void playSound(final NotificationType notificationType) {
-        if (!mediaServicesAvailable) {
-            final Screen screen = getScreen();
-            try {
-                if (screen != null) {
-                    Notifications.create()
-                            .darkStyle()
-                            .title(LocaleService.getLocalizedStringForCurrentLocale("notification.media.feature.pack.title"))
-                            .text(LocaleService.getLocalizedStringForCurrentLocale("notification.media.feature.pack.text"))
-                            .owner(screen)
-                            .showError();
-                }
-            } catch (NullPointerException ex) {
-                log.error("Failed to create notification", ex);
-            }
-            return;
-        }
+    public static void playSound(final NotificationType notificationType) {
         final boolean playSounds = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_SOUND, Boolean.TRUE);
         final double volume = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_VOLUME, 50);
         final String customSoundPath = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_SOUND_CUSTOM_FILE_PREFIX + notificationType.name(), "");

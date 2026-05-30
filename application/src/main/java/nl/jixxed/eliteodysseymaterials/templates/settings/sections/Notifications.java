@@ -10,9 +10,6 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaException;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.util.StringConverter;
@@ -24,14 +21,10 @@ import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.RegistryService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -149,24 +142,7 @@ public class Notifications extends DestroyableVBox implements DestroyableTemplat
         DestroyableButton playNotificationButton = ButtonBuilder.builder()
                 .withText("tab.settings.notification.play")
                 .withOnAction(_ -> {
-                    final double volume = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_VOLUME, 50);
-                    final String customSoundPath = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_SOUND_CUSTOM_FILE, "");
-                    try {
-                        final URI resource;
-                        if (Objects.equals(customSoundPath, "")) {
-                            resource = Objects.requireNonNull(NotificationService.class.getResource("/audio/pop.mp3")).toURI();
-                        } else {
-                            resource = new File(customSoundPath).toURI();     // For example
-                        }
-
-                        final Media sound = new Media(resource.toString());
-                        final MediaPlayer mediaPlayer = new MediaPlayer(sound);
-                        mediaPlayer.setVolume(volume / 100);
-                        mediaPlayer.play();
-                    } catch (final URISyntaxException | NullPointerException | MediaException ex) {
-                        log.error("Failed to play notification sound", ex);
-                        NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.play.error.title"), RegistryService.hasMediaServices() ? LocaleService.LocaleString.of("notification.play.error.text") : LocaleService.LocaleString.of("notification.media.feature.pack.text"), true);
-                    }
+                    NotificationService.playSound(NotificationType.SUCCESS);
                 })
                 .build();
         return BoxBuilder.builder()

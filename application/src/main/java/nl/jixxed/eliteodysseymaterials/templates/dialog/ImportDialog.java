@@ -86,8 +86,8 @@ public class ImportDialog extends DestroyableVBox implements DestroyableTemplate
                         ButtonBuilder.builder()
                                 .withText("dialog.import.yes")
                                 .withOnAction(event -> {
-                                    importAction.run();
                                     this.stage.close();
+                                    importAction.run();
                                 })
                                 .build()
                 ).buildHBox();
