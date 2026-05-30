@@ -48,6 +48,15 @@ public class ShipConfiguration {
     private double currentFuelReserve;
     private double currentFuel;
     private double currentCargo;
+    //metadata
+    private Double topSpeed;
+    private Double boostSpeed;
+    private Double jumpRange;
+    private Double mass;
+    private Double pitch;
+    private Double roll;
+    private Double yaw;
+    private Long price;
 
     @JsonIgnore
     public static final ShipConfiguration CURRENT = new ShipConfiguration("0", "Current Ship (read only)");

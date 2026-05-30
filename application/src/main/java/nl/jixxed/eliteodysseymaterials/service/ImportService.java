@@ -145,7 +145,7 @@ public class ImportService {
         try {
 
             final ClipboardShip clipboardShip = OBJECT_MAPPER.readValue(decoded, ClipboardShip.class);
-            if (Objects.equals(clipboardShip.getVersion(), 1)) {
+            if (Objects.equals(clipboardShip.getVersion(), 1) || Objects.equals(clipboardShip.getVersion(), 2)) {
                 ShipConfiguration shipConfiguration = clipboardShip.getShipConfiguration();
                 shipConfiguration.setUuid(UUID.randomUUID().toString());
                 shipConfiguration.setName(shipConfiguration.getName() + LocaleService.getLocalizedStringForCurrentLocale("imported.partial.name"));

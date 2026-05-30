@@ -76,7 +76,6 @@ public class DeeplinkHelper {
                 } catch (final CoriolisDeeplinkException ex) {
                     EventService.publish(new ImportResultEvent(new ImportResult(ImportResult.ResultType.ERROR_CORIOLIS_WISHLIST)));
                     NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.imported.failed.coriolis"), ex.getLocaleString());
-//                        NotificationService.showError(NotificationType.ERROR, "Failed to import Coriolis wishlist", ex.getMessage());
                 } catch (final RuntimeException ex) {
                     NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.imported.failed.generic"), LocaleService.LocaleString.of("notification.imported.failed.generic.text", ex.getMessage()));
                     EventService.publish(new ImportResultEvent(new ImportResult(ImportResult.ResultType.OTHER_ERROR)));

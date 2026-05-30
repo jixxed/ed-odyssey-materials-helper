@@ -754,6 +754,8 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.templates.settings.sections to javafx.fxml, org.controlsfx.controls;
     opens database.commander;
     opens database.common;
+    exports nl.jixxed.eliteodysseymaterials.helper;
+    opens nl.jixxed.eliteodysseymaterials.helper to com.fasterxml.jackson.databind, org.hibernate.validator;
     provides io.ebean.config.EntityClassRegister with nl.jixxed.eliteodysseymaterials.persistence.common.model.EbeanEntityRegister;
 
 }

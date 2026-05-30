@@ -14,6 +14,7 @@ import com.google.common.primitives.Ints;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
+import nl.jixxed.eliteodysseymaterials.helper.ShipMathHelper;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -29,6 +30,16 @@ public class ShipMapper {
         shipConfiguration.setCurrentFuelReserve(ship.getCurrentFuelReserve());
         shipConfiguration.setCurrentCargo(ship.getCurrentCargo());
         shipConfiguration.setCurrentFuel(ship.getCurrentFuel());
+        //metadata
+        shipConfiguration.setMass(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxFuelReserve());
+        shipConfiguration.setPrice(ship.getTotalPrice());
+        shipConfiguration.setPitch(ShipMathHelper.calculatePitchMax(ship));
+        shipConfiguration.setRoll(ShipMathHelper.calculateRollMax(ship));
+        shipConfiguration.setYaw(ShipMathHelper.calculateYawMax(ship));
+        shipConfiguration.setTopSpeed(ShipMathHelper.calculateTopSpeedMax(ship));
+        shipConfiguration.setBoostSpeed(ShipMathHelper.calculateBoostSpeedMax(ship));
+        shipConfiguration.setJumpRange(ShipMathHelper.calculateJumpRangeMaxMaintenance(ship));
+
         shipConfiguration.getCoreSlots().clear();
         shipConfiguration.getOptionalSlots().clear();
         shipConfiguration.getHardpointSlots().clear();

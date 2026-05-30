@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.service.*;
+import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
 import nl.jixxed.eliteodysseymaterials.service.shortlink.ShortLinkService;
 
@@ -33,6 +34,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.Objects;
 import java.util.zip.Deflater;
 
 import static nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper.deeplinkConsumer;
@@ -121,14 +123,16 @@ public class ClipboardHelper {
         return APPLICATION_STATE.getPreferredCommander().map(commander ->
                 ShipService.getShipConfigurations(commander).getSelectedShipConfiguration().map(configuration -> {
                     try {
-                        final String shipJson = OBJECT_MAPPER.writeValueAsString(new ClipboardShip("ship", 1, configuration));
+                        //this mapping is a bit double, but it makes sure the variables are set, since the configurations come directly from disk and might be v1
+                        ShipMapper.toShipConfiguration(Objects.requireNonNull(ShipMapper.toShip(configuration)), configuration, configuration.getName());
+                        final String shipJson = OBJECT_MAPPER.writeValueAsString(new ClipboardShip("ship", 2, configuration));
                         final String ship64 = convertJsonToBase64Compressed(shipJson);
                         final String url = "edomh://ship/?" + ship64;
                         if (url.length() > 2048) {
                             NotificationService.showWarning(NotificationType.COPY, LocaleService.LocaleString.of("notification.clipboard.title"), LocaleService.LocaleString.of("notification.clipboard.url.length.text"));
                         }
                         return url;
-                    } catch (final JsonProcessingException e) {
+                    } catch (final JsonProcessingException | NullPointerException e) {
                         log.error("failed to process ship", e);
                     }
                     return "";
