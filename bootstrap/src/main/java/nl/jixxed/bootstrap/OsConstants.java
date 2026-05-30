@@ -24,7 +24,7 @@ class OsConstants {
             );
             case Linux -> setLinux();
             case Windows -> setWindows();
-            case MacOS -> setMacOs("aarch64"); // TODO: determine arch
+            case MacOS -> setMacOs();
         }
     }
 
@@ -44,8 +44,8 @@ class OsConstants {
         VERSION_FILE = "%s/lib/app/Elite Dangerous Odyssey Materials Helper.cfg";
     }
 
-    private static void setMacOs(String arch) {
-        UPDATE_FILE_SUFFIX = "portable.macos.zip";
+    private static void setMacOs() {
+        UPDATE_FILE_SUFFIX = "portable.macos.arm64.zip";
         KILL_COMMAND = "pkill -f \"Elite Dangerous Odyssey Materials Helper\"";
         START_COMMAND = "open \"%s/Elite Dangerous Odyssey Materials Helper.app\"";
         VERSION_FILE = "%s/Elite Dangerous Odyssey Materials Helper.app/Contents/app/Elite Dangerous Odyssey Materials Helper.cfg";
