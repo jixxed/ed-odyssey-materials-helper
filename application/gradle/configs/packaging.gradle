@@ -1,6 +1,7 @@
 import org.gradle.internal.os.OperatingSystem
 import java.util.Base64
-
+import org.gradle.process.ExecOperations
+import javax.inject.Inject
 jpackage {
     jvmArgs = [
             '-Dapp.version=' + project.version,
@@ -87,36 +88,67 @@ tasks.register("generateSecrets") {
     }
 }
 
-tasks.register("patchInfoPlist") {
-    description = "Patches Info.plist to register edomh:// URL scheme on macOS"
-    dependsOn(tasks.named("jpackage"))
+abstract class PatchInfoPlistTask extends DefaultTask {
 
-    onlyIf("macOS only") { project.ext.os.isMacOsX() }
+    @Inject
+    abstract ExecOperations getExecOperations()
 
-    doLast {
-        def plistFile = file(
-            "$buildDir/jpackage/Elite Dangerous Odyssey Materials Helper.app/Contents/Info.plist"
-        )
+    @TaskAction
+    void patch() {
+
+        File plistFile = project.layout.buildDirectory.file(
+                "jpackage/Elite Dangerous Odyssey Materials Helper.app/Contents/Info.plist"
+        ).get().asFile
 
         if (!plistFile.exists()) {
-            throw new GradleException("Info.plist not found at: $plistFile")
+            throw new GradleException("Info.plist not found at: ${plistFile}")
         }
 
-        if (exec(commandLine: ["plutil", "-key", "CFBundleURLTypes", plistFile.absolutePath], ignoreExitValue: true).exitValue == 0) {
-            println "Info.plist already patched"
+        String plistText = plistFile.getText("UTF-8")
+
+        if (plistText.contains("<string>edomh</string>")) {
+            logger.lifecycle("Info.plist already patched")
             return
         }
 
-        def urlTypesXml = '<key>CFBundleURLTypes</key><array><dict><key>CFBundleURLName</key><string>edomh</string><key>CFBundleURLSchemes</key><array><string>edomh</string></array></dict></array>'
-        exec(commandLine: ["plutil", "-insert", "CFBundleURLTypes", "-xml", urlTypesXml, plistFile.absolutePath])
+        String plistBuddy = "/usr/libexec/PlistBuddy"
 
-        def validation = new StringWriter()
-        exec(commandLine: ["plutil", "-validate", "plist1", plistFile.absolutePath], standardOutput: validation)
+        logger.lifecycle("Adding CFBundleURLTypes for edomh://")
 
-        println "Patched Info.plist: added CFBundleURLTypes (edomh)"
+        execOperations.exec {
+            commandLine(
+                    plistBuddy,
+                    "-c", "Add :CFBundleURLTypes array",
+                    "-c", "Add :CFBundleURLTypes:0 dict",
+                    "-c", "Add :CFBundleURLTypes:0:CFBundleURLName string edomh",
+                    "-c", "Add :CFBundleURLTypes:0:CFBundleURLSchemes array",
+                    "-c", "Add :CFBundleURLTypes:0:CFBundleURLSchemes:0 string edomh",
+                    plistFile.absolutePath
+            )
+        }
+
+        execOperations.exec {
+            commandLine(
+                    "plutil",
+                    "-lint",
+                    plistFile.absolutePath
+            )
+        }
+
+        logger.lifecycle("Patched Info.plist: added CFBundleURLTypes (edomh)")
     }
 }
 
+tasks.register("patchInfoPlist", PatchInfoPlistTask) {
+    description = "Patches Info.plist to register edomh:// URL scheme on macOS"
+    group = "distribution"
+
+    dependsOn(tasks.named("jpackage"))
+
+    onlyIf {
+        org.gradle.internal.os.OperatingSystem.current().isMacOsX()
+    }
+}
 tasks.register("jpackageSigned") {
     dependsOn tasks.named("jpackage")
     dependsOn tasks.named("jpackageImage")
