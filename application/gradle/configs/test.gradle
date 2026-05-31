@@ -1,0 +1,20 @@
+test {
+    useJUnitPlatform()
+    doFirst {
+        // starting a specific test allows ones with the "manual" tag to be executed
+        // if the entire suite is ran, the "manual" tagged tests are excluded
+        def runningSingleTest = !filter.getIncludePatterns().isEmpty()
+        runningSingleTest = runningSingleTest || !filter.getCommandLineIncludePatterns().isEmpty()
+
+        println "Running tests in " + (runningSingleTest ? "single-test mode" : "full-suite mode")
+
+        useJUnitPlatform {
+            if (!runningSingleTest) {
+                excludeTags 'manual'
+            }
+        }
+    }
+    jvmArgs += [
+            "-javaagent:${configurations.testRuntimeClasspath.find { it.name.contains('mockito-core') }}"
+    ]
+}

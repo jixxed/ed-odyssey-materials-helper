@@ -1,0 +1,78 @@
+extraJavaModuleInfo {
+    deriveAutomaticModuleNamesFromFileNames.set(true)
+    module("scribejava-java8-${project.getProperties().version_scribejava}.jar", "scribejava.java8", "${project.getProperties().version_scribejava}") {
+        exports("com.github.scribejava.java8.base64")
+    }
+    module("scribejava-core-${project.getProperties().version_scribejava}.jar", "scribejava.core", "${project.getProperties().version_scribejava}") {
+        exports("com.github.scribejava.core.builder")
+        exports("com.github.scribejava.core.builder.api")
+        exports("com.github.scribejava.core.oauth")
+        exports("com.github.scribejava.core.model")
+        exports("com.github.scribejava.core.pkce")
+        exports("com.github.scribejava.core.httpclient")
+        requires("scribejava.java8")
+        requires("com.fasterxml.jackson.core")
+        requires("com.fasterxml.jackson.databind")
+    }
+//    module('failureaccess-1.0.2.jar', 'com.google.guava.failureaccess', '1.0.2')
+    module('jsr305-3.0.2.jar', 'com.google.code.findbugs.jsr305', '3.0.2')
+//    automaticModule('j2objc-annotations-${project.getProperties().version_j2objc_annotations}.jar', 'j2objc')
+    module("commons-math3-${project.getProperties().version_apache_commons_math3}.jar", 'org.apache.commons.math3') {
+        patchRealModule()
+        exportAllPackages()
+    }
+    module('listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar', 'com.google.guava.listenablefuture', '9999.0-empty-to-avoid-conflict-with-guava')
+
+    module('doc-annotations-0.2.jar', 'eu.lestard', '0.2')
+    module('hamcrest-core-1.3.jar', 'org.hamcrest', '1.3')
+    automaticModule('path-matching-resource-pattern-resolver-0.1.jar', 'io.github.secretx33')
+    automaticModule("opencv-${project.getProperties().version_opencv}.jar", "org.openpnp")
+    module("tess4j-${project.getProperties().version_tess4j}.jar", "nl.jixxed.tess4j") {
+        exports("nl.jixxed.tess4j")
+        exports("nl.jixxed.tess4j.util")
+        requires("org.slf4j")
+        requires("com.sun.jna")
+        requires("java.desktop")
+    }
+    automaticModule("lept4j-${project.getProperties().version_lept4j}.jar", "nl.jixxed.lept4j")
+    automaticModule("jai-imageio-core-${project.getProperties().version_jai_imageio}.jar", 'com.github.jaiimageio')
+    automaticModule('jboss-vfs-3.2.16.Final.jar', 'org.jboss')
+    automaticModule('commons-logging-1.2.jar', 'org.apache.commons.logging')
+    automaticModule('jboss-logging-3.1.4.GA.jar', 'org.jboss.logging')
+    automaticModule('javax.servlet-api-4.0.1.jar', 'javax.servlet')
+    module("poi-${project.getProperties().version_apache_poi}.jar", "org.apache.poi.poi", "${project.getProperties().version_apache_poi}") {
+        patchRealModule()
+        exportAllPackages()
+        requires("org.apache.commons.math3")
+        requires("com.zaxxer.sparsebitset")
+        requires("org.apache.logging.log4j")
+        requires("java.desktop")
+
+    }
+    module("poi-ooxml-lite-${project.getProperties().version_apache_poi}.jar", "org.apache.poi.ooxml.schemas", "${project.getProperties().version_apache_poi}") {
+        patchRealModule()
+        requires("org.apache.poi.poi")
+        requires("org.apache.xmlbeans")
+        requires("org.apache.logging.log4j")
+        requires("java.xml")
+        exportAllPackages()
+    }
+    module("poi-ooxml-${project.getProperties().version_apache_poi}.jar", "org.apache.poi.ooxml", "${project.getProperties().version_apache_poi}") {
+        patchRealModule()
+        exportAllPackages()
+//        exports("org.apache.poi.xssf.usermodel")
+        requires("org.apache.logging.log4j")
+        requires("org.apache.commons.io")
+        requires("org.apache.commons.math3")
+        requires("org.apache.commons.compress")
+        requires("org.apache.commons.collections4")
+        requires("org.apache.poi.poi")
+        requires("org.apache.poi.ooxml.schemas")
+        requires("com.zaxxer.sparsebitset")
+        requires("org.apache.xmlbeans")
+        requires("java.xml")
+    }
+    automaticModule("mockito-inline-${project.getProperties().version_mockito_inline}.jar", "mockito.inline")
+
+
+}

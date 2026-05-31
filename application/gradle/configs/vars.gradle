@@ -1,0 +1,36 @@
+import org.gradle.internal.os.OperatingSystem
+import java.net.URL
+
+// Cross-cutting variables (visible to all included scripts via project scope)
+project.ext.os = OperatingSystem.current()
+
+def proprietaryUser = System.getenv('PROPRIETARY_REPO_USER')
+def proprietaryPass = System.getenv('PROPRIETARY_REPO_PASS')
+project.ext.proprietary = (proprietaryUser && proprietaryPass) || isRepoReachable("https://nexus.jixxed.nl/nexus/content/repositories/releases")
+project.ext.proprietaryUser = proprietaryUser
+project.ext.proprietaryPass = proprietaryPass
+
+def isRepoReachable(String url) {
+    try {
+        def connection = new URL(url).openConnection()
+        connection.setConnectTimeout(2000)
+        connection.setReadTimeout(2000)
+        connection.requestMethod = 'HEAD'
+        connection.connect()
+        return connection.responseCode == 200
+    } catch (Exception ignored) {
+        return false
+    }
+}
+
+def arch = System.getProperty("os.arch")
+def platform = 'linux'
+if (project.ext.os.isWindows()) {
+    platform = 'win'
+} else if (project.ext.os.isMacOsX()) {
+    platform = 'mac'
+}
+if (arch == "aarch64") {
+    platform += "-aarch64"
+}
+project.ext.platform = platform

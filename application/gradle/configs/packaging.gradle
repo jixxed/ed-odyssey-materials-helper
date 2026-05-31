@@ -1,0 +1,185 @@
+import org.gradle.internal.os.OperatingSystem
+import java.util.Base64
+
+jpackage {
+    jvmArgs = [
+            '-Dapp.version=' + project.version,
+            '-Xmx2048M',
+            '--add-exports=java.base/jdk.internal.misc=nl.jixxed.merged.module',
+            '--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls',
+            '--add-exports=jdk.naming.dns/com.sun.jndi.dns=java.naming',
+            '--add-exports=javafx.graphics/com.sun.glass.ui=nl.jixxed.eliteodysseymaterials',
+            '--add-exports=javafx.graphics/com.sun.javafx.tk=nl.jixxed.eliteodysseymaterials',
+            '--add-opens=javafx.graphics/javafx.scene.layout=nl.jixxed.eliteodysseymaterials',
+            '--add-opens=org.controlsfx.controls/org.controlsfx.control=nl.jixxed.eliteodysseymaterials',
+            '--enable-preview'
+    ]
+}
+jlink {
+//    jmods = javaVersion >= 24 ? [javafxJmods, jdkJmods] : [jdkJmods, javafxJmods]
+    mergedModule {
+        excludeProvides servicePattern: 'reactor.blockhound.*'
+//        excludeProvides servicePattern: "jakarta.servlet.*"
+    }
+    jpackage {
+        skipInstaller = true
+
+        if (project.ext.os.isLinux()) {
+            imageOptions.addAll('--icon', 'src/main/resources/images/application/appicon512.png')
+        } else if (project.ext.os.isMacOsX()) {
+            imageOptions.addAll(
+                '--icon', 'src/main/resources/images/application/appicon.icns',
+                '--mac-package-identifier', 'nl.jixxed.ed.edomh'
+            )
+        } else {
+            imageOptions.addAll('--icon', 'src/main/resources/images/application/appicon.ico')
+        }
+    }
+    addExtraDependencies("javafx", "jackson", "log4j", "jdk.accessibility")
+    forceMerge("j2objc", "sqlite-jdbc"/*, "logback"*/)
+    if (project.ext.proprietary) {
+//        addExtraDependencies("nl.jixxed.ed.awesome.impl")
+//        forceMerge("nl.jixxed.ed.awesome.impl")
+        addOptions '--bind-services'
+    }
+    addOptions('--strip-debug', '--compress', 'zip-0', '--no-header-files', '--no-man-pages')
+    launcher {
+        name = 'Elite Dangerous Odyssey Materials Helper'
+        jvmArgs = [
+                '-Dapp.version=' + project.version,
+                '-Xmx2048M',
+                '--add-exports=java.base/jdk.internal.misc=nl.jixxed.merged.module',
+                '--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls',
+                '--add-exports=jdk.naming.dns/com.sun.jndi.dns=java.naming',
+                '--add-exports=javafx.graphics/com.sun.glass.ui=nl.jixxed.eliteodysseymaterials',
+                '--add-exports=javafx.graphics/com.sun.javafx.tk=nl.jixxed.eliteodysseymaterials',
+                '--add-opens=javafx.graphics/javafx.scene.layout=nl.jixxed.eliteodysseymaterials',
+                '--add-opens=org.controlsfx.controls/org.controlsfx.control=nl.jixxed.eliteodysseymaterials',
+                '--enable-preview'
+        ]
+    }
+}
+
+tasks.register("generateSecrets") {
+    doLast {
+        def secretFile = file("src/main/resources/secret.properties")
+        secretFile.parentFile.mkdirs()
+
+        secretFile.text = """
+            app.version=${project.version ?: 'dev'}
+            eddn.software.name=${System.getenv('EDDN_SOFTWARE_NAME') ?: 'missing'}
+            api.services.host=${System.getenv('API_SERVICES_HOST') ?: 'localhost'}
+            sentry.dsn=${System.getenv("SENTRY_DSN") ?: 'missing'}
+            broker.host=${System.getenv("BROKER_HOST") ?: 'localhost'}
+            ccid=${System.getenv("CCID") ?: 'aef4566a-2c1b-4d0f-8e3a-5c6f7d8e9a0c'}
+            market.services.host=${System.getenv('MARKET_SERVICES_HOST') ?: 'localhost'}
+            commodity.host=${System.getenv('COMMODITY_HOST') ?: 'localhost'}
+            system.host=${System.getenv('SYSTEM_HOST') ?: 'localhost'}
+            shortlink.api.key=${System.getenv('SL_KEY') ?: 'localhost'}
+            shortlink.host=${System.getenv('SL_HOST') ?: 'localhost'}
+            elite.mq.api.key=${System.getenv('MQ_KEY') ?: 'localhost'}
+            elite.mq.host=${System.getenv('MQ_HOST') ?: 'localhost'}
+            cg.age=${System.getenv('CG_AGE') ?: '2026-01-01T00:00:00'}
+            cg.services.host=${System.getenv('CG_HOST') ?: 'localhost'}
+            cg.services.api.key=${System.getenv('CG_KEY') ?: 'localhost'}
+            ed.status.host=${System.getenv('STAT_HOST') ?: 'localhost'}
+        """.stripIndent().stripLeading().stripTrailing()
+    }
+}
+
+tasks.register("patchInfoPlist") {
+    description = "Patches Info.plist to register edomh:// URL scheme on macOS"
+    dependsOn(tasks.named("jpackage"))
+
+    onlyIf("macOS only") { project.ext.os.isMacOsX() }
+
+    doLast {
+        def plistFile = file(
+            "$buildDir/jpackage/Elite Dangerous Odyssey Materials Helper.app/Contents/Info.plist"
+        )
+
+        if (!plistFile.exists()) {
+            throw new GradleException("Info.plist not found at: $plistFile")
+        }
+
+        if (exec(commandLine: ["plutil", "-key", "CFBundleURLTypes", plistFile.absolutePath], ignoreExitValue: true).exitValue == 0) {
+            println "Info.plist already patched"
+            return
+        }
+
+        def urlTypesXml = '<key>CFBundleURLTypes</key><array><dict><key>CFBundleURLName</key><string>edomh</string><key>CFBundleURLSchemes</key><array><string>edomh</string></array></dict></array>'
+        exec(commandLine: ["plutil", "-insert", "CFBundleURLTypes", "-xml", urlTypesXml, plistFile.absolutePath])
+
+        def validation = new StringWriter()
+        exec(commandLine: ["plutil", "-validate", "plist1", plistFile.absolutePath], standardOutput: validation)
+
+        println "Patched Info.plist: added CFBundleURLTypes (edomh)"
+    }
+}
+
+tasks.register("jpackageSigned") {
+    dependsOn tasks.named("jpackage")
+    dependsOn tasks.named("jpackageImage")
+    finalizedBy tasks.named("signAppExe")
+}
+
+tasks.register('createSignCert') {
+    doLast {
+        String base64 = System.getProperty("base64_pfx") ?: ""
+
+        byte[] decoded = Base64.getDecoder().decode(base64)
+
+        new File("./edomh_codesigning.pfx").withOutputStream { stream ->
+            stream.write(decoded)
+        }
+    }
+}
+
+tasks.register('signAppExe') {
+    dependsOn tasks.named("createSignCert"), tasks.named("jpackage")
+    doLast {
+        File target = new File("application/build/jpackage/Elite Dangerous Odyssey Materials Helper/Elite Dangerous Odyssey Materials Helper.exe")
+        target.setWritable(true)
+        jsign(file: 'application/build/jpackage/Elite Dangerous Odyssey Materials Helper/Elite Dangerous Odyssey Materials Helper.exe',
+                name: 'Elite Dangerous Odyssey Materials Helper',
+                url: 'https://github.com/jixxed/ed-odyssey-materials-helper',
+                keystore: 'edomh_codesigning.pfx',
+                alias: System.getProperty("pfx_alias") ?: "NO_ALIAS",
+                storepass: System.getProperty("pfx_password") ?: "NO_PASSWORD",
+                storetype: 'PKCS12',
+                tsaurl: 'http://timestamp.sectigo.com')
+    }
+}
+
+tasks.register("signAppMacOs") {
+    dependsOn "patchInfoPlist"
+    doLast {
+        def app = file("$buildDir/jpackage/Elite Dangerous Odyssey Materials Helper.app")
+
+        exec {
+            commandLine "codesign",
+                    "--force",
+                    "--deep",
+                    "--sign", System.getenv("MAC_CODESIGN_IDENTITY"),
+                    app
+        }
+    }
+}
+
+tasks.jpackageImage.doFirst {
+    if (project.ext.os.isWindows()) {
+        ant.attrib(readonly: false) {
+            fileset(dir: 'build\\jpackage')
+        }
+    } else {
+        ant.chmod(dir: 'build/jpackage', perm: 'ugo+w')
+    }
+    delete file('\\build\\jpackage\\').listFiles()
+}
+
+// jpackage should run tests on Windows before packaging
+tasks.named("jpackage").configure {
+    if (project.ext.os.isWindows()) {
+        dependsOn tasks.named('test')
+    }
+}

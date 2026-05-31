@@ -1,0 +1,54 @@
+compileJava {
+    doFirst {
+        //bugfix for intelliJ adding cyclic dependency
+        def moduleInfo = file("src/main/java/module-info.java")
+        if (moduleInfo.exists()) {
+            moduleInfo.text = moduleInfo.text.replace(
+                    "    requires nl.jixxed.eliteodysseymaterials;\n",
+                    ""
+            )
+        }
+        options.compilerArgs = [
+                '--module-path', classpath.asPath,
+                '--add-exports', "javafx.graphics/com.sun.javafx.tk=nl.jixxed.eliteodysseymaterials",
+                '--add-exports', 'javafx.controls/com.sun.javafx.scene.control=nl.jixxed.eliteodysseymaterials',
+                '--add-exports', "javafx.graphics/com.sun.glass.ui=nl.jixxed.eliteodysseymaterials"
+        ]
+        classpath = files()
+    }
+}
+run {
+//    setArgs(['edomh://wishlist?eyJldmVudCI6Indpc2hsaXN0IiwidmVyc2lvbiI6IjEiLCJ3aXNobGlzdCI6eyJ1dWlkIjoiMGU4OGE4MzEtMGY1ZS00NjczLWEwODItMzk4YTRmMjA5NDU0IiwibmFtZSI6IkRlZmF1bHQgd2lzaGxpc3QiLCJpdGVtcyI6W3sicmVjaXBlTmFtZSI6IktBUk1BXzRfNSIsInZpc2libGUiOnRydWV9LHsicmVjaXBlTmFtZSI6Ik1BTlRJQ09SRV80XzUiLCJ2aXNpYmxlIjp0cnVlfSx7InJlY2lwZU5hbWUiOiJNQUdBWklORV9TSVpFIiwidmlzaWJsZSI6dHJ1ZX0seyJyZWNpcGVOYW1lIjoiS0FSTUFfMV8yIiwidmlzaWJsZSI6dHJ1ZX1dfX0='])
+    jvmArgs = [
+//            '-Dprism.verbose=true',
+//            '--add-opens=javafx.graphics/javafx.scene.layout=nl.jixxed.eliteodysseymaterials',
+'--add-exports=javafx.graphics/com.sun.glass.ui=nl.jixxed.eliteodysseymaterials',
+'--add-exports=javafx.graphics/com.sun.javafx.tk=nl.jixxed.eliteodysseymaterials',
+'--add-exports=javafx.controls/com.sun.javafx.scene.control=nl.jixxed.eliteodysseymaterials',
+'--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls',
+'--add-exports=jdk.naming.dns/com.sun.jndi.dns=java.naming',
+'--add-opens=org.controlsfx.controls/org.controlsfx.control=nl.jixxed.eliteodysseymaterials',
+'--add-opens=javafx.graphics/javafx.scene.layout=nl.jixxed.eliteodysseymaterials',//TODO removeme. when 25.0.3 or later fixes the flowpane https://bugs.openjdk.org/browse/JDK-8377153
+'--enable-preview'
+    ]
+    //, '-Xmx1G', '-XX:+UseCompressedOops', '-XX:+PrintGCDetails', '-XX:SoftRefLRUPolicyMSPerMB=100'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += "--enable-preview"
+    options.forkOptions.jvmArgs << '--sun-misc-unsafe-memory-access=allow'
+    //lombok warnings https://github.com/projectlombok/lombok/issues/3852
+}
+
+tasks.withType(Test).configureEach {
+    jvmArgs += "--enable-preview"
+    jvmArgs += "--enable-native-access=ALL-UNNAMED"
+}
+tasks.withType(JavaExec).configureEach {
+    jvmArgs += "--enable-preview"
+    jvmArgs += "--enable-native-access=ALL-UNNAMED"
+    jvmArgs += "--enable-native-access=com.sun.jna"
+    jvmArgs += "--enable-native-access=javafx.graphics,javafx.media"
+    jvmArgs += "--enable-native-access=org.openpnp"
+    jvmArgs += "--enable-native-access=org.xerial.sqlitejdbc"
+}

@@ -1,0 +1,25 @@
+repositories {
+    mavenCentral {
+    }
+    maven {
+        name = 'repsy'
+        url = "https://repo.repsy.io/mvn/jixxed/maven/"
+    }
+    maven { url = 'https://jitpack.io' }
+    if (project.ext.proprietary) {
+        maven {
+            name = 'nexus'
+            url = "https://nexus.jixxed.nl/nexus/content/repositories/releases"
+        }
+    }
+    if (project.ext.proprietaryUser && project.ext.proprietaryPass) {
+        maven {
+            name = 'repsy'
+            url = "https://repo.repsy.io/mvn/jixxed/proprietary/"
+            credentials {
+                username = project.ext.proprietaryUser
+                password = project.ext.proprietaryPass
+            }
+        }
+    }
+}
