@@ -217,6 +217,7 @@ dependencies {
     implementation "ch.qos.logback:logback-core"
     implementation "ch.qos.logback:logback-classic"
     implementation "org.slf4j:slf4j-api"
+    implementation "com.github.wille:oslib"
 
     implementation "org.openjfx:javafx-base::${platform}"
     implementation "org.openjfx:javafx-controls::${platform}"

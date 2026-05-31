@@ -10,6 +10,10 @@
 
 package nl.jixxed.bootstrap;
 
+import nu.redpois0n.oslib.AbstractOperatingSystem;
+import nu.redpois0n.oslib.Arch;
+import nu.redpois0n.oslib.OperatingSystem;
+
 class OsConstants {
 
     static String KILL_COMMAND;
@@ -17,14 +21,15 @@ class OsConstants {
     static String UPDATE_FILE_SUFFIX;
     static String VERSION_FILE;
 
+    private static final AbstractOperatingSystem CURRENT_OS = OperatingSystem.getOperatingSystem();
     static {
-        switch (OsCheck.getOperatingSystemType()) {
-            case Other -> throw new IllegalArgumentException(
-                "OS not supported."
+        switch (CURRENT_OS.getType()) {
+            case LINUX -> setLinux();
+            case WINDOWS -> setWindows();
+            case MACOS -> setMacOs(CURRENT_OS.getArch());
+            default -> throw new IllegalArgumentException(
+                    "OS not supported."
             );
-            case Linux -> setLinux();
-            case Windows -> setWindows();
-            case MacOS -> setMacOs();
         }
     }
 
@@ -44,10 +49,18 @@ class OsConstants {
         VERSION_FILE = "%s/lib/app/Elite Dangerous Odyssey Materials Helper.cfg";
     }
 
-    private static void setMacOs() {
-        UPDATE_FILE_SUFFIX = "portable.macos.arm64.zip";
+    private static void setMacOs(Arch arch) {
+        UPDATE_FILE_SUFFIX = String.format("portable.macos.%s.zip", getMacOsArch(arch));
         KILL_COMMAND = "pkill -f \"Elite Dangerous Odyssey Materials Helper\"";
         START_COMMAND = "open \"%s/Elite Dangerous Odyssey Materials Helper.app\"";
         VERSION_FILE = "%s/Elite Dangerous Odyssey Materials Helper.app/Contents/app/Elite Dangerous Odyssey Materials Helper.cfg";
+    }
+
+    private static String getMacOsArch(Arch arch) {
+        return switch (arch){
+            case ARM -> "arm64";
+            case x86_64 -> "x64";
+            default -> throw new IllegalArgumentException("Arch not supported!");
+        };
     }
 }

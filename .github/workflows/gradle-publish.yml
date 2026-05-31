@@ -190,7 +190,7 @@ jobs:
       - name: Generate secrets file
         run: ./gradlew application:generateSecrets
       - name: Build release with Gradle
-        run: ./gradlew createReleaseMacOs -DpackageType=dmg -PskipSass
+        run: ./gradlew createReleaseMacOsARM -DpackageType=dmg -PskipSass
       - name: Create Release
         uses: ncipollo/release-action@v1.21.0
         with:

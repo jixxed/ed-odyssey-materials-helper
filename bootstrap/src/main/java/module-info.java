@@ -11,6 +11,8 @@ module nl.jixxed.bootstrap {
     requires ch.qos.logback.classic;
     requires ch.qos.logback.core;
     requires org.slf4j;
+    requires oslib.master.SNAPSHOT;
+
     requires static lombok;
     exports nl.jixxed.bootstrap.log to ch.qos.logback.core;
     opens nl.jixxed.bootstrap to javafx.graphics;

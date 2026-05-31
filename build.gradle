@@ -65,12 +65,20 @@ tasks.register('copyRpm', Copy) {
     rename('elite-dangerous-odyssey-materials-helper-' + version + '-1.x86_64.rpm', 'elite-dangerous-odyssey-materials-helper-auto-updater_' + version + '.rpm')
 }
 
-tasks.register('copyDmg', Copy) {
+tasks.register('copyDmgARM', Copy) {
     dependsOn(project(":bootstrap").tasks.named("jpackage"))
     from 'bootstrap/build/jpackage/'
     into 'output'
     include('Elite Dangerous Odyssey Materials Helper-' + project.version + '.dmg')
     rename('Elite Dangerous Odyssey Materials Helper-' + project.version + '.dmg', 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.launcher.macos.arm64.dmg')
+}
+
+tasks.register('copyDmgX64', Copy) {
+    dependsOn(project(":bootstrap").tasks.named("jpackage"))
+    from 'bootstrap/build/jpackage/'
+    into 'output'
+    include('Elite Dangerous Odyssey Materials Helper-' + project.version + '.dmg')
+    rename('Elite Dangerous Odyssey Materials Helper-' + project.version + '.dmg', 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.launcher.macos.x64.dmg')
 }
 
 tasks.register('makePortable', Zip) {
@@ -105,12 +113,23 @@ tasks.register('makeLinuxAutoUpdaterPortable', Zip) {
     useFileSystemPermissions()
 }
 
-tasks.register('makeMacOsPortable', Zip) {
+tasks.register('makeMacOsPortableARM', Zip) {
     dependsOn(project(":application").tasks.named("jpackage"), project(":application").tasks.named("patchInfoPlist"))
     from 'application/build/jpackage'
     include '*'
     include '**/*' //to include contents of a folder present inside Reports directory
     archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.macos.arm64.zip'
+    destinationDirectory = file('./output/')
+    preserveFileTimestamps = true
+    useFileSystemPermissions()
+}
+
+tasks.register('makeMacOsPortableX64', Zip) {
+    dependsOn(project(":application").tasks.named("jpackage"), project(":application").tasks.named("patchInfoPlist"))
+    from 'application/build/jpackage'
+    include '*'
+    include '**/*' //to include contents of a folder present inside Reports directory
+    archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.macos.x64.zip'
     destinationDirectory = file('./output/')
     preserveFileTimestamps = true
     useFileSystemPermissions()
@@ -151,14 +170,23 @@ tasks.register("createReleaseLinux") {
     finalizedBy makeLinuxPortable, makeLinuxAutoUpdaterPortable, copyDeb
 }
 
-tasks.register("createReleaseMacOs") {
+tasks.register("createReleaseMacOsARM") {
     dependsOn(
-        subprojects.findAll { p ->
-            p.tasks.findByName("jpackage") != null
-        }.collect { p ->
-            p.tasks.named("jpackage")
-        })
-    finalizedBy makeMacOsPortable, copyDmg
+            subprojects.findAll { p ->
+                p.tasks.findByName("jpackage") != null
+            }.collect { p ->
+                p.tasks.named("jpackage")
+            })
+    finalizedBy makeMacOsPortableARM, copyDmgARM
+}
+tasks.register("createReleaseMacOsX64") {
+    dependsOn(
+            subprojects.findAll { p ->
+                p.tasks.findByName("jpackage") != null
+            }.collect { p ->
+                p.tasks.named("jpackage")
+            })
+    finalizedBy makeMacOsPortableX64, copyDmgX64
 }
 
 tasks.register("createReleaseLinuxRpm") {
