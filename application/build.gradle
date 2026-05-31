@@ -244,7 +244,10 @@ jlink {
 }
 
 tasks.register("patchInfoPlist") {
-    dependsOn tasks.named("jpackage")
+    description = "Patches Info.plist to register edomh:// URL scheme on macOS"
+    dependsOn(tasks.named("jpackage"))
+
+    onlyIf("macOS only") { os.isMacOsX() }
 
     doLast {
         def plistFile = file(
@@ -252,38 +255,21 @@ tasks.register("patchInfoPlist") {
         )
 
         if (!plistFile.exists()) {
-            println "Info.plist not found: $plistFile"
-            return
+            throw new GradleException("Info.plist not found at: $plistFile")
         }
 
-        def marker = "</dict>\n</plist>"
-
-        def urlTypes = """
-  <key>CFBundleURLTypes</key>
-    <array>
-      <dict>
-        <key>CFBundleURLName</key>
-        <string>edomh</string>
-        <key>CFBundleURLSchemes</key>
-        <array>
-        <string>edomh</string>
-        </array>
-    </dict>
-  </array>
-"""
-
-        def text = plistFile.text
-
-        if (text.contains("<key>CFBundleURLTypes</key>")) {
+        if (exec(commandLine: ["plutil", "-key", "CFBundleURLTypes", plistFile.absolutePath], ignoreExitValue: true).exitValue == 0) {
             println "Info.plist already patched"
             return
         }
 
-        if (!text.contains(marker)) {
-            throw new GradleException("Could not find plist closing marker")
-        }
+        def urlTypesXml = '<key>CFBundleURLTypes</key><array><dict><key>CFBundleURLName</key><string>edomh</string><key>CFBundleURLSchemes</key><array><string>edomh</string></array></dict></array>'
+        exec(commandLine: ["plutil", "-insert", "CFBundleURLTypes", "-xml", urlTypesXml, plistFile.absolutePath])
 
-        plistFile.text = text.replace(marker, urlTypes + marker)
+        def validation = new StringWriter()
+        exec(commandLine: ["plutil", "-validate", "plist1", plistFile.absolutePath], standardOutput: validation)
+
+        println "Patched Info.plist: added CFBundleURLTypes (edomh)"
     }
 }
 
