@@ -70,9 +70,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-reports-html-linux
-          path:
-            - '**/build/reports/tests/**'
-            - '**/build/reports/problems/problems-report.html'
+          path: ['**/build/reports/tests/**', '**/build/reports/problems/problems-report.html']
 
       - name: Build release
         run: ./gradlew createReleaseLinuxDebAndZip createReleaseLinuxRpm -DpackageType=deb${{ github.event.inputs.version != '' && format(' -Pversion={0}', github.event.inputs.version) || '' }}
@@ -122,9 +120,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-reports-html-windows
-          path:
-            - '**/build/reports/tests/**'
-            - '**/build/reports/problems/problems-report.html'
+          path: ['**/build/reports/tests/**', '**/build/reports/problems/problems-report.html']
 
       - name: Build release
         run: ./gradlew createReleaseWindowsUnsigned -DpackageType=msi${{ github.event.inputs.version != '' && format(' -Pversion={0}', github.event.inputs.version) || '' }}
@@ -177,9 +173,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-reports-html-macos
-          path:
-            - '**/build/reports/tests/**'
-            - '**/build/reports/problems/problems-report.html'
+          path: ['**/build/reports/tests/**', '**/build/reports/problems/problems-report.html']
 
       - name: Build release
         run: ./gradlew createReleaseMacOsARM -DpackageType=dmg${{ github.event.inputs.version != '' && format(' -Pversion={0}', github.event.inputs.version) || '' }}
