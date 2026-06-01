@@ -261,7 +261,7 @@ allprojects {
                 implementation "org.apache.commons:commons-compress:${version_apache_commons_compress}"
                 implementation "org.apache.xmlbeans:xmlbeans:${version_apache_xmlbeans}"
                 implementation "org.apache.poi:poi-ooxml:${version_apache_poi}"
-                implementation "org.eclipse.parsson:jakarta.json:1.1.7"
+                implementation "org.eclipse.parsson:jakarta.json:1.1.9"
                 implementation "org.hibernate.validator:hibernate-validator:9.1.0.Final"
                 implementation "jakarta.el:jakarta.el-api:6.0.1"
                 implementation "org.glassfish.expressly:expressly:6.0.0"
