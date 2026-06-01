@@ -324,6 +324,7 @@ tasks.withType(JavaCompile) {
 }
 tasks.withType(Test) {
     jvmArgs += "--enable-preview"
+    reports.html.required = true
 }
 tasks.withType(JavaExec) {
     jvmArgs += "--enable-preview"
