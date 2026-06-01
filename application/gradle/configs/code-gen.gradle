@@ -3,10 +3,6 @@
 tasks.register('compileSassDefault', compileSass.getClass()) {
     group = "edomh > sass"
     outputs.upToDateWhen { false }
-    def skipProvider = providers.gradleProperty("skipSass")
-    onlyIf("there is no property skipSass") {
-        !skipProvider.present
-    }
     sourceDir = file('src/main/resources/sass/default')
     sassPath = ''
     destinationDir = file("src/main/resources/css/compiled")

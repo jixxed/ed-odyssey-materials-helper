@@ -52,9 +52,9 @@ jobs:
       - name: Generate secrets file
         run: ./gradlew application:generateSecrets
       - name: Build release with Gradle
-        run: ./gradlew createReleaseLinuxDebAndZip -DpackageType=deb -PskipSass
+        run: ./gradlew createReleaseLinuxDebAndZip -DpackageType=deb
       - name: Build rpm Gradle
-        run: ./gradlew createReleaseLinuxRpm -DpackageType=rpm -PskipSass
+        run: ./gradlew createReleaseLinuxRpm -DpackageType=rpm
       - name: Create Release
         uses: ncipollo/release-action@v1.21.0
         with:
@@ -114,7 +114,7 @@ jobs:
       - name: Generate secrets file
         run: ./gradlew application:generateSecrets
       - name: Build with Gradle
-        run: ./gradlew createReleaseWindowsSigned -DpackageType=msi -Dpfx_alias="${{secrets.CODE_SIGN_CERT_ALIAS}}" -Dpfx_password='"${{secrets.CODE_SIGN_PASSWORD}}"' -Dbase64_pfx="${{secrets.CODE_SIGN_BASE64}}" -PskipSass
+        run: ./gradlew createReleaseWindowsSigned -DpackageType=msi -Dpfx_alias="${{secrets.CODE_SIGN_CERT_ALIAS}}" -Dpfx_password='"${{secrets.CODE_SIGN_PASSWORD}}"' -Dbase64_pfx="${{secrets.CODE_SIGN_BASE64}}"
       - name: Create Release
         uses: ncipollo/release-action@v1.21.0
         with:
@@ -190,7 +190,7 @@ jobs:
       - name: Generate secrets file
         run: ./gradlew application:generateSecrets
       - name: Build release with Gradle
-        run: ./gradlew createReleaseMacOsARM -DpackageType=dmg -PskipSass
+        run: ./gradlew createReleaseMacOsARM -DpackageType=dmg
       - name: Create Release
         uses: ncipollo/release-action@v1.21.0
         with:
