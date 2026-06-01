@@ -10,7 +10,6 @@
 
 package nl.jixxed.eliteodysseymaterials.service;
 
-import de.saxsys.mvvmfx.testingutils.JfxToolkitExtension;
 import de.saxsys.mvvmfx.testingutils.jfxrunner.TestInJfxThread;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
@@ -40,7 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-@ExtendWith(JfxToolkitExtension.class)
+//@ExtendWith(JfxToolkitExtension.class)
 class PathServiceTest {
 
     @BeforeEach

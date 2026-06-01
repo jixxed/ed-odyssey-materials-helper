@@ -10,6 +10,7 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 
+import de.saxsys.mvvmfx.testingutils.JfxToolkitExtension;
 import javafx.embed.swing.JFXPanel;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
@@ -21,7 +22,6 @@ import nl.jixxed.eliteodysseymaterials.constants.PathConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleWishlistBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.PathItem;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -33,6 +33,7 @@ import nl.jixxed.eliteodysseymaterials.templates.generic.ShortestPathFlow;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -43,6 +44,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+@ExtendWith(JfxToolkitExtension.class)
 class HorizonsHorizonsWishlistModuleBlueprintTemplateTest {
 
     private static JFXPanel fxPanel;

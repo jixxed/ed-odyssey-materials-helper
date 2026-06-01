@@ -10,7 +10,6 @@
 
 package nl.jixxed.eliteodysseymaterials.service;
 
-import de.saxsys.mvvmfx.testingutils.JfxToolkitExtension;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
 import nl.jixxed.eliteodysseymaterials.enums.Expansion;
@@ -30,7 +29,7 @@ import java.time.format.DateTimeFormatter;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
-@ExtendWith(JfxToolkitExtension.class)
+//@ExtendWith(JfxToolkitExtension.class)
 class OdysseyMaterialTrackingServiceTest {
     @BeforeAll
     static void beforeAll() {

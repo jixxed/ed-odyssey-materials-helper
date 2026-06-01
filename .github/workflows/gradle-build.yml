@@ -28,8 +28,13 @@ jobs:
   build-linux:
     if: ${{ github.event.inputs.platform == 'all' || !github.event.inputs.platform || github.event.inputs.platform == 'linux' }}
     runs-on: ubuntu-latest
+    env:
+      DISPLAY: :99
     steps:
       - uses: actions/checkout@v6
+
+      - name: Set up virtual display
+        run: sudo apt-get update && sudo apt-get install -y xvfb && Xvfb :99 -screen 0 1024x768x24 &
 
       - name: Download Zulu JDK
         id: download_zulu
@@ -60,6 +65,13 @@ jobs:
         if: ${{ github.event.inputs.runTests == 'true' }}
         run: ./gradlew test
 
+      - name: Upload test reports
+        if: ${{ github.event.inputs.runTests == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports-linux
+          path: '**/build/test-results/**/TEST-*.xml'
+
       - name: Build release
         run: ./gradlew createReleaseLinuxDebAndZip createReleaseLinuxRpm -DpackageType=deb -PskipSass${{ github.event.inputs.version != '' && format(' -Pversion={0}', github.event.inputs.version) || '' }}
 
@@ -69,14 +81,7 @@ jobs:
         with:
           name: packages-linux
           path: output/**
-          retention-days: 30
-
-      - name: Upload test reports
-        if: ${{ github.event.inputs.runTests == 'true' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-reports-linux
-          path: '**/build/test-results/**/TEST-*.xml'
+          retention-days: 1
 
   build-windows:
     if: ${{ github.event.inputs.platform == 'all' || !github.event.inputs.platform || github.event.inputs.platform == 'windows' }}
@@ -110,6 +115,13 @@ jobs:
         if: ${{ github.event.inputs.runTests == 'true' }}
         run: ./gradlew test
 
+      - name: Upload test reports
+        if: ${{ github.event.inputs.runTests == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports-windows
+          path: '**/build/test-results/**/TEST-*.xml'
+
       - name: Build release
         run: ./gradlew createReleaseWindowsUnsigned -DpackageType=msi -PskipSass${{ github.event.inputs.version != '' && format(' -Pversion={0}', github.event.inputs.version) || '' }}
 
@@ -119,14 +131,7 @@ jobs:
         with:
           name: packages-windows
           path: output/**
-          retention-days: 30
-
-      - name: Upload test reports
-        if: ${{ github.event.inputs.runTests == 'true' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-reports-windows
-          path: '**/build/test-results/**/TEST-*.xml'
+          retention-days: 1
 
   build-macos:
     if: ${{ github.event.inputs.platform == 'all' || !github.event.inputs.platform || github.event.inputs.platform == 'macos' }}
@@ -163,6 +168,13 @@ jobs:
         if: ${{ github.event.inputs.runTests == 'true' }}
         run: ./gradlew test
 
+      - name: Upload test reports
+        if: ${{ github.event.inputs.runTests == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports-macos
+          path: '**/build/test-results/**/TEST-*.xml'
+
       - name: Build release
         run: ./gradlew createReleaseMacOsARM -DpackageType=dmg -PskipSass${{ github.event.inputs.version != '' && format(' -Pversion={0}', github.event.inputs.version) || '' }}
 
@@ -172,11 +184,4 @@ jobs:
         with:
           name: packages-macos
           path: output/**
-          retention-days: 30
-
-      - name: Upload test reports
-        if: ${{ github.event.inputs.runTests == 'true' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-reports-macos
-          path: '**/build/test-results/**/TEST-*.xml'
+          retention-days: 1
