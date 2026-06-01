@@ -42,6 +42,7 @@ if (arch == "aarch64") {
 }
 
 tasks.register('copyMsi', Copy) {
+    group = "edomh > copy"
     dependsOn(project(":bootstrap").tasks.named("jpackage"))
     from 'bootstrap/build/jpackage/'
     into 'output'
@@ -50,6 +51,7 @@ tasks.register('copyMsi', Copy) {
 }
 
 tasks.register('copyDeb', Copy) {
+    group = "edomh > copy"
     dependsOn(project(":bootstrap").tasks.named("jpackage"), "bootstrap:patchShellScript")
     from 'bootstrap/build/jpackage/'
     into 'output'
@@ -58,6 +60,7 @@ tasks.register('copyDeb', Copy) {
 }
 
 tasks.register('copyRpm', Copy) {
+    group = "edomh > copy"
     dependsOn(project(":bootstrap").tasks.named("jpackage"), "bootstrap:patchShellScript")
     from 'bootstrap/build/jpackage/'
     into 'output'
@@ -66,6 +69,7 @@ tasks.register('copyRpm', Copy) {
 }
 
 tasks.register('copyDmgARM', Copy) {
+    group = "edomh > copy"
     dependsOn(project(":bootstrap").tasks.named("jpackage"))
     from 'bootstrap/build/jpackage/'
     into 'output'
@@ -74,6 +78,7 @@ tasks.register('copyDmgARM', Copy) {
 }
 
 tasks.register('copyDmgX64', Copy) {
+    group = "edomh > copy"
     dependsOn(project(":bootstrap").tasks.named("jpackage"))
     from 'bootstrap/build/jpackage/'
     into 'output'
@@ -81,7 +86,8 @@ tasks.register('copyDmgX64', Copy) {
     rename('Elite Dangerous Odyssey Materials Helper-' + project.version + '.dmg', 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.launcher.macos.x64.dmg')
 }
 
-tasks.register('makePortable', Zip) {
+tasks.register('makeWindowsPortable', Zip) {
+    group = "edomh > portable app"
     dependsOn(project(":application").tasks.named("jpackage"))
     from 'application/build/jpackage/Elite Dangerous Odyssey Materials Helper'
     include '*'
@@ -92,6 +98,7 @@ tasks.register('makePortable', Zip) {
 }
 
 tasks.register('makeLinuxPortable', Zip) {
+    group = "edomh > portable app"
     dependsOn(project(":application").tasks.named("jpackage"))
     from 'application/build/jpackage/Elite Dangerous Odyssey Materials Helper'
     include '*'
@@ -103,6 +110,7 @@ tasks.register('makeLinuxPortable', Zip) {
 }
 
 tasks.register('makeLinuxAutoUpdaterPortable', Zip) {
+    group = "edomh > release"
     dependsOn(project(":bootstrap").tasks.named("jpackage"), "bootstrap:patchShellScript")
     from 'bootstrap/build/jpackage/Elite Dangerous Odyssey Materials Helper Launcher'
     include '*'
@@ -114,6 +122,7 @@ tasks.register('makeLinuxAutoUpdaterPortable', Zip) {
 }
 
 tasks.register('makeMacOsPortableARM', Zip) {
+    group = "edomh > portable app"
     dependsOn(project(":application").tasks.named("jpackage"), project(":application").tasks.named("patchInfoPlist"))
     from 'application/build/jpackage'
     include '*'
@@ -125,6 +134,7 @@ tasks.register('makeMacOsPortableARM', Zip) {
 }
 
 tasks.register('makeMacOsPortableX64', Zip) {
+    group = "edomh > portable app"
     dependsOn(project(":application").tasks.named("jpackage"), project(":application").tasks.named("patchInfoPlist"))
     from 'application/build/jpackage'
     include '*'
@@ -135,7 +145,8 @@ tasks.register('makeMacOsPortableX64', Zip) {
     useFileSystemPermissions()
 }
 
-tasks.register("createRelease") {
+tasks.register("createReleaseWindowsUnsigned") {
+    group = "edomh > release"
     dependsOn(
         subprojects.findAll { p ->
             p.tasks.findByName("jpackage") != null
@@ -143,24 +154,21 @@ tasks.register("createRelease") {
             p.tasks.named("jpackage")
         }
     )
-    finalizedBy makePortable, copyMsi
+    finalizedBy makeWindowsPortable, copyMsi
 }
 
-tasks.register("createReleaseSigned") {
+tasks.register("createReleaseWindowsSigned") {
+    group = "edomh > release"
     dependsOn subprojects.findAll { p ->
         p.tasks.findByName("jpackageSigned") != null
     }.collect { p ->
         p.tasks.named("jpackageSigned")
     }
-    finalizedBy makePortable, copyMsi
+    finalizedBy makeWindowsPortable, copyMsi
 }
 
-tasks.register("createPortableRelease") {
-    dependsOn(project(":application").tasks.named("jpackage"))
-    finalizedBy makePortable
-}
-
-tasks.register("createReleaseLinux") {
+tasks.register("createReleaseLinuxDebAndZip") {
+    group = "edomh > release"
     dependsOn(
         subprojects.findAll { p ->
             p.tasks.findByName("jpackage") != null
@@ -170,7 +178,14 @@ tasks.register("createReleaseLinux") {
     finalizedBy makeLinuxPortable, makeLinuxAutoUpdaterPortable, copyDeb
 }
 
+tasks.register("createReleaseLinuxRpm") {
+    group = "edomh > release"
+    dependsOn(project(":bootstrap").tasks.named("jpackage"))
+    finalizedBy copyRpm
+}
+
 tasks.register("createReleaseMacOsARM") {
+    group = "edomh > release"
     dependsOn(
             subprojects.findAll { p ->
                 p.tasks.findByName("jpackage") != null
@@ -180,6 +195,7 @@ tasks.register("createReleaseMacOsARM") {
     finalizedBy makeMacOsPortableARM, copyDmgARM
 }
 tasks.register("createReleaseMacOsX64") {
+    group = "edomh > release"
     dependsOn(
             subprojects.findAll { p ->
                 p.tasks.findByName("jpackage") != null
@@ -189,10 +205,6 @@ tasks.register("createReleaseMacOsX64") {
     finalizedBy makeMacOsPortableX64, copyDmgX64
 }
 
-tasks.register("createReleaseLinuxRpm") {
-    dependsOn(project(":bootstrap").tasks.named("jpackage"))
-    finalizedBy copyRpm
-}
 
 ext {
     version_logback = "1.5.32"

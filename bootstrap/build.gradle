@@ -136,7 +136,9 @@ jlink {
 tasks.register("patchShellScript") {
     dependsOn tasks.named("jpackage")
     doLast {
-        def launcherScript = file("$buildDir/jpackage/Elite Dangerous Odyssey Materials Helper Launcher/lib/runtime/bin/Elite Dangerous Odyssey Materials Helper Launcher")
+        File launcherScript = project.layout.buildDirectory.file(
+                "Elite Dangerous Odyssey Materials Helper Launcher/lib/runtime/bin/Elite Dangerous Odyssey Materials Helper Launcher"
+        ).get().asFile
         if (launcherScript.exists()) {
             def text = launcherScript.text
             // Replace the unescaped version with escaped version
@@ -184,7 +186,7 @@ tasks.register('signInstallerExe') {
                 keystore: 'edomh_codesigning.pfx',
                 alias: System.getProperty("pfx_alias") ?: "NO_ALIAS",
                 storepass: System.getProperty("pfx_password") ?: "NO_PASSWORD",
-                tsaurl: 'http://timestamp.sectigo.com')
+                tsaurl: 'http://timestamp.sectigo.com') //must be http
     }
 }
 
@@ -201,7 +203,7 @@ tasks.register('signInstallerMsi') {
                 keystore: 'edomh_codesigning.pfx',
                 alias: System.getProperty("pfx_alias") ?: "NO_ALIAS",
                 storepass: System.getProperty("pfx_password") ?: "NO_PASSWORD",
-                tsaurl: 'http://timestamp.sectigo.com')
+                tsaurl: 'http://timestamp.sectigo.com') //must be http
     }
 }
 def arch = System.getProperty("os.arch")

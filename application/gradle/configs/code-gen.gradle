@@ -1,8 +1,8 @@
 // Code generation: SCSS → CSS and JSON Schema → Java
 
 tasks.register('compileSassDefault', compileSass.getClass()) {
+    group = "edomh > sass"
     outputs.upToDateWhen { false }
-    group = 'build'
     def skipProvider = providers.gradleProperty("skipSass")
     onlyIf("there is no property skipSass") {
         !skipProvider.present
@@ -22,8 +22,8 @@ tasks.register('compileSassDefault', compileSass.getClass()) {
 }
 
 tasks.register('compileSassColorblind', compileSass.getClass()) {
+    group = "edomh > sass"
     outputs.upToDateWhen { false }
-    group = 'build'
     description = 'Compiles Sass files to CSS'
     sourceDir = file('src/main/resources/sass/colorblind')
     sassPath = ''
@@ -301,7 +301,13 @@ jsonSchema2Pojo {
 // Wire Sass compilation into the build lifecycle
 compileJava.dependsOn tasks.named('compileSassDefault')
 compileJava.dependsOn tasks.named('compileSassColorblind')
+
 tasks.named('compileSass') {
+    group = "edomh > sass"
     dependsOn tasks.named('compileSassDefault')
     dependsOn tasks.named('compileSassColorblind')
+}
+
+tasks.named('generateJsonSchema2Pojo') {
+    group = "edomh > json schema"
 }

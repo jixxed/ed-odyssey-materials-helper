@@ -146,7 +146,7 @@ tasks.register("patchInfoPlist", PatchInfoPlistTask) {
     dependsOn(tasks.named("jpackage"))
 
     onlyIf {
-        org.gradle.internal.os.OperatingSystem.current().isMacOsX()
+        OperatingSystem.current().isMacOsX()
     }
 }
 tasks.register("jpackageSigned") {
@@ -180,21 +180,6 @@ tasks.register('signAppExe') {
                 storepass: System.getProperty("pfx_password") ?: "NO_PASSWORD",
                 storetype: 'PKCS12',
                 tsaurl: 'http://timestamp.sectigo.com')
-    }
-}
-
-tasks.register("signAppMacOs") {
-    dependsOn "patchInfoPlist"
-    doLast {
-        def app = file("$buildDir/jpackage/Elite Dangerous Odyssey Materials Helper.app")
-
-        exec {
-            commandLine "codesign",
-                    "--force",
-                    "--deep",
-                    "--sign", System.getenv("MAC_CODESIGN_IDENTITY"),
-                    app
-        }
     }
 }
 

@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        maven { url "https://repo.repsy.io/mvn/jixxed/maven/" }
+        maven { url = "https://repo.repsy.io/mvn/jixxed/maven/" }
         mavenLocal()
         mavenCentral()
         gradlePluginPortal()

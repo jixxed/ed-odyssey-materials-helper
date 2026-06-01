@@ -52,7 +52,7 @@ jobs:
       - name: Generate secrets file
         run: ./gradlew application:generateSecrets
       - name: Build release with Gradle
-        run: ./gradlew createReleaseLinux -DpackageType=deb -PskipSass
+        run: ./gradlew createReleaseLinuxDebAndZip -DpackageType=deb -PskipSass
       - name: Build rpm Gradle
         run: ./gradlew createReleaseLinuxRpm -DpackageType=rpm -PskipSass
       - name: Create Release
@@ -114,7 +114,7 @@ jobs:
       - name: Generate secrets file
         run: ./gradlew application:generateSecrets
       - name: Build with Gradle
-        run: ./gradlew createReleaseSigned -DpackageType=msi -Dpfx_alias="${{secrets.CODE_SIGN_CERT_ALIAS}}" -Dpfx_password='"${{secrets.CODE_SIGN_PASSWORD}}"' -Dbase64_pfx="${{secrets.CODE_SIGN_BASE64}}" -PskipSass
+        run: ./gradlew createReleaseWindowsSigned -DpackageType=msi -Dpfx_alias="${{secrets.CODE_SIGN_CERT_ALIAS}}" -Dpfx_password='"${{secrets.CODE_SIGN_PASSWORD}}"' -Dbase64_pfx="${{secrets.CODE_SIGN_BASE64}}" -PskipSass
       - name: Create Release
         uses: ncipollo/release-action@v1.21.0
         with:
