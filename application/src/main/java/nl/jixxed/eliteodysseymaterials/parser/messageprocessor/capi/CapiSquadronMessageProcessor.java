@@ -57,8 +57,12 @@ public class CapiSquadronMessageProcessor implements CapiMessageProcessor<CapiSq
 
             CarrierService.carrierExistsProperty(CarrierType.SQUADRONCARRIER).set(true);
             String encodedName = squadronCarrier.getName().getFilteredVanityName();
-            String decodedName = new String(new java.math.BigInteger(encodedName, 16).toByteArray());
-            CarrierService.setCarrierName(CarrierType.SQUADRONCARRIER, decodedName);
+            if (encodedName != null && !encodedName.isEmpty()) {
+                String decodedName = new String(new java.math.BigInteger(encodedName, 16).toByteArray());
+                CarrierService.setCarrierName(CarrierType.SQUADRONCARRIER, decodedName);
+            } else {
+                CarrierService.setCarrierName(CarrierType.SQUADRONCARRIER, "");
+            }
             CarrierService.setCarrierCallSign(CarrierType.SQUADRONCARRIER, squadronCarrier.getName().getCallsign());
             CarrierService.setCarrierState(CarrierType.SQUADRONCARRIER, CarrierState.forKey(squadronCarrier.getState()));
             CarrierService.setCarrierDockingAccess(CarrierType.SQUADRONCARRIER, CarrierDockingAccess.forKey(squadronCarrier.getDockingAccess()));

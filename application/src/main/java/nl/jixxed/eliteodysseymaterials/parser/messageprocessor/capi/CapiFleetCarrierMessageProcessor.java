@@ -60,8 +60,12 @@ public class CapiFleetCarrierMessageProcessor implements CapiMessageProcessor<Ca
         EventService.publish(new StorageEvent(StoragePool.FLEETCARRIER));
         CarrierService.carrierExistsProperty(CarrierType.FLEETCARRIER).set(true);
         String encodedName = capiFleetcarrier.getName().getFilteredVanityName();
-        String decodedName = new String(new java.math.BigInteger(encodedName, 16).toByteArray());
-        CarrierService.setCarrierName(CarrierType.FLEETCARRIER, decodedName);
+        if (encodedName != null && !encodedName.isEmpty()) {
+            String decodedName = new String(new java.math.BigInteger(encodedName, 16).toByteArray());
+            CarrierService.setCarrierName(CarrierType.FLEETCARRIER, decodedName);
+        } else {
+            CarrierService.setCarrierName(CarrierType.FLEETCARRIER, "");
+        }
         CarrierService.setCarrierCallSign(CarrierType.FLEETCARRIER, capiFleetcarrier.getName().getCallsign());
         CarrierService.setCarrierState(CarrierType.FLEETCARRIER, CarrierState.forKey(capiFleetcarrier.getState()));
         CarrierService.setCarrierDockingAccess(CarrierType.FLEETCARRIER, CarrierDockingAccess.forKey(capiFleetcarrier.getDockingAccess()));
