@@ -47,7 +47,7 @@ tasks.register('copyMsi', Copy) {
     from 'bootstrap/build/jpackage/'
     into 'output'
     include('Elite Dangerous Odyssey Materials Helper-' + version + '.msi')
-    rename('Elite Dangerous Odyssey Materials Helper-' + version + '.msi', 'Elite.Dangerous.Odyssey.Materials.Helper.Auto.Updater-' + version + '.msi')
+    rename('Elite Dangerous Odyssey Materials Helper-' + version + '.msi', 'edomh-' + version + '.auto-updater.windows.msi')
 }
 
 tasks.register('copyDeb', Copy) {
@@ -56,7 +56,7 @@ tasks.register('copyDeb', Copy) {
     from 'bootstrap/build/jpackage/'
     into 'output'
     include('elite-dangerous-odyssey-materials-helper_' + version + '_amd64.deb')
-    rename('elite-dangerous-odyssey-materials-helper_' + version + '_amd64.deb', 'elite-dangerous-odyssey-materials-helper-auto-updater_' + version + '.deb')
+    rename('elite-dangerous-odyssey-materials-helper_' + version + '_amd64.deb', 'edomh-' + version + '.auto-updater.linux.deb')
 }
 
 tasks.register('copyRpm', Copy) {
@@ -65,7 +65,7 @@ tasks.register('copyRpm', Copy) {
     from 'bootstrap/build/jpackage/'
     into 'output'
     include('elite-dangerous-odyssey-materials-helper-' + version + '-1.x86_64.rpm')
-    rename('elite-dangerous-odyssey-materials-helper-' + version + '-1.x86_64.rpm', 'elite-dangerous-odyssey-materials-helper-auto-updater_' + version + '.rpm')
+    rename('elite-dangerous-odyssey-materials-helper-' + version + '-1.x86_64.rpm', 'edomh-' + version + '.auto-updater.linux.rpm')
 }
 
 tasks.register('copyDmgARM', Copy) {
@@ -73,8 +73,8 @@ tasks.register('copyDmgARM', Copy) {
     dependsOn(project(":bootstrap").tasks.named("jpackage"))
     from 'bootstrap/build/jpackage/'
     into 'output'
-    include('Elite Dangerous Odyssey Materials Helper-' + project.version + '.dmg')
-    rename('Elite Dangerous Odyssey Materials Helper-' + project.version + '.dmg', 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.launcher.macos.arm64.dmg')
+    include('Elite Dangerous Odyssey Materials Helper-' + version + '.dmg')
+    rename('Elite Dangerous Odyssey Materials Helper-' + version + '.dmg', 'edomh-' + version + '.auto-updater.macos.arm64.dmg')
 }
 
 tasks.register('copyDmgX64', Copy) {
@@ -82,8 +82,8 @@ tasks.register('copyDmgX64', Copy) {
     dependsOn(project(":bootstrap").tasks.named("jpackage"))
     from 'bootstrap/build/jpackage/'
     into 'output'
-    include('Elite Dangerous Odyssey Materials Helper-' + project.version + '.dmg')
-    rename('Elite Dangerous Odyssey Materials Helper-' + project.version + '.dmg', 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.launcher.macos.x64.dmg')
+    include('Elite Dangerous Odyssey Materials Helper-' + version + '.dmg')
+    rename('Elite Dangerous Odyssey Materials Helper-' + version + '.dmg', 'edomh-' + version + '.auto-updater.macos.x64.dmg')
 }
 
 tasks.register('makeWindowsPortable', Zip) {
@@ -92,7 +92,7 @@ tasks.register('makeWindowsPortable', Zip) {
     from 'application/build/jpackage/Elite Dangerous Odyssey Materials Helper'
     include '*'
     include '**/*' //to include contents of a folder present inside Reports directory
-    archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.zip'
+    archiveFileName = 'edomh-' + project.version + '.portable.zip'
     destinationDirectory = file('/output/')
     preserveFileTimestamps = true
 }
@@ -103,7 +103,7 @@ tasks.register('makeLinuxPortable', Zip) {
     from 'application/build/jpackage/Elite Dangerous Odyssey Materials Helper'
     include '*'
     include '**/*' //to include contents of a folder present inside Reports directory
-    archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.linux.zip'
+    archiveFileName = 'edomh-' + project.version + '.portable.linux.zip'
     destinationDirectory = file('./output/')
     preserveFileTimestamps = true
     useFileSystemPermissions()
@@ -115,7 +115,7 @@ tasks.register('makeLinuxAutoUpdaterPortable', Zip) {
     from 'bootstrap/build/jpackage/Elite Dangerous Odyssey Materials Helper Launcher'
     include '*'
     include '**/*' //to include contents of a folder present inside Reports directory
-    archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.linux.autoupdater.zip'
+    archiveFileName = 'edomh-' + project.version + '.auto-updater.linux.zip'
     destinationDirectory = file('./output/')
     preserveFileTimestamps = true
     useFileSystemPermissions()
@@ -127,7 +127,7 @@ tasks.register('makeMacOsPortableARM', Zip) {
     from 'application/build/jpackage'
     include '*'
     include '**/*' //to include contents of a folder present inside Reports directory
-    archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.macos.arm64.zip'
+    archiveFileName = 'edomh-' + project.version + '.portable.macos.arm64.zip'
     destinationDirectory = file('./output/')
     preserveFileTimestamps = true
     useFileSystemPermissions()
@@ -139,7 +139,7 @@ tasks.register('makeMacOsPortableX64', Zip) {
     from 'application/build/jpackage'
     include '*'
     include '**/*' //to include contents of a folder present inside Reports directory
-    archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.macos.x64.zip'
+    archiveFileName = 'edomh-' + project.version + '.portable.macos.x64.zip'
     destinationDirectory = file('./output/')
     preserveFileTimestamps = true
     useFileSystemPermissions()
