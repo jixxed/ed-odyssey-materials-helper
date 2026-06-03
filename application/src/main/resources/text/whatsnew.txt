@@ -1,3 +1,11 @@
+Version 3.10.1
+-------------
+Fix ship list refresh to old behavior, behavior added in 3.9.5 is now only for delete actions
+Fix pinned blueprint showing grade < 1 for invited state at start
+Fix Increased FSD Range - Optimised Mass start value to 0% instead of 5%
+Added error notification on DB error, for example on disk full
+Handle empty carrier names gracefully
+
 Version 3.10.0
 -------------
 MacOs on Apple Silicon support has been added thanks to @stefanlight8!

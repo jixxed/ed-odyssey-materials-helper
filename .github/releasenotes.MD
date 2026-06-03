@@ -21,7 +21,9 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-MacOs on Apple Silicon support has been added thanks to @stefanlight8
-Added ship links V2. when you share a ship build on discord, it will preview a lot of ship data.
-Fixed notifications not showing after import, while still making a sound 
+Fix ship list refresh to old behavior, behavior added in 3.9.5 is now only for delete actions
+Fix pinned blueprint showing grade < 1 for invited state at start
+Fix Increased FSD Range - Optimised Mass start value to 0% instead of 5%
+Added error notification on DB error, for example on disk full
+Handle empty carrier names gracefully
 ```
