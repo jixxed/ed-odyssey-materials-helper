@@ -466,7 +466,7 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
                 if (buttonType == ButtonType.OK) {
                     APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                         ShipService.deleteShipConfiguration(this.shipSelect.getSelectionModel().getSelectedItem().getUuid(), commander);
-                        Platform.runLater(this::refreshShipSelect);
+                        Platform.runLater(() -> refreshShipSelect(true));
                     });
                 }
             });
@@ -618,16 +618,27 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
     }
 
     private void refreshShipSelect() {
+        refreshShipSelect(false);
+    }
+    private void refreshShipSelect(boolean keepIndexAfterDelete) {
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-            final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
+            ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
+
+            int selectedIndex = keepIndexAfterDelete
+                    ? shipSelect.getSelectionModel().getSelectedIndex()
+                    : -1;
+
             final Set<ShipConfiguration> allShipConfigurations = shipConfigurations.getAllShipConfigurations();
-            int selectedIndex = this.shipSelect.getSelectionModel().getSelectedIndex();
             this.shipSelect.clear();
             this.shipSelect.addAll(allShipConfigurations.stream().sorted(Comparator.comparing(ShipConfiguration::getName)).toList());
-            if (selectedIndex != -1) {
-                this.shipSelect.getSelectionModel().select(Math.min(selectedIndex, this.shipSelect.getItems().size() - 1));
+
+            if (keepIndexAfterDelete && selectedIndex >= 0) {
+                shipSelect.getSelectionModel().select(
+                        Math.min(selectedIndex, shipSelect.getItems().size() - 1)
+                );
             } else {
-                shipConfigurations.getSelectedShipConfiguration().ifPresent(configuration -> this.shipSelect.getSelectionModel().select(configuration));
+                shipConfigurations.getSelectedShipConfiguration()
+                        .ifPresent(shipSelect.getSelectionModel()::select);
             }
         });
     }
