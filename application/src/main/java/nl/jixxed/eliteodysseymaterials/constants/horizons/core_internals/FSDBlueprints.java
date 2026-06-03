@@ -99,7 +99,7 @@ public class FSDBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+3%", false, percentagePositive(0.0, 0.03)),
-                                    HorizonsModifier.FSD_OPTIMISED_MASS, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.05, 0.15)),
+                                    HorizonsModifier.FSD_OPTIMISED_MASS, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.00, 0.15)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-3%", false, percentageNegative(0.0, 0.03)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.05, 0.10))
                             ),
