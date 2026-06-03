@@ -10,10 +10,13 @@
 
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
+import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.persistence.commander.model.CommunityGoalModel;
 import nl.jixxed.eliteodysseymaterials.persistence.common.model.StarSystemModel;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Event;
 import nl.jixxed.eliteodysseymaterials.service.DatabaseService;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 
 public interface MessageProcessor<T extends Event> {
     void process(final Object event);
@@ -30,14 +33,18 @@ public interface MessageProcessor<T extends Event> {
                   y = excluded.y,
                   z = excluded.z
                 """;
+        try {
+            DatabaseService.getCommonDatabase().sqlUpdate(sql)
+                    .setParameter("address", starSystemModel.getAddress())
+                    .setParameter("name", starSystemModel.getName())
+                    .setParameter("x", starSystemModel.getX())
+                    .setParameter("y", starSystemModel.getY())
+                    .setParameter("z", starSystemModel.getZ())
+                    .execute();
+        } catch (Exception e) {
+            NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.value.text", "Failed to store star system"), LocaleService.LocaleString.of("notification.value.text", e.getMessage()));
+        }
 
-        DatabaseService.getCommonDatabase().sqlUpdate(sql)
-                .setParameter("address", starSystemModel.getAddress())
-                .setParameter("name", starSystemModel.getName())
-                .setParameter("x", starSystemModel.getX())
-                .setParameter("y", starSystemModel.getY())
-                .setParameter("z", starSystemModel.getZ())
-                .execute();
     }
 
     default void upsert(CommunityGoalModel communityGoalModel) {
@@ -102,25 +109,29 @@ public interface MessageProcessor<T extends Event> {
                     bonus = excluded.bonus
                 """;
 
-        DatabaseService.getCommanderDatabase().sqlUpdate(sql)
-                .setParameter("id", communityGoalModel.getId())
-                .setParameter("timestamp", communityGoalModel.getTimestamp())
-                .setParameter("cgid", communityGoalModel.getCgid())
-                .setParameter("title", communityGoalModel.getTitle())
-                .setParameter("systemName", communityGoalModel.getSystemName())
-                .setParameter("marketName", communityGoalModel.getMarketName())
-                .setParameter("expiry", communityGoalModel.getExpiry())
-                .setParameter("isComplete", communityGoalModel.getIsComplete())
-                .setParameter("currentTotal", communityGoalModel.getCurrentTotal())
-                .setParameter("playerContribution", communityGoalModel.getPlayerContribution())
-                .setParameter("numContributors", communityGoalModel.getNumContributors())
-                .setParameter("topTierName", communityGoalModel.getTopTierName())
-                .setParameter("topTierBonus", communityGoalModel.getTopTierBonus())
-                .setParameter("topRankSize", communityGoalModel.getTopRankSize())
-                .setParameter("playerInTopRank", communityGoalModel.getPlayerInTopRank())
-                .setParameter("tierReached", communityGoalModel.getTierReached())
-                .setParameter("playerPercentileBand", communityGoalModel.getPlayerPercentileBand())
-                .setParameter("bonus", communityGoalModel.getBonus())
-                .execute();
+        try {
+            DatabaseService.getCommanderDatabase().sqlUpdate(sql)
+                    .setParameter("id", communityGoalModel.getId())
+                    .setParameter("timestamp", communityGoalModel.getTimestamp())
+                    .setParameter("cgid", communityGoalModel.getCgid())
+                    .setParameter("title", communityGoalModel.getTitle())
+                    .setParameter("systemName", communityGoalModel.getSystemName())
+                    .setParameter("marketName", communityGoalModel.getMarketName())
+                    .setParameter("expiry", communityGoalModel.getExpiry())
+                    .setParameter("isComplete", communityGoalModel.getIsComplete())
+                    .setParameter("currentTotal", communityGoalModel.getCurrentTotal())
+                    .setParameter("playerContribution", communityGoalModel.getPlayerContribution())
+                    .setParameter("numContributors", communityGoalModel.getNumContributors())
+                    .setParameter("topTierName", communityGoalModel.getTopTierName())
+                    .setParameter("topTierBonus", communityGoalModel.getTopTierBonus())
+                    .setParameter("topRankSize", communityGoalModel.getTopRankSize())
+                    .setParameter("playerInTopRank", communityGoalModel.getPlayerInTopRank())
+                    .setParameter("tierReached", communityGoalModel.getTierReached())
+                    .setParameter("playerPercentileBand", communityGoalModel.getPlayerPercentileBand())
+                    .setParameter("bonus", communityGoalModel.getBonus())
+                    .execute();
+        } catch (Exception e) {
+            NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.value.text", "Failed to store star system"), LocaleService.LocaleString.of("notification.value.text", e.getMessage()));
+        }
     }
 }
