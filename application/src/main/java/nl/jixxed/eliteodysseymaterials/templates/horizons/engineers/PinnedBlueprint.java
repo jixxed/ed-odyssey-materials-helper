@@ -32,8 +32,10 @@ public class PinnedBlueprint extends Blueprint implements DestroyableEventTempla
         super(blueprint, maxGrade, withType);
         this.engineer = engineer;
         initEventHandling();
-        final int grade = getMaxGrade(blueprint);
-        update(blueprint, grade, true);
+        if(blueprint != null) {
+            final int grade = getMaxGrade(blueprint);
+            update(blueprint, grade, true);
+        }
 
     }
 
