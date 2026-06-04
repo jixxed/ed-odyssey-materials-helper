@@ -23,3 +23,5 @@ ship.full
 edomh_codesigning.pfx
 .DS_Store
 *.log
+/application/src/main/resources/css/compiled/colorblind.css
+/application/src/main/resources/css/compiled/main.css
