@@ -67,14 +67,14 @@ jobs:
 
       - name: Upload test reports
         if: ${{ github.event.inputs.runTests == 'true' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: test-reports-html-linux
           path: '**/build/reports/tests/**'
 
       - name: Upload problems report
         if: ${{ github.event.inputs.runTests == 'true' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: problems-report-linux
           path: '**/build/reports/problems/problems-report.html'
@@ -84,7 +84,7 @@ jobs:
 
       - name: Upload packages as artifacts
         if: ${{ github.event.inputs.storePackagesAsArtifacts == 'true' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: packages-linux
           path: output/**
@@ -124,14 +124,14 @@ jobs:
 
       - name: Upload test reports
         if: ${{ github.event.inputs.runTests == 'true' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: test-reports-html-windows
           path: '**/build/reports/tests/**'
 
       - name: Upload problems report
         if: ${{ github.event.inputs.runTests == 'true' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: problems-report-windows
           path: '**/build/reports/problems/problems-report.html'
@@ -141,7 +141,7 @@ jobs:
 
       - name: Upload packages as artifacts
         if: ${{ github.event.inputs.storePackagesAsArtifacts == 'true' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: packages-windows
           path: output/**
@@ -184,14 +184,14 @@ jobs:
 
       - name: Upload test reports
         if: ${{ github.event.inputs.runTests == 'true' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: test-reports-html-macos
           path: '**/build/reports/tests/**'
 
       - name: Upload problems report
         if: ${{ github.event.inputs.runTests == 'true' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: problems-report-macos
           path: '**/build/reports/problems/problems-report.html'
@@ -201,7 +201,7 @@ jobs:
 
       - name: Upload packages as artifacts
         if: ${{ github.event.inputs.storePackagesAsArtifacts == 'true' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: packages-macos
           path: output/**
