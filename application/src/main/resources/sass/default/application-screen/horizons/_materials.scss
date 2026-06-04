@@ -26,17 +26,20 @@
       -fx-alignment: center-left;
       -fx-wrap-text: true;
     }
-
     .material-card {
       -fx-background-color: $background-color-dark;
+      -fx-border-color: $border-color-black;
+      -fx-border-width: 0.1em;
       -fx-alignment: center-left;
       @include fixedWidth(16.5em);
 
       &:thargoid {
+        -fx-border-color: darken($background-color-thargoid, 3%);
         -fx-background-color: $background-color-thargoid;
       }
 
       &:guardian {
+        -fx-border-color: darken($background-color-guardian, 3%);
         -fx-background-color: $background-color-guardian;
       }
 
@@ -45,10 +48,12 @@
       }
 
       &:thargoid:live {
+        -fx-border-color: darken($background-color-thargoid, 3%);
         -fx-background-color: linear-gradient(from 0 0 to 0.5em 0.5em, repeat, $background-color-thargoid 0%, lighten($background-color-thargoid, 6.25%) 25%, $background-color-thargoid 50%, lighten($background-color-thargoid, 6.25%) 75%, $background-color-thargoid 100%);
       }
 
       &:guardian:live {
+        -fx-border-color: darken($background-color-guardian, 3%);
         -fx-background-color: linear-gradient(from 0 0 to 0.5em 0.5em, repeat, $background-color-guardian 0%, lighten($background-color-guardian, 6.25%) 25%, $background-color-guardian 50%, lighten($background-color-guardian, 6.25%) 75%, $background-color-guardian 100%);
       }
 
@@ -165,7 +170,7 @@
       }
 
       .segmented-bar {
-        @include fixedWidth(16.5em);
+        @include fixedWidth(16.3em);
         @include fixedHeight(0.5em);
 
         @include segmented-bar-straight;
