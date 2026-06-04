@@ -50,6 +50,7 @@ public class HorizonsMaterialCard extends DestroyableVBox implements Destroyable
     private DestroyableLabel storageSpace;
 
     HorizonsMaterialCard(final HorizonsMaterial material) {
+        this.getStyleClass().add("material-card-" + material.name().toLowerCase().replace("_", "-"));
         this.material = material;
         initComponents();
         initEventHandling();
