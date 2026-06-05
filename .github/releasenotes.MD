@@ -27,4 +27,5 @@ Fix Increased FSD Range - Optimised Mass start value to 0% instead of 5%
 Added error notification on DB error, for example on disk full
 Handle empty carrier names gracefully
 Added unique styleclass to ship material cards to allow for css override
+Complete localization of CG's
 ```
