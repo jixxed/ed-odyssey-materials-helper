@@ -29,3 +29,5 @@
 "community.goal.information.currentband.top","Top {0}","","","","","","Топ {0}","",""
 "community.goal.information.currentband.percent","{0}%","","","","","","{0}%","",""
 "community.goal.information.currentband.none","-","","","","","","-","",""
+"community.goal.date.format.currentyear","LLLL d, HH:mm","LLLL d, HH:mm","d. LLLL HH:mm","d de LLLL HH:mm","d LLLL HH:mm","d de LLLL HH:mm","d LLLL HH:mm","yyyy年M月d日 HH:mm","d LLLL HH:mm"
+"community.goal.date.format.previousyear","LLLL d yyyy, HH:mm","LLLL d yyyy, HH:mm","d. LLLL yyyy HH:mm","d de LLLL de yyyy HH:mm","d LLLL yyyy HH:mm","d de LLLL de yyyy HH:mm","d LLLL yyyy HH:mm","yyyy年M月d日 HH:mm","d LLLL yyyy HH:mm"

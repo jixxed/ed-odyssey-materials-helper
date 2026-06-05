@@ -32,6 +32,7 @@ import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -105,6 +106,9 @@ public class LocaleService {
 
     public static StringBinding getStringBinding(final Supplier<String> supplier) {
         return ObservableResourceFactory.getStringBinding(supplier);
+    }
+    public static StringBinding getStringBinding(final Function<Locale, String> function) {
+        return ObservableResourceFactory.getStringBinding(function);
     }
 
     public static StringBinding getToolTipStringBinding(final ModuleBlueprint recipe, final String localizationKey) {

@@ -39,6 +39,8 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -66,6 +68,16 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
     private DestroyableLabel contribution;
 
     private final ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
+
+    private static String lookupLocalized(Map<String, Object> localized, Locale locale, String key, String fallback) {
+        if (localized == null) return fallback;
+        Object localeMap = localized.get(locale.toLanguageTag());
+        if (localeMap instanceof Map<?, ?> map) {
+            Object value = map.get(key);
+            return value != null ? value.toString() : fallback;
+        }
+        return fallback;
+    }
 
     public CommunityGoal(Goal goal, int index) {
         this.goal = goal;
@@ -184,20 +196,21 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                     progressStats.update(goalReport);
                     currentTier.setText(goalReport.currentAchievedTier().toString());
                     maxTier.setText(goalReport.currentTopTier().toString());
-                    activityType.setText(goalReport.metadata().get("activityType").toString());
+                    Map<String, Object> localized = (Map<String, Object>) goalReport.metadata().get("localized");
+                    String fallbackActivityType = goalReport.metadata().get("activityType").toString();
+                    activityType.addBinding(activityType.textProperty(),
+                        LocaleService.getStringBinding(locale -> lookupLocalized(localized, locale, "activityType", fallbackActivityType)));
 
 
-                    LocalDateTime expiryUtc = LocalDateTime.parse(goalReport.metadata().get("expiry").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-                    ZonedDateTime localExpiry = expiryUtc
-                            .atZone(ZoneOffset.UTC)
-                            .withZoneSameInstant(ZoneId.systemDefault());
-                    DateTimeFormatter formatter = (expiryUtc.getYear() == LocalDateTime.now().getYear())
-                            ? DateTimeFormatter.ofPattern("LLLL d, HH:mm")
-                            : DateTimeFormatter.ofPattern("LLLL d yyyy, HH:mm");
-
-                    expires.setText(formatter.format(localExpiry));
+                    ZonedDateTime localExpiry = toLocalExpiry(goalReport.metadata().get("expiry").toString());
+                    String formatKey = localExpiry.getYear() == ZonedDateTime.now().getYear() ? "community.goal.date.format.currentyear" : "community.goal.date.format.previousyear";
+                    StringBinding formattedDate = LocaleService.getStringBinding(locale -> {
+                        String pattern = LocaleService.getLocalizedStringForLocale(locale, formatKey);
+                        return DateTimeFormatter.ofPattern(pattern).withLocale(locale).format(localExpiry);
+                    });
+                    expires.addBinding(expires.textProperty(), formattedDate);
                     if (localExpiry.isAfter(ZonedDateTime.now())) {
-                        expiresTimer.setText(Formatters.timeUntil(localExpiry));
+                        expiresTimer.addBinding(expiresTimer.textProperty(), LocaleService.getStringBinding(() -> Formatters.timeUntil(localExpiry)));
                         expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expires"));
                     } else {
                         expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expired"));
@@ -214,8 +227,12 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                         location.setVisible(true);
                         location.setManaged(true);
                     }
-                    goalText.setText(goalReport.metadata().get("bulletin").toString());
-                    title.setText(goalReport.metadata().get("title").toString());
+                    String fallbackBulletin = goalReport.metadata().get("bulletin").toString();
+                    goalText.addBinding(goalText.textProperty(),
+                        LocaleService.getStringBinding(locale -> lookupLocalized(localized, locale, "bulletin", fallbackBulletin)));
+                    String fallbackTitle = goalReport.metadata().get("title").toString();
+                    title.addBinding(title.textProperty(),
+                        LocaleService.getStringBinding(locale -> lookupLocalized(localized, locale, "title", fallbackTitle)));
                     ApplicationState.getInstance().getPreferredCommander().ifPresent(_ -> {//database must be initialized with a commander
                         Optional<CommunityGoalModel> communityGoalModel = new QCommunityGoalModel()
                                 .cgid.eq((int) goalReport.cgid())
@@ -259,6 +276,12 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                 });
     }
 
+    private ZonedDateTime toLocalExpiry(String expiryUtc) {
+        return LocalDateTime.parse(expiryUtc, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                .atZone(ZoneOffset.UTC)
+                .withZoneSameInstant(ZoneId.systemDefault());
+    }
+
     private void smallUpdate() {
         Platform.runLater(() -> {
             CommunityGoalsService.getReport(goal.getId())
@@ -266,12 +289,9 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                             .filter(g -> goal.getId().equals((int) g.cgid()))
                             .findFirst())
                     .ifPresent(goalReport -> {
-                        LocalDateTime expiryUtc = LocalDateTime.parse(goalReport.metadata().get("expiry").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-                        ZonedDateTime localExpiry = expiryUtc
-                                .atZone(ZoneOffset.UTC)
-                                .withZoneSameInstant(ZoneId.systemDefault());
+                        ZonedDateTime localExpiry = toLocalExpiry(goalReport.metadata().get("expiry").toString());
                         if (localExpiry.isAfter(ZonedDateTime.now())) {
-                            expiresTimer.setText(Formatters.timeUntil(localExpiry));
+                            expiresTimer.addBinding(expiresTimer.textProperty(), LocaleService.getStringBinding(() -> Formatters.timeUntil(localExpiry)));
                             expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expires"));
                         } else {
                             expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expired"));

@@ -10,6 +10,7 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.other.communitygoal;
 
+import javafx.beans.binding.StringBinding;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ProgressBarBuilder;
@@ -22,7 +23,6 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableProgres
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -65,12 +65,16 @@ public class ProgressStats extends DestroyableVBox implements DestroyableTemplat
             this.estimate.addBinding(this.estimate.textProperty(), LocaleService.getStringBinding("community.goal.progress.percent", currentPercentage));
             this.estimate.setVisible(true);
             this.estimate.setManaged(true);
-        } else if(!estimatedCompletion.equals("insufficient-data") && !estimatedCompletion.equals("expired")) {//date or percentage
+        } else if (!estimatedCompletion.equals("insufficient-data") && !estimatedCompletion.equals("expired")) {//date or percentage
             try {
-                LocalDateTime parsed = LocalDateTime.parse(estimatedCompletion);
-                ZonedDateTime zoned = ZonedDateTime.from(parsed).withZoneSameInstant(ZoneId.systemDefault());
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LLLL dd, HH:mm");
-                this.estimate.addBinding(this.estimate.textProperty(), LocaleService.getStringBinding("community.goal.progress.estimate", formatter.format(zoned)));
+                ZonedDateTime zoned = ZonedDateTime.parse(estimatedCompletion).withZoneSameInstant(ZoneId.systemDefault());
+                String formatKey = "community.goal.date.format.currentyear";
+                StringBinding formattedDate = LocaleService.getStringBinding(locale -> {
+                    String pattern = LocaleService.getLocalizedStringForLocale(locale, formatKey);
+                    return LocaleService.getLocalizedStringForCurrentLocale("community.goal.progress.estimate", DateTimeFormatter.ofPattern(pattern).withLocale(locale).format(zoned));
+                });
+                this.estimate.addBinding(this.estimate.textProperty(), formattedDate);
+
             } catch (DateTimeParseException ex) {
                 this.estimate.addBinding(this.estimate.textProperty(), LocaleService.getStringBinding("community.goal.progress.estimate", estimatedCompletion));
             }

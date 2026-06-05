@@ -19,7 +19,9 @@ import javafx.collections.ObservableList;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -49,6 +51,19 @@ public class ObservableResourceFactory {
             @Override
             public String computeValue() {
                 return stringSupplier.get();
+            }
+        };
+    }
+    @SuppressWarnings("java:S1171")
+    public static StringBinding getStringBinding(final Function<Locale, String> stringFunction) {
+        return new StringBinding() {
+            {
+                bind(resourcesProperty());
+            }
+
+            @Override
+            public String computeValue() {
+                return stringFunction.apply(LocaleService.getCurrentLocale());
             }
         };
     }
