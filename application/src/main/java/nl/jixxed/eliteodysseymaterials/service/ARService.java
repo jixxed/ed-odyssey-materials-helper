@@ -126,11 +126,15 @@ public class ARService {
         EVENT_LISTENERS.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
             if (timer != null) {
                 timer.cancel();
-                timerDisplay.cancel();
-                executorService.shutdownNow();
-                animationTimer.stop();
-                log.info("AR Service shutdown finished.");
             }
+            if (timerDisplay != null) {
+                timerDisplay.cancel();
+            }
+            if (animationTimer != null) {
+                animationTimer.stop();
+            }
+            executorService.shutdownNow();
+            log.info("AR Service shutdown finished.");
         }));
 
         EVENT_LISTENERS.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
@@ -163,14 +167,51 @@ public class ARService {
     public static void forceShow() {
         FORCE_VISIBLE.set(true);
         if (enabled && !arStage.isShowing()) {
-            REQUEST_SHOW.set(true);
+            showOverlay();
         }
     }
 
     public static void forceHide() {
         FORCE_VISIBLE.set(false);
         if (enabled && arStage.isShowing()) {
-            REQUEST_HIDE.set(true);
+            hideOverlay();
+        }
+    }
+
+    private static void showOverlay() {
+        if (!arStage.isShowing()) {
+            positionWindow();
+            arStage.setAlwaysOnTop(true);
+            arStage.show();
+            final int handle = WindowInfoUtil.findWindow(windowTitle -> windowTitle.contains(arStage.getTitle()));
+            long wl = User32.INSTANCE.GetWindowLongA(handle, WinUser.GWL_EXSTYLE);
+            wl = wl | WinUser.WS_EX_LAYERED | WinUser.WS_EX_TRANSPARENT;
+            User32.INSTANCE.SetWindowLongA(handle, WinUser.GWL_EXSTYLE, wl);
+            if (targetWindowInfo.hwnd != 0) {
+                User32.INSTANCE.SetForegroundWindow(targetWindowInfo.hwnd);
+            }
+            log.debug("show overlay");
+        }
+    }
+
+    private static void hideOverlay() {
+        if (arStage.isShowing()) {
+            arOverlay.getResizableImageView().setImage(null);
+            arStage.hide();
+            arStage.setAlwaysOnTop(false);
+            log.debug("hide overlay");
+            tradeHits.set(0);
+            System.gc();
+        }
+    }
+
+    private static void positionWindow() {
+        final nl.jixxed.eliteodysseymaterials.service.ar.Rectangle scaledRectForRealRect = ScreenHelper.getScaledRectForRealRect(contentX, contentY, contentX + contentWidth, contentY + contentHeight);
+        if (scaledRectForRealRect != null) {
+            arStage.setX(scaledRectForRealRect.getX());
+            arStage.setY(scaledRectForRealRect.getY());
+            arStage.setHeight(scaledRectForRealRect.getHeight());
+            arStage.setWidth(scaledRectForRealRect.getWidth());
         }
     }
 
@@ -197,22 +238,25 @@ public class ARService {
             setupTimerAnalyzeAndRender();
 
             arStage.setOnCloseRequest(event -> {
-                if (timer != null) {
-                    timer.cancel();
-                }
-                if (timerDisplay != null) {
-                    timerDisplay.cancel();
-                }
-                executorService.shutdown();
-                if (animationTimer != null) {
-                    animationTimer.stop();
+                log.debug("arStage setOnCloseRequest");
+                if (enabled) {
+                    event.consume();
                 }
             });
 
             setupAnimationTimer();
+            if (PreferencesService.getPreference(PreferenceConstants.AR_FORCE_VISIBLE, false)) {
+                FORCE_VISIBLE.set(true);
+                if (!arStage.isShowing()) {
+                    showOverlay();
+                }
+            }
         } else {
             enabled = false;
             FORCE_VISIBLE.set(false);
+            if (arStage != null) {
+                arStage.close();
+            }
             log.debug("disabling AR Service");
             if (animationTimer != null) {
                 animationTimer.stop();
@@ -664,44 +708,6 @@ public class ARService {
                 } else if (!MENU_VISIBLE.get() && !TRADE_VISIBLE.get() && REQUEST_HIDE.get()) {
                     REQUEST_HIDE.set(false);
                     hideOverlay();
-                }
-            }
-
-            private static void showOverlay() {
-                if (!arStage.isShowing()) {
-                    positionWindow();
-                    arStage.setAlwaysOnTop(true);
-                    arStage.show();
-                    final int handle = WindowInfoUtil.findWindow(windowTitle -> windowTitle.contains(arStage.getTitle()));
-                    long wl = User32.INSTANCE.GetWindowLongA(handle, WinUser.GWL_EXSTYLE);
-                    wl = wl | WinUser.WS_EX_LAYERED | WinUser.WS_EX_TRANSPARENT;
-                    User32.INSTANCE.SetWindowLongA(handle, WinUser.GWL_EXSTYLE, wl);
-                    if (targetWindowInfo.hwnd != 0) {
-                        User32.INSTANCE.SetForegroundWindow(targetWindowInfo.hwnd);
-                    }
-                    log.debug("show overlay");
-                }
-
-            }
-
-            private static void hideOverlay() {
-                if (arStage.isShowing()) {
-                    arOverlay.getResizableImageView().setImage(null);
-                    arStage.hide();
-                    arStage.setAlwaysOnTop(false);
-                    log.debug("hide overlay");
-                    tradeHits.set(0);
-                    System.gc();
-                }
-            }
-
-            private static void positionWindow() {
-                final nl.jixxed.eliteodysseymaterials.service.ar.Rectangle scaledRectForRealRect = ScreenHelper.getScaledRectForRealRect(contentX, contentY, contentX + contentWidth, contentY + contentHeight);
-                if (scaledRectForRealRect != null) {
-                    arStage.setX(scaledRectForRealRect.getX());
-                    arStage.setY(scaledRectForRealRect.getY());
-                    arStage.setHeight(scaledRectForRealRect.getHeight());
-                    arStage.setWidth(scaledRectForRealRect.getWidth());
                 }
             }
         };
