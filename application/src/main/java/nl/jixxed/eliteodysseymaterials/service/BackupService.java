@@ -68,7 +68,7 @@ public class BackupService {
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                     if (!file.startsWith(zipPath) && !file.startsWith(Path.of(OsConstants.getConfigDirectory() + "/tesseract")) && !isExcluded(file.getFileName().toString())) {
                         zos.putNextEntry(new ZipEntry(sourceFolderPath.relativize(file).toString()));
-                        log.debug("backup: " + file.getFileName());
+//                        log.debug("backup: " + file.getFileName());
                         Files.copy(file, zos);
                         zos.closeEntry();
                     }
