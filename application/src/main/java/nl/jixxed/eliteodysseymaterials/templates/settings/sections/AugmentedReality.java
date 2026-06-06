@@ -74,6 +74,7 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableEven
                 .withText("tab.settings.ar.link")
                 .build();
         final DestroyableHBox arSetting = createARSetting();
+        final DestroyableHBox arForceVisibleSetting = createARForceVisibleSetting();
         final DestroyableHBox arLocaleSetting = createARLocaleSetting();
         final DestroyableHBox arMatchSetting = createARMatchMethodSetting();
         final DestroyableHBox arFuzzyScoreSetting = createARFuzzyScoreSetting();
@@ -87,7 +88,7 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableEven
 
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
         this.getNodes().addAll(arLabel, BoxBuilder.builder()
-                .withNodes(arExplainLabel, vccLink).buildHBox(), arSetting, arLocaleSetting, arMatchSetting, arFuzzyScoreSetting, arDataportDetectSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting, arColorPowerplaySetting, arBartenderSetting, arColorBartenderSetting);
+                .withNodes(arExplainLabel, vccLink).buildHBox(), arSetting, arForceVisibleSetting, arLocaleSetting, arMatchSetting, arFuzzyScoreSetting, arDataportDetectSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting, arColorPowerplaySetting, arBartenderSetting, arColorBartenderSetting);
     }
 
     private DestroyableHBox createARFuzzyScoreSetting() {
@@ -168,6 +169,32 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableEven
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(this.arOverlayLabel, this.arOverlayButton)
+                .buildHBox();
+    }
+
+    private DestroyableHBox createARForceVisibleSetting() {
+        DestroyableLabel arForceVisibleLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ar.force.visible")
+                .build();
+        DestroyableToggleSwitch arForceVisibleButton = ToggleSwitchBuilder.builder()
+                .withSelectedChangeListener((_, _, newValue) -> {
+                    PreferencesService.setPreference(PreferenceConstants.AR_FORCE_VISIBLE, Boolean.TRUE.equals(newValue));
+                    if (Boolean.TRUE.equals(newValue)) {
+                        Platform.runLater(ARService::forceShow);
+                    } else {
+                        Platform.runLater(ARService::forceHide);
+                    }
+                })
+                .withSelected(PreferencesService.getPreference(PreferenceConstants.AR_FORCE_VISIBLE, false))
+                .build();
+        DestroyableLabel arForceVisibleLabelExplain = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ar.force.visible.explain")
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(arForceVisibleLabel, arForceVisibleButton, arForceVisibleLabelExplain)
                 .buildHBox();
     }
 

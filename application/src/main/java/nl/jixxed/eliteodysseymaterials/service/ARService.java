@@ -71,7 +71,7 @@ public class ARService {
     private static final double BARTENDER_MATCHING_THRESHOLD = 0.65;
     private static final String STYLESHEET = "/css/ar.css";
     private static final String ELITE_DANGEROUS_CLIENT_WINDOW_NAME = "Elite - Dangerous (CLIENT)";
-//        private static final String ELITE_DANGEROUS_CLIENT_WINDOW_NAME = "Elite Simulator";
+    //        private static final String ELITE_DANGEROUS_CLIENT_WINDOW_NAME = "Elite Simulator";
     private static AROverlay arOverlay;
     private static Scene arScene;
     private static Stage arStage;
@@ -96,6 +96,7 @@ public class ARService {
     private static final AtomicBoolean TRADE_VISIBLE = new AtomicBoolean(false);
     private static final AtomicBoolean REQUEST_SHOW = new AtomicBoolean(false);
     private static final AtomicBoolean REQUEST_HIDE = new AtomicBoolean(false);
+    private static final AtomicBoolean FORCE_VISIBLE = new AtomicBoolean(false);
     private static DownloadMenu downloadMenu;
     private static BartenderMenu bartenderMenu;
     private static ScrollBarV2 scrollBar;
@@ -159,6 +160,20 @@ public class ARService {
         bartenderOverlayEnabled.set(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_AR, Boolean.TRUE));
     }
 
+    public static void forceShow() {
+        FORCE_VISIBLE.set(true);
+        if (enabled && !arStage.isShowing()) {
+            REQUEST_SHOW.set(true);
+        }
+    }
+
+    public static void forceHide() {
+        FORCE_VISIBLE.set(false);
+        if (enabled && arStage.isShowing()) {
+            REQUEST_HIDE.set(true);
+        }
+    }
+
     public static void toggle() {
         if (!enabled) {
             enabled = true;
@@ -197,6 +212,7 @@ public class ARService {
             setupAnimationTimer();
         } else {
             enabled = false;
+            FORCE_VISIBLE.set(false);
             log.debug("disabling AR Service");
             if (animationTimer != null) {
                 animationTimer.stop();
@@ -330,7 +346,7 @@ public class ARService {
         cocktailCaptureMat = CvHelper.convertToMat(capture, cocktailCaptureMat);
         final int result_cols = cocktailCaptureMat.cols() - cocktailTemplateScaled.cols() + 1;
         final int result_rows = cocktailCaptureMat.rows() - cocktailTemplateScaled.rows() + 1;
-        if(result_cols <= 0 || result_rows <= 0) {
+        if (result_cols <= 0 || result_rows <= 0) {
             return false;
         }
         if (bartenderMenuResult == null || bartenderMenuResult.cols() != result_cols || bartenderMenuResult.rows() != result_rows) {
@@ -595,19 +611,24 @@ public class ARService {
     }
 
     private static Asset getAsset(boolean fuzzy, String textAsset, Locale locale, int fuzzyScore) {
-        Asset asset;
-        if (fuzzy) {
-            BoundExtractedResult<Asset> extractedResult = Asset.forLocalizedNameSpaceInsensitiveFuzzy(textAsset, locale);
-            log.info("Fuzzy matched '{}' to '{}' with score {}", textAsset, extractedResult.getReferent(), extractedResult.getScore());
-            if (extractedResult.getScore() >= fuzzyScore) {
-                asset = extractedResult.getReferent();
+        try {
+            Asset asset;
+            if (fuzzy) {
+                BoundExtractedResult<Asset> extractedResult = Asset.forLocalizedNameSpaceInsensitiveFuzzy(textAsset, locale);
+                log.info("Fuzzy matched '{}' to '{}' with score {}", textAsset, extractedResult.getReferent(), extractedResult.getScore());
+                if (extractedResult.getScore() >= fuzzyScore) {
+                    asset = extractedResult.getReferent();
+                } else {
+                    throw new IllegalArgumentException("Fuzzy score too low");
+                }
             } else {
-                throw new IllegalArgumentException("Fuzzy score too low");
+                asset = Asset.forLocalizedNameSpaceInsensitive(textAsset, locale);
             }
-        } else {
-            asset = Asset.forLocalizedNameSpaceInsensitive(textAsset, locale);
+            return asset;
+        } catch (IllegalArgumentException e) {
+            log.info("Could not match '{}' to an asset for locale {}. Reason: {}", textAsset, locale, e.getMessage());
+            return Asset.UNKNOWN;
         }
-        return asset;
     }
 
     private static String bartenderMenuItemToString(final BufferedImage bartenderMenuCapture) throws TesseractException {
@@ -632,7 +653,11 @@ public class ARService {
                 if (arStage.isShowing()) {
                     positionWindow();
                 }
-                if ((MENU_VISIBLE.get() || TRADE_VISIBLE.get()) && REQUEST_SHOW.get()) {
+                if (FORCE_VISIBLE.get() && enabled) {
+                    if (!arStage.isShowing()) {
+                        showOverlay();
+                    }
+                } else if ((MENU_VISIBLE.get() || TRADE_VISIBLE.get()) && REQUEST_SHOW.get()) {
                     REQUEST_SHOW.set(false);
                     showOverlay();
 
@@ -1020,7 +1045,7 @@ public class ARService {
         arrowCaptureMat = CvHelper.convertToMat(capture, arrowCaptureMat);
         final int result_cols = arrowCaptureMat.cols() - arrowTemplateScaled.cols() + 1;
         final int result_rows = arrowCaptureMat.rows() - arrowTemplateScaled.rows() + 1;
-        if(result_cols <= 0 || result_rows <= 0) {
+        if (result_cols <= 0 || result_rows <= 0) {
             return false;
         }
         if (downloadMenuResult == null || downloadMenuResult.cols() != result_cols || downloadMenuResult.rows() != result_rows) {
