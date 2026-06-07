@@ -103,9 +103,9 @@ public class ARService {
     private static Boolean hasWarning;
     private static BartenderMenuType oldBartenderSubMenu;
     private static boolean enabled = false;
-    private static AnimationTimer animationTimer;
-    private static Timer timer;
-    private static Timer timerDisplay;
+    private static AnimationTimer windowVisibilityAndPositionTimer;
+    private static Timer ocrAndRenderTimer;
+    private static Timer gameStateTimer;
     private static WindowInfo targetWindowInfo = new WindowInfo(0, new RECT(), "", 0);
     private static Borders windowBorders;
     private static int foregroundHwnd;
@@ -124,14 +124,14 @@ public class ARService {
 
     static {
         EVENT_LISTENERS.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
-            if (timer != null) {
-                timer.cancel();
+            if (ocrAndRenderTimer != null) {
+                ocrAndRenderTimer.cancel();
             }
-            if (timerDisplay != null) {
-                timerDisplay.cancel();
+            if (gameStateTimer != null) {
+                gameStateTimer.cancel();
             }
-            if (animationTimer != null) {
-                animationTimer.stop();
+            if (windowVisibilityAndPositionTimer != null) {
+                windowVisibilityAndPositionTimer.stop();
             }
             executorService.shutdownNow();
             log.info("AR Service shutdown finished.");
@@ -258,18 +258,18 @@ public class ARService {
                 arStage.close();
             }
             log.debug("disabling AR Service");
-            if (animationTimer != null) {
-                animationTimer.stop();
-                animationTimer = null;
+            if (windowVisibilityAndPositionTimer != null) {
+                windowVisibilityAndPositionTimer.stop();
+                windowVisibilityAndPositionTimer = null;
 
             }
-            if (timer != null) {
-                timer.cancel();
-                timer = null;
+            if (ocrAndRenderTimer != null) {
+                ocrAndRenderTimer.cancel();
+                ocrAndRenderTimer = null;
             }
-            if (timerDisplay != null) {
-                timerDisplay.cancel();
-                timer = null;
+            if (gameStateTimer != null) {
+                gameStateTimer.cancel();
+                gameStateTimer = null;
             }
         }
     }
@@ -373,8 +373,8 @@ public class ARService {
                 }
             }
         };
-        timerDisplay = new Timer();
-        timerDisplay.scheduleAtFixedRate(timerDisplayTask, 0, 50);//100fps
+        gameStateTimer = new Timer();
+        gameStateTimer.scheduleAtFixedRate(timerDisplayTask, 0, 50);//100fps
     }
 
     static void updateScaling(BartenderMenu bartenderMenu1) {
@@ -556,8 +556,8 @@ public class ARService {
                 }
             }
         };
-        timer = new Timer();
-        timer.scheduleAtFixedRate(timerTask, 0, 50);//100fps
+        ocrAndRenderTimer = new Timer();
+        ocrAndRenderTimer.scheduleAtFixedRate(timerTask, 0, 50);//100fps
     }
 
     private static boolean canRenderMore(Render cachedImage, DownloadMenu downloadMenu) {
@@ -691,7 +691,7 @@ public class ARService {
     }
 
     private static void setupAnimationTimer() {
-        animationTimer = new AnimationTimer() {
+        windowVisibilityAndPositionTimer = new AnimationTimer() {
             @Override
             public void handle(final long now) {
                 if (arStage.isShowing()) {
@@ -711,7 +711,7 @@ public class ARService {
                 }
             }
         };
-        animationTimer.start();
+        windowVisibilityAndPositionTimer.start();
     }
 
     private static ScrollBarV2 getScrollBar(final BufferedImage downloadMenuCapture, final boolean hasWarning) {
