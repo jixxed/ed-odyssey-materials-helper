@@ -70,19 +70,19 @@ public class ARService {
     private static final double MATCHING_THRESHOLD = 0.75;
     private static final double BARTENDER_MATCHING_THRESHOLD = 0.65;
     private static final String STYLESHEET = "/css/ar.css";
-    private static final String ELITE_DANGEROUS_CLIENT_WINDOW_NAME = "Elite - Dangerous (CLIENT)";
-    //        private static final String ELITE_DANGEROUS_CLIENT_WINDOW_NAME = "Elite Simulator";
+    //    private static final String ELITE_DANGEROUS_CLIENT_WINDOW_NAME = "Elite - Dangerous (CLIENT)";
+    private static final String ELITE_DANGEROUS_CLIENT_WINDOW_NAME = "Elite Simulator";
     private static AROverlay arOverlay;
     private static Scene arScene;
     private static Stage arStage;
-    private static Mat arrowTemplate;
-    private static Mat arrowTemplateScaled;
+//    private static Mat arrowTemplate;
+//    private static Mat arrowTemplateScaled;
     private static Mat arrowCaptureMat;
     private static Mat arrowCaptureMatGray = new Mat();
-    private static Mat cocktailTemplate;
-    private static Mat cocktailTemplateScaled;
-    private static Mat cocktailMask;
-    private static Mat cocktailMaskScaled;
+//    private static Mat cocktailTemplate;
+//    private static Mat cocktailTemplateScaled;
+//    private static Mat cocktailMask;
+//    private static Mat cocktailMaskScaled;
     private static Mat cocktailCaptureMat;
     private static Mat cocktailCaptureMatGray = new Mat();
     private static BufferedImage downloadMenuCapture;
@@ -91,16 +91,18 @@ public class ARService {
     private static BufferedImage cocktailCapture;
     private static Image overlayImage;
     private static final int MATCH_METHOD = Imgproc.TM_CCOEFF_NORMED;
-    private static double scaling = 0;
+//    private static double scaling = 0;
     private static final AtomicBoolean MENU_VISIBLE = new AtomicBoolean(false);
     private static final AtomicBoolean TRADE_VISIBLE = new AtomicBoolean(false);
     private static final AtomicBoolean REQUEST_SHOW = new AtomicBoolean(false);
     private static final AtomicBoolean REQUEST_HIDE = new AtomicBoolean(false);
     private static final AtomicBoolean FORCE_VISIBLE = new AtomicBoolean(false);
-    private static DownloadMenu downloadMenu;
-    private static BartenderMenu bartenderMenu;
-    private static ScrollBarV2 scrollBar;
-    private static Boolean hasWarning;
+    //    private static DownloadMenu downloadMenu;
+//    private static BartenderMenu bartenderMenu;
+//    private static ScrollBarV2 scrollBar;
+//    private static Boolean hasWarning;
+    private static ARMenu dataportDownloadARMenu = new DataportDownloadARMenu();
+    private static ARMenu bartenderTradeARMenu = new BartenderTradeARMenu();
     private static BartenderMenuType oldBartenderSubMenu;
     private static boolean enabled = false;
     private static AnimationTimer windowVisibilityAndPositionTimer;
@@ -113,7 +115,7 @@ public class ARService {
     private static int contentWidth;
     private static int contentX;
     private static int contentY;
-    private static double newScaling;
+//    private static double newScaling;
     private static Mat downloadMenuResult;
     private static Mat bartenderMenuResult;
     private static final Map<String, Render> renderCache = new HashMap<>();
@@ -144,20 +146,20 @@ public class ARService {
                 }
         ));
 
-        arrowTemplate = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_download.png")));
-        arrowTemplateScaled = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_download.png")));
-        cocktailTemplate = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail.png")));
-        cocktailTemplateScaled = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail.png")));
-        cocktailMask = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail_tp.png")));
-        cocktailMaskScaled = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail_tp.png")));
-        //greyscale templates
-        Imgproc.cvtColor(arrowTemplate, arrowTemplate, Imgproc.COLOR_BGRA2GRAY);
-        Imgproc.cvtColor(arrowTemplateScaled, arrowTemplateScaled, Imgproc.COLOR_BGRA2GRAY);
-        Imgproc.cvtColor(cocktailTemplate, cocktailTemplate, Imgproc.COLOR_BGRA2GRAY);
-        Imgproc.cvtColor(cocktailTemplateScaled, cocktailTemplateScaled, Imgproc.COLOR_BGRA2GRAY);
-        Imgproc.cvtColor(cocktailMask, cocktailMask, Imgproc.COLOR_BGRA2GRAY);
-        Imgproc.cvtColor(cocktailMaskScaled, cocktailMaskScaled, Imgproc.COLOR_BGRA2GRAY);
-        Imgproc.threshold(cocktailMaskScaled, cocktailMaskScaled, 50, 255, Imgproc.THRESH_BINARY);
+//        arrowTemplate = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_download.png")));
+//        arrowTemplateScaled = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_download.png")));
+//        cocktailTemplate = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail.png")));
+//        cocktailTemplateScaled = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail.png")));
+//        cocktailMask = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail_tp.png")));
+//        cocktailMaskScaled = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail_tp.png")));
+//        //greyscale templates
+//        Imgproc.cvtColor(arrowTemplate, arrowTemplate, Imgproc.COLOR_BGRA2GRAY);
+//        Imgproc.cvtColor(arrowTemplateScaled, arrowTemplateScaled, Imgproc.COLOR_BGRA2GRAY);
+//        Imgproc.cvtColor(cocktailTemplate, cocktailTemplate, Imgproc.COLOR_BGRA2GRAY);
+//        Imgproc.cvtColor(cocktailTemplateScaled, cocktailTemplateScaled, Imgproc.COLOR_BGRA2GRAY);
+//        Imgproc.cvtColor(cocktailMask, cocktailMask, Imgproc.COLOR_BGRA2GRAY);
+//        Imgproc.cvtColor(cocktailMaskScaled, cocktailMaskScaled, Imgproc.COLOR_BGRA2GRAY);
+//        Imgproc.threshold(cocktailMaskScaled, cocktailMaskScaled, 50, 255, Imgproc.THRESH_BINARY);
     }
 
     public static void bartenderToggle() {
@@ -218,7 +220,8 @@ public class ARService {
     public static void toggle() {
         if (!enabled) {
             enabled = true;
-            scaling = 1;
+            DataportDownloadARMenu.scaling = 1;
+            BartenderTradeARMenu.scaling = 1;
             log.debug("enabling AR Service");
 
 
@@ -308,31 +311,33 @@ public class ARService {
                     final RECT rect = targetWindowInfo.rect;
                     contentWidth = rect.right - rect.left;
                     contentHeight = rect.bottom - rect.top;
-                    if (windowBorders == null) {
-                        windowBorders = WindowInfoUtil.getWindowBorders(targetWindowInfo.hwnd);
-                    }
                     contentX = targetWindowInfo.rect.left;
                     contentY = targetWindowInfo.rect.top;
+                    dataportDownloadARMenu.update(contentX,contentY,contentWidth,contentHeight);
+                    bartenderTradeARMenu.update(contentX,contentY,contentWidth,contentHeight);
+//                    if (windowBorders == null) {
+//                        windowBorders = WindowInfoUtil.getWindowBorders(targetWindowInfo.hwnd);
+//                    }
 
-                    newScaling = contentHeight / 1600D;
-                    final DownloadMenu downloadMenu1 = getDownloadMenu();
-                    downloadMenu1.setContentWidth(contentWidth);
-                    downloadMenu1.setContentHeight(contentHeight);
-                    downloadMenu1.setScale(newScaling);
-                    final BartenderMenu bartenderMenu1 = getBartenderMenu();
-                    bartenderMenu1.setContentWidth(contentWidth);
-                    bartenderMenu1.setContentHeight(contentHeight);
-                    if (newScaling != scaling) {
-                        log.debug("application scaling changed");
-                        log.debug("detected resolution: " + contentWidth + "x" + contentHeight);
-                        //scaling
-                        scaling = newScaling;
-                        Imgproc.resize(arrowTemplate, arrowTemplateScaled, new Size(), scaling, scaling, Imgproc.INTER_AREA);
-                        updateScaling(bartenderMenu1);
-                        WarningHelper.updateScale(scaling);
-
-                        ImageTransformHelper.init(downloadMenu1, scaling);
-                    }
+//                    newScaling = contentHeight / 1600D;
+//                    final DownloadMenu downloadMenu1 = DataportDownloadARMenu.getDownloadMenu();
+//                    downloadMenu1.setContentWidth(contentWidth);
+//                    downloadMenu1.setContentHeight(contentHeight);
+//                    downloadMenu1.setScale(newScaling);
+//                    final BartenderMenu bartenderMenu1 = BartenderTradeARMenu.getBartenderMenu();
+//                    bartenderMenu1.setContentWidth(contentWidth);
+//                    bartenderMenu1.setContentHeight(contentHeight);
+//                    if (newScaling != scaling) {
+//                        log.debug("application scaling changed");
+//                        log.debug("detected resolution: " + contentWidth + "x" + contentHeight);
+//                        //scaling
+//                        scaling = newScaling;
+//                        Imgproc.resize(arrowTemplate, arrowTemplateScaled, new Size(), scaling, scaling, Imgproc.INTER_AREA);
+//                        updateScaling(BartenderTradeARMenu.getBartenderMenu());
+//                        WarningHelper.updateScale(scaling);
+//
+//                        ImageTransformHelper.init(DataportDownloadARMenu.getDownloadMenu(), scaling);
+//                    }
                     //test if download image is present
                     arrowCapture = getArrowCapture();
                     final boolean menuPresent = isDownloadMenu(arrowCapture);
@@ -377,19 +382,19 @@ public class ARService {
         gameStateTimer.scheduleAtFixedRate(timerDisplayTask, 0, 50);//100fps
     }
 
-    static void updateScaling(BartenderMenu bartenderMenu1) {
-        Imgproc.resize(cocktailTemplate, cocktailTemplateScaled, new Size(), bartenderMenu1.getScale(), bartenderMenu1.getScale(), Imgproc.INTER_AREA);
-        Imgproc.resize(cocktailMask, cocktailMaskScaled, new Size(), bartenderMenu1.getScale(), bartenderMenu1.getScale(), Imgproc.INTER_AREA);
-        Imgproc.threshold(cocktailMaskScaled, cocktailMaskScaled, 50, 255, Imgproc.THRESH_BINARY);
-    }
+//    static void updateScaling(BartenderMenu bartenderMenu1) {
+//        Imgproc.resize(cocktailTemplate, cocktailTemplateScaled, new Size(), bartenderMenu1.getScale(), bartenderMenu1.getScale(), Imgproc.INTER_AREA);
+//        Imgproc.resize(cocktailMask, cocktailMaskScaled, new Size(), bartenderMenu1.getScale(), bartenderMenu1.getScale(), Imgproc.INTER_AREA);
+//        Imgproc.threshold(cocktailMaskScaled, cocktailMaskScaled, 50, 255, Imgproc.THRESH_BINARY);
+//    }
 
     public static boolean isBartenderMenu(final BufferedImage capture) {
         if (capture == null) {
             return false;
         }
         cocktailCaptureMat = CvHelper.convertToMat(capture, cocktailCaptureMat);
-        final int result_cols = cocktailCaptureMat.cols() - cocktailTemplateScaled.cols() + 1;
-        final int result_rows = cocktailCaptureMat.rows() - cocktailTemplateScaled.rows() + 1;
+        final int result_cols = cocktailCaptureMat.cols() - BartenderTradeARMenu.cocktailTemplateScaled.cols() + 1;
+        final int result_rows = cocktailCaptureMat.rows() - BartenderTradeARMenu.cocktailTemplateScaled.rows() + 1;
         if (result_cols <= 0 || result_rows <= 0) {
             return false;
         }
@@ -413,20 +418,20 @@ public class ARService {
         // Apply mask using copyTo
 //        cocktailTemplateScaled.copyTo(maskedResult, cocktailMaskScaled);
         Mat temp2 = new Mat();
-        Imgproc.threshold(cocktailTemplateScaled, temp2, 128, 255, Imgproc.THRESH_BINARY_INV + THRESH_OTSU);
+        Imgproc.threshold(BartenderTradeARMenu.cocktailTemplateScaled, temp2, 128, 255, Imgproc.THRESH_BINARY_INV + THRESH_OTSU);
         //matching
         Imgproc.matchTemplate(temp, temp2, bartenderMenuResult, MATCH_METHOD);
         //take the best result mmr.maxLoc
         Core.MinMaxLocResult mmr = Core.minMaxLoc(bartenderMenuResult);
         //cut out a mat with the same dimensions as cocktailMaskScaled
-        final Mat cutOutMat = new Mat(temp, new Rect((int) mmr.maxLoc.x, (int) mmr.maxLoc.y, cocktailMaskScaled.cols(), cocktailMaskScaled.rows()));
+        final Mat cutOutMat = new Mat(temp, new Rect((int) mmr.maxLoc.x, (int) mmr.maxLoc.y, BartenderTradeARMenu.cocktailMaskScaled.cols(), BartenderTradeARMenu.cocktailMaskScaled.rows()));
 
         Imgproc.threshold(cutOutMat, cutOutMat, 128, 255, Imgproc.THRESH_BINARY_INV);
         Imgproc.threshold(temp2, temp2, 128, 255, Imgproc.THRESH_BINARY_INV);
         //apply mask to the cut out mat
         // Create destination Mat
         Mat maskedResult = new Mat();
-        cutOutMat.copyTo(maskedResult, cocktailMaskScaled);
+        cutOutMat.copyTo(maskedResult, BartenderTradeARMenu.cocktailMaskScaled);
         //match again
         Imgproc.matchTemplate(maskedResult, temp2, bartenderMenuResult, MATCH_METHOD);
 
@@ -461,28 +466,28 @@ public class ARService {
 
     private static BufferedImage getCocktailCapture() {
         if (targetWindowInfo.hwnd != 0 && User32.INSTANCE.GetForegroundWindow() == targetWindowInfo.hwnd) {
-            return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getBartenderMenu().getCocktail().getAwtRectangle().getBounds(), cocktailCapture);
+            return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), BartenderTradeARMenu.getBartenderMenu().getCocktail().getAwtRectangle().getBounds(), cocktailCapture);
         }
         return null;
     }
-
-    private static BartenderMenu getBartenderMenu() {
-        if (bartenderMenu == null) {
-            bartenderMenu = new BartenderMenu();
-        }
-        return bartenderMenu;
-    }
-
-    private static BartenderMenu getBartenderMenu(final BartenderMenuType submenu) {
-        if (bartenderMenu == null) {
-            bartenderMenu = new BartenderMenu();
-        }
-        bartenderMenu.setContentHeight(contentHeight);
-        bartenderMenu.setContentWidth(contentWidth);
-        bartenderMenu.setSubMenu(submenu);
-
-        return bartenderMenu;
-    }
+//
+//    private static BartenderMenu getBartenderMenu() {
+//        if (bartenderMenu == null) {
+//            bartenderMenu = new BartenderMenu();
+//        }
+//        return bartenderMenu;
+//    }
+//
+//    private static BartenderMenu getBartenderMenu(final BartenderMenuType submenu) {
+//        if (bartenderMenu == null) {
+//            bartenderMenu = new BartenderMenu();
+//        }
+//        bartenderMenu.setContentHeight(contentHeight);
+//        bartenderMenu.setContentWidth(contentWidth);
+//        bartenderMenu.setSubMenu(submenu);
+//
+//        return bartenderMenu;
+//    }
 
     private static void setupTimerAnalyzeAndRender() {
         final TimerTask timerTask = new TimerTask() {
@@ -492,31 +497,31 @@ public class ARService {
                 try {
                     if (MENU_VISIBLE.get()) {
                         downloadMenuCapture = getDownloadMenuCapture();
-                        final Boolean newHasWarning = WarningHelper.menuHasWarning(downloadMenuCapture, scaling, MATCHING_THRESHOLD);
+                        final Boolean newHasWarning = WarningHelper.menuHasWarning(downloadMenuCapture, DataportDownloadARMenu.scaling, MATCHING_THRESHOLD);
                         final ScrollBarV2 newScrollBar = getScrollBar(downloadMenuCapture, newHasWarning);
-                        final boolean render = !Objects.equals(newScrollBar, scrollBar) || newHasWarning.equals(hasWarning);//initialRender.get();//only render on change
-                        scrollBar = newScrollBar;
-                        hasWarning = newHasWarning;
+                        final boolean render = !Objects.equals(newScrollBar, DataportDownloadARMenu.scrollBar) || newHasWarning.equals(DataportDownloadARMenu.hasWarning);//initialRender.get();//only render on change
+                        DataportDownloadARMenu.scrollBar = newScrollBar;
+                        DataportDownloadARMenu.hasWarning = newHasWarning;
                         if (downloadMenuCapture != null) {
                             if (render) {
-                                final Render cachedImage = renderCache.get(String.valueOf(hasWarning) + newScrollBar.getPosition());
+                                final Render cachedImage = renderCache.get(String.valueOf(DataportDownloadARMenu.hasWarning) + newScrollBar.getPosition());
                                 if (cachedImage != null && cachedImage.fullyRendered()) {
                                     overlayImage = cachedImage.render();
                                     arOverlay.getResizableImageView().setImage(overlayImage);
-                                } else if (canRenderMore(cachedImage, downloadMenu)) {
+                                } else if (canRenderMore(cachedImage, DataportDownloadARMenu.getDownloadMenu())) {
                                     arOverlay.getResizableImageView().setImage(null);
-                                    log.debug("render required for Warning: " + getDownloadMenu().isHasWarning() + ". Scrollbar: " + scrollBar.getPosition() + " size:" + scrollBar.getSize());
-                                    downloadMenu = getDownloadMenu(downloadMenuCapture, hasWarning, scrollBar);
+                                    log.debug("render required for Warning: " + DataportDownloadARMenu.getDownloadMenu().isHasWarning() + ". Scrollbar: " + DataportDownloadARMenu.scrollBar.getPosition() + " size:" + DataportDownloadARMenu.scrollBar.getSize());
+                                    DataportDownloadARMenu.getDownloadMenu(downloadMenuCapture, DataportDownloadARMenu.hasWarning, DataportDownloadARMenu.scrollBar);
                                     if (PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "").equals("ENGLISH")) {
-                                        processMenuType(downloadMenuCapture, getDownloadMenu());
+                                        processMenuType(downloadMenuCapture, DataportDownloadARMenu.getDownloadMenu());
                                     }
-                                    ImageTransformHelper.init(getDownloadMenu(), scaling);
+                                    ImageTransformHelper.init(DataportDownloadARMenu.getDownloadMenu(), DataportDownloadARMenu.scaling);
                                     final long timeProcessBefore = System.currentTimeMillis();
-                                    processMenu(downloadMenuCapture, getDownloadMenu());
+                                    processMenu(downloadMenuCapture, DataportDownloadARMenu.getDownloadMenu());
                                     final long timeProcessAfter = System.currentTimeMillis();
                                     log.debug("Menu processing time: " + (timeProcessAfter - timeProcessBefore));
                                     final long timeRenderBefore = System.currentTimeMillis();
-                                    renderMenu(getDownloadMenu());
+                                    renderMenu(DataportDownloadARMenu.getDownloadMenu());
                                     arOverlay.getResizableImageView().setImage(overlayImage);
                                     final long timeRenderAfter = System.currentTimeMillis();
                                     log.debug("Total render time: " + (timeRenderAfter - timeRenderBefore));
@@ -526,7 +531,7 @@ public class ARService {
                         }
                     } else if (TRADE_VISIBLE.get()) {
                         bartenderMenuCapture = getBartenderMenuCapture();
-                        if (BartenderMenuHelper.isTradeMenu(bartenderMenuCapture, getBartenderMenu())) {
+                        if (BartenderMenuHelper.isTradeMenu(bartenderMenuCapture, BartenderTradeARMenu.getBartenderMenu())) {
                             if (tradeHits.get() <= 4) {
                                 tradeHits.getAndIncrement();
                             }
@@ -539,14 +544,14 @@ public class ARService {
                             tradeHits.set(0);
                         }
                     } else {
-                        getDownloadMenu().getScanned().clear();
-                        getDownloadMenu().setType(null);
-                        getDownloadMenu().setDataPortName(null);
-                        getDownloadMenu().getDownloadData().clear();
-                        getBartenderMenu().setSubMenu(BartenderMenuType.NONE);
+                        DataportDownloadARMenu.getDownloadMenu().getScanned().clear();
+                        DataportDownloadARMenu.getDownloadMenu().setType(null);
+                        DataportDownloadARMenu.getDownloadMenu().setDataPortName(null);
+                        DataportDownloadARMenu.getDownloadMenu().getDownloadData().clear();
+                        BartenderTradeARMenu.getBartenderMenu().setSubMenu(BartenderMenuType.NONE);
                         renderCache.clear();
-                        scrollBar = null;
-                        hasWarning = null;
+                        DataportDownloadARMenu.scrollBar = null;
+                        DataportDownloadARMenu.hasWarning = null;
                         oldBartenderSubMenu = null;
                         newBartenderSubMenu = null;
                         arOverlay.getResizableImageView().setImage(null);
@@ -572,12 +577,12 @@ public class ARService {
     }
 
     private static void processTradeMenu() throws InterruptedException {
-        newBartenderSubMenu = BartenderMenuHelper.getMenuType(bartenderMenuCapture, getBartenderMenu());
+        newBartenderSubMenu = BartenderMenuHelper.getMenuType(bartenderMenuCapture, BartenderTradeARMenu.getBartenderMenu());
 //        log.info("detected menutype:" + menuType);
         if (oldBartenderSubMenu == null || newBartenderSubMenu != oldBartenderSubMenu) {
             Thread.sleep(20);
             bartenderMenuCapture = getBartenderMenuCapture();
-            newBartenderSubMenu = BartenderMenuHelper.getMenuType(bartenderMenuCapture, getBartenderMenu());
+            newBartenderSubMenu = BartenderMenuHelper.getMenuType(bartenderMenuCapture, BartenderTradeARMenu.getBartenderMenu());
         }
         if (bartenderMenuCapture != null) {
             if (oldBartenderSubMenu == null || newBartenderSubMenu != oldBartenderSubMenu) {
@@ -586,13 +591,13 @@ public class ARService {
                 bartenderMenuCapture = getBartenderMenuCapture();
 
                 arOverlay.getResizableImageView().setImage(null);
-                bartenderMenu = getBartenderMenu(newBartenderSubMenu);
+                BartenderTradeARMenu.getBartenderMenu(newBartenderSubMenu);
                 final long timeProcessBefore = System.currentTimeMillis();
-                processBartenderMenu(bartenderMenuCapture, getBartenderMenu());
+                processBartenderMenu(bartenderMenuCapture, BartenderTradeARMenu.getBartenderMenu());
                 final long timeProcessAfter = System.currentTimeMillis();
                 log.debug("Menu processing time: " + (timeProcessAfter - timeProcessBefore));
                 final long timeRenderBefore = System.currentTimeMillis();
-                renderMenu(getBartenderMenu());
+                renderMenu(BartenderTradeARMenu.getBartenderMenu());
                 arOverlay.getResizableImageView().setImage(overlayImage);
                 final long timeRenderAfter = System.currentTimeMillis();
                 log.debug("Total render time: " + (timeRenderAfter - timeRenderBefore));
@@ -716,9 +721,9 @@ public class ARService {
 
     private static ScrollBarV2 getScrollBar(final BufferedImage downloadMenuCapture, final boolean hasWarning) {
         if (downloadMenuCapture == null) {
-            return scrollBar;
+            return DataportDownloadARMenu.scrollBar;
         }
-        return ScrollBarHelper.getScrollBarV2(downloadMenuCapture, hasWarning, scaling);
+        return ScrollBarHelper.getScrollBarV2(downloadMenuCapture, hasWarning, DataportDownloadARMenu.scaling);
     }
 
     private static void renderMenu(final DownloadMenu downloadMenu) {
@@ -999,7 +1004,7 @@ public class ARService {
         if (targetWindowInfo.hwnd != 0) {
             final int i = User32.INSTANCE.GetForegroundWindow();
             if (i == targetWindowInfo.hwnd) {
-                return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getDownloadMenu().getMenu().getAwtRectangle().getBounds(), downloadMenuCapture);
+                return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), DataportDownloadARMenu.getDownloadMenu().getMenu().getAwtRectangle().getBounds(), downloadMenuCapture);
             }
         }
         return null;
@@ -1009,7 +1014,7 @@ public class ARService {
         if (targetWindowInfo.hwnd != 0) {
             final int i = User32.INSTANCE.GetForegroundWindow();
             if (i == targetWindowInfo.hwnd) {
-                return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getBartenderMenu().getMenu().getAwtRectangle().getBounds(), bartenderMenuCapture);
+                return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), BartenderTradeARMenu.getBartenderMenu().getMenu().getAwtRectangle().getBounds(), bartenderMenuCapture);
             }
         }
         return null;
@@ -1017,40 +1022,40 @@ public class ARService {
 
     private static BufferedImage getArrowCapture() {
         if (targetWindowInfo.hwnd != 0 && User32.INSTANCE.GetForegroundWindow() == targetWindowInfo.hwnd) {
-            return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getDownloadMenu().getArrow().getAwtRectangle().getBounds(), arrowCapture);
+            return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), DataportDownloadARMenu.getDownloadMenu().getArrow().getAwtRectangle().getBounds(), arrowCapture);
         }
         return null;
     }
 
-    private static DownloadMenu getDownloadMenu() {
-        if (downloadMenu == null) {
-            downloadMenu = new DownloadMenu(downloadMenuCapture, scaling, Boolean.TRUE.equals(hasWarning), scrollBar, contentWidth, contentHeight);
-        }
-        return downloadMenu;
-    }
+//    private static DownloadMenu getDownloadMenu() {
+//        if (downloadMenu == null) {
+//            downloadMenu = new DownloadMenu(downloadMenuCapture, scaling, Boolean.TRUE.equals(hasWarning), scrollBar, contentWidth, contentHeight);
+//        }
+//        return downloadMenu;
+//    }
+//
+//    private static DownloadMenu getDownloadMenu(final BufferedImage downloadMenuCapture, final boolean hasWarning, final ScrollBarV2 scrollBar) {
+//        if (downloadMenu == null) {
+//            downloadMenu = new DownloadMenu(downloadMenuCapture, scaling, hasWarning, scrollBar, contentWidth, contentHeight);
+//        } else {
+//            downloadMenu.setScale(scaling);
+//            downloadMenu.setContentHeight(contentHeight);
+//            downloadMenu.setContentWidth(contentWidth);
 
-    private static DownloadMenu getDownloadMenu(final BufferedImage downloadMenuCapture, final boolean hasWarning, final ScrollBarV2 scrollBar) {
-        if (downloadMenu == null) {
-            downloadMenu = new DownloadMenu(downloadMenuCapture, scaling, hasWarning, scrollBar, contentWidth, contentHeight);
-        } else {
-            downloadMenu.setScale(scaling);
-            downloadMenu.setContentHeight(contentHeight);
-            downloadMenu.setContentWidth(contentWidth);
-//            downloadMenu.setScrollBar(scrollBar);
-//            downloadMenu.setDownloadMenuCapture(downloadMenuCapture);
-//            downloadMenu.setHasWarning(hasWarning);
-            downloadMenu.updateMenuState(downloadMenuCapture, scrollBar, hasWarning);
-        }
-        return downloadMenu;
-    }
-
+    /// /            downloadMenu.setScrollBar(scrollBar);
+    /// /            downloadMenu.setDownloadMenuCapture(downloadMenuCapture);
+    /// /            downloadMenu.setHasWarning(hasWarning);
+//            downloadMenu.updateMenuState(downloadMenuCapture, scrollBar, hasWarning);
+//        }
+//        return downloadMenu;
+//    }
     private static boolean isDownloadMenu(final BufferedImage capture) {
         if (capture == null) {
             return false;
         }
         arrowCaptureMat = CvHelper.convertToMat(capture, arrowCaptureMat);
-        final int result_cols = arrowCaptureMat.cols() - arrowTemplateScaled.cols() + 1;
-        final int result_rows = arrowCaptureMat.rows() - arrowTemplateScaled.rows() + 1;
+        final int result_cols = arrowCaptureMat.cols() - DataportDownloadARMenu.arrowTemplateScaled.cols() + 1;
+        final int result_rows = arrowCaptureMat.rows() - DataportDownloadARMenu.arrowTemplateScaled.rows() + 1;
         if (result_cols <= 0 || result_rows <= 0) {
             return false;
         }
@@ -1069,7 +1074,7 @@ public class ARService {
         //grayscale capture
         Imgproc.cvtColor(arrowCaptureMat, arrowCaptureMatGray, Imgproc.COLOR_BGRA2GRAY);
         //matching
-        Imgproc.matchTemplate(arrowCaptureMatGray, arrowTemplateScaled, downloadMenuResult, MATCH_METHOD);
+        Imgproc.matchTemplate(arrowCaptureMatGray, DataportDownloadARMenu.arrowTemplateScaled, downloadMenuResult, MATCH_METHOD);
         final Core.MinMaxLocResult mmr = Core.minMaxLoc(downloadMenuResult);
 
 
