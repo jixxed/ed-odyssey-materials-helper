@@ -59,7 +59,7 @@ public class ARService {
 
 
     public static boolean debug = false;
-    private static final AtomicBoolean bartenderOverlayEnabled = new AtomicBoolean(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_AR, true));
+//    private static final AtomicBoolean bartenderOverlayEnabled = new AtomicBoolean(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_AR, true));
     private static BartenderMenuType newBartenderSubMenu;
 
     static {
@@ -70,30 +70,30 @@ public class ARService {
     private static final double MATCHING_THRESHOLD = 0.75;
     private static final double BARTENDER_MATCHING_THRESHOLD = 0.65;
     private static final String STYLESHEET = "/css/ar.css";
-    //    private static final String ELITE_DANGEROUS_CLIENT_WINDOW_NAME = "Elite - Dangerous (CLIENT)";
+    //        private static final String ELITE_DANGEROUS_CLIENT_WINDOW_NAME = "Elite - Dangerous (CLIENT)";
     private static final String ELITE_DANGEROUS_CLIENT_WINDOW_NAME = "Elite Simulator";
     private static AROverlay arOverlay;
     private static Scene arScene;
     private static Stage arStage;
-//    private static Mat arrowTemplate;
+    //    private static Mat arrowTemplate;
 //    private static Mat arrowTemplateScaled;
-    private static Mat arrowCaptureMat;
-    private static Mat arrowCaptureMatGray = new Mat();
+//    private static Mat arrowCaptureMat;
+//    private static Mat arrowCaptureMatGray = new Mat();
 //    private static Mat cocktailTemplate;
 //    private static Mat cocktailTemplateScaled;
 //    private static Mat cocktailMask;
 //    private static Mat cocktailMaskScaled;
-    private static Mat cocktailCaptureMat;
-    private static Mat cocktailCaptureMatGray = new Mat();
+//    private static Mat cocktailCaptureMat;
+//    private static Mat cocktailCaptureMatGray = new Mat();
     private static BufferedImage downloadMenuCapture;
     private static BufferedImage bartenderMenuCapture;
-    private static BufferedImage arrowCapture;
-    private static BufferedImage cocktailCapture;
+    //    private static BufferedImage arrowCapture;
+//    private static BufferedImage cocktailCapture;
     private static Image overlayImage;
-    private static final int MATCH_METHOD = Imgproc.TM_CCOEFF_NORMED;
+    //    private static final int MATCH_METHOD = Imgproc.TM_CCOEFF_NORMED;
 //    private static double scaling = 0;
-    private static final AtomicBoolean MENU_VISIBLE = new AtomicBoolean(false);
-    private static final AtomicBoolean TRADE_VISIBLE = new AtomicBoolean(false);
+//    private static final AtomicBoolean MENU_VISIBLE = new AtomicBoolean(false);
+//    private static final AtomicBoolean TRADE_VISIBLE = new AtomicBoolean(false);
     private static final AtomicBoolean REQUEST_SHOW = new AtomicBoolean(false);
     private static final AtomicBoolean REQUEST_HIDE = new AtomicBoolean(false);
     private static final AtomicBoolean FORCE_VISIBLE = new AtomicBoolean(false);
@@ -101,8 +101,7 @@ public class ARService {
 //    private static BartenderMenu bartenderMenu;
 //    private static ScrollBarV2 scrollBar;
 //    private static Boolean hasWarning;
-    private static ARMenu dataportDownloadARMenu = new DataportDownloadARMenu();
-    private static ARMenu bartenderTradeARMenu = new BartenderTradeARMenu();
+    private static List<ARMenu> arMenus = List.of(new DataportDownloadARMenu(), new BartenderTradeARMenu());
     private static BartenderMenuType oldBartenderSubMenu;
     private static boolean enabled = false;
     private static AnimationTimer windowVisibilityAndPositionTimer;
@@ -115,9 +114,9 @@ public class ARService {
     private static int contentWidth;
     private static int contentX;
     private static int contentY;
-//    private static double newScaling;
-    private static Mat downloadMenuResult;
-    private static Mat bartenderMenuResult;
+    //    private static double newScaling;
+//    private static Mat downloadMenuResult;
+//    private static Mat bartenderMenuResult;
     private static final Map<String, Render> renderCache = new HashMap<>();
     private static final ScreenshotService screenshotService = GDIScreenshotService.getInstance();
     private static final ExecutorService executorService = Executors.newFixedThreadPool(6);
@@ -162,9 +161,9 @@ public class ARService {
 //        Imgproc.threshold(cocktailMaskScaled, cocktailMaskScaled, 50, 255, Imgproc.THRESH_BINARY);
     }
 
-    public static void bartenderToggle() {
-        bartenderOverlayEnabled.set(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_AR, Boolean.TRUE));
-    }
+//    public static void bartenderToggle() {
+//        bartenderOverlayEnabled.set(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_AR, Boolean.TRUE));
+//    }
 
     public static void forceShow() {
         FORCE_VISIBLE.set(true);
@@ -289,8 +288,9 @@ public class ARService {
                     if (targetWindowInfo.hwnd == 0) {
                         //application not running
                         Thread.sleep(1000);
-                        MENU_VISIBLE.set(false);
-                        TRADE_VISIBLE.set(false);
+                        arMenus.forEach(arMenu -> arMenu.getVISIBLE().set(false));
+//                        MENU_VISIBLE.set(false);
+//                        TRADE_VISIBLE.set(false);
                         tradeHits.set(0);
                         REQUEST_HIDE.set(true);
                         return;
@@ -300,8 +300,9 @@ public class ARService {
                     foregroundHwnd = User32.INSTANCE.GetForegroundWindow();
                     if (foregroundHwnd != targetWindowInfo.hwnd) {
 
-                        MENU_VISIBLE.set(false);
-                        TRADE_VISIBLE.set(false);
+                        arMenus.forEach(arMenu -> arMenu.getVISIBLE().set(false));
+//                        MENU_VISIBLE.set(false);
+//                        TRADE_VISIBLE.set(false);
                         tradeHits.set(0);
                         REQUEST_HIDE.set(true);
                         Thread.sleep(1000);
@@ -313,8 +314,9 @@ public class ARService {
                     contentHeight = rect.bottom - rect.top;
                     contentX = targetWindowInfo.rect.left;
                     contentY = targetWindowInfo.rect.top;
-                    dataportDownloadARMenu.update(contentX,contentY,contentWidth,contentHeight);
-                    bartenderTradeARMenu.update(contentX,contentY,contentWidth,contentHeight);
+                    arMenus.forEach(arMenu -> arMenu.update(contentX, contentY, contentWidth, contentHeight));
+//                    dataportDownloadARMenu.update(contentX, contentY, contentWidth, contentHeight);
+//                    bartenderTradeARMenu.update(contentX, contentY, contentWidth, contentHeight);
 //                    if (windowBorders == null) {
 //                        windowBorders = WindowInfoUtil.getWindowBorders(targetWindowInfo.hwnd);
 //                    }
@@ -339,37 +341,61 @@ public class ARService {
 //                        ImageTransformHelper.init(DataportDownloadARMenu.getDownloadMenu(), scaling);
 //                    }
                     //test if download image is present
-                    arrowCapture = getArrowCapture();
-                    final boolean menuPresent = isDownloadMenu(arrowCapture);
-                    boolean tradeMenuPresent = false;
-                    if (!menuPresent && bartenderOverlayEnabled.get()) {
-                        cocktailCapture = getCocktailCapture();
-                        tradeMenuPresent = isBartenderMenu(cocktailCapture);
-                    }
+//                    arrowCapture = getArrowCapture();
+//                    final boolean menuPresent = dataportDownloadARMenu.isMenuVisible(targetWindowInfo);
+//                    boolean tradeMenuPresent = false;
+//                    if (!menuPresent && bartenderOverlayEnabled.get()) {
+////                        cocktailCapture = getCocktailCapture();
+//                        tradeMenuPresent = bartenderTradeARMenu.isMenuVisible(targetWindowInfo);
+//                    }
                     boolean pauseThread = false;
-                    if (menuPresent) {
-                        //show
-                        if (!MENU_VISIBLE.get()) {
-                            REQUEST_SHOW.set(true);
-                            pauseThread = true;
+                    boolean anyVisible = false;
+                    for (ARMenu arMenu : arMenus){
+                        if(arMenu.isEnabled()) {
+                            final boolean visible = arMenu.isMenuVisible(targetWindowInfo);
+                            if (!arMenu.getVISIBLE().get()) {
+                                REQUEST_SHOW.set(true);
+                                pauseThread = true;
+                            }
+                            if(visible) {
+                                arMenu.getVISIBLE().set(true);
+                                anyVisible = true;
+                                break;
+                            }
                         }
-                        MENU_VISIBLE.set(true);
-                    } else if (tradeMenuPresent) {
+                    }
+                    if(!anyVisible){
                         //hide
-                        if (!TRADE_VISIBLE.get()) {
-                            REQUEST_SHOW.set(true);
-                            pauseThread = true;
-                        }
-                        TRADE_VISIBLE.set(true);
-                    } else {
-                        //hide
-                        if (MENU_VISIBLE.get() || TRADE_VISIBLE.get()) {
+                        if (arMenus.stream().anyMatch(arMenu -> arMenu.getVISIBLE().get())) {
                             REQUEST_HIDE.set(true);
                         }
-                        MENU_VISIBLE.set(false);
-                        TRADE_VISIBLE.set(false);
+                        arMenus.forEach(arMenu -> arMenu.getVISIBLE().set(false));
                         tradeHits.set(0);
                     }
+
+//                    if (menuPresent) {
+//                        //show
+//                        if (!MENU_VISIBLE.get()) {
+//                            REQUEST_SHOW.set(true);
+//                            pauseThread = true;
+//                        }
+//                        MENU_VISIBLE.set(true);
+//                    } else if (tradeMenuPresent) {
+//                        //hide
+//                        if (!TRADE_VISIBLE.get()) {
+//                            REQUEST_SHOW.set(true);
+//                            pauseThread = true;
+//                        }
+//                        TRADE_VISIBLE.set(true);
+//                    } else {
+//                        //hide
+//                        if (MENU_VISIBLE.get() || TRADE_VISIBLE.get()) {
+//                            REQUEST_HIDE.set(true);
+//                        }
+//                        MENU_VISIBLE.set(false);
+//                        TRADE_VISIBLE.set(false);
+//                        tradeHits.set(0);
+//                    }
                     if (pauseThread) {
                         Thread.sleep(2000);
                     }
@@ -388,88 +414,89 @@ public class ARService {
 //        Imgproc.threshold(cocktailMaskScaled, cocktailMaskScaled, 50, 255, Imgproc.THRESH_BINARY);
 //    }
 
-    public static boolean isBartenderMenu(final BufferedImage capture) {
-        if (capture == null) {
-            return false;
-        }
-        cocktailCaptureMat = CvHelper.convertToMat(capture, cocktailCaptureMat);
-        final int result_cols = cocktailCaptureMat.cols() - BartenderTradeARMenu.cocktailTemplateScaled.cols() + 1;
-        final int result_rows = cocktailCaptureMat.rows() - BartenderTradeARMenu.cocktailTemplateScaled.rows() + 1;
-        if (result_cols <= 0 || result_rows <= 0) {
-            return false;
-        }
-        if (bartenderMenuResult == null || bartenderMenuResult.cols() != result_cols || bartenderMenuResult.rows() != result_rows) {
-            if (bartenderMenuResult != null) {
-                bartenderMenuResult.release();
-            }
-            bartenderMenuResult = new Mat(result_rows, result_cols, CvType.CV_32FC1);
-        }
-        if (cocktailCaptureMatGray == null || cocktailCaptureMat.cols() != cocktailCaptureMatGray.cols() || cocktailCaptureMat.rows() != cocktailCaptureMatGray.rows()) {
-            if (cocktailCaptureMatGray != null) {
-                cocktailCaptureMatGray.release();
-            }
-            cocktailCaptureMatGray = new Mat();
-        }
-        //grayscale capture
-        Imgproc.cvtColor(cocktailCaptureMat, cocktailCaptureMatGray, Imgproc.COLOR_BGRA2GRAY);
-        Mat temp = new Mat();
-        Imgproc.threshold(cocktailCaptureMatGray, temp, 128, 255, Imgproc.THRESH_BINARY_INV + THRESH_OTSU);
+//    public static boolean isBartenderMenu(final BufferedImage capture) {
+//        if (capture == null) {
+//            return false;
+//        }
+//        cocktailCaptureMat = CvHelper.convertToMat(capture, cocktailCaptureMat);
+//        final int result_cols = cocktailCaptureMat.cols() - BartenderTradeARMenu.cocktailTemplateScaled.cols() + 1;
+//        final int result_rows = cocktailCaptureMat.rows() - BartenderTradeARMenu.cocktailTemplateScaled.rows() + 1;
+//        if (result_cols <= 0 || result_rows <= 0) {
+//            return false;
+//        }
+//        if (bartenderMenuResult == null || bartenderMenuResult.cols() != result_cols || bartenderMenuResult.rows() != result_rows) {
+//            if (bartenderMenuResult != null) {
+//                bartenderMenuResult.release();
+//            }
+//            bartenderMenuResult = new Mat(result_rows, result_cols, CvType.CV_32FC1);
+//        }
+//        if (cocktailCaptureMatGray == null || cocktailCaptureMat.cols() != cocktailCaptureMatGray.cols() || cocktailCaptureMat.rows() != cocktailCaptureMatGray.rows()) {
+//            if (cocktailCaptureMatGray != null) {
+//                cocktailCaptureMatGray.release();
+//            }
+//            cocktailCaptureMatGray = new Mat();
+//        }
+//        //grayscale capture
+//        Imgproc.cvtColor(cocktailCaptureMat, cocktailCaptureMatGray, Imgproc.COLOR_BGRA2GRAY);
+//        Mat temp = new Mat();
+//        Imgproc.threshold(cocktailCaptureMatGray, temp, 128, 255, Imgproc.THRESH_BINARY_INV + THRESH_OTSU);
+//
+//        // Apply mask using copyTo
 
-        // Apply mask using copyTo
-//        cocktailTemplateScaled.copyTo(maskedResult, cocktailMaskScaled);
-        Mat temp2 = new Mat();
-        Imgproc.threshold(BartenderTradeARMenu.cocktailTemplateScaled, temp2, 128, 255, Imgproc.THRESH_BINARY_INV + THRESH_OTSU);
-        //matching
-        Imgproc.matchTemplate(temp, temp2, bartenderMenuResult, MATCH_METHOD);
-        //take the best result mmr.maxLoc
-        Core.MinMaxLocResult mmr = Core.minMaxLoc(bartenderMenuResult);
-        //cut out a mat with the same dimensions as cocktailMaskScaled
-        final Mat cutOutMat = new Mat(temp, new Rect((int) mmr.maxLoc.x, (int) mmr.maxLoc.y, BartenderTradeARMenu.cocktailMaskScaled.cols(), BartenderTradeARMenu.cocktailMaskScaled.rows()));
+    /// /        cocktailTemplateScaled.copyTo(maskedResult, cocktailMaskScaled);
+//        Mat temp2 = new Mat();
+//        Imgproc.threshold(BartenderTradeARMenu.cocktailTemplateScaled, temp2, 128, 255, Imgproc.THRESH_BINARY_INV + THRESH_OTSU);
+//        //matching
+//        Imgproc.matchTemplate(temp, temp2, bartenderMenuResult, MATCH_METHOD);
+//        //take the best result mmr.maxLoc
+//        Core.MinMaxLocResult mmr = Core.minMaxLoc(bartenderMenuResult);
+//        //cut out a mat with the same dimensions as cocktailMaskScaled
+//        final Mat cutOutMat = new Mat(temp, new Rect((int) mmr.maxLoc.x, (int) mmr.maxLoc.y, BartenderTradeARMenu.cocktailMaskScaled.cols(), BartenderTradeARMenu.cocktailMaskScaled.rows()));
+//
+//        Imgproc.threshold(cutOutMat, cutOutMat, 128, 255, Imgproc.THRESH_BINARY_INV);
+//        Imgproc.threshold(temp2, temp2, 128, 255, Imgproc.THRESH_BINARY_INV);
+//        //apply mask to the cut out mat
+//        // Create destination Mat
+//        Mat maskedResult = new Mat();
+//        cutOutMat.copyTo(maskedResult, BartenderTradeARMenu.cocktailMaskScaled);
+//        //match again
+//        Imgproc.matchTemplate(maskedResult, temp2, bartenderMenuResult, MATCH_METHOD);
+//
+//        mmr = Core.minMaxLoc(bartenderMenuResult);
+//
+//
+//        final double matchValue = mmr.maxVal;
+//        if (debug) {
+//            log.debug("bartendermenu detected. Confidence(" + BARTENDER_MATCHING_THRESHOLD + "): " + matchValue);
+//        }
+//        if (matchValue > BARTENDER_MATCHING_THRESHOLD) {
+//            if (!previousBartenderMatch) {
+//                previousBartenderMatch = true;
+//                log.debug("bartendermenu detected. Confidence(" + BARTENDER_MATCHING_THRESHOLD + "): " + matchValue);
+//            }
+//            return true;
+//        }
+//        if (previousBartenderMatch) {
+//
+//            previousBartenderMatch = false;
+//            log.debug("bartendermenu detected 2. Confidence(" + BARTENDER_MATCHING_THRESHOLD + "): " + matchValue);
+//            try {
+//                Thread.sleep(20);
+//            } catch (final InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//            cocktailCapture = getCocktailCapture();
+//            return isBartenderMenu(cocktailCapture);
+//        }
+//        return false;
+//    }
 
-        Imgproc.threshold(cutOutMat, cutOutMat, 128, 255, Imgproc.THRESH_BINARY_INV);
-        Imgproc.threshold(temp2, temp2, 128, 255, Imgproc.THRESH_BINARY_INV);
-        //apply mask to the cut out mat
-        // Create destination Mat
-        Mat maskedResult = new Mat();
-        cutOutMat.copyTo(maskedResult, BartenderTradeARMenu.cocktailMaskScaled);
-        //match again
-        Imgproc.matchTemplate(maskedResult, temp2, bartenderMenuResult, MATCH_METHOD);
-
-        mmr = Core.minMaxLoc(bartenderMenuResult);
-
-
-        final double matchValue = mmr.maxVal;
-        if (debug) {
-            log.debug("bartendermenu detected. Confidence(" + BARTENDER_MATCHING_THRESHOLD + "): " + matchValue);
-        }
-        if (matchValue > BARTENDER_MATCHING_THRESHOLD) {
-            if (!previousBartenderMatch) {
-                previousBartenderMatch = true;
-                log.debug("bartendermenu detected. Confidence(" + BARTENDER_MATCHING_THRESHOLD + "): " + matchValue);
-            }
-            return true;
-        }
-        if (previousBartenderMatch) {
-
-            previousBartenderMatch = false;
-            log.debug("bartendermenu detected 2. Confidence(" + BARTENDER_MATCHING_THRESHOLD + "): " + matchValue);
-            try {
-                Thread.sleep(20);
-            } catch (final InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            cocktailCapture = getCocktailCapture();
-            return isBartenderMenu(cocktailCapture);
-        }
-        return false;
-    }
-
-    private static BufferedImage getCocktailCapture() {
-        if (targetWindowInfo.hwnd != 0 && User32.INSTANCE.GetForegroundWindow() == targetWindowInfo.hwnd) {
-            return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), BartenderTradeARMenu.getBartenderMenu().getCocktail().getAwtRectangle().getBounds(), cocktailCapture);
-        }
-        return null;
-    }
+//    private static BufferedImage getCocktailCapture() {
+//        if (targetWindowInfo.hwnd != 0 && User32.INSTANCE.GetForegroundWindow() == targetWindowInfo.hwnd) {
+//            return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), BartenderTradeARMenu.getBartenderMenu().getCocktail().getAwtRectangle().getBounds(), cocktailCapture);
+//        }
+//        return null;
+//    }
 //
 //    private static BartenderMenu getBartenderMenu() {
 //        if (bartenderMenu == null) {
@@ -488,14 +515,13 @@ public class ARService {
 //
 //        return bartenderMenu;
 //    }
-
     private static void setupTimerAnalyzeAndRender() {
         final TimerTask timerTask = new TimerTask() {
 
             @Override
             public void run() {
                 try {
-                    if (MENU_VISIBLE.get()) {
+                    if (arMenus.getFirst().getVISIBLE().get()) {
                         downloadMenuCapture = getDownloadMenuCapture();
                         final Boolean newHasWarning = WarningHelper.menuHasWarning(downloadMenuCapture, DataportDownloadARMenu.scaling, MATCHING_THRESHOLD);
                         final ScrollBarV2 newScrollBar = getScrollBar(downloadMenuCapture, newHasWarning);
@@ -529,7 +555,7 @@ public class ARService {
                                 }
                             }
                         }
-                    } else if (TRADE_VISIBLE.get()) {
+                    } else if (arMenus.getLast().getVISIBLE().get()) {
                         bartenderMenuCapture = getBartenderMenuCapture();
                         if (BartenderMenuHelper.isTradeMenu(bartenderMenuCapture, BartenderTradeARMenu.getBartenderMenu())) {
                             if (tradeHits.get() <= 4) {
@@ -706,11 +732,11 @@ public class ARService {
                     if (!arStage.isShowing()) {
                         showOverlay();
                     }
-                } else if ((MENU_VISIBLE.get() || TRADE_VISIBLE.get()) && REQUEST_SHOW.get()) {
+                } else if ((arMenus.stream().anyMatch(arMenu -> arMenu.getVISIBLE().get())) && REQUEST_SHOW.get()) {
                     REQUEST_SHOW.set(false);
                     showOverlay();
 
-                } else if (!MENU_VISIBLE.get() && !TRADE_VISIBLE.get() && REQUEST_HIDE.get()) {
+                } else if (arMenus.stream().noneMatch(arMenu -> arMenu.getVISIBLE().get()) && REQUEST_HIDE.get()) {
                     REQUEST_HIDE.set(false);
                     hideOverlay();
                 }
@@ -976,29 +1002,29 @@ public class ARService {
         log.debug("OCR menu full time: " + (timeRenderAfterMenu - timeRenderBeforeMenu));
     }
 
-    private static void makeGray(final BufferedImage img) {
-        for (int x = 0; x < img.getWidth(); ++x) {
-            for (int y = 0; y < img.getHeight(); ++y) {
-                final int rgb = img.getRGB(x, y);
-                final int r = (rgb >> 16) & 0xFF;
-                final int g = (rgb >> 8) & 0xFF;
-                final int b = (rgb & 0xFF);
-
-                // Normalize and gamma correct:
-                final double rr = Math.pow(r / 255.0, 2.2);
-                final double gg = Math.pow(g / 255.0, 2.2);
-                final double bb = Math.pow(b / 255.0, 2.2);
-
-                // Calculate luminance:
-                final double lum = 0.2126 * rr + 0.7152 * gg + 0.0722 * bb;
-
-                // Gamma compand and rescale to byte range:
-                final int grayLevel = (int) (255.0 * Math.pow(lum, 1.0 / 2.2));
-                final int gray = (grayLevel << 16) + (grayLevel << 8) + grayLevel;
-                img.setRGB(x, y, gray);
-            }
-        }
-    }
+//    private static void makeGray(final BufferedImage img) {
+//        for (int x = 0; x < img.getWidth(); ++x) {
+//            for (int y = 0; y < img.getHeight(); ++y) {
+//                final int rgb = img.getRGB(x, y);
+//                final int r = (rgb >> 16) & 0xFF;
+//                final int g = (rgb >> 8) & 0xFF;
+//                final int b = (rgb & 0xFF);
+//
+//                // Normalize and gamma correct:
+//                final double rr = Math.pow(r / 255.0, 2.2);
+//                final double gg = Math.pow(g / 255.0, 2.2);
+//                final double bb = Math.pow(b / 255.0, 2.2);
+//
+//                // Calculate luminance:
+//                final double lum = 0.2126 * rr + 0.7152 * gg + 0.0722 * bb;
+//
+//                // Gamma compand and rescale to byte range:
+//                final int grayLevel = (int) (255.0 * Math.pow(lum, 1.0 / 2.2));
+//                final int gray = (grayLevel << 16) + (grayLevel << 8) + grayLevel;
+//                img.setRGB(x, y, gray);
+//            }
+//        }
+//    }
 
     private static BufferedImage getDownloadMenuCapture() {
         if (targetWindowInfo.hwnd != 0) {
@@ -1020,12 +1046,12 @@ public class ARService {
         return null;
     }
 
-    private static BufferedImage getArrowCapture() {
-        if (targetWindowInfo.hwnd != 0 && User32.INSTANCE.GetForegroundWindow() == targetWindowInfo.hwnd) {
-            return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), DataportDownloadARMenu.getDownloadMenu().getArrow().getAwtRectangle().getBounds(), arrowCapture);
-        }
-        return null;
-    }
+//    private static BufferedImage getArrowCapture() {
+//        if (targetWindowInfo.hwnd != 0 && User32.INSTANCE.GetForegroundWindow() == targetWindowInfo.hwnd) {
+//            return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), DataportDownloadARMenu.getDownloadMenu().getArrow().getAwtRectangle().getBounds(), arrowCapture);
+//        }
+//        return null;
+//    }
 
 //    private static DownloadMenu getDownloadMenu() {
 //        if (downloadMenu == null) {
@@ -1049,59 +1075,58 @@ public class ARService {
 //        }
 //        return downloadMenu;
 //    }
-    private static boolean isDownloadMenu(final BufferedImage capture) {
-        if (capture == null) {
-            return false;
-        }
-        arrowCaptureMat = CvHelper.convertToMat(capture, arrowCaptureMat);
-        final int result_cols = arrowCaptureMat.cols() - DataportDownloadARMenu.arrowTemplateScaled.cols() + 1;
-        final int result_rows = arrowCaptureMat.rows() - DataportDownloadARMenu.arrowTemplateScaled.rows() + 1;
-        if (result_cols <= 0 || result_rows <= 0) {
-            return false;
-        }
-        if (downloadMenuResult == null || downloadMenuResult.cols() != result_cols || downloadMenuResult.rows() != result_rows) {
-            if (downloadMenuResult != null) {
-                downloadMenuResult.release();
-            }
-            downloadMenuResult = new Mat(result_rows, result_cols, CvType.CV_32FC1);
-        }
-        if (arrowCaptureMatGray == null || arrowCaptureMat.cols() != arrowCaptureMatGray.cols() || arrowCaptureMat.rows() != arrowCaptureMatGray.rows()) {
-            if (arrowCaptureMatGray != null) {
-                arrowCaptureMatGray.release();
-            }
-            arrowCaptureMatGray = new Mat();
-        }
-        //grayscale capture
-        Imgproc.cvtColor(arrowCaptureMat, arrowCaptureMatGray, Imgproc.COLOR_BGRA2GRAY);
-        //matching
-        Imgproc.matchTemplate(arrowCaptureMatGray, DataportDownloadARMenu.arrowTemplateScaled, downloadMenuResult, MATCH_METHOD);
-        final Core.MinMaxLocResult mmr = Core.minMaxLoc(downloadMenuResult);
+//    private static boolean isDownloadMenu(final BufferedImage capture) {
+//        if (capture == null) {
+//            return false;
+//        }
+//        arrowCaptureMat = CvHelper.convertToMat(capture, arrowCaptureMat);
+//        final int result_cols = arrowCaptureMat.cols() - DataportDownloadARMenu.arrowTemplateScaled.cols() + 1;
+//        final int result_rows = arrowCaptureMat.rows() - DataportDownloadARMenu.arrowTemplateScaled.rows() + 1;
+//        if (result_cols <= 0 || result_rows <= 0) {
+//            return false;
+//        }
+//        if (downloadMenuResult == null || downloadMenuResult.cols() != result_cols || downloadMenuResult.rows() != result_rows) {
+//            if (downloadMenuResult != null) {
+//                downloadMenuResult.release();
+//            }
+//            downloadMenuResult = new Mat(result_rows, result_cols, CvType.CV_32FC1);
+//        }
+//        if (arrowCaptureMatGray == null || arrowCaptureMat.cols() != arrowCaptureMatGray.cols() || arrowCaptureMat.rows() != arrowCaptureMatGray.rows()) {
+//            if (arrowCaptureMatGray != null) {
+//                arrowCaptureMatGray.release();
+//            }
+//            arrowCaptureMatGray = new Mat();
+//        }
+//        //grayscale capture
+//        Imgproc.cvtColor(arrowCaptureMat, arrowCaptureMatGray, Imgproc.COLOR_BGRA2GRAY);
+//        //matching
+//        Imgproc.matchTemplate(arrowCaptureMatGray, DataportDownloadARMenu.arrowTemplateScaled, downloadMenuResult, MATCH_METHOD);
+//        final Core.MinMaxLocResult mmr = Core.minMaxLoc(downloadMenuResult);
+//
+//
+//        if (mmr.maxVal > getMatchingThreshold()) {
+//            if (!previousDataportMatch) {
+//                previousDataportMatch = true;
+//                log.debug("dataport downloadmenu detection confidence(" + getMatchingThreshold() + "): " + mmr.maxVal);
+//            }
+//            return true;
+//        }
+//        if (previousDataportMatch) {
+//
+//            previousDataportMatch = false;
+//            log.debug("dataport downloadmenu detection confidence(" + getMatchingThreshold() + "): " + mmr.maxVal);
+//            arrowCapture = getArrowCapture();
+//            return isDownloadMenu(arrowCapture);
+//        }
+//        return false;
+//    }
 
+//    private static boolean previousDataportMatch = false;
+//    private static boolean previousBartenderMatch = false;
 
-        if (mmr.maxVal > getMatchingThreshold()) {
-            if (!previousDataportMatch) {
-                previousDataportMatch = true;
-                log.debug("dataport downloadmenu detection confidence(" + getMatchingThreshold() + "): " + mmr.maxVal);
-            }
-            return true;
-        }
-        if (previousDataportMatch) {
-
-            previousDataportMatch = false;
-            log.debug("dataport downloadmenu detection confidence(" + getMatchingThreshold() + "): " + mmr.maxVal);
-            arrowCapture = getArrowCapture();
-            return isDownloadMenu(arrowCapture);
-        }
-        return false;
-    }
-
-    private static boolean previousDataportMatch = false;
-    private static boolean previousBartenderMatch = false;
-
-    private static double getMatchingThreshold() {
-        return MATCHING_THRESHOLD;
-    }
-
+//    private static double getMatchingThreshold() {
+//        return MATCHING_THRESHOLD;
+//    }
     private static String imageToString(final int index, final BufferedImage menuItemLabelCapture) throws TesseractException {
         final String dataCharacterForCurrentARLocale = LocaleService.getDataCharacterForCurrentARLocale();
         OCRService.setCharWhitelist(dataCharacterForCurrentARLocale);

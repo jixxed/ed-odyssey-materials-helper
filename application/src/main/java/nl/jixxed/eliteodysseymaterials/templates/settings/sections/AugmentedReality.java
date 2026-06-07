@@ -25,6 +25,7 @@ import nl.jixxed.eliteodysseymaterials.service.ARService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.jixxed.eliteodysseymaterials.service.ar.BartenderTradeARMenu;
 import nl.jixxed.eliteodysseymaterials.service.event.ARDisableEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.ARLocaleChangeEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.ARWhitelistChangeEvent;
@@ -210,7 +211,7 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableEven
         DestroyableToggleSwitch arBartenderButton = ToggleSwitchBuilder.builder()
                 .withSelectedChangeListener((_, _, newValue) -> {
                     PreferencesService.setPreference(PreferenceConstants.ENABLE_BARTENDER_AR, Boolean.TRUE.equals(newValue));
-                    Platform.runLater(ARService::bartenderToggle);
+                    Platform.runLater(BartenderTradeARMenu::bartenderToggle);
                 })
                 .withSelected(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_AR, true))
                 .build();

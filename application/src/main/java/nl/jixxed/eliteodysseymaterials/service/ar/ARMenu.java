@@ -11,8 +11,15 @@
 package nl.jixxed.eliteodysseymaterials.service.ar;
 
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public interface ARMenu {
 
-//    boolean isMenuVisible();
     void update(int x, int y, int w, int h);
+
+    boolean isMenuVisible(WindowInfo targetWindowInfo);
+
+    boolean isEnabled();
+
+    AtomicBoolean getVISIBLE();
 }

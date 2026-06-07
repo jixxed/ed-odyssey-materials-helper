@@ -11,16 +11,23 @@
 package nl.jixxed.eliteodysseymaterials.service.ar;
 
 import javafx.scene.image.Image;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.service.ARService;
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 import java.awt.image.BufferedImage;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
 public class DataportDownloadARMenu implements ARMenu {
+    @Getter
+    private final AtomicBoolean VISIBLE = new AtomicBoolean(false);
+    private static final ScreenshotService screenshotService = GDIScreenshotService.getInstance();
     public static Mat arrowTemplate;
     public static Mat arrowTemplateScaled;
     private static DownloadMenu downloadMenu;
@@ -86,5 +93,82 @@ public class DataportDownloadARMenu implements ARMenu {
 
             ImageTransformHelper.init(DataportDownloadARMenu.getDownloadMenu(), scaling);
         }
+    }
+    private static BufferedImage getArrowCapture(WindowInfo targetWindowInfo) {
+        if (targetWindowInfo.hwnd != 0 && User32.INSTANCE.GetForegroundWindow() == targetWindowInfo.hwnd) {
+            return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), DataportDownloadARMenu.getDownloadMenu().getArrow().getAwtRectangle().getBounds(), arrowCapture);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean isMenuVisible(WindowInfo targetWindowInfo) {
+        BufferedImage arrowCapture = getArrowCapture(targetWindowInfo);
+        return isDownloadMenu(arrowCapture, targetWindowInfo);
+    }
+
+
+
+    private static boolean isDownloadMenu(final BufferedImage capture, WindowInfo targetWindowInfo) {
+        if (capture == null) {
+            return false;
+        }
+        arrowCaptureMat = CvHelper.convertToMat(capture, arrowCaptureMat);
+        final int result_cols = arrowCaptureMat.cols() - DataportDownloadARMenu.arrowTemplateScaled.cols() + 1;
+        final int result_rows = arrowCaptureMat.rows() - DataportDownloadARMenu.arrowTemplateScaled.rows() + 1;
+        if (result_cols <= 0 || result_rows <= 0) {
+            return false;
+        }
+        if (downloadMenuResult == null || downloadMenuResult.cols() != result_cols || downloadMenuResult.rows() != result_rows) {
+            if (downloadMenuResult != null) {
+                downloadMenuResult.release();
+            }
+            downloadMenuResult = new Mat(result_rows, result_cols, CvType.CV_32FC1);
+        }
+        if (arrowCaptureMatGray == null || arrowCaptureMat.cols() != arrowCaptureMatGray.cols() || arrowCaptureMat.rows() != arrowCaptureMatGray.rows()) {
+            if (arrowCaptureMatGray != null) {
+                arrowCaptureMatGray.release();
+            }
+            arrowCaptureMatGray = new Mat();
+        }
+        //grayscale capture
+        Imgproc.cvtColor(arrowCaptureMat, arrowCaptureMatGray, Imgproc.COLOR_BGRA2GRAY);
+        //matching
+        Imgproc.matchTemplate(arrowCaptureMatGray, DataportDownloadARMenu.arrowTemplateScaled, downloadMenuResult, MATCH_METHOD);
+        final Core.MinMaxLocResult mmr = Core.minMaxLoc(downloadMenuResult);
+
+
+        if (mmr.maxVal > getMatchingThreshold()) {
+            if (!previousDataportMatch) {
+                previousDataportMatch = true;
+                log.debug("dataport downloadmenu detection confidence(" + getMatchingThreshold() + "): " + mmr.maxVal);
+            }
+            return true;
+        }
+        if (previousDataportMatch) {
+
+            previousDataportMatch = false;
+            log.debug("dataport downloadmenu detection confidence(" + getMatchingThreshold() + "): " + mmr.maxVal);
+            arrowCapture = getArrowCapture(targetWindowInfo);
+            return isDownloadMenu(arrowCapture, targetWindowInfo);
+        }
+        return false;
+    }
+    private static double getMatchingThreshold() {
+        return MATCHING_THRESHOLD;
+    }
+
+    private static final double MATCHING_THRESHOLD = 0.75;
+    private static BufferedImage arrowCapture;
+
+    private static final int MATCH_METHOD = Imgproc.TM_CCOEFF_NORMED;
+    private static Mat downloadMenuResult;
+    private static Mat arrowCaptureMat;
+    private static Mat arrowCaptureMatGray = new Mat();
+    private static boolean previousDataportMatch = false;
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
