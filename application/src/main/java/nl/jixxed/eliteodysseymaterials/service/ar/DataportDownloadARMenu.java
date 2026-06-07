@@ -69,10 +69,10 @@ public class DataportDownloadARMenu implements ARMenu {
         contentX = x;
         contentY = y;
         newScaling = contentHeight / 1600D;
-        updateScaling();
         getDownloadMenu().setContentWidth(contentWidth);
         getDownloadMenu().setContentHeight(contentHeight);
         getDownloadMenu().setScale(newScaling);
+        updateScaling();
     }
 
     private void updateScaling(){

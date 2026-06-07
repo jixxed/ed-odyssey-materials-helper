@@ -70,9 +70,9 @@ public class BartenderTradeARMenu implements ARMenu {
         contentX = x;
         contentY = y;
         newScaling = contentHeight / 1600D;
-        updateScaling();
         getBartenderMenu().setContentWidth(contentWidth);
         getBartenderMenu().setContentHeight(contentHeight);
+        updateScaling();
     }
     private void updateScaling(){
         if (newScaling != scaling) {
