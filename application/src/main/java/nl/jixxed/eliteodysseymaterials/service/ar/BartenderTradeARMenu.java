@@ -52,7 +52,7 @@ public class BartenderTradeARMenu implements ARMenu {
     private Mat cocktailMaskScaled;
     private double scaling = 1;
     private boolean debug = false;
-    private BartenderMenu bartenderMenu;
+    private BartenderTradeMenu bartenderTradeMenu;
     private int contentHeight;
     private int contentWidth;
     private int contentX;
@@ -84,27 +84,27 @@ public class BartenderTradeARMenu implements ARMenu {
         Imgproc.threshold(cocktailMaskScaled, cocktailMaskScaled, 50, 255, Imgproc.THRESH_BINARY);
     }
 
-    public BartenderMenu getBartenderMenu() {
-        if (bartenderMenu == null) {
-            bartenderMenu = new BartenderMenu();
+    public BartenderTradeMenu getBartenderTradeMenu() {
+        if (bartenderTradeMenu == null) {
+            bartenderTradeMenu = new BartenderTradeMenu();
         }
-        return bartenderMenu;
+        return bartenderTradeMenu;
     }
 
-    public BartenderMenu getBartenderMenu(final BartenderMenuType submenu) {
-        if (bartenderMenu == null) {
-            bartenderMenu = new BartenderMenu();
+    public BartenderTradeMenu getBartenderTradeMenu(final BartenderMenuType submenu) {
+        if (bartenderTradeMenu == null) {
+            bartenderTradeMenu = new BartenderTradeMenu();
         }
-        bartenderMenu.setContentHeight(contentHeight);
-        bartenderMenu.setContentWidth(contentWidth);
-        bartenderMenu.setSubMenu(submenu);
+        bartenderTradeMenu.setContentHeight(contentHeight);
+        bartenderTradeMenu.setContentWidth(contentWidth);
+        bartenderTradeMenu.setSubMenu(submenu);
 
-        return bartenderMenu;
+        return bartenderTradeMenu;
     }
 
     private BufferedImage getCocktailCapture(WindowInfo targetWindowInfo) {
         if (targetWindowInfo.hwnd != 0 && User32.INSTANCE.GetForegroundWindow() == targetWindowInfo.hwnd) {
-            return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getBartenderMenu().getCocktail().getAwtRectangle().getBounds(), cocktailCapture);
+            return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getBartenderTradeMenu().getCocktail().getAwtRectangle().getBounds(), cocktailCapture);
         }
         return null;
     }
@@ -193,19 +193,19 @@ public class BartenderTradeARMenu implements ARMenu {
         if (targetWindowInfo.hwnd != 0) {
             final int i = User32.INSTANCE.GetForegroundWindow();
             if (i == targetWindowInfo.hwnd) {
-                return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getBartenderMenu().getMenu().getAwtRectangle().getBounds(), bartenderMenuCapture);
+                return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getBartenderTradeMenu().getMenu().getAwtRectangle().getBounds(), bartenderMenuCapture);
             }
         }
         return null;
     }
 
     private void processTradeMenu(WindowInfo targetWindowInfo, Consumer<Image> resultConsumer) {
-        newBartenderSubMenu = BartenderMenuHelper.getMenuType(bartenderMenuCapture, getBartenderMenu());
+        newBartenderSubMenu = BartenderMenuHelper.getMenuType(bartenderMenuCapture, getBartenderTradeMenu());
 //        log.info("detected menutype:" + menuType);
         if (oldBartenderSubMenu == null || newBartenderSubMenu != oldBartenderSubMenu) {
 //            Thread.sleep(20);
             bartenderMenuCapture = getBartenderMenuCapture(targetWindowInfo);
-            newBartenderSubMenu = BartenderMenuHelper.getMenuType(bartenderMenuCapture, getBartenderMenu());
+            newBartenderSubMenu = BartenderMenuHelper.getMenuType(bartenderMenuCapture, getBartenderTradeMenu());
         }
         if (bartenderMenuCapture != null) {
             if (oldBartenderSubMenu == null || newBartenderSubMenu != oldBartenderSubMenu) {
@@ -214,13 +214,13 @@ public class BartenderTradeARMenu implements ARMenu {
                 bartenderMenuCapture = getBartenderMenuCapture(targetWindowInfo);
 
                 resultConsumer.accept(null);
-                getBartenderMenu(newBartenderSubMenu);
+                getBartenderTradeMenu(newBartenderSubMenu);
                 final long timeProcessBefore = System.currentTimeMillis();
-                processBartenderMenu(bartenderMenuCapture, getBartenderMenu());
+                processBartenderMenu(bartenderMenuCapture, getBartenderTradeMenu());
                 final long timeProcessAfter = System.currentTimeMillis();
                 log.debug("Menu processing time: " + (timeProcessAfter - timeProcessBefore));
                 final long timeRenderBefore = System.currentTimeMillis();
-                renderMenu(getBartenderMenu());
+                renderMenu(getBartenderTradeMenu());
 //                arOverlay.getResizableImageView().setImage(overlayImage);
 
                 resultConsumer.accept(overlayImage);
@@ -234,17 +234,17 @@ public class BartenderTradeARMenu implements ARMenu {
 //        return overlayImage;
     }
 
-    private void renderMenu(final BartenderMenu bartenderMenu) {
-        final BufferedImage bufferedImage = MenuOverlayRenderer.renderMenu(bartenderMenu);
+    private void renderMenu(final BartenderTradeMenu bartenderTradeMenu) {
+        final BufferedImage bufferedImage = MenuOverlayRenderer.renderMenu(bartenderTradeMenu);
         overlayImage = SwingFXUtils.toFXImage(bufferedImage, null);
     }
 
-    private static void processBartenderMenu(final BufferedImage bartenderMenuCapture, final BartenderMenu bartenderMenu) {
+    private static void processBartenderMenu(final BufferedImage bartenderMenuCapture, final BartenderTradeMenu bartenderTradeMenu) {
         try {
             final Locale locale = ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")).getLocale();
 
             final List<Asset> assets = new ArrayList<>();
-            final int lines = switch (bartenderMenu.getSubMenu()) {
+            final int lines = switch (bartenderTradeMenu.getSubMenu()) {
                 case SUBMENU, MAIN_CIRCUITS -> 12;
                 case MAIN_TECH -> 11;
                 case MAIN_CHEMICALS -> 10;
@@ -253,7 +253,7 @@ public class BartenderTradeARMenu implements ARMenu {
             boolean fuzzy = PreferencesService.getPreference(PreferenceConstants.AR_SEARCH_METHOD, "EXACT").equals("FUZZY");
             int fuzzyScore = PreferencesService.getPreference(PreferenceConstants.AR_FUZZY_SCORE, 90);
             for (int index = 0; index < lines; index++) {
-                final nl.jixxed.eliteodysseymaterials.service.ar.Rectangle textArea = (bartenderMenu.getSubMenu().equals(BartenderMenuType.SUBMENU)) ? bartenderMenu.getSubMenuEntryText(index) : bartenderMenu.getMenuEntryText(index);
+                final nl.jixxed.eliteodysseymaterials.service.ar.Rectangle textArea = (bartenderTradeMenu.getSubMenu().equals(BartenderMenuType.SUBMENU)) ? bartenderTradeMenu.getSubMenuEntryText(index) : bartenderTradeMenu.getMenuEntryText(index);
                 BufferedImage textImage = bartenderMenuCapture.getSubimage((int) textArea.getX(), (int) textArea.getY(), (int) textArea.getWidth(), (int) textArea.getHeight());
 
                 final Mat image = CvHelper.convertToMat(textImage, null);
@@ -281,8 +281,8 @@ public class BartenderTradeARMenu implements ARMenu {
                 temp.release();
                 assets.add(asset);
             }
-            bartenderMenu.getVisibleAssets().clear();
-            bartenderMenu.getVisibleAssets().addAll(assets);
+            bartenderTradeMenu.getVisibleAssets().clear();
+            bartenderTradeMenu.getVisibleAssets().addAll(assets);
             log.info(assets.stream().map(Enum::name).collect(Collectors.joining(", ")));
         } catch (final TesseractException e) {
             throw new RuntimeException(e);
@@ -333,8 +333,8 @@ public class BartenderTradeARMenu implements ARMenu {
         contentX = x;
         contentY = y;
         newScaling = contentHeight / 1600D;
-        getBartenderMenu().setContentWidth(contentWidth);
-        getBartenderMenu().setContentHeight(contentHeight);
+        getBartenderTradeMenu().setContentWidth(contentWidth);
+        getBartenderTradeMenu().setContentHeight(contentHeight);
         updateScaling();
     }
 
@@ -344,8 +344,8 @@ public class BartenderTradeARMenu implements ARMenu {
             log.debug("detected resolution: " + contentWidth + "x" + contentHeight);
             //scaling
             scaling = newScaling;
-            Imgproc.resize(cocktailTemplate, cocktailTemplateScaled, new Size(), getBartenderMenu().getScale(), getBartenderMenu().getScale(), Imgproc.INTER_AREA);
-            Imgproc.resize(cocktailMask, cocktailMaskScaled, new Size(), getBartenderMenu().getScale(), getBartenderMenu().getScale(), Imgproc.INTER_AREA);
+            Imgproc.resize(cocktailTemplate, cocktailTemplateScaled, new Size(), getBartenderTradeMenu().getScale(), getBartenderTradeMenu().getScale(), Imgproc.INTER_AREA);
+            Imgproc.resize(cocktailMask, cocktailMaskScaled, new Size(), getBartenderTradeMenu().getScale(), getBartenderTradeMenu().getScale(), Imgproc.INTER_AREA);
             Imgproc.threshold(cocktailMaskScaled, cocktailMaskScaled, 50, 255, Imgproc.THRESH_BINARY);
         }
     }
@@ -366,7 +366,7 @@ public class BartenderTradeARMenu implements ARMenu {
 
         if (getVisible().get()) {
             bartenderMenuCapture = getBartenderMenuCapture(targetWindowInfo);
-            if (BartenderMenuHelper.isTradeMenu(bartenderMenuCapture, getBartenderMenu())) {
+            if (BartenderMenuHelper.isTradeMenu(bartenderMenuCapture, getBartenderTradeMenu())) {
                 if (tradeHits.get() <= 1) {
                     tradeHits.getAndIncrement();
                 }

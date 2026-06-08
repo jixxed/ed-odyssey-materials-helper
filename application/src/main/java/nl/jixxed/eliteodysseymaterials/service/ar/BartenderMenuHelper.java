@@ -20,49 +20,49 @@ import java.awt.image.BufferedImage;
 public class BartenderMenuHelper {
 
 
-    public static BartenderMenuType getMenuType(final BufferedImage bartenderMenuCapture, final BartenderMenu bartenderMenu) {
+    public static BartenderMenuType getMenuType(final BufferedImage bartenderMenuCapture, final BartenderTradeMenu bartenderTradeMenu) {
         if (bartenderMenuCapture == null) {
             return BartenderMenuType.NONE;
         }
-        final Point leftPixel = bartenderMenu.getSubMenuDetectionLeftPixel();
-        final Point rightPixel = bartenderMenu.getSubMenuDetectionRightPixel();
+        final Point leftPixel = bartenderTradeMenu.getSubMenuDetectionLeftPixel();
+        final Point rightPixel = bartenderTradeMenu.getSubMenuDetectionRightPixel();
         final int leftRGB = bartenderMenuCapture.getRGB(leftPixel.x, leftPixel.y);
         final int rightRGB = bartenderMenuCapture.getRGB(rightPixel.x, rightPixel.y);
         if (leftRGB == rightRGB) {
             return BartenderMenuType.SUBMENU;
-        } else if (isMainMenuCircuits(bartenderMenuCapture, bartenderMenu)) {//test 12
+        } else if (isMainMenuCircuits(bartenderMenuCapture, bartenderTradeMenu)) {//test 12
             return BartenderMenuType.MAIN_CIRCUITS;
-        } else if (isMainMenuTech(bartenderMenuCapture, bartenderMenu)) {//test 11
+        } else if (isMainMenuTech(bartenderMenuCapture, bartenderTradeMenu)) {//test 11
             return BartenderMenuType.MAIN_TECH;
         } else {
             return BartenderMenuType.MAIN_CHEMICALS;
         }
     }
 
-    private static boolean isMainMenuTech(final BufferedImage bartenderMenuCapture, final BartenderMenu bartenderMenu) {
-        final Point leftPixel = bartenderMenu.getLine11LeftPixel();
-        final Point rightPixel = bartenderMenu.getLine11RightPixel();
+    private static boolean isMainMenuTech(final BufferedImage bartenderMenuCapture, final BartenderTradeMenu bartenderTradeMenu) {
+        final Point leftPixel = bartenderTradeMenu.getLine11LeftPixel();
+        final Point rightPixel = bartenderTradeMenu.getLine11RightPixel();
         return bartenderMenuCapture.getRGB(leftPixel.x, leftPixel.y) != bartenderMenuCapture.getRGB(rightPixel.x, rightPixel.y);
     }
 
-    private static boolean isMainMenuCircuits(final BufferedImage bartenderMenuCapture, final BartenderMenu bartenderMenu) {
-        final Point leftPixel = bartenderMenu.getLine12LeftPixel();
-        final Point rightPixel = bartenderMenu.getLine12RightPixel();
+    private static boolean isMainMenuCircuits(final BufferedImage bartenderMenuCapture, final BartenderTradeMenu bartenderTradeMenu) {
+        final Point leftPixel = bartenderTradeMenu.getLine12LeftPixel();
+        final Point rightPixel = bartenderTradeMenu.getLine12RightPixel();
         return bartenderMenuCapture.getRGB(leftPixel.x, leftPixel.y) != bartenderMenuCapture.getRGB(rightPixel.x, rightPixel.y);
     }
 
-    public static boolean isTradeMenu(final BufferedImage bartenderMenuCapture, final BartenderMenu bartenderMenu) {
-        return bartenderMenuCapture != null && !isSellMenu(bartenderMenuCapture, bartenderMenu);
+    public static boolean isTradeMenu(final BufferedImage bartenderMenuCapture, final BartenderTradeMenu bartenderTradeMenu) {
+        return bartenderMenuCapture != null && !isSellMenu(bartenderMenuCapture, bartenderTradeMenu);
     }
 
-    private static boolean isSellMenu(final BufferedImage bartenderMenuCapture, final BartenderMenu bartenderMenu) {
+    private static boolean isSellMenu(final BufferedImage bartenderMenuCapture, final BartenderTradeMenu bartenderTradeMenu) {
         if (bartenderMenuCapture == null) {
             return false;
         }
-        final Point leftPixel = bartenderMenu.getSellMenuDetectionLeftPixel();//cocktail
+        final Point leftPixel = bartenderTradeMenu.getSellMenuDetectionLeftPixel();//cocktail
         // 2 pixel check in case of a mouse over
-        final Point rightPixel = bartenderMenu.getSellMenuDetectionRightPixel();//balance triangle bottom left
-        final Point rightPixel2 = bartenderMenu.getSellMenuDetectionRightPixel2();//balance triangle bottom right
+        final Point rightPixel = bartenderTradeMenu.getSellMenuDetectionRightPixel();//balance triangle bottom left
+        final Point rightPixel2 = bartenderTradeMenu.getSellMenuDetectionRightPixel2();//balance triangle bottom right
         final int left = bartenderMenuCapture.getRGB(leftPixel.x, leftPixel.y);
         final int right = bartenderMenuCapture.getRGB(rightPixel.x, rightPixel.y);
         final int right2 = bartenderMenuCapture.getRGB(rightPixel2.x, rightPixel2.y);

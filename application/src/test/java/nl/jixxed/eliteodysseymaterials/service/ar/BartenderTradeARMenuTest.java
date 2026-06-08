@@ -34,11 +34,11 @@ public class BartenderTradeARMenuTest {
             BufferedImage image = ImageIO.read(resourceAsStream);
             ARService.debug = true;
             // Call the method and assert the result
-            BartenderMenu bartenderMenu = new BartenderMenu();
-            bartenderMenu.setContentWidth(image.getWidth());
-            bartenderMenu.setContentHeight(image.getHeight());
+            BartenderTradeMenu bartenderTradeMenu = new BartenderTradeMenu();
+            bartenderTradeMenu.setContentWidth(image.getWidth());
+            bartenderTradeMenu.setContentHeight(image.getHeight());
             // get the cocktail from the image
-            final Rectangle cocktail = bartenderMenu.getCocktail();
+            final Rectangle cocktail = bartenderTradeMenu.getCocktail();
             BufferedImage subimage = image.getSubimage((int) cocktail.getX(), (int) cocktail.getY(), (int) cocktail.getWidth(), (int) cocktail.getHeight());
 
             BufferedImage convertedImg = new BufferedImage(subimage.getWidth(), subimage.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
@@ -63,11 +63,11 @@ public class BartenderTradeARMenuTest {
             BufferedImage image = ImageIO.read(resourceAsStream);
             ARService.debug = true;
             // Call the method and assert the result
-            BartenderMenu bartenderMenu = new BartenderMenu();
-            bartenderMenu.setContentWidth(image.getWidth());
-            bartenderMenu.setContentHeight(image.getHeight());
+            BartenderTradeMenu bartenderTradeMenu = new BartenderTradeMenu();
+            bartenderTradeMenu.setContentWidth(image.getWidth());
+            bartenderTradeMenu.setContentHeight(image.getHeight());
             // get the cocktail from the image
-            final Rectangle cocktail = bartenderMenu.getCocktail();
+            final Rectangle cocktail = bartenderTradeMenu.getCocktail();
             BufferedImage subimage = image.getSubimage((int) cocktail.getX(), (int) cocktail.getY(), (int) cocktail.getWidth(), (int) cocktail.getHeight());
 
             BufferedImage convertedImg = new BufferedImage(subimage.getWidth(), subimage.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);

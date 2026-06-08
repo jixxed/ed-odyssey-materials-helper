@@ -56,7 +56,7 @@ public class DataportDownloadARMenu implements ARMenu {
     private Boolean hasWarning;
     private double scaling = 1;
     private Image overlayImage;
-    private DownloadMenu downloadMenu;
+    private DataportDownloadMenu dataportDownloadMenu;
     private int contentHeight;
     private int contentWidth;
     private int contentX;
@@ -83,28 +83,28 @@ public class DataportDownloadARMenu implements ARMenu {
         }));
     }
 
-    public DownloadMenu getDownloadMenu() {
-        if (downloadMenu == null) {
-            downloadMenu = new DownloadMenu(downloadMenuCapture, scaling, Boolean.TRUE.equals(hasWarning), scrollBar, contentWidth, contentHeight);
+    public DataportDownloadMenu getDataportDownloadMenu() {
+        if (dataportDownloadMenu == null) {
+            dataportDownloadMenu = new DataportDownloadMenu(downloadMenuCapture, scaling, Boolean.TRUE.equals(hasWarning), scrollBar, contentWidth, contentHeight);
         }
-        return downloadMenu;
+        return dataportDownloadMenu;
     }
 
-    public DownloadMenu getDownloadMenu(final BufferedImage downloadMenuCapture, final boolean hasWarning, final ScrollBarV2 scrollBar) {
-        if (downloadMenu == null) {
-            downloadMenu = new DownloadMenu(downloadMenuCapture, scaling, hasWarning, scrollBar, contentWidth, contentHeight);
+    public DataportDownloadMenu getDataportDownloadMenu(final BufferedImage downloadMenuCapture, final boolean hasWarning, final ScrollBarV2 scrollBar) {
+        if (dataportDownloadMenu == null) {
+            dataportDownloadMenu = new DataportDownloadMenu(downloadMenuCapture, scaling, hasWarning, scrollBar, contentWidth, contentHeight);
         } else {
-            downloadMenu.setScale(scaling);
-            downloadMenu.setContentHeight(contentHeight);
-            downloadMenu.setContentWidth(contentWidth);
-            downloadMenu.updateMenuState(downloadMenuCapture, scrollBar, hasWarning);
+            dataportDownloadMenu.setScale(scaling);
+            dataportDownloadMenu.setContentHeight(contentHeight);
+            dataportDownloadMenu.setContentWidth(contentWidth);
+            dataportDownloadMenu.updateMenuState(downloadMenuCapture, scrollBar, hasWarning);
         }
-        return downloadMenu;
+        return dataportDownloadMenu;
     }
 
     private BufferedImage getArrowCapture(WindowInfo targetWindowInfo) {
         if (targetWindowInfo.hwnd != 0 && User32.INSTANCE.GetForegroundWindow() == targetWindowInfo.hwnd) {
-            return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getDownloadMenu().getArrow().getAwtRectangle().getBounds(), arrowCapture);
+            return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getDataportDownloadMenu().getArrow().getAwtRectangle().getBounds(), arrowCapture);
         }
         return null;
     }
@@ -159,31 +159,31 @@ public class DataportDownloadARMenu implements ARMenu {
         return MATCHING_THRESHOLD;
     }
 
-    private boolean canRenderMore(Render cachedImage, DownloadMenu downloadMenu) {
+    private boolean canRenderMore(Render cachedImage, DataportDownloadMenu dataportDownloadMenu) {
         if (cachedImage == null)
             return true;
-        for (int index = 1; index <= downloadMenu.getMenuSize(); index++) {
-            if ((downloadMenu.isMenuItemVisible(index) && downloadMenu.isScanned(index) && !cachedImage.renderedIndexes().contains(index)) || !cachedImage.renderedIndexes().contains(index) && downloadMenu.isMenuItemVisibleForOCR(index)) {
+        for (int index = 1; index <= dataportDownloadMenu.getMenuSize(); index++) {
+            if ((dataportDownloadMenu.isMenuItemVisible(index) && dataportDownloadMenu.isScanned(index) && !cachedImage.renderedIndexes().contains(index)) || !cachedImage.renderedIndexes().contains(index) && dataportDownloadMenu.isMenuItemVisibleForOCR(index)) {
                 return true;
             }
         }
         return false;
     }
 
-    private void renderMenu(final DownloadMenu downloadMenu) {
-        final BufferedImage bufferedImage = MenuOverlayRenderer.renderMenu(downloadMenu);
+    private void renderMenu(final DataportDownloadMenu dataportDownloadMenu) {
+        final BufferedImage bufferedImage = MenuOverlayRenderer.renderMenu(dataportDownloadMenu);
         final AtomicBoolean isFullyRendered = new AtomicBoolean(true);
         final Set<Integer> renderedIndexes = new HashSet();
-        for (int index = 1; index <= downloadMenu.getMenuSize(); index++) {
-            if (downloadMenu.isMenuItemVisible(index) && !downloadMenu.isScanned(index)) {
+        for (int index = 1; index <= dataportDownloadMenu.getMenuSize(); index++) {
+            if (dataportDownloadMenu.isMenuItemVisible(index) && !dataportDownloadMenu.isScanned(index)) {
                 log.debug("not scanned index:" + index);
                 isFullyRendered.set(false);
-            } else if (downloadMenu.isMenuItemVisible(index)) {
+            } else if (dataportDownloadMenu.isMenuItemVisible(index)) {
                 renderedIndexes.add(index);
             }
         }
         overlayImage = SwingFXUtils.toFXImage(bufferedImage, null);
-        renderCache.put(String.valueOf(downloadMenu.isHasWarning()) + downloadMenu.getScrollBar().getPosition(), new Render(renderedIndexes, isFullyRendered.get(), overlayImage));
+        renderCache.put(String.valueOf(dataportDownloadMenu.isHasWarning()) + dataportDownloadMenu.getScrollBar().getPosition(), new Render(renderedIndexes, isFullyRendered.get(), overlayImage));
     }
 
     private ScrollBarV2 getScrollBar(final BufferedImage downloadMenuCapture, final boolean hasWarning) {
@@ -197,31 +197,31 @@ public class DataportDownloadARMenu implements ARMenu {
         if (targetWindowInfo.hwnd != 0) {
             final int i = User32.INSTANCE.GetForegroundWindow();
             if (i == targetWindowInfo.hwnd) {
-                return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getDownloadMenu().getMenu().getAwtRectangle().getBounds(), downloadMenuCapture);
+                return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getDataportDownloadMenu().getMenu().getAwtRectangle().getBounds(), downloadMenuCapture);
             }
         }
         return null;
     }
 
-    private void processMenuType(final BufferedImage downloadMenuCapture, final DownloadMenu downloadMenu) {
-        if (downloadMenu.getType() == null) {
+    private void processMenuType(final BufferedImage downloadMenuCapture, final DataportDownloadMenu dataportDownloadMenu) {
+        if (dataportDownloadMenu.getType() == null) {
             try {
 
                 long timeRenderBefore = System.currentTimeMillis();
                 final BufferedImage warped = ImageTransformHelper.transformForSelection(downloadMenuCapture, new java.awt.Rectangle(
-                        (int) (downloadMenu.getTerminalType().getX() - 10),
-                        (int) (downloadMenu.getTerminalType().getY() - 10),
-                        (int) (downloadMenu.getTerminalType().getWidth() + 10),
-                        (int) (downloadMenu.getTerminalType().getHeight() + 10))
+                        (int) (dataportDownloadMenu.getTerminalType().getX() - 10),
+                        (int) (dataportDownloadMenu.getTerminalType().getY() - 10),
+                        (int) (dataportDownloadMenu.getTerminalType().getWidth() + 10),
+                        (int) (dataportDownloadMenu.getTerminalType().getHeight() + 10))
 
                 );
                 long timeRenderAfter = System.currentTimeMillis();
                 log.debug("Transform terminal time: " + (timeRenderAfter - timeRenderBefore));
                 final BufferedImage typeLabelCaptureOriginalColor = warped.getSubimage(
-                        (int) (downloadMenu.getTerminalType().getX()),
-                        (int) (downloadMenu.getTerminalType().getY()),
-                        (int) downloadMenu.getTerminalType().getWidth(),
-                        (int) downloadMenu.getTerminalType().getHeight()
+                        (int) (dataportDownloadMenu.getTerminalType().getX()),
+                        (int) (dataportDownloadMenu.getTerminalType().getY()),
+                        (int) dataportDownloadMenu.getTerminalType().getWidth(),
+                        (int) dataportDownloadMenu.getTerminalType().getHeight()
                 );
 
                 final Mat matColor = CvHelper.convertToMat(typeLabelCaptureOriginalColor, null);
@@ -273,8 +273,8 @@ public class DataportDownloadARMenu implements ARMenu {
                         if (matcher.matches()) {
                             final DataPortType dataPortType = DataPortType.forLocalizedName(matcher.group(1), locale);
                             log.debug("detected terminal: " + cleaned);
-                            downloadMenu.setType(dataPortType);
-                            downloadMenu.setDataPortName(cleaned);
+                            dataportDownloadMenu.setType(dataPortType);
+                            dataportDownloadMenu.setDataPortName(cleaned);
                         } else {
                             throw new IllegalArgumentException("no match");
                         }
@@ -282,7 +282,7 @@ public class DataportDownloadARMenu implements ARMenu {
 
                 } catch (final IllegalArgumentException ex) {
                     log.debug("detected terminal: UNKNOWN");
-                    downloadMenu.setDataPortName("UNKNOWN");
+                    dataportDownloadMenu.setDataPortName("UNKNOWN");
                 }
 
                 timeRenderAfter = System.currentTimeMillis();
@@ -299,32 +299,32 @@ public class DataportDownloadARMenu implements ARMenu {
         return (byte) iVal;
     }
 
-    private void processMenu(final BufferedImage downloadMenuCapture, final DownloadMenu downloadMenu) {
+    private void processMenu(final BufferedImage downloadMenuCapture, final DataportDownloadMenu dataportDownloadMenu) {
 
         final long timeRenderBeforeMenu = System.currentTimeMillis();
         final List<Future> tasks = new ArrayList<>();
-        for (int index = 1; index <= downloadMenu.getMenuSize(); index++) {
+        for (int index = 1; index <= dataportDownloadMenu.getMenuSize(); index++) {
             final int finalIndex = index;
             final Future<?> future = executorService.submit(() -> {
-                if (Boolean.TRUE.equals(!downloadMenu.getScanned().getOrDefault(finalIndex, false)) && downloadMenu.isMenuItemVisibleForOCR(finalIndex)) {
+                if (Boolean.TRUE.equals(!dataportDownloadMenu.getScanned().getOrDefault(finalIndex, false)) && dataportDownloadMenu.isMenuItemVisibleForOCR(finalIndex)) {
                     try {
-                        final double menuItemY = downloadMenu.getMenuItem(finalIndex).getY();
+                        final double menuItemY = dataportDownloadMenu.getMenuItem(finalIndex).getY();
 
                         long timeRenderBefore = System.currentTimeMillis();
                         final BufferedImage warped = ImageTransformHelper.transformForSelection(downloadMenuCapture, new java.awt.Rectangle(
-                                (int) (downloadMenu.getMenuItem(finalIndex).getX() + downloadMenu.getMenuTextReadOffset().getX() - 10),
-                                (int) (menuItemY + downloadMenu.getMenuTextReadOffset().getY() - 50),
-                                (int) downloadMenu.getMenuTextReadOffset().getWidth() + 20,
-                                (int) downloadMenu.getMenuTextReadOffset().getHeight() + 100)
+                                (int) (dataportDownloadMenu.getMenuItem(finalIndex).getX() + dataportDownloadMenu.getMenuTextReadOffset().getX() - 10),
+                                (int) (menuItemY + dataportDownloadMenu.getMenuTextReadOffset().getY() - 50),
+                                (int) dataportDownloadMenu.getMenuTextReadOffset().getWidth() + 20,
+                                (int) dataportDownloadMenu.getMenuTextReadOffset().getHeight() + 100)
                         );
                         long timeRenderAfter = System.currentTimeMillis();
                         log.debug("Transform menu item time: " + (timeRenderAfter - timeRenderBefore));
 //                        final int y = (int) (menuItemY + downloadMenu.getMenuTextReadOffset().getY() - downloadMenu.getMenu().getY());
                         final BufferedImage menuItemLabelCaptureOriginalColor = warped.getSubimage(
-                                (int) (downloadMenu.getMenuItem(finalIndex).getX() + downloadMenu.getMenuTextReadOffset().getX()),
-                                (int) (downloadMenu.getMenuItem(finalIndex).getY() + downloadMenu.getMenuTextReadOffset().getY()),
-                                (int) downloadMenu.getMenuTextReadOffset().getWidth(),
-                                (int) downloadMenu.getMenuTextReadOffset().getHeight()
+                                (int) (dataportDownloadMenu.getMenuItem(finalIndex).getX() + dataportDownloadMenu.getMenuTextReadOffset().getX()),
+                                (int) (dataportDownloadMenu.getMenuItem(finalIndex).getY() + dataportDownloadMenu.getMenuTextReadOffset().getY()),
+                                (int) dataportDownloadMenu.getMenuTextReadOffset().getWidth(),
+                                (int) dataportDownloadMenu.getMenuTextReadOffset().getHeight()
                         );
 
                         final Mat matColor = CvHelper.convertToMat(menuItemLabelCaptureOriginalColor, null);
@@ -369,8 +369,8 @@ public class DataportDownloadARMenu implements ARMenu {
                             } else {
                                 odysseyMaterial = OdysseyMaterial.forLocalizedNameSpaceInsensitive(cleaned, locale);
                             }
-                            downloadMenu.getDownloadData().put(finalIndex, odysseyMaterial);
-                            downloadMenu.getScanned().put(finalIndex, true);
+                            dataportDownloadMenu.getDownloadData().put(finalIndex, odysseyMaterial);
+                            dataportDownloadMenu.getScanned().put(finalIndex, true);
                         } catch (final Exception e) {
                             final Mat normal = CvHelper.convertToMat(menuItemLabelCaptureOriginalShifted, null);
                             final Mat inverted = new Mat();
@@ -382,8 +382,8 @@ public class DataportDownloadARMenu implements ARMenu {
                             cleaned = imageToString(finalIndex, menuItemLabelCaptureInverted);
                             try {
                                 if (cleaned.isBlank()) {
-                                    downloadMenu.getDownloadData().put(finalIndex, Data.UNKNOWN);
-                                    downloadMenu.getScanned().put(finalIndex, true);
+                                    dataportDownloadMenu.getDownloadData().put(finalIndex, Data.UNKNOWN);
+                                    dataportDownloadMenu.getScanned().put(finalIndex, true);
                                 } else {
                                     if (fuzzy) {
                                         BoundExtractedResult<OdysseyMaterial> extractedResult = OdysseyMaterial.forLocalizedNameSpaceInsensitiveFuzzy(cleaned, locale);
@@ -396,17 +396,17 @@ public class DataportDownloadARMenu implements ARMenu {
                                     } else {
                                         odysseyMaterial = OdysseyMaterial.forLocalizedNameSpaceInsensitive(cleaned, locale);
                                     }
-                                    if (odysseyMaterial instanceof Data data && PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "").equals("ENGLISH") && downloadMenu.getDataPortName() != null && !downloadMenu.getDataPortName().equals("UNKNOWN")) {
-                                        MaterialTrackingService.registerData(downloadMenu.getDataPortName(), downloadMenu.getType(), data, finalIndex);
+                                    if (odysseyMaterial instanceof Data data && PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "").equals("ENGLISH") && dataportDownloadMenu.getDataPortName() != null && !dataportDownloadMenu.getDataPortName().equals("UNKNOWN")) {
+                                        MaterialTrackingService.registerData(dataportDownloadMenu.getDataPortName(), dataportDownloadMenu.getType(), data, finalIndex);
                                     }
-                                    downloadMenu.getDownloadData().put(finalIndex, odysseyMaterial);
-                                    downloadMenu.getScanned().put(finalIndex, true);
+                                    dataportDownloadMenu.getDownloadData().put(finalIndex, odysseyMaterial);
+                                    dataportDownloadMenu.getScanned().put(finalIndex, true);
                                 }
 
                             } catch (final IllegalArgumentException ex) {
                                 log.debug("detected material: UNKNOWN");
-                                downloadMenu.getDownloadData().put(finalIndex, Data.UNKNOWN);
-                                downloadMenu.getScanned().put(finalIndex, true);
+                                dataportDownloadMenu.getDownloadData().put(finalIndex, Data.UNKNOWN);
+                                dataportDownloadMenu.getScanned().put(finalIndex, true);
                             }
                         }
 
@@ -485,9 +485,9 @@ public class DataportDownloadARMenu implements ARMenu {
         contentX = x;
         contentY = y;
         newScaling = contentHeight / 1600D;
-        getDownloadMenu().setContentWidth(contentWidth);
-        getDownloadMenu().setContentHeight(contentHeight);
-        getDownloadMenu().setScale(newScaling);
+        getDataportDownloadMenu().setContentWidth(contentWidth);
+        getDataportDownloadMenu().setContentHeight(contentHeight);
+        getDataportDownloadMenu().setScale(newScaling);
         updateScaling();
     }
 
@@ -500,7 +500,7 @@ public class DataportDownloadARMenu implements ARMenu {
             Imgproc.resize(arrowTemplate, arrowTemplateScaled, new Size(), scaling, scaling, Imgproc.INTER_AREA);
             WarningHelper.updateScale(scaling);
 
-            ImageTransformHelper.init(getDownloadMenu(), scaling);
+            ImageTransformHelper.init(getDataportDownloadMenu(), scaling);
         }
     }
 
@@ -531,21 +531,21 @@ public class DataportDownloadARMenu implements ARMenu {
                         overlayImage = cachedImage.render();
 //                        arOverlay.getResizableImageView().setImage(overlayImage);
                         resultConsumer.accept(overlayImage);
-                    } else if (canRenderMore(cachedImage, getDownloadMenu())) {
+                    } else if (canRenderMore(cachedImage, getDataportDownloadMenu())) {
 //                        arOverlay.getResizableImageView().setImage(null);
                         resultConsumer.accept(null);
-                        log.debug("render required for Warning: " + getDownloadMenu().isHasWarning() + ". Scrollbar: " + scrollBar.getPosition() + " size:" + scrollBar.getSize());
-                        getDownloadMenu(downloadMenuCapture, hasWarning, scrollBar);
+                        log.debug("render required for Warning: " + getDataportDownloadMenu().isHasWarning() + ". Scrollbar: " + scrollBar.getPosition() + " size:" + scrollBar.getSize());
+                        getDataportDownloadMenu(downloadMenuCapture, hasWarning, scrollBar);
                         if (PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "").equals("ENGLISH")) {
-                            processMenuType(downloadMenuCapture, getDownloadMenu());
+                            processMenuType(downloadMenuCapture, getDataportDownloadMenu());
                         }
-                        ImageTransformHelper.init(getDownloadMenu(), scaling);
+                        ImageTransformHelper.init(getDataportDownloadMenu(), scaling);
                         final long timeProcessBefore = System.currentTimeMillis();
-                        processMenu(downloadMenuCapture, getDownloadMenu());
+                        processMenu(downloadMenuCapture, getDataportDownloadMenu());
                         final long timeProcessAfter = System.currentTimeMillis();
                         log.debug("Menu processing time: " + (timeProcessAfter - timeProcessBefore));
                         final long timeRenderBefore = System.currentTimeMillis();
-                        renderMenu(getDownloadMenu());
+                        renderMenu(getDataportDownloadMenu());
 //                        arOverlay.getResizableImageView().setImage(overlayImage);
                         final long timeRenderAfter = System.currentTimeMillis();
                         log.debug("Total render time: " + (timeRenderAfter - timeRenderBefore));
@@ -561,10 +561,10 @@ public class DataportDownloadARMenu implements ARMenu {
     }
 
     public void clear() {
-        getDownloadMenu().getScanned().clear();
-        getDownloadMenu().setType(null);
-        getDownloadMenu().setDataPortName(null);
-        getDownloadMenu().getDownloadData().clear();
+        getDataportDownloadMenu().getScanned().clear();
+        getDataportDownloadMenu().setType(null);
+        getDataportDownloadMenu().setDataPortName(null);
+        getDataportDownloadMenu().getDownloadData().clear();
         renderCache.clear();
         overlayImage = null;
         scrollBar = null;

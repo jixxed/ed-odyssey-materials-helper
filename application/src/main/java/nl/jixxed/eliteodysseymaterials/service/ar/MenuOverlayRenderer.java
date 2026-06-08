@@ -29,40 +29,40 @@ import java.util.Locale;
 @Slf4j
 public class MenuOverlayRenderer {
 
-    public static BufferedImage renderMenu(final DownloadMenu downloadMenu) {
+    public static BufferedImage renderMenu(final DataportDownloadMenu dataportDownloadMenu) {
 //        final int contentWidth = downloadMenu.getContentWidth();
 //        final int contentHeight = downloadMenu.getContentHeight();
-        final BufferedImage bufferedImage = new BufferedImage((int) downloadMenu.getMenu().getWidth(), (int) downloadMenu.getMenu().getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+        final BufferedImage bufferedImage = new BufferedImage((int) dataportDownloadMenu.getMenu().getWidth(), (int) dataportDownloadMenu.getMenu().getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D graphics = bufferedImage.createGraphics();
 //        final AtomicBoolean isFullyRendered = new AtomicBoolean(true);
 
 //        graphics.setColor(Color.WHITE);
 //        graphics.drawRect((int) downloadMenu.getTerminalType().getX(), (int) downloadMenu.getTerminalType().getY(), (int) downloadMenu.getTerminalType().getWidth(), (int) downloadMenu.getTerminalType().getHeight());
 
-        for (int index = 1; index <= downloadMenu.getMenuSize(); index++) {
-            final OdysseyMaterial odysseyMaterial = downloadMenu.getDownloadData().get(index);
+        for (int index = 1; index <= dataportDownloadMenu.getMenuSize(); index++) {
+            final OdysseyMaterial odysseyMaterial = dataportDownloadMenu.getDownloadData().get(index);
 //            if (downloadMenu.isMenuItemVisible(index) && !downloadMenu.isScanned(index)) {
 //                log.debug("not scanned index:" + index);
 //                isFullyRendered.set(false);
 //            }
 //            graphics.setColor(Color.YELLOW);
 //            graphics.drawRect((int) (downloadMenu.getMenuItemX(index) + downloadMenu.getMenuTextReadOffset().getX()), (int) (downloadMenu.getMenuItemY(index) + downloadMenu.getMenuTextReadOffset().getY()), (int) downloadMenu.getMenuTextReadOffset().getWidth(), (int) downloadMenu.getMenuTextReadOffset().getHeight());
-            if (downloadMenu.isMenuItemVisible(index) && Data.UNKNOWN != odysseyMaterial && odysseyMaterial != null) {
+            if (dataportDownloadMenu.isMenuItemVisible(index) && Data.UNKNOWN != odysseyMaterial && odysseyMaterial != null) {
                 graphics.setColor(Color.WHITE);
                 if (Locale.forLanguageTag("ru").equals(LocaleService.getCurrentLocale())) {
-                    graphics.setFont(new Font("Eurostile-Roman", Font.BOLD, (int) (downloadMenu.getFontSize())));
+                    graphics.setFont(new Font("Eurostile-Roman", Font.BOLD, (int) (dataportDownloadMenu.getFontSize())));
                 } else {
 //                    graphics.setFont(new Font("Eurostile-Roman", Font.BOLD, (int) (downloadMenu.getFontSize())));
-                    graphics.setFont(new Font("Euro Caps", Font.BOLD, (int) (downloadMenu.getFontSize())));
+                    graphics.setFont(new Font("Euro Caps", Font.BOLD, (int) (dataportDownloadMenu.getFontSize())));
                 }
                 graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
                 graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-                final double menuItemY = downloadMenu.getMenuItemY(index) + downloadMenu.getMenuItemPositionYOffset();
+                final double menuItemY = dataportDownloadMenu.getMenuItemY(index) + dataportDownloadMenu.getMenuItemPositionYOffset();
 
-                final int x = (int) (downloadMenu.getMenuItemX(index) + downloadMenu.getMenuTextWriteOffsetX());
-                double offset = downloadMenu.getMenuItem(index).getY() < downloadMenu.getVisibleViewPortRect().getY() ? downloadMenu.getMenuItemDefaultHeight() - downloadMenu.getMenuItemVisibleHeight(index) : 0;
-                final int y = (int) (menuItemY + downloadMenu.getMenuTextWriteOffsetY() + offset);
+                final int x = (int) (dataportDownloadMenu.getMenuItemX(index) + dataportDownloadMenu.getMenuTextWriteOffsetX());
+                double offset = dataportDownloadMenu.getMenuItem(index).getY() < dataportDownloadMenu.getVisibleViewPortRect().getY() ? dataportDownloadMenu.getMenuItemDefaultHeight() - dataportDownloadMenu.getMenuItemVisibleHeight(index) : 0;
+                final int y = (int) (menuItemY + dataportDownloadMenu.getMenuTextWriteOffsetY() + offset);
                 final Color color;
                 if (WishlistService.isMaterialOnWishlist(odysseyMaterial)) {
                     final javafx.scene.paint.Color preference = javafx.scene.paint.Color.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_WISHLIST_COLOR, javafx.scene.paint.Color.LIME.toString()));
@@ -89,7 +89,7 @@ public class MenuOverlayRenderer {
                             (float) preference.getBlue(),
                             (float) preference.getOpacity());
                 }
-                if (downloadMenu.isMenuItemLabelVisible(index)) {
+                if (dataportDownloadMenu.isMenuItemLabelVisible(index)) {
                     final String text;
                     final Integer backPackValue = StorageService.getMaterialStorage(odysseyMaterial).getBackPackValue();
                     final String backPackText = backPackValue > 0 ? "(" + backPackValue + ")" : "";
@@ -113,22 +113,22 @@ public class MenuOverlayRenderer {
                     graphics.drawString(text, x, y + fm.getHeight() - fm.getDescent() + (int) (0.05 * fm.getHeight()));
                 }
                 graphics.setColor(color);
-                graphics.fillRect((int) downloadMenu.getMenuItemX(index), (int) (menuItemY + offset), (int) downloadMenu.getMenuItemWidth(index), (int) downloadMenu.getMenuItemVisibleHeight(index));
-                graphics.drawRect((int) downloadMenu.getMenuItemX(index), (int) (menuItemY + offset), (int) downloadMenu.getMenuItemWidth(), (int) downloadMenu.getMenuItemVisibleHeight(index));
+                graphics.fillRect((int) dataportDownloadMenu.getMenuItemX(index), (int) (menuItemY + offset), (int) dataportDownloadMenu.getMenuItemWidth(index), (int) dataportDownloadMenu.getMenuItemVisibleHeight(index));
+                graphics.drawRect((int) dataportDownloadMenu.getMenuItemX(index), (int) (menuItemY + offset), (int) dataportDownloadMenu.getMenuItemWidth(), (int) dataportDownloadMenu.getMenuItemVisibleHeight(index));
 
 
             }
         }
 
         graphics.dispose();
-        BufferedImage transformed = ImageTransformHelper.transform(bufferedImage, downloadMenu);
+        BufferedImage transformed = ImageTransformHelper.transform(bufferedImage, dataportDownloadMenu);
         graphics = transformed.createGraphics();
         graphics.setColor(Color.WHITE);
         if (Locale.forLanguageTag("ru").equals(LocaleService.getCurrentLocale())) {
-            graphics.setFont(new Font("Eurostile-Roman", Font.BOLD, (int) (downloadMenu.getFontSize())));
+            graphics.setFont(new Font("Eurostile-Roman", Font.BOLD, (int) (dataportDownloadMenu.getFontSize())));
         } else {
 //                    graphics.setFont(new Font("Eurostile-Roman", Font.BOLD, (int) (downloadMenu.getFontSize())));
-            graphics.setFont(new Font("Euro Caps", Font.BOLD, (int) (downloadMenu.getFontSize())));
+            graphics.setFont(new Font("Euro Caps", Font.BOLD, (int) (dataportDownloadMenu.getFontSize())));
         }
         graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -142,8 +142,8 @@ public class MenuOverlayRenderer {
     }
 
 
-    public static BufferedImage renderMenu(final BartenderMenu bartenderMenu) {
-        final BufferedImage bufferedImage = new BufferedImage((int) bartenderMenu.getContentWidth(), (int) bartenderMenu.getContentHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+    public static BufferedImage renderMenu(final BartenderTradeMenu bartenderTradeMenu) {
+        final BufferedImage bufferedImage = new BufferedImage((int) bartenderTradeMenu.getContentWidth(), (int) bartenderTradeMenu.getContentHeight(), BufferedImage.TYPE_4BYTE_ABGR);
         final Graphics2D graphics = bufferedImage.createGraphics();
 
         final javafx.scene.paint.Color preference = javafx.scene.paint.Color.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_BARTENDER_COLOR, "0xb3b3b3ff"));
@@ -154,9 +154,9 @@ public class MenuOverlayRenderer {
         graphics.setColor(color);
 
         if (Locale.forLanguageTag("ru").equals(LocaleService.getCurrentLocale())) {
-            graphics.setFont(new Font("Eurostile-Roman", Font.PLAIN, (int) (bartenderMenu.getHeaderFontSize())));
+            graphics.setFont(new Font("Eurostile-Roman", Font.PLAIN, (int) (bartenderTradeMenu.getHeaderFontSize())));
         } else {
-            graphics.setFont(new Font("Euro Caps", Font.PLAIN, (int) (bartenderMenu.getHeaderFontSize())));
+            graphics.setFont(new Font("Euro Caps", Font.PLAIN, (int) (bartenderTradeMenu.getHeaderFontSize())));
         }
         graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -166,26 +166,26 @@ public class MenuOverlayRenderer {
 //        final String text = bartenderMenu.getSubMenu().toString();
         final FontMetrics fmHeader = graphics.getFontMetrics();
 
-        if (!bartenderMenu.getVisibleAssets().stream().allMatch(Asset.UNKNOWN::equals)) {
-            graphics.drawString("FLEETCARRIER", bartenderMenu.getFleetCarrierHeaderPosition().x + ((135 - fmHeader.stringWidth("FLEETCARRIER")) / 2), bartenderMenu.getFleetCarrierHeaderPosition().y + fmHeader.getHeight() - fmHeader.getDescent() + (int) (0.05 * fmHeader.getHeight()));
-            graphics.drawString("WISHLIST", bartenderMenu.getWishlistHeaderPosition().x + ((135 - fmHeader.stringWidth("WISHLIST")) / 2), bartenderMenu.getWishlistHeaderPosition().y + fmHeader.getHeight() - fmHeader.getDescent() + (int) (0.05 * fmHeader.getHeight()));
-            graphics.drawString("Move the mousecursor over the cocktail for a rescan", (int) bartenderMenu.getMenu().getX() + 10, (int) bartenderMenu.getMenu().getY() + 10 + fmHeader.getHeight() - fmHeader.getDescent() + (int) (0.05 * fmHeader.getHeight()));
+        if (!bartenderTradeMenu.getVisibleAssets().stream().allMatch(Asset.UNKNOWN::equals)) {
+            graphics.drawString("FLEETCARRIER", bartenderTradeMenu.getFleetCarrierHeaderPosition().x + ((135 - fmHeader.stringWidth("FLEETCARRIER")) / 2), bartenderTradeMenu.getFleetCarrierHeaderPosition().y + fmHeader.getHeight() - fmHeader.getDescent() + (int) (0.05 * fmHeader.getHeight()));
+            graphics.drawString("WISHLIST", bartenderTradeMenu.getWishlistHeaderPosition().x + ((135 - fmHeader.stringWidth("WISHLIST")) / 2), bartenderTradeMenu.getWishlistHeaderPosition().y + fmHeader.getHeight() - fmHeader.getDescent() + (int) (0.05 * fmHeader.getHeight()));
+            graphics.drawString("Move the mousecursor over the cocktail for a rescan", (int) bartenderTradeMenu.getMenu().getX() + 10, (int) bartenderTradeMenu.getMenu().getY() + 10 + fmHeader.getHeight() - fmHeader.getDescent() + (int) (0.05 * fmHeader.getHeight()));
         }
         if (Locale.forLanguageTag("ru").equals(LocaleService.getCurrentLocale())) {
-            graphics.setFont(new Font("Eurostile-Roman", Font.PLAIN, (int) (bartenderMenu.getFontSize())));
+            graphics.setFont(new Font("Eurostile-Roman", Font.PLAIN, (int) (bartenderTradeMenu.getFontSize())));
         } else {
-            graphics.setFont(new Font("Euro Caps", Font.PLAIN, (int) (bartenderMenu.getFontSize())));
+            graphics.setFont(new Font("Euro Caps", Font.PLAIN, (int) (bartenderTradeMenu.getFontSize())));
         }
 
         final FontMetrics fm = graphics.getFontMetrics();
-        bartenderMenu.visibleAssets.forEach(asset -> {
+        bartenderTradeMenu.visibleAssets.forEach(asset -> {
             if (!asset.isUnknown()) {
 //                final Rectangle rectangle = bartenderMenu.getMenuItem(asset);
 //                graphics.drawRect((int) rectangle.getX(), (int) rectangle.getY(), (int) rectangle.getWidth(), (int) rectangle.getHeight());
                 final String fcValue = StorageService.getMaterialStorage(asset).getFleetCarrierValue().toString();
                 final String wlValue = WishlistService.getAllWishlistsCount(asset).toString();
-                graphics.drawString(fcValue, bartenderMenu.getFleetCarrierTextPosition(asset).x + ((135 - fm.stringWidth(fcValue)) / 2), bartenderMenu.getFleetCarrierTextPosition(asset).y + fm.getHeight() - fm.getDescent() + (int) (0.05 * fm.getHeight()));
-                graphics.drawString(wlValue, bartenderMenu.getWishlistTextPosition(asset).x + ((135 - fm.stringWidth(wlValue)) / 2), bartenderMenu.getWishlistTextPosition(asset).y + fm.getHeight() - fm.getDescent() + (int) (0.05 * fm.getHeight()));
+                graphics.drawString(fcValue, bartenderTradeMenu.getFleetCarrierTextPosition(asset).x + ((135 - fm.stringWidth(fcValue)) / 2), bartenderTradeMenu.getFleetCarrierTextPosition(asset).y + fm.getHeight() - fm.getDescent() + (int) (0.05 * fm.getHeight()));
+                graphics.drawString(wlValue, bartenderTradeMenu.getWishlistTextPosition(asset).x + ((135 - fm.stringWidth(wlValue)) / 2), bartenderTradeMenu.getWishlistTextPosition(asset).y + fm.getHeight() - fm.getDescent() + (int) (0.05 * fm.getHeight()));
             }
         });
         //debugging

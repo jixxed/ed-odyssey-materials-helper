@@ -28,13 +28,13 @@ public class ImageTransformHelper {
     private static Point[][] sourceRows;
     private static Point[][] reverseSourceRows;
 
-    public static void init(final DownloadMenu downloadMenu, final double scaling) {
-        midRows = downloadMenu.getMenu().getHeight() / 2;
-        midCols = downloadMenu.getMenu().getWidth() / 2;
-        col_count = (int) (downloadMenu.getMenu().getWidth() / 50);
-        row_count = (int) (downloadMenu.getMenu().getHeight() / 50);
-        dx = downloadMenu.getMenu().getWidth() / (col_count - 1);
-        dy = downloadMenu.getMenu().getHeight() / (row_count - 1);
+    public static void init(final DataportDownloadMenu dataportDownloadMenu, final double scaling) {
+        midRows = dataportDownloadMenu.getMenu().getHeight() / 2;
+        midCols = dataportDownloadMenu.getMenu().getWidth() / 2;
+        col_count = (int) (dataportDownloadMenu.getMenu().getWidth() / 50);
+        row_count = (int) (dataportDownloadMenu.getMenu().getHeight() / 50);
+        dx = dataportDownloadMenu.getMenu().getWidth() / (col_count - 1);
+        dy = dataportDownloadMenu.getMenu().getHeight() / (row_count - 1);
         size = new Size(dx + EXTRA_PIXELS * 2, dy + EXTRA_PIXELS * 2);
         sourceRows = new Point[row_count][];
         reverseSourceRows = new Point[row_count][];
@@ -45,7 +45,7 @@ public class ImageTransformHelper {
                 final double x = (int) (dx * col) - EXTRA_PIXELS;
                 final double ellipse_offset = 120 * scaling;
                 final int a = Math.abs((int) (ellipse_offset * (row * dy - midRows) / midRows));
-                final int b = (int) downloadMenu.getMenu().getWidth();
+                final int b = (int) dataportDownloadMenu.getMenu().getWidth();
                 final double y;
                 final double yReverse;
                 if (row * dy > midRows) {
@@ -64,17 +64,17 @@ public class ImageTransformHelper {
         }
     }
 
-    static BufferedImage transform(final BufferedImage bufferedImage, final DownloadMenu downloadMenu) {
+    static BufferedImage transform(final BufferedImage bufferedImage, final DataportDownloadMenu dataportDownloadMenu) {
         final Mat mat = CvHelper.convertToMat(bufferedImage, null);
-        final Mat overlay = Mat.zeros(downloadMenu.getContentHeight(), downloadMenu.getContentWidth(), CvType.CV_32FC4);
+        final Mat overlay = Mat.zeros(dataportDownloadMenu.getContentHeight(), dataportDownloadMenu.getContentWidth(), CvType.CV_32FC4);
 
         for (int row = 0; row < row_count - 1; row++) {
             for (int col = 0; col < col_count - 1; col++) {
                 final Mat submat = mat.submat(
                         (int) Math.max(0, Math.min(reverseSourceRows[row][col].y - EXTRA_PIXELS, reverseSourceRows[row + 1][col].y + EXTRA_PIXELS)),
-                        (int) Math.min(downloadMenu.getContentHeight(), Math.max(reverseSourceRows[row][col + 1].y - EXTRA_PIXELS, reverseSourceRows[row + 1][col + 1].y + EXTRA_PIXELS)),
+                        (int) Math.min(dataportDownloadMenu.getContentHeight(), Math.max(reverseSourceRows[row][col + 1].y - EXTRA_PIXELS, reverseSourceRows[row + 1][col + 1].y + EXTRA_PIXELS)),
                         (int) Math.max(0, reverseSourceRows[row][col].x - EXTRA_PIXELS),
-                        (int) Math.min(downloadMenu.getContentWidth(), reverseSourceRows[row + 1][col + 1].x + EXTRA_PIXELS));
+                        (int) Math.min(dataportDownloadMenu.getContentWidth(), reverseSourceRows[row + 1][col + 1].x + EXTRA_PIXELS));
                 Imgproc.cvtColor(submat, submat, Imgproc.COLOR_BGRA2GRAY);
                 if (Core.countNonZero(submat) == 0) {
                     continue;
@@ -94,7 +94,7 @@ public class ImageTransformHelper {
                 dst.create(size, mat.type());
                 Imgproc.warpPerspective(mat, dst, perspectiveTransform, size, Imgproc.INTER_LANCZOS4);
 
-                CvHelper.overlayImage(dst, overlay, new Point((dx * col) + downloadMenu.getMenu().getX(), (dy * row) + downloadMenu.getMenu().getY()), EXTRA_PIXELS);
+                CvHelper.overlayImage(dst, overlay, new Point((dx * col) + dataportDownloadMenu.getMenu().getX(), (dy * row) + dataportDownloadMenu.getMenu().getY()), EXTRA_PIXELS);
                 perspectiveTransform.release();
                 fromPoints.release();
                 toPoints.release();

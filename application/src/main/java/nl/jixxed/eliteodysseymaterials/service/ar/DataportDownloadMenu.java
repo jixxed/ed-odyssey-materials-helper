@@ -28,7 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Data
-public class DownloadMenu {
+public class DataportDownloadMenu {
     public static final int VIEWPORT_HEIGHT = 553;
     private boolean hasWarning;
     Map<Integer, Rectangle> menuItems = new HashMap<>();
@@ -44,7 +44,7 @@ public class DownloadMenu {
     private int menuSize;
     private BufferedImage downloadMenuCapture;
 
-    public DownloadMenu(final BufferedImage downloadMenuCapture, final double scale, final boolean hasWarning, final ScrollBarV2 scrollBar, final int contentWidth, final int contentHeight) {
+    public DataportDownloadMenu(final BufferedImage downloadMenuCapture, final double scale, final boolean hasWarning, final ScrollBarV2 scrollBar, final int contentWidth, final int contentHeight) {
         this.scale = scale;
         this.scrollBar = scrollBar;
         this.hasWarning = hasWarning;

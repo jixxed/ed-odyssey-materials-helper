@@ -18,7 +18,7 @@ import nl.jixxed.eliteodysseymaterials.enums.BartenderMenuType;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class BartenderMenu {
+public class BartenderTradeMenu {
     @Getter
     java.util.List<Asset> visibleAssets = new ArrayList<>();
     @Getter
@@ -33,7 +33,7 @@ public class BartenderMenu {
     @Getter
     private BartenderMenuType subMenu;
 
-    public BartenderMenu() {
+    public BartenderTradeMenu() {
         this.scale = 1;
         this.contentHeight = 1600;
         this.contentWidth = 3840;//2844.445;

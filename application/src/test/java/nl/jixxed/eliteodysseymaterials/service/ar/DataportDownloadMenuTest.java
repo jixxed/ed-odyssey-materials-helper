@@ -42,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 @Slf4j
 @Tag("manual")
-class DownloadMenuTest {
+class DataportDownloadMenuTest {
     private static Object[][] heightTests() {
         return new Object[][]{
                 {0, "/ar/scrollbar/Screenshot_0007.png", false, new double[]{100, 100, 100, 100}},
@@ -77,11 +77,11 @@ class DownloadMenuTest {
             importImage = bgrImage;
 
             var scaling = importImage.getHeight() / 1600D;
-            var downloadMenu = new DownloadMenu(null, scaling, hasWarning, null, importImage.getWidth(), importImage.getHeight());
+            var downloadMenu = new DataportDownloadMenu(null, scaling, hasWarning, null, importImage.getWidth(), importImage.getHeight());
             BufferedImage downloadMenuImage = importImage.getSubimage((int) downloadMenu.getMenu().getX(), (int) downloadMenu.getMenu().getY(), (int) downloadMenu.getMenu().getWidth(), (int) downloadMenu.getMenu().getHeight());
 
             var scrollbar = ScrollBarHelper.getScrollBarV2(downloadMenuImage, hasWarning, scaling);
-            downloadMenu = new DownloadMenu(downloadMenuImage, scaling, hasWarning, scrollbar, importImage.getWidth(), importImage.getHeight());
+            downloadMenu = new DataportDownloadMenu(downloadMenuImage, scaling, hasWarning, scrollbar, importImage.getWidth(), importImage.getHeight());
             Graphics2D g2d = downloadMenuImage.createGraphics();
             g2d.setColor(Color.RED);
             var visibleViewPortRect = downloadMenu.getVisibleViewPortRect().getAwtRectangle().getBounds();
@@ -125,10 +125,10 @@ class DownloadMenuTest {
             org.junit.jupiter.api.Assertions.assertNotNull(resourceAsStream, "Test image resource not found.");
             BufferedImage importImage = ImageIO.read(resourceAsStream);
             var scaling = importImage.getHeight() / 1600D;
-            var downloadMenu = new DownloadMenu(null, scaling, hasWarning, null, importImage.getWidth(), importImage.getHeight());
+            var downloadMenu = new DataportDownloadMenu(null, scaling, hasWarning, null, importImage.getWidth(), importImage.getHeight());
             BufferedImage downloadMenuImage = importImage.getSubimage((int) downloadMenu.getMenu().getX(), (int) downloadMenu.getMenu().getY(), (int) downloadMenu.getMenu().getWidth(), (int) downloadMenu.getMenu().getHeight());
             var scrollbar = ScrollBarHelper.getScrollBarV2(downloadMenuImage, hasWarning, scaling);
-            downloadMenu = new DownloadMenu(downloadMenuImage, scaling, hasWarning, scrollbar, importImage.getWidth(), importImage.getHeight());
+            downloadMenu = new DataportDownloadMenu(downloadMenuImage, scaling, hasWarning, scrollbar, importImage.getWidth(), importImage.getHeight());
 
             saveImage(downloadMenuImage, "isMenuItemLabelVisible", 0);
             final var dm = downloadMenu;
@@ -166,10 +166,10 @@ class DownloadMenuTest {
             org.junit.jupiter.api.Assertions.assertNotNull(resourceAsStream, "Test image resource not found.");
             BufferedImage importImage = ImageIO.read(resourceAsStream);
             var scaling = importImage.getHeight() / 1600D;
-            var downloadMenu = new DownloadMenu(null, scaling, hasWarning, null, importImage.getWidth(), importImage.getHeight());
+            var downloadMenu = new DataportDownloadMenu(null, scaling, hasWarning, null, importImage.getWidth(), importImage.getHeight());
             BufferedImage downloadMenuImage = importImage.getSubimage((int) downloadMenu.getMenu().getX(), (int) downloadMenu.getMenu().getY(), (int) downloadMenu.getMenu().getWidth(), (int) downloadMenu.getMenu().getHeight());
             var scrollbar = ScrollBarHelper.getScrollBarV2(downloadMenuImage, hasWarning, scaling);
-            downloadMenu = new DownloadMenu(downloadMenuImage, scaling, hasWarning, scrollbar, importImage.getWidth(), importImage.getHeight());
+            downloadMenu = new DataportDownloadMenu(downloadMenuImage, scaling, hasWarning, scrollbar, importImage.getWidth(), importImage.getHeight());
 
             Graphics2D g2d = downloadMenuImage.createGraphics();
             g2d.setColor(Color.RED);
@@ -228,7 +228,7 @@ class DownloadMenuTest {
             var contentHeight = importImage.getHeight();
             var hasWarning = false;
             var scaling = contentHeight / 1600D;
-            var downloadMenu1 = new DownloadMenu(null, scaling, Boolean.TRUE.equals(hasWarning), null, contentWidth, contentHeight);
+            var downloadMenu1 = new DataportDownloadMenu(null, scaling, Boolean.TRUE.equals(hasWarning), null, contentWidth, contentHeight);
             BufferedImage downloadMenuCapture = new BufferedImage(
                     importImage.getWidth(),
                     importImage.getHeight(),
@@ -242,7 +242,7 @@ class DownloadMenuTest {
             var hasWarning2 = false;
             var scaling2 = contentHeight / 1600D;
             var scrollBar = ScrollBarHelper.getScrollBarV2(downloadMenuCapture, hasWarning2, scaling2);
-            var downloadMenu = new DownloadMenu(null, scaling2, Boolean.TRUE.equals(hasWarning), scrollBar, contentWidth2, contentHeight2);
+            var downloadMenu = new DataportDownloadMenu(null, scaling2, Boolean.TRUE.equals(hasWarning), scrollBar, contentWidth2, contentHeight2);
             ImageTransformHelper.init(downloadMenu, scaling);
             for (int index = 1; index <= expected.length; index++) {
                 final int finalIndex = index;

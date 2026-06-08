@@ -43,7 +43,7 @@ class ScrollBarHelperTest {
             org.junit.jupiter.api.Assertions.assertNotNull(resourceAsStream, "Test image resource not found.");
             BufferedImage importImage = ImageIO.read(resourceAsStream);
             var scaling = importImage.getHeight() / 1600D;
-            var downloadMenu = new DownloadMenu(null, scaling, Boolean.TRUE.equals(hasWarning), null, importImage.getWidth(), importImage.getHeight());
+            var downloadMenu = new DataportDownloadMenu(null, scaling, Boolean.TRUE.equals(hasWarning), null, importImage.getWidth(), importImage.getHeight());
             BufferedImage downloadMenuImage = importImage.getSubimage((int)downloadMenu.getMenu().getX(), (int)downloadMenu.getMenu().getY(), (int)downloadMenu.getMenu().getWidth(), (int)downloadMenu.getMenu().getHeight());
             saveImage(downloadMenuImage,"downloadmenu", expected);
             int scrollBarHeight = ScrollBarHelper.getScrollBarHeight(downloadMenuImage,hasWarning, scaling);
@@ -71,7 +71,7 @@ class ScrollBarHelperTest {
             org.junit.jupiter.api.Assertions.assertNotNull(resourceAsStream, "Test image resource not found.");
             BufferedImage importImage = ImageIO.read(resourceAsStream);
             var scaling = importImage.getHeight() / 1600D;
-            var downloadMenu = new DownloadMenu(null, scaling, hasWarning, null, importImage.getWidth(), importImage.getHeight());
+            var downloadMenu = new DataportDownloadMenu(null, scaling, hasWarning, null, importImage.getWidth(), importImage.getHeight());
             BufferedImage downloadMenuImage = importImage.getSubimage((int)downloadMenu.getMenu().getX(), (int)downloadMenu.getMenu().getY(), (int)downloadMenu.getMenu().getWidth(), (int)downloadMenu.getMenu().getHeight());
             saveImage(downloadMenuImage,"downloadmenu", expected);
             int listSize = ScrollBarHelper.getListSize(downloadMenuImage,hasWarning, scaling);
@@ -99,7 +99,7 @@ class ScrollBarHelperTest {
             org.junit.jupiter.api.Assertions.assertNotNull(resourceAsStream, "Test image resource not found.");
             BufferedImage importImage = ImageIO.read(resourceAsStream);
             var scaling = importImage.getHeight() / 1600D;
-            var downloadMenu = new DownloadMenu(null, scaling, hasWarning, null, importImage.getWidth(), importImage.getHeight());
+            var downloadMenu = new DataportDownloadMenu(null, scaling, hasWarning, null, importImage.getWidth(), importImage.getHeight());
             BufferedImage downloadMenuImage = importImage.getSubimage((int)downloadMenu.getMenu().getX(), (int)downloadMenu.getMenu().getY(), (int)downloadMenu.getMenu().getWidth(), (int)downloadMenu.getMenu().getHeight());
             saveImage(downloadMenuImage,"downloadmenu", (int)expected);
             double progress = ScrollBarHelper.getProgress(downloadMenuImage, hasWarning, scaling);
