@@ -400,7 +400,7 @@ public abstract class ShipModule implements Serializable {
         }
         return value.get();
     }
-    private final static List<HorizonsModifier> OPTIMAL_MULTIPLIER_LIST = List.of (
+    private static final List<HorizonsModifier> OPTIMAL_MULTIPLIER_LIST = List.of (
             HorizonsModifier.OPTIMAL_MULTIPLIER,
             HorizonsModifier.MINIMUM_MULTIPLIER,
             HorizonsModifier.MAXIMUM_MULIPLIER,

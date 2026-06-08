@@ -11,7 +11,10 @@
 package nl.jixxed.eliteodysseymaterials.service.ar;
 
 
+import javafx.scene.image.Image;
+
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Consumer;
 
 public interface ARMenu {
 
@@ -21,5 +24,9 @@ public interface ARMenu {
 
     boolean isEnabled();
 
-    AtomicBoolean getVISIBLE();
+    AtomicBoolean getVisible();
+
+    void analyzeAndRender(WindowInfo targetWindowInfo, Consumer<Image> resultConsumer);
+
+    void clear();
 }

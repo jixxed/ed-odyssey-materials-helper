@@ -22,7 +22,7 @@ import java.awt.image.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JNAScreenshotService implements ScreenshotService {
-    private final static JNAScreenshotService INSTANCE = new JNAScreenshotService();
+    private static final JNAScreenshotService INSTANCE = new JNAScreenshotService();
     private static WinGDI.BITMAPINFOHEADER bih;
     private static int height;
     private static ColorModel cm;

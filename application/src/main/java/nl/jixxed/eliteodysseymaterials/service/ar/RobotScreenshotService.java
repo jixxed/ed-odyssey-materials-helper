@@ -22,8 +22,8 @@ import java.awt.image.MultiResolutionImage;
 import java.util.Optional;
 
 public class RobotScreenshotService implements ScreenshotService {
-    private final static RobotScreenshotService INSTANCE = new RobotScreenshotService();
-    private final static Robot robot;
+    private static final RobotScreenshotService INSTANCE = new RobotScreenshotService();
+    private static final Robot robot;
 
 
     static {

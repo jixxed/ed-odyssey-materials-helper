@@ -141,12 +141,12 @@ public class LocaleService {
         return parameter.toString();
     }
 
-    static String getDataCharacterForCurrentARLocale() {
+    public static String getDataCharacterForCurrentARLocale() {
         final Locale locale = ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")).getLocale();
         return getDataCharacterForARLocale(locale);
     }
 
-    static String getDataCharacterForARLocale(Locale locale) {
+    public static String getDataCharacterForARLocale(Locale locale) {
         return Arrays.stream(Data.values())
                 .filter(Predicate.not(Data::isUnknown))
                 .map(data -> LocaleService.getLocalizedStringForLocale(locale, data.getLocalizationKey()))
@@ -157,7 +157,7 @@ public class LocaleService {
                 .collect(Collectors.joining());
     }
 
-    static String getAssetCharacterForCurrentARLocale() {
+    public static String getAssetCharacterForCurrentARLocale() {
         final Locale locale = ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")).getLocale();
         return Arrays.stream(Asset.values())
                 .filter(Predicate.not(Asset::isUnknown))

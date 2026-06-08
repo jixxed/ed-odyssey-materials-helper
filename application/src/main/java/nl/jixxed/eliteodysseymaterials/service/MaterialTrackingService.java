@@ -106,7 +106,7 @@ public class MaterialTrackingService {
 //        thread.start();
     }
 
-    static void registerData(final String dataPortName, final DataPortType dataPortType, final Data data, final Integer id) {
+    public static void registerData(final String dataPortName, final DataPortType dataPortType, final Data data, final Integer id) {
         final Terminal terminal = TERMINAL_DATAS.getOrDefault(dataPortName, new Terminal());
         terminal.setType(dataPortType);
         terminal.getDatas().put(id, data);

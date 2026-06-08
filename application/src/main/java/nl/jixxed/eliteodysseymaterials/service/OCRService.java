@@ -66,11 +66,11 @@ public class OCRService {
         setCharWhitelist(LocaleService.getDataCharacterForARLocale(appLocale.getLocale()));
     }
 
-    static void setCharWhitelist(final String characters) {
+    public static void setCharWhitelist(final String characters) {
         instance.setVariable("tessedit_char_whitelist", characters);
     }
 
-    static synchronized String imageToString(final BufferedImage image) throws TesseractException {
+    public static synchronized String imageToString(final BufferedImage image) throws TesseractException {
         try{
             return instance.doOCR(image);
         }catch (Error error){

@@ -13,7 +13,6 @@ package nl.jixxed.eliteodysseymaterials.service;
 import com.sun.jna.NativeLibrary;
 import com.sun.jna.platform.win32.WinUser;
 import javafx.animation.AnimationTimer;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
@@ -22,108 +21,55 @@ import javafx.stage.StageStyle;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.xdrop.fuzzywuzzy.model.BoundExtractedResult;
 import nl.jixxed.eliteodysseymaterials.FXApplication;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.ar.*;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.TerminateApplicationEvent;
 import nl.jixxed.eliteodysseymaterials.templates.overlay.ar.AROverlay;
-import nl.jixxed.tess4j.TesseractException;
 import nu.pattern.OpenCV;
-import org.opencv.core.*;
-import org.opencv.imgproc.Imgproc;
 
-import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
+import java.util.Timer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
-import static org.opencv.imgproc.Imgproc.INTER_LANCZOS4;
-import static org.opencv.imgproc.Imgproc.THRESH_OTSU;
 
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ARService {
 
-
-    public static boolean debug = false;
-//    private static final AtomicBoolean bartenderOverlayEnabled = new AtomicBoolean(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_AR, true));
-    private static BartenderMenuType newBartenderSubMenu;
-
-    static {
-        OpenCV.loadLocally();
-    }
-
-    private static final AtomicInteger tradeHits = new AtomicInteger();
-    private static final double MATCHING_THRESHOLD = 0.75;
-    private static final double BARTENDER_MATCHING_THRESHOLD = 0.65;
     private static final String STYLESHEET = "/css/ar.css";
-    //        private static final String ELITE_DANGEROUS_CLIENT_WINDOW_NAME = "Elite - Dangerous (CLIENT)";
-    private static final String ELITE_DANGEROUS_CLIENT_WINDOW_NAME = "Elite Simulator";
-    private static AROverlay arOverlay;
-    private static Scene arScene;
-    private static Stage arStage;
-    //    private static Mat arrowTemplate;
-//    private static Mat arrowTemplateScaled;
-//    private static Mat arrowCaptureMat;
-//    private static Mat arrowCaptureMatGray = new Mat();
-//    private static Mat cocktailTemplate;
-//    private static Mat cocktailTemplateScaled;
-//    private static Mat cocktailMask;
-//    private static Mat cocktailMaskScaled;
-//    private static Mat cocktailCaptureMat;
-//    private static Mat cocktailCaptureMatGray = new Mat();
-    private static BufferedImage downloadMenuCapture;
-    private static BufferedImage bartenderMenuCapture;
-    //    private static BufferedImage arrowCapture;
-//    private static BufferedImage cocktailCapture;
-    private static Image overlayImage;
-    //    private static final int MATCH_METHOD = Imgproc.TM_CCOEFF_NORMED;
-//    private static double scaling = 0;
-//    private static final AtomicBoolean MENU_VISIBLE = new AtomicBoolean(false);
-//    private static final AtomicBoolean TRADE_VISIBLE = new AtomicBoolean(false);
+    private static final String ELITE_DANGEROUS_CLIENT_WINDOW_NAME = "Elite - Dangerous (CLIENT)";
     private static final AtomicBoolean REQUEST_SHOW = new AtomicBoolean(false);
     private static final AtomicBoolean REQUEST_HIDE = new AtomicBoolean(false);
     private static final AtomicBoolean FORCE_VISIBLE = new AtomicBoolean(false);
-    //    private static DownloadMenu downloadMenu;
-//    private static BartenderMenu bartenderMenu;
-//    private static ScrollBarV2 scrollBar;
-//    private static Boolean hasWarning;
-    private static List<ARMenu> arMenus = List.of(new DataportDownloadARMenu(), new BartenderTradeARMenu());
-    private static BartenderMenuType oldBartenderSubMenu;
+    private static final ExecutorService executorService = Executors.newFixedThreadPool(6);
+    private static final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
+    private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
+    public static boolean debug = false;
+    private static AROverlay arOverlay;
+    private static Scene arScene;
+    private static Stage arStage;
+    private static List<ARMenu> arMenus;
     private static boolean enabled = false;
     private static AnimationTimer windowVisibilityAndPositionTimer;
     private static Timer ocrAndRenderTimer;
     private static Timer gameStateTimer;
     private static WindowInfo targetWindowInfo = new WindowInfo(0, new RECT(), "", 0);
-    private static Borders windowBorders;
     private static int foregroundHwnd;
     private static int contentHeight;
     private static int contentWidth;
     private static int contentX;
     private static int contentY;
-    //    private static double newScaling;
-//    private static Mat downloadMenuResult;
-//    private static Mat bartenderMenuResult;
-    private static final Map<String, Render> renderCache = new HashMap<>();
-    private static final ScreenshotService screenshotService = GDIScreenshotService.getInstance();
-    private static final ExecutorService executorService = Executors.newFixedThreadPool(6);
-    private static final Pattern DATA_PORT_NAME_PATTERN = Pattern.compile("^([A-Z]*[\s]?DATA PORT)[\s]?([\\d]{0,2})$");
-    private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
 
     static {
+        OpenCV.loadLocally();
+        arMenus = List.of(new DataportDownloadARMenu(), new BartenderTradeARMenu());
+
         EVENT_LISTENERS.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
             if (ocrAndRenderTimer != null) {
                 ocrAndRenderTimer.cancel();
@@ -135,35 +81,13 @@ public class ARService {
                 windowVisibilityAndPositionTimer.stop();
             }
             executorService.shutdownNow();
+            scheduledExecutorService.shutdownNow();
             log.info("AR Service shutdown finished.");
+
+            NativeLibrary.getInstance("user32").dispose();
+            NativeLibrary.getInstance("gdi32").dispose();
         }));
-
-        EVENT_LISTENERS.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
-                    NativeLibrary.getInstance("user32").dispose();
-                    NativeLibrary.getInstance("gdi32").dispose();
-
-                }
-        ));
-
-//        arrowTemplate = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_download.png")));
-//        arrowTemplateScaled = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_download.png")));
-//        cocktailTemplate = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail.png")));
-//        cocktailTemplateScaled = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail.png")));
-//        cocktailMask = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail_tp.png")));
-//        cocktailMaskScaled = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail_tp.png")));
-//        //greyscale templates
-//        Imgproc.cvtColor(arrowTemplate, arrowTemplate, Imgproc.COLOR_BGRA2GRAY);
-//        Imgproc.cvtColor(arrowTemplateScaled, arrowTemplateScaled, Imgproc.COLOR_BGRA2GRAY);
-//        Imgproc.cvtColor(cocktailTemplate, cocktailTemplate, Imgproc.COLOR_BGRA2GRAY);
-//        Imgproc.cvtColor(cocktailTemplateScaled, cocktailTemplateScaled, Imgproc.COLOR_BGRA2GRAY);
-//        Imgproc.cvtColor(cocktailMask, cocktailMask, Imgproc.COLOR_BGRA2GRAY);
-//        Imgproc.cvtColor(cocktailMaskScaled, cocktailMaskScaled, Imgproc.COLOR_BGRA2GRAY);
-//        Imgproc.threshold(cocktailMaskScaled, cocktailMaskScaled, 50, 255, Imgproc.THRESH_BINARY);
     }
-
-//    public static void bartenderToggle() {
-//        bartenderOverlayEnabled.set(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_AR, Boolean.TRUE));
-//    }
 
     public static void forceShow() {
         FORCE_VISIBLE.set(true);
@@ -201,8 +125,6 @@ public class ARService {
             arStage.hide();
             arStage.setAlwaysOnTop(false);
             log.debug("hide overlay");
-            tradeHits.set(0);
-            System.gc();
         }
     }
 
@@ -219,10 +141,9 @@ public class ARService {
     public static void toggle() {
         if (!enabled) {
             enabled = true;
-            DataportDownloadARMenu.scaling = 1;
-            BartenderTradeARMenu.scaling = 1;
+//            DataportDownloadARMenu.scaling = 1;
+//            BartenderTradeARMenu.scaling = 1;
             log.debug("enabling AR Service");
-
 
             arStage = new Stage();
             for (int res : new int[]{16, 32, 48, 64, 128, 256, 512}) {
@@ -236,8 +157,7 @@ public class ARService {
             arScene.getStylesheets().add(ARService.class.getResource(STYLESHEET).toExternalForm());
             arStage.setScene(arScene);
             arStage.titleProperty().set("AR Overlay");
-            setupTimerDisplay();
-            setupTimerAnalyzeAndRender();
+            scheduleNext(50L);
 
             arStage.setOnCloseRequest(event -> {
                 log.debug("arStage setOnCloseRequest");
@@ -276,449 +196,87 @@ public class ARService {
         }
     }
 
-    private static void setupTimerDisplay() {
-        final TimerTask timerDisplayTask = new TimerTask() {
-            @Override
-            public void run() {
-                try {
-                    //determine the window handle if it is unknown
-                    if (targetWindowInfo.hwnd == 0 || !WindowInfoUtil.isWindow(targetWindowInfo.hwnd)) {
-                        targetWindowInfo.hwnd = WindowInfoUtil.findWindow(windowTitle -> windowTitle.contains(ELITE_DANGEROUS_CLIENT_WINDOW_NAME));
-                    }
-                    if (targetWindowInfo.hwnd == 0) {
-                        //application not running
-                        Thread.sleep(1000);
-                        arMenus.forEach(arMenu -> arMenu.getVISIBLE().set(false));
-//                        MENU_VISIBLE.set(false);
-//                        TRADE_VISIBLE.set(false);
-                        tradeHits.set(0);
-                        REQUEST_HIDE.set(true);
-                        return;
-                    }
-                    //hide when game is not on the foreground
-                    targetWindowInfo = WindowInfoUtil.getWindowInfo(targetWindowInfo);
-                    foregroundHwnd = User32.INSTANCE.GetForegroundWindow();
-                    if (foregroundHwnd != targetWindowInfo.hwnd) {
+    private static void scheduleNext(long delayMs) {
+        scheduledExecutorService.schedule(() -> {
+            long delay = doWork();
+            scheduleNext(delay);
 
-                        arMenus.forEach(arMenu -> arMenu.getVISIBLE().set(false));
-//                        MENU_VISIBLE.set(false);
-//                        TRADE_VISIBLE.set(false);
-                        tradeHits.set(0);
-                        REQUEST_HIDE.set(true);
-                        Thread.sleep(1000);
-                        return;
-                    }
-                    //determine scaling used for further processing
-                    final RECT rect = targetWindowInfo.rect;
-                    contentWidth = rect.right - rect.left;
-                    contentHeight = rect.bottom - rect.top;
-                    contentX = targetWindowInfo.rect.left;
-                    contentY = targetWindowInfo.rect.top;
-                    arMenus.forEach(arMenu -> arMenu.update(contentX, contentY, contentWidth, contentHeight));
-//                    dataportDownloadARMenu.update(contentX, contentY, contentWidth, contentHeight);
-//                    bartenderTradeARMenu.update(contentX, contentY, contentWidth, contentHeight);
-//                    if (windowBorders == null) {
-//                        windowBorders = WindowInfoUtil.getWindowBorders(targetWindowInfo.hwnd);
-//                    }
 
-//                    newScaling = contentHeight / 1600D;
-//                    final DownloadMenu downloadMenu1 = DataportDownloadARMenu.getDownloadMenu();
-//                    downloadMenu1.setContentWidth(contentWidth);
-//                    downloadMenu1.setContentHeight(contentHeight);
-//                    downloadMenu1.setScale(newScaling);
-//                    final BartenderMenu bartenderMenu1 = BartenderTradeARMenu.getBartenderMenu();
-//                    bartenderMenu1.setContentWidth(contentWidth);
-//                    bartenderMenu1.setContentHeight(contentHeight);
-//                    if (newScaling != scaling) {
-//                        log.debug("application scaling changed");
-//                        log.debug("detected resolution: " + contentWidth + "x" + contentHeight);
-//                        //scaling
-//                        scaling = newScaling;
-//                        Imgproc.resize(arrowTemplate, arrowTemplateScaled, new Size(), scaling, scaling, Imgproc.INTER_AREA);
-//                        updateScaling(BartenderTradeARMenu.getBartenderMenu());
-//                        WarningHelper.updateScale(scaling);
-//
-//                        ImageTransformHelper.init(DataportDownloadARMenu.getDownloadMenu(), scaling);
-//                    }
-                    //test if download image is present
-//                    arrowCapture = getArrowCapture();
-//                    final boolean menuPresent = dataportDownloadARMenu.isMenuVisible(targetWindowInfo);
-//                    boolean tradeMenuPresent = false;
-//                    if (!menuPresent && bartenderOverlayEnabled.get()) {
-////                        cocktailCapture = getCocktailCapture();
-//                        tradeMenuPresent = bartenderTradeARMenu.isMenuVisible(targetWindowInfo);
-//                    }
-                    boolean pauseThread = false;
-                    boolean anyVisible = false;
-                    for (ARMenu arMenu : arMenus){
-                        if(arMenu.isEnabled()) {
-                            final boolean visible = arMenu.isMenuVisible(targetWindowInfo);
-                            if (!arMenu.getVISIBLE().get()) {
-                                REQUEST_SHOW.set(true);
-                                pauseThread = true;
-                            }
-                            if(visible) {
-                                arMenu.getVISIBLE().set(true);
-                                anyVisible = true;
-                                break;
-                            }
-                        }
-                    }
-                    if(!anyVisible){
-                        //hide
-                        if (arMenus.stream().anyMatch(arMenu -> arMenu.getVISIBLE().get())) {
-                            REQUEST_HIDE.set(true);
-                        }
-                        arMenus.forEach(arMenu -> arMenu.getVISIBLE().set(false));
-                        tradeHits.set(0);
-                    }
-
-//                    if (menuPresent) {
-//                        //show
-//                        if (!MENU_VISIBLE.get()) {
-//                            REQUEST_SHOW.set(true);
-//                            pauseThread = true;
-//                        }
-//                        MENU_VISIBLE.set(true);
-//                    } else if (tradeMenuPresent) {
-//                        //hide
-//                        if (!TRADE_VISIBLE.get()) {
-//                            REQUEST_SHOW.set(true);
-//                            pauseThread = true;
-//                        }
-//                        TRADE_VISIBLE.set(true);
-//                    } else {
-//                        //hide
-//                        if (MENU_VISIBLE.get() || TRADE_VISIBLE.get()) {
-//                            REQUEST_HIDE.set(true);
-//                        }
-//                        MENU_VISIBLE.set(false);
-//                        TRADE_VISIBLE.set(false);
-//                        tradeHits.set(0);
-//                    }
-                    if (pauseThread) {
-                        Thread.sleep(2000);
-                    }
-                } catch (final Exception e) {
-                    log.error("error", e);
-                }
-            }
-        };
-        gameStateTimer = new Timer();
-        gameStateTimer.scheduleAtFixedRate(timerDisplayTask, 0, 50);//100fps
+        }, delayMs, java.util.concurrent.TimeUnit.MILLISECONDS);
     }
 
-//    static void updateScaling(BartenderMenu bartenderMenu1) {
-//        Imgproc.resize(cocktailTemplate, cocktailTemplateScaled, new Size(), bartenderMenu1.getScale(), bartenderMenu1.getScale(), Imgproc.INTER_AREA);
-//        Imgproc.resize(cocktailMask, cocktailMaskScaled, new Size(), bartenderMenu1.getScale(), bartenderMenu1.getScale(), Imgproc.INTER_AREA);
-//        Imgproc.threshold(cocktailMaskScaled, cocktailMaskScaled, 50, 255, Imgproc.THRESH_BINARY);
-//    }
-
-//    public static boolean isBartenderMenu(final BufferedImage capture) {
-//        if (capture == null) {
-//            return false;
-//        }
-//        cocktailCaptureMat = CvHelper.convertToMat(capture, cocktailCaptureMat);
-//        final int result_cols = cocktailCaptureMat.cols() - BartenderTradeARMenu.cocktailTemplateScaled.cols() + 1;
-//        final int result_rows = cocktailCaptureMat.rows() - BartenderTradeARMenu.cocktailTemplateScaled.rows() + 1;
-//        if (result_cols <= 0 || result_rows <= 0) {
-//            return false;
-//        }
-//        if (bartenderMenuResult == null || bartenderMenuResult.cols() != result_cols || bartenderMenuResult.rows() != result_rows) {
-//            if (bartenderMenuResult != null) {
-//                bartenderMenuResult.release();
-//            }
-//            bartenderMenuResult = new Mat(result_rows, result_cols, CvType.CV_32FC1);
-//        }
-//        if (cocktailCaptureMatGray == null || cocktailCaptureMat.cols() != cocktailCaptureMatGray.cols() || cocktailCaptureMat.rows() != cocktailCaptureMatGray.rows()) {
-//            if (cocktailCaptureMatGray != null) {
-//                cocktailCaptureMatGray.release();
-//            }
-//            cocktailCaptureMatGray = new Mat();
-//        }
-//        //grayscale capture
-//        Imgproc.cvtColor(cocktailCaptureMat, cocktailCaptureMatGray, Imgproc.COLOR_BGRA2GRAY);
-//        Mat temp = new Mat();
-//        Imgproc.threshold(cocktailCaptureMatGray, temp, 128, 255, Imgproc.THRESH_BINARY_INV + THRESH_OTSU);
-//
-//        // Apply mask using copyTo
-
-    /// /        cocktailTemplateScaled.copyTo(maskedResult, cocktailMaskScaled);
-//        Mat temp2 = new Mat();
-//        Imgproc.threshold(BartenderTradeARMenu.cocktailTemplateScaled, temp2, 128, 255, Imgproc.THRESH_BINARY_INV + THRESH_OTSU);
-//        //matching
-//        Imgproc.matchTemplate(temp, temp2, bartenderMenuResult, MATCH_METHOD);
-//        //take the best result mmr.maxLoc
-//        Core.MinMaxLocResult mmr = Core.minMaxLoc(bartenderMenuResult);
-//        //cut out a mat with the same dimensions as cocktailMaskScaled
-//        final Mat cutOutMat = new Mat(temp, new Rect((int) mmr.maxLoc.x, (int) mmr.maxLoc.y, BartenderTradeARMenu.cocktailMaskScaled.cols(), BartenderTradeARMenu.cocktailMaskScaled.rows()));
-//
-//        Imgproc.threshold(cutOutMat, cutOutMat, 128, 255, Imgproc.THRESH_BINARY_INV);
-//        Imgproc.threshold(temp2, temp2, 128, 255, Imgproc.THRESH_BINARY_INV);
-//        //apply mask to the cut out mat
-//        // Create destination Mat
-//        Mat maskedResult = new Mat();
-//        cutOutMat.copyTo(maskedResult, BartenderTradeARMenu.cocktailMaskScaled);
-//        //match again
-//        Imgproc.matchTemplate(maskedResult, temp2, bartenderMenuResult, MATCH_METHOD);
-//
-//        mmr = Core.minMaxLoc(bartenderMenuResult);
-//
-//
-//        final double matchValue = mmr.maxVal;
-//        if (debug) {
-//            log.debug("bartendermenu detected. Confidence(" + BARTENDER_MATCHING_THRESHOLD + "): " + matchValue);
-//        }
-//        if (matchValue > BARTENDER_MATCHING_THRESHOLD) {
-//            if (!previousBartenderMatch) {
-//                previousBartenderMatch = true;
-//                log.debug("bartendermenu detected. Confidence(" + BARTENDER_MATCHING_THRESHOLD + "): " + matchValue);
-//            }
-//            return true;
-//        }
-//        if (previousBartenderMatch) {
-//
-//            previousBartenderMatch = false;
-//            log.debug("bartendermenu detected 2. Confidence(" + BARTENDER_MATCHING_THRESHOLD + "): " + matchValue);
-//            try {
-//                Thread.sleep(20);
-//            } catch (final InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
-//            cocktailCapture = getCocktailCapture();
-//            return isBartenderMenu(cocktailCapture);
-//        }
-//        return false;
-//    }
-
-//    private static BufferedImage getCocktailCapture() {
-//        if (targetWindowInfo.hwnd != 0 && User32.INSTANCE.GetForegroundWindow() == targetWindowInfo.hwnd) {
-//            return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), BartenderTradeARMenu.getBartenderMenu().getCocktail().getAwtRectangle().getBounds(), cocktailCapture);
-//        }
-//        return null;
-//    }
-//
-//    private static BartenderMenu getBartenderMenu() {
-//        if (bartenderMenu == null) {
-//            bartenderMenu = new BartenderMenu();
-//        }
-//        return bartenderMenu;
-//    }
-//
-//    private static BartenderMenu getBartenderMenu(final BartenderMenuType submenu) {
-//        if (bartenderMenu == null) {
-//            bartenderMenu = new BartenderMenu();
-//        }
-//        bartenderMenu.setContentHeight(contentHeight);
-//        bartenderMenu.setContentWidth(contentWidth);
-//        bartenderMenu.setSubMenu(submenu);
-//
-//        return bartenderMenu;
-//    }
-    private static void setupTimerAnalyzeAndRender() {
-        final TimerTask timerTask = new TimerTask() {
-
-            @Override
-            public void run() {
-                try {
-                    if (arMenus.getFirst().getVISIBLE().get()) {
-                        downloadMenuCapture = getDownloadMenuCapture();
-                        final Boolean newHasWarning = WarningHelper.menuHasWarning(downloadMenuCapture, DataportDownloadARMenu.scaling, MATCHING_THRESHOLD);
-                        final ScrollBarV2 newScrollBar = getScrollBar(downloadMenuCapture, newHasWarning);
-                        final boolean render = !Objects.equals(newScrollBar, DataportDownloadARMenu.scrollBar) || newHasWarning.equals(DataportDownloadARMenu.hasWarning);//initialRender.get();//only render on change
-                        DataportDownloadARMenu.scrollBar = newScrollBar;
-                        DataportDownloadARMenu.hasWarning = newHasWarning;
-                        if (downloadMenuCapture != null) {
-                            if (render) {
-                                final Render cachedImage = renderCache.get(String.valueOf(DataportDownloadARMenu.hasWarning) + newScrollBar.getPosition());
-                                if (cachedImage != null && cachedImage.fullyRendered()) {
-                                    overlayImage = cachedImage.render();
-                                    arOverlay.getResizableImageView().setImage(overlayImage);
-                                } else if (canRenderMore(cachedImage, DataportDownloadARMenu.getDownloadMenu())) {
-                                    arOverlay.getResizableImageView().setImage(null);
-                                    log.debug("render required for Warning: " + DataportDownloadARMenu.getDownloadMenu().isHasWarning() + ". Scrollbar: " + DataportDownloadARMenu.scrollBar.getPosition() + " size:" + DataportDownloadARMenu.scrollBar.getSize());
-                                    DataportDownloadARMenu.getDownloadMenu(downloadMenuCapture, DataportDownloadARMenu.hasWarning, DataportDownloadARMenu.scrollBar);
-                                    if (PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "").equals("ENGLISH")) {
-                                        processMenuType(downloadMenuCapture, DataportDownloadARMenu.getDownloadMenu());
-                                    }
-                                    ImageTransformHelper.init(DataportDownloadARMenu.getDownloadMenu(), DataportDownloadARMenu.scaling);
-                                    final long timeProcessBefore = System.currentTimeMillis();
-                                    processMenu(downloadMenuCapture, DataportDownloadARMenu.getDownloadMenu());
-                                    final long timeProcessAfter = System.currentTimeMillis();
-                                    log.debug("Menu processing time: " + (timeProcessAfter - timeProcessBefore));
-                                    final long timeRenderBefore = System.currentTimeMillis();
-                                    renderMenu(DataportDownloadARMenu.getDownloadMenu());
-                                    arOverlay.getResizableImageView().setImage(overlayImage);
-                                    final long timeRenderAfter = System.currentTimeMillis();
-                                    log.debug("Total render time: " + (timeRenderAfter - timeRenderBefore));
-                                    log.debug("Total time to screen: " + ((timeProcessAfter - timeProcessBefore) + (timeRenderAfter - timeRenderBefore)));
-                                }
-                            }
-                        }
-                    } else if (arMenus.getLast().getVISIBLE().get()) {
-                        bartenderMenuCapture = getBartenderMenuCapture();
-                        if (BartenderMenuHelper.isTradeMenu(bartenderMenuCapture, BartenderTradeARMenu.getBartenderMenu())) {
-                            if (tradeHits.get() <= 4) {
-                                tradeHits.getAndIncrement();
-                            }
-                            if (tradeHits.get() > 4) {
-                                processTradeMenu();
-                            } else {
-                                Thread.sleep(20);
-                            }
-                        } else {
-                            tradeHits.set(0);
-                        }
-                    } else {
-                        DataportDownloadARMenu.getDownloadMenu().getScanned().clear();
-                        DataportDownloadARMenu.getDownloadMenu().setType(null);
-                        DataportDownloadARMenu.getDownloadMenu().setDataPortName(null);
-                        DataportDownloadARMenu.getDownloadMenu().getDownloadData().clear();
-                        BartenderTradeARMenu.getBartenderMenu().setSubMenu(BartenderMenuType.NONE);
-                        renderCache.clear();
-                        DataportDownloadARMenu.scrollBar = null;
-                        DataportDownloadARMenu.hasWarning = null;
-                        oldBartenderSubMenu = null;
-                        newBartenderSubMenu = null;
-                        arOverlay.getResizableImageView().setImage(null);
-                    }
-                } catch (final Exception e) {
-                    log.error("error", e);
-                }
-            }
-        };
-        ocrAndRenderTimer = new Timer();
-        ocrAndRenderTimer.scheduleAtFixedRate(timerTask, 0, 50);//100fps
-    }
-
-    private static boolean canRenderMore(Render cachedImage, DownloadMenu downloadMenu) {
-        if (cachedImage == null)
-            return true;
-        for (int index = 1; index <= downloadMenu.getMenuSize(); index++) {
-            if ((downloadMenu.isMenuItemVisible(index) && downloadMenu.isScanned(index) && !cachedImage.renderedIndexes().contains(index)) || !cachedImage.renderedIndexes().contains(index) && downloadMenu.isMenuItemVisibleForOCR(index)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static void processTradeMenu() throws InterruptedException {
-        newBartenderSubMenu = BartenderMenuHelper.getMenuType(bartenderMenuCapture, BartenderTradeARMenu.getBartenderMenu());
-//        log.info("detected menutype:" + menuType);
-        if (oldBartenderSubMenu == null || newBartenderSubMenu != oldBartenderSubMenu) {
-            Thread.sleep(20);
-            bartenderMenuCapture = getBartenderMenuCapture();
-            newBartenderSubMenu = BartenderMenuHelper.getMenuType(bartenderMenuCapture, BartenderTradeARMenu.getBartenderMenu());
-        }
-        if (bartenderMenuCapture != null) {
-            if (oldBartenderSubMenu == null || newBartenderSubMenu != oldBartenderSubMenu) {
-                arOverlay.getResizableImageView().setImage(null);
-                Thread.sleep(500);
-                bartenderMenuCapture = getBartenderMenuCapture();
-
-                arOverlay.getResizableImageView().setImage(null);
-                BartenderTradeARMenu.getBartenderMenu(newBartenderSubMenu);
-                final long timeProcessBefore = System.currentTimeMillis();
-                processBartenderMenu(bartenderMenuCapture, BartenderTradeARMenu.getBartenderMenu());
-                final long timeProcessAfter = System.currentTimeMillis();
-                log.debug("Menu processing time: " + (timeProcessAfter - timeProcessBefore));
-                final long timeRenderBefore = System.currentTimeMillis();
-                renderMenu(BartenderTradeARMenu.getBartenderMenu());
-                arOverlay.getResizableImageView().setImage(overlayImage);
-                final long timeRenderAfter = System.currentTimeMillis();
-                log.debug("Total render time: " + (timeRenderAfter - timeRenderBefore));
-//              log.debug("Total time to screen: " + ((timeProcessAfter - timeProcessBefore) + (timeRenderAfter - timeRenderBefore)));
-
-            }
-        }
-        oldBartenderSubMenu = newBartenderSubMenu;
-    }
-
-    private static void processBartenderMenu(final BufferedImage bartenderMenuCapture, final BartenderMenu bartenderMenu) {
+    private static long doWork() {
         try {
-            final Locale locale = ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")).getLocale();
-
-            final List<Asset> assets = new ArrayList<>();
-            final int lines = switch (bartenderMenu.getSubMenu()) {
-                case SUBMENU, MAIN_CIRCUITS -> 12;
-                case MAIN_TECH -> 11;
-                case MAIN_CHEMICALS -> 10;
-                case NONE -> 0;
-            };
-            boolean fuzzy = PreferencesService.getPreference(PreferenceConstants.AR_SEARCH_METHOD, "EXACT").equals("FUZZY");
-            int fuzzyScore = PreferencesService.getPreference(PreferenceConstants.AR_FUZZY_SCORE, 90);
-            for (int index = 0; index < lines; index++) {
-                final nl.jixxed.eliteodysseymaterials.service.ar.Rectangle textArea = (bartenderMenu.getSubMenu().equals(BartenderMenuType.SUBMENU)) ? bartenderMenu.getSubMenuEntryText(index) : bartenderMenu.getMenuEntryText(index);
-                BufferedImage textImage = bartenderMenuCapture.getSubimage((int) textArea.getX(), (int) textArea.getY(), (int) textArea.getWidth(), (int) textArea.getHeight());
-
-                final Mat image = CvHelper.convertToMat(textImage, null);
-                Imgproc.resize(image, image, new Size(image.size().width * 4, image.size().height * 4), 4, 4, INTER_LANCZOS4);
-                final Mat temp = image.clone();
-                Imgproc.cvtColor(image, image, Imgproc.COLOR_BGRA2GRAY);
-                Imgproc.threshold(image, temp, 50, 255, Imgproc.THRESH_BINARY_INV + THRESH_OTSU);
-                textImage = CvHelper.createBufferedImage(temp);
-                String textAsset = bartenderMenuItemToString(textImage);
-                Asset asset;
-                asset = getAsset(fuzzy, textAsset, locale, fuzzyScore);
-                if (asset.isUnknown()) {
-                    Imgproc.threshold(image, temp, 50, 255, Imgproc.THRESH_BINARY_INV + THRESH_OTSU);
-                    textImage = CvHelper.createBufferedImage(temp);
-                    textAsset = bartenderMenuItemToString(textImage);
-                    asset = getAsset(fuzzy, textAsset, locale, fuzzyScore);
-                }
-                if (asset.isUnknown()) {
-                    Imgproc.threshold(image, temp, 127, 255, Imgproc.THRESH_BINARY + THRESH_OTSU);
-                    textImage = CvHelper.createBufferedImage(temp);
-                    textAsset = bartenderMenuItemToString(textImage);
-                    asset = getAsset(fuzzy, textAsset, locale, fuzzyScore);
-                }
-                image.release();
-                temp.release();
-                assets.add(asset);
+            //determine the window handle if it is unknown
+            if (targetWindowInfo.hwnd == 0 || !WindowInfoUtil.isWindow(targetWindowInfo.hwnd)) {
+                targetWindowInfo.hwnd = WindowInfoUtil.findWindow(windowTitle -> windowTitle.contains(ELITE_DANGEROUS_CLIENT_WINDOW_NAME));
             }
-            bartenderMenu.getVisibleAssets().clear();
-            bartenderMenu.getVisibleAssets().addAll(assets);
-            log.info(assets.stream().map(Enum::name).collect(Collectors.joining(", ")));
-        } catch (final TesseractException e) {
-            throw new RuntimeException(e);
-        }
+            if (targetWindowInfo.hwnd == 0) {
+                //application not running
+                arMenus.forEach(arMenu -> arMenu.getVisible().set(false));
+                arMenus.forEach(arMenu -> arMenu.clear());
+                arOverlay.getResizableImageView().setImage(null);
+                REQUEST_HIDE.set(true);
+                return 1000L;
+            }
+            //hide when game is not on the foreground
+            targetWindowInfo = WindowInfoUtil.getWindowInfo(targetWindowInfo);
+            foregroundHwnd = User32.INSTANCE.GetForegroundWindow();
+            if (foregroundHwnd != targetWindowInfo.hwnd) {
+                arMenus.forEach(arMenu -> arMenu.getVisible().set(false));
+                arMenus.forEach(arMenu -> arMenu.clear());
+                arOverlay.getResizableImageView().setImage(null);
+                REQUEST_HIDE.set(true);
+                return 1000L;
+            }
+            //determine scaling used for further processing
+            final RECT rect = targetWindowInfo.rect;
+            contentWidth = rect.right - rect.left;
+            contentHeight = rect.bottom - rect.top;
+            contentX = targetWindowInfo.rect.left;
+            contentY = targetWindowInfo.rect.top;
+            arMenus.forEach(arMenu -> arMenu.update(contentX, contentY, contentWidth, contentHeight));
 
-    }
-
-    private static Asset getAsset(boolean fuzzy, String textAsset, Locale locale, int fuzzyScore) {
-        try {
-            Asset asset;
-            if (fuzzy) {
-                BoundExtractedResult<Asset> extractedResult = Asset.forLocalizedNameSpaceInsensitiveFuzzy(textAsset, locale);
-                log.info("Fuzzy matched '{}' to '{}' with score {}", textAsset, extractedResult.getReferent(), extractedResult.getScore());
-                if (extractedResult.getScore() >= fuzzyScore) {
-                    asset = extractedResult.getReferent();
-                } else {
-                    throw new IllegalArgumentException("Fuzzy score too low");
+            boolean anyVisible = false;
+            for (ARMenu arMenu : arMenus) {
+                if (arMenu.isEnabled()) {
+                    final boolean visible = arMenu.isMenuVisible(targetWindowInfo);
+                    if (!arMenu.getVisible().get()) {
+                        REQUEST_SHOW.set(true);
+                    }
+                    if (visible) {
+                        arMenu.getVisible().set(true);
+                        anyVisible = true;
+                        break;
+                    }
                 }
+            }
+            if (!anyVisible) {
+                //hide
+                if (arMenus.stream().anyMatch(arMenu -> arMenu.getVisible().get())) {
+                    REQUEST_HIDE.set(true);
+                }
+                arMenus.forEach(arMenu -> arMenu.getVisible().set(false));
+                arMenus.forEach(arMenu -> arMenu.clear());
+            }
+            if (arMenus.stream().anyMatch(arMenu -> arMenu.getVisible().get())) {
+                arMenus.forEach(arMenu -> {
+                    if (arMenu.getVisible().get()) {
+                        try {
+                            arMenu.analyzeAndRender(targetWindowInfo, (image) -> arOverlay.getResizableImageView().setImage(image));
+                        } catch (final Exception e) {
+                            log.error("error in analyze and render", e);
+                        }
+                    }
+                });
             } else {
-                asset = Asset.forLocalizedNameSpaceInsensitive(textAsset, locale);
+                arMenus.forEach(ARMenu::clear);
+                arOverlay.getResizableImageView().setImage(null);
             }
-            return asset;
-        } catch (IllegalArgumentException e) {
-            log.info("Could not match '{}' to an asset for locale {}. Reason: {}", textAsset, locale, e.getMessage());
-            return Asset.UNKNOWN;
+        } catch (final Exception e) {
+            log.error("error", e);
         }
-    }
-
-    private static String bartenderMenuItemToString(final BufferedImage bartenderMenuCapture) throws TesseractException {
-        final String assetCharacterForCurrentARLocale = LocaleService.getAssetCharacterForCurrentARLocale();
-        OCRService.setCharWhitelist(assetCharacterForCurrentARLocale);
-        final String assetCharacterForCurrentLocale = assetCharacterForCurrentARLocale;
-        final String dataCharacterForCurrentLocaleWithoutSpace = assetCharacterForCurrentLocale.replace("\s", "");
-        final String ocr = OCRService.imageToString(bartenderMenuCapture);
-//        log.debug("ocr detected: " + ocr);
-        String cleaned = ocr.replaceAll("[^" + assetCharacterForCurrentLocale + "]", "").replace("\s\s", "\s").trim();
-        if (cleaned.matches("^[" + assetCharacterForCurrentLocale + "]*\s[" + dataCharacterForCurrentLocaleWithoutSpace + "]$")) {
-            cleaned = cleaned.substring(0, cleaned.length() - 2);
-        }
-//        log.debug("ocr cleaned: " + cleaned);
-        return cleaned;
+        return 50L;
     }
 
     private static void setupAnimationTimer() {
@@ -732,448 +290,19 @@ public class ARService {
                     if (!arStage.isShowing()) {
                         showOverlay();
                     }
-                } else if ((arMenus.stream().anyMatch(arMenu -> arMenu.getVISIBLE().get())) && REQUEST_SHOW.get()) {
+                    REQUEST_SHOW.set(false);
+                    REQUEST_HIDE.set(false);
+                } else if ((arMenus.stream().anyMatch(arMenu -> arMenu.getVisible().get())) && REQUEST_SHOW.get()) {
                     REQUEST_SHOW.set(false);
                     showOverlay();
 
-                } else if (arMenus.stream().noneMatch(arMenu -> arMenu.getVISIBLE().get()) && REQUEST_HIDE.get()) {
+                } else if (arMenus.stream().noneMatch(arMenu -> arMenu.getVisible().get()) && REQUEST_HIDE.get()) {
                     REQUEST_HIDE.set(false);
                     hideOverlay();
                 }
             }
         };
         windowVisibilityAndPositionTimer.start();
-    }
-
-    private static ScrollBarV2 getScrollBar(final BufferedImage downloadMenuCapture, final boolean hasWarning) {
-        if (downloadMenuCapture == null) {
-            return DataportDownloadARMenu.scrollBar;
-        }
-        return ScrollBarHelper.getScrollBarV2(downloadMenuCapture, hasWarning, DataportDownloadARMenu.scaling);
-    }
-
-    private static void renderMenu(final DownloadMenu downloadMenu) {
-        final BufferedImage bufferedImage = MenuOverlayRenderer.renderMenu(downloadMenu);
-        final AtomicBoolean isFullyRendered = new AtomicBoolean(true);
-        final Set<Integer> renderedIndexes = new HashSet();
-        for (int index = 1; index <= downloadMenu.getMenuSize(); index++) {
-            if (downloadMenu.isMenuItemVisible(index) && !downloadMenu.isScanned(index)) {
-                log.debug("not scanned index:" + index);
-                isFullyRendered.set(false);
-            } else if (downloadMenu.isMenuItemVisible(index)) {
-                renderedIndexes.add(index);
-            }
-        }
-        overlayImage = SwingFXUtils.toFXImage(bufferedImage, null);
-        renderCache.put(String.valueOf(downloadMenu.isHasWarning()) + downloadMenu.getScrollBar().getPosition(), new Render(renderedIndexes, isFullyRendered.get(), overlayImage));
-    }
-
-    private static void renderMenu(final BartenderMenu bartenderMenu) {
-        final BufferedImage bufferedImage = MenuOverlayRenderer.renderMenu(bartenderMenu);
-        overlayImage = SwingFXUtils.toFXImage(bufferedImage, null);
-    }
-
-    private static byte saturate(final double val) {
-        int iVal = (int) Math.round(val);
-        iVal = iVal > 255 ? 255 : (iVal < 0 ? 0 : iVal);
-        return (byte) iVal;
-    }
-
-    private static void processMenuType(final BufferedImage downloadMenuCapture, final DownloadMenu downloadMenu) {
-        if (downloadMenu.getType() == null) {
-            try {
-
-                long timeRenderBefore = System.currentTimeMillis();
-                final BufferedImage warped = ImageTransformHelper.transformForSelection(downloadMenuCapture, new Rectangle(
-                        (int) (downloadMenu.getTerminalType().getX() - 10),
-                        (int) (downloadMenu.getTerminalType().getY() - 10),
-                        (int) (downloadMenu.getTerminalType().getWidth() + 10),
-                        (int) (downloadMenu.getTerminalType().getHeight() + 10))
-
-                );
-                long timeRenderAfter = System.currentTimeMillis();
-                log.debug("Transform terminal time: " + (timeRenderAfter - timeRenderBefore));
-                final BufferedImage typeLabelCaptureOriginalColor = warped.getSubimage(
-                        (int) (downloadMenu.getTerminalType().getX()),
-                        (int) (downloadMenu.getTerminalType().getY()),
-                        (int) downloadMenu.getTerminalType().getWidth(),
-                        (int) downloadMenu.getTerminalType().getHeight()
-                );
-
-                final Mat matColor = CvHelper.convertToMat(typeLabelCaptureOriginalColor, null);
-                final Mat matGray = new Mat(matColor.size(), CvType.CV_8UC1);
-                final Mat lookUpTable = new Mat(1, 256, CvType.CV_8U);
-                final double gammaValue = 1.5;
-                final byte[] lookUpTableData = new byte[(int) (lookUpTable.total() * lookUpTable.channels())];
-                for (int i = 0; i < lookUpTable.cols(); i++) {
-                    lookUpTableData[i] = saturate(Math.pow(i / 255.0, gammaValue) * 255.0);
-                }
-                lookUpTable.put(0, 0, lookUpTableData);
-                final Mat img = new Mat();
-                Core.LUT(matColor, lookUpTable, img);
-                final Mat m = new Mat(matColor.size(), matColor.type(), new Scalar(255, 255, 255, 255));
-                final Mat mMul = img.mul(m, 0.05);
-                Imgproc.cvtColor(mMul, matGray, Imgproc.COLOR_RGB2GRAY);
-
-                Imgproc.threshold(matGray, matGray, 0, 255, Imgproc.THRESH_BINARY_INV + THRESH_OTSU);
-
-                final BufferedImage typeLabelCaptureOriginalGray = CvHelper.mat2Img(matGray);
-                matColor.release();
-                lookUpTable.release();
-                matGray.release();
-                m.release();
-                mMul.release();
-                timeRenderBefore = System.currentTimeMillis();
-                String cleaned = imageToTerminalType(typeLabelCaptureOriginalGray);
-                final Locale locale = ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")).getLocale();
-                try {
-                    final Matcher matcher = DATA_PORT_NAME_PATTERN.matcher(cleaned);
-                    if (matcher.matches()) {
-                        DataPortType.forLocalizedName(matcher.group(1), locale);
-                    } else {
-                        throw new IllegalArgumentException("no match");
-                    }
-                } catch (final Exception e) {
-                    final Mat normal = CvHelper.convertToMat(typeLabelCaptureOriginalGray, null);
-                    final Mat inverted = new Mat();
-                    Core.bitwise_not(normal, inverted);
-                    final BufferedImage typeLabelCaptureInverted = CvHelper.mat2Img(inverted);
-                    normal.release();
-                    inverted.release();
-                    log.debug("Attempt OCR inverted");
-                    cleaned = imageToTerminalType(typeLabelCaptureInverted);
-                }
-                try {
-                    if (!cleaned.isBlank()) {
-                        final Matcher matcher = DATA_PORT_NAME_PATTERN.matcher(cleaned);
-                        if (matcher.matches()) {
-                            final DataPortType dataPortType = DataPortType.forLocalizedName(matcher.group(1), locale);
-                            log.debug("detected terminal: " + cleaned);
-                            downloadMenu.setType(dataPortType);
-                            downloadMenu.setDataPortName(cleaned);
-                        } else {
-                            throw new IllegalArgumentException("no match");
-                        }
-                    }
-
-                } catch (final IllegalArgumentException ex) {
-                    log.debug("detected terminal: UNKNOWN");
-                    downloadMenu.setDataPortName("UNKNOWN");
-                }
-
-                timeRenderAfter = System.currentTimeMillis();
-                log.debug("OCR terminal time: " + (timeRenderAfter - timeRenderBefore));
-            } catch (final TesseractException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    private static void processMenu(final BufferedImage downloadMenuCapture, final DownloadMenu downloadMenu) {
-
-        final long timeRenderBeforeMenu = System.currentTimeMillis();
-        final List<Future> tasks = new ArrayList<>();
-        for (int index = 1; index <= downloadMenu.getMenuSize(); index++) {
-            final int finalIndex = index;
-            final Future<?> future = executorService.submit(() -> {
-                if (Boolean.TRUE.equals(!downloadMenu.getScanned().getOrDefault(finalIndex, false)) && downloadMenu.isMenuItemVisibleForOCR(finalIndex)) {
-                    try {
-                        final double menuItemY = downloadMenu.getMenuItem(finalIndex).getY();
-
-                        long timeRenderBefore = System.currentTimeMillis();
-                        final BufferedImage warped = ImageTransformHelper.transformForSelection(downloadMenuCapture, new Rectangle(
-                                (int) (downloadMenu.getMenuItem(finalIndex).getX() + downloadMenu.getMenuTextReadOffset().getX() - 10),
-                                (int) (menuItemY + downloadMenu.getMenuTextReadOffset().getY() - 50),
-                                (int) downloadMenu.getMenuTextReadOffset().getWidth() + 20,
-                                (int) downloadMenu.getMenuTextReadOffset().getHeight() + 100)
-                        );
-                        long timeRenderAfter = System.currentTimeMillis();
-                        log.debug("Transform menu item time: " + (timeRenderAfter - timeRenderBefore));
-//                        final int y = (int) (menuItemY + downloadMenu.getMenuTextReadOffset().getY() - downloadMenu.getMenu().getY());
-                        final BufferedImage menuItemLabelCaptureOriginalColor = warped.getSubimage(
-                                (int) (downloadMenu.getMenuItem(finalIndex).getX() + downloadMenu.getMenuTextReadOffset().getX()),
-                                (int) (downloadMenu.getMenuItem(finalIndex).getY() + downloadMenu.getMenuTextReadOffset().getY()),
-                                (int) downloadMenu.getMenuTextReadOffset().getWidth(),
-                                (int) downloadMenu.getMenuTextReadOffset().getHeight()
-                        );
-
-                        final Mat matColor = CvHelper.convertToMat(menuItemLabelCaptureOriginalColor, null);
-                        final Mat matShiftedColor = new Mat(matColor.size(), CvType.CV_8UC4);
-                        Map<RGB, Integer> dominantColors = findDominantColors(matColor);
-                        RGB dominant = Collections.max(dominantColors.entrySet(), Map.Entry.comparingByValue()).getKey();
-                        //remove the dominant color(background) value from each pixel
-                        for (int y = 0; y < matColor.rows(); y++) {
-                            for (int x = 0; x < matColor.cols(); x++) {
-                                double[] bgr = matColor.get(y, x);
-                                double b = bgr[0];
-                                double g = bgr[1];
-                                double r = bgr[2];
-
-                                b = Math.abs(b - dominant.b());
-                                g = Math.abs(g - dominant.g());
-                                r = Math.abs(r - dominant.r());
-
-                                matShiftedColor.put(y, x, b, g, r, 255.0);
-
-                            }
-                        }
-
-                        final BufferedImage menuItemLabelCaptureOriginalShifted = CvHelper.mat2Img(matShiftedColor);
-                        matColor.release();
-                        matShiftedColor.release();
-                        timeRenderBefore = System.currentTimeMillis();
-                        String cleaned = imageToString(finalIndex, menuItemLabelCaptureOriginalShifted);
-                        final Locale locale = ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")).getLocale();
-                        boolean fuzzy = PreferencesService.getPreference(PreferenceConstants.AR_SEARCH_METHOD, "EXACT").equals("FUZZY");
-                        int fuzzyScore = PreferencesService.getPreference(PreferenceConstants.AR_FUZZY_SCORE, 90);
-                        OdysseyMaterial odysseyMaterial;
-                        try {
-                            if (fuzzy) {
-                                BoundExtractedResult<OdysseyMaterial> extractedResult = OdysseyMaterial.forLocalizedNameSpaceInsensitiveFuzzy(cleaned, locale);
-                                log.info("Fuzzy matched '{}' to '{}' with score {}", cleaned, extractedResult.getReferent(), extractedResult.getScore());
-                                if (extractedResult.getScore() >= fuzzyScore) {
-                                    odysseyMaterial = extractedResult.getReferent();
-                                } else {
-                                    throw new IllegalArgumentException("Fuzzy score too low");
-                                }
-                            } else {
-                                odysseyMaterial = OdysseyMaterial.forLocalizedNameSpaceInsensitive(cleaned, locale);
-                            }
-                            downloadMenu.getDownloadData().put(finalIndex, odysseyMaterial);
-                            downloadMenu.getScanned().put(finalIndex, true);
-                        } catch (final Exception e) {
-                            final Mat normal = CvHelper.convertToMat(menuItemLabelCaptureOriginalShifted, null);
-                            final Mat inverted = new Mat();
-                            Core.bitwise_not(normal, inverted);
-                            final BufferedImage menuItemLabelCaptureInverted = CvHelper.mat2Img(inverted);
-                            normal.release();
-                            inverted.release();
-                            log.debug("Attempt OCR inverted");
-                            cleaned = imageToString(finalIndex, menuItemLabelCaptureInverted);
-                            try {
-                                if (cleaned.isBlank()) {
-                                    downloadMenu.getDownloadData().put(finalIndex, Data.UNKNOWN);
-                                    downloadMenu.getScanned().put(finalIndex, true);
-                                } else {
-                                    if (fuzzy) {
-                                        BoundExtractedResult<OdysseyMaterial> extractedResult = OdysseyMaterial.forLocalizedNameSpaceInsensitiveFuzzy(cleaned, locale);
-                                        log.info("Fuzzy matched '{}' to '{}' with score {}", cleaned, extractedResult.getReferent(), extractedResult.getScore());
-                                        if (extractedResult.getScore() >= fuzzyScore) {
-                                            odysseyMaterial = extractedResult.getReferent();
-                                        } else {
-                                            throw new IllegalArgumentException("Fuzzy score too low");
-                                        }
-                                    } else {
-                                        odysseyMaterial = OdysseyMaterial.forLocalizedNameSpaceInsensitive(cleaned, locale);
-                                    }
-                                    if (odysseyMaterial instanceof Data data && PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "").equals("ENGLISH") && downloadMenu.getDataPortName() != null && !downloadMenu.getDataPortName().equals("UNKNOWN")) {
-                                        MaterialTrackingService.registerData(downloadMenu.getDataPortName(), downloadMenu.getType(), data, finalIndex);
-                                    }
-                                    downloadMenu.getDownloadData().put(finalIndex, odysseyMaterial);
-                                    downloadMenu.getScanned().put(finalIndex, true);
-                                }
-
-                            } catch (final IllegalArgumentException ex) {
-                                log.debug("detected material: UNKNOWN");
-                                downloadMenu.getDownloadData().put(finalIndex, Data.UNKNOWN);
-                                downloadMenu.getScanned().put(finalIndex, true);
-                            }
-                        }
-
-                        timeRenderAfter = System.currentTimeMillis();
-                        log.debug("OCR menu item time: " + (timeRenderAfter - timeRenderBefore));
-                    } catch (final TesseractException e) {
-                        log.error("", e);
-                        throw new RuntimeException(e);
-                    }
-                }
-            });
-            tasks.add(future);
-        }
-        tasks.forEach(future -> {
-            try {
-                future.get();
-            } catch (final InterruptedException | ExecutionException e) {
-                log.error("", e);
-                throw new RuntimeException(e);
-            }
-        });
-        final long timeRenderAfterMenu = System.currentTimeMillis();
-        log.debug("OCR menu full time: " + (timeRenderAfterMenu - timeRenderBeforeMenu));
-    }
-
-//    private static void makeGray(final BufferedImage img) {
-//        for (int x = 0; x < img.getWidth(); ++x) {
-//            for (int y = 0; y < img.getHeight(); ++y) {
-//                final int rgb = img.getRGB(x, y);
-//                final int r = (rgb >> 16) & 0xFF;
-//                final int g = (rgb >> 8) & 0xFF;
-//                final int b = (rgb & 0xFF);
-//
-//                // Normalize and gamma correct:
-//                final double rr = Math.pow(r / 255.0, 2.2);
-//                final double gg = Math.pow(g / 255.0, 2.2);
-//                final double bb = Math.pow(b / 255.0, 2.2);
-//
-//                // Calculate luminance:
-//                final double lum = 0.2126 * rr + 0.7152 * gg + 0.0722 * bb;
-//
-//                // Gamma compand and rescale to byte range:
-//                final int grayLevel = (int) (255.0 * Math.pow(lum, 1.0 / 2.2));
-//                final int gray = (grayLevel << 16) + (grayLevel << 8) + grayLevel;
-//                img.setRGB(x, y, gray);
-//            }
-//        }
-//    }
-
-    private static BufferedImage getDownloadMenuCapture() {
-        if (targetWindowInfo.hwnd != 0) {
-            final int i = User32.INSTANCE.GetForegroundWindow();
-            if (i == targetWindowInfo.hwnd) {
-                return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), DataportDownloadARMenu.getDownloadMenu().getMenu().getAwtRectangle().getBounds(), downloadMenuCapture);
-            }
-        }
-        return null;
-    }
-
-    private static BufferedImage getBartenderMenuCapture() {
-        if (targetWindowInfo.hwnd != 0) {
-            final int i = User32.INSTANCE.GetForegroundWindow();
-            if (i == targetWindowInfo.hwnd) {
-                return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), BartenderTradeARMenu.getBartenderMenu().getMenu().getAwtRectangle().getBounds(), bartenderMenuCapture);
-            }
-        }
-        return null;
-    }
-
-//    private static BufferedImage getArrowCapture() {
-//        if (targetWindowInfo.hwnd != 0 && User32.INSTANCE.GetForegroundWindow() == targetWindowInfo.hwnd) {
-//            return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), DataportDownloadARMenu.getDownloadMenu().getArrow().getAwtRectangle().getBounds(), arrowCapture);
-//        }
-//        return null;
-//    }
-
-//    private static DownloadMenu getDownloadMenu() {
-//        if (downloadMenu == null) {
-//            downloadMenu = new DownloadMenu(downloadMenuCapture, scaling, Boolean.TRUE.equals(hasWarning), scrollBar, contentWidth, contentHeight);
-//        }
-//        return downloadMenu;
-//    }
-//
-//    private static DownloadMenu getDownloadMenu(final BufferedImage downloadMenuCapture, final boolean hasWarning, final ScrollBarV2 scrollBar) {
-//        if (downloadMenu == null) {
-//            downloadMenu = new DownloadMenu(downloadMenuCapture, scaling, hasWarning, scrollBar, contentWidth, contentHeight);
-//        } else {
-//            downloadMenu.setScale(scaling);
-//            downloadMenu.setContentHeight(contentHeight);
-//            downloadMenu.setContentWidth(contentWidth);
-
-    /// /            downloadMenu.setScrollBar(scrollBar);
-    /// /            downloadMenu.setDownloadMenuCapture(downloadMenuCapture);
-    /// /            downloadMenu.setHasWarning(hasWarning);
-//            downloadMenu.updateMenuState(downloadMenuCapture, scrollBar, hasWarning);
-//        }
-//        return downloadMenu;
-//    }
-//    private static boolean isDownloadMenu(final BufferedImage capture) {
-//        if (capture == null) {
-//            return false;
-//        }
-//        arrowCaptureMat = CvHelper.convertToMat(capture, arrowCaptureMat);
-//        final int result_cols = arrowCaptureMat.cols() - DataportDownloadARMenu.arrowTemplateScaled.cols() + 1;
-//        final int result_rows = arrowCaptureMat.rows() - DataportDownloadARMenu.arrowTemplateScaled.rows() + 1;
-//        if (result_cols <= 0 || result_rows <= 0) {
-//            return false;
-//        }
-//        if (downloadMenuResult == null || downloadMenuResult.cols() != result_cols || downloadMenuResult.rows() != result_rows) {
-//            if (downloadMenuResult != null) {
-//                downloadMenuResult.release();
-//            }
-//            downloadMenuResult = new Mat(result_rows, result_cols, CvType.CV_32FC1);
-//        }
-//        if (arrowCaptureMatGray == null || arrowCaptureMat.cols() != arrowCaptureMatGray.cols() || arrowCaptureMat.rows() != arrowCaptureMatGray.rows()) {
-//            if (arrowCaptureMatGray != null) {
-//                arrowCaptureMatGray.release();
-//            }
-//            arrowCaptureMatGray = new Mat();
-//        }
-//        //grayscale capture
-//        Imgproc.cvtColor(arrowCaptureMat, arrowCaptureMatGray, Imgproc.COLOR_BGRA2GRAY);
-//        //matching
-//        Imgproc.matchTemplate(arrowCaptureMatGray, DataportDownloadARMenu.arrowTemplateScaled, downloadMenuResult, MATCH_METHOD);
-//        final Core.MinMaxLocResult mmr = Core.minMaxLoc(downloadMenuResult);
-//
-//
-//        if (mmr.maxVal > getMatchingThreshold()) {
-//            if (!previousDataportMatch) {
-//                previousDataportMatch = true;
-//                log.debug("dataport downloadmenu detection confidence(" + getMatchingThreshold() + "): " + mmr.maxVal);
-//            }
-//            return true;
-//        }
-//        if (previousDataportMatch) {
-//
-//            previousDataportMatch = false;
-//            log.debug("dataport downloadmenu detection confidence(" + getMatchingThreshold() + "): " + mmr.maxVal);
-//            arrowCapture = getArrowCapture();
-//            return isDownloadMenu(arrowCapture);
-//        }
-//        return false;
-//    }
-
-//    private static boolean previousDataportMatch = false;
-//    private static boolean previousBartenderMatch = false;
-
-//    private static double getMatchingThreshold() {
-//        return MATCHING_THRESHOLD;
-//    }
-    private static String imageToString(final int index, final BufferedImage menuItemLabelCapture) throws TesseractException {
-        final String dataCharacterForCurrentARLocale = LocaleService.getDataCharacterForCurrentARLocale();
-        OCRService.setCharWhitelist(dataCharacterForCurrentARLocale);
-        final String dataCharacterForCurrentLocale = dataCharacterForCurrentARLocale;
-        final String dataCharacterForCurrentLocaleWithoutSpace = dataCharacterForCurrentLocale.replace("\s", "");
-        final String ocr = OCRService.imageToString(menuItemLabelCapture);
-        log.debug("ocr detected " + index + ": " + ocr);
-        String cleaned = ocr.replaceAll("[^" + dataCharacterForCurrentLocale + "]", "").replace("\s\s", "\s").trim();
-        if (cleaned.matches("^[" + dataCharacterForCurrentLocale + "]*\s[" + dataCharacterForCurrentLocaleWithoutSpace + "]$")) {
-            cleaned = cleaned.substring(0, cleaned.length() - 2);
-        }
-        log.debug("ocr cleaned " + index + ": " + cleaned);
-        return cleaned;
-    }
-
-    private static String imageToTerminalType(final BufferedImage terminalLabelCapture) throws TesseractException {
-        final String dataCharacterForCurrentLocale = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
-        OCRService.setCharWhitelist(dataCharacterForCurrentLocale);
-        final String dataCharacterForCurrentLocaleWithoutSpace = dataCharacterForCurrentLocale.replace("\s", "");
-        final String ocr = OCRService.imageToString(terminalLabelCapture);
-        log.debug("ocr detected terminal: " + ocr);
-        final String cleaned = ocr.replaceAll("[^" + dataCharacterForCurrentLocale + "]", "").replace("\s\s", "\s").trim();
-//        if (cleaned.matches("^[" + dataCharacterForCurrentLocale + "]*\s[" + dataCharacterForCurrentLocaleWithoutSpace + "]$")) {
-//            cleaned = cleaned.substring(0, cleaned.length() - 2);
-//        }
-        log.debug("ocr cleaned terminal: " + cleaned);
-        return cleaned;
-    }
-
-    record RGB(int r, int g, int b) {
-    }
-
-    private static Map<RGB, Integer> findDominantColors(Mat img) {
-        Map<RGB, Integer> colorCount = new HashMap<>();
-
-        for (int y = 0; y < img.rows(); y++) {
-            for (int x = 0; x < img.cols(); x++) {
-                double[] bgr = img.get(y, x);
-                int b = (int) bgr[0];
-                int g = (int) bgr[1];
-                int r = (int) bgr[2];
-
-                RGB key = new RGB(r, g, b);
-                colorCount.put(key, colorCount.getOrDefault(key, 0) + 1);
-            }
-        }
-        return colorCount;
     }
 
 }
