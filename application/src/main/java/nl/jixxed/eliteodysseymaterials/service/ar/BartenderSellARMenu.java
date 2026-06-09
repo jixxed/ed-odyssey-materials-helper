@@ -67,6 +67,7 @@ public class BartenderSellARMenu implements ARMenu {
     private boolean previousBartenderMatch = false;
     private BufferedImage bartenderMenuCapture;
     private BufferedImage bartenderScrollbarCapture;
+    private BufferedImage bartenderMenuItemsCapture;
 
     private ScrollBarV2 scrollBar;
     //    private BartenderMenuType newBartenderSubMenu;
@@ -297,6 +298,15 @@ public class BartenderSellARMenu implements ARMenu {
         }
         return null;
     }
+    private BufferedImage getBartenderSellMenuItemsCapture(WindowInfo targetWindowInfo) {
+        if (targetWindowInfo.hwnd != 0) {
+            final int i = User32.INSTANCE.GetForegroundWindow();
+            if (i == targetWindowInfo.hwnd) {
+                return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getBartenderSellMenu().getMenuItemsRect().getAwtRectangle().getBounds(), bartenderMenuItemsCapture);
+            }
+        }
+        return null;
+    }
 
     private ScrollBarV2 getScrollBar(final BufferedImage bartenderSellMenuScrollbarCapture) {
         if (bartenderSellMenuScrollbarCapture == null) {
@@ -311,6 +321,8 @@ public class BartenderSellARMenu implements ARMenu {
         scrollBar = newScrollBar;
         if (render) {
             getBartenderSellMenu().setScrollBarV2(scrollBar);
+            BufferedImage bartenderSellMenuItemsCapture = getBartenderSellMenuItemsCapture(targetWindowInfo);
+            getBartenderSellMenu().setMenuItemsCapture(bartenderSellMenuItemsCapture);
             renderMenu(getBartenderSellMenu());
             resultConsumer.accept(overlayImage);
         }

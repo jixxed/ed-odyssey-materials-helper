@@ -18,6 +18,7 @@ import nl.jixxed.eliteodysseymaterials.enums.Good;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 public class BartenderSellMenu implements BartenderMenu {
@@ -34,6 +35,8 @@ public class BartenderSellMenu implements BartenderMenu {
 
     @Getter
     private Rectangle menu;
+    @Setter
+    private BufferedImage menuItemsCapture;
 
     public BartenderSellMenu() {
         this.scale = 1;
@@ -154,6 +157,18 @@ public class BartenderSellMenu implements BartenderMenu {
                 this.menu.getY() + 1470 * this.scale
         );
     }
+    public Rectangle getMenuItemsRect() {
+//        2445/400
+//        2460/1470
+        //585,64 - 109, 109
+        //497,77778
+        return new Rectangle(
+                getMenu().getX() + 188 * this.scale,
+                getMenu().getHeight() / 2,
+                getMenu().getX() + 188 * this.scale + 1,
+                getMenu().getHeight() / 2 + getCategoryEntryHeight() * this.scale
+        );
+    }
 
     private double getCategoryHeaderHeight() {
         return 72;
@@ -163,11 +178,13 @@ public class BartenderSellMenu implements BartenderMenu {
         return 50;
     }
 
+    private double itemHeight = 78.1;
+
     private double getCategoryEntryHeight() {
-        return 79;
+        return itemHeight;
     }
     private double getItemHeight() {
-        return 73;
+        return 72.8;
     }
 
     public double getItemX(OdysseyMaterial material, int index) {
@@ -194,29 +211,35 @@ public class BartenderSellMenu implements BartenderMenu {
 //                        .filter(mat -> !mat.isIllegal() || LocationService.getStationGovernment().equals(Government.ANARCHY))
 //                        .toList()
 //                ).orElse(Collections.emptyList());
+        double y;
+        y = getY(material, index, goods, assets);
+        return y - getMenuItemPositionYOffset(goods, assets, datas) + getVisibleViewPortRect().getY();
+    }
+
+    private double getY(OdysseyMaterial material, int index, List<OdysseyMaterial> goods, List<OdysseyMaterial> assets) {
         double y = 0;
         if (material instanceof Asset) {
             y += getCategoryHeaderHeight() * this.scale;
-            y += index * Math.ceil(getCategoryEntryHeight() * this.scale);
+            y += index * getCategoryEntryHeight() * this.scale;
         }
         if (material instanceof Good) {
             y += getCategoryHeaderHeight() * 2 * this.scale;
             y += assets.isEmpty()
-                    ? Math.ceil(getCategoryEmptyTextHeight() * this.scale)
-                    : (double)assets.size() * Math.ceil(getCategoryEntryHeight() * this.scale);
-            y += index * Math.ceil(getCategoryEntryHeight() * this.scale);
+                    ? getCategoryEmptyTextHeight() * this.scale
+                    : (double) assets.size() * getCategoryEntryHeight() * this.scale;
+            y += index * getCategoryEntryHeight() * this.scale;
         }
         if (material instanceof Data) {
             y += getCategoryHeaderHeight() * 3 * this.scale;
             y += assets.isEmpty()
-                    ? Math.ceil(getCategoryEmptyTextHeight() * this.scale)
-                    : (double)assets.size() * Math.ceil(getCategoryEntryHeight() * this.scale);
+                    ? getCategoryEmptyTextHeight() * this.scale
+                    : (double) assets.size() * getCategoryEntryHeight() * this.scale;
             y += goods.isEmpty()
-                    ? Math.ceil(getCategoryEmptyTextHeight() * this.scale)
-                    : (double)goods.size() * Math.ceil(getCategoryEntryHeight() * this.scale);
-            y += index * Math.ceil(getCategoryEntryHeight() * this.scale);
+                    ? getCategoryEmptyTextHeight() * this.scale
+                    : (double) goods.size() * getCategoryEntryHeight() * this.scale;
+            y += index * getCategoryEntryHeight() * this.scale;
         }
-        return y - getMenuItemPositionYOffset(goods, assets, datas) + getVisibleViewPortRect().getY();
+        return y;
     }
 
     public double getItemWidth(OdysseyMaterial material, int index) {
@@ -251,18 +274,21 @@ public class BartenderSellMenu implements BartenderMenu {
         if (!scrollBarV2.isActive()) {
             return 0;
         }
-        double menuSize = getCategoryHeaderHeight() * 3D;
+        double menuSize = getCategoryHeaderHeight() * this.scale * 3D;
         menuSize += (goods.isEmpty() ? getCategoryEmptyTextHeight() : (double)goods.size() * getCategoryEntryHeight()) * this.scale;
         menuSize += (assets.isEmpty() ? getCategoryEmptyTextHeight() : (double)assets.size() * getCategoryEntryHeight()) * this.scale;
         menuSize += (datas.isEmpty() ? getCategoryEmptyTextHeight() : (double)datas.size() * getCategoryEntryHeight()) * this.scale;
+        menuSize -= 5 * this.scale;
         double viewportHeight = VIEWPORT_HEIGHT * this.scale;
         double menuHeight = menuSize;
-        return (menuHeight - viewportHeight) * this.scrollBarV2.getPosition() / 100.0;
+        double ballparkOffset = (menuHeight - viewportHeight) * this.scrollBarV2.getPosition() / 100.0;
+
+        return ballparkOffset;
     }
 
     public Rectangle getVisibleViewPortRect() {
         final double menuItemOffsetX = getMenu().getX() + 87 * this.scale;
-        final double menuItemOffsetY = 400 * this.scale;
+        final double menuItemOffsetY = 404 * this.scale;
         final double menuWidth = (1866) * this.scale;
         double viewportHeight = VIEWPORT_HEIGHT * this.scale;
         return new Rectangle(menuItemOffsetX, menuItemOffsetY, menuItemOffsetX + menuWidth, menuItemOffsetY + viewportHeight);
@@ -273,7 +299,7 @@ public class BartenderSellMenu implements BartenderMenu {
         return getMenuItemVisibleHeight(material, index, goods, assets, datas) > 0;
     }
 
-//942 1020 1170 1248
+    //942 1020 1170 1248
 //cat title height 150 - 78 = 72
 //cat empty text height 122 - 72 = 50
 //cat entry height = 78

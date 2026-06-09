@@ -16,7 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -146,12 +148,14 @@ public class ScrollBarHelper {
         return new ScrollBarV2(false, 0, 0);
     }
 
-    public static int getScrollBarHeightBartenderSell(final BufferedImage sellMenuScrollbarCapture, final double scaling) {
+    public static double getScrollBarHeightBartenderSell(final BufferedImage sellMenuScrollbarCapture, final double scaling) {
         final int scrollbarX = 11;
-        final int scrollbarYTop = 405;
+        final int scrollbarYTop = 404;
         final int scrollbarYBottom = 1469;
-        final WritableRaster dataColorPixel = ((WritableRaster) sellMenuScrollbarCapture.getData(new java.awt.Rectangle((int) (0D * scaling),
+        final WritableRaster thumbColorPixel = ((WritableRaster) sellMenuScrollbarCapture.getData(new java.awt.Rectangle((int) (0D * scaling),
                 (int) (205D * scaling), 1, 1))).createWritableTranslatedChild(0, 0);
+        final WritableRaster backgroundColorPixel = ((WritableRaster) sellMenuScrollbarCapture.getData(new java.awt.Rectangle((int) (0D * scaling),
+                (int) (215D * scaling), 1, 1))).createWritableTranslatedChild(0, 0);
 
         BufferedImage scrollbarLine = sellMenuScrollbarCapture.getSubimage((int) (scrollbarX * scaling), (int) (scrollbarYTop * scaling), 1, (int) ((scrollbarYBottom - scrollbarYTop) * scaling));
 //        try {
@@ -159,52 +163,73 @@ public class ScrollBarHelper {
 //        } catch (IOException e) {
 //            throw new RuntimeException(e);
 //        }
-        byte[] color = DataBufferHelper.getData(dataColorPixel.getDataBuffer());
-        final byte[] darkenedColor = color.clone();
+        byte[] colorBG = DataBufferHelper.getData(backgroundColorPixel.getDataBuffer());
+        byte[] colorFG = DataBufferHelper.getData(thumbColorPixel.getDataBuffer());
+        byte[] thumbColor = colorFG.clone();
         for (int i = 1; i < 4; i++) { // RGB channels
-            int value = darkenedColor[i] & 0xFF;
-            darkenedColor[i] = (byte) Math.round(value * 0.76);
+            int value = thumbColor[i] & 0xFF;
+            thumbColor[i] = (byte) Math.floor(value * 0.765);
         }
         //count pixels in scrollbar line that match the color pixel
-        int count = 0;
+        double count = 0;
+        List<byte[]> pixels = new ArrayList<>();
         for (int y = 0; y < scrollbarLine.getHeight(); y++) {
             final WritableRaster dataPixel = ((WritableRaster) scrollbarLine.getData(new java.awt.Rectangle(0, y, 1, 1))).createWritableTranslatedChild(0, 0);
             final byte[] pixel = DataBufferHelper.getData(dataPixel.getDataBuffer());
 
-            if (matchesColor(color, pixel, 2) || matchesColor(darkenedColor, pixel, 2)) {
-                count++;
+            if (!matchesColor(colorBG, pixel, 2) /*|| !matchesColor(darkenedColor, pixel, 2)*/) {
+                pixels.add(pixel);
+                if(matchesColor(colorFG, pixel, 2)){
+                    thumbColor = colorFG;
+                }
             }
         }
-
-        return (int) (count / scaling);
+        for (byte[] pixel:pixels){
+            double opacity = (double) ((pixel[1] & 0xFF) - (colorBG[1] & 0xFF)) / ((thumbColor[1] & 0xFF) - (colorBG[1] & 0xFF));
+            double opacity2 = (double) ((pixel[2] & 0xFF) - (colorBG[2] & 0xFF)) / ((thumbColor[2] & 0xFF) - (colorBG[2] & 0xFF));
+            double opacity3 = (double) ((pixel[3] & 0xFF) - (colorBG[3] & 0xFF)) / ((thumbColor[3] & 0xFF) - (colorBG[3] & 0xFF));
+            count += (opacity + opacity2 + opacity3) / 3D;
+        }
+//        log.debug("thumb size {}", count);
+        return (count / scaling);
     }
 
     public static double getProgress(BufferedImage sellMenuScrollbarCapture, double scaling) {
         final int scrollbarX = 11;
-        final int scrollbarYTop = 405;
+        final int scrollbarYTop = 404;
         final int scrollbarYBottom = 1469;
-        final WritableRaster dataColorPixel = ((WritableRaster) sellMenuScrollbarCapture.getData(new java.awt.Rectangle((int) (0D * scaling),
+        final WritableRaster thumbColorPixel = ((WritableRaster) sellMenuScrollbarCapture.getData(new java.awt.Rectangle((int) (0D * scaling),
                 (int) (205D * scaling), 1, 1))).createWritableTranslatedChild(0, 0);
-        int scrollBarHeight = getScrollBarHeightBartenderSell(sellMenuScrollbarCapture, scaling);
+        final WritableRaster backgroundColorPixel = ((WritableRaster) sellMenuScrollbarCapture.getData(new java.awt.Rectangle((int) (0D * scaling),
+                (int) (215D * scaling), 1, 1))).createWritableTranslatedChild(0, 0);
+        double scrollBarHeight = getScrollBarHeightBartenderSell(sellMenuScrollbarCapture, scaling);
         BufferedImage scrollbarLine = sellMenuScrollbarCapture.getSubimage((int) (scrollbarX * scaling), (int) (scrollbarYTop * scaling), 1, (int) ((scrollbarYBottom - scrollbarYTop) * scaling));
 //        try {
 //            saveImage(scrollbarLine, "scrollbarline" + new Random(100), 1);
 //        } catch (IOException e) {
 //            throw new RuntimeException(e);
 //        }
-        byte[] color = DataBufferHelper.getData(dataColorPixel.getDataBuffer());
-        final byte[] darkenedColor = color.clone();
+        byte[] colorFG = DataBufferHelper.getData(thumbColorPixel.getDataBuffer());
+        byte[] colorBG = DataBufferHelper.getData(backgroundColorPixel.getDataBuffer());
+        final byte[] darkenedColor = colorFG.clone();
         for (int i = 1; i < 4; i++) { // RGB channels
             int value = darkenedColor[i] & 0xFF;
-            darkenedColor[i] = (byte) Math.round(value * 0.76);
+            darkenedColor[i] = (byte) Math.floor(value * 0.765);
         }
         //count pixels in scrollbar line that match the color pixel
-        int count = 0;
+        double count = 0;
         for (int y = 0; y < scrollbarLine.getHeight(); y++) {
             final WritableRaster dataPixel = ((WritableRaster) scrollbarLine.getData(new java.awt.Rectangle(0, y, 1, 1))).createWritableTranslatedChild(0, 0);
             final byte[] pixel = DataBufferHelper.getData(dataPixel.getDataBuffer());
 
-            if (matchesColor(color, pixel, 2) || matchesColor(darkenedColor, pixel, 2)) {
+            if (!matchesColor(colorBG, pixel, 2) /*|| matchesColor(darkenedColor, pixel, 2)*/) {
+                double opacity = (double) ((pixel[1] & 0xFF) - (colorBG[1] & 0xFF)) / ((darkenedColor[1] & 0xFF) - (colorBG[1] & 0xFF));
+                double opacity2 = (double) ((pixel[2] & 0xFF) - (colorBG[2] & 0xFF)) / ((darkenedColor[2] & 0xFF) - (colorBG[2] & 0xFF));
+                double opacity3 = (double) ((pixel[3] & 0xFF) - (colorBG[3] & 0xFF)) / ((darkenedColor[3] & 0xFF) - (colorBG[3] & 0xFF));
+                double avg = (opacity + opacity2 + opacity3) / 3D;
+                if(avg < 1D){
+                    count += 1D - avg;
+                }
                 break;
             }
             count++;
@@ -213,6 +238,6 @@ public class ScrollBarHelper {
         double freeSpace = ((scrollbarYBottom - scrollbarYTop)) - (scrollBarHeight) - 1;
 
 //        log.debug("progress (%s/%s) %s".formatted(start, freeSpace, (double) start / freeSpace));
-        return Math.clamp((start / freeSpace) * 100, 0, 100);
+        return Math.clamp((start / freeSpace) * 100, 0D, 100D);
     }
 }

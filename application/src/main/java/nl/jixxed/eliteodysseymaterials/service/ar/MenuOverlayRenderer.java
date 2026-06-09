@@ -209,7 +209,14 @@ public class MenuOverlayRenderer {
                 (float) preference.getBlue(),
                 (float) preference.getOpacity());
         graphics.setColor(color);
-
+        graphics.drawRect((int) bartenderSellMenu.getVisibleViewPortRect().getX(),
+                (int) bartenderSellMenu.getVisibleViewPortRect().getY(),
+                (int) bartenderSellMenu.getVisibleViewPortRect().getWidth(),
+                (int) bartenderSellMenu.getVisibleViewPortRect().getHeight());
+        graphics.drawRect((int) bartenderSellMenu.getMenuItemsRect().getX(),
+                (int) bartenderSellMenu.getMenuItemsRect().getY(),
+                (int) bartenderSellMenu.getMenuItemsRect().getWidth(),
+                (int) bartenderSellMenu.getMenuItemsRect().getHeight());
         if (Locale.forLanguageTag("ru").equals(LocaleService.getCurrentLocale())) {
             graphics.setFont(new Font("Eurostile-Roman", Font.PLAIN, (int) (bartenderSellMenu.getHeaderFontSize())));
         } else {
