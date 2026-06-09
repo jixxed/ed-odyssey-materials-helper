@@ -44,6 +44,7 @@ public class ARService {
 
     private static final String STYLESHEET = "/css/ar.css";
     private static final String ELITE_DANGEROUS_CLIENT_WINDOW_NAME = "Elite - Dangerous (CLIENT)";
+//    private static final String ELITE_DANGEROUS_CLIENT_WINDOW_NAME = "Elite Simulator";
     private static final AtomicBoolean REQUEST_SHOW = new AtomicBoolean(false);
     private static final AtomicBoolean REQUEST_HIDE = new AtomicBoolean(false);
     private static final AtomicBoolean FORCE_VISIBLE = new AtomicBoolean(false);
@@ -52,9 +53,8 @@ public class ARService {
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
     public static boolean debug = false;
     private static AROverlay arOverlay;
-    private static Scene arScene;
     private static Stage arStage;
-    private static List<ARMenu> arMenus;
+    private static final List<ARMenu> arMenus;
     private static boolean enabled = false;
     private static AnimationTimer windowVisibilityAndPositionTimer;
     private static Timer ocrAndRenderTimer;
@@ -68,7 +68,7 @@ public class ARService {
 
     static {
         OpenCV.loadLocally();
-        arMenus = List.of(new DataportDownloadARMenu(), new BartenderTradeARMenu());
+        arMenus = List.of(new DataportDownloadARMenu(), new BartenderTradeARMenu(), new BartenderSellARMenu());
 
         EVENT_LISTENERS.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
             if (ocrAndRenderTimer != null) {
@@ -84,8 +84,8 @@ public class ARService {
             scheduledExecutorService.shutdownNow();
             log.info("AR Service shutdown finished.");
 
-            NativeLibrary.getInstance("user32").dispose();
-            NativeLibrary.getInstance("gdi32").dispose();
+            NativeLibrary.getInstance("user32").close();
+            NativeLibrary.getInstance("gdi32").close();
         }));
     }
 
@@ -150,7 +150,7 @@ public class ARService {
                 arStage.getIcons().add(new Image(FXApplication.class.getResourceAsStream("/images/application/appicon" + res + ".png")));
             }
             arOverlay = new AROverlay();
-            arScene = new Scene(arOverlay, 640, 480);
+            Scene arScene = new Scene(arOverlay, 640, 480);
             arStage.initModality(Modality.WINDOW_MODAL);
             arStage.initStyle(StageStyle.TRANSPARENT);
             arScene.setFill(javafx.scene.paint.Color.TRANSPARENT);
@@ -213,8 +213,7 @@ public class ARService {
             }
             if (targetWindowInfo.hwnd == 0) {
                 //application not running
-                arMenus.forEach(arMenu -> arMenu.getVisible().set(false));
-                arMenus.forEach(arMenu -> arMenu.clear());
+                arMenus.forEach(ARMenu::clear);
                 arOverlay.getResizableImageView().setImage(null);
                 REQUEST_HIDE.set(true);
                 return 1000L;
@@ -223,8 +222,7 @@ public class ARService {
             targetWindowInfo = WindowInfoUtil.getWindowInfo(targetWindowInfo);
             foregroundHwnd = User32.INSTANCE.GetForegroundWindow();
             if (foregroundHwnd != targetWindowInfo.hwnd) {
-                arMenus.forEach(arMenu -> arMenu.getVisible().set(false));
-                arMenus.forEach(arMenu -> arMenu.clear());
+                arMenus.forEach(ARMenu::clear);
                 arOverlay.getResizableImageView().setImage(null);
                 REQUEST_HIDE.set(true);
                 return 1000L;
@@ -244,10 +242,12 @@ public class ARService {
                     if (!arMenu.getVisible().get()) {
                         REQUEST_SHOW.set(true);
                     }
+                    arMenu.getVisible().set(visible);
                     if (visible) {
-                        arMenu.getVisible().set(true);
                         anyVisible = true;
                         break;
+                    }else{
+                        arMenu.clear();
                     }
                 }
             }
@@ -256,8 +256,7 @@ public class ARService {
                 if (arMenus.stream().anyMatch(arMenu -> arMenu.getVisible().get())) {
                     REQUEST_HIDE.set(true);
                 }
-                arMenus.forEach(arMenu -> arMenu.getVisible().set(false));
-                arMenus.forEach(arMenu -> arMenu.clear());
+//                arMenus.forEach(ARMenu::clear);
             }
             if (arMenus.stream().anyMatch(arMenu -> arMenu.getVisible().get())) {
                 arMenus.forEach(arMenu -> {

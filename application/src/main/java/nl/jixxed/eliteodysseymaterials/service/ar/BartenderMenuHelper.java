@@ -51,18 +51,18 @@ public class BartenderMenuHelper {
         return bartenderMenuCapture.getRGB(leftPixel.x, leftPixel.y) != bartenderMenuCapture.getRGB(rightPixel.x, rightPixel.y);
     }
 
-    public static boolean isTradeMenu(final BufferedImage bartenderMenuCapture, final BartenderTradeMenu bartenderTradeMenu) {
-        return bartenderMenuCapture != null && !isSellMenu(bartenderMenuCapture, bartenderTradeMenu);
+    public static boolean isTradeMenu(final BufferedImage bartenderMenuCapture, final BartenderMenu bartenderMenu) {
+        return bartenderMenuCapture != null && !isSellMenu(bartenderMenuCapture, bartenderMenu);
     }
 
-    private static boolean isSellMenu(final BufferedImage bartenderMenuCapture, final BartenderTradeMenu bartenderTradeMenu) {
+    public static boolean isSellMenu(final BufferedImage bartenderMenuCapture, final BartenderMenu bartenderMenu) {
         if (bartenderMenuCapture == null) {
             return false;
         }
-        final Point leftPixel = bartenderTradeMenu.getSellMenuDetectionLeftPixel();//cocktail
+        final Point leftPixel = bartenderMenu.getSellMenuDetectionLeftPixel();//cocktail
         // 2 pixel check in case of a mouse over
-        final Point rightPixel = bartenderTradeMenu.getSellMenuDetectionRightPixel();//balance triangle bottom left
-        final Point rightPixel2 = bartenderTradeMenu.getSellMenuDetectionRightPixel2();//balance triangle bottom right
+        final Point rightPixel = bartenderMenu.getSellMenuDetectionRightPixel();//balance triangle bottom left
+        final Point rightPixel2 = bartenderMenu.getSellMenuDetectionRightPixel2();//balance triangle bottom right
         final int left = bartenderMenuCapture.getRGB(leftPixel.x, leftPixel.y);
         final int right = bartenderMenuCapture.getRGB(rightPixel.x, rightPixel.y);
         final int right2 = bartenderMenuCapture.getRGB(rightPixel2.x, rightPixel2.y);

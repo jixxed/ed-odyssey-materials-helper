@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.Location;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
+import nl.jixxed.eliteodysseymaterials.enums.Government;
 import nl.jixxed.eliteodysseymaterials.helper.DnsHelper;
 import nl.jixxed.eliteodysseymaterials.persistence.common.model.StarSystemModel;
 import nl.jixxed.eliteodysseymaterials.persistence.common.model.query.QStarSystemModel;
@@ -60,6 +61,8 @@ public class LocationService {
     private static Double latitude = DEFAULT_LATITUDE;
     private static Double longitude = DEFAULT_LONGITUDE;
     private static Long bodyID;
+    @Getter
+    private static Government stationGovernment = Government.UNKNOWN;
     @Getter
     @Setter
     private static Optional<String> statusBodyName;
@@ -118,6 +121,7 @@ public class LocationService {
         EVENT_LISTENERS.add(EventService.addStaticListener(DockedJournalEvent.class, event -> {//Always player controlled
             station = event.getDocked().getStationName_Localised().orElseGet(() -> event.getDocked().getStationName());
             marketID = event.getDocked().getMarketID().orElse(BigInteger.ZERO);
+            stationGovernment = event.getDocked().getStationGovernment().map(Government::forId).orElse(Government.UNKNOWN);
             notifyListeners();
         }));
         EVENT_LISTENERS.add(EventService.addStaticListener(FSDJumpJournalEvent.class, event -> {//After jump to other system
@@ -149,6 +153,7 @@ public class LocationService {
                 marketID = BigInteger.ZERO;
                 latitude = DEFAULT_LATITUDE;
                 longitude = DEFAULT_LONGITUDE;
+                stationGovernment = Government.UNKNOWN;
             }
             notifyListeners();
         }));
@@ -157,6 +162,7 @@ public class LocationService {
             currentSystemAddress = event.getLocation().getSystemAddress();
             body = event.getBody();
             bodyID = event.getLocation().getBodyID().longValue();
+            stationGovernment = event.getLocation().getStationGovernment().map(Government::forId).orElse(Government.UNKNOWN);
             //on relog station is empty for POI's.
             //on respawn after death there is a station?
             //if we already have a station from before the relog, we keep the station

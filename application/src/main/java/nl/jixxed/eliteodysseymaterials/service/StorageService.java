@@ -11,9 +11,12 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.ShipLocker.ShipLocker;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -31,7 +34,9 @@ public class StorageService {
     private static final Map<Asset, Storage> assets = new EnumMap<>(Asset.class);
     private static final Map<Data, Storage> data = new EnumMap<>(Data.class);
     private static final Map<Consumable, Storage> consumables = new EnumMap<>(Consumable.class);
-
+    @Getter
+    @Setter
+    private static ShipLocker rawShipLocker;
     static {
         initCounts();
     }

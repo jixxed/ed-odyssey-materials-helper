@@ -350,10 +350,21 @@ public class BartenderTradeARMenu implements ARMenu {
         }
     }
 
+//    @Override
+//    public boolean isMenuVisible(WindowInfo targetWindowInfo) {
+//        BufferedImage cocktailCapture = getCocktailCapture(targetWindowInfo);
+//        return isBartenderMenu(cocktailCapture, targetWindowInfo);
+//    }
+
     @Override
     public boolean isMenuVisible(WindowInfo targetWindowInfo) {
         BufferedImage cocktailCapture = getCocktailCapture(targetWindowInfo);
-        return isBartenderMenu(cocktailCapture, targetWindowInfo);
+        boolean bartenderMenu = isBartenderMenu(cocktailCapture, targetWindowInfo);
+        if (bartenderMenu) {
+            bartenderMenuCapture = getBartenderMenuCapture(targetWindowInfo);
+            return BartenderMenuHelper.isTradeMenu(bartenderMenuCapture, getBartenderTradeMenu());
+        }
+        return false;
     }
 
     @Override
@@ -378,6 +389,7 @@ public class BartenderTradeARMenu implements ARMenu {
     }
 
     public void clear() {
+        visible.set(false);
         overlayImage = null;
         renderCache.clear();
         tradeHits.set(0);

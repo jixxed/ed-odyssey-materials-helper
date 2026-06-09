@@ -15,15 +15,15 @@ import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
+import nl.jixxed.eliteodysseymaterials.enums.Government;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.StorageService;
-import nl.jixxed.eliteodysseymaterials.service.WishlistService;
+import nl.jixxed.eliteodysseymaterials.service.*;
+import org.jspecify.annotations.NonNull;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.Collections;
 import java.util.Locale;
 
 @Slf4j
@@ -199,4 +199,210 @@ public class MenuOverlayRenderer {
         return bufferedImage;
     }
 
+    public static BufferedImage renderMenu(final BartenderSellMenu bartenderSellMenu) {
+        final BufferedImage bufferedImage = new BufferedImage((int) bartenderSellMenu.getContentWidth(), (int) bartenderSellMenu.getContentHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+        final Graphics2D graphics = bufferedImage.createGraphics();
+
+        final javafx.scene.paint.Color preference = javafx.scene.paint.Color.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_BARTENDER_COLOR, "0xb3b3b3ff"));
+        final Color color = new Color((float) preference.getRed(),
+                (float) preference.getGreen(),
+                (float) preference.getBlue(),
+                (float) preference.getOpacity());
+        graphics.setColor(color);
+
+        if (Locale.forLanguageTag("ru").equals(LocaleService.getCurrentLocale())) {
+            graphics.setFont(new Font("Eurostile-Roman", Font.PLAIN, (int) (bartenderSellMenu.getHeaderFontSize())));
+        } else {
+            graphics.setFont(new Font("Euro Caps", Font.PLAIN, (int) (bartenderSellMenu.getHeaderFontSize())));
+        }
+        graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+//        final Rectangle rectangle = Boolean.TRUE.equals((bartenderMenu.getSubMenu())) ? bartenderMenu.getSubMenuEntry() : bartenderMenu.getMenuEntry();
+
+//        final String text = bartenderMenu.getSubMenu().toString();
+        final FontMetrics fmHeader = graphics.getFontMetrics();
+
+//        if (!bartenderTradeMenu.getVisibleAssets().stream().allMatch(Asset.UNKNOWN::equals)) {
+//            graphics.drawString("FLEETCARRIER", bartenderTradeMenu.getFleetCarrierHeaderPosition().x + ((135 - fmHeader.stringWidth("FLEETCARRIER")) / 2), bartenderTradeMenu.getFleetCarrierHeaderPosition().y + fmHeader.getHeight() - fmHeader.getDescent() + (int) (0.05 * fmHeader.getHeight()));
+//            graphics.drawString("WISHLIST", bartenderTradeMenu.getWishlistHeaderPosition().x + ((135 - fmHeader.stringWidth("WISHLIST")) / 2), bartenderTradeMenu.getWishlistHeaderPosition().y + fmHeader.getHeight() - fmHeader.getDescent() + (int) (0.05 * fmHeader.getHeight()));
+        graphics.drawString("Move the mousecursor over the cocktail for a rescan (Sell)", (int) bartenderSellMenu.getMenu().getX() + 10, (int) bartenderSellMenu.getMenu().getY() + 10 + fmHeader.getHeight() - fmHeader.getDescent() + (int) (0.05 * fmHeader.getHeight()));
+//        }
+        if (Locale.forLanguageTag("ru").equals(LocaleService.getCurrentLocale())) {
+            graphics.setFont(new Font("Eurostile-Roman", Font.PLAIN, (int) (bartenderSellMenu.getFontSize())));
+        } else {
+            graphics.setFont(new Font("Euro Caps", Font.PLAIN, (int) (bartenderSellMenu.getFontSize())));
+        }
+
+        final FontMetrics fm = graphics.getFontMetrics();
+
+        java.util.List<OdysseyMaterial> assets = StorageService.getRawShipLocker().getComponents()
+                .map(list -> list.stream()
+                        .map(item -> OdysseyMaterial.subtypeForName(item.getName()))
+                        .filter(mat -> !mat.isIllegal() || LocationService.getStationGovernment().equals(Government.ANARCHY))
+                        .toList()
+                ).orElse(Collections.emptyList());
+        java.util.List<OdysseyMaterial> goods = StorageService.getRawShipLocker().getItems()
+                .map(list -> list.stream()
+                        .map(item -> OdysseyMaterial.subtypeForName(item.getName()))
+                        .filter(mat -> !mat.isIllegal() || LocationService.getStationGovernment().equals(Government.ANARCHY))
+                        .toList()
+                ).orElse(Collections.emptyList());
+        java.util.List<OdysseyMaterial> datas = StorageService.getRawShipLocker().getData()
+                .map(list -> list.stream()
+                        .map(item -> OdysseyMaterial.subtypeForName(item.getName()))
+                        .filter(mat -> !mat.isIllegal() || LocationService.getStationGovernment().equals(Government.ANARCHY))
+                        .toList()
+                ).orElse(Collections.emptyList());
+        for (int index = 0; index < assets.size(); index++) {
+            OdysseyMaterial material = assets.get(index);
+            if (bartenderSellMenu.isMenuItemVisible(material, index, goods, assets, datas)) {
+                setColor(graphics, material);
+                double offset = bartenderSellMenu.getItemY(material, index, goods, assets, datas) < bartenderSellMenu.getVisibleViewPortRect().getY() ? bartenderSellMenu.getItemHeight(material, index) - bartenderSellMenu.getMenuItemVisibleHeight(material, index, goods, assets, datas) : 0;
+                graphics.drawRect((int) bartenderSellMenu.getItemX(material, index),
+                        (int) bartenderSellMenu.getItemY(material, index, goods, assets, datas) + (int) offset,
+                        (int) bartenderSellMenu.getItemWidth(material, index),
+                        (int) bartenderSellMenu.getMenuItemVisibleHeight(material, index, goods, assets, datas));
+                drawName(bartenderSellMenu, graphics, material, index, goods, assets, datas, (int) offset, (int) bartenderSellMenu.getMenuItemVisibleHeight(material, index, goods, assets, datas));
+            }
+        }
+        for (int index = 0; index < goods.size(); index++) {
+            OdysseyMaterial material = goods.get(index);
+            if (bartenderSellMenu.isMenuItemVisible(material, index, goods, assets, datas)) {
+                setColor(graphics, material);
+                double offset = bartenderSellMenu.getItemY(material, index, goods, assets, datas) < bartenderSellMenu.getVisibleViewPortRect().getY() ? bartenderSellMenu.getItemHeight(material, index) - bartenderSellMenu.getMenuItemVisibleHeight(material, index, goods, assets, datas) : 0;
+                graphics.drawRect((int) bartenderSellMenu.getItemX(material, index),
+                        (int) bartenderSellMenu.getItemY(material, index, goods, assets, datas) + (int) offset,
+                        (int) bartenderSellMenu.getItemWidth(material, index),
+                        (int) bartenderSellMenu.getMenuItemVisibleHeight(material, index, goods, assets, datas));
+                drawName(bartenderSellMenu, graphics, material, index, goods, assets, datas, (int) offset, (int) bartenderSellMenu.getMenuItemVisibleHeight(material, index, goods, assets, datas));
+            }
+        }
+        for (int index = 0; index < datas.size(); index++) {
+            OdysseyMaterial material = datas.get(index);
+            if (bartenderSellMenu.isMenuItemVisible(material, index, goods, assets, datas)) {
+                setColor(graphics, material);
+                double offset = bartenderSellMenu.getItemY(material, index, goods, assets, datas) < bartenderSellMenu.getVisibleViewPortRect().getY() ? bartenderSellMenu.getItemHeight(material, index) - bartenderSellMenu.getMenuItemVisibleHeight(material, index, goods, assets, datas) : 0;
+                graphics.drawRect((int) bartenderSellMenu.getItemX(material, index),
+                        (int) bartenderSellMenu.getItemY(material, index, goods, assets, datas) + (int) offset,
+                        (int) bartenderSellMenu.getItemWidth(material, index),
+                        (int) bartenderSellMenu.getMenuItemVisibleHeight(material, index, goods, assets, datas));
+                drawName(bartenderSellMenu, graphics, material, index, goods, assets, datas, (int) offset, (int) bartenderSellMenu.getMenuItemVisibleHeight(material, index, goods, assets, datas));
+            }
+        }
+
+//        bartenderTradeMenu.visibleAssets.forEach(asset -> {
+//            if (!asset.isUnknown()) {
+////                final Rectangle rectangle = bartenderMenu.getMenuItem(asset);
+////                graphics.drawRect((int) rectangle.getX(), (int) rectangle.getY(), (int) rectangle.getWidth(), (int) rectangle.getHeight());
+//                final String fcValue = StorageService.getMaterialStorage(asset).getFleetCarrierValue().toString();
+//                final String wlValue = WishlistService.getAllWishlistsCount(asset).toString();
+//                graphics.drawString(fcValue, bartenderTradeMenu.getFleetCarrierTextPosition(asset).x + ((135 - fm.stringWidth(fcValue)) / 2), bartenderTradeMenu.getFleetCarrierTextPosition(asset).y + fm.getHeight() - fm.getDescent() + (int) (0.05 * fm.getHeight()));
+//                graphics.drawString(wlValue, bartenderTradeMenu.getWishlistTextPosition(asset).x + ((135 - fm.stringWidth(wlValue)) / 2), bartenderTradeMenu.getWishlistTextPosition(asset).y + fm.getHeight() - fm.getDescent() + (int) (0.05 * fm.getHeight()));
+//            }
+//        });
+        //debugging
+//         graphics.setColor(Color.RED);
+//        graphics.drawRect( (int)bartenderMenu.getMenu().getX() + bartenderMenu.getSubMenuDetectionLeftPixel().x -1,  (int)bartenderMenu.getMenu().getY() + bartenderMenu.getSubMenuDetectionLeftPixel().y -1, 3,3);
+//        graphics.drawRect( (int)bartenderMenu.getMenu().getX() + bartenderMenu.getSubMenuDetectionRightPixel().x -1, (int)bartenderMenu.getMenu().getY() +  bartenderMenu.getSubMenuDetectionRightPixel().y -1, 3,3);
+//        graphics.drawRect( (int)bartenderMenu.getMenu().getX() + bartenderMenu.getSellMenuDetectionLeftPixel().x -1,  (int)bartenderMenu.getMenu().getY() + bartenderMenu.getSellMenuDetectionLeftPixel().y -1, 3,3);
+//        graphics.drawRect( (int)bartenderMenu.getMenu().getX() + bartenderMenu.getSellMenuDetectionRightPixel().x -1, (int)bartenderMenu.getMenu().getY() +  bartenderMenu.getSellMenuDetectionRightPixel().y -1, 3,3);
+//        graphics.drawRect((int) bartenderMenu.getMenu().getX(), (int) bartenderMenu.getMenu().getY(), (int) bartenderMenu.getMenu().getWidth() - 1, (int) bartenderMenu.getMenu().getHeight() - 1);
+        graphics.dispose();
+        return bufferedImage;
+    }//942 1020 1170 1248
+
+//    private static void drawName(BartenderSellMenu bartenderSellMenu, Graphics2D graphics, OdysseyMaterial material, int i, java.util.List<OdysseyMaterial> goods, java.util.List<OdysseyMaterial> assets, java.util.List<OdysseyMaterial> datas, int offset) {
+//        String text = getLocalizedStringForCurrentLocale(material);
+//        final FontMetrics fm = graphics.getFontMetrics();
+//        final Rectangle2D rect = fm.getStringBounds(text, graphics);
+//        int x = (int) bartenderSellMenu.getItemX(material, i) + (int) bartenderSellMenu.getItemWidth(material, i) / 2;
+
+    /// /        int y = (int) bartenderSellMenu.getItemY(material, i, goods, assets, datas) + offset + fm.getHeight() - fm.getDescent() + (int) (0.05 * fm.getHeight());
+//        int y = (int) bartenderSellMenu.getItemY(material, i, goods, assets, datas) + offset + fm.getHeight() - fm.getDescent() + (int)(bartenderSellMenu.getItemHeight(material, i) / 2) - (fm.getHeight() / 2);
+//
+//        graphics.setColor(Color.BLACK);
+//        graphics.fillRect(x - fm.getAscent(), y - (int)(bartenderSellMenu.getItemHeight(material, i) / 2) + (fm.getHeight() / 2) - (int) (0.1 * fm.getHeight()),
+//                (int) rect.getWidth() + fm.getAscent() * 2,
+//                (int) fm.getHeight() + (int) (0.1 * fm.getHeight()));
+//
+//        setColor(graphics, material);
+//        graphics.drawString(text, x, y);
+//    }
+    private static void drawName(
+            BartenderSellMenu bartenderSellMenu,
+            Graphics2D graphics,
+            OdysseyMaterial material,
+            int index,
+            java.util.List<OdysseyMaterial> goods,
+            java.util.List<OdysseyMaterial> assets,
+            java.util.List<OdysseyMaterial> datas,
+            int offset,
+            int visibleHeight) {
+        String text = getLocalizedStringForCurrentLocale(material);
+
+        FontMetrics fm = graphics.getFontMetrics();
+        Rectangle2D rect = fm.getStringBounds(text, graphics);
+        int itemX = (int) bartenderSellMenu.getItemX(material, index);
+        int itemY = (int) bartenderSellMenu.getItemY(material, index, goods, assets, datas) + offset;
+        int itemWidth = (int) bartenderSellMenu.getItemWidth(material, index);
+        int itemHeight = (int) bartenderSellMenu.getItemHeight(material, index);
+
+        // Horizontal center (same as your original code)
+        int x = itemX + itemWidth / 2;
+
+        // Vertically center the text baseline
+        int y = itemY + (itemHeight - fm.getHeight()) / 2 + fm.getAscent();
+
+        int paddingX = fm.getAscent();
+        int paddingY = (int) (0.1 * fm.getHeight());
+
+        int boxHeight = fm.getHeight() + paddingY * 2;
+        int boxY = itemY + (itemHeight - boxHeight) / 2;
+        if (visibleHeight > boxHeight) {
+            graphics.setColor(Color.BLACK);
+            graphics.fillRect(
+                    x - paddingX,
+                    boxY,
+                    (int) rect.getWidth() + paddingX * 2,
+                    boxHeight
+            );
+            setColor(graphics, material);
+            graphics.drawString(text, x, y);
+        }
+    }
+
+    private static @NonNull String getLocalizedStringForCurrentLocale(OdysseyMaterial material) {
+        return LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey());
+    }
+
+    private static void setColor(Graphics2D graphics, OdysseyMaterial material) {
+        final Color color;
+        if (WishlistService.isMaterialOnWishlist(material)) {
+            final javafx.scene.paint.Color preference = javafx.scene.paint.Color.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_WISHLIST_COLOR, javafx.scene.paint.Color.LIME.toString()));
+            color = new Color((float) preference.getRed(),
+                    (float) preference.getGreen(),
+                    (float) preference.getBlue(),
+                    (float) preference.getOpacity());
+        } else if (OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(material)) {
+            final javafx.scene.paint.Color preference = javafx.scene.paint.Color.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_BLUEPRINT_COLOR, javafx.scene.paint.Color.BLUE.toString()));
+            color = new Color((float) preference.getRed(),
+                    (float) preference.getGreen(),
+                    (float) preference.getBlue(),
+                    (float) preference.getOpacity());
+        } else if (material.isPowerplay()) {
+            final javafx.scene.paint.Color preference = javafx.scene.paint.Color.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_POWERPLAY_COLOR, javafx.scene.paint.Color.PURPLE.toString()));
+            color = new Color((float) preference.getRed(),
+                    (float) preference.getGreen(),
+                    (float) preference.getBlue(),
+                    (float) preference.getOpacity());
+        } else {
+            final javafx.scene.paint.Color preference = javafx.scene.paint.Color.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_IRRELEVANT_COLOR, javafx.scene.paint.Color.RED.toString()));
+            color = new Color((float) preference.getRed(),
+                    (float) preference.getGreen(),
+                    (float) preference.getBlue(),
+                    (float) preference.getOpacity());
+        }
+        graphics.setColor(color);
+    }
 }

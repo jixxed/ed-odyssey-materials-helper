@@ -561,6 +561,7 @@ public class DataportDownloadARMenu implements ARMenu {
     }
 
     public void clear() {
+        visible.set(false);
         getDataportDownloadMenu().getScanned().clear();
         getDataportDownloadMenu().setType(null);
         getDataportDownloadMenu().setDataPortName(null);

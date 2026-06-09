@@ -18,7 +18,7 @@ import nl.jixxed.eliteodysseymaterials.enums.BartenderMenuType;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class BartenderTradeMenu {
+public class BartenderTradeMenu implements BartenderMenu {
     @Getter
     java.util.List<Asset> visibleAssets = new ArrayList<>();
     @Getter
@@ -185,17 +185,17 @@ public class BartenderTradeMenu {
         return new Point((int) (2040D * this.scale), (int) (204D * this.scale));
     }
 
-    Point getSellMenuDetectionLeftPixel() {
+    public Point getSellMenuDetectionLeftPixel() {
         return new Point((int) (142D * this.scale), (int) (135D * this.scale));
 
     }
 
-    Point getSellMenuDetectionRightPixel() {
+    public Point getSellMenuDetectionRightPixel() {
         return new Point((int) (2688D * this.scale), (int) (171D * this.scale));
 
     }
 
-    Point getSellMenuDetectionRightPixel2() {
+    public Point getSellMenuDetectionRightPixel2() {
         return new Point((int) (2750D * this.scale), (int) (171D * this.scale));
 
     }

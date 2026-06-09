@@ -37,7 +37,7 @@ public class ShipLockerSingleMessageProcessor implements SingleMessageProcessor<
             return;
         }
         StorageService.resetShipLockerCounts();
-
+        StorageService.setRawShipLocker(event);
         ASSET_PARSER.parse(event.getComponents().get().stream().map(MaterialMapping::map).collect(Collectors.toList()), StoragePool.SHIPLOCKER);
         GOOD_PARSER.parse(event.getItems().get().stream().map(MaterialMapping::map).collect(Collectors.toList()), StoragePool.SHIPLOCKER);
         DATA_PARSER.parse(event.getData().get().stream().map(MaterialMapping::map).collect(Collectors.toList()), StoragePool.SHIPLOCKER);
