@@ -15,15 +15,16 @@ import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
-import nl.jixxed.eliteodysseymaterials.enums.Government;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
-import nl.jixxed.eliteodysseymaterials.service.*;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import org.jspecify.annotations.NonNull;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.Collections;
 import java.util.Locale;
 
 @Slf4j
@@ -169,7 +170,7 @@ public class MenuOverlayRenderer {
         if (!bartenderTradeMenu.getVisibleAssets().stream().allMatch(Asset.UNKNOWN::equals)) {
             graphics.drawString("FLEETCARRIER", bartenderTradeMenu.getFleetCarrierHeaderPosition().x + ((135 - fmHeader.stringWidth("FLEETCARRIER")) / 2), bartenderTradeMenu.getFleetCarrierHeaderPosition().y + fmHeader.getHeight() - fmHeader.getDescent() + (int) (0.05 * fmHeader.getHeight()));
             graphics.drawString("WISHLIST", bartenderTradeMenu.getWishlistHeaderPosition().x + ((135 - fmHeader.stringWidth("WISHLIST")) / 2), bartenderTradeMenu.getWishlistHeaderPosition().y + fmHeader.getHeight() - fmHeader.getDescent() + (int) (0.05 * fmHeader.getHeight()));
-            graphics.drawString("Move the mousecursor over the cocktail for a rescan", (int) bartenderTradeMenu.getMenu().getX() + 10, (int) bartenderTradeMenu.getMenu().getY() + 10 + fmHeader.getHeight() - fmHeader.getDescent() + (int) (0.05 * fmHeader.getHeight()));
+            graphics.drawString("Move the mousecursor over the cocktail for a rescan (Trade)", (int) bartenderTradeMenu.getMenu().getX() + 10, (int) bartenderTradeMenu.getMenu().getY() + 10 + fmHeader.getHeight() - fmHeader.getDescent() + (int) (0.05 * fmHeader.getHeight()));
         }
         if (Locale.forLanguageTag("ru").equals(LocaleService.getCurrentLocale())) {
             graphics.setFont(new Font("Eurostile-Roman", Font.PLAIN, (int) (bartenderTradeMenu.getFontSize())));
@@ -199,7 +200,8 @@ public class MenuOverlayRenderer {
         return bufferedImage;
     }
 
-    public static BufferedImage renderMenu(final BartenderSellMenu bartenderSellMenu) {
+    public static BufferedImage renderMenu(final BartenderSellMenu bartenderSellMenu, java.util.List<OdysseyMaterial> goods, java.util.List<OdysseyMaterial> assets, java.util.List<OdysseyMaterial> datas) {
+
         final BufferedImage bufferedImage = new BufferedImage((int) bartenderSellMenu.getContentWidth(), (int) bartenderSellMenu.getContentHeight(), BufferedImage.TYPE_4BYTE_ABGR);
         final Graphics2D graphics = bufferedImage.createGraphics();
 
@@ -209,14 +211,15 @@ public class MenuOverlayRenderer {
                 (float) preference.getBlue(),
                 (float) preference.getOpacity());
         graphics.setColor(color);
-        graphics.drawRect((int) bartenderSellMenu.getVisibleViewPortRect().getX(),
-                (int) bartenderSellMenu.getVisibleViewPortRect().getY(),
-                (int) bartenderSellMenu.getVisibleViewPortRect().getWidth(),
-                (int) bartenderSellMenu.getVisibleViewPortRect().getHeight());
-        graphics.drawRect((int) bartenderSellMenu.getMenuItemsRect().getX(),
-                (int) bartenderSellMenu.getMenuItemsRect().getY(),
-                (int) bartenderSellMenu.getMenuItemsRect().getWidth(),
-                (int) bartenderSellMenu.getMenuItemsRect().getHeight());
+//        graphics.drawRect((int) bartenderSellMenu.getVisibleViewPortRect().getX(),
+//                (int) bartenderSellMenu.getVisibleViewPortRect().getY(),
+//                (int) bartenderSellMenu.getVisibleViewPortRect().getWidth(),
+//                (int) bartenderSellMenu.getVisibleViewPortRect().getHeight());
+//        Rectangle menuItemsRect = bartenderSellMenu.getMenuItemsRect(goods, assets, datas);
+//        graphics.drawRect((int) menuItemsRect.getX() + 2,
+//                (int) menuItemsRect.getY(),
+//                (int) menuItemsRect.getWidth(),
+//                (int) menuItemsRect.getHeight());
         if (Locale.forLanguageTag("ru").equals(LocaleService.getCurrentLocale())) {
             graphics.setFont(new Font("Eurostile-Roman", Font.PLAIN, (int) (bartenderSellMenu.getHeaderFontSize())));
         } else {
@@ -243,24 +246,7 @@ public class MenuOverlayRenderer {
 
         final FontMetrics fm = graphics.getFontMetrics();
 
-        java.util.List<OdysseyMaterial> assets = StorageService.getRawShipLocker().getComponents()
-                .map(list -> list.stream()
-                        .map(item -> OdysseyMaterial.subtypeForName(item.getName()))
-                        .filter(mat -> !mat.isIllegal() || LocationService.getStationGovernment().equals(Government.ANARCHY))
-                        .toList()
-                ).orElse(Collections.emptyList());
-        java.util.List<OdysseyMaterial> goods = StorageService.getRawShipLocker().getItems()
-                .map(list -> list.stream()
-                        .map(item -> OdysseyMaterial.subtypeForName(item.getName()))
-                        .filter(mat -> !mat.isIllegal() || LocationService.getStationGovernment().equals(Government.ANARCHY))
-                        .toList()
-                ).orElse(Collections.emptyList());
-        java.util.List<OdysseyMaterial> datas = StorageService.getRawShipLocker().getData()
-                .map(list -> list.stream()
-                        .map(item -> OdysseyMaterial.subtypeForName(item.getName()))
-                        .filter(mat -> !mat.isIllegal() || LocationService.getStationGovernment().equals(Government.ANARCHY))
-                        .toList()
-                ).orElse(Collections.emptyList());
+        graphics.setStroke(new BasicStroke(2));
         for (int index = 0; index < assets.size(); index++) {
             OdysseyMaterial material = assets.get(index);
             if (bartenderSellMenu.isMenuItemVisible(material, index, goods, assets, datas)) {
@@ -346,6 +332,9 @@ public class MenuOverlayRenderer {
             java.util.List<OdysseyMaterial> datas,
             int offset,
             int visibleHeight) {
+        if(!PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_SELL_NAMES_AR, true)){
+            return;
+        }
         String text = getLocalizedStringForCurrentLocale(material);
 
         FontMetrics fm = graphics.getFontMetrics();

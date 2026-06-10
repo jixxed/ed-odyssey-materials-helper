@@ -16,18 +16,14 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import me.xdrop.fuzzywuzzy.model.BoundExtractedResult;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
-import nl.jixxed.eliteodysseymaterials.enums.Asset;
-import nl.jixxed.eliteodysseymaterials.enums.BartenderMenuType;
-import nl.jixxed.eliteodysseymaterials.service.ARService;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.OCRService;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.tess4j.TesseractException;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 
 import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -41,7 +37,7 @@ import static org.opencv.imgproc.Imgproc.THRESH_OTSU;
 public class BartenderSellARMenu implements ARMenu {
     private static final double BARTENDER_MATCHING_THRESHOLD = 0.65;
     private static final int MATCH_METHOD = Imgproc.TM_CCOEFF_NORMED;
-    private static final AtomicBoolean BARTENDER_OVERLAY_ENABLED = new AtomicBoolean(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_AR, true));
+    private static final AtomicBoolean BARTENDER_OVERLAY_ENABLED = new AtomicBoolean(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_SELL_AR, true));
 
     private final Map<String, Render> renderCache = new HashMap<>();
     private final ScreenshotService screenshotService = GDIScreenshotService.getInstance();
@@ -89,7 +85,7 @@ public class BartenderSellARMenu implements ARMenu {
     }
 
     public static void bartenderToggle() {
-        BARTENDER_OVERLAY_ENABLED.set(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_AR, Boolean.TRUE));
+        BARTENDER_OVERLAY_ENABLED.set(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_SELL_AR, Boolean.TRUE));
     }
 
     private static void processBartenderMenu(final BufferedImage bartenderMenuCapture, final BartenderTradeMenu bartenderTradeMenu) {
@@ -298,11 +294,11 @@ public class BartenderSellARMenu implements ARMenu {
         }
         return null;
     }
-    private BufferedImage getBartenderSellMenuItemsCapture(WindowInfo targetWindowInfo) {
+    private BufferedImage getBartenderSellMenuItemsCapture(WindowInfo targetWindowInfo, List<OdysseyMaterial> goods, List<OdysseyMaterial> assets, List<OdysseyMaterial> datas) {
         if (targetWindowInfo.hwnd != 0) {
             final int i = User32.INSTANCE.GetForegroundWindow();
             if (i == targetWindowInfo.hwnd) {
-                return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getBartenderSellMenu().getMenuItemsRect().getAwtRectangle().getBounds(), bartenderMenuItemsCapture);
+                return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getBartenderSellMenu().getMenuItemsRect(goods, assets, datas).getAwtRectangle().getBounds(), bartenderMenuItemsCapture);
             }
         }
         return null;
@@ -317,13 +313,38 @@ public class BartenderSellARMenu implements ARMenu {
     private void processSellMenu(WindowInfo targetWindowInfo, Consumer<Image> resultConsumer) {
         BufferedImage bartenderSellMenuScrollbarCapture = getBartenderSellMenuScrollbarCapture(targetWindowInfo);
         final ScrollBarV2 newScrollBar = getScrollBar(bartenderSellMenuScrollbarCapture);
+        byte[] colorBG = getColorBG(bartenderSellMenuScrollbarCapture);
+        getBartenderSellMenu().setColorBG(colorBG);
         final boolean render = !Objects.equals(newScrollBar, scrollBar);//initialRender.get();//only render on change
         scrollBar = newScrollBar;
         if (render) {
+            java.util.List<OdysseyMaterial> assets = StorageService.getRawShipLocker().getComponents()
+                    .map(list -> list.stream()
+                            .map(item -> OdysseyMaterial.subtypeForName(item.getName()))
+                            .filter(mat -> !mat.isIllegal() || LocationService.getStationGovernment().equals(Government.ANARCHY))
+                            .toList()
+                    ).orElse(Collections.emptyList());
+            java.util.List<OdysseyMaterial> goods = StorageService.getRawShipLocker().getItems()
+                    .map(list -> list.stream()
+                            .map(item -> OdysseyMaterial.subtypeForName(item.getName()))
+                            .filter(mat -> !mat.isIllegal() || LocationService.getStationGovernment().equals(Government.ANARCHY))
+                            .toList()
+                    ).orElse(Collections.emptyList());
+            java.util.List<OdysseyMaterial> datas = StorageService.getRawShipLocker().getData()
+                    .map(list -> list.stream()
+                            .map(item -> OdysseyMaterial.subtypeForName(item.getName()))
+                            .filter(mat -> !mat.isIllegal() || LocationService.getStationGovernment().equals(Government.ANARCHY))
+                            .toList()
+                    ).orElse(Collections.emptyList());
             getBartenderSellMenu().setScrollBarV2(scrollBar);
-            BufferedImage bartenderSellMenuItemsCapture = getBartenderSellMenuItemsCapture(targetWindowInfo);
+//            try {
+//                Thread.sleep(100);
+//            } catch (InterruptedException e) {
+//                Thread.currentThread().interrupt();
+//            }
+            BufferedImage bartenderSellMenuItemsCapture = getBartenderSellMenuItemsCapture(targetWindowInfo, goods, assets, datas);
             getBartenderSellMenu().setMenuItemsCapture(bartenderSellMenuItemsCapture);
-            renderMenu(getBartenderSellMenu());
+            renderMenu(getBartenderSellMenu(), goods, assets, datas);
             resultConsumer.accept(overlayImage);
         }
 //        newBartenderSubMenu = BartenderMenuHelper.getMenuType(bartenderMenuCapture, getBartenderTradeMenu());
@@ -360,8 +381,17 @@ public class BartenderSellARMenu implements ARMenu {
 ////        return overlayImage;
     }
 
-    private void renderMenu(final BartenderSellMenu bartenderSellMenu) {
-        final BufferedImage bufferedImage = MenuOverlayRenderer.renderMenu(bartenderSellMenu);
+    private byte[] getColorBG(BufferedImage bartenderSellMenuScrollbarCapture) {
+        if (bartenderSellMenuScrollbarCapture == null) {
+            return new byte[4];
+        }
+        final WritableRaster backgroundColorPixel = ((WritableRaster) bartenderSellMenuScrollbarCapture.getData(new java.awt.Rectangle((int) (0D * scaling),
+                (int) (215D * scaling), 1, 1))).createWritableTranslatedChild(0, 0);
+        return DataBufferHelper.getData(backgroundColorPixel.getDataBuffer());
+    }
+
+    private void renderMenu(final BartenderSellMenu bartenderSellMenu, List<OdysseyMaterial> goods, List<OdysseyMaterial> assets, List<OdysseyMaterial> datas) {
+        final BufferedImage bufferedImage = MenuOverlayRenderer.renderMenu(bartenderSellMenu, goods, assets, datas);
         overlayImage = SwingFXUtils.toFXImage(bufferedImage, null);
     }
 

@@ -41,7 +41,7 @@ import static org.opencv.imgproc.Imgproc.THRESH_OTSU;
 public class BartenderTradeARMenu implements ARMenu {
     private static final double BARTENDER_MATCHING_THRESHOLD = 0.65;
     private static final int MATCH_METHOD = Imgproc.TM_CCOEFF_NORMED;
-    private static final AtomicBoolean BARTENDER_OVERLAY_ENABLED = new AtomicBoolean(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_AR, true));
+    private static final AtomicBoolean BARTENDER_OVERLAY_ENABLED = new AtomicBoolean(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_TRADE_AR, true));
 
     private final Map<String, Render> renderCache = new HashMap<>();
     private final ScreenshotService screenshotService = GDIScreenshotService.getInstance();
@@ -186,7 +186,7 @@ public class BartenderTradeARMenu implements ARMenu {
     }
 
     public static void bartenderToggle() {
-        BARTENDER_OVERLAY_ENABLED.set(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_AR, Boolean.TRUE));
+        BARTENDER_OVERLAY_ENABLED.set(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_TRADE_AR, Boolean.TRUE));
     }
 
     private BufferedImage getBartenderMenuCapture(WindowInfo targetWindowInfo) {

@@ -80,7 +80,9 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableEven
         final DestroyableHBox arLocaleSetting = createARLocaleSetting();
         final DestroyableHBox arMatchSetting = createARMatchMethodSetting();
         final DestroyableHBox arFuzzyScoreSetting = createARFuzzyScoreSetting();
-        final DestroyableHBox arBartenderSetting = createARBartenderSetting();
+        final DestroyableHBox arBartenderTradeSetting = createARBartenderTradeEnabledSetting();
+        final DestroyableHBox arBartenderSellSetting = createARBartenderSellEnabledSetting();
+        final DestroyableHBox arBartenderSellNamesSetting = createARBartenderSellNamesEnabledSetting();
         final DestroyableHBox arColorPowerplaySetting = createARColorSetting(PreferenceConstants.AR_POWERPLAY_COLOR, "tab.settings.ar.color.powerplay", Color.PURPLE);
         final DestroyableHBox arColorIrrelevantSetting = createARColorSetting(PreferenceConstants.AR_IRRELEVANT_COLOR, "tab.settings.ar.color.irrelevant", Color.RED);
         final DestroyableHBox arColorWishlistSetting = createARColorSetting(PreferenceConstants.AR_WISHLIST_COLOR, "tab.settings.ar.color.wishlist", Color.LIME);
@@ -90,7 +92,7 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableEven
 
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
         this.getNodes().addAll(arLabel, BoxBuilder.builder()
-                .withNodes(arExplainLabel, vccLink).buildHBox(), arSetting, arForceVisibleSetting, arLocaleSetting, arMatchSetting, arFuzzyScoreSetting, arDataportDetectSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting, arColorPowerplaySetting, arBartenderSetting, arColorBartenderSetting);
+                .withNodes(arExplainLabel, vccLink).buildHBox(), arSetting, arForceVisibleSetting, arLocaleSetting, arMatchSetting, arFuzzyScoreSetting, arDataportDetectSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting, arColorPowerplaySetting, arBartenderTradeSetting, arBartenderSellSetting, arBartenderSellNamesSetting, arColorBartenderSetting);
     }
 
     private DestroyableHBox createARFuzzyScoreSetting() {
@@ -200,22 +202,69 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableEven
                 .buildHBox();
     }
 
-    private DestroyableHBox createARBartenderSetting() {
+    private DestroyableHBox createARBartenderTradeEnabledSetting() {
         DestroyableLabel arBartenderLabel = LabelBuilder.builder()
                 .withStyleClass(SETTINGS_LABEL_CLASS)
-                .withText("tab.settings.ar.bartender.toggle")
+                .withText("tab.settings.ar.bartender.trade.toggle")
                 .build();
         DestroyableLabel arBartenderLabelExplain = LabelBuilder.builder()
                 .withStyleClass(SETTINGS_LABEL_CLASS)
-                .withText("tab.settings.ar.bartender.toggle.explain")
+                .withText("tab.settings.ar.bartender.trade.toggle.explain")
                 .build();
         DestroyableToggleSwitch arBartenderButton = ToggleSwitchBuilder.builder()
                 .withSelectedChangeListener((_, _, newValue) -> {
-                    PreferencesService.setPreference(PreferenceConstants.ENABLE_BARTENDER_AR, Boolean.TRUE.equals(newValue));
+                    PreferencesService.setPreference(PreferenceConstants.ENABLE_BARTENDER_TRADE_AR, Boolean.TRUE.equals(newValue));
                     Platform.runLater(BartenderTradeARMenu::bartenderToggle);
                     Platform.runLater(BartenderSellARMenu::bartenderToggle);
                 })
-                .withSelected(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_AR, true))
+                .withSelected(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_TRADE_AR, true))
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(arBartenderLabel, arBartenderButton, arBartenderLabelExplain)
+                .buildHBox();
+    }
+
+    private DestroyableHBox createARBartenderSellEnabledSetting() {
+        DestroyableLabel arBartenderLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ar.bartender.sell.toggle")
+                .build();
+        DestroyableLabel arBartenderLabelExplain = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ar.bartender.sell.toggle.explain")
+                .build();
+        DestroyableToggleSwitch arBartenderButton = ToggleSwitchBuilder.builder()
+                .withSelectedChangeListener((_, _, newValue) -> {
+                    PreferencesService.setPreference(PreferenceConstants.ENABLE_BARTENDER_SELL_AR, Boolean.TRUE.equals(newValue));
+                    Platform.runLater(BartenderTradeARMenu::bartenderToggle);
+                    Platform.runLater(BartenderSellARMenu::bartenderToggle);
+                })
+                .withSelected(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_SELL_AR, true))
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(arBartenderLabel, arBartenderButton, arBartenderLabelExplain)
+                .buildHBox();
+    }
+
+
+    private DestroyableHBox createARBartenderSellNamesEnabledSetting() {
+        DestroyableLabel arBartenderLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ar.bartender.sell.names.toggle")
+                .build();
+        DestroyableLabel arBartenderLabelExplain = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ar.bartender.sell.names.toggle.explain")
+                .build();
+        DestroyableToggleSwitch arBartenderButton = ToggleSwitchBuilder.builder()
+                .withSelectedChangeListener((_, _, newValue) -> {
+                    PreferencesService.setPreference(PreferenceConstants.ENABLE_BARTENDER_SELL_NAMES_AR, Boolean.TRUE.equals(newValue));
+                    Platform.runLater(BartenderTradeARMenu::bartenderToggle);
+                    Platform.runLater(BartenderSellARMenu::bartenderToggle);
+                })
+                .withSelected(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_SELL_NAMES_AR, true))
                 .build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)

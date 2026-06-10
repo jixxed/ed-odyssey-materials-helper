@@ -57,7 +57,9 @@ public class PreferenceConstants {
     public static final String HORIZONS_MATERIAL_TRADER_MAX_RANGE = "horizons.material.trader.max.range";
     public static final String HORIZONS_TECHNOLOGY_BROKER_MAX_RANGE = "horizons.technology.broker.max.range";
     public static final String MARKETPLACE_TOKEN_PREFIX = "marketplace.token.";
-    public static final String ENABLE_BARTENDER_AR = "ar.bartender.enabled";
+    public static final String ENABLE_BARTENDER_TRADE_AR = "ar.bartender.enabled";
+    public static final String ENABLE_BARTENDER_SELL_AR = "ar.bartender.sell.enabled";
+    public static final String ENABLE_BARTENDER_SELL_NAMES_AR = "ar.bartender.sell.names.enabled";
     public static final String USER_LATEST_EVENT = "latest.event";
     public static final String MQ_LATEST_CG = "mq.latest.communitygoal.event";
     public static final String EDDN_ENABLED = "eddn.enabled";

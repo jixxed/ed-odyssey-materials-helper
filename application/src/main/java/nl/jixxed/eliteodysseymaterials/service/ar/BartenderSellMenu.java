@@ -12,6 +12,7 @@ package nl.jixxed.eliteodysseymaterials.service.ar;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
 import nl.jixxed.eliteodysseymaterials.enums.Good;
@@ -19,8 +20,9 @@ import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
 import java.util.List;
-
+@Slf4j
 public class BartenderSellMenu implements BartenderMenu {
 
     public static final int VIEWPORT_HEIGHT = 1064;
@@ -37,6 +39,9 @@ public class BartenderSellMenu implements BartenderMenu {
     private Rectangle menu;
     @Setter
     private BufferedImage menuItemsCapture;
+
+    @Setter
+    private byte[] colorBG;
 
     public BartenderSellMenu() {
         this.scale = 1;
@@ -157,16 +162,18 @@ public class BartenderSellMenu implements BartenderMenu {
                 this.menu.getY() + 1470 * this.scale
         );
     }
-    public Rectangle getMenuItemsRect() {
+
+    public Rectangle getMenuItemsRect(List<OdysseyMaterial> goods, List<OdysseyMaterial> assets, List<OdysseyMaterial> datas) {
 //        2445/400
 //        2460/1470
         //585,64 - 109, 109
         //497,77778
+        double y = findFirstAfter(getMenu().getHeight() / 2, goods, assets, datas);
         return new Rectangle(
-                getMenu().getX() + 188 * this.scale,
-                getMenu().getHeight() / 2,
-                getMenu().getX() + 188 * this.scale + 1,
-                getMenu().getHeight() / 2 + getCategoryEntryHeight() * this.scale
+                getMenu().getX() + 288 * this.scale,
+                y,
+                getMenu().getX() + 288 * this.scale + 1,
+                y + getCategoryEntryHeight() * this.scale
         );
     }
 
@@ -178,11 +185,10 @@ public class BartenderSellMenu implements BartenderMenu {
         return 50;
     }
 
-    private double itemHeight = 78.1;
-
     private double getCategoryEntryHeight() {
-        return itemHeight;
+        return  78.1;
     }
+
     private double getItemHeight() {
         return 72.8;
     }
@@ -213,7 +219,7 @@ public class BartenderSellMenu implements BartenderMenu {
 //                ).orElse(Collections.emptyList());
         double y;
         y = getY(material, index, goods, assets);
-        return y - getMenuItemPositionYOffset(goods, assets, datas) + getVisibleViewPortRect().getY();
+        return y - getMenuItemPositionYCorrectedOffset(goods, assets, datas) + getVisibleViewPortRect().getY();
     }
 
     private double getY(OdysseyMaterial material, int index, List<OdysseyMaterial> goods, List<OdysseyMaterial> assets) {
@@ -243,12 +249,13 @@ public class BartenderSellMenu implements BartenderMenu {
     }
 
     public double getItemWidth(OdysseyMaterial material, int index) {
-        return 1461 * this.scale;
+        return 1464 * this.scale;
     }
 
     public double getItemHeight(OdysseyMaterial material, int index) {
         return getItemHeight() * this.scale;
     }
+
     /**
      * visible height of menu item in viewport
      *
@@ -268,23 +275,88 @@ public class BartenderSellMenu implements BartenderMenu {
     }
 
 
-    public double getMenuItemPositionYOffset(List<OdysseyMaterial> goods, List<OdysseyMaterial> assets, List<OdysseyMaterial> datas) {
+    public double getMenuItemPositionYCorrectedOffset(List<OdysseyMaterial> goods, List<OdysseyMaterial> assets, List<OdysseyMaterial> datas) {
+        double ballparkOffset = getMenuItemPositionYBallparkOffset(goods, assets, datas);
+        int position = 0;
+        double spacing = (getCategoryEntryHeight() - getItemHeight()) * this.scale;
+        for (int y = 0; y < menuItemsCapture.getHeight(); y++) {
+            final WritableRaster dataPixel = ((WritableRaster) menuItemsCapture.getData(new java.awt.Rectangle(0, y, 1, 1))).createWritableTranslatedChild(0, 0);
+            final byte[] pixel = DataBufferHelper.getData(dataPixel.getDataBuffer());
+
+            if (matchesColor(colorBG, pixel, 2) /*|| !matchesColor(darkenedColor, pixel, 2)*/) {
+                position = y;
+                if(position == 0){
+                    spacing = 0;
+                    for (int z = 0; z < menuItemsCapture.getHeight(); z++) {
+                        final WritableRaster dataPixelSpacing = ((WritableRaster) menuItemsCapture.getData(new java.awt.Rectangle(0, z, 1, 1))).createWritableTranslatedChild(0, 0);
+                        final byte[] pixelSpacing = DataBufferHelper.getData(dataPixelSpacing.getDataBuffer());
+                        if (matchesColor(colorBG, pixelSpacing, 2)) {
+                            spacing++;
+                        }else{
+                            break;
+                        }
+                    }
+                }
+                break;
+            }
+        }
+//        log.debug("ballparkOffset: {}. position: {}", ballparkOffset, position);
+        if(position < getItemHeight() * this.scale / 2) {
+            return ballparkOffset - (position + spacing);
+        }else {
+            return ballparkOffset + (getCategoryEntryHeight() * this.scale) - (position + spacing);//- spacing;
+        }
+//        return ballparkOffset;
+    }
+    private static boolean matchesColor(byte[] colorToTest, byte[] colorToMatch, int range) {
+        return colorToTest[0] >= colorToMatch[0] - range && colorToTest[0] <= colorToMatch[0] + range
+                && colorToTest[1] >= colorToMatch[1] - range && colorToTest[1] <= colorToMatch[1] + range
+                && colorToTest[2] >= colorToMatch[2] - range && colorToTest[2] <= colorToMatch[2] + range
+                && colorToTest[3] >= colorToMatch[3] - range && colorToTest[3] <= colorToMatch[3] + range;
+    }
+    public double getMenuItemPositionYBallparkOffset(List<OdysseyMaterial> goods, List<OdysseyMaterial> assets, List<OdysseyMaterial> datas) {
         if (this.scrollBarV2 == null)
             return 0;
         if (!scrollBarV2.isActive()) {
             return 0;
         }
         double menuSize = getCategoryHeaderHeight() * this.scale * 3D;
-        menuSize += (goods.isEmpty() ? getCategoryEmptyTextHeight() : (double)goods.size() * getCategoryEntryHeight()) * this.scale;
-        menuSize += (assets.isEmpty() ? getCategoryEmptyTextHeight() : (double)assets.size() * getCategoryEntryHeight()) * this.scale;
-        menuSize += (datas.isEmpty() ? getCategoryEmptyTextHeight() : (double)datas.size() * getCategoryEntryHeight()) * this.scale;
+        menuSize += (goods.isEmpty() ? getCategoryEmptyTextHeight() : (double) goods.size() * getCategoryEntryHeight()) * this.scale;
+        menuSize += (assets.isEmpty() ? getCategoryEmptyTextHeight() : (double) assets.size() * getCategoryEntryHeight()) * this.scale;
+        menuSize += (datas.isEmpty() ? getCategoryEmptyTextHeight() : (double) datas.size() * getCategoryEntryHeight()) * this.scale;
         menuSize -= 5 * this.scale;
         double viewportHeight = VIEWPORT_HEIGHT * this.scale;
         double menuHeight = menuSize;
-        double ballparkOffset = (menuHeight - viewportHeight) * this.scrollBarV2.getPosition() / 100.0;
-
-        return ballparkOffset;
+        return (menuHeight - viewportHeight) * this.scrollBarV2.getPosition() / 100.0;
     }
+
+    private double findFirstAfter(double start, List<OdysseyMaterial> goods, List<OdysseyMaterial> assets, List<OdysseyMaterial> datas) {
+        double viewportY = getVisibleViewPortRect().getY();
+        double ballparkOffset = getMenuItemPositionYBallparkOffset(goods, assets, datas);
+        for (int index = 0; index < assets.size(); index++) {
+            OdysseyMaterial material = assets.get(index);
+            double y = getY(material, index, goods, assets) - ballparkOffset + viewportY;
+            if (y > start) {
+                return y;
+            }
+        }
+        for (int index = 0; index < goods.size(); index++) {
+            OdysseyMaterial material = goods.get(index);
+            double y = getY(material, index, goods, assets) - ballparkOffset + viewportY;
+            if (y > start) {
+                return y;
+            }
+        }
+        for (int index = 0; index < datas.size(); index++) {
+            OdysseyMaterial material = datas.get(index);
+            double y = getY(material, index, goods, assets) - ballparkOffset + viewportY;
+            if (y > start) {
+                return y;
+            }
+        }
+        return 0D;
+    }
+
 
     public Rectangle getVisibleViewPortRect() {
         final double menuItemOffsetX = getMenu().getX() + 87 * this.scale;
