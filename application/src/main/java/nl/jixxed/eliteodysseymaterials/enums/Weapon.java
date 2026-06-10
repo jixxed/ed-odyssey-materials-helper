@@ -45,8 +45,6 @@ public enum Weapon implements Equipment {
             Map.entry(DynamicStat.DRAW_SPEED, 0.45),
             Map.entry(DynamicStat.STOW_SPEED, 0.63),
             Map.entry(DynamicStat.ADS_SPEED, 0.20)
-
-
     ),
     KINEMATIC_AR50(
             new LevelValue(OdysseyBlueprintName.NONE, OdysseyBlueprintName.KARMA_1_2, OdysseyBlueprintName.KARMA_2_3, OdysseyBlueprintName.KARMA_3_4, OdysseyBlueprintName.KARMA_4_5),

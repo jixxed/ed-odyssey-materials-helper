@@ -1,3 +1,11 @@
+Version 3.11.0
+-------------
+AR rework
+- Cleaned up the AR code making it more stable and easier to maintain
+- Added a toggle to make the AR Overlay persistent. This allows for capturing with OBS and should prevent Z-fighting with other overlays.
+Added a new AR overlay that shows when selling at the bartender
+Added configuration toggles for the new overlay in the Augmented Reality section under Settings
+
 Version 3.10.1
 -------------
 Fix ship list refresh to old behavior, behavior added in 3.9.5 is now only for delete actions

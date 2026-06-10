@@ -21,11 +21,9 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Fix ship list refresh to old behavior, behavior added in 3.9.5 is now only for delete actions
-Fix pinned blueprint showing grade < 1 for invited state at start
-Fix Increased FSD Range - Optimised Mass start value to 0% instead of 5%
-Added error notification on DB error, for example on disk full
-Handle empty carrier names gracefully
-Added unique styleclass to ship material cards to allow for css override
-Complete localization of CG's
+AR rework
+- Cleaned up the AR code making it more stable and easier to maintain
+- Added a toggle to make the AR Overlay persistent. This allows for capturing with OBS and should prevent Z-fighting with other overlays.
+Added a new AR overlay that shows when selling at the bartender
+Added configuration toggles for the new overlay in the Augmented Reality section under Settings
 ```
