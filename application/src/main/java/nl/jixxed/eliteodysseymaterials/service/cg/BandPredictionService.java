@@ -43,8 +43,7 @@ public class BandPredictionService {
      * @param cgEndUtc   the community goal end time
      * @return prediction with optimistic bound, or empty if insufficient data
      */
-    public static Optional<BandPrediction> calculateOptimisticPrediction(List<HourlyData> hourlyData,
-            Instant cgEndUtc) {
+    public static Optional<BandPrediction> calculateOptimisticPrediction(List<HourlyData> hourlyData, Instant cgEndUtc) {
         return calculateScalarPrediction(hourlyData, cgEndUtc, true);
     }
 
@@ -57,8 +56,7 @@ public class BandPredictionService {
      * @param cgEndUtc   the community goal end time
      * @return prediction with pessimistic bound, or empty if insufficient data
      */
-    public static Optional<BandPrediction> calculatePessimisticPrediction(List<HourlyData> hourlyData,
-            Instant cgEndUtc) {
+    public static Optional<BandPrediction> calculatePessimisticPrediction(List<HourlyData> hourlyData, Instant cgEndUtc) {
         return calculateScalarPrediction(hourlyData, cgEndUtc, false);
     }
 
@@ -74,8 +72,7 @@ public class BandPredictionService {
      * @param cgEndUtc   the community goal end time
      * @return per-band deltas for optimistic and pessimistic projections, or empty if insufficient data
      */
-    public static Optional<PerBandDeltas> calculatePerBandDeltas(List<HourlyData> hourlyData,
-            Instant cgEndUtc) {
+    public static Optional<PerBandDeltas> calculatePerBandDeltas(List<HourlyData> hourlyData, Instant cgEndUtc) {
         int dataPointCount = hourlyData.size();
         if (dataPointCount < MINIMUM_DATA_POINTS) {
             return Optional.empty();
@@ -102,22 +99,20 @@ public class BandPredictionService {
         }
 
         // Optimistic: last 72h of usable data
-        int optLookback = Math.min(72, usableDataCount);
-        List<HourlyData> optWindow = hourlyData.subList(dataPointCount - optLookback, dataPointCount);
-        Map<String, Long> optimisticDeltas =
-                calculateDeltasForWindow(sortedBands, optWindow, optLookback, remainingHours);
+        int optimisticLookback = Math.min(72, usableDataCount);
+        List<HourlyData> optimisticWindow = hourlyData.subList(dataPointCount - optimisticLookback, dataPointCount);
+        Map<String, Long> optimisticDeltas = calculateDeltasForWindow(sortedBands, optimisticWindow, optimisticLookback, remainingHours);
 
         // Pessimistic: full usable range (after 12h skip)
-        Map<String, Long> pessimisticDeltas =
-                calculateDeltasForWindow(sortedBands, usableData, usableDataCount, remainingHours);
+        Map<String, Long> pessimisticDeltas = calculateDeltasForWindow(sortedBands, usableData, usableDataCount, remainingHours);
 
         // Ensure pessimistic >= optimistic for each band
-        for (String bandName : optimisticDeltas.keySet()) {
-            long pess = pessimisticDeltas.getOrDefault(bandName, 0L);
-            if (optimisticDeltas.get(bandName) > pess) {
-                optimisticDeltas.put(bandName, pess);
+        optimisticDeltas.keySet().forEach(bandName -> {
+            long pessimistic = pessimisticDeltas.getOrDefault(bandName, 0L);
+            if (optimisticDeltas.get(bandName) > pessimistic) {
+                optimisticDeltas.put(bandName, pessimistic);
             }
-        }
+        });
 
         return Optional.of(new PerBandDeltas(optimisticDeltas, pessimisticDeltas));
     }
@@ -132,30 +127,28 @@ public class BandPredictionService {
      * @param remainingHours remaining hours until CG end
      * @return map of band name to projected delta
      */
-    private static Map<String, Long> calculateDeltasForWindow(List<BandMax> sortedBands,
-            List<HourlyData> window, int lookback, int remainingHours) {
+    private static Map<String, Long> calculateDeltasForWindow(List<BandMax> sortedBands, List<HourlyData> window, int lookback, int remainingHours) {
         // Pre-build per-hour lookup to avoid O(n*m^2) nested streams
         List<LinkedHashMap<String, BandMax>> hourLookups = window.stream()
-                .map(data -> data.bandMax().stream().collect(java.util.stream.Collectors.toMap(
-                        BandMax::band, b -> b, (a, bb) -> a, LinkedHashMap::new)))
+                .map(data -> data.bandMax().stream()
+                        .collect(java.util.stream.Collectors.toMap(BandMax::band, b -> b, (a, bb) -> a, LinkedHashMap::new)))
                 .toList();
 
         Map<String, Long> deltas = new LinkedHashMap<>();
-        for (BandMax bandMax : sortedBands) {
+        sortedBands.forEach(bandMax -> {
             int targetIndex = findBandIndex(sortedBands, bandMax.band());
             if (targetIndex == -1) {
                 deltas.put(bandMax.band(), 0L);
-                continue;
+                return;
             }
             List<Long> bandMins = deriveBandMinsForIndex(hourLookups, targetIndex, sortedBands);
             if (bandMins.size() >= 3) {
                 long growth = bandMins.getLast() - bandMins.getFirst();
-                deltas.put(bandMax.band(),
-                        Math.round((double) growth / lookback * remainingHours));
+                deltas.put(bandMax.band(), Math.round((double) growth / lookback * remainingHours));
             } else {
                 deltas.put(bandMax.band(), 0L);
             }
-        }
+        });
         return deltas;
     }
 
@@ -168,8 +161,7 @@ public class BandPredictionService {
      * @param optimistic whether to use optimistic (72h) or full lookback
      * @return prediction with both optimistic and pessimistic set to the same delta
      */
-    private static Optional<BandPrediction> calculateScalarPrediction(List<HourlyData> hourlyData,
-            Instant cgEndUtc, boolean optimistic) {
+    private static Optional<BandPrediction> calculateScalarPrediction(List<HourlyData> hourlyData, Instant cgEndUtc, boolean optimistic) {
         int dataPointCount = hourlyData.size();
         if (dataPointCount < MINIMUM_DATA_POINTS) {
             return Optional.empty();
@@ -269,7 +261,7 @@ public class BandPredictionService {
                 .toList();
     }
 
-   /**
+    /**
      * Finds the index of a band in the sorted band list.
      *
      * @param sortedBands sorted list of band max values
@@ -277,22 +269,23 @@ public class BandPredictionService {
      * @return index of the band, or -1 if not found
      */
     private static int findBandIndex(List<BandMax> sortedBands, String bandName) {
-        for (int i = 0; i < sortedBands.size(); i++) {
-            if (sortedBands.get(i).band().equals(bandName)) return i;
+        for (int index = 0; index < sortedBands.size(); index++) {
+            if (sortedBands.get(index).band().equals(bandName)) {
+                return index;
+            }
         }
         return -1;
     }
 
-   /**
+    /**
      * Derives bandMin threshold for a target index band at each hour using pre-built lookups.
      *
-     * @param hourLookups   per-hour band name to BandMax lookup maps
-     * @param targetIndex   index of the target band in sortedBands
-     * @param sortedBands   sorted list of band max values
+     * @param hourLookups per-hour band name to BandMax lookup maps
+     * @param targetIndex index of the target band in sortedBands
+     * @param sortedBands sorted list of band max values
      * @return list of bandMin values, one per hour
      */
-    private static List<Long> deriveBandMinsForIndex(List<LinkedHashMap<String, BandMax>> hourLookups,
-            int targetIndex, List<BandMax> sortedBands) {
+    private static List<Long> deriveBandMinsForIndex(final List<LinkedHashMap<String, BandMax>> hourLookups, final int targetIndex, final List<BandMax> sortedBands) {
         return hourLookups.stream()
                 .map(lookup -> deriveBandMinForIndex(lookup, targetIndex, sortedBands))
                 .filter(java.util.Objects::nonNull)
@@ -302,20 +295,21 @@ public class BandPredictionService {
     /**
      * Derives bandMin threshold for a target index band at a single hour.
      *
-     * @param hourLookup    band name to BandMax map for a single hour
-     * @param targetIndex   index of the target band in sortedBands
-     * @param sortedBands   sorted list of band max values
+     * @param hourLookup  band name to BandMax map for a single hour
+     * @param targetIndex index of the target band in sortedBands
+     * @param sortedBands sorted list of band max values
      * @return bandMin value for the target band, or null if the band is missing
      */
-    private static Long deriveBandMinForIndex(LinkedHashMap<String, BandMax> hourLookup,
-            int targetIndex, List<BandMax> sortedBands) {
+    private static Long deriveBandMinForIndex(final LinkedHashMap<String, BandMax> hourLookup, final int targetIndex, final List<BandMax> sortedBands) {
         long previousMax = 0;
-        for (int i = 0; i < sortedBands.size(); i++) {
-            String bandName = sortedBands.get(i).band();
+        for (int index = 0; index < sortedBands.size(); index++) {
+            String bandName = sortedBands.get(index).band();
             BandMax bandMax = hourLookup.get(bandName);
-            if (bandMax == null) return null;
-            if (i == targetIndex) {
-                return (i == 0) ? 1L : previousMax + 1;
+            if (bandMax == null) {
+                return null;
+            }
+            if (index == targetIndex) {
+                return (index == 0) ? 1L : previousMax + 1;
             }
             previousMax = bandMax.max();
         }

@@ -24,6 +24,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplat
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -41,11 +42,9 @@ public class BandPredictionTable extends DestroyableVBox implements DestroyableT
     @Override
     public void initComponents() {
         this.getStyleClass().add("band-prediction-table");
-        table = BoxBuilder.builder().withStyleClass("threshold-table").buildHBox();
-//        DestroyableVBox vBox = BoxBuilder.builder()
-//                .withS/tyleClass("threshold-table-box")
-//                .withNode(table)
-//                .buildVBox();
+        table = BoxBuilder.builder()
+                .withStyleClass("threshold-table")
+                .buildHBox();
         this.getNodes().add(table);
     }
 
@@ -168,7 +167,7 @@ public class BandPredictionTable extends DestroyableVBox implements DestroyableT
                         ? "community.goal.band.prediction.final"
                         : "community.goal.band.prediction.current")
                 .build());
-       if (report.hourlyData().size() >= 14 && cgEndUtc != null && cgEndUtc.isAfter(Instant.now())) {
+        if (report.hourlyData().size() >= 14 && cgEndUtc != null && cgEndUtc.isAfter(Instant.now())) {
             labelColumn.getNodes().add(LabelBuilder.builder()
                     .withStyleClass("cg-threshold-title")
                     .withText("community.goal.band.prediction.predicted")
@@ -180,7 +179,6 @@ public class BandPredictionTable extends DestroyableVBox implements DestroyableT
             table.getNodes().add(bandColumns.get(band));
             table.getNodes().add(new GrowingRegion("cg-spacer"));
         }
-//        table.getNodes().add(new GrowingRegion("cg-spacer"));
 
         boolean visible = !report.hourlyData().isEmpty();
         this.setVisible(visible);
@@ -191,7 +189,7 @@ public class BandPredictionTable extends DestroyableVBox implements DestroyableT
      * Determines the highest band the player currently qualifies for.
      *
      * @param playerContribution the player's current contribution value
-     * @param thresholds map of band name to minimum threshold
+     * @param thresholds         map of band name to minimum threshold
      * @return the highest band the player qualifies for, or null
      */
     private Band determinePlayerBand(long playerContribution, Map<String, Long> thresholds) {
@@ -220,13 +218,12 @@ public class BandPredictionTable extends DestroyableVBox implements DestroyableT
     /**
      * Calculates the minimum predicted threshold for a band.
      *
-     * @param bandName the band name
-     * @param thresholds map of band name to current threshold
+     * @param bandName      the band name
+     * @param thresholds    map of band name to current threshold
      * @param perBandDeltas optional per-band deltas
      * @return predicted minimum value (threshold + pessimistic delta)
      */
-    private long calculatePredictedMin(String bandName,
-            Map<String, Long> thresholds, Optional<PerBandDeltas> perBandDeltas) {
+    private long calculatePredictedMin(String bandName, Map<String, Long> thresholds, Optional<PerBandDeltas> perBandDeltas) {
         long delta = perBandDeltas
                 .map(p -> p.optimisticFor(bandName))
                 .orElse(0L);
@@ -236,13 +233,12 @@ public class BandPredictionTable extends DestroyableVBox implements DestroyableT
     /**
      * Calculates the maximum predicted threshold for a band.
      *
-     * @param bandName the band name
-     * @param thresholds map of band name to current threshold
+     * @param bandName      the band name
+     * @param thresholds    map of band name to current threshold
      * @param perBandDeltas optional per-band deltas
      * @return predicted maximum value (threshold + optimistic delta)
      */
-    private long calculatePredictedMax(String bandName,
-            Map<String, Long> thresholds, Optional<PerBandDeltas> perBandDeltas) {
+    private long calculatePredictedMax(String bandName, Map<String, Long> thresholds, Optional<PerBandDeltas> perBandDeltas) {
         long delta = perBandDeltas
                 .map(p -> p.pessimisticFor(bandName))
                 .orElse(0L);
@@ -258,7 +254,8 @@ public class BandPredictionTable extends DestroyableVBox implements DestroyableT
      */
     private Instant resolveCgEndUtc(ReportModels.CommunityGoalReport report) {
         String estimatedCompletion = report.progress().estimatedCompletion();
-        if (estimatedCompletion != null && !estimatedCompletion.equals("insufficient-data")
+        if (estimatedCompletion != null
+                && !estimatedCompletion.equals("insufficient-data")
                 && !estimatedCompletion.equals("expired")
                 && !estimatedCompletion.equals("current-value")) {
             try {
@@ -270,10 +267,9 @@ public class BandPredictionTable extends DestroyableVBox implements DestroyableT
         Object expiryObj = report.metadata().get("expiry");
         if (expiryObj instanceof String expiry) {
             try {
-                return java.time.LocalDateTime.parse(expiry,
-                        java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-                                .atZone(java.time.ZoneOffset.UTC)
-                                .toInstant();
+                return LocalDateTime.parse(expiry, java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                        .atZone(java.time.ZoneOffset.UTC)
+                        .toInstant();
             } catch (Exception e) {
                 // safe: falls through to progress.endDate() fallback
             }
