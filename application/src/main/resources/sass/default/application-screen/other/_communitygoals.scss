@@ -679,6 +679,54 @@
             }
           }
         }
+
+        .band-prediction-table {
+          //.threshold-table-box {
+            -fx-background-color: $background-color-light;
+
+            .threshold-table {
+              -fx-background-color: $background-color-lighter;
+              -fx-background-insets: 2.6em 0 0 0;
+
+              .threshold-names {
+                -fx-background-color: $background-color-light;
+                -fx-fill-width: true;
+
+                .cg-threshold-title {
+                  -fx-font-weight: bold;
+                  -fx-font-size: 1.2em;
+                  -fx-padding: 0.5em;
+                  -fx-alignment: center-left;
+                }
+
+              }
+              .threshold-values {
+                -fx-fill-width: true;
+
+                .cg-threshold-title {
+                  -fx-font-weight: bold;
+                  -fx-font-size: 1.2em;
+                  -fx-padding: 0.5em;
+                  -fx-alignment: center-left;
+                }
+
+                .cg-threshold-value {
+                  -fx-font-size: 1.2em;
+                  -fx-padding: 0.5em;
+                  -fx-alignment: center-left;
+                }
+
+                .band-prediction-highlight {
+                  -fx-text-fill: $text-color-yellow;
+                }
+
+                .band-prediction-between {
+                  -fx-text-fill: $text-color-blue;
+                }
+              }
+            }
+          //}
+        }
       }
     }
   }

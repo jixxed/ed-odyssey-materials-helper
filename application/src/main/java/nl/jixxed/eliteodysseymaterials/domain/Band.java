@@ -13,6 +13,10 @@ package nl.jixxed.eliteodysseymaterials.domain;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+/**
+ * Represents a rewards band (e.g., top1, 50%, 75%).
+ * Bands are sorted topX first (numerically), then percentage bands (ascending).
+ */
 @Getter
 @EqualsAndHashCode
 public class Band implements Comparable<Band> {
@@ -33,7 +37,7 @@ public class Band implements Comparable<Band> {
             // Extract numbers and sort: top1, top5, top10, etc.
             var aNum = Integer.parseInt(a.name.replace("top",""));
             var bNum = Integer.parseInt(b.name.replace("top",""));
-            return aNum - bNum;
+            return Integer.compare(aNum, bNum);
         }
 
         // topX bands come first
@@ -41,8 +45,8 @@ public class Band implements Comparable<Band> {
         if (bIsTopX) return 1;
 
         // For percentage bands, sort from lowest to highest
-        var aPercent = Integer.parseInt(a.name);
-        var bPercent = Integer.parseInt(b.name);
-        return aPercent - bPercent;
+        var aPercent = Integer.parseInt(a.name.replace("%", ""));
+        var bPercent = Integer.parseInt(b.name.replace("%", ""));
+        return Integer.compare(aPercent, bPercent);
     }
 }

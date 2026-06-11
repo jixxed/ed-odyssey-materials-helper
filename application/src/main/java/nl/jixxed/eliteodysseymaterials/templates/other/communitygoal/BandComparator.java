@@ -16,6 +16,11 @@ import java.util.Comparator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Compares band max values by band name.
+ * topX bands are sorted numerically (top1, top5, top10), then percentage bands (25%, 50%, etc.).
+ * topX bands come before percentage bands.
+ */
 public class BandComparator implements Comparator<ReportModels.BandMax> {
 
     private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");

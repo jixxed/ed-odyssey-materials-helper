@@ -1,0 +1,5043 @@
+{
+  "generatedAtUtc": "2026-06-11T08:40:03.772422Z",
+  "goals": [
+    {
+      "cgid": 849,
+      "title": " Frontline Solutions Calls for Critical Supplies to Complete Runner Production",
+      "hourlyData": [
+        {
+          "hourUtc": "2026-06-04T08:00:00Z",
+          "numContributors": 0,
+          "currentTotal": 0,
+          "delta": 0,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 0
+            },
+            {
+              "band": "top10",
+              "max": 0
+            },
+            {
+              "band": "25%",
+              "max": 0
+            },
+            {
+              "band": "50%",
+              "max": 0
+            },
+            {
+              "band": "75%",
+              "max": 0
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-04T09:00:00Z",
+          "numContributors": 0,
+          "currentTotal": 0,
+          "delta": 0,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 1
+            },
+            {
+              "band": "top10",
+              "max": 32
+            },
+            {
+              "band": "100%",
+              "max": 1
+            },
+            {
+              "band": "75%",
+              "max": 1
+            },
+            {
+              "band": "50%",
+              "max": 1
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-04T10:00:00Z",
+          "numContributors": 58,
+          "currentTotal": 57109,
+          "delta": 57109,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 2274
+            },
+            {
+              "band": "25%",
+              "max": 3443
+            },
+            {
+              "band": "top10",
+              "max": 7801
+            },
+            {
+              "band": "100%",
+              "max": 32
+            },
+            {
+              "band": "75%",
+              "max": 1105
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-04T11:00:00Z",
+          "numContributors": 254,
+          "currentTotal": 397169,
+          "delta": 340060,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 1169
+            },
+            {
+              "band": "100%",
+              "max": 214
+            },
+            {
+              "band": "top10",
+              "max": 11385
+            },
+            {
+              "band": "25%",
+              "max": 7656
+            },
+            {
+              "band": "50%",
+              "max": 2306
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-04T12:00:00Z",
+          "numContributors": 459,
+          "currentTotal": 880663,
+          "delta": 483494,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 9864
+            },
+            {
+              "band": "50%",
+              "max": 2436
+            },
+            {
+              "band": "75%",
+              "max": 1218
+            },
+            {
+              "band": "100%",
+              "max": 214
+            },
+            {
+              "band": "top10",
+              "max": 18975
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-04T13:00:00Z",
+          "numContributors": 658,
+          "currentTotal": 1445738,
+          "delta": 565075,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 2699
+            },
+            {
+              "band": "25%",
+              "max": 12330
+            },
+            {
+              "band": "top10",
+              "max": 24035
+            },
+            {
+              "band": "100%",
+              "max": 220
+            },
+            {
+              "band": "75%",
+              "max": 1218
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-04T14:00:00Z",
+          "numContributors": 864,
+          "currentTotal": 2061675,
+          "delta": 615937,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 3248
+            },
+            {
+              "band": "25%",
+              "max": 12330
+            },
+            {
+              "band": "top10",
+              "max": 24035
+            },
+            {
+              "band": "100%",
+              "max": 220
+            },
+            {
+              "band": "75%",
+              "max": 1280
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-04T15:00:00Z",
+          "numContributors": 1093,
+          "currentTotal": 2753733,
+          "delta": 692058,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 3600
+            },
+            {
+              "band": "75%",
+              "max": 1280
+            },
+            {
+              "band": "100%",
+              "max": 304
+            },
+            {
+              "band": "top10",
+              "max": 24035
+            },
+            {
+              "band": "25%",
+              "max": 15613
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-04T16:00:00Z",
+          "numContributors": 1337,
+          "currentTotal": 3563720,
+          "delta": 809987,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 3747
+            },
+            {
+              "band": "25%",
+              "max": 15613
+            },
+            {
+              "band": "top10",
+              "max": 24244
+            },
+            {
+              "band": "100%",
+              "max": 304
+            },
+            {
+              "band": "75%",
+              "max": 1301
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-04T17:00:00Z",
+          "numContributors": 1585,
+          "currentTotal": 4384338,
+          "delta": 820618,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 3747
+            },
+            {
+              "band": "75%",
+              "max": 1301
+            },
+            {
+              "band": "100%",
+              "max": 304
+            },
+            {
+              "band": "top10",
+              "max": 24244
+            },
+            {
+              "band": "25%",
+              "max": 18495
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-04T18:00:00Z",
+          "numContributors": 1837,
+          "currentTotal": 5222405,
+          "delta": 838067,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 3759
+            },
+            {
+              "band": "25%",
+              "max": 19984
+            },
+            {
+              "band": "top10",
+              "max": 25520
+            },
+            {
+              "band": "100%",
+              "max": 349
+            },
+            {
+              "band": "75%",
+              "max": 1302
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-04T19:00:00Z",
+          "numContributors": 2153,
+          "currentTotal": 6233000,
+          "delta": 1010595,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 21319
+            },
+            {
+              "band": "top10",
+              "max": 25520
+            },
+            {
+              "band": "100%",
+              "max": 349
+            },
+            {
+              "band": "75%",
+              "max": 1302
+            },
+            {
+              "band": "50%",
+              "max": 3807
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-04T20:00:00Z",
+          "numContributors": 2466,
+          "currentTotal": 7308817,
+          "delta": 1075817,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 397
+            },
+            {
+              "band": "25%",
+              "max": 24035
+            },
+            {
+              "band": "top10",
+              "max": 25520
+            },
+            {
+              "band": "75%",
+              "max": 1304
+            },
+            {
+              "band": "50%",
+              "max": 3828
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-04T21:00:00Z",
+          "numContributors": 2764,
+          "currentTotal": 8467666,
+          "delta": 1158849,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 3894
+            },
+            {
+              "band": "100%",
+              "max": 397
+            },
+            {
+              "band": "75%",
+              "max": 1304
+            },
+            {
+              "band": "25%",
+              "max": 24035
+            },
+            {
+              "band": "top10",
+              "max": 25520
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-04T22:00:00Z",
+          "numContributors": 3068,
+          "currentTotal": 9563220,
+          "delta": 1095554,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 397
+            },
+            {
+              "band": "50%",
+              "max": 3904
+            },
+            {
+              "band": "75%",
+              "max": 1304
+            },
+            {
+              "band": "25%",
+              "max": 24035
+            },
+            {
+              "band": "top10",
+              "max": 25520
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-04T23:00:00Z",
+          "numContributors": 3306,
+          "currentTotal": 10479321,
+          "delta": 916101,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 404
+            },
+            {
+              "band": "50%",
+              "max": 3904
+            },
+            {
+              "band": "25%",
+              "max": 24035
+            },
+            {
+              "band": "top10",
+              "max": 25520
+            },
+            {
+              "band": "75%",
+              "max": 1320
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T00:00:00Z",
+          "numContributors": 3519,
+          "currentTotal": 11130255,
+          "delta": 650934,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 3904
+            },
+            {
+              "band": "75%",
+              "max": 1320
+            },
+            {
+              "band": "100%",
+              "max": 404
+            },
+            {
+              "band": "top10",
+              "max": 25520
+            },
+            {
+              "band": "25%",
+              "max": 24035
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T01:00:00Z",
+          "numContributors": 3717,
+          "currentTotal": 11736361,
+          "delta": 606106,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 3904
+            },
+            {
+              "band": "75%",
+              "max": 1320
+            },
+            {
+              "band": "100%",
+              "max": 404
+            },
+            {
+              "band": "25%",
+              "max": 24035
+            },
+            {
+              "band": "top10",
+              "max": 25520
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T02:00:00Z",
+          "numContributors": 3898,
+          "currentTotal": 12369362,
+          "delta": 633001,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 404
+            },
+            {
+              "band": "50%",
+              "max": 3904
+            },
+            {
+              "band": "75%",
+              "max": 1320
+            },
+            {
+              "band": "top10",
+              "max": 25520
+            },
+            {
+              "band": "25%",
+              "max": 24035
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T03:00:00Z",
+          "numContributors": 4067,
+          "currentTotal": 13003091,
+          "delta": 633729,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 1320
+            },
+            {
+              "band": "50%",
+              "max": 3960
+            },
+            {
+              "band": "25%",
+              "max": 26946
+            },
+            {
+              "band": "top10",
+              "max": 26947
+            },
+            {
+              "band": "100%",
+              "max": 404
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T04:00:00Z",
+          "numContributors": 4197,
+          "currentTotal": 13577237,
+          "delta": 574146,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 30465
+            },
+            {
+              "band": "50%",
+              "max": 3960
+            },
+            {
+              "band": "75%",
+              "max": 1320
+            },
+            {
+              "band": "100%",
+              "max": 404
+            },
+            {
+              "band": "top10",
+              "max": 30466
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T05:00:00Z",
+          "numContributors": 4343,
+          "currentTotal": 14123837,
+          "delta": 546600,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 3960
+            },
+            {
+              "band": "75%",
+              "max": 1320
+            },
+            {
+              "band": "100%",
+              "max": 404
+            },
+            {
+              "band": "top10",
+              "max": 35157
+            },
+            {
+              "band": "25%",
+              "max": 30465
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T06:00:00Z",
+          "numContributors": 4455,
+          "currentTotal": 14622605,
+          "delta": 498768,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 3960
+            },
+            {
+              "band": "75%",
+              "max": 1320
+            },
+            {
+              "band": "100%",
+              "max": 404
+            },
+            {
+              "band": "top10",
+              "max": 37503
+            },
+            {
+              "band": "25%",
+              "max": 30465
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T07:00:00Z",
+          "numContributors": 4542,
+          "currentTotal": 15116114,
+          "delta": 493509,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 30465
+            },
+            {
+              "band": "50%",
+              "max": 4167
+            },
+            {
+              "band": "75%",
+              "max": 1320
+            },
+            {
+              "band": "100%",
+              "max": 404
+            },
+            {
+              "band": "top10",
+              "max": 38676
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T08:00:00Z",
+          "numContributors": 4641,
+          "currentTotal": 15598854,
+          "delta": 482740,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 30465
+            },
+            {
+              "band": "top10",
+              "max": 39849
+            },
+            {
+              "band": "100%",
+              "max": 404
+            },
+            {
+              "band": "75%",
+              "max": 1320
+            },
+            {
+              "band": "50%",
+              "max": 4278
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T09:00:00Z",
+          "numContributors": 4743,
+          "currentTotal": 16038206,
+          "delta": 439352,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 4278
+            },
+            {
+              "band": "25%",
+              "max": 30465
+            },
+            {
+              "band": "top10",
+              "max": 39849
+            },
+            {
+              "band": "100%",
+              "max": 404
+            },
+            {
+              "band": "75%",
+              "max": 1320
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T10:00:00Z",
+          "numContributors": 4835,
+          "currentTotal": 16536866,
+          "delta": 498660,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 4292
+            },
+            {
+              "band": "25%",
+              "max": 34027
+            },
+            {
+              "band": "top10",
+              "max": 39849
+            },
+            {
+              "band": "100%",
+              "max": 404
+            },
+            {
+              "band": "75%",
+              "max": 1320
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T11:00:00Z",
+          "numContributors": 4889,
+          "currentTotal": 17062646,
+          "delta": 525780,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 1320
+            },
+            {
+              "band": "25%",
+              "max": 34027
+            },
+            {
+              "band": "top10",
+              "max": 39849
+            },
+            {
+              "band": "100%",
+              "max": 404
+            },
+            {
+              "band": "50%",
+              "max": 4292
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T12:00:00Z",
+          "numContributors": 5032,
+          "currentTotal": 17644836,
+          "delta": 582190,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 1320
+            },
+            {
+              "band": "25%",
+              "max": 34096
+            },
+            {
+              "band": "top10",
+              "max": 39849
+            },
+            {
+              "band": "100%",
+              "max": 404
+            },
+            {
+              "band": "50%",
+              "max": 4292
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T13:00:00Z",
+          "numContributors": 5154,
+          "currentTotal": 18391010,
+          "delta": 746174,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 1324
+            },
+            {
+              "band": "25%",
+              "max": 39849
+            },
+            {
+              "band": "top10",
+              "max": 39849
+            },
+            {
+              "band": "100%",
+              "max": 404
+            },
+            {
+              "band": "50%",
+              "max": 4544
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T14:00:00Z",
+          "numContributors": 5279,
+          "currentTotal": 19199391,
+          "delta": 808381,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 4544
+            },
+            {
+              "band": "25%",
+              "max": 41022
+            },
+            {
+              "band": "top10",
+              "max": 42195
+            },
+            {
+              "band": "100%",
+              "max": 404
+            },
+            {
+              "band": "75%",
+              "max": 1324
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T15:00:00Z",
+          "numContributors": 5460,
+          "currentTotal": 20078507,
+          "delta": 879116,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 46887
+            },
+            {
+              "band": "50%",
+              "max": 4676
+            },
+            {
+              "band": "75%",
+              "max": 1324
+            },
+            {
+              "band": "100%",
+              "max": 404
+            },
+            {
+              "band": "25%",
+              "max": 41920
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T16:00:00Z",
+          "numContributors": 5623,
+          "currentTotal": 21068360,
+          "delta": 989853,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 4676
+            },
+            {
+              "band": "75%",
+              "max": 1324
+            },
+            {
+              "band": "25%",
+              "max": 43224
+            },
+            {
+              "band": "100%",
+              "max": 429
+            },
+            {
+              "band": "top10",
+              "max": 48440
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T17:00:00Z",
+          "numContributors": 5789,
+          "currentTotal": 21967784,
+          "delta": 899424,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 437
+            },
+            {
+              "band": "50%",
+              "max": 4804
+            },
+            {
+              "band": "75%",
+              "max": 1440
+            },
+            {
+              "band": "top10",
+              "max": 50406
+            },
+            {
+              "band": "25%",
+              "max": 43224
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T18:00:00Z",
+          "numContributors": 5960,
+          "currentTotal": 22991505,
+          "delta": 1023721,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 51048
+            },
+            {
+              "band": "top10",
+              "max": 53925
+            },
+            {
+              "band": "100%",
+              "max": 437
+            },
+            {
+              "band": "75%",
+              "max": 1474
+            },
+            {
+              "band": "50%",
+              "max": 4804
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T19:00:00Z",
+          "numContributors": 6180,
+          "currentTotal": 24084602,
+          "delta": 1093097,
+          "reachedTier": null,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 53925
+            },
+            {
+              "band": "50%",
+              "max": 4864
+            },
+            {
+              "band": "75%",
+              "max": 1520
+            },
+            {
+              "band": "100%",
+              "max": 483
+            },
+            {
+              "band": "top10",
+              "max": 53925
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T20:00:00Z",
+          "numContributors": 6427,
+          "currentTotal": 25432844,
+          "delta": 1348242,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 4904
+            },
+            {
+              "band": "25%",
+              "max": 53925
+            },
+            {
+              "band": "top10",
+              "max": 53925
+            },
+            {
+              "band": "100%",
+              "max": 494
+            },
+            {
+              "band": "75%",
+              "max": 1540
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T21:00:00Z",
+          "numContributors": 6725,
+          "currentTotal": 26991998,
+          "delta": 1559154,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 1785
+            },
+            {
+              "band": "50%",
+              "max": 5060
+            },
+            {
+              "band": "25%",
+              "max": 53925
+            },
+            {
+              "band": "top10",
+              "max": 53925
+            },
+            {
+              "band": "100%",
+              "max": 583
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T22:00:00Z",
+          "numContributors": 6976,
+          "currentTotal": 28333910,
+          "delta": 1341912,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 53925
+            },
+            {
+              "band": "25%",
+              "max": 53925
+            },
+            {
+              "band": "50%",
+              "max": 5112
+            },
+            {
+              "band": "75%",
+              "max": 1920
+            },
+            {
+              "band": "100%",
+              "max": 583
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-05T23:00:00Z",
+          "numContributors": 7163,
+          "currentTotal": 29436040,
+          "delta": 1102130,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 5133
+            },
+            {
+              "band": "top10",
+              "max": 53925
+            },
+            {
+              "band": "25%",
+              "max": 53925
+            },
+            {
+              "band": "100%",
+              "max": 583
+            },
+            {
+              "band": "75%",
+              "max": 2080
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T00:00:00Z",
+          "numContributors": 7343,
+          "currentTotal": 30379222,
+          "delta": 943182,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2080
+            },
+            {
+              "band": "50%",
+              "max": 5133
+            },
+            {
+              "band": "25%",
+              "max": 53925
+            },
+            {
+              "band": "top10",
+              "max": 53925
+            },
+            {
+              "band": "100%",
+              "max": 583
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T01:00:00Z",
+          "numContributors": 7519,
+          "currentTotal": 31254590,
+          "delta": 875368,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 55098
+            },
+            {
+              "band": "50%",
+              "max": 5258
+            },
+            {
+              "band": "75%",
+              "max": 2120
+            },
+            {
+              "band": "100%",
+              "max": 696
+            },
+            {
+              "band": "top10",
+              "max": 55099
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T02:00:00Z",
+          "numContributors": 7661,
+          "currentTotal": 32125115,
+          "delta": 870525,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 5258
+            },
+            {
+              "band": "75%",
+              "max": 2120
+            },
+            {
+              "band": "100%",
+              "max": 764
+            },
+            {
+              "band": "top10",
+              "max": 55099
+            },
+            {
+              "band": "25%",
+              "max": 55098
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T03:00:00Z",
+          "numContributors": 7822,
+          "currentTotal": 32973932,
+          "delta": 848817,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 5258
+            },
+            {
+              "band": "25%",
+              "max": 55098
+            },
+            {
+              "band": "75%",
+              "max": 2120
+            },
+            {
+              "band": "100%",
+              "max": 764
+            },
+            {
+              "band": "top10",
+              "max": 55099
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T04:00:00Z",
+          "numContributors": 7964,
+          "currentTotal": 33788510,
+          "delta": 814578,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 55099
+            },
+            {
+              "band": "25%",
+              "max": 55098
+            },
+            {
+              "band": "50%",
+              "max": 5258
+            },
+            {
+              "band": "75%",
+              "max": 2120
+            },
+            {
+              "band": "100%",
+              "max": 764
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T05:00:00Z",
+          "numContributors": 8074,
+          "currentTotal": 34461524,
+          "delta": 673014,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2120
+            },
+            {
+              "band": "50%",
+              "max": 5258
+            },
+            {
+              "band": "25%",
+              "max": 55098
+            },
+            {
+              "band": "top10",
+              "max": 55099
+            },
+            {
+              "band": "100%",
+              "max": 764
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T06:00:00Z",
+          "numContributors": 8176,
+          "currentTotal": 35119492,
+          "delta": 657968,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 55099
+            },
+            {
+              "band": "25%",
+              "max": 55098
+            },
+            {
+              "band": "50%",
+              "max": 5280
+            },
+            {
+              "band": "75%",
+              "max": 2210
+            },
+            {
+              "band": "100%",
+              "max": 764
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T07:00:00Z",
+          "numContributors": 8290,
+          "currentTotal": 35761828,
+          "delta": 642336,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 764
+            },
+            {
+              "band": "top10",
+              "max": 55099
+            },
+            {
+              "band": "50%",
+              "max": 5280
+            },
+            {
+              "band": "75%",
+              "max": 2210
+            },
+            {
+              "band": "25%",
+              "max": 55098
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T08:00:00Z",
+          "numContributors": 8391,
+          "currentTotal": 36494670,
+          "delta": 732842,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2210
+            },
+            {
+              "band": "50%",
+              "max": 5516
+            },
+            {
+              "band": "100%",
+              "max": 764
+            },
+            {
+              "band": "top10",
+              "max": 55099
+            },
+            {
+              "band": "25%",
+              "max": 55098
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T09:00:00Z",
+          "numContributors": 8515,
+          "currentTotal": 37336628,
+          "delta": 841958,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 55098
+            },
+            {
+              "band": "top10",
+              "max": 55099
+            },
+            {
+              "band": "100%",
+              "max": 808
+            },
+            {
+              "band": "75%",
+              "max": 2210
+            },
+            {
+              "band": "50%",
+              "max": 5556
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T10:00:00Z",
+          "numContributors": 8633,
+          "currentTotal": 38134113,
+          "delta": 797485,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 55099
+            },
+            {
+              "band": "50%",
+              "max": 5615
+            },
+            {
+              "band": "75%",
+              "max": 2210
+            },
+            {
+              "band": "100%",
+              "max": 808
+            },
+            {
+              "band": "25%",
+              "max": 55098
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T11:00:00Z",
+          "numContributors": 8774,
+          "currentTotal": 39082284,
+          "delta": 948171,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2240
+            },
+            {
+              "band": "25%",
+              "max": 55098
+            },
+            {
+              "band": "top10",
+              "max": 55099
+            },
+            {
+              "band": "100%",
+              "max": 808
+            },
+            {
+              "band": "50%",
+              "max": 5745
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T12:00:00Z",
+          "numContributors": 8909,
+          "currentTotal": 40008050,
+          "delta": 925766,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2272
+            },
+            {
+              "band": "100%",
+              "max": 832
+            },
+            {
+              "band": "25%",
+              "max": 57328
+            },
+            {
+              "band": "top10",
+              "max": 57329
+            },
+            {
+              "band": "50%",
+              "max": 5781
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T13:00:00Z",
+          "numContributors": 9051,
+          "currentTotal": 41022554,
+          "delta": 1014504,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2272
+            },
+            {
+              "band": "50%",
+              "max": 5839
+            },
+            {
+              "band": "25%",
+              "max": 57328
+            },
+            {
+              "band": "top10",
+              "max": 57329
+            },
+            {
+              "band": "100%",
+              "max": 832
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T14:00:00Z",
+          "numContributors": 9229,
+          "currentTotal": 42141077,
+          "delta": 1118523,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 832
+            },
+            {
+              "band": "top10",
+              "max": 57329
+            },
+            {
+              "band": "75%",
+              "max": 2274
+            },
+            {
+              "band": "50%",
+              "max": 5845
+            },
+            {
+              "band": "25%",
+              "max": 57328
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T15:00:00Z",
+          "numContributors": 9393,
+          "currentTotal": 43280377,
+          "delta": 1139300,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 57329
+            },
+            {
+              "band": "50%",
+              "max": 5888
+            },
+            {
+              "band": "75%",
+              "max": 2274
+            },
+            {
+              "band": "100%",
+              "max": 854
+            },
+            {
+              "band": "25%",
+              "max": 57328
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T16:00:00Z",
+          "numContributors": 9560,
+          "currentTotal": 44491258,
+          "delta": 1210881,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2274
+            },
+            {
+              "band": "100%",
+              "max": 854
+            },
+            {
+              "band": "top10",
+              "max": 57329
+            },
+            {
+              "band": "50%",
+              "max": 5888
+            },
+            {
+              "band": "25%",
+              "max": 57328
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T17:00:00Z",
+          "numContributors": 9726,
+          "currentTotal": 45714986,
+          "delta": 1223728,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 57329
+            },
+            {
+              "band": "75%",
+              "max": 2274
+            },
+            {
+              "band": "100%",
+              "max": 854
+            },
+            {
+              "band": "50%",
+              "max": 5888
+            },
+            {
+              "band": "25%",
+              "max": 57328
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T18:00:00Z",
+          "numContributors": 9900,
+          "currentTotal": 46915680,
+          "delta": 1200694,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 57328
+            },
+            {
+              "band": "100%",
+              "max": 912
+            },
+            {
+              "band": "50%",
+              "max": 5921
+            },
+            {
+              "band": "75%",
+              "max": 2304
+            },
+            {
+              "band": "top10",
+              "max": 57329
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T19:00:00Z",
+          "numContributors": 10052,
+          "currentTotal": 48146158,
+          "delta": 1230478,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 6054
+            },
+            {
+              "band": "75%",
+              "max": 2314
+            },
+            {
+              "band": "100%",
+              "max": 912
+            },
+            {
+              "band": "top10",
+              "max": 57329
+            },
+            {
+              "band": "25%",
+              "max": 57328
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T20:00:00Z",
+          "numContributors": 10219,
+          "currentTotal": 49548663,
+          "delta": 1402505,
+          "reachedTier": 1,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 57329
+            },
+            {
+              "band": "25%",
+              "max": 57328
+            },
+            {
+              "band": "50%",
+              "max": 6054
+            },
+            {
+              "band": "75%",
+              "max": 2352
+            },
+            {
+              "band": "100%",
+              "max": 912
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T21:00:00Z",
+          "numContributors": 10411,
+          "currentTotal": 51087891,
+          "delta": 1539228,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2368
+            },
+            {
+              "band": "100%",
+              "max": 912
+            },
+            {
+              "band": "top10",
+              "max": 57329
+            },
+            {
+              "band": "25%",
+              "max": 57328
+            },
+            {
+              "band": "50%",
+              "max": 6160
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T22:00:00Z",
+          "numContributors": 10583,
+          "currentTotal": 52512132,
+          "delta": 1424241,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 912
+            },
+            {
+              "band": "75%",
+              "max": 2370
+            },
+            {
+              "band": "50%",
+              "max": 6160
+            },
+            {
+              "band": "25%",
+              "max": 57328
+            },
+            {
+              "band": "top10",
+              "max": 57329
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-06T23:00:00Z",
+          "numContributors": 10704,
+          "currentTotal": 53569058,
+          "delta": 1056926,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 57329
+            },
+            {
+              "band": "50%",
+              "max": 6202
+            },
+            {
+              "band": "100%",
+              "max": 912
+            },
+            {
+              "band": "75%",
+              "max": 2370
+            },
+            {
+              "band": "25%",
+              "max": 57328
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T00:00:00Z",
+          "numContributors": 10827,
+          "currentTotal": 54556111,
+          "delta": 987053,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 57328
+            },
+            {
+              "band": "50%",
+              "max": 6202
+            },
+            {
+              "band": "75%",
+              "max": 2370
+            },
+            {
+              "band": "100%",
+              "max": 912
+            },
+            {
+              "band": "top10",
+              "max": 57329
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T01:00:00Z",
+          "numContributors": 10915,
+          "currentTotal": 55380718,
+          "delta": 824607,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2370
+            },
+            {
+              "band": "50%",
+              "max": 6202
+            },
+            {
+              "band": "100%",
+              "max": 912
+            },
+            {
+              "band": "top10",
+              "max": 57329
+            },
+            {
+              "band": "25%",
+              "max": 57328
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T02:00:00Z",
+          "numContributors": 11020,
+          "currentTotal": 56204681,
+          "delta": 823963,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 57329
+            },
+            {
+              "band": "25%",
+              "max": 57328
+            },
+            {
+              "band": "50%",
+              "max": 6240
+            },
+            {
+              "band": "75%",
+              "max": 2392
+            },
+            {
+              "band": "100%",
+              "max": 912
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T03:00:00Z",
+          "numContributors": 11099,
+          "currentTotal": 57012527,
+          "delta": 807846,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 6385
+            },
+            {
+              "band": "25%",
+              "max": 57328
+            },
+            {
+              "band": "top10",
+              "max": 57329
+            },
+            {
+              "band": "100%",
+              "max": 912
+            },
+            {
+              "band": "75%",
+              "max": 2400
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T04:00:00Z",
+          "numContributors": 11167,
+          "currentTotal": 57714631,
+          "delta": 702104,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 912
+            },
+            {
+              "band": "top10",
+              "max": 57329
+            },
+            {
+              "band": "25%",
+              "max": 57328
+            },
+            {
+              "band": "50%",
+              "max": 6385
+            },
+            {
+              "band": "75%",
+              "max": 2400
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T05:00:00Z",
+          "numContributors": 11270,
+          "currentTotal": 58344374,
+          "delta": 629743,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 6385
+            },
+            {
+              "band": "top10",
+              "max": 57329
+            },
+            {
+              "band": "25%",
+              "max": 57328
+            },
+            {
+              "band": "100%",
+              "max": 912
+            },
+            {
+              "band": "75%",
+              "max": 2400
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T06:00:00Z",
+          "numContributors": 11348,
+          "currentTotal": 58931621,
+          "delta": 587247,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 57328
+            },
+            {
+              "band": "50%",
+              "max": 6434
+            },
+            {
+              "band": "75%",
+              "max": 2400
+            },
+            {
+              "band": "top10",
+              "max": 57329
+            },
+            {
+              "band": "100%",
+              "max": 912
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T07:00:00Z",
+          "numContributors": 11409,
+          "currentTotal": 59506485,
+          "delta": 574864,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2400
+            },
+            {
+              "band": "25%",
+              "max": 57328
+            },
+            {
+              "band": "100%",
+              "max": 912
+            },
+            {
+              "band": "top10",
+              "max": 57329
+            },
+            {
+              "band": "50%",
+              "max": 6509
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T08:00:00Z",
+          "numContributors": 11479,
+          "currentTotal": 60133410,
+          "delta": 626925,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 912
+            },
+            {
+              "band": "25%",
+              "max": 59816
+            },
+            {
+              "band": "top10",
+              "max": 59817
+            },
+            {
+              "band": "75%",
+              "max": 2400
+            },
+            {
+              "band": "50%",
+              "max": 6509
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T09:00:00Z",
+          "numContributors": 11545,
+          "currentTotal": 60817943,
+          "delta": 684533,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 59817
+            },
+            {
+              "band": "50%",
+              "max": 6509
+            },
+            {
+              "band": "75%",
+              "max": 2424
+            },
+            {
+              "band": "25%",
+              "max": 59816
+            },
+            {
+              "band": "100%",
+              "max": 912
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T10:00:00Z",
+          "numContributors": 11625,
+          "currentTotal": 61690177,
+          "delta": 872234,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2424
+            },
+            {
+              "band": "50%",
+              "max": 6600
+            },
+            {
+              "band": "top10",
+              "max": 59817
+            },
+            {
+              "band": "25%",
+              "max": 59816
+            },
+            {
+              "band": "100%",
+              "max": 918
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T11:00:00Z",
+          "numContributors": 11728,
+          "currentTotal": 62579654,
+          "delta": 889477,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 61896
+            },
+            {
+              "band": "top10",
+              "max": 61897
+            },
+            {
+              "band": "50%",
+              "max": 6600
+            },
+            {
+              "band": "100%",
+              "max": 918
+            },
+            {
+              "band": "75%",
+              "max": 2424
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T12:00:00Z",
+          "numContributors": 11841,
+          "currentTotal": 63521669,
+          "delta": 942015,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 918
+            },
+            {
+              "band": "50%",
+              "max": 6630
+            },
+            {
+              "band": "75%",
+              "max": 2424
+            },
+            {
+              "band": "top10",
+              "max": 65017
+            },
+            {
+              "band": "25%",
+              "max": 65016
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T13:00:00Z",
+          "numContributors": 11957,
+          "currentTotal": 64586992,
+          "delta": 1065323,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 67096
+            },
+            {
+              "band": "50%",
+              "max": 6630
+            },
+            {
+              "band": "75%",
+              "max": 2424
+            },
+            {
+              "band": "100%",
+              "max": 930
+            },
+            {
+              "band": "top10",
+              "max": 67097
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T14:00:00Z",
+          "numContributors": 12077,
+          "currentTotal": 65686790,
+          "delta": 1099798,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2424
+            },
+            {
+              "band": "25%",
+              "max": 71256
+            },
+            {
+              "band": "top10",
+              "max": 71257
+            },
+            {
+              "band": "100%",
+              "max": 999
+            },
+            {
+              "band": "50%",
+              "max": 6705
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T15:00:00Z",
+          "numContributors": 12163,
+          "currentTotal": 66542549,
+          "delta": 855759,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2464
+            },
+            {
+              "band": "50%",
+              "max": 6705
+            },
+            {
+              "band": "25%",
+              "max": 71256
+            },
+            {
+              "band": "top10",
+              "max": 71257
+            },
+            {
+              "band": "100%",
+              "max": 999
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T16:00:00Z",
+          "numContributors": 12294,
+          "currentTotal": 68005706,
+          "delta": 1463157,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 71256
+            },
+            {
+              "band": "top10",
+              "max": 71257
+            },
+            {
+              "band": "100%",
+              "max": 999
+            },
+            {
+              "band": "75%",
+              "max": 2464
+            },
+            {
+              "band": "50%",
+              "max": 6705
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T17:00:00Z",
+          "numContributors": 12431,
+          "currentTotal": 69220893,
+          "delta": 1215187,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 72297
+            },
+            {
+              "band": "25%",
+              "max": 72296
+            },
+            {
+              "band": "50%",
+              "max": 6705
+            },
+            {
+              "band": "75%",
+              "max": 2466
+            },
+            {
+              "band": "100%",
+              "max": 999
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T18:00:00Z",
+          "numContributors": 12576,
+          "currentTotal": 70465151,
+          "delta": 1244258,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 73337
+            },
+            {
+              "band": "50%",
+              "max": 6912
+            },
+            {
+              "band": "75%",
+              "max": 2466
+            },
+            {
+              "band": "100%",
+              "max": 999
+            },
+            {
+              "band": "25%",
+              "max": 73336
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T19:00:00Z",
+          "numContributors": 12732,
+          "currentTotal": 71738983,
+          "delta": 1273832,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 73336
+            },
+            {
+              "band": "top10",
+              "max": 73337
+            },
+            {
+              "band": "100%",
+              "max": 999
+            },
+            {
+              "band": "75%",
+              "max": 2466
+            },
+            {
+              "band": "50%",
+              "max": 6912
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T20:00:00Z",
+          "numContributors": 12875,
+          "currentTotal": 73111429,
+          "delta": 1372446,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 75417
+            },
+            {
+              "band": "50%",
+              "max": 7036
+            },
+            {
+              "band": "75%",
+              "max": 2466
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "25%",
+              "max": 75416
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T21:00:00Z",
+          "numContributors": 13019,
+          "currentTotal": 74481382,
+          "delta": 1369953,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 75416
+            },
+            {
+              "band": "top10",
+              "max": 75417
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2468
+            },
+            {
+              "band": "50%",
+              "max": 7206
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T22:00:00Z",
+          "numContributors": 13121,
+          "currentTotal": 75507662,
+          "delta": 1026280,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 7210
+            },
+            {
+              "band": "75%",
+              "max": 2468
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "top10",
+              "max": 75417
+            },
+            {
+              "band": "25%",
+              "max": 75416
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-07T23:00:00Z",
+          "numContributors": 13220,
+          "currentTotal": 76351707,
+          "delta": 844045,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2468
+            },
+            {
+              "band": "50%",
+              "max": 7210
+            },
+            {
+              "band": "top10",
+              "max": 75417
+            },
+            {
+              "band": "25%",
+              "max": 75416
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T00:00:00Z",
+          "numContributors": 13302,
+          "currentTotal": 77063956,
+          "delta": 712249,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 75416
+            },
+            {
+              "band": "50%",
+              "max": 7210
+            },
+            {
+              "band": "75%",
+              "max": 2474
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "top10",
+              "max": 75417
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T01:00:00Z",
+          "numContributors": 13382,
+          "currentTotal": 77722367,
+          "delta": 658411,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 75416
+            },
+            {
+              "band": "top10",
+              "max": 75417
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2474
+            },
+            {
+              "band": "50%",
+              "max": 7210
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T02:00:00Z",
+          "numContributors": 13450,
+          "currentTotal": 78385517,
+          "delta": 663150,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 7210
+            },
+            {
+              "band": "25%",
+              "max": 75416
+            },
+            {
+              "band": "top10",
+              "max": 75417
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2474
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T03:00:00Z",
+          "numContributors": 13512,
+          "currentTotal": 79012262,
+          "delta": 626745,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 75416
+            },
+            {
+              "band": "50%",
+              "max": 7210
+            },
+            {
+              "band": "75%",
+              "max": 2474
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "top10",
+              "max": 75417
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T04:00:00Z",
+          "numContributors": 13577,
+          "currentTotal": 79561548,
+          "delta": 549286,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 7302
+            },
+            {
+              "band": "25%",
+              "max": 75416
+            },
+            {
+              "band": "top10",
+              "max": 75417
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2474
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T05:00:00Z",
+          "numContributors": 13639,
+          "currentTotal": 80067337,
+          "delta": 505789,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 75417
+            },
+            {
+              "band": "25%",
+              "max": 75416
+            },
+            {
+              "band": "50%",
+              "max": 7302
+            },
+            {
+              "band": "75%",
+              "max": 2474
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T06:00:00Z",
+          "numContributors": 13686,
+          "currentTotal": 80494379,
+          "delta": 427042,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "top10",
+              "max": 75417
+            },
+            {
+              "band": "25%",
+              "max": 75416
+            },
+            {
+              "band": "50%",
+              "max": 7332
+            },
+            {
+              "band": "75%",
+              "max": 2474
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T07:00:00Z",
+          "numContributors": 13729,
+          "currentTotal": 80911732,
+          "delta": 417353,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 7392
+            },
+            {
+              "band": "25%",
+              "max": 75416
+            },
+            {
+              "band": "top10",
+              "max": 75417
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2474
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T08:00:00Z",
+          "numContributors": 13769,
+          "currentTotal": 81293186,
+          "delta": 381454,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 7392
+            },
+            {
+              "band": "25%",
+              "max": 76456
+            },
+            {
+              "band": "top10",
+              "max": 76457
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2474
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T09:00:00Z",
+          "numContributors": 13798,
+          "currentTotal": 81668907,
+          "delta": 375721,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 76456
+            },
+            {
+              "band": "75%",
+              "max": 2474
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "50%",
+              "max": 7392
+            },
+            {
+              "band": "top10",
+              "max": 76457
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T10:00:00Z",
+          "numContributors": 13826,
+          "currentTotal": 82053471,
+          "delta": 384564,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 76456
+            },
+            {
+              "band": "top10",
+              "max": 76457
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2474
+            },
+            {
+              "band": "50%",
+              "max": 7392
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T11:00:00Z",
+          "numContributors": 13872,
+          "currentTotal": 82508506,
+          "delta": 455035,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "25%",
+              "max": 76456
+            },
+            {
+              "band": "top10",
+              "max": 76457
+            },
+            {
+              "band": "75%",
+              "max": 2498
+            },
+            {
+              "band": "50%",
+              "max": 7392
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T12:00:00Z",
+          "numContributors": 13916,
+          "currentTotal": 82988637,
+          "delta": 480131,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 76457
+            },
+            {
+              "band": "25%",
+              "max": 76456
+            },
+            {
+              "band": "50%",
+              "max": 7488
+            },
+            {
+              "band": "75%",
+              "max": 2498
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T13:00:00Z",
+          "numContributors": 13972,
+          "currentTotal": 83587906,
+          "delta": 599269,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 7511
+            },
+            {
+              "band": "top10",
+              "max": 76457
+            },
+            {
+              "band": "25%",
+              "max": 76456
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2498
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T14:00:00Z",
+          "numContributors": 14046,
+          "currentTotal": 84211867,
+          "delta": 623961,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 76457
+            },
+            {
+              "band": "25%",
+              "max": 76456
+            },
+            {
+              "band": "75%",
+              "max": 2498
+            },
+            {
+              "band": "50%",
+              "max": 7511
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T15:00:00Z",
+          "numContributors": 14118,
+          "currentTotal": 84902020,
+          "delta": 690153,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 79577
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2498
+            },
+            {
+              "band": "50%",
+              "max": 7511
+            },
+            {
+              "band": "25%",
+              "max": 79576
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T16:00:00Z",
+          "numContributors": 14176,
+          "currentTotal": 85705927,
+          "delta": 803907,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 79576
+            },
+            {
+              "band": "top10",
+              "max": 79577
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2498
+            },
+            {
+              "band": "50%",
+              "max": 7511
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T17:00:00Z",
+          "numContributors": 14245,
+          "currentTotal": 86479941,
+          "delta": 774014,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "top10",
+              "max": 79577
+            },
+            {
+              "band": "25%",
+              "max": 79576
+            },
+            {
+              "band": "50%",
+              "max": 7511
+            },
+            {
+              "band": "75%",
+              "max": 2498
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T18:00:00Z",
+          "numContributors": 14325,
+          "currentTotal": 87407523,
+          "delta": 927582,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2498
+            },
+            {
+              "band": "50%",
+              "max": 7680
+            },
+            {
+              "band": "25%",
+              "max": 79576
+            },
+            {
+              "band": "top10",
+              "max": 79577
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T19:00:00Z",
+          "numContributors": 14416,
+          "currentTotal": 88512621,
+          "delta": 1105098,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 79576
+            },
+            {
+              "band": "75%",
+              "max": 2538
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "top10",
+              "max": 79577
+            },
+            {
+              "band": "50%",
+              "max": 7788
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T20:00:00Z",
+          "numContributors": 14514,
+          "currentTotal": 89595512,
+          "delta": 1082891,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 79577
+            },
+            {
+              "band": "50%",
+              "max": 7812
+            },
+            {
+              "band": "75%",
+              "max": 2538
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "25%",
+              "max": 79576
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T21:00:00Z",
+          "numContributors": 14618,
+          "currentTotal": 90652144,
+          "delta": 1056632,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 7812
+            },
+            {
+              "band": "25%",
+              "max": 79576
+            },
+            {
+              "band": "top10",
+              "max": 79577
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2552
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T22:00:00Z",
+          "numContributors": 14711,
+          "currentTotal": 91515528,
+          "delta": 863384,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 79577
+            },
+            {
+              "band": "25%",
+              "max": 79576
+            },
+            {
+              "band": "50%",
+              "max": 7812
+            },
+            {
+              "band": "75%",
+              "max": 2552
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-08T23:00:00Z",
+          "numContributors": 14794,
+          "currentTotal": 92240524,
+          "delta": 724996,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "top10",
+              "max": 79577
+            },
+            {
+              "band": "25%",
+              "max": 79576
+            },
+            {
+              "band": "50%",
+              "max": 7812
+            },
+            {
+              "band": "75%",
+              "max": 2552
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T00:00:00Z",
+          "numContributors": 14865,
+          "currentTotal": 92901227,
+          "delta": 660703,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 7812
+            },
+            {
+              "band": "25%",
+              "max": 79576
+            },
+            {
+              "band": "top10",
+              "max": 79577
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2552
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T01:00:00Z",
+          "numContributors": 14915,
+          "currentTotal": 93457043,
+          "delta": 555816,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 7848
+            },
+            {
+              "band": "25%",
+              "max": 79576
+            },
+            {
+              "band": "top10",
+              "max": 79577
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2552
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T02:00:00Z",
+          "numContributors": 14984,
+          "currentTotal": 94047804,
+          "delta": 590761,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 79576
+            },
+            {
+              "band": "top10",
+              "max": 79577
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2552
+            },
+            {
+              "band": "50%",
+              "max": 7848
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T03:00:00Z",
+          "numContributors": 15044,
+          "currentTotal": 94650294,
+          "delta": 602490,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 79577
+            },
+            {
+              "band": "50%",
+              "max": 7848
+            },
+            {
+              "band": "75%",
+              "max": 2552
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "25%",
+              "max": 79576
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T04:00:00Z",
+          "numContributors": 15100,
+          "currentTotal": 95178269,
+          "delta": 527975,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 7848
+            },
+            {
+              "band": "top10",
+              "max": 79577
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2552
+            },
+            {
+              "band": "25%",
+              "max": 79576
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T05:00:00Z",
+          "numContributors": 15139,
+          "currentTotal": 95626222,
+          "delta": 447953,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "50%",
+              "max": 7920
+            },
+            {
+              "band": "75%",
+              "max": 2552
+            },
+            {
+              "band": "top10",
+              "max": 79577
+            },
+            {
+              "band": "25%",
+              "max": 79576
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T06:00:00Z",
+          "numContributors": 15169,
+          "currentTotal": 95995171,
+          "delta": 368949,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 79576
+            },
+            {
+              "band": "top10",
+              "max": 79577
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2552
+            },
+            {
+              "band": "50%",
+              "max": 7920
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T07:00:00Z",
+          "numContributors": 15197,
+          "currentTotal": 96320228,
+          "delta": 325057,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 79576
+            },
+            {
+              "band": "top10",
+              "max": 79577
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2552
+            },
+            {
+              "band": "50%",
+              "max": 7920
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T08:00:00Z",
+          "numContributors": 15219,
+          "currentTotal": 96638141,
+          "delta": 317913,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 80616
+            },
+            {
+              "band": "50%",
+              "max": 7920
+            },
+            {
+              "band": "75%",
+              "max": 2552
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "top10",
+              "max": 80617
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T09:00:00Z",
+          "numContributors": 15247,
+          "currentTotal": 96938399,
+          "delta": 300258,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 80617
+            },
+            {
+              "band": "25%",
+              "max": 80616
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2564
+            },
+            {
+              "band": "50%",
+              "max": 7920
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T10:00:00Z",
+          "numContributors": 15274,
+          "currentTotal": 97285790,
+          "delta": 347391,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2564
+            },
+            {
+              "band": "50%",
+              "max": 7920
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "top10",
+              "max": 80617
+            },
+            {
+              "band": "25%",
+              "max": 80616
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T11:00:00Z",
+          "numContributors": 15298,
+          "currentTotal": 97720034,
+          "delta": 434244,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "top10",
+              "max": 80617
+            },
+            {
+              "band": "25%",
+              "max": 80616
+            },
+            {
+              "band": "50%",
+              "max": 7920
+            },
+            {
+              "band": "75%",
+              "max": 2564
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T12:00:00Z",
+          "numContributors": 15322,
+          "currentTotal": 98185620,
+          "delta": 465586,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 81656
+            },
+            {
+              "band": "top10",
+              "max": 81657
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2564
+            },
+            {
+              "band": "50%",
+              "max": 7920
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T13:00:00Z",
+          "numContributors": 15363,
+          "currentTotal": 98623827,
+          "delta": 438207,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 82697
+            },
+            {
+              "band": "25%",
+              "max": 82696
+            },
+            {
+              "band": "50%",
+              "max": 7920
+            },
+            {
+              "band": "75%",
+              "max": 2564
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T14:00:00Z",
+          "numContributors": 15407,
+          "currentTotal": 99157168,
+          "delta": 533341,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2564
+            },
+            {
+              "band": "50%",
+              "max": 7920
+            },
+            {
+              "band": "top10",
+              "max": 82697
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "25%",
+              "max": 82696
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T15:00:00Z",
+          "numContributors": 15455,
+          "currentTotal": 99779130,
+          "delta": 621962,
+          "reachedTier": 2,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 82697
+            },
+            {
+              "band": "25%",
+              "max": 82696
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2564
+            },
+            {
+              "band": "50%",
+              "max": 8084
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T16:00:00Z",
+          "numContributors": 15507,
+          "currentTotal": 100468368,
+          "delta": 689238,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 8084
+            },
+            {
+              "band": "25%",
+              "max": 82696
+            },
+            {
+              "band": "top10",
+              "max": 82697
+            },
+            {
+              "band": "75%",
+              "max": 2564
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T17:00:00Z",
+          "numContributors": 15558,
+          "currentTotal": 101237785,
+          "delta": 769417,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 8084
+            },
+            {
+              "band": "top10",
+              "max": 82697
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2596
+            },
+            {
+              "band": "25%",
+              "max": 82696
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T18:00:00Z",
+          "numContributors": 15631,
+          "currentTotal": 102054594,
+          "delta": 816809,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 85816
+            },
+            {
+              "band": "75%",
+              "max": 2596
+            },
+            {
+              "band": "top10",
+              "max": 85817
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "50%",
+              "max": 8204
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T19:00:00Z",
+          "numContributors": 15701,
+          "currentTotal": 102943923,
+          "delta": 889329,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 85816
+            },
+            {
+              "band": "50%",
+              "max": 8204
+            },
+            {
+              "band": "75%",
+              "max": 2604
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "top10",
+              "max": 85817
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T20:00:00Z",
+          "numContributors": 15784,
+          "currentTotal": 103898828,
+          "delta": 954905,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2604
+            },
+            {
+              "band": "50%",
+              "max": 8204
+            },
+            {
+              "band": "25%",
+              "max": 85816
+            },
+            {
+              "band": "top10",
+              "max": 85817
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T21:00:00Z",
+          "numContributors": 15855,
+          "currentTotal": 104751132,
+          "delta": 852304,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 85816
+            },
+            {
+              "band": "top10",
+              "max": 85817
+            },
+            {
+              "band": "100%",
+              "max": 1024
+            },
+            {
+              "band": "75%",
+              "max": 2604
+            },
+            {
+              "band": "50%",
+              "max": 8204
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T22:00:00Z",
+          "numContributors": 15944,
+          "currentTotal": 105575465,
+          "delta": 824333,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 85816
+            },
+            {
+              "band": "top10",
+              "max": 85817
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "75%",
+              "max": 2604
+            },
+            {
+              "band": "50%",
+              "max": 8222
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-09T23:00:00Z",
+          "numContributors": 16008,
+          "currentTotal": 106214006,
+          "delta": 638541,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 85816
+            },
+            {
+              "band": "50%",
+              "max": 8222
+            },
+            {
+              "band": "75%",
+              "max": 2604
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "top10",
+              "max": 85817
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T00:00:00Z",
+          "numContributors": 16058,
+          "currentTotal": 106765193,
+          "delta": 551187,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 8222
+            },
+            {
+              "band": "25%",
+              "max": 85816
+            },
+            {
+              "band": "top10",
+              "max": 85817
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "75%",
+              "max": 2604
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T01:00:00Z",
+          "numContributors": 16103,
+          "currentTotal": 107331525,
+          "delta": 566332,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "50%",
+              "max": 8280
+            },
+            {
+              "band": "75%",
+              "max": 2604
+            },
+            {
+              "band": "top10",
+              "max": 85817
+            },
+            {
+              "band": "25%",
+              "max": 85816
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T02:00:00Z",
+          "numContributors": 16159,
+          "currentTotal": 107896181,
+          "delta": 564656,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 85817
+            },
+            {
+              "band": "25%",
+              "max": 85816
+            },
+            {
+              "band": "50%",
+              "max": 8280
+            },
+            {
+              "band": "75%",
+              "max": 2604
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T03:00:00Z",
+          "numContributors": 16223,
+          "currentTotal": 108537884,
+          "delta": 641703,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 85817
+            },
+            {
+              "band": "50%",
+              "max": 8280
+            },
+            {
+              "band": "75%",
+              "max": 2604
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "25%",
+              "max": 85816
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T04:00:00Z",
+          "numContributors": 16271,
+          "currentTotal": 109033123,
+          "delta": 495239,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 85816
+            },
+            {
+              "band": "50%",
+              "max": 8372
+            },
+            {
+              "band": "75%",
+              "max": 2604
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "top10",
+              "max": 85817
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T05:00:00Z",
+          "numContributors": 16301,
+          "currentTotal": 109443233,
+          "delta": 410110,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 85816
+            },
+            {
+              "band": "top10",
+              "max": 85817
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "75%",
+              "max": 2604
+            },
+            {
+              "band": "50%",
+              "max": 8372
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T06:00:00Z",
+          "numContributors": 16334,
+          "currentTotal": 109781549,
+          "delta": 338316,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 8372
+            },
+            {
+              "band": "25%",
+              "max": 85816
+            },
+            {
+              "band": "top10",
+              "max": 85817
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "75%",
+              "max": 2604
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T07:00:00Z",
+          "numContributors": 16357,
+          "currentTotal": 110088175,
+          "delta": 306626,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "25%",
+              "max": 85816
+            },
+            {
+              "band": "50%",
+              "max": 8372
+            },
+            {
+              "band": "75%",
+              "max": 2604
+            },
+            {
+              "band": "top10",
+              "max": 85817
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T08:00:00Z",
+          "numContributors": 16382,
+          "currentTotal": 110370352,
+          "delta": 282177,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2604
+            },
+            {
+              "band": "25%",
+              "max": 85816
+            },
+            {
+              "band": "top10",
+              "max": 85817
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "50%",
+              "max": 8372
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T09:00:00Z",
+          "numContributors": 16405,
+          "currentTotal": 110688393,
+          "delta": 318041,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2604
+            },
+            {
+              "band": "25%",
+              "max": 85816
+            },
+            {
+              "band": "top10",
+              "max": 85817
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "50%",
+              "max": 8397
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T10:00:00Z",
+          "numContributors": 16434,
+          "currentTotal": 111059658,
+          "delta": 371265,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 86952
+            },
+            {
+              "band": "50%",
+              "max": 8397
+            },
+            {
+              "band": "75%",
+              "max": 2604
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "top10",
+              "max": 86953
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T11:00:00Z",
+          "numContributors": 16466,
+          "currentTotal": 111446245,
+          "delta": 386587,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 8397
+            },
+            {
+              "band": "75%",
+              "max": 2604
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "top10",
+              "max": 86953
+            },
+            {
+              "band": "25%",
+              "max": 86952
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T12:00:00Z",
+          "numContributors": 16505,
+          "currentTotal": 111848662,
+          "delta": 402417,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 86952
+            },
+            {
+              "band": "50%",
+              "max": 8397
+            },
+            {
+              "band": "75%",
+              "max": 2604
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "top10",
+              "max": 86953
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T13:00:00Z",
+          "numContributors": 16532,
+          "currentTotal": 112284926,
+          "delta": 436264,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 86953
+            },
+            {
+              "band": "25%",
+              "max": 86952
+            },
+            {
+              "band": "50%",
+              "max": 8397
+            },
+            {
+              "band": "75%",
+              "max": 2604
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T14:00:00Z",
+          "numContributors": 16573,
+          "currentTotal": 112777673,
+          "delta": 492747,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 86953
+            },
+            {
+              "band": "25%",
+              "max": 86952
+            },
+            {
+              "band": "50%",
+              "max": 8397
+            },
+            {
+              "band": "75%",
+              "max": 2604
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T15:00:00Z",
+          "numContributors": 16611,
+          "currentTotal": 113316332,
+          "delta": 538659,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2604
+            },
+            {
+              "band": "25%",
+              "max": 86952
+            },
+            {
+              "band": "top10",
+              "max": 86953
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "50%",
+              "max": 8397
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T16:00:00Z",
+          "numContributors": 16650,
+          "currentTotal": 113900389,
+          "delta": 584057,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 8397
+            },
+            {
+              "band": "25%",
+              "max": 86952
+            },
+            {
+              "band": "top10",
+              "max": 86953
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "75%",
+              "max": 2604
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T17:00:00Z",
+          "numContributors": 16705,
+          "currentTotal": 114490165,
+          "delta": 589776,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 86953
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "75%",
+              "max": 2604
+            },
+            {
+              "band": "50%",
+              "max": 8479
+            },
+            {
+              "band": "25%",
+              "max": 86952
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T18:00:00Z",
+          "numContributors": 16760,
+          "currentTotal": 115208526,
+          "delta": 718361,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 8479
+            },
+            {
+              "band": "25%",
+              "max": 87285
+            },
+            {
+              "band": "75%",
+              "max": 2608
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "top10",
+              "max": 87286
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T19:00:00Z",
+          "numContributors": 16812,
+          "currentTotal": 115988948,
+          "delta": 780422,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "50%",
+              "max": 8479
+            },
+            {
+              "band": "25%",
+              "max": 88550
+            },
+            {
+              "band": "top10",
+              "max": 88551
+            },
+            {
+              "band": "75%",
+              "max": 2608
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T20:00:00Z",
+          "numContributors": 16875,
+          "currentTotal": 116894318,
+          "delta": 905370,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "25%",
+              "max": 92345
+            },
+            {
+              "band": "50%",
+              "max": 8659
+            },
+            {
+              "band": "75%",
+              "max": 2608
+            },
+            {
+              "band": "top10",
+              "max": 92346
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T21:00:00Z",
+          "numContributors": 16923,
+          "currentTotal": 117737581,
+          "delta": 843263,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2608
+            },
+            {
+              "band": "25%",
+              "max": 97405
+            },
+            {
+              "band": "top10",
+              "max": 97406
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "50%",
+              "max": 8659
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T22:00:00Z",
+          "numContributors": 16986,
+          "currentTotal": 118354273,
+          "delta": 616692,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 8659
+            },
+            {
+              "band": "25%",
+              "max": 97405
+            },
+            {
+              "band": "top10",
+              "max": 97406
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "75%",
+              "max": 2608
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-10T23:00:00Z",
+          "numContributors": 17035,
+          "currentTotal": 118920569,
+          "delta": 566296,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 97406
+            },
+            {
+              "band": "25%",
+              "max": 97405
+            },
+            {
+              "band": "50%",
+              "max": 8659
+            },
+            {
+              "band": "75%",
+              "max": 2608
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-11T00:00:00Z",
+          "numContributors": 17088,
+          "currentTotal": 119386251,
+          "delta": 465682,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2608
+            },
+            {
+              "band": "50%",
+              "max": 8659
+            },
+            {
+              "band": "25%",
+              "max": 97405
+            },
+            {
+              "band": "top10",
+              "max": 97406
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-11T01:00:00Z",
+          "numContributors": 17127,
+          "currentTotal": 119787872,
+          "delta": 401621,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 97405
+            },
+            {
+              "band": "top10",
+              "max": 97406
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "75%",
+              "max": 2608
+            },
+            {
+              "band": "50%",
+              "max": 8659
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-11T02:00:00Z",
+          "numContributors": 17158,
+          "currentTotal": 120213061,
+          "delta": 425189,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2608
+            },
+            {
+              "band": "25%",
+              "max": 97405
+            },
+            {
+              "band": "top10",
+              "max": 97406
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "50%",
+              "max": 8659
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-11T03:00:00Z",
+          "numContributors": 17196,
+          "currentTotal": 120715359,
+          "delta": 502298,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 97405
+            },
+            {
+              "band": "50%",
+              "max": 8659
+            },
+            {
+              "band": "75%",
+              "max": 2608
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "top10",
+              "max": 97406
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-11T04:00:00Z",
+          "numContributors": 17225,
+          "currentTotal": 121208995,
+          "delta": 493636,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "25%",
+              "max": 97405
+            },
+            {
+              "band": "50%",
+              "max": 8659
+            },
+            {
+              "band": "75%",
+              "max": 2608
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "top10",
+              "max": 97406
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-11T05:00:00Z",
+          "numContributors": 17247,
+          "currentTotal": 121615388,
+          "delta": 406393,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "75%",
+              "max": 2608
+            },
+            {
+              "band": "25%",
+              "max": 97405
+            },
+            {
+              "band": "top10",
+              "max": 97406
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "50%",
+              "max": 8883
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-11T06:00:00Z",
+          "numContributors": 17270,
+          "currentTotal": 121925709,
+          "delta": 310321,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "top10",
+              "max": 97406
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "75%",
+              "max": 2608
+            },
+            {
+              "band": "50%",
+              "max": 8883
+            },
+            {
+              "band": "25%",
+              "max": 97405
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-11T07:00:00Z",
+          "numContributors": 17301,
+          "currentTotal": 122237746,
+          "delta": 312037,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 8883
+            },
+            {
+              "band": "25%",
+              "max": 97405
+            },
+            {
+              "band": "top10",
+              "max": 97406
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "75%",
+              "max": 2608
+            }
+          ]
+        },
+        {
+          "hourUtc": "2026-06-11T08:00:00Z",
+          "numContributors": 17301,
+          "currentTotal": 122237746,
+          "delta": 0,
+          "reachedTier": 3,
+          "bandMax": [
+            {
+              "band": "50%",
+              "max": 8883
+            },
+            {
+              "band": "75%",
+              "max": 2608
+            },
+            {
+              "band": "100%",
+              "max": 1040
+            },
+            {
+              "band": "25%",
+              "max": 97405
+            },
+            {
+              "band": "top10",
+              "max": 97406
+            }
+          ]
+        }
+      ],
+      "tierRewards": [
+        {
+          "tier": 1,
+          "bands": [
+            {
+              "band": "100",
+              "reward": 30000000
+            },
+            {
+              "band": "25",
+              "reward": 140000000
+            },
+            {
+              "band": "50",
+              "reward": 100000000
+            },
+            {
+              "band": "75",
+              "reward": 80000000
+            }
+          ]
+        },
+        {
+          "tier": 2,
+          "bands": [
+            {
+              "band": "100",
+              "reward": 35000000
+            },
+            {
+              "band": "25",
+              "reward": 155000000
+            },
+            {
+              "band": "50",
+              "reward": 110000000
+            },
+            {
+              "band": "75",
+              "reward": 90000000
+            }
+          ]
+        },
+        {
+          "tier": 3,
+          "bands": [
+            {
+              "band": "100",
+              "reward": 45000000
+            },
+            {
+              "band": "25",
+              "reward": 170000000
+            },
+            {
+              "band": "50",
+              "reward": 120000000
+            },
+            {
+              "band": "75",
+              "reward": 100000000
+            }
+          ]
+        }
+      ],
+      "tierUnlocks": [
+        {
+          "tier": 1,
+          "earliestOccurrence": "2026-06-05T19:44:31Z"
+        },
+        {
+          "tier": 2,
+          "earliestOccurrence": "2026-06-06T20:29:25Z"
+        },
+        {
+          "tier": 3,
+          "earliestOccurrence": "2026-06-09T15:30:26Z"
+        }
+      ],
+      "progress": {
+        "currentAmount": 122237746,
+        "requiredAmount": 200000000,
+        "startDate": "2026-06-04T09:08:41Z",
+        "endDate": "2026-06-18T09:00:00Z",
+        "estimatedCompletion": "2026-06-17T22:00:00Z"
+      },
+      "currentTopTier": 5,
+      "currentAchievedTier": 3,
+      "integrityFlags": [],
+      "metadata": {
+        "id": "849",
+        "title": " Frontline Solutions Calls for Critical Supplies to Complete Runner Production",
+        "expiry": "2026-06-18 09:00:00",
+        "market_name": "Pawelczyk Dock",
+        "starsystem_name": "HIP 58412",
+        "activityType": "Trading",
+        "target_commodity_list": "Aluminium, Polymers, Semiconductors",
+        "target_qty": "200000000",
+        "qty": "0",
+        "objective": "Aluminium, Polymers, Semiconductors",
+        "images": "NewsImageMarket",
+        "news": "Frontline Solutions Calls for Critical Supplies to Complete Runner Production\n\n\nFrontline Solutions has issued a public call for support in the final production phase of their new vessel.\n\nThe Runner, capable of rapidly transporting and deploying mercenary squads and their ships to operational locations, is a new venture for Frontline Solutions and they require manufacturing support.\n\nCommanders can support this initiative by first signing up at Pawelczyk Dock in the HIP 58412 system, then selling Semiconductors, Polymers or Aluminium at the commodity market.\n\nCommodities sold as part of this initiative will have a 8x price multiplier.\n\nPilots who register at least 1 contribution will receive the following rewards:\n\n- Type-8 Convoy Chromatic Cherry\n- Panther Clipper Mk II ZPG Parcel Red\n- Credits, depending on success tier achieved and individual contribution level.\n\nThe campaign begins on the 4th of June 3312 and will run for two weeks. If the final target is met earlier than planned, the campaign will end immediately.\n\n{{top5}}",
+        "bulletin": "Frontline Solutions has issued a public call for support in the final production phase of their new vessel.\n\nThe Runner, capable of rapidly transporting and deploying mercenary squads and their ships to operational locations, is a new venture for Frontline Solutions and they require manufacturing support.\n\nCommanders can support this initiative by first signing up at Pawelczyk Dock in the HIP 58412 system, then selling Semiconductors, Polymers or Aluminium at the commodity market.\n\nCommodities sold as part of this initiative will have a 8x price multiplier.\n\nPilots who register at least 1 contribution will receive the following rewards:\n\n- Type-8 Convoy Chromatic Cherry\n- Panther Clipper Mk II ZPG Parcel Red\n- Credits, depending on success tier achieved and individual contribution level.\n\nThe campaign begins on the 4th of June 3312 and will run for two weeks. If the final target is met earlier than planned, the campaign will end immediately.\n",
+        "localized": {
+          "ru": {
+            "title": "Frontline Solutions Calls for Critical Supplies to Complete Runner Production",
+            "bulletin": "Компания Frontline Solutions объявила о начале кампании по сбору материалов, необходимых для заключительного этапа производства нового корабля.\n\nRunner – новое судно Frontline Solutions, предназначенное для быстрой транспортировки и развертывания отрядов наемников вместе с их кораблями в районах проведения операций. Для завершения строительства компании требуется производственная поддержка.\n\nКомандиры могут поддержать инициативу, предварительно зарегистрировавшись на Pawelczyk Dock в системе HIP 58412, а затем продавая на местном товарном рынке полупроводники, полимеры или алюминий.\n\nТовары для этой инициативы будут продаваться со множителем x8.\n\nПилоты, сделавшие хотя бы один вклад, получат следующее вознаграждение:\n\n- Расцветка Type-8 - \"Convoy Chromatic\" - вишневый\n- Расцветка Panther Clipper Mk II – \"ZPG Parcel\" – красный\n– денежное вознаграждение в кредитах, размер которого зависит от достигнутого уровня успеха и индивидуального вклада.\n\nКампания начнется 4 июня 3312 г. и продлится две недели. Если финальная цель будет достигнута раньше срока, кампания завершится немедленно.\n",
+            "activityType": "Торговля"
+          },
+          "es": {
+            "title": "Frontline Solutions Calls for Critical Supplies to Complete Runner Production",
+            "bulletin": "Frontline Solutions ha emitido una convocatoria pública de apoyo en la fase final de producción de su nueva nave.\n\nLa Runner, capaz de transportar y desplegar con rapidez a escuadras y naves mercenarias a las ubicaciones de las operaciones, es un nuevo proyecto de Frontline Solutions y necesitan apoyo para su fabricación.\n\nLos comandantes pueden apoyar esta iniciativa inscribiéndose primero en Pawelczyk Dock en el sistema HIP 58412, y luego vendiendo semiconductores, polímeros o aluminio en el mercado de mercancías.\n\nLas mercancías vendidas como parte de esta iniciativa tendrán un multiplicador de 8 sobre su precio.\n\nLos pilotos que registren al menos 1 contribución recibirán las siguientes recompensas:\n\n- Diseño \"Convoy Chromatic\" - Cereza para el Type-8\n- Diseño \"ZPG Parcel\" - Rojo para el Panther Clipper Mk II\n- Créditos, en función del nivel de éxito alcanzado y del nivel de contribución individual.\n\nEl evento comienza el 4 de junio de 3312 y durará dos semanas. Si el objetivo se alcanza antes de lo planeado, la campaña finalizará de inmediato.\n",
+            "activityType": "Comercio"
+          },
+          "pt": {
+            "title": "Frontline Solutions Calls for Critical Supplies to Complete Runner Production",
+            "bulletin": "A Frontline Solutions convocou o público para apoiar os esforços finais de produção de sua nova embarcação.\n\nA Runner, capaz de transportar e mobilizar rapidamente esquadrões de mercenários e suas naves para locais de operação, é um novo projeto da Frontline Solutions, e a empresa precisa de apoio na fabricação.\n\nOs comandantes podem apoiar esta iniciativa inscrevendo-se primeiro em Pawelczyk Dock, no sistema HIP 58412, e, em seguida, vendendo semicondutores, polímeros ou alumínio no mercado.\n\nAs mercadorias vendidas como parte desta iniciativa terão um multiplicador de preço de 8x.\n\nPilotos que registrarem pelo menos uma contribuição receberão os seguintes prêmios:\n\n- Pintura \"Convoy Chromatic\" - Cereja para Type-8\n- Pintura \"ZPG Parcel\" - Vermelho para Panther Clipper Mk II\n- Créditos, dependendo do nível de sucesso alcançado e do nível de contribuição individual.\n\nA campanha começa no dia 4 de junho de 3312 e durará duas semanas. Se o objetivo final for atingido antes do planejado, a campanha terminará imediatamente.\n",
+            "activityType": "Comércio"
+          },
+          "de": {
+            "title": "Frontline Solutions Calls for Critical Supplies to Complete Runner Production",
+            "bulletin": "Frontline Solutions bat alle Piloten um Unterstützung in der letzten Produktionsphase ihres neuen Schiffes.\n\n\"The Runner\" – ein Projekt, mit dem Söldnergeschwader und ihre Schiffe schnell zu Einsatzorten transportiert und dort stationiert werden können – ist ein neues Vorhaben von Frontline Solutions, für welches das Unternehmen Unterstützung bei der Fertigung benötigt.\n\nKommandanten können diese Initiative unterstützen, indem sie sich zunächst am Pawelczyk Dock im System HIP 58412 anmelden und anschließend Halbleiter, Polymere oder Aluminium auf dem Rohstoffmarkt verkaufen.\n\nWaren, die im Rahmen dieser Initiative verkauft werden, haben einen Preismultiplikator von 8.\n\nPiloten, denen mindestens 1 Beitrag gelingt, erhalten folgende Belohnungen:\n\n- Lackierung  \"Convoy Chromatic\" - Kirsche für den Type-8\n- Lackierung \"ZPG Parcel\" - Rot für den Panther Clipper Mk II\n- Credits, abhängig von der erreichten Erfolgsstufe und dem individuellen Beitragsniveau.\n\nDie Kampagne beginnt am 04. Juni 3312 und soll zwei Wochen andauern. Sollte das Ziel früher erreicht werden als geplant, endet diese mit sofortiger Wirkung.\n",
+            "activityType": "Handel"
+          },
+          "fr": {
+            "title": "Frontline Solutions Calls for Critical Supplies to Complete Runner Production",
+            "bulletin": "Frontline Solutions invite la communauté galactique à soutenir la phase finale de la production de leur nouveau vaisseau.\n\nLe Runner, capable de transporter et déployer rapidement des escadrons mercenaires et leurs vaisseaux dans des lieux d'opération, est une nouvelle aventure de Frontline Solutions qui demande une aide dans sa construction.\n\nLes commandants peuvent aider dans cette initiative en s'inscrivant d'abord au Dock Pawelczyk dans le système HIP 58412, puis en vendant des semi-conducteurs, des polymères ou de l'aluminium au marché.\n\nLes marchandises vendues dans le cadre de cette opération bénéficieront d'un multiplicateur de prix de 8.\n\nLes pilotes qui réussiront à obtenir au moins 1 contribution recevront les récompenses suivantes :\n\n- Livrée \" Convoy Chromatic \" - Cerise pour le Type-8\n- Livrée \" ZPG Parcel \" - Rouge pour le Panther Clipper Mk II\n- Une récompense en crédits, en fonction du niveau de réussite de l'opération et du niveau de contribution individuelle.\n\nCette campagne débutera le 4 juin 3312 et se poursuivra pendant deux semaines. À noter cependant qu'elle prendra fin dès que l'objectif fixé aura été atteint, et ce, même si cela se produit avant la date butoir.\n",
+            "activityType": "Commerce"
+          }
+        }
+      }
+    }
+  ]
+}

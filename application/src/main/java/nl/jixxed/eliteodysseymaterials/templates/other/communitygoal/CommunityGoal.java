@@ -66,6 +66,7 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
     private DestroyableLabel expiresTitle;
     private DestroyableLabel currentBand;
     private DestroyableLabel contribution;
+    private BandPredictionTable bandPredictionTable;
 
     private final ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
 
@@ -151,9 +152,7 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                 )
                 .buildVBox();
         goalText = LabelBuilder.builder().withStyleClass("cg-text").build();
-//        VBox.setVgrow(goalText, javafx.scene.layout.Priority.ALWAYS);
         DestroyableVBox destroyableVBox = BoxBuilder.builder().withNode(goalText).buildVBox();
-//        destroyableVBox.minHeightProperty().bind(goalText.prefHeightProperty());
         goalText.setMinHeight(Region.USE_PREF_SIZE);
         DestroyableHBox info = BoxBuilder.builder()
                 .withStyleClass("information")
@@ -162,11 +161,12 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
         commodityList = new CommodityList();
         progressChart = new ProgressChart();
         bandChart = new BandChart();
+        bandPredictionTable = new BandPredictionTable();
         rewardsTable = new RewardsTable();
         progressStats = new ProgressStats();
         DestroyableSeparator destroyableSeparator = new DestroyableSeparator(Orientation.HORIZONTAL);
         destroyableSeparator.getStyleClass().add("splitter");
-        this.getNodes().addAll(header, destroyableSeparator, info, commodityList, progressStats, progressChart, bandChart, rewardsTable);
+        this.getNodes().addAll(header, destroyableSeparator, info, commodityList, progressStats, progressChart, bandChart, bandPredictionTable, rewardsTable);
         this.setManaged(false);
         this.setVisible(false);
     }
@@ -176,7 +176,6 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
         register(EventService.addListener(true, this, CommunityGoalEvent.class, _ -> refreshContent()));
         register(EventService.addListener(true, this, CommunityGoalReportEvent.class, event -> {
             if (event.getReport() != null && event.getReport().goals().stream().anyMatch(g -> goal.getId().equals((int) g.cgid()))) {
-//                report = event.getReport();
                 refreshContent();
             }
         }));
@@ -194,15 +193,19 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                     bandChart.update(goalReport);
                     rewardsTable.update(goalReport);
                     progressStats.update(goalReport);
-                    currentTier.setText(goalReport.currentAchievedTier().toString());
-                    maxTier.setText(goalReport.currentTopTier().toString());
+                    currentTier.setText(Optional.ofNullable(goalReport.currentAchievedTier())
+                            .map(Object::toString).orElse(""));
+                    maxTier.setText(Optional.ofNullable(goalReport.currentTopTier())
+                            .map(Object::toString).orElse(""));
                     Map<String, Object> localized = (Map<String, Object>) goalReport.metadata().get("localized");
-                    String fallbackActivityType = goalReport.metadata().get("activityType").toString();
+                    String fallbackActivityType = Optional.ofNullable(goalReport.metadata().get("activityType"))
+                            .map(Object::toString).orElse("");
                     activityType.addBinding(activityType.textProperty(),
                         LocaleService.getStringBinding(locale -> lookupLocalized(localized, locale, "activityType", fallbackActivityType)));
 
-
-                    ZonedDateTime localExpiry = toLocalExpiry(goalReport.metadata().get("expiry").toString());
+                    ZonedDateTime localExpiry = toLocalExpiry(
+                            Optional.ofNullable(goalReport.metadata().get("expiry"))
+                                    .map(Object::toString).orElse(""));
                     String formatKey = localExpiry.getYear() == ZonedDateTime.now().getYear() ? "community.goal.date.format.currentyear" : "community.goal.date.format.previousyear";
                     StringBinding formattedDate = LocaleService.getStringBinding(locale -> {
                         String pattern = LocaleService.getLocalizedStringForLocale(locale, formatKey);
@@ -218,19 +221,25 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                         expiresTimer.setManaged(false);
                     }
 
-                    StarSystem starSystem = LocationService.getStarSystem(goalReport.metadata().get("starsystem_name").toString());
+                    StarSystem starSystem = LocationService.getStarSystem(
+                            Optional.ofNullable(goalReport.metadata().get("starsystem_name"))
+                                    .map(Object::toString).orElse(""));
                     location.getNodes().clear();
                     location.setVisible(false);
                     location.setManaged(false);
                     if (starSystem != null) {
-                        location.getNodes().add(new CopyableLocation(starSystem, goalReport.metadata().get("market_name").toString()));
+                        location.getNodes().add(new CopyableLocation(starSystem,
+                                    Optional.ofNullable(goalReport.metadata().get("market_name"))
+                                            .map(Object::toString).orElse("")));
                         location.setVisible(true);
                         location.setManaged(true);
                     }
-                    String fallbackBulletin = goalReport.metadata().get("bulletin").toString();
+                    String fallbackBulletin = Optional.ofNullable(goalReport.metadata().get("bulletin"))
+                            .map(Object::toString).orElse("");
                     goalText.addBinding(goalText.textProperty(),
                         LocaleService.getStringBinding(locale -> lookupLocalized(localized, locale, "bulletin", fallbackBulletin)));
-                    String fallbackTitle = goalReport.metadata().get("title").toString();
+                    String fallbackTitle = Optional.ofNullable(goalReport.metadata().get("title"))
+                            .map(Object::toString).orElse("");
                     title.addBinding(title.textProperty(),
                         LocaleService.getStringBinding(locale -> lookupLocalized(localized, locale, "title", fallbackTitle)));
                     ApplicationState.getInstance().getPreferredCommander().ifPresent(_ -> {//database must be initialized with a commander
@@ -265,11 +274,12 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                             currentBand.addBinding(currentBand.textProperty(), title);
                         }
 
-                        if (contributionValue < 0L) {//no journal events, not signed up
+ if (contributionValue < 0L) {//no journal events, not signed up
                             contribution.setText("-");
                         } else {//no data, set to highest from journal
                             contribution.setText(Formatters.NUMBER_FORMAT_0.format(contributionValue));
                         }
+                        bandPredictionTable.update(goalReport, contributionValue);
                     });
                     this.setManaged(true);
                     this.setVisible(true);
@@ -289,14 +299,18 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                             .filter(g -> goal.getId().equals((int) g.cgid()))
                             .findFirst())
                     .ifPresent(goalReport -> {
-                        ZonedDateTime localExpiry = toLocalExpiry(goalReport.metadata().get("expiry").toString());
-                        if (localExpiry.isAfter(ZonedDateTime.now())) {
+                        String expiryStr = Optional.ofNullable(goalReport.metadata().get("expiry"))
+                                .map(Object::toString).orElse(null);
+                        if (expiryStr != null) {
+                            ZonedDateTime localExpiry = toLocalExpiry(expiryStr);
+                            if (localExpiry.isAfter(ZonedDateTime.now())) {
                             expiresTimer.addBinding(expiresTimer.textProperty(), LocaleService.getStringBinding(() -> Formatters.timeUntil(localExpiry)));
                             expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expires"));
                         } else {
                             expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expired"));
                             expiresTimer.setVisible(false);
                             expiresTimer.setManaged(false);
+                        }
                         }
                         bandChart.update(goalReport);
                     });
