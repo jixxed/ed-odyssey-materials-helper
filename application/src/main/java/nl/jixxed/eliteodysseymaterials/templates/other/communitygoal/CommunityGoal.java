@@ -191,7 +191,7 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                     commodityList.update(goalReport);
                     progressChart.update(goalReport);
                     bandChart.update(goalReport);
-                    rewardsTable.update(goalReport);
+                    rewardsTable.update(goalReport, goalReport.currentAchievedTier(), null);
                     progressStats.update(goalReport);
                     currentTier.setText(Optional.ofNullable(goalReport.currentAchievedTier())
                             .map(Object::toString).orElse(""));
@@ -257,10 +257,12 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                                 .map(CommunityGoalModel::getPlayerPercentileBand)
                                 .map(BigInteger::longValue)
                                 .orElse(-1L);
+                        String currentBandStr = null;
                         if (currentBandValue < 0L) {//no journal events, not signed up
                             currentBand.addBinding(currentBand.textProperty(), LocaleService.getStringBinding("community.goal.information.currentband.none"));
                         } else if (goalReport.hourlyData().isEmpty()) {//no data, set to highest from journal
                             String band = currentBandValue.toString();
+                            currentBandStr = band;
                             String label = (band.contains("top")) ? "community.goal.reward.table.top" : "community.goal.reward.table.percent";
                             StringBinding title = LocaleService.getStringBinding(label, band.replace("top", ""));
                             currentBand.addBinding(currentBand.textProperty(), title);
@@ -269,17 +271,19 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                                     .filter(bandMax -> bandMax.max() >= contributionValue)
                                     .max(new BandComparator());
                             String band = lowestMax.map(ReportModels.BandMax::band).orElse("top10");
+                            currentBandStr = band;
                             String label = (band.contains("top")) ? "community.goal.reward.table.top" : "community.goal.reward.table.percent";
                             StringBinding title = LocaleService.getStringBinding(label, band.replace("top", "").replace("%", ""));
                             currentBand.addBinding(currentBand.textProperty(), title);
                         }
 
- if (contributionValue < 0L) {//no journal events, not signed up
+                        if (contributionValue < 0L) {//no journal events, not signed up
                             contribution.setText("-");
                         } else {//no data, set to highest from journal
                             contribution.setText(Formatters.NUMBER_FORMAT_0.format(contributionValue));
                         }
                         bandPredictionTable.update(goalReport, contributionValue);
+                        rewardsTable.update(goalReport, goalReport.currentAchievedTier(), currentBandStr);
                     });
                     this.setManaged(true);
                     this.setVisible(true);

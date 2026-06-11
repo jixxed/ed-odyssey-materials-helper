@@ -37,7 +37,7 @@ public class RewardsTable extends DestroyableVBox implements DestroyableTemplate
         this.getNodes().addAll(BoxBuilder.builder().withStyleClass("reward-table-box").withNode(table).buildVBox());
     }
 
-    public void update(ReportModels.CommunityGoalReport report) {
+    public void update(ReportModels.CommunityGoalReport report, Integer achievedTier, String currentBandName) {
         table.getNodes().clear();
         DestroyableVBox tierBox = BoxBuilder.builder().withStyleClass("reward-tiers").withNode(LabelBuilder.builder().withStyleClass("cg-reward-title").withText("community.goal.reward.table.tier").build()).buildVBox();//TODO localize
         Map<Band, DestroyableVBox> rewards = new HashMap<>();
@@ -47,11 +47,12 @@ public class RewardsTable extends DestroyableVBox implements DestroyableTemplate
             tierBox.getNodes().add(LabelBuilder.builder().withStyleClass("cg-reward-tier").withNonLocalizedText(String.valueOf(tier)).build());
             tierReward.bands().forEach(reward -> bands.add(new Band(reward.band())));
         });
-        table.getNodes().add(tierBox);
+       table.getNodes().add(tierBox);
+
         for (int i = tierBox.getNodes().size() - 1; i > 0; i--) {
-            int finalI = i;
-            bands.stream().sorted().forEach(band -> {
-                Optional<ReportModels.BandReward> reward = report.tierRewards().stream().filter(tierReward -> tierReward.tier() == finalI)
+            final int tier = i;
+            bands.stream().sorted(Comparator.reverseOrder()).forEach(band -> {
+                Optional<ReportModels.BandReward> reward = report.tierRewards().stream().filter(tierReward -> tierReward.tier() == tier)
                         .findFirst().flatMap(tierReward -> tierReward.bands().stream().filter(bandReward -> new Band(bandReward.band()).equals(band)).findFirst());
                 rewards.computeIfAbsent(band, k -> {
                             String label = (band.getName().contains("top")) ? "community.goal.reward.table.top" : "community.goal.reward.table.percent";
@@ -59,20 +60,32 @@ public class RewardsTable extends DestroyableVBox implements DestroyableTemplate
                             return BoxBuilder.builder().withStyleClass("reward-values").withNode(title).buildVBox();
                         })
                         .getNodes()
-                        .add(LabelBuilder.builder().withStyleClass("cg-reward-value")
-                                .withText("community.goal.reward.table.credits", reward
-                                        .map(ReportModels.BandReward::reward)
-                                        .map(Formatters.NUMBER_FORMAT_0::format)
-                                        .orElse("?"))
-                                .build());
+                        .add(buildRewardValue(reward, tier, achievedTier, currentBandName, band.getName()));
             });
         }
-        rewards.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(Map.Entry::getValue).forEach(rewardsBox -> {
+        rewards.entrySet().stream().sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).map(Map.Entry::getValue).forEach(rewardsBox -> {
             table.getNodes().addAll(new GrowingRegion("cg-spacer"), rewardsBox);
         });
         table.getNodes().add(new GrowingRegion("cg-spacer"));
-        boolean emptyDataset = !report.tierRewards().isEmpty();
+       boolean emptyDataset = !report.tierRewards().isEmpty();
         this.setVisible(emptyDataset);
         this.setManaged(emptyDataset);
+    }
+
+  private DestroyableLabel buildRewardValue(Optional<ReportModels.BandReward> reward, int tier, Integer achievedTier, String currentBandName, String bandName) {
+        DestroyableLabel label = LabelBuilder.builder()
+                .withStyleClass("cg-reward-value")
+                .withText("community.goal.reward.table.credits", reward
+                        .map(ReportModels.BandReward::reward)
+                        .map(Formatters.NUMBER_FORMAT_0::format)
+                        .orElse("?"))
+                .build();
+        if (achievedTier != null && achievedTier == tier
+                && currentBandName != null
+                && (currentBandName.equals(bandName)
+                        || currentBandName.equals(bandName + "%"))) {
+            label.getStyleClass().add("cg-reward-value-highlight");
+        }
+        return label;
     }
 }

@@ -666,6 +666,10 @@
                   //-fx-background-color: $background-color-lighter;
 
                 }
+
+                .cg-reward-value-highlight {
+                  -fx-text-fill: $text-color-yellow;
+                }
               }
 
               .cg-spacer {
