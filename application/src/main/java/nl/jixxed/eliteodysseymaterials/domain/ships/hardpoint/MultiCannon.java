@@ -146,4 +146,11 @@ public class MultiCannon extends HardpointModule {
         return SynthesisBlueprints.SMALL_CALIBRE_MUNITIONS.values();
 
     }
+
+    public HorizonsBlueprintType getPreEngineeredExperimentalEffect() {
+        return switch (this.getId()) {
+            case "MULTI_CANNON_2_E_F_PRE" -> HorizonsBlueprintType.PHASING_SEQUENCE;
+            default -> null;
+        };
+    }
 }

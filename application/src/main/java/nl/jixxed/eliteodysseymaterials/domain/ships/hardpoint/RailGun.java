@@ -114,4 +114,12 @@ public class RailGun extends HardpointModule {
     public Collection<HorizonsSynthesisBlueprint> synthesisBlueprints() {
         return SynthesisBlueprints.HIGH_VELOCITY_MUNITIONS.values();
     }
+
+    public HorizonsBlueprintType getPreEngineeredExperimentalEffect() {
+        return switch (this.getId()) {
+            case "RAIL_GUN_2_B_F_PRE" -> HorizonsBlueprintType.FEEDBACK_CASCADE;
+            case "IMPERIAL_HAMMER_RAIL_GUN_2_B_F_PRE" -> HorizonsBlueprintType.SUPER_PENETRATOR;
+            default -> null;
+        };
+    }
 }

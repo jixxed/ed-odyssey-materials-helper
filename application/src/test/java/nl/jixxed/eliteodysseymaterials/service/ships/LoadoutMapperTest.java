@@ -44,100 +44,20 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.math.BigInteger;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Slf4j
 class LoadoutMapperTest {
 
-    @Test
-    public void getShipSlotIndexes() {
-        final Ship ship = ShipService.createBlankShip(ShipType.FEDERATION_CORVETTE);
-        Assertions.assertAll(
-                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "HugeHardpoint1").getIndex()),
-                () -> Assertions.assertEquals(1, LoadoutMapper.getShipSlot(ship, "HugeHardpoint2").getIndex()),
-                () -> Assertions.assertEquals(2, LoadoutMapper.getShipSlot(ship, "LargeHardpoint1").getIndex()),
-                () -> Assertions.assertEquals(3, LoadoutMapper.getShipSlot(ship, "MediumHardpoint1").getIndex()),
-                () -> Assertions.assertEquals(4, LoadoutMapper.getShipSlot(ship, "MediumHardpoint2").getIndex()),
-                () -> Assertions.assertEquals(5, LoadoutMapper.getShipSlot(ship, "SmallHardpoint1").getIndex()),
-                () -> Assertions.assertEquals(6, LoadoutMapper.getShipSlot(ship, "SmallHardpoint2").getIndex()),
-                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "TinyHardpoint1").getIndex()),
-                () -> Assertions.assertEquals(1, LoadoutMapper.getShipSlot(ship, "TinyHardpoint2").getIndex()),
-                () -> Assertions.assertEquals(2, LoadoutMapper.getShipSlot(ship, "TinyHardpoint3").getIndex()),
-                () -> Assertions.assertEquals(3, LoadoutMapper.getShipSlot(ship, "TinyHardpoint4").getIndex()),
-                () -> Assertions.assertEquals(4, LoadoutMapper.getShipSlot(ship, "TinyHardpoint5").getIndex()),
-                () -> Assertions.assertEquals(5, LoadoutMapper.getShipSlot(ship, "TinyHardpoint6").getIndex()),
-                () -> Assertions.assertEquals(6, LoadoutMapper.getShipSlot(ship, "TinyHardpoint7").getIndex()),
-                () -> Assertions.assertEquals(7, LoadoutMapper.getShipSlot(ship, "TinyHardpoint8").getIndex()),
-                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "Armour").getIndex()),
-                () -> Assertions.assertEquals(1, LoadoutMapper.getShipSlot(ship, "PowerPlant").getIndex()),
-                () -> Assertions.assertEquals(2, LoadoutMapper.getShipSlot(ship, "MainEngines").getIndex()),
-                () -> Assertions.assertEquals(3, LoadoutMapper.getShipSlot(ship, "FrameShiftDrive").getIndex()),
-                () -> Assertions.assertEquals(4, LoadoutMapper.getShipSlot(ship, "LifeSupport").getIndex()),
-                () -> Assertions.assertEquals(5, LoadoutMapper.getShipSlot(ship, "PowerDistributor").getIndex()),
-                () -> Assertions.assertEquals(6, LoadoutMapper.getShipSlot(ship, "Radar").getIndex()),
-                () -> Assertions.assertEquals(7, LoadoutMapper.getShipSlot(ship, "FuelTank").getIndex()),
-                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "Slot01_Size7").getIndex()),
-                () -> Assertions.assertEquals(1, LoadoutMapper.getShipSlot(ship, "Slot02_Size7").getIndex()),
-                () -> Assertions.assertEquals(2, LoadoutMapper.getShipSlot(ship, "Slot03_Size7").getIndex()),
-                () -> Assertions.assertEquals(3, LoadoutMapper.getShipSlot(ship, "Slot04_Size6").getIndex()),
-                () -> Assertions.assertEquals(4, LoadoutMapper.getShipSlot(ship, "Slot05_Size6").getIndex()),
-                () -> Assertions.assertEquals(5, LoadoutMapper.getShipSlot(ship, "Slot06_Size5").getIndex()),
-                () -> Assertions.assertEquals(6, LoadoutMapper.getShipSlot(ship, "Slot07_Size5").getIndex()),
-                () -> Assertions.assertEquals(7, LoadoutMapper.getShipSlot(ship, "Military01").getIndex()),
-                () -> Assertions.assertEquals(8, LoadoutMapper.getShipSlot(ship, "Military02").getIndex()),
-                () -> Assertions.assertEquals(9, LoadoutMapper.getShipSlot(ship, "Slot08_Size4").getIndex()),
-                () -> Assertions.assertEquals(10, LoadoutMapper.getShipSlot(ship, "Slot09_Size4").getIndex()),
-                () -> Assertions.assertEquals(11, LoadoutMapper.getShipSlot(ship, "Slot10_Size3").getIndex()),
-                () -> Assertions.assertEquals(12, LoadoutMapper.getShipSlot(ship, "Slot11_Size1").getIndex())
-        );
-    }
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @Test
-    public void getShipSlotSizes() {
-        final Ship ship = ShipService.createBlankShip(ShipType.FEDERATION_CORVETTE);
-        Assertions.assertAll(
-                () -> Assertions.assertEquals(4, LoadoutMapper.getShipSlot(ship, "HugeHardpoint1").getSlotSize()),
-                () -> Assertions.assertEquals(4, LoadoutMapper.getShipSlot(ship, "HugeHardpoint2").getSlotSize()),
-                () -> Assertions.assertEquals(3, LoadoutMapper.getShipSlot(ship, "LargeHardpoint1").getSlotSize()),
-                () -> Assertions.assertEquals(2, LoadoutMapper.getShipSlot(ship, "MediumHardpoint1").getSlotSize()),
-                () -> Assertions.assertEquals(2, LoadoutMapper.getShipSlot(ship, "MediumHardpoint2").getSlotSize()),
-                () -> Assertions.assertEquals(1, LoadoutMapper.getShipSlot(ship, "SmallHardpoint1").getSlotSize()),
-                () -> Assertions.assertEquals(1, LoadoutMapper.getShipSlot(ship, "SmallHardpoint2").getSlotSize()),
-                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "TinyHardpoint1").getSlotSize()),
-                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "TinyHardpoint2").getSlotSize()),
-                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "TinyHardpoint3").getSlotSize()),
-                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "TinyHardpoint4").getSlotSize()),
-                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "TinyHardpoint5").getSlotSize()),
-                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "TinyHardpoint6").getSlotSize()),
-                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "TinyHardpoint7").getSlotSize()),
-                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "TinyHardpoint8").getSlotSize()),
-                () -> Assertions.assertEquals(1, LoadoutMapper.getShipSlot(ship, "Armour").getSlotSize()),
-                () -> Assertions.assertEquals(8, LoadoutMapper.getShipSlot(ship, "PowerPlant").getSlotSize()),
-                () -> Assertions.assertEquals(7, LoadoutMapper.getShipSlot(ship, "MainEngines").getSlotSize()),
-                () -> Assertions.assertEquals(6, LoadoutMapper.getShipSlot(ship, "FrameShiftDrive").getSlotSize()),
-                () -> Assertions.assertEquals(5, LoadoutMapper.getShipSlot(ship, "LifeSupport").getSlotSize()),
-                () -> Assertions.assertEquals(8, LoadoutMapper.getShipSlot(ship, "PowerDistributor").getSlotSize()),
-                () -> Assertions.assertEquals(8, LoadoutMapper.getShipSlot(ship, "Radar").getSlotSize()),
-                () -> Assertions.assertEquals(5, LoadoutMapper.getShipSlot(ship, "FuelTank").getSlotSize()),
-                () -> Assertions.assertEquals(7, LoadoutMapper.getShipSlot(ship, "Slot01_Size7").getSlotSize()),
-                () -> Assertions.assertEquals(7, LoadoutMapper.getShipSlot(ship, "Slot02_Size7").getSlotSize()),
-                () -> Assertions.assertEquals(7, LoadoutMapper.getShipSlot(ship, "Slot03_Size7").getSlotSize()),
-                () -> Assertions.assertEquals(6, LoadoutMapper.getShipSlot(ship, "Slot04_Size6").getSlotSize()),
-                () -> Assertions.assertEquals(6, LoadoutMapper.getShipSlot(ship, "Slot05_Size6").getSlotSize()),
-                () -> Assertions.assertEquals(5, LoadoutMapper.getShipSlot(ship, "Slot06_Size5").getSlotSize()),
-                () -> Assertions.assertEquals(5, LoadoutMapper.getShipSlot(ship, "Slot07_Size5").getSlotSize()),
-                () -> Assertions.assertEquals(5, LoadoutMapper.getShipSlot(ship, "Military01").getSlotSize()),
-                () -> Assertions.assertEquals(5, LoadoutMapper.getShipSlot(ship, "Military02").getSlotSize()),
-                () -> Assertions.assertEquals(4, LoadoutMapper.getShipSlot(ship, "Slot08_Size4").getSlotSize()),
-                () -> Assertions.assertEquals(4, LoadoutMapper.getShipSlot(ship, "Slot09_Size4").getSlotSize()),
-                () -> Assertions.assertEquals(3, LoadoutMapper.getShipSlot(ship, "Slot10_Size3").getSlotSize()),
-                () -> Assertions.assertEquals(1, LoadoutMapper.getShipSlot(ship, "Slot11_Size1").getSlotSize())
-        );
+    {
+        this.objectMapper.setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
+        this.objectMapper.registerModule(new JavaTimeModule());
+        this.objectMapper.registerModule(new Jdk8Module().configureAbsentsAsNulls(true));
     }
 
     //    private static Stream<Arguments> preEngineeredModules() {
@@ -235,6 +155,100 @@ class LoadoutMapperTest {
                 Arguments.of("FRAGMENT_CANNON_1_E_G_PRE.json", FragmentCannon.FRAGMENT_CANNON_1_E_G_PRE, SlotType.HARDPOINT),
                 Arguments.of("FRAGMENT_CANNON_3_C_G_PRE.json", FragmentCannon.FRAGMENT_CANNON_3_C_G_PRE, SlotType.HARDPOINT)
 
+        );
+    }
+
+    private static Stream<Arguments> roundtripFixtures() {
+        return Stream.of(
+                Arguments.of(new LoadoutFixture("asp", "/ships/asp.json")),
+                Arguments.of(new LoadoutFixture("mandalay", "/ships/mandalay.json")),
+                Arguments.of(new LoadoutFixture("medium_transport", "/ships/medium_transport.json"))
+        );
+    }
+
+    @Test
+    public void getShipSlotIndexes() {
+        final Ship ship = ShipService.createBlankShip(ShipType.FEDERATION_CORVETTE);
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "HugeHardpoint1").getIndex()),
+                () -> Assertions.assertEquals(1, LoadoutMapper.getShipSlot(ship, "HugeHardpoint2").getIndex()),
+                () -> Assertions.assertEquals(2, LoadoutMapper.getShipSlot(ship, "LargeHardpoint1").getIndex()),
+                () -> Assertions.assertEquals(3, LoadoutMapper.getShipSlot(ship, "MediumHardpoint1").getIndex()),
+                () -> Assertions.assertEquals(4, LoadoutMapper.getShipSlot(ship, "MediumHardpoint2").getIndex()),
+                () -> Assertions.assertEquals(5, LoadoutMapper.getShipSlot(ship, "SmallHardpoint1").getIndex()),
+                () -> Assertions.assertEquals(6, LoadoutMapper.getShipSlot(ship, "SmallHardpoint2").getIndex()),
+                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "TinyHardpoint1").getIndex()),
+                () -> Assertions.assertEquals(1, LoadoutMapper.getShipSlot(ship, "TinyHardpoint2").getIndex()),
+                () -> Assertions.assertEquals(2, LoadoutMapper.getShipSlot(ship, "TinyHardpoint3").getIndex()),
+                () -> Assertions.assertEquals(3, LoadoutMapper.getShipSlot(ship, "TinyHardpoint4").getIndex()),
+                () -> Assertions.assertEquals(4, LoadoutMapper.getShipSlot(ship, "TinyHardpoint5").getIndex()),
+                () -> Assertions.assertEquals(5, LoadoutMapper.getShipSlot(ship, "TinyHardpoint6").getIndex()),
+                () -> Assertions.assertEquals(6, LoadoutMapper.getShipSlot(ship, "TinyHardpoint7").getIndex()),
+                () -> Assertions.assertEquals(7, LoadoutMapper.getShipSlot(ship, "TinyHardpoint8").getIndex()),
+                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "Armour").getIndex()),
+                () -> Assertions.assertEquals(1, LoadoutMapper.getShipSlot(ship, "PowerPlant").getIndex()),
+                () -> Assertions.assertEquals(2, LoadoutMapper.getShipSlot(ship, "MainEngines").getIndex()),
+                () -> Assertions.assertEquals(3, LoadoutMapper.getShipSlot(ship, "FrameShiftDrive").getIndex()),
+                () -> Assertions.assertEquals(4, LoadoutMapper.getShipSlot(ship, "LifeSupport").getIndex()),
+                () -> Assertions.assertEquals(5, LoadoutMapper.getShipSlot(ship, "PowerDistributor").getIndex()),
+                () -> Assertions.assertEquals(6, LoadoutMapper.getShipSlot(ship, "Radar").getIndex()),
+                () -> Assertions.assertEquals(7, LoadoutMapper.getShipSlot(ship, "FuelTank").getIndex()),
+                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "Slot01_Size7").getIndex()),
+                () -> Assertions.assertEquals(1, LoadoutMapper.getShipSlot(ship, "Slot02_Size7").getIndex()),
+                () -> Assertions.assertEquals(2, LoadoutMapper.getShipSlot(ship, "Slot03_Size7").getIndex()),
+                () -> Assertions.assertEquals(3, LoadoutMapper.getShipSlot(ship, "Slot04_Size6").getIndex()),
+                () -> Assertions.assertEquals(4, LoadoutMapper.getShipSlot(ship, "Slot05_Size6").getIndex()),
+                () -> Assertions.assertEquals(5, LoadoutMapper.getShipSlot(ship, "Slot06_Size5").getIndex()),
+                () -> Assertions.assertEquals(6, LoadoutMapper.getShipSlot(ship, "Slot07_Size5").getIndex()),
+                () -> Assertions.assertEquals(7, LoadoutMapper.getShipSlot(ship, "Military01").getIndex()),
+                () -> Assertions.assertEquals(8, LoadoutMapper.getShipSlot(ship, "Military02").getIndex()),
+                () -> Assertions.assertEquals(9, LoadoutMapper.getShipSlot(ship, "Slot08_Size4").getIndex()),
+                () -> Assertions.assertEquals(10, LoadoutMapper.getShipSlot(ship, "Slot09_Size4").getIndex()),
+                () -> Assertions.assertEquals(11, LoadoutMapper.getShipSlot(ship, "Slot10_Size3").getIndex()),
+                () -> Assertions.assertEquals(12, LoadoutMapper.getShipSlot(ship, "Slot11_Size1").getIndex())
+        );
+    }
+
+    @Test
+    public void getShipSlotSizes() {
+        final Ship ship = ShipService.createBlankShip(ShipType.FEDERATION_CORVETTE);
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(4, LoadoutMapper.getShipSlot(ship, "HugeHardpoint1").getSlotSize()),
+                () -> Assertions.assertEquals(4, LoadoutMapper.getShipSlot(ship, "HugeHardpoint2").getSlotSize()),
+                () -> Assertions.assertEquals(3, LoadoutMapper.getShipSlot(ship, "LargeHardpoint1").getSlotSize()),
+                () -> Assertions.assertEquals(2, LoadoutMapper.getShipSlot(ship, "MediumHardpoint1").getSlotSize()),
+                () -> Assertions.assertEquals(2, LoadoutMapper.getShipSlot(ship, "MediumHardpoint2").getSlotSize()),
+                () -> Assertions.assertEquals(1, LoadoutMapper.getShipSlot(ship, "SmallHardpoint1").getSlotSize()),
+                () -> Assertions.assertEquals(1, LoadoutMapper.getShipSlot(ship, "SmallHardpoint2").getSlotSize()),
+                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "TinyHardpoint1").getSlotSize()),
+                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "TinyHardpoint2").getSlotSize()),
+                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "TinyHardpoint3").getSlotSize()),
+                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "TinyHardpoint4").getSlotSize()),
+                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "TinyHardpoint5").getSlotSize()),
+                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "TinyHardpoint6").getSlotSize()),
+                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "TinyHardpoint7").getSlotSize()),
+                () -> Assertions.assertEquals(0, LoadoutMapper.getShipSlot(ship, "TinyHardpoint8").getSlotSize()),
+                () -> Assertions.assertEquals(1, LoadoutMapper.getShipSlot(ship, "Armour").getSlotSize()),
+                () -> Assertions.assertEquals(8, LoadoutMapper.getShipSlot(ship, "PowerPlant").getSlotSize()),
+                () -> Assertions.assertEquals(7, LoadoutMapper.getShipSlot(ship, "MainEngines").getSlotSize()),
+                () -> Assertions.assertEquals(6, LoadoutMapper.getShipSlot(ship, "FrameShiftDrive").getSlotSize()),
+                () -> Assertions.assertEquals(5, LoadoutMapper.getShipSlot(ship, "LifeSupport").getSlotSize()),
+                () -> Assertions.assertEquals(8, LoadoutMapper.getShipSlot(ship, "PowerDistributor").getSlotSize()),
+                () -> Assertions.assertEquals(8, LoadoutMapper.getShipSlot(ship, "Radar").getSlotSize()),
+                () -> Assertions.assertEquals(5, LoadoutMapper.getShipSlot(ship, "FuelTank").getSlotSize()),
+                () -> Assertions.assertEquals(7, LoadoutMapper.getShipSlot(ship, "Slot01_Size7").getSlotSize()),
+                () -> Assertions.assertEquals(7, LoadoutMapper.getShipSlot(ship, "Slot02_Size7").getSlotSize()),
+                () -> Assertions.assertEquals(7, LoadoutMapper.getShipSlot(ship, "Slot03_Size7").getSlotSize()),
+                () -> Assertions.assertEquals(6, LoadoutMapper.getShipSlot(ship, "Slot04_Size6").getSlotSize()),
+                () -> Assertions.assertEquals(6, LoadoutMapper.getShipSlot(ship, "Slot05_Size6").getSlotSize()),
+                () -> Assertions.assertEquals(5, LoadoutMapper.getShipSlot(ship, "Slot06_Size5").getSlotSize()),
+                () -> Assertions.assertEquals(5, LoadoutMapper.getShipSlot(ship, "Slot07_Size5").getSlotSize()),
+                () -> Assertions.assertEquals(5, LoadoutMapper.getShipSlot(ship, "Military01").getSlotSize()),
+                () -> Assertions.assertEquals(5, LoadoutMapper.getShipSlot(ship, "Military02").getSlotSize()),
+                () -> Assertions.assertEquals(4, LoadoutMapper.getShipSlot(ship, "Slot08_Size4").getSlotSize()),
+                () -> Assertions.assertEquals(4, LoadoutMapper.getShipSlot(ship, "Slot09_Size4").getSlotSize()),
+                () -> Assertions.assertEquals(3, LoadoutMapper.getShipSlot(ship, "Slot10_Size3").getSlotSize()),
+                () -> Assertions.assertEquals(1, LoadoutMapper.getShipSlot(ship, "Slot11_Size1").getSlotSize())
         );
     }
 
@@ -607,14 +621,6 @@ class LoadoutMapperTest {
         Assertions.assertFalse(preEngineered);
     }
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
-    {
-        this.objectMapper.setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
-        this.objectMapper.registerModule(new JavaTimeModule());
-        this.objectMapper.registerModule(new Jdk8Module().configureAbsentsAsNulls(true));
-    }
-
     @Test
     public void testLoadoutMapping() {
 //        final InputStream resourceAsStream = LoadoutMapperTest.class.getResourceAsStream("ships/loadout.json");
@@ -679,5 +685,238 @@ class LoadoutMapperTest {
             log.info(line);
             Assertions.assertFalse(true);
         }
+    }
+
+    @ParameterizedTest
+    @MethodSource("roundtripFixtures")
+    void roundtripLoadoutShipLoadout(LoadoutFixture fixture) throws Exception {
+        try (InputStream resourceAsStream = LoadoutMapperTest.class.getResourceAsStream(fixture.resourcePath)) {
+            Assertions.assertTrue(resourceAsStream.available() > 0, fixture.name() + " file is empty");
+            final Loadout original = objectMapper.readValue(resourceAsStream, Loadout.class);
+
+            log.info("=== ORIGINAL LOADOUT: {} ===", fixture.name());
+            log.info("Ship: {}", original.getShip());
+            log.info("ShipName: {}", original.getShipName());
+            original.getModules().forEach(mod -> {
+                log.info("Module: slot={}, item={}", mod.getSlot(), mod.getItem());
+                mod.getEngineering().ifPresent(eng -> {
+                    log.info("  Engineering: BlueprintName={}, Level={}, Quality={}, ExperimentalEffect={}",
+                            eng.getBlueprintName(), eng.getLevel(), eng.getQuality(), eng.getExperimentalEffect().orElse(null));
+                    eng.getModifiers().forEach(m -> log.info("    Modifier: {}={}", m.getLabel(), m.getValue().orElse(null)));
+                });
+            });
+
+            final nl.jixxed.eliteodysseymaterials.domain.ships.Ship ship = LoadoutMapper.toShip(original);
+            final Loadout result = LoadoutMapper.toLoadout(
+                    nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper.toShipConfiguration(ship, new nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration(), original.getShipName()));
+
+            log.info("=== ROUNDTRIPPED LOADOUT: {} ===", fixture.name());
+            log.info("Ship: {}", result.getShip());
+            log.info("ShipName: {}", result.getShipName());
+            result.getModules().forEach(mod -> {
+                log.info("Module: slot={}, item={}", mod.getSlot(), mod.getItem());
+                mod.getEngineering().ifPresent(eng -> {
+                    log.info("  Engineering: BlueprintName={}, Level={}, Quality={}, ExperimentalEffect={}",
+                            eng.getBlueprintName(), eng.getLevel(), eng.getQuality(), eng.getExperimentalEffect().orElse(null));
+                    eng.getModifiers().forEach(m -> log.info("    Modifier: {}={}", m.getLabel(), m.getValue().orElse(null)));
+                });
+            });
+
+            Assertions.assertEquals(original.getShip(), result.getShip().toLowerCase(), "Ship must match (case-insensitive)");
+            Assertions.assertFalse(result.getModules().isEmpty(), fixture.name() + ": Modules must be present");
+
+            // Every module item in the roundtripped loadout must match the original by slot name
+            // (cosmetic/untemplateable slots may be dropped during roundtrip)
+            final Map<String, Module> origBySlot = new HashMap<>();
+            original.getModules().forEach(m -> origBySlot.put(m.getSlot(), m));
+            final Map<String, nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module> resBySlot = new HashMap<>();
+            result.getModules().forEach(m -> resBySlot.put(m.getSlot(), m));
+
+            for (final var entry : resBySlot.entrySet()) {
+                final String slotName = entry.getKey();
+                final nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module resMod = entry.getValue();
+
+                Assertions.assertNotNull(resMod.getSlot(), fixture.name() + ": Roundtripped module slot must be present");
+                Assertions.assertNotNull(resMod.getItem(), fixture.name() + ": Roundtripped module item must be present");
+
+                // Find matching original slot by stripping _SizeN suffix for comparison
+                final String slotBase = slotName.replaceAll("_Size\\d+", "");
+                final Module origMod = origBySlot.entrySet().stream()
+                        .filter(e -> e.getKey().replaceAll("_Size\\d+", "").equals(slotBase))
+                        .map(Map.Entry::getValue)
+                        .findFirst()
+                        .orElse(null);
+
+                Assertions.assertNotNull(origMod, fixture.name() + ": slot '" + slotName + "' must exist in original");
+
+                // Assert every module.item in the mapped loadout matches the original (case-insensitive)
+                Assertions.assertEquals(origMod.getItem().toLowerCase(), resMod.getItem().toLowerCase(),
+                        fixture.name() + ": item for slot '" + slotName + "' must match original");
+
+                Assertions.assertEquals(origMod.getEngineering().isPresent(), resMod.getEngineering().isPresent(),
+                        fixture.name() + ": engineering presence for slot '" + slotName + "' must match");
+
+                if (origMod.getEngineering().isPresent() && resMod.getEngineering().isPresent()) {
+                    final var origEng = origMod.getEngineering().get();
+                    final var resEng = resMod.getEngineering().get();
+
+                    Assertions.assertNotNull(resEng.getBlueprintName(), fixture.name() + ": Roundtripped BlueprintName for slot '" + slotName + "' must be present");
+                    Assertions.assertNotNull(resEng.getLevel(), fixture.name() + ": Roundtripped Level for slot '" + slotName + "' must be present");
+                    Assertions.assertNotNull(resEng.getQuality(), fixture.name() + ": Roundtripped Quality for slot '" + slotName + "' must be present");
+
+                    Assertions.assertEquals(origEng.getLevel().intValue(), resEng.getLevel().intValue(), fixture.name() + ": Level for slot '" + slotName + "' must match");
+                    Assertions.assertEquals(origEng.getQuality().intValue(), resEng.getQuality().intValue(), fixture.name() + ": Quality for slot '" + slotName + "' must match");
+
+                    // Blueprint names match case-insensitively
+                    final String origBlueprint = origEng.getBlueprintName();
+                    final String resBlueprint = resEng.getBlueprintName();
+                    Assertions.assertTrue(
+                            resBlueprint.equalsIgnoreCase(origBlueprint),
+                            fixture.name() + ": BlueprintName for slot '" + slotName + "' must match (" + origBlueprint + " vs " + resBlueprint + ")");
+
+                    // Experimental effects match case-insensitively
+                    Assertions.assertEquals(
+                            origEng.getExperimentalEffect().map(String::toLowerCase).orElse(null),
+                            resEng.getExperimentalEffect().map(String::toLowerCase).orElse(null),
+                            fixture.name() + ": ExperimentalEffect for slot '" + slotName + "' must match");
+
+                    // Verify modifier names and values match by label (not by position)
+                    Assertions.assertEquals(origEng.getModifiers().size(), resEng.getModifiers().size(),
+                            fixture.name() + ": modifier count for slot '" + slotName + "' must match");
+                    for (int m = 0; m < origEng.getModifiers().size(); m++) {
+                        final var origModEntry = origEng.getModifiers().get(m);
+                        final var matchingRes = resEng.getModifiers().stream()
+                                .filter(r -> r.getLabel().equals(origModEntry.getLabel()))
+                                .findFirst();
+                        Assertions.assertTrue(matchingRes.isPresent(),
+                                fixture.name() + ": modifier '" + origModEntry.getLabel() + "' for slot '" + slotName + "' must exist in result");
+                        // Compare as doubles to handle floating point precision
+                        double origVal = origModEntry.getValue().map(v -> v.doubleValue()).orElse(Double.NaN);
+                        double resVal = matchingRes.get().getValue().map(v -> v.doubleValue()).orElse(Double.NaN);
+                        Assertions.assertEquals(origVal, resVal, 0.001,
+                                fixture.name() + ": modifier '" + origModEntry.getLabel() + "' for slot '" + slotName + "' must match");
+//                                fixture.name() + ": modifier '" + origModEntry.getLabel() + "' for slot '" + slotName + "' must match");
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    @Tag("manual")
+    void roundtripAllLoadouts() throws Exception {
+        String line = "";
+        for (final var file : List.of("/ships/loadout.json")) {
+            try (InputStream resourceAsStream = LoadoutMapperTest.class.getResourceAsStream(file)) {
+                if (resourceAsStream == null || resourceAsStream.available() == 0) continue;
+                final BufferedReader reader = new BufferedReader(new InputStreamReader(resourceAsStream));
+                while (reader.ready()) {
+                    line = reader.readLine();
+                    log.info("===================================================");
+                    log.info(line);
+                    log.info("===================================================");
+                    if (line == null || line.isBlank()) continue;
+                    final Loadout original = objectMapper.readValue(line, Loadout.class);
+                    final nl.jixxed.eliteodysseymaterials.domain.ships.Ship ship = LoadoutMapper.toShip(original);
+                    final Loadout result = LoadoutMapper.toLoadout(
+                            nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper.toShipConfiguration(ship, new nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration(), original.getShipName()));
+
+                    log.info("=== ORIGINAL LOADOUT: {} ===", original.getShip());
+                    log.info("Ship: {}", original.getShip());
+                    log.info("ShipName: {}", original.getShipName());
+                    original.getModules().forEach(mod -> {
+                        log.info("Module: slot={}, item={}", mod.getSlot(), mod.getItem());
+                        mod.getEngineering().ifPresent(eng -> {
+                            log.info("  Engineering: BlueprintName={}, Level={}, Quality={}, ExperimentalEffect={}",
+                                    eng.getBlueprintName(), eng.getLevel(), eng.getQuality(), eng.getExperimentalEffect().orElse(null));
+                            eng.getModifiers().forEach(m -> log.info("    Modifier: {}={}", m.getLabel(), m.getValue().orElse(null)));
+                        });
+                    });
+
+
+                    log.info("=== ROUNDTRIPPED LOADOUT: {} ===", result.getShip());
+                    log.info("Ship: {}", result.getShip());
+                    log.info("ShipName: {}", result.getShipName());
+                    result.getModules().forEach(mod -> {
+                        log.info("Module: slot={}, item={}", mod.getSlot(), mod.getItem());
+                        mod.getEngineering().ifPresent(eng -> {
+                            log.info("  Engineering: BlueprintName={}, Level={}, Quality={}, ExperimentalEffect={}",
+                                    eng.getBlueprintName(), eng.getLevel(), eng.getQuality(), eng.getExperimentalEffect().orElse(null));
+                            eng.getModifiers().forEach(m -> log.info("    Modifier: {}={}", m.getLabel(), m.getValue().orElse(null)));
+                        });
+                    });
+
+
+                    Assertions.assertNotNull(result, file + ": toLoadout must not return null for " + original.getShip());
+                    // Loadout doesn't expose ShipType, only getShip() string
+                    Assertions.assertFalse(result.getModules().isEmpty(), file + ": modules must not be empty");
+
+                    final Map<String, Module> origBySlot = new HashMap<>();
+                    original.getModules().forEach(m -> origBySlot.put(m.getSlot(), m));
+                    final Map<String, nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module> resBySlot = new HashMap<>();
+                    result.getModules().forEach(m -> resBySlot.put(m.getSlot(), m));
+
+                    for (final var entry : resBySlot.entrySet()) {
+
+
+                        final String slotName = entry.getKey();
+                        final nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module resMod = entry.getValue();
+                        final Module origMod = origBySlot.get(slotName);
+
+                        Assertions.assertNotNull(resMod.getSlot());
+                        Assertions.assertNotNull(resMod.getItem());
+                        Assertions.assertNotNull(origMod, file + ": slot '" + slotName + "' must exist in original");
+                        Assertions.assertEquals(origMod.getItem(), resMod.getItem(),
+                                file + ": item for slot '" + slotName + "' must match original");
+
+                        if (origMod.getEngineering().isPresent()) {
+                            final var origEng = origMod.getEngineering().get();
+                            Assertions.assertTrue(resMod.getEngineering().isPresent(), file + ": engineering for slot '" + slotName + "' must be present");
+                            final var resEng = resMod.getEngineering().get();
+
+                            if (origEng.getQuality().doubleValue() == 0.0 || resEng.getQuality().doubleValue() == 0.0) {//legacy
+                                continue;
+                            }
+                            Assertions.assertNotNull(resEng.getBlueprintName());
+                            Assertions.assertTrue(resEng.getBlueprintName().equalsIgnoreCase(origEng.getBlueprintName()),
+                                    file + ": blueprintName for slot '" + slotName + "' must match." + origEng.getBlueprintName() + "<>" + resEng.getBlueprintName());
+
+                            if (!(resEng.getLevel().equals(BigInteger.valueOf(5)) && origEng.getLevel().equals(BigInteger.ONE))) {//some pre-eng wont match
+                                Assertions.assertEquals(origEng.getLevel().intValue(), resEng.getLevel().intValue(), file + ": level for slot '" + slotName + "' must match");
+                            }
+                            Assertions.assertEquals(
+                                    origEng.getExperimentalEffect().map(String::toLowerCase).orElse(null),
+                                    resEng.getExperimentalEffect().map(String::toLowerCase).orElse(null),
+                                    file + ": experimentalEffect for slot '" + slotName + "' must match");
+
+                            // Verify modifier names and values match by label (not by position)
+                            Assertions.assertEquals(origEng.getModifiers().stream().filter(modifier -> !modifier.getLabel().equalsIgnoreCase("DamageType")
+                                            && !modifier.getLabel().equalsIgnoreCase("CabinClass")
+                                            && !modifier.getLabel().equalsIgnoreCase("WeaponMode")).count(), resEng.getModifiers().size(),
+                                    file + ": modifier count for slot '" + slotName + "' must match");
+                            for (int m = 0; m < origEng.getModifiers().size(); m++) {
+                                final var origModEntry = origEng.getModifiers().get(m);
+                                final var matchingRes = resEng.getModifiers().stream()
+                                        .filter(r -> r.getLabel().equals(origModEntry.getLabel()))
+                                        .findFirst();
+                                if (!origModEntry.getLabel().equalsIgnoreCase("DamageType")
+                                        && !origModEntry.getLabel().equalsIgnoreCase("CabinClass")
+                                        && !origModEntry.getLabel().equalsIgnoreCase("WeaponMode")) {
+                                    Assertions.assertTrue(matchingRes.isPresent(),
+                                            file + ": modifier '" + origModEntry.getLabel() + "' for slot '" + slotName + "' must exist in result");
+                                    double origVal = origModEntry.getValue().map(v -> v.doubleValue()).orElse(Double.NaN);
+                                    double resVal = matchingRes.get().getValue().map(v -> v.doubleValue()).orElse(Double.NaN);
+                                    Assertions.assertEquals(origVal, resVal, 0.001,
+                                            file + ": modifier '" + origModEntry.getLabel() + "' for slot '" + slotName + "' must match");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private record LoadoutFixture(String name, String resourcePath) {
     }
 }

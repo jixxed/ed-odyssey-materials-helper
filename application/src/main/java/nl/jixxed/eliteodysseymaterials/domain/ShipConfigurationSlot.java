@@ -38,6 +38,7 @@ public class ShipConfigurationSlot {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String id;//module
 
+  
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean legacy;
 

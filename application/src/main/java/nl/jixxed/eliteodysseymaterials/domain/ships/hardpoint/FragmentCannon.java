@@ -127,4 +127,11 @@ public class FragmentCannon extends HardpointModule {
     public Collection<HorizonsSynthesisBlueprint> synthesisBlueprints() {
         return SynthesisBlueprints.LARGE_CALIBRE_MUNITIONS.values();
     }
+    public HorizonsBlueprintType getPreEngineeredExperimentalEffect() {
+        return switch (this.getId()) {
+            case "FRAGMENT_CANNON_1_E_G_PRE" -> HorizonsBlueprintType.SCREENING_SHELL;
+            case "FRAGMENT_CANNON_3_C_G_PRE" -> HorizonsBlueprintType.SCREENING_SHELL;
+            default -> null;
+        };
+    }
 }

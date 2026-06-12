@@ -134,4 +134,12 @@ public class AXMultiCannon extends HardpointModule {
     public Collection<HorizonsSynthesisBlueprint> synthesisBlueprints() {
         return SynthesisBlueprints.AX_SMALL_CALIBRE_MUNITIONS.values();
     }
+
+    public HorizonsBlueprintType getPreEngineeredExperimentalEffect() {
+        return switch (this.getId()) {
+            case "AX_MULTI_CANNON_2_E_F_PRE" -> HorizonsBlueprintType.AUTO_LOADER;
+            case "AX_MULTI_CANNON_3_C_F_PRE" -> HorizonsBlueprintType.AUTO_LOADER;
+            default -> null;
+        };
+    }
 }

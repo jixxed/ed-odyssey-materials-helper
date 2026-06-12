@@ -117,4 +117,12 @@ public class MiningLaser extends HardpointModule {
         }
         return super.techBrokerBlueprint();
     }
+
+    public HorizonsBlueprintType getPreEngineeredExperimentalEffect() {
+        return switch (this.getId()) {
+            case "MINING_LASER_1_D_F_PRE" -> HorizonsBlueprintType.INCENDIARY_ROUNDS;
+            case "MINING_LASER_1_D_F_PRE_ARX" -> HorizonsBlueprintType.INCENDIARY_ROUNDS;
+            default -> null;
+        };
+    }
 }

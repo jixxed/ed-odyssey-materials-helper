@@ -14,19 +14,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
+import nl.jixxed.eliteodysseymaterials.domain.ShipConfigurationSlot;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.enums.MatchType;
-import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Engineering;
-import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Loadout;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.*;
 import nl.jixxed.eliteodysseymaterials.service.ReportService;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Slf4j
@@ -81,9 +86,6 @@ public class LoadoutMapper {
                         } catch (Exception e) {
                             log.error("failed to send module error", e);
                         }
-//                    log.debug("Slot: " + module.getSlot());
-//                    log.debug("Item: " + module.getItem());
-//                    log.debug("Potential modules:" + potentialShipModules.stream().map(shipModule -> shipModule.getName().toString()).collect(Collectors.joining(",")));
                         throw new IllegalArgumentException("No potential modules found");
                     }).orElseGet(() -> {
                         try {
@@ -99,6 +101,10 @@ public class LoadoutMapper {
                     });
                     if (matchingModule == null) {
                         return;
+                    }
+                    // Debug: log matching module for FSD
+                    if (matchingModule.getClass().getSimpleName().equals("FrameShiftDrive") && module.getSlot().equals("FrameShiftDrive")) {
+                        log.info("DEBUG toShip FSD: matchingModule.id={} preEng={} modsBeforeApply={}", matchingModule.getId(), matchingModule.isPreEngineered(), matchingModule.getModifications().stream().map(m -> m.getModification().name()).toList());
                     }
                     final ShipModule shipModule = matchingModule.Clone();
                     module.getEngineering().ifPresent(engineering -> {
@@ -120,6 +126,10 @@ public class LoadoutMapper {
                                         }
                                 ));
                     });
+                    // Debug: log modifications after apply for FSD
+                    if (matchingModule.getClass().getSimpleName().equals("FrameShiftDrive") && module.getSlot().equals("FrameShiftDrive")) {
+                        log.info("DEBUG toShip FSD after: mods={} slot={}", shipModule.getModifications().stream().map(m -> m.getModification().name()).toList(), module.getSlot());
+                    }
 
                     module.getValue().ifPresent(value -> shipModule.setBuyPrice(value.longValue()));
                     shipModule.setPowerGroup(module.getPriority().intValue() + 1);
@@ -182,14 +192,11 @@ public class LoadoutMapper {
                         final Object attributeValue = shipModule.getAttributeValue(moduleAttribute, false);
 
                         if (attributeValue instanceof Double value2) {
-//                            log.debug(moduleAttribute.name() + ": " + value.setScale(2, RoundingMode.HALF_EVEN) + " =? " + BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));
                             return value.setScale(2, RoundingMode.HALF_EVEN).equals(BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));
                         }
                         if (attributeValue instanceof Boolean) {
-//                            log.debug("bool true");
                             return true;
                         }
-//                        log.debug("false");
                         return false;
                     }).orElse(true));
         }).findFirst().map(ShipModule::isPreEngineered).orElse(false);
@@ -319,8 +326,6 @@ public class LoadoutMapper {
                     .orElseThrow(IllegalArgumentException::new);
         } catch (IllegalArgumentException ex) {
             optionalSlots.stream().map(slot -> slot.toString()).forEach(log::debug);
-//            log.debug(slotName);
-//            log.debug(slotNumber + "not in size:" + optionalSlots.size());
             throw ex;
         }
     }
@@ -366,5 +371,195 @@ public class LoadoutMapper {
                     .orElseThrow(IllegalArgumentException::new);
             default -> throw new IllegalArgumentException("Unexpected value: " + slotName);
         };
+    }
+
+    public static Loadout toLoadout(ShipConfiguration shipConfiguration) {
+        if (shipConfiguration.getShipType() == null) {
+            return null;
+        }
+        final Ship blankShip = ShipService.createBlankShip(shipConfiguration.getShipType());
+
+        // Build config slot lookup by index for each category
+        final Map<Integer, ShipConfigurationSlot> coreByIndex = new HashMap<>();
+        shipConfiguration.getCoreSlots().forEach(s -> coreByIndex.put(s.getIndex(), s));
+        final Map<Integer, ShipConfigurationSlot> hardpointByIndex = new HashMap<>();
+        shipConfiguration.getHardpointSlots().forEach(s -> hardpointByIndex.put(s.getIndex(), s));
+        final Map<Integer, ShipConfigurationSlot> utilityByIndex = new HashMap<>();
+        shipConfiguration.getUtilitySlots().forEach(s -> utilityByIndex.put(s.getIndex(), s));
+        final Map<Integer, ShipConfigurationSlot> optionalByIndex = new HashMap<>();
+        shipConfiguration.getOptionalSlots().forEach(s -> optionalByIndex.put(s.getIndex(), s));
+
+        final List<nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module> modules = new ArrayList<>();
+
+        // Iterate through blank ship slots (same order as toShip uses)
+        for (int i = 0; i < blankShip.getCoreSlots().size(); i++) {
+            final Slot blankSlot = blankShip.getCoreSlots().get(i);
+            final ShipConfigurationSlot configSlot = coreByIndex.get(i);
+            if (configSlot != null && configSlot.getId() != null) {
+                final ShipModule module = ShipModule.getModule(configSlot.getId());
+                modules.add(buildJournalModule(configSlot, buildSlotNameFromBlank(blankShip.getCoreSlots(), blankSlot, module, Map.of()), module, blankSlot.getSlotType()));
+            }
+        }
+
+        // Track sequential position per hardpoint size for correct journal slot names
+        final Map<Integer, Integer> hardpointSizePosition = new HashMap<>();
+        for (int i = 0; i < blankShip.getHardpointSlots().size(); i++) {
+            final Slot blankSlot = blankShip.getHardpointSlots().get(i);
+            final ShipConfigurationSlot configSlot = hardpointByIndex.get(i);
+            if (configSlot != null && configSlot.getId() != null) {
+                final ShipModule module = ShipModule.getModule(configSlot.getId());
+                modules.add(buildJournalModule(configSlot, buildSlotNameFromBlank(blankShip.getHardpointSlots(), blankSlot, module, hardpointSizePosition), module, blankSlot.getSlotType()));
+            }
+        }
+
+        for (int i = 0; i < blankShip.getUtilitySlots().size(); i++) {
+            final Slot blankSlot = blankShip.getUtilitySlots().get(i);
+            final ShipConfigurationSlot configSlot = utilityByIndex.get(i);
+            if (configSlot != null && configSlot.getId() != null) {
+                final ShipModule module = ShipModule.getModule(configSlot.getId());
+                modules.add(buildJournalModule(configSlot, buildSlotNameFromBlank(blankShip.getUtilitySlots(), blankSlot, module, Map.of()), module, blankSlot.getSlotType()));
+            }
+        }
+
+        for (int i = 0; i < blankShip.getOptionalSlots().size(); i++) {
+            final Slot blankSlot = blankShip.getOptionalSlots().get(i);
+            final ShipConfigurationSlot configSlot = optionalByIndex.get(i);
+            if (configSlot != null && configSlot.getId() != null) {
+                final ShipModule module = ShipModule.getModule(configSlot.getId());
+                modules.add(buildJournalModule(configSlot, buildSlotNameFromBlank(blankShip.getOptionalSlots(), blankSlot, module, Map.of()), module, blankSlot.getSlotType()));
+            }
+        }
+
+        final Loadout loadout = new Loadout();
+        loadout.setShip(shipConfiguration.getShipType().getInternalName());
+        loadout.setShipName(shipConfiguration.getName());
+        loadout.setHullHealth(BigDecimal.ONE);
+        loadout.setUnladenMass(shipConfiguration.getMass() != null ? BigDecimal.valueOf(shipConfiguration.getMass()) : BigDecimal.ZERO);
+        loadout.setMaxJumpRange(shipConfiguration.getJumpRange() != null ? BigDecimal.valueOf(shipConfiguration.getJumpRange()) : BigDecimal.ZERO);
+
+        final FuelCapacity fuelCapacity = new FuelCapacity();
+        fuelCapacity.setMain(toBigDecimal(shipConfiguration.getCurrentFuel()));
+        fuelCapacity.setReserve(toBigDecimal(shipConfiguration.getCurrentFuelReserve()));
+        loadout.setFuelCapacity(fuelCapacity);
+
+        loadout.setRebuy(shipConfiguration.getPrice() != null ? BigInteger.valueOf(shipConfiguration.getPrice()) : BigInteger.ZERO);
+        loadout.setModules(modules);
+        loadout.setEvent("Loadout");
+        loadout.setTimestamp(LocalDateTime.now());
+
+        return loadout;
+    }
+
+   private static BigDecimal toBigDecimal(Double value) {
+        return value != null ? BigDecimal.valueOf(value) : BigDecimal.ZERO;
+    }
+
+   private static nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module buildJournalModule(ShipConfigurationSlot slot, String slotName, ShipModule module, SlotType slotType) {
+        final nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module journalModule = new nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module();
+        journalModule.setSlot(slotName);
+        journalModule.setItem(module != null && module.getInternalName() != null ? module.getInternalName().toLowerCase() : slot.getId());
+        journalModule.setOn(slot.getPowered());
+        journalModule.setPriority(slot.getPowerGroup() != null ? BigInteger.valueOf(slot.getPowerGroup()) : BigInteger.ONE);
+        journalModule.setHealth(BigDecimal.ONE);
+        if (slot.getBuyPrice() != null) {
+            journalModule.setValue(BigInteger.valueOf(slot.getBuyPrice()));
+        }
+        final Engineering engineering = buildEngineering(slot, module, slotType);
+        if (engineering != null) {
+            journalModule.setEngineering(engineering);
+        }
+        return journalModule;
+    }
+
+    private static String buildSlotNameFromBlank(List<? extends Slot> slots, Slot blankSlot, ShipModule module, Map<Integer, Integer> hardpointSizePosition) {
+        return switch (blankSlot.getSlotType()) {
+            case CORE_ARMOUR -> "Armour";
+            case CORE_POWER_PLANT -> "PowerPlant";
+            case CORE_THRUSTERS -> "MainEngines";
+            case CORE_FRAME_SHIFT_DRIVE -> "FrameShiftDrive";
+            case CORE_LIFE_SUPPORT -> "LifeSupport";
+            case CORE_POWER_DISTRIBUTION -> "PowerDistributor";
+            case CORE_SENSORS -> "Radar";
+            case CORE_FUEL_TANK -> "FuelTank";
+            case HARDPOINT, MINING_HARDPOINT -> {
+                final String size;
+                switch (blankSlot.getSlotSize()) {
+                    case 1 -> size = "Small";
+                    case 2 -> size = "Medium";
+                    case 3 -> size = "Large";
+                    case 4 -> size = "Huge";
+                    default -> throw new IllegalArgumentException("Unexpected slot size: " + blankSlot.getSlotSize());
+                }
+                final String type = blankSlot.getSlotType() == SlotType.MINING_HARDPOINT ? "Mining" : "";
+                final int pos = slots.stream().filter(slot -> slot.getSlotSize() == blankSlot.getSlotSize()).toList().indexOf(blankSlot) + 1;
+                yield size + type + "Hardpoint" + pos;
+            }
+            case UTILITY -> "TinyHardpoint" + blankSlot.getNamedIndex();
+            case CARGO -> "Cargo" + String.format("%02d", slots.stream().filter(slot -> slot.getSlotType() == blankSlot.getSlotType()).toList().indexOf(blankSlot) + 1);
+            case PASSENGER -> "Passenger" + String.format("%02d", slots.stream().filter(slot -> slot.getSlotType() == blankSlot.getSlotType()).toList().indexOf(blankSlot) + 1);
+            case SLF -> "FighterBay" + String.format("%02d", slots.stream().filter(slot -> slot.getSlotType() == blankSlot.getSlotType()).toList().indexOf(blankSlot) + 1);
+            case LIMPET -> "LimpetController" + String.format("%02d", slots.stream().filter(slot -> slot.getSlotType() == blankSlot.getSlotType()).toList().indexOf(blankSlot) + 1);
+            case MILITARY -> "Military" + String.format("%02d", slots.stream().filter(slot -> slot.getSlotType() == blankSlot.getSlotType()).toList().indexOf(blankSlot) + 1);
+            case OPTIONAL -> {
+                final String base = "Slot" + String.format("%02d", blankSlot.getNamedIndex());
+                final int slotSize = blankSlot.getSlotSize();
+                yield base + "_Size" + slotSize;
+            }
+            default -> throw new IllegalArgumentException("Unexpected slot type: " + blankSlot.getSlotType());
+        };
+    }
+
+    private static Engineering buildEngineering(ShipConfigurationSlot slot, ShipModule module, SlotType slotType) {
+        if (slot.getModification().isEmpty() && slot.getExperimentalEffect().isEmpty() && slot.getModifiers().isEmpty()) {
+            return null;
+        }
+
+        final Engineering engineering = new Engineering();
+        engineering.setModifiers(buildJournalModifiers(slot));
+
+        if (!slot.getModification().isEmpty()) {
+            final nl.jixxed.eliteodysseymaterials.domain.ShipConfigurationModification firstMod = slot.getModification().getFirst();
+            engineering.setBlueprintName(buildBlueprintName(firstMod.getType(), module));
+            engineering.setLevel(BigInteger.valueOf(firstMod.getGrade().getGrade()));
+            engineering.setQuality(firstMod.getPercentComplete() != null ? BigDecimal.valueOf(firstMod.getPercentComplete().doubleValue()) : BigDecimal.ZERO);
+        } else {
+            engineering.setLevel(BigInteger.ONE);
+            engineering.setQuality(BigDecimal.ZERO);
+        }
+
+        if (!slot.getExperimentalEffect().isEmpty()) {
+            HorizonsBlueprintType effect = slot.getExperimentalEffect().getFirst().getType();
+
+            if (effect != null) {
+                engineering.setExperimentalEffect(effect.getExperimentalEffectJournalName(module));
+            }
+        }else if(module.isPreEngineered()) {
+            HorizonsBlueprintType effect = module.getPreEngineeredExperimentalEffect();
+
+            if (effect != null) {
+                engineering.setExperimentalEffect(effect.getExperimentalEffectJournalName(module));
+            }
+        }
+
+        return engineering;
+    }
+
+  private static String buildBlueprintName(HorizonsBlueprintType type, ShipModule module) {
+        return type.getJournalName(module);
+    }
+
+    private static List<Modifier> buildJournalModifiers(ShipConfigurationSlot slot) {
+        final List<Modifier> modifiers = new ArrayList<>();
+        for (final Map.Entry<HorizonsModifier, Object> entry : slot.getModifiers().entrySet()) {
+            final HorizonsModifier modifier = entry.getKey();
+            final Object value = entry.getValue();
+            final Modifier journalModifier = new Modifier();
+            journalModifier.setLabel(modifier.getJournalName());
+            if (value instanceof Double doubleValue) {
+                journalModifier.setValue(BigDecimal.valueOf(doubleValue / modifier.scale(1.0)));
+            }
+            modifiers.add(journalModifier);
+        }
+        return modifiers;
     }
 }

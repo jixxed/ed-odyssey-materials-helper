@@ -686,4 +686,8 @@ public abstract class ShipModule implements Serializable {
         }
         return bp.getModifiers().containsKey(remap(horizonsModifier));
     }
+
+    public HorizonsBlueprintType getPreEngineeredExperimentalEffect() {
+        return null;
+    }
 }

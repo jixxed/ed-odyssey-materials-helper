@@ -16,6 +16,16 @@
           "title" : "appVersion",
           "type" : "string",
           "examples" : [ "1.0.0", "1.0.1" ]
+        },
+        "appUrl" : {
+          "title" : "appUrl",
+          "type" : "string",
+          "examples" : [ "edomh://abcde" ]
+        },
+        "appCustomProperties" : {
+          "title" : "appCustomProperties",
+          "type": "object",
+          "existingJavaType": "java.lang.Object"
         }
       },
       "additionalProperties" : false,

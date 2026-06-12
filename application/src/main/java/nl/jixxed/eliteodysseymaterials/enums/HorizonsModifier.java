@@ -262,6 +262,10 @@ public enum HorizonsModifier {
 
     ;
     private final String[] internalNames;
+
+    public String getJournalName() {
+        return internalNames[0];
+    }
     private final int order;
     @Getter
     private BigDecimal multiplier = BigDecimal.ONE;
