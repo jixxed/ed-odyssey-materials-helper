@@ -249,7 +249,7 @@ public class BartenderSellMenu implements BartenderMenu {
     }
 
     public double getItemWidth(OdysseyMaterial material, int index) {
-        return 1464 * this.scale;
+        return scrollBarV2.isActive() ? 1464 * this.scale : 1492 * this.scale;
     }
 
     public double getItemHeight(OdysseyMaterial material, int index) {
@@ -276,6 +276,11 @@ public class BartenderSellMenu implements BartenderMenu {
 
 
     public double getMenuItemPositionYCorrectedOffset(List<OdysseyMaterial> goods, List<OdysseyMaterial> assets, List<OdysseyMaterial> datas) {
+        if (this.scrollBarV2 == null)
+            return 3;
+        if (!scrollBarV2.isActive()) {
+            return 3;
+        }
         double ballparkOffset = getMenuItemPositionYBallparkOffset(goods, assets, datas);
         int position = 0;
         double spacing = (getCategoryEntryHeight() - getItemHeight()) * this.scale;

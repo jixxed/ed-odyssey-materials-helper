@@ -142,10 +142,20 @@ public class ScrollBarHelper {
     }
 
     public static ScrollBarV2 getScrollBarV2BartenderSell(final BufferedImage sellMenuScrollbarCapture, final double scaling) {
-        if (getScrollBarHeightBartenderSell(sellMenuScrollbarCapture, scaling) > 0) {
+        if (hasScrollBarBartenderSell(sellMenuScrollbarCapture, scaling)) {
             return new ScrollBarV2(true, getProgress(sellMenuScrollbarCapture, scaling), 0);
         }
         return new ScrollBarV2(false, 0, 0);
+    }
+
+    public static boolean hasScrollBarBartenderSell(final BufferedImage sellMenuScrollbarCapture, final double scaling) {
+        final WritableRaster backgroundColorPixel = ((WritableRaster) sellMenuScrollbarCapture.getData(new java.awt.Rectangle((int) (0D * scaling),
+                (int) (215D * scaling), 1, 1))).createWritableTranslatedChild(0, 0);
+        byte[] colorBG = DataBufferHelper.getData(backgroundColorPixel.getDataBuffer());
+        final WritableRaster scrollbarColorPixel = ((WritableRaster) sellMenuScrollbarCapture.getData(new java.awt.Rectangle((int) (9D * scaling),
+                (int) (407 * scaling), 1, 1))).createWritableTranslatedChild(0, 0);
+        byte[] pixel = DataBufferHelper.getData(scrollbarColorPixel.getDataBuffer());
+        return  !matchesColor(colorBG, pixel, 2);
     }
 
     public static double getScrollBarHeightBartenderSell(final BufferedImage sellMenuScrollbarCapture, final double scaling) {
