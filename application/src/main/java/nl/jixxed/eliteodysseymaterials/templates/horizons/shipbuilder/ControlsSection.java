@@ -30,10 +30,13 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
+import nl.jixxed.eliteodysseymaterials.schemas.slef.Slef;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
+import nl.jixxed.eliteodysseymaterials.service.ships.SlefMapper;
+import nl.jixxed.eliteodysseymaterials.service.spansh.SpanshService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import org.controlsfx.control.PopOver;
@@ -56,6 +59,7 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
     private DestroyableMenuButton menuButton;
     private DestroyableMenuButton addAllToWishlist;
     private DestroyableMenuButton addChangedToWishlist;
+    private DestroyableButton plotSpansh;
     private DestroyableResizableImageView shipsHelp;
 
     public ControlsSection() {
@@ -167,7 +171,18 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
                 .withOnMouseClicked(this::showHelp)
                 .withVisibilityProperty(this.shipSelect.getSelectionModel().selectedItemProperty().map(s -> s.getShipType() != null))
                 .build();
-        this.getNodes().addAll(this.shipSelect, this.quickCreate, this.menuButton, this.quickFavourites, this.addAllToWishlist, this.addChangedToWishlist, this.shipsHelp);
+
+        this.plotSpansh = ButtonBuilder.builder()
+                .withText("tab.ships.plot")
+                .withDisableProperty(Bindings.createBooleanBinding(() -> this.shipSelect.getSelectionModel().getSelectedItem() == null || this.shipSelect.getSelectionModel().getSelectedItem().getShipType() == null, this.shipSelect.getSelectionModel().selectedItemProperty()).or(SpanshService.isWorking()))
+                .withOnAction(_ -> {
+                    final ShipConfiguration shipConfiguration = this.shipSelect.getSelectionModel().getSelectedItem();
+                    Slef slef = SlefMapper.map(shipConfiguration);
+                    SpanshService.openPlotter(slef);
+                })
+                .build();
+
+        this.getNodes().addAll(this.shipSelect, this.quickCreate, this.menuButton, this.quickFavourites, this.addAllToWishlist, this.addChangedToWishlist, this.plotSpansh, this.shipsHelp);
         APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
     }
 

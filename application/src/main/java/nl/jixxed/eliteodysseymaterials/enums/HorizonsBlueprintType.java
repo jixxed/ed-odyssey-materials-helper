@@ -569,13 +569,11 @@ public enum HorizonsBlueprintType {
             case DECORATIVE_RED -> "decorative_red";
             case DECORATIVE_PINK -> "decorative_pink";
             case DECORATIVE_YELLOW -> "decorative_yellow";
-            // Shared special-effect enums — pick prefix based on module class
             case DOUBLE_BRACED -> resolveSpecialBraced(module);
             case STRIPPED_DOWN -> resolveSpecialStripped(module);
             case FLOW_CONTROL -> resolveSpecialFlow(module);
             case THERMAL_SPREAD -> resolveSpecialThermalSpread(module);
             case SHIELDED -> resolveShielded(module);
-            // Unique special effects
             case AUTO_LOADER -> "special_auto_loader";
             case CONCORDANT_SEQUENCE -> "special_concordant_sequence";
             case CORROSIVE_SHELL -> "special_corrosive_shell";
@@ -614,7 +612,6 @@ public enum HorizonsBlueprintType {
             case BLAST_BLOCK -> "special_shieldbooster_explosive";
             case SUPER_CAPACITOR -> "special_shieldbooster_chunky";
             case THERMO_BLOCK -> resolveThermoBlock(module);
-//            case "special_shieldbooster_thermic", "special_shield_thermic" -> THERMO_BLOCK;
             case ANGLED_PLATING -> resolveAngledPlating(module);
             case DEEP_PLATING -> resolveDeepPlating(module);
             case LAYERED_PLATING -> resolveLayeredPlating(module);

@@ -122,3 +122,4 @@
 "power.level.reason.malfunctioning","Power output when malfunctioning","","","","","","Выработка энергии при неисправности","发电机故障时电力输出",""
 "power.level.reason.destroyed","Power output when destroyed","","","","","","Выработка энергии при разрушении","发电机被毁时电力输出",""
 "power.level.reason.normal","Maximum power output","","","","","","Максимальная выработка энергии","最大电力输出",""
+"tab.ships.plot","Plot on Spansh","","","","","","","",""

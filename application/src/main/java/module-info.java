@@ -63,6 +63,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires io.fair_acc.dataset;
     requires io.fair_acc.bench;
     requires mp3spi;
+    requires jdk.management;
 
     uses nl.jixxed.ed.awesome.api.FontLoader;
     uses nl.jixxed.ed.confidential.api.SecrecyLoader;
@@ -724,8 +725,10 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.schemas.market.save.request to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.schemas.market.save.response to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.schemas.market.search to com.fasterxml.jackson.databind, org.hibernate.validator;
+    opens nl.jixxed.eliteodysseymaterials.schemas.spansh to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.schemas.slef to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.service.message to com.fasterxml.jackson.databind, org.hibernate.validator;
+    opens nl.jixxed.eliteodysseymaterials.service.ships to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.service.shortlink to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.service.cg to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.templates to java.desktop, javafx.fxml, javafx.graphics, org.controlsfx.controls;
@@ -756,6 +759,7 @@ module nl.jixxed.eliteodysseymaterials {
     opens database.common;
     exports nl.jixxed.eliteodysseymaterials.helper;
     opens nl.jixxed.eliteodysseymaterials.helper to com.fasterxml.jackson.databind, org.hibernate.validator;
+    exports nl.jixxed.eliteodysseymaterials.service.spansh;
     provides io.ebean.config.EntityClassRegister with nl.jixxed.eliteodysseymaterials.persistence.common.model.EbeanEntityRegister;
 
 }

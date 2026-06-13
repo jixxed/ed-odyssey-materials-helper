@@ -18,6 +18,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.slef.Slef;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.VersionService;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 public class SlefMapper {
@@ -33,7 +34,7 @@ public class SlefMapper {
                 .withAppName("EDOMH")
                 .withAppVersion(VersionService.getBuildVersion())
                 .withAppUrl(ClipboardHelper.createClipboardShipConfiguration())
-                .withAppCustomProperties(new CustomProperties(LocationService.getCurrentSystemAddress(), BigInteger.valueOf((long) shipConfiguration.getCurrentCargo())))
+                .withAppCustomProperties(new CustomProperties(LocationService.getCurrentSystemAddress(), BigInteger.valueOf((long) shipConfiguration.getCurrentCargo()), BigDecimal.valueOf(shipConfiguration.getCurrentFuel())))
                 .build();
     }
 
@@ -41,7 +42,4 @@ public class SlefMapper {
         return LoadoutMapper.toLoadout(shipConfiguration);
     }
 
-    record CustomProperties(BigInteger location, BigInteger cargo) {
-
-    }
 }
