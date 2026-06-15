@@ -920,7 +920,7 @@ public class ShipSpecs {
                     {30.0, 40.0}}),
             Map.entry(HorizonsModifier.CRUISE_ROLL_PROFILE, new Double[][]{
                     {80.0, 80.0},
-                    {90.0, 90.0},
+                    {96.0, 96.0},
                     {80.0, 80.0}}),
             Map.entry(HorizonsModifier.CRUISE_YAW_PROFILE, new Double[][]{
                     {40.0, 40.0},
