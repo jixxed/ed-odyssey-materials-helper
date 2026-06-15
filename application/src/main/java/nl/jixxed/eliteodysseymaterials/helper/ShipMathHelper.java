@@ -240,21 +240,21 @@ public class ShipMathHelper {
      * Convenience: forward acceleration with current fuel/cargo/reserve mass
      */
     public static double calculateForwardAcceleration(final Ship ship) {
-        return (Double) ship.getAttributes().get(HorizonsModifier.FORWARD_ACCELERATION) * getAccelerationProfile(ship).getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve()) / 100D;
+        return (Double) ship.getAttributes().get(HorizonsModifier.FORWARD_ACCELERATION) * getAccelerationProfile(ship).getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo()/* + ship.getCurrentFuelReserve()*/) / 100D;
     }
 
     /**
      * Convenience: reverse acceleration with current fuel/cargo/reserve mass
      */
     public static double calculateReverseAcceleration(final Ship ship) {
-        return (Double) ship.getAttributes().get(HorizonsModifier.REVERSE_ACCELERATION) * getAccelerationProfile(ship).getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve()) / 100D;
+        return (Double) ship.getAttributes().get(HorizonsModifier.REVERSE_ACCELERATION) * getAccelerationProfile(ship).getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() /*+ ship.getCurrentFuelReserve()*/) / 100D;
     }
 
     /**
      * Convenience: lateral acceleration with current fuel/cargo/reserve mass
      */
     public static double calculateLateralAcceleration(final Ship ship) {
-        return (Double) ship.getAttributes().get(HorizonsModifier.LATERAL_ACCELERATION) * getAccelerationProfile(ship).getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve()) / 100D;
+        return (Double) ship.getAttributes().get(HorizonsModifier.LATERAL_ACCELERATION) * getAccelerationProfile(ship).getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() /*+ ship.getCurrentFuelReserve()*/) / 100D;
     }
 
     // ── Handling ────────────────────────────────────────────────────────────────────
@@ -370,7 +370,10 @@ public class ShipMathHelper {
             }
             case CURRENT -> {
                 if (speedAttr == HorizonsModifier.MAX_ROLL_SPEED) {
-                    yield (Double) ship.getAttributes().getOrDefault(speedAttr, 0.0D) * multiplier;
+                    yield (Double) ship.getAttributes().getOrDefault(speedAttr, 0.0D);
+                }
+                if (speedAttr == HorizonsModifier.MAX_YAW_SPEED) {
+                    yield (Double) ship.getAttributes().getOrDefault(speedAttr, 0.0D);
                 }
                 yield (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MAX_PITCH_SPEED, 0.0D) * multiplier
                         + (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MIN_PITCH_SPEED, 0.0D) * (1 - multiplier);
