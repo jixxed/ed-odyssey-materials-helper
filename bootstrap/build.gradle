@@ -57,7 +57,7 @@ repositories {
         name = 'repsy'
         url = "https://repo.repsy.io/mvn/jixxed/maven/"
     }
-    maven { url = 'https://jitpack.io' }
+//    maven { url = 'https://jitpack.io' }
 }
 
 application {
