@@ -25,7 +25,7 @@ public class ShipSpecs {
             Map.entry(HorizonsModifier.MINIMUM_THRUST, 45.454),
             Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.0),
             Map.entry(HorizonsModifier.BOOST_COST, 7.0),
-            Map.entry(HorizonsModifier.FORWARD_ACCELERATION, 44.0),
+            Map.entry(HorizonsModifier.FORWARD_ACCELERATION, 45.0),
             Map.entry(HorizonsModifier.REVERSE_ACCELERATION, 30.0),
             Map.entry(HorizonsModifier.LATERAL_ACCELERATION, 30.0),
             Map.entry(HorizonsModifier.SUPERCRUISE_PROFILE, new Double[][]{
