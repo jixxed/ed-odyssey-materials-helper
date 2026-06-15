@@ -1,3 +1,14 @@
+Version 3.11.1
+-------------
+Added CG band predictions
+- Gives an optimistic and pessimistic prediction for where a band will end up once the CG ends.
+Added highlighting to the achieved rewards and predictions
+Added Plot on Spansh button in the Ship Editor
+Fixed roll/yaw calculation for old ships
+Fixed roll stats for Mandalay
+Fixed acceleration for Sidewinder
+Fixed overlay positioning for Bartender Sell menu when there are only a small amount of items in your inventory
+
 Version 3.11.0
 -------------
 AR rework

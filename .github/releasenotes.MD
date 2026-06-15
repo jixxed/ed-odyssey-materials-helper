@@ -21,9 +21,12 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-AR rework
-- Cleaned up the AR code making it more stable and easier to maintain
-- Added a toggle to make the AR Overlay persistent. This allows for capturing with OBS and should prevent Z-fighting with other overlays.
-Added a new AR overlay that shows when selling at the bartender
-Added configuration toggles for the new overlay in the Augmented Reality section under Settings
+Added CG band predictions
+- Gives an optimistic and pessimistic prediction for where a band will end up once the CG ends.
+Added highlighting to the achieved rewards and predictions
+Added Plot on Spansh button in the Ship Editor
+Fixed roll/yaw calculation for old ships
+Fixed roll stats for Mandalay
+Fixed acceleration for Sidewinder
+Fixed overlay positioning for Bartender Sell menu when there are only a small amount of items in your inventory
 ```
