@@ -29,3 +29,5 @@
 "guardian.structure.title.beacon","Beacon for ancient key","","","","","","Древний ключ","","ძველი გასაღები"
 "horizons.materials.nearest.markets","Nearby selling markets","","","Mercados de venta cercanos","","","Ближайшие рынки","附近出售该货物的市场","ახლომდებარე ბაზრები"
 "menu.about.pinplanner","Engineer pin planner","","","","","","Планировщик закрепленных инженеров","蓝图固定规划器","დამახსოვრებული ინჟინრების დამგეგმავი"
+"menu.about.sponsor.github","Sponsor or donate on Github","","","","","","","",""
+"menu.about.sponsor.github.commission","0% commission","","","","","","","",""
