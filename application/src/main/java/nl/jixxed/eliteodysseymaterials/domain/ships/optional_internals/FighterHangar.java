@@ -23,10 +23,22 @@ public class FighterHangar extends OptionalModule {
     public static final FighterHangar FIGHTER_HANGAR_5_D = new FighterHangar("FIGHTER_HANGAR_5_D", HorizonsBlueprintName.FIGHTER_HANGAR, ModuleSize.SIZE_5, ModuleClass.D, false, 575660, "Int_FighterBay_Size5_Class1", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 20.0), Map.entry(HorizonsModifier.INTEGRITY, 60.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.25), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.VEHICLE_SLOTS, 1.0), Map.entry(HorizonsModifier.VEHICLE_COUNT, 6.0), Map.entry(HorizonsModifier.AMMO_COST, 1030.0)));
     public static final FighterHangar FIGHTER_HANGAR_6_D = new FighterHangar("FIGHTER_HANGAR_6_D", HorizonsBlueprintName.FIGHTER_HANGAR, ModuleSize.SIZE_6, ModuleClass.D, false, 1869350, "Int_FighterBay_Size6_Class1", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 40.0), Map.entry(HorizonsModifier.INTEGRITY, 80.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.35), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.VEHICLE_SLOTS, 2.0), Map.entry(HorizonsModifier.VEHICLE_COUNT, 8.0), Map.entry(HorizonsModifier.AMMO_COST, 1030.0)));
     public static final FighterHangar FIGHTER_HANGAR_7_D = new FighterHangar("FIGHTER_HANGAR_7_D", HorizonsBlueprintName.FIGHTER_HANGAR, ModuleSize.SIZE_7, ModuleClass.D, false, 2369330, "Int_FighterBay_Size7_Class1", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 60.0), Map.entry(HorizonsModifier.INTEGRITY, 120.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.35), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.VEHICLE_SLOTS, 2.0), Map.entry(HorizonsModifier.VEHICLE_COUNT, 15.0), Map.entry(HorizonsModifier.AMMO_COST, 1030.0)));
+    public static final FighterHangar MK_II_VESSEL_HANGAR_5_D_FREE = new FighterHangar("MK_II_FIGHTER_HANGAR_5_D_FREE", HorizonsBlueprintName.FIGHTER_HANGAR_MK_II, ModuleSize.SIZE_5, ModuleClass.D, false, 0, "Int_FighterBayMk2_Size5_Class1_free", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 40.0), Map.entry(HorizonsModifier.INTEGRITY, 60.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.3), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.VEHICLE_SLOTS, 1.0), Map.entry(HorizonsModifier.VEHICLE_COUNT, 6.0), Map.entry(HorizonsModifier.AMMO_COST, 1030.0)));
+    public static final FighterHangar MK_II_VESSEL_HANGAR_6_D_FREE = new FighterHangar("MK_II_FIGHTER_HANGAR_6_D_FREE", HorizonsBlueprintName.FIGHTER_HANGAR_MK_II, ModuleSize.SIZE_6, ModuleClass.D, false, 0, "Int_FighterBayMk2_Size6_Class1_free", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 80.0), Map.entry(HorizonsModifier.INTEGRITY, 80.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.40), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.VEHICLE_SLOTS, 2.0), Map.entry(HorizonsModifier.VEHICLE_COUNT, 8.0), Map.entry(HorizonsModifier.AMMO_COST, 1030.0)));
+    public static final FighterHangar MK_II_VESSEL_HANGAR_7_D_FREE = new FighterHangar("MK_II_FIGHTER_HANGAR_7_D_FREE", HorizonsBlueprintName.FIGHTER_HANGAR_MK_II, ModuleSize.SIZE_7, ModuleClass.D, false, 0, "Int_FighterBayMk2_Size7_Class1_free", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 120.0), Map.entry(HorizonsModifier.INTEGRITY, 120.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.42), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.VEHICLE_SLOTS, 2.0), Map.entry(HorizonsModifier.VEHICLE_COUNT, 30.0), Map.entry(HorizonsModifier.AMMO_COST, 1030.0)));
+    public static final FighterHangar MK_II_VESSEL_HANGAR_5_D = new FighterHangar("MK_II_FIGHTER_HANGAR_5_D", HorizonsBlueprintName.FIGHTER_HANGAR_MK_II, ModuleSize.SIZE_5, ModuleClass.D, false, 575660, "Int_FighterBayMk2_Size5_Class1", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 40.0), Map.entry(HorizonsModifier.INTEGRITY, 60.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.3), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.VEHICLE_SLOTS, 1.0), Map.entry(HorizonsModifier.VEHICLE_COUNT, 6.0), Map.entry(HorizonsModifier.AMMO_COST, 1030.0)));
+    public static final FighterHangar MK_II_VESSEL_HANGAR_6_D = new FighterHangar("MK_II_FIGHTER_HANGAR_6_D", HorizonsBlueprintName.FIGHTER_HANGAR_MK_II, ModuleSize.SIZE_6, ModuleClass.D, false, 1869350, "Int_FighterBayMk2_Size6_Class1", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 80.0), Map.entry(HorizonsModifier.INTEGRITY, 80.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.40), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.VEHICLE_SLOTS, 2.0), Map.entry(HorizonsModifier.VEHICLE_COUNT, 8.0), Map.entry(HorizonsModifier.AMMO_COST, 1030.0)));
+    public static final FighterHangar MK_II_VESSEL_HANGAR_7_D = new FighterHangar("MK_II_FIGHTER_HANGAR_7_D", HorizonsBlueprintName.FIGHTER_HANGAR_MK_II, ModuleSize.SIZE_7, ModuleClass.D, false, 2369330, "Int_FighterBayMk2_Size7_Class1", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 120.0), Map.entry(HorizonsModifier.INTEGRITY, 120.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.42), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.VEHICLE_SLOTS, 2.0), Map.entry(HorizonsModifier.VEHICLE_COUNT, 30.0), Map.entry(HorizonsModifier.AMMO_COST, 1030.0)));
     public static final List<FighterHangar> FIGHTER_HANGARS = List.of(
             FIGHTER_HANGAR_5_D,
             FIGHTER_HANGAR_6_D,
-            FIGHTER_HANGAR_7_D
+            FIGHTER_HANGAR_7_D,
+            MK_II_VESSEL_HANGAR_5_D_FREE,
+            MK_II_VESSEL_HANGAR_6_D_FREE,
+            MK_II_VESSEL_HANGAR_7_D_FREE,
+            MK_II_VESSEL_HANGAR_5_D,
+            MK_II_VESSEL_HANGAR_6_D,
+            MK_II_VESSEL_HANGAR_7_D
     );
 
     public FighterHangar(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
@@ -39,6 +51,12 @@ public class FighterHangar extends OptionalModule {
 
     public FighterHangar(FighterHangar fighterHangar) {
         super(fighterHangar);
+    }
+
+    public boolean isSelectable() {
+        return !MK_II_VESSEL_HANGAR_5_D_FREE.equals(this)
+                && !MK_II_VESSEL_HANGAR_6_D_FREE.equals(this)
+                && !MK_II_VESSEL_HANGAR_7_D_FREE.equals(this);
     }
 
     @Override
@@ -63,7 +81,18 @@ public class FighterHangar extends OptionalModule {
 
     @Override
     public boolean isAllowed(ShipType shipType) {
-        return shipType.isFighterBay();
+        return switch(this.getId()){
+            case "FIGHTER_HANGAR_5_D",
+                 "FIGHTER_HANGAR_6_D",
+                 "FIGHTER_HANGAR_7_D" -> shipType.getFighterBay().equals(Mark.I) || shipType.getFighterBay().equals(Mark.II);
+            case "MK_II_FIGHTER_HANGAR_5_D_FREE",
+                 "MK_II_FIGHTER_HANGAR_6_D_FREE",
+                 "MK_II_FIGHTER_HANGAR_7_D_FREE",
+                 "MK_II_FIGHTER_HANGAR_5_D",
+                 "MK_II_FIGHTER_HANGAR_6_D",
+                 "MK_II_FIGHTER_HANGAR_7_D" -> shipType.getFighterBay().equals(Mark.II);
+            default -> throw new IllegalStateException("Unexpected value: " + this.getId());
+        };
     }
 
     @Override
