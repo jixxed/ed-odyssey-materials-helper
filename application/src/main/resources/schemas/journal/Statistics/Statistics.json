@@ -88,6 +88,31 @@
           "title" : "Premium_Stock_Bought",
           "type" : "integer",
           "examples" : [ 102, 105, 59500000 ]
+        },
+        "MercCoins_Current" : {
+          "title" : "MercCoins_Current",
+          "type" : "integer",
+          "examples" : [ 0, 46, 6 ]
+        },
+        "MercCoins_Total_Earned" : {
+          "title" : "MercCoins_Total_Earned",
+          "type" : "integer",
+          "examples" : [ 0, 46, 6 ]
+        },
+        "MercCoins_Total_Spent" : {
+          "title" : "MercCoins_Total_Spent",
+          "type" : "integer",
+          "examples" : [ 0, 46, 6 ]
+        },
+        "MercCoins_Spent_On_MercGear" : {
+          "title" : "MercCoins_Spent_On_MercGear",
+          "type" : "integer",
+          "examples" : [ 0, 46, 6 ]
+        },
+        "MercCoins_Spent_On_Engineering" : {
+          "title" : "MercCoins_Spent_On_Engineering",
+          "type" : "integer",
+          "examples" : [ 0, 46, 6 ]
         }
       },
       "additionalProperties" : false,
