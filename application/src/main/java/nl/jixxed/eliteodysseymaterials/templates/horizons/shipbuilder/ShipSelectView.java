@@ -18,6 +18,7 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfigurations;
+import nl.jixxed.eliteodysseymaterials.domain.ships.Mark;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
 import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
@@ -64,7 +65,7 @@ public class ShipSelectView extends DestroyableVBox implements DestroyableTempla
             values.put("ship.view.header.price", () -> new FormattedLong(ship.getRetailPrice()));
             values.put("ship.view.header.size", () -> LocaleService.LocalizationKey.of(ship.getShipType().getShipSize().getLocalizationKey()));
             values.put("ship.view.header.crew", () -> "1 + " + ship.getShipType().getMultiCrewSeats());
-            values.put("ship.view.header.fighterbay", () -> new FormattedBoolean(ship.getShipType().isFighterBay()));
+            values.put("ship.view.header.fighterbay", () -> new FormattedBoolean(ship.getShipType().getFighterBay() != Mark.NONE));
             values.put("ship.view.header.masslock", () -> new FormattedDouble((Double) ship.getAttributes().get(HorizonsModifier.MASS_LOCK)));
             values.put("ship.view.header.mass", () -> new FormattedDouble((Double) ship.getAttributes().get(HorizonsModifier.MASS)));
             values.put("ship.view.header.jumprange", () -> new FormattedDouble(calculateJumpRangeMax(ship), Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL));

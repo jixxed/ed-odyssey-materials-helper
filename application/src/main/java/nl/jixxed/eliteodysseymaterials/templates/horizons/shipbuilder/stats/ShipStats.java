@@ -11,6 +11,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.domain.ships.Mark;
 import nl.jixxed.eliteodysseymaterials.domain.ships.PowerProfile;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipType;
@@ -169,7 +170,7 @@ public class ShipStats extends Stats implements DestroyableEventTemplate {
     }
 
     private boolean calculateSlf() {
-        return getShip().map(Ship::getShipType).map(ShipType::isFighterBay).orElse(Boolean.FALSE);
+        return getShip().map(Ship::getShipType).map(type -> type.getFighterBay() != Mark.NONE).orElse(Boolean.FALSE);
     }
 
     private int calculateCrew() {
