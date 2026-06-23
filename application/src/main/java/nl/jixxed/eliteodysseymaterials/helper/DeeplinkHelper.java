@@ -120,6 +120,8 @@ public class DeeplinkHelper {
             NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.imported.failed.unknown.type.title"), LocaleService.LocaleString.of("notification.imported.failed.unknown.type.text"));
         } else if (ImportResult.ResultType.CAPI_OAUTH_TOKEN.equals(importResult.getResultType())) {
             FXApplication.getInstance().getPrimaryStage().toFront();
+        } else if (ImportResult.ResultType.SPONSOR_OAUTH_TOKEN.equals(importResult.getResultType())) {
+            FXApplication.getInstance().getPrimaryStage().toFront();
         } else if (ImportResult.ResultType.SUCCESS_SLEF.equals(importResult.getResultType())) {
             NotificationService.showInformation(NotificationType.IMPORT, LocaleService.LocaleString.of("notification.imported.success.slef.title"), importResult.getMessage());
             FXApplication.getInstance().getPrimaryStage().toFront();
@@ -211,7 +213,7 @@ public class DeeplinkHelper {
     }
 
     private static boolean shouldSkipDialog(ImportType type) {
-        return ImportType.CAPI.equals(type) || ImportType.UNKNOWN.equals(type);
+        return ImportType.CAPI.equals(type) || ImportType.SPONSOR.equals(type) || ImportType.UNKNOWN.equals(type);
     }
 
     private static void addIconsToStage(Stage stage) {

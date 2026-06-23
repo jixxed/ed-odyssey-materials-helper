@@ -1,12 +1,10 @@
 import org.gradle.internal.os.OperatingSystem
-import java.net.URL
-
 // Cross-cutting variables (visible to all included scripts via project scope)
 project.ext.os = OperatingSystem.current()
 
 def proprietaryUser = System.getenv('PROPRIETARY_REPO_USER')
 def proprietaryPass = System.getenv('PROPRIETARY_REPO_PASS')
-project.ext.proprietary = (proprietaryUser && proprietaryPass) || isRepoReachable("https://nexus.jixxed.nl/nexus/content/repositories/releases")
+project.ext.proprietary = (proprietaryUser && proprietaryPass) || isRepoReachable("https://nexus.jixxed.nl/content/repositories/releases")
 project.ext.proprietaryUser = proprietaryUser
 project.ext.proprietaryPass = proprietaryPass
 

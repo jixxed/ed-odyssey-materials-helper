@@ -31,13 +31,11 @@ import nl.jixxed.eliteodysseymaterials.export.TextExporter;
 import nl.jixxed.eliteodysseymaterials.export.XlsExporter;
 import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
 import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.RegistryService;
-import nl.jixxed.eliteodysseymaterials.service.SupportService;
+import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.window.FXWinUtil;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.jixxed.github.sponsor.SponsorService;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -52,6 +50,7 @@ import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 @Slf4j
 public class General extends DestroyableVBox implements DestroyableEventTemplate {
 
+    public final BooleanProperty registered = new SimpleBooleanProperty(RegistryService.isRegistered());
     private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     private DestroyableLabel selectedFolderLabel;
     private DestroyableButton journalSelectButton;
@@ -60,13 +59,22 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
     private DestroyableComboBox<ApplicationLocale> languageSelect;
     private DestroyableButton urlSchemeLinkingButton;
     private DestroyableLabel urlSchemeLinkingActiveLabel;
-
-    public final BooleanProperty registered = new SimpleBooleanProperty(RegistryService.isRegistered());
+    private DestroyableLabel sponsorStatusLabel;
+    private DestroyableButton connectButton;
+    private DestroyableButton disconnectButton;
 
     public General() {
         this.initComponents();
         this.initEventHandling();
         applyFontSizingHack();
+    }
+
+    private static void applyFontSizeToComponents(Integer size, Node... components) {
+        final String style = String.format("-fx-font-size: %dpx;", size);
+
+        for (Node component : components) {
+            component.setStyle(style);
+        }
     }
 
     private void applyFontSizingHack() {
@@ -102,6 +110,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
         final DestroyableHBox importFromClipboardSetting = createImportFromClipboardSetting();
         final DestroyableHBox importSlefFromClipboardSetting = createImportSlefFromClipboardSetting();
         final DestroyableHBox supportPackageSetting = createSupportPackageSetting();
+        final DestroyableHBox sponsorSetting = createSponsorSetting();
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
         this.getNodes().addAll(
                 customJournalFolderSetting,
@@ -119,7 +128,8 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 blueprintExpandedSetting,
                 importFromClipboardSetting,
                 importSlefFromClipboardSetting,
-                supportPackageSetting
+                supportPackageSetting,
+                sponsorSetting
         );
     }
 
@@ -160,7 +170,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
 //                        EventService.publish(new StyleSheetChangedEvent(newValue));
                         var customCss = new File(OsConstants.getCustomCss());
                         try {
-                            if(FXApplication.getInstance().getPrimaryStage().getScene().getStylesheets().contains(customCss.toURI().toURL().toExternalForm())) {
+                            if (FXApplication.getInstance().getPrimaryStage().getScene().getStylesheets().contains(customCss.toURI().toURL().toExternalForm())) {
                                 FXApplication.getInstance().getPrimaryStage().getScene().getStylesheets().remove(customCss.toURI().toURL().toExternalForm());
                                 FXApplication.getInstance().getPrimaryStage().getScene().getStylesheets().add(customCss.toURI().toURL().toExternalForm());
                             }
@@ -200,14 +210,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
     public void initEventHandling() {
         register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> applyFontSizeToComponents(fontSizeEvent.getFontSize(), this.journalSelectButton, this.fontsizeSelect, this.languageSelect)));
         register(EventService.addListener(false, true, TerminateApplicationEvent.class, _ -> executorService.shutdownNow()));
-    }
-
-    private static void applyFontSizeToComponents(Integer size, Node... components) {
-        final String style = String.format("-fx-font-size: %dpx;", size);
-
-        for (Node component : components) {
-            component.setStyle(style);
-        }
+        register(EventService.addListener(false, this, SponsorConnectionEvent.class, _ -> updateSponsorUI()));
     }
 
     private DestroyableHBox createLangSetting() {
@@ -502,6 +505,64 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(supportPackageLabel, supportPackage, supportPackageExplainLabel)
                 .buildHBox();
+    }
+
+    private DestroyableHBox createSponsorSetting() {
+        final DestroyableLabel sponsorLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("settings.sponsor.title")
+                .build();
+        boolean connected = SponsorService.isConnected();
+        sponsorStatusLabel =
+                connected ?
+                        LabelBuilder.builder()
+                                .withStyleClass(SETTINGS_LABEL_CLASS)
+                                .withText("settings.sponsor.connected", SponsorService.getSponsorName(), LocaleService.LocalizationKey.of(SponsorService.getSponsorTier().getLocaleKey()))
+                                .build():
+                        LabelBuilder.builder()
+                                .withStyleClass(SETTINGS_LABEL_CLASS)
+                                .withText("settings.sponsor.notconnected")
+                                .build() ;
+        connectButton = ButtonBuilder.builder()
+                .withStyleClass(SETTINGS_BUTTON_STYLE_CLASS)
+                .withText("settings.sponsor.connect")
+                .withVisibility(!connected)
+                .withManaged(!connected)
+                .withOnAction(e -> {
+                    String authUrl = SponsorService.authUrl();
+                    FXApplication.getInstance().getHostServices().showDocument(authUrl);
+                })
+                .build();
+        disconnectButton = ButtonBuilder.builder()
+                .withStyleClass(SETTINGS_BUTTON_STYLE_CLASS)
+                .withText("settings.sponsor.disconnect")
+                .withVisibility(connected)
+                .withManaged(connected)
+                .withOnAction(e -> {
+                    SponsorService.disconnect();
+                    updateSponsorUI();
+                })
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(sponsorLabel, connectButton, disconnectButton, sponsorStatusLabel)
+                .buildHBox();
+    }
+
+    private void updateSponsorUI() {
+        if (SponsorService.isConnected()) {
+            sponsorStatusLabel.addBinding(sponsorStatusLabel.textProperty(), LocaleService.getStringBinding("settings.sponsor.connected", SponsorService.getSponsorName(), LocaleService.LocalizationKey.of(SponsorService.getSponsorTier().getLocaleKey())));
+            connectButton.setVisible(false);
+            connectButton.setManaged(false);
+            disconnectButton.setVisible(true);
+            disconnectButton.setManaged(true);
+        } else {
+            sponsorStatusLabel.addBinding(sponsorStatusLabel.textProperty(), LocaleService.getStringBinding("settings.sponsor.notconnected"));
+            connectButton.setVisible(true);
+            connectButton.setManaged(true);
+            disconnectButton.setVisible(false);
+            disconnectButton.setManaged(false);
+        }
     }
 
     @Override

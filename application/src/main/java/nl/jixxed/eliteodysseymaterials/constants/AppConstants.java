@@ -41,6 +41,7 @@ public class AppConstants {
     public static final String PERMITS_FILE = "permits.json";
     public static final String CARGO_FILE = "Cargo.json";
     public static final String STATUS_FILE = "Status.json";
+    public static final String SPONSOR_TOKEN_FILE = "sponsor-token.json";
 
     public static final String SHIPYARD_FILE = "Shipyard.json";
     public static final String OUTFITTING_FILE = "Outfitting.json";

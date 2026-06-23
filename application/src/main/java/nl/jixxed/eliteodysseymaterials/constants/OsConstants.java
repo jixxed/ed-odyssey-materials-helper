@@ -143,6 +143,10 @@ public class OsConstants {
         return pathConfig.getConfigDirectory() + pathConfig.getOsSlash() + "style.css";
     }
 
+    public static String getSponsorToken() {
+        return pathConfig.getConfigDirectory() + pathConfig.getOsSlash() + AppConstants.SPONSOR_TOKEN_FILE;
+    }
+
     public static String getTess4j() {
         return pathConfig.getConfigDirectory() + pathConfig.getOsSlash() + "tesseract";
     }

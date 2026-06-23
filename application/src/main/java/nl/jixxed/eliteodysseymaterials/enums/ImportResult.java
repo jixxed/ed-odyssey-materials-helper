@@ -41,6 +41,7 @@ public class ImportResult {
         ERROR_HORIZONS_SHIP,
         SUCCESS_PINCONFIG,
         ERROR_PINCONFIG,
-        CAPI_OAUTH_TOKEN
+        CAPI_OAUTH_TOKEN,
+        SPONSOR_OAUTH_TOKEN
     }
 }

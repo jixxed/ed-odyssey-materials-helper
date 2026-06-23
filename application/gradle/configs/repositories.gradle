@@ -9,7 +9,7 @@ repositories {
     if (project.ext.proprietary) {
         maven {
             name = 'nexus'
-            url = "https://nexus.jixxed.nl/nexus/content/repositories/releases"
+            url = "https://nexus.jixxed.nl/content/repositories/releases"
         }
     }
     if (project.ext.proprietaryUser && project.ext.proprietaryPass) {

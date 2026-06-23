@@ -19,16 +19,20 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.schemas.slef.Slef;
 import nl.jixxed.eliteodysseymaterials.service.event.CapiOAuthCallbackEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.SponsorConnectionEvent;
 import nl.jixxed.eliteodysseymaterials.service.exception.*;
 import nl.jixxed.eliteodysseymaterials.service.ships.LoadoutMapper;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
+import nl.jixxed.github.sponsor.SponsorAuth;
+import nl.jixxed.github.sponsor.SponsorService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -40,15 +44,14 @@ import java.util.zip.Inflater;
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ImportService {
+    public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final String ERROR_IMPORT_STRING_NOT_DECODED = "String could not be decoded";
 
     static {
         OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         OBJECT_MAPPER.registerModule(new JavaTimeModule());
     }
-
-    public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private static final String ERROR_IMPORT_STRING_NOT_DECODED = "String could not be decoded";
 
     public static ImportResult importDeeplink(final String deeplink) {
         final String content = deeplink.substring(8);
@@ -81,6 +84,13 @@ public class ImportService {
         } else if ("pinconfig/".equals(type)) {
             final String decoded = convertBase64CompressedToJson(data);
             return importPinConfig(decoded);
+        } else if ("sponsor/".equals(type)) {
+            log.info(data);
+            final HashMap<String, String> params = convertToQueryStringToHashMap(data);
+            SponsorService.saveToken(new SponsorAuth(params.get("user"), params.get("hash")));
+            SponsorService.init(OsConstants.getSponsorToken());
+            EventService.publish(new SponsorConnectionEvent(true));
+            return new ImportResult(ImportResult.ResultType.SPONSOR_OAUTH_TOKEN);
         }
         return new ImportResult(ImportResult.ResultType.UNKNOWN_TYPE);
     }

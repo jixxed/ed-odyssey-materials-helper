@@ -68,6 +68,7 @@ public class ImportDialog extends DestroyableVBox implements DestroyableTemplate
             case CORIOLIS -> new CoriolisHorizonsWishlist(json);
             case PINCONFIG -> new HorizonsPinConfig(json);
             case CAPI -> null;//skipped earlier
+            case SPONSOR -> null;//skipped earlier
             case UNKNOWN -> null;//skipped earlier
         };
         DestroyableScrollPane scrollPane = ScrollPaneBuilder.builder()

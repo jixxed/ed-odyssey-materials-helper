@@ -64,6 +64,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires io.fair_acc.bench;
     requires mp3spi;
     requires jdk.management;
+    requires nl.jixxed.github.sponsor;
 
     uses nl.jixxed.ed.awesome.api.FontLoader;
     uses nl.jixxed.ed.confidential.api.SecrecyLoader;

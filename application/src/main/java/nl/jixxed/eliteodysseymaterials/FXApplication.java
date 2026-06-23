@@ -63,6 +63,7 @@ import nl.jixxed.eliteodysseymaterials.templates.dialog.URLSchemeDialog;
 import nl.jixxed.eliteodysseymaterials.templates.dialog.VersionDialog;
 import nl.jixxed.eliteodysseymaterials.watchdog.*;
 import nl.jixxed.eliteodysseymaterials.watchdog.FileService;
+import nl.jixxed.github.sponsor.SponsorService;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.controlsfx.control.Notifications;
 import org.controlsfx.control.SegmentedBar;
@@ -129,6 +130,7 @@ public class FXApplication extends Application {
     public void start(final Stage primaryStage) {
         System.setProperty("de.jensd.fx.glyphs.fontawesome.disableCSS", "true");
 //        DeeplinkHelper.setFxApplication(this);
+        SponsorService.init(OsConstants.getSponsorToken());
         NotificationService.init();
         DatabaseService.init();
         ScrapeState.init();
@@ -652,10 +654,10 @@ public class FXApplication extends Application {
         final JMetro jMetro = new JMetro(Style.DARK);
         jMetro.setScene(scene);
         try {
-            log.error("Load controlsfx notifications css");
+//            log.error("Load controlsfx notifications css");
             String stylesheetUrl = getControlsFxNotificationsCssUrl();
             scene.getStylesheets().add(stylesheetUrl);
-            log.error("Loaded controlsfx notifications css");
+//            log.error("Loaded controlsfx notifications css");
         } catch (Exception e) {
             log.error("Failed to load controlsfx notifications css", e);
         }
