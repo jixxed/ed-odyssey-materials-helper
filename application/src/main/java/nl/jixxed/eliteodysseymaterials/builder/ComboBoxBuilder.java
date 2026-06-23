@@ -10,11 +10,13 @@
 
 package nl.jixxed.eliteodysseymaterials.builder;
 
+import javafx.scene.control.skin.ComboBoxListViewSkin;
 import javafx.util.StringConverter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComboBox;
+
 @Slf4j
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class ComboBoxBuilder<T> extends AbstractComboBoxBuilder<T, ComboBoxBuilder<T>> {
@@ -38,8 +40,10 @@ public class ComboBoxBuilder<T> extends AbstractComboBoxBuilder<T, ComboBoxBuild
         if(stringConverter != null) {
             comboBox.converterProperty().set(stringConverter);
         }
-        comboBox.addChangeListener(comboBox.itemsProperty(), (_,_,_) -> {
-            comboBox.setVisibleRowCount(Math.min(comboBox.getItems().size(), 10));
+        comboBox.addChangeListener(comboBox.showingProperty(), (_,_,_) -> {
+            if (comboBox.getSkin() instanceof ComboBoxListViewSkin<?> skin) {
+                skin.getPopupContent().autosize();
+            }
         });
         return comboBox;
     }

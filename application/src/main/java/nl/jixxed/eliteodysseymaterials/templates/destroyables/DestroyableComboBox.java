@@ -10,10 +10,7 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.destroyables;
 
-import javafx.application.Platform;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.skin.ComboBoxListViewSkin;
 import lombok.Getter;
 
 import java.util.List;
@@ -27,11 +24,6 @@ public class DestroyableComboBox<T> extends ComboBox<T> implements DestroyableCo
                 .map(Destroyable.class::cast)
                 .forEach(this::register);
         this.getItems().addAll(items);
-        Platform.runLater(() -> {
-            if (this.getSkin() instanceof ComboBoxListViewSkin<?> skin) {
-                ((ListView) skin.getPopupContent()).requestLayout();
-            }
-        });
     }
 
     public void add(T menuItem) {
