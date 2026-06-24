@@ -166,21 +166,21 @@ public class JumpStats extends Stats implements DestroyableTemplate {
                 totalJumpRangeIndicator2.setVisible(false);
                 totalJumpRangeIndicator2.setManaged(false);
                 superCruisePitchMap.forEach((key, value) -> {
-                    Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.SUPERCRUISE_PROFILE);
+                    Double[][] profile = ship.getShipSpecs().getSupercruiseProfile();
                     Double pivot = profile[0][1];
                     Double min = profile[0][0];
                     Double max = profile[0][2];
                     mapProfile(key, value, pivot, min, max);
                 });
                 superCruiseRollMap.forEach((key, value) -> {
-                    Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.SUPERCRUISE_PROFILE);
+                    Double[][] profile = ship.getShipSpecs().getSupercruiseProfile();
                     Double pivot = profile[1][1];
                     Double min = profile[1][0];
                     Double max = profile[1][2];
                     mapProfile(key, value, pivot, min, max);
                 });
                 superCruiseYawMap.forEach((key, value) -> {
-                    Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.SUPERCRUISE_PROFILE);
+                    Double[][] profile = ship.getShipSpecs().getSupercruiseProfile();
                     Double pivot = profile[2][1];
                     Double min = profile[2][0];
                     Double max = profile[2][2];

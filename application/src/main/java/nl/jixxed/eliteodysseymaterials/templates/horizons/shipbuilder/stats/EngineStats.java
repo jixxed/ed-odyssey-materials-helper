@@ -77,7 +77,7 @@ public class EngineStats extends Stats implements DestroyableTemplate {
     protected void update() {
 
         getShip().ifPresent(ship -> {
-            final double boostInterval = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.BOOST_INTERVAL, 0.0D);
+            final double boostInterval = ship.getShipSpecs().getBoostInterval();
 
             var minSpeed = calculateMinSpeed(ship);
             var currentSpeed = calculateCurrentSpeed(ship);

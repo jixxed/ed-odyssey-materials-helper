@@ -183,7 +183,7 @@ public class ShieldStats extends Stats implements DestroyableEventTemplate {
                             Double minimumStrength = (Double) module.getAttributeValue(SHIELDGEN_MINIMUM_STRENGTH, true);
                             Double optimalStrength = (Double) module.getAttributeValue(SHIELDGEN_OPTIMAL_STRENGTH, true);
                             Double maximumStrength = (Double) module.getAttributeValue(SHIELDGEN_MAXIMUM_STRENGTH, true);
-                            double shields = (double) ship.getAttributes().getOrDefault(SHIELDS, 0D);
+                            double shields = ship.getShipSpecs().getShields();
                             double shieldReinforcement = ship.getOptionalSlots().stream()
                                     .filter(slot -> slot.getShipModule() instanceof GuardianShieldReinforcementPackage)
                                     .mapToDouble(slot -> (Double) slot.getShipModule().getAttributeValue(SHIELD_REINFORCEMENT, true))
@@ -195,7 +195,7 @@ public class ShieldStats extends Stats implements DestroyableEventTemplate {
                             var moduleProfile = new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumStrength, optimalStrength, maximumStrength);
                             return shieldReinforcement + (shields
                                     * getEffectiveShieldBoostMultiplier(totalShieldBoost)
-                                    * moduleProfile.getMassCurveMultiplier((double) ship.getAttributes().getOrDefault(MASS, 0D)));
+                                    * moduleProfile.getMassCurveMultiplier(ship.getShipSpecs().getMass()));
                         }).orElse(0D))
                 .orElse(0D);
     }

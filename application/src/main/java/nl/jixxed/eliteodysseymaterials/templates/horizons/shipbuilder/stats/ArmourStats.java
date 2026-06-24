@@ -116,7 +116,7 @@ public class ArmourStats extends Stats implements DestroyableTemplate {
     }
 
     public double calculateResistanceRaw() {
-        return (double) getShip().map(ship -> ship.getAttributes().getOrDefault(HorizonsModifier.ARMOUR_HARDNESS, 0D)).orElse(0D);
+        return (double) getShip().map(ship -> ship.getShipSpecs().getArmourHardness()).orElse(0D);
     }
 
     public double calculateResistanceKinetic() {
@@ -171,7 +171,7 @@ public class ArmourStats extends Stats implements DestroyableTemplate {
 
     public double calculateIntegrityRaw() {
         return getShip().map(ship -> {
-            final double shipArmour = (double) ship.getAttributes().getOrDefault(HorizonsModifier.ARMOUR, 0D);
+            final double shipArmour = ship.getShipSpecs().getArmour();
             final Optional<ShipModule> armour = ship.getCoreSlots().stream().filter(slot -> SlotType.CORE_ARMOUR.equals(slot.getSlotType())).findFirst().map(Slot::getShipModule);
             double hullBoost = (double) armour.map(shipModule -> shipModule.getAttributeValue(HorizonsModifier.HULL_BOOST, true)).orElse(0D);
             hullBoost += ship.getOptionalSlots().stream()

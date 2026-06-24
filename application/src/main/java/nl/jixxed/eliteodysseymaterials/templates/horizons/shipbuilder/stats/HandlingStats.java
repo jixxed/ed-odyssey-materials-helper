@@ -26,9 +26,7 @@ import nl.jixxed.eliteodysseymaterials.builder.NumberAxisBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
-import static nl.jixxed.eliteodysseymaterials.helper.ShipMathHelper.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
@@ -40,6 +38,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+
+import static nl.jixxed.eliteodysseymaterials.helper.ShipMathHelper.*;
 
 @Slf4j
 public class HandlingStats extends Stats implements DestroyableTemplate {
@@ -394,13 +394,13 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
 
             final ModuleProfile moduleProfile = getRotationProfile(ship);
             final ModuleProfile boostProfile = getBoostedProfile(ship);
-            pitchMaxValue.textProperty().bind(LocaleService.getStringBinding("ship.stats.handling.pitch.value", Formatters.NUMBER_FORMAT_2.format(mapProfile(50, ApplicationState.getInstance().getEnginePips(), (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_PITCH_PROFILE), moduleProfile, ship))));
-            rollMaxValue.textProperty().bind(LocaleService.getStringBinding("ship.stats.handling.roll.value", Formatters.NUMBER_FORMAT_2.format(mapProfile(50, ApplicationState.getInstance().getEnginePips(), (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_ROLL_PROFILE), moduleProfile, ship))));
-            yawMaxValue.textProperty().bind(LocaleService.getStringBinding("ship.stats.handling.yaw.value", Formatters.NUMBER_FORMAT_2.format(mapProfile(50, ApplicationState.getInstance().getEnginePips(), (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_YAW_PROFILE), moduleProfile, ship))));
+            pitchMaxValue.textProperty().bind(LocaleService.getStringBinding("ship.stats.handling.pitch.value", Formatters.NUMBER_FORMAT_2.format(mapProfile(50, ApplicationState.getInstance().getEnginePips(), ship.getShipSpecs().getCruisePitchProfile(), moduleProfile, ship))));
+            rollMaxValue.textProperty().bind(LocaleService.getStringBinding("ship.stats.handling.roll.value", Formatters.NUMBER_FORMAT_2.format(mapProfile(50, ApplicationState.getInstance().getEnginePips(), ship.getShipSpecs().getCruiseRollProfile(), moduleProfile, ship))));
+            yawMaxValue.textProperty().bind(LocaleService.getStringBinding("ship.stats.handling.yaw.value", Formatters.NUMBER_FORMAT_2.format(mapProfile(50, ApplicationState.getInstance().getEnginePips(), ship.getShipSpecs().getCruiseYawProfile(), moduleProfile, ship))));
 
-            pitchMaxBoostValue.textProperty().bind(LocaleService.getStringBinding("ship.stats.handling.pitch.value", Formatters.NUMBER_FORMAT_2.format(mapBoostedProfile(50, ApplicationState.getInstance().getEnginePips(), (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_PITCH_PROFILE), moduleProfile, boostProfile, ship))));
-            rollMaxBoostValue.textProperty().bind(LocaleService.getStringBinding("ship.stats.handling.roll.value", Formatters.NUMBER_FORMAT_2.format(mapBoostedProfile(50, ApplicationState.getInstance().getEnginePips(), (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_ROLL_PROFILE), moduleProfile, boostProfile, ship))));
-            yawMaxBoostValue.textProperty().bind(LocaleService.getStringBinding("ship.stats.handling.yaw.value", Formatters.NUMBER_FORMAT_2.format(mapBoostedProfile(50, ApplicationState.getInstance().getEnginePips(), (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_YAW_PROFILE), moduleProfile, boostProfile, ship))));
+            pitchMaxBoostValue.textProperty().bind(LocaleService.getStringBinding("ship.stats.handling.pitch.value", Formatters.NUMBER_FORMAT_2.format(mapBoostedProfile(50, ApplicationState.getInstance().getEnginePips(), ship.getShipSpecs().getCruisePitchProfile(), moduleProfile, boostProfile, ship))));
+            rollMaxBoostValue.textProperty().bind(LocaleService.getStringBinding("ship.stats.handling.roll.value", Formatters.NUMBER_FORMAT_2.format(mapBoostedProfile(50, ApplicationState.getInstance().getEnginePips(), ship.getShipSpecs().getCruiseRollProfile(), moduleProfile, boostProfile, ship))));
+            yawMaxBoostValue.textProperty().bind(LocaleService.getStringBinding("ship.stats.handling.yaw.value", Formatters.NUMBER_FORMAT_2.format(mapBoostedProfile(50, ApplicationState.getInstance().getEnginePips(), ship.getShipSpecs().getCruiseYawProfile(), moduleProfile, boostProfile, ship))));
 
             if (ship.supportsGraphs()) {
                 setVisibility(true, buttons, maxValues, separator);
@@ -419,51 +419,51 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
                 }
                 setVisibility(false, pitchIndicator, rollIndicator, yawIndicator);
                 minPitchMap.forEach((key, value) -> {
-                    Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_PITCH_PROFILE);
+                    Double[][] profile = (Double[][]) ship.getShipSpecs().getCruisePitchProfile();
                     value.setYValue(mapProfile(key, 0, profile, moduleProfile, ship));
                 });
                 maxPitchMap.forEach((key, value) -> {
-                    Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_PITCH_PROFILE);
+                    Double[][] profile = (Double[][]) ship.getShipSpecs().getCruisePitchProfile();
                     value.setYValue(mapProfile(key, 8, profile, moduleProfile, ship));
                 });
                 currentPitchMap.forEach((key, value) -> {
-                    Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_PITCH_PROFILE);
+                    Double[][] profile = (Double[][]) ship.getShipSpecs().getCruisePitchProfile();
                     value.setYValue(mapProfile(key, ApplicationState.getInstance().getEnginePips(), profile, moduleProfile, ship));
                 });
                 currentBoostPitchMap.forEach((key, value) -> {
-                    Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_PITCH_PROFILE);
+                    Double[][] profile = (Double[][]) ship.getShipSpecs().getCruisePitchProfile();
                     value.setYValue(mapBoostedProfile(key, ApplicationState.getInstance().getEnginePips(), profile, moduleProfile, boostProfile, ship));
                 });
                 minRollMap.forEach((key, value) -> {
-                    Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_ROLL_PROFILE);
+                    Double[][] profile = (Double[][]) ship.getShipSpecs().getCruiseRollProfile();
                     value.setYValue(mapProfile(key, 0, profile, moduleProfile, ship));
                 });
                 maxRollMap.forEach((key, value) -> {
-                    Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_ROLL_PROFILE);
+                    Double[][] profile = (Double[][]) ship.getShipSpecs().getCruiseRollProfile();
                     value.setYValue(mapProfile(key, 8, profile, moduleProfile, ship));
                 });
                 currentRollMap.forEach((key, value) -> {
-                    Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_ROLL_PROFILE);
+                    Double[][] profile = (Double[][]) ship.getShipSpecs().getCruiseRollProfile();
                     value.setYValue(mapProfile(key, ApplicationState.getInstance().getEnginePips(), profile, moduleProfile, ship));
                 });
                 currentBoostRollMap.forEach((key, value) -> {
-                    Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_ROLL_PROFILE);
+                    Double[][] profile = (Double[][]) ship.getShipSpecs().getCruiseRollProfile();
                     value.setYValue(mapBoostedProfile(key, ApplicationState.getInstance().getEnginePips(), profile, moduleProfile, boostProfile, ship));
                 });
                 minYawMap.forEach((key, value) -> {
-                    Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_YAW_PROFILE);
+                    Double[][] profile = (Double[][]) ship.getShipSpecs().getCruiseYawProfile();
                     value.setYValue(mapProfile(key, 0, profile, moduleProfile, ship));
                 });
                 maxYawMap.forEach((key, value) -> {
-                    Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_YAW_PROFILE);
+                    Double[][] profile = (Double[][]) ship.getShipSpecs().getCruiseYawProfile();
                     value.setYValue(mapProfile(key, 8, profile, moduleProfile, ship));
                 });
                 currentYawMap.forEach((key, value) -> {
-                    Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_YAW_PROFILE);
+                    Double[][] profile = (Double[][]) ship.getShipSpecs().getCruiseYawProfile();
                     value.setYValue(mapProfile(key, ApplicationState.getInstance().getEnginePips(), profile, moduleProfile, ship));
                 });
                 currentBoostYawMap.forEach((key, value) -> {
-                    Double[][] profile = (Double[][]) ship.getAttributes().get(HorizonsModifier.CRUISE_YAW_PROFILE);
+                    Double[][] profile = (Double[][]) ship.getShipSpecs().getCruiseYawProfile();
                     value.setYValue(mapBoostedProfile(key, ApplicationState.getInstance().getEnginePips(), profile, moduleProfile, boostProfile, ship));
                 });
             } else {
@@ -475,7 +475,9 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
 
     //    private static void mapProfile(Integer key, XYChart.Data<Number, Number> value, Double pivot, Double min, Double max) {
     private double mapProfile(Integer key, int pips, Double[][] profile, ModuleProfile moduleProfile, Ship ship) {
-
+        if(profile == null) {
+            return 0D;
+        }
 //        Final	0	    8
 //        0%	38,93	39,81
 //        50%	27,52	35,68
@@ -499,6 +501,9 @@ public class HandlingStats extends Stats implements DestroyableTemplate {
     }
     //    private static void mapProfile(Integer key, XYChart.Data<Number, Number> value, Double pivot, Double min, Double max) {
     private double mapBoostedProfile(Integer key, int pips, Double[][] profile, ModuleProfile moduleProfile,  ModuleProfile boostProfile, Ship ship) {
+        if(profile == null) {
+            return 0D;
+        }
 
 //        Final	0	    8
 //        0%	38,93	39,81

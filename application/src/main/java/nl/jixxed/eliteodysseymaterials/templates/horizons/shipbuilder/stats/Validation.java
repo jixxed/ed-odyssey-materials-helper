@@ -178,7 +178,7 @@ public class Validation extends Stats implements DestroyableTemplate {
     private void testPowerDeliveryBoost(Ship ship) {
         final Optional<Slot> powerDistributor = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION)).findFirst().filter(Slot::isOccupied);
         final double engineCapacity = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINES_CAPACITY, true)).orElse(0D);
-        final double boostCost = (double) ship.getAttributes().getOrDefault(HorizonsModifier.BOOST_COST, 0D);
+        final double boostCost = ship.getShipSpecs().getBoostCost();
         final boolean engineCapacityEnough = engineCapacity < boostCost;
         isMaxBoostPowerExceeded.set(engineCapacityEnough);
     }
@@ -194,7 +194,7 @@ public class Validation extends Stats implements DestroyableTemplate {
         AtomicBoolean exceeded = new AtomicBoolean(false);
         ship.getOptionalSlots().forEach(slot -> {
             if (slot.getShipModule() instanceof ShieldGenerator shieldGenerator) {
-                exceeded.set(exceeded.get() || (double) shieldGenerator.getAttributeValue(HorizonsModifier.SHIELDGEN_MAXIMUM_MASS, true) < (double) ship.getAttributes().get(HorizonsModifier.MASS));
+                exceeded.set(exceeded.get() || (double) shieldGenerator.getAttributeValue(HorizonsModifier.SHIELDGEN_MAXIMUM_MASS, true) < ship.getShipSpecs().getMass());
             }
         });
         isMaxShieldGeneratorHullMassExceeded.set(exceeded.get());

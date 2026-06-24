@@ -202,7 +202,7 @@ public class ThermalStats extends Stats implements DestroyableEventTemplate {
         final double retractedUsage = retractedPower.usedPower();
         final double thermalLoad = retractedUsage * powerPlantEfficiency;
         return Math.min(14000D, Math.max(getShipSensorRangeMax(), getShip()
-                .map(ship -> 1.75 * getShipSensorRangeMax() * Math.pow((1D + (thermalLoad - (double)ship.getAttributes().get(HorizonsModifier.HEAT_DISSIPATION_MIN)) / (double)ship.getAttributes().get(HorizonsModifier.HEAT_DISSIPATION_MIN)), 2D))
+                .map(ship -> 1.75 * getShipSensorRangeMax() * Math.pow((1D + (thermalLoad - (double)ship.getShipSpecs().getHeatDissipationMin()) / (double)ship.getShipSpecs().getHeatDissipationMin()), 2D))
                 .orElse(0D)));
     }
 
@@ -212,7 +212,7 @@ public class ThermalStats extends Stats implements DestroyableEventTemplate {
         final double retractedUsage = retractedPower.usedPower();
         final double thermalLoad = retractedUsage * powerPlantEfficiency;
         return Math.min(14000D, Math.max(getShipSensorRangeMin(), getShip()
-                .map(ship -> getShipSensorRangeMin() * Math.pow((1D + (thermalLoad - (double)ship.getAttributes().get(HorizonsModifier.HEAT_DISSIPATION_MIN)) / (double)ship.getAttributes().get(HorizonsModifier.HEAT_DISSIPATION_MIN)), 2D))
+                .map(ship -> getShipSensorRangeMin() * Math.pow((1D + (thermalLoad - (double)ship.getShipSpecs().getHeatDissipationMin()) / (double)ship.getShipSpecs().getHeatDissipationMin()), 2D))
                 .orElse(0D)));
     }
     private double getPowerPlantEfficiency() {
@@ -238,13 +238,13 @@ public class ThermalStats extends Stats implements DestroyableEventTemplate {
     }
 
     private Double getShipSensorRangeMin() {
-        return getShip().map(ship -> (double) ship.getAttributes().get(HorizonsModifier.SENSOR_LOCK_MIN)).orElse(0D);
+        return getShip().map(ship -> ship.getShipSpecs().getSensorLockMin()).orElse(0D);
     }
 
     private Value calculateSilentRunTime() {
         return getShip().map(ship -> {
-            final double heatCapacity = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_CAPACITY, 0d);
-            final double maximumHeatDissipation = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_DISSIPATION_MAX, 0d);
+            final double heatCapacity = ship.getShipSpecs().getHeatCapacity();
+            final double maximumHeatDissipation = ship.getShipSpecs().getHeatDissipationMax();
             final double powerCapacity = ship.getPowerCapacity();
             final double heatEfficiency = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
@@ -416,8 +416,8 @@ public class ThermalStats extends Stats implements DestroyableEventTemplate {
 
     private Value calculateIdleThermals() {
         return getShip().map(ship -> {
-            final double heatCapacity = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_CAPACITY, 0d);
-            final double maximumHeatDissipation = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_DISSIPATION_MAX, 0d);
+            final double heatCapacity = ship.getShipSpecs().getHeatCapacity();
+            final double maximumHeatDissipation = ship.getShipSpecs().getHeatDissipationMax();
             final double powerCapacity = ship.getPowerCapacity();
             final double heatEfficiency = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
@@ -462,8 +462,8 @@ public class ThermalStats extends Stats implements DestroyableEventTemplate {
     }
     private Value calculateWeaponThermalsBase(final double usedCapacityPercentage) {
         return getShip().map(ship -> {
-            final double heatCapacity = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_CAPACITY, 0d);
-            final double maximumHeatDissipation = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_DISSIPATION_MAX, 0d);
+            final double heatCapacity = ship.getShipSpecs().getHeatCapacity();
+            final double maximumHeatDissipation = ship.getShipSpecs().getHeatDissipationMax();
             final double powerCapacity = ship.getPowerCapacity();
             final double heatEfficiency = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
@@ -519,8 +519,8 @@ public class ThermalStats extends Stats implements DestroyableEventTemplate {
 
     private Value calculateThrusterThermals() {
         return getShip().map(ship -> {
-            final double heatCapacity = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_CAPACITY, 0d);
-            final double maximumHeatDissipation = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_DISSIPATION_MAX, 0d);
+            final double heatCapacity = ship.getShipSpecs().getHeatCapacity();
+            final double maximumHeatDissipation = ship.getShipSpecs().getHeatDissipationMax();
             final double powerCapacity = ship.getPowerCapacity();
             final double heatEfficiency = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
@@ -545,8 +545,8 @@ public class ThermalStats extends Stats implements DestroyableEventTemplate {
 
     private Value calculateFsdThermals() {
         return getShip().map(ship -> {
-            final double heatCapacity = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_CAPACITY, 0d);
-            final double maximumHeatDissipation = (double) ship.getAttributes().getOrDefault(HorizonsModifier.HEAT_DISSIPATION_MAX, 0d);
+            final double heatCapacity = ship.getShipSpecs().getHeatCapacity();
+            final double maximumHeatDissipation = ship.getShipSpecs().getHeatDissipationMax();
             final double powerCapacity = ship.getPowerCapacity();
             final double heatEfficiency = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType()))
@@ -554,13 +554,6 @@ public class ThermalStats extends Stats implements DestroyableEventTemplate {
                     .filter(slot -> slot.getShipModule().isPowered())
                     .findFirst()
                     .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.HEAT_EFFICIENCY, true))
-                    .orElse(Double.NaN);
-            final double engineHeat = (double) ship.getCoreSlots().stream()
-                    .filter(slot -> SlotType.CORE_THRUSTERS.equals(slot.getSlotType()))
-                    .filter(Slot::isOccupied)
-                    .filter(slot -> slot.getShipModule().isPowered())
-                    .findFirst()
-                    .map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.ENGINE_THERMAL_LOAD, true))
                     .orElse(Double.NaN);
             final double fsdHeat = (double) ship.getCoreSlots().stream()
                     .filter(slot -> SlotType.CORE_FRAME_SHIFT_DRIVE.equals(slot.getSlotType()))
@@ -572,7 +565,7 @@ public class ThermalStats extends Stats implements DestroyableEventTemplate {
 
             final double powerForHeat = getPowerForHeat(powerCapacity, heatEfficiency);
 
-            return getHeatLevelForDuration(fsdHeat, powerForHeat + engineHeat, maximumHeatDissipation, heatCapacity, 60);
+            return getHeatLevelForDuration(fsdHeat, powerForHeat, maximumHeatDissipation, heatCapacity, 60);
         }).orElse(new Value(0D, Value.ValueType.PERCENTAGE));
     }
 

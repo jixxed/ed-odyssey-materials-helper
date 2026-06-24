@@ -142,27 +142,30 @@ public class ShipMathHelper {
      * Convenience: min top speed (max fuel + cargo + fuel reserve mass)
      */
     public static double calculateMinSpeed(final Ship ship) {
-        final Double topSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.TOP_SPEED, 0.0D);
+        Double minSpeed = ship.getShipSpecs().getMinSpeed();
+        final Double topSpeed = ship.getShipSpecs().getTopSpeed();
         final double mass = ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo() + ship.getMaxFuelReserve();
-        return topSpeed * getEngineMassProfile(ship).getMassCurveMultiplier(mass) / 100D * ((Double) ship.getAttributes().getOrDefault(HorizonsModifier.MINIMUM_THRUST, 0.0D) / 100D);
+        double thrustFactor = minSpeed / topSpeed;
+        return topSpeed * getEngineMassProfile(ship).getMassCurveMultiplier(mass) / 100D * (thrustFactor / 100D);
     }
 
     /**
      * Convenience: current top speed with pip interpolation
      */
     public static double calculateCurrentSpeed(final Ship ship) {
-        final Double topSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.TOP_SPEED, 0.0D);
+        Double minSpeed = ship.getShipSpecs().getMinSpeed();
+        final Double topSpeed = ship.getShipSpecs().getTopSpeed();
         final double multiplier = ApplicationState.getInstance().getEnginePips() / 8.0;
-        final Double minimumThrust = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MINIMUM_THRUST, 0.0D);
+        double thrustFactor = minSpeed / topSpeed;
         final double mass = ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo();
-        return topSpeed * getEngineMassProfile(ship).getMassCurveMultiplier(mass) / 100D * (multiplier + (minimumThrust / 100D) * (1D - multiplier));
+        return topSpeed * getEngineMassProfile(ship).getMassCurveMultiplier(mass) / 100D * (multiplier + (thrustFactor / 100D) * (1D - multiplier));
     }
 
     /**
      * Convenience: max top speed (empty mass)
      */
     public static double calculateMaxSpeed(final Ship ship) {
-        final Double topSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.TOP_SPEED, 0.0D);
+        final Double topSpeed = (Double) ship.getShipSpecs().getTopSpeed();
         return topSpeed * getEngineMassProfile(ship).getMassCurveMultiplier(ship.getEmptyMass()) / 100D;
     }
 
@@ -171,9 +174,12 @@ public class ShipMathHelper {
      */
     public static double calculateMinBoostSpeed(final Ship ship) {
         if (!hasBoostCapacity(ship)) return Double.NaN;
-        final Double boostSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.BOOST_SPEED, 0.0D);
+        Double minSpeed = ship.getShipSpecs().getMinSpeed();
+        final Double topSpeed = ship.getShipSpecs().getTopSpeed();
+        final Double boostSpeed = (Double) ship.getShipSpecs().getBoostSpeed();
         final double mass = ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo() + ship.getMaxFuelReserve();
-        return boostSpeed * getEngineMassProfile(ship).getMassCurveMultiplier(mass) / 100D * ((Double) ship.getAttributes().getOrDefault(HorizonsModifier.MINIMUM_THRUST, 0.0D) / 100D);
+        double thrustFactor = minSpeed / topSpeed;
+        return boostSpeed * getEngineMassProfile(ship).getMassCurveMultiplier(mass) / 100D * (thrustFactor / 100D);
     }
 
     /**
@@ -181,11 +187,13 @@ public class ShipMathHelper {
      */
     public static double calculateCurrentBoostSpeed(final Ship ship) {
         if (!hasBoostCapacity(ship)) return Double.NaN;
-        final Double boostSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.BOOST_SPEED, 0.0D);
+        Double minSpeed = ship.getShipSpecs().getMinSpeed();
+        final Double topSpeed = ship.getShipSpecs().getTopSpeed();
+        final Double boostSpeed = ship.getShipSpecs().getBoostSpeed();
         final double multiplier = ApplicationState.getInstance().getEnginePips() / 8.0;
-        final Double minimumThrust = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MINIMUM_THRUST, 0.0D);
+        double thrustFactor = minSpeed / topSpeed;
         final double mass = ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo();
-        return boostSpeed * getEngineMassProfile(ship).getMassCurveMultiplier(mass) / 100D * (multiplier + (minimumThrust / 100D) * (1D - multiplier));
+        return boostSpeed * getEngineMassProfile(ship).getMassCurveMultiplier(mass) / 100D * (multiplier + (thrustFactor / 100D) * (1D - multiplier));
     }
 
     /**
@@ -193,7 +201,7 @@ public class ShipMathHelper {
      */
     public static double calculateMaxBoostSpeed(final Ship ship) {
         if (!hasBoostCapacity(ship)) return Double.NaN;
-        final Double boostSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.BOOST_SPEED, 0.0D);
+        final Double boostSpeed = (Double) ship.getShipSpecs().getBoostSpeed();
         return boostSpeed * getEngineMassProfile(ship).getMassCurveMultiplier(ship.getEmptyMass()) / 100D;
     }
 
@@ -207,7 +215,7 @@ public class ShipMathHelper {
         final double engineRecharge = (double) getPowerDistributor(ship)
                 .map(s -> s.getShipModule().getAttributeValue(HorizonsModifier.ENGINES_RECHARGE, true))
                 .orElse(0D);
-        return (double) ship.getAttributes().getOrDefault(HorizonsModifier.BOOST_COST, 0D) / engineRecharge;
+        return (double) ship.getShipSpecs().getBoostCost() / engineRecharge;
     }
 
     /**
@@ -219,7 +227,7 @@ public class ShipMathHelper {
                 .map(s -> s.getShipModule().getAttributeValue(HorizonsModifier.ENGINES_RECHARGE, true))
                 .orElse(0D);
         final double multiplier = ApplicationState.getInstance().getEnginePips() / 8.0;
-        return (double) ship.getAttributes().getOrDefault(HorizonsModifier.BOOST_COST, 0D) / (engineRecharge * Math.pow(multiplier, 1.1));
+        return (double) ship.getShipSpecs().getBoostCost() / (engineRecharge * Math.pow(multiplier, 1.1));
     }
 
     /**
@@ -231,7 +239,7 @@ public class ShipMathHelper {
                 .map(s -> s.getShipModule().getAttributeValue(HorizonsModifier.ENGINES_RECHARGE, true))
                 .orElse(0D);
         final double multiplier = ApplicationState.getInstance().getEnginePips() / 8.0;
-        return (double) ship.getAttributes().getOrDefault(HorizonsModifier.BOOST_COST, 0D) / (engineRecharge * Math.pow(multiplier > 0 ? 1D / 8D : 0D, 1.1));
+        return (double) ship.getShipSpecs().getBoostCost() / (engineRecharge * Math.pow(multiplier > 0 ? 1D / 8D : 0D, 1.1));
     }
 
     // ── Engine acceleration ────────────────────────────────────────────────────────
@@ -240,21 +248,21 @@ public class ShipMathHelper {
      * Convenience: forward acceleration with current fuel/cargo/reserve mass
      */
     public static double calculateForwardAcceleration(final Ship ship) {
-        return (Double) ship.getAttributes().get(HorizonsModifier.FORWARD_ACCELERATION) * getAccelerationProfile(ship).getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo()/* + ship.getCurrentFuelReserve()*/) / 100D;
+        return (Double) ship.getShipSpecs().getForwardAcceleration() * getAccelerationProfile(ship).getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo()/* + ship.getCurrentFuelReserve()*/) / 100D;
     }
 
     /**
      * Convenience: reverse acceleration with current fuel/cargo/reserve mass
      */
     public static double calculateReverseAcceleration(final Ship ship) {
-        return (Double) ship.getAttributes().get(HorizonsModifier.REVERSE_ACCELERATION) * getAccelerationProfile(ship).getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() /*+ ship.getCurrentFuelReserve()*/) / 100D;
+        return (Double) ship.getShipSpecs().getReverseAcceleration() * getAccelerationProfile(ship).getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() /*+ ship.getCurrentFuelReserve()*/) / 100D;
     }
 
     /**
      * Convenience: lateral acceleration with current fuel/cargo/reserve mass
      */
     public static double calculateLateralAcceleration(final Ship ship) {
-        return (Double) ship.getAttributes().get(HorizonsModifier.LATERAL_ACCELERATION) * getAccelerationProfile(ship).getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() /*+ ship.getCurrentFuelReserve()*/) / 100D;
+        return (Double) ship.getShipSpecs().getLateralAcceleration() * getAccelerationProfile(ship).getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() /*+ ship.getCurrentFuelReserve()*/) / 100D;
     }
 
     // ── Handling ────────────────────────────────────────────────────────────────────
@@ -343,8 +351,6 @@ public class ShipMathHelper {
         return handleRotation(ship, HorizonsModifier.MAX_YAW_SPEED, RotationMode.CURRENT, getBoostedProfile(ship));
     }
 
-    private enum RotationMode {MIN, CURRENT, MAX}
-
     private static double handleRotation(final Ship ship, final HorizonsModifier speedAttr, final RotationMode mode, final ModuleProfile boostProfile) {
         final double speed = resolveSpeed(ship, speedAttr, mode);
         final ModuleProfile profile = getRotationProfile(ship);
@@ -358,26 +364,35 @@ public class ShipMathHelper {
 
     private static double resolveSpeed(final Ship ship, final HorizonsModifier speedAttr, final RotationMode mode) {
         final double multiplier = ApplicationState.getInstance().getEnginePips() / 8.0;
-        final Double maxSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MAX_PITCH_SPEED, 0.0D);
-        final Double minSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MIN_PITCH_SPEED, 0.0D);
         return switch (mode) {
-            case MAX -> (Double) ship.getAttributes().getOrDefault(speedAttr, 0.0D);
+            case MAX -> getShipSpecRotation(ship, speedAttr);
             case MIN -> {
                 // Roll/Yaw MIN uses MAX speed (no pip interpolation), Pitch MIN uses pip interpolation between min and max
-                final Double attrSpeed = (Double) ship.getAttributes().getOrDefault(speedAttr, 0.0D);
+                final Double attrSpeed = getShipSpecRotation(ship, speedAttr);
                 if (speedAttr != HorizonsModifier.MAX_PITCH_SPEED) yield attrSpeed;
-                yield maxSpeed * multiplier + minSpeed * (1 - multiplier);
+                final Double minSpeed = ship.getShipSpecs().getMinPitchSpeed();
+                final Double maxSpeed = ship.getShipSpecs().getMaxPitchSpeed();
+                yield maxSpeed * multiplier + minSpeed * (1 - multiplier);//minSpeed + ((maxSpeed - minSpeed) * multiplier)
             }
             case CURRENT -> {
                 if (speedAttr == HorizonsModifier.MAX_ROLL_SPEED) {
-                    yield (Double) ship.getAttributes().getOrDefault(speedAttr, 0.0D);
+                    yield getShipSpecRotation(ship, speedAttr);
                 }
                 if (speedAttr == HorizonsModifier.MAX_YAW_SPEED) {
-                    yield (Double) ship.getAttributes().getOrDefault(speedAttr, 0.0D);
+                    yield getShipSpecRotation(ship, speedAttr);
                 }
-                yield (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MAX_PITCH_SPEED, 0.0D) * multiplier
-                        + (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MIN_PITCH_SPEED, 0.0D) * (1 - multiplier);
+                yield ship.getShipSpecs().getMaxPitchSpeed() * multiplier
+                        + ship.getShipSpecs().getMinPitchSpeed() * (1 - multiplier);
             }
+        };
+    }
+
+    private static Double getShipSpecRotation(final Ship ship, final HorizonsModifier modifier) {
+        return switch (modifier) {
+            case MAX_YAW_SPEED -> ship.getShipSpecs().getMaxYawSpeed();
+            case MAX_ROLL_SPEED -> ship.getShipSpecs().getMaxYawSpeed();
+            case MAX_PITCH_SPEED -> ship.getShipSpecs().getMaxYawSpeed();
+            default -> throw new IllegalArgumentException("unsupported");
         };
     }
 
@@ -389,8 +404,6 @@ public class ShipMathHelper {
         };
     }
 
-    // ── ShipMapper convenience (max values only) ──────────────────────────────────
-
     /**
      * Convenience: max top speed (empty mass, no pip interpolation)
      */
@@ -398,11 +411,13 @@ public class ShipMathHelper {
         return calculateMaxSpeed(ship);
     }
 
+    // ── ShipMapper convenience (max values only) ──────────────────────────────────
+
     /**
      * Convenience: max boost speed (empty mass, no pip interpolation, no capacity check)
      */
     public static double calculateBoostSpeedMax(final Ship ship) {
-        final Double boostSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.BOOST_SPEED, 0.0D);
+        final Double boostSpeed = (Double) ship.getShipSpecs().getBoostSpeed();
         return boostSpeed * getEngineMassProfile(ship).getMassCurveMultiplier(ship.getEmptyMass()) / 100D;
     }
 
@@ -427,14 +442,14 @@ public class ShipMathHelper {
         return calculateMaxYaw(ship);
     }
 
-    // ── Helper methods ─────────────────────────────────────────────────────────────
-
     public static Optional<Slot> getThrusters(final Ship ship) {
         return ship.getCoreSlots().stream()
                 .filter(slot -> slot.getSlotType().equals(SlotType.CORE_THRUSTERS))
                 .findFirst()
                 .filter(Slot::isOccupied);
     }
+
+    // ── Helper methods ─────────────────────────────────────────────────────────────
 
     public static Optional<Slot> getPowerDistributor(final Ship ship) {
         return ship.getCoreSlots().stream()
@@ -447,7 +462,7 @@ public class ShipMathHelper {
      * Check if power distributor provides enough capacity for boost
      */
     private static boolean hasBoostCapacity(final Ship ship) {
-        final double boostCost = (double) ship.getAttributes().getOrDefault(HorizonsModifier.BOOST_COST, 0D);
+        final double boostCost = (double) ship.getShipSpecs().getBoostCost();
         final double engineCapacity = (double) getPowerDistributor(ship)
                 .map(s -> s.getShipModule().getAttributeValue(HorizonsModifier.ENGINES_CAPACITY, true))
                 .orElse(0D);
@@ -488,14 +503,14 @@ public class ShipMathHelper {
         return new ModuleProfile(minimumMass, optimalMass, maximumMass, minMult, optMult, maxMult);
     }
 
-    // ── Internal multiplier retrieval ──────────────────────────────────────────────
-
     private static Double getMaximumMultiplier(Optional<Slot> thrusters) {
         return thrusters
                 .map(Slot::getShipModule)
                 .flatMap(shipModule -> Optional.ofNullable((Double) shipModule.getAttributeValueOrDefault(HorizonsModifier.MAXIMUM_MULTIPLIER_SPEED, null, true)))
                 .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MAXIMUM_MULIPLIER, true)).orElse(0D));
     }
+
+    // ── Internal multiplier retrieval ──────────────────────────────────────────────
 
     private static Double getOptimalMultiplier(Optional<Slot> thrusters) {
         return thrusters
@@ -585,4 +600,6 @@ public class ShipMathHelper {
                 .map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER, true))
                 .orElse(0D);
     }
+
+    private enum RotationMode {MIN, CURRENT, MAX}
 }

@@ -15,7 +15,6 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.Mark;
 import nl.jixxed.eliteodysseymaterials.domain.ships.PowerProfile;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipType;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.enums.PassengerCabinType;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -103,7 +102,7 @@ public class ShipStats extends Stats implements DestroyableEventTemplate {
 
 //    private void createEntry(String titleKey, Ship ship, HorizonsModifier modifier) {
 //        flow.getNodes().add(BoxBuilder.builder()
-//                .withNodes(title(titleKey), value(modifier.format(ship.getAttributes().get(modifier))))
+//                .withNodes(title(titleKey), value(modifier.format(ship.getShipSpecs().get(modifier))))
 //                .buildVBox());
 //
 //    }
@@ -141,7 +140,7 @@ public class ShipStats extends Stats implements DestroyableEventTemplate {
     }
 
     private double calculateBoostCost() {
-        return (double) getShip().map(ship -> ship.getAttributes().get(HorizonsModifier.BOOST_COST)).orElse(Double.NaN);
+        return (double) getShip().map(ship -> ship.getShipSpecs().getBoostCost()).orElse(Double.NaN);
     }
 
 
@@ -166,7 +165,7 @@ public class ShipStats extends Stats implements DestroyableEventTemplate {
     }
 
     private double calculateMlf() {
-        return getShip().map(ship -> (double) ship.getAttributes().get(HorizonsModifier.MASS_LOCK)).orElse(0D);
+        return getShip().map(ship -> (double) ship.getShipSpecs().getMassLock()).orElse(0D);
     }
 
     private boolean calculateSlf() {
@@ -178,6 +177,6 @@ public class ShipStats extends Stats implements DestroyableEventTemplate {
     }
 
     private double calculateManoeuvrability() {
-        return getShip().map(ship -> (double) ship.getAttributes().get(HorizonsModifier.MANOEUVRABILITY)).orElse(0D);
+        return getShip().map(ship -> (double) ship.getShipSpecs().getManoeuvrability()).orElse(0D);
     }
 }

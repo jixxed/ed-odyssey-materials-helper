@@ -318,10 +318,9 @@ public class LoadoutMapper {
     }
 
     private static Slot getOptionalSlot(List<Slot> optionalSlots, String slotName) {
-        final int slotNumber = Integer.parseInt(slotName.substring(4, 6));
         try {
             return optionalSlots.stream()
-                    .filter(slot -> slot.getNamedIndex() == slotNumber)
+                    .filter(slot -> slot.matches(slotName))
                     .findFirst()
                     .orElseThrow(IllegalArgumentException::new);
         } catch (IllegalArgumentException ex) {
@@ -472,41 +471,7 @@ public class LoadoutMapper {
     }
 
     private static String buildSlotNameFromBlank(List<? extends Slot> slots, Slot blankSlot, ShipModule module, Map<Integer, Integer> hardpointSizePosition) {
-        return switch (blankSlot.getSlotType()) {
-            case CORE_ARMOUR -> "Armour";
-            case CORE_POWER_PLANT -> "PowerPlant";
-            case CORE_THRUSTERS -> "MainEngines";
-            case CORE_FRAME_SHIFT_DRIVE -> "FrameShiftDrive";
-            case CORE_LIFE_SUPPORT -> "LifeSupport";
-            case CORE_POWER_DISTRIBUTION -> "PowerDistributor";
-            case CORE_SENSORS -> "Radar";
-            case CORE_FUEL_TANK -> "FuelTank";
-            case HARDPOINT, MINING_HARDPOINT -> {
-                final String size;
-                switch (blankSlot.getSlotSize()) {
-                    case 1 -> size = "Small";
-                    case 2 -> size = "Medium";
-                    case 3 -> size = "Large";
-                    case 4 -> size = "Huge";
-                    default -> throw new IllegalArgumentException("Unexpected slot size: " + blankSlot.getSlotSize());
-                }
-                final String type = blankSlot.getSlotType() == SlotType.MINING_HARDPOINT ? "Mining" : "";
-                final int pos = slots.stream().filter(slot -> slot.getSlotSize() == blankSlot.getSlotSize()).toList().indexOf(blankSlot) + 1;
-                yield size + type + "Hardpoint" + pos;
-            }
-            case UTILITY -> "TinyHardpoint" + blankSlot.getNamedIndex();
-            case CARGO -> "Cargo" + String.format("%02d", slots.stream().filter(slot -> slot.getSlotType() == blankSlot.getSlotType()).toList().indexOf(blankSlot) + 1);
-            case PASSENGER -> "Passenger" + String.format("%02d", slots.stream().filter(slot -> slot.getSlotType() == blankSlot.getSlotType()).toList().indexOf(blankSlot) + 1);
-            case SLF -> "FighterBay" + String.format("%02d", slots.stream().filter(slot -> slot.getSlotType() == blankSlot.getSlotType()).toList().indexOf(blankSlot) + 1);
-            case LIMPET -> "LimpetController" + String.format("%02d", slots.stream().filter(slot -> slot.getSlotType() == blankSlot.getSlotType()).toList().indexOf(blankSlot) + 1);
-            case MILITARY -> "Military" + String.format("%02d", slots.stream().filter(slot -> slot.getSlotType() == blankSlot.getSlotType()).toList().indexOf(blankSlot) + 1);
-            case OPTIONAL -> {
-                final String base = "Slot" + String.format("%02d", blankSlot.getNamedIndex());
-                final int slotSize = blankSlot.getSlotSize();
-                yield base + "_Size" + slotSize;
-            }
-            default -> throw new IllegalArgumentException("Unexpected slot type: " + blankSlot.getSlotType());
-        };
+        return blankSlot.getFdevName();
     }
 
     private static Engineering buildEngineering(ShipConfigurationSlot slot, ShipModule module, SlotType slotType) {

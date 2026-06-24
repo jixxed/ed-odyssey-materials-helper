@@ -31,6 +31,7 @@ public class Slot {
     @Getter
     private int slotSize;
     private Integer namedIndex;
+    private String fdevName;
     @Setter
     private HardpointGroup hardpointGroup;
     @Getter
@@ -39,6 +40,18 @@ public class Slot {
     @Getter
     @Setter
     private ShipModule oldShipModule;
+
+    public Slot(final Slot slot) {
+        this.slotType = slot.slotType;
+        this.index = slot.index;
+        this.namedIndex = slot.namedIndex;
+        this.slotSize = slot.slotSize;
+        this.fdevName = slot.fdevName;
+        if (slot.shipModule != null) {
+            this.shipModule = slot.shipModule.Clone();
+        }
+
+    }
 
     public List<HorizonsBlueprintType> getEffectiveExperimentalEffects() {
         if (!this.shipModule.getModifications().isEmpty()) {
@@ -54,20 +67,11 @@ public class Slot {
         return String.valueOf(this.slotSize);
     }
 
-    public Slot(final Slot slot) {
-        this.slotType = slot.slotType;
-        this.index = slot.index;
-        this.namedIndex = slot.namedIndex;
-        this.slotSize = slot.slotSize;
-        if (slot.shipModule != null) {
-            this.shipModule = slot.shipModule.Clone();
-        }
-
-    }
     //some ships have their last slotnumbers offset due to military slots
     public int getNamedIndex() {
         return hasNamedIndex() ? namedIndex : index + 1;
     }
+
     //some ships have their last slotnumbers offset due to military slots
     public boolean hasNamedIndex() {
         return namedIndex != null;
@@ -78,9 +82,63 @@ public class Slot {
     }
 
     public HardpointGroup getHardpointGroup() {
-        if(slotType != SlotType.HARDPOINT && slotType != SlotType.MINING_HARDPOINT) {
+        if (slotType != SlotType.HARDPOINT && slotType != SlotType.MINING_HARDPOINT) {
             return null;
         }
         return hardpointGroup;
+    }
+
+    public boolean matches(String slotName) {
+        return getFdevName().equalsIgnoreCase(slotName);
+    }
+
+    public String getFdevName() {
+        if (fdevName != null) {//name override for slots that do not follow convention
+            return fdevName;
+        }
+        final String base = getFdevBaseName() + getFdevSlotIndex();
+        final String suffix = (slotType == SlotType.OPTIONAL) ? "_Size" + slotSize : "";
+        return base + suffix;
+    }
+
+    private String getFdevSlotIndex() {
+        return switch (slotType) {
+            case HARDPOINT, MINING_HARDPOINT, UTILITY -> String.format("%d", getNamedIndex());
+            case OPTIONAL, MILITARY, SLF, LIMPET, CARGO, PASSENGER -> String.format("%02d", getNamedIndex());
+            default -> "";
+        };
+    }
+
+    private String getFdevBaseName() {
+        return switch (slotType) {
+            case CARGO_HATCH -> "CargoHatch";
+            case HARDPOINT -> getFdevHardpointSize() + "Hardpoint";
+            case MINING_HARDPOINT -> getFdevHardpointSize() + "MiningHardpoint";
+            case UTILITY -> "TinyHardpoint";
+            case CORE_ARMOUR -> "Armour";
+            case CORE_POWER_PLANT -> "PowerPlant";
+            case CORE_THRUSTERS -> "MainEngines";
+            case CORE_FRAME_SHIFT_DRIVE -> "FrameShiftDrive";
+            case CORE_LIFE_SUPPORT -> "LifeSupport";
+            case CORE_POWER_DISTRIBUTION -> "PowerDistributor";
+            case CORE_SENSORS -> "Radar";
+            case CORE_FUEL_TANK -> "FuelTank";
+            case OPTIONAL -> "Slot";
+            case MILITARY -> "Military";
+            case SLF -> "FighterBay";
+            case LIMPET -> "LimpetController";
+            case CARGO -> "Cargo";
+            case PASSENGER -> "Passenger";
+        };
+    }
+
+    private String getFdevHardpointSize() {
+        return switch (slotSize) {
+            case 1 -> "Small";
+            case 2 -> "Medium";
+            case 3 -> "Large";
+            case 4 -> "Huge";
+            default -> throw new IllegalArgumentException("Unsupported hardpoint size");
+        };
     }
 }

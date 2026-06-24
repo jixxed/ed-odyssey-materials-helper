@@ -10,8 +10,12 @@
 
 package nl.jixxed.eliteodysseymaterials.domain.ships;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
+import nl.jixxed.ed.data.api.DataLoader;
+import nl.jixxed.ed.data.api.DefaultDataLoader;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.MultiCannon;
@@ -23,18 +27,17 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.enums.PassengerCabinType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.ServiceLoader;
 import java.util.stream.Stream;
 
 
 public class Ship {
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     public static final Ship SIDE_WINDER = new Ship(
             ShipType.SIDE_WINDER,
             5070,
             32000,
-            ShipSpecs.SIDE_WINDER,
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1107).y(597).index(0).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1043).y(663).index(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
@@ -66,7 +69,6 @@ public class Ship {
             ShipType.EAGLE,
             7490,
             44800,
-            ShipSpecs.EAGLE,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1028).y(569).index(0).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -101,7 +103,6 @@ public class Ship {
             ShipType.HAULER,
             8160,
             52720,
-            ShipSpecs.HAULER,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(927).y(465).index(0).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
@@ -134,7 +135,6 @@ public class Ship {
             ShipType.ADDER,
             18710,
             87808,
-            ShipSpecs.ADDER,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1003).y(559).index(0).slotSize(2).build(),
@@ -170,7 +170,6 @@ public class Ship {
             ShipType.EMPIRE_EAGLE,
             50890,
             110830,
-            ShipSpecs.EMPIRE_EAGLE,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1032).y(573).index(0).slotSize(2).build(),
@@ -205,7 +204,6 @@ public class Ship {
             ShipType.VIPER_MK_III,
             74610,
             142931,
-            ShipSpecs.VIPER_MK_III,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1064).y(579).index(0).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -242,7 +240,6 @@ public class Ship {
             ShipType.COBRA_MK_III,
             186260,
             349718,
-            ShipSpecs.COBRA_MK_III,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1257).y(702).index(0).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -280,7 +277,6 @@ public class Ship {
             ShipType.VIPER_MK_IV,
             290680,
             437931,
-            ShipSpecs.VIPER_MK_IV,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1090).y(562).index(0).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -319,7 +315,6 @@ public class Ship {
             ShipType.DIAMOND_BACK,
             441800,
             564329,
-            ShipSpecs.DIAMOND_BACK,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(3).x(779).y(836).index(0).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -357,7 +352,6 @@ public class Ship {
             ShipType.COBRA_MK_IV,
             584200,
             764720,
-            ShipSpecs.COBRA_MK_IV,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1278).y(680).index(0).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -398,7 +392,6 @@ public class Ship {
             ShipType.TYPE_6,
             858010,
             1045945,
-            ShipSpecs.TYPE_6,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1178).y(649).index(0).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -435,7 +428,6 @@ public class Ship {
             ShipType.DOLPHIN,
             1095780,
             1337323,
-            ShipSpecs.DOLPHIN,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1165).y(412).index(0).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -473,7 +465,6 @@ public class Ship {
             ShipType.DIAMOND_BACK_XL,
             1616160,
             1894760,
-            ShipSpecs.DIAMOND_BACK_XL,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1148).y(492).index(0).slotSize(3).build(),
@@ -512,7 +503,6 @@ public class Ship {
             ShipType.EMPIRE_COURIER,
             2462010,
             2542930,
-            ShipSpecs.EMPIRE_COURIER,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(898).y(825).index(0).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -551,7 +541,6 @@ public class Ship {
             ShipType.INDEPENDANT_TRADER,
             2937840,
             3126154,
-            ShipSpecs.INDEPENDANT_TRADER,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1233).y(637).index(0).slotSize(2).build(),
@@ -576,20 +565,19 @@ public class Ship {
 
             ),
             List.of(
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(3).shipModule(ShieldGenerator.SHIELD_GENERATOR_3_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(2).shipModule(CargoRack.CARGO_RACK_1_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).fdevName("Slot01_Size5").slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).fdevName("Slot02_Size5").slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).fdevName("Slot03_Size3").slotSize(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).fdevName("Slot04_Size3").slotSize(3).shipModule(ShieldGenerator.SHIELD_GENERATOR_3_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).fdevName("Slot05_Size2").slotSize(2).shipModule(CargoRack.CARGO_RACK_1_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).fdevName("Slot06_Size2").slotSize(2).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).fdevName("Slot07_Size1").slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
     public static final Ship ASP_SCOUT = new Ship(
             ShipType.ASP_SCOUT,
             3811220,
             3961154,
-            ShipSpecs.ASP_SCOUT,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1232).y(700).index(0).slotSize(2).build(),
@@ -613,20 +601,19 @@ public class Ship {
 
             ),
             List.of(
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(5).shipModule(CargoRack.CARGO_RACK_3_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(3).shipModule(ShieldGenerator.SHIELD_GENERATOR_3_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(3).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).fdevName("Slot01_Size4").slotSize(5).shipModule(CargoRack.CARGO_RACK_3_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).fdevName("Slot02_Size4").slotSize(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).fdevName("Slot03_Size3").slotSize(3).shipModule(ShieldGenerator.SHIELD_GENERATOR_3_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).fdevName("Slot04_Size3").slotSize(3).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).fdevName("Slot05_Size2").slotSize(2).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).fdevName("Slot06_Size2").slotSize(2).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).fdevName("Slot07_Size1").slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
     public static final Ship VULTURE = new Ship(
             ShipType.VULTURE,
             4670100,
             4925615,
-            ShipSpecs.VULTURE,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1205).y(538).index(0).slotSize(3).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -650,21 +637,20 @@ public class Ship {
 
             ),
             List.of(
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(5).shipModule(ShieldGenerator.SHIELD_GENERATOR_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).fdevName("Slot01_Size5").slotSize(5).shipModule(ShieldGenerator.SHIELD_GENERATOR_5_E).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(1).slotSize(5).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(4).namedIndex(2).shipModule(CargoRack.CARGO_RACK_3_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(2).namedIndex(3).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(1).namedIndex(5).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(1).namedIndex(6).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(1).namedIndex(7).shipModule(Computer.SUPERCRUISE_ASSIST).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(1).namedIndex(8).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).fdevName("Slot02_Size4").slotSize(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).fdevName("Slot03_Size2").slotSize(2).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).fdevName("Slot05_Size1").slotSize(1).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).fdevName("Slot06_Size1").slotSize(1).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).fdevName("Slot07_Size1").slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).fdevName("Slot08_Size1").slotSize(1).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build()
             ));
 
     public static final Ship ASP = new Ship(//asp explorer
             ShipType.ASP,
             6137180,
             6661154,
-            ShipSpecs.ASP,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1163).y(773).index(0).slotSize(2).build(),
@@ -706,7 +692,6 @@ public class Ship {
             ShipType.FEDERATION_DROPSHIP,
             13501480,
             14314210,
-            ShipSpecs.FEDERATION_DROPSHIP,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1318).y(510).index(0).slotSize(3).build(),
@@ -733,23 +718,22 @@ public class Ship {
 
             ),
             List.of(
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(5).shipModule(ShieldGenerator.SHIELD_GENERATOR_5_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).fdevName("Slot01_Size6").slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).fdevName("Slot02_Size5").slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).fdevName("Slot03_Size5").slotSize(5).shipModule(ShieldGenerator.SHIELD_GENERATOR_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).fdevName("Slot04_Size4").slotSize(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(4).slotSize(4).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(5).slotSize(4).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(3).namedIndex(5).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(3).namedIndex(6).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(2).namedIndex(9).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(1).namedIndex(10).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).fdevName("Slot05_Size3").slotSize(3).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).fdevName("Slot06_Size3").slotSize(3).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).fdevName("Slot09_Size2").slotSize(2).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).fdevName("Slot10_Size1").slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
     public static final Ship TYPE_7 = new Ship(
             ShipType.TYPE_7,
             16774470,
             17472252,
-            ShipSpecs.TYPE_7,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1226).y(450).index(0).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -775,23 +759,22 @@ public class Ship {
 
             ),
             List.of(
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(5).shipModule(ShieldGenerator.SHIELD_GENERATOR_4_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(3).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(3).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).fdevName("Slot01_Size6").slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).fdevName("Slot02_Size6").slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).fdevName("Slot03_Size5").slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).fdevName("Slot04_Size5").slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).fdevName("Slot05_Size4").slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).fdevName("Slot06_Size4").slotSize(5).shipModule(ShieldGenerator.SHIELD_GENERATOR_4_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).fdevName("Slot07_Size2").slotSize(3).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).fdevName("Slot08_Size2").slotSize(3).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).fdevName("Slot09_Size2").slotSize(2).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).fdevName("Slot09_Size1").slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
     public static final Ship TYPE_X = new Ship(//chieftan
             ShipType.TYPE_X,
             18603850,
             19382252,
-            ShipSpecs.TYPE_X,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1030).y(534).index(0).slotSize(3).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -834,7 +817,6 @@ public class Ship {
             ShipType.FEDERATION_DROPSHIP_MK_II,
             19102490,
             19814210,
-            ShipSpecs.FEDERATION_DROPSHIP_MK_II,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1317).y(514).index(0).slotSize(3).build(),
@@ -875,7 +857,6 @@ public class Ship {
             ShipType.EMPIRE_TRADER,
             21108270,
             22295860,
-            ShipSpecs.EMPIRE_TRADER,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1030).y(156).index(0).slotSize(3).build(),
@@ -916,7 +897,6 @@ public class Ship {
             ShipType.TYPE_X_2,
             22087940,
             22866340,
-            ShipSpecs.TYPE_X_2,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1190).y(688).index(0).slotSize(3).build(),
@@ -960,7 +940,6 @@ public class Ship {
             ShipType.TYPE_X_3,
             29561170,
             30472250,
-            ShipSpecs.TYPE_X_3,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1194).y(687).index(0).slotSize(3).build(),
@@ -1005,7 +984,6 @@ public class Ship {
             ShipType.FEDERATION_GUNSHIP,
             34806280,
             35814210,
-            ShipSpecs.FEDERATION_GUNSHIP,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1308).y(405).index(0).slotSize(3).build(),
@@ -1049,7 +1027,6 @@ public class Ship {
             ShipType.KRAIT_LIGHT,
             35732880,
             37472250,
-            ShipSpecs.KRAIT_LIGHT,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1003).y(659).index(0).slotSize(3).build(),
@@ -1090,7 +1067,6 @@ public class Ship {
             ShipType.KRAIT_MK_II,
             44152080,
             45814210,
-            ShipSpecs.KRAIT_MK_II,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1170).y(681).index(0).slotSize(3).build(),
@@ -1132,7 +1108,6 @@ public class Ship {
             ShipType.ORCA,
             47792090,
             48539890,
-            ShipSpecs.ORCA,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1261).y(407).index(0).slotSize(3).build(),
@@ -1172,7 +1147,6 @@ public class Ship {
             ShipType.FER_DE_LANCE,
             51126980,
             51567040,
-            ShipSpecs.FER_DE_LANCE,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1080).y(572).index(0).slotSize(4).build(),
@@ -1213,7 +1187,6 @@ public class Ship {
             ShipType.MAMBA,
             55434290,
             55867040,
-            ShipSpecs.MAMBA,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(951).y(507).index(0).slotSize(4).build(),
@@ -1254,7 +1227,6 @@ public class Ship {
             ShipType.PYTHON,
             55316050,
             56978180,
-            ShipSpecs.PYTHON,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(996).y(714).index(0).slotSize(3).build(),
@@ -1297,7 +1269,6 @@ public class Ship {
             ShipType.TYPE_9,
             72108220,
             76555840,
-            ShipSpecs.TYPE_9,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1152).y(496).index(0).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -1324,24 +1295,23 @@ public class Ship {
 
             ),
             List.of(
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(8).namedIndex(0).shipModule(CargoRack.CARGO_RACK_7_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(8).namedIndex(1).shipModule(CargoRack.CARGO_RACK_7_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(7).namedIndex(2).shipModule(CargoRack.CARGO_RACK_6_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(6).namedIndex(3).shipModule(ShieldGenerator.SHIELD_GENERATOR_6_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(5).namedIndex(4).shipModule(CargoRack.CARGO_RACK_4_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(4).namedIndex(5).shipModule(CargoRack.CARGO_RACK_3_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(4).namedIndex(6).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(3).namedIndex(7).shipModule(CargoRack.CARGO_RACK_2_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(3).namedIndex(8).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(2).namedIndex(11).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).slotSize(1).namedIndex(12).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).fdevName("Slot00_Size8").slotSize(8).shipModule(CargoRack.CARGO_RACK_7_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).fdevName("Slot01_Size8").slotSize(8).shipModule(CargoRack.CARGO_RACK_7_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).fdevName("Slot02_Size7").slotSize(7).shipModule(CargoRack.CARGO_RACK_6_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).fdevName("Slot03_Size6").slotSize(6).shipModule(ShieldGenerator.SHIELD_GENERATOR_6_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).fdevName("Slot04_Size5").slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).fdevName("Slot05_Size4").slotSize(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).fdevName("Slot06_Size4").slotSize(4).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).fdevName("Slot07_Size3").slotSize(3).shipModule(CargoRack.CARGO_RACK_2_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).fdevName("Slot08_Size3").slotSize(3).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).fdevName("Slot11_Size2").slotSize(2).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).fdevName("Slot12_Size1").slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
     public static final Ship BELUGA_LINER = new Ship(
             ShipType.BELUGA_LINER,
             79686090,
             84532760,
-            ShipSpecs.BELUGA_LINER,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(852).y(447).index(0).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -1388,18 +1358,17 @@ public class Ship {
             ShipType.TYPE_9_MILITARY,
             121486140,
             124755340,
-            ShipSpecs.TYPE_9_MILITARY,
 
             List.of(
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1179).y(319).index(0).slotSize(3).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(733).y(766).index(1).slotSize(3).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1185).y(717).index(2).slotSize(3).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(859).y(366).index(3).slotSize(3).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1128).y(522).index(4).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1205).y(433).index(5).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(884).y(759).index(6).slotSize(2).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1318).y(408).index(7).slotSize(1).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1276).y(360).index(8).slotSize(1).build()
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1179).y(319).index(0).fdevName("LargeHardpoint1").slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(733).y(766).index(1).fdevName("LargeHardpoint2").slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1185).y(717).index(2).fdevName("LargeHardpoint3").slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(859).y(366).index(3).fdevName("LargeHardpoint4").slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1128).y(522).index(4).fdevName("MediumHardpoint1").slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1205).y(433).index(5).fdevName("MediumHardpoint2").slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(884).y(759).index(6).fdevName("MediumHardpoint3").slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1318).y(408).index(7).fdevName("SmallHardpoint1").slotSize(1).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1276).y(360).index(8).fdevName("SmallHardpoint2").slotSize(1).build()
             ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1098).y(362).index(0).slotSize(0).build(),
@@ -1423,25 +1392,24 @@ public class Ship {
 
             ),
             List.of(
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(8).shipModule(CargoRack.CARGO_RACK_7_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(7).shipModule(CargoRack.CARGO_RACK_6_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(6).shipModule(ShieldGenerator.SHIELD_GENERATOR_6_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).fdevName("Slot01_Size8").slotSize(8).shipModule(CargoRack.CARGO_RACK_7_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).fdevName("Slot02_Size7").slotSize(7).shipModule(CargoRack.CARGO_RACK_6_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).fdevName("Slot03_Size6").slotSize(6).shipModule(ShieldGenerator.SHIELD_GENERATOR_6_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).fdevName("Slot04_Size5").slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(4).slotSize(5).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(5).slotSize(5).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(4).namedIndex(5).shipModule(CargoRack.CARGO_RACK_3_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(4).namedIndex(6).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(3).namedIndex(7).shipModule(CargoRack.CARGO_RACK_2_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(3).namedIndex(8).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).slotSize(2).namedIndex(11).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).slotSize(1).namedIndex(12).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).fdevName("Slot05_Size4").slotSize(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).fdevName("Slot06_Size4").slotSize(4).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).fdevName("Slot07_Size3").slotSize(3).shipModule(CargoRack.CARGO_RACK_2_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).fdevName("Slot08_Size3").slotSize(3).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).fdevName("Slot11_Size2").slotSize(2).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).fdevName("Slot12_Size1").slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
     public static final Ship ANACONDA = new Ship(
             ShipType.ANACONDA,
             142447820,
             146969450,
-            ShipSpecs.ANACONDA,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1150).y(466).index(0).slotSize(4).build(),
@@ -1475,26 +1443,25 @@ public class Ship {
 
             ),
             List.of(
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(7).shipModule(CargoRack.CARGO_RACK_6_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(6).shipModule(ShieldGenerator.SHIELD_GENERATOR_6_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(6).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(5).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(5).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).fdevName("Slot01_Size7").slotSize(7).shipModule(CargoRack.CARGO_RACK_6_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).fdevName("Slot02_Size6").slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).fdevName("Slot03_Size6").slotSize(6).shipModule(ShieldGenerator.SHIELD_GENERATOR_6_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).fdevName("Slot04_Size6").slotSize(6).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).fdevName("Slot05_Size5").slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).fdevName("Slot06_Size5").slotSize(5).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).fdevName("Slot07_Size5").slotSize(5).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(7).slotSize(5).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(4).namedIndex(8).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(4).namedIndex(9).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).slotSize(4).namedIndex(10).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).slotSize(2).namedIndex(13).shipModule(CargoRack.CARGO_RACK_1_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(12).slotSize(1).namedIndex(14).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).fdevName("Slot08_Size4").slotSize(4).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).fdevName("Slot09_Size4").slotSize(4).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).fdevName("Slot10_Size4").slotSize(4).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).fdevName("Slot13_Size2").slotSize(2).shipModule(CargoRack.CARGO_RACK_1_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(12).fdevName("Slot14_Size1").slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
     public static final Ship FEDERATION_CORVETTE = new Ship(
             ShipType.FEDERATION_CORVETTE,
             183147460,
             187969450,
-            ShipSpecs.FEDERATION_CORVETTE,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(707).y(254).index(0).slotSize(4).build(),
@@ -1546,7 +1513,6 @@ public class Ship {
             ShipType.CUTTER,
             200484780,
             208969450,
-            ShipSpecs.CUTTER,
 
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1503).y(258).index(0).slotSize(4).build(),
@@ -1597,7 +1563,6 @@ public class Ship {
             ShipType.PYTHON_NX,
             66161981,
             67527359,
-            ShipSpecs.PYTHON_NX,
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(961).y(573).index(0).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1134).y(445).index(1).slotSize(3).build(),
@@ -1630,21 +1595,20 @@ public class Ship {
                     Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
                     Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(3).build(),
                     Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(1).shipModule(CargoRack.CARGO_RACK_1_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(1).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build()
             ));
     public static final Ship TYPE_8 = new Ship(
             ShipType.TYPE_8,
             36238840,
             38453967,
-            ShipSpecs.TYPE_8,
             List.of(
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(732).y(816).index(0).namedIndex(1).slotSize(2).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(4).x(878).y(558).index(1).namedIndex(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1042).y(557).index(2).namedIndex(2).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(943).y(414).index(3).namedIndex(4).slotSize(1).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1314).y(554).index(4).namedIndex(5).slotSize(1).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(4).x(606).y(556).index(5).namedIndex(6).slotSize(1).build()
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(732).y(816).index(0).fdevName("MediumHardpoint1").slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(4).x(878).y(558).index(1).fdevName("SmallHardpoint1").slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1042).y(557).index(2).fdevName("SmallHardpoint2").slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(943).y(414).index(3).fdevName("SmallHardpoint4").slotSize(1).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1314).y(554).index(4).fdevName("SmallHardpoint5").slotSize(1).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(4).x(606).y(556).index(5).fdevName("SmallHardpoint6").slotSize(1).build()
             ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(954).y(323).index(0).slotSize(0).build(),
@@ -1678,7 +1642,6 @@ public class Ship {
             ShipType.MANDALAY,
             16527690,
             17639220,
-            ShipSpecs.MANDALAY,
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1117).y(403).index(0).namedIndex(1).slotSize(2).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(985).y(543).index(1).namedIndex(2).slotSize(2).build(),
@@ -1721,7 +1684,6 @@ public class Ship {
             ShipType.COBRA_MK_V,
             1473191,
             1989460,
-            ShipSpecs.COBRA_MK_V,
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1430).y(427).index(0).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1337).y(227).index(1).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -1761,7 +1723,6 @@ public class Ship {
             ShipType.CORSAIR,
             76884160,
             79304746,
-            ShipSpecs.CORSAIR,
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1055).y(504).index(0).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(4).x(786).y(429).index(1).slotSize(3).build(),
@@ -1803,7 +1764,6 @@ public class Ship {
             ShipType.PANTHER_CLIPPER_MK_II,
             286906165,
             301348585,
-            ShipSpecs.PANTHER_CLIPPER_MK_II,
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1354).y(351).index(0).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1023).y(672).index(1).slotSize(3).build(),
@@ -1835,33 +1795,32 @@ public class Ship {
                     Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(7).shipModule(FuelTank.FUEL_TANK_7_C).build()
             ),
             List.of(
-                    Slot.builder().slotType(SlotType.CARGO).index(0).slotSize(8).shipModule(CargoRack.CARGO_RACK_7_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).namedIndex(1).slotSize(8).shipModule(ShieldGenerator.SHIELD_GENERATOR_7_E).build(),
-                    Slot.builder().slotType(SlotType.CARGO).index(2).slotSize(7).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(7).namedIndex(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(6).namedIndex(3).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(6).namedIndex(4).shipModule(CargoRack.CARGO_RACK_5_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(6).namedIndex(5).shipModule(CargoRack.CARGO_RACK_5_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(5).namedIndex(6).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(5).namedIndex(7).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(4).namedIndex(8).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).slotSize(2).namedIndex(9).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).slotSize(1).namedIndex(10).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.CARGO).index(0).fdevName("Cargo01").slotSize(8).shipModule(CargoRack.CARGO_RACK_7_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).fdevName("Slot01_Size8").slotSize(8).shipModule(ShieldGenerator.SHIELD_GENERATOR_7_E).build(),
+                    Slot.builder().slotType(SlotType.CARGO).index(2).fdevName("Cargo02").slotSize(7).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).fdevName("Slot02_Size7").slotSize(7).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).fdevName("Slot03_Size6").slotSize(6).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).fdevName("Slot04_Size6").slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).fdevName("Slot05_Size6").slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).fdevName("Slot06_Size5").slotSize(5).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).fdevName("Slot07_Size5").slotSize(5).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).fdevName("Slot08_Size4").slotSize(4).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).fdevName("Slot09_Size2").slotSize(2).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).fdevName("Slot10_Size1").slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
     public static final Ship LAKONMINER = new Ship(//Type-11
             ShipType.LAKONMINER,
             66346717,
             67861850,
-            ShipSpecs.LAKONMINER,
             List.of(
-                    ImageSlot.builder().slotType(SlotType.MINING_HARDPOINT).imageIndex(1).x(1314).y(854).index(0).namedIndex(1).slotSize(3).build(),
-                    ImageSlot.builder().slotType(SlotType.MINING_HARDPOINT).imageIndex(2).x(1393).y(325).index(1).namedIndex(1).slotSize(2).build(),
-                    ImageSlot.builder().slotType(SlotType.MINING_HARDPOINT).imageIndex(2).x(1340).y(270).index(2).namedIndex(2).slotSize(2).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(988).y(433).index(3).namedIndex(3).slotSize(2).build(),
-                    ImageSlot.builder().slotType(SlotType.MINING_HARDPOINT).imageIndex(2).x(1343).y(329).index(4).namedIndex(1).slotSize(1).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1127).y(549).index(5).namedIndex(2).slotSize(1).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(767).y(743).index(6).namedIndex(3).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(843).y(792).index(7).namedIndex(4).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
+                    ImageSlot.builder().slotType(SlotType.MINING_HARDPOINT).imageIndex(1).x(1314).y(854).index(0).fdevName("LargeMiningHardpoint1").slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.MINING_HARDPOINT).imageIndex(2).x(1393).y(325).index(1).fdevName("MediumMiningHardpoint1").slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.MINING_HARDPOINT).imageIndex(2).x(1340).y(270).index(2).fdevName("MediumMiningHardpoint2").slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(988).y(433).index(3).fdevName("MediumHardpoint3").slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.MINING_HARDPOINT).imageIndex(2).x(1343).y(329).index(4).fdevName("SmallMiningHardpoint1").slotSize(1).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1127).y(549).index(5).fdevName("SmallHardpoint2").slotSize(1).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(767).y(743).index(6).fdevName("SmallHardpoint3").slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(843).y(792).index(7).fdevName("SmallHardpoint4").slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
             ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1324).y(692).index(0).slotSize(0).build(),
@@ -1880,32 +1839,32 @@ public class Ship {
                     Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(5).shipModule(FuelTank.FUEL_TANK_5_C).build()
             ),
             List.of(
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),//Slot01_Size6
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),//Slot02_Size6
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(6).shipModule(ShieldGenerator.SHIELD_GENERATOR_5_E).build(),//Slot03_Size6
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(5).build(),//Slot04_Size5
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(5).build(),//Slot05_Size5
-                    Slot.builder().slotType(SlotType.LIMPET).index(5).slotSize(5).build(),//LimpetController01
-                    Slot.builder().slotType(SlotType.SLF).index(6).slotSize(5).build(),//FighterBay01
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).namedIndex(6).slotSize(4).build(),//Slot06_Size4
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).namedIndex(7).slotSize(3).build(),//Slot07_Size3
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).namedIndex(8).slotSize(2).build(),//Slot08_Size2
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).namedIndex(9).slotSize(1).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build(),//Slot09_Size1
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).namedIndex(10).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()//Slot10_Size1
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).fdevName("Slot01_Size6").slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).fdevName("Slot02_Size6").slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).fdevName("Slot03_Size6").slotSize(6).shipModule(ShieldGenerator.SHIELD_GENERATOR_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).fdevName("Slot04_Size5").slotSize(5).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).fdevName("Slot05_Size5").slotSize(5).build(),
+                    Slot.builder().slotType(SlotType.LIMPET).index(5).fdevName("LimpetController01").slotSize(5).build(),
+                    Slot.builder().slotType(SlotType.SLF).index(6).fdevName("FighterBay01").slotSize(5).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).fdevName("Slot06_Size4").slotSize(4).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).fdevName("Slot07_Size3").slotSize(3).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).fdevName("Slot08_Size2").slotSize(2).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).fdevName("Slot09_Size1").slotSize(1).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).fdevName("Slot10_Size1").slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
+
     public static final Ship EXPLORER_NX = new Ship(//Caspian Explorer
             ShipType.EXPLORER_NX,
             194322997,
             199857777,
-            ShipSpecs.EXPLORER_NX,
             List.of(
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1047).y(485).index(0).slotSize(3).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(926).y(657).index(1).namedIndex(6).slotSize(2).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1212).y(389).index(2).namedIndex(5).slotSize(2).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1365).y(428).index(3).namedIndex(1).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1333).y(360).index(4).namedIndex(2).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1054).y(340).index(5).namedIndex(3).slotSize(2).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(868).y(499).index(6).namedIndex(4).slotSize(2).build()
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1047).y(485).index(0).fdevName("LargeHardpoint1").slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(926).y(657).index(1).fdevName("MediumHardpoint6").slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1212).y(389).index(2).fdevName("MediumHardpoint5").slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1365).y(428).index(3).fdevName("MediumHardpoint1").slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1333).y(360).index(4).fdevName("MediumHardpoint2").slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1054).y(340).index(5).fdevName("MediumHardpoint3").slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(868).y(499).index(6).fdevName("MediumHardpoint4").slotSize(2).build()
             ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1146).y(590).index(0).slotSize(0).build(),
@@ -1926,27 +1885,26 @@ public class Ship {
                     Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(7).shipModule(FuelTank.FUEL_TANK_7_C).build()
             ),
             List.of(
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(7).shipModule(CargoRack.CARGO_RACK_6_E).build(),//Slot01_Size7
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(6).shipModule(ShieldGenerator.SHIELD_GENERATOR_6_E).build(),//Slot02_Size6
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),//Slot03_Size6
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(5).build(),//Slot04_Size5
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(5).build(),//Slot05_Size5
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(5).build(),//Slot06_Size5
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(5).build(),//Slot07_Size5
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(4).build(),//Slot08_Size4
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(4).build(),//Slot09_Size4
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(3).build(),//Slot10_Size3
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).slotSize(2).build(),//Slot11_Size2
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).slotSize(1).build(),//Slot12_Size1
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(12).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build(),//Slot13_Size1
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(13).slotSize(1).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build()//Slot14_Size1
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).fdevName("Slot01_Size7").slotSize(7).shipModule(CargoRack.CARGO_RACK_6_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).fdevName("Slot02_Size6").slotSize(6).shipModule(ShieldGenerator.SHIELD_GENERATOR_6_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).fdevName("Slot03_Size6").slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).fdevName("Slot04_Size5").slotSize(5).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).fdevName("Slot05_Size5").slotSize(5).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).fdevName("Slot06_Size5").slotSize(5).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).fdevName("Slot07_Size5").slotSize(5).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).fdevName("Slot08_Size4").slotSize(4).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).fdevName("Slot09_Size4").slotSize(4).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).fdevName("Slot10_Size3").slotSize(3).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).fdevName("Slot11_Size2").slotSize(2).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).fdevName("Slot12_Size1").slotSize(1).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(12).fdevName("Slot13_Size1").slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(13).fdevName("Slot14_Size1").slotSize(1).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build()
             ));
 
     public static final Ship KESTREL_MK_II = new Ship(//Kestrel Mk II
             ShipType.KESTREL_MK_II,
             13776383,
             14273818,
-            ShipSpecs.KESTREL_MK_II,
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(866).y(326).index(0).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(4).x(949).y(464).index(1).slotSize(3).build(),
@@ -1971,21 +1929,20 @@ public class Ship {
                     Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(4).shipModule(FuelTank.FUEL_TANK_4_C).build()
             ),
             List.of(
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(5).shipModule(ShieldGenerator.SHIELD_GENERATOR_5_E).build(),//Slot01_Size5
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(4).build(),//Slot02_Size4
-                    Slot.builder().slotType(SlotType.MILITARY).index(2).slotSize(4).build(),//Military01
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).namedIndex(3).slotSize(3).shipModule(CargoRack.CARGO_RACK_2_E).build(),//Slot03_Size3
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).namedIndex(4).slotSize(2).build(),//Slot04_Size2
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).namedIndex(5).slotSize(2).build(),//Slot05_Size2
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).namedIndex(6).slotSize(2).shipModule(Computer.SUPERCRUISE_ASSIST).build(),//Slot06_Size2
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).namedIndex(7).slotSize(1).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build()//Slot07_Size1
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).fdevName("Slot01_Size5").slotSize(5).shipModule(ShieldGenerator.SHIELD_GENERATOR_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).fdevName("Slot02_Size4").slotSize(4).build(),
+                    Slot.builder().slotType(SlotType.MILITARY).index(2).fdevName("Military01").slotSize(4).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).fdevName("Slot03_Size3").slotSize(3).shipModule(CargoRack.CARGO_RACK_2_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).fdevName("Slot04_Size2").slotSize(2).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).fdevName("Slot05_Size2").slotSize(2).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).fdevName("Slot06_Size2").slotSize(2).shipModule(Computer.SUPERCRUISE_ASSIST).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).fdevName("Slot07_Size1").slotSize(1).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build()
             ));
 
     public static final Ship LYNX_HIGHLINER = new Ship(
             ShipType.LYNX_HIGHLINER,
             67992080,
             69289468,
-            ShipSpecs.LYNX_HIGHLINER,
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(985).y(426).index(0).slotSize(3).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(3).x(514).y(895).index(1).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -2010,16 +1967,16 @@ public class Ship {
                     Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(5).shipModule(FuelTank.FUEL_TANK_5_C).build()
             ),
             List.of(
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(6).namedIndex(1).shipModule(ShieldGenerator.SHIELD_GENERATOR_5_E).build(),
-                    Slot.builder().slotType(SlotType.PASSENGER).index(1).slotSize(6).namedIndex(1).shipModule(PassengerCabin.ECONOMY_CLASS_PASSENGER_CABIN_5_E).build(),
-                    Slot.builder().slotType(SlotType.PASSENGER).index(2).slotSize(6).namedIndex(2).shipModule(PassengerCabin.ECONOMY_CLASS_PASSENGER_CABIN_5_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(5).namedIndex(2).shipModule(PassengerCabin.ECONOMY_CLASS_PASSENGER_CABIN_4_E).build(),
-                    Slot.builder().slotType(SlotType.PASSENGER).index(4).slotSize(5).namedIndex(3).shipModule(PassengerCabin.ECONOMY_CLASS_PASSENGER_CABIN_4_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(4).namedIndex(3).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(4).namedIndex(4).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(3).namedIndex(5).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(2).namedIndex(6).shipModule(Computer.SUPERCRUISE_ASSIST).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(1).namedIndex(7).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(6).fdevName("Slot01_Size6").shipModule(ShieldGenerator.SHIELD_GENERATOR_5_E).build(),
+                    Slot.builder().slotType(SlotType.PASSENGER).index(1).slotSize(6).fdevName("Passenger01").namedIndex(1).shipModule(PassengerCabin.ECONOMY_CLASS_PASSENGER_CABIN_5_E).build(),
+                    Slot.builder().slotType(SlotType.PASSENGER).index(2).slotSize(6).fdevName("Passenger02").namedIndex(2).shipModule(PassengerCabin.ECONOMY_CLASS_PASSENGER_CABIN_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(5).fdevName("Slot02_Size5").shipModule(PassengerCabin.ECONOMY_CLASS_PASSENGER_CABIN_4_E).build(),
+                    Slot.builder().slotType(SlotType.PASSENGER).index(4).slotSize(5).fdevName("Passenger03").namedIndex(3).shipModule(PassengerCabin.ECONOMY_CLASS_PASSENGER_CABIN_4_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(4).fdevName("Slot03_Size4").build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(4).fdevName("Slot04_Size4").build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(3).fdevName("Slot05_Size3").build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(2).fdevName("Slot06_Size2").shipModule(Computer.SUPERCRUISE_ASSIST).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(1).fdevName("Slot07_Size1").shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build()
             ));
 
     public static final List<Ship> ALL = List.of(
@@ -2072,8 +2029,6 @@ public class Ship {
             KESTREL_MK_II,//24 Feb 2026 - S
             LYNX_HIGHLINER//28 Apr 2026 - M
     );
-
-
     @Getter
     private final ShipType shipType;
     @Getter
@@ -2086,9 +2041,6 @@ public class Ship {
     private final List<Slot> optionalSlots;
     @Getter
     private final Slot cargoHatch;
-
-    @Getter
-    private final Map<HorizonsModifier, Object> attributes = new HashMap<>();
     private double currentFuelReserve = 0D;
     private double currentFuel = 0D;
     private double currentCargo = 0D;
@@ -2099,11 +2051,10 @@ public class Ship {
     @Setter
     private long retailPrice;
 
-    private Ship(final ShipType shipType, final long price, final long retailPrice, final Map<HorizonsModifier, Object> attributes, final List<ImageSlot> hardpointSlots, final List<ImageSlot> utilitySlots, final List<Slot> coreSlots, final List<Slot> optionalSlots) {
+    private Ship(final ShipType shipType, final long price, final long retailPrice, final List<ImageSlot> hardpointSlots, final List<ImageSlot> utilitySlots, final List<Slot> coreSlots, final List<Slot> optionalSlots) {
         this.price = price;
         this.retailPrice = retailPrice;
         this.shipType = shipType;
-        this.attributes.putAll(attributes);
         this.hardpointSlots = new ArrayList<>(hardpointSlots);
         this.utilitySlots = new ArrayList<>(utilitySlots);
         this.coreSlots = new ArrayList<>(coreSlots);
@@ -2122,7 +2073,6 @@ public class Ship {
         this.coreSlots = new ArrayList<>(ship.coreSlots.stream().map(Slot::new).toList());
         this.optionalSlots = new ArrayList<>(ship.optionalSlots.stream().map(Slot::new).toList());
         this.cargoHatch = new Slot(ship.cargoHatch);
-        this.attributes.putAll(ship.getAttributes());
         this.currentCargo = ship.currentCargo;
         this.currentFuel = ship.currentFuel;
         this.currentFuelReserve = ship.currentFuelReserve;
@@ -2175,14 +2125,39 @@ public class Ship {
         return this.getOptionalSlots().stream()
                 .map(Slot::getShipModule)
                 .filter(shipModule -> shipModule instanceof PassengerCabin)
-                .filter(shipModule -> ((PassengerCabin)shipModule).getCabinType().equals(cabinType))
+                .filter(shipModule -> ((PassengerCabin) shipModule).getCabinType().equals(cabinType))
                 .map(shipModule -> (double) shipModule.getAttributeValue(HorizonsModifier.CABIN_CAPACITY, true))
                 .mapToDouble(Double::doubleValue)
                 .sum();
     }
 
+    public ShipSpecs getShipSpecs() {
+        ServiceLoader<DataLoader> loader = ServiceLoader.load(DataLoader.class);
+        DataLoader defaultDataLoader = new DefaultDataLoader();
+        DataLoader dataLoader = loader.stream().map(ServiceLoader.Provider::get)
+                .filter(f -> !isJUnitTest() && !(f instanceof DefaultDataLoader))
+                .findFirst()
+                .orElseGet(() -> defaultDataLoader);
+        String internalName = this.getShipType().getInternalName();
+        String data = dataLoader.load(internalName, defaultDataLoader.load(internalName, ""));
+        try {
+            return OBJECT_MAPPER.readValue(data, ShipSpecs.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean isJUnitTest() {
+        for (StackTraceElement element : Thread.currentThread().getStackTrace()) {
+            if (element.getClassName().startsWith("org.junit.")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public double getMaxFuelReserve() {
-        return (double) this.attributes.getOrDefault(HorizonsModifier.FUEL_RESERVE, 0.0);
+        return this.getShipSpecs().getFuelReserve();
     }
 
     /**
@@ -2191,7 +2166,7 @@ public class Ship {
      * @return
      */
     public double getEmptyMass() {
-        return (double) this.attributes.getOrDefault(HorizonsModifier.MASS, 0.0)
+        return this.getShipSpecs().getMass()
                 + Stream.concat(this.getCoreSlots().stream(), Stream.concat(this.getHardpointSlots().stream(), Stream.concat(this.getUtilitySlots().stream(), this.getOptionalSlots().stream())))
                 .map(slot -> (slot.isOccupied()) ? (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.MASS, 0.0, true) : 0.0)
                 .mapToDouble(Double::doubleValue)
@@ -2210,6 +2185,10 @@ public class Ship {
 
     }
 
+    public void setCurrentFuelReserve(double currentFuelReserve) {
+        this.currentFuelReserve = Math.min(currentFuelReserve, getMaxFuelReserve());
+    }
+
     public double getCurrentFuel() {
         final boolean liveStats = ApplicationState.getInstance().isLiveStats();
         if (liveStats) {
@@ -2221,6 +2200,10 @@ public class Ship {
         }
     }
 
+    public void setCurrentFuel(double currentFuel) {
+        this.currentFuel = Math.min(currentFuel, getMaxFuel());
+    }
+
     public double getCurrentCargo() {
         final boolean liveStats = ApplicationState.getInstance().isLiveStats();
         if (liveStats) {
@@ -2230,14 +2213,6 @@ public class Ship {
         } else {
             return currentCargo;
         }
-    }
-
-    public void setCurrentFuelReserve(double currentFuelReserve) {
-        this.currentFuelReserve = Math.min(currentFuelReserve, getMaxFuelReserve());
-    }
-
-    public void setCurrentFuel(double currentFuel) {
-        this.currentFuel = Math.min(currentFuel, getMaxFuel());
     }
 
     public void setCurrentCargo(double currentCargo) {
@@ -2365,16 +2340,17 @@ public class Ship {
     }
 
     public boolean supportsGraphs() {
-        return this.shipType == ShipType.PYTHON_NX
-                || this.shipType == ShipType.MANDALAY
-                || this.shipType == ShipType.COBRA_MK_V
-                || this.shipType == ShipType.CORSAIR
-                || this.shipType == ShipType.PANTHER_CLIPPER_MK_II
-                || this.shipType == ShipType.TYPE_8
-                || this.shipType == ShipType.LAKONMINER
-                || this.shipType == ShipType.EXPLORER_NX
-                || this.shipType == ShipType.KESTREL_MK_II
-                || this.shipType == ShipType.LYNX_HIGHLINER;
+        return this.getShipSpecs().getCruisePitchProfile() != null;
+//        return this.shipType == ShipType.PYTHON_NX
+//                || this.shipType == ShipType.MANDALAY
+//                || this.shipType == ShipType.COBRA_MK_V
+//                || this.shipType == ShipType.CORSAIR
+//                || this.shipType == ShipType.PANTHER_CLIPPER_MK_II
+//                || this.shipType == ShipType.TYPE_8
+//                || this.shipType == ShipType.LAKONMINER
+//                || this.shipType == ShipType.EXPLORER_NX
+//                || this.shipType == ShipType.KESTREL_MK_II
+//                || this.shipType == ShipType.LYNX_HIGHLINER;
 
     }
 }
