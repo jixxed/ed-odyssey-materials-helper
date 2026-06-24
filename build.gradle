@@ -208,7 +208,7 @@ tasks.register("createReleaseMacOsX64") {
 
 ext {
     version_logback = "1.5.34"
-    version_jackson = "2.21.3"
+    version_jackson = "2.22.0"
     version_jna = "5.19.1"
     version_junit_jupiter = "6.1.0"
     version_junit_platform = "1.14.4"
