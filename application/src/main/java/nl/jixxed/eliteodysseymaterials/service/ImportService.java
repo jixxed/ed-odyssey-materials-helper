@@ -153,7 +153,6 @@ public class ImportService {
             throw new IllegalArgumentException(ERROR_IMPORT_STRING_NOT_DECODED);
         }
         try {
-
             final ClipboardShip clipboardShip = OBJECT_MAPPER.readValue(decoded, ClipboardShip.class);
             if (Objects.equals(clipboardShip.getVersion(), 1) || Objects.equals(clipboardShip.getVersion(), 2)) {
                 ShipConfiguration shipConfiguration = clipboardShip.getShipConfiguration();
@@ -168,7 +167,6 @@ public class ImportService {
             } else {
                 throw new ShipDeeplinkException("The ship could not be imported because the link was made with a newer version of the app.", "notification.imported.ship.exception.newer.version");
             }
-
         } catch (final RuntimeException | JsonProcessingException ex) {
             log.error("Failed to import ship", ex);
             throw new ShipDeeplinkException("Failed to parse deeplink", "notification.imported.exception.failed.parse");

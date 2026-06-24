@@ -1,0 +1,161 @@
+{
+  "timestamp": "2026-06-24T19:00:58Z",
+  "event": "Loadout",
+  "Ship": "empire_eagle",
+  "ShipID": 113,
+  "ShipName": "vanilla",
+  "ShipIdent": "test",
+  "HullValue": 44227,
+  "ModulesValue": 53023,
+  "HullHealth": 1.000000,
+  "UnladenMass": 80.300003,
+  "CargoCapacity": 2,
+  "MaxJumpRange": 8.704443,
+  "FuelCapacity": {
+    "Main": 4.000000,
+    "Reserve": 0.370000
+  },
+  "Rebuy": 4865,
+  "Modules": [
+    {
+      "Slot": "SmallHardpoint1",
+      "Item": "hpt_pulselaser_fixed_small",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 1930
+    },
+    {
+      "Slot": "SmallHardpoint2",
+      "Item": "hpt_pulselaser_fixed_small",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 1930
+    },
+    {
+      "Slot": "Armour",
+      "Item": "empire_eagle_armour_grade1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "PowerPlant",
+      "Item": "int_powerplant_size3_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 5204
+    },
+    {
+      "Slot": "MainEngines",
+      "Item": "int_engine_size3_class1",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000,
+      "Value": 5502
+    },
+    {
+      "Slot": "FrameShiftDrive",
+      "Item": "int_hyperdrive_size3_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 5502
+    },
+    {
+      "Slot": "LifeSupport",
+      "Item": "int_lifesupport_size1_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 453
+    },
+    {
+      "Slot": "PowerDistributor",
+      "Item": "int_powerdistributor_size2_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 1270
+    },
+    {
+      "Slot": "Radar",
+      "Item": "int_sensors_size2_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 1270
+    },
+    {
+      "Slot": "FuelTank",
+      "Item": "int_fueltank_size2_class3",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 3290
+    },
+    {
+      "Slot": "Slot01_Size3",
+      "Item": "int_shieldgenerator_size3_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 5502
+    },
+    {
+      "Slot": "Slot02_Size2",
+      "Item": "int_cargorack_size1_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 877
+    },
+    {
+      "Slot": "Slot05_Size1",
+      "Item": "int_supercruiseassist",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 8003
+    },
+    {
+      "Slot": "Slot06_Size1",
+      "Item": "int_dockingcomputer_advanced",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 11852
+    },
+    {
+      "Slot": "PlanetaryApproachSuite",
+      "Item": "int_planetapproachsuite_advanced",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 438
+    },
+    {
+      "Slot": "VesselVoice",
+      "Item": "voicepack_eden",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "ShipCockpit",
+      "Item": "empire_eagle_cockpit",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "CargoHatch",
+      "Item": "modularcargobaydoor",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000
+    }
+  ]
+}

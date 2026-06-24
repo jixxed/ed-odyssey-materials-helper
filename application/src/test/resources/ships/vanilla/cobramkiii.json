@@ -1,0 +1,177 @@
+{
+  "timestamp": "2026-06-24T19:07:06Z",
+  "event": "Loadout",
+  "Ship": "cobramkiii",
+  "ShipID": 115,
+  "ShipName": "vanilla",
+  "ShipIdent": "test",
+  "HullValue": 162997,
+  "ModulesValue": 143882,
+  "HullHealth": 1.000000,
+  "UnladenMass": 239.000000,
+  "CargoCapacity": 18,
+  "MaxJumpRange": 11.158146,
+  "FuelCapacity": {
+    "Main": 16.000000,
+    "Reserve": 0.490000
+  },
+  "Rebuy": 15345,
+  "Modules": [
+    {
+      "Slot": "MediumHardpoint1",
+      "Item": "hpt_pulselaser_fixed_small",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 1930
+    },
+    {
+      "Slot": "MediumHardpoint2",
+      "Item": "hpt_pulselaser_fixed_small",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 1930
+    },
+    {
+      "Slot": "Armour",
+      "Item": "cobramkiii_armour_grade1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "PowerPlant",
+      "Item": "int_powerplant_size4_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 15613
+    },
+    {
+      "Slot": "MainEngines",
+      "Item": "int_engine_size4_class1",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000,
+      "Value": 17443
+    },
+    {
+      "Slot": "FrameShiftDrive",
+      "Item": "int_hyperdrive_size4_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 17443
+    },
+    {
+      "Slot": "LifeSupport",
+      "Item": "int_lifesupport_size3_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 3556
+    },
+    {
+      "Slot": "PowerDistributor",
+      "Item": "int_powerdistributor_size3_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 3556
+    },
+    {
+      "Slot": "Radar",
+      "Item": "int_sensors_size3_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 3556
+    },
+    {
+      "Slot": "FuelTank",
+      "Item": "int_fueltank_size4_class3",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 21704
+    },
+    {
+      "Slot": "Slot01_Size4",
+      "Item": "int_cargorack_size3_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 9269
+    },
+    {
+      "Slot": "Slot02_Size4",
+      "Item": "int_cargorack_size3_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 9269
+    },
+    {
+      "Slot": "Slot03_Size4",
+      "Item": "int_shieldgenerator_size4_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 17443
+    },
+    {
+      "Slot": "Slot04_Size2",
+      "Item": "int_cargorack_size1_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 877
+    },
+    {
+      "Slot": "Slot07_Size1",
+      "Item": "int_supercruiseassist",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 8003
+    },
+    {
+      "Slot": "Slot08_Size1",
+      "Item": "int_dockingcomputer_advanced",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 11852
+    },
+    {
+      "Slot": "PlanetaryApproachSuite",
+      "Item": "int_planetapproachsuite_advanced",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 438
+    },
+    {
+      "Slot": "VesselVoice",
+      "Item": "voicepack_eden",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "ShipCockpit",
+      "Item": "cobramkiii_cockpit",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "CargoHatch",
+      "Item": "modularcargobaydoor",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000
+    }
+  ]
+}

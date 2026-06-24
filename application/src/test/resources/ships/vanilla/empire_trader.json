@@ -1,0 +1,169 @@
+{
+  "timestamp": "2026-06-24T19:32:02Z",
+  "event": "Loadout",
+  "Ship": "empire_trader",
+  "ShipID": 132,
+  "ShipName": "vanilla",
+  "ShipIdent": "test",
+  "HullValue": 18522077,
+  "ModulesValue": 1042541,
+  "HullHealth": 1.000000,
+  "UnladenMass": 624.000000,
+  "CargoCapacity": 74,
+  "MaxJumpRange": 9.157619,
+  "FuelCapacity": {
+    "Main": 16.000000,
+    "Reserve": 0.740000
+  },
+  "Rebuy": 978232,
+  "Modules": [
+    {
+      "Slot": "MediumHardpoint1",
+      "Item": "hpt_pulselaser_fixed_small",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 1930
+    },
+    {
+      "Slot": "MediumHardpoint2",
+      "Item": "hpt_pulselaser_fixed_small",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 1930
+    },
+    {
+      "Slot": "Armour",
+      "Item": "empire_trader_armour_grade1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "PowerPlant",
+      "Item": "int_powerplant_size6_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 140520
+    },
+    {
+      "Slot": "MainEngines",
+      "Item": "int_engine_size6_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 175278
+    },
+    {
+      "Slot": "FrameShiftDrive",
+      "Item": "int_hyperdrive_size5_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 55293
+    },
+    {
+      "Slot": "LifeSupport",
+      "Item": "int_lifesupport_size5_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 27885
+    },
+    {
+      "Slot": "PowerDistributor",
+      "Item": "int_powerdistributor_size6_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 78078
+    },
+    {
+      "Slot": "Radar",
+      "Item": "int_sensors_size5_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 27885
+    },
+    {
+      "Slot": "FuelTank",
+      "Item": "int_fueltank_size4_class3",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 21704
+    },
+    {
+      "Slot": "Slot01_Size7",
+      "Item": "int_cargorack_size6_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 318173
+    },
+    {
+      "Slot": "Slot02_Size6",
+      "Item": "int_shieldgenerator_size6_class1",
+      "On": true,
+      "Priority": 3,
+      "Health": 1.000000,
+      "Value": 175278
+    },
+    {
+      "Slot": "Slot03_Size4",
+      "Item": "int_cargorack_size3_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 9269
+    },
+    {
+      "Slot": "Slot07_Size2",
+      "Item": "int_cargorack_size1_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 877
+    },
+    {
+      "Slot": "Slot09_Size1",
+      "Item": "int_supercruiseassist",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 8003
+    },
+    {
+      "Slot": "PlanetaryApproachSuite",
+      "Item": "int_planetapproachsuite_advanced",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 438
+    },
+    {
+      "Slot": "VesselVoice",
+      "Item": "voicepack_verity",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "ShipCockpit",
+      "Item": "empire_trader_cockpit",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "CargoHatch",
+      "Item": "modularcargobaydoor",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000
+    }
+  ]
+}

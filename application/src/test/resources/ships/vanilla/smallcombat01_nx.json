@@ -1,0 +1,165 @@
+{
+  "timestamp": "2026-06-24T19:24:03Z",
+  "event": "Loadout",
+  "Ship": "smallcombat01_nx",
+  "ShipID": 104,
+  "ShipName": "vanilla",
+  "ShipIdent": "test",
+  "HullValue": 12088343,
+  "ModulesValue": 436933,
+  "HullHealth": 1.000000,
+  "UnladenMass": 287.799988,
+  "CargoCapacity": 4,
+  "MaxJumpRange": 13.321475,
+  "FuelCapacity": {
+    "Main": 16.000000,
+    "Reserve": 0.610000
+  },
+  "Rebuy": 626266,
+  "Modules": [
+    {
+      "Slot": "SmallHardpoint1",
+      "Item": "hpt_multicannon_fixed_small",
+      "On": true,
+      "Priority": 2,
+      "AmmoInClip": 100,
+      "AmmoInHopper": 2100,
+      "Health": 1.000000,
+      "Value": 8336
+    },
+    {
+      "Slot": "SmallHardpoint2",
+      "Item": "hpt_multicannon_fixed_small",
+      "On": true,
+      "Priority": 2,
+      "AmmoInClip": 100,
+      "AmmoInHopper": 2100,
+      "Health": 1.000000,
+      "Value": 8336
+    },
+    {
+      "Slot": "Armour",
+      "Item": "smallcombat01_nx_armour_grade1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "PowerPlant",
+      "Item": "int_powerplant_size5_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 46840
+    },
+    {
+      "Slot": "MainEngines",
+      "Item": "int_engine_size5_class1",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000,
+      "Value": 55293
+    },
+    {
+      "Slot": "FrameShiftDrive",
+      "Item": "int_hyperdrive_overcharge_size4_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 188379
+    },
+    {
+      "Slot": "LifeSupport",
+      "Item": "int_lifesupport_size1_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 453
+    },
+    {
+      "Slot": "PowerDistributor",
+      "Item": "int_powerdistributor_size5_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 27885
+    },
+    {
+      "Slot": "Radar",
+      "Item": "int_sensors_size2_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 1270
+    },
+    {
+      "Slot": "FuelTank",
+      "Item": "int_fueltank_size4_class3",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 21704
+    },
+    {
+      "Slot": "Slot01_Size5",
+      "Item": "int_shieldgenerator_size5_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 55293
+    },
+    {
+      "Slot": "Slot03_Size3",
+      "Item": "int_cargorack_size2_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 2851
+    },
+    {
+      "Slot": "Slot06_Size2",
+      "Item": "int_supercruiseassist",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 8003
+    },
+    {
+      "Slot": "Slot07_Size1",
+      "Item": "int_dockingcomputer_advanced",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 11852
+    },
+    {
+      "Slot": "PlanetaryApproachSuite",
+      "Item": "int_planetapproachsuite_advanced",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 438
+    },
+    {
+      "Slot": "VesselVoice",
+      "Item": "voicepack_eden",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "ShipCockpit",
+      "Item": "smallcombat01_nx_cockpit",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "CargoHatch",
+      "Item": "modularcargobaydoor",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000
+    }
+  ]
+}

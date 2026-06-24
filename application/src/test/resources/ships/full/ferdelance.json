@@ -1,45 +1,24 @@
 {
-  "timestamp": "2026-06-24T09:14:45Z",
+  "timestamp": "2026-06-24T19:53:40Z",
   "event": "Loadout",
-  "Ship": "type9_military",
-  "ShipID": 148,
+  "Ship": "ferdelance",
+  "ShipID": 140,
   "ShipName": "vanilla",
   "ShipIdent": "test",
-  "HullValue": 106603674,
-  "ModulesValue": 3008578,
+  "HullValue": 44863498,
+  "ModulesValue": 474420,
   "HullHealth": 1.000000,
-  "UnladenMass": 1499.800049,
-  "CargoCapacity": 220,
-  "MaxJumpRange": 6.864106,
+  "UnladenMass": 407.799988,
+  "CargoCapacity": 24,
+  "MaxJumpRange": 6.562013,
   "FuelCapacity": {
-    "Main": 64.000000,
-    "Reserve": 0.770000
+    "Main": 8.000000,
+    "Reserve": 0.670000
   },
-  "Rebuy": 5480618,
+  "Rebuy": 2266899,
   "Modules": [
     {
-      "Slot": "LargeHardpoint1",
-      "Item": "hpt_mining_abrblstr_fixed_small",
-      "On": true,
-      "Priority": 0,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "LargeHardpoint2",
-      "Item": "hpt_mining_abrblstr_fixed_small",
-      "On": true,
-      "Priority": 0,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "LargeHardpoint3",
-      "Item": "hpt_mining_abrblstr_fixed_small",
-      "On": true,
-      "Priority": 0,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "LargeHardpoint4",
+      "Slot": "HugeHardpoint1",
       "Item": "hpt_mining_abrblstr_fixed_small",
       "On": true,
       "Priority": 0,
@@ -69,14 +48,7 @@
       "Health": 1.000000
     },
     {
-      "Slot": "SmallHardpoint1",
-      "Item": "hpt_mining_abrblstr_fixed_small",
-      "On": true,
-      "Priority": 0,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "SmallHardpoint2",
+      "Slot": "MediumHardpoint4",
       "Item": "hpt_mining_abrblstr_fixed_small",
       "On": true,
       "Priority": 0,
@@ -119,8 +91,26 @@
       "Health": 1.000000
     },
     {
+      "Slot": "TinyHardpoint5",
+      "Item": "hpt_chafflauncher_tiny",
+      "On": true,
+      "Priority": 0,
+      "AmmoInClip": 1,
+      "AmmoInHopper": 10,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "TinyHardpoint6",
+      "Item": "hpt_chafflauncher_tiny",
+      "On": true,
+      "Priority": 0,
+      "AmmoInClip": 1,
+      "AmmoInHopper": 10,
+      "Health": 1.000000
+    },
+    {
       "Slot": "Armour",
-      "Item": "type9_military_armour_grade1",
+      "Item": "ferdelance_armour_grade1",
       "On": true,
       "Priority": 1,
       "Health": 1.000000
@@ -135,27 +125,27 @@
     },
     {
       "Slot": "MainEngines",
-      "Item": "int_engine_size7_class1",
+      "Item": "int_engine_size5_class1",
       "On": true,
       "Priority": 2,
       "Health": 1.000000,
-      "Value": 555632
+      "Value": 55293
     },
     {
       "Slot": "FrameShiftDrive",
-      "Item": "int_hyperdrive_size6_class1",
+      "Item": "int_hyperdrive_size4_class1",
       "On": true,
       "Priority": 2,
       "Health": 1.000000,
-      "Value": 175277
+      "Value": 17442
     },
     {
       "Slot": "LifeSupport",
-      "Item": "int_lifesupport_size5_class1",
+      "Item": "int_lifesupport_size4_class1",
       "On": true,
       "Priority": 2,
       "Health": 1.000000,
-      "Value": 27885
+      "Value": 9958
     },
     {
       "Slot": "PowerDistributor",
@@ -175,38 +165,14 @@
     },
     {
       "Slot": "FuelTank",
-      "Item": "int_fueltank_size6_class3",
+      "Item": "int_fueltank_size3_class3",
       "On": true,
       "Priority": 1,
       "Health": 1.000000,
-      "Value": 299733
+      "Value": 6197
     },
     {
-      "Slot": "Slot01_Size8",
-      "Item": "int_cargorack_size7_class1",
-      "On": true,
-      "Priority": 1,
-      "Health": 1.000000,
-      "Value": 1034063
-    },
-    {
-      "Slot": "Slot02_Size7",
-      "Item": "int_cargorack_size6_class1",
-      "On": true,
-      "Priority": 1,
-      "Health": 1.000000,
-      "Value": 318173
-    },
-    {
-      "Slot": "Slot03_Size6",
-      "Item": "int_shieldgenerator_size6_class1",
-      "On": true,
-      "Priority": 2,
-      "Health": 1.000000,
-      "Value": 175277
-    },
-    {
-      "Slot": "Slot04_Size5",
+      "Slot": "Slot01_Size5",
       "Item": "int_cargorack_size4_class1",
       "On": true,
       "Priority": 1,
@@ -214,7 +180,15 @@
       "Value": 30122
     },
     {
-      "Slot": "Slot05_Size4",
+      "Slot": "Slot02_Size4",
+      "Item": "int_shieldgenerator_size4_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 17442
+    },
+    {
+      "Slot": "Slot03_Size4",
       "Item": "int_cargorack_size3_class1",
       "On": true,
       "Priority": 1,
@@ -222,55 +196,26 @@
       "Value": 9269
     },
     {
-      "Slot": "Slot06_Size4",
+      "Slot": "Slot04_Size2",
       "Item": "int_repairer_size1_class1",
       "On": true,
       "Priority": 0,
       "Health": 1.000000
     },
     {
-      "Slot": "Slot07_Size3",
-      "Item": "int_cargorack_size2_class1",
-      "On": true,
-      "Priority": 1,
-      "Health": 1.000000,
-      "Value": 2851
-    },
-    {
-      "Slot": "Slot08_Size3",
+      "Slot": "Slot05_Size1",
       "Item": "int_repairer_size1_class1",
       "On": true,
       "Priority": 0,
       "Health": 1.000000
     },
     {
-      "Slot": "Slot11_Size2",
-      "Item": "int_repairer_size1_class1",
-      "On": true,
-      "Priority": 0,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "Slot12_Size1",
+      "Slot": "Slot06_Size1",
       "Item": "int_supercruiseassist",
       "On": true,
       "Priority": 2,
       "Health": 1.000000,
       "Value": 8003
-    },
-    {
-      "Slot": "Military01",
-      "Item": "int_hullreinforcement_size1_class1",
-      "On": true,
-      "Priority": 1,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "Military02",
-      "Item": "int_hullreinforcement_size1_class1",
-      "On": true,
-      "Priority": 1,
-      "Health": 1.000000
     },
     {
       "Slot": "PlanetaryApproachSuite",
@@ -281,42 +226,6 @@
       "Value": 438
     },
     {
-      "Slot": "TinyHardpoint5",
-      "Item": "hpt_chafflauncher_tiny",
-      "On": true,
-      "Priority": 0,
-      "AmmoInClip": 1,
-      "AmmoInHopper": 10,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "TinyHardpoint6",
-      "Item": "hpt_chafflauncher_tiny",
-      "On": true,
-      "Priority": 0,
-      "AmmoInClip": 1,
-      "AmmoInHopper": 10,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "TinyHardpoint7",
-      "Item": "hpt_chafflauncher_tiny",
-      "On": true,
-      "Priority": 0,
-      "AmmoInClip": 1,
-      "AmmoInHopper": 10,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "TinyHardpoint8",
-      "Item": "hpt_chafflauncher_tiny",
-      "On": true,
-      "Priority": 0,
-      "AmmoInClip": 1,
-      "AmmoInHopper": 10,
-      "Health": 1.000000
-    },
-    {
       "Slot": "VesselVoice",
       "Item": "voicepack_eden",
       "On": true,
@@ -325,14 +234,14 @@
     },
     {
       "Slot": "ShipCockpit",
-      "Item": "type9_military_cockpit",
+      "Item": "ferdelance_cockpit",
       "On": true,
       "Priority": 1,
       "Health": 1.000000
     },
     {
       "Slot": "CargoHatch",
-      "Item": "modularcargobaydoor",
+      "Item": "modularcargobaydoorfdl",
       "On": true,
       "Priority": 2,
       "Health": 1.000000

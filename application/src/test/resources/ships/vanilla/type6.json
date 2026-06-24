@@ -1,0 +1,185 @@
+{
+  "timestamp": "2026-06-24T19:12:41Z",
+  "event": "Loadout",
+  "Ship": "type6",
+  "ShipID": 118,
+  "ShipName": "vanilla",
+  "ShipIdent": "test",
+  "HullValue": 752468,
+  "ModulesValue": 165350,
+  "HullHealth": 1.000000,
+  "UnladenMass": 199.000000,
+  "CargoCapacity": 50,
+  "MaxJumpRange": 13.378673,
+  "FuelCapacity": {
+    "Main": 16.000000,
+    "Reserve": 0.390000
+  },
+  "Rebuy": 45891,
+  "Modules": [
+    {
+      "Slot": "SmallHardpoint1",
+      "Item": "hpt_pulselaser_fixed_small",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 1930
+    },
+    {
+      "Slot": "SmallHardpoint2",
+      "Item": "hpt_pulselaser_fixed_small",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 1930
+    },
+    {
+      "Slot": "Armour",
+      "Item": "type6_armour_grade1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "PowerPlant",
+      "Item": "int_powerplant_size3_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 5204
+    },
+    {
+      "Slot": "MainEngines",
+      "Item": "int_engine_size4_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 17442
+    },
+    {
+      "Slot": "FrameShiftDrive",
+      "Item": "int_hyperdrive_size4_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 17442
+    },
+    {
+      "Slot": "LifeSupport",
+      "Item": "int_lifesupport_size2_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 1270
+    },
+    {
+      "Slot": "PowerDistributor",
+      "Item": "int_powerdistributor_size3_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 3556
+    },
+    {
+      "Slot": "Radar",
+      "Item": "int_sensors_size2_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 1270
+    },
+    {
+      "Slot": "FuelTank",
+      "Item": "int_fueltank_size4_class3",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 21704
+    },
+    {
+      "Slot": "Slot01_Size5",
+      "Item": "int_cargorack_size4_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 30122
+    },
+    {
+      "Slot": "Slot02_Size5",
+      "Item": "int_cargorack_size4_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 30122
+    },
+    {
+      "Slot": "Slot03_Size4",
+      "Item": "int_cargorack_size3_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 9269
+    },
+    {
+      "Slot": "Slot04_Size4",
+      "Item": "int_cargorack_size3_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 9269
+    },
+    {
+      "Slot": "Slot05_Size3",
+      "Item": "int_shieldgenerator_size3_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 5502
+    },
+    {
+      "Slot": "Slot06_Size2",
+      "Item": "int_cargorack_size1_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 877
+    },
+    {
+      "Slot": "Slot08_Size1",
+      "Item": "int_supercruiseassist",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 8003
+    },
+    {
+      "Slot": "PlanetaryApproachSuite",
+      "Item": "int_planetapproachsuite_advanced",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 438
+    },
+    {
+      "Slot": "VesselVoice",
+      "Item": "voicepack_eden",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "ShipCockpit",
+      "Item": "type6_cockpit",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "CargoHatch",
+      "Item": "modularcargobaydoor",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000
+    }
+  ]
+}

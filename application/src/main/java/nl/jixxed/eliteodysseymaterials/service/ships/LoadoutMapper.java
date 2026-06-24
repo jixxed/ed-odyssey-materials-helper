@@ -21,28 +21,21 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.enums.MatchType;
-import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.*;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Engineering;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.FuelCapacity;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Loadout;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Modifier;
 import nl.jixxed.eliteodysseymaterials.service.ReportService;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 public class LoadoutMapper {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-
-    static {
-        OBJECT_MAPPER.registerModule(new JavaTimeModule());
-        OBJECT_MAPPER.registerModule(new Jdk8Module().configureAbsentsAsNulls(true));
-    }
-
     private static final Set<String> HARDPOINT_SLOT_NAMES = Set.of("SmallHardpoint", "MediumHardpoint", "LargeHardpoint", "HugeHardpoint");
     private static final Set<String> MINING_HARDPOINT_SLOT_NAMES = Set.of("SmallMiningHardpoint", "MediumMiningHardpoint", "LargeMiningHardpoint");
     private static final Set<String> UTILITY_SLOT_NAMES = Set.of("TinyHardpoint");
@@ -53,6 +46,11 @@ public class LoadoutMapper {
     private static final Set<String> SLF_SLOT_NAMES = Set.of("FighterBay");
     private static final Set<String> LIMPET_SLOT_NAMES = Set.of("LimpetController");
     private static final Set<String> OPTIONAL_SLOT_NAMES = Set.of("Slot");
+
+    static {
+        OBJECT_MAPPER.registerModule(new JavaTimeModule());
+        OBJECT_MAPPER.registerModule(new Jdk8Module().configureAbsentsAsNulls(true));
+    }
 
     public static Ship toShip(Loadout loadout) {
         final ShipType shipType;
@@ -216,46 +214,25 @@ public class LoadoutMapper {
 
     public static Slot getShipSlot(Ship ship, String slotName) {
         try {
-            if (HARDPOINT_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
-                List<ImageSlot> hardpointSlots = ship.getHardpointSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.HARDPOINT)).toList();
-                return getHardpointSlot(hardpointSlots, slotName);
-            }
-            if (MINING_HARDPOINT_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
-                List<ImageSlot> hardpointSlots = ship.getHardpointSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.MINING_HARDPOINT)).toList();
-                return getHardpointSlot(hardpointSlots, slotName);
-            }
-            if (UTILITY_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
-                return getUtilitySlot(ship.getUtilitySlots(), slotName);
-            }
-            if (CORE_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
-                return getCoreSlot(ship.getCoreSlots(), slotName);
-            }
-            if (OPTIONAL_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
-                final List<Slot> optionalSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.OPTIONAL)).toList();
-                return getOptionalSlot(optionalSlots, slotName);
-            }
-            if (MILITARY_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
-                final List<Slot> militarySlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.MILITARY)).toList();
-                return getRestrictedOptionalSlot(militarySlots, slotName);
-            }
             if ("CargoHatch".equals(slotName)) {
                 return ship.getCargoHatch();
             }
-            if (CARGO_SLOT_NAMES.stream().anyMatch(slotName::startsWith)) {//Cargo
-                final List<Slot> cargoSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CARGO)).toList();
-                return getRestrictedOptionalSlot(cargoSlots, slotName);
+            if (HARDPOINT_SLOT_NAMES.stream().anyMatch(slotName::contains) || MINING_HARDPOINT_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
+                return getSlot(ship.getHardpointSlots(), slotName);
             }
-            if (PASSENGER_SLOT_NAMES.stream().anyMatch(slotName::startsWith)) {//Passenger
-                final List<Slot> passengerSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.PASSENGER)).toList();
-                return getRestrictedOptionalSlot(passengerSlots, slotName);
+            if (UTILITY_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
+                return getSlot(ship.getUtilitySlots(), slotName);
             }
-            if (SLF_SLOT_NAMES.stream().anyMatch(slotName::startsWith)) {//FighterBay
-                final List<Slot> slfSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.SLF)).toList();
-                return getRestrictedOptionalSlot(slfSlots, slotName);
+            if (CORE_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
+                return getSlot(ship.getCoreSlots(), slotName);
             }
-            if (LIMPET_SLOT_NAMES.stream().anyMatch(slotName::startsWith)) {//Limpet
-                final List<Slot> limpetSlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.LIMPET)).toList();
-                return getRestrictedOptionalSlot(limpetSlots, slotName);
+            if (OPTIONAL_SLOT_NAMES.stream().anyMatch(slotName::contains)
+                    || MILITARY_SLOT_NAMES.stream().anyMatch(slotName::contains)
+                    || CARGO_SLOT_NAMES.stream().anyMatch(slotName::startsWith)
+                    || PASSENGER_SLOT_NAMES.stream().anyMatch(slotName::startsWith)
+                    || SLF_SLOT_NAMES.stream().anyMatch(slotName::startsWith)
+                    || LIMPET_SLOT_NAMES.stream().anyMatch(slotName::startsWith)) {//Limpet
+                return getSlot(ship.getOptionalSlots(), slotName);
             }
         } catch (IndexOutOfBoundsException | IllegalArgumentException e) {
             log.error(e.getMessage(), e);
@@ -264,112 +241,11 @@ public class LoadoutMapper {
         return null;
     }
 
-    private static Slot getHardpointSlot(List<ImageSlot> hardpointSlots, String slotName) {
-        final int slotNumber = Integer.parseInt(slotName.substring(slotName.length() - 1));
-        try {
-            return getHardpointSlots(hardpointSlots, slotName).stream()
-                    .filter(Slot::hasNamedIndex)
-                    .filter(slot -> slot.getNamedIndex() == slotNumber)
-                    .findFirst()
-                    .orElseGet(() -> getHardpointSlots(hardpointSlots, slotName).get(slotNumber - 1));
-        } catch (IllegalArgumentException ex) {
-            hardpointSlots.stream().map(Slot::toString).forEach(log::debug);
-            throw ex;
-        }
-    }
-
-    private static List<ImageSlot> getHardpointSlots(List<ImageSlot> hardpointSlots, String slotName) {
-        return switch (slotName.substring(0, slotName.length() - 1)) {
-            case "SmallHardpoint" -> hardpointSlots.stream()
-                    .filter(slot -> slot.getSlotSize() == 1)
-                    .filter(slot -> SlotType.HARDPOINT.equals(slot.getSlotType()))
-                    .toList();
-            case "MediumHardpoint" -> hardpointSlots.stream()
-                    .filter(slot -> slot.getSlotSize() == 2)
-                    .filter(slot -> SlotType.HARDPOINT.equals(slot.getSlotType()))
-                    .toList();
-            case "LargeHardpoint" -> hardpointSlots.stream()
-                    .filter(slot -> slot.getSlotSize() == 3)
-                    .filter(slot -> SlotType.HARDPOINT.equals(slot.getSlotType()))
-                    .toList();
-            case "HugeHardpoint" -> hardpointSlots.stream()
-                    .filter(slot -> slot.getSlotSize() == 4)
-                    .filter(slot -> SlotType.HARDPOINT.equals(slot.getSlotType()))
-                    .toList();
-            case "SmallMiningHardpoint" -> hardpointSlots.stream()
-                    .filter(slot -> slot.getSlotSize() == 1)
-                    .filter(slot -> SlotType.MINING_HARDPOINT.equals(slot.getSlotType()))
-                    .toList();
-            case "MediumMiningHardpoint" -> hardpointSlots.stream()
-                    .filter(slot -> slot.getSlotSize() == 2)
-                    .filter(slot -> SlotType.MINING_HARDPOINT.equals(slot.getSlotType()))
-                    .toList();
-            case "LargeMiningHardpoint" -> hardpointSlots.stream()
-                    .filter(slot -> slot.getSlotSize() == 3)
-                    .filter(slot -> SlotType.MINING_HARDPOINT.equals(slot.getSlotType()))
-                    .toList();
-            default -> throw new IllegalArgumentException("Unexpected value: " + slotName);
-        };
-    }
-
-    private static Slot getUtilitySlot(List<ImageSlot> utilitySlots, String slotName) {
-        final int slotNumber = Integer.parseInt(slotName.substring(slotName.length() - 1));
-        return utilitySlots.get(slotNumber - 1);
-    }
-
-    private static Slot getOptionalSlot(List<Slot> optionalSlots, String slotName) {
-        try {
-            return optionalSlots.stream()
-                    .filter(slot -> slot.matches(slotName))
-                    .findFirst()
-                    .orElseThrow(IllegalArgumentException::new);
-        } catch (IllegalArgumentException ex) {
-            optionalSlots.stream().map(slot -> slot.toString()).forEach(log::debug);
-            throw ex;
-        }
-    }
-
-    private static Slot getRestrictedOptionalSlot(List<Slot> restrictedOptionalSlots, String slotName) {
-        final int slotNumber = Integer.parseInt(slotName.substring(slotName.length() - 2));
-        return restrictedOptionalSlots.get(slotNumber - 1);
-    }
-
-    private static Slot getCoreSlot(List<Slot> coreSlots, String slotName) {
-        return switch (slotName) {
-            case "Armour" -> coreSlots.stream()
-                    .filter(slot -> slot.getSlotType().equals(SlotType.CORE_ARMOUR))
-                    .findFirst()
-                    .orElseThrow(IllegalArgumentException::new);
-            case "PowerPlant" -> coreSlots.stream()
-                    .filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_PLANT))
-                    .findFirst()
-                    .orElseThrow(IllegalArgumentException::new);
-            case "MainEngines" -> coreSlots.stream()
-                    .filter(slot -> slot.getSlotType().equals(SlotType.CORE_THRUSTERS))
-                    .findFirst()
-                    .orElseThrow(IllegalArgumentException::new);
-            case "FrameShiftDrive" -> coreSlots.stream()
-                    .filter(slot -> slot.getSlotType().equals(SlotType.CORE_FRAME_SHIFT_DRIVE))
-                    .findFirst()
-                    .orElseThrow(IllegalArgumentException::new);
-            case "LifeSupport" -> coreSlots.stream()
-                    .filter(slot -> slot.getSlotType().equals(SlotType.CORE_LIFE_SUPPORT))
-                    .findFirst()
-                    .orElseThrow(IllegalArgumentException::new);
-            case "PowerDistributor" -> coreSlots.stream()
-                    .filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION))
-                    .findFirst()
-                    .orElseThrow(IllegalArgumentException::new);
-            case "Radar" -> coreSlots.stream()
-                    .filter(slot -> slot.getSlotType().equals(SlotType.CORE_SENSORS))
-                    .findFirst()
-                    .orElseThrow(IllegalArgumentException::new);
-            case "FuelTank" -> coreSlots.stream()
-                    .filter(slot -> slot.getSlotType().equals(SlotType.CORE_FUEL_TANK))
-                    .findFirst()
-                    .orElseThrow(IllegalArgumentException::new);
-            default -> throw new IllegalArgumentException("Unexpected value: " + slotName);
-        };
+    private static Slot getSlot(List<? extends Slot> slots, String slotName) {
+        return slots.stream()
+                .filter(slot -> slot.matches(slotName))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
     }
 
     public static Loadout toLoadout(ShipConfiguration shipConfiguration) {
@@ -449,11 +325,11 @@ public class LoadoutMapper {
         return loadout;
     }
 
-   private static BigDecimal toBigDecimal(Double value) {
+    private static BigDecimal toBigDecimal(Double value) {
         return value != null ? BigDecimal.valueOf(value) : BigDecimal.ZERO;
     }
 
-   private static nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module buildJournalModule(ShipConfigurationSlot slot, String slotName, ShipModule module, SlotType slotType) {
+    private static nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module buildJournalModule(ShipConfigurationSlot slot, String slotName, ShipModule module, SlotType slotType) {
         final nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module journalModule = new nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module();
         journalModule.setSlot(slotName);
         journalModule.setItem(module != null && module.getInternalName() != null ? module.getInternalName().toLowerCase() : slot.getId());
@@ -498,7 +374,7 @@ public class LoadoutMapper {
             if (effect != null) {
                 engineering.setExperimentalEffect(effect.getExperimentalEffectJournalName(module));
             }
-        }else if(module.isPreEngineered()) {
+        } else if (module.isPreEngineered()) {
             HorizonsBlueprintType effect = module.getPreEngineeredExperimentalEffect();
 
             if (effect != null) {
@@ -509,7 +385,7 @@ public class LoadoutMapper {
         return engineering;
     }
 
-  private static String buildBlueprintName(HorizonsBlueprintType type, ShipModule module) {
+    private static String buildBlueprintName(HorizonsBlueprintType type, ShipModule module) {
         return type.getJournalName(module);
     }
 
