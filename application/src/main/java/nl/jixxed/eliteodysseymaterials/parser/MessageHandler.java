@@ -170,6 +170,8 @@ class MessageHandler {
             Map.entry(JournalEventType.MODULERETRIEVE, new ModuleRetrieveSingleMessageProcessor()),
             Map.entry(JournalEventType.MODULESELL, new ModuleSellSingleMessageProcessor()),
             Map.entry(JournalEventType.MODULESTORE, new ModuleStoreSingleMessageProcessor()),
+            Map.entry(JournalEventType.MASSMODULESTORE, new MassModuleStoreSingleMessageProcessor()),
+
             Map.entry(JournalEventType.MODULESWAP, new ModuleSwapSingleMessageProcessor()),
             Map.entry(JournalEventType.REPUTATION, new ReputationSingleMessageProcessor()),
             Map.entry(JournalEventType.RANK, new RankSingleMessageProcessor()),

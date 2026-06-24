@@ -172,7 +172,7 @@ public class ShipConfigDiscoveryTest {
         final Double maximumMultiplier = getMaximumMultiplier(thrusters);
         final ModuleProfile moduleProfile = new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumMultiplier, optimalMultiplier, maximumMultiplier);
 
-        final Double topSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.TOP_SPEED, 0.0D);
+        final Double topSpeed = (Double) ship.getShipSpecs().getTopSpeed();
         Double value = 0D;
         Double thrust = 0D;
         while (!within(thrust, expected, delta) && value < 1000D) {
@@ -384,7 +384,7 @@ public class ShipConfigDiscoveryTest {
                         final Double shieldValue = value = value + delta;
                         shields = shieldReinforcement + (shieldValue
                                 * getEffectiveShieldBoostMultiplier(totalShieldBoost)
-                                * moduleProfile.getMassCurveMultiplier((double) ship.getAttributes().getOrDefault(MASS, 0D)));
+                                * moduleProfile.getMassCurveMultiplier((ship.getShipSpecs().getMass())));
 
                     }
                     log.info("Value of {} results in shields of {} which is within range", value, shields);
@@ -393,7 +393,7 @@ public class ShipConfigDiscoveryTest {
                         final Double shieldValue = value = value + delta;
                          shields2 = shieldReinforcement + (shieldValue
                                 * getEffectiveShieldBoostMultiplier(totalShieldBoost)
-                                * moduleProfile.getMassCurveMultiplier((double) ship.getAttributes().getOrDefault(MASS, 0D)));
+                                * moduleProfile.getMassCurveMultiplier((ship.getShipSpecs().getMass())));
                         var inRange = within(shields2, expected, delta);
                         log.info("Value of {} results in shields of {} which is {}within range", value, shields2, (!inRange) ? "not " : "");
                     }

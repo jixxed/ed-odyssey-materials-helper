@@ -65,9 +65,11 @@ module nl.jixxed.eliteodysseymaterials {
     requires mp3spi;
     requires jdk.management;
     requires nl.jixxed.github.sponsor;
+    requires nl.jixxed.ed.data.api;
 
     uses nl.jixxed.ed.awesome.api.FontLoader;
     uses nl.jixxed.ed.confidential.api.SecrecyLoader;
+    uses nl.jixxed.ed.data.api.DataLoader;
     exports nl.jixxed.eliteodysseymaterials.persistence.commander.model;
     exports nl.jixxed.eliteodysseymaterials.persistence.common.model;
     exports nl.jixxed.eliteodysseymaterials.domain.ships;

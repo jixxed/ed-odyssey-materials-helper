@@ -78,9 +78,9 @@ public class AgileThrustersDiscoveryTest {
         Assertions.assertEquals(expectedMass, ship.getEmptyMass() + ship.getCurrentCargo() + ship.getCurrentFuel() + ship.getCurrentFuelReserve(), 0.05);
 
         for (double i = 96.0; i < 116.0; i = i + 0.01) {
-            var testPitch = (double)ship.getAttributes().get(MAX_PITCH_SPEED) * (i / 100D);
-            var testRoll = (double)ship.getAttributes().get(MAX_ROLL_SPEED) * (i / 100D);
-            var testYaw = (double)ship.getAttributes().get(MAX_YAW_SPEED) * (i / 100D);
+            var testPitch = ship.getShipSpecs().getMaxPitchSpeed() * (i / 100D);
+            var testRoll = ship.getShipSpecs().getMaxRollSpeed() * (i / 100D);
+            var testYaw = ship.getShipSpecs().getMaxYawSpeed() * (i / 100D);
             if(isClose(testPitch, pitch) && isClose(testRoll, roll) && isClose(testYaw, yaw)){
                 log.info("test {}: {} tests valid with mass {} and multiplier of {}", test, ship.getMaxFuelReserve(), expectedMass - ship.getCurrentFuelReserve(), i);
             }
