@@ -14,6 +14,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.util.Collections;
 import java.util.List;
@@ -74,23 +75,29 @@ public class FighterHangar extends OptionalModule {
         return new FighterHangar(this);
     }
 
+
     @Override
     public int getGrouping() {
-        return 1;
+        return switch (this.getName()) {
+            case HorizonsBlueprintName.FIGHTER_HANGAR -> 1;
+            case HorizonsBlueprintName.FIGHTER_HANGAR_MK_II -> 3;
+            default -> 0;
+        };
     }
+    @Override
+    public String getClarifier() {
+        if (HorizonsBlueprintName.FIGHTER_HANGAR_MK_II.equals(this.getName())) {
+            return " " + LocaleService.getLocalizedStringForCurrentLocale("blueprint.horizons.name.mk_ii_clarifier");
+        }
+        return super.getClarifier();
+    }
+
 
     @Override
     public boolean isAllowed(ShipType shipType) {
-        return switch(this.getId()){
-            case "FIGHTER_HANGAR_5_D",
-                 "FIGHTER_HANGAR_6_D",
-                 "FIGHTER_HANGAR_7_D" -> shipType.getFighterBay().equals(Mark.I) || shipType.getFighterBay().equals(Mark.II);
-            case "MK_II_FIGHTER_HANGAR_5_D_FREE",
-                 "MK_II_FIGHTER_HANGAR_6_D_FREE",
-                 "MK_II_FIGHTER_HANGAR_7_D_FREE",
-                 "MK_II_FIGHTER_HANGAR_5_D",
-                 "MK_II_FIGHTER_HANGAR_6_D",
-                 "MK_II_FIGHTER_HANGAR_7_D" -> shipType.getFighterBay().equals(Mark.II);
+        return switch(this.getName()){
+            case HorizonsBlueprintName.FIGHTER_HANGAR -> shipType.getFighterBay().equals(Mark.I) || shipType.getFighterBay().equals(Mark.II);
+            case HorizonsBlueprintName.FIGHTER_HANGAR_MK_II -> shipType.getFighterBay().equals(Mark.II);
             default -> throw new IllegalStateException("Unexpected value: " + this.getId());
         };
     }
