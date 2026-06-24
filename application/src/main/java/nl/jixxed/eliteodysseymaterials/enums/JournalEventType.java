@@ -101,6 +101,7 @@ public enum JournalEventType {
     MODULERETRIEVE("ModuleRetrieve"),
     MODULESELL("ModuleSell"),
     MODULESTORE("ModuleStore"),
+    MASSMODULESTORE("MassModuleStore"),
     MODULESWAP("ModuleSwap"),
     REPUTATION("Reputation"),
     RANK("Rank"),
