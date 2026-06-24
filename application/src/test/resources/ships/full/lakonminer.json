@@ -1,0 +1,280 @@
+{
+  "timestamp": "2026-06-24T13:16:29Z",
+  "event": "Loadout",
+  "Ship": "lakonminer",
+  "ShipID": 108,
+  "ShipName": "vanilla",
+  "ShipIdent": "test",
+  "ModulesValue": 686620,
+  "HullHealth": 1.000000,
+  "UnladenMass": 551.700012,
+  "CargoCapacity": 64,
+  "MaxJumpRange": 14.734149,
+  "FuelCapacity": {
+    "Main": 32.000000,
+    "Reserve": 0.600000
+  },
+  "Rebuy": 34335,
+  "Modules": [
+    {
+      "Slot": "MediumMiningHardpoint1",
+      "Item": "hpt_mining_abrblstr_fixed_small",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "MediumMiningHardpoint2",
+      "Item": "hpt_mining_abrblstr_fixed_small",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "MediumHardpoint3",
+      "Item": "hpt_mining_abrblstr_fixed_small",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "SmallMiningHardpoint1",
+      "Item": "hpt_mining_abrblstr_fixed_small",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "SmallHardpoint2",
+      "Item": "hpt_mining_abrblstr_fixed_small",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "SmallHardpoint3",
+      "Item": "hpt_pulselaser_fixed_small",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "SmallHardpoint4",
+      "Item": "hpt_pulselaser_fixed_small",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "LargeMiningHardpoint1",
+      "Item": "hpt_mining_abrblstr_fixed_small",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "TinyHardpoint1",
+      "Item": "hpt_chafflauncher_tiny",
+      "On": true,
+      "Priority": 0,
+      "AmmoInClip": 1,
+      "AmmoInHopper": 10,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "TinyHardpoint2",
+      "Item": "hpt_chafflauncher_tiny",
+      "On": true,
+      "Priority": 0,
+      "AmmoInClip": 1,
+      "AmmoInHopper": 10,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "TinyHardpoint3",
+      "Item": "hpt_chafflauncher_tiny",
+      "On": true,
+      "Priority": 0,
+      "AmmoInClip": 1,
+      "AmmoInHopper": 10,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "TinyHardpoint4",
+      "Item": "hpt_chafflauncher_tiny",
+      "On": true,
+      "Priority": 0,
+      "AmmoInClip": 1,
+      "AmmoInHopper": 10,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "Armour",
+      "Item": "lakonminer_armour_grade1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "PowerPlant",
+      "Item": "int_powerplant_size6_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "MainEngines",
+      "Item": "int_engine_size5_class1",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "FrameShiftDrive",
+      "Item": "int_hyperdrive_overcharge_size5_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "LifeSupport",
+      "Item": "int_lifesupport_size3_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "PowerDistributor",
+      "Item": "int_powerdistributor_size7_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "Radar",
+      "Item": "int_sensors_size3_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "FuelTank",
+      "Item": "int_fueltank_size5_class3",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "Slot01_Size6",
+      "Item": "int_cargorack_size5_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "Slot02_Size6",
+      "Item": "int_cargorack_size5_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "Slot03_Size6",
+      "Item": "int_shieldgenerator_size5_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "Slot04_Size5",
+      "Item": "int_repairer_size1_class1",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "Slot05_Size5",
+      "Item": "int_repairer_size1_class1",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "LimpetController01",
+      "Item": "int_dronecontrol_collection_size1_class1",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "FighterBay01",
+      "Item": "int_fighterbay_size5_class1",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "Slot06_Size4",
+      "Item": "int_repairer_size1_class1",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "Slot07_Size3",
+      "Item": "int_repairer_size1_class1",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "Slot08_Size2",
+      "Item": "int_repairer_size1_class1",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "Slot09_Size1",
+      "Item": "int_dockingcomputer_advanced",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "Slot10_Size1",
+      "Item": "int_supercruiseassist",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "PlanetaryApproachSuite",
+      "Item": "int_planetapproachsuite_advanced",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "VesselVoice",
+      "Item": "voicepack_verity",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "ShipCockpit",
+      "Item": "lakonminer_cockpit",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "CargoHatch",
+      "Item": "modularcargobaydoor",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000
+    }
+  ]
+}

@@ -1,0 +1,185 @@
+{
+  "timestamp": "2026-06-24T13:42:39Z",
+  "event": "Loadout",
+  "Ship": "mediumtransport01",
+  "ShipID": 144,
+  "ShipName": "vanilla",
+  "ShipIdent": "test",
+  "HullValue": 59662641,
+  "ModulesValue": 1138867,
+  "HullHealth": 1.000000,
+  "UnladenMass": 489.000000,
+  "CargoCapacity": 0,
+  "MaxJumpRange": 16.610708,
+  "FuelCapacity": {
+    "Main": 32.000000,
+    "Reserve": 0.750000
+  },
+  "Rebuy": 3040079,
+  "Modules": [
+    {
+      "Slot": "MediumHardpoint1",
+      "Item": "hpt_pulselaser_fixed_small",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 1930
+    },
+    {
+      "Slot": "MediumHardpoint2",
+      "Item": "hpt_pulselaser_fixed_small",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 1930
+    },
+    {
+      "Slot": "Armour",
+      "Item": "mediumtransport01_armour_grade1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "PowerPlant",
+      "Item": "int_powerplant_size5_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 46840
+    },
+    {
+      "Slot": "MainEngines",
+      "Item": "int_engine_size6_class1",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000,
+      "Value": 175277
+    },
+    {
+      "Slot": "FrameShiftDrive",
+      "Item": "int_hyperdrive_overcharge_size5_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 547398
+    },
+    {
+      "Slot": "LifeSupport",
+      "Item": "int_lifesupport_size6_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 78078
+    },
+    {
+      "Slot": "PowerDistributor",
+      "Item": "int_powerdistributor_size5_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 27885
+    },
+    {
+      "Slot": "Radar",
+      "Item": "int_sensors_size3_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 3556
+    },
+    {
+      "Slot": "FuelTank",
+      "Item": "int_fueltank_size5_class3",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 85779
+    },
+    {
+      "Slot": "Slot01_Size6",
+      "Item": "int_shieldgenerator_size5_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 55293
+    },
+    {
+      "Slot": "Slot02_Size5",
+      "Item": "int_passengercabin_size4_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 16632
+    },
+    {
+      "Slot": "Slot06_Size2",
+      "Item": "int_supercruiseassist",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 8003
+    },
+    {
+      "Slot": "Slot07_Size1",
+      "Item": "int_dockingcomputer_advanced",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 11852
+    },
+    {
+      "Slot": "Passenger01",
+      "Item": "int_passengercabin_size5_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 30672
+    },
+    {
+      "Slot": "Passenger02",
+      "Item": "int_passengercabin_size5_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 30672
+    },
+    {
+      "Slot": "Passenger03",
+      "Item": "int_passengercabin_size4_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 16632
+    },
+    {
+      "Slot": "PlanetaryApproachSuite",
+      "Item": "int_planetapproachsuite_advanced",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 438
+    },
+    {
+      "Slot": "VesselVoice",
+      "Item": "voicepack_verity",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "ShipCockpit",
+      "Item": "mediumtransport01_cockpit",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "CargoHatch",
+      "Item": "modularcargobaydoorfdl",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000
+    }
+  ]
+}

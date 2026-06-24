@@ -1,0 +1,201 @@
+{
+  "timestamp": "2026-06-23T21:10:36Z",
+  "event": "Loadout",
+  "Ship": "belugaliner",
+  "ShipID": 146,
+  "ShipName": "vanilla",
+  "ShipIdent": "test",
+  "HullValue": 69924158,
+  "ModulesValue": 4253343,
+  "HullHealth": 1.000000,
+  "UnladenMass": 1514.000000,
+  "CargoCapacity": 44,
+  "MaxJumpRange": 10.616872,
+  "FuelCapacity": {
+    "Main": 128.000000,
+    "Reserve": 0.810000
+  },
+  "Rebuy": 3708877,
+  "Modules": [
+    {
+      "Slot": "MediumHardpoint1",
+      "Item": "hpt_pulselaser_fixed_small",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 1930
+    },
+    {
+      "Slot": "MediumHardpoint2",
+      "Item": "hpt_pulselaser_fixed_small",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 1930
+    },
+    {
+      "Slot": "Armour",
+      "Item": "belugaliner_armour_grade1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "PowerPlant",
+      "Item": "int_powerplant_size6_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 140520
+    },
+    {
+      "Slot": "MainEngines",
+      "Item": "int_engine_size7_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 555632
+    },
+    {
+      "Slot": "FrameShiftDrive",
+      "Item": "int_hyperdrive_size7_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 555632
+    },
+    {
+      "Slot": "LifeSupport",
+      "Item": "int_lifesupport_size8_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 612129
+    },
+    {
+      "Slot": "PowerDistributor",
+      "Item": "int_powerdistributor_size6_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 78078
+    },
+    {
+      "Slot": "Radar",
+      "Item": "int_sensors_size5_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 27885
+    },
+    {
+      "Slot": "FuelTank",
+      "Item": "int_fueltank_size7_class3",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 1562752
+    },
+    {
+      "Slot": "Slot01_Size6",
+      "Item": "int_shieldgenerator_size6_class1",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 175277
+    },
+    {
+      "Slot": "Slot02_Size6",
+      "Item": "int_cargorack_size5_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 97899
+    },
+    {
+      "Slot": "Slot03_Size6",
+      "Item": "int_passengercabin_size6_class2",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 161663
+    },
+    {
+      "Slot": "Slot04_Size6",
+      "Item": "int_passengercabin_size6_class2",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 161663
+    },
+    {
+      "Slot": "Slot05_Size5",
+      "Item": "int_passengercabin_size4_class2",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 49896
+    },
+    {
+      "Slot": "Slot06_Size5",
+      "Item": "int_passengercabin_size4_class2",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 49896
+    },
+    {
+      "Slot": "Slot07_Size4",
+      "Item": "int_cargorack_size3_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 9269
+    },
+    {
+      "Slot": "Slot08_Size3",
+      "Item": "int_cargorack_size2_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 2851
+    },
+    {
+      "Slot": "Slot12_Size1",
+      "Item": "int_supercruiseassist",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000,
+      "Value": 8003
+    },
+    {
+      "Slot": "PlanetaryApproachSuite",
+      "Item": "int_planetapproachsuite_advanced",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 438
+    },
+    {
+      "Slot": "VesselVoice",
+      "Item": "voicepack_eden",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "ShipCockpit",
+      "Item": "belugaliner_cockpit",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "CargoHatch",
+      "Item": "modularcargobaydoor",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.000000
+    }
+  ]
+}
