@@ -10,6 +10,7 @@
 
 package nl.jixxed.eliteodysseymaterials.service.ships;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -25,6 +26,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Engineering;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.FuelCapacity;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Loadout;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Modifier;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module;
 import nl.jixxed.eliteodysseymaterials.service.ReportService;
 
 import java.math.BigDecimal;
@@ -73,8 +75,8 @@ public class LoadoutMapper {
                     final List<ShipModule> potentialShipModules = getPotentialShipModules(module.getItem(), slot.getSlotType());
                     final ShipModule matchingModule = module.getEngineering().map(engineering -> {
                         if (!potentialShipModules.isEmpty()) {
-                            if (isPreEngineered(potentialShipModules, engineering)) {
-                                return potentialShipModules.stream().filter(ShipModule::isPreEngineered).filter(shipModule -> matchingEngineering(shipModule, engineering)).findFirst().orElseThrow(IllegalArgumentException::new);
+                            if (isPreEngineered(potentialShipModules, engineering, module)) {
+                                return potentialShipModules.stream().filter(ShipModule::isPreEngineered).filter(shipModule -> matchingEngineering(shipModule, engineering, module)).findFirst().orElseThrow(IllegalArgumentException::new);
                             } else {
                                 return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(IllegalArgumentException::new);
                             }
@@ -107,13 +109,13 @@ public class LoadoutMapper {
                     final ShipModule shipModule = matchingModule.Clone();
                     module.getEngineering().ifPresent(engineering -> {
                         boolean isLegacy = isLegacy(shipModule, engineering);
-                        HorizonsBlueprintType blueprint = determineBlueprint(engineering);
+                        HorizonsBlueprintType blueprint = determineBlueprint(engineering, module);
                         HorizonsBlueprintGrade grade = determineGrade(engineering);
                         BigDecimal progression = determineGradeProgress(engineering);
                         if (isLegacy) {
                             shipModule.setLegacy(true);
                         }
-                        HorizonsBlueprintType experimentalEffect = determineExperimentalEffect(engineering);
+                        HorizonsBlueprintType experimentalEffect = determineExperimentalEffect(engineering, module);
                         shipModule.applyModification(blueprint, grade, progression);
                         shipModule.applyExperimentalEffect(experimentalEffect);
                         engineering.getModifiers().forEach(modifier ->
@@ -145,20 +147,39 @@ public class LoadoutMapper {
         return ship;
     }
 
-    public static boolean matchingEngineering(ShipModule shipModule, Engineering engineering) {
+    public static boolean matchingEngineering(ShipModule shipModule, Engineering engineering, Module module) {
         if (shipModule.getPreEngineeredMatchType().equals(MatchType.BLUEPRINT)) {
             return shipModule.getModifications().stream().anyMatch(modification -> modification.getModification().equals(HorizonsBlueprintType.forInternalName(engineering.getBlueprintName())))
                     && engineering.getExperimentalEffect().map(experimentalEffect -> shipModule.getExperimentalEffects().stream().anyMatch(effect -> effect.equals(HorizonsBlueprintType.forInternalName(experimentalEffect)))).orElse(true);
         }
-        return isPreEngineered(List.of(shipModule), engineering);
+        return isPreEngineered(List.of(shipModule), engineering, module);
     }
 
-    private static HorizonsBlueprintType determineExperimentalEffect(Engineering engineering) {
-        return engineering.getExperimentalEffect().map(HorizonsBlueprintType::forInternalName).orElse(null);
+    private static HorizonsBlueprintType determineExperimentalEffect(Engineering engineering, Module module) {
+        try {
+            return engineering.getExperimentalEffect().map(HorizonsBlueprintType::forInternalName).orElse(null);
+        } catch (IllegalArgumentException ex) {
+            try {
+                ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(module), "Failed to map experimental effect: " + engineering.getExperimentalEffect().orElse(""));
+            } catch (JsonProcessingException e) {
+               //ignore
+            }
+            throw ex;
+        }
     }
 
-    private static HorizonsBlueprintType determineBlueprint(Engineering engineering) {
-        return HorizonsBlueprintType.forInternalName(engineering.getBlueprintName());
+    private static HorizonsBlueprintType determineBlueprint(Engineering engineering, Module module) {
+        try {
+            return HorizonsBlueprintType.forInternalName(engineering.getBlueprintName());
+
+        } catch (IllegalArgumentException ex) {
+            try {
+                ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(module), "Failed to map blueprint: " + engineering.getBlueprintName());
+            } catch (JsonProcessingException e) {
+                //ignore
+            }
+            throw ex;
+        }
     }
 
     private static BigDecimal determineGradeProgress(Engineering engineering) {
@@ -169,14 +190,14 @@ public class LoadoutMapper {
         return HorizonsBlueprintGrade.forDigit(engineering.getLevel().intValue());
     }
 
-    static boolean isPreEngineered(List<? extends ShipModule> potentialShipModules, Engineering engineering) {
-        HorizonsBlueprintType blueprint = determineBlueprint(engineering);
+    static boolean isPreEngineered(List<? extends ShipModule> potentialShipModules, Engineering engineering, Module module) {
+        HorizonsBlueprintType blueprint = determineBlueprint(engineering, module);
         HorizonsBlueprintGrade grade = determineGrade(engineering);
         BigDecimal progression = determineGradeProgress(engineering);
         if (progression == null) {
             return false;
         }
-        HorizonsBlueprintType experimentalEffect = determineExperimentalEffect(engineering);
+        HorizonsBlueprintType experimentalEffect = determineExperimentalEffect(engineering, module);
         return potentialShipModules.stream().map(ShipModule::Clone).filter(shipModule -> {
             if (shipModule.getModifications().isEmpty()) {
                 shipModule.applyModification(blueprint, grade, progression);
@@ -264,7 +285,7 @@ public class LoadoutMapper {
         final Map<Integer, ShipConfigurationSlot> optionalByIndex = new HashMap<>();
         shipConfiguration.getOptionalSlots().forEach(s -> optionalByIndex.put(s.getIndex(), s));
 
-        final List<nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module> modules = new ArrayList<>();
+        final List<Module> modules = new ArrayList<>();
 
         // Iterate through blank ship slots (same order as toShip uses)
         for (int i = 0; i < blankShip.getCoreSlots().size(); i++) {
@@ -329,8 +350,8 @@ public class LoadoutMapper {
         return value != null ? BigDecimal.valueOf(value) : BigDecimal.ZERO;
     }
 
-    private static nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module buildJournalModule(ShipConfigurationSlot slot, String slotName, ShipModule module, SlotType slotType) {
-        final nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module journalModule = new nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module();
+    private static Module buildJournalModule(ShipConfigurationSlot slot, String slotName, ShipModule module, SlotType slotType) {
+        final Module journalModule = new Module();
         journalModule.setSlot(slotName);
         journalModule.setItem(module != null && module.getInternalName() != null ? module.getInternalName().toLowerCase() : slot.getId());
         journalModule.setOn(slot.getPowered());

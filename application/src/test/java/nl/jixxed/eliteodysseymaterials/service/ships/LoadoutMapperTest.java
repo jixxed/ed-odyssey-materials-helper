@@ -264,9 +264,9 @@ class LoadoutMapperTest {
             Ship sa = Ship.KRAIT_MK_II;
             final List<ShipModule> potentialShipModules = LoadoutMapper.getPotentialShipModules(module.getItem(), slotType);
             log.debug(potentialShipModules.stream().map(ShipModule::getId).collect(Collectors.joining(", ")));
-            final boolean preEngineered = LoadoutMapper.isPreEngineered(potentialShipModules, module.getEngineering().get());
+            final boolean preEngineered = LoadoutMapper.isPreEngineered(potentialShipModules, module.getEngineering().get(), null);
             Assertions.assertTrue(preEngineered);
-            final Optional<ShipModule> first = potentialShipModules.stream().filter(ShipModule::isPreEngineered).filter(shipModule2 -> LoadoutMapper.matchingEngineering(shipModule2, module.getEngineering().get())).findFirst();
+            final Optional<ShipModule> first = potentialShipModules.stream().filter(ShipModule::isPreEngineered).filter(shipModule2 -> LoadoutMapper.matchingEngineering(shipModule2, module.getEngineering().get(), null)).findFirst();
             Assertions.assertEquals(shipModule.getId(), first.get().getId());
 
 
@@ -329,7 +329,7 @@ class LoadoutMapperTest {
                 	]
                 }
                 """, Engineering.class);
-        final boolean preEngineered = LoadoutMapper.isPreEngineered(List.of(FrameShiftDrive.FRAME_SHIFT_DRIVE_5_A_V1_PRE, FrameShiftDrive.FRAME_SHIFT_DRIVE_5_A), engineering);
+        final boolean preEngineered = LoadoutMapper.isPreEngineered(List.of(FrameShiftDrive.FRAME_SHIFT_DRIVE_5_A_V1_PRE, FrameShiftDrive.FRAME_SHIFT_DRIVE_5_A), engineering, null);
         Assertions.assertTrue(preEngineered);
     }
 
@@ -383,7 +383,7 @@ class LoadoutMapperTest {
                 	]
                 }
                 """, Engineering.class);
-        final boolean preEngineered = LoadoutMapper.isPreEngineered(List.of(FrameShiftDrive.FRAME_SHIFT_DRIVE_5_A_V1_PRE, FrameShiftDrive.FRAME_SHIFT_DRIVE_5_A), engineering);
+        final boolean preEngineered = LoadoutMapper.isPreEngineered(List.of(FrameShiftDrive.FRAME_SHIFT_DRIVE_5_A_V1_PRE, FrameShiftDrive.FRAME_SHIFT_DRIVE_5_A), engineering, null);
         Assertions.assertTrue(preEngineered);
     }
 
@@ -427,7 +427,7 @@ class LoadoutMapperTest {
                 	]
                 }
                 """, Engineering.class);
-        final boolean preEngineered = LoadoutMapper.isPreEngineered(List.of(FrameShiftDrive.FRAME_SHIFT_DRIVE_5_A_V1_PRE, FrameShiftDrive.FRAME_SHIFT_DRIVE_5_A), engineering);
+        final boolean preEngineered = LoadoutMapper.isPreEngineered(List.of(FrameShiftDrive.FRAME_SHIFT_DRIVE_5_A_V1_PRE, FrameShiftDrive.FRAME_SHIFT_DRIVE_5_A), engineering, null);
         Assertions.assertFalse(preEngineered);
     }
 
@@ -457,7 +457,7 @@ class LoadoutMapperTest {
                 	]
                 }
                 """, Engineering.class);
-        final boolean preEngineered = LoadoutMapper.isPreEngineered(List.of(DetailedSurfaceScanner.DETAILED_SURFACE_SCANNER_1_I, DetailedSurfaceScanner.DETAILED_SURFACE_SCANNER_1_I_V1_PRE), engineering);
+        final boolean preEngineered = LoadoutMapper.isPreEngineered(List.of(DetailedSurfaceScanner.DETAILED_SURFACE_SCANNER_1_I, DetailedSurfaceScanner.DETAILED_SURFACE_SCANNER_1_I_V1_PRE), engineering, null);
         Assertions.assertTrue(preEngineered);
     }
 
@@ -524,7 +524,7 @@ class LoadoutMapperTest {
                     ]
                 }
                 """, Engineering.class);
-        final boolean preEngineered = LoadoutMapper.isPreEngineered(MiningLaser.MINING_LASERS, engineering);
+        final boolean preEngineered = LoadoutMapper.isPreEngineered(MiningLaser.MINING_LASERS, engineering, null);
         Assertions.assertTrue(preEngineered);
     }
 
@@ -553,7 +553,7 @@ class LoadoutMapperTest {
                      ]
                    }
                 """, Engineering.class);
-        final boolean preEngineered = LoadoutMapper.isPreEngineered(SinkLauncher.SINK_LAUNCHERS, engineering);
+        final boolean preEngineered = LoadoutMapper.isPreEngineered(SinkLauncher.SINK_LAUNCHERS, engineering, null);
         Assertions.assertTrue(preEngineered);
     }
 
@@ -583,7 +583,7 @@ class LoadoutMapperTest {
                 	]
                 }
                 """, Engineering.class);
-        final boolean preEngineered = LoadoutMapper.isPreEngineered(List.of(DetailedSurfaceScanner.DETAILED_SURFACE_SCANNER_1_I, DetailedSurfaceScanner.DETAILED_SURFACE_SCANNER_1_I_V1_PRE), engineering);
+        final boolean preEngineered = LoadoutMapper.isPreEngineered(List.of(DetailedSurfaceScanner.DETAILED_SURFACE_SCANNER_1_I, DetailedSurfaceScanner.DETAILED_SURFACE_SCANNER_1_I_V1_PRE), engineering, null);
         Assertions.assertFalse(preEngineered);
     }
 
@@ -617,7 +617,7 @@ class LoadoutMapperTest {
                         }
                     ]
                 }""", Engineering.class);
-        final boolean preEngineered = LoadoutMapper.isPreEngineered(List.of(GuardianGaussCannon.GUARDIAN_GAUSS_CANNON_1_D_F, GuardianGaussCannon.GUARDIAN_GAUSS_CANNON_1_D_F_PRE), engineering);
+        final boolean preEngineered = LoadoutMapper.isPreEngineered(List.of(GuardianGaussCannon.GUARDIAN_GAUSS_CANNON_1_D_F, GuardianGaussCannon.GUARDIAN_GAUSS_CANNON_1_D_F_PRE), engineering, null);
         Assertions.assertFalse(preEngineered);
     }
 
