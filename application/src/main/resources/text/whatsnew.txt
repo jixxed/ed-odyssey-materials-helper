@@ -1,3 +1,8 @@
+Version 3.12.1
+-------------
+Fix min/current speed calculation for ships
+Update schemas for new journal events in Nomad release
+
 Version 3.12.0
 -------------
 Added Sponsor Early Access
