@@ -48,6 +48,11 @@
             "title" : "BuyPrice",
             "type" : "integer",
             "examples" : [ 16731, 66924, 6275 ]
+          },
+          "BuyMercCoinsPrice" : {
+            "title" : "BuyMercCoinsPrice",
+            "type" : "integer",
+            "examples" : [ 950, 500, 450 ]
           }
         },
         "additionalProperties" : false,

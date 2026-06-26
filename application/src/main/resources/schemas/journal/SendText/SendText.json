@@ -8,7 +8,7 @@
     "To" : {
       "title" : "To",
       "type" : "string",
-      "examples" : [ "Alice", "Bob", "$cmdr_decorate:#name=Mallory;" ]
+      "examples" : [ "Alice", "Bob", "Mallory" ]
     },
     "To_Localised" : {
       "title" : "To_Localised",

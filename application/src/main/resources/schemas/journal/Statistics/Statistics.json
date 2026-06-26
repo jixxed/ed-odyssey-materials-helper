@@ -608,22 +608,402 @@
         "Passengers_Missions_Bulk" : {
           "title" : "Passengers_Missions_Bulk",
           "type" : "integer",
-          "examples" : [ 4977, 0, 1078 ]
+          "examples" : [ 553, 555, 152 ]
         },
         "Passengers_Missions_VIP" : {
           "title" : "Passengers_Missions_VIP",
           "type" : "integer",
-          "examples" : [ 637, 644, 0 ]
+          "examples" : [ 553, 555, 152 ]
         },
         "Passengers_Missions_Delivered" : {
           "title" : "Passengers_Missions_Delivered",
           "type" : "integer",
-          "examples" : [ 5614, 5621, 0 ]
+          "examples" : [ 553, 555, 152 ]
         },
         "Passengers_Missions_Ejected" : {
           "title" : "Passengers_Missions_Ejected",
           "type" : "integer",
-          "examples" : [ 0, 46, 6 ]
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Tourist_vip_delivered" : {
+          "title" : "Passengers_Missions_Tourist_vip_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Tourist_vip_ejected" : {
+          "title" : "Passengers_Missions_Tourist_vip_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Tourist_bulk_delivered" : {
+          "title" : "Passengers_Missions_Tourist_bulk_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Tourist_bulk_ejected" : {
+          "title" : "Passengers_Missions_Tourist_bulk_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Refugee_vip_delivered" : {
+          "title" : "Passengers_Missions_Refugee_vip_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Refugee_vip_ejected" : {
+          "title" : "Passengers_Missions_Refugee_vip_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Refugee_bulk_delivered" : {
+          "title" : "Passengers_Missions_Refugee_bulk_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Refugee_bulk_ejected" : {
+          "title" : "Passengers_Missions_Refugee_bulk_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_AidWorker_vip_delivered" : {
+          "title" : "Passengers_Missions_AidWorker_vip_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_AidWorker_vip_ejected" : {
+          "title" : "Passengers_Missions_AidWorker_vip_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_AidWorker_bulk_delivered" : {
+          "title" : "Passengers_Missions_AidWorker_bulk_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_AidWorker_bulk_ejected" : {
+          "title" : "Passengers_Missions_AidWorker_bulk_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_POW_vip_delivered" : {
+          "title" : "Passengers_Missions_POW_vip_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_POW_vip_ejected" : {
+          "title" : "Passengers_Missions_POW_vip_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_POW_bulk_delivered" : {
+          "title" : "Passengers_Missions_POW_bulk_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_POW_bulk_ejected" : {
+          "title" : "Passengers_Missions_POW_bulk_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Soldiers_vip_delivered" : {
+          "title" : "Passengers_Missions_Soldiers_vip_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Soldiers_vip_ejected" : {
+          "title" : "Passengers_Missions_Soldiers_vip_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Soldiers_bulk_delivered" : {
+          "title" : "Passengers_Missions_Soldiers_bulk_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Soldiers_bulk_ejected" : {
+          "title" : "Passengers_Missions_Soldiers_bulk_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Protestors_vip_delivered" : {
+          "title" : "Passengers_Missions_Protestors_vip_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Protestors_vip_ejected" : {
+          "title" : "Passengers_Missions_Protestors_vip_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Protestors_bulk_delivered" : {
+          "title" : "Passengers_Missions_Protestors_bulk_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Protestors_bulk_ejected" : {
+          "title" : "Passengers_Missions_Protestors_bulk_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Prisoners_vip_delivered" : {
+          "title" : "Passengers_Missions_Prisoners_vip_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Prisoners_vip_ejected" : {
+          "title" : "Passengers_Missions_Prisoners_vip_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Prisoners_bulk_delivered" : {
+          "title" : "Passengers_Missions_Prisoners_bulk_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Prisoners_bulk_ejected" : {
+          "title" : "Passengers_Missions_Prisoners_bulk_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_FreedomFighters_vip_delivered" : {
+          "title" : "Passengers_Missions_FreedomFighters_vip_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_FreedomFighters_vip_ejected" : {
+          "title" : "Passengers_Missions_FreedomFighters_vip_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_FreedomFighters_bulk_delivered" : {
+          "title" : "Passengers_Missions_FreedomFighters_bulk_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_FreedomFighters_bulk_ejected" : {
+          "title" : "Passengers_Missions_FreedomFighters_bulk_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Politicians_vip_delivered" : {
+          "title" : "Passengers_Missions_Politicians_vip_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Politicians_vip_ejected" : {
+          "title" : "Passengers_Missions_Politicians_vip_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Politicians_bulk_delivered" : {
+          "title" : "Passengers_Missions_Politicians_bulk_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Politicians_bulk_ejected" : {
+          "title" : "Passengers_Missions_Politicians_bulk_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_PoliticalPrisoner_vip_delivered" : {
+          "title" : "Passengers_Missions_PoliticalPrisoner_vip_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_PoliticalPrisoner_vip_ejected" : {
+          "title" : "Passengers_Missions_PoliticalPrisoner_vip_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_PoliticalPrisoner_bulk_delivered" : {
+          "title" : "Passengers_Missions_PoliticalPrisoner_bulk_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_PoliticalPrisoner_bulk_ejected" : {
+          "title" : "Passengers_Missions_PoliticalPrisoner_bulk_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_SecurityForces_vip_delivered" : {
+          "title" : "Passengers_Missions_SecurityForces_vip_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_SecurityForces_vip_ejected" : {
+          "title" : "Passengers_Missions_SecurityForces_vip_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_SecurityForces_bulk_delivered" : {
+          "title" : "Passengers_Missions_SecurityForces_bulk_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_SecurityForces_bulk_ejected" : {
+          "title" : "Passengers_Missions_SecurityForces_bulk_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Businessmen_vip_delivered" : {
+          "title" : "Passengers_Missions_Businessmen_vip_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Businessmen_vip_ejected" : {
+          "title" : "Passengers_Missions_Businessmen_vip_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Businessmen_bulk_delivered" : {
+          "title" : "Passengers_Missions_Businessmen_bulk_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Businessmen_bulk_ejected" : {
+          "title" : "Passengers_Missions_Businessmen_bulk_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_ScienceTeams_vip_delivered" : {
+          "title" : "Passengers_Missions_ScienceTeams_vip_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_ScienceTeams_vip_ejected" : {
+          "title" : "Passengers_Missions_ScienceTeams_vip_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_ScienceTeams_bulk_delivered" : {
+          "title" : "Passengers_Missions_ScienceTeams_bulk_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_ScienceTeams_bulk_ejected" : {
+          "title" : "Passengers_Missions_ScienceTeams_bulk_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Explorers_vip_delivered" : {
+          "title" : "Passengers_Missions_Explorers_vip_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Explorers_vip_ejected" : {
+          "title" : "Passengers_Missions_Explorers_vip_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Explorers_bulk_delivered" : {
+          "title" : "Passengers_Missions_Explorers_bulk_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Explorers_bulk_ejected" : {
+          "title" : "Passengers_Missions_Explorers_bulk_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Celebrities_vip_delivered" : {
+          "title" : "Passengers_Missions_Celebrities_vip_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Celebrities_vip_ejected" : {
+          "title" : "Passengers_Missions_Celebrities_vip_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Celebrities_bulk_delivered" : {
+          "title" : "Passengers_Missions_Celebrities_bulk_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Celebrities_bulk_ejected" : {
+          "title" : "Passengers_Missions_Celebrities_bulk_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_HeadOfState_vip_delivered" : {
+          "title" : "Passengers_Missions_HeadOfState_vip_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_HeadOfState_vip_ejected" : {
+          "title" : "Passengers_Missions_HeadOfState_vip_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_HeadOfState_bulk_delivered" : {
+          "title" : "Passengers_Missions_HeadOfState_bulk_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_HeadOfState_bulk_ejected" : {
+          "title" : "Passengers_Missions_HeadOfState_bulk_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Criminal_vip_delivered" : {
+          "title" : "Passengers_Missions_Criminal_vip_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Criminal_vip_ejected" : {
+          "title" : "Passengers_Missions_Criminal_vip_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Criminal_bulk_delivered" : {
+          "title" : "Passengers_Missions_Criminal_bulk_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Criminal_bulk_ejected" : {
+          "title" : "Passengers_Missions_Criminal_bulk_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Medical_vip_delivered" : {
+          "title" : "Passengers_Missions_Medical_vip_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Medical_vip_ejected" : {
+          "title" : "Passengers_Missions_Medical_vip_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Medical_bulk_delivered" : {
+          "title" : "Passengers_Missions_Medical_bulk_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Medical_bulk_ejected" : {
+          "title" : "Passengers_Missions_Medical_bulk_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Disgruntled_vip_delivered" : {
+          "title" : "Passengers_Missions_Disgruntled_vip_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Disgruntled_vip_ejected" : {
+          "title" : "Passengers_Missions_Disgruntled_vip_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Disgruntled_bulk_delivered" : {
+          "title" : "Passengers_Missions_Disgruntled_bulk_delivered",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
+        },
+        "Passengers_Missions_Disgruntled_bulk_ejected" : {
+          "title" : "Passengers_Missions_Disgruntled_bulk_ejected",
+          "type" : "integer",
+          "examples" : [ 553, 555, 152 ]
         }
       },
       "additionalProperties" : false,

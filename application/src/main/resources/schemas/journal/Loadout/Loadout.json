@@ -174,7 +174,12 @@
                     "Label" : {
                       "title" : "Label",
                       "type" : "string",
-                      "examples" : [ "DamagePerSecond", "Damage", "DistributorDraw" ]
+                      "examples" : [ "DamagePerSecond", "Damage", "DistributorDraw", "$Kinetic;" ]
+                    },
+                    "Label_Localised" : {
+                      "title" : "Label_Localised",
+                      "type" : "string",
+                      "examples" : [ "Kinetic" ]
                     },
                     "Value" : {
                       "title" : "Value",

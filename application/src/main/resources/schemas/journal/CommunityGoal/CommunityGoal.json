@@ -42,6 +42,7 @@
           },
           "IsComplete" : {
             "title" : "IsComplete",
+            "description": "Whether the CG has ended or not",
             "type" : "boolean",
             "examples" : [ false, true ]
           },
@@ -57,6 +58,7 @@
           },
           "NumContributors" : {
             "title" : "NumContributors",
+            "description": "Number of commanders signed up to contribute to the CG",
             "type" : "integer",
             "examples" : [ 3897, 3900, 3903 ]
           },
@@ -67,6 +69,7 @@
               "Name" : {
                 "title" : "Name",
                 "type" : "string",
+                "description": "Localized name of the maximum tier set for the CG",
                 "examples" : [ "Tier 8", "Tier 6", "Tier 5" ]
               },
               "Bonus" : {
@@ -92,18 +95,19 @@
           },
           "TierReached" : {
             "title" : "TierReached",
-		    "description": "If the community goal has reached the first success",
+		    "description": "Available if the community goal has reached the first success. Localized name of the reached tier for the CG.",
             "type" : "string",
             "examples" : [ "Tier 7", "Tier 2", "Tier 3" ]
           },
           "PlayerPercentileBand" : {
             "title" : "PlayerPercentileBand",
+            "description": "Percentile band the player is in for the current community goal. topX -> 0, no contribution -> 100",
             "type" : "integer",
-            "examples" : [ 100, 75, 50 ]
+            "examples" : [ 100, 75, 50, 25, 0 ]
           },
           "Bonus" : {
             "title" : "Bonus",
-			"description": "If the community goal has reached the first success",
+			"description": "If the community goal has reached the first tier, the bonus for the given PlayerPercentileBand and TierReached.",
             "type" : "integer",
             "examples" : [ 2400000, 8000000, 1000000 ]
           }

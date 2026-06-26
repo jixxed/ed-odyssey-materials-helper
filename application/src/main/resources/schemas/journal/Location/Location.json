@@ -506,7 +506,12 @@
         "Name" : {
           "title" : "Name",
           "type" : "string",
-          "examples" : [ "FleetCarrier", "Independent Detention Foundation", "Jude Navarro" ]
+          "examples" : [ "FleetCarrier", "Independent Detention Foundation", "Jude Navarro", "$faction_FrontlineSolutions;" ]
+        },
+        "Name_Localised" : {
+          "title" : "Name_Localised",
+          "type" : "string",
+          "examples" : [ "Frontline Solutions" ]
         },
         "FactionState" : {
           "title" : "FactionState",

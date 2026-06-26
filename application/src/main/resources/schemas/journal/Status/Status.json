@@ -8,11 +8,13 @@
     "Flags" : {
       "title" : "Flags",
       "type" : "integer",
+      "description": "Flags:\nBit Value      Hex       Meaning\n0   1          0000 0001 Docked, (on a landing pad)\n1   2          0000 0002 Landed, (on planet surface)\n2   4          0000 0004 Landing Gear Down\n3   8          0000 0008 Shields Up\n4   16         0000 0010 Supercruise\n5   32         0000 0020 FlightAssist Off\n6   64         0000 0040 Hardpoints Deployed\n7   128        0000 0080 In Wing\n8   256        0000 0100 LightsOn\n9   512        0000 0200 Cargo Scoop Deployed\n10  1024       0000 0400 Silent Running,\n11  2048       0000 0800 Scooping Fuel\n12  4096       0000 1000 Srv Handbrake\n13  8192       0000 2000 Srv using Turret view\n14  16384      0000 4000 Srv Turret retracted (close to ship)\n15  32768      0000 8000 Srv DriveAssist\n16  65536      0001 0000 Fsd MassLocked\n17  131072     0002 0000 Fsd Charging\n18  262144     0004 0000 Fsd Cooldown\n19  524288     0008 0000 Low Fuel ( < 25% )\n20  1048576    0010 0000 Over Heating ( > 100% )\n21  2097152    0020 0000 Has Lat Long\n22  4194304    0040 0000 IsInDanger\n23  8388608    0080 0000 Being Interdicted\n24  16777216   0100 0000 In MainShip\n25  33554432   0200 0000 In Fighter\n26  67108864   0400 0000 In SRV\n27  134217728  0800 0000 Hud in Analysis mode\n28  268435456  1000 0000 Night Vision\n29  536870912  2000 0000 Altitude from Average radius\n30  1073741824 4000 0000 fsdJump\n31  2147483648 8000 0000 srvHighBeam",
       "examples" : [ 16842765, 18874376, 0 ]
     },
     "Pips" : {
       "title" : "Pips",
       "type" : "array",
+      "description": "an array of 3 integers representing energy distribution (in half-pips)",
       "default": null,
       "items" : {
         "type" : "integer",
@@ -45,16 +47,19 @@
     "GuiFocus" : {
       "title" : "GuiFocus",
       "type" : "integer",
+      "description": "the selected GUI screen\n0  NoFocus\n1  InternalPanel (right hand side)\n2  ExternalPanel (left hand side)\n3  CommsPanel (top)\n4  RolePanel (bottom)\n5  StationServices\n6  GalaxyMap\n7  SystemMap\n8  Orrery\n9  FSS mode\n10 SAA mode\n11 Codex",
       "examples" : [ 5, 0, 2 ]
     },
     "Latitude" : {
       "title" : "Latitude",
       "type" : "number",
+      "description" : "if on or near a planet\nThe latitude or longitude need to change by 0.02 degrees to trigger an update when flying, or by 0.0005 degrees when in the SRV. If the bit29 is set, the altitude value is based on the planet’s average radius (used at higher altitudes). If the bit29 is not set, the Altitude value is based on a raycast to the actual surface below the ship/srv",
       "examples" : [ -28.584963, -66.410538, -66.413887 ]
     },
     "Longitude" : {
       "title" : "Longitude",
       "type" : "number",
+      "description" : "if on or near a planet\nThe latitude or longitude need to change by 0.02 degrees to trigger an update when flying, or by 0.0005 degrees when in the SRV. If the bit29 is set, the altitude value is based on the planet’s average radius (used at higher altitudes). If the bit29 is not set, the Altitude value is based on a raycast to the actual surface below the ship/srv",
       "examples" : [ 6.826313, 19.822344, 19.815832 ]
     },
     "Heading" : {
@@ -70,6 +75,7 @@
     "Flags2" : {
       "title" : "Flags2",
       "type" : "integer",
+      "description": "Flags2:\nBit Value      Hex       Meaning\n0   1          0000 0001 OnFoot\n1   2          0000 0002 InTaxi (or dropship/shuttle)\n2   4          0000 0004 InMulticrew (ie in someone else’s ship)\n3   8          0000 0008 OnFootInStation\n4   16         0000 0010 OnFootOnPlanet\n5   32         0000 0020 AimDownSight\n6   64         0000 0040 LowOxygen\n7   128        0000 0080 LowHealth\n8   256        0000 0100 Cold\n9   512        0000 0200 Hot\n10  1024       0000 0400 VeryCold\n11  2048       0000 0800 VeryHot\n12  4096       0000 1000 Glide Mode\n13  8192       0000 2000 OnFootInHangar\n14  16384      0000 4000 OnFootSocialSpace\n15  32768      0000 8000 OnFootExterior\n16  65536      0001 0001 BreathableAtmosphere\n17  131072     0002 0000 Telepresence Multicrew\n18  262144     0004 0000 Physical Multicrew\n19  524288     0008 0000 Fsd hyperdrive charging\n20  1048576    0010 0000 Supercruise Overcharge\n21  2097152    0020 0000 Supercruise Assist\n22  4194304    0040 0000 NPC Crew Active",
       "examples" : [ 0, 90121, 35345 ]
     },
     "Cargo" : {
@@ -90,11 +96,13 @@
     "Oxygen" : {
       "title" : "Oxygen",
       "type" : "number",
+      "description" : "value range: 0.0 - 1.0",
       "examples" : [ 1.0 ]
     },
     "Health" : {
       "title" : "Health",
       "type" : "number",
+      "description" : "value range: 0.0 - 1.0",
       "examples" : [ 1.0 ]
     },
     "Temperature" : {
@@ -153,6 +161,7 @@
     "Gravity" : {
       "title" : "Gravity",
       "type" : "number",
+      "description" : "relative to 1G",
       "examples" : [ 0.347632 ]
     }
   },
