@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PowerPlant extends CoreModule {
+    public static final PowerPlant POWER_PLANT_1_E_FIGHTER = new PowerPlant("POWER_PLANT_1_E", HorizonsBlueprintName.POWER_PLANT, ModuleSize.SIZE_1, ModuleClass.E, 0, "int_powerplant_fighter_class1", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 1.00), Map.entry(HorizonsModifier.INTEGRITY, 20.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 6.00), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 1.00)));
     public static final PowerPlant POWER_PLANT_2_E_FREE = new PowerPlant("POWER_PLANT_2_E_FREE", HorizonsBlueprintName.POWER_PLANT, ModuleSize.SIZE_2, ModuleClass.E, 0, "Int_PowerPlant_Size2_Class1_free", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.50), Map.entry(HorizonsModifier.INTEGRITY, 46.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 6.40), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 1.00)));
     public static final PowerPlant POWER_PLANT_2_E = new PowerPlant("POWER_PLANT_2_E", HorizonsBlueprintName.POWER_PLANT, ModuleSize.SIZE_2, ModuleClass.E, 1980, "Int_Powerplant_Size2_Class1", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.50), Map.entry(HorizonsModifier.INTEGRITY, 46.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 6.40), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 1.00)));
     public static final PowerPlant POWER_PLANT_2_D = new PowerPlant("POWER_PLANT_2_D", HorizonsBlueprintName.POWER_PLANT, ModuleSize.SIZE_2, ModuleClass.D, 5930, "Int_Powerplant_Size2_Class2", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 1.00), Map.entry(HorizonsModifier.INTEGRITY, 41.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 7.20), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.75)));
@@ -88,6 +89,7 @@ public class PowerPlant extends CoreModule {
     }
 
     public static final List<PowerPlant> POWER_PLANTS = List.of(
+            POWER_PLANT_1_E_FIGHTER,
             POWER_PLANT_2_E_FREE,
             POWER_PLANT_2_E,
             POWER_PLANT_2_D,
@@ -152,6 +154,9 @@ public class PowerPlant extends CoreModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
+        if(POWER_PLANT_1_E_FIGHTER.equals(this)){
+            return Collections.emptyList();
+        }
         if (isPreEngineered()) {
             return Collections.emptyList();
         }
@@ -163,6 +168,9 @@ public class PowerPlant extends CoreModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedExperimentalEffects() {
+        if(POWER_PLANT_1_E_FIGHTER.equals(this)){
+            return Collections.emptyList();
+        }
         if (isPreEngineered()) {
             return Collections.emptyList();
         }
@@ -203,6 +211,6 @@ public class PowerPlant extends CoreModule {
     }
 
     public boolean isSelectable() {
-        return !POWER_PLANT_2_E_FREE.equals(this);
+        return !POWER_PLANT_2_E_FREE.equals(this) && !POWER_PLANT_1_E_FIGHTER.equals(this);
     }
 }

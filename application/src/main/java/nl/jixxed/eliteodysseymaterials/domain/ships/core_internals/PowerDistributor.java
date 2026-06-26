@@ -24,6 +24,9 @@ import java.util.List;
 import java.util.Map;
 
 public class PowerDistributor extends CoreModule {
+
+    public static final PowerDistributor POWER_DISTRIBUTOR_1_E_FIGHTER = new PowerDistributor("POWER_DISTRIBUTOR_1_E_FIGHTER", HorizonsBlueprintName.POWER_DISTRIBUTOR, ModuleSize.SIZE_1, ModuleClass.E, 0, "int_powerdistributor_fighter_class1", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 0.25), Map.entry(HorizonsModifier.INTEGRITY, 20.0), Map.entry(HorizonsModifier.POWER_DRAW, 1.00), Map.entry(HorizonsModifier.POWER_BOOST, 0.0), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.WEAPONS_CAPACITY, 10.00), Map.entry(HorizonsModifier.WEAPONS_RECHARGE, 1.20), Map.entry(HorizonsModifier.ENGINES_CAPACITY, 10.00), Map.entry(HorizonsModifier.ENGINES_RECHARGE, 1.20), Map.entry(HorizonsModifier.SYSTEMS_CAPACITY, 10.00), Map.entry(HorizonsModifier.SYSTEMS_RECHARGE, 1.20)));
+    public static final PowerDistributor POWER_DISTRIBUTOR_1_E_GUARDIAN_FIGHTER = new PowerDistributor("POWER_DISTRIBUTOR_1_E_GUARDIAN_FIGHTER", HorizonsBlueprintName.POWER_DISTRIBUTOR, ModuleSize.SIZE_1, ModuleClass.E, 0, "int_powerdistributor_gdnfighter_class1", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 0.25), Map.entry(HorizonsModifier.INTEGRITY, 20.0), Map.entry(HorizonsModifier.POWER_DRAW, 1.00), Map.entry(HorizonsModifier.POWER_BOOST, 0.0), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.WEAPONS_CAPACITY, 10.00), Map.entry(HorizonsModifier.WEAPONS_RECHARGE, 1.60), Map.entry(HorizonsModifier.ENGINES_CAPACITY, 10.00), Map.entry(HorizonsModifier.ENGINES_RECHARGE, 1.60), Map.entry(HorizonsModifier.SYSTEMS_CAPACITY, 10.00), Map.entry(HorizonsModifier.SYSTEMS_RECHARGE, 1.60)));
     public static final PowerDistributor POWER_DISTRIBUTOR_1_E_FREE = new PowerDistributor("POWER_DISTRIBUTOR_1_E_FREE", HorizonsBlueprintName.POWER_DISTRIBUTOR, ModuleSize.SIZE_1, ModuleClass.E, 0, "Int_PowerDistributor_Size1_Class1_free", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 1.30), Map.entry(HorizonsModifier.INTEGRITY, 36.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.32), Map.entry(HorizonsModifier.POWER_BOOST, 0.0), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.WEAPONS_CAPACITY, 10.00), Map.entry(HorizonsModifier.WEAPONS_RECHARGE, 1.20), Map.entry(HorizonsModifier.ENGINES_CAPACITY, 8.00), Map.entry(HorizonsModifier.ENGINES_RECHARGE, 0.40), Map.entry(HorizonsModifier.SYSTEMS_CAPACITY, 8.00), Map.entry(HorizonsModifier.SYSTEMS_RECHARGE, 0.40)));
     public static final PowerDistributor POWER_DISTRIBUTOR_1_E = new PowerDistributor("POWER_DISTRIBUTOR_1_E", HorizonsBlueprintName.POWER_DISTRIBUTOR, ModuleSize.SIZE_1, ModuleClass.E, 520, "Int_PowerDistributor_Size1_Class1", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 1.30), Map.entry(HorizonsModifier.INTEGRITY, 36.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.32), Map.entry(HorizonsModifier.POWER_BOOST, 0.0), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.WEAPONS_CAPACITY, 10.00), Map.entry(HorizonsModifier.WEAPONS_RECHARGE, 1.20), Map.entry(HorizonsModifier.ENGINES_CAPACITY, 8.00), Map.entry(HorizonsModifier.ENGINES_RECHARGE, 0.40), Map.entry(HorizonsModifier.SYSTEMS_CAPACITY, 8.00), Map.entry(HorizonsModifier.SYSTEMS_RECHARGE, 0.40)));
     public static final PowerDistributor POWER_DISTRIBUTOR_1_D = new PowerDistributor("POWER_DISTRIBUTOR_1_D", HorizonsBlueprintName.POWER_DISTRIBUTOR, ModuleSize.SIZE_1, ModuleClass.D, 1290, "Int_PowerDistributor_Size1_Class2", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 0.50), Map.entry(HorizonsModifier.INTEGRITY, 32.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.36), Map.entry(HorizonsModifier.POWER_BOOST, 0.0), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.WEAPONS_CAPACITY, 11.00), Map.entry(HorizonsModifier.WEAPONS_RECHARGE, 1.40), Map.entry(HorizonsModifier.ENGINES_CAPACITY, 9.00), Map.entry(HorizonsModifier.ENGINES_RECHARGE, 0.50), Map.entry(HorizonsModifier.SYSTEMS_CAPACITY, 9.00), Map.entry(HorizonsModifier.SYSTEMS_RECHARGE, 0.50)));
@@ -100,6 +103,7 @@ public class PowerDistributor extends CoreModule {
     }
 
     public static final List<PowerDistributor> POWER_DISTRIBUTORS = List.of(
+            POWER_DISTRIBUTOR_1_E_FIGHTER,
             POWER_DISTRIBUTOR_1_E_FREE,
             POWER_DISTRIBUTOR_1_E,
             POWER_DISTRIBUTOR_1_D,
@@ -171,6 +175,9 @@ public class PowerDistributor extends CoreModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
+        if(POWER_DISTRIBUTOR_1_E_FIGHTER.equals(this)){
+            return Collections.emptyList();
+        }
         if (isPreEngineered()) {
             return Collections.emptyList();
         }
@@ -182,6 +189,9 @@ public class PowerDistributor extends CoreModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedExperimentalEffects() {
+        if(POWER_DISTRIBUTOR_1_E_FIGHTER.equals(this)){
+            return Collections.emptyList();
+        }
         if (isPreEngineered()) {
             return Collections.emptyList();
         }
@@ -221,6 +231,6 @@ public class PowerDistributor extends CoreModule {
     }
 
     public boolean isSelectable() {
-        return !POWER_DISTRIBUTOR_1_E_FREE.equals(this);
+        return !POWER_DISTRIBUTOR_1_E_FREE.equals(this) && !POWER_DISTRIBUTOR_1_E_GUARDIAN_FIGHTER.equals(this);
     }
 }

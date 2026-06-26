@@ -21,10 +21,12 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 public class Thrusters extends CoreModule {
+    public static final Thrusters THRUSTERS_1_E_FIGHTER =   new Thrusters("THRUSTERS_1_E_FIGHTER",  HorizonsBlueprintName.THRUSTERS,             ModuleSize.SIZE_1, ModuleClass.E, 0,         "int_engine_fighter_class1",                     Map.ofEntries(Map.entry(HorizonsModifier.MASS, 1.00),    Map.entry(HorizonsModifier.INTEGRITY, 20.0),    Map.entry(HorizonsModifier.POWER_DRAW, 1.00),   Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.ENGINE_MINIMUM_MASS, 20.0),   Map.entry(HorizonsModifier.ENGINE_OPTIMAL_MASS, 25.0),   Map.entry(HorizonsModifier.MAXIMUM_MASS, 30.0),   Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER, 80.0),  Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER, 100.0), Map.entry(HorizonsModifier.MAXIMUM_MULIPLIER, 120.0), Map.entry(HorizonsModifier.ENGINE_THERMAL_LOAD, 1.3), Map.entry(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER, 100.0), Map.entry(HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER, 100.0), Map.entry(HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER, 100.0)));
     public static final Thrusters THRUSTERS_2_E_FREE =      new Thrusters("THRUSTERS_2_E_FREE",     HorizonsBlueprintName.THRUSTERS,             ModuleSize.SIZE_2, ModuleClass.E, 0,         "Int_Engine_Size2_Class1_free",                  Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.50),    Map.entry(HorizonsModifier.INTEGRITY, 46.0),    Map.entry(HorizonsModifier.POWER_DRAW, 2.00),   Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.ENGINE_MINIMUM_MASS, 24.0),   Map.entry(HorizonsModifier.ENGINE_OPTIMAL_MASS, 48.0),   Map.entry(HorizonsModifier.MAXIMUM_MASS, 72.0),   Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER, 83.0),  Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER, 100.0), Map.entry(HorizonsModifier.MAXIMUM_MULIPLIER, 103.0), Map.entry(HorizonsModifier.ENGINE_THERMAL_LOAD, 1.3), Map.entry(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER, 100.0), Map.entry(HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER, 100.0), Map.entry(HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER, 100.0)));
     public static final Thrusters THRUSTERS_2_E =           new Thrusters("THRUSTERS_2_E",          HorizonsBlueprintName.THRUSTERS,             ModuleSize.SIZE_2, ModuleClass.E, 1980,      "Int_Engine_Size2_Class1",                       Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.50),    Map.entry(HorizonsModifier.INTEGRITY, 46.0),    Map.entry(HorizonsModifier.POWER_DRAW, 2.00),   Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.ENGINE_MINIMUM_MASS, 24.0),   Map.entry(HorizonsModifier.ENGINE_OPTIMAL_MASS, 48.0),   Map.entry(HorizonsModifier.MAXIMUM_MASS, 72.0),   Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER, 83.0),  Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER, 100.0), Map.entry(HorizonsModifier.MAXIMUM_MULIPLIER, 103.0), Map.entry(HorizonsModifier.ENGINE_THERMAL_LOAD, 1.3), Map.entry(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER, 100.0), Map.entry(HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER, 100.0), Map.entry(HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER, 100.0)));
     public static final Thrusters THRUSTERS_2_D =           new Thrusters("THRUSTERS_2_D",          HorizonsBlueprintName.THRUSTERS,             ModuleSize.SIZE_2, ModuleClass.D, 5930,      "Int_Engine_Size2_Class2",                       Map.ofEntries(Map.entry(HorizonsModifier.MASS, 1.00),    Map.entry(HorizonsModifier.INTEGRITY, 41.0),    Map.entry(HorizonsModifier.POWER_DRAW, 2.25),   Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.ENGINE_MINIMUM_MASS, 27.0),   Map.entry(HorizonsModifier.ENGINE_OPTIMAL_MASS, 54.0),   Map.entry(HorizonsModifier.MAXIMUM_MASS, 81.0),   Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER, 86.0),  Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER, 100.0), Map.entry(HorizonsModifier.MAXIMUM_MULIPLIER, 106.0), Map.entry(HorizonsModifier.ENGINE_THERMAL_LOAD, 1.3), Map.entry(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER, 100.0), Map.entry(HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER, 100.0), Map.entry(HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER, 100.0)));
@@ -68,6 +70,7 @@ public class Thrusters extends CoreModule {
     public static final Thrusters THRUSTERS_5_A_MK_II =     new Thrusters("THRUSTERS_5_A_MK_II",    HorizonsBlueprintName.THRUSTERS_MK_II_AGILE, ModuleSize.SIZE_5, ModuleClass.A, 6803570,   "int_mkiiagileboost_engine_size5_class5",        Map.ofEntries(Map.entry(HorizonsModifier.MASS, 20.00),   Map.entry(HorizonsModifier.INTEGRITY, 106.0),   Map.entry(HorizonsModifier.POWER_DRAW, 6.29),   Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.ENGINE_MINIMUM_MASS, 420.0),  Map.entry(HorizonsModifier.ENGINE_OPTIMAL_MASS, 840.0),  Map.entry(HorizonsModifier.MAXIMUM_MASS, 1260.0), Map.entry(HorizonsModifier.MINIMUM_MULTIPLIER, 96.0),  Map.entry(HorizonsModifier.OPTIMAL_MULTIPLIER, 100.0), Map.entry(HorizonsModifier.MAXIMUM_MULIPLIER, 116.0), Map.entry(HorizonsModifier.ENGINE_THERMAL_LOAD, 1.3), Map.entry(HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER, 111.0), Map.entry(HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER, 122.0), Map.entry(HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER, 133.0)));
 
     public static final List<Thrusters> THRUSTERS = List.of(
+            THRUSTERS_1_E_FIGHTER,
             THRUSTERS_2_E_FREE,
             THRUSTERS_2_E,
             THRUSTERS_2_D,
@@ -116,11 +119,17 @@ public class Thrusters extends CoreModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
+        if(THRUSTERS_1_E_FIGHTER.equals(this)){
+            return Collections.emptyList();
+        }
         return ThrusterBlueprints.BLUEPRINTS.keySet().stream().toList();
     }
 
     @Override
     public List<HorizonsBlueprintType> getAllowedExperimentalEffects() {
+        if(THRUSTERS_1_E_FIGHTER.equals(this)){
+            return Collections.emptyList();
+        }
         return ExperimentalEffectBlueprints.THRUSTERS.keySet().stream().toList();
     }
 
@@ -153,7 +162,7 @@ public class Thrusters extends CoreModule {
     }
 
     public boolean isSelectable() {
-        return !THRUSTERS_2_E_FREE.equals(this);
+        return !THRUSTERS_2_E_FREE.equals(this) && !THRUSTERS_1_E_FIGHTER.equals(this);
     }
 
     @Override

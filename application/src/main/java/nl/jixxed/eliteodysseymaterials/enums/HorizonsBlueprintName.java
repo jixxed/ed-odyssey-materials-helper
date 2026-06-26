@@ -87,6 +87,10 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     GUARDIAN_PLASMA_CHARGER(BlueprintGroup.GUARDIAN_PLASMA_CHARGERS, BlueprintCategory.HARDPOINT),
     GUARDIAN_PLASMA_CHARGER_PRE(BlueprintGroup.GUARDIAN_PLASMA_CHARGERS, BlueprintCategory.HARDPOINT, false),
     GUARDIAN_NANITE_TORPEDO_PYLON(BlueprintGroup.GUARDIAN_NANITE_TORPEDO_PYLONS, BlueprintCategory.HARDPOINT),
+    GUARDIAN_PLASMA_AUTO_CANNON(BlueprintGroup.GUARDIAN_SLV_WEAPONS, BlueprintCategory.HARDPOINT),
+    GUARDIAN_SHARD_LAUNCHER(BlueprintGroup.GUARDIAN_SLV_WEAPONS, BlueprintCategory.HARDPOINT, false),
+    GUARDIAN_GAUSS_FOCUS_CANNON(BlueprintGroup.GUARDIAN_SLV_WEAPONS, BlueprintCategory.HARDPOINT, false),
+    PLASMA_REPEATER(BlueprintGroup.PLASMA_REPEATERS, BlueprintCategory.HARDPOINT),
     REMOTE_RELEASE_FLAK_LAUNCHER(BlueprintGroup.REMOTE_RELEASE_FLAK_LAUNCHERS, BlueprintCategory.HARDPOINT),
     FESTIVE_LAUNCHER(BlueprintGroup.REMOTE_RELEASE_FLAK_LAUNCHERS, BlueprintCategory.HARDPOINT, false),
     REMOTE_RELEASE_FLECHETTE_LAUNCHER(BlueprintGroup.REMOTE_RELEASE_FLECHETTE_LAUNCHERS, BlueprintCategory.HARDPOINT),
@@ -322,7 +326,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
             return SEEKER_MISSILE_RACK;
         } else if (nameLowerCase.startsWith("hpt_multicannon")) {
             return MULTI_CANNON;
-        } else if (nameLowerCase.startsWith("hpt_plasmaaccelerator")) {
+        } else if (nameLowerCase.startsWith("hpt_plasmaaccelerator") || nameLowerCase.startsWith("hpt_mkiiplasmashockautocannon")) {
             return PLASMA_ACCELERATOR;
         } else if (nameLowerCase.startsWith("hpt_pulselaser")) {
             return PULSE_LASER;
@@ -360,7 +364,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
             return POWER_PLANT;
         } else if (nameLowerCase.startsWith("int_sensors")) {
             return SENSORS;
-        } else if (nameLowerCase.startsWith("int_engine")) {
+        } else if (nameLowerCase.startsWith("int_engine") || nameLowerCase.startsWith("int_mkiiagileboost_engine")) {
             return THRUSTERS;
         } else if (nameLowerCase.startsWith("int_repairer")) {
             return AUTO_FIELD_MAINTENANCE_UNIT;

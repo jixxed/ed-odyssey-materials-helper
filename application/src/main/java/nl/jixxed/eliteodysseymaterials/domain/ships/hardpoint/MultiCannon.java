@@ -27,6 +27,9 @@ import java.util.List;
 import java.util.Map;
 
 public class MultiCannon extends HardpointModule {
+//    { "Slot":"SmallHardpoint1", "Item":"hpt_multicannon_fixed_fed_fighter", "Power":1.000000, "Priority":2 },
+    public static final MultiCannon MULTI_CANNON_1_H_F_FIGHTER = new MultiCannon("MULTI_CANNON_1_H_F_FIGHTER", HorizonsBlueprintName.MULTI_CANNON, ModuleSize.SIZE_1, ModuleClass.H, false, Mounting.FIXED, 0, "hpt_multicannon_fixed_fed_fighter",                                            Map.ofEntries(Map.entry(HorizonsModifier.MASS, 0.25), Map.entry(HorizonsModifier.INTEGRITY, 30.0), Map.entry(HorizonsModifier.POWER_DRAW, 1.00), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, 21.0), Map.entry(HorizonsModifier.DAMAGE, 3.1), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 0.13), Map.entry(HorizonsModifier.THERMAL_LOAD, 0.3), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 140.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE, 4000.0), Map.entry(HorizonsModifier.SHOT_SPEED, 1600.0), Map.entry(HorizonsModifier.RATE_OF_FIRE, 6.7), Map.entry(HorizonsModifier.BURST_INTERVAL, 0.13), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 36.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM, 36.0), Map.entry(HorizonsModifier.ROUNDS_PER_SHOT, 1.0), Map.entry(HorizonsModifier.RELOAD_TIME, 1.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.9), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 0.20), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 0.40), Map.entry(HorizonsModifier.KINETIC_DAMAGE_RATIO, 1.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.0), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START, 2000.0), Map.entry(HorizonsModifier.JITTER, 0.0), Map.entry(HorizonsModifier.AMMO_COST, 0.0)));
+
     public static final MultiCannon MULTI_CANNON_1_F_F = new MultiCannon("MULTI_CANNON_1_F_F", HorizonsBlueprintName.MULTI_CANNON, ModuleSize.SIZE_1, ModuleClass.F, false, Mounting.FIXED, 9500, "Hpt_MultiCannon_Fixed_Small",                                            Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.0), Map.entry(HorizonsModifier.INTEGRITY, 40.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.28), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, 8.615), Map.entry(HorizonsModifier.DAMAGE, 1.12), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 0.06), Map.entry(HorizonsModifier.THERMAL_LOAD, 0.09), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 22.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE, 4000.0), Map.entry(HorizonsModifier.SHOT_SPEED, 1600.0), Map.entry(HorizonsModifier.RATE_OF_FIRE, 7.692), Map.entry(HorizonsModifier.BURST_INTERVAL, 0.13), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 100.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM, 2100.0),                                                       Map.entry(HorizonsModifier.RELOAD_TIME, 4.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.9), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 0.40), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 0.80), Map.entry(HorizonsModifier.KINETIC_DAMAGE_RATIO, 1.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.0), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START, 2000.0), Map.entry(HorizonsModifier.JITTER, 0.0), Map.entry(HorizonsModifier.AUTO_RELOAD_WHILE_FIRING, false), Map.entry(HorizonsModifier.TARGET_SIGNATURE_INCREASED, false), Map.entry(HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, false), Map.entry(HorizonsModifier.TARGET_ARMOR_HARDNESS_REDUCED, false), Map.entry(HorizonsModifier.NO_DAMAGE_TO_UNTARGETED_SHIPS, false), Map.entry(HorizonsModifier.TARGET_HEAT_INCREASED, false), Map.entry(HorizonsModifier.AMMO_COST, 1.0)));
     public static final MultiCannon MULTI_CANNON_1_G_G = new MultiCannon("MULTI_CANNON_1_G_G", HorizonsBlueprintName.MULTI_CANNON, ModuleSize.SIZE_1, ModuleClass.G, false, Mounting.GIMBALLED, 14250, "Hpt_MultiCannon_Gimbal_Small",                                      Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.0), Map.entry(HorizonsModifier.INTEGRITY, 40.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.37), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, 6.833), Map.entry(HorizonsModifier.DAMAGE, 0.82), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 0.07), Map.entry(HorizonsModifier.THERMAL_LOAD, 0.1), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 22.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE, 4000.0), Map.entry(HorizonsModifier.SHOT_SPEED, 1600.0), Map.entry(HorizonsModifier.RATE_OF_FIRE, 8.333), Map.entry(HorizonsModifier.BURST_INTERVAL, 0.12), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 90.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM, 2100.0),                                                         Map.entry(HorizonsModifier.RELOAD_TIME, 5.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.9), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 0.40), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 0.80), Map.entry(HorizonsModifier.KINETIC_DAMAGE_RATIO, 1.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.0), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START, 2000.0), Map.entry(HorizonsModifier.JITTER, 0.0), Map.entry(HorizonsModifier.AUTO_RELOAD_WHILE_FIRING, false), Map.entry(HorizonsModifier.TARGET_SIGNATURE_INCREASED, false), Map.entry(HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, false), Map.entry(HorizonsModifier.TARGET_ARMOR_HARDNESS_REDUCED, false), Map.entry(HorizonsModifier.NO_DAMAGE_TO_UNTARGETED_SHIPS, false), Map.entry(HorizonsModifier.TARGET_HEAT_INCREASED, false), Map.entry(HorizonsModifier.AMMO_COST, 1.0)));
     public static final MultiCannon MULTI_CANNON_1_G_T = new MultiCannon("MULTI_CANNON_1_G_T", HorizonsBlueprintName.MULTI_CANNON, ModuleSize.SIZE_1, ModuleClass.G, true, Mounting.TURRETED, 81600, "Hpt_MultiCannon_Turret_Small",                                        Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.0), Map.entry(HorizonsModifier.INTEGRITY, 40.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.26), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, 4.0), Map.entry(HorizonsModifier.DAMAGE, 0.56), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 0.03), Map.entry(HorizonsModifier.THERMAL_LOAD, 0.04), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 22.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE, 4000.0), Map.entry(HorizonsModifier.SHOT_SPEED, 1600.0), Map.entry(HorizonsModifier.RATE_OF_FIRE, 7.143), Map.entry(HorizonsModifier.BURST_INTERVAL, 0.14), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 90.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM, 2100.0),                                                          Map.entry(HorizonsModifier.RELOAD_TIME, 4.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.9), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 0.40), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 0.80), Map.entry(HorizonsModifier.KINETIC_DAMAGE_RATIO, 1.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.0), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START, 2000.0), Map.entry(HorizonsModifier.JITTER, 0.0), Map.entry(HorizonsModifier.AUTO_RELOAD_WHILE_FIRING, false), Map.entry(HorizonsModifier.TARGET_SIGNATURE_INCREASED, false), Map.entry(HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, false), Map.entry(HorizonsModifier.TARGET_ARMOR_HARDNESS_REDUCED, false), Map.entry(HorizonsModifier.NO_DAMAGE_TO_UNTARGETED_SHIPS, false), Map.entry(HorizonsModifier.TARGET_HEAT_INCREASED, false), Map.entry(HorizonsModifier.AMMO_COST, 1.0)));
@@ -50,6 +53,7 @@ public class MultiCannon extends HardpointModule {
     }
 
     public static final List<MultiCannon> MULTI_CANNONS = List.of(
+            MULTI_CANNON_1_H_F_FIGHTER,
             MULTI_CANNON_1_F_F,
             MULTI_CANNON_1_G_G,
             MULTI_CANNON_1_G_T,
@@ -81,6 +85,9 @@ public class MultiCannon extends HardpointModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
+        if(MULTI_CANNON_1_H_F_FIGHTER.equals(this)){
+            return Collections.emptyList();
+        }
         if (isPreEngineered()) {
             return Collections.emptyList();
         }
@@ -89,6 +96,9 @@ public class MultiCannon extends HardpointModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedExperimentalEffects() {
+        if(MULTI_CANNON_1_H_F_FIGHTER.equals(this)){
+            return Collections.emptyList();
+        }
         if (isPreEngineered()) {
             return Collections.emptyList();
         }
@@ -152,5 +162,8 @@ public class MultiCannon extends HardpointModule {
             case "MULTI_CANNON_2_E_F_PRE" -> HorizonsBlueprintType.PHASING_SEQUENCE;
             default -> null;
         };
+    }
+    public boolean isSelectable() {
+        return !MULTI_CANNON_1_H_F_FIGHTER.equals(this);
     }
 }
