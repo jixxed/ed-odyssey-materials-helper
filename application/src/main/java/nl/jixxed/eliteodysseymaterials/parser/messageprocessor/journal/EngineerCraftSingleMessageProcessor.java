@@ -10,6 +10,10 @@
 
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor.journal;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
@@ -18,6 +22,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.SingleMessageProcessor;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.EngineerCraft.EngineerCraft;
+import nl.jixxed.eliteodysseymaterials.service.ReportService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipLoadoutEvent;
@@ -27,6 +32,12 @@ import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
 
 @Slf4j
 public class EngineerCraftSingleMessageProcessor implements SingleMessageProcessor<EngineerCraft> {
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    static {
+        OBJECT_MAPPER.registerModule(new JavaTimeModule());
+        OBJECT_MAPPER.registerModule(new Jdk8Module().configureAbsentsAsNulls(true));
+    }
+
     @Override
     public void process(final EngineerCraft event) {
         event.getIngredients().forEach(ingredient -> {
@@ -60,8 +71,24 @@ public class EngineerCraftSingleMessageProcessor implements SingleMessageProcess
             log.error("Could not find module for in slot {}", event.getSlot());
             return;
         }
-        module.applyModification(HorizonsBlueprintType.forInternalName(event.getBlueprintName()), HorizonsBlueprintGrade.forDigit(event.getLevel()), event.getQuality());
-        event.getExperimentalEffect().ifPresent(effect -> module.applyExperimentalEffect(HorizonsBlueprintType.forInternalName(effect)));
+        try{
+            module.applyModification(HorizonsBlueprintType.forInternalName(event.getBlueprintName()), HorizonsBlueprintGrade.forDigit(event.getLevel()), event.getQuality());
+        } catch (IllegalArgumentException e) {
+            try {
+                ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(event), "Failed to map blueprint: " + event.getBlueprintName());
+            } catch (JsonProcessingException ex) {
+                //ignore
+            }
+        }
+        try{
+            event.getExperimentalEffect().ifPresent(effect -> module.applyExperimentalEffect(HorizonsBlueprintType.forInternalName(effect)));
+        } catch (IllegalArgumentException e) {
+            try {
+                ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(event), "Failed to map experimental effect: " + event.getExperimentalEffect().orElse(""));
+            } catch (JsonProcessingException ex) {
+                //ignore
+            }
+        }
         shipSlot.setOldShipModule(module);
         ShipMapper.toShipConfiguration(ship, ShipConfiguration.CURRENT, ShipConfiguration.CURRENT.getName());
         EventService.publish(new ShipLoadoutEvent());

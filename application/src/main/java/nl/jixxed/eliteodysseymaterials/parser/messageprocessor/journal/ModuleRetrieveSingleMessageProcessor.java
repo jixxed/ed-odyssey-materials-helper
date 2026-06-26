@@ -10,6 +10,10 @@
 
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor.journal;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
@@ -19,6 +23,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.SingleMessageProcessor;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ModuleRetrieve.ModuleRetrieve;
+import nl.jixxed.eliteodysseymaterials.service.ReportService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipLoadoutEvent;
 import nl.jixxed.eliteodysseymaterials.service.ships.LoadoutMapper;
@@ -30,6 +35,11 @@ import java.util.function.Predicate;
 
 @Slf4j
 public class ModuleRetrieveSingleMessageProcessor implements SingleMessageProcessor<ModuleRetrieve> {
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    static {
+        OBJECT_MAPPER.registerModule(new JavaTimeModule());
+        OBJECT_MAPPER.registerModule(new Jdk8Module().configureAbsentsAsNulls(true));
+    }
     @Override
     public void process(final ModuleRetrieve event) {
 
@@ -56,9 +66,17 @@ public class ModuleRetrieveSingleMessageProcessor implements SingleMessageProces
         if(event.getQuality().map(quality -> quality.compareTo(BigDecimal.ZERO) == 0).orElse(false)){
             module.setLegacy(true);
         }
-        //this module is technically not engineered fully because information is missing, but will be updated once the outfitting screen is exited
-        event.getEngineerModifications().ifPresent(modifications -> module.applyModification(HorizonsBlueprintType.forInternalName(modifications), HorizonsBlueprintGrade.forDigit(event.getLevel().orElse(BigInteger.ZERO)), event.getQuality().orElse(BigDecimal.ZERO)));
 
+        try{
+            //this module is technically not engineered fully because information is missing, but will be updated once the outfitting screen is exited
+            event.getEngineerModifications().ifPresent(modifications -> module.applyModification(HorizonsBlueprintType.forInternalName(modifications), HorizonsBlueprintGrade.forDigit(event.getLevel().orElse(BigInteger.ZERO)), event.getQuality().orElse(BigDecimal.ZERO)));
+        } catch (IllegalArgumentException e) {
+            try {
+                ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(event), "Failed to map blueprint: " + event.getEngineerModifications().orElse(""));
+            } catch (JsonProcessingException ex) {
+                //ignore
+            }
+        }
         shipSlot.setShipModule(module);
         shipSlot.setOldShipModule(module);
 
