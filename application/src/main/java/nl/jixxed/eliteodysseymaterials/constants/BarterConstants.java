@@ -239,9 +239,10 @@ public class BarterConstants {
             Map.entry(Data.POWEREMPLOYEEDATA, 18_000),
             Map.entry(Data.POWERFINANCIALRECORDS, 17_000),
             Map.entry(Data.POWERPROPAGANDADATA, 12_000),
-            Map.entry(Data.POWERCLASSIFIEDDATA, 35_000)
+            Map.entry(Data.POWERCLASSIFIEDDATA, 35_000),
+            Map.entry(Data.OPERATIONSSTRIKEDATA, 0),
+            Map.entry(Data.OPERATIONSCOUNTERATTACKDATA, 0)
     );
-
 
     public static Integer getBarterSellPrice(final OdysseyMaterial odysseyMaterial) {
         return BARTER_SELLVALUES.getOrDefault(odysseyMaterial, -1);
