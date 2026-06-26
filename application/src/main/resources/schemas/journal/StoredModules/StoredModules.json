@@ -67,6 +67,12 @@
             "type" : "integer",
             "examples" : [ 0, 504, 1411 ]
           },
+          "BuyMercCoinsPrice" : {
+            "title" : "BuyMercCoinsPrice",
+            "description": "Price paid in merc coins",
+            "type" : "integer",
+            "examples" : [ 100, 200, 300 ]
+          },
           "Hot" : {
             "title" : "Hot",
             "type" : "boolean",

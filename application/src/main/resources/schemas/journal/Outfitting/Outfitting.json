@@ -41,6 +41,7 @@
           },
           "Name" : {
             "title" : "Name",
+            "description": "An identifier for this module. Do note that this identifier is not unique between different variations of the same module.",
             "type" : "string",
             "examples" : [ "hpt_pulselaser_fixed_medium", "hpt_pulselaser_fixed_large", "hpt_pulselaser_gimbal_small" ]
           },
@@ -51,6 +52,7 @@
           },
           "BuyMercCoinsPrice" : {
             "title" : "BuyMercCoinsPrice",
+            "description": "Positive integer defining the price of a module sold for Merc coins. This property is only present on Merc modules.",
             "type" : "integer",
             "examples" : [ 950, 500, 450 ]
           }

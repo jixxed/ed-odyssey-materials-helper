@@ -27,6 +27,12 @@
       "type" : "integer",
       "examples" : [ 1535274, 43875, 70200 ]
     },
+    "BuyMercCoinsPrice" : {
+      "title" : "BuyMercCoinsPrice",
+      "description": "Price paid in merc coins",
+      "type" : "integer",
+      "examples" : [ 100, 200, 300 ]
+    },
     "Ship" : {
       "title" : "Ship",
       "description": "The player's ship",
