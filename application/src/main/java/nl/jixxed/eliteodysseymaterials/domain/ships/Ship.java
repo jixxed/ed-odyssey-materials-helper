@@ -31,6 +31,7 @@ import java.util.ServiceLoader;
 import java.util.stream.Stream;
 
 public class Ship {
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     public static final Ship SIDE_WINDER = new Ship(
             ShipType.SIDE_WINDER,
             5070,
@@ -1904,7 +1905,6 @@ public class Ship {
             KESTREL_MK_II,//24 Feb 2026 - S
             LYNX_HIGHLINER//28 Apr 2026 - M
     );
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     @Getter
     private final ShipType shipType;
     @Getter
