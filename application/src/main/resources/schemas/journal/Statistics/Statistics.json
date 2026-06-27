@@ -1684,6 +1684,11 @@
           "type" : "integer",
           "examples" : [ 0 ]
         },
+        "Squadron_Leaderboard_operationscore_highestcontribution": {
+          "title" : "Squadron_Leaderboard_operationscore_highestcontribution",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
         "Squadron_Leaderboard_podiums": {
           "title" : "Squadron_Leaderboard_podiums",
           "type" : "integer",
