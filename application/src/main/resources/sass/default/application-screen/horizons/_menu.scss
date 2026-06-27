@@ -19,6 +19,9 @@
           -fx-fill: $text-color-white;
         }
       }
+      .merccoin-icon{
+        @include currencies;
+      }
 
       &:complete {
         -fx-text-fill: $text-color-green;
@@ -170,6 +173,7 @@
           }
 
           @include commodities;
+          @include currencies;
         }
 
         &:partial .required, &:partial .available, &:partial .quantity {

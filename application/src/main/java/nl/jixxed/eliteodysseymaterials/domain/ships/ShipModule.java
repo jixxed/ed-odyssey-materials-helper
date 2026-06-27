@@ -119,6 +119,7 @@ public abstract class ShipModule implements Serializable {
         this.multiCrew = shipModule.multiCrew;
         this.basePrice = PriceService.getModulePriceOrDefault(shipModule.internalName, shipModule.basePrice);
         this.internalName = shipModule.internalName;
+        this.modifications.clear();
         this.modifications.addAll(shipModule.modifications.stream().map(modification -> new Modification(modification.getModification(), modification.getModificationCompleteness().orElse(null), modification.getGrade())).toList());
         this.experimentalEffects.addAll(shipModule.experimentalEffects);
         this.attributes.putAll(shipModule.attributes);
@@ -146,19 +147,19 @@ public abstract class ShipModule implements Serializable {
     public void applyModification(final HorizonsBlueprintType modification, final HorizonsBlueprintGrade grade, final BigDecimal modificationCompleteness) {
         if (validModification(modification, false)) {
             final Modification mod = new Modification(modification, modificationCompleteness, grade);
-            if (!this.modifications.contains(mod)) {
+//            if (!this.modifications.contains(mod)) {
                 this.modifications.clear();
                 this.modifications.add(mod);
                 this.modifiers.clear();
-            } else {
-                this.modifications.stream().filter(existingMod -> Objects.equals(existingMod, mod))
-                        .findFirst()
-                        .ifPresent(existingModification -> {
-                            existingModification.setGrade(grade);
-                            existingModification.setModificationCompleteness(modificationCompleteness);
-                        });
-                this.modifiers.clear();
-            }
+//            } else {
+//                this.modifications.stream().filter(existingMod -> Objects.equals(existingMod, mod))
+//                        .findFirst()
+//                        .ifPresent(existingModification -> {
+//                            existingModification.setGrade(grade);
+//                            existingModification.setModificationCompleteness(modificationCompleteness);
+//                        });
+//                this.modifiers.clear();
+//            }
         }
     }
 
@@ -461,6 +462,10 @@ public abstract class ShipModule implements Serializable {
     }
 
     public boolean isPreEngineered() {
+        return false;
+    }
+
+    public boolean isMerc() {
         return false;
     }
 

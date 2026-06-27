@@ -28,6 +28,7 @@ import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.enums.Currency;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
@@ -46,7 +47,7 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     @Getter
     @EqualsAndHashCode.Include
-    private final HorizonsMaterial horizonsMaterial;
+    private final Material horizonsMaterial;
 
     private EdAwesomeIconViewPane image;
     private DestroyableLabel requiredAmountLabel;
@@ -76,7 +77,7 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
     ObjectProperty<HorizonsWishlistBlueprint> blueprint = new SimpleObjectProperty<>();
     private int quantityOverride = -1;
 
-    HorizonsWishlistIngredient(final HorizonsMaterial horizonsMaterial) {
+    HorizonsWishlistIngredient(final Material horizonsMaterial) {
         this.horizonsMaterial = horizonsMaterial;
         this.hideCompleted = new SimpleBooleanProperty(PreferencesService.getPreference("blueprint.horizons.hide.completed", false));
         this.showRemaining = new SimpleBooleanProperty(PreferencesService.getPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_HORIZONS, Boolean.FALSE));
@@ -118,7 +119,7 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
                 .build();
         DestroyableLabel categoryLabel = LabelBuilder.builder()
                 .withStyleClass("category")
-                .withText(this.horizonsMaterial.getMaterialType().getLocalizationKey())
+                .withText(this.horizonsMaterial instanceof HorizonsMaterial material ? material.getMaterialType().getLocalizationKey() : "material.category.currency")
                 .build();
         VBox.setVgrow(nameLabel, Priority.ALWAYS);
         HBox.setHgrow(nameLabel, Priority.ALWAYS);
@@ -263,20 +264,25 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
     private boolean matchesSearch() {
         return !this.currentSearchQuery.isEmpty()
                 && (LocaleService.getLocalizedStringForCurrentLocale(this.horizonsMaterial.getLocalizationKey()).toLowerCase().contains(this.currentSearchQuery.toLowerCase())
-                || LocaleService.getLocalizedStringForCurrentLocale(this.horizonsMaterial.getMaterialType().getLocalizationKey()).toLowerCase().contains(this.currentSearchQuery.toLowerCase()));
+                || ( this.horizonsMaterial instanceof HorizonsMaterial material && LocaleService.getLocalizedStringForCurrentLocale(material.getMaterialType().getLocalizationKey()).toLowerCase().contains(this.currentSearchQuery.toLowerCase())));
     }
 
     @SuppressWarnings("java:S6205")
     private void initImage() {
         if (this.horizonsMaterial instanceof Commodity commodity) {
-             this.image = EdAwesomeIconViewPaneBuilder.builder()
+            this.image = EdAwesomeIconViewPaneBuilder.builder()
                     .withStyleClass("image")
                     .withIcons(Arrays.stream(commodity.getCommodityType().getIcons()).map(EdAwesomeIconView::new).toArray(EdAwesomeIconView[]::new))
+                    .build();
+        } else if (this.horizonsMaterial instanceof Currency currency) {
+            this.image = EdAwesomeIconViewPaneBuilder.builder()
+                    .withStyleClass("image")
+                    .withIcons(Arrays.stream(currency.getIcons()).map(EdAwesomeIconView::new).toArray(EdAwesomeIconView[]::new))
                     .build();
         } else {
             this.image = EdAwesomeIconViewPaneBuilder.builder()
                     .withStyleClass("image")
-                    .withIcons(new EdAwesomeIconView(this.horizonsMaterial.getRarity().getIcon()))
+                    .withIcons(new EdAwesomeIconView(((HorizonsMaterial)this.horizonsMaterial).getRarity().getIcon()))
                     .build();
         }
     }
@@ -343,7 +349,7 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
     }
 
     private void add(HorizonsBlueprint blueprint, int quantity, Double percentage, boolean hasHigherGradeOrIsMaxGrade) {
-        Map<HorizonsMaterial, Integer> materials = blueprint.getMaterialCollection(this.horizonsMaterial.getClass());
+        Map<Material, Integer> materials = blueprint.getMaterialCollection(this.horizonsMaterial.getClass());
         if (materials.isEmpty() || (percentage <= 0.2 && hasHigherGradeOrIsMaxGrade) || !materials.containsKey(this.horizonsMaterial))
             return;
 
@@ -361,9 +367,9 @@ public class HorizonsWishlistIngredient extends DestroyableVBox implements Destr
                     .orElse(0);
 
             final Engineer engineer = getCurrentEngineerForBlueprint(blueprint, pathItems).orElseGet(() -> getWorstEngineer(blueprint));
-            minimum += (int) Math.ceil(amount * percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(maxRank, moduleBlueprint.getHorizonsBlueprintType())) * (quantityOverride == -1 ? quantity : quantityOverride);
-            required.set(required.get() + (int) Math.ceil(amount * percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(engineer, moduleBlueprint.getHorizonsBlueprintName(), moduleBlueprint.getHorizonsBlueprintType())) * (quantityOverride == -1 ? quantity : quantityOverride));
-            maximum += (int) Math.ceil(amount * percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(minRank, moduleBlueprint.getHorizonsBlueprintType())) * (quantityOverride == -1 ? quantity : quantityOverride);
+            minimum += amount * (int) Math.ceil(percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(maxRank, moduleBlueprint.getHorizonsBlueprintType())) * (quantityOverride == -1 ? quantity : quantityOverride);
+            required.set(required.get() + amount * (int) Math.ceil(percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(engineer, moduleBlueprint.getHorizonsBlueprintName(), moduleBlueprint.getHorizonsBlueprintType())) * (quantityOverride == -1 ? quantity : quantityOverride));
+            maximum += amount * (int) Math.ceil(percentage * blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(minRank, moduleBlueprint.getHorizonsBlueprintType())) * (quantityOverride == -1 ? quantity : quantityOverride);
         } else {
             minimum += amount * (quantityOverride == -1 ? quantity : quantityOverride);
             required.set(required.get() + amount * (quantityOverride == -1 ? quantity : quantityOverride));

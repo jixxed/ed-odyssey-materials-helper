@@ -297,6 +297,11 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
                 LocaleService.getStringBinding("statusbar.info.arx.value", Formatters.NUMBER_FORMAT_0.format(LedgerService.getArx())),
                 CAPIService.getInstance().getActive().get(),
                 EdAwesomeIcon.OTHER_ARX);
+        InfoNode merc = new InfoNode(
+                LocaleService.getStringBinding("statusbar.info.merc"),
+                LocaleService.getStringBinding("statusbar.info.merc.value", Formatters.NUMBER_FORMAT_0.format(StorageService.getMaterialCount(Currency.MERC_COIN))),
+                true,
+                EdAwesomeIcon.OTHER_MERCCOIN);
 
         InfoNode federationNavyRank = new InfoNode(LocaleService.getStringBinding("statusbar.info.federation.rank"),
                 LocaleService.getStringBinding("statusbar.info.federation.rank.value", LocaleService.LocalizationKey.of(FederationRank.forRank(APPLICATION_STATE.getCommanderRank(CommanderRank.FEDERATION)).getLocalizationKey()), Formatters.NUMBER_FORMAT_0.format(APPLICATION_STATE.getCommanderRank(CommanderRank.FEDERATION)), Formatters.NUMBER_FORMAT_0.format(APPLICATION_STATE.getCommanderRankProgress(CommanderRank.FEDERATION))),
@@ -340,6 +345,7 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
                 .withStyleClass("info-node-list")
                 .withNodes(
                         credits,
+                        merc,
                         arx,
                         federationNavyRank,
                         empireNavyRank,

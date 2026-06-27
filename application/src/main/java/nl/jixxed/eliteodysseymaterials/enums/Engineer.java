@@ -13,8 +13,10 @@ package nl.jixxed.eliteodysseymaterials.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 
+import java.util.Arrays;
 import java.util.List;
 
 @AllArgsConstructor
@@ -73,6 +75,13 @@ public enum Engineer {
     private final StarSystem starSystem;
     @Getter
     private final List<EngineerPrerequisite> prerequisites;
+
+    public static Engineer forName(String name) {
+            return Arrays.stream(Engineer.values())
+                    .filter(engineer -> LocaleService.getLocalizedStringForCurrentLocale(engineer.getLocalizationKey()).equalsIgnoreCase(name))
+                    .findFirst()
+                    .orElse(Engineer.UNKNOWN);
+    }
 
 
     public Double getDistance(final double x, final double y, final double z) {

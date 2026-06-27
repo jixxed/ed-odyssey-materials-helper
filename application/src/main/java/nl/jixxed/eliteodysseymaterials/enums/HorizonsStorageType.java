@@ -16,6 +16,7 @@ public enum HorizonsStorageType implements StorageType {
     MANUFACTURED,
     COMMODITY,
     OTHER,
+    CURRENCY,
     UNKNOWN;
 
     public static HorizonsStorageType forMaterial(final HorizonsMaterial horizonsMaterial) {

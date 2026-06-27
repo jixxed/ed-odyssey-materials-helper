@@ -81,13 +81,13 @@ dependencies {
 
     testImplementation 'io.avaje:junit'
     testImplementation 'io.ebean:ebean-test'
-    implementation "nl.jixxed.ed.data:ed-data-api:1.2"
+    implementation "nl.jixxed.ed.data:ed-data-api:1.5"
     implementation "nl.jixxed.github.sponsor:github-sponsor:1.4"
 
     if (project.ext.proprietary) {
         implementation 'nl.jixxed.ed.awesome:ed-awesome-impl:1.26'
         implementation 'nl.jixxed.ed.confidential:ed-confidential-impl:1.2'
-        implementation "nl.jixxed.ed.data:ed-data-impl:1.4"
+        implementation "nl.jixxed.ed.data:ed-data-impl:1.12"
     }
 
 }

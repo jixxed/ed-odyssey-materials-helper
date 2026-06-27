@@ -107,6 +107,8 @@ public enum JournalEventType {
     RANK("Rank"),
     PROGRESS("Progress"),
     COMMUNITYGOAL("CommunityGoal"),
+    STATISTICS("Statistics"),
+    MODULEBUYANDSTORE("ModuleBuyAndStore"),
     ;
     private final String name;
 

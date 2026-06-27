@@ -105,7 +105,7 @@ public class ImportService {
                 final Integer engineerRank = ApplicationState.getInstance().getEngineerRank(engineer);
                 final HorizonsBlueprintName name = HorizonsBlueprintName.forName(horizonsBlueprintJson.getName().equals("MISSILE_RACK") ? "DUMBFIRE_MISSILE_RACK" : horizonsBlueprintJson.getName());
                 final HorizonsBlueprintType horizonsBlueprintType = HorizonsBlueprintType.forName(horizonsBlueprintJson.getType());
-                final int maxBlueprintGrade = HorizonsBlueprintConstants.getBlueprintGrades(name, horizonsBlueprintType).stream().max(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).orElse(HorizonsBlueprintGrade.GRADE_1).getGrade();
+                final int maxBlueprintGrade = HorizonsBlueprintConstants.getEngineerableBlueprintGrades(name, horizonsBlueprintType).stream().max(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).orElse(HorizonsBlueprintGrade.GRADE_1).getGrade();
                 PinnedBlueprintService.pinBlueprint(engineer, (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(
                         name,
                         horizonsBlueprintType,

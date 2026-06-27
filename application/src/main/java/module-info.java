@@ -70,6 +70,7 @@ module nl.jixxed.eliteodysseymaterials {
     uses nl.jixxed.ed.awesome.api.FontLoader;
     uses nl.jixxed.ed.confidential.api.SecrecyLoader;
     uses nl.jixxed.ed.data.api.DataLoader;
+    exports nl.jixxed.eliteodysseymaterials.constants.horizons;
     exports nl.jixxed.eliteodysseymaterials.persistence.commander.model;
     exports nl.jixxed.eliteodysseymaterials.persistence.common.model;
     exports nl.jixxed.eliteodysseymaterials.domain.ships;
@@ -419,6 +420,7 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials;
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics, java.desktop;
     opens nl.jixxed.eliteodysseymaterials.builder to javafx.graphics, java.desktop, javafx.fxml, org.controlsfx.controls;
+    opens nl.jixxed.eliteodysseymaterials.constants.horizons to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.domain to com.fasterxml.jackson.databind, javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.schemas.system to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.domain.ships to com.fasterxml.jackson.databind, org.hibernate.validator;

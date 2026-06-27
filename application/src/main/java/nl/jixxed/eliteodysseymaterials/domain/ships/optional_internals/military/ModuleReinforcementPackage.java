@@ -10,10 +10,8 @@
 
 package nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military;
 
-import nl.jixxed.eliteodysseymaterials.domain.ships.MilitaryOptionalModule;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleClass;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleSize;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Origin;
+import nl.jixxed.eliteodysseymaterials.domain.ships.*;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
@@ -33,7 +31,13 @@ public class ModuleReinforcementPackage extends MilitaryOptionalModule {
     public static final ModuleReinforcementPackage MODULE_REINFORCEMENT_PACKAGE_4_D = new ModuleReinforcementPackage("MODULE_REINFORCEMENT_PACKAGE_4_D", HorizonsBlueprintName.MODULE_REINFORCEMENT_PACKAGE, ModuleSize.SIZE_4, ModuleClass.D, 195000, "Int_ModuleReinforcement_Size4_Class2", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 8.0), Map.entry(HorizonsModifier.INTEGRITY, 235.0), Map.entry(HorizonsModifier.MODULE_DEFENCE_ABSORPTION, 0.60)));
     public static final ModuleReinforcementPackage MODULE_REINFORCEMENT_PACKAGE_5_E = new ModuleReinforcementPackage("MODULE_REINFORCEMENT_PACKAGE_5_E", HorizonsBlueprintName.MODULE_REINFORCEMENT_PACKAGE, ModuleSize.SIZE_5, ModuleClass.E, 150000, "Int_ModuleReinforcement_Size5_Class1", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 32.0), Map.entry(HorizonsModifier.INTEGRITY, 385.0), Map.entry(HorizonsModifier.MODULE_DEFENCE_ABSORPTION, 0.30)));
     public static final ModuleReinforcementPackage MODULE_REINFORCEMENT_PACKAGE_5_D = new ModuleReinforcementPackage("MODULE_REINFORCEMENT_PACKAGE_5_D", HorizonsBlueprintName.MODULE_REINFORCEMENT_PACKAGE, ModuleSize.SIZE_5, ModuleClass.D, 450000, "Int_ModuleReinforcement_Size5_Class2", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 16.0), Map.entry(HorizonsModifier.INTEGRITY, 350.0), Map.entry(HorizonsModifier.MODULE_DEFENCE_ABSORPTION, 0.60)));
+    public static final ModuleReinforcementPackage MODULE_REINFORCEMENT_PACKAGE_5_D_MERC = new ModuleReinforcementPackage("MODULE_REINFORCEMENT_PACKAGE_5_D_MERC", HorizonsBlueprintName.MODULE_REINFORCEMENT_PACKAGE, ModuleSize.SIZE_5, ModuleClass.D, 450, "Int_ModuleReinforcement_Size5_Class2", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 16.0), Map.entry(HorizonsModifier.INTEGRITY, 350.0), Map.entry(HorizonsModifier.MODULE_DEFENCE_ABSORPTION, 0.60)));
 
+    static {
+        MODULE_REINFORCEMENT_PACKAGE_5_D_MERC.getModifications().add(
+                new Modification(HorizonsBlueprintType.MERC_HEAVY_DUTY_MODULE_REINFORCEMENT_PACKAGE, 1.0, HorizonsBlueprintGrade.GRADE_1)
+        );
+    }
     public static final List<ModuleReinforcementPackage> MODULE_REINFORCEMENT_PACKAGES = List.of(
             MODULE_REINFORCEMENT_PACKAGE_1_E,
             MODULE_REINFORCEMENT_PACKAGE_1_D,
@@ -44,7 +48,8 @@ public class ModuleReinforcementPackage extends MilitaryOptionalModule {
             MODULE_REINFORCEMENT_PACKAGE_4_E,
             MODULE_REINFORCEMENT_PACKAGE_4_D,
             MODULE_REINFORCEMENT_PACKAGE_5_E,
-            MODULE_REINFORCEMENT_PACKAGE_5_D
+            MODULE_REINFORCEMENT_PACKAGE_5_D,
+            MODULE_REINFORCEMENT_PACKAGE_5_D_MERC
     );
 
     public ModuleReinforcementPackage(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
@@ -61,12 +66,20 @@ public class ModuleReinforcementPackage extends MilitaryOptionalModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
+        if(MODULE_REINFORCEMENT_PACKAGE_5_D_MERC.equals(this)){
+            return List.of(HorizonsBlueprintType.MERC_HEAVY_DUTY_MODULE_REINFORCEMENT_PACKAGE);
+        }
         return Collections.emptyList();
     }
 
     @Override
     public List<HorizonsBlueprintType> getAllowedExperimentalEffects() {
         return Collections.emptyList();
+    }
+
+    @Override
+    public boolean isMerc() {
+        return MODULE_REINFORCEMENT_PACKAGE_5_D_MERC.equals(this);
     }
 
     @Override

@@ -1847,6 +1847,13 @@
 
                 .blueprint-button {
                   @include fixedWidth(25.1em);
+                  @include fixedHeight(2.5em);
+                    .button-icon {
+                      @include currencies;
+                      .glyph-icon {
+                        -fx-font-size: 1.5em !important;
+                      }
+                  }
                 }
               }
 
@@ -1877,7 +1884,7 @@
                 -fx-spacing: 0.1em;
 
                 .module-button {
-                  -fx-pref-height: 2.1em;
+                  @include fixedHeight(2.5em);
 
                   &:overload {
                     -fx-border-color: $border-color-red;

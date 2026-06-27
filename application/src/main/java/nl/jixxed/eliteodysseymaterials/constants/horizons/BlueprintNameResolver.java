@@ -8,28 +8,15 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package nl.jixxed.eliteodysseymaterials.domain;
+package nl.jixxed.eliteodysseymaterials.constants.horizons;
 
-import nl.jixxed.eliteodysseymaterials.enums.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 
-import java.util.List;
-import java.util.Map;
-
-public class HorizonsExperimentalEffectBlueprint extends HorizonsBlueprint implements HorizonsEngineeringBlueprint {
-    private final List<Engineer> engineers;
-
-    public HorizonsExperimentalEffectBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<? extends Material, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers) {
-        super(horizonsBlueprintName, horizonsBlueprintType, materials, modifiers, engineers);
-        this.engineers = engineers;
-    }
-
-    @Override
-    public List<Engineer> getEngineers() {
-        return this.engineers;
-    }
-
-    @Override
-    public boolean hasSingleEngineerPerRegion() {
-        return this.engineers != null && this.engineers.size() == 2;
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public abstract class BlueprintNameResolver {
+    public static HorizonsBlueprintName resolve(String name) {
+        return HorizonsBlueprintName.valueOf(name);
     }
 }

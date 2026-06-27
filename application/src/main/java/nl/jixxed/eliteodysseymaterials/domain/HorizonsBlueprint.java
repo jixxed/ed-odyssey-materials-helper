@@ -25,10 +25,11 @@ import java.util.stream.Stream;
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class HorizonsBlueprint implements Blueprint<HorizonsBlueprintName> {
-    private final Map<HorizonsMaterial, Integer> raw;
-    private final Map<HorizonsMaterial, Integer> encoded;
-    private final Map<HorizonsMaterial, Integer> manufactured;
-    private final Map<HorizonsMaterial, Integer> commodities;
+    private final Map<Material, Integer> currency;
+    private final Map<Material, Integer> raw;
+    private final Map<Material, Integer> encoded;
+    private final Map<Material, Integer> manufactured;
+    private final Map<Material, Integer> commodities;
     @EqualsAndHashCode.Include
     @Getter
     private final HorizonsBlueprintName horizonsBlueprintName;
@@ -47,25 +48,26 @@ public class HorizonsBlueprint implements Blueprint<HorizonsBlueprintName> {
     @Getter
     private final boolean preEngineered;
 
-    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final Map<? extends HorizonsMaterial, Integer> materials) {
+    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final Map<? extends Material, Integer> materials) {
         this(horizonsBlueprintName, HorizonsBlueprintType.ENGINEER, HorizonsBlueprintGrade.NONE, materials, Collections.emptyMap(), List.of());
     }
 
-    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<? extends HorizonsMaterial, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers) {
+    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<? extends Material, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers) {
         this(horizonsBlueprintName, horizonsBlueprintType, HorizonsBlueprintGrade.NONE, materials, modifiers, engineers);
     }
-    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<? extends HorizonsMaterial, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers, final boolean preEngineered) {
+    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<? extends Material, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers, final boolean preEngineered) {
         this(horizonsBlueprintName, horizonsBlueprintType, HorizonsBlueprintGrade.NONE, materials, modifiers, engineers, preEngineered);
     }
-    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade, final Map<? extends HorizonsMaterial, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers, final GameVersion gameVersion) {
+    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade, final Map<? extends Material, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers, final GameVersion gameVersion) {
         this(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGrade, materials, modifiers, engineers, gameVersion, false);
     }
-    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade, final Map<? extends HorizonsMaterial, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers, final GameVersion gameVersion, final boolean preEngineered) {
+    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade, final Map<? extends Material, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers, final GameVersion gameVersion, final boolean preEngineered) {
         this.horizonsBlueprintName = horizonsBlueprintName;
         this.horizonsBlueprintType = horizonsBlueprintType;
         this.horizonsBlueprintGrade = horizonsBlueprintGrade;
         this.modifiers = modifiers;
         this.engineers = engineers;
+        this.currency = materials.entrySet().stream().filter(materialIntegerEntry -> materialIntegerEntry.getKey() instanceof Currency).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         this.raw = materials.entrySet().stream().filter(materialIntegerEntry -> materialIntegerEntry.getKey() instanceof Raw).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         this.encoded = materials.entrySet().stream().filter(materialIntegerEntry -> materialIntegerEntry.getKey() instanceof Encoded).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         this.manufactured = materials.entrySet().stream().filter(materialIntegerEntry -> materialIntegerEntry.getKey() instanceof Manufactured).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
@@ -74,15 +76,17 @@ public class HorizonsBlueprint implements Blueprint<HorizonsBlueprintName> {
         this.preEngineered = preEngineered;
     }
 
-    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade, final Map<? extends HorizonsMaterial, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers) {
+    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade, final Map<? extends Material, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers) {
         this(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGrade, materials, modifiers, engineers, GameVersion.LEGACY, false);
     }
-    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade, final Map<? extends HorizonsMaterial, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers, final boolean preEngineered) {
+    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade, final Map<? extends Material, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers, final boolean preEngineered) {
         this(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGrade, materials, modifiers, engineers, GameVersion.LEGACY, preEngineered);
     }
 
-    public <T extends HorizonsMaterial> Map<HorizonsMaterial, Integer> getMaterialCollection(final Class<T> clazz) {
-        if (clazz.equals(Raw.class)) {
+    public <T extends Material> Map<Material, Integer> getMaterialCollection(final Class<T> clazz) {
+        if (clazz.equals(Currency.class)) {
+            return this.currency;
+        } else if (clazz.equals(Raw.class)) {
             return this.raw;
         } else if (clazz.equals(Encoded.class)) {
             return this.encoded;
@@ -93,30 +97,33 @@ public class HorizonsBlueprint implements Blueprint<HorizonsBlueprintName> {
         } else if (clazz.equals(HorizonsMaterial.class)) {
             return Stream.concat(Stream.concat(Stream.concat(this.raw.entrySet().stream(), this.encoded.entrySet().stream()), this.manufactured.entrySet().stream()), this.commodities.entrySet().stream()).collect(
                     Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        }else if (clazz.equals(Material.class)) {
+            return Stream.concat(Stream.concat(Stream.concat(Stream.concat(this.raw.entrySet().stream(), this.encoded.entrySet().stream()), this.manufactured.entrySet().stream()), this.commodities.entrySet().stream()), this.currency.entrySet().stream()).collect(
+                    Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         }
         throw new ClassCastException("Invalid Material Collection Type");
 
     }
 
-    public boolean hasIngredient(final HorizonsMaterial material) {
+    public boolean hasIngredient(final Material material) {
         return getMaterialCollection(HorizonsMaterial.class).containsKey(material);
     }
 
-    public Integer getRequiredAmount(final HorizonsMaterial material, final Engineer engineer) {
-        final Integer amount = getMaterialCollection(HorizonsMaterial.class).get(material);
+    public Integer getRequiredAmount(final Material material, final Engineer engineer) {
+        final Integer amount = getMaterialCollection(Material.class).get(material);
         return amount != null ? amount * getNumberOfRolls(engineer) : 0;
     }
 
-    public Integer getMinimumAmount(final HorizonsMaterial material) {
+    public Integer getMinimumAmount(final Material material) {
         final Engineer engineer = getEngineers().stream().max(Comparator.comparing(eng -> ApplicationState.getInstance().getEngineerRank(eng))).orElse(null);
 
-        final Integer amount = getMaterialCollection(HorizonsMaterial.class).get(material);
+        final Integer amount = getMaterialCollection(Material.class).get(material);
         return amount != null ? amount * getNumberOfRolls(engineer) : 0;
     }
 
-    public Integer getMaximumAmount(final HorizonsMaterial material) {
+    public Integer getMaximumAmount(final Material material) {
         final Engineer engineer = getEngineers().stream().min(Comparator.comparing(eng -> ApplicationState.getInstance().getEngineerRank(eng))).orElse(null);
-        final Integer amount = getMaterialCollection(HorizonsMaterial.class).get(material);
+        final Integer amount = getMaterialCollection(Material.class).get(material);
 
         return amount != null ? amount * getNumberOfRolls(engineer) : 0;
     }

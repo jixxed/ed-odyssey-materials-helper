@@ -115,7 +115,7 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
                 .build();
         this.tooltip = TooltipBuilder.builder()
                 .withStyleClass("tooltip")
-                .withText(LocaleService.getToolTipStringBinding((HorizonsEngineeringBlueprint) HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), HorizonsBlueprintGrade.GRADE_1), "tab.wishlist.blueprint.tooltip"))
+                .withText(LocaleService.getToolTipStringBinding((HorizonsEngineeringBlueprint) HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), HorizonsBlueprintConstants.getEngineerableBlueprintGrades(getRecipeName(), getBlueprintType()).stream().sorted().findFirst().orElse(HorizonsBlueprintGrade.GRADE_1)), "tab.wishlist.blueprint.tooltip"))
                 .withShowDelay(Duration.millis(100))
                 .build();
         tooltip.install(blueprintName);
@@ -256,7 +256,7 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
 
     private void showGradeSettings() {
         if (popOverRef.get() == null || !popOverRef.get().isShowing()) {
-            final DestroyableHBox[] gradeControls = HorizonsBlueprintConstants.getBlueprintGrades(this.wishlistBlueprint.getRecipeName(), this.wishlistBlueprint.getBlueprintType()).stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(grade ->
+            final DestroyableHBox[] gradeControls = HorizonsBlueprintConstants.getEngineerableBlueprintGrades(this.wishlistBlueprint.getRecipeName(), this.wishlistBlueprint.getBlueprintType()).stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(grade ->
                     {
                         DoubleConsumer function = percentage -> {
                             this.wishlistBlueprint.setBlueprintGradePercentageToComplete(grade, Math.round(percentage * 10.0) / 1000.0);
@@ -298,7 +298,7 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
                     .withSelected(this.wishlistBlueprint.getBlueprintType())
                     .withValueChangeListener((_, _, newValue) -> {
                         this.wishlistBlueprint.setBlueprintType(newValue);
-                        final HorizonsBlueprintGrade maxBlueprintGrade = HorizonsBlueprintConstants.getBlueprintGrades(this.wishlistBlueprint.getRecipeName(), newValue).stream().max(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).orElse(HorizonsBlueprintGrade.GRADE_1);
+                        final HorizonsBlueprintGrade maxBlueprintGrade = HorizonsBlueprintConstants.getEngineerableBlueprintGrades(this.wishlistBlueprint.getRecipeName(), newValue).stream().max(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).orElse(HorizonsBlueprintGrade.GRADE_1);
                         this.wishlistBlueprint.getPercentageToComplete().entrySet().removeIf(entry -> entry.getKey().getGrade() > maxBlueprintGrade.getGrade());
                         modify();
                         update();

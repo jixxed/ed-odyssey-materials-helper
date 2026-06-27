@@ -888,7 +888,7 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
     private static Map<HorizonsBlueprintGrade, Double> getPercentagesToComplete(HorizonsBlueprintName
                                                                                         name, ShipConfigurationModification modification, HorizonsBlueprintGrade oldGrade, HorizonsBlueprintGrade
                                                                                         grade, ShipConfigurationModification oldModification) {
-        return HorizonsBlueprintConstants.getBlueprintGrades(name, modification.getType())
+        return HorizonsBlueprintConstants.getEngineerableBlueprintGrades(name, modification.getType())
                 .stream()
                 .filter(gradeToAdd -> gradeToAdd.getGrade() >= oldGrade.getGrade() && gradeToAdd.getGrade() <= grade.getGrade())
                 .map(horizonsBlueprintGrade -> {
@@ -940,7 +940,7 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
                                                                                   modification, HorizonsBlueprintName name, HorizonsBlueprintGrade grade) {
         final Map<HorizonsBlueprintGrade, Double> gradePercentageToComplete = new HashMap<>();
 
-        final Set<HorizonsBlueprintGrade> blueprintGrades = HorizonsBlueprintConstants.getBlueprintGrades(name, modification.getType())
+        final Set<HorizonsBlueprintGrade> blueprintGrades = HorizonsBlueprintConstants.getEngineerableBlueprintGrades(name, modification.getType())
                 .stream()
                 .filter(gradeToAdd -> gradeToAdd.getGrade() <= grade.getGrade())
                 .collect(Collectors.toSet());

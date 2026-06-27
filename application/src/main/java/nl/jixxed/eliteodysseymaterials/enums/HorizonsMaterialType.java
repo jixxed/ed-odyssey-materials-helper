@@ -44,6 +44,7 @@ public enum HorizonsMaterialType {
     THERMIC(true),
     WAKE_SCANS(true),
     COMMODITY(true),
+    CURRENCY(true),
     UNKNOWN(false);
 
     private final boolean tradable;

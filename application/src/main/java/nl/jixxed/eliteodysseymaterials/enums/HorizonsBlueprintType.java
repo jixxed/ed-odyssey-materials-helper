@@ -231,14 +231,40 @@ public enum HorizonsBlueprintType {
     DOUBLE_SHOT_HIGH_CAPACITY_MAGAZINE_SCREENING_SHELL(false, true),
     DOUBLE_SHOT_HIGH_CAPACITY_MAGAZINE_SCREENING_SHELL_B(false, true),
     INCREASED_CARGO_CAPACITY(false, true),
+    MERC_BALANCED_POWER_DISTRIBUTOR(false, false, true, true),
+    MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR(false, false, true, true),
+    MERC_LONG_RANGE_DETAILED_SURFACE_SCANNER(false, false, true, true),
+    MERC_SCOOP_RATE_ENHANCED_FUEL_SCOOP(false, false, true, false),
+    MERC_PLASMA_CONVERSION_BEAM_LASER(false, false, true, false),
+    MERC_PLASMA_CONVERSION_PULSE_LASER(false, false, true, false),
+    MERC_PLASMA_CONVERSION_BURST_LASER(false, false, true, false),
+    MERC_HEAVY_DUTY_MODULE_REINFORCEMENT_PACKAGE(false, false, true, true),
+    MERC_EXTENDED_CARGO_RACK(false, false, true, true),
+    MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON(false, false, true, true),
+    MERC_RAPID_PHASE_MULTI_CANNON(false, false, true, true),
+    MERC_FAR_REACHING_ABRASION_BLASTER(false, false, true, true),
+    MERC_HIGH_YIELD_ENZYME_MISSILE_RACK(false, false, true, false),
+    MERC_LONG_RANGE_MINING_LASER(false, false, true, true),
+    MERC_DRAG_SEEKER_MISSILE_RACK(false, false, true, true),
+    MERC_LIGHTWEIGHT_THERMAL_SEEKER_MISSILE_RACK(false, false, true, true),
+    MERC_LOCKDOWN_SEEKER_MISSILE_RACK(false, false, true, true),
+    MERC_ENDURING_FEEDBACK_RAIL_GUN(false, false, true, true),
     NONE(false, false);
     @Getter
     private final boolean experimental;
     @Getter
     private final boolean preEngineered;
+    @Getter
+    private final boolean merc;
+    @Getter
+    private final boolean mercOnly;
 
     HorizonsBlueprintType(boolean experimental) {
-        this(experimental, false);
+        this(experimental, false, false, false);
+    }
+
+    HorizonsBlueprintType(boolean experimental, boolean preEngineered) {
+        this(experimental, preEngineered, false, false);
     }
 
     public static HorizonsBlueprintType forName(final String name) {
@@ -457,9 +483,40 @@ public enum HorizonsBlueprintType {
             case "special_shield_health" -> HI_CAP;
             case "special_shield_efficient" -> LO_DRAW;
             case "special_shield_resistive" -> MULTI_WEAVE;
+            case "unknown1" -> MERC_LONG_RANGE_DETAILED_SURFACE_SCANNER;
+            case "unknown2" -> MERC_PLASMA_CONVERSION_BURST_LASER;
+            case "unknown3" -> MERC_PLASMA_CONVERSION_BEAM_LASER;
+            case "unknown4" -> MERC_PLASMA_CONVERSION_PULSE_LASER;
+            case "unknown5" -> MERC_SCOOP_RATE_ENHANCED_FUEL_SCOOP;
+            case "unknown6" -> MERC_HEAVY_DUTY_MODULE_REINFORCEMENT_PACKAGE;
+            case "unknown7" -> MERC_EXTENDED_CARGO_RACK;
+            case "unknown8" -> MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON;
+            case "unknown9" -> MERC_RAPID_PHASE_MULTI_CANNON;
+            case "unknown10" -> MERC_BALANCED_POWER_DISTRIBUTOR;
+            case "unknown11" -> MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR;
+            case "unknown12" -> MERC_FAR_REACHING_ABRASION_BLASTER;
+            case "unknown13" -> MERC_HIGH_YIELD_ENZYME_MISSILE_RACK;
+            case "unknown14" -> MERC_LONG_RANGE_MINING_LASER;
+            case "unknown15" -> MERC_DRAG_SEEKER_MISSILE_RACK;
+            case "unknown16" -> MERC_LIGHTWEIGHT_THERMAL_SEEKER_MISSILE_RACK;
+            case "unknown17" -> MERC_LOCKDOWN_SEEKER_MISSILE_RACK;
+            case "unknown18" -> MERC_ENDURING_FEEDBACK_RAIL_GUN;
             default -> throw new IllegalArgumentException("Unknown blueprint type: " + internalName);
         };
 
+    }
+
+    @JsonCreator
+    public static HorizonsBlueprintType fromString(String value) {
+        if (value == null) {
+            return null;
+        }
+
+        return switch (value) {
+            case "HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR_FEEDBACK_CASCADE" ->
+                    HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR; // HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR_FEEDBACK_CASCADE renamed to HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR
+            default -> HorizonsBlueprintType.valueOf(value);
+        };
     }
 
     public String getLocalizationKey() {
@@ -483,26 +540,16 @@ public enum HorizonsBlueprintType {
         return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
     }
 
-    @JsonCreator
-    public static HorizonsBlueprintType fromString(String value) {
-        if (value == null) {
-            return null;
-        }
-
-        return switch (value) {
-            case "HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR_FEEDBACK_CASCADE" -> HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR; // HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR_FEEDBACK_CASCADE renamed to HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR
-            default -> HorizonsBlueprintType.valueOf(value);
-        };
-    }
-
     public String getJournalName(ShipModule module) {
         return switch (this) {
             case INCREASED_FSD_RANGE_FASTER_FSD_BOOT_SEQUENCE -> "FSD_LongRange";
             case LONG_RANGE_WEAPON_INCENDIARY_ROUNDS,
                  LONG_RANGE_WEAPON_INCENDIARY_ROUNDS_ARX, LONG_RANGE_WEAPON_FOCUSED_WEAPON_PENETRATOR_MUNITIONS,
                  LONG_RANGE_WEAPON_FOCUSED_WEAPON_PENETRATOR_MUNITIONS_GOD, LONG_RANGE_WEAPON -> "weapon_longrange";
-            case LONG_RANGE_WEAPON_HIGH_CAPACITY_MAGAZINE_FEEDBACK_CASCADE, HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR,HIGH_CAPACITY_MAGAZINE_INCREASED_DAMAGE,
-                 HIGH_CAPACITY_MAGAZINE_STURDY_FSD_INTERRUPT ,HIGH_CAPACITY_MAGAZINE_THERMAL_CASCADE -> "Weapon_HighCapacity";
+            case LONG_RANGE_WEAPON_HIGH_CAPACITY_MAGAZINE_FEEDBACK_CASCADE, HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR,
+                 HIGH_CAPACITY_MAGAZINE_INCREASED_DAMAGE,
+                 HIGH_CAPACITY_MAGAZINE_STURDY_FSD_INTERRUPT, HIGH_CAPACITY_MAGAZINE_THERMAL_CASCADE ->
+                    "Weapon_HighCapacity";
             case OVERCHARGED_WEAPON_AUTO_LOADER, OVERCHARGED_WEAPON_FOCUSED_WEAPON -> "Weapon_Overcharged";
             case OVERCHARGED_OVERCHARGED -> "powerplant_boosted";
             case ARMOURED_OVERCHARGED -> "PowerPlant_Armoured";
@@ -511,7 +558,8 @@ public enum HorizonsBlueprintType {
             case FAST_SCANNER_LONG_RANGE_SCANNER -> "sensor_fastscan";
             case AMMO_CAPACITY_X2 -> "Misc_HeatSinkCapacity";
             case LIGHTWEIGHT_FOCUSED -> "Misc_LightWeight";
-            case DOUBLE_SHOT_HIGH_CAPACITY_MAGAZINE_SCREENING_SHELL, DOUBLE_SHOT_HIGH_CAPACITY_MAGAZINE_SCREENING_SHELL_B -> "weapon_doubleshot";
+            case DOUBLE_SHOT_HIGH_CAPACITY_MAGAZINE_SCREENING_SHELL,
+                 DOUBLE_SHOT_HIGH_CAPACITY_MAGAZINE_SCREENING_SHELL_B -> "weapon_doubleshot";
             case EXPANDED_PROBE_SCANNING_RADIUS_X2 -> "sensor_expanded";
             case SYSTEM_ENGINE_FOCUSED -> "powerdistributor_priorityengines";
             case HIGH_CAPACITY_MAGAZINE_RAPID_FIRE_MODIFICATION -> "Weapon_HighCapacity";
@@ -615,7 +663,7 @@ public enum HorizonsBlueprintType {
             case ANGLED_PLATING -> resolveAngledPlating(module);
             case DEEP_PLATING -> resolveDeepPlating(module);
             case LAYERED_PLATING -> resolveLayeredPlating(module);
-            case REFLECTIVE_PLATING ->resolveReflectivePlating(module);
+            case REFLECTIVE_PLATING -> resolveReflectivePlating(module);
             case MONSTERED -> "special_powerplant_highcharge";
             case DRAG_DRIVES -> "special_engine_overloaded";
             case DRIVE_DISTRIBUTORS -> "special_engine_haulage";
@@ -631,6 +679,24 @@ public enum HorizonsBlueprintType {
             case MULTI_WEAVE -> "special_shield_resistive";
             case FORCE_BLOCK -> resolveForceBlock(module);
             case ANTI_GUARDIAN_ZONE_RESISTANCE -> "guardianmodule_sturdy";
+            case MERC_LONG_RANGE_DETAILED_SURFACE_SCANNER -> "unknown";
+            case MERC_PLASMA_CONVERSION_BURST_LASER -> "unknown";
+            case MERC_PLASMA_CONVERSION_BEAM_LASER -> "unknown";
+            case MERC_PLASMA_CONVERSION_PULSE_LASER -> "unknown";
+            case MERC_SCOOP_RATE_ENHANCED_FUEL_SCOOP -> "unknown";
+            case MERC_HEAVY_DUTY_MODULE_REINFORCEMENT_PACKAGE -> "unknown";
+            case MERC_EXTENDED_CARGO_RACK -> "unknown";
+            case MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON -> "unknown";
+            case MERC_RAPID_PHASE_MULTI_CANNON -> "unknown";
+            case MERC_BALANCED_POWER_DISTRIBUTOR -> "unknown";
+            case MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR -> "unknown";
+            case MERC_FAR_REACHING_ABRASION_BLASTER -> "unknown";
+            case MERC_HIGH_YIELD_ENZYME_MISSILE_RACK -> "unknown";
+            case MERC_LONG_RANGE_MINING_LASER -> "unknown";
+            case MERC_DRAG_SEEKER_MISSILE_RACK -> "unknown";
+            case MERC_LIGHTWEIGHT_THERMAL_SEEKER_MISSILE_RACK -> "unknown";
+            case MERC_LOCKDOWN_SEEKER_MISSILE_RACK -> "unknown";
+            case MERC_ENDURING_FEEDBACK_RAIL_GUN -> "unknown";
             default -> "";
         };
     }
@@ -653,7 +719,8 @@ public enum HorizonsBlueprintType {
             case Armour _ -> "Armour_Advanced";
             case KillWarrantScanner _, LifeSupport _, ProspectorLimpetController _, CollectorLimpetController _,
                  FuelTransferLimpetController _, HatchBreakerLimpetController _, FrameShiftWakeScanner _,
-                 PointDefence _, ManifestScanner _, SinkLauncher _, ChaffLauncher _, ElectronicCountermeasure _ -> "misc_lightweight";
+                 PointDefence _, ManifestScanner _, SinkLauncher _, ChaffLauncher _, ElectronicCountermeasure _ ->
+                    "misc_lightweight";
             default -> "";
         };
     }

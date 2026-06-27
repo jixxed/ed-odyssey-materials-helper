@@ -33,6 +33,12 @@ public class SeekerMissileRack extends HardpointModule {
     public static final SeekerMissileRack SEEKER_MISSILE_RACK_2_B_F_PRE = new SeekerMissileRack("SEEKER_MISSILE_RACK_2_B_F_PRE", HorizonsBlueprintName.SEEKER_MISSILE_RACK_PRE, ModuleSize.SIZE_2, ModuleClass.B, Origin.EURYBIA_BLUE_MAFIA, true, Mounting.FIXED, 0, "Hpt_BasicMissileRack_Fixed_Medium", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 4.00), Map.entry(HorizonsModifier.INTEGRITY, 51.0), Map.entry(HorizonsModifier.POWER_DRAW, 1.20), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, 13.333), Map.entry(HorizonsModifier.DAMAGE, 40.000), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 0.240), Map.entry(HorizonsModifier.THERMAL_LOAD, 3.60), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 60.0), Map.entry(HorizonsModifier.SHOT_SPEED, 625.0), Map.entry(HorizonsModifier.RATE_OF_FIRE, 0.333), Map.entry(HorizonsModifier.BURST_INTERVAL, 3.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 6.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM, 18.0), Map.entry(HorizonsModifier.RELOAD_TIME, 12.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.4), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 0.0), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 0.0), Map.entry(HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, 1.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.0), Map.entry(HorizonsModifier.AMMO_COST, 500.0), Map.entry(HorizonsModifier.JITTER, 0.0), Map.entry(HorizonsModifier.SHIELDED_TARGET_HEAT_INCREASED, false), Map.entry(HorizonsModifier.TARGET_SIGNATURE_INCREASED, false), Map.entry(HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, false), Map.entry(HorizonsModifier.TARGET_SPEED_REDUCED, false)));
     public static final SeekerMissileRack SEEKER_MISSILE_RACK_2_B_F_PRE_2 = new SeekerMissileRack("SEEKER_MISSILE_RACK_2_B_F_PRE_2", HorizonsBlueprintName.SEEKER_MISSILE_RACK_PRE, ModuleSize.SIZE_2, ModuleClass.B, true, Mounting.FIXED, 0, "Hpt_BasicMissileRack_Fixed_Medium", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 4.00), Map.entry(HorizonsModifier.INTEGRITY, 51.0), Map.entry(HorizonsModifier.POWER_DRAW, 1.20), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, 13.333), Map.entry(HorizonsModifier.DAMAGE, 40.000), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 0.240), Map.entry(HorizonsModifier.THERMAL_LOAD, 3.60), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 60.0), Map.entry(HorizonsModifier.SHOT_SPEED, 625.0), Map.entry(HorizonsModifier.RATE_OF_FIRE, 0.333), Map.entry(HorizonsModifier.BURST_INTERVAL, 3.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 6.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM, 18.0), Map.entry(HorizonsModifier.RELOAD_TIME, 12.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.4), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 0.0), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 0.0), Map.entry(HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, 1.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.0), Map.entry(HorizonsModifier.AMMO_COST, 500.0), Map.entry(HorizonsModifier.JITTER, 0.0), Map.entry(HorizonsModifier.SHIELDED_TARGET_HEAT_INCREASED, false), Map.entry(HorizonsModifier.TARGET_SIGNATURE_INCREASED, false), Map.entry(HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, false), Map.entry(HorizonsModifier.TARGET_FSD_REBOOTS, false), Map.entry(HorizonsModifier.TARGET_SPEED_REDUCED, false)));
     public static final SeekerMissileRack SEEKER_MISSILE_RACK_3_A_F_PRE = new SeekerMissileRack("SEEKER_MISSILE_RACK_3_A_F_PRE", HorizonsBlueprintName.SEEKER_MISSILE_RACK_PRE, ModuleSize.SIZE_3, ModuleClass.A, true, Mounting.FIXED, 0, "Hpt_BasicMissileRack_Fixed_Large", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 8.00), Map.entry(HorizonsModifier.INTEGRITY, 64.0), Map.entry(HorizonsModifier.POWER_DRAW, 1.62), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, 13.333), Map.entry(HorizonsModifier.DAMAGE, 40.000), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 0.240), Map.entry(HorizonsModifier.THERMAL_LOAD, 3.60), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 60.0), Map.entry(HorizonsModifier.SHOT_SPEED, 625.0), Map.entry(HorizonsModifier.RATE_OF_FIRE, 0.333), Map.entry(HorizonsModifier.BURST_INTERVAL, 3.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 6.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM, 36.0), Map.entry(HorizonsModifier.RELOAD_TIME, 12.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.4), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 0.0), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 0.0), Map.entry(HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, 1.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.0), Map.entry(HorizonsModifier.AMMO_COST, 500.0), Map.entry(HorizonsModifier.JITTER, 0.0), Map.entry(HorizonsModifier.SHIELDED_TARGET_HEAT_INCREASED, false), Map.entry(HorizonsModifier.TARGET_SIGNATURE_INCREASED, false), Map.entry(HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, false), Map.entry(HorizonsModifier.TARGET_FSD_REBOOTS, false), Map.entry(HorizonsModifier.TARGET_SPEED_REDUCED, false)));
+
+    public static final SeekerMissileRack SEEKER_MISSILE_RACK_2_B_F_MERC_DRAG = new SeekerMissileRack("SEEKER_MISSILE_RACK_2_B_F_MERC_DRAG", HorizonsBlueprintName.SEEKER_MISSILE_RACK_REG, ModuleSize.SIZE_2, ModuleClass.B, true, Mounting.FIXED, 800, "Hpt_BasicMissileRack_Fixed_Medium", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 4.00), Map.entry(HorizonsModifier.INTEGRITY, 51.0), Map.entry(HorizonsModifier.POWER_DRAW, 1.20), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, 13.333), Map.entry(HorizonsModifier.DAMAGE, 40.000), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 0.240), Map.entry(HorizonsModifier.THERMAL_LOAD, 3.60), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 60.0), Map.entry(HorizonsModifier.SHOT_SPEED, 625.0), Map.entry(HorizonsModifier.RATE_OF_FIRE, 0.333), Map.entry(HorizonsModifier.BURST_INTERVAL, 3.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 6.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM, 18.0), Map.entry(HorizonsModifier.RELOAD_TIME, 12.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.4), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 0.0), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 0.0), Map.entry(HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, 1.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.0), Map.entry(HorizonsModifier.AMMO_COST, 500.0), Map.entry(HorizonsModifier.JITTER, 0.0), Map.entry(HorizonsModifier.SHIELDED_TARGET_HEAT_INCREASED, false), Map.entry(HorizonsModifier.TARGET_SIGNATURE_INCREASED, false), Map.entry(HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, false), Map.entry(HorizonsModifier.TARGET_SPEED_REDUCED, false)));
+    public static final SeekerMissileRack SEEKER_MISSILE_RACK_2_B_F_MERC_LW = new SeekerMissileRack("SEEKER_MISSILE_RACK_2_B_F_MERC_LW", HorizonsBlueprintName.SEEKER_MISSILE_RACK_REG, ModuleSize.SIZE_2, ModuleClass.B, true, Mounting.FIXED, 800, "Hpt_BasicMissileRack_Fixed_Medium", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 4.00), Map.entry(HorizonsModifier.INTEGRITY, 51.0), Map.entry(HorizonsModifier.POWER_DRAW, 1.20), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, 13.333), Map.entry(HorizonsModifier.DAMAGE, 40.000), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 0.240), Map.entry(HorizonsModifier.THERMAL_LOAD, 3.60), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 60.0), Map.entry(HorizonsModifier.SHOT_SPEED, 625.0), Map.entry(HorizonsModifier.RATE_OF_FIRE, 0.333), Map.entry(HorizonsModifier.BURST_INTERVAL, 3.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 6.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM, 18.0), Map.entry(HorizonsModifier.RELOAD_TIME, 12.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.4), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 0.0), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 0.0), Map.entry(HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, 1.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.0), Map.entry(HorizonsModifier.AMMO_COST, 500.0), Map.entry(HorizonsModifier.JITTER, 0.0), Map.entry(HorizonsModifier.SHIELDED_TARGET_HEAT_INCREASED, false), Map.entry(HorizonsModifier.TARGET_SIGNATURE_INCREASED, false), Map.entry(HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, false), Map.entry(HorizonsModifier.TARGET_SPEED_REDUCED, false)));
+    public static final SeekerMissileRack SEEKER_MISSILE_RACK_2_B_F_MERC_LOCKDOWN = new SeekerMissileRack("SEEKER_MISSILE_RACK_2_B_F_MERC_LOCKDOWN", HorizonsBlueprintName.SEEKER_MISSILE_RACK_REG, ModuleSize.SIZE_2, ModuleClass.B, true, Mounting.FIXED, 800, "Hpt_BasicMissileRack_Fixed_Medium", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 4.00), Map.entry(HorizonsModifier.INTEGRITY, 51.0), Map.entry(HorizonsModifier.POWER_DRAW, 1.20), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, 13.333), Map.entry(HorizonsModifier.DAMAGE, 40.000), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 0.240), Map.entry(HorizonsModifier.THERMAL_LOAD, 3.60), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 60.0), Map.entry(HorizonsModifier.SHOT_SPEED, 625.0), Map.entry(HorizonsModifier.RATE_OF_FIRE, 0.333), Map.entry(HorizonsModifier.BURST_INTERVAL, 3.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 6.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM, 18.0), Map.entry(HorizonsModifier.RELOAD_TIME, 12.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.4), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 0.0), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 0.0), Map.entry(HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, 1.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.0), Map.entry(HorizonsModifier.AMMO_COST, 500.0), Map.entry(HorizonsModifier.JITTER, 0.0), Map.entry(HorizonsModifier.SHIELDED_TARGET_HEAT_INCREASED, false), Map.entry(HorizonsModifier.TARGET_SIGNATURE_INCREASED, false), Map.entry(HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, false), Map.entry(HorizonsModifier.TARGET_SPEED_REDUCED, false)));
+    public static final SeekerMissileRack SEEKER_MISSILE_RACK_3_A_F_MERC_LOCKDOWN = new SeekerMissileRack("SEEKER_MISSILE_RACK_3_A_F_MERC_LOCKDOWN", HorizonsBlueprintName.SEEKER_MISSILE_RACK_REG, ModuleSize.SIZE_3, ModuleClass.A, true, Mounting.FIXED, 900, "Hpt_BasicMissileRack_Fixed_Large", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 8.00), Map.entry(HorizonsModifier.INTEGRITY, 64.0), Map.entry(HorizonsModifier.POWER_DRAW, 1.62), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, 13.333), Map.entry(HorizonsModifier.DAMAGE, 40.000), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 0.240), Map.entry(HorizonsModifier.THERMAL_LOAD, 3.60), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 60.0), Map.entry(HorizonsModifier.SHOT_SPEED, 625.0), Map.entry(HorizonsModifier.RATE_OF_FIRE, 0.333), Map.entry(HorizonsModifier.BURST_INTERVAL, 3.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 6.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM, 36.0), Map.entry(HorizonsModifier.RELOAD_TIME, 12.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.4), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 0.0), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 0.0), Map.entry(HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, 1.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.0), Map.entry(HorizonsModifier.AMMO_COST, 500.0), Map.entry(HorizonsModifier.JITTER, 0.0), Map.entry(HorizonsModifier.SHIELDED_TARGET_HEAT_INCREASED, false), Map.entry(HorizonsModifier.TARGET_SIGNATURE_INCREASED, false), Map.entry(HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, false), Map.entry(HorizonsModifier.TARGET_SPEED_REDUCED, false)));
+
     public static final List<SeekerMissileRack> SEEKER_MISSILE_RACKS = List.of(
             SEEKER_MISSILE_RACK_1_B_F,
             SEEKER_MISSILE_RACK_2_B_F,
@@ -40,7 +46,11 @@ public class SeekerMissileRack extends HardpointModule {
             PACK_HOUND_MISSILE_RACK_2_B_F,
             SEEKER_MISSILE_RACK_2_B_F_PRE,
             SEEKER_MISSILE_RACK_2_B_F_PRE_2,
-            SEEKER_MISSILE_RACK_3_A_F_PRE
+            SEEKER_MISSILE_RACK_3_A_F_PRE,
+            SEEKER_MISSILE_RACK_2_B_F_MERC_DRAG,
+            SEEKER_MISSILE_RACK_2_B_F_MERC_LW,
+            SEEKER_MISSILE_RACK_2_B_F_MERC_LOCKDOWN,
+            SEEKER_MISSILE_RACK_3_A_F_MERC_LOCKDOWN
     );
 
     static {
@@ -52,6 +62,19 @@ public class SeekerMissileRack extends HardpointModule {
         );
         SEEKER_MISSILE_RACK_3_A_F_PRE.getModifications().add(
                 new Modification(HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE_STURDY_FSD_INTERRUPT, 1.0, HorizonsBlueprintGrade.GRADE_5)
+        );
+
+        SEEKER_MISSILE_RACK_2_B_F_MERC_DRAG.getModifications().add(
+                new Modification(HorizonsBlueprintType.MERC_DRAG_SEEKER_MISSILE_RACK, 1.0, HorizonsBlueprintGrade.GRADE_1)
+        );
+        SEEKER_MISSILE_RACK_2_B_F_MERC_LW.getModifications().add(
+                new Modification(HorizonsBlueprintType.MERC_LIGHTWEIGHT_THERMAL_SEEKER_MISSILE_RACK, 1.0, HorizonsBlueprintGrade.GRADE_1)
+        );
+        SEEKER_MISSILE_RACK_2_B_F_MERC_LOCKDOWN.getModifications().add(
+                new Modification(HorizonsBlueprintType.MERC_LOCKDOWN_SEEKER_MISSILE_RACK, 1.0, HorizonsBlueprintGrade.GRADE_1)
+        );
+        SEEKER_MISSILE_RACK_3_A_F_MERC_LOCKDOWN.getModifications().add(
+                new Modification(HorizonsBlueprintType.MERC_LOCKDOWN_SEEKER_MISSILE_RACK, 1.0, HorizonsBlueprintGrade.GRADE_1)
         );
     }
 
@@ -93,6 +116,13 @@ public class SeekerMissileRack extends HardpointModule {
     public boolean isPreEngineered() {
         return SEEKER_MISSILE_RACK_2_B_F_PRE.equals(this) || SEEKER_MISSILE_RACK_2_B_F_PRE_2.equals(this) || SEEKER_MISSILE_RACK_3_A_F_PRE.equals(this);
     }
+    @Override
+    public boolean isMerc() {
+        return List.of(SEEKER_MISSILE_RACK_2_B_F_MERC_DRAG,
+                SEEKER_MISSILE_RACK_2_B_F_MERC_LW,
+                SEEKER_MISSILE_RACK_2_B_F_MERC_LOCKDOWN,
+                SEEKER_MISSILE_RACK_3_A_F_MERC_LOCKDOWN).contains(this);
+    }
 
     public boolean isSeeker() {
         return SEEKER_MISSILE_RACK_1_B_F.equals(this) || SEEKER_MISSILE_RACK_2_B_F.equals(this) || SEEKER_MISSILE_RACK_3_A_F.equals(this) || SEEKER_MISSILE_RACK_2_B_F_PRE.equals(this) || SEEKER_MISSILE_RACK_2_B_F_PRE_2.equals(this) || SEEKER_MISSILE_RACK_3_A_F_PRE.equals(this);
@@ -108,6 +138,15 @@ public class SeekerMissileRack extends HardpointModule {
         if (PACK_HOUND_MISSILE_RACK_2_B_F.equals(this)) {
             return " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey() + ".short");
         }
+        if (SEEKER_MISSILE_RACK_2_B_F_MERC_DRAG.equals(this)) {
+            return " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey() + ".drag");
+        }
+        if (SEEKER_MISSILE_RACK_2_B_F_MERC_LW.equals(this)) {
+            return " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey() + ".lw");
+        }
+        if (SEEKER_MISSILE_RACK_2_B_F_MERC_LOCKDOWN.equals(this) || SEEKER_MISSILE_RACK_3_A_F_MERC_LOCKDOWN.equals(this)) {
+            return " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey() + ".lockdown");
+        }
         return super.getClarifier();
     }
 
@@ -115,11 +154,15 @@ public class SeekerMissileRack extends HardpointModule {
     public int getGrouping() {
         return switch (getId()) {
             case "SEEKER_MISSILE_RACK_1_B_F" -> 1;
-            case "SEEKER_MISSILE_RACK_2_B_F" -> 3;
-            case "SEEKER_MISSILE_RACK_2_B_F_PRE", "SEEKER_MISSILE_RACK_2_B_F_PRE_2" -> 4;
-            case "PACK_HOUND_MISSILE_RACK_2_B_F" -> 5;
-            case "SEEKER_MISSILE_RACK_3_A_F" -> 7;
+            case "SEEKER_MISSILE_RACK_2_B_F" -> 2;
+            case "SEEKER_MISSILE_RACK_2_B_F_PRE", "SEEKER_MISSILE_RACK_2_B_F_PRE_2" -> 3;
+            case "SEEKER_MISSILE_RACK_2_B_F_MERC_DRAG" -> 4;
+            case "SEEKER_MISSILE_RACK_2_B_F_MERC_LW" -> 5;
+            case "SEEKER_MISSILE_RACK_2_B_F_MERC_LOCKDOWN" -> 6;
+            case "PACK_HOUND_MISSILE_RACK_2_B_F" -> 7;
+            case "SEEKER_MISSILE_RACK_3_A_F" -> 8;
             case "SEEKER_MISSILE_RACK_3_A_F_PRE" -> 8;
+            case "SEEKER_MISSILE_RACK_3_A_F_MERC_LOCKDOWN" -> 9;
             default -> 0;
         };
     }

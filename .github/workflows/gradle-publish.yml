@@ -23,8 +23,11 @@ jobs:
       PROPRIETARY_REPO_USER: "${{secrets.PROPRIETARY_REPO_USER}}"
       PROPRIETARY_REPO_PASS: "${{secrets.PROPRIETARY_REPO_PASS}}"
 
+#Downloading JDK from: https://cdn.azul.com/zulu/bin/zulu25.32.21-ca-jdk25.0.2-linux_x64.zip
+#Downloading JDK from: https://cdn.azul.com/zulu/bin/zulu25.32.21-ca-jdk25.0.2-win_x64.zip
+#Downloading JDK from: https://cdn.azul.com/zulu/bin/zulu25.32.21-ca-jdk25.0.2-macosx_aarch64.zip
     steps:
-      - uses: olegtarasov/get-tag@v2.1.4
+      - uses: jixxed/get-tag@3.0.1
         id: tagName
       - uses: actions/checkout@v6
       - name: Download Zulu (without CRaC)
@@ -87,7 +90,7 @@ jobs:
       PROPRIETARY_REPO_PASS: "${{secrets.PROPRIETARY_REPO_PASS}}"
 
     steps:
-      - uses: olegtarasov/get-tag@v2.1.4
+      - uses: jixxed/get-tag@3.0.1
         id: tagName
       - uses: actions/checkout@v6
       - name: Download Zulu (without CRaC)
@@ -162,7 +165,7 @@ jobs:
       PROPRIETARY_REPO_PASS: "${{secrets.PROPRIETARY_REPO_PASS}}"
 
     steps:
-      - uses: olegtarasov/get-tag@v2.1.4
+      - uses: jixxed/get-tag@3.0.1
         id: tagName
       - uses: actions/checkout@v6
       - name: Download Zulu (without CRaC)
@@ -222,7 +225,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: olegtarasov/get-tag@v2.1.4
+      - uses: jixxed/get-tag@3.0.1
         id: tagName
       - uses: actions/checkout@v6
         with:

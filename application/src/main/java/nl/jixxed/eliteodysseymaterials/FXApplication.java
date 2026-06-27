@@ -862,6 +862,7 @@ public class FXApplication extends Application {
         StorageService.resetFleetCarrierCounts();
         StorageService.resetSquadronCarrierCounts();
         StorageService.resetSrvCounts();
+        StorageService.resetCurrencyCounts();
         StorageService.resetHorizonsMaterialCounts();
         StorageService.resetHorizonsCommodityCounts();
         if (this.fleetCarrierWatcher != null) {

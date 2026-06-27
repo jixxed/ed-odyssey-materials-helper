@@ -80,6 +80,10 @@ public class MaterialCard extends DestroyableStackPane implements DestroyableEve
         this.getStyleClass().add("material-card");
 
         EdAwesomeIconViewPane typeImage = switch (material) {
+            case Currency currency -> EdAwesomeIconViewPaneBuilder.builder()
+                    .withStyleClass("commodity-image")
+                    .withIcons(Arrays.stream(currency.getIcons()).map(icon -> new EdAwesomeIconView(icon, "2.5em")).toArray(EdAwesomeIconView[]::new))
+                    .build();
             case Commodity commodity -> EdAwesomeIconViewPaneBuilder.builder()
                     .withStyleClass("commodity-image")
                     .withIcons(Arrays.stream(commodity.getCommodityType().getIcons()).map(icon -> new EdAwesomeIconView(icon, "2.5em")).toArray(EdAwesomeIconView[]::new))
@@ -300,6 +304,11 @@ public class MaterialCard extends DestroyableStackPane implements DestroyableEve
             }
             case HorizonsMaterial horizonsMaterial: {
                 this.shipAmount = (StorageService.getMaterialCount(horizonsMaterial));
+                this.shipAmountLabel.setText(this.shipAmount.toString());
+                break;
+            }
+            case Currency currency: {
+                this.shipAmount = (StorageService.getMaterialCount(currency));
                 this.shipAmountLabel.setText(this.shipAmount.toString());
                 break;
             }

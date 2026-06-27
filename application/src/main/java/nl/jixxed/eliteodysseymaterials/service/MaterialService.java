@@ -28,6 +28,7 @@ import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.*;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.enums.Currency;
 import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.helper.POIHelper;
@@ -572,6 +573,7 @@ public class MaterialService {
                         case HorizonsMaterial horizonsMaterial ->
                                 getMaterialPopOverContent(horizonsMaterial, wishlist, requiredAmount, spaceOnlyMarkets, hoverableNode);
                         case OdysseyMaterial odysseyMaterial -> getMaterialPopOverContent(odysseyMaterial);
+                        case Currency currency -> getMaterialPopOverContent(currency);
                     };
                     contentNode.set(content);
                     contentNode.get().getStyleClass().add("material-popover");
@@ -635,6 +637,23 @@ public class MaterialService {
 
 
         });
+    }
+
+    private static DestroyableMaterialContent getMaterialPopOverContent(Currency currency) {
+        final DestroyableMaterialContent vBox = new DestroyableMaterialContent();
+        vBox.getStyleClass().add("material-popover-content");
+        if (currency.isUnknown()) {
+            vBox.getNodes().add(LabelBuilder.builder()
+                    .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_TITLE)
+                    .withText(LocaleService.getStringBinding("material.tooltip.unknown"))
+                    .build());
+        } else {
+            vBox.getNodes().add(LabelBuilder.builder()
+                    .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_TITLE)
+                    .withText(LocaleService.getStringBinding(currency.getLocalizationKey()))
+                    .build());
+        }
+        return vBox;
     }
 
 

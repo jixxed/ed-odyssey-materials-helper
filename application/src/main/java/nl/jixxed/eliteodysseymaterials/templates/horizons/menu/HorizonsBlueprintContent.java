@@ -173,6 +173,7 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
     }
 
     private void loadIngredients() {
+        this.ingredients.addAll(getRecipeIngredients(this.blueprint, Currency.class, HorizonsStorageType.CURRENCY));
         this.ingredients.addAll(getRecipeIngredients(this.blueprint, Raw.class, HorizonsStorageType.RAW));
         this.ingredients.addAll(getRecipeIngredients(this.blueprint, Encoded.class, HorizonsStorageType.ENCODED));
         this.ingredients.addAll(getRecipeIngredients(this.blueprint, Manufactured.class, HorizonsStorageType.MANUFACTURED));
@@ -293,7 +294,9 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
     }
 
     private void loadCommanderWishlists(final Commander commander) {
-        this.addToWishlist.loadCommanderWishlists(commander, this.blueprint);
+        if(this.addToWishlist != null) {
+            this.addToWishlist.loadCommanderWishlists(commander, this.blueprint);
+        }
     }
 
 
@@ -383,7 +386,7 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
         }));
     }
 
-    private List<HorizonsMaterialIngredient> getRecipeIngredients(final HorizonsBlueprint blueprint, final Class<? extends HorizonsMaterial> materialClass, final HorizonsStorageType storageType) {
+    private List<HorizonsMaterialIngredient> getRecipeIngredients(final HorizonsBlueprint blueprint, final Class<? extends Material> materialClass, final HorizonsStorageType storageType) {
         return blueprint.getMaterialCollection(materialClass).entrySet().stream()
                 .sorted(Comparator.comparing(entry -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getLocalizationKey())))
                 .map(material ->

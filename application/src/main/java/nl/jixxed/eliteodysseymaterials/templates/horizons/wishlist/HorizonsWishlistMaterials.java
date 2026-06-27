@@ -31,6 +31,7 @@ public class HorizonsWishlistMaterials extends DestroyableVBox implements Destro
     public void initComponents() {
         this.getStyleClass().add("materials");
         HorizonsWishlistMaterialsCategory allFlow = new HorizonsWishlistMaterialsCategory(WishlistMaterialsCategory.ALL);
+        HorizonsWishlistMaterialsCategory currencyFlow = new HorizonsWishlistMaterialsCategory(WishlistMaterialsCategory.CURRENCY);
         HorizonsWishlistMaterialsCategory rawFlow = new HorizonsWishlistMaterialsCategory(WishlistMaterialsCategory.RAW);
         HorizonsWishlistMaterialsCategory encodedFlow = new HorizonsWishlistMaterialsCategory(WishlistMaterialsCategory.ENCODED);
         HorizonsWishlistMaterialsCategory manufacturedFlow = new HorizonsWishlistMaterialsCategory(WishlistMaterialsCategory.MANUFACTURED);
@@ -63,7 +64,7 @@ public class HorizonsWishlistMaterials extends DestroyableVBox implements Destro
                 .buildHBox();
         final DestroyableVBox flows = BoxBuilder.builder()
                 .withStyleClass("flows")
-                .withNodes(allFlow, rawFlow, encodedFlow, manufacturedFlow, commodityFlow)
+                .withNodes(allFlow, currencyFlow, rawFlow, encodedFlow, manufacturedFlow, commodityFlow)
                 .buildVBox();
         this.getNodes().addAll(titleBar, flows);
     }

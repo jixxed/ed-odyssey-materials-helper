@@ -18,6 +18,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -64,7 +65,9 @@ public class BurstLaser extends HardpointModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
-        return BurstLaserBlueprints.BLUEPRINTS.keySet().stream().toList();
+        List<HorizonsBlueprintType> allowed = new ArrayList<>(BurstLaserBlueprints.BLUEPRINTS.keySet().stream().toList());
+        allowed.add(HorizonsBlueprintType.MERC_PLASMA_CONVERSION_BURST_LASER);
+        return allowed;
     }
 
     @Override

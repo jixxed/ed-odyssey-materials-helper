@@ -21,10 +21,10 @@ import java.util.stream.Stream;
 
 public class HorizonsSynthesisBlueprint extends HorizonsBlueprint {
 
-    private final Map<HorizonsMaterial, Integer> alternateRaw;
-    private final Map<HorizonsMaterial, Integer> alternateEncoded;
-    private final Map<HorizonsMaterial, Integer> alternateManufactured;
-    private final Map<HorizonsMaterial, Integer> alternateCommodities;
+    private final Map<Material, Integer> alternateRaw;
+    private final Map<Material, Integer> alternateEncoded;
+    private final Map<Material, Integer> alternateManufactured;
+    private final Map<Material, Integer> alternateCommodities;
     private final SquadronPerk[] squadronPerks;
 
     public HorizonsSynthesisBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade, final Map<? extends HorizonsMaterial, Integer> materials, final Map<? extends HorizonsMaterial, Integer> alternateMaterials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, SquadronPerk... squadronPerks) {
@@ -49,7 +49,7 @@ public class HorizonsSynthesisBlueprint extends HorizonsBlueprint {
     }
 
     @Override
-    public <T extends HorizonsMaterial> Map<HorizonsMaterial, Integer> getMaterialCollection(final Class<T> clazz) {
+    public <T extends Material> Map<Material, Integer> getMaterialCollection(final Class<T> clazz) {
         if (isPerked()) {
             if (clazz.equals(Raw.class)) {
                 return this.alternateRaw;

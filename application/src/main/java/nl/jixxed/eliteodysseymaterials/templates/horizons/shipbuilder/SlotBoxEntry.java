@@ -55,14 +55,14 @@ public class SlotBoxEntry extends DestroyableVBox {
                 .build();
 //        HBox.setHgrow(this.name, Priority.ALWAYS);
         Stream<List<ShipModule>> stream = shipModules.stream().allMatch(ShipModule::hasGrouping) && !(firstModule instanceof Armour)
-                ? shipModules.stream().collect(Collectors.groupingBy(shipModule -> String.valueOf(shipModule.getGrouping()))).values().stream()
-                : shipModules.stream().collect(Collectors.groupingBy(shipModule -> shipModule.getModuleSize().toString() + shipModule.getGrouping() + shipModule.getOrigin().equals(Origin.POWERPLAY))).values().stream();
+                ? shipModules.stream().collect(Collectors.groupingBy(shipModule -> String.format("%03d", shipModule.getGrouping()))).values().stream()
+                : shipModules.stream().collect(Collectors.groupingBy(shipModule -> shipModule.getModuleSize().toString() + String.format("%03d", shipModule.getGrouping()) + shipModule.getOrigin().equals(Origin.POWERPLAY))).values().stream();
         stream = Stream.concat(stream, ApplicationState.getInstance().getPreferredCommander().map(commander -> {
             final ShipLegacyModules legacyModules = LegacyModuleService.loadModules(commander);
             return legacyModules.getLegacyModules().stream().map(this::mapToShipModule).filter(shipModule -> shipModule.getClass().equals(firstModule.getClass())).map(Collections::singletonList);
         }).orElseGet(Stream::empty));
         this.options = stream
-                .sorted(Comparator.comparing(shipModuleSubList -> (shipModuleSubList.getFirst().hasGrouping() || firstModule instanceof Armour) ? String.valueOf(shipModuleSubList.getFirst().getGrouping()) : shipModuleSubList.getFirst().getModuleSize().toString() + shipModuleSubList.getFirst().getOrigin().equals(Origin.POWERPLAY)))
+                .sorted(Comparator.comparing(shipModuleSubList -> (shipModuleSubList.getFirst().hasGrouping() || firstModule instanceof Armour) ? String.format("%03d", shipModuleSubList.getFirst().getGrouping()) : shipModuleSubList.getFirst().getModuleSize().toString() + shipModuleSubList.getFirst().getOrigin().equals(Origin.POWERPLAY)))
                 .map(shipModuleSubList ->
                         shipModuleSubList.stream()
                                 .map(shipModule -> createShipModuleButton(slotBox, shipModule))

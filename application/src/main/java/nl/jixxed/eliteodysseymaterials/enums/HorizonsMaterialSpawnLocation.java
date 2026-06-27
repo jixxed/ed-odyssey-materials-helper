@@ -98,6 +98,9 @@ public enum HorizonsMaterialSpawnLocation implements SpawnLocation {
     RES_COMBAT(null),
     CZ_AUTHORITY(null),
     CRASHED_SHIP_ANACONDA_005(List.of(
+            new Location(new StarSystem("85 Pegasi", -30.75000, -22.40625, -11.40625), "A1A", null, null, null, null),
+            new Location(new StarSystem("BD+37 2625", -55, 100.28125, 32.03125), "A3C", null, null, null, null),
+            new Location(new StarSystem("Ross 113", -41.78125, 95.53125, -47.56250), "10A", null, null, null, null),
             new Location(new StarSystem("BD+49 1280", -19.84375, 4.625, -49.15625), "B2", null, null, null, null),
             new Location(new StarSystem("Beditjari", -6.53125, -60.9375, 104.34375), "B3A", null, null, null, null),
             new Location(new StarSystem("Belu", -30.3125, 13.3125, 59.34375), "B11A", null, null, null, null),

@@ -167,6 +167,7 @@ class MessageHandler {
             Map.entry(JournalEventType.CARRIERSTATS, new CarrierStatsSingleMessageProcessor()),
             Map.entry(JournalEventType.CARRIERTRADEORDER, new CarrierTradeOrderSingleMessageProcessor()),
             Map.entry(JournalEventType.MODULEBUY, new ModuleBuySingleMessageProcessor()),
+            Map.entry(JournalEventType.MODULEBUYANDSTORE, new ModuleBuyAndStoreSingleMessageProcessor()),
             Map.entry(JournalEventType.MODULERETRIEVE, new ModuleRetrieveSingleMessageProcessor()),
             Map.entry(JournalEventType.MODULESELL, new ModuleSellSingleMessageProcessor()),
             Map.entry(JournalEventType.MODULESTORE, new ModuleStoreSingleMessageProcessor()),
@@ -177,6 +178,7 @@ class MessageHandler {
             Map.entry(JournalEventType.RANK, new RankSingleMessageProcessor()),
             Map.entry(JournalEventType.PROGRESS, new ProgressSingleMessageProcessor()),
             Map.entry(JournalEventType.COMMUNITYGOAL, new CommunityGoalSingleMessageProcessor()),
+            Map.entry(JournalEventType.STATISTICS, new StatisticsSingleMessageProcessor()),
 
             Map.entry(JournalEventType.LOADGAME, new LoadGameSingleMessageProcessor())
     );

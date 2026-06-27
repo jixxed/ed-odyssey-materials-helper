@@ -38,7 +38,10 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipBuilderEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.SlotboxEngineeringEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.SlotboxHoverEvent;
+import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
+import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIconView;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.math.BigDecimal;
@@ -49,11 +52,9 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class ModuleSelectPopover extends DestroyablePopOver implements DestroyableEventTemplate {
-    private SlotBox slotBox;
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-
     IntegerProperty maxGrade = new SimpleIntegerProperty(0);
-
+    private SlotBox slotBox;
     private DestroyableSlider progressSlider;
     private List<DestroyableToggleButton> toggleButtonsRank;
     private ToggleGroup toggleGroupRank;
@@ -141,12 +142,14 @@ public class ModuleSelectPopover extends DestroyablePopOver implements Destroyab
             this.experintalEffectsSection = addBlueprintSection(content, "tabs.ships.experimental.effects", true);
         }
     }
+
     private void addSynthesis(final DestroyableVBox content) {
         final ShipModule shipModule = slotBox.getSlot().getShipModule();
         if (shipModule != null && !shipModule.synthesisBlueprints().isEmpty()) {
             this.synthesisSection = addSynthesisSection(content);
         }
     }
+
     private DestroyableVBox addSynthesisSection(final DestroyableVBox content) {
         final ShipModule shipModule = slotBox.getSlot().getShipModule();
         final Collection<HorizonsSynthesisBlueprint> allowedBlueprints = shipModule.synthesisBlueprints();
@@ -250,6 +253,14 @@ public class ModuleSelectPopover extends DestroyablePopOver implements Destroyab
                                             EventService.publish(new SlotboxEngineeringEvent(this.slotBox, slotBox.getSlot().getShipModule()));
                                         })
                                         .build();
+                                button.setDisable(shipModule.isMerc());
+                                if (horizonsBlueprintType.isMerc()) {
+                                    EdAwesomeIconViewPane iconView = EdAwesomeIconViewPaneBuilder.builder()
+                                            .withStyleClasses("button-icon")
+                                            .withIcons(new EdAwesomeIconView(EdAwesomeIcon.OTHER_MERCCOIN))
+                                            .build();
+                                    button.setGraphic(iconView);
+                                }
                                 button.setFocusTraversable(false);
                                 boolean selected = experimental ? shipModule.getExperimentalEffects().contains(horizonsBlueprintType) : shipModule.getModifications().stream().anyMatch(modification -> modification.getModification().equals(horizonsBlueprintType));
                                 button.selectedProperty().set(selected);

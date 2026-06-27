@@ -84,7 +84,7 @@ public class HorizonsWishlistMaterialsCategory extends DestroyableFlowPane imple
     }
 
     private void createCards() {
-        final Set<HorizonsMaterial> allWishlistMaterials = getAllWishlistMaterials();
+        final Set<Material> allWishlistMaterials = getAllWishlistMaterials();
         destroyCards();
         this.getNodes().addAll(allWishlistMaterials.stream()
                 .filter(getFilter())
@@ -93,8 +93,9 @@ public class HorizonsWishlistMaterialsCategory extends DestroyableFlowPane imple
                 .toList());
     }
 
-    private Predicate<HorizonsMaterial> getFilter() {
+    private Predicate<Material> getFilter() {
         return switch (wishlistMaterialsCategory) {
+            case CURRENCY -> Currency.class::isInstance;
             case RAW -> Raw.class::isInstance;
             case ENCODED -> Encoded.class::isInstance;
             case MANUFACTURED -> Manufactured.class::isInstance;
@@ -128,7 +129,7 @@ public class HorizonsWishlistMaterialsCategory extends DestroyableFlowPane imple
         return !getChildren().filtered(Node::isVisible).isEmpty();
     }
 
-    private Set<HorizonsMaterial> getAllWishlistMaterials() {
+    private Set<Material> getAllWishlistMaterials() {
         return APPLICATION_STATE.getPreferredCommander()
                 .map(commander -> WishlistService.getHorizonsWishlists(commander).getSelectedWishlist())
                 .map(wishlist -> wishlist.getItems().stream()
@@ -138,20 +139,20 @@ public class HorizonsWishlistMaterialsCategory extends DestroyableFlowPane imple
                 .orElse(Collections.emptySet());
     }
 
-    private Set<HorizonsMaterial> getMaterials(HorizonsWishlistBlueprint wishlistBlueprint) {
-        Set<HorizonsMaterial> materials = new HashSet<>();
+    private Set<Material> getMaterials(HorizonsWishlistBlueprint wishlistBlueprint) {
+        Set<Material> materials = new HashSet<>();
         if (wishlistBlueprint instanceof HorizonsModuleWishlistBlueprint moduleWishlistBlueprint) {
             moduleWishlistBlueprint.getPercentageToComplete().forEach((grade, _) -> {
                 final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(moduleWishlistBlueprint.getRecipeName(), moduleWishlistBlueprint.getBlueprintType(), grade);
-                materials.addAll(blueprint.getMaterialCollection(HorizonsMaterial.class).keySet());
+                materials.addAll(blueprint.getMaterialCollection(Material.class).keySet());
             });
             if (moduleWishlistBlueprint.getExperimentalEffect() != null) {
                 final HorizonsBlueprint experimentalBlueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(moduleWishlistBlueprint.getRecipeName(), moduleWishlistBlueprint.getExperimentalEffect(), null);
-                materials.addAll(experimentalBlueprint.getMaterialCollection(HorizonsMaterial.class).keySet());
+                materials.addAll(experimentalBlueprint.getMaterialCollection(Material.class).keySet());
             }
         } else {
             final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(wishlistBlueprint.getRecipeName(), WishlistService.getBlueprintType(wishlistBlueprint), WishlistService.getBlueprintGrade(wishlistBlueprint));
-            materials.addAll(blueprint.getMaterialCollection(HorizonsMaterial.class).keySet());
+            materials.addAll(blueprint.getMaterialCollection(Material.class).keySet());
         }
         return materials;
     }

@@ -99,6 +99,7 @@ public class ShipModuleButton extends DestroyableButton {
         }
         if (shipModule.isLegacy()) images.add(createImage("module-image", EdAwesomeIcon.SHIPS_LEGACY));
         if (shipModule.isPreEngineered()) images.add(createImage("module-image", EdAwesomeIcon.SHIPS_PREENGINEERED));
+        if (shipModule.isMerc()) images.add(createImage("module-image", EdAwesomeIcon.OTHER_MERCCOIN));
         if (shipModule.isStoreExclusive()) images.add(createImage("module-image", EdAwesomeIcon.OTHER_ARX));
         if (shipModule.isAdvanced()) images.add(createImage("module-image-wide", EdAwesomeIcon.SHIPS_ADVANCED));
         if (shipModule.isEnhanced()) images.add(createImage("module-image-wide", EdAwesomeIcon.SHIPS_ENHANCED));

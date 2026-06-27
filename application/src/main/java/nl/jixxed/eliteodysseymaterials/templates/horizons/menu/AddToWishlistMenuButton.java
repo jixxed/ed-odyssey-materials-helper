@@ -118,7 +118,7 @@ public class AddToWishlistMenuButton extends DestroyableMenuButton implements De
     private DestroyableMenuItem createAllGradeMenuItem(final Commander commander, final HorizonsWishlist wishlist, HorizonsBlueprint blueprint) {
         return MenuItemBuilder.builder()
                 .withOnAction(_ -> {
-                    final Set<HorizonsBlueprintGrade> blueprintGrades = HorizonsBlueprintConstants.getBlueprintGrades((blueprint.getBlueprintName()), blueprint.getHorizonsBlueprintType());
+                    final Set<HorizonsBlueprintGrade> blueprintGrades = HorizonsBlueprintConstants.getEngineerableBlueprintGrades((blueprint.getBlueprintName()), blueprint.getHorizonsBlueprintType());
 
                     final Map<HorizonsBlueprintGrade, Double> gradePercentages = new EnumMap<>(HorizonsBlueprintGrade.class);
                     blueprintGrades.forEach(horizonsBlueprintGrade -> gradePercentages.put(horizonsBlueprintGrade, 1D));

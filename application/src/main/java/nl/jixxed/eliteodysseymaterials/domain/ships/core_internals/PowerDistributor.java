@@ -84,24 +84,12 @@ public class PowerDistributor extends CoreModule {
     public static final PowerDistributor POWER_DISTRIBUTOR_4_D_SYSTEM_ENGINE_FOCUSED = new PowerDistributor("POWER_DISTRIBUTOR_4_D_SYSTEM_ENGINE_FOCUSED", HorizonsBlueprintName.POWER_DISTRIBUTOR_SYSTEM_ENGINE_FOCUSED, ModuleSize.SIZE_4, ModuleClass.D, 0, "Int_PowerDistributor_Size4_Class2", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 4.00), Map.entry(HorizonsModifier.INTEGRITY, 64.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.50), Map.entry(HorizonsModifier.POWER_BOOST, 0.0), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.WEAPONS_CAPACITY, 24.00), Map.entry(HorizonsModifier.WEAPONS_RECHARGE, 2.60), Map.entry(HorizonsModifier.ENGINES_CAPACITY, 17.00), Map.entry(HorizonsModifier.ENGINES_RECHARGE, 1.40), Map.entry(HorizonsModifier.SYSTEMS_CAPACITY, 17.00), Map.entry(HorizonsModifier.SYSTEMS_RECHARGE, 1.40)));
     public static final PowerDistributor POWER_DISTRIBUTOR_6_A_SYSTEM_ENGINE_FOCUSED = new PowerDistributor("POWER_DISTRIBUTOR_6_A_SYSTEM_ENGINE_FOCUSED", HorizonsBlueprintName.POWER_DISTRIBUTOR_SYSTEM_ENGINE_FOCUSED, ModuleSize.SIZE_6, ModuleClass.A, 0, "Int_PowerDistributor_Size6_Class5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 40.00), Map.entry(HorizonsModifier.INTEGRITY, 124.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.82), Map.entry(HorizonsModifier.POWER_BOOST, 0.0), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.WEAPONS_CAPACITY, 50.00), Map.entry(HorizonsModifier.WEAPONS_RECHARGE, 5.20), Map.entry(HorizonsModifier.ENGINES_CAPACITY, 35.00), Map.entry(HorizonsModifier.ENGINES_RECHARGE, 3.20), Map.entry(HorizonsModifier.SYSTEMS_CAPACITY, 35.00), Map.entry(HorizonsModifier.SYSTEMS_RECHARGE, 3.20)));
 
-    static {
-        POWER_DISTRIBUTOR_3_A_SYSTEM_ENGINE_FOCUSED.getModifications().add(
-                new Modification(HorizonsBlueprintType.SYSTEM_ENGINE_FOCUSED, 1.0, HorizonsBlueprintGrade.GRADE_5)
-        );
-        POWER_DISTRIBUTOR_3_D_SYSTEM_ENGINE_FOCUSED.getModifications().add(
-                new Modification(HorizonsBlueprintType.SYSTEM_ENGINE_FOCUSED, 1.0, HorizonsBlueprintGrade.GRADE_5)
-        );
-        POWER_DISTRIBUTOR_4_A_SYSTEM_ENGINE_FOCUSED.getModifications().add(
-                new Modification(HorizonsBlueprintType.SYSTEM_ENGINE_FOCUSED, 1.0, HorizonsBlueprintGrade.GRADE_5)
-        );
-        POWER_DISTRIBUTOR_4_D_SYSTEM_ENGINE_FOCUSED.getModifications().add(
-                new Modification(HorizonsBlueprintType.SYSTEM_ENGINE_FOCUSED, 1.0, HorizonsBlueprintGrade.GRADE_5)
-        );
-        POWER_DISTRIBUTOR_6_A_SYSTEM_ENGINE_FOCUSED.getModifications().add(
-                new Modification(HorizonsBlueprintType.SYSTEM_ENGINE_FOCUSED, 1.0, HorizonsBlueprintGrade.GRADE_5)
-        );
-    }
-
+    public static final PowerDistributor POWER_DISTRIBUTOR_5_A_MERC_BALANCED = new PowerDistributor("POWER_DISTRIBUTOR_5_A_MERC_BALANCED", HorizonsBlueprintName.POWER_DISTRIBUTOR, ModuleSize.SIZE_5, ModuleClass.A, 500, "Int_PowerDistributor_Size5_Class5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 20.00), Map.entry(HorizonsModifier.INTEGRITY, 106.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.74), Map.entry(HorizonsModifier.POWER_BOOST, 0.0), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.WEAPONS_CAPACITY, 41.00), Map.entry(HorizonsModifier.WEAPONS_RECHARGE, 4.30), Map.entry(HorizonsModifier.ENGINES_CAPACITY, 29.00), Map.entry(HorizonsModifier.ENGINES_RECHARGE, 2.50), Map.entry(HorizonsModifier.SYSTEMS_CAPACITY, 29.00), Map.entry(HorizonsModifier.SYSTEMS_RECHARGE, 2.50)));
+    public static final PowerDistributor POWER_DISTRIBUTOR_3_A_MERC_SUPPORT_FOCUSED = new PowerDistributor("POWER_DISTRIBUTOR_3_A_MERC_SUPPORT_FOCUSED", HorizonsBlueprintName.POWER_DISTRIBUTOR, ModuleSize.SIZE_3, ModuleClass.A, 350, "Int_PowerDistributor_Size3_Class5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 5.00), Map.entry(HorizonsModifier.INTEGRITY, 70.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.60), Map.entry(HorizonsModifier.POWER_BOOST, 0.0), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.WEAPONS_CAPACITY, 24.00), Map.entry(HorizonsModifier.WEAPONS_RECHARGE, 2.80), Map.entry(HorizonsModifier.ENGINES_CAPACITY, 18.00), Map.entry(HorizonsModifier.ENGINES_RECHARGE, 1.30), Map.entry(HorizonsModifier.SYSTEMS_CAPACITY, 18.00), Map.entry(HorizonsModifier.SYSTEMS_RECHARGE, 1.30)));
+    public static final PowerDistributor POWER_DISTRIBUTOR_3_D_MERC_SUPPORT_FOCUSED = new PowerDistributor("POWER_DISTRIBUTOR_3_D_MERC_SUPPORT_FOCUSED", HorizonsBlueprintName.POWER_DISTRIBUTOR, ModuleSize.SIZE_3, ModuleClass.D, 300, "Int_PowerDistributor_Size3_Class2", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.00), Map.entry(HorizonsModifier.INTEGRITY, 51.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.45), Map.entry(HorizonsModifier.POWER_BOOST, 0.0), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.WEAPONS_CAPACITY, 18.00), Map.entry(HorizonsModifier.WEAPONS_RECHARGE, 2.10), Map.entry(HorizonsModifier.ENGINES_CAPACITY, 14.00), Map.entry(HorizonsModifier.ENGINES_RECHARGE, 1.00), Map.entry(HorizonsModifier.SYSTEMS_CAPACITY, 14.00), Map.entry(HorizonsModifier.SYSTEMS_RECHARGE, 1.00)));
+    public static final PowerDistributor POWER_DISTRIBUTOR_4_A_MERC_SUPPORT_FOCUSED = new PowerDistributor("POWER_DISTRIBUTOR_4_A_MERC_SUPPORT_FOCUSED", HorizonsBlueprintName.POWER_DISTRIBUTOR, ModuleSize.SIZE_4, ModuleClass.A, 450, "Int_PowerDistributor_Size4_Class5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 10.00), Map.entry(HorizonsModifier.INTEGRITY, 88.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.67), Map.entry(HorizonsModifier.POWER_BOOST, 0.0), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.WEAPONS_CAPACITY, 32.00), Map.entry(HorizonsModifier.WEAPONS_RECHARGE, 3.50), Map.entry(HorizonsModifier.ENGINES_CAPACITY, 23.00), Map.entry(HorizonsModifier.ENGINES_RECHARGE, 1.90), Map.entry(HorizonsModifier.SYSTEMS_CAPACITY, 23.00), Map.entry(HorizonsModifier.SYSTEMS_RECHARGE, 1.90)));
+    public static final PowerDistributor POWER_DISTRIBUTOR_4_D_MERC_SUPPORT_FOCUSED = new PowerDistributor("POWER_DISTRIBUTOR_4_D_MERC_SUPPORT_FOCUSED", HorizonsBlueprintName.POWER_DISTRIBUTOR, ModuleSize.SIZE_4, ModuleClass.D, 400, "Int_PowerDistributor_Size4_Class2", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 4.00), Map.entry(HorizonsModifier.INTEGRITY, 64.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.50), Map.entry(HorizonsModifier.POWER_BOOST, 0.0), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.WEAPONS_CAPACITY, 24.00), Map.entry(HorizonsModifier.WEAPONS_RECHARGE, 2.60), Map.entry(HorizonsModifier.ENGINES_CAPACITY, 17.00), Map.entry(HorizonsModifier.ENGINES_RECHARGE, 1.40), Map.entry(HorizonsModifier.SYSTEMS_CAPACITY, 17.00), Map.entry(HorizonsModifier.SYSTEMS_RECHARGE, 1.40)));
+    public static final PowerDistributor POWER_DISTRIBUTOR_6_A_MERC_SUPPORT_FOCUSED = new PowerDistributor("POWER_DISTRIBUTOR_6_A_MERC_SUPPORT_FOCUSED", HorizonsBlueprintName.POWER_DISTRIBUTOR, ModuleSize.SIZE_6, ModuleClass.A, 550, "Int_PowerDistributor_Size6_Class5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 40.00), Map.entry(HorizonsModifier.INTEGRITY, 124.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.82), Map.entry(HorizonsModifier.POWER_BOOST, 0.0), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.WEAPONS_CAPACITY, 50.00), Map.entry(HorizonsModifier.WEAPONS_RECHARGE, 5.20), Map.entry(HorizonsModifier.ENGINES_CAPACITY, 35.00), Map.entry(HorizonsModifier.ENGINES_RECHARGE, 3.20), Map.entry(HorizonsModifier.SYSTEMS_CAPACITY, 35.00), Map.entry(HorizonsModifier.SYSTEMS_RECHARGE, 3.20)));
     public static final List<PowerDistributor> POWER_DISTRIBUTORS = List.of(
             POWER_DISTRIBUTOR_1_E_FIGHTER,
             POWER_DISTRIBUTOR_1_E_FREE,
@@ -157,8 +145,50 @@ public class PowerDistributor extends CoreModule {
             POWER_DISTRIBUTOR_3_D_SYSTEM_ENGINE_FOCUSED,
             POWER_DISTRIBUTOR_4_A_SYSTEM_ENGINE_FOCUSED,
             POWER_DISTRIBUTOR_4_D_SYSTEM_ENGINE_FOCUSED,
-            POWER_DISTRIBUTOR_6_A_SYSTEM_ENGINE_FOCUSED
+            POWER_DISTRIBUTOR_6_A_SYSTEM_ENGINE_FOCUSED,
+            POWER_DISTRIBUTOR_5_A_MERC_BALANCED,
+            POWER_DISTRIBUTOR_3_A_MERC_SUPPORT_FOCUSED,
+            POWER_DISTRIBUTOR_3_D_MERC_SUPPORT_FOCUSED,
+            POWER_DISTRIBUTOR_4_A_MERC_SUPPORT_FOCUSED,
+            POWER_DISTRIBUTOR_4_D_MERC_SUPPORT_FOCUSED,
+            POWER_DISTRIBUTOR_6_A_MERC_SUPPORT_FOCUSED
     );
+
+    static {
+        POWER_DISTRIBUTOR_3_A_SYSTEM_ENGINE_FOCUSED.getModifications().add(
+                new Modification(HorizonsBlueprintType.SYSTEM_ENGINE_FOCUSED, 1.0, HorizonsBlueprintGrade.GRADE_5)
+        );
+        POWER_DISTRIBUTOR_3_D_SYSTEM_ENGINE_FOCUSED.getModifications().add(
+                new Modification(HorizonsBlueprintType.SYSTEM_ENGINE_FOCUSED, 1.0, HorizonsBlueprintGrade.GRADE_5)
+        );
+        POWER_DISTRIBUTOR_4_A_SYSTEM_ENGINE_FOCUSED.getModifications().add(
+                new Modification(HorizonsBlueprintType.SYSTEM_ENGINE_FOCUSED, 1.0, HorizonsBlueprintGrade.GRADE_5)
+        );
+        POWER_DISTRIBUTOR_4_D_SYSTEM_ENGINE_FOCUSED.getModifications().add(
+                new Modification(HorizonsBlueprintType.SYSTEM_ENGINE_FOCUSED, 1.0, HorizonsBlueprintGrade.GRADE_5)
+        );
+        POWER_DISTRIBUTOR_6_A_SYSTEM_ENGINE_FOCUSED.getModifications().add(
+                new Modification(HorizonsBlueprintType.SYSTEM_ENGINE_FOCUSED, 1.0, HorizonsBlueprintGrade.GRADE_5)
+        );
+        POWER_DISTRIBUTOR_5_A_MERC_BALANCED.getModifications().add(
+                new Modification(HorizonsBlueprintType.MERC_BALANCED_POWER_DISTRIBUTOR, 1.0, HorizonsBlueprintGrade.GRADE_1)
+        );
+        POWER_DISTRIBUTOR_3_A_MERC_SUPPORT_FOCUSED.getModifications().add(
+                new Modification(HorizonsBlueprintType.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR, 1.0, HorizonsBlueprintGrade.GRADE_1)
+        );
+        POWER_DISTRIBUTOR_3_D_MERC_SUPPORT_FOCUSED.getModifications().add(
+                new Modification(HorizonsBlueprintType.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR, 1.0, HorizonsBlueprintGrade.GRADE_1)
+        );
+        POWER_DISTRIBUTOR_4_A_MERC_SUPPORT_FOCUSED.getModifications().add(
+                new Modification(HorizonsBlueprintType.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR, 1.0, HorizonsBlueprintGrade.GRADE_1)
+        );
+        POWER_DISTRIBUTOR_4_D_MERC_SUPPORT_FOCUSED.getModifications().add(
+                new Modification(HorizonsBlueprintType.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR, 1.0, HorizonsBlueprintGrade.GRADE_1)
+        );
+        POWER_DISTRIBUTOR_6_A_MERC_SUPPORT_FOCUSED.getModifications().add(
+                new Modification(HorizonsBlueprintType.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR, 1.0, HorizonsBlueprintGrade.GRADE_1)
+        );
+    }
 
     private PowerDistributor(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, basePrice, internalName, attributes);
@@ -175,7 +205,7 @@ public class PowerDistributor extends CoreModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
-        if(POWER_DISTRIBUTOR_1_E_FIGHTER.equals(this)){
+        if (POWER_DISTRIBUTOR_1_E_FIGHTER.equals(this)) {
             return Collections.emptyList();
         }
         if (isPreEngineered()) {
@@ -189,7 +219,7 @@ public class PowerDistributor extends CoreModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedExperimentalEffects() {
-        if(POWER_DISTRIBUTOR_1_E_FIGHTER.equals(this)){
+        if (POWER_DISTRIBUTOR_1_E_FIGHTER.equals(this)) {
             return Collections.emptyList();
         }
         if (isPreEngineered()) {
@@ -212,22 +242,40 @@ public class PowerDistributor extends CoreModule {
     }
 
     @Override
+    public boolean isMerc() {
+        return POWER_DISTRIBUTOR_5_A_MERC_BALANCED.equals(this)
+                || POWER_DISTRIBUTOR_3_A_MERC_SUPPORT_FOCUSED.equals(this)
+                || POWER_DISTRIBUTOR_3_D_MERC_SUPPORT_FOCUSED.equals(this)
+                || POWER_DISTRIBUTOR_4_A_MERC_SUPPORT_FOCUSED.equals(this)
+                || POWER_DISTRIBUTOR_4_D_MERC_SUPPORT_FOCUSED.equals(this)
+                || POWER_DISTRIBUTOR_6_A_MERC_SUPPORT_FOCUSED.equals(this);
+    }
+    @Override
     public boolean isCGExclusive() {
         return HorizonsBlueprintName.POWER_DISTRIBUTOR_SYSTEM_ENGINE_FOCUSED.equals(this.getName());
     }
 
     @Override
     public String getClarifier() {
-        if (this.getOrigin() == Origin.GUARDIAN)
+        if (this.getOrigin() == Origin.GUARDIAN) {
             return " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey());
-        else if (isPreEngineered())
+        } else if (isPreEngineered()) {
             return " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey() + ".short");
+        } else if (POWER_DISTRIBUTOR_5_A_MERC_BALANCED.equals(this)) {
+            return " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey() + ".balanced");
+        } else if (POWER_DISTRIBUTOR_3_A_MERC_SUPPORT_FOCUSED.equals(this)
+                || POWER_DISTRIBUTOR_3_D_MERC_SUPPORT_FOCUSED.equals(this)
+                || POWER_DISTRIBUTOR_4_A_MERC_SUPPORT_FOCUSED.equals(this)
+                || POWER_DISTRIBUTOR_4_D_MERC_SUPPORT_FOCUSED.equals(this)
+                || POWER_DISTRIBUTOR_6_A_MERC_SUPPORT_FOCUSED.equals(this)) {
+            return " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey() + ".support");
+        }
         return "";
     }
 
     @Override
     public int getGrouping() {
-        return getModuleSize().intValue() * 10 + (getOrigin().equals(Origin.GUARDIAN) ? 1 : 0) + (isPreEngineered() ? 2 : 0);
+        return getModuleSize().intValue() * 10 + (getOrigin().equals(Origin.GUARDIAN) ? 1 : 0) + (isPreEngineered() ? 2 : 0) + (isMerc() ? 3 : 0);
     }
 
     public boolean isSelectable() {

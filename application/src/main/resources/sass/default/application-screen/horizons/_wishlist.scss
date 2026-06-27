@@ -493,6 +493,7 @@
                   -fx-fill: $text-color-white;
                 }
 
+                @include currencies;
                 @include commodities;
               }
 

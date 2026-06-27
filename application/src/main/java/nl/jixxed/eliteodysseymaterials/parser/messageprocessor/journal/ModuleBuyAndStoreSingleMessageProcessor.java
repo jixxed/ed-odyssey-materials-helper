@@ -8,28 +8,25 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package nl.jixxed.eliteodysseymaterials.domain;
+package nl.jixxed.eliteodysseymaterials.parser.messageprocessor.journal;
 
-import nl.jixxed.eliteodysseymaterials.enums.*;
+import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.enums.Currency;
+import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.SingleMessageProcessor;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.ModuleBuyAndStore.ModuleBuyAndStore;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
 
-import java.util.List;
-import java.util.Map;
-
-public class HorizonsExperimentalEffectBlueprint extends HorizonsBlueprint implements HorizonsEngineeringBlueprint {
-    private final List<Engineer> engineers;
-
-    public HorizonsExperimentalEffectBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<? extends Material, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers) {
-        super(horizonsBlueprintName, horizonsBlueprintType, materials, modifiers, engineers);
-        this.engineers = engineers;
+@Slf4j
+public class ModuleBuyAndStoreSingleMessageProcessor implements SingleMessageProcessor<ModuleBuyAndStore> {
+    @Override
+    public void process(final ModuleBuyAndStore event) {
+        log.info("Merc Currency: " + StorageService.getMaterialCount(Currency.MERC_COIN));
+        event.getBuyMercCoinsPrice().ifPresent(amount -> StorageService.removeMaterial(Currency.MERC_COIN, amount.intValue()));
+        log.info("Merc Currency: " + StorageService.getMaterialCount(Currency.MERC_COIN));
     }
 
     @Override
-    public List<Engineer> getEngineers() {
-        return this.engineers;
-    }
-
-    @Override
-    public boolean hasSingleEngineerPerRegion() {
-        return this.engineers != null && this.engineers.size() == 2;
+    public Class<ModuleBuyAndStore> getMessageClass() {
+        return ModuleBuyAndStore.class;
     }
 }

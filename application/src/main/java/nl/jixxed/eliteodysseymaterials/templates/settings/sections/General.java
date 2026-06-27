@@ -540,7 +540,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 .withManaged(connected)
                 .withOnAction(e -> {
                     SponsorService.disconnect();
-                    updateSponsorUI();
+                    EventService.publish(new SponsorConnectionEvent(false));
                 })
                 .build();
         return BoxBuilder.builder()

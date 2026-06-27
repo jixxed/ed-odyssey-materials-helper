@@ -39,6 +39,8 @@ public class FragmentCannon extends HardpointModule {
     public static final FragmentCannon PACIFIER_FRAG_CANNON_3_C_F = new FragmentCannon("PACIFIER_FRAG_CANNON_3_C_F", HorizonsBlueprintName.PACIFIER_FRAGMENT_CANNON, ModuleSize.SIZE_3, ModuleClass.C, Origin.POWERPLAY, false, Mounting.FIXED, 1751040, "Hpt_Slugshot_Fixed_Large_Range",  Map.ofEntries(Map.entry(HorizonsModifier.MASS, 8.00), Map.entry(HorizonsModifier.INTEGRITY, 64.0), Map.entry(HorizonsModifier.POWER_DRAW, 1.02), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.DAMAGE, 3.960), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 0.570), Map.entry(HorizonsModifier.THERMAL_LOAD, 1.13), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 45.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE, 3000.0), Map.entry(HorizonsModifier.SHOT_SPEED, 1000.0), Map.entry(HorizonsModifier.RATE_OF_FIRE, 4.545), Map.entry(HorizonsModifier.BURST_RATE_OF_FIRE, -1.0), Map.entry(HorizonsModifier.BURST_INTERVAL, 0.220), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 3.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM, 180.0), Map.entry(HorizonsModifier.ROUNDS_PER_SHOT, 12.0), Map.entry(HorizonsModifier.BURST_SIZE, 1.0), Map.entry(HorizonsModifier.RELOAD_TIME, 5.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.9), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 0.40), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 0.80), Map.entry(HorizonsModifier.JITTER, 1.7), Map.entry(HorizonsModifier.KINETIC_DAMAGE_RATIO, 1.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.0), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START, 2800.0), Map.entry(HorizonsModifier.AMMO_COST, 17.0), Map.entry(HorizonsModifier.TARGET_ARMOR_HARDNESS_REDUCED, false), Map.entry(HorizonsModifier.EFFECTIVENESS_INCREASE_AGAINST_MUNITIONS, false), Map.entry(HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, false), Map.entry(HorizonsModifier.TARGET_SENSOR_ACUITY_REDUCED, false), Map.entry(HorizonsModifier.TARGET_SPEED_REDUCED, false)));
     public static final FragmentCannon FRAGMENT_CANNON_1_E_G_PRE = new FragmentCannon("FRAGMENT_CANNON_1_E_G_PRE", HorizonsBlueprintName.FRAGMENT_CANNON_PRE, ModuleSize.SIZE_1, ModuleClass.E, false, Mounting.GIMBALLED, 54720, "Hpt_Slugshot_Gimbal_Small",                              Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.00), Map.entry(HorizonsModifier.INTEGRITY, 40.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.59), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.DAMAGE, 1.010), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 0.260), Map.entry(HorizonsModifier.THERMAL_LOAD, 0.44), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 20.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE, 2000.0), Map.entry(HorizonsModifier.SHOT_SPEED, 667.0), Map.entry(HorizonsModifier.RATE_OF_FIRE, 5.882), Map.entry(HorizonsModifier.BURST_RATE_OF_FIRE, -1.0), Map.entry(HorizonsModifier.BURST_INTERVAL, 0.170), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 3.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM, 180.0), Map.entry(HorizonsModifier.ROUNDS_PER_SHOT, 12.0), Map.entry(HorizonsModifier.BURST_SIZE, 1.0), Map.entry(HorizonsModifier.RELOAD_TIME, 5.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.9), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 0.40), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 0.80), Map.entry(HorizonsModifier.JITTER, 5.0), Map.entry(HorizonsModifier.KINETIC_DAMAGE_RATIO, 1.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.0), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START, 1800.0), Map.entry(HorizonsModifier.AMMO_COST, 17.0), Map.entry(HorizonsModifier.TARGET_ARMOR_HARDNESS_REDUCED, false), Map.entry(HorizonsModifier.EFFECTIVENESS_INCREASE_AGAINST_MUNITIONS, false), Map.entry(HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, false), Map.entry(HorizonsModifier.TARGET_SENSOR_ACUITY_REDUCED, false), Map.entry(HorizonsModifier.TARGET_SPEED_REDUCED, false)));
     public static final FragmentCannon FRAGMENT_CANNON_3_C_G_PRE = new FragmentCannon("FRAGMENT_CANNON_3_C_G_PRE", HorizonsBlueprintName.FRAGMENT_CANNON_PRE, ModuleSize.SIZE_3, ModuleClass.C, false, Mounting.GIMBALLED, 1751040, "Hpt_Slugshot_Gimbal_Large",                            Map.ofEntries(Map.entry(HorizonsModifier.MASS, 8.00), Map.entry(HorizonsModifier.INTEGRITY, 64.0), Map.entry(HorizonsModifier.POWER_DRAW, 1.55), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.DAMAGE, 3.770), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 0.810), Map.entry(HorizonsModifier.THERMAL_LOAD, 1.40), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 45.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE, 2000.0), Map.entry(HorizonsModifier.SHOT_SPEED, 667.0), Map.entry(HorizonsModifier.RATE_OF_FIRE, 4.762), Map.entry(HorizonsModifier.BURST_RATE_OF_FIRE, -1.0), Map.entry(HorizonsModifier.BURST_INTERVAL, 0.210), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 3.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM, 180.0), Map.entry(HorizonsModifier.ROUNDS_PER_SHOT, 12.0), Map.entry(HorizonsModifier.BURST_SIZE, 1.0), Map.entry(HorizonsModifier.RELOAD_TIME, 5.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.9), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 0.40), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 0.80), Map.entry(HorizonsModifier.JITTER, 5.0), Map.entry(HorizonsModifier.KINETIC_DAMAGE_RATIO, 1.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.0), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START, 1800.0), Map.entry(HorizonsModifier.AMMO_COST, 17.0), Map.entry(HorizonsModifier.TARGET_ARMOR_HARDNESS_REDUCED, false), Map.entry(HorizonsModifier.EFFECTIVENESS_INCREASE_AGAINST_MUNITIONS, false), Map.entry(HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, false), Map.entry(HorizonsModifier.TARGET_SENSOR_ACUITY_REDUCED, false), Map.entry(HorizonsModifier.TARGET_SPEED_REDUCED, false)));
+    public static final FragmentCannon FRAGMENT_CANNON_1_E_G_MERC = new FragmentCannon("FRAGMENT_CANNON_1_E_G_MERC", HorizonsBlueprintName.FRAGMENT_CANNON, ModuleSize.SIZE_1, ModuleClass.E, false, Mounting.GIMBALLED, 800, "Hpt_Slugshot_Gimbal_Small",                                          Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.00), Map.entry(HorizonsModifier.INTEGRITY, 40.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.59), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.DAMAGE, 1.010), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 0.260), Map.entry(HorizonsModifier.THERMAL_LOAD, 0.44), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 20.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE, 2000.0), Map.entry(HorizonsModifier.SHOT_SPEED, 667.0), Map.entry(HorizonsModifier.RATE_OF_FIRE, 5.882), Map.entry(HorizonsModifier.BURST_RATE_OF_FIRE, -1.0), Map.entry(HorizonsModifier.BURST_INTERVAL, 0.170), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 3.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM, 180.0), Map.entry(HorizonsModifier.ROUNDS_PER_SHOT, 12.0), Map.entry(HorizonsModifier.BURST_SIZE, 1.0), Map.entry(HorizonsModifier.RELOAD_TIME, 5.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.9), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 0.40), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 0.80), Map.entry(HorizonsModifier.JITTER, 5.0), Map.entry(HorizonsModifier.KINETIC_DAMAGE_RATIO, 1.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.0), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START, 1800.0), Map.entry(HorizonsModifier.AMMO_COST, 17.0), Map.entry(HorizonsModifier.TARGET_ARMOR_HARDNESS_REDUCED, false), Map.entry(HorizonsModifier.EFFECTIVENESS_INCREASE_AGAINST_MUNITIONS, false), Map.entry(HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, false), Map.entry(HorizonsModifier.TARGET_SENSOR_ACUITY_REDUCED, false), Map.entry(HorizonsModifier.TARGET_SPEED_REDUCED, false)));
+    public static final FragmentCannon FRAGMENT_CANNON_3_C_G_MERC = new FragmentCannon("FRAGMENT_CANNON_3_C_G_MERC", HorizonsBlueprintName.FRAGMENT_CANNON, ModuleSize.SIZE_3, ModuleClass.C, false, Mounting.GIMBALLED, 800, "Hpt_Slugshot_Gimbal_Large",                                        Map.ofEntries(Map.entry(HorizonsModifier.MASS, 8.00), Map.entry(HorizonsModifier.INTEGRITY, 64.0), Map.entry(HorizonsModifier.POWER_DRAW, 1.55), Map.entry(HorizonsModifier.BOOT_TIME, 0.0), Map.entry(HorizonsModifier.DAMAGE, 3.770), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 0.810), Map.entry(HorizonsModifier.THERMAL_LOAD, 1.40), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 45.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE, 2000.0), Map.entry(HorizonsModifier.SHOT_SPEED, 667.0), Map.entry(HorizonsModifier.RATE_OF_FIRE, 4.762), Map.entry(HorizonsModifier.BURST_RATE_OF_FIRE, -1.0), Map.entry(HorizonsModifier.BURST_INTERVAL, 0.210), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 3.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM, 180.0), Map.entry(HorizonsModifier.ROUNDS_PER_SHOT, 12.0), Map.entry(HorizonsModifier.BURST_SIZE, 1.0), Map.entry(HorizonsModifier.RELOAD_TIME, 5.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.9), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 0.40), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 0.80), Map.entry(HorizonsModifier.JITTER, 5.0), Map.entry(HorizonsModifier.KINETIC_DAMAGE_RATIO, 1.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.0), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START, 1800.0), Map.entry(HorizonsModifier.AMMO_COST, 17.0), Map.entry(HorizonsModifier.TARGET_ARMOR_HARDNESS_REDUCED, false), Map.entry(HorizonsModifier.EFFECTIVENESS_INCREASE_AGAINST_MUNITIONS, false), Map.entry(HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, false), Map.entry(HorizonsModifier.TARGET_SENSOR_ACUITY_REDUCED, false), Map.entry(HorizonsModifier.TARGET_SPEED_REDUCED, false)));
 
 
     static {
@@ -47,6 +49,12 @@ public class FragmentCannon extends HardpointModule {
         );
         FRAGMENT_CANNON_3_C_G_PRE.getModifications().add(
                 new Modification(HorizonsBlueprintType.DOUBLE_SHOT_HIGH_CAPACITY_MAGAZINE_SCREENING_SHELL, 1.0, HorizonsBlueprintGrade.GRADE_5)
+        );
+        FRAGMENT_CANNON_1_E_G_MERC.getModifications().add(
+                new Modification(HorizonsBlueprintType.MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON, 1.0, HorizonsBlueprintGrade.GRADE_1)
+        );
+        FRAGMENT_CANNON_3_C_G_MERC.getModifications().add(
+                new Modification(HorizonsBlueprintType.MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON, 1.0, HorizonsBlueprintGrade.GRADE_1)
         );
     }
 
@@ -62,7 +70,9 @@ public class FragmentCannon extends HardpointModule {
             FRAGMENT_CANNON_3_C_T,
             PACIFIER_FRAG_CANNON_3_C_F,
             FRAGMENT_CANNON_1_E_G_PRE,
-            FRAGMENT_CANNON_3_C_G_PRE
+            FRAGMENT_CANNON_3_C_G_PRE,
+            FRAGMENT_CANNON_1_E_G_MERC,
+            FRAGMENT_CANNON_3_C_G_MERC
     );
 
     public FragmentCannon(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, Mounting mounting, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
@@ -82,6 +92,9 @@ public class FragmentCannon extends HardpointModule {
         if (isPreEngineered()) {
             return Collections.emptyList();
         }
+        if(FRAGMENT_CANNON_1_E_G_MERC.equals(this) || FRAGMENT_CANNON_3_C_G_MERC.equals(this)){
+            return List.of(HorizonsBlueprintType.MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON);
+        }
         return FragmentCannonBlueprints.BLUEPRINTS.keySet().stream().toList();
     }
 
@@ -96,6 +109,10 @@ public class FragmentCannon extends HardpointModule {
     @Override
     public boolean isPreEngineered() {
         return FRAGMENT_CANNON_1_E_G_PRE.equals(this) || FRAGMENT_CANNON_3_C_G_PRE.equals(this);
+    }
+    @Override
+    public boolean isMerc() {
+        return FRAGMENT_CANNON_1_E_G_MERC.equals(this) || FRAGMENT_CANNON_3_C_G_MERC.equals(this);
     }
 
     @Override
@@ -120,7 +137,8 @@ public class FragmentCannon extends HardpointModule {
     public int getGrouping() {
         return getModuleSize().intValue() * 10
                 + (isPreEngineered() ? 1 : 0)
-                + (getOrigin() == Origin.POWERPLAY ? 2 : 0);
+                + (isPreEngineered() ? 2 : 0)
+                + (getOrigin() == Origin.POWERPLAY ? 3 : 0);
     }
 
     @Override

@@ -92,7 +92,7 @@ public class ModuleDetails extends DestroyableVBox implements DestroyableEventTe
     }
 
     private void addPrice(String text, int index, int size) {
-        properties.getNodes().add(new ModuleDetailsProperty("module.details.price", "module.details.price.value", text, index, size));
+        properties.getNodes().add(new ModuleDetailsProperty(shipModule.isMerc() ? "module.details.mercprice" : "module.details.price", shipModule.isMerc() ? "module.details.mercprice.value" : "module.details.price.value", text, index, size));
 
     }
 
@@ -102,6 +102,9 @@ public class ModuleDetails extends DestroyableVBox implements DestroyableEventTe
 
     private void addRebuyPrice(String text, int index, int size) {
         properties.getNodes().add(new ModuleDetailsProperty("module.details.rebuyprice", "module.details.rebuyprice.value", text, index, size));
+    }
+    private void addModuleType(String text, int index, int size){
+        properties.getNodes().add(new ModuleDetailsProperty("module.details.type", "notification.value.text", text, index, size));
     }
 
     private void update() {
@@ -117,7 +120,7 @@ public class ModuleDetails extends DestroyableVBox implements DestroyableEventTe
             if (shipModule.getBuyPrice() != null) {
                 addBuyPrice(Formatters.NUMBER_FORMAT_0.format(shipModule.getBuyPrice()), propertyIndex++, size);
             }
-            addRebuyPrice(Formatters.NUMBER_FORMAT_0.format((shipModule.getBuyPrice() != null ? shipModule.getBuyPrice() : shipModule.getBasePrice()) * 0.05), propertyIndex++, size);
+            addRebuyPrice(Formatters.NUMBER_FORMAT_0.format(shipModule.isMerc() ? 0D : (shipModule.getBuyPrice() != null ? shipModule.getBuyPrice() : shipModule.getBasePrice()) * 0.05), propertyIndex++, size);
             if (!shipModule.getModifications().isEmpty()) {
                 addEngineering(Stream.concat(shipModule.getModifications().stream()
                                         .map(modification -> LocaleService.getLocalizedStringForCurrentLocale(modification.getModification().getLocalizationKey())),
@@ -126,7 +129,17 @@ public class ModuleDetails extends DestroyableVBox implements DestroyableEventTe
                         .collect(Collectors.joining(", ")), propertyIndex++, size);
             }
             moduleName.setText(LocaleService.getLocalizedStringForCurrentLocale(shipModule.getLocalizationKey()) + " " + shipModule.getModuleSize().intValue() + shipModule.getModuleClass() + ((shipModule instanceof HardpointModule hardpointModule ? "-" + hardpointModule.getMounting().getShortName() : "")));
-
+            String type = "module.details.type.regular";
+            if(shipModule.isMerc()) {
+                type = "module.details.type.merc";
+            }
+            else if(shipModule.isPreEngineered()) {
+                type = "module.details.type.preengineered";
+            }
+            else if(shipModule.isLegacy()) {
+                type = "module.details.type.legacy";
+            }
+            addModuleType(LocaleService.getLocalizedStringForCurrentLocale(type), propertyIndex++, size);
             List<HorizonsModifier> attributesList = shipModule.getAttibutes().stream().filter(Predicate.not(shipModule::isHiddenStat)).collect(Collectors.toList());
 
             if (shipModule instanceof HardpointModule && !attributesList.contains(HorizonsModifier.DAMAGE_PER_SECOND)) {

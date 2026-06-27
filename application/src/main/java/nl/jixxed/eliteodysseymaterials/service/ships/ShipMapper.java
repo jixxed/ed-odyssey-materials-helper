@@ -113,9 +113,13 @@ public class ShipMapper {
         shipModule1.ifPresentOrElse(shipModule2 -> {
             ShipModule shipModule = shipModule2.Clone();
             shipConfigurationSlot.getModification().forEach(shipConfigurationModification -> {
-                if (!shipConfigurationModification.getType().isPreEngineered()) {// no need to double apply pre-engineering
-                    shipModule.getModifications().add(new Modification(shipConfigurationModification.getType(), shipConfigurationModification.getPercentComplete(), shipConfigurationModification.getGrade()));
-                }
+//                if (shipConfigurationModification.getType().isMerc()) {// no need to double apply pre-engineering
+//                    shipModule.getModifications().clear();
+//                    shipModule.getModifications().add(new Modification(shipConfigurationModification.getType(), shipConfigurationModification.getPercentComplete(), shipConfigurationModification.getGrade()));
+//                }else if (!shipConfigurationModification.getType().isPreEngineered()) {// no need to double apply pre-engineering
+//                    shipModule.getModifications().add(new Modification(shipConfigurationModification.getType(), shipConfigurationModification.getPercentComplete(), shipConfigurationModification.getGrade()));
+//                }
+                shipModule.applyModification(shipConfigurationModification.getType(), shipConfigurationModification.getGrade(), shipConfigurationModification.getPercentComplete());
             });
             shipConfigurationSlot.getExperimentalEffect().stream()
                     .map(ShipConfigurationExperimentalEffect::getType)
@@ -152,9 +156,10 @@ public class ShipMapper {
         oldShipModule.ifPresentOrElse(shipModule2 -> {
             ShipModule shipModule = shipModule2.Clone();
             shipConfigurationSlot.getOldModule().getModification().forEach(shipConfigurationModification -> {
-                if (!shipConfigurationModification.getType().isPreEngineered()) {// no need to double apply pre-engineering
-                    shipModule.getModifications().add(new Modification(shipConfigurationModification.getType(), shipConfigurationModification.getPercentComplete(), shipConfigurationModification.getGrade()));
-                }
+//                if (!shipConfigurationModification.getType().isPreEngineered()) {// no need to double apply pre-engineering
+//                    shipModule.getModifications().add(new Modification(shipConfigurationModification.getType(), shipConfigurationModification.getPercentComplete(), shipConfigurationModification.getGrade()));
+//                }
+                shipModule.applyModification(shipConfigurationModification.getType(), shipConfigurationModification.getGrade(), shipConfigurationModification.getPercentComplete());
             });
             shipConfigurationSlot.getOldModule().getExperimentalEffect().stream()
                     .map(ShipConfigurationExperimentalEffect::getType)

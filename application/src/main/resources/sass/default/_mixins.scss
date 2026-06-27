@@ -362,7 +362,11 @@
   -fx-font-weight: normal;
   -fx-font-style: normal;
 }
-
+@mixin currencies{
+  .other-merccoin {
+    -fx-fill: rgb(255, 0, 109);
+  }
+}
 @mixin commodities {
   .commodities-chemicals {
     -fx-fill: rgb(160, 219, 131);
@@ -480,6 +484,9 @@
     -fx-fill: $text-color-blue;
   }
 
+  .other-merccoin {
+    -fx-fill: rgb(255, 0, 109);
+  }
   .ships-preengineered {
     -fx-fill: rgb(242, 200, 14);
   }

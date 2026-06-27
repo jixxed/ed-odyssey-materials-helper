@@ -402,7 +402,7 @@ public class WishlistService {
                     wishlist.getItems().removeIf(item ->
                             switch (item) {
                                 case HorizonsModuleWishlistBlueprint bp -> {
-                                    Set<HorizonsBlueprintGrade> grades = HorizonsBlueprintConstants.getBlueprintGrades(bp.getRecipeName(), bp.getBlueprintType());
+                                    Set<HorizonsBlueprintGrade> grades = HorizonsBlueprintConstants.getEngineerableBlueprintGrades(bp.getRecipeName(), bp.getBlueprintType());
                                     yield grades.isEmpty() || !grades.containsAll(bp.getPercentageToComplete().keySet());
                                 }
                                 case HorizonsEngineerWishlistBlueprint bp -> {

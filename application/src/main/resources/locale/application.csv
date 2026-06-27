@@ -232,3 +232,5 @@
 "time.until.hours","{0}h ","","","{0}h ","","","{0}ч ","",""
 "time.until.minutes","{0}m","","","{0}m","","","{0}м","",""
 "application.game.down","The gameservers are currently down!","","","¡Los servidores de juegos están caídos!","","","Серверы игры в данный момент не работают!","",""
+"statusbar.info.merc","Merc coin","","","","","","","",""
+"statusbar.info.merc.value","{0}","","","{0}","","","{0}","",""

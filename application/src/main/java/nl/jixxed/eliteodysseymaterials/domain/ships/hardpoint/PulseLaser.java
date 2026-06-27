@@ -18,6 +18,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +78,9 @@ public class PulseLaser extends HardpointModule {
         if(isFighterModule()){
             return Collections.emptyList();
         }
-        return PulseLaserBlueprints.BLUEPRINTS.keySet().stream().toList();
+        List<HorizonsBlueprintType> allowed = new ArrayList<>(PulseLaserBlueprints.BLUEPRINTS.keySet().stream().toList());
+        allowed.add(HorizonsBlueprintType.MERC_PLASMA_CONVERSION_PULSE_LASER);
+        return allowed;
     }
 
     @Override

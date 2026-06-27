@@ -35,6 +35,8 @@ public class CargoRack extends OptionalModule {
     public static final CargoRack CARGO_RACK_8_E = new CargoRack("CARGO_RACK_8_E", HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_8, ModuleClass.E, false, 3829870, "Int_CargoRack_Size8_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY, 256.0)));
     public static final CargoRack CARGO_RACK_5_E_PRE = new CargoRack("CARGO_RACK_5_E_PRE", HorizonsBlueprintName.CARGO_RACK_PRE, ModuleSize.SIZE_5, ModuleClass.E, false, 111570, "Int_CargoRack_Size5_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY, 32.0)));
     public static final CargoRack CARGO_RACK_6_E_PRE = new CargoRack("CARGO_RACK_6_E_PRE", HorizonsBlueprintName.CARGO_RACK_PRE, ModuleSize.SIZE_6, ModuleClass.E, false, 362590, "Int_CargoRack_Size6_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY, 64.0)));
+    public static final CargoRack CARGO_RACK_5_E_MERC = new CargoRack("CARGO_RACK_5_E_MERC", HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_5, ModuleClass.E, false, 550, "Int_CargoRack_Size5_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY, 32.0)));
+    public static final CargoRack CARGO_RACK_6_E_MERC = new CargoRack("CARGO_RACK_6_E_MERC", HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_6, ModuleClass.E, false, 550, "Int_CargoRack_Size6_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY, 64.0)));
 
     static {
         CARGO_RACK_5_E_PRE.getModifications().add(
@@ -42,6 +44,12 @@ public class CargoRack extends OptionalModule {
         );
         CARGO_RACK_6_E_PRE.getModifications().add(
                 new Modification(HorizonsBlueprintType.INCREASED_CARGO_CAPACITY, 1.0, HorizonsBlueprintGrade.GRADE_5)
+        );
+        CARGO_RACK_5_E_MERC.getModifications().add(
+                new Modification(HorizonsBlueprintType.MERC_EXTENDED_CARGO_RACK, 1.0, HorizonsBlueprintGrade.GRADE_1)
+        );
+        CARGO_RACK_6_E_MERC.getModifications().add(
+                new Modification(HorizonsBlueprintType.MERC_EXTENDED_CARGO_RACK, 1.0, HorizonsBlueprintGrade.GRADE_1)
         );
     }
 
@@ -56,7 +64,9 @@ public class CargoRack extends OptionalModule {
             CARGO_RACK_7_E,
             CARGO_RACK_8_E,
             CARGO_RACK_5_E_PRE,
-            CARGO_RACK_6_E_PRE
+            CARGO_RACK_6_E_PRE,
+            CARGO_RACK_5_E_MERC,
+            CARGO_RACK_6_E_MERC
     );
 
     public CargoRack(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
@@ -69,6 +79,9 @@ public class CargoRack extends OptionalModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
+        if(CARGO_RACK_5_E_MERC.equals(this) || CARGO_RACK_6_E_MERC.equals(this)){
+            return List.of(HorizonsBlueprintType.MERC_EXTENDED_CARGO_RACK);
+        }
         return Collections.emptyList();
     }
 
@@ -88,13 +101,18 @@ public class CargoRack extends OptionalModule {
     }
 
     @Override
+    public boolean isMerc() {
+        return CARGO_RACK_5_E_MERC.equals(this) || CARGO_RACK_6_E_MERC.equals(this);
+    }
+
+    @Override
     public boolean isCGExclusive() {
         return isPreEngineered();
     }
 
     @Override
     public int getGrouping() {
-        return 1 + (isPreEngineered() ? 1 : 0);
+        return 1 + (isPreEngineered() ? 1 : 0)+ (isMerc() ? 2 : 0);
     }
 
     public boolean isSelectable() {

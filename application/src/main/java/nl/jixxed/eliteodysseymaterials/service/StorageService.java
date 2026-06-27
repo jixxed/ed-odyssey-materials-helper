@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.enums.Currency;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ShipLocker.ShipLocker;
 
 import java.util.*;
@@ -23,6 +24,7 @@ import java.util.stream.Stream;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StorageService {
+    private static final Map<Currency, Integer> currency = new EnumMap<>(Currency.class);
     private static final Map<Raw, Integer> raw = new EnumMap<>(Raw.class);
     private static final Map<Encoded, Integer> encoded = new EnumMap<>(Encoded.class);
     private static final Map<Manufactured, Integer> manufactured = new EnumMap<>(Manufactured.class);
@@ -62,7 +64,7 @@ public class StorageService {
         throw new IllegalArgumentException("Unknown material type");
     }
 
-    public static void removeMaterial(final HorizonsMaterial material, final Integer amount) {
+    public static void removeMaterial(final Material material, final Integer amount) {
         addMaterial(material, -amount);
     }
 
@@ -70,15 +72,18 @@ public class StorageService {
         addCommodity(commodity, storagePool, -amount);
     }
 
-    public static void addMaterial(final HorizonsMaterial material, final Integer amount) {
-        if (material instanceof Raw rawMaterial) {
-            final int value = Math.min(raw.get(material) + amount, material.getMaxAmount());
+    public static void addMaterial(final Material material, final Integer amount) {
+        if (material instanceof Currency currencyMaterial) {
+            final int value = Math.min(currency.get(currencyMaterial) + amount, currencyMaterial.getMaxAmount());
+            currency.put(currencyMaterial, Math.max(value, 0));
+        } else if (material instanceof Raw rawMaterial) {
+            final int value = Math.min(raw.get(material) + amount, rawMaterial.getMaxAmount());
             raw.put(rawMaterial, Math.max(value, 0));
         } else if (material instanceof Encoded encodedMaterial) {
-            final int value = Math.min(encoded.get(material) + amount, material.getMaxAmount());
+            final int value = Math.min(encoded.get(material) + amount, encodedMaterial.getMaxAmount());
             encoded.put(encodedMaterial, Math.max(value, 0));
         } else if (material instanceof Manufactured manufacturedMaterial) {
-            final int value = Math.min(manufactured.get(material) + amount, material.getMaxAmount());
+            final int value = Math.min(manufactured.get(material) + amount, manufacturedMaterial.getMaxAmount());
             manufactured.put(manufacturedMaterial, Math.max(value, 0));
         } else if (material instanceof Commodity _) {
             throw new UnsupportedOperationException("use addCommodity instead");
@@ -120,12 +125,14 @@ public class StorageService {
         }
     }
 
-    public static Integer getMaterialCount(final HorizonsMaterial material) {
+    public static Integer getMaterialCount(final Material material) {
         return switch (material) {
+            case Currency _ -> currency.get(material);
             case Raw _ -> raw.get(material);
             case Encoded _ -> encoded.get(material);
             case Manufactured _ -> manufactured.get(material);
             case Commodity _ -> throw new UnsupportedOperationException("Use getCommodityCount instead");
+            default -> throw new UnsupportedOperationException("Unsupported material");
         };
     }
 
@@ -203,6 +210,11 @@ public class StorageService {
          goods.values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
     }
 
+    public static void resetCurrencyCounts() {
+        Arrays.stream(Currency.values()).forEach(material ->
+                currency.put(material, 0)
+        );
+    }
     public static void resetHorizonsMaterialCounts() {
         Arrays.stream(Raw.values()).forEach(material ->
                 raw.put(material, 0)
@@ -233,6 +245,7 @@ public class StorageService {
         );
 
         resetHorizonsMaterialCounts();
+        resetCurrencyCounts();
 
         Stream.concat(Arrays.stream(RegularCommodity.values()), Arrays.stream(RareCommodity.values())).forEach(material -> {
             commoditiesShip.put(material, 0);

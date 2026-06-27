@@ -48,7 +48,7 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
     private final HorizonsStorageType storageType;
     @Getter
 //    @EqualsAndHashCode.Include
-    private final HorizonsMaterial horizonsMaterial;
+    private final Material horizonsMaterial;
     private final HorizonsBlueprint horizonsBlueprint;
     @Getter
     @Setter
@@ -62,7 +62,7 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
     private DestroyableLabel availableLabel;
     private DestroyableLabel availableTitle;
 
-    public HorizonsMaterialIngredient(final HorizonsBlueprint horizonsBlueprint, final HorizonsStorageType storageType, final HorizonsMaterial horizonsMaterial, final Integer required, final Integer available) {
+    public HorizonsMaterialIngredient(final HorizonsBlueprint horizonsBlueprint, final HorizonsStorageType storageType, final Material horizonsMaterial, final Integer required, final Integer available) {
         if (storageType.equals(HorizonsStorageType.OTHER)) {
             throw new IllegalArgumentException("StorageType Other must use MissionIngredient class");
         }
@@ -164,10 +164,15 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
                     .withStyleClass("ingredient-image")
                     .withIcons(Arrays.stream(commodity.getCommodityType().getIcons()).map(EdAwesomeIconView::new).toArray(EdAwesomeIconView[]::new))
                     .build();
+        } else if (this.horizonsMaterial instanceof Currency currency) {
+            this.image = EdAwesomeIconViewPaneBuilder.builder()
+                    .withStyleClass("ingredient-image")
+                    .withIcons(Arrays.stream(currency.getIcons()).map(EdAwesomeIconView::new).toArray(EdAwesomeIconView[]::new))
+                    .build();
         } else {
             this.image = EdAwesomeIconViewPaneBuilder.builder()
                     .withStyleClass("ingredient-image")
-                    .withIcons(new EdAwesomeIconView(this.horizonsMaterial.getRarity().getIcon()))
+                    .withIcons(new EdAwesomeIconView(((HorizonsMaterial)this.horizonsMaterial).getRarity().getIcon()))
                     .build();
         }
     }

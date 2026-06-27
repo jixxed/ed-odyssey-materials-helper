@@ -15,8 +15,10 @@ import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
+import nl.jixxed.eliteodysseymaterials.enums.Currency;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.SingleMessageProcessor;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ModuleBuy.ModuleBuy;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipLoadoutEvent;
 import nl.jixxed.eliteodysseymaterials.service.ships.LoadoutMapper;
@@ -28,6 +30,9 @@ import java.util.function.Predicate;
 public class ModuleBuySingleMessageProcessor implements SingleMessageProcessor<ModuleBuy> {
     @Override
     public void process(final ModuleBuy event) {
+        log.info("Merc Currency: " + StorageService.getMaterialCount(Currency.MERC_COIN));
+        event.getBuyMercCoinsPrice().ifPresent(amount -> StorageService.removeMaterial(Currency.MERC_COIN, amount.intValue()));
+        log.info("Merc Currency: " + StorageService.getMaterialCount(Currency.MERC_COIN));
         final Ship ship = ShipMapper.toShip(ShipConfiguration.CURRENT);
         if (ship == null) {
             log.error("Ship is null, cannot process ModuleBuy event: " + event);

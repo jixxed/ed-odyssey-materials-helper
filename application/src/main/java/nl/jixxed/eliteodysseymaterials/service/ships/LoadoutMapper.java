@@ -77,6 +77,8 @@ public class LoadoutMapper {
                         if (!potentialShipModules.isEmpty()) {
                             if (isPreEngineered(potentialShipModules, engineering, module)) {
                                 return potentialShipModules.stream().filter(ShipModule::isPreEngineered).filter(shipModule -> matchingEngineering(shipModule, engineering, module)).findFirst().orElseThrow(IllegalArgumentException::new);
+                            }if (isMerc(potentialShipModules, engineering, module)) {
+                                return potentialShipModules.stream().filter(ShipModule::isMerc).filter(shipModule -> matchingMercEngineering(shipModule, engineering, module)).findFirst().orElseThrow(IllegalArgumentException::new);
                             } else {
                                 return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(IllegalArgumentException::new);
                             }
@@ -147,12 +149,20 @@ public class LoadoutMapper {
         return ship;
     }
 
+    private static boolean isMerc(List<ShipModule> potentialShipModules, Engineering engineering, Module module) {
+        HorizonsBlueprintType blueprint = determineBlueprint(engineering, module);
+        return blueprint.isMerc();
+    }
+
     public static boolean matchingEngineering(ShipModule shipModule, Engineering engineering, Module module) {
         if (shipModule.getPreEngineeredMatchType().equals(MatchType.BLUEPRINT)) {
             return shipModule.getModifications().stream().anyMatch(modification -> modification.getModification().equals(HorizonsBlueprintType.forInternalName(engineering.getBlueprintName())))
                     && engineering.getExperimentalEffect().map(experimentalEffect -> shipModule.getExperimentalEffects().stream().anyMatch(effect -> effect.equals(HorizonsBlueprintType.forInternalName(experimentalEffect)))).orElse(true);
         }
         return isPreEngineered(List.of(shipModule), engineering, module);
+    }
+    public static boolean matchingMercEngineering(ShipModule shipModule, Engineering engineering, Module module) {
+        return shipModule.getModifications().stream().anyMatch(modification -> modification.getModification().equals(HorizonsBlueprintType.forInternalName(engineering.getBlueprintName())));
     }
 
     private static HorizonsBlueprintType determineExperimentalEffect(Engineering engineering, Module module) {
@@ -222,7 +232,7 @@ public class LoadoutMapper {
     }
 
     private static boolean isLegacy(ShipModule shipModule, Engineering engineering) {
-        return !shipModule.isPreEngineered() && (engineering.getQuality() == null || (engineering.getQuality().doubleValue() == 0.0 && !Origin.GUARDIAN.equals(shipModule.getOrigin())));
+        return !shipModule.isMerc() &&!shipModule.isPreEngineered() && (engineering.getQuality() == null || (engineering.getQuality().doubleValue() == 0.0 && !Origin.GUARDIAN.equals(shipModule.getOrigin())));
     }
 
     static List<ShipModule> getPotentialShipModules(String module, SlotType slotType) {

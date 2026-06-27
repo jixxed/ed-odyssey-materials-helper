@@ -19,6 +19,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -122,7 +123,9 @@ public class FuelScoop extends OptionalModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
-        return FuelScoopBlueprints.BLUEPRINTS.keySet().stream().toList();
+        List<HorizonsBlueprintType> allowed = new ArrayList<>(FuelScoopBlueprints.BLUEPRINTS.keySet().stream().toList());
+        allowed.add(HorizonsBlueprintType.MERC_SCOOP_RATE_ENHANCED_FUEL_SCOOP);
+        return allowed;
     }
 
     @Override
