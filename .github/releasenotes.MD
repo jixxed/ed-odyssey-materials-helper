@@ -21,6 +21,7 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Fix min/current speed calculation for ships
-Update schemas for new journal events in Nomad release
+Update label clarifying blur MUST be disabled for AR to function properly
+Some Nomad update related fixed for processing the journal
+Added data used during operations
 ```

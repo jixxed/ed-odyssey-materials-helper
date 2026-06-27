@@ -1,3 +1,9 @@
+Version 3.12.2
+-------------
+Update label clarifying blur MUST be disabled for AR to function properly
+Some Nomad update related fixed for processing the journal
+Added data used during operations
+
 Version 3.12.1
 -------------
 Fix min/current speed calculation for ships
