@@ -75,7 +75,6 @@ public class EliteMQService {
         }
         try {
             final String data = OBJECT_MAPPER.writeValueAsString(report);
-            log.info(data);
             final Runnable run = () -> {
                 try {
                     HttpClient httpClient = HttpClientService.getHttpClient();
@@ -111,7 +110,6 @@ public class EliteMQService {
         }
         try {
             final String data = OBJECT_MAPPER.writeValueAsString(reportUnknownJournal);
-            log.info(data);
                 final Runnable run = () -> {
                     try {
                         HttpClient httpClient = HttpClientService.getHttpClient();
