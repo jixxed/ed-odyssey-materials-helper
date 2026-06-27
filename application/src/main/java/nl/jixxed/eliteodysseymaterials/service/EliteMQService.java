@@ -69,6 +69,79 @@ public class EliteMQService {
         }));
     }
 
+    public static void sendMaterialReport(ReportService.Report report) {
+        if (VersionService.isDev()) {
+            return;
+        }
+        try {
+            final String data = OBJECT_MAPPER.writeValueAsString(report);
+            log.info(data);
+            final Runnable run = () -> {
+                try {
+                    HttpClient httpClient = HttpClientService.getHttpClient();
+                    final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("elite.mq.host", "localhost"));
+                    final HttpRequest request = HttpRequest.newBuilder()
+                            .uri(URI.create("https://" + domainName + "/errormaterial"))
+                            .header("User-Agent", VersionService.getUserAgent())
+                            .header("X-API-Key", Secrets.getOrDefault("elite.mq.api.key", "none"))
+                            .header("Content-Type", "application/json")
+                            .POST(HttpRequest.BodyPublishers.ofString(data))
+                            .build();
+                    SEMAPHORE.acquire();
+                    try {
+                        httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+                    } finally {
+                        SEMAPHORE.release();
+                    }
+                } catch (final InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                } catch (final Exception e) {
+                    log.error("publish error", e);
+                }
+            };
+            EXECUTOR_SERVICE.submit(run);
+
+        } catch (Exception e) {
+            log.error("publish error", e);
+        }
+    }
+    public static void sendJournalReport(ReportService.ReportUnknownJournal reportUnknownJournal) {
+        if (VersionService.isDev()) {
+            return;
+        }
+        try {
+            final String data = OBJECT_MAPPER.writeValueAsString(reportUnknownJournal);
+            log.info(data);
+                final Runnable run = () -> {
+                    try {
+                        HttpClient httpClient = HttpClientService.getHttpClient();
+                        final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("elite.mq.host", "localhost"));
+                        final HttpRequest request = HttpRequest.newBuilder()
+                                .uri(URI.create("https://" + domainName + "/errorgeneric"))
+                                .header("User-Agent", VersionService.getUserAgent())
+                                .header("X-API-Key", Secrets.getOrDefault("elite.mq.api.key", "none"))
+                                .header("Content-Type", "application/json")
+                                .POST(HttpRequest.BodyPublishers.ofString(data))
+                                .build();
+                        SEMAPHORE.acquire();
+                        try {
+                            httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+                        } finally {
+                            SEMAPHORE.release();
+                        }
+                    } catch (final InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    } catch (final Exception e) {
+                        log.error("publish error", e);
+                    }
+                };
+                EXECUTOR_SERVICE.submit(run);
+
+        } catch (Exception e) {
+            log.error("publish error", e);
+        }
+
+    }
 
     public static void sendCommunityGoal(CommunityGoal communityGoal) {
         if (VersionService.isDev()) {
@@ -166,4 +239,5 @@ public class EliteMQService {
             log.error("batch sendCommunityGoal serialization error", e);
         }
     }
+
 }

@@ -11,6 +11,7 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -18,13 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.helper.DnsHelper;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Fileheader.Fileheader;
-
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 
 @Slf4j
 public class ReportService {
@@ -35,63 +30,22 @@ public class ReportService {
         OBJECT_MAPPER.registerModule(new JavaTimeModule());
         OBJECT_MAPPER.registerModule(new Jdk8Module().configureAbsentsAsNulls(true));
     }
-
     public static void reportMaterial(final Object material) {
-        final String buildVersion = VersionService.getBuildVersion();
-        if (!VersionService.isDev()) {
-            final Runnable run = () -> {
-                try {
-                    final String data = OBJECT_MAPPER.writeValueAsString(new Report(buildVersion, ApplicationState.getInstance().getFileheader(), material));
-                    log.info(data);
-                    final HttpResponse<String> send;
-
-                    HttpClient httpClient = HttpClientService.getHttpClient();
-                    final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
-                    final HttpRequest request = HttpRequest.newBuilder()
-                            .uri(URI.create("https://" + domainName + "/Prod/v2/submit-unknown-material"))
-                            .header("User-Agent", VersionService.getUserAgent())
-                            .POST(HttpRequest.BodyPublishers.ofString(data))
-                            .build();
-                    send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-                    log.info(send.body());
-                } catch (final InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                } catch (final Exception e) {
-                    log.error("publish material tracking error", e);
-                }
-            };
-            new Thread(run).start();
+        try {
+            reportMaterial(OBJECT_MAPPER.writeValueAsString(material));
+        } catch (JsonProcessingException e) {
+            //noop
         }
+    }
+
+    public static void reportMaterial(final String material) {
+        final String buildVersion = VersionService.getBuildVersion();
+        EliteMQService.sendMaterialReport(new Report(buildVersion, ApplicationState.getInstance().getFileheader(), material));
     }
 
     public static void reportJournal(String channel, String journalLine, String error) {
         final String buildVersion = VersionService.getBuildVersion();
-        if (!VersionService.isDev()) {
-            final Runnable run = () -> {
-                try {
-                    final String data = OBJECT_MAPPER.writeValueAsString(new ReportUnknownJournal(channel, buildVersion, ApplicationState.getInstance().getFileheader(), journalLine, error));
-                    log.info(data);
-                    final HttpResponse<String> send;
-
-                    HttpClient httpClient = HttpClientService.getHttpClient();
-                    final String domainName = DnsHelper.resolveCname(Secrets.getOrDefault("api.services.host", "localhost"));
-                    final HttpRequest request = HttpRequest.newBuilder()
-                            .uri(URI.create("https://" + domainName + "/Prod/v2/submit-unknown-journal"))
-                            .header("User-Agent", VersionService.getUserAgent())
-                            .POST(HttpRequest.BodyPublishers.ofString(data))
-                            .build();
-                    send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-                    log.info(send.body());
-                } catch (final InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                } catch (final Exception e) {
-                    log.error("publish unknown journal error", e);
-                }
-            };
-            new Thread(run).start();
-        }
+        EliteMQService.sendJournalReport(new ReportUnknownJournal(channel, buildVersion, ApplicationState.getInstance().getFileheader(), journalLine, error));
     }
 
     @Data
@@ -99,7 +53,7 @@ public class ReportService {
     public static class Report {
         String version;
         Fileheader fileheader;
-        Object data;
+        String data;
     }
 
     @Data
