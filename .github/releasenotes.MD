@@ -21,7 +21,7 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Update label clarifying blur MUST be disabled for AR to function properly
-Some Nomad update related fixed for processing the journal
-Added data used during operations
+Implement a more aggressive garbage collection and release memory back to OS. This will increase CPU usage a little, but lower memory usage.
+Application is still capped to 2 GB of RAM
+Flipped translations on new operations data materials
 ```

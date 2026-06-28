@@ -1,3 +1,9 @@
+Version 3.12.3
+-------------
+Implement a more aggressive garbage collection and release memory back to OS. This will increase CPU usage a little, but lower memory usage.
+Application is still capped to 2 GB of RAM
+Fix: flipped translations on new operations data materials
+
 Version 3.12.2
 -------------
 Update label clarifying blur MUST be disabled for AR to function properly
