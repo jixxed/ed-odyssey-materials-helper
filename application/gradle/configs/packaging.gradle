@@ -5,6 +5,14 @@ import javax.inject.Inject
 jpackage {
     jvmArgs = [
             '-Dapp.version=' + project.version,
+            '-XX:+UseG1GC',
+            '-XX:MinHeapFreeRatio=5',
+            '-XX:MaxHeapFreeRatio=10',
+            '-XX:InitiatingHeapOccupancyPercent=15',
+            '-XX:G1ReservePercent=10',
+            '-XX:G1HeapWastePercent=2',s
+            '-XX:G1PeriodicGCInterval=10000',
+            '-XX:+G1PeriodicGCInvokesConcurrent',
             '-Xmx2048M',
             '--add-exports=java.base/jdk.internal.misc=nl.jixxed.merged.module',
             '--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls',
