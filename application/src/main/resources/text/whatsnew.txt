@@ -1,3 +1,7 @@
+Version 3.13.2
+-------------
+Hotfix handle currency for perked synthesis blueprints
+
 Version 3.13.1
 -------------
 Hotfix: some errors could occur because the new modules were missing materials and engineers. Those have been added but will still be wrong.

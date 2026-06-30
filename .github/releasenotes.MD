@@ -21,7 +21,5 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Hotfix: some errors could occur because the new modules were missing materials and engineers. Those have been added but will still be wrong.
-Just merccoins are added to those blueprints and all engineers do G5 even though it may be less ingame.
-Fixed some modules not listing the merc blueprint (Seeker/Power distributor)
+Hotfix handle currency for perked synthesis blueprints
 ```

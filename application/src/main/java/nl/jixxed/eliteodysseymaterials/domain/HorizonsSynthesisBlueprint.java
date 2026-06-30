@@ -51,7 +51,9 @@ public class HorizonsSynthesisBlueprint extends HorizonsBlueprint {
     @Override
     public <T extends Material> Map<Material, Integer> getMaterialCollection(final Class<T> clazz) {
         if (isPerked()) {
-            if (clazz.equals(Raw.class)) {
+            if (clazz.equals(Currency.class)) {
+                return Collections.emptyMap();
+            } else if (clazz.equals(Raw.class)) {
                 return this.alternateRaw;
             } else if (clazz.equals(Encoded.class)) {
                 return this.alternateEncoded;
