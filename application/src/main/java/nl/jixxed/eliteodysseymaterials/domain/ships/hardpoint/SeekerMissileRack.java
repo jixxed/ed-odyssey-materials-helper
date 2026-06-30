@@ -95,6 +95,9 @@ public class SeekerMissileRack extends HardpointModule {
         if (isPreEngineered()) {
             return Collections.emptyList();
         }
+        if(isMerc()){
+            return List.of(HorizonsBlueprintType.MERC_DRAG_SEEKER_MISSILE_RACK, HorizonsBlueprintType.MERC_LOCKDOWN_SEEKER_MISSILE_RACK, HorizonsBlueprintType.MERC_LIGHTWEIGHT_THERMAL_SEEKER_MISSILE_RACK);
+        }
         return SeekerMissileRackBlueprints.BLUEPRINTS.keySet().stream().toList();
     }
 
