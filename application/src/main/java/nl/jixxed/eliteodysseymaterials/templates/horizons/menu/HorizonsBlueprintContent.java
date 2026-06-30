@@ -301,10 +301,12 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
 
 
     private void updateCount(final long count) {
-        if (count > 0L) {
-            this.countLabel.addBinding(this.countLabel.textProperty(), LocaleService.getStringBinding("blueprint.on.wishlist", count));
-        } else {
-            this.countLabel.addBinding(this.countLabel.textProperty(), LocaleService.getStringBinding(() -> ""));
+        if(this.countLabel != null) {
+            if (count > 0L) {
+                this.countLabel.addBinding(this.countLabel.textProperty(), LocaleService.getStringBinding("blueprint.on.wishlist", count));
+            } else {
+                this.countLabel.addBinding(this.countLabel.textProperty(), LocaleService.getStringBinding(() -> ""));
+            }
         }
     }
 
