@@ -21,5 +21,5 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Hotfix handle currency for perked synthesis blueprints
+Hotfix 2 for perked synthesis blueprints
 ```

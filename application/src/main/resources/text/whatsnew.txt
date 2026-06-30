@@ -1,3 +1,7 @@
+Version 3.13.3
+-------------
+Hotfix 2 for perked synthesis blueprints
+
 Version 3.13.2
 -------------
 Hotfix handle currency for perked synthesis blueprints

@@ -61,7 +61,7 @@ public class HorizonsSynthesisBlueprint extends HorizonsBlueprint {
                 return this.alternateManufactured;
             } else if (clazz.equals(RegularCommodity.class) || clazz.equals(RareCommodity.class) || clazz.equals(Commodity.class)) {
                 return this.alternateCommodities;
-            } else if (clazz.equals(HorizonsMaterial.class)) {
+            } else if (clazz.equals(Material.class)) {
                 return Stream.concat(Stream.concat(Stream.concat(this.alternateRaw.entrySet().stream(), this.alternateEncoded.entrySet().stream()), this.alternateManufactured.entrySet().stream()), this.alternateCommodities.entrySet().stream()).collect(
                         Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
             }
