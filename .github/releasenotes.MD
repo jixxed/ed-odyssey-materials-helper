@@ -21,11 +21,7 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Add basic merc module and blueprint support (WIP). Note that:
-- Data for blueprints is still missing
-- Merc modules are not detected on the current ship
-- Merc pinned blueprints are not available on the pin planner
-
-* Early Access feature(7 day period, starting at Supporter level): Merc module stats
-* - New stats are still being collected and will be available in early access
+Hotfix: some errors could occur because the new modules were missing materials and engineers. Those have been added but will still be wrong.
+Just merccoins are added to those blueprints and all engineers do G5 even though it may be less ingame.
+Fixed some modules not listing the merc blueprint (Seeker/Power distributor)
 ```

@@ -1,3 +1,9 @@
+Version 3.13.1
+-------------
+Hotfix: some errors could occur because the new modules were missing materials and engineers. Those have been added but will still be wrong.
+Just merccoins are added to those blueprints and all engineers do G5 even though it may be less ingame.
+Fixed some modules not listing the merc blueprint (Seeker/Power distributor)
+
 Version 3.13.0
 -------------
 Add basic merc module and blueprint support (WIP). Note that:
