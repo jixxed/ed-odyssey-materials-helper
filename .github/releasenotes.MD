@@ -21,7 +21,11 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Implement a more aggressive garbage collection and release memory back to OS. This will increase CPU usage a little, but lower memory usage.
-Application is still capped to 2 GB of RAM
-Flipped translations on new operations data materials
+Add basic merc module and blueprint support (WIP). Note that:
+- Data for blueprints is still missing
+- Merc modules are not detected on the current ship
+- Merc pinned blueprints are not available on the pin planner
+
+* Early Access feature(7 day period, starting at Supporter level): Merc module stats
+* - New stats are still being collected and will be available in early access
 ```
