@@ -211,6 +211,9 @@ public class PowerDistributor extends CoreModule {
         if (isPreEngineered()) {
             return Collections.emptyList();
         }
+        if (isMerc()) {
+            return List.of(HorizonsBlueprintType.MERC_BALANCED_POWER_DISTRIBUTOR, HorizonsBlueprintType.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR);
+        }
         if (this.getOrigin() == Origin.GUARDIAN) {
             return PowerDistributorBlueprints.GUARDIAN_BLUEPRINTS.keySet().stream().toList();
         }
