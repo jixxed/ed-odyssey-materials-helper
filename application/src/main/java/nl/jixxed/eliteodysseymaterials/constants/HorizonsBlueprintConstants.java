@@ -10,15 +10,11 @@
 
 package nl.jixxed.eliteodysseymaterials.constants;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.ed.data.api.DataLoader;
 import nl.jixxed.ed.data.api.DefaultDataLoader;
-import nl.jixxed.eliteodysseymaterials.constants.horizons.EngineerBlueprints;
-import nl.jixxed.eliteodysseymaterials.constants.horizons.ExperimentalEffectBlueprints;
-import nl.jixxed.eliteodysseymaterials.constants.horizons.SynthesisBlueprints;
-import nl.jixxed.eliteodysseymaterials.constants.horizons.TechbrokerBlueprints;
+import nl.jixxed.eliteodysseymaterials.constants.horizons.*;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.core_internals.*;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.core_internals.preengineered.FSDPreEngineeredBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.core_internals.preengineered.PowerDistributorPreEngineeredBlueprints;
@@ -29,7 +25,6 @@ import nl.jixxed.eliteodysseymaterials.constants.horizons.optional_internals.*;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.optional_internals.preengineered.CargoRackPreEngineeredBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.optional_internals.preengineered.DetailedSurfaceScannerPreEngineeredBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.optional_internals.preengineered.ShieldGeneratorPreEngineeredBlueprints;
-import nl.jixxed.eliteodysseymaterials.constants.horizons.MercenaryBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.utilitymounts.*;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.utilitymounts.preengineered.KillWarrantScannerPreEngineeredBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.utilitymounts.preengineered.PointDefencePreEngineeredBlueprints;
@@ -52,8 +47,6 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @SuppressWarnings("java:S1192")
 public abstract class HorizonsBlueprintConstants {
-    private static final String[] MERC_MODULES = {"MERC_DETAILED_SURFACE_SCANNER"};
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> HARDPOINT_BLUEPRINTS = new EnumMap<>(HorizonsBlueprintName.class);
     private static final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> UTILITY_MOUNT_BLUEPRINTS = new EnumMap<>(HorizonsBlueprintName.class);
     private static final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> CORE_INTERNAL_BLUEPRINTS = new EnumMap<>(HorizonsBlueprintName.class);
