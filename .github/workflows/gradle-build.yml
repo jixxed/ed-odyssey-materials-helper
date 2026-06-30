@@ -80,7 +80,7 @@ jobs:
           path: '**/build/reports/problems/problems-report.html'
 
       - name: Build release
-        run: ./gradlew createReleaseLinuxDebAndZip createReleaseLinuxRpm -DpackageType=deb${{ github.event.inputs.version != '' && format(' -Pversion={0}', github.event.inputs.version) || '' }}
+        run: ./gradlew createReleaseLinuxDebAndZip createReleaseLinuxRpm -DpackageType=deb${{ github.event.inputs.version != '' && format(' -Pversion="{0}"', github.event.inputs.version) || '' }}
 
       - name: Upload packages as artifacts
         if: ${{ github.event.inputs.storePackagesAsArtifacts == 'true' }}
@@ -137,7 +137,7 @@ jobs:
           path: '**/build/reports/problems/problems-report.html'
 
       - name: Build release
-        run: ./gradlew createReleaseWindowsUnsigned -DpackageType=msi${{ github.event.inputs.version != '' && format(' -Pversion={0}', github.event.inputs.version) || '' }}
+        run: ./gradlew createReleaseWindowsUnsigned -DpackageType=msi${{ github.event.inputs.version != '' && format(' -Pversion="{0}"', github.event.inputs.version) || '' }}
 
       - name: Upload packages as artifacts
         if: ${{ github.event.inputs.storePackagesAsArtifacts == 'true' }}
@@ -197,7 +197,7 @@ jobs:
           path: '**/build/reports/problems/problems-report.html'
 
       - name: Build release
-        run: ./gradlew createReleaseMacOsARM -DpackageType=dmg${{ github.event.inputs.version != '' && format(' -Pversion={0}', github.event.inputs.version) || '' }}
+        run: ./gradlew createReleaseMacOsARM -DpackageType=dmg${{ github.event.inputs.version != '' && format(' -Pversion="{0}"', github.event.inputs.version) || '' }}
 
       - name: Upload packages as artifacts
         if: ${{ github.event.inputs.storePackagesAsArtifacts == 'true' }}
