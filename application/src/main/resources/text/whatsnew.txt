@@ -1,3 +1,8 @@
+Version 3.13.4
+-------------
+Hotfix shortest path calculation fix for merc modules
+Show correct material quantity in left hand menu for merc modules
+
 Version 3.13.3
 -------------
 Hotfix 2 for perked synthesis blueprints

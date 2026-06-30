@@ -21,5 +21,6 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Hotfix 2 for perked synthesis blueprints
+Hotfix shortest path calculation fix for merc modules
+Show correct material quantity in left hand menu for merc modules
 ```

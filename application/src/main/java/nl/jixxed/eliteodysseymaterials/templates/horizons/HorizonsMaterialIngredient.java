@@ -69,8 +69,8 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
         this.horizonsBlueprint = horizonsBlueprint;
         this.storageType = storageType;
         if (horizonsBlueprint instanceof HorizonsModuleBlueprint) {
-            this.minRequired = horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getBestEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintName(), horizonsBlueprint.getHorizonsBlueprintType());
-            this.maxRequired = horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getWorstEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintName(), horizonsBlueprint.getHorizonsBlueprintType());
+            this.minRequired = horizonsBlueprint.getRequiredAmount(horizonsMaterial, null) * horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getBestEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintName(), horizonsBlueprint.getHorizonsBlueprintType());
+            this.maxRequired = horizonsBlueprint.getRequiredAmount(horizonsMaterial, null) * horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getWorstEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintName(), horizonsBlueprint.getHorizonsBlueprintType());
         } else {
             this.minRequired = required;
             this.maxRequired = required;
@@ -90,8 +90,8 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
         }));
         register(EventService.addListener(true, this, EngineerEvent.class, _ -> {
             if (horizonsBlueprint instanceof HorizonsModuleBlueprint) {
-                this.minRequired = horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getBestEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintName(), horizonsBlueprint.getHorizonsBlueprintType());
-                this.maxRequired = horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getWorstEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintName(), horizonsBlueprint.getHorizonsBlueprintType());
+                this.minRequired = horizonsBlueprint.getRequiredAmount(horizonsMaterial, null) * horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getBestEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintName(), horizonsBlueprint.getHorizonsBlueprintType());
+                this.maxRequired = horizonsBlueprint.getRequiredAmount(horizonsMaterial, null) * horizonsBlueprint.getHorizonsBlueprintGrade().getNumberOfRolls(getWorstEngineer(horizonsBlueprint), horizonsBlueprint.getHorizonsBlueprintName(), horizonsBlueprint.getHorizonsBlueprintType());
             }
             String required = Objects.equals(minRequired, maxRequired) ? minRequired.toString() : minRequired + " - " + maxRequired;
             this.requiredLabel.setText(required);
