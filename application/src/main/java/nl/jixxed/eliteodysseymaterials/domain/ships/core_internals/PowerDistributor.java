@@ -174,19 +174,19 @@ public class PowerDistributor extends CoreModule {
                 new Modification(HorizonsBlueprintType.MERC_BALANCED_POWER_DISTRIBUTOR, 1.0, HorizonsBlueprintGrade.GRADE_1)
         );
         POWER_DISTRIBUTOR_3_A_MERC_SUPPORT_FOCUSED.getModifications().add(
-                new Modification(HorizonsBlueprintType.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR, 1.0, HorizonsBlueprintGrade.GRADE_1)
+                new Modification(HorizonsBlueprintType.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3A, 1.0, HorizonsBlueprintGrade.GRADE_1)
         );
         POWER_DISTRIBUTOR_3_D_MERC_SUPPORT_FOCUSED.getModifications().add(
-                new Modification(HorizonsBlueprintType.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR, 1.0, HorizonsBlueprintGrade.GRADE_1)
+                new Modification(HorizonsBlueprintType.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3D, 1.0, HorizonsBlueprintGrade.GRADE_1)
         );
         POWER_DISTRIBUTOR_4_A_MERC_SUPPORT_FOCUSED.getModifications().add(
-                new Modification(HorizonsBlueprintType.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR, 1.0, HorizonsBlueprintGrade.GRADE_1)
+                new Modification(HorizonsBlueprintType.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4A, 1.0, HorizonsBlueprintGrade.GRADE_1)
         );
         POWER_DISTRIBUTOR_4_D_MERC_SUPPORT_FOCUSED.getModifications().add(
-                new Modification(HorizonsBlueprintType.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR, 1.0, HorizonsBlueprintGrade.GRADE_1)
+                new Modification(HorizonsBlueprintType.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4D, 1.0, HorizonsBlueprintGrade.GRADE_1)
         );
         POWER_DISTRIBUTOR_6_A_MERC_SUPPORT_FOCUSED.getModifications().add(
-                new Modification(HorizonsBlueprintType.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR, 1.0, HorizonsBlueprintGrade.GRADE_1)
+                new Modification(HorizonsBlueprintType.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_6A, 1.0, HorizonsBlueprintGrade.GRADE_1)
         );
     }
 
@@ -211,8 +211,23 @@ public class PowerDistributor extends CoreModule {
         if (isPreEngineered()) {
             return Collections.emptyList();
         }
-        if (isMerc()) {
-            return List.of(HorizonsBlueprintType.MERC_BALANCED_POWER_DISTRIBUTOR, HorizonsBlueprintType.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR);
+        if (POWER_DISTRIBUTOR_5_A_MERC_BALANCED.equals(this)) {
+            return List.of(HorizonsBlueprintType.MERC_BALANCED_POWER_DISTRIBUTOR);
+        }
+        if (POWER_DISTRIBUTOR_3_A_MERC_SUPPORT_FOCUSED.equals(this)) {
+            return List.of(HorizonsBlueprintType.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3A);
+        }
+        if (POWER_DISTRIBUTOR_3_D_MERC_SUPPORT_FOCUSED.equals(this)) {
+            return List.of(HorizonsBlueprintType.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3D);
+        }
+        if (POWER_DISTRIBUTOR_4_A_MERC_SUPPORT_FOCUSED.equals(this)) {
+            return List.of(HorizonsBlueprintType.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4A);
+        }
+        if (POWER_DISTRIBUTOR_4_D_MERC_SUPPORT_FOCUSED.equals(this)) {
+            return List.of(HorizonsBlueprintType.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4D);
+        }
+        if (POWER_DISTRIBUTOR_6_A_MERC_SUPPORT_FOCUSED.equals(this)) {
+            return List.of(HorizonsBlueprintType.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_6A);
         }
         if (this.getOrigin() == Origin.GUARDIAN) {
             return PowerDistributorBlueprints.GUARDIAN_BLUEPRINTS.keySet().stream().toList();

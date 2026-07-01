@@ -71,10 +71,10 @@ public class SeekerMissileRack extends HardpointModule {
                 new Modification(HorizonsBlueprintType.MERC_LIGHTWEIGHT_THERMAL_SEEKER_MISSILE_RACK, 1.0, HorizonsBlueprintGrade.GRADE_1)
         );
         SEEKER_MISSILE_RACK_2_B_F_MERC_LOCKDOWN.getModifications().add(
-                new Modification(HorizonsBlueprintType.MERC_LOCKDOWN_SEEKER_MISSILE_RACK, 1.0, HorizonsBlueprintGrade.GRADE_1)
+                new Modification(HorizonsBlueprintType.MERC_LOCKDOWN_SEEKER_MISSILE_RACK_2B, 1.0, HorizonsBlueprintGrade.GRADE_1)
         );
         SEEKER_MISSILE_RACK_3_A_F_MERC_LOCKDOWN.getModifications().add(
-                new Modification(HorizonsBlueprintType.MERC_LOCKDOWN_SEEKER_MISSILE_RACK, 1.0, HorizonsBlueprintGrade.GRADE_1)
+                new Modification(HorizonsBlueprintType.MERC_LOCKDOWN_SEEKER_MISSILE_RACK_3A, 1.0, HorizonsBlueprintGrade.GRADE_1)
         );
     }
 
@@ -95,8 +95,17 @@ public class SeekerMissileRack extends HardpointModule {
         if (isPreEngineered()) {
             return Collections.emptyList();
         }
-        if(isMerc()){
-            return List.of(HorizonsBlueprintType.MERC_DRAG_SEEKER_MISSILE_RACK, HorizonsBlueprintType.MERC_LOCKDOWN_SEEKER_MISSILE_RACK, HorizonsBlueprintType.MERC_LIGHTWEIGHT_THERMAL_SEEKER_MISSILE_RACK);
+        if(SEEKER_MISSILE_RACK_2_B_F_MERC_DRAG.equals(this)){
+            return List.of(HorizonsBlueprintType.MERC_DRAG_SEEKER_MISSILE_RACK);
+        }
+        if(SEEKER_MISSILE_RACK_2_B_F_MERC_LW.equals(this)){
+            return List.of(HorizonsBlueprintType.MERC_LIGHTWEIGHT_THERMAL_SEEKER_MISSILE_RACK);
+        }
+        if(SEEKER_MISSILE_RACK_2_B_F_MERC_LOCKDOWN.equals(this)){
+            return List.of(HorizonsBlueprintType.MERC_LOCKDOWN_SEEKER_MISSILE_RACK_2B);
+        }
+        if(SEEKER_MISSILE_RACK_3_A_F_MERC_LOCKDOWN.equals(this)){
+            return List.of(HorizonsBlueprintType.MERC_LOCKDOWN_SEEKER_MISSILE_RACK_3A);
         }
         return SeekerMissileRackBlueprints.BLUEPRINTS.keySet().stream().toList();
     }

@@ -46,10 +46,10 @@ public class CargoRack extends OptionalModule {
                 new Modification(HorizonsBlueprintType.INCREASED_CARGO_CAPACITY, 1.0, HorizonsBlueprintGrade.GRADE_5)
         );
         CARGO_RACK_5_E_MERC.getModifications().add(
-                new Modification(HorizonsBlueprintType.MERC_EXTENDED_CARGO_RACK, 1.0, HorizonsBlueprintGrade.GRADE_1)
+                new Modification(HorizonsBlueprintType.MERC_EXTENDED_CARGO_RACK_5E, 1.0, HorizonsBlueprintGrade.GRADE_1)
         );
         CARGO_RACK_6_E_MERC.getModifications().add(
-                new Modification(HorizonsBlueprintType.MERC_EXTENDED_CARGO_RACK, 1.0, HorizonsBlueprintGrade.GRADE_1)
+                new Modification(HorizonsBlueprintType.MERC_EXTENDED_CARGO_RACK_6E, 1.0, HorizonsBlueprintGrade.GRADE_1)
         );
     }
 
@@ -79,8 +79,11 @@ public class CargoRack extends OptionalModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
-        if(CARGO_RACK_5_E_MERC.equals(this) || CARGO_RACK_6_E_MERC.equals(this)){
-            return List.of(HorizonsBlueprintType.MERC_EXTENDED_CARGO_RACK);
+        if(CARGO_RACK_5_E_MERC.equals(this)){
+            return List.of(HorizonsBlueprintType.MERC_EXTENDED_CARGO_RACK_5E);
+        }
+        if(CARGO_RACK_6_E_MERC.equals(this)){
+            return List.of(HorizonsBlueprintType.MERC_EXTENDED_CARGO_RACK_6E);
         }
         return Collections.emptyList();
     }

@@ -51,10 +51,10 @@ public class FragmentCannon extends HardpointModule {
                 new Modification(HorizonsBlueprintType.DOUBLE_SHOT_HIGH_CAPACITY_MAGAZINE_SCREENING_SHELL, 1.0, HorizonsBlueprintGrade.GRADE_5)
         );
         FRAGMENT_CANNON_1_E_G_MERC.getModifications().add(
-                new Modification(HorizonsBlueprintType.MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON, 1.0, HorizonsBlueprintGrade.GRADE_1)
+                new Modification(HorizonsBlueprintType.MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_1EG, 1.0, HorizonsBlueprintGrade.GRADE_1)
         );
         FRAGMENT_CANNON_3_C_G_MERC.getModifications().add(
-                new Modification(HorizonsBlueprintType.MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON, 1.0, HorizonsBlueprintGrade.GRADE_1)
+                new Modification(HorizonsBlueprintType.MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_1EG, 1.0, HorizonsBlueprintGrade.GRADE_1)
         );
     }
 
@@ -92,8 +92,11 @@ public class FragmentCannon extends HardpointModule {
         if (isPreEngineered()) {
             return Collections.emptyList();
         }
-        if(FRAGMENT_CANNON_1_E_G_MERC.equals(this) || FRAGMENT_CANNON_3_C_G_MERC.equals(this)){
-            return List.of(HorizonsBlueprintType.MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON);
+        if(FRAGMENT_CANNON_1_E_G_MERC.equals(this)){
+            return List.of(HorizonsBlueprintType.MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_1EG);
+        }
+        if(FRAGMENT_CANNON_3_C_G_MERC.equals(this)){
+            return List.of(HorizonsBlueprintType.MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_3CG);
         }
         return FragmentCannonBlueprints.BLUEPRINTS.keySet().stream().toList();
     }

@@ -232,22 +232,29 @@ public enum HorizonsBlueprintType {
     DOUBLE_SHOT_HIGH_CAPACITY_MAGAZINE_SCREENING_SHELL_B(false, true),
     INCREASED_CARGO_CAPACITY(false, true),
     MERC_BALANCED_POWER_DISTRIBUTOR(false, false, true, true),
-    MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR(false, false, true, true),
+    MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3D(false, false, true, true),
+    MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3A(false, false, true, true),
+    MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4D(false, false, true, true),
+    MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4A(false, false, true, true),
+    MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_6A(false, false, true, true),
     MERC_LONG_RANGE_DETAILED_SURFACE_SCANNER(false, false, true, true),
     MERC_SCOOP_RATE_ENHANCED_FUEL_SCOOP(false, false, true, false),
     MERC_PLASMA_CONVERSION_BEAM_LASER(false, false, true, false),
     MERC_PLASMA_CONVERSION_PULSE_LASER(false, false, true, false),
     MERC_PLASMA_CONVERSION_BURST_LASER(false, false, true, false),
     MERC_HEAVY_DUTY_MODULE_REINFORCEMENT_PACKAGE(false, false, true, true),
-    MERC_EXTENDED_CARGO_RACK(false, false, true, true),
-    MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON(false, false, true, true),
+    MERC_EXTENDED_CARGO_RACK_5E(false, false, true, true),
+    MERC_EXTENDED_CARGO_RACK_6E(false, false, true, true),
+    MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_1EG(false, false, true, true),
+    MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_3CG(false, false, true, true),
     MERC_RAPID_PHASE_MULTI_CANNON(false, false, true, true),
     MERC_FAR_REACHING_ABRASION_BLASTER(false, false, true, true),
-    MERC_HIGH_YIELD_ENZYME_MISSILE_RACK(false, false, true, false),
+    MERC_HIGH_YIELD_ENZYME_MISSILE_RACK(false, false, true, true),
     MERC_LONG_RANGE_MINING_LASER(false, false, true, true),
     MERC_DRAG_SEEKER_MISSILE_RACK(false, false, true, true),
     MERC_LIGHTWEIGHT_THERMAL_SEEKER_MISSILE_RACK(false, false, true, true),
-    MERC_LOCKDOWN_SEEKER_MISSILE_RACK(false, false, true, true),
+    MERC_LOCKDOWN_SEEKER_MISSILE_RACK_2B(false, false, true, true),
+    MERC_LOCKDOWN_SEEKER_MISSILE_RACK_3A(false, false, true, true),
     MERC_ENDURING_FEEDBACK_RAIL_GUN(false, false, true, true),
     NONE(false, false);
     @Getter
@@ -489,17 +496,24 @@ public enum HorizonsBlueprintType {
             case "unknown4" -> MERC_PLASMA_CONVERSION_PULSE_LASER;
             case "unknown5" -> MERC_SCOOP_RATE_ENHANCED_FUEL_SCOOP;
             case "unknown6" -> MERC_HEAVY_DUTY_MODULE_REINFORCEMENT_PACKAGE;
-            case "unknown7" -> MERC_EXTENDED_CARGO_RACK;
-            case "unknown8" -> MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON;
+            case "unknown7" -> MERC_EXTENDED_CARGO_RACK_5E;
+            case "unknown7.1" -> MERC_EXTENDED_CARGO_RACK_6E;
+            case "unknown8" -> MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_1EG;
+            case "unknown8.1" -> MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_3CG;
             case "unknown9" -> MERC_RAPID_PHASE_MULTI_CANNON;
             case "unknown10" -> MERC_BALANCED_POWER_DISTRIBUTOR;
-            case "unknown11" -> MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR;
+            case "unknown11" -> MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3D;
+            case "unknown11.1" -> MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3A;
+            case "unknown11.2" -> MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4D;
+            case "unknown11.3" -> MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4A;
+            case "unknown11.4" -> MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_6A;
             case "unknown12" -> MERC_FAR_REACHING_ABRASION_BLASTER;
             case "unknown13" -> MERC_HIGH_YIELD_ENZYME_MISSILE_RACK;
             case "unknown14" -> MERC_LONG_RANGE_MINING_LASER;
             case "unknown15" -> MERC_DRAG_SEEKER_MISSILE_RACK;
             case "unknown16" -> MERC_LIGHTWEIGHT_THERMAL_SEEKER_MISSILE_RACK;
-            case "unknown17" -> MERC_LOCKDOWN_SEEKER_MISSILE_RACK;
+            case "unknown17" -> MERC_LOCKDOWN_SEEKER_MISSILE_RACK_2B;
+            case "unknown17.1" -> MERC_LOCKDOWN_SEEKER_MISSILE_RACK_3A;
             case "unknown18" -> MERC_ENDURING_FEEDBACK_RAIL_GUN;
             default -> throw new IllegalArgumentException("Unknown blueprint type: " + internalName);
         };
@@ -511,10 +525,13 @@ public enum HorizonsBlueprintType {
         if (value == null) {
             return null;
         }
-
         return switch (value) {
             case "HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR_FEEDBACK_CASCADE" ->
                     HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR; // HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR_FEEDBACK_CASCADE renamed to HIGH_CAPACITY_MAGAZINE_SUPER_PENETRATOR
+            case "MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR" -> MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3A;
+            case "MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON" -> MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_1EG;
+            case "MERC_LOCKDOWN_SEEKER_MISSILE_RACK" -> MERC_LOCKDOWN_SEEKER_MISSILE_RACK_2B;
+            case "MERC_EXTENDED_CARGO_RACK" -> MERC_EXTENDED_CARGO_RACK_5E;
             default -> HorizonsBlueprintType.valueOf(value);
         };
     }
@@ -685,17 +702,24 @@ public enum HorizonsBlueprintType {
             case MERC_PLASMA_CONVERSION_PULSE_LASER -> "unknown";
             case MERC_SCOOP_RATE_ENHANCED_FUEL_SCOOP -> "unknown";
             case MERC_HEAVY_DUTY_MODULE_REINFORCEMENT_PACKAGE -> "unknown";
-            case MERC_EXTENDED_CARGO_RACK -> "unknown";
-            case MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON -> "unknown";
+            case MERC_EXTENDED_CARGO_RACK_5E -> "unknown";
+            case MERC_EXTENDED_CARGO_RACK_6E -> "unknown";
+            case MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_1EG -> "unknown";
+            case MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_3CG -> "unknown";
             case MERC_RAPID_PHASE_MULTI_CANNON -> "unknown";
             case MERC_BALANCED_POWER_DISTRIBUTOR -> "unknown";
-            case MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR -> "unknown";
+            case MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3D -> "unknown";
+            case MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3A -> "unknown";
+            case MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4D -> "unknown";
+            case MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4A -> "unknown";
+            case MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_6A -> "unknown";
             case MERC_FAR_REACHING_ABRASION_BLASTER -> "unknown";
             case MERC_HIGH_YIELD_ENZYME_MISSILE_RACK -> "unknown";
             case MERC_LONG_RANGE_MINING_LASER -> "unknown";
             case MERC_DRAG_SEEKER_MISSILE_RACK -> "unknown";
             case MERC_LIGHTWEIGHT_THERMAL_SEEKER_MISSILE_RACK -> "unknown";
-            case MERC_LOCKDOWN_SEEKER_MISSILE_RACK -> "unknown";
+            case MERC_LOCKDOWN_SEEKER_MISSILE_RACK_2B -> "unknown";
+            case MERC_LOCKDOWN_SEEKER_MISSILE_RACK_3A -> "unknown";
             case MERC_ENDURING_FEEDBACK_RAIL_GUN -> "unknown";
             default -> "";
         };
