@@ -21,6 +21,12 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Hotfix shortest path calculation fix for merc modules
-Show correct material quantity in left hand menu for merc modules
+Added free Mk1 Vessel Hangars
+Updated mass of Mk1 Vessel Hangars
+Free Vessel Hangars are now listed in the module dropdown
+Split per-engineered merc blueprints per module
+
+* Early access:
+* Added costs for most of the blueprints
+* Added some stats for blueprints
 ```

@@ -1,3 +1,14 @@
+Version 3.13.5
+-------------
+Added free Mk1 Vessel Hangars
+Updated mass of Mk1 Vessel Hangars
+Free Vessel Hangars are now listed in the module dropdown
+Split per-engineered merc blueprints per module
+
+* Early access:
+* Added costs for most of the blueprints
+* Added some stats for blueprints
+
 Version 3.13.4
 -------------
 Hotfix shortest path calculation fix for merc modules
