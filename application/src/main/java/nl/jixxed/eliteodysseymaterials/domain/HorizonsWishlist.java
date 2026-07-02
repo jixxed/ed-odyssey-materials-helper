@@ -93,6 +93,12 @@ public class HorizonsWishlist {
                     existingEwb.setQuantity(existingEwb.getQuantity() + ewb.getQuantity());
                     found = true;
                     break;
+                } else if (item instanceof HorizonsOutfittingWishlistBlueprint ewb &&
+                        existing instanceof HorizonsOutfittingWishlistBlueprint existingEwb &&
+                        ewb.getRecipeName().equals(existingEwb.getRecipeName())) {
+                    existingEwb.setQuantity(existingEwb.getQuantity() + ewb.getQuantity());
+                    found = true;
+                    break;
                 } else if (item instanceof HorizonsSynthesisWishlistBlueprint swb &&
                         existing instanceof HorizonsSynthesisWishlistBlueprint existingSwb &&
                         swb.getRecipeName().equals(existingSwb.getRecipeName()) &&
@@ -144,6 +150,13 @@ public class HorizonsWishlist {
                     break;
                 } else if (item instanceof HorizonsEngineerWishlistBlueprint ewb &&
                         existing instanceof HorizonsEngineerWishlistBlueprint existingEwb &&
+                        ewb.getRecipeName().equals(existingEwb.getRecipeName()) &&
+                        existingEwb.getQuantity() < 10) {
+                    existingEwb.setQuantity(existingEwb.getQuantity() + ewb.getQuantity());
+                    found = true;
+                    break;
+                }else if (item instanceof HorizonsOutfittingWishlistBlueprint ewb &&
+                        existing instanceof HorizonsOutfittingWishlistBlueprint existingEwb &&
                         ewb.getRecipeName().equals(existingEwb.getRecipeName()) &&
                         existingEwb.getQuantity() < 10) {
                     existingEwb.setQuantity(existingEwb.getQuantity() + ewb.getQuantity());

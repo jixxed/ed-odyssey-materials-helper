@@ -1,0 +1,482 @@
+{
+  "name" : {
+    "callsign" : "123",
+    "vanityName" : "123",
+    "filteredVanityName" : "123"
+  },
+  "currentStarSystem" : "Kutkha",
+  "balance" : "123",
+  "fuel" : "336",
+  "state" : "normalOperation",
+  "theme" : "Trader",
+  "dockingAccess" : "all",
+  "notoriousAccess" : true,
+  "capacity" : {
+    "shipPacks" : 0,
+    "modulePacks" : 0,
+    "cargoForSale" : 0,
+    "cargoNotForSale" : 685,
+    "cargoSpaceReserved" : 818,
+    "crew" : 1870,
+    "freeSpace" : 21627,
+    "microresourceCapacityTotal" : 1000,
+    "microresourceCapacityFree" : 961,
+    "microresourceCapacityUsed" : 39,
+    "microresourceCapacityReserved" : 0,
+    "squadronBankTotal" : 0
+  },
+  "itinerary" : {
+    "completed" : [ {
+      "departureTime" : "2026-06-19 16:06:00",
+      "arrivalTime" : "2026-06-13 20:31:00",
+      "state" : "success",
+      "visitDurationSeconds" : 502500,
+      "starsystem" : "Alrai Sector PI-T b3-7"
+    }, {
+      "departureTime" : "2026-06-30 03:50:00",
+      "arrivalTime" : "2026-06-19 16:06:00",
+      "state" : "success",
+      "visitDurationSeconds" : 906240,
+      "starsystem" : "Core Sys Sector DB-O a6-2"
+    }, {
+      "departureTime" : null,
+      "arrivalTime" : "2026-06-30 03:50:00",
+      "state" : "success",
+      "visitDurationSeconds" : 219398,
+      "starsystem" : "Kutkha"
+    } ],
+    "totalDistanceJumpedLY" : 152,
+    "currentJump" : null
+  },
+  "marketFinances" : {
+    "cargoTotalValue" : 82149044,
+    "allTimeProfit" : 0,
+    "numCommodsForSale" : 0,
+    "numCommodsPurchaseOrders" : 2,
+    "balanceAllocForPurchaseOrders" : 127222456
+  },
+  "blackmarketFinances" : {
+    "cargoTotalValue" : 0,
+    "allTimeProfit" : 0,
+    "numCommodsForSale" : 0,
+    "numCommodsPurchaseOrders" : 0,
+    "balanceAllocForPurchaseOrders" : 0
+  },
+  "finance" : {
+    "bankBalance" : 530618687,
+    "bankReservedBalance" : 28887185,
+    "taxation" : 0,
+    "service_taxation" : {
+      "bartender" : 0,
+      "pioneersupplies" : 0,
+      "rearm" : 0,
+      "refuel" : 0,
+      "repair" : 0,
+      "shipyard" : 0,
+      "outfitting" : 0
+    },
+    "numServices" : 13,
+    "numOptionalServices" : 2,
+    "debtThreshold" : -300000000,
+    "maintenance" : 23395029,
+    "maintenanceToDate" : 6018747,
+    "coreCost" : 5000000,
+    "servicesCost" : 18395029,
+    "servicesCostToDate" : 1018747,
+    "jumpsCost" : 0,
+    "numJumps" : 0,
+    "bartender" : {
+      "microresourcesTotalValue" : 875000,
+      "allTimeProfit" : 0,
+      "microresourcesForSale" : 0,
+      "microresourcesPurchaseOrders" : 1,
+      "balanceAllocForPurchaseOrders" : 0,
+      "profitHistory" : [ 0, 0, 0, 0, 0, 0, 0, 0 ]
+    }
+  },
+  "servicesCrew" : {
+    "refuel" : {
+      "crewMember" : {
+        "name" : "Mikel Chandler",
+        "gender" : "M",
+        "enabled" : "YES",
+        "faction" : "alliance",
+        "salary" : 1500000,
+        "hiringPrice" : 40000000,
+        "lastEdit" : "2026-07-02 07:30:02"
+      },
+      "invoicesWeekToDate" : [ {
+        "wages" : 82827,
+        "from" : "2026-07-02 07:30:02",
+        "until" : "2026-07-02 16:46:37",
+        "type" : "current"
+      }, {
+        "wages" : 1495530,
+        "from" : "2026-07-02 16:46:37",
+        "until" : "2026-07-09 07:00:00",
+        "type" : "expected"
+      } ],
+      "status" : "ok"
+    },
+    "repair" : {
+      "crewMember" : {
+        "name" : "Walter Loshi",
+        "gender" : "M",
+        "enabled" : "YES",
+        "faction" : "alliance",
+        "salary" : 1500000,
+        "hiringPrice" : 50000000,
+        "lastEdit" : "2026-07-02 07:30:02"
+      },
+      "invoicesWeekToDate" : [ {
+        "wages" : 82827,
+        "from" : "2026-07-02 07:30:02",
+        "until" : "2026-07-02 16:46:37",
+        "type" : "current"
+      }, {
+        "wages" : 1495530,
+        "from" : "2026-07-02 16:46:37",
+        "until" : "2026-07-09 07:00:00",
+        "type" : "expected"
+      } ],
+      "status" : "ok"
+    },
+    "rearm" : {
+      "crewMember" : {
+        "name" : "Barrett Nichols",
+        "gender" : "M",
+        "enabled" : "YES",
+        "faction" : "alliance",
+        "salary" : 1500000,
+        "hiringPrice" : 95000000,
+        "lastEdit" : "2026-07-02 07:30:02"
+      },
+      "invoicesWeekToDate" : [ {
+        "wages" : 82827,
+        "from" : "2026-07-02 07:30:02",
+        "until" : "2026-07-02 16:46:37",
+        "type" : "current"
+      }, {
+        "wages" : 1495530,
+        "from" : "2026-07-02 16:46:37",
+        "until" : "2026-07-09 07:00:00",
+        "type" : "expected"
+      } ],
+      "status" : "ok"
+    },
+    "blackmarket" : {
+      "crewMember" : {
+        "name" : "Amina Lopez",
+        "gender" : "F",
+        "enabled" : "YES",
+        "faction" : "alliance",
+        "salary" : 2000000,
+        "hiringPrice" : 165000000,
+        "lastEdit" : "2026-07-02 07:30:02"
+      },
+      "invoicesWeekToDate" : [ {
+        "wages" : 110436,
+        "from" : "2026-07-02 07:30:02",
+        "until" : "2026-07-02 16:46:37",
+        "type" : "current"
+      }, {
+        "wages" : 1994041,
+        "from" : "2026-07-02 16:46:37",
+        "until" : "2026-07-09 07:00:00",
+        "type" : "expected"
+      } ],
+      "status" : "ok"
+    },
+    "voucherredemption" : {
+      "crewMember" : {
+        "name" : "Edison Stanley",
+        "gender" : "M",
+        "enabled" : "YES",
+        "faction" : "alliance",
+        "salary" : 1850000,
+        "hiringPrice" : 150000000,
+        "lastEdit" : "2026-07-02 07:30:02"
+      },
+      "invoicesWeekToDate" : [ {
+        "wages" : 102153,
+        "from" : "2026-07-02 07:30:02",
+        "until" : "2026-07-02 16:46:37",
+        "type" : "current"
+      }, {
+        "wages" : 1844487,
+        "from" : "2026-07-02 16:46:37",
+        "until" : "2026-07-09 07:00:00",
+        "type" : "expected"
+      } ],
+      "status" : "ok"
+    },
+    "exploration" : {
+      "crewMember" : {
+        "name" : "Julia Farrell",
+        "gender" : "F",
+        "enabled" : "YES",
+        "faction" : "alliance",
+        "salary" : 1850000,
+        "hiringPrice" : 150000000,
+        "lastEdit" : "2026-07-02 07:30:02"
+      },
+      "invoicesWeekToDate" : [ {
+        "wages" : 102153,
+        "from" : "2026-07-02 07:30:02",
+        "until" : "2026-07-02 16:46:37",
+        "type" : "current"
+      }, {
+        "wages" : 1844487,
+        "from" : "2026-07-02 16:46:37",
+        "until" : "2026-07-09 07:00:00",
+        "type" : "expected"
+      } ],
+      "status" : "ok"
+    },
+    "bartender" : {
+      "crewMember" : {
+        "name" : "Howard Ramos",
+        "gender" : "M",
+        "enabled" : "YES",
+        "faction" : "alliance",
+        "salary" : 1750000,
+        "hiringPrice" : 200000000,
+        "lastEdit" : "2026-07-02 07:30:02"
+      },
+      "invoicesWeekToDate" : [ {
+        "wages" : 96631,
+        "from" : "2026-07-02 07:30:02",
+        "until" : "2026-07-02 16:46:37",
+        "type" : "current"
+      }, {
+        "wages" : 1744785,
+        "from" : "2026-07-02 16:46:37",
+        "until" : "2026-07-09 07:00:00",
+        "type" : "expected"
+      } ],
+      "status" : "ok"
+    },
+    "vistagenomics" : {
+      "crewMember" : {
+        "name" : "Arissa Mills",
+        "gender" : "F",
+        "enabled" : "YES",
+        "faction" : "alliance",
+        "salary" : 1500000,
+        "hiringPrice" : 150000000,
+        "lastEdit" : "2026-07-02 07:30:02"
+      },
+      "invoicesWeekToDate" : [ {
+        "wages" : 82827,
+        "from" : "2026-07-02 07:30:02",
+        "until" : "2026-07-02 16:46:37",
+        "type" : "current"
+      }, {
+        "wages" : 1495530,
+        "from" : "2026-07-02 16:46:37",
+        "until" : "2026-07-09 07:00:00",
+        "type" : "expected"
+      } ],
+      "status" : "ok"
+    },
+    "pioneersupplies" : {
+      "crewMember" : {
+        "name" : "Tyrone Villarreal",
+        "gender" : "M",
+        "enabled" : "YES",
+        "faction" : "alliance",
+        "salary" : 5000000,
+        "hiringPrice" : 250000000,
+        "lastEdit" : "2026-07-02 07:30:02"
+      },
+      "invoicesWeekToDate" : [ {
+        "wages" : 276091,
+        "from" : "2026-07-02 07:30:02",
+        "until" : "2026-07-02 16:46:37",
+        "type" : "current"
+      }, {
+        "wages" : 4985102,
+        "from" : "2026-07-02 16:46:37",
+        "until" : "2026-07-09 07:00:00",
+        "type" : "expected"
+      } ],
+      "status" : "ok"
+    }
+  },
+  "cargo" : [ {
+    "commodity" : "Tritium",
+    "originSystem" : null,
+    "mission" : false,
+    "qty" : 684,
+    "value" : 45941544,
+    "stolen" : false,
+    "locName" : "Tritium"
+  }, {
+    "commodity" : "Thargoidtitandrivecomponent",
+    "originSystem" : 10477373803,
+    "mission" : false,
+    "qty" : 1,
+    "value" : 36207500,
+    "stolen" : false,
+    "locName" : "Titan Drive Component"
+  } ],
+  "orders" : {
+    "commodities" : {
+      "sales" : [ ],
+      "purchases" : [ {
+        "name" : "thargoidtitandrivecomponent",
+        "total" : 3,
+        "outstanding" : 2,
+        "price" : 36207500,
+        "blackmarket" : false
+      }, {
+        "name" : "tritium",
+        "total" : 1500,
+        "outstanding" : 816,
+        "price" : 67166,
+        "blackmarket" : false
+      } ]
+    },
+    "onfootmicroresources" : {
+      "sales" : {
+        "128962607" : {
+          "id" : 128962607,
+          "name" : "push",
+          "locName" : "Push",
+          "price" : 99500,
+          "stock" : 34
+        }
+      },
+      "purchases" : [ ]
+    }
+  },
+  "carrierLocker" : {
+    "assets" : [ ],
+    "goods" : [ {
+      "id" : 128962607,
+      "quantity" : 34,
+      "name" : "push",
+      "locName" : "Push"
+    } ],
+    "data" : [ {
+      "id" : 128972342,
+      "quantity" : 5,
+      "name" : "opinionpolls",
+      "locName" : "Opinion Polls"
+    } ]
+  },
+  "reputation" : [ {
+    "majorFaction" : "empire",
+    "score" : 100
+  }, {
+    "majorFaction" : "federation",
+    "score" : 100
+  }, {
+    "majorFaction" : "independent",
+    "score" : 100
+  }, {
+    "majorFaction" : "alliance",
+    "score" : 100
+  } ],
+  "market" : {
+    "id" : 3715318528,
+    "name" : "WFT-T2K",
+    "outpostType" : "fleetcarrier",
+    "imported" : [ ],
+    "exported" : [ ],
+    "services" : {
+      "commodities" : "ok",
+      "carrierfuel" : "ok",
+      "socialspace" : "ok",
+      "shipyard" : "private",
+      "refuel" : "ok",
+      "repair" : "ok",
+      "rearm" : "ok",
+      "outfitting" : "private",
+      "blackmarket" : "ok",
+      "voucherredemption" : "ok",
+      "exploration" : "ok",
+      "bartender" : "ok",
+      "vistagenomics" : "ok",
+      "pioneersupplies" : "ok",
+      "carriermanagement" : "ok",
+      "stationmenu" : "ok",
+      "dock" : "ok",
+      "crewlounge" : "ok",
+      "engineer" : "ok",
+      "contacts" : "ok",
+      "registeringcolonisation" : "faction",
+      "livery" : "private"
+    },
+    "economies" : {
+      "136" : {
+        "name" : "Carrier",
+        "proportion" : 1
+      }
+    },
+    "prohibited" : [ ]
+  },
+  "blackmarket" : {
+    "commodities" : [ {
+      "id" : 128066403,
+      "categoryname" : "NonMarketable",
+      "name" : "Drones",
+      "stock" : 999999,
+      "buyPrice" : 95,
+      "sellPrice" : 95,
+      "demand" : 9999999,
+      "legality" : "",
+      "meanPrice" : 95,
+      "demandBracket" : 2,
+      "stockBracket" : 2,
+      "locName" : "Limpet"
+    } ]
+  },
+  "commodities" : {
+    "commodities" : [ {
+      "id" : 128961249,
+      "categoryname" : "Chemicals",
+      "name" : "Tritium",
+      "stock" : 0,
+      "buyPrice" : 0,
+      "sellPrice" : 67166,
+      "demand" : 816,
+      "legality" : "",
+      "meanPrice" : 0,
+      "demandBracket" : 2,
+      "stockBracket" : "",
+      "locName" : "Tritium"
+    }, {
+      "id" : 128066403,
+      "categoryname" : "NonMarketable",
+      "name" : "Drones",
+      "stock" : 999999,
+      "buyPrice" : 95,
+      "sellPrice" : 95,
+      "demand" : 9999999,
+      "legality" : "",
+      "meanPrice" : 95,
+      "demandBracket" : 2,
+      "stockBracket" : 2,
+      "locName" : "Limpet"
+    }, {
+      "id" : 129030459,
+      "categoryname" : "Salvage",
+      "name" : "ThargoidTitanDriveComponent",
+      "stock" : 0,
+      "buyPrice" : 0,
+      "sellPrice" : 36207500,
+      "demand" : 2,
+      "legality" : "",
+      "meanPrice" : 0,
+      "demandBracket" : 2,
+      "stockBracket" : "",
+      "locName" : "Titan Drive Component"
+    } ]
+  },
+  "ships" : {
+    "shipyard_list" : [ ],
+    "discount_list" : [ ]
+  },
+  "modules" : [ ]
+}

@@ -23,8 +23,12 @@ public abstract class MilitaryOptionalModule extends OptionalModule {
     public MilitaryOptionalModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, origin,false, basePrice, internalName, attributes);
     }
+    public MilitaryOptionalModule(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean merc, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
+        super(id, name, moduleSize, moduleClass,false, merc, basePrice, internalName, attributes);
+    }
 
     public MilitaryOptionalModule(final MilitaryOptionalModule militaryOptionalModule) {
         super(militaryOptionalModule);
     }
+
 }

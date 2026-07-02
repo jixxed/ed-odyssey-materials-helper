@@ -104,6 +104,8 @@ public class Blueprint extends DestroyableVBox implements DestroyableTemplate {
                     LocaleService.getStringBinding("wishlist.blueprint.horizons.title.synthesis", LocaleService.LocalizationKey.of("blueprint.synthesis.grade" + bp.getBlueprintGrade().getGrade()));
             case HorizonsTechBrokerWishlistBlueprint bp ->
                     LocaleService.getStringBinding("wishlist.blueprint.horizons.title.techbroker", LocaleService.LocalizationKey.of(bp.getBlueprintType().getLocalizationKey()));
+            case HorizonsOutfittingWishlistBlueprint bp ->
+                    LocaleService.getStringBinding("wishlist.blueprint.horizons.title.outfitting", LocaleService.LocalizationKey.of(bp.getRecipeName().getLocalizationKey()));
             case HorizonsEngineerWishlistBlueprint bp ->
                     Bindings.createStringBinding(() -> LocaleService.getStringBinding("wishlist.blueprint.horizons.title.engineer", LocaleService.LocalizationKey.of(bp.getRecipeName().getLocalizationKey())).get().replaceAll("^[ ├└\\s]+", ""));
             case OdysseyWishlistBlueprint bp ->

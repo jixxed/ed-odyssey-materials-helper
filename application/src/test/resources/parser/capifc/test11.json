@@ -1,0 +1,303 @@
+{
+  "name" : {
+    "callsign" : "123",
+    "vanityName" : "123",
+    "filteredVanityName" : "123"
+  },
+  "currentStarSystem" : "LTT 4428",
+  "balance" : "123",
+  "fuel" : "761",
+  "state" : "normalOperation",
+  "theme" : "None",
+  "dockingAccess" : "squadronfriends",
+  "notoriousAccess" : false,
+  "capacity" : {
+    "shipPacks" : 0,
+    "modulePacks" : 0,
+    "cargoForSale" : 642,
+    "cargoNotForSale" : 0,
+    "cargoSpaceReserved" : 0,
+    "crew" : 920,
+    "freeSpace" : 23438,
+    "microresourceCapacityTotal" : 1000,
+    "microresourceCapacityFree" : 1000,
+    "microresourceCapacityUsed" : 0,
+    "microresourceCapacityReserved" : 0,
+    "squadronBankTotal" : 0
+  },
+  "itinerary" : {
+    "completed" : [ {
+      "departureTime" : "2026-06-25 18:49:00",
+      "arrivalTime" : "2026-06-13 21:58:00",
+      "state" : "success",
+      "visitDurationSeconds" : 1025460,
+      "starsystem" : "HIP 55459"
+    }, {
+      "departureTime" : null,
+      "arrivalTime" : "2026-06-25 18:49:00",
+      "state" : "success",
+      "visitDurationSeconds" : 599019,
+      "starsystem" : "LTT 4428"
+    } ],
+    "totalDistanceJumpedLY" : 177,
+    "currentJump" : null
+  },
+  "marketFinances" : {
+    "cargoTotalValue" : 1646730,
+    "allTimeProfit" : 2929230,
+    "numCommodsForSale" : 1,
+    "numCommodsPurchaseOrders" : 0,
+    "balanceAllocForPurchaseOrders" : 0
+  },
+  "blackmarketFinances" : {
+    "cargoTotalValue" : 0,
+    "allTimeProfit" : 0,
+    "numCommodsForSale" : 0,
+    "numCommodsPurchaseOrders" : 0,
+    "balanceAllocForPurchaseOrders" : 0
+  },
+  "finance" : {
+    "bankBalance" : 527531889,
+    "bankReservedBalance" : 0,
+    "taxation" : 0,
+    "service_taxation" : {
+      "bartender" : 0,
+      "pioneersupplies" : 0,
+      "rearm" : 0,
+      "refuel" : 0,
+      "repair" : 0,
+      "shipyard" : 0,
+      "outfitting" : 0
+    },
+    "numServices" : 8,
+    "numOptionalServices" : 0,
+    "debtThreshold" : -300000000,
+    "maintenance" : 11331081,
+    "maintenanceToDate" : 5367026,
+    "coreCost" : 5000000,
+    "servicesCost" : 6331081,
+    "servicesCostToDate" : 367026,
+    "jumpsCost" : 0,
+    "numJumps" : 0,
+    "bartender" : {
+      "microresourcesTotalValue" : 0,
+      "allTimeProfit" : 0,
+      "microresourcesForSale" : 0,
+      "microresourcesPurchaseOrders" : 0,
+      "balanceAllocForPurchaseOrders" : 0,
+      "profitHistory" : [ 0, 0, 0, 0, 0, 0, 0, 0 ]
+    }
+  },
+  "servicesCrew" : {
+    "refuel" : {
+      "crewMember" : {
+        "name" : "Taylor Herring",
+        "gender" : "M",
+        "enabled" : "YES",
+        "faction" : "alliance",
+        "salary" : 1500000,
+        "hiringPrice" : 40000000,
+        "lastEdit" : "2026-07-02 07:30:02"
+      },
+      "invoicesWeekToDate" : [ {
+        "wages" : 86698,
+        "from" : "2026-07-02 07:30:02",
+        "until" : "2026-07-02 17:12:38",
+        "type" : "current"
+      }, {
+        "wages" : 1495530,
+        "from" : "2026-07-02 17:12:38",
+        "until" : "2026-07-09 07:00:00",
+        "type" : "expected"
+      } ],
+      "status" : "ok"
+    },
+    "repair" : {
+      "crewMember" : {
+        "name" : "Rod Massey",
+        "gender" : "M",
+        "enabled" : "YES",
+        "faction" : "alliance",
+        "salary" : 1500000,
+        "hiringPrice" : 50000000,
+        "lastEdit" : "2026-07-02 07:30:02"
+      },
+      "invoicesWeekToDate" : [ {
+        "wages" : 86698,
+        "from" : "2026-07-02 07:30:02",
+        "until" : "2026-07-02 17:12:38",
+        "type" : "current"
+      }, {
+        "wages" : 1495530,
+        "from" : "2026-07-02 17:12:38",
+        "until" : "2026-07-09 07:00:00",
+        "type" : "expected"
+      } ],
+      "status" : "ok"
+    },
+    "exploration" : {
+      "crewMember" : {
+        "name" : "Luther Berger",
+        "gender" : "M",
+        "enabled" : "YES",
+        "faction" : "alliance",
+        "salary" : 1850000,
+        "hiringPrice" : 150000000,
+        "lastEdit" : "2026-07-02 07:30:02"
+      },
+      "invoicesWeekToDate" : [ {
+        "wages" : 106928,
+        "from" : "2026-07-02 07:30:02",
+        "until" : "2026-07-02 17:12:38",
+        "type" : "current"
+      }, {
+        "wages" : 1844487,
+        "from" : "2026-07-02 17:12:38",
+        "until" : "2026-07-09 07:00:00",
+        "type" : "expected"
+      } ],
+      "status" : "ok"
+    },
+    "vistagenomics" : {
+      "crewMember" : {
+        "name" : "Ella Santiago",
+        "gender" : "F",
+        "enabled" : "YES",
+        "faction" : "alliance",
+        "salary" : 1500000,
+        "hiringPrice" : 150000000,
+        "lastEdit" : "2026-07-02 07:30:02"
+      },
+      "invoicesWeekToDate" : [ {
+        "wages" : 86698,
+        "from" : "2026-07-02 07:30:02",
+        "until" : "2026-07-02 17:12:38",
+        "type" : "current"
+      }, {
+        "wages" : 1495530,
+        "from" : "2026-07-02 17:12:38",
+        "until" : "2026-07-09 07:00:00",
+        "type" : "expected"
+      } ],
+      "status" : "ok"
+    }
+  },
+  "cargo" : [ {
+    "commodity" : "Tritium",
+    "originSystem" : null,
+    "mission" : false,
+    "qty" : 642,
+    "value" : 1646730,
+    "stolen" : false,
+    "locName" : "Tritium"
+  } ],
+  "orders" : {
+    "commodities" : {
+      "sales" : [ {
+        "name" : "tritium",
+        "stock" : "642",
+        "price" : "2565",
+        "blackmarket" : false
+      } ],
+      "purchases" : [ ]
+    },
+    "onfootmicroresources" : {
+      "sales" : [ ],
+      "purchases" : [ ]
+    }
+  },
+  "carrierLocker" : {
+    "assets" : [ ],
+    "goods" : [ ],
+    "data" : [ ]
+  },
+  "reputation" : [ {
+    "majorFaction" : "empire",
+    "score" : 100
+  }, {
+    "majorFaction" : "federation",
+    "score" : 100
+  }, {
+    "majorFaction" : "independent",
+    "score" : 100
+  }, {
+    "majorFaction" : "alliance",
+    "score" : 100
+  } ],
+  "market" : {
+    "id" : 3715105792,
+    "name" : "BFG-75T",
+    "outpostType" : "fleetcarrier",
+    "imported" : [ ],
+    "exported" : [ ],
+    "services" : {
+      "commodities" : "ok",
+      "carrierfuel" : "ok",
+      "socialspace" : "ok",
+      "shipyard" : "private",
+      "refuel" : "ok",
+      "repair" : "ok",
+      "rearm" : "unavailable",
+      "outfitting" : "private",
+      "blackmarket" : "unavailable",
+      "voucherredemption" : "unavailable",
+      "exploration" : "ok",
+      "bartender" : "unavailable",
+      "vistagenomics" : "ok",
+      "pioneersupplies" : "unavailable",
+      "carriermanagement" : "ok",
+      "stationmenu" : "ok",
+      "dock" : "ok",
+      "crewlounge" : "ok",
+      "engineer" : "ok",
+      "contacts" : "ok",
+      "registeringcolonisation" : "faction",
+      "livery" : "private"
+    },
+    "economies" : {
+      "136" : {
+        "name" : "Carrier",
+        "proportion" : 1
+      }
+    },
+    "prohibited" : {
+      "128983059" : "OnionHeadC",
+      "128667728" : "ImperialSlaves",
+      "128049212" : "BasicNarcotics"
+    }
+  },
+  "commodities" : {
+    "commodities" : [ {
+      "id" : 128961249,
+      "categoryname" : "Chemicals",
+      "name" : "Tritium",
+      "stock" : 642,
+      "buyPrice" : 2565,
+      "sellPrice" : 0,
+      "demand" : 0,
+      "legality" : "",
+      "meanPrice" : 0,
+      "demandBracket" : "",
+      "stockBracket" : 2,
+      "locName" : "Tritium"
+    }, {
+      "id" : 128066403,
+      "categoryname" : "NonMarketable",
+      "name" : "Drones",
+      "stock" : 999999,
+      "buyPrice" : 95,
+      "sellPrice" : 95,
+      "demand" : 9999999,
+      "legality" : "",
+      "meanPrice" : 95,
+      "demandBracket" : 2,
+      "stockBracket" : 2,
+      "locName" : "Drone"
+    } ]
+  },
+  "ships" : {
+    "shipyard_list" : [ ],
+    "discount_list" : [ ]
+  },
+  "modules" : [ ]
+}

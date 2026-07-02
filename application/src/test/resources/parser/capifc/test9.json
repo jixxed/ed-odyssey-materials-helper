@@ -1,0 +1,700 @@
+{
+  "name" : {
+    "callsign" : "123",
+    "vanityName" : "123",
+    "filteredVanityName" : "123"
+  },
+  "currentStarSystem" : "Namnetes",
+  "balance" : "123",
+  "fuel" : "265",
+  "state" : "normalOperation",
+  "theme" : "Explorer",
+  "dockingAccess" : "all",
+  "notoriousAccess" : true,
+  "capacity" : {
+    "shipPacks" : 0,
+    "modulePacks" : 0,
+    "cargoForSale" : 0,
+    "cargoNotForSale" : 3118,
+    "cargoSpaceReserved" : 0,
+    "crew" : 1400,
+    "freeSpace" : 20482,
+    "microresourceCapacityTotal" : 1000,
+    "microresourceCapacityFree" : 0,
+    "microresourceCapacityUsed" : 1000,
+    "microresourceCapacityReserved" : 2,
+    "squadronBankTotal" : 0
+  },
+  "itinerary" : {
+    "completed" : [ {
+      "departureTime" : "2026-06-26 11:08:00",
+      "arrivalTime" : "2026-06-12 03:35:00",
+      "state" : "success",
+      "visitDurationSeconds" : 1236780,
+      "starsystem" : "Synuefai QV-G c26-0"
+    }, {
+      "departureTime" : "2026-06-26 11:46:00",
+      "arrivalTime" : "2026-06-26 11:08:00",
+      "state" : "success",
+      "visitDurationSeconds" : 2280,
+      "starsystem" : "HIP 4582"
+    }, {
+      "departureTime" : "2026-07-01 19:35:00",
+      "arrivalTime" : "2026-06-26 11:46:00",
+      "state" : "success",
+      "visitDurationSeconds" : 460140,
+      "starsystem" : "Polevnic"
+    }, {
+      "departureTime" : null,
+      "arrivalTime" : "2026-07-01 19:35:00",
+      "state" : "success",
+      "visitDurationSeconds" : 76168,
+      "starsystem" : "Namnetes"
+    } ],
+    "totalDistanceJumpedLY" : 456,
+    "currentJump" : null
+  },
+  "marketFinances" : {
+    "cargoTotalValue" : 29222572,
+    "allTimeProfit" : 349601767,
+    "numCommodsForSale" : 1,
+    "numCommodsPurchaseOrders" : 0,
+    "balanceAllocForPurchaseOrders" : 0
+  },
+  "blackmarketFinances" : {
+    "cargoTotalValue" : 0,
+    "allTimeProfit" : 0,
+    "numCommodsForSale" : 0,
+    "numCommodsPurchaseOrders" : 0,
+    "balanceAllocForPurchaseOrders" : 0
+  },
+  "finance" : {
+    "bankBalance" : 5183139097,
+    "bankReservedBalance" : 4437564582,
+    "taxation" : 0,
+    "service_taxation" : {
+      "bartender" : 0,
+      "pioneersupplies" : 100,
+      "rearm" : 100,
+      "refuel" : 100,
+      "repair" : 0,
+      "shipyard" : 100,
+      "outfitting" : 25
+    },
+    "numServices" : 10,
+    "numOptionalServices" : 0,
+    "debtThreshold" : -300000000,
+    "maintenance" : 18060969,
+    "maintenanceToDate" : 5720544,
+    "coreCost" : 5000000,
+    "servicesCost" : 13060969,
+    "servicesCostToDate" : 720544,
+    "jumpsCost" : 0,
+    "numJumps" : 0,
+    "bartender" : {
+      "microresourcesTotalValue" : 507200,
+      "allTimeProfit" : 0,
+      "microresourcesForSale" : 1,
+      "microresourcesPurchaseOrders" : 1,
+      "balanceAllocForPurchaseOrders" : 500,
+      "profitHistory" : [ 0, 0, 0, 0, 0, 0, 0, 0 ]
+    }
+  },
+  "servicesCrew" : {
+    "refuel" : {
+      "crewMember" : {
+        "name" : "Isaiah Tanner",
+        "gender" : "M",
+        "enabled" : "YES",
+        "faction" : "federation",
+        "salary" : 1500000,
+        "hiringPrice" : 40000000,
+        "lastEdit" : "2026-07-02 07:30:02"
+      },
+      "invoicesWeekToDate" : [ {
+        "wages" : 82504,
+        "from" : "2026-07-02 07:30:02",
+        "until" : "2026-07-02 16:44:27",
+        "type" : "current"
+      }, {
+        "wages" : 1495530,
+        "from" : "2026-07-02 16:44:27",
+        "until" : "2026-07-09 07:00:00",
+        "type" : "expected"
+      } ],
+      "status" : "ok"
+    },
+    "repair" : {
+      "crewMember" : {
+        "name" : "Cleo Bridges",
+        "gender" : "F",
+        "enabled" : "YES",
+        "faction" : "federation",
+        "salary" : 1500000,
+        "hiringPrice" : 50000000,
+        "lastEdit" : "2026-07-02 07:30:02"
+      },
+      "invoicesWeekToDate" : [ {
+        "wages" : 82504,
+        "from" : "2026-07-02 07:30:02",
+        "until" : "2026-07-02 16:44:27",
+        "type" : "current"
+      }, {
+        "wages" : 1495530,
+        "from" : "2026-07-02 16:44:27",
+        "until" : "2026-07-09 07:00:00",
+        "type" : "expected"
+      } ],
+      "status" : "ok"
+    },
+    "rearm" : {
+      "crewMember" : {
+        "name" : "Illiana Calderon",
+        "gender" : "F",
+        "enabled" : "YES",
+        "faction" : "federation",
+        "salary" : 1500000,
+        "hiringPrice" : 95000000,
+        "lastEdit" : "2026-07-02 07:30:02"
+      },
+      "invoicesWeekToDate" : [ {
+        "wages" : 82504,
+        "from" : "2026-07-02 07:30:02",
+        "until" : "2026-07-02 16:44:27",
+        "type" : "current"
+      }, {
+        "wages" : 1495530,
+        "from" : "2026-07-02 16:44:27",
+        "until" : "2026-07-09 07:00:00",
+        "type" : "expected"
+      } ],
+      "status" : "ok"
+    },
+    "exploration" : {
+      "crewMember" : {
+        "name" : "Macey Cooke",
+        "gender" : "F",
+        "enabled" : "YES",
+        "faction" : "independent",
+        "salary" : 1850000,
+        "hiringPrice" : 150000000,
+        "lastEdit" : "2026-07-02 07:30:02"
+      },
+      "invoicesWeekToDate" : [ {
+        "wages" : 101756,
+        "from" : "2026-07-02 07:30:02",
+        "until" : "2026-07-02 16:44:27",
+        "type" : "current"
+      }, {
+        "wages" : 1844487,
+        "from" : "2026-07-02 16:44:27",
+        "until" : "2026-07-09 07:00:00",
+        "type" : "expected"
+      } ],
+      "status" : "ok"
+    },
+    "bartender" : {
+      "crewMember" : {
+        "name" : "Elissa Owens",
+        "gender" : "F",
+        "enabled" : "YES",
+        "faction" : "independent",
+        "salary" : 1750000,
+        "hiringPrice" : 200000000,
+        "lastEdit" : "2026-07-02 07:30:02"
+      },
+      "invoicesWeekToDate" : [ {
+        "wages" : 96255,
+        "from" : "2026-07-02 07:30:02",
+        "until" : "2026-07-02 16:44:27",
+        "type" : "current"
+      }, {
+        "wages" : 1744785,
+        "from" : "2026-07-02 16:44:27",
+        "until" : "2026-07-09 07:00:00",
+        "type" : "expected"
+      } ],
+      "status" : "ok"
+    },
+    "pioneersupplies" : {
+      "crewMember" : {
+        "name" : "Willy Bowen",
+        "gender" : "M",
+        "enabled" : "YES",
+        "faction" : "independent",
+        "salary" : 5000000,
+        "hiringPrice" : 250000000,
+        "lastEdit" : "2026-07-02 07:30:02"
+      },
+      "invoicesWeekToDate" : [ {
+        "wages" : 275016,
+        "from" : "2026-07-02 07:30:02",
+        "until" : "2026-07-02 16:44:27",
+        "type" : "current"
+      }, {
+        "wages" : 4985102,
+        "from" : "2026-07-02 16:44:27",
+        "until" : "2026-07-09 07:00:00",
+        "type" : "expected"
+      } ],
+      "status" : "ok"
+    }
+  },
+  "cargo" : [ {
+    "commodity" : "Tritium",
+    "originSystem" : null,
+    "mission" : false,
+    "qty" : 457,
+    "value" : 22636124,
+    "stolen" : false,
+    "locName" : "Tritium"
+  }, {
+    "commodity" : "Tritium",
+    "originSystem" : null,
+    "mission" : false,
+    "qty" : 448,
+    "value" : 3261120,
+    "stolen" : false,
+    "locName" : "Tritium"
+  }, {
+    "commodity" : "Konggaale",
+    "originSystem" : null,
+    "mission" : false,
+    "qty" : 7,
+    "value" : 4095,
+    "stolen" : false,
+    "locName" : "Kongga Ale"
+  }, {
+    "commodity" : "Bromellite",
+    "originSystem" : 2870514623921,
+    "mission" : false,
+    "qty" : 4,
+    "value" : 0,
+    "stolen" : false,
+    "locName" : "Bromellite"
+  }, {
+    "commodity" : "Medicaldiagnosticequipment",
+    "originSystem" : null,
+    "mission" : false,
+    "qty" : 65,
+    "value" : 176930,
+    "stolen" : false,
+    "locName" : "Medical Diagnostic Equipment"
+  }, {
+    "commodity" : "Waterpurifiers",
+    "originSystem" : null,
+    "mission" : false,
+    "qty" : 190,
+    "value" : 121030,
+    "stolen" : false,
+    "locName" : "Water Purifiers"
+  }, {
+    "commodity" : "Fruitandvegetables",
+    "originSystem" : null,
+    "mission" : false,
+    "qty" : 250,
+    "value" : 92000,
+    "stolen" : false,
+    "locName" : "Fruit and Vegetables"
+  }, {
+    "commodity" : "Nonlethalweapons",
+    "originSystem" : null,
+    "mission" : false,
+    "qty" : 65,
+    "value" : 88140,
+    "stolen" : false,
+    "locName" : "Non-Lethal Weapons"
+  }, {
+    "commodity" : "Powergenerators",
+    "originSystem" : null,
+    "mission" : false,
+    "qty" : 95,
+    "value" : 233320,
+    "stolen" : false,
+    "locName" : "Power Generators"
+  }, {
+    "commodity" : "Computercomponents",
+    "originSystem" : null,
+    "mission" : false,
+    "qty" : 372,
+    "value" : 248868,
+    "stolen" : false,
+    "locName" : "Computer Components"
+  }, {
+    "commodity" : "Foodcartridges",
+    "originSystem" : null,
+    "mission" : false,
+    "qty" : 470,
+    "value" : 25850,
+    "stolen" : false,
+    "locName" : "Food Cartridges"
+  }, {
+    "commodity" : "Semiconductors",
+    "originSystem" : null,
+    "mission" : false,
+    "qty" : 340,
+    "value" : 372300,
+    "stolen" : false,
+    "locName" : "Semiconductors"
+  }, {
+    "commodity" : "Cmmcomposite",
+    "originSystem" : null,
+    "mission" : false,
+    "qty" : 355,
+    "value" : 1962795,
+    "stolen" : false,
+    "locName" : "CMM Composite"
+  } ],
+  "orders" : {
+    "commodities" : {
+      "sales" : [ {
+        "name" : "xihecompanions",
+        "stock" : "0",
+        "price" : "553",
+        "blackmarket" : false
+      } ],
+      "purchases" : [ ]
+    },
+    "onfootmicroresources" : {
+      "sales" : {
+        "128972367" : {
+          "id" : 128972367,
+          "name" : "smearcampaignplans",
+          "locName" : "Smear Campaign Plans",
+          "price" : 299000,
+          "stock" : 0
+        }
+      },
+      "purchases" : [ {
+        "name" : "opinionpolls",
+        "locName" : "Opinion Polls",
+        "total" : 3,
+        "outstanding" : 2,
+        "price" : 250
+      } ]
+    }
+  },
+  "carrierLocker" : {
+    "assets" : [ {
+      "id" : 128064021,
+      "quantity" : 76,
+      "name" : "graphene",
+      "locName" : "Graphene"
+    }, {
+      "id" : 128961524,
+      "quantity" : 15,
+      "name" : "aerogel",
+      "locName" : "Aerogel"
+    }, {
+      "id" : 128961526,
+      "quantity" : 15,
+      "name" : "carbonfibreplating",
+      "locName" : "Carbon Fibre Plating"
+    }, {
+      "id" : 128961527,
+      "quantity" : 25,
+      "name" : "chemicalcatalyst",
+      "locName" : "Chemical Catalyst"
+    }, {
+      "id" : 128961528,
+      "quantity" : 66,
+      "name" : "chemicalsuperbase",
+      "locName" : "Chemical Superbase"
+    }, {
+      "id" : 128961529,
+      "quantity" : 15,
+      "name" : "circuitboard",
+      "locName" : "Circuit Board"
+    }, {
+      "id" : 128961530,
+      "quantity" : 51,
+      "name" : "circuitswitch",
+      "locName" : "Circuit Switch"
+    }, {
+      "id" : 128961531,
+      "quantity" : 18,
+      "name" : "electricalfuse",
+      "locName" : "Electrical Fuse"
+    }, {
+      "id" : 128961532,
+      "quantity" : 21,
+      "name" : "electricalwiring",
+      "locName" : "Electrical Wiring"
+    }, {
+      "id" : 128961533,
+      "quantity" : 86,
+      "name" : "encryptedmemorychip",
+      "locName" : "Encrypted Memory Chip"
+    }, {
+      "id" : 128961534,
+      "quantity" : 44,
+      "name" : "epoxyadhesive",
+      "locName" : "Epoxy Adhesive"
+    }, {
+      "id" : 128961537,
+      "quantity" : 63,
+      "name" : "memorychip",
+      "locName" : "Memory Chip"
+    }, {
+      "id" : 128961538,
+      "quantity" : 70,
+      "name" : "metalcoil",
+      "locName" : "Metal Coil"
+    }, {
+      "id" : 128961539,
+      "quantity" : 15,
+      "name" : "microhydraulics",
+      "locName" : "Micro Hydraulics"
+    }, {
+      "id" : 128961540,
+      "quantity" : 5,
+      "name" : "microsupercapacitor",
+      "locName" : "Micro Supercapacitor"
+    }, {
+      "id" : 128961541,
+      "quantity" : 14,
+      "name" : "microthrusters",
+      "locName" : "Micro Thrusters"
+    }, {
+      "id" : 128961542,
+      "quantity" : 15,
+      "name" : "microtransformer",
+      "locName" : "Micro Transformer"
+    }, {
+      "id" : 128961543,
+      "quantity" : 17,
+      "name" : "motor",
+      "locName" : "Motor"
+    }, {
+      "id" : 128961544,
+      "quantity" : 15,
+      "name" : "opticalfibre",
+      "locName" : "Optical Fibre"
+    }, {
+      "id" : 128961545,
+      "quantity" : 58,
+      "name" : "opticallens",
+      "locName" : "Optical Lens"
+    }, {
+      "id" : 128961547,
+      "quantity" : 40,
+      "name" : "scrambler",
+      "locName" : "Scrambler"
+    }, {
+      "id" : 128961549,
+      "quantity" : 25,
+      "name" : "titaniumplating",
+      "locName" : "Titanium Plating"
+    }, {
+      "id" : 128961550,
+      "quantity" : 6,
+      "name" : "transmitter",
+      "locName" : "Transmitter"
+    }, {
+      "id" : 128961551,
+      "quantity" : 14,
+      "name" : "tungstencarbide",
+      "locName" : "Tungsten Carbide"
+    }, {
+      "id" : 128961552,
+      "quantity" : 27,
+      "name" : "viscoelasticpolymer",
+      "locName" : "Viscoelastic Polymer"
+    }, {
+      "id" : 128962572,
+      "quantity" : 11,
+      "name" : "rdx",
+      "locName" : "RDX"
+    }, {
+      "id" : 128962573,
+      "quantity" : 25,
+      "name" : "electromagnet",
+      "locName" : "Electromagnet"
+    }, {
+      "id" : 128962574,
+      "quantity" : 10,
+      "name" : "oxygenicbacteria",
+      "locName" : "Oxygenic Bacteria"
+    }, {
+      "id" : 128962575,
+      "quantity" : 10,
+      "name" : "epinephrine",
+      "locName" : "Epinephrine"
+    }, {
+      "id" : 128962576,
+      "quantity" : 10,
+      "name" : "phneutraliser",
+      "locName" : "pH Neutraliser"
+    }, {
+      "id" : 128964025,
+      "quantity" : 63,
+      "name" : "microelectrode",
+      "locName" : "Microelectrode"
+    }, {
+      "id" : 128965844,
+      "quantity" : 33,
+      "name" : "ionbattery",
+      "locName" : "Ion Battery"
+    }, {
+      "id" : 128965845,
+      "quantity" : 19,
+      "name" : "weaponcomponent",
+      "locName" : "Weapon Component"
+    } ],
+    "goods" : [ ],
+    "data" : [ {
+      "id" : 128972342,
+      "quantity" : 1,
+      "name" : "opinionpolls",
+      "locName" : "Opinion Polls"
+    }, {
+      "id" : 128972367,
+      "quantity" : 0,
+      "name" : "smearcampaignplans",
+      "locName" : "Smear Campaign Plans"
+    } ]
+  },
+  "reputation" : [ {
+    "majorFaction" : "empire",
+    "score" : 100
+  }, {
+    "majorFaction" : "federation",
+    "score" : 100
+  }, {
+    "majorFaction" : "independent",
+    "score" : 100
+  }, {
+    "majorFaction" : "alliance",
+    "score" : 100
+  } ],
+  "market" : {
+    "id" : 3701534208,
+    "name" : "H8K-50B",
+    "outpostType" : "fleetcarrier",
+    "imported" : [ ],
+    "exported" : [ ],
+    "services" : {
+      "commodities" : "ok",
+      "carrierfuel" : "ok",
+      "socialspace" : "ok",
+      "shipyard" : "private",
+      "refuel" : "ok",
+      "repair" : "ok",
+      "rearm" : "ok",
+      "outfitting" : "private",
+      "blackmarket" : "unavailable",
+      "voucherredemption" : "unavailable",
+      "exploration" : "ok",
+      "bartender" : "ok",
+      "vistagenomics" : "unavailable",
+      "pioneersupplies" : "ok",
+      "carriermanagement" : "ok",
+      "stationmenu" : "ok",
+      "dock" : "ok",
+      "crewlounge" : "ok",
+      "engineer" : "ok",
+      "contacts" : "ok",
+      "registeringcolonisation" : "faction",
+      "livery" : "private"
+    },
+    "economies" : {
+      "136" : {
+        "name" : "Carrier",
+        "proportion" : 1
+      }
+    },
+    "prohibited" : {
+      "128667728" : "ImperialSlaves",
+      "128049212" : "BasicNarcotics",
+      "128983059" : "OnionHeadC"
+    }
+  },
+  "commodities" : {
+    "commodities" : [ {
+      "id" : 128066403,
+      "categoryname" : "NonMarketable",
+      "name" : "Drones",
+      "stock" : 999999,
+      "buyPrice" : 95,
+      "sellPrice" : 95,
+      "demand" : 9999999,
+      "legality" : "",
+      "meanPrice" : 95,
+      "demandBracket" : 2,
+      "stockBracket" : 2,
+      "locName" : "Limpet"
+    } ]
+  },
+  "ships" : {
+    "shipyard_list" : [ ],
+    "discount_list" : [ ]
+  },
+  "modules" : {
+    "129045677" : {
+      "id" : 129045677,
+      "category" : "module",
+      "name" : "Int_FighterBayMk2_Size5_Class1_Free",
+      "cost" : 0,
+      "sku" : "ELITE_V_MKIIFIGHTERBAY_FREE",
+      "stock" : -1,
+      "variant" : null,
+      "restock" : 0,
+      "bundle" : true
+    },
+    "129045678" : {
+      "id" : 129045678,
+      "category" : "module",
+      "name" : "Int_FighterBayMk2_Size6_Class1_Free",
+      "cost" : 0,
+      "sku" : "ELITE_V_MKIIFIGHTERBAY_FREE",
+      "stock" : -1,
+      "variant" : null,
+      "restock" : 0,
+      "bundle" : true
+    },
+    "129045679" : {
+      "id" : 129045679,
+      "category" : "module",
+      "name" : "Int_FighterBayMk2_Size7_Class1_Free",
+      "cost" : 0,
+      "sku" : "ELITE_V_MKIIFIGHTERBAY_FREE",
+      "stock" : -1,
+      "variant" : null,
+      "restock" : 0,
+      "bundle" : true
+    },
+    "129045963" : {
+      "id" : 129045963,
+      "category" : "module",
+      "name" : "Int_FighterBay_Size5_Class1_Free",
+      "cost" : 0,
+      "sku" : "ELITE_V_MKIFIGHTERBAY_FREE",
+      "stock" : -1,
+      "variant" : null,
+      "restock" : 0,
+      "bundle" : true
+    },
+    "129045964" : {
+      "id" : 129045964,
+      "category" : "module",
+      "name" : "Int_FighterBay_Size6_Class1_Free",
+      "cost" : 0,
+      "sku" : "ELITE_V_MKIFIGHTERBAY_FREE",
+      "stock" : -1,
+      "variant" : null,
+      "restock" : 0,
+      "bundle" : true
+    },
+    "129045965" : {
+      "id" : 129045965,
+      "category" : "module",
+      "name" : "Int_FighterBay_Size7_Class1_Free",
+      "cost" : 0,
+      "sku" : "ELITE_V_MKIFIGHTERBAY_FREE",
+      "stock" : -1,
+      "variant" : null,
+      "restock" : 0,
+      "bundle" : true
+    }
+  }
+}

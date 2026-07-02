@@ -28,6 +28,7 @@ public abstract sealed class HorizonsWishlistBlueprint implements WishlistBluepr
         HorizonsModuleWishlistBlueprint,
         HorizonsSynthesisWishlistBlueprint,
         HorizonsTechBrokerWishlistBlueprint,
+        HorizonsOutfittingWishlistBlueprint,
         HorizonsEngineerWishlistBlueprint {
     @EqualsAndHashCode.Include
     private String uuid = UUID.randomUUID().toString();
@@ -52,6 +53,8 @@ public abstract sealed class HorizonsWishlistBlueprint implements WishlistBluepr
             return horizonsTechBrokerWishlistBlueprint.getBlueprintType();
         } else if (blueprint instanceof HorizonsEngineerWishlistBlueprint) {
             return HorizonsBlueprintType.ENGINEER;
+        } else if (blueprint instanceof HorizonsOutfittingWishlistBlueprint) {
+            return HorizonsBlueprintType.OUTFITTING;
         }
         return null;
     }

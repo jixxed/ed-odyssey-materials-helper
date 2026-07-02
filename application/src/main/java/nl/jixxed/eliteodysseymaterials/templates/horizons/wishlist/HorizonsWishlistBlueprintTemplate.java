@@ -231,6 +231,8 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableVBo
             return horizonsTechBrokerWishlistBlueprint.getBlueprintType();
         } else if (this.wishlistBlueprint instanceof HorizonsEngineerWishlistBlueprint) {
             return HorizonsBlueprintType.ENGINEER;
+        } else if (this.wishlistBlueprint instanceof HorizonsOutfittingWishlistBlueprint) {
+            return HorizonsBlueprintType.OUTFITTING;
         }
         return null;
     }

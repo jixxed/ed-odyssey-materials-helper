@@ -25,6 +25,10 @@ public abstract class CoreModule extends ShipModule {
         super(id, name, moduleSize, moduleClass, origin, basePrice, internalName, attributes);
     }
 
+    public CoreModule(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean merc, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
+        super(id, name, moduleSize, moduleClass, false, merc, basePrice, internalName, attributes);
+    }
+
     public CoreModule(final CoreModule coreModule) {
         super(coreModule);
     }

@@ -25,7 +25,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 @RequiredArgsConstructor
 public enum HorizonsBlueprintType {
-    //inara
+    OUTFITTING(false),
     ENGINEER(false),
     AMMO_CAPACITY(false),
     ARMOURED(false),

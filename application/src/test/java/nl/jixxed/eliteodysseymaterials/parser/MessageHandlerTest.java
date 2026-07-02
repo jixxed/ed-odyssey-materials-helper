@@ -16,7 +16,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import nl.jixxed.eliteodysseymaterials.schemas.capi.fleetcarrier.CapiFleetcarrier;
-import nl.jixxed.eliteodysseymaterials.schemas.capi.squadron.BankItem;
 import nl.jixxed.eliteodysseymaterials.schemas.capi.squadron.CapiSquadron;
 import nl.jixxed.eliteodysseymaterials.schemas.capi.squadron.ShipItem;
 import nl.jixxed.eliteodysseymaterials.service.ShipsDeserializer;
@@ -57,7 +56,7 @@ public class MessageHandlerTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"test1.json", "test2.json", "test3.json", "test4.json", "test5.json", "test6.json", "test7.json", "test8.json"})
+    @ValueSource(strings = {"test1.json", "test2.json", "test3.json", "test4.json", "test5.json", "test6.json", "test7.json", "test8.json", "test9.json", "test10.json", "test11.json"})
     public void canMapFCFile(String file) {
         final InputStream resourceAsStream = MessageHandlerTest.class.getResourceAsStream("/parser/capifc/" + file);
         if (resourceAsStream == null) {

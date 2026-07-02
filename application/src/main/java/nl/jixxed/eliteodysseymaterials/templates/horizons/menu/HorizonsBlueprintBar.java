@@ -205,16 +205,19 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
         final DestroyableTitledPane categoryTitledPaneExperimental = register(createExperimentalEffectsCategoryTitledPane(HorizonsBlueprintConstants.getExperimentalEffects()));
         categoryTitledPaneSynthesis = register(createSynthesisCategoryTitledPane(HorizonsBlueprintConstants.getSynthesis()));
         final DestroyableTitledPane categoryTitledPaneTechBroker = register(createTechbrokerCategoryTitledPane(HorizonsBlueprintConstants.getTechbrokerUnlocks()));
+        final DestroyableTitledPane categoryTitledPaneOutfitting = register(createOutfittingCategoryTitledPane(HorizonsBlueprintConstants.getOutfittingBlueprints()));
         final DestroyableTitledPane aboutTitledPane = register(createAboutTitledPane());
         this.getPanes().addAll(categoryTitledPaneEngineers);
         this.getPanes().addAll(categoryTitledPanes);
         this.getPanes().addAll(categoryTitledPaneExperimental);
         this.getPanes().addAll(categoryTitledPaneSynthesis);
         this.getPanes().addAll(categoryTitledPaneTechBroker);
+        this.getPanes().addAll(categoryTitledPaneOutfitting);
         this.getPanes().add(aboutTitledPane);
         this.setExpandedPane(aboutTitledPane);
 
     }
+
 
     @Override
     public void initEventHandling() {
@@ -289,6 +292,35 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
                 this.setExpandedPane(categoryTitledPane);
             }
         }));
+        return categoryTitledPane;
+    }
+
+    private DestroyableTitledPane createOutfittingCategoryTitledPane(Map<HorizonsBlueprintName, HorizonsOutfittingBlueprint> outfittingBlueprints) {
+        final DestroyableScrollPane scroll = createScrollPane();
+        final DestroyableComboBox<HorizonsBlueprintName> blueprints = createBlueprintsComboboxForOutfitting(scroll, outfittingBlueprints.keySet(), HorizonsBlueprintType.OUTFITTING, outfittingBlueprints);
+
+        final DestroyableTitledPane categoryTitledPane = createTitledPane(BlueprintCategory.OUTFITTING.getLocalizationKey());
+
+
+        final DestroyableHBox hBoxBlueprints = BoxBuilder.builder()
+                .withNode(blueprints).buildHBox();
+        HBox.setHgrow(blueprints, Priority.ALWAYS);
+        register(EventService.addListener(true, this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
+            if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName && BlueprintCategory.OUTFITTING.equals(blueprintName.getBlueprintCategory())) {
+                blueprints.getSelectionModel().select(blueprintName);
+                this.setExpandedPane(categoryTitledPane);
+            }
+        }));
+
+        //auto select first option
+        blueprints.getSelectionModel().select(0);
+        final DestroyableVBox content = BoxBuilder.builder()
+                .withStyleClass(BLUEPRINT_TITLED_PANE_CONTENT_STYLE_CLASS)
+                .withNodes(hBoxBlueprints, scroll)
+                .buildVBox();
+
+        categoryTitledPane.setContentNode(content);
+        VBox.setVgrow(scroll, Priority.ALWAYS);
         return categoryTitledPane;
     }
 
@@ -495,6 +527,20 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
                         final Set<HorizonsBlueprintGrade> blueprintGrades = HorizonsBlueprintConstants.getSynthesisBlueprintGrades(newValue);
                         configureToggleButtonsState(toggleButtons, newValue, blueprintGrades);
                         setContent(scroll, newValue, type, true, generateContent(recipeEntry.getOrDefault(newValue, Collections.emptyMap()).get(HorizonsBlueprintGrade.GRADE_1)));
+                    }
+                })
+                .asLocalized()
+                .build();
+        blueprints.setVisibleRowCount(Math.min(blueprints.getItems().size(), 10));
+        return blueprints;
+    }
+    private DestroyableComboBox<HorizonsBlueprintName> createBlueprintsComboboxForOutfitting(final DestroyableScrollPane scroll, final Set<HorizonsBlueprintName> horizonsBlueprintNames, final HorizonsBlueprintType type, final Map<HorizonsBlueprintName, HorizonsOutfittingBlueprint> recipeEntry) {
+        final DestroyableComboBox<HorizonsBlueprintName> blueprints = ComboBoxBuilder.builder(HorizonsBlueprintName.class)
+                .withStyleClass(BLUEPRINT_LIST_STYLE_CLASS)
+                .withItemsProperty(LocaleService.getListBinding(horizonsBlueprintNames.stream().sorted(Comparator.comparing(recipeName -> LocaleService.getLocalizedStringForCurrentLocale(recipeName.getLocalizationKey()))).toArray(HorizonsBlueprintName[]::new)))
+                .withValueChangeListener((_, _, newValue) -> {
+                    if (newValue != null) {
+                        setContent(scroll, newValue, type, true, generateContent(recipeEntry.get(newValue)));
                     }
                 })
                 .asLocalized()

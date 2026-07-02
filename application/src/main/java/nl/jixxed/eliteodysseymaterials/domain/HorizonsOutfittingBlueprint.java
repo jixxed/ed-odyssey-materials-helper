@@ -8,20 +8,23 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package nl.jixxed.eliteodysseymaterials.enums;
+package nl.jixxed.eliteodysseymaterials.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
+import nl.jixxed.eliteodysseymaterials.enums.Currency;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 
-@RequiredArgsConstructor
+import java.util.Map;
 @Getter
-public enum BlueprintCategory {
-
-    ENGINEER_UNLOCKS(1), WEAPON_MODULES(5), WEAPON_GRADES(4), SUIT_MODULES(3), SUIT_GRADES(2),//odyssey
-    HARDPOINT(2), UTILITY_MOUNT(3), CORE_INTERNAL(4), OPTIONAL_INTERNAL(5), OPTIONAL_MILITARY(6), EXPERIMENTAL_EFFECTS(7), SYNTHESIS(8), TECHBROKER(9), CARGO_HATCH(10), OUTFITTING(11);//horizons
-    private final int order;
-
-    public String getLocalizationKey() {
-        return "blueprint.category.name." + this.name().toLowerCase();
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+public class HorizonsOutfittingBlueprint extends HorizonsBlueprint {
+    private final String moduleID;
+    public HorizonsOutfittingBlueprint(final String moduleID, final HorizonsBlueprintName blueprintName) {
+        this.moduleID = moduleID;
+        int mercCoin = Math.toIntExact(ShipModule.getModule(moduleID).getBasePrice());
+        super(blueprintName, Map.of(Currency.MERC_COIN, mercCoin));
     }
+
 }

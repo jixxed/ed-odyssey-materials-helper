@@ -32,6 +32,7 @@ import java.util.Map;
         @JsonSubTypes.Type(value = HorizonsSynthesisWishlistBlueprint.class, name = "synthesis"),
         @JsonSubTypes.Type(value = HorizonsTechBrokerWishlistBlueprint.class, name = "techbroker"),
         @JsonSubTypes.Type(value = HorizonsEngineerWishlistBlueprint.class, name = "engineer"),
+        @JsonSubTypes.Type(value = HorizonsOutfittingWishlistBlueprint.class, name = "outfitting"),
         @JsonSubTypes.Type(value = OdysseyWishlistBlueprint.class, name = "odyssey")
 })
 public sealed interface WishlistBlueprint<E extends BlueprintName<E>> permits HorizonsWishlistBlueprint, OdysseyWishlistBlueprint {
@@ -63,6 +64,8 @@ public sealed interface WishlistBlueprint<E extends BlueprintName<E>> permits Ho
                 case HorizonsTechBrokerWishlistBlueprint bp ->
                         HorizonsBlueprintConstants.getRecipe(bp.getRecipeName(), bp.getBlueprintType(), null);
                 case HorizonsEngineerWishlistBlueprint bp ->
+                        HorizonsBlueprintConstants.getRecipe(bp.getRecipeName(), null, null);
+                case HorizonsOutfittingWishlistBlueprint bp ->
                         HorizonsBlueprintConstants.getRecipe(bp.getRecipeName(), null, null);
                 case OdysseyWishlistBlueprint bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName());
             };

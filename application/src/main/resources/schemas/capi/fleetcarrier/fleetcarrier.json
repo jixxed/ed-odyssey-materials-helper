@@ -3,8 +3,52 @@
   "title": "CapiFleetcarrier",
   "type": "object",
   "definitions": {
+    "commodity": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "categoryname": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "stock": {
+          "type": "integer"
+        },
+        "buyPrice": {
+          "type": "integer"
+        },
+        "sellPrice": {
+          "type": "integer"
+        },
+        "demand": {
+          "type": "integer"
+        },
+        "legality": {
+          "type": "string"
+        },
+        "meanPrice": {
+          "type": "integer"
+        },
+        "demandBracket": {
+          "type": "integer"
+        },
+        "stockBracket": {
+          "type": "integer"
+        },
+        "locName": {
+          "type": "string"
+        }
+      }
+    },
     "crewMember": {
-      "type": ["object", "null"],
+      "type": [
+        "object",
+        "null"
+      ],
       "properties": {
         "name": {
           "type": "string"
@@ -71,7 +115,10 @@
       "type": "object",
       "properties": {
         "crewMember": {
-          "type": ["object", "null"],
+          "type": [
+            "object",
+            "null"
+          ],
           "$ref": "#/definitions/crewMember"
         },
         "invoicesWeekToDate": {
@@ -223,7 +270,10 @@
           "type": "integer"
         },
         "currentJump": {
-          "type": ["string", "null"]
+          "type": [
+            "string",
+            "null"
+          ]
         }
       },
       "required": [
@@ -417,7 +467,10 @@
       ]
     },
     "servicesCrew": {
-      "type": ["object", "null"],
+      "type": [
+        "object",
+        "null"
+      ],
       "properties": {
         "refuel": {
           "$ref": "#/definitions/crewService"
@@ -503,7 +556,10 @@
           "type": "object",
           "properties": {
             "sales": {
-              "type": ["array", "null"],
+              "type": [
+                "array",
+                "null"
+              ],
               "items": {
                 "type": "object",
                 "properties": {
@@ -529,7 +585,10 @@
               }
             },
             "purchases": {
-              "type": ["array", "null"],
+              "type": [
+                "array",
+                "null"
+              ],
               "items": {
                 "type": "object",
                 "properties": {
@@ -568,11 +627,17 @@
           "type": "object",
           "properties": {
             "sales": {
-              "type": ["object", "null"],
+              "type": [
+                "object",
+                "null"
+              ],
               "existingJavaType": "java.util.Map<String,SaleItem>"
             },
             "purchases": {
-              "type": ["array", "null"],
+              "type": [
+                "array",
+                "null"
+              ],
               "items": {
                 "type": "object",
                 "properties": {
@@ -840,7 +905,10 @@
           "existingJavaType": "java.util.Map<String,Economy>"
         },
         "prohibited": {
-          "type": ["object", "null"],
+          "type": [
+            "object",
+            "null"
+          ],
           "existingJavaType": "java.util.Map<String,String>"
         },
         "commodities": {
@@ -920,15 +988,43 @@
         "commodities"
       ]
     },
+    "blackmarket": {
+      "type": "object",
+      "properties": {
+        "commodities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/commodity"
+          }
+        }
+      }
+    },
+    "commodities": {
+      "type": "object",
+      "properties": {
+        "commodities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/commodity"
+          }
+        }
+      }
+    },
     "ships": {
       "type": "object",
       "properties": {
         "shipyard_list": {
-          "type": ["object", "null"],
+          "type": [
+            "object",
+            "null"
+          ],
           "existingJavaType": "java.util.Map<String,Ship>"
         },
         "discount_list": {
-          "type": ["object", "null"],
+          "type": [
+            "object",
+            "null"
+          ],
           "existingJavaType": "java.util.Map<String,java.math.BigDecimal>"
         }
       },
@@ -937,7 +1033,10 @@
       ]
     },
     "modules": {
-      "type": ["object", "null"],
+      "type": [
+        "object",
+        "null"
+      ],
       "existingJavaType": "java.util.Map<String,Module>"
     }
   },

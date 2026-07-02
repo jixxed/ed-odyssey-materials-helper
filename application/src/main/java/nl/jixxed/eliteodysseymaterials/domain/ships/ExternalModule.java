@@ -24,8 +24,18 @@ public abstract class ExternalModule extends ShipModule {
         this.mounting = mounting;
     }
 
+    ExternalModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Mounting mounting, final boolean multiCrew, boolean merc, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+        super(id, name, moduleSize, moduleClass, multiCrew, merc, basePrice, internalName, attributes);
+        this.mounting = mounting;
+    }
+
     ExternalModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final boolean multiCrew, final Mounting mounting, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
-        super(id, name, moduleSize, moduleClass, origin, multiCrew, basePrice, internalName, attributes);
+        super(id, name, moduleSize, moduleClass, origin, multiCrew, false, basePrice, internalName, attributes);
+        this.mounting = mounting;
+    }
+
+    ExternalModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final boolean multiCrew, boolean merc, final Mounting mounting, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+        super(id, name, moduleSize, moduleClass, origin, multiCrew, merc, basePrice, internalName, attributes);
         this.mounting = mounting;
     }
 

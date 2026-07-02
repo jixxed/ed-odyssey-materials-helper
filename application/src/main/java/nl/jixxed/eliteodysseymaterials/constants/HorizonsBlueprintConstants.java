@@ -29,10 +29,7 @@ import nl.jixxed.eliteodysseymaterials.constants.horizons.utilitymounts.*;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.utilitymounts.preengineered.KillWarrantScannerPreEngineeredBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.utilitymounts.preengineered.PointDefencePreEngineeredBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.utilitymounts.preengineered.SinkLauncherPreEngineeredBlueprints;
-import nl.jixxed.eliteodysseymaterials.domain.Blueprint;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsEngineerBlueprint;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.enums.Currency;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
@@ -63,6 +60,7 @@ public abstract class HorizonsBlueprintConstants {
     private static final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, ? extends HorizonsBlueprint>> SYNTHESIS = new EnumMap<>(HorizonsBlueprintName.class);
     private static final Map<HorizonsBlueprintName, HorizonsEngineerBlueprint> ENGINEER_UNLOCK_REQUIREMENTS = new EnumMap<>(HorizonsBlueprintName.class);
     private static final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, HorizonsBlueprint>> TECHBROKER_UNLOCKS = new EnumMap<>(HorizonsBlueprintName.class);
+    private static final Map<HorizonsBlueprintName, HorizonsOutfittingBlueprint> OUTFITTING = new EnumMap<>(HorizonsBlueprintName.class);
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
 
     static {
@@ -155,13 +153,14 @@ public abstract class HorizonsBlueprintConstants {
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.BEAM_LASER, ExperimentalEffectBlueprints.BEAM_LASER);
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.BURST_LASER, ExperimentalEffectBlueprints.BURST_LASER);
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.PULSE_LASER, ExperimentalEffectBlueprints.PULSE_LASER);
-        EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.MULTI_CANNON, ExperimentalEffectBlueprints.MULTI_CANNON);
+        EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.MULTI_CANNON, mergeEffects(ExperimentalEffectBlueprints.MULTI_CANNON, MercExperimentalEffectBlueprints.MULTI_CANNON));
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.CANNON, ExperimentalEffectBlueprints.CANNON);
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.FRAGMENT_CANNON, ExperimentalEffectBlueprints.FRAGMENT_CANNON);
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, ExperimentalEffectBlueprints.DUMBFIRE_MISSILE_RACK);
-        EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.SEEKER_MISSILE_RACK, ExperimentalEffectBlueprints.SEEKER_MISSILE_RACK);
+        EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.SEEKER_MISSILE_RACK, mergeEffects(ExperimentalEffectBlueprints.SEEKER_MISSILE_RACK, MercExperimentalEffectBlueprints.SEEKER_MISSILE_RACK));
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.TORPEDO_PYLON, ExperimentalEffectBlueprints.TORPEDO_PYLON);
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.MINE_LAUNCHER, ExperimentalEffectBlueprints.MINE_LAUNCHER);
+        EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.MINING_LASER, MercExperimentalEffectBlueprints.MINING_LASER);
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.PLASMA_ACCELERATOR, ExperimentalEffectBlueprints.PLASMA_ACCELERATOR);
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.RAIL_GUN, ExperimentalEffectBlueprints.RAIL_GUN);
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.POWER_PLANT, ExperimentalEffectBlueprints.POWER_PLANT);
@@ -208,6 +207,27 @@ public abstract class HorizonsBlueprintConstants {
         TECHBROKER_UNLOCKS.put(HorizonsBlueprintName.GUARDIAN_MODULES, TechbrokerBlueprints.GUARDIAN_MODULES);
         TECHBROKER_UNLOCKS.put(HorizonsBlueprintName.GUARDIAN_WEAPONS, TechbrokerBlueprints.GUARDIAN_WEAPONS);
         TECHBROKER_UNLOCKS.put(HorizonsBlueprintName.GUARDIAN_FIGHTERS, TechbrokerBlueprints.GUARDIAN_FIGHTERS);
+        OUTFITTING.put(HorizonsBlueprintName.MERC_BALANCED_POWER_DISTRIBUTOR, OutfittingBlueprints.MERC_BALANCED_POWER_DISTRIBUTOR);
+        OUTFITTING.put(HorizonsBlueprintName.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3D, OutfittingBlueprints.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3D);
+        OUTFITTING.put(HorizonsBlueprintName.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3A, OutfittingBlueprints.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3A);
+        OUTFITTING.put(HorizonsBlueprintName.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4D, OutfittingBlueprints.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4D);
+        OUTFITTING.put(HorizonsBlueprintName.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4A, OutfittingBlueprints.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4A);
+        OUTFITTING.put(HorizonsBlueprintName.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_6A, OutfittingBlueprints.MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_6A);
+        OUTFITTING.put(HorizonsBlueprintName.MERC_LONG_RANGE_DETAILED_SURFACE_SCANNER, OutfittingBlueprints.MERC_LONG_RANGE_DETAILED_SURFACE_SCANNER);
+        OUTFITTING.put(HorizonsBlueprintName.MERC_HEAVY_DUTY_MODULE_REINFORCEMENT_PACKAGE, OutfittingBlueprints.MERC_HEAVY_DUTY_MODULE_REINFORCEMENT_PACKAGE);
+        OUTFITTING.put(HorizonsBlueprintName.MERC_EXTENDED_CARGO_RACK_5E, OutfittingBlueprints.MERC_EXTENDED_CARGO_RACK_5E);
+        OUTFITTING.put(HorizonsBlueprintName.MERC_EXTENDED_CARGO_RACK_6E, OutfittingBlueprints.MERC_EXTENDED_CARGO_RACK_6E);
+        OUTFITTING.put(HorizonsBlueprintName.MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_1EG, OutfittingBlueprints.MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_1EG);
+        OUTFITTING.put(HorizonsBlueprintName.MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_3CG, OutfittingBlueprints.MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_3CG);
+        OUTFITTING.put(HorizonsBlueprintName.MERC_RAPID_PHASE_MULTI_CANNON, OutfittingBlueprints.MERC_RAPID_PHASE_MULTI_CANNON);
+        OUTFITTING.put(HorizonsBlueprintName.MERC_FAR_REACHING_ABRASION_BLASTER, OutfittingBlueprints.MERC_FAR_REACHING_ABRASION_BLASTER);
+        OUTFITTING.put(HorizonsBlueprintName.MERC_HIGH_YIELD_ENZYME_MISSILE_RACK, OutfittingBlueprints.MERC_HIGH_YIELD_ENZYME_MISSILE_RACK);
+        OUTFITTING.put(HorizonsBlueprintName.MERC_LONG_RANGE_MINING_LASER, OutfittingBlueprints.MERC_LONG_RANGE_MINING_LASER);
+        OUTFITTING.put(HorizonsBlueprintName.MERC_DRAG_SEEKER_MISSILE_RACK, OutfittingBlueprints.MERC_DRAG_SEEKER_MISSILE_RACK);
+        OUTFITTING.put(HorizonsBlueprintName.MERC_LIGHTWEIGHT_THERMAL_SEEKER_MISSILE_RACK, OutfittingBlueprints.MERC_LIGHTWEIGHT_THERMAL_SEEKER_MISSILE_RACK);
+        OUTFITTING.put(HorizonsBlueprintName.MERC_LOCKDOWN_SEEKER_MISSILE_RACK_2B, OutfittingBlueprints.MERC_LOCKDOWN_SEEKER_MISSILE_RACK_2B);
+        OUTFITTING.put(HorizonsBlueprintName.MERC_LOCKDOWN_SEEKER_MISSILE_RACK_3A, OutfittingBlueprints.MERC_LOCKDOWN_SEEKER_MISSILE_RACK_3A);
+        OUTFITTING.put(HorizonsBlueprintName.MERC_ENDURING_FEEDBACK_RAIL_GUN, OutfittingBlueprints.MERC_ENDURING_FEEDBACK_RAIL_GUN);
     }
 
     public static Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> getHardpointBlueprints() {
@@ -237,6 +257,9 @@ public abstract class HorizonsBlueprintConstants {
     public static Map<HorizonsBlueprintName, HorizonsEngineerBlueprint> getEngineerUnlockRequirements() {
         return ENGINEER_UNLOCK_REQUIREMENTS;
     }
+    public static Map<HorizonsBlueprintName, HorizonsOutfittingBlueprint> getOutfittingBlueprints() {
+        return OUTFITTING;
+    }
 
     public static Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, HorizonsBlueprint>> getTechbrokerUnlocks() {
         return TECHBROKER_UNLOCKS.entrySet().stream()
@@ -260,6 +283,9 @@ public abstract class HorizonsBlueprintConstants {
         HorizonsBlueprintGrade grade = remapGrade(name, horizonsBlueprintType, horizonsBlueprintGrade);
 
         HorizonsBlueprint recipe = getRecipeFromEngineerUnlockRequirements(name);
+        if (recipe != null) return recipe;
+
+        recipe = getOutfittingRecipe(name);
         if (recipe != null) return recipe;
 
         recipe = getRecipeFromExperimentalEffects(name, horizonsBlueprintType);
@@ -338,6 +364,10 @@ public abstract class HorizonsBlueprintConstants {
 
     }
 
+    private static HorizonsBlueprint getOutfittingRecipe(HorizonsBlueprintName name) {
+        return OUTFITTING.get(name);
+    }
+
     private static Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> getBlueprintTypesMap(final HorizonsBlueprintName name) {
         Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> blueprintModificationTypes = HARDPOINT_BLUEPRINTS.getOrDefault(name, Collections.emptyMap());
         if (!blueprintModificationTypes.isEmpty()) {
@@ -412,11 +442,12 @@ public abstract class HorizonsBlueprintConstants {
         final Map<HorizonsBlueprintGrade, HorizonsBlueprint> gradeMap = blueprintModificationTypes.getOrDefault(horizonsBlueprintType, Collections.emptyMap());
         return gradeMap.keySet();
     }
+
     public static Set<HorizonsBlueprintGrade> getEngineerableBlueprintGrades(final HorizonsBlueprintName name, final HorizonsBlueprintType horizonsBlueprintType) {
         final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> blueprintModificationTypes = getBlueprintTypesMap(name);
         final Map<HorizonsBlueprintGrade, HorizonsBlueprint> gradeMap = blueprintModificationTypes.getOrDefault(horizonsBlueprintType, Collections.emptyMap());
         Set<HorizonsBlueprintGrade> grades = new HashSet<>(gradeMap.keySet());
-        if(horizonsBlueprintType.isMercOnly()){
+        if (horizonsBlueprintType.isMercOnly()) {
             grades.remove(HorizonsBlueprintGrade.GRADE_1);
         }
         return grades;
@@ -436,6 +467,8 @@ public abstract class HorizonsBlueprintConstants {
             blueprintCategory = BlueprintCategory.SYNTHESIS;
         } else if (TECHBROKER_UNLOCKS.entrySet().stream().anyMatch(recipeCategoryMapEntry -> recipeCategoryMapEntry.getKey().equals(recipeName))) {
             blueprintCategory = BlueprintCategory.TECHBROKER;
+        }else if (OUTFITTING.entrySet().stream().anyMatch(recipeCategoryMapEntry -> recipeCategoryMapEntry.getKey().equals(recipeName))) {
+            blueprintCategory = BlueprintCategory.OUTFITTING;
         } else {
             blueprintCategory = RECIPES.entrySet().stream()
                     .filter(recipeCategoryMapEntry -> recipeCategoryMapEntry.getValue().containsKey(recipeName))
@@ -528,6 +561,10 @@ public abstract class HorizonsBlueprintConstants {
         TECHBROKER_UNLOCKS.values()
                 .stream()
                 .flatMap(horizonsBlueprintNameMap -> horizonsBlueprintNameMap.values().stream())
+                .filter(horizonsBlueprint -> horizonsBlueprint.getMaterialCollection(horizonsMaterial.getClass()).containsKey(horizonsMaterial))
+                .forEach(horizonsBlueprint -> newMap.put(horizonsBlueprint, horizonsBlueprint.getMaterialCollection(horizonsMaterial.getClass()).get(horizonsMaterial)));
+        OUTFITTING.values()
+                .stream()
                 .filter(horizonsBlueprint -> horizonsBlueprint.getMaterialCollection(horizonsMaterial.getClass()).containsKey(horizonsMaterial))
                 .forEach(horizonsBlueprint -> newMap.put(horizonsBlueprint, horizonsBlueprint.getMaterialCollection(horizonsMaterial.getClass()).get(horizonsMaterial)));
         return newMap;

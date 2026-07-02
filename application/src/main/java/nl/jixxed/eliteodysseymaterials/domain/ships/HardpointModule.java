@@ -25,8 +25,16 @@ public abstract class HardpointModule extends ExternalModule {
         super(id, name, moduleSize, moduleClass, mounting, multiCrew, basePrice, internalName, attributes);
     }
 
+    public HardpointModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final boolean multiCrew, boolean merc, final Mounting mounting, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+        super(id, name, moduleSize, moduleClass, mounting, multiCrew, merc, basePrice, internalName, attributes);
+    }
+
     public HardpointModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final boolean multiCrew, final Mounting mounting, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, origin, multiCrew, mounting, basePrice, internalName, attributes);
+    }
+
+    public HardpointModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final boolean multiCrew, boolean merc, final Mounting mounting, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+        super(id, name, moduleSize, moduleClass, origin, multiCrew, merc, mounting, basePrice, internalName, attributes);
     }
 
     public HardpointModule(final HardpointModule hardpointModule) {

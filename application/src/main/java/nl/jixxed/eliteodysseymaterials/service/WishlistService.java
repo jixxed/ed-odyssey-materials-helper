@@ -192,6 +192,8 @@ public class WishlistService {
             return horizonsTechBrokerWishlistBlueprint.getBlueprintType();
         } else if (blueprint instanceof HorizonsEngineerWishlistBlueprint) {
             return HorizonsBlueprintType.ENGINEER;
+        } else if (blueprint instanceof HorizonsOutfittingWishlistBlueprint) {
+            return HorizonsBlueprintType.OUTFITTING;
         }
         return null;
     }
@@ -416,6 +418,14 @@ public class WishlistService {
                                 case HorizonsTechBrokerWishlistBlueprint bp -> {
                                     try {
                                         HorizonsBlueprintConstants.getRecipe(bp.getRecipeName(), bp.getBlueprintType(), null);
+                                        yield false;
+                                    } catch (IllegalArgumentException e) {
+                                        yield true;
+                                    }
+                                }
+                                case HorizonsOutfittingWishlistBlueprint bp -> {
+                                    try {
+                                        HorizonsBlueprintConstants.getRecipe(bp.getRecipeName(), null, null);
                                         yield false;
                                     } catch (IllegalArgumentException e) {
                                         yield true;

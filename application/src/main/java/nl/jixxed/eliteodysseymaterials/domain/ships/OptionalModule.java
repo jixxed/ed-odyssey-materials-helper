@@ -21,8 +21,12 @@ public abstract class OptionalModule extends ShipModule {
         super(id, name, moduleSize, moduleClass, multiCrew, basePrice, internalName, attributes);
     }
 
+    public OptionalModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final boolean multiCrew, final boolean merc, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+        super(id, name, moduleSize, moduleClass, multiCrew, merc, basePrice, internalName, attributes);
+    }
+
     public OptionalModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final boolean multiCrew, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
-        super(id, name, moduleSize, moduleClass, origin, multiCrew, basePrice, internalName, attributes);
+        super(id, name, moduleSize, moduleClass, origin, multiCrew, false, basePrice, internalName, attributes);
     }
 
     public OptionalModule(final OptionalModule optionalModule) {

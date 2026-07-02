@@ -22,10 +22,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.enums.MatchType;
-import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Engineering;
-import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.FuelCapacity;
-import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Loadout;
-import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Modifier;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.*;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module;
 import nl.jixxed.eliteodysseymaterials.service.ReportService;
 
@@ -34,6 +31,7 @@ import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class LoadoutMapper {
@@ -302,7 +300,13 @@ public class LoadoutMapper {
             final Slot blankSlot = blankShip.getCoreSlots().get(i);
             final ShipConfigurationSlot configSlot = coreByIndex.get(i);
             if (configSlot != null && configSlot.getId() != null) {
-                final ShipModule module = ShipModule.getModule(configSlot.getId());
+                final ShipModule module = ShipModule.getModule(configSlot.getId()).Clone();
+                if(!configSlot.getModification().isEmpty()) {
+                    module.applyModification(configSlot.getModification().getFirst().getType(), configSlot.getModification().getFirst().getGrade(), configSlot.getModification().getFirst().getPercentComplete());
+                }
+                if(configSlot.getFirstExperimentalEffect() != null) {
+                    module.applyExperimentalEffect(configSlot.getFirstExperimentalEffect().getType());
+                }
                 modules.add(buildJournalModule(configSlot, buildSlotNameFromBlank(blankShip.getCoreSlots(), blankSlot, module, Map.of()), module, blankSlot.getSlotType()));
             }
         }
@@ -313,7 +317,13 @@ public class LoadoutMapper {
             final Slot blankSlot = blankShip.getHardpointSlots().get(i);
             final ShipConfigurationSlot configSlot = hardpointByIndex.get(i);
             if (configSlot != null && configSlot.getId() != null) {
-                final ShipModule module = ShipModule.getModule(configSlot.getId());
+                final ShipModule module = ShipModule.getModule(configSlot.getId()).Clone();
+                if(!configSlot.getModification().isEmpty()) {
+                    module.applyModification(configSlot.getModification().getFirst().getType(), configSlot.getModification().getFirst().getGrade(), configSlot.getModification().getFirst().getPercentComplete());
+                }
+                if(configSlot.getFirstExperimentalEffect() != null) {
+                    module.applyExperimentalEffect(configSlot.getFirstExperimentalEffect().getType());
+                }
                 modules.add(buildJournalModule(configSlot, buildSlotNameFromBlank(blankShip.getHardpointSlots(), blankSlot, module, hardpointSizePosition), module, blankSlot.getSlotType()));
             }
         }
@@ -322,7 +332,13 @@ public class LoadoutMapper {
             final Slot blankSlot = blankShip.getUtilitySlots().get(i);
             final ShipConfigurationSlot configSlot = utilityByIndex.get(i);
             if (configSlot != null && configSlot.getId() != null) {
-                final ShipModule module = ShipModule.getModule(configSlot.getId());
+                final ShipModule module = ShipModule.getModule(configSlot.getId()).Clone();
+                if(!configSlot.getModification().isEmpty()) {
+                    module.applyModification(configSlot.getModification().getFirst().getType(), configSlot.getModification().getFirst().getGrade(), configSlot.getModification().getFirst().getPercentComplete());
+                }
+                if(configSlot.getFirstExperimentalEffect() != null) {
+                    module.applyExperimentalEffect(configSlot.getFirstExperimentalEffect().getType());
+                }
                 modules.add(buildJournalModule(configSlot, buildSlotNameFromBlank(blankShip.getUtilitySlots(), blankSlot, module, Map.of()), module, blankSlot.getSlotType()));
             }
         }
@@ -331,7 +347,13 @@ public class LoadoutMapper {
             final Slot blankSlot = blankShip.getOptionalSlots().get(i);
             final ShipConfigurationSlot configSlot = optionalByIndex.get(i);
             if (configSlot != null && configSlot.getId() != null) {
-                final ShipModule module = ShipModule.getModule(configSlot.getId());
+                final ShipModule module = ShipModule.getModule(configSlot.getId()).Clone();
+                if(!configSlot.getModification().isEmpty()) {
+                    module.applyModification(configSlot.getModification().getFirst().getType(), configSlot.getModification().getFirst().getGrade(), configSlot.getModification().getFirst().getPercentComplete());
+                }
+                if(configSlot.getFirstExperimentalEffect() != null) {
+                    module.applyExperimentalEffect(configSlot.getFirstExperimentalEffect().getType());
+                }
                 modules.add(buildJournalModule(configSlot, buildSlotNameFromBlank(blankShip.getOptionalSlots(), blankSlot, module, Map.of()), module, blankSlot.getSlotType()));
             }
         }
@@ -340,7 +362,7 @@ public class LoadoutMapper {
         loadout.setShip(shipConfiguration.getShipType().getInternalName());
         loadout.setShipName(shipConfiguration.getName());
         loadout.setHullHealth(BigDecimal.ONE);
-        loadout.setUnladenMass(shipConfiguration.getMass() != null ? BigDecimal.valueOf(shipConfiguration.getMass()) : BigDecimal.ZERO);
+        loadout.setUnladenMass(shipConfiguration.getMass() != null ? BigDecimal.valueOf(shipConfiguration.getMass() - shipConfiguration.getCurrentFuel() - shipConfiguration.getCurrentFuelReserve()) : BigDecimal.ZERO);
         loadout.setMaxJumpRange(shipConfiguration.getJumpRange() != null ? BigDecimal.valueOf(shipConfiguration.getJumpRange()) : BigDecimal.ZERO);
 
         final FuelCapacity fuelCapacity = new FuelCapacity();
@@ -387,7 +409,7 @@ public class LoadoutMapper {
         }
 
         final Engineering engineering = new Engineering();
-        engineering.setModifiers(buildJournalModifiers(slot));
+        engineering.setModifiers(buildJournalModifiers(slot ,module));
 
         if (!slot.getModification().isEmpty()) {
             final nl.jixxed.eliteodysseymaterials.domain.ShipConfigurationModification firstMod = slot.getModification().getFirst();
@@ -420,17 +442,23 @@ public class LoadoutMapper {
         return type.getJournalName(module);
     }
 
-    private static List<Modifier> buildJournalModifiers(ShipConfigurationSlot slot) {
+    private static List<Modifier> buildJournalModifiers(ShipConfigurationSlot slot, ShipModule shipModule) {
+
+        Set<HorizonsModifier> moduleModifiers =  shipModule.getAttibutes().stream().filter(attribute -> !attribute.getJournalName().equals("")).collect(Collectors.toSet());
         final List<Modifier> modifiers = new ArrayList<>();
-        for (final Map.Entry<HorizonsModifier, Object> entry : slot.getModifiers().entrySet()) {
-            final HorizonsModifier modifier = entry.getKey();
-            final Object value = entry.getValue();
+        for (final HorizonsModifier modifier : moduleModifiers) {
+            final Object value = shipModule.getAttributeValue(modifier, false);
             final Modifier journalModifier = new Modifier();
             journalModifier.setLabel(modifier.getJournalName());
             if (value instanceof Double doubleValue) {
-                journalModifier.setValue(BigDecimal.valueOf(doubleValue / modifier.scale(1.0)));
+                BigDecimal originalValue = BigDecimal.valueOf((Double) shipModule.getOriginalAttributeValue(modifier));
+                BigDecimal modifiedValue = BigDecimal.valueOf(doubleValue / modifier.scale(1.0));
+                journalModifier.setOriginalValue(originalValue);
+                journalModifier.setValue(modifiedValue);
+                if(!originalValue.equals(modifiedValue)) {
+                    modifiers.add(journalModifier);
+                }
             }
-            modifiers.add(journalModifier);
         }
         return modifiers;
     }

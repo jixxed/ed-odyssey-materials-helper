@@ -55,6 +55,8 @@ public abstract class ShipModule implements Serializable {
     @Getter
     private final boolean multiCrew;
     @Getter
+    private final boolean merc;
+    @Getter
     private boolean legacy;
     @Getter
     private final String internalName;
@@ -82,25 +84,30 @@ public abstract class ShipModule implements Serializable {
     }
 
     public ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
-        this(id, name, moduleSize, moduleClass, Origin.HUMAN, false, basePrice, internalName, attributes);
+        this(id, name, moduleSize, moduleClass, Origin.HUMAN, false, false, basePrice, internalName, attributes);
     }
 
     ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
-        this(id, name, moduleSize, moduleClass, origin, false, basePrice, internalName, attributes);
+        this(id, name, moduleSize, moduleClass, origin, false, false, basePrice, internalName, attributes);
     }
 
     ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final boolean multiCrew, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
-        this(id, name, moduleSize, moduleClass, Origin.HUMAN, multiCrew, basePrice, internalName, attributes);
+        this(id, name, moduleSize, moduleClass, Origin.HUMAN, multiCrew, false, basePrice, internalName, attributes);
     }
 
-    ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final boolean multiCrew, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+    ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final boolean multiCrew, final boolean merc, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+        this(id, name, moduleSize, moduleClass, Origin.HUMAN, multiCrew, merc, basePrice, internalName, attributes);
+    }
+
+    ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final boolean multiCrew, final boolean merc, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         this.id = id;
         this.name = name;
         this.moduleSize = moduleSize;
         this.moduleClass = moduleClass;
         this.origin = origin;
         this.multiCrew = multiCrew;
-        this.basePrice = PriceService.getModulePriceOrDefault(internalName, basePrice);
+        this.merc = merc;
+        this.basePrice = (merc) ? basePrice : PriceService.getModulePriceOrDefault(internalName, basePrice);
         this.internalName = internalName;
         this.attributes.putAll(attributes);
         this.attributes.computeIfAbsent(HorizonsModifier.POWER_DRAW, modifier -> {
@@ -117,7 +124,8 @@ public abstract class ShipModule implements Serializable {
         this.moduleClass = shipModule.moduleClass;
         this.origin = shipModule.origin;
         this.multiCrew = shipModule.multiCrew;
-        this.basePrice = PriceService.getModulePriceOrDefault(shipModule.internalName, shipModule.basePrice);
+        this.merc = shipModule.merc;
+        this.basePrice = (shipModule.merc) ? shipModule.basePrice : PriceService.getModulePriceOrDefault(shipModule.internalName, shipModule.basePrice);
         this.internalName = shipModule.internalName;
         this.modifications.clear();
         this.modifications.addAll(shipModule.modifications.stream().map(modification -> new Modification(modification.getModification(), modification.getModificationCompleteness().orElse(null), modification.getGrade())).toList());
@@ -376,15 +384,19 @@ public abstract class ShipModule implements Serializable {
         if (!this.modifications.isEmpty()) {
             this.experimentalEffects.forEach(modification -> {
                 final HorizonsBlueprint experimentalEffectBlueprint = HorizonsBlueprintConstants.getExperimentalEffects().get(this.name.getPrimary()).get(modification);
-                final HorizonsModifierValue experimentalEffectModifier = experimentalEffectBlueprint.getModifiers().get(remap(moduleAttribute));
-                if (experimentalEffectModifier != null) {
+                try{final HorizonsModifierValue experimentalEffectModifier = experimentalEffectBlueprint.getModifiers().get(remap(moduleAttribute));
+                    if (experimentalEffectModifier != null) {
 //                value.set(experimentalEffectModifier.getModifiedValue(value.get(), 1D));
-                    try {
-                        value.set(experimentalEffectModifier.getModifier().getFunction().apply(value.get(), 1D));
-                    } catch (final Throwable t) {
-                        log.error("Error modifying value", t);
+                        try {
+                            value.set(experimentalEffectModifier.getModifier().getFunction().apply(value.get(), 1D));
+                        } catch (final Throwable t) {
+                            log.error("Error modifying value", t);
+                        }
                     }
+                }catch (NullPointerException ex){
+                    throw ex;
                 }
+
             });
         }
         if (synthesized && !HorizonsBlueprintGrade.NONE.equals(this.synthesisGrade)) {

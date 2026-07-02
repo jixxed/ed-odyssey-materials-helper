@@ -105,6 +105,8 @@ public class AddToWishlistMenuButton extends DestroyableMenuButton implements De
                         bp = new HorizonsSynthesisWishlistBlueprint(blueprint.getHorizonsBlueprintGrade());
                     } else if (BlueprintCategory.TECHBROKER.equals((blueprint.getBlueprintName()).getBlueprintCategory())) {
                         bp = new HorizonsTechBrokerWishlistBlueprint(blueprint.getHorizonsBlueprintType());
+                    } else if (BlueprintCategory.OUTFITTING.equals((blueprint.getBlueprintName()).getBlueprintCategory())) {
+                        bp = new HorizonsOutfittingWishlistBlueprint(blueprint.getBlueprintName(), true);
                     } else {
                         bp = new HorizonsEngineerWishlistBlueprint((blueprint.getBlueprintName()), true);
                     }

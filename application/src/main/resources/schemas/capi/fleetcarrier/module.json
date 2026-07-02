@@ -23,6 +23,15 @@
     },
     "stock": {
       "type": "integer"
+    },
+    "variant": {
+      "type": ["null", "string"]
+    },
+    "restock": {
+      "type": "integer"
+    },
+    "bundle": {
+      "type": "boolean"
     }
   },
   "required": [

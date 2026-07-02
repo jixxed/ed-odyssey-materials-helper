@@ -36,7 +36,7 @@ run {
             '-XX:InitiatingHeapOccupancyPercent=15',
             '-XX:G1ReservePercent=10',
             '-XX:G1HeapWastePercent=2',
-            '-Xlog:gc*=info',
+//            '-Xlog:gc*=info',
             '-XX:G1PeriodicGCInterval=10000',
             '-XX:+G1PeriodicGCInvokesConcurrent',
             '-Xmx2048M',

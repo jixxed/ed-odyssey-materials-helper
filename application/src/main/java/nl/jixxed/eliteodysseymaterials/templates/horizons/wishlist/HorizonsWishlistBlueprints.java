@@ -42,7 +42,8 @@ public class HorizonsWishlistBlueprints extends DestroyableVBox implements Destr
                         new HorizonsWishlistBlueprintsCategory(BlueprintCategory.OPTIONAL_INTERNAL),
                         new HorizonsWishlistBlueprintsCategory(BlueprintCategory.EXPERIMENTAL_EFFECTS),
                         new HorizonsWishlistBlueprintsCategory(BlueprintCategory.SYNTHESIS),
-                        new HorizonsWishlistBlueprintsCategory(BlueprintCategory.TECHBROKER)
+                        new HorizonsWishlistBlueprintsCategory(BlueprintCategory.TECHBROKER),
+                        new HorizonsWishlistBlueprintsCategory(BlueprintCategory.OUTFITTING)
                 )
                 .buildVBox();
 

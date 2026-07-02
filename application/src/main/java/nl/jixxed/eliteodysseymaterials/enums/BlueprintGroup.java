@@ -95,7 +95,8 @@ public enum BlueprintGroup {
     MODULE_REINFORCEMENT_PACKAGES,
     XENOS,
     PULSE_WAVE_ANALYSERS,
-    DISCOVERY_SCANNERS;
+    DISCOVERY_SCANNERS,
+    OUTFITTING;
 
     public String getLocalizationKey() {
         return "blueprint.group.name." + this.name().toLowerCase();
