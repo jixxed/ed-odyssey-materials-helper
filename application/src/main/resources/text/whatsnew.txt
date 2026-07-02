@@ -1,3 +1,13 @@
+Version 3.13.6
+-------------
+Updated CAPI schema for fleetcarrier
+Add wishlistable merc modules
+Add outfitting panel with merc modules
+Added effects to merc modules
+
+* Early access:
+* Added fuel scoop G5 mats - blueprint costs complete
+
 Version 3.13.5
 -------------
 Added free Mk1 Vessel Hangars

@@ -21,12 +21,11 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Added free Mk1 Vessel Hangars
-Updated mass of Mk1 Vessel Hangars
-Free Vessel Hangars are now listed in the module dropdown
-Split per-engineered merc blueprints per module
+Updated CAPI schema for fleetcarrier
+Add wishlistable merc modules
+Add outfitting panel with merc modules
+Added effects to merc modules
 
 * Early access:
-* Added costs for most of the blueprints
-* Added some stats for blueprints
+* Added fuel scoop G5 mats - blueprint costs complete
 ```
