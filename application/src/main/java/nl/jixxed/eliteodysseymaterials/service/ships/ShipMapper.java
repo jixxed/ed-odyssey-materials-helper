@@ -125,7 +125,7 @@ public class ShipMapper {
                     .map(ShipConfigurationExperimentalEffect::getType)
                     .filter(Predicate.not(HorizonsBlueprintType::isPreEngineered))
                     .forEach(type -> {
-                        shipModule.getExperimentalEffects().add(type);
+                        shipModule.applyExperimentalEffect(type);
                     });
             shipModule.applySynthesis(shipConfigurationSlot.getSynthesis());
             if (!shipConfigurationSlot.getModifiers().isEmpty()) {
@@ -165,7 +165,7 @@ public class ShipMapper {
                     .map(ShipConfigurationExperimentalEffect::getType)
                     .filter(Predicate.not(HorizonsBlueprintType::isPreEngineered))
                     .forEach(type -> {
-                        shipModule.getExperimentalEffects().add(type);
+                        shipModule.applyExperimentalEffect(type);
                     });
             shipModule.applySynthesis(shipConfigurationSlot.getOldModule().getSynthesis());
             shipConfigurationSlot.getOldModule().getModifiers().forEach((modifier, value) -> {
