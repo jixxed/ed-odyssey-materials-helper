@@ -1,0 +1,116 @@
+{
+  "$schema"               : "http://json-schema.org/draft-04/schema#",
+  "id"                    : "https://eddn.edcd.io/schemas/scanorganic/1#",
+  "type"                  : "object",
+  "additionalProperties"  : false,
+  "required": [ "$schemaRef", "header", "message" ],
+  "properties": {
+    "$schemaRef": {
+      "type"                  : "string"
+    },
+    "header": {
+      "type"                  : "object",
+      "additionalProperties"  : true,
+      "required"              : [ "uploaderID", "softwareName", "softwareVersion" ],
+      "properties"            : {
+        "uploaderID": {
+          "type"          : "string"
+        },
+        "softwareName": {
+          "type"          : "string"
+        },
+        "softwareVersion": {
+          "type"          : "string"
+        },
+        "gatewayTimestamp": {
+          "type"          : "string",
+          "format"        : "date-time",
+          "description"   : "Timestamp upon receipt at the gateway. If present, this property will be overwritten by the gateway; submitters are not intended to populate this property."
+        }
+      }
+    },
+    "message": {
+      "type"                  : "object",
+      "description"           : "Contains all properties from the listed events in the client's journal minus the Localised strings and the properties marked below as 'disallowed'",
+      "additionalProperties"  : false,
+      "required"              : [ "timestamp", "event", "StarSystem", "StarPos", "ScanType", "Genus", "Species", "SystemAddress", "BodyID"],
+      "properties"            : {
+        "timestamp": {
+          "type"          : "string",
+          "format"        : "date-time"
+        },
+        "event" : {
+          "enum"          : [ "ScanOrganic" ]
+        },
+        "horizons": {
+          "type"          : "boolean",
+          "description"   : "Boolean value copied from the Journal LoadGame event, when it is present there."
+        },
+        "odyssey": {
+          "type"          : "boolean",
+          "description"   : "Boolean value copied from the Journal LoadGame event, when it is present there."
+        },
+        "StarSystem": {
+          "type"          : "string",
+          "minLength"     : 1,
+          "description"   : "Must be added by the sender"
+        },
+        "StarPos": {
+          "type"          : "array",
+          "items"         : { "type": "number" },
+          "minItems"      : 3,
+          "maxItems"      : 3,
+          "description"   : "Must be added by the sender"
+        },
+        "ScanType": {
+          "enum"          : ["Log", "Sample"],
+          "description"   : "Scan level of the scan; can be 'Log', 'Sample', or 'Analyse'. 'Analyse' can give bad location data and is excluded."
+        },
+        "Genus": {
+          "type"          : "string",
+          "minLength"     : 1,
+          "description"   : "Internal ID of bio genus string."
+        },
+        "Species": {
+          "type"          : "string",
+          "minLength"     : 1,
+          "description"   : "Internal ID of bio species string."
+        },
+        "Variant": {
+          "type"          : "string",
+          "minLength"     : 1,
+          "description"   : "Internal ID of bio variant string. This mirrors the CodexEntry name. Not present in older journal files."
+        },
+        "SystemAddress": {
+          "type"          : "integer"
+        },
+        "Body": {
+          "type"          : "integer",
+          "renamed"       : "BodyID",
+          "description"   : "Body ID is reported as 'Body' in this event. Rename to BodyID for general cross-compatibility."
+        },
+        "BodyID": {
+          "type"          : "integer"
+        },
+        "BodyName": {
+          "type"          : "string",
+          "description"   : "Optional. Must be added by the sender, perhaps from Status.json."
+        },
+        "Latitude": {
+          "type"          : "number",
+          "description"   : "Optional. Must be added by the sender, typically from Status.json."
+        },
+        "Longitude": {
+          "type"          : "number",
+          "description"   : "Optional. Must be added by the sender, typically from Status.json."
+        }
+      },
+      "patternProperties": {
+        "_Localised$"       : { "$ref" : "#/definitions/disallowed" }
+      }
+    }
+  },
+  "definitions": {
+    "disallowed" : { "not" : { "type": [ "array", "boolean", "integer", "number", "null", "object", "string" ] } }
+  }
+}

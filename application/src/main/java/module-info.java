@@ -102,9 +102,11 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.schemas.eddn.navbeaconscan;
     exports nl.jixxed.eliteodysseymaterials.schemas.eddn.navroute;
     exports nl.jixxed.eliteodysseymaterials.schemas.eddn.outfitting;
+    exports nl.jixxed.eliteodysseymaterials.schemas.eddn.outfittingv3;
     exports nl.jixxed.eliteodysseymaterials.schemas.eddn.saasignalsfound;
     exports nl.jixxed.eliteodysseymaterials.schemas.eddn.scan;
     exports nl.jixxed.eliteodysseymaterials.schemas.eddn.scanbarycentre;
+    exports nl.jixxed.eliteodysseymaterials.schemas.eddn.scanorganic;
     exports nl.jixxed.eliteodysseymaterials.schemas.eddn.shipyard;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.AfmuRepairs;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.AppliedToSquadron;
@@ -449,9 +451,11 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.navbeaconscan to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.navroute to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.outfitting to com.fasterxml.jackson.databind, org.hibernate.validator;
+    opens nl.jixxed.eliteodysseymaterials.schemas.eddn.outfittingv3 to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.saasignalsfound to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.scan to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.scanbarycentre to com.fasterxml.jackson.databind, org.hibernate.validator;
+    opens nl.jixxed.eliteodysseymaterials.schemas.eddn.scanorganic to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.shipyard to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal to com.fasterxml.jackson.databind, org.hibernate.validator;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.AfmuRepairs to com.fasterxml.jackson.databind, org.hibernate.validator;

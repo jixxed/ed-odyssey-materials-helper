@@ -108,6 +108,7 @@ public enum JournalEventType {
     PROGRESS("Progress"),
     COMMUNITYGOAL("CommunityGoal"),
     STATISTICS("Statistics"),
+    SCANORGANIC("ScanOrganic"),
     MODULEBUYANDSTORE("ModuleBuyAndStore"),
     ;
     private final String name;

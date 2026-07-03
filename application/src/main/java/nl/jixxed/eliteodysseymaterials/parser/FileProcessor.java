@@ -402,6 +402,8 @@ public class FileProcessor {
                             )));
                     ApplicationState.getInstance().setShipConfig(shipConfiguration);
                     LocationService.setStatusBodyName(status.getBodyName());
+                    LocationService.setStatusLatitude(status.getLatitude().orElse(null));
+                    LocationService.setStatusLongitude(status.getLongitude().orElse(null));
                 });
             }
         } catch (final IOException e) {

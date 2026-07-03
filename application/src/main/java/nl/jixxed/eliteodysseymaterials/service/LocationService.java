@@ -48,6 +48,12 @@ public class LocationService {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
+    @Getter
+    @Setter
+    private static BigDecimal statusLatitude;
+    @Getter
+    @Setter
+    private static BigDecimal statusLongitude;
     private static final Double DEFAULT_LATITUDE = 999.9;
     private static final Double DEFAULT_LONGITUDE = 999.9;
     @Getter
@@ -235,6 +241,7 @@ public class LocationService {
         return currentStarSystem.getName();
     }
 
+    //TODO used by EDDN Mappers, use DB lookup?
     public static List<Double> getCurrentStarPos() {
         return List.of(getCurrentStarSystem().getX(),
                 getCurrentStarSystem().getY(),
@@ -242,6 +249,7 @@ public class LocationService {
         );
     }
 
+    //TODO used by EDDN Mappers, use DB lookup?
     public static List<Double> getCurrentStarPos(final BigInteger address) {
         if (currentSystemAddress.equals(address)) {
             return List.of(getCurrentStarSystem().getX(),
@@ -252,6 +260,7 @@ public class LocationService {
         return null;
     }
 
+    //TODO used by EDDN Mappers, use DB lookup?
     public static String getCurrentStarSystemName(final BigInteger address) {
         if (currentSystemAddress.equals(address)) {
             return currentStarSystem.getName();

@@ -1,0 +1,98 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "https://eddn.edcd.io/schemas/outfitting/2#",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schemaRef",
+    "header",
+    "message"
+  ],
+  "properties": {
+    "$schemaRef": {
+      "type": "string"
+    },
+    "header": {
+      "$ref": "../definitions.json#/definitions/header"
+    },
+    "message": {
+      "type": "object",
+      "additionalProperties": false,
+      "required" : [ "timestamp", "event", "StarSystem", "StarPos", "ScanType", "Genus", "Species", "SystemAddress", "BodyID"],
+      "properties": {
+        "timestamp": {
+          "type"          : "string",
+          "format"        : "date-time"
+        },
+        "event" : {
+          "type": "string"
+        },
+        "horizons": {
+          "type"          : "boolean",
+          "description"   : "Boolean value copied from the Journal LoadGame event, when it is present there."
+        },
+        "odyssey": {
+          "type"          : "boolean",
+          "description"   : "Boolean value copied from the Journal LoadGame event, when it is present there."
+        },
+        "StarSystem": {
+          "type"          : "string",
+          "minLength"     : 1,
+          "description"   : "Must be added by the sender"
+        },
+        "StarPos": {
+          "type"          : "array",
+          "items"         : { "type": "number" },
+          "minItems"      : 3,
+          "maxItems"      : 3,
+          "description"   : "Must be added by the sender"
+        },
+        "ScanType" : {
+          "title" : "ScanType",
+          "type" : "string",
+          "examples" : [ "Log", "Sample", "Analyse" ]
+        },
+        "Genus" : {
+          "title" : "Genus",
+          "type" : "string",
+          "examples" : [ "$Codex_Ent_Stratum_Genus_Name;", "$Codex_Ent_Bacterial_Genus_Name;", "$Codex_Ent_Fonticulus_Genus_Name;" ]
+        },
+        "Species" : {
+          "title" : "Species",
+          "type" : "string",
+          "examples" : [ "$Codex_Ent_Stratum_07_Name;", "$Codex_Ent_Bacterial_12_Name;", "$Codex_Ent_Fonticulus_02_Name;" ]
+        },
+        "Variant" : {
+          "title" : "Variant",
+          "type" : "string",
+          "examples" : [ "$Codex_Ent_Tubus_01_A_Name;" ]
+        },
+        "WasLogged" : {
+          "title" : "WasLogged",
+          "type" : "boolean",
+          "examples" : [ false, true ]
+        },
+        "SystemAddress" : {
+          "title" : "SystemAddress",
+          "type" : "integer",
+          "examples" : [ 647903226970, 40406380861921, 4226214177978 ]
+        },
+        "BodyID": {
+          "type"          : "integer"
+        },
+        "BodyName": {
+          "type"          : "string",
+          "description"   : "Optional. Must be added by the sender, perhaps from Status.json."
+        },
+        "Latitude": {
+          "type"          : "number",
+          "description"   : "Optional. Must be added by the sender, typically from Status.json."
+        },
+        "Longitude": {
+          "type"          : "number",
+          "description"   : "Optional. Must be added by the sender, typically from Status.json."
+        }
+      }
+    }
+  }
+}

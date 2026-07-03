@@ -11,26 +11,19 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor.journal;
 
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.SingleMessageProcessor;
-import nl.jixxed.eliteodysseymaterials.schemas.journal.Outfitting.Outfitting;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.ScanOrganic.ScanOrganic;
 import nl.jixxed.eliteodysseymaterials.service.EDDNService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.OutfittingEvent;
 
-import java.time.format.DateTimeFormatter;
-
-public class OutfittingSingleMessageProcessor implements SingleMessageProcessor<Outfitting> {
+public class ScanOrganicSingleMessageProcessor implements SingleMessageProcessor<ScanOrganic> {
     @Override
-    public void process(final Outfitting event) {
-        if(event.getItems().isEmpty()) {
-            EventService.publish(new OutfittingEvent(event.getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"))));
-        }else {
-            EDDNService.outfittingV3(event);
-            EDDNService.outfitting(event);
+    public void process(final ScanOrganic event) {
+        if("log".equalsIgnoreCase(event.getScanType()) || "sample".equalsIgnoreCase(event.getScanType())) {
+            EDDNService.scanOrganic(event);
         }
     }
 
     @Override
-    public Class<Outfitting> getMessageClass() {
-        return Outfitting.class;
+    public Class<ScanOrganic> getMessageClass() {
+        return ScanOrganic.class;
     }
 }

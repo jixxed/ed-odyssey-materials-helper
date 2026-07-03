@@ -61,6 +61,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.Outfitting.Outfitting;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.SAASignalsFound.SAASignalsFound;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Scan.Scan;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ScanBaryCentre.ScanBaryCentre;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.ScanOrganic.ScanOrganic;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Shipyard.Shipyard;
 import nl.jixxed.eliteodysseymaterials.service.eddn.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -348,6 +349,31 @@ public class EDDNService {
                         .build(), outfitting, "outfitting-v2.0.json", 15);//allow events to be delayed up to 15 seconds because of delayed writes to secondary file
             });
         }
+    }
+
+    public static void outfittingV3(final Outfitting outfitting) {
+        if (outfitting.getItems().map(items -> !items.isEmpty()).orElse(false)) {
+            ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
+                final Expansion expansion = APPLICATION_STATE.getExpansion();
+                send(new nl.jixxed.eliteodysseymaterials.schemas.eddn.outfittingv3.OutfittingV3.OutfittingV3Builder()
+                        .with$schemaRef("https://eddn.edcd.io/schemas/outfitting/3" + (isTestMode() ? "/test" : ""))
+                        .withHeader(buildHeader(commander))
+                        .withMessage(EDDNOutfittingV3Mapper.mapToEDDN(outfitting, expansion))
+                        .build(), outfitting, "outfitting-v3.0.json", 15);//allow events to be delayed up to 15 seconds because of delayed writes to secondary file
+            });
+        }
+    }
+
+    public static void scanOrganic(final ScanOrganic scanOrganic) {
+        ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
+            final Expansion expansion = APPLICATION_STATE.getExpansion();
+            send(new nl.jixxed.eliteodysseymaterials.schemas.eddn.scanorganic.Scanorganic.ScanorganicBuilder()
+                    .with$schemaRef("https://eddn.edcd.io/schemas/scanorganic/1" + (isTestMode() ? "/test" : ""))
+                    .withHeader(buildHeader(commander))
+                    .withMessage(ScanOrganicMapper.mapToEDDN(scanOrganic, expansion))
+                    .build(), scanOrganic, "scanorganic-v1.0.json", 15);//allow events to be delayed up to 15 seconds because of delayed writes to secondary file
+        });
+
     }
 
     public static void saasignalsfound(final SAASignalsFound saasignalsfound) {

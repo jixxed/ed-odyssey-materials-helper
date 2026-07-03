@@ -179,6 +179,7 @@ class MessageHandler {
             Map.entry(JournalEventType.PROGRESS, new ProgressSingleMessageProcessor()),
             Map.entry(JournalEventType.COMMUNITYGOAL, new CommunityGoalSingleMessageProcessor()),
             Map.entry(JournalEventType.STATISTICS, new StatisticsSingleMessageProcessor()),
+            Map.entry(JournalEventType.SCANORGANIC, new ScanOrganicSingleMessageProcessor()),
 
             Map.entry(JournalEventType.LOADGAME, new LoadGameSingleMessageProcessor())
     );
