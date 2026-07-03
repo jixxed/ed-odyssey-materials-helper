@@ -75,10 +75,10 @@ public class LoadoutMapper {
                         if (!potentialShipModules.isEmpty()) {
                             if (isPreEngineered(potentialShipModules, engineering, module)) {
                                 return potentialShipModules.stream().filter(ShipModule::isPreEngineered).filter(shipModule -> matchingEngineering(shipModule, engineering, module)).findFirst().orElseThrow(IllegalArgumentException::new);
-                            }if (isMerc(potentialShipModules, engineering, module)) {
+                            } else if (isMerc(potentialShipModules, engineering, module)) {
                                 return potentialShipModules.stream().filter(ShipModule::isMerc).filter(shipModule -> matchingMercEngineering(shipModule, engineering, module)).findFirst().orElseThrow(IllegalArgumentException::new);
                             } else {
-                                return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(IllegalArgumentException::new);
+                                return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered() && !shipModule1.isMerc()).findFirst().orElseThrow(IllegalArgumentException::new);
                             }
                         }
                         try {
@@ -89,7 +89,7 @@ public class LoadoutMapper {
                         throw new IllegalArgumentException("No potential modules found");
                     }).orElseGet(() -> {
                         try {
-                            return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(() -> new IllegalArgumentException(slotName + "|" + module));
+                            return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered() && !shipModule1.isMerc()).findFirst().orElseThrow(() -> new IllegalArgumentException(slotName + "|" + module));
                         } catch (IllegalArgumentException ex) {
                             try {
                                 ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(module), "Can't map regular module: " + module.getItem());
