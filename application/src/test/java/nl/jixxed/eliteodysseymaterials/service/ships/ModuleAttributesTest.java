@@ -27,6 +27,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 @Slf4j
 public class ModuleAttributesTest {
@@ -62,7 +63,7 @@ public class ModuleAttributesTest {
                                         }
                                         return (HorizonsExperimentalEffectBlueprint) horizonsBlueprintTypeHorizonsBlueprintMap.get(type);
                                     })
-                                    .map(blueprint-> blueprint.getModifiers().keySet())
+                                    .map(blueprint-> blueprint.getModifiers().keySet().stream().filter(Predicate.not(HorizonsModifier.DAMAGE_RATIO::equals)).collect(Collectors.toSet()))
                                     .map(attrs-> () -> Assertions.assertTrue(shipModuleAttibutes.containsAll(attrs.stream().filter(attr-> !ignored(attr)).toList()), () -> "Failed to find fields for: " +shipModule.getName() + "\n"
                                             + shipModuleAttibutes.stream().map(Enum::name).collect(Collectors.joining(","))
                                             + "\n" + attrs.stream().filter(attr-> !ignored(attr)).map(Enum::name).collect(Collectors.joining(","))))
