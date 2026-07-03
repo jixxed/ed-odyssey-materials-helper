@@ -65,6 +65,7 @@ public class LoadoutMapper {
             throw e;
         }
         final Ship ship = ShipService.createBlankShip(shipType);
+        loadout.getHullValue().ifPresent(hullValue -> ship.setPrice(hullValue.longValue()));
         loadout.getModules().forEach(module -> {
             try {
                 final String slotName = module.getSlot();
@@ -450,8 +451,9 @@ public class LoadoutMapper {
             final Object value = shipModule.getAttributeValue(modifier, false);
             final Modifier journalModifier = new Modifier();
             journalModifier.setLabel(modifier.getJournalName());
-            if (value instanceof Double doubleValue) {
-                BigDecimal originalValue = BigDecimal.valueOf((Double) shipModule.getOriginalAttributeValue(modifier));
+            Double original = (Double) shipModule.getOriginalAttributeValue(modifier);
+            if (value instanceof Double doubleValue && !doubleValue.isInfinite() && !doubleValue.isNaN() && !original.isInfinite() && !original.isNaN() ) {
+                BigDecimal originalValue = BigDecimal.valueOf(original);
                 BigDecimal modifiedValue = BigDecimal.valueOf(doubleValue / modifier.scale(1.0));
                 journalModifier.setOriginalValue(originalValue);
                 journalModifier.setValue(modifiedValue);
