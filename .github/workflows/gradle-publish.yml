@@ -129,14 +129,14 @@ jobs:
       - name: Flatpak (Self-Contained)
         uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         with:
-          bundle: edomh-${{ env.TAG_NAME }}.flatpak
+          bundle: edomh-${{ env.TAG_NAME }}-nonfree.flatpak
           manifest-path: flatpak/manifest-contained.yml
           cache-key: flatpak-builder-${{ github.sha }}
 
       - name: Flatpak (Auto-Updating)
         uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         with:
-          bundle: edomh-${{ env.TAG_NAME }}.auto-updater.flatpak
+          bundle: edomh-${{ env.TAG_NAME }}-nonfree.auto-updater.flatpak
           manifest-path: flatpak/manifest-selfupdate.yml
           cache-key: flatpak-builder-${{ github.sha }}
 

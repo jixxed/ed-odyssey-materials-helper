@@ -19,6 +19,15 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 # or via settings: Open app -> Privacy & Security -> Allow
 ```
 
+:question: **"nonfree" flatpaks?!**
+
+The term does not refer to money; it refers to freedom.  
+The release files/binaries contain proprietary components and are subject to the EULA's terms.
+They are **not** distributed under a FOSS license.  
+Because you are not free to do with them as you like, they are named accordingly with the "nonfree" suffix.
+
+Why even bother? Because for some Linux folks, the distinction between free and proprietary software is ideologically quite important.
+
 :page_facing_up: **Release notes for this version:**
 ```
 Updated CAPI schema for fleetcarrier
