@@ -23,6 +23,9 @@ jobs:
       PROPRIETARY_REPO_USER: "${{secrets.PROPRIETARY_REPO_USER}}"
       PROPRIETARY_REPO_PASS: "${{secrets.PROPRIETARY_REPO_PASS}}"
 
+    outputs:
+      assets: ${{ steps.draft_release.outputs.assets }}
+      tag: ${{ steps.tagName.outputs.tag }}
 #Downloading JDK from: https://cdn.azul.com/zulu/bin/zulu25.32.21-ca-jdk25.0.2-linux_x64.zip
 #Downloading JDK from: https://cdn.azul.com/zulu/bin/zulu25.32.21-ca-jdk25.0.2-win_x64.zip
 #Downloading JDK from: https://cdn.azul.com/zulu/bin/zulu25.32.21-ca-jdk25.0.2-macosx_aarch64.zip
@@ -60,6 +63,7 @@ jobs:
         run: ./gradlew createReleaseLinuxRpm -DpackageType=rpm
       - name: Create Release
         uses: ncipollo/release-action@v1.21.0
+        id: draft_release
         with:
           allowUpdates: true
           draft: true
@@ -74,6 +78,77 @@ jobs:
   #          update_release_body: true
   #          files: |
   #            output/*.*
+
+  build-flatpak:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/flathub-infra/flatpak-github-actions:freedesktop-25.08
+      options: --privileged
+    needs: [build-ubuntu]
+    permissions:
+      contents: write
+    env:
+      TAG_NAME: "${{ needs.build-ubuntu.outputs.tag }}"
+    steps:
+      - uses: actions/checkout@v6
+      - name: Download assets
+        env:
+          GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        run: |
+          git config --global --add safe.directory "$PWD"
+
+          declare -A files=(
+            ["update.zip"]="edomh-${TAG_NAME}.portable.linux.zip"
+            ["launcher.zip"]="edomh-${TAG_NAME}.auto-updater.linux.zip"
+          )
+
+          mkdir -p artifacts
+
+          for file_out in "${!files[@]}"; do
+            file=${files["$file_out"]}
+            gh release download "${TAG_NAME}" -p "$file" --output "artifacts/$file_out"
+          done
+
+      - name: Generate releases metainfo
+        run: |
+          date=$(git log -1 --format=%cI "${TAG_NAME}")
+
+          {
+            printf '<?xml version="1.0" encoding="UTF-8"?>\n'
+            printf '<releases>\n'
+
+            git log --tags --format="%S %cI" --no-walk --until "$date" | while read -r tag date; do
+              printf '<release version="%s" date="%s">\n' "$tag" "$date"
+              printf '<url>%s</url>\n' "${{ github.server_url }}/${{ github.repository }}/releases/tag/$tag"
+              printf '</release>\n'
+            done
+
+            printf '</releases>\n'
+          } > flatpak/releases.xml
+
+      - name: Flatpak (Self-Contained)
+        uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+        with:
+          bundle: edomh-${{ env.TAG_NAME }}.flatpak
+          manifest-path: flatpak/manifest-contained.yml
+          cache-key: flatpak-builder-${{ github.sha }}
+
+      - name: Flatpak (Auto-Updating)
+        uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+        with:
+          bundle: edomh-${{ env.TAG_NAME }}.auto-updater.flatpak
+          manifest-path: flatpak/manifest-selfupdate.yml
+          cache-key: flatpak-builder-${{ github.sha }}
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1.21.0
+        with:
+          allowUpdates: true
+          draft: true
+          omitBodyDuringUpdate: true
+          bodyFile: ".github/releasenotes.MD"
+          artifacts: "*.flatpak"
+          name: "Elite Dangerous Odyssey Materials Helper ${{ env.TAG_NAME }}"
 
   build-windows:
     runs-on: windows-latest
@@ -206,7 +281,7 @@ jobs:
 
   publish-release:
     runs-on: ubuntu-latest
-    needs: [build-windows, build-ubuntu, build-macos]
+    needs: [build-windows, build-ubuntu, build-flatpak, build-macos]
     permissions:
       contents: write
     steps:
@@ -221,7 +296,7 @@ jobs:
 
   sentry-release:
     runs-on: ubuntu-latest
-    needs: [build-windows, build-ubuntu, build-macos]
+    needs: [build-windows, build-ubuntu, build-flatpak, build-macos]
     permissions:
       contents: write
     steps:

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Elite Dangerous Odyssey Materials Helper
+Exec=apprun %u
+Icon=nl.jixxed.edomh
+Terminal=false
+Keywords=edo;edomh;elite dangerous;ed;elite;odyssey;materials helper;
