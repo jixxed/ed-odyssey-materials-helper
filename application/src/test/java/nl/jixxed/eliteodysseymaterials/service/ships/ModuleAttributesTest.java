@@ -64,8 +64,8 @@ public class ModuleAttributesTest {
                                     })
                                     .map(blueprint-> blueprint.getModifiers().keySet())
                                     .map(attrs-> () -> Assertions.assertTrue(shipModuleAttibutes.containsAll(attrs.stream().filter(attr-> !ignored(attr)).toList()), () -> "Failed to find fields for: " +shipModule.getName() + "\n"
-                                            + shipModule.getAttibutes().stream().map(Enum::name).collect(Collectors.joining(","))
-                                            + "\n" + attrs.stream().map(Enum::name).collect(Collectors.joining(","))))
+                                            + shipModuleAttibutes.stream().map(Enum::name).collect(Collectors.joining(","))
+                                            + "\n" + attrs.stream().filter(attr-> !ignored(attr)).map(Enum::name).collect(Collectors.joining(","))))
                     );
                 })
         );

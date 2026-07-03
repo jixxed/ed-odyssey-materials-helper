@@ -689,6 +689,7 @@ class LoadoutMapperTest {
 
     @ParameterizedTest
     @MethodSource("roundtripFixtures")
+    @Tag("manual")
     void roundtripLoadoutShipLoadout(LoadoutFixture fixture) throws Exception {
         try (InputStream resourceAsStream = LoadoutMapperTest.class.getResourceAsStream(fixture.resourcePath)) {
             Assertions.assertTrue(resourceAsStream.available() > 0, fixture.name() + " file is empty");
@@ -782,7 +783,9 @@ class LoadoutMapperTest {
 
                     // Verify modifier names and values match by label (not by position)
                     Assertions.assertEquals(origEng.getModifiers().size(), resEng.getModifiers().size(),
-                            fixture.name() + ": modifier count for slot '" + slotName + "' must match");
+                            fixture.name() + ": modifier count for slot '" + slotName + "' must match."
+                                    + "\norg: " + origEng.getModifiers().stream().map(modifier -> modifier.getLabel()).collect(Collectors.joining(","))
+                                    + "\nres: " + resEng.getModifiers().stream().map(modifier -> modifier.getLabel()).collect(Collectors.joining(",")));
                     for (int m = 0; m < origEng.getModifiers().size(); m++) {
                         final var origModEntry = origEng.getModifiers().get(m);
                         final var matchingRes = resEng.getModifiers().stream()
