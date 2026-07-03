@@ -1,3 +1,17 @@
+Version 3.13.7
+-------------
+Updated EDDN Outfitting to V3 schema to include merc modules and merc prices
+Added EDDN ScanOrganic schema
+Some preliminary work on damage ratio's to deal with the engineerability for them
+Fixed Enzyme Missile Rack Merc price
+Added merc engineering icon so it is also clear on regular modules
+
+* Early access:
+* Several modules have their stats, but not all
+* Included are: Lasers, Power Distributors, Fuel scoop, DSS, Cargo racks and Abrasion blaster
+* Because some stats have really weird multipliers, journals are required to get exact numbers. The game rounds values.
+* Given the complexities, early access might be extended.
+
 Version 3.13.6
 -------------
 Updated CAPI schema for fleetcarrier

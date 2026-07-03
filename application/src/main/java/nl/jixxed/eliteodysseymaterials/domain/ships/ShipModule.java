@@ -33,6 +33,31 @@ import java.util.concurrent.atomic.AtomicReference;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class ShipModule implements Serializable {
 
+    private static final List<HorizonsModifier> OPTIMAL_MULTIPLIER_LIST = List.of(
+            HorizonsModifier.OPTIMAL_MULTIPLIER,
+            HorizonsModifier.MINIMUM_MULTIPLIER,
+            HorizonsModifier.MAXIMUM_MULIPLIER,
+            HorizonsModifier.MINIMUM_MULTIPLIER_SPEED,
+            HorizonsModifier.OPTIMAL_MULTIPLIER_SPEED,
+            HorizonsModifier.MAXIMUM_MULTIPLIER_SPEED,
+            HorizonsModifier.MINIMUM_MULTIPLIER_ACCELERATION,
+            HorizonsModifier.OPTIMAL_MULTIPLIER_ACCELERATION,
+            HorizonsModifier.MAXIMUM_MULTIPLIER_ACCELERATION,
+            HorizonsModifier.MINIMUM_MULTIPLIER_ROTATION,
+            HorizonsModifier.OPTIMAL_MULTIPLIER_ROTATION,
+            HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION,
+            HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER,
+            HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER,
+            HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER
+    );
+    private static final List<HorizonsModifier> DAMAGE_RATIO_LIST = List.of(
+            HorizonsModifier.ABSOLUTE_DAMAGE_RATIO,
+            HorizonsModifier.THERMAL_DAMAGE_RATIO,
+            HorizonsModifier.ANTI_XENO_DAMAGE_RATIO,
+            HorizonsModifier.KINETIC_DAMAGE_RATIO,
+            HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO,
+            HorizonsModifier.CAUSTIC_DAMAGE_RATIO
+    );
     @Getter
     @EqualsAndHashCode.Include
     private final String id;
@@ -57,13 +82,13 @@ public abstract class ShipModule implements Serializable {
     @Getter
     private final boolean merc;
     @Getter
-    private boolean legacy;
-    @Getter
     private final String internalName;
     @Getter
     private final List<Modification> modifications = new ArrayList<>();
     @Getter
     private final List<HorizonsBlueprintType> experimentalEffects = new ArrayList<>();
+    @Getter
+    private boolean legacy;
     @Getter
     @Setter
     private Long buyPrice;
@@ -72,16 +97,11 @@ public abstract class ShipModule implements Serializable {
     @Getter
     @Setter
     private String customName = "";
-
     private boolean powerToggle = true;
     @Setter
     private int powerGroup = 3;
     @Getter
     private HorizonsBlueprintGrade synthesisGrade = HorizonsBlueprintGrade.NONE;
-
-    public int getPowerGroup() {
-        return (!hasPowerToggle() && isPassivePower()) ? -1 : powerGroup;
-    }
 
     public ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         this(id, name, moduleSize, moduleClass, Origin.HUMAN, false, false, basePrice, internalName, attributes);
@@ -152,13 +172,35 @@ public abstract class ShipModule implements Serializable {
         return ShipModuleService.getModule(id);
     }
 
+    private static HorizonsModifier remap(HorizonsModifier moduleAttribute) {
+        if (OPTIMAL_MULTIPLIER_LIST.contains(moduleAttribute)) {
+            return HorizonsModifier.OPTIMAL_MULTIPLIER;
+        }
+        if (DAMAGE_RATIO_LIST.contains(moduleAttribute)) {
+            return HorizonsModifier.DAMAGE_RATIO;
+        }
+        return moduleAttribute;
+    }
+
+    private static boolean modifiesStat(HorizonsModifier horizonsModifier, HorizonsSynthesisBlueprint bp) {
+        //derived stats check on base stat
+        if (HorizonsModifier.DAMAGE_PER_SECOND.equals(horizonsModifier) || HorizonsModifier.BREACH_DAMAGE.equals(horizonsModifier)) {
+            return bp.getModifiers().containsKey(HorizonsModifier.DAMAGE);
+        }
+        return bp.getModifiers().containsKey(remap(horizonsModifier));
+    }
+
+    public int getPowerGroup() {
+        return (!hasPowerToggle() && isPassivePower()) ? -1 : powerGroup;
+    }
+
     public void applyModification(final HorizonsBlueprintType modification, final HorizonsBlueprintGrade grade, final BigDecimal modificationCompleteness) {
         if (validModification(modification, false)) {
             final Modification mod = new Modification(modification, modificationCompleteness, grade);
 //            if (!this.modifications.contains(mod)) {
-                this.modifications.clear();
-                this.modifications.add(mod);
-                this.modifiers.clear();
+            this.modifications.clear();
+            this.modifications.add(mod);
+            this.modifiers.clear();
 //            } else {
 //                this.modifications.stream().filter(existingMod -> Objects.equals(existingMod, mod))
 //                        .findFirst()
@@ -337,8 +379,8 @@ public abstract class ShipModule implements Serializable {
                 double burstSize = getAttributeValueOrDefault(HorizonsModifier.BURST_SIZE, completeness, 1.0, synthesized);
 
                 toReturn = (this.attributes.containsKey(HorizonsModifier.AMMO_MAXIMUM) && (this.attributes.get(HorizonsModifier.AMMO_MAXIMUM)).equals(Double.POSITIVE_INFINITY))
-                    ? toReturn// default to AMMO_CLIP_SIZE if there is no ammo max
-                    : Math.ceil(toReturn / burstSize) * burstSize;
+                        ? toReturn// default to AMMO_CLIP_SIZE if there is no ammo max
+                        : Math.ceil(toReturn / burstSize) * burstSize;
             }
             if (HorizonsModifier.AMMO_MAXIMUM.equals(moduleAttribute)) {
                 toReturn = Math.floor(toReturn);
@@ -363,37 +405,74 @@ public abstract class ShipModule implements Serializable {
 
             final HorizonsModifierValue horizonsModifierValue = moduleBlueprint.getModifiers().get(remap(moduleAttribute));
             if (horizonsModifierValue != null) {
-                final HorizonsBiFunction current = moduleModifier.get();
-                if (current == null) {
-                    positive.set(horizonsModifierValue.isPositive());
-                    modificationCompleteness.set(completeness != null ? completeness : modification.getModificationCompleteness().orElse(BigDecimal.ZERO).doubleValue());
-                    moduleModifier.set(horizonsModifierValue.getModifier());
-                } else {
-                    moduleModifier.set(current.stack(horizonsModifierValue.getModifier()));
+
+                    final HorizonsBiFunction current = moduleModifier.get();
+                    if (current == null) {
+                        positive.set(horizonsModifierValue.isPositive());
+                        modificationCompleteness.set(completeness != null ? completeness : modification.getModificationCompleteness().orElse(BigDecimal.ZERO).doubleValue());
+                        moduleModifier.set(horizonsModifierValue.getModifier());
+                    } else {
+                        moduleModifier.set(current.stack(horizonsModifierValue.getModifier()));
+                    }
                 }
-            }
+
         });
         if (moduleModifier.get() != null) {
             //if negative effect, apply fully
+            if (HorizonsBiFunction.CalculationType.DAMAGE_RATIO_FIXED.equals(moduleModifier.get().getCalculationType())) {
+                //TODO this is a hacky solution that can only transfer 1-1 ratio
+                // if a module has multiple ratios that would be modified, this won't work correctly.
+                HorizonsModifier fromRatio = moduleModifier.get().getFromRatio();
+                HorizonsModifier toRatio = moduleModifier.get().getToRatio();
+                try {
+                    Double multiplier = 0.0;
+                    if (moduleAttribute.equals(toRatio)) {
+                        multiplier = modificationCompleteness.get();
+                    } else if (moduleAttribute.equals(fromRatio)){
+                        multiplier = modificationCompleteness.get() * -1D;
+                    }
+                    value.set(moduleModifier.get().getFunction().apply(value.get(), multiplier));
+                } catch (final Throwable t) {
+                    log.error("Error modifying value", t);
+                }
+            } else {
             try {
                 value.set(moduleModifier.get().getFunction().apply(value.get(), positive.get() ? modificationCompleteness.get() : 1D));
             } catch (final Throwable t) {
                 log.error("Error modifying value", t);
             }
+            }
         }
         if (!this.modifications.isEmpty()) {
             this.experimentalEffects.forEach(modification -> {
                 final HorizonsBlueprint experimentalEffectBlueprint = HorizonsBlueprintConstants.getExperimentalEffects().get(this.name.getPrimary()).get(modification);
-                try{final HorizonsModifierValue experimentalEffectModifier = experimentalEffectBlueprint.getModifiers().get(remap(moduleAttribute));
+                try {
+                    final HorizonsModifierValue experimentalEffectModifier = experimentalEffectBlueprint.getModifiers().get(remap(moduleAttribute));
                     if (experimentalEffectModifier != null) {
-//                value.set(experimentalEffectModifier.getModifiedValue(value.get(), 1D));
-                        try {
-                            value.set(experimentalEffectModifier.getModifier().getFunction().apply(value.get(), 1D));
-                        } catch (final Throwable t) {
-                            log.error("Error modifying value", t);
+                        if (experimentalEffectModifier instanceof HorizonsDamageRatioModifierValue damageRatioModifierValue) {
+                            //TODO this is a hacky solution that can only transfer 1-1 ratio
+                            HorizonsModifier fromRatio = damageRatioModifierValue.getFromRatio();
+                            HorizonsModifier toRatio = damageRatioModifierValue.getToRatio();
+                            try {
+                                Double multiplier = 0.0;
+                                if (moduleAttribute.equals(toRatio)) {
+                                    multiplier = 1D;
+                                } else if (moduleAttribute.equals(fromRatio)){
+                                    multiplier = -1D;
+                                }
+                                value.set(damageRatioModifierValue.getModifier().getFunction().apply(value.get(), multiplier));
+                            } catch (final Throwable t) {
+                                log.error("Error modifying value", t);
+                            }
+                        } else {
+                            try {
+                                value.set(experimentalEffectModifier.getModifier().getFunction().apply(value.get(), 1D));
+                            } catch (final Throwable t) {
+                                log.error("Error modifying value", t);
+                            }
                         }
                     }
-                }catch (NullPointerException ex){
+                } catch (NullPointerException ex) {
                     throw ex;
                 }
 
@@ -412,29 +491,6 @@ public abstract class ShipModule implements Serializable {
             });
         }
         return value.get();
-    }
-    private static final List<HorizonsModifier> OPTIMAL_MULTIPLIER_LIST = List.of (
-            HorizonsModifier.OPTIMAL_MULTIPLIER,
-            HorizonsModifier.MINIMUM_MULTIPLIER,
-            HorizonsModifier.MAXIMUM_MULIPLIER,
-            HorizonsModifier.MINIMUM_MULTIPLIER_SPEED,
-            HorizonsModifier.OPTIMAL_MULTIPLIER_SPEED,
-            HorizonsModifier.MAXIMUM_MULTIPLIER_SPEED,
-            HorizonsModifier.MINIMUM_MULTIPLIER_ACCELERATION,
-            HorizonsModifier.OPTIMAL_MULTIPLIER_ACCELERATION,
-            HorizonsModifier.MAXIMUM_MULTIPLIER_ACCELERATION,
-            HorizonsModifier.MINIMUM_MULTIPLIER_ROTATION,
-            HorizonsModifier.OPTIMAL_MULTIPLIER_ROTATION,
-            HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION,
-            HorizonsModifier.OPTIMAL_BOOSTED_MULTIPLIER,
-            HorizonsModifier.MINIMUM_BOOSTED_MULTIPLIER,
-            HorizonsModifier.MAXIMUM_BOOSTED_MULTIPLIER
-    );
-    private static HorizonsModifier remap(HorizonsModifier moduleAttribute) {
-            if(OPTIMAL_MULTIPLIER_LIST.contains(moduleAttribute)){
-                return HorizonsModifier.OPTIMAL_MULTIPLIER;
-            }
-            return moduleAttribute;
     }
 
     public abstract List<HorizonsBlueprintType> getAllowedBlueprints();
@@ -477,8 +533,11 @@ public abstract class ShipModule implements Serializable {
         return false;
     }
 
-    public boolean isMerc() {
-        return false;
+//    public boolean isMerc() {
+//        return false;
+//    }
+    public boolean isMercEngineered() {
+        return this.getModifications().stream().anyMatch(modification -> modification.getModification().isMerc());
     }
 
     public boolean isStoreExclusive() {
@@ -694,14 +753,6 @@ public abstract class ShipModule implements Serializable {
                 .findFirst()
                 .map(bp -> modifiesStat(horizonsModifier, bp))
                 .orElse(false);
-    }
-
-    private static boolean modifiesStat(HorizonsModifier horizonsModifier, HorizonsSynthesisBlueprint bp) {
-        //derived stats check on base stat
-        if (HorizonsModifier.DAMAGE_PER_SECOND.equals(horizonsModifier) || HorizonsModifier.BREACH_DAMAGE.equals(horizonsModifier)) {
-            return bp.getModifiers().containsKey(HorizonsModifier.DAMAGE);
-        }
-        return bp.getModifiers().containsKey(remap(horizonsModifier));
     }
 
     public HorizonsBlueprintType getPreEngineeredExperimentalEffect() {

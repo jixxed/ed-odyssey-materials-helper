@@ -89,6 +89,7 @@ public class ShipSlot extends DestroyableHBox implements DestroyableTemplate {
             addIcon(iconBox, (shipModule instanceof UtilityModule um && Mounting.FIXED.equals(um.getMounting())), EdAwesomeIcon.SHIPS_FIXED, "ship.module.icon.tooltip.fixed", "module-icon");
 
             addIcon(iconBox, shipModule.isMerc(), EdAwesomeIcon.OTHER_MERCCOIN, "ship.module.icon.tooltip.merc", "module-icon");
+            addIcon(iconBox, shipModule.isMercEngineered(), EdAwesomeIcon.SHIPS_PREENGINEERED, "ship.module.icon.tooltip.merc.engineered", "module-icon", "merc-engineered-icon");
             addIcon(iconBox, shipModule.isPreEngineered(), EdAwesomeIcon.SHIPS_PREENGINEERED, "ship.module.icon.tooltip.pre.engineered", "module-icon");
             addIcon(iconBox, shipModule.isStoreExclusive(), EdAwesomeIcon.OTHER_ARX, "ship.module.icon.tooltip.arx", "module-icon");
             addIcon(iconBox, shipModule.isAdvanced(), EdAwesomeIcon.SHIPS_ADVANCED, "ship.module.icon.tooltip.advanced", "module-icon-wide");

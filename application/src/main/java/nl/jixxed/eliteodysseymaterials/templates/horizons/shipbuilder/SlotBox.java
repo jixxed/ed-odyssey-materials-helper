@@ -504,6 +504,7 @@ public class SlotBox extends DestroyableStackPane {
             addIcon((shipModule instanceof UtilityModule um && Mounting.FIXED.equals(um.getMounting())), EdAwesomeIcon.SHIPS_FIXED, "ship.module.icon.tooltip.fixed", "module-icon");
 
             addIcon(shipModule.isMerc(), EdAwesomeIcon.OTHER_MERCCOIN, "ship.module.icon.tooltip.merc", "module-icon");
+            addIcon(shipModule.isMercEngineered(), EdAwesomeIcon.SHIPS_PREENGINEERED, "ship.module.icon.tooltip.merc.engineered", "module-icon", "merc-engineered-icon");
             addIcon(shipModule.isPreEngineered(), EdAwesomeIcon.SHIPS_PREENGINEERED, "ship.module.icon.tooltip.pre.engineered", "module-icon");
             addIcon(shipModule.isStoreExclusive(), EdAwesomeIcon.OTHER_ARX, "ship.module.icon.tooltip.arx", "module-icon");
             addIcon(shipModule.isAdvanced(), EdAwesomeIcon.SHIPS_ADVANCED, "ship.module.icon.tooltip.advanced", "module-icon-wide");

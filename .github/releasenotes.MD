@@ -21,11 +21,15 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Updated CAPI schema for fleetcarrier
-Add wishlistable merc modules
-Add outfitting panel with merc modules
-Added effects to merc modules
+Updated EDDN Outfitting to V3 schema to include merc modules and merc prices
+Added EDDN ScanOrganic schema
+Some preliminary work on damage ratio's to deal with the engineerability for them
+Fixed Enzyme Missile Rack Merc price
+Added merc engineering icon so it is also clear on regular modules
 
 * Early access:
-* Added fuel scoop G5 mats - blueprint costs complete
+* Several modules have their stats, but not all
+* Included are: Lasers, Power Distributors, Fuel scoop, DSS, Cargo racks and Abrasion blaster
+* Because some stats have really weird multipliers, journals are required to get exact numbers. The game rounds values.
+* Given the complexities, early access might be extended.
 ```

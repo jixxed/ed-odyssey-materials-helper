@@ -13,10 +13,7 @@ package nl.jixxed.eliteodysseymaterials.constants.horizons;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.constants.UTF8Constants;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsBooleanModifierValue;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsExperimentalEffectBlueprint;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsNumberModifierValue;
+import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.util.List;
@@ -226,6 +223,7 @@ public class ExperimentalEffectBlueprints {
                     Map.of(
                             HorizonsModifier.DAMAGE_PARTIALLY_KINETIC, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)),
                             HorizonsModifier.JITTER, new HorizonsNumberModifierValue("3", false, plus(3.0)),
+                            HorizonsModifier.DAMAGE_RATIO, new HorizonsDamageRatioModifierValue(HorizonsModifier.THERMAL_DAMAGE_RATIO, HorizonsModifier.KINETIC_DAMAGE_RATIO, "50%", damageRatio(HorizonsModifier.THERMAL_DAMAGE_RATIO, HorizonsModifier.KINETIC_DAMAGE_RATIO, 0.5)),
                             HorizonsModifier.THERMAL_DAMAGE_RATIO, new HorizonsNumberModifierValue("-50%", false, minus(0.5)),
                             HorizonsModifier.KINETIC_DAMAGE_RATIO, new HorizonsNumberModifierValue("+50%", true, plus(0.5)),
                             HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+50%", true, percentagePositive(0.0, 0.5))
@@ -599,6 +597,7 @@ public class ExperimentalEffectBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+200%", false, percentagePositive(0.0, 2.0)),
                                     HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("5.26%", false, percentagePositive(0.0, 0.05263157894736842)),
                                     HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)),
+                                    HorizonsModifier.DAMAGE_RATIO, new HorizonsDamageRatioModifierValue(HorizonsModifier.KINETIC_DAMAGE_RATIO, HorizonsModifier.THERMAL_DAMAGE_RATIO, "90%", damageRatio(HorizonsModifier.KINETIC_DAMAGE_RATIO, HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.9)),
                                     HorizonsModifier.KINETIC_DAMAGE_RATIO, new HorizonsNumberModifierValue("-90%", false, minus(0.9)),
                                     HorizonsModifier.THERMAL_DAMAGE_RATIO, new HorizonsNumberModifierValue("+90%", true, plus(0.9))
                             ),
@@ -801,6 +800,7 @@ public class ExperimentalEffectBlueprints {
                             Map.of(
                                     HorizonsModifier.DAMAGE_PARTIALLY_EXPLOSIVE, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)),
                                     HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("11.11%", false, percentagePositive(0.0, 0.11111111111)),
+                                    HorizonsModifier.DAMAGE_RATIO, new HorizonsDamageRatioModifierValue(HorizonsModifier.KINETIC_DAMAGE_RATIO, HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, "50%", damageRatio(HorizonsModifier.KINETIC_DAMAGE_RATIO, HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, 0.5)),
                                     HorizonsModifier.KINETIC_DAMAGE_RATIO, new HorizonsNumberModifierValue("-50%", false, minus(0.5)),
                                     HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, new HorizonsNumberModifierValue("+50%", true, plus(0.5))
                             ),
@@ -991,6 +991,7 @@ public class ExperimentalEffectBlueprints {
                             HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+200%", false, percentagePositive(0.0, 2.0)),
                             HorizonsModifier.BURST_INTERVAL, new HorizonsNumberModifierValue("5.26%", false, percentagePositive(0.0, 0.05263157894736842)),
                             HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)),
+                            HorizonsModifier.DAMAGE_RATIO, new HorizonsDamageRatioModifierValue(HorizonsModifier.KINETIC_DAMAGE_RATIO, HorizonsModifier.THERMAL_DAMAGE_RATIO, "90%", damageRatio(HorizonsModifier.KINETIC_DAMAGE_RATIO, HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.9)),
                             HorizonsModifier.KINETIC_DAMAGE_RATIO, new HorizonsNumberModifierValue("-90%", false, minus(0.9)),
                             HorizonsModifier.THERMAL_DAMAGE_RATIO, new HorizonsNumberModifierValue("+90%", true, plus(0.9))
                     ),
@@ -1169,6 +1170,7 @@ public class ExperimentalEffectBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)),
+                                    HorizonsModifier.DAMAGE_RATIO, new HorizonsDamageRatioModifierValue(HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, HorizonsModifier.THERMAL_DAMAGE_RATIO, "50%", damageRatio(HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.5)),
                                     HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, new HorizonsNumberModifierValue("-50%", false, minus(0.5)),
                                     HorizonsModifier.THERMAL_DAMAGE_RATIO, new HorizonsNumberModifierValue("+50%", true, plus(0.5))
                             ),
@@ -1350,6 +1352,7 @@ public class ExperimentalEffectBlueprints {
                                 ),
                                 Map.of(
                                         HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)),
+                                        HorizonsModifier.DAMAGE_RATIO, new HorizonsDamageRatioModifierValue(HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, HorizonsModifier.THERMAL_DAMAGE_RATIO, "50%", damageRatio(HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.5)),
                                         HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, new HorizonsNumberModifierValue("-50%", false, minus(0.5)),
                                         HorizonsModifier.THERMAL_DAMAGE_RATIO, new HorizonsNumberModifierValue("+50%", true, plus(0.5))
                                 ),
@@ -1597,6 +1600,7 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.DAMAGE_PARTIALLY_THERMAL, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)),
+                            HorizonsModifier.DAMAGE_RATIO, new HorizonsDamageRatioModifierValue(HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, HorizonsModifier.THERMAL_DAMAGE_RATIO, "50%", damageRatio(HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.5)),
                             HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO, new HorizonsNumberModifierValue("-50%", false, minus(0.5)),
                             HorizonsModifier.THERMAL_DAMAGE_RATIO, new HorizonsNumberModifierValue("+50%", true, plus(0.5))
                     ),

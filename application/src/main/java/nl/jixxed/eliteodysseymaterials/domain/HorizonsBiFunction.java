@@ -12,6 +12,7 @@ package nl.jixxed.eliteodysseymaterials.domain;
 
 import io.reactivex.rxjava3.functions.BiFunction;
 import lombok.Getter;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 
 import java.math.BigDecimal;
 
@@ -21,7 +22,9 @@ public class HorizonsBiFunction<T> {
     private double value;
     private double start;
     private double end;
-    CalculationType calculationType;
+    private HorizonsModifier fromRatio;
+    private HorizonsModifier toRatio;
+    private CalculationType calculationType;
 
     public HorizonsBiFunction(Double value, Double start, Double end, CalculationType calculationType) {
         this.value = value;
@@ -43,6 +46,22 @@ public class HorizonsBiFunction<T> {
 
     public HorizonsBiFunction(Boolean bool, CalculationType calculationType) {
         this.bool = bool;
+        this.calculationType = calculationType;
+    }
+
+    public HorizonsBiFunction(HorizonsModifier fromRatio, HorizonsModifier toRatio, Double value, CalculationType calculationType) {
+
+        this.fromRatio = fromRatio;
+        this.toRatio = toRatio;
+        this.value = value;
+        this.calculationType = calculationType;
+    }
+
+    public HorizonsBiFunction(HorizonsModifier fromRatio, HorizonsModifier toRatio, Double start, Double end, CalculationType calculationType) {
+        this.fromRatio = fromRatio;
+        this.toRatio = toRatio;
+        this.start = start;
+        this.end = end;
         this.calculationType = calculationType;
     }
 
@@ -71,6 +90,8 @@ public class HorizonsBiFunction<T> {
             case MINUS ->
                     (BiFunction<T, Double, T>) (BiFunction<Double, Double, Double>) (base, percent) -> base - value;
             case BOOL -> (BiFunction<T, Double, T>) (BiFunction<Boolean, Double, Boolean>) (base, percent) -> bool;
+            case DAMAGE_RATIO_FIXED -> (BiFunction<T, Double, T>) (BiFunction<Double, Double, Double>) (base, multiplier) -> Math.clamp(base + (value * multiplier), 0.0, 1.0);
+            case DAMAGE_RATIO_RANGE -> (BiFunction<T, Double, T>) (BiFunction<Double, Double, Double>) (base, multiplier) -> Math.clamp(base + (((multiplier < 0.0) ? -start : start) + (end - start) * multiplier), 0.0, 1.0);
         };
     }
 
@@ -86,6 +107,6 @@ public class HorizonsBiFunction<T> {
     }
 
     public enum CalculationType {
-        PERCENTAGE_POSITIVE, PERCENTAGE_NEGATIVE, PLUS, MINUS, BOOL, RESISTANCE_NEGATIVE, RESISTANCE_POSITIVE, HULL_BOOST_POSITIVE, HULL_BOOST_NEGATIVE, SHIELD_BOOST_POSITIVE, SHIELD_BOOST_NEGATIVE
+        PERCENTAGE_POSITIVE, PERCENTAGE_NEGATIVE, PLUS, MINUS, BOOL, RESISTANCE_NEGATIVE, RESISTANCE_POSITIVE, HULL_BOOST_POSITIVE, HULL_BOOST_NEGATIVE, SHIELD_BOOST_POSITIVE, SHIELD_BOOST_NEGATIVE, DAMAGE_RATIO_FIXED, DAMAGE_RATIO_RANGE
     }
 }

@@ -234,3 +234,4 @@
 "modifier.horizons.unit.minimum_boosted_multiplier","x","","","x","","","x","x","x"
 "modifier.horizons.unit.optimal_boosted_multiplier","x","","","x","","","x","x","x"
 "modifier.horizons.unit.maximum_boosted_multiplier","x","","","x","","","x","x","x"
+"modifier.horizons.unit.damage_ratio","%","","","%","%","","%","%","%"

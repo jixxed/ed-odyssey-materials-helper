@@ -84,7 +84,7 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
             initTips(engineerBlueprint);
         }
 
-        if (!(this.blueprint instanceof HorizonsEngineerBlueprint) && !this.blueprint.getHorizonsBlueprintType().equals(HorizonsBlueprintType.SYNTHESIS) && !HorizonsBlueprintConstants.getTechbrokerUnlocks().containsKey(this.blueprint.getHorizonsBlueprintName())) {
+        if (!(this.blueprint instanceof HorizonsEngineerBlueprint) && !(this.blueprint instanceof HorizonsOutfittingBlueprint) && !this.blueprint.getHorizonsBlueprintType().equals(HorizonsBlueprintType.SYNTHESIS) && !HorizonsBlueprintConstants.getTechbrokerUnlocks().containsKey(this.blueprint.getHorizonsBlueprintName())) {
             initEngineers();
         }
         initModifiers();

@@ -1255,7 +1255,11 @@
                   -fx-padding: 0em 0.2em 0em 0em;
 
                   @include awesome-icons;
-
+                }
+                .merc-engineered-icon{
+                  .glyph-icon {
+                    -fx-fill: rgb(255, 0, 109) !important;
+                  }
                 }
 
                 .module-icon-wide {

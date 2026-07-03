@@ -114,6 +114,8 @@ public abstract class MercenaryBlueprints {
             double start,
             double end,
             double value,
+            String fromRatio,
+            String toRatio,
             boolean valueBool,
             HorizonsBiFunction.CalculationType calculationType
     ) {
@@ -124,6 +126,8 @@ public abstract class MercenaryBlueprints {
                 @JsonProperty("start") double start,
                 @JsonProperty("end") double end,
                 @JsonProperty("value") double value,
+                @JsonProperty("fromRatio") String fromRatio,
+                @JsonProperty("toRatio") String toRatio,
                 @JsonProperty("valueBool") boolean valueBool,
                 @JsonProperty("calculationType") HorizonsBiFunction.CalculationType calculationType
         ) {
@@ -132,6 +136,8 @@ public abstract class MercenaryBlueprints {
             this.start = start;
             this.end = end;
             this.value = value;
+            this.fromRatio = fromRatio;
+            this.toRatio = toRatio;
             this.valueBool = valueBool;
             this.calculationType = calculationType != null ? calculationType : HorizonsBiFunction.CalculationType.PERCENTAGE_POSITIVE;
         }
@@ -161,6 +167,8 @@ public abstract class MercenaryBlueprints {
                 case RESISTANCE_NEGATIVE -> ModifierFunctionHelper.resistanceNegative(start, end);
                 case PLUS -> ModifierFunctionHelper.plus(value);
                 case MINUS -> ModifierFunctionHelper.minus(value);
+                case DAMAGE_RATIO_FIXED -> ModifierFunctionHelper.damageRatio(HorizonsModifier.forInternalName(fromRatio), HorizonsModifier.forInternalName(toRatio), value);
+                case DAMAGE_RATIO_RANGE -> ModifierFunctionHelper.damageRatio(HorizonsModifier.forInternalName(fromRatio), HorizonsModifier.forInternalName(toRatio), start, end);
                 case BOOL -> throw new IllegalStateException("BOOL should use createBooleanFunction");
             };
         }

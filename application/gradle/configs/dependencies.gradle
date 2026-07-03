@@ -87,7 +87,7 @@ dependencies {
     if (project.ext.proprietary) {
         implementation 'nl.jixxed.ed.awesome:ed-awesome-impl:1.26'
         implementation 'nl.jixxed.ed.confidential:ed-confidential-impl:1.2'
-        implementation "nl.jixxed.ed.data:ed-data-impl:1.21"
+        implementation "nl.jixxed.ed.data:ed-data-impl:1.24"
     }
 
 }

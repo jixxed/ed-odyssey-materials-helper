@@ -258,6 +258,7 @@ public enum HorizonsModifier {
     DAMAGE_BOOST(2060, ""),//synthesis
     BOOST_AUGMENTER_POWER_USE(8000, false, "BoostAugmenterPowerUse"),//todo remove?
     BOOST_SPEED_MULTIPLIER(8000, "BoostSpeedMultiplier"),//todo remove?
+    DAMAGE_RATIO(9998, false, ""),
     LISTED_POWER_DRAW(9999, false, ""),
 
     ;
