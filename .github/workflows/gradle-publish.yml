@@ -109,35 +109,24 @@ jobs:
             gh release download "${TAG_NAME}" -p "$file" --output "artifacts/$file_out"
           done
 
-      - name: Generate releases metainfo
-        run: |
-          date=$(git log -1 --format=%cI "${TAG_NAME}")
-
-          {
-            printf '<?xml version="1.0" encoding="UTF-8"?>\n'
-            printf '<releases>\n'
-
-            git log --tags --format="%S %cI" --no-walk --until "$date" | while read -r tag date; do
-              printf '<release version="%s" date="%s">\n' "$tag" "$date"
-              printf '<url>%s</url>\n' "${{ github.server_url }}/${{ github.repository }}/releases/tag/$tag"
-              printf '</release>\n'
-            done
-
-            printf '</releases>\n'
-          } > flatpak/releases.xml
+      - name: Generate flatpak manifests
+        id: manifest
+        env:
+          REPOSITORY_URL_BASE: "${{ github.server_url }}/${{ github.repository }}"
+        run: python3 flatpak/generate_metafiles.py contained selfupdate >> $GITHUB_OUTPUT
 
       - name: Flatpak (Self-Contained)
         uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         with:
           bundle: edomh-${{ env.TAG_NAME }}-nonfree.flatpak
-          manifest-path: flatpak/manifest-contained.yml
+          manifest-path: ${{ steps.manifest.outputs.contained }}
           cache-key: flatpak-builder-${{ github.sha }}
 
       - name: Flatpak (Auto-Updating)
         uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         with:
           bundle: edomh-${{ env.TAG_NAME }}-nonfree.auto-updater.flatpak
-          manifest-path: flatpak/manifest-selfupdate.yml
+          manifest-path: ${{ steps.manifest.outputs.selfupdate }}
           cache-key: flatpak-builder-${{ github.sha }}
 
       - name: Create Release

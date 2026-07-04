@@ -2,7 +2,7 @@ id: nl.jixxed.edomh
 runtime: org.freedesktop.Platform
 runtime-version: "25.08"
 sdk: org.freedesktop.Sdk
-command: edomh-launcher
+command: entrypoint
 
 finish-args:
   - --socket=x11
@@ -11,29 +11,26 @@ finish-args:
 
   - --filesystem=~/.steam/steam/steamapps/compatdata/359320/pfx/drive_c/users/steamuser/Saved Games/Frontier Developments/Elite Dangerous:ro
   - --filesystem=~/.config/odyssey-materials-helper:create
-  - --persist=.ed-odyssey-materials-helper
 
 modules:
   - name: ed-odyssey-materials-helper
     buildsystem: simple
     build-commands:
       # install files
-      - bsdunzip -d "$FLATPAK_DEST/launcher" launcher.zip
-      - install -Dm755 -t "$FLATPAK_DEST/bin/" apprun edomh edomh-launcher
-    
+      - bsdunzip -d "$FLATPAK_DEST" program.zip
+      - install -Dm755 -t "$FLATPAK_DEST/bin/" {{binfiles}}
+
     post-install:
       # appstream data
-      - install -Dm644 metainfo-selfupdate.xml "$FLATPAK_DEST/share/metainfo/$FLATPAK_ID.metainfo.xml"
+      - install -Dm644 metainfo.xml "$FLATPAK_DEST/share/metainfo/$FLATPAK_ID.metainfo.xml"
       - install -Dm644 releases.xml "$FLATPAK_DEST/share/metainfo/releases/$FLATPAK_ID.releases.xml"
 
       # XDG-Desktop integration
-      - install -Dm644 edomh-mime.desktop "$FLATPAK_DEST/share/applications/$FLATPAK_ID-mime.desktop"
       - install -Dm644 edomh.desktop "$FLATPAK_DEST/share/applications/$FLATPAK_ID.desktop"
       - |
         desktop-file-edit \
           --set-icon="$FLATPAK_ID" \
-          --set-key=Exec \
-          --set-value="edomh-launcher %u" \
+          {{desktop-file-edit}} \
           "$FLATPAK_DEST/share/applications/$FLATPAK_ID.desktop"
       - |
         for i in {16,32,48,64,128,256,512}; do
@@ -41,10 +38,9 @@ modules:
         done
 
     sources:
-      - { type: file, dest: ., path: metainfo-selfupdate.xml }
-      - { type: file, dest: ., path: releases.xml }
+      - { type: file, dest-filename: metainfo.xml, path: "{{metainfo-path}}" }
+      - { type: file, dest-filename: releases.xml, path: "{{releases-path}}" }
       - { type: file, dest: ., path: edomh.desktop }
-      - { type: file, dest: ., path: edomh-mime.desktop }
 
       - { type: file, dest: ., path: ../bootstrap/src/main/resources/images/appicon16.png }
       - { type: file, dest: ., path: ../bootstrap/src/main/resources/images/appicon32.png }
@@ -53,34 +49,3 @@ modules:
       - { type: file, dest: ., path: ../bootstrap/src/main/resources/images/appicon128.png }
       - { type: file, dest: ., path: ../bootstrap/src/main/resources/images/appicon256.png }
       - { type: file, dest: ., path: ../bootstrap/src/main/resources/images/appicon512.png }
-
-      - { type: file, dest: ., path: ../artifacts/launcher.zip }
-
-      - type: script
-        dest-filename: apprun
-        commands:
-          - |
-            mkdir -p \
-              "$HOME/.local/share/applications/" \
-              "$XDG_STATE_HOME/log" \
-              "$XDG_CACHE_HOME/javafx-cache-program"
-
-          - ln -s "/app/share/applications/$FLATPAK_ID-mime.desktop" "$HOME/.local/share/applications/edomh.desktop"
-
-          - |
-            ln -st \
-            "$HOME/.ed-odyssey-materials-helper" \
-            "$XDG_STATE_HOME/log" \
-            "$XDG_CACHE_HOME/javafx-cache-program"
-
-          - exec "$@"
-
-      - type: script
-        dest-filename: edomh
-        commands:
-          - apprun "$HOME/.ed-odyssey-materials-helper/bin/Elite Dangerous Odyssey Materials Helper" "$@"
-
-      - type: script
-        dest-filename: edomh-launcher
-        commands:
-          - apprun "/app/launcher/bin/Elite Dangerous Odyssey Materials Helper Launcher" "$@"

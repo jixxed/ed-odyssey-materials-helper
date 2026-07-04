@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>nl.jixxed.edomh</id>
+  <id>{{id}}</id>
   
   <name>Elite Dangerous Odyssey Materials Helper</name>
   <summary>Companion application for Elite: Dangerous, providing material tracking information</summary>
@@ -20,14 +20,11 @@
   <url type="contact">https://github.com/jixxed</url>
   <url type="vcs-browser">https://github.com/jixxed/ed-odyssey-materials-helper</url>
 
-  <requires>
-    <internet>first-run</internet>
-  </requires>
   <recommends>
     <internet>always</internet>
   </recommends>
   
-  <launchable type="desktop-id">nl.jixxed.edomh.desktop</launchable>
+  <launchable type="desktop-id">{{id}}.desktop</launchable>
 
   <screenshots>
     <screenshot>
