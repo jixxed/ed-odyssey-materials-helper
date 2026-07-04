@@ -448,11 +448,9 @@ public class LoadoutMapper {
         Set<HorizonsModifier> moduleModifiers =  shipModule.getAttibutes().stream().filter(attribute -> !attribute.getJournalName().equals("")).collect(Collectors.toSet());
         final List<Modifier> modifiers = new ArrayList<>();
         for (final HorizonsModifier modifier : moduleModifiers) {
-            final Object value = shipModule.getAttributeValue(modifier, false);
             final Modifier journalModifier = new Modifier();
             journalModifier.setLabel(modifier.getJournalName());
-            Double original = (Double) shipModule.getOriginalAttributeValue(modifier);
-            if (value instanceof Double doubleValue && !doubleValue.isInfinite() && !doubleValue.isNaN() && !original.isInfinite() && !original.isNaN() ) {
+            if (shipModule.getAttributeValue(modifier, false) instanceof Double doubleValue && shipModule.getOriginalAttributeValue(modifier) instanceof Double original && !doubleValue.isInfinite() && !doubleValue.isNaN() && !original.isInfinite() && !original.isNaN() ) {
                 BigDecimal originalValue = BigDecimal.valueOf(original);
                 BigDecimal modifiedValue = BigDecimal.valueOf(doubleValue / modifier.scale(1.0));
                 journalModifier.setOriginalValue(originalValue);
