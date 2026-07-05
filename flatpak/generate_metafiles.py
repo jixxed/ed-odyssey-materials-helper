@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 #
 # Copyright (c) 2026 Alyx/flusedev <alyx@fluse.cc>
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be included in all
 # copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,12 +22,13 @@
 
 import os
 import yaml
+from typing import *
 from xml.etree import ElementTree as xml
 from os import PathLike
 from pathlib import Path
 from io import TextIOBase
 from subprocess import Popen, CompletedProcess, CalledProcessError, check_output as invoke2, PIPE
-from typing import Generator, Mapping, defaultdict, List, overload, Sequence, TypedDict, NotRequired, Deque
+from urllib.parse import urlparse
 
 
 class Env(Mapping[str, str]):
@@ -74,7 +75,17 @@ def mkstemp(prefix, suffix) -> tuple[int, str]:
     return tmp
 
 
-def fmt[T](value: T, args: Mapping[str, str]) -> T:
+@overload
+def fmt(value: str, args: Mapping[str, str]) -> str: ...
+@overload
+def fmt[K, V](value: Mapping[K, V], args: Mapping[str, str]) -> MutableMapping[K, V]: ...
+@overload
+def fmt[T](value: Sequence[T], args: Mapping[str, str]) -> MutableSequence[T]: ...
+@overload
+def fmt[T](value: T, args: Mapping[str, str]) -> T: ...
+
+
+def fmt(value, args: Mapping[str, str]):
     if not value:
         return value
 
@@ -184,7 +195,7 @@ def generate_manifest_file(
 
     # load variant inc
     with path(inc_file).open("r") as f:
-        inc = defaultdict(lambda: None, yaml.safe_load(f))
+        inc = DefaultDict(lambda: None, yaml.safe_load(f))
 
     metainfo_out: tuple[int, str] = mkstemp("metainfo", ".xml")
 
@@ -214,7 +225,9 @@ def generate_manifest_file(
         s: dict
         sources.append(s)
 
-        dest: Path = Path(s.get("dest-filename", None) or s["path"])
+        dest: Path = Path(s.get("dest-filename", None) or s.get("path", None) or urlparse(s.get("url", "")).path)
+        if not dest.name:
+            continue
 
         match s["type"]:
             case "script":
@@ -231,11 +244,17 @@ def generate_manifest_file(
     with os.fdopen(metainfo_out[0], "w") as out:
         metainfo.write(out, "unicode", True)
 
+    # normalize manifest
+    manifest: dict = fmt(manifest, format_args)
+    for s in manifest["modules"][0]["sources"]:
+        s: dict
+        if _path := s.get("path", None):
+            s["path"] = path(_path).resolve().as_posix()
+
     # write out
     manifest_out = mkstemp("manifest", ".yml")
-
     with os.fdopen(manifest_out[0], "w") as out:
-        yaml.safe_dump(fmt(manifest, format_args), out, sort_keys=False, width=0x7FFFFFFF)
+        yaml.safe_dump(manifest, out, sort_keys=False, width=0x7FFFFFFF)
 
     return manifest_out[1]
 
