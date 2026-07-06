@@ -232,7 +232,7 @@ ext {
     version_mockito = "5.23.0"
     version_sentry = "8.44.1"
     version_github_classgraph = "4.8.184"
-    version_ebean = "17.5.0"
+    version_ebean = "19.2.0"
 }
 allprojects {
     plugins.withType(JavaPlugin).whenPluginAdded {
