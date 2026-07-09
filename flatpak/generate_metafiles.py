@@ -234,7 +234,7 @@ def generate_manifest_file(
                 scripts.append(dest.name)
             case "file":
                 if dest.name.endswith(".desktop"):
-                    post_install.append(f'install -Dm644 "{dest.name}"t "$FLATPAK_DEST/share/applications/$FLATPAK_ID-{dest.stem}.desktop"')
+                    post_install.append(f'install -Dm644 "{dest.name}" "$FLATPAK_DEST/share/applications/$FLATPAK_ID-{dest.stem}.desktop"')
 
     # set binfiles from declared scripts
     format_args["binfiles"] = " ".join(f'"{it}"' for it in scripts)
