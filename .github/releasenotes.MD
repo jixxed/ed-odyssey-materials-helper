@@ -21,15 +21,12 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Updated EDDN Outfitting to V3 schema to include merc modules and merc prices
-Added EDDN ScanOrganic schema
-Some preliminary work on damage ratio's to deal with the engineerability for them
-Fixed Enzyme Missile Rack Merc price
-Added merc engineering icon so it is also clear on regular modules
+Several Merc module related fixes:
+Added ability to map merc modules from loadout events
+Prevent swapping blueprints in the wishlist to unsupported combinations
+Previously you could put a G5 blueprint Lightweight Sink Launcher on the wishlist and then swap to Ammo Capacity that only allowed G1. It then still allowed to set G2-G5, which was invalid.
+Prevent quickswitch size/class in ship editor for merc modules. Each merc module has its own blueprint, so there are no compatible other modules to swap to. 
 
 * Early access:
-* Several modules have their stats, but not all
-* Included are: Lasers, Power Distributors, Fuel scoop, DSS, Cargo racks and Abrasion blaster
-* Because some stats have really weird multipliers, journals are required to get exact numbers. The game rounds values.
-* Given the complexities, early access might be extended.
+* More modules with stats. G1 should be available on all, but for some weapons, higher grades are still missing and require in game testing.
 ```
