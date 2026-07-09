@@ -410,22 +410,24 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
 
                 //effect
                 HorizonsBlueprintType effect = null;
-                if (all || didNotHaveModule(slot) || hasDifferentExperimentalEffect(slot) || hasDifferentModification(slot)) {
-                    effect = slot.getFirstExperimentalEffect() != null ? slot.getFirstExperimentalEffect().getType() : null;
+                if(!modification.getType().isMercOnly()) {
+                    if (all || didNotHaveModule(slot) || hasDifferentExperimentalEffect(slot) || hasDifferentModification(slot)) {
+                        effect = slot.getFirstExperimentalEffect() != null ? slot.getFirstExperimentalEffect().getType() : null;
+                    }
                 }
 
-                if (!gradePercentageToComplete.values().stream().allMatch(rolls -> rolls.equals(0D))) {
-                    final HorizonsModuleWishlistBlueprint bp = new HorizonsModuleWishlistBlueprint(modification.getType(), gradePercentageToComplete);
-                    bp.setExperimentalEffect(effect);
-                    bp.setRecipeName(name);
-                    bp.setVisible(true);
-                    wishlistBlueprints.add(bp);
-                } else if (effect != null) {
-                    final HorizonsExperimentalWishlistBlueprint bp = new HorizonsExperimentalWishlistBlueprint(effect);
-                    bp.setVisible(true);
-                    bp.setRecipeName(name);
-                    wishlistBlueprints.add(bp);
-                }
+                    if (!gradePercentageToComplete.values().stream().allMatch(rolls -> rolls.equals(0D))) {
+                        final HorizonsModuleWishlistBlueprint bp = new HorizonsModuleWishlistBlueprint(modification.getType(), gradePercentageToComplete);
+                        bp.setExperimentalEffect(effect);
+                        bp.setRecipeName(name);
+                        bp.setVisible(true);
+                        wishlistBlueprints.add(bp);
+                    } else if (effect != null) {
+                        final HorizonsExperimentalWishlistBlueprint bp = new HorizonsExperimentalWishlistBlueprint(effect);
+                        bp.setVisible(true);
+                        bp.setRecipeName(name);
+                        wishlistBlueprints.add(bp);
+                    }
             }
         });
         if (!HorizonsBlueprintGrade.NONE.equals(slot.getSynthesis())) {

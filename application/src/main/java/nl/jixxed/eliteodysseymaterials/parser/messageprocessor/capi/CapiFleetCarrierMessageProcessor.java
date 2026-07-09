@@ -74,7 +74,7 @@ public class CapiFleetCarrierMessageProcessor implements CapiMessageProcessor<Ca
         CarrierService.setCarrierFuel(CarrierType.FLEETCARRIER, Integer.valueOf(capiFleetcarrier.getFuel()));
         CarrierService.setCarrierCapacity(CarrierType.FLEETCARRIER, capiFleetcarrier.getCapacity());
         if(CarrierState.forKey(capiFleetcarrier.getState()) == CarrierState.UNKNOWN){
-            ReportService.reportJournal("module", capiFleetcarrier.getState(), "Unknown carrier state");
+            ReportService.reportJournal("capi", capiFleetcarrier.getState(), "Unknown carrier state");
         }
     }
 

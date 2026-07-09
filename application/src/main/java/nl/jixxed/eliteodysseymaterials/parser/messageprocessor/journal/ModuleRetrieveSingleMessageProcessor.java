@@ -69,7 +69,19 @@ public class ModuleRetrieveSingleMessageProcessor implements SingleMessageProces
 
         try{
             //this module is technically not engineered fully because information is missing, but will be updated once the outfitting screen is exited
-            event.getEngineerModifications().ifPresent(modifications -> module.applyModification(HorizonsBlueprintType.forInternalName(modifications), HorizonsBlueprintGrade.forDigit(event.getLevel().orElse(BigInteger.ZERO)), event.getQuality().orElse(BigDecimal.ZERO)));
+            event.getEngineerModifications().ifPresent(modifications -> {
+                HorizonsBlueprintType modification = HorizonsBlueprintType.forInternalName(modifications);
+                //TODO MERCREMOVEME
+                if(modification.isMerc()){
+                    try {
+                        ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(event), "Merc module: " + event.getEngineerModifications().orElse(""));
+                    } catch (JsonProcessingException ex) {
+                        //ignore
+                    }
+                }
+                module.applyModification(modification, HorizonsBlueprintGrade.forDigit(event.getLevel().orElse(BigInteger.ZERO)), event.getQuality().orElse(BigDecimal.ZERO));
+            });
+
         } catch (IllegalArgumentException e) {
             try {
                 ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(event), "Failed to map blueprint: " + event.getEngineerModifications().orElse(""));

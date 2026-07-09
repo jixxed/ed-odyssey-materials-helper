@@ -58,6 +58,12 @@ public class EngineerCraftSingleMessageProcessor implements SingleMessageProcess
         try{
             HorizonsBlueprintType horizonsBlueprintType = HorizonsBlueprintType.forInternalName(event.getBlueprintName());
             if(horizonsBlueprintType.isMerc()){
+                //TODO MERCREMOVEME
+                try {
+                    ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(event), "Merc module: " + event.getBlueprintName());
+                } catch (JsonProcessingException ex) {
+                    //ignore
+                }
                 HorizonsBlueprint recipe = (HorizonsBlueprint)HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.forInternalName(event.getModule()), horizonsBlueprintType, HorizonsBlueprintGrade.forDigit(event.getLevel()));
                 Integer amount = recipe.getMaterialCollection(Currency.class).getOrDefault(Currency.MERC_COIN, 0);
                 log.info("Merc Currency: " + StorageService.getMaterialCount(Currency.MERC_COIN));

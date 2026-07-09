@@ -100,16 +100,6 @@ public class ModifierFunctionHelper {
      * @param value value to increase with
      * @return BiFunction
      */
-    public static HorizonsBiFunction<Double> plus(final Double value) {
-//        return (base, percent) -> base + value;
-        return new HorizonsBiFunction<>(value, HorizonsBiFunction.CalculationType.PLUS);
-    }
-    /**
-     * Calculation that adds a fixed amount.
-     *
-     * @param value value to increase with
-     * @return BiFunction
-     */
     public static HorizonsBiFunction<Double> damageRatio(final HorizonsModifier fromRatio, final HorizonsModifier toRatio, final Double value) {
 //        return (base, percent) -> base + value;
         return new HorizonsBiFunction<>(fromRatio, toRatio, value, HorizonsBiFunction.CalculationType.DAMAGE_RATIO_FIXED);
@@ -126,6 +116,36 @@ public class ModifierFunctionHelper {
         return new HorizonsBiFunction<>(fromRatio, toRatio, start, end, HorizonsBiFunction.CalculationType.DAMAGE_RATIO_RANGE);
     }
 
+    /**
+     * Calculation that adds a fixed amount.
+     *
+     * @param value value to increase with
+     * @return BiFunction
+     */
+    public static HorizonsBiFunction<Double> plusAtCompletion(final Double value) {
+//        return (base, percent) -> base + value;
+        return new HorizonsBiFunction<>(value, HorizonsBiFunction.CalculationType.PLUS_AT_COMPLETION);
+    }
+    /**
+     * Calculation that subtracts a fixed amount.
+     *
+     * @param value value to subtract with
+     * @return BiFunction
+     */
+    public static HorizonsBiFunction<Double> minusAtCompletion(final Double value) {
+//        return (base, percent) -> base - value;
+        return new HorizonsBiFunction<>(value, HorizonsBiFunction.CalculationType.MINUS_AT_COMPLETION);
+    }
+    /**
+     * Calculation that adds a fixed amount.
+     *
+     * @param value value to increase with
+     * @return BiFunction
+     */
+    public static HorizonsBiFunction<Double> plus(final Double value) {
+//        return (base, percent) -> base + value;
+        return new HorizonsBiFunction<>(value, HorizonsBiFunction.CalculationType.PLUS);
+    }
     /**
      * Calculation that subtracts a fixed amount.
      *

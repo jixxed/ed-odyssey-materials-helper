@@ -35,8 +35,8 @@ public class CargoRack extends OptionalModule {
     public static final CargoRack CARGO_RACK_8_E = new CargoRack("CARGO_RACK_8_E", HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_8, ModuleClass.E, false, 3829870, "Int_CargoRack_Size8_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY, 256.0)));
     public static final CargoRack CARGO_RACK_5_E_PRE = new CargoRack("CARGO_RACK_5_E_PRE", HorizonsBlueprintName.CARGO_RACK_PRE, ModuleSize.SIZE_5, ModuleClass.E, false, 111570, "Int_CargoRack_Size5_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY, 32.0)));
     public static final CargoRack CARGO_RACK_6_E_PRE = new CargoRack("CARGO_RACK_6_E_PRE", HorizonsBlueprintName.CARGO_RACK_PRE, ModuleSize.SIZE_6, ModuleClass.E, false, 362590, "Int_CargoRack_Size6_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY, 64.0)));
-    public static final CargoRack CARGO_RACK_5_E_MERC = new CargoRack("CARGO_RACK_5_E_MERC", HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_5, ModuleClass.E, false, true, 550, "Int_CargoRack_Size5_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY, 32.0)));
-    public static final CargoRack CARGO_RACK_6_E_MERC = new CargoRack("CARGO_RACK_6_E_MERC", HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_6, ModuleClass.E, false, true, 550, "Int_CargoRack_Size6_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY, 64.0)));
+    public static final CargoRack CARGO_RACK_5_E_MERC = new CargoRack("CARGO_RACK_5_E_MERC", HorizonsBlueprintName.CARGO_RACK_5_E_MERC, ModuleSize.SIZE_5, ModuleClass.E, false, true, 550, "Int_CargoRack_Size5_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY, 32.0)));
+    public static final CargoRack CARGO_RACK_6_E_MERC = new CargoRack("CARGO_RACK_6_E_MERC", HorizonsBlueprintName.CARGO_RACK_6_E_MERC, ModuleSize.SIZE_6, ModuleClass.E, false, true, 550, "Int_CargoRack_Size6_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY, 64.0)));
 
     static {
         CARGO_RACK_5_E_PRE.getModifications().add(

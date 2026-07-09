@@ -47,21 +47,23 @@ public class HorizonsBlueprint implements Blueprint<HorizonsBlueprintName> {
     private final GameVersion gameVersion;
     @Getter
     private final boolean preEngineered;
+    @Getter
+    private final boolean isMerc;
 
     public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final Map<? extends Material, Integer> materials) {
         this(horizonsBlueprintName, HorizonsBlueprintType.ENGINEER, HorizonsBlueprintGrade.NONE, materials, Collections.emptyMap(), List.of());
     }
 
-    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<? extends Material, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers) {
+    public HorizonsBlueprint(final boolean isMerc, final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<? extends Material, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers) {
         this(horizonsBlueprintName, horizonsBlueprintType, HorizonsBlueprintGrade.NONE, materials, modifiers, engineers);
     }
     public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<? extends Material, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers, final boolean preEngineered) {
         this(horizonsBlueprintName, horizonsBlueprintType, HorizonsBlueprintGrade.NONE, materials, modifiers, engineers, preEngineered);
     }
     public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade, final Map<? extends Material, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers, final GameVersion gameVersion) {
-        this(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGrade, materials, modifiers, engineers, gameVersion, false);
+        this(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGrade, materials, modifiers, engineers, gameVersion, false, false);
     }
-    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade, final Map<? extends Material, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers, final GameVersion gameVersion, final boolean preEngineered) {
+    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade, final Map<? extends Material, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers, final GameVersion gameVersion, final boolean preEngineered, final boolean isMerc) {
         this.horizonsBlueprintName = horizonsBlueprintName;
         this.horizonsBlueprintType = horizonsBlueprintType;
         this.horizonsBlueprintGrade = horizonsBlueprintGrade;
@@ -74,13 +76,14 @@ public class HorizonsBlueprint implements Blueprint<HorizonsBlueprintName> {
         this.commodities = materials.entrySet().stream().filter(materialIntegerEntry -> materialIntegerEntry.getKey() instanceof Commodity).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         this.gameVersion = gameVersion;
         this.preEngineered = preEngineered;
+        this.isMerc = isMerc;
     }
 
     public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade, final Map<? extends Material, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers) {
-        this(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGrade, materials, modifiers, engineers, GameVersion.LEGACY, false);
+        this(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGrade, materials, modifiers, engineers, GameVersion.LEGACY, false, false);
     }
     public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade, final Map<? extends Material, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers, final boolean preEngineered) {
-        this(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGrade, materials, modifiers, engineers, GameVersion.LEGACY, preEngineered);
+        this(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGrade, materials, modifiers, engineers, GameVersion.LEGACY, preEngineered, false);
     }
 
     public <T extends Material> Map<Material, Integer> getMaterialCollection(final Class<T> clazz) {

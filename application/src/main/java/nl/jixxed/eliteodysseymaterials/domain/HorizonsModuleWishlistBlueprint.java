@@ -86,6 +86,12 @@ public final class HorizonsModuleWishlistBlueprint extends HorizonsWishlistBluep
 
     public void setBlueprintType(HorizonsBlueprintType blueprintType) {
         this.blueprintType = blueprintType;
+        if(blueprintType.isMercOnly()){
+            setExperimentalEffect(null);
+            if (this.percentageToComplete != null) {
+                this.percentageToComplete.remove(HorizonsBlueprintGrade.GRADE_1);
+            }
+        }
         bugfix(getRecipeName(), experimentalEffect);
     }
 

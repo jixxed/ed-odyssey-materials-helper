@@ -89,6 +89,10 @@ public class HorizonsBiFunction<T> {
                     (BiFunction<T, Double, T>) (BiFunction<Double, Double, Double>) (base, percent) -> base + value;
             case MINUS ->
                     (BiFunction<T, Double, T>) (BiFunction<Double, Double, Double>) (base, percent) -> base - value;
+            case PLUS_AT_COMPLETION ->
+                    (BiFunction<T, Double, T>) (BiFunction<Double, Double, Double>) (base, percent) -> percent.equals(1.0) ? base + start : base + end;
+            case MINUS_AT_COMPLETION ->
+                    (BiFunction<T, Double, T>) (BiFunction<Double, Double, Double>) (base, percent) -> percent.equals(1.0) ? base - start : base - end;
             case BOOL -> (BiFunction<T, Double, T>) (BiFunction<Boolean, Double, Boolean>) (base, percent) -> bool;
             case DAMAGE_RATIO_FIXED -> (BiFunction<T, Double, T>) (BiFunction<Double, Double, Double>) (base, multiplier) -> Math.clamp(base + (value * multiplier), 0.0, 1.0);
             case DAMAGE_RATIO_RANGE -> (BiFunction<T, Double, T>) (BiFunction<Double, Double, Double>) (base, multiplier) -> Math.clamp(base + (((multiplier < 0.0) ? -start : start) + (end - start) * multiplier), 0.0, 1.0);
@@ -107,6 +111,6 @@ public class HorizonsBiFunction<T> {
     }
 
     public enum CalculationType {
-        PERCENTAGE_POSITIVE, PERCENTAGE_NEGATIVE, PLUS, MINUS, BOOL, RESISTANCE_NEGATIVE, RESISTANCE_POSITIVE, HULL_BOOST_POSITIVE, HULL_BOOST_NEGATIVE, SHIELD_BOOST_POSITIVE, SHIELD_BOOST_NEGATIVE, DAMAGE_RATIO_FIXED, DAMAGE_RATIO_RANGE
+        PERCENTAGE_POSITIVE, PERCENTAGE_NEGATIVE, PLUS, MINUS, PLUS_AT_COMPLETION, MINUS_AT_COMPLETION, BOOL, RESISTANCE_NEGATIVE, RESISTANCE_POSITIVE, HULL_BOOST_POSITIVE, HULL_BOOST_NEGATIVE, SHIELD_BOOST_POSITIVE, SHIELD_BOOST_NEGATIVE, DAMAGE_RATIO_FIXED, DAMAGE_RATIO_RANGE
     }
 }

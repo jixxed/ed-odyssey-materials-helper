@@ -19,7 +19,11 @@ public class HorizonsExperimentalEffectBlueprint extends HorizonsBlueprint imple
     private final List<Engineer> engineers;
 
     public HorizonsExperimentalEffectBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<? extends Material, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers) {
-        super(horizonsBlueprintName, horizonsBlueprintType, materials, modifiers, engineers);
+        this(horizonsBlueprintName, horizonsBlueprintType, materials, modifiers, engineers, false);
+    }
+
+    public HorizonsExperimentalEffectBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<? extends Material, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers, final boolean isMerc) {
+        super(isMerc, horizonsBlueprintName, horizonsBlueprintType, materials, modifiers, engineers);
         this.engineers = engineers;
     }
 

@@ -148,9 +148,9 @@ public class LoadoutMapper {
         return ship;
     }
 
-    private static boolean isMerc(List<ShipModule> potentialShipModules, Engineering engineering, Module module) {
+    protected static boolean isMerc(List<ShipModule> potentialShipModules, Engineering engineering, Module module) {
         HorizonsBlueprintType blueprint = determineBlueprint(engineering, module);
-        return blueprint.isMerc();
+        return blueprint.isMercOnly();
     }
 
     public static boolean matchingEngineering(ShipModule shipModule, Engineering engineering, Module module) {
@@ -166,6 +166,7 @@ public class LoadoutMapper {
 
     private static HorizonsBlueprintType determineExperimentalEffect(Engineering engineering, Module module) {
         try {
+            boolean mercOnly = HorizonsBlueprintType.forInternalName(engineering.getBlueprintName()).isMercOnly();
             return engineering.getExperimentalEffect().map(HorizonsBlueprintType::forInternalName).orElse(null);
         } catch (IllegalArgumentException ex) {
             try {
@@ -179,7 +180,16 @@ public class LoadoutMapper {
 
     private static HorizonsBlueprintType determineBlueprint(Engineering engineering, Module module) {
         try {
-            return HorizonsBlueprintType.forInternalName(engineering.getBlueprintName());
+            HorizonsBlueprintType horizonsBlueprintType = HorizonsBlueprintType.forInternalName(engineering.getBlueprintName());
+            //TODO MERCREMOVEME
+            if(horizonsBlueprintType.isMerc()){
+                try {
+                    ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(module), "Merc module: " + engineering.getBlueprintName());
+                } catch (JsonProcessingException e) {
+                    //ignore
+                }
+            }
+            return horizonsBlueprintType;
 
         } catch (IllegalArgumentException ex) {
             try {

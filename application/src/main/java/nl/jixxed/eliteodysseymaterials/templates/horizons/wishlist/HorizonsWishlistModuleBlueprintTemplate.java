@@ -12,6 +12,7 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
@@ -35,6 +36,7 @@ import nl.jixxed.eliteodysseymaterials.templates.generic.QuantitySelect;
 import nl.jixxed.eliteodysseymaterials.templates.generic.QuantitySelectable;
 import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTemplate;
 import org.controlsfx.control.PopOver;
+import org.jspecify.annotations.NonNull;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -256,25 +258,7 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
 
     private void showGradeSettings() {
         if (popOverRef.get() == null || !popOverRef.get().isShowing()) {
-            final DestroyableHBox[] gradeControls = HorizonsBlueprintConstants.getEngineerableBlueprintGrades(this.wishlistBlueprint.getRecipeName(), this.wishlistBlueprint.getBlueprintType()).stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(grade ->
-                    {
-                        DoubleConsumer function = percentage -> {
-                            this.wishlistBlueprint.setBlueprintGradePercentageToComplete(grade, Math.round(percentage * 10.0) / 1000.0);
-                            modify();
-                            update();
-                        };
-                        CompletionSlider completionSlider = new CompletionSlider(0D, 100D, this.wishlistBlueprint.getPercentageToComplete().getOrDefault(grade, 0D) * 100D, function);
-
-                        final DestroyableLabel label = LabelBuilder.builder()
-                                .withStyleClass("grade")
-                                .withNonLocalizedText(String.valueOf(grade.getGrade()))
-                                .build();
-                        return BoxBuilder.builder()
-                                .withStyleClasses("grade-select")
-                                .withNodes(label, completionSlider)
-                                .buildHBox();
-                    })
-                    .toArray(DestroyableHBox[]::new);
+            final DestroyableHBox[] gradeControls = getGradeControls();
 
             final DestroyableVBox grades = BoxBuilder.builder()
                     .withStyleClasses("grade-selects")
@@ -291,13 +275,32 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
                     .withStyleClass("title")
                     .withText("wishlist.blueprint.select")
                     .build();
+            final DestroyableLabel experimentalEffectSelectTitle = LabelBuilder.builder()
+                    .withStyleClass("title")
+                    .withText("wishlist.effect.select")
+                    .build();
+            final DestroyableComboBox<HorizonsBlueprintType> experimentalEffectSelect = ComboBoxBuilder.builder(HorizonsBlueprintType.class)
+                    .withStyleClass("blueprint-select")
+                    .build();;
             final ObservableList<HorizonsBlueprintType> blueprintItems = FXCollections.observableList(HorizonsBlueprintConstants.getBlueprintTypes(this.wishlistBlueprint.getRecipeName()).stream().filter(type -> !type.isPreEngineered()).toList());
             final DestroyableComboBox<HorizonsBlueprintType> blueprintSelect = ComboBoxBuilder.builder(HorizonsBlueprintType.class)
                     .withStyleClass("blueprint-select")
                     .withItemsProperty(blueprintItems)
                     .withSelected(this.wishlistBlueprint.getBlueprintType())
                     .withValueChangeListener((_, _, newValue) -> {
+                        final Map<HorizonsBlueprintType, HorizonsBlueprint> effects = HorizonsBlueprintConstants.getExperimentalEffects().get(this.wishlistBlueprint.getRecipeName());
+                        final ObservableList<HorizonsBlueprintType> items = effects != null ? FXCollections.observableList(effects.keySet().stream().filter(Predicate.not(HorizonsBlueprintType::isPreEngineered)).collect(Collectors.toList())) : FXCollections.observableArrayList();
+                        final boolean hasEffects = !items.isEmpty() && !newValue.isMercOnly();
+                        experimentalEffectSelectTitle.setVisible(hasEffects);
+                        experimentalEffectSelect.setVisible(hasEffects);
+                        experimentalEffectSelectTitle.setManaged(hasEffects);
+                        experimentalEffectSelect.setManaged(hasEffects);
                         this.wishlistBlueprint.setBlueprintType(newValue);
+                        if(newValue.isMercOnly()){
+                            experimentalEffectSelect.getSelectionModel().select(null);
+                        }
+                        grades.getNodes().clear();
+                        grades.getNodes().addAll(getGradeControls());
                         final HorizonsBlueprintGrade maxBlueprintGrade = HorizonsBlueprintConstants.getEngineerableBlueprintGrades(this.wishlistBlueprint.getRecipeName(), newValue).stream().max(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).orElse(HorizonsBlueprintGrade.GRADE_1);
                         this.wishlistBlueprint.getPercentageToComplete().entrySet().removeIf(entry -> entry.getKey().getGrade() > maxBlueprintGrade.getGrade());
                         modify();
@@ -305,25 +308,20 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
                         EventService.publish(new HorizonsWishlistBlueprintAlteredEvent(this.wishlistUUID));
                     })
                     .build();
-            final DestroyableLabel experimentalEffectSelectTitle = LabelBuilder.builder()
-                    .withStyleClass("title")
-                    .withText("wishlist.effect.select")
-                    .build();
+
             final Map<HorizonsBlueprintType, HorizonsBlueprint> effects = HorizonsBlueprintConstants.getExperimentalEffects().get(this.wishlistBlueprint.getRecipeName());
             final ObservableList<HorizonsBlueprintType> items = effects != null ? FXCollections.observableList(effects.keySet().stream().filter(Predicate.not(HorizonsBlueprintType::isPreEngineered)).collect(Collectors.toList())) : FXCollections.observableArrayList();
             items.addFirst(null);
-            final DestroyableComboBox<HorizonsBlueprintType> experimentalEffectSelect = ComboBoxBuilder.builder(HorizonsBlueprintType.class)
-                    .withStyleClass("blueprint-select")
-                    .withItemsProperty(items)
-                    .withSelected(this.wishlistBlueprint.getExperimentalEffect())
-                    .withValueChangeListener((_, _, newValue) -> {
+            experimentalEffectSelect.addBinding(experimentalEffectSelect.itemsProperty(), new SimpleListProperty<>(items));
+            experimentalEffectSelect.getSelectionModel().select(this.wishlistBlueprint.getExperimentalEffect());
+//                    .withSelected(this.wishlistBlueprint.getExperimentalEffect())
+            experimentalEffectSelect.addChangeListener(experimentalEffectSelect.valueProperty(), (_, _, newValue) -> {
                         this.wishlistBlueprint.setExperimentalEffect(newValue);
                         modify();
                         update();
                         EventService.publish(new HorizonsWishlistBlueprintAlteredEvent(this.wishlistUUID));
-                    })
-                    .build();
-            final boolean hasEffects = !items.isEmpty();
+                    });
+            final boolean hasEffects = !items.isEmpty() && !blueprintSelect.getSelectionModel().getSelectedItem().isMercOnly();
             experimentalEffectSelectTitle.setVisible(hasEffects);
             experimentalEffectSelect.setVisible(hasEffects);
             experimentalEffectSelectTitle.setManaged(hasEffects);
@@ -346,6 +344,29 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
             popOverRef.get().hide();
             popOverRef.set(null);
         }
+    }
+
+    private DestroyableHBox @NonNull [] getGradeControls() {
+        final DestroyableHBox[] gradeControls = HorizonsBlueprintConstants.getEngineerableBlueprintGrades(this.wishlistBlueprint.getRecipeName(), this.wishlistBlueprint.getBlueprintType()).stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(grade ->
+                {
+                    DoubleConsumer function = percentage -> {
+                        this.wishlistBlueprint.setBlueprintGradePercentageToComplete(grade, Math.round(percentage * 10.0) / 1000.0);
+                        modify();
+                        update();
+                    };
+                    CompletionSlider completionSlider = new CompletionSlider(0D, 100D, this.wishlistBlueprint.getPercentageToComplete().getOrDefault(grade, 0D) * 100D, function);
+
+                    final DestroyableLabel label = LabelBuilder.builder()
+                            .withStyleClass("grade")
+                            .withNonLocalizedText(String.valueOf(grade.getGrade()))
+                            .build();
+                    return BoxBuilder.builder()
+                            .withStyleClasses("grade-select")
+                            .withNodes(label, completionSlider)
+                            .buildHBox();
+                })
+                .toArray(DestroyableHBox[]::new);
+        return gradeControls;
     }
 
     private void modify() {

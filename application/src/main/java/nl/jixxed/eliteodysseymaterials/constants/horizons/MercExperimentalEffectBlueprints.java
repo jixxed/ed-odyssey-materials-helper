@@ -28,10 +28,10 @@ public class MercExperimentalEffectBlueprints {
     public static final Map<HorizonsBlueprintType, HorizonsBlueprint> MINING_LASER = Map.of(
             HorizonsBlueprintType.INCENDIARY_ROUNDS, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.MULTI_CANNON, HorizonsBlueprintType.INCENDIARY_ROUNDS,
                     Map.of(
-                            Raw.SULPHUR, 5,
-                            Raw.PHOSPHORUS, 5,
-                            Manufactured.HEATCONDUCTIONWIRING, 5,
-                            Manufactured.PHASEALLOYS, 3
+//                            Raw.SULPHUR, 5,
+//                            Raw.PHOSPHORUS, 5,
+//                            Manufactured.HEATCONDUCTIONWIRING, 5,
+//                            Manufactured.PHASEALLOYS, 3
                     ),
                     Map.of(
                             HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+200%", false, percentagePositive(0.0, 2.0)),
@@ -45,17 +45,18 @@ public class MercExperimentalEffectBlueprints {
                             Engineer.MARSHA_HICKS,
                             Engineer.TOD_THE_BLASTER_MCQUINN,
                             Engineer.ZACARIAH_NEMO
-                    )
+                    ),
+                    true
             )
     );
 
     public static final Map<HorizonsBlueprintType, HorizonsBlueprint> MULTI_CANNON = Map.of(
             HorizonsBlueprintType.PHASING_SEQUENCE, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.MULTI_CANNON, HorizonsBlueprintType.PHASING_SEQUENCE,
                     Map.of(
-                            Raw.NIOBIUM, 3,
-                            Encoded.SHIELDPATTERNANALYSIS, 3,
-                            Manufactured.CONFIGURABLECOMPONENTS, 3,
-                            Manufactured.FOCUSCRYSTALS, 5
+//                            Raw.NIOBIUM, 3,
+//                            Encoded.SHIELDPATTERNANALYSIS, 3,
+//                            Manufactured.CONFIGURABLECOMPONENTS, 3,
+//                            Manufactured.FOCUSCRYSTALS, 5
                     ),
                     Map.of(
                             HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
@@ -65,17 +66,18 @@ public class MercExperimentalEffectBlueprints {
                             Engineer.MEL_BRANDON,
                             Engineer.THE_DWELLER,
                             Engineer.BROO_TARQUIN
-                    )
+                    ),
+                    true
             )
     );
 
     public static final Map<HorizonsBlueprintType, HorizonsBlueprint> SEEKER_MISSILE_RACK = Map.of(
             HorizonsBlueprintType.FSD_INTERRUPT, new HorizonsExperimentalEffectBlueprint(HorizonsBlueprintName.DUMBFIRE_MISSILE_RACK, HorizonsBlueprintType.FSD_INTERRUPT,
                     Map.of(
-                            Encoded.FSDTELEMETRY, 5,
-                            Encoded.WAKESOLUTIONS, 3,
-                            Manufactured.MECHANICALEQUIPMENT, 5,
-                            Manufactured.CONFIGURABLECOMPONENTS, 3
+//                            Encoded.FSDTELEMETRY, 5,
+//                            Encoded.WAKESOLUTIONS, 3,
+//                            Manufactured.MECHANICALEQUIPMENT, 5,
+//                            Manufactured.CONFIGURABLECOMPONENTS, 3
                     ),
                     Map.of(
                             HorizonsModifier.TARGET_FSD_REBOOTS, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)),
@@ -86,7 +88,8 @@ public class MercExperimentalEffectBlueprints {
                             Engineer.LIZ_RYDER,
                             Engineer.PETRA_OLMANOVA,
                             Engineer.JURI_ISHMAAK
-                    )
+                    ),
+                    true
             )
     );
 

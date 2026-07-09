@@ -75,7 +75,7 @@ public enum HorizonsModifier {
     ROUNDS_PER_SHOT(49, "RoundsPerShot"),
     BURST_RATE_OF_FIRE(50, "BurstRateOfFire"),
     BURST_SIZE(51, "BurstSize"),
-    BURST_INTERVAL(52, false, ""),
+    BURST_INTERVAL(52, false, "EDOMH_BurstInterval"),//unofficial
     AMMO_CLIP_SIZE(53, "AmmoClipSize"),
     AMMO_MAXIMUM(54, "AmmoMaximum"),
     AMMO_COST(55, false, ""),

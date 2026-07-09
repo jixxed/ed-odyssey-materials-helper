@@ -348,6 +348,10 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
         types.setVisibleRowCount(Math.min(types.getItems().size(), 10));
         final DestroyableComboBox<HorizonsBlueprintName> blueprints = createBlueprintsComboboxForTypes(types, recipesEntry.keySet(), recipesEntry.entrySet().stream().map(horizonsBlueprintNameMapEntry -> Map.entry(horizonsBlueprintNameMapEntry.getKey(), horizonsBlueprintNameMapEntry.getValue().keySet())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
 
+        var destroyableCellFactory = createDestroyableCellFactoryTypes(types);
+        types.setCellFactory(destroyableCellFactory);
+        types.setButtonCell(createDestroyableButtonCellFactoryTypes(types).call(null));
+
         final DestroyableTitledPane categoryTitledPane = createTitledPane(BlueprintCategory.EXPERIMENTAL_EFFECTS.getLocalizationKey());
 
         types.addChangeListener(types.valueProperty(), (_, _, newValue) -> {

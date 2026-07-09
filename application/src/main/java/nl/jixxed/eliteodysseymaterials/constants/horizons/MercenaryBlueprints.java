@@ -167,6 +167,8 @@ public abstract class MercenaryBlueprints {
                 case RESISTANCE_NEGATIVE -> ModifierFunctionHelper.resistanceNegative(start, end);
                 case PLUS -> ModifierFunctionHelper.plus(value);
                 case MINUS -> ModifierFunctionHelper.minus(value);
+                case PLUS_AT_COMPLETION -> ModifierFunctionHelper.plusAtCompletion(value);
+                case MINUS_AT_COMPLETION -> ModifierFunctionHelper.minusAtCompletion(value);
                 case DAMAGE_RATIO_FIXED -> ModifierFunctionHelper.damageRatio(HorizonsModifier.forInternalName(fromRatio), HorizonsModifier.forInternalName(toRatio), value);
                 case DAMAGE_RATIO_RANGE -> ModifierFunctionHelper.damageRatio(HorizonsModifier.forInternalName(fromRatio), HorizonsModifier.forInternalName(toRatio), start, end);
                 case BOOL -> throw new IllegalStateException("BOOL should use createBooleanFunction");

@@ -21,7 +21,7 @@ public class HorizonsTechBrokerBlueprint extends HorizonsBlueprint {
     private final List<HorizonsBrokerType> horizonsBrokerTypes;
 
     public HorizonsTechBrokerBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<? extends HorizonsMaterial, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers, final List<HorizonsBrokerType> horizonsBrokerTypes) {
-        super(horizonsBlueprintName, horizonsBlueprintType, materials, modifiers, engineers);
+        super(false, horizonsBlueprintName, horizonsBlueprintType, materials, modifiers, engineers);
         this.horizonsBrokerTypes = horizonsBrokerTypes;
     }
 

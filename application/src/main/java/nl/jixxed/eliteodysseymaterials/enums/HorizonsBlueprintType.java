@@ -281,6 +281,11 @@ public enum HorizonsBlueprintType {
             return null;
         }
     }
+//    public static HorizonsBlueprintType forInternalNameMerc(final String internalName) {
+//        return switch (internalName.toLowerCase()) {
+//            case "cargorack_increasedcapacity" -> INCREASED_CARGO_CAPACITY;
+//        };
+//    }
 
     public static HorizonsBlueprintType forInternalName(final String internalName) {
         return switch (internalName.toLowerCase()) {
@@ -490,31 +495,31 @@ public enum HorizonsBlueprintType {
             case "special_shield_health" -> HI_CAP;
             case "special_shield_efficient" -> LO_DRAW;
             case "special_shield_resistive" -> MULTI_WEAVE;
-            case "unknown1" -> MERC_LONG_RANGE_DETAILED_SURFACE_SCANNER;
-            case "unknown2" -> MERC_PLASMA_CONVERSION_BURST_LASER;
-            case "unknown3" -> MERC_PLASMA_CONVERSION_BEAM_LASER;
-            case "unknown4" -> MERC_PLASMA_CONVERSION_PULSE_LASER;
-            case "unknown5" -> MERC_SCOOP_RATE_ENHANCED_FUEL_SCOOP;
-            case "unknown6" -> MERC_HEAVY_DUTY_MODULE_REINFORCEMENT_PACKAGE;
-            case "unknown7" -> MERC_EXTENDED_CARGO_RACK_5E;
-            case "unknown7.1" -> MERC_EXTENDED_CARGO_RACK_6E;
-            case "unknown8" -> MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_1EG;
-            case "unknown8.1" -> MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_3CG;
-            case "unknown9" -> MERC_RAPID_PHASE_MULTI_CANNON;
-            case "unknown10" -> MERC_BALANCED_POWER_DISTRIBUTOR;
-            case "unknown11" -> MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3D;
-            case "unknown11.1" -> MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3A;
-            case "unknown11.2" -> MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4D;
-            case "unknown11.3" -> MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4A;
-            case "unknown11.4" -> MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_6A;
-            case "unknown12" -> MERC_FAR_REACHING_ABRASION_BLASTER;
-            case "unknown13" -> MERC_HIGH_YIELD_ENZYME_MISSILE_RACK;
-            case "unknown14" -> MERC_LONG_RANGE_MINING_LASER;
-            case "unknown15" -> MERC_DRAG_SEEKER_MISSILE_RACK;
-            case "unknown16" -> MERC_LIGHTWEIGHT_THERMAL_SEEKER_MISSILE_RACK;
-            case "unknown17" -> MERC_LOCKDOWN_SEEKER_MISSILE_RACK_2B;
-            case "unknown17.1" -> MERC_LOCKDOWN_SEEKER_MISSILE_RACK_3A;
-            case "unknown18" -> MERC_ENDURING_FEEDBACK_RAIL_GUN;
+            case "detailedsurfacescanner_longrange" -> MERC_LONG_RANGE_DETAILED_SURFACE_SCANNER;
+            case "burstlaser_thermalplasmaconversion" -> MERC_PLASMA_CONVERSION_BURST_LASER;
+            case "beamlaser_thermalplasmaconversion" -> MERC_PLASMA_CONVERSION_BEAM_LASER;
+            case "pulselaser_thermalplasmaconversion" -> MERC_PLASMA_CONVERSION_PULSE_LASER;
+            case "fuelscoop_efficiency" -> MERC_SCOOP_RATE_ENHANCED_FUEL_SCOOP;
+            case "modulereinforcement_heavyduty" -> MERC_HEAVY_DUTY_MODULE_REINFORCEMENT_PACKAGE;
+            case "cargoracks5c1_extended" -> MERC_EXTENDED_CARGO_RACK_5E;
+            case "cargoracks6c1_extended" -> MERC_EXTENDED_CARGO_RACK_6E;
+            case "fragmentcannonsmall_doublescreaming" -> MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_1EG;
+            case "fragmentcannonlarge_doublescreaming" -> MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_3CG;
+            case "multicannon_rapid" -> MERC_RAPID_PHASE_MULTI_CANNON;
+            case "powerdistributor_balanced" -> MERC_BALANCED_POWER_DISTRIBUTOR;
+            case "powerdistributors3c2_supportfocused" -> MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3D;
+            case "powerdistributors3c5_supportfocused" -> MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3A;
+            case "powerdistributors4c2_supportfocused" -> MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4D;
+            case "powerdistributors4c5_supportfocused" -> MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4A;
+            case "powerdistributors6c5_supportfocused" -> MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_6A;
+            case "abrasionblaster_farreaching" -> MERC_FAR_REACHING_ABRASION_BLASTER;
+            case "enzymemissilerack_highyield" -> MERC_HIGH_YIELD_ENZYME_MISSILE_RACK;
+            case "mininglaser_longrange" -> MERC_LONG_RANGE_MINING_LASER;
+            case "seekermissilerack_drag" -> MERC_DRAG_SEEKER_MISSILE_RACK;
+            case "seekermissilerack_lightweightthermal" -> MERC_LIGHTWEIGHT_THERMAL_SEEKER_MISSILE_RACK;
+            case "seekermissilerackmedium_lockdown" -> MERC_LOCKDOWN_SEEKER_MISSILE_RACK_2B;
+            case "seekermissileracklarge_lockdown" -> MERC_LOCKDOWN_SEEKER_MISSILE_RACK_3A;
+            case "railgun_longshot" -> MERC_ENDURING_FEEDBACK_RAIL_GUN;
             default -> throw new IllegalArgumentException("Unknown blueprint type: " + internalName);
         };
 
@@ -696,31 +701,31 @@ public enum HorizonsBlueprintType {
             case MULTI_WEAVE -> "special_shield_resistive";
             case FORCE_BLOCK -> resolveForceBlock(module);
             case ANTI_GUARDIAN_ZONE_RESISTANCE -> "guardianmodule_sturdy";
-            case MERC_LONG_RANGE_DETAILED_SURFACE_SCANNER -> "unknown";
-            case MERC_PLASMA_CONVERSION_BURST_LASER -> "unknown";
-            case MERC_PLASMA_CONVERSION_BEAM_LASER -> "unknown";
-            case MERC_PLASMA_CONVERSION_PULSE_LASER -> "unknown";
-            case MERC_SCOOP_RATE_ENHANCED_FUEL_SCOOP -> "unknown";
-            case MERC_HEAVY_DUTY_MODULE_REINFORCEMENT_PACKAGE -> "unknown";
-            case MERC_EXTENDED_CARGO_RACK_5E -> "unknown";
-            case MERC_EXTENDED_CARGO_RACK_6E -> "unknown";
-            case MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_1EG -> "unknown";
-            case MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_3CG -> "unknown";
-            case MERC_RAPID_PHASE_MULTI_CANNON -> "unknown";
-            case MERC_BALANCED_POWER_DISTRIBUTOR -> "unknown";
-            case MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3D -> "unknown";
-            case MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3A -> "unknown";
-            case MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4D -> "unknown";
-            case MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4A -> "unknown";
-            case MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_6A -> "unknown";
-            case MERC_FAR_REACHING_ABRASION_BLASTER -> "unknown";
-            case MERC_HIGH_YIELD_ENZYME_MISSILE_RACK -> "unknown";
-            case MERC_LONG_RANGE_MINING_LASER -> "unknown";
-            case MERC_DRAG_SEEKER_MISSILE_RACK -> "unknown";
-            case MERC_LIGHTWEIGHT_THERMAL_SEEKER_MISSILE_RACK -> "unknown";
-            case MERC_LOCKDOWN_SEEKER_MISSILE_RACK_2B -> "unknown";
-            case MERC_LOCKDOWN_SEEKER_MISSILE_RACK_3A -> "unknown";
-            case MERC_ENDURING_FEEDBACK_RAIL_GUN -> "unknown";
+            case MERC_LONG_RANGE_DETAILED_SURFACE_SCANNER -> "detailedsurfacescanner_longrange";
+            case MERC_PLASMA_CONVERSION_BURST_LASER -> "burstlaser_thermalplasmaconversion";
+            case MERC_PLASMA_CONVERSION_BEAM_LASER -> "beamlaser_thermalplasmaconversion";
+            case MERC_PLASMA_CONVERSION_PULSE_LASER -> "pulselaser_thermalplasmaconversion";
+            case MERC_SCOOP_RATE_ENHANCED_FUEL_SCOOP -> "fuelscoop_efficiency";
+            case MERC_HEAVY_DUTY_MODULE_REINFORCEMENT_PACKAGE -> "modulereinforcement_heavyduty";
+            case MERC_EXTENDED_CARGO_RACK_5E -> "cargoracks5c1_extended";
+            case MERC_EXTENDED_CARGO_RACK_6E -> "cargoracks6c1_extended";
+            case MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_1EG -> "fragmentcannonsmall_doublescreaming";
+            case MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_3CG -> "fragmentcannonlarge_doublescreaming";
+            case MERC_RAPID_PHASE_MULTI_CANNON -> "multicannon_rapid";
+            case MERC_BALANCED_POWER_DISTRIBUTOR -> "powerdistributor_balanced";
+            case MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3D -> "powerdistributors3c2_supportfocused";
+            case MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3A -> "powerdistributors3c5_supportfocused";
+            case MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4D -> "powerdistributors4c2_supportfocused";
+            case MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4A -> "powerdistributors4c5_supportfocused";
+            case MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_6A -> "powerdistributors6c5_supportfocused";
+            case MERC_FAR_REACHING_ABRASION_BLASTER -> "abrasionblaster_farreaching";
+            case MERC_HIGH_YIELD_ENZYME_MISSILE_RACK -> "enzymemissilerack_highyield";
+            case MERC_LONG_RANGE_MINING_LASER -> "mininglaser_longrange";
+            case MERC_DRAG_SEEKER_MISSILE_RACK -> "seekermissilerack_drag";
+            case MERC_LIGHTWEIGHT_THERMAL_SEEKER_MISSILE_RACK -> "seekermissilerack_lightweightthermal";
+            case MERC_LOCKDOWN_SEEKER_MISSILE_RACK_2B -> "seekermissilerackmedium_lockdown";
+            case MERC_LOCKDOWN_SEEKER_MISSILE_RACK_3A -> "seekermissileracklarge_lockdown";
+            case MERC_ENDURING_FEEDBACK_RAIL_GUN -> "railgun_longshot";
             default -> "";
         };
     }

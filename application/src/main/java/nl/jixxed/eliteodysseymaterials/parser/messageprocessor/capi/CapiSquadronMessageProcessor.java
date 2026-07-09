@@ -107,7 +107,7 @@ public class CapiSquadronMessageProcessor implements CapiMessageProcessor<CapiSq
 //                        "squadronBankTotal": 11582
 //            },
             if (CarrierState.forKey(squadronCarrier.getState()) == CarrierState.UNKNOWN) {
-                ReportService.reportJournal("capi", squadronCarrier.getState(), "Unknown carrier state");
+                ReportService.reportJournal("squadron", squadronCarrier.getState(), "Unknown carrier state");
             }
         });
 

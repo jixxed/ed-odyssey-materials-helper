@@ -106,7 +106,7 @@ public class FragmentCannonBlueprints {
                             Map.of(
                                     HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+3", true, plus(3.0)),
                                     HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("-1500%", true, percentageNegative(13.0, 15.0)),
-                                    HorizonsModifier.BURST_SIZE, new HorizonsNumberModifierValue("1", true, plus(1.0)),
+                                    HorizonsModifier.BURST_SIZE, new HorizonsNumberModifierValue("+1", true, plus(1.0)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.08, 0.1))
                             ),
                             List.of(
