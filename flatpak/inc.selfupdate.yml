@@ -1,49 +1,52 @@
 command: edomh-launcher
 
+entrypoint:
+  - ln -sf "/app/share/applications/$FLATPAK_ID-mime.desktop" "$HOME/.local/share/applications/edomh.desktop"
+
 finish-args:
   - --persist=.ed-odyssey-materials-helper
 
-desktop-file-edit:
-  - --set-key=Exec
-  - --set-value="edomh-launcher %u"
+build-commands: []
+post-install:
+  # entrypoint is the launcher, so the url handler must be changed to the actual application
+  - desktop-file-edit --remove-mime-type="x-scheme-handler/edomh" "$FLATPAK_DEST/share/applications/$FLATPAK_ID.desktop"
+
+  # generate {{id}}-mime.desktop
+  - |
+    desktop_file="$FLATPAK_DEST/share/applications/$FLATPAK_ID-mime.desktop"
+
+    appstreamcli make-desktop-file --exec="edomh %u" metainfo.xml "$desktop_file"
+
+    desktop-file-edit                           \
+                                                \
+        --set-name="{{name}} URL Handler"       \
+        --set-key=NoDisplay --set-value=true    \
+                                                \
+        "$desktop_file"
 
 sources:
   - { type: file, dest-filename: program.zip, path: ../artifacts/launcher.zip }
-  - { type: file, dest-filename: mime.desktop, path: edomh-mime.desktop }
-
-  - type: script
-    dest-filename: entrypoint
-    commands:
-      - |
-        mkdir -p \
-          "$HOME/.local/share/applications/" \
-          "$XDG_STATE_HOME/log" \
-          "$XDG_CACHE_HOME/javafx-cache-program"
-
-      - ln -s "/app/share/applications/$FLATPAK_ID-mime.desktop" "$HOME/.local/share/applications/edomh.desktop"
-
-      - |
-        ln -st \
-        "$HOME/.ed-odyssey-materials-helper" \
-        "$XDG_STATE_HOME/log" \
-        "$XDG_CACHE_HOME/javafx-cache-program"
-
-      - exec "$@"
 
   - type: script
     dest-filename: edomh
     commands:
-      - |
-        entrypoint "$HOME/.ed-odyssey-materials-helper/bin/Elite Dangerous Odyssey Materials Helper" "$@"
+      - /app/entrypoint "$HOME/.ed-odyssey-materials-helper/program/bin/Elite Dangerous Odyssey Materials Helper" "$@"
 
   - type: script
     dest-filename: edomh-launcher
     commands:
-      - |
-        entrypoint "/app/launcher/bin/Elite Dangerous Odyssey Materials Helper Launcher" "$@"
+      - /app/entrypoint "/app/bin/Elite Dangerous Odyssey Materials Helper Launcher" "$@"
 
 metainfo:
   - tag: requires
     children:
       - tag: internet
         text: first-run
+  - tag: provides
+    children:
+      - tag: binary
+        text: edomh-launcher
+  - tag: launchable
+    text: "{{id}}-mime.desktop"
+    attrib:
+      type: desktop-id

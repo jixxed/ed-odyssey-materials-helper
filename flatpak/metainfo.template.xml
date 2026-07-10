@@ -1,73 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>{{id}}</id>
-  
-  <name>Elite Dangerous Odyssey Materials Helper</name>
-  <summary>Companion application for Elite: Dangerous, providing material tracking information</summary>
-  
-  <metadata_license>MIT</metadata_license>
-  <project_license>MIT</project_license>
-  
-  <description>
-    <p>
-      This application reads the journal files to track which materials you have and make it instantly visible. It shows which materials are relevant to collect, how much you need to collect to upgrade a weapon or suit, unlock an engineer or craft a blueprint. You can design loadouts and see the effects of the upgrades you want to apply. You can track your open orders and stock on your fleetcarrier. You can also export your wishlist from EDSY into the app, as well as easily share your wishlists and loadouts with other commanders. A special feature of the app is an overlay that instantly shows you the relevance of data while standing at the data terminal.
-    </p>
-  </description>
+    <id>{{id}}</id>
 
-  <url type="homepage">https://edomh.nl</url>
-  <url type="bugtracker">https://github.com/jixxed/ed-odyssey-materials-helper/issues</url>
-  <url type="donation">https://github.com/sponsors/jixxed</url>
-  <url type="contact">https://github.com/jixxed</url>
-  <url type="vcs-browser">https://github.com/jixxed/ed-odyssey-materials-helper</url>
+    <name>Elite Dangerous Odyssey Materials Helper</name>
+    <summary>Companion application for Elite: Dangerous, providing material tracking information</summary>
 
-  <recommends>
-    <internet>always</internet>
-  </recommends>
-  
-  <launchable type="desktop-id">{{id}}.desktop</launchable>
+    <metadata_license>MIT</metadata_license>
+    <project_license>MIT</project_license>
 
-  <screenshots>
-    <screenshot>
-      <caption>Engineers</caption>
-      <image type="source" width="2174" height="1326">https://edomh.nl/images/edomh-0000.png</image>
-    </screenshot>
-    <screenshot>
-      <caption>Ship materials</caption>
-      <image type="source" width="1669" height="1205">https://edomh.nl/images/edomh-0001.png</image>
-    </screenshot>
-    <screenshot>
-      <caption>Loadout editor</caption>
-      <image type="source" width="2024" height="1280">https://edomh.nl/images/edomh-0005.png</image>
-    </screenshot>
-    <screenshot type="default">
-      <caption>On foot materials</caption>
-      <image type="source" width="2024" height="1323">https://edomh.nl/images/edomh-0006.png</image>
-    </screenshot>
-    <screenshot>
-      <caption>Wishlist</caption>
-      <image type="source" width="1669" height="1205">https://edomh.nl/images/edomh-0007.png</image>
-    </screenshot>
-    <screenshot>
-      <caption>Bartender overlay</caption>
-      <image type="source" width="1920" height="1080">https://edomh.nl/images/edomh-0008.png</image>
-    </screenshot>
-    <screenshot>
-      <caption>Community goals</caption>
-      <image type="source" width="1529" height="1560">https://edomh.nl/images/edomh-cg.png</image>
-    </screenshot>
-    <screenshot>
-      <caption>Dataport overlay</caption>
-      <image type="source" width="1492" height="900">https://edomh.nl/images/edomh-0009.png</image>
-    </screenshot>
-    <screenshot>
-      <caption>Ship editor</caption>
-      <image type="source" width="1669" height="1205">https://edomh.nl/images/edomh-0010.png</image>
-    </screenshot>
-    <screenshot>
-      <caption>Ship editor</caption>
-      <image type="source" width="1669" height="1205">https://edomh.nl/images/edomh-0011.png</image>
-    </screenshot>
-  </screenshots>
+    <description>
+        <p>
+            This application reads the journal files to track which materials you have and make it
+            instantly visible. It shows which materials are relevant to collect, how much you need
+            to collect to upgrade a weapon or suit, unlock an engineer or craft a blueprint. You can
+            design loadouts and see the effects of the upgrades you want to apply. You can track
+            your open orders and stock on your fleetcarrier. You can also export your wishlist from
+            EDSY into the app, as well as easily share your wishlists and loadouts with other
+            commanders. A special feature of the app is an overlay that instantly shows you the
+            relevance of data while standing at the data terminal.
+        </p>
+    </description>
 
-  <releases type="external"/>
+    <categories>
+        <category>Game</category>
+        <category>Utility</category>
+    </categories>
+
+    <keywords>
+        <keyword>ed</keyword>
+        <keyword>edo</keyword>
+        <keyword>edomh</keyword>
+        <keyword>elite</keyword>
+        <keyword>elite dangerous</keyword>
+        <keyword>odyssey</keyword>
+        <keyword>materials helper</keyword>
+    </keywords>
+
+    <url type="homepage">https://edomh.nl</url>
+    <url type="bugtracker">https://github.com/jixxed/ed-odyssey-materials-helper/issues</url>
+    <url type="donation">https://github.com/sponsors/jixxed</url>
+    <url type="contact">https://github.com/jixxed</url>
+    <url type="vcs-browser">https://github.com/jixxed/ed-odyssey-materials-helper</url>
+
+    <recommends>
+        <internet>always</internet>
+    </recommends>
+
+    <launchable type="desktop-id">{{id}}.desktop</launchable>
+
+    <icon type="stock">{{id}}</icon>
+
+    <provides>
+        <mediatype>x-scheme-handler/edomh</mediatype>
+        <binary>edomh</binary>
+    </provides>
+
+    <screenshots>
+        <screenshot>
+            <caption>Engineers</caption>
+            <image type="source" width="2174" height="1326">https://edomh.nl/images/edomh-0000.png</image>
+        </screenshot>
+        <screenshot>
+            <caption>Ship materials</caption>
+            <image type="source" width="1669" height="1205">https://edomh.nl/images/edomh-0001.png</image>
+        </screenshot>
+        <screenshot>
+            <caption>Loadout editor</caption>
+            <image type="source" width="2024" height="1280">https://edomh.nl/images/edomh-0005.png</image>
+        </screenshot>
+        <screenshot type="default">
+            <caption>On foot materials</caption>
+            <image type="source" width="2024" height="1323">https://edomh.nl/images/edomh-0006.png</image>
+        </screenshot>
+        <screenshot>
+            <caption>Wishlist</caption>
+            <image type="source" width="1669" height="1205">https://edomh.nl/images/edomh-0007.png</image>
+        </screenshot>
+        <screenshot>
+            <caption>Bartender overlay</caption>
+            <image type="source" width="1920" height="1080">https://edomh.nl/images/edomh-0008.png</image>
+        </screenshot>
+        <screenshot>
+            <caption>Community goals</caption>
+            <image type="source" width="1529" height="1560">https://edomh.nl/images/edomh-cg.png</image>
+        </screenshot>
+        <screenshot>
+            <caption>Dataport overlay</caption>
+            <image type="source" width="1492" height="900">https://edomh.nl/images/edomh-0009.png</image>
+        </screenshot>
+        <screenshot>
+            <caption>Ship editor</caption>
+            <image type="source" width="1669" height="1205">https://edomh.nl/images/edomh-0010.png</image>
+        </screenshot>
+        <screenshot>
+            <caption>Ship editor</caption>
+            <image type="source" width="1669" height="1205">https://edomh.nl/images/edomh-0011.png</image>
+        </screenshot>
+    </screenshots>
+
+    <releases type="external" />
 </component>

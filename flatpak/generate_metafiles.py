@@ -22,6 +22,8 @@
 
 import os
 import yaml
+import sys
+import copy
 from typing import *
 from xml.etree import ElementTree as xml
 from os import PathLike
@@ -138,8 +140,8 @@ def invoke(*args, splitby: Optional[tuple[Optional[str], int]], check: bool = Tr
 
 def generate_releases_file(tag_thres: TagName, repo_base_url: str, fd_out: int):
     """
-    Generate a AppStream releases.xml file (as specified by https://www.freedesktop.org/software/appstream/docs/sect-Metadata-Releases.html)
-    from all tags in the current git repository up until the given tag name
+    Generate an AppStream releases.xml file  from all tags in the current git repository up until the given tag name
+    (see https://www.freedesktop.org/software/appstream/docs/sect-Metadata-Releases.html)
     """
 
     date_thres: str = invoke2(["git", "log", "-1", "--format=%cI", tag_thres, "--"])  # ISO 8601
@@ -159,21 +161,29 @@ def generate_releases_file(tag_thres: TagName, repo_base_url: str, fd_out: int):
 
 
 def generate_metainfo(template: xml.ElementTree, inc: Optional[Sequence[YamlXmlElement]], format_args: Mapping[str, str]) -> xml.ElementTree:
+    """
+    Generate an AppStream Component Metainfo XML ElementTree
+    (see https://www.freedesktop.org/software/appstream/docs/index.html)
+    """
     metainfo: xml.ElementTree = copy.deepcopy(template)
     root = metainfo.getroot()
 
     if inc:
         queue: Deque[tuple[xml.Element, YamlXmlElement]] = Deque([(root, it) for it in inc])
         while queue:
-            e, yxe = queue.popleft()
+            parent, yxe = queue.popleft()
 
-            new_e = xml.Element(yxe["tag"], yxe.get("attrib", {}))
-            if text := yxe.get("text", None):
-                new_e.text = text
+            tag: str = yxe["tag"]
+            attrib: dict = yxe.get("attrib", {})
 
-            e.append(new_e)
+            if (text := yxe.get("text", None)) or (e := parent.find(tag)) is None:
+                # new element
+                e = xml.Element(tag, attrib)
+                e.text = text or None
+                parent.append(e)
+            # else: existing element
 
-            queue.extend((new_e, it) for it in yxe.get("children", []))
+            queue.extend((e, it) for it in yxe.get("children", []))
 
     # format metainfo
     for e in metainfo.iter():
@@ -187,41 +197,31 @@ def generate_metainfo(template: xml.ElementTree, inc: Optional[Sequence[YamlXmlE
 def generate_manifest_file(
     manifest_template: Mapping,
     metainfo_template: xml.ElementTree,
-    inc_file: PathLike,
+    manifest_inc: Mapping,
     format_args: Mapping[str, str],
 ) -> PathLike:
     manifest: dict = copy.deepcopy(manifest_template)
-    inc: dict
 
-    # load variant inc
-    with path(inc_file).open("r") as f:
-        inc = DefaultDict(lambda: None, yaml.safe_load(f))
-
-    metainfo_out: tuple[int, str] = mkstemp("metainfo", ".xml")
-
-    format_args: dict = {
-        "id": manifest["id"],
-        "binfiles": "",
-        "desktop-file-edit": " ".join(inc["desktop-file-edit"] or []),
-        "metainfo-path": metainfo_out[1],
-        **format_args,
-    }
-
-    # populate variant manifest
-    if s := inc["command"]:
-        s: str
-        manifest["command"] = s
-
-    if s := inc["finish-args"]:
-        s: List[str]
-        manifest["finish-args"].extend(s)
-
+    ## populate variant manifest ##
     module: dict = manifest["modules"][0]
     post_install: List[str] = module["post-install"]
+    build_commands: List[str] = module["build-commands"]
     sources: List[dict] = module["sources"]
 
+    # append commands
+    manifest["command"] = manifest_inc["command"]
+    manifest["finish-args"].extend(manifest_inc["finish-args"] or [])
+    build_commands.extend(manifest_inc["build-commands"] or [])
+    post_install.extend(manifest_inc["post-install"] or [])
+
+    # add entrypoint commands to entrypoint
+    entrypoint: dict = sources[-1]
+    assert entrypoint["type"] == "script" and entrypoint["dest-filename"] == "entrypoint"
+    entrypoint["commands"].extend((manifest_inc["entrypoint"] or []) + ['exec "$@"'])
+
+    # add sources
     scripts: List[str] = []
-    for s in inc["sources"] or []:
+    for s in manifest_inc["sources"] or []:
         s: dict
         sources.append(s)
 
@@ -236,22 +236,29 @@ def generate_manifest_file(
                 if dest.name.endswith(".desktop"):
                     post_install.append(f'install -Dm644 "{dest.name}" "$FLATPAK_DEST/share/applications/$FLATPAK_ID-{dest.stem}.desktop"')
 
-    # set binfiles from declared scripts
-    format_args["binfiles"] = " ".join(f'"{it}"' for it in scripts)
-
     # generate metainfo
-    metainfo = generate_metainfo(metainfo_template, inc["metainfo"], format_args)
-    with os.fdopen(metainfo_out[0], "w") as out:
-        metainfo.write(out, "unicode", True)
+    metainfo_out: tuple[int, str] = mkstemp("metainfo", ".xml")
+    metainfo = generate_metainfo(metainfo_template, manifest_inc["metainfo"], {"id": manifest["id"], **format_args})
 
     # normalize manifest
+    format_args: dict = {
+        "id": manifest["id"],
+        "name": metainfo.findtext("name"),
+        "command": manifest["command"],
+        "binfiles": " ".join(f'"{it}"' for it in scripts),
+        "metainfo-path": metainfo_out[1],
+    }
     manifest: dict = fmt(manifest, format_args)
     for s in manifest["modules"][0]["sources"]:
         s: dict
         if _path := s.get("path", None):
             s["path"] = path(_path).resolve().as_posix()
 
-    # write out
+    # write metainfo
+    with os.fdopen(metainfo_out[0], "w") as out:
+        metainfo.write(out, "unicode", True)
+
+    # write manifest
     manifest_out = mkstemp("manifest", ".yml")
     with os.fdopen(manifest_out[0], "w") as out:
         yaml.safe_dump(manifest, out, sort_keys=False, width=0x7FFFFFFF)
@@ -259,9 +266,7 @@ def generate_manifest_file(
     return manifest_out[1]
 
 
-if __name__ == "__main__":
-    import sys, copy
-
+def main() -> int:
     try:
         variants = sys.argv[1:]
 
@@ -287,7 +292,12 @@ if __name__ == "__main__":
         }
 
         for variant in variants:
-            _path = generate_manifest_file(manifest, metainfo, f"inc.{variant}.yml", format_args)
+            # load variant inc
+            with path(f"inc.{variant}.yml").open("r") as f:
+                inc = DefaultDict(lambda: None, yaml.safe_load(f))
+
+            # generate
+            _path = generate_manifest_file(manifest, metainfo, inc, format_args)
             print(f"{variant}={_path}")
 
     except BaseException as x:
@@ -312,9 +322,13 @@ if __name__ == "__main__":
             else:
                 print(f"{progname}: {err}", file=sys.stderr)
 
-            exit(x.errno or 1)
+            return x.errno or 1
 
         if isinstance(x, KeyboardInterrupt):
-            exit(130)
+            return 130
 
         raise
+
+
+if __name__ == "__main__":
+    exit(main())

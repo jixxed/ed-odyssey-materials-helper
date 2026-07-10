@@ -18,29 +18,24 @@ modules:
     build-commands:
       # install files
       - bsdunzip -d "$FLATPAK_DEST" program.zip
+      - install -Dm755 entrypoint "$FLATPAK_DEST/entrypoint"
       - install -Dm755 -t "$FLATPAK_DEST/bin/" {{binfiles}}
 
     post-install:
-      # appstream data
+      # Desktop integration (AppStream)
       - install -Dm644 metainfo.xml "$FLATPAK_DEST/share/metainfo/$FLATPAK_ID.metainfo.xml"
-      - install -Dm644 releases.xml "$FLATPAK_DEST/share/metainfo/releases/$FLATPAK_ID.releases.xml"
-
-      # XDG-Desktop integration
-      - install -Dm644 edomh.desktop "$FLATPAK_DEST/share/applications/$FLATPAK_ID.desktop"
-      - |
-        desktop-file-edit \
-          --set-icon="$FLATPAK_ID" \
-          {{desktop-file-edit}} \
-          "$FLATPAK_DEST/share/applications/$FLATPAK_ID.desktop"
+      - install -Dm644 releases.xml "$FLATPAK_DEST/share/metainfo/$FLATPAK_ID.releases.xml"
       - |
         for i in {16,32,48,64,128,256,512}; do
           install -Dm644 "appicon$i.png" "$FLATPAK_DEST/share/icons/hicolor/${i}x${i}/apps/$FLATPAK_ID.png"
         done
 
+      - mkdir -p "$FLATPAK_DEST/share/applications"
+      - appstreamcli make-desktop-file --exec="{{command}} %u" metainfo.xml "$FLATPAK_DEST/share/applications/$FLATPAK_ID.desktop"
+
     sources:
       - { type: file, dest-filename: metainfo.xml, path: "{{metainfo-path}}" }
       - { type: file, dest-filename: releases.xml, path: "{{releases-path}}" }
-      - { type: file, dest: ., path: edomh.desktop }
 
       - { type: file, dest: ., path: ../bootstrap/src/main/resources/images/appicon16.png }
       - { type: file, dest: ., path: ../bootstrap/src/main/resources/images/appicon32.png }
@@ -49,3 +44,19 @@ modules:
       - { type: file, dest: ., path: ../bootstrap/src/main/resources/images/appicon128.png }
       - { type: file, dest: ., path: ../bootstrap/src/main/resources/images/appicon256.png }
       - { type: file, dest: ., path: ../bootstrap/src/main/resources/images/appicon512.png }
+
+      - type: script
+        dest-filename: entrypoint
+        commands:
+          - |
+            mkdir -p \
+              "$HOME/.local/share/applications/" \
+              "$XDG_STATE_HOME/log" \
+              "$XDG_CACHE_HOME/javafx-cache-program" \
+              "$HOME/.ed-odyssey-materials-helper"
+
+          - |
+            ln -sft \
+            "$HOME/.ed-odyssey-materials-helper" \
+            "$XDG_STATE_HOME/log" \
+            "$XDG_CACHE_HOME/javafx-cache-program"

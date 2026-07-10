@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name=Elite Dangerous Odyssey Materials Helper
-Exec=edomh %u
-Type=Application
-NoDisplay=true
-Terminal=false
-MimeType=x-scheme-handler/edomh;

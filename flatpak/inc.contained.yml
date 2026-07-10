@@ -1,26 +1,16 @@
-command: entrypoint
+command: edomh
+
+entrypoint:
+  - ln -sf "/app/share/applications/$FLATPAK_ID.desktop" "$HOME/.local/share/applications/edomh.desktop"
 
 finish-args: []
-
-desktop-file-edit:
-  - --add-mime-type=x-scheme-handler/edomh
+build-commands: []
+post-install: []
 
 sources:
   - { type: file, dest-filename: program.zip, path: ../artifacts/update.zip }
 
   - type: script
-    dest-filename: entrypoint
+    dest-filename: edomh
     commands:
-      - |
-        mkdir -p \
-          "$HOME/.ed-odyssey-materials-helper" \
-          "$XDG_STATE_HOME/log" \
-          "$XDG_CACHE_HOME/javafx-cache-program"
-      - |
-        ln -st "$HOME/.ed-odyssey-materials-helper" \
-          "$XDG_STATE_HOME/log" \
-          "$XDG_CACHE_HOME/javafx-cache-program" \
-          /app/update/*
-
-      - ln -s "/app/share/applications/$FLATPAK_ID.desktop" "$HOME/.local/share/applications/edomh.desktop"
-      - exec "$HOME/.ed-odyssey-materials-helper/bin/Elite Dangerous Odyssey Materials Helper" "$@"
+      - /app/entrypoint "/app/bin/Elite Dangerous Odyssey Materials Helper" "$@"
