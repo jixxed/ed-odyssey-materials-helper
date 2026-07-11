@@ -12,6 +12,7 @@ package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
 import javafx.application.HostServices;
 import javafx.application.Platform;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Node;
@@ -40,6 +41,7 @@ import nl.jixxed.github.sponsor.SponsorService;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
+import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -432,6 +434,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                         TextExporter::createTextInventory,
                         CsvExporter::createCsvInventory,
                         XlsExporter::createXlsInventory)))
+                .withDisableProperty(BooleanBinding.booleanExpression(ApplicationState.getInstance().getCommandersProperty().map(Set::isEmpty)))
                 .build();
 
         return BoxBuilder.builder()
@@ -452,6 +455,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
         final DestroyableButton importClipboard = ButtonBuilder.builder()
                 .withText("settings.button.import.clipboard.import")
                 .withOnAction(_ -> ClipboardHelper.importFromClipboard())
+                .withDisableProperty(BooleanBinding.booleanExpression(ApplicationState.getInstance().getCommandersProperty().map(Set::isEmpty)))
                 .build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
@@ -477,6 +481,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                                 slefConsumer.accept(clipboard);
                             }
                         }))
+                .withDisableProperty(BooleanBinding.booleanExpression(ApplicationState.getInstance().getCommandersProperty().map(Set::isEmpty)))
                 .build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
@@ -500,6 +505,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                     HostServices host = FXApplication.getInstance().getHostServices();
                     host.showDocument(Path.of(supportPackageFile).toFile().getAbsoluteFile().getParent());
                 })
+                .withDisableProperty(BooleanBinding.booleanExpression(ApplicationState.getInstance().getCommandersProperty().map(Set::isEmpty)))
                 .build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)

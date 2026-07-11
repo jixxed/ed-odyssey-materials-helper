@@ -30,6 +30,8 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.SquadronCarrierStorageConfigurationEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
+import java.util.Set;
+
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 
 public class FrontierAPI extends DestroyableVBox implements DestroyableEventTemplate {
@@ -143,8 +145,8 @@ public class FrontierAPI extends DestroyableVBox implements DestroyableEventTemp
                 .withText("tab.settings.capi.disconnect", ApplicationState.getInstance().getPreferredCommander().map(Commander::getName).orElse(""))
                 .withOnAction(_ -> CAPIService.getInstance().deauthenticate())
                 .build();
-        this.capiConnectButton.addBinding(this.capiConnectButton.disableProperty(), CAPIService.getInstance().getActive().or(registered.not()));
-        this.capiDisconnectButton.addBinding(this.capiDisconnectButton.disableProperty(), CAPIService.getInstance().getActive().not());
+        this.capiConnectButton.addBinding(this.capiConnectButton.disableProperty(), CAPIService.getInstance().getActive().or(registered.not()).or(BooleanBinding.booleanExpression(ApplicationState.getInstance().getCommandersProperty().map(Set::isEmpty))));
+        this.capiDisconnectButton.addBinding(this.capiDisconnectButton.disableProperty(), CAPIService.getInstance().getActive().not().or(BooleanBinding.booleanExpression(ApplicationState.getInstance().getCommandersProperty().map(Set::isEmpty))));
         if (registered.get()) {
             this.capiStatusLabel = LabelBuilder.builder()
                     .withStyleClass(SETTINGS_LABEL_CLASS)

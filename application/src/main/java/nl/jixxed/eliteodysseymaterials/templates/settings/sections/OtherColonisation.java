@@ -10,10 +10,12 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
+import javafx.beans.binding.BooleanBinding;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ToggleSwitchBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.service.UserPreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.ColonisationStockStateEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -21,6 +23,8 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
+
+import java.util.Set;
 
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 
@@ -55,6 +59,7 @@ public class OtherColonisation extends DestroyableVBox implements DestroyableTem
                     EventService.publish(new ColonisationStockStateEvent());
                 })
                 .withSelected(UserPreferencesService.getPreference(PreferenceConstants.COLONISATION_ENABLE_FC, true))
+                .withDisableProperty(BooleanBinding.booleanExpression(ApplicationState.getInstance().getCommandersProperty().map(Set::isEmpty)))
                 .build();
 
         DestroyableLabel fcEnabledLabelExplainLabel = LabelBuilder.builder()
@@ -78,6 +83,7 @@ public class OtherColonisation extends DestroyableVBox implements DestroyableTem
                     EventService.publish(new ColonisationStockStateEvent());
                 })
                 .withSelected(UserPreferencesService.getPreference(PreferenceConstants.COLONISATION_ENABLE_SC, true))
+                .withDisableProperty(BooleanBinding.booleanExpression(ApplicationState.getInstance().getCommandersProperty().map(Set::isEmpty)))
                 .build();
 
         DestroyableLabel scEnabledLabelExplainLabel = LabelBuilder.builder()

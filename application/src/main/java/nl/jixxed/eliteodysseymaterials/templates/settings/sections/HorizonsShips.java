@@ -117,7 +117,7 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
         final DestroyableHBox horizonsShipsSensorsFavourites = createHorizonsShipsSensorsFavourites();
         final DestroyableHBox horizonsShipsCreateModule = createHorizonsShipsCreateModule();
         final DestroyableHBox horizonsShipsModuleList = createHorizonsShipsModuleList();
-
+        this.addBinding(this.disableProperty(), BooleanBinding.booleanExpression(ApplicationState.getInstance().getCommandersProperty().map(Set::isEmpty)));
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
         this.getNodes().addAll(
                 shipsFavouritesLabel,
