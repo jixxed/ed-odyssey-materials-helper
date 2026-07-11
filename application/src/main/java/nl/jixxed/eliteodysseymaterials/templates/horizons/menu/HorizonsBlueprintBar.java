@@ -182,7 +182,85 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
                 } else {
                     String displayText = item.toString();
                     setText(displayText);
+
                     setGraphic(item.isMerc() ? EdAwesomeIconViewPaneBuilder.builder().withStyleClass("merccoin-icon").withIcons(EdAwesomeIcon.OTHER_MERCCOIN).build() : null);
+                }
+            }
+        };
+    }
+    private Callback<ListView<HorizonsBlueprintType>, ListCell<HorizonsBlueprintType>> createDestroyableCellFactoryTypesExperimentals(Destroyable destroyable, DestroyableComboBox<HorizonsBlueprintName> blueprints) {
+        return _ -> new DestroyableListCell<>() {
+            DestroyableComboBox<HorizonsBlueprintName> blueprintz;
+            {
+                this.blueprintz = blueprints;
+                destroyable.register(this);
+                register(EventService.addListener(true, destroyable, StorageEvent.class, _ -> {
+                    updateText(getItem(), this.emptyProperty().get());
+                }));
+                register(EventService.addListener(true, destroyable, EngineerEvent.class, _ -> {
+                    updateText(getItem(), this.emptyProperty().get());
+                }));
+            }
+
+            @Override
+            protected void updateItem(final HorizonsBlueprintType item, final boolean empty) {
+                super.updateItem(item, empty);
+                updateText(item, empty);
+            }
+
+            private void updateText(final HorizonsBlueprintType item, final boolean empty) {
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    String displayText = item.toString();
+                    setText(displayText);
+                    try{
+                        HorizonsBlueprintName selectedItem = blueprintz.getSelectionModel().getSelectedItem();
+                        HorizonsBlueprint recipe = (HorizonsBlueprint)HorizonsBlueprintConstants.getRecipe(selectedItem, item, null);
+                        setGraphic(recipe.isMerc() ? EdAwesomeIconViewPaneBuilder.builder().withStyleClass("merccoin-icon").withIcons(EdAwesomeIcon.OTHER_MERCCOIN).build() : null);
+                    }catch (IllegalArgumentException ex){
+                        //noop
+                    }
+                }
+            }
+        };
+    }
+    private Callback<ListView<HorizonsBlueprintType>, ListCell<HorizonsBlueprintType>> createDestroyableButtonCellFactoryTypesExperimentals(Destroyable destroyable, DestroyableComboBox<HorizonsBlueprintName> blueprints) {
+        return _ -> new DestroyableListCell<>() {
+            DestroyableComboBox<HorizonsBlueprintName> blueprintz;
+            {
+                this.blueprintz = blueprints;
+                destroyable.register(this);
+                register(EventService.addListener(true, destroyable, StorageEvent.class, _ -> {
+                    updateText(getItem(), this.emptyProperty().get());
+                }));
+                register(EventService.addListener(true, destroyable, EngineerEvent.class, _ -> {
+                    updateText(getItem(), this.emptyProperty().get());
+                }));
+            }
+
+            @Override
+            protected void updateItem(final HorizonsBlueprintType item, final boolean empty) {
+                super.updateItem(item, empty);
+                updateText(item, empty);
+            }
+
+            private void updateText(final HorizonsBlueprintType item, final boolean empty) {
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    String displayText = item.toString();
+                    setText(displayText);
+
+                    try{
+                        HorizonsBlueprintName selectedItem = blueprintz.getSelectionModel().getSelectedItem();
+                        HorizonsBlueprint recipe = (HorizonsBlueprint)HorizonsBlueprintConstants.getRecipe(selectedItem, item, null);
+                        setGraphic(recipe.isMerc() ? EdAwesomeIconViewPaneBuilder.builder().withStyleClass("merccoin-icon").withIcons(EdAwesomeIcon.OTHER_MERCCOIN).build() : null);
+                    }catch (IllegalArgumentException ex) {
+                        //noop
+                    }
                 }
             }
         };
@@ -348,9 +426,9 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
         types.setVisibleRowCount(Math.min(types.getItems().size(), 10));
         final DestroyableComboBox<HorizonsBlueprintName> blueprints = createBlueprintsComboboxForTypes(types, recipesEntry.keySet(), recipesEntry.entrySet().stream().map(horizonsBlueprintNameMapEntry -> Map.entry(horizonsBlueprintNameMapEntry.getKey(), horizonsBlueprintNameMapEntry.getValue().keySet())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
 
-        var destroyableCellFactory = createDestroyableCellFactoryTypes(types);
+        var destroyableCellFactory = createDestroyableCellFactoryTypesExperimentals(types, blueprints);
         types.setCellFactory(destroyableCellFactory);
-        types.setButtonCell(createDestroyableButtonCellFactoryTypes(types).call(null));
+        types.setButtonCell(createDestroyableButtonCellFactoryTypesExperimentals(types, blueprints).call(null));
 
         final DestroyableTitledPane categoryTitledPane = createTitledPane(BlueprintCategory.EXPERIMENTAL_EFFECTS.getLocalizationKey());
 
