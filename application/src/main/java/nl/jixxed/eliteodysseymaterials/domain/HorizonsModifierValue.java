@@ -10,24 +10,33 @@
 
 package nl.jixxed.eliteodysseymaterials.domain;
 
+import lombok.Getter;
+
 import java.util.Objects;
 
 public abstract class HorizonsModifierValue<T> {
     private final String modification;
+    @Getter
     private final boolean isPositive;
+    @Getter
+    private final boolean isApplyGradually;
 
     public HorizonsModifierValue(final String modification, final boolean isPositive) {
+       this(modification, isPositive, isPositive);
+    }
+    public HorizonsModifierValue(final String modification, final boolean isPositive, final boolean isApplyGradually) {
         this.modification = modification;
         this.isPositive = isPositive;
+        this.isApplyGradually = isApplyGradually;
     }
 
     public String modification() {
         return this.modification;
     }
 
-    public boolean isPositive() {
-        return this.isPositive;
-    }
+//    public boolean isPositive() {
+//        return this.isPositive;
+//    }
 
     @Override
     public boolean equals(final Object obj) {

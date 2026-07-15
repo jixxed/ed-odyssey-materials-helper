@@ -21,12 +21,14 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Several Merc module related fixes:
-Added ability to map merc modules from loadout events
-Prevent swapping blueprints in the wishlist to unsupported combinations
-Previously you could put a G5 blueprint Lightweight Sink Launcher on the wishlist and then swap to Ammo Capacity that only allowed G1. It then still allowed to set G2-G5, which was invalid.
-Prevent quickswitch size/class in ship editor for merc modules. Each merc module has its own blueprint, so there are no compatible other modules to swap to. 
+Corrected combat movement speed description
+Disable certain settings when no valid journal folder is selected.
+Add Merc indicator to merc only experimental effects
+Remove multicrew indicator from shield booster and point defence
+Correct Merc price large fragment cannon 800 -> 950
+New logic for damage ratio on weapons to better display the ratios and keep total at 100%
+Updated descriptions on Merc modules and blueprints
 
 * Early access:
-* More modules with stats. G1 should be available on all, but for some weapons, higher grades are still missing and require in game testing.
+* Completed all merc blueprints. Only mining related blueprints could contain some minor errors on G2.
 ```

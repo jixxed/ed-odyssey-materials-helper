@@ -27,4 +27,9 @@ public final class HorizonsNumberModifierValue extends HorizonsModifierValue<Dou
         this.modifier = modifier;
     }
 
+    public HorizonsNumberModifierValue(final String modification, final boolean isPositive, final boolean isApplyGradually, final HorizonsBiFunction modifier) {
+        super(modification, isPositive, isApplyGradually);
+        this.modifier = modifier;
+    }
+
 }

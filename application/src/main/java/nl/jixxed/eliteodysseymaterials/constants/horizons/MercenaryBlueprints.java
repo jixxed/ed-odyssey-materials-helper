@@ -111,6 +111,7 @@ public abstract class MercenaryBlueprints {
     record ModifierDataDTO(
             String displayValue,
             boolean positive,
+            Boolean gradually,
             double start,
             double end,
             double value,
@@ -123,6 +124,7 @@ public abstract class MercenaryBlueprints {
         ModifierDataDTO(
                 @JsonProperty("displayValue") String displayValue,
                 @JsonProperty("positive") boolean positive,
+                @JsonProperty("gradually") Boolean gradually,
                 @JsonProperty("start") double start,
                 @JsonProperty("end") double end,
                 @JsonProperty("value") double value,
@@ -133,6 +135,7 @@ public abstract class MercenaryBlueprints {
         ) {
             this.displayValue = displayValue != null ? displayValue : "";
             this.positive = positive;
+            this.gradually = gradually;
             this.start = start;
             this.end = end;
             this.value = value;
@@ -146,8 +149,12 @@ public abstract class MercenaryBlueprints {
             if (calculationType == HorizonsBiFunction.CalculationType.BOOL) {
                 return new HorizonsBooleanModifierValue(displayValue, positive, createBooleanFunction());
             }
-            return new HorizonsNumberModifierValue(displayValue, positive,
+//            if(calculationType == HorizonsBiFunction.CalculationType.DAMAGE_RATIO_FIXED || calculationType == HorizonsBiFunction.CalculationType.DAMAGE_RATIO_RANGE){
+//                return new HorizonsDamageRatioModifierValue(HorizonsModifier.forInternalName(fromRatio), HorizonsModifier.forInternalName(toRatio), displayValue, createFunction());
+//            }
+            return new HorizonsNumberModifierValue(displayValue, positive, gradually != null ? gradually: positive,
                     createFunction());
+
         }
 
         private @NonNull HorizonsBiFunction<Boolean> createBooleanFunction() {
@@ -167,10 +174,11 @@ public abstract class MercenaryBlueprints {
                 case RESISTANCE_NEGATIVE -> ModifierFunctionHelper.resistanceNegative(start, end);
                 case PLUS -> ModifierFunctionHelper.plus(value);
                 case MINUS -> ModifierFunctionHelper.minus(value);
-                case PLUS_AT_COMPLETION -> ModifierFunctionHelper.plusAtCompletion(value);
-                case MINUS_AT_COMPLETION -> ModifierFunctionHelper.minusAtCompletion(value);
-                case DAMAGE_RATIO_FIXED -> ModifierFunctionHelper.damageRatio(HorizonsModifier.forInternalName(fromRatio), HorizonsModifier.forInternalName(toRatio), value);
-                case DAMAGE_RATIO_RANGE -> ModifierFunctionHelper.damageRatio(HorizonsModifier.forInternalName(fromRatio), HorizonsModifier.forInternalName(toRatio), start, end);
+                case PLUS_AT_COMPLETION -> ModifierFunctionHelper.plusAtCompletion(start, end);//needs to be start, end
+                case MINUS_AT_COMPLETION -> ModifierFunctionHelper.minusAtCompletion(start, end);
+                case DAMAGE_RATIO_FIXED -> ModifierFunctionHelper.damageRatio( value);
+                case DAMAGE_RATIO_RANGE_POSITIVE -> ModifierFunctionHelper.damageRatioPositive(start, end);
+                case DAMAGE_RATIO_RANGE_NEGATIVE -> ModifierFunctionHelper.damageRatioNegative(start, end);
                 case BOOL -> throw new IllegalStateException("BOOL should use createBooleanFunction");
             };
         }

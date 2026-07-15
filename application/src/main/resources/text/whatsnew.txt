@@ -1,3 +1,16 @@
+Version 3.13.9
+-------------
+Corrected combat movement speed description
+Disable certain settings when no valid journal folder is selected.
+Add Merc indicator to merc only experimental effects
+Remove multicrew indicator from shield booster and point defence
+Correct Merc price large fragment cannon 800 -> 950
+New logic for damage ratio on weapons to better display the ratios and keep total at 100%
+Updated descriptions on Merc modules and blueprints
+
+* Early access:
+* Completed all merc blueprints. Only mining related blueprints could contain some minor stat errors on G2.
+
 Version 3.13.8
 -------------
 Several Merc module related fixes:

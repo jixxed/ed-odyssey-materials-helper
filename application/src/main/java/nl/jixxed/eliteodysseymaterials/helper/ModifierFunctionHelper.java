@@ -11,7 +11,6 @@
 package nl.jixxed.eliteodysseymaterials.helper;
 
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBiFunction;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 
 public class ModifierFunctionHelper {
     /**
@@ -100,9 +99,9 @@ public class ModifierFunctionHelper {
      * @param value value to increase with
      * @return BiFunction
      */
-    public static HorizonsBiFunction<Double> damageRatio(final HorizonsModifier fromRatio, final HorizonsModifier toRatio, final Double value) {
+    public static HorizonsBiFunction<Double> damageRatio(final Double value) {
 //        return (base, percent) -> base + value;
-        return new HorizonsBiFunction<>(fromRatio, toRatio, value, HorizonsBiFunction.CalculationType.DAMAGE_RATIO_FIXED);
+        return new HorizonsBiFunction<>(value, HorizonsBiFunction.CalculationType.DAMAGE_RATIO_FIXED);
     }
     /**
      * Calculation that adds a ranged amount.
@@ -111,9 +110,13 @@ public class ModifierFunctionHelper {
      * @param end   end of the range
      * @return BiFunction
      */
-    public static HorizonsBiFunction<Double> damageRatio(final HorizonsModifier fromRatio, final HorizonsModifier toRatio, final Double start, final Double end) {
+    public static HorizonsBiFunction<Double> damageRatioPositive(final Double start, final Double end) {
 //        return (base, percent) -> base + value;
-        return new HorizonsBiFunction<>(fromRatio, toRatio, start, end, HorizonsBiFunction.CalculationType.DAMAGE_RATIO_RANGE);
+        return new HorizonsBiFunction<>(start, end, HorizonsBiFunction.CalculationType.DAMAGE_RATIO_RANGE_POSITIVE);
+    }
+    public static HorizonsBiFunction<Double> damageRatioNegative(final Double start, final Double end) {
+//        return (base, percent) -> base + value;
+        return new HorizonsBiFunction<>(start, end, HorizonsBiFunction.CalculationType.DAMAGE_RATIO_RANGE_NEGATIVE);
     }
 
     /**
@@ -122,9 +125,9 @@ public class ModifierFunctionHelper {
      * @param value value to increase with
      * @return BiFunction
      */
-    public static HorizonsBiFunction<Double> plusAtCompletion(final Double value) {
+    public static HorizonsBiFunction<Double> plusAtCompletion(final Double start, final Double end) {
 //        return (base, percent) -> base + value;
-        return new HorizonsBiFunction<>(value, HorizonsBiFunction.CalculationType.PLUS_AT_COMPLETION);
+        return new HorizonsBiFunction<>(start, end, HorizonsBiFunction.CalculationType.PLUS_AT_COMPLETION);
     }
     /**
      * Calculation that subtracts a fixed amount.
@@ -132,9 +135,9 @@ public class ModifierFunctionHelper {
      * @param value value to subtract with
      * @return BiFunction
      */
-    public static HorizonsBiFunction<Double> minusAtCompletion(final Double value) {
+    public static HorizonsBiFunction<Double> minusAtCompletion(final Double start, final Double end) {
 //        return (base, percent) -> base - value;
-        return new HorizonsBiFunction<>(value, HorizonsBiFunction.CalculationType.MINUS_AT_COMPLETION);
+        return new HorizonsBiFunction<>(start, end, HorizonsBiFunction.CalculationType.MINUS_AT_COMPLETION);
     }
     /**
      * Calculation that adds a fixed amount.
