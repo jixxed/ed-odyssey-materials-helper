@@ -26,12 +26,12 @@ jobs:
           jdk_archive_filename=$(curl -LOs -w '%{filename_effective}' "$(curl -s -X GET 'https://api.azul.com/metadata/v1/zulu/packages/?os=windows&arch=x64&archive_type=zip&java_package_type=jdk&javafx_bundled=false&crac_supported=false&release_status=ga&availability_types=CA&certifications=tck' --data-urlencode "java_version=$JAVA_VERSION" -H  'accept: application/json' | jq -r '.[0].download_url')")
           echo "jdk_archive_filename=$jdk_archive_filename" >> $GITHUB_OUTPUT
       - name: Set up JDKS
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v5.6.0
         with:
           java-version: |
             ${{ env.JAVA_VERSION }}
           distribution: jdkfile
-          jdkFile: ${{ runner.temp }}/${{ steps.download_zulu.outputs.jdk_archive_filename }}
+          jdk-file: ${{ runner.temp }}/${{ steps.download_zulu.outputs.jdk_archive_filename }}
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
