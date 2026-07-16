@@ -452,6 +452,7 @@ public abstract class ShipModule implements Serializable {
                     final HorizonsModifierValue experimentalEffectModifier = experimentalEffectBlueprint.getModifiers().get(remap(moduleAttribute));
                     if (experimentalEffectModifier != null) {
                         if (experimentalEffectModifier instanceof HorizonsDamageRatioModifierValue damageRatioModifierValue) {
+                            //17-6-2026 damage ratio effects don't appear to stack, so reapply from base
                             //TODO this is a hacky solution that can only transfer 1-1 ratio
                             HorizonsModifier fromRatio = damageRatioModifierValue.getFromRatio();
                             HorizonsModifier toRatio = damageRatioModifierValue.getToRatio();
@@ -462,13 +463,15 @@ public abstract class ShipModule implements Serializable {
                                 } else if (moduleAttribute.equals(fromRatio)){
                                     multiplier = -1D;
                                 }
-                                value.set(damageRatioModifierValue.getModifier().getFunction().apply(value.get(), multiplier));
+                                value.set(damageRatioModifierValue.getModifier().getFunction().apply(getOriginalAttributeValue(moduleAttribute), multiplier));
                             } catch (final Throwable t) {
                                 log.error("Error modifying value", t);
                             }
                         } else {
                             try {
-                                value.set(experimentalEffectModifier.getModifier().getFunction().apply(value.get(), 1D));
+                                //17-6-2026 damage ratio effects don't appear to stack, so reapply from base
+                                Object currentValue = DAMAGE_RATIO_LIST.contains(moduleAttribute) ? getOriginalAttributeValue(moduleAttribute) : value.get();
+                                value.set(experimentalEffectModifier.getModifier().getFunction().apply(currentValue, 1D));
                             } catch (final Throwable t) {
                                 log.error("Error modifying value", t);
                             }

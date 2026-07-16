@@ -224,6 +224,7 @@ public class ExperimentalEffectBlueprints {
                             HorizonsModifier.DAMAGE_PARTIALLY_KINETIC, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)),
                             HorizonsModifier.JITTER, new HorizonsNumberModifierValue("3", false, plus(3.0)),
 //                            HorizonsModifier.DAMAGE_RATIO, new HorizonsDamageRatioModifierValue(HorizonsModifier.THERMAL_DAMAGE_RATIO, HorizonsModifier.KINETIC_DAMAGE_RATIO, "50%", damageRatio(HorizonsModifier.THERMAL_DAMAGE_RATIO, HorizonsModifier.KINETIC_DAMAGE_RATIO, 0.5)),
+                            HorizonsModifier.ABSOLUTE_DAMAGE_RATIO, new HorizonsNumberModifierValue("-100%", false, damageRatioNegative(1.0, 1.0)),//remove absolute damage from plasma conversion
                             HorizonsModifier.THERMAL_DAMAGE_RATIO, new HorizonsNumberModifierValue("-50%", false, damageRatioNegative(0.5, 0.5)),
                             HorizonsModifier.KINETIC_DAMAGE_RATIO, new HorizonsNumberModifierValue("+50%", true, damageRatioPositive(0.5, 0.5)),
                             HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+50%", true, percentagePositive(0.0, 0.5))
