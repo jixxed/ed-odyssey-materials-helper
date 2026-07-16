@@ -60,7 +60,9 @@ public class EngineerCraftSingleMessageProcessor implements SingleMessageProcess
             if(horizonsBlueprintType.isMerc()){
                 //TODO MERCREMOVEME
                 try {
-                    ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(event), "Merc module: " + event.getBlueprintName());
+                    if(horizonsBlueprintType.toReport()) {
+                        ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(event), "Merc module: " + event.getBlueprintName());
+                    }
                 } catch (JsonProcessingException ex) {
                     //ignore
                 }

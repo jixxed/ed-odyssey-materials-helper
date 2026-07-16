@@ -977,4 +977,11 @@ public enum HorizonsBlueprintType {
         return getJournalName(module);
     }
 
+    public boolean toReport() {
+        return MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3A.equals(this)
+                || MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_3D.equals(this)
+                || MERC_SUPPORT_FOCUSED_POWER_DISTRIBUTOR_4A.equals(this)
+                || MERC_DOUBLE_SCREAMING_FRAGMENT_CANNON_1EG.equals(this)
+                || MERC_LOCKDOWN_SEEKER_MISSILE_RACK_2B.equals(this);
+    }
 }

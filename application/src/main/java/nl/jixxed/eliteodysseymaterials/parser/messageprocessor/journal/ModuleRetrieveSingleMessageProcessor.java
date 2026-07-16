@@ -74,7 +74,9 @@ public class ModuleRetrieveSingleMessageProcessor implements SingleMessageProces
                 //TODO MERCREMOVEME
                 if(modification.isMerc()){
                     try {
-                        ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(event), "Merc module: " + event.getEngineerModifications().orElse(""));
+                        if(modification.toReport()) {
+                            ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(event), "Merc module: " + event.getEngineerModifications().orElse(""));
+                        }
                     } catch (JsonProcessingException ex) {
                         //ignore
                     }

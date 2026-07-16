@@ -185,7 +185,9 @@ public class LoadoutMapper {
             //TODO MERCREMOVEME
             if (horizonsBlueprintType.isMerc()) {
                 try {
-                    ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(module), "Merc module: " + engineering.getBlueprintName());
+                    if(horizonsBlueprintType.toReport()) {
+                        ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(module), "Merc module: " + engineering.getBlueprintName());
+                    }
                 } catch (JsonProcessingException e) {
                     //ignore
                 }
