@@ -21,14 +21,10 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Corrected combat movement speed description
-Disable certain settings when no valid journal folder is selected.
-Add Merc indicator to merc only experimental effects
-Remove multicrew indicator from shield booster and point defence
-Correct Merc price large fragment cannon 800 -> 950
-New logic for damage ratio on weapons to better display the ratios and keep total at 100%
-Updated descriptions on Merc modules and blueprints
+Updated Odyssey engineer hints after a playthrough of unlocking most of them.
+Update shortest path after unlocking an engineer
 
 * Early access:
-* Completed all merc blueprints. Only mining related blueprints could contain some minor errors on G2.
+* Completed all merc blueprints. Mining related blueprints are also fixed.
+* Currently available for patrons and supporters, 21 July -> backer access, 11 August -> general availability
 ```
