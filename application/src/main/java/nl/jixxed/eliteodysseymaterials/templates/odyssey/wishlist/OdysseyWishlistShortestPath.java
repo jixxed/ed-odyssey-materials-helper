@@ -91,6 +91,7 @@ public class OdysseyWishlistShortestPath extends DestroyableVBox implements Dest
         register(EventService.addListener(true, this, HideWishlistShortestPathItemEvent.class, _ -> update(false)));
         register(EventService.addListener(true, this, LocationChangedEvent.class, _ -> update(false)));
         register(EventService.addListener(true, this, EngineerPinEvent.class, _ -> update(false)));
+        register(EventService.addListener(true, this, EngineerEvent.class, _ -> update(true)));
     }
 
     private void update(boolean force) {

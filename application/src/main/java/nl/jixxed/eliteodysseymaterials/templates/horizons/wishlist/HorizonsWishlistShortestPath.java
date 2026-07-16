@@ -89,6 +89,7 @@ public class HorizonsWishlistShortestPath extends DestroyableVBox implements Des
         register(EventService.addListener(true, this, HorizonsHideWishlistShortestPathItemEvent.class, _ -> update()));
         register(EventService.addListener(true, this, LocationChangedEvent.class, _ -> update()));
         register(EventService.addListener(true, this, EngineerPinEvent.class, _ -> update()));
+        register(EventService.addListener(true, this, EngineerEvent.class, _ -> update()));
     }
 
     private void update() {
