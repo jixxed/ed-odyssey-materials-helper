@@ -432,7 +432,7 @@ public class BartenderSellARMenu implements ARMenu {
 
     @Override
     public boolean isEnabled() {
-        return BARTENDER_OVERLAY_ENABLED.get();
+        return BARTENDER_OVERLAY_ENABLED.get() && !Government.PRIVATEOWNERSHIP.equals(LocationService.getStationGovernment());
     }
 
     @Override
