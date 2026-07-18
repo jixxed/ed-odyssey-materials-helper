@@ -21,10 +21,7 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Updated Odyssey engineer hints after a playthrough of unlocking most of them.
-Update shortest path after unlocking an engineer
-
-* Early access:
-* Completed all merc blueprints. Mining related blueprints are also fixed.
-* Currently available for patrons and supporters, 21 July -> backer access, 11 August -> general availability
+Fix wishlist and inventory export to txt,csv,xls to include quantity multiplication and squadron carrier amounts
+Update border styling issue in community goals when docked at a market
+Update ship builder thermal tooltips and labels to match ingame behavior
 ```

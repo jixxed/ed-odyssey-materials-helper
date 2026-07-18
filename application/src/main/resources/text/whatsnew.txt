@@ -1,3 +1,9 @@
+Version 3.13.11
+-------------
+Fix wishlist and inventory export to txt,csv,xls to include quantity multiplication and squadron carrier amounts
+Update border styling issue in community goals when docked at a market
+Update ship builder thermal tooltips and labels to match ingame behavior
+
 Version 3.13.10
 -------------
 Updated Odyssey engineer hints after a playthrough of unlocking most of them.
