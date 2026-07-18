@@ -48,11 +48,10 @@ public class XlsExporter {
         createCell(sheet, row, 0, "Material", style);
         createCell(sheet, row, 1, "Available BP+S", style);
         createCell(sheet, row, 2, "Available FC", style);
-        createCell(sheet, row, 3, "Available Total", style);
-        createCell(sheet, row, 4, "Required minimum", style);
+        createCell(sheet, row, 3, "Available SC", style);
+        createCell(sheet, row, 4, "Available Total", style);
         createCell(sheet, row, 5, "Required current", style);
-        createCell(sheet, row, 6, "Required maximum", style);
-        createCell(sheet, row, 7, "Need", style);
+        createCell(sheet, row, 6, "Need", style);
         final AtomicInteger rowNumber = new AtomicInteger(1);
         final CellStyle dataStyle = workbook.createCellStyle();
         final XSSFFont dataFont = workbook.createFont();
@@ -73,6 +72,11 @@ public class XlsExporter {
                                         StorageService.getMaterialCount(item.getKey(), AmountType.FLEETCARRIER);
                                 case CONSUMABLE, OTHER -> 0;
                             };
+                            final Integer sc = switch (item.getKey().getStorageType()) {
+                                case GOOD, DATA, ASSET ->
+                                        StorageService.getMaterialCount(item.getKey(), AmountType.SQUADRONCARRIER);
+                                case CONSUMABLE, OTHER -> 0;
+                            };
                             final Integer total = switch (item.getKey().getStorageType()) {
                                 case GOOD, DATA, ASSET ->
                                         StorageService.getMaterialCount(item.getKey(), AmountType.TOTAL);
@@ -82,9 +86,10 @@ public class XlsExporter {
                             createCell(sheet, dataRow, 0, materialName, dataStyle);
                             createCell(sheet, dataRow, 1, ship, dataStyle);
                             createCell(sheet, dataRow, 2, fc, dataStyle);
-                            createCell(sheet, dataRow, 3, total, dataStyle);
-                            createCell(sheet, dataRow, 4, item.getValue(), dataStyle);
-                            createCell(sheet, dataRow, 5, Math.max(0, item.getValue() - ship), dataStyle);
+                            createCell(sheet, dataRow, 3, sc, dataStyle);
+                            createCell(sheet, dataRow, 4, total, dataStyle);
+                            createCell(sheet, dataRow, 5, item.getValue(), dataStyle);
+                            createCell(sheet, dataRow, 6, Math.max(0, item.getValue() - ship), dataStyle);
                         })
         );
         return workbook;
@@ -102,11 +107,12 @@ public class XlsExporter {
         createCell(sheet, row, 0, "Material", style);
         createCell(sheet, row, 1, "Available S", style);
         createCell(sheet, row, 2, "Available FC", style);
-        createCell(sheet, row, 3, "Available Total", style);
-        createCell(sheet, row, 4, "Required minimum", style);
-        createCell(sheet, row, 5, "Required current", style);
-        createCell(sheet, row, 6, "Required maximum", style);
-        createCell(sheet, row, 7, "Need", style);
+        createCell(sheet, row, 3, "Available SC", style);
+        createCell(sheet, row, 4, "Available Total", style);
+        createCell(sheet, row, 5, "Required minimum", style);
+        createCell(sheet, row, 6, "Required current", style);
+        createCell(sheet, row, 7, "Required maximum", style);
+        createCell(sheet, row, 8, "Need", style);
         final AtomicInteger rowNumber = new AtomicInteger(1);
         final CellStyle dataStyle = workbook.createCellStyle();
         final XSSFFont dataFont = workbook.createFont();
@@ -124,21 +130,25 @@ public class XlsExporter {
                                 default -> 0;
                             };
                             final Integer fc = item.getKey() instanceof Commodity commodity ? StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER) : 0;
+                            final Integer sc = item.getKey() instanceof Commodity commodity ? StorageService.getCommodityCount(commodity, StoragePool.SQUADRONCARRIER) : 0;
                             final Integer total = switch (item.getKey().getStorageType()) {
                                 case RAW, ENCODED, MANUFACTURED -> StorageService.getMaterialCount(item.getKey());
                                 case COMMODITY ->
-                                        StorageService.getCommodityCount((Commodity) item.getKey(), StoragePool.SHIP) + StorageService.getCommodityCount((Commodity) item.getKey(), StoragePool.FLEETCARRIER);
+                                        StorageService.getCommodityCount((Commodity) item.getKey(), StoragePool.SHIP)
+                                                + StorageService.getCommodityCount((Commodity) item.getKey(), StoragePool.FLEETCARRIER)
+                                                + StorageService.getCommodityCount((Commodity) item.getKey(), StoragePool.SQUADRONCARRIER);
                                 default -> 0;
                             };
                             final Row dataRow = sheet.createRow(rowNumber.getAndIncrement());
                             createCell(sheet, dataRow, 0, materialName, dataStyle);
                             createCell(sheet, dataRow, 1, ship, dataStyle);
                             createCell(sheet, dataRow, 2, fc, dataStyle);
-                            createCell(sheet, dataRow, 3, total, dataStyle);
-                            createCell(sheet, dataRow, 4, item.getValue().getMinimum(), dataStyle);
-                            createCell(sheet, dataRow, 5, item.getValue().getRequired(), dataStyle);
-                            createCell(sheet, dataRow, 6, item.getValue().getMaximum(), dataStyle);
-                            createCell(sheet, dataRow, 7, Math.max(0, item.getValue().getRequired() - ship), dataStyle);
+                            createCell(sheet, dataRow, 3, sc, dataStyle);
+                            createCell(sheet, dataRow, 4, total, dataStyle);
+                            createCell(sheet, dataRow, 5, item.getValue().getMinimum(), dataStyle);
+                            createCell(sheet, dataRow, 6, item.getValue().getRequired(), dataStyle);
+                            createCell(sheet, dataRow, 7, item.getValue().getMaximum(), dataStyle);
+                            createCell(sheet, dataRow, 8, Math.max(0, item.getValue().getRequired() - ship), dataStyle);
                         })
         );
         return workbook;
@@ -187,7 +197,8 @@ public class XlsExporter {
                 createCell(sheetGoods, dataRow, 2, StorageService.getMaterialCount(material, AmountType.BACKPACK), dataStyle);
                 createCell(sheetGoods, dataRow, 3, StorageService.getMaterialCount(material, AmountType.SHIPLOCKER), dataStyle);
                 createCell(sheetGoods, dataRow, 4, StorageService.getMaterialCount(material, AmountType.FLEETCARRIER), dataStyle);
-                createCell(sheetGoods, dataRow, 5, StorageService.getMaterialCount(material, AmountType.TOTAL), dataStyle);
+                createCell(sheetGoods, dataRow, 5, StorageService.getMaterialCount(material, AmountType.SQUADRONCARRIER), dataStyle);
+                createCell(sheetGoods, dataRow, 6, StorageService.getMaterialCount(material, AmountType.TOTAL), dataStyle);
             }
         });
         rowNumber.set(1);
@@ -200,7 +211,8 @@ public class XlsExporter {
                 createCell(sheetAssets, dataRow, 2, StorageService.getMaterialCount(material, AmountType.BACKPACK), dataStyle);
                 createCell(sheetAssets, dataRow, 3, StorageService.getMaterialCount(material, AmountType.SHIPLOCKER), dataStyle);
                 createCell(sheetAssets, dataRow, 4, StorageService.getMaterialCount(material, AmountType.FLEETCARRIER), dataStyle);
-                createCell(sheetAssets, dataRow, 5, StorageService.getMaterialCount(material, AmountType.TOTAL), dataStyle);
+                createCell(sheetAssets, dataRow, 5, StorageService.getMaterialCount(material, AmountType.SQUADRONCARRIER), dataStyle);
+                createCell(sheetAssets, dataRow, 6, StorageService.getMaterialCount(material, AmountType.TOTAL), dataStyle);
             }
         });
         rowNumber.set(1);
@@ -213,7 +225,8 @@ public class XlsExporter {
                 createCell(sheetData, dataRow, 2, StorageService.getMaterialCount(material, AmountType.BACKPACK), dataStyle);
                 createCell(sheetData, dataRow, 3, StorageService.getMaterialCount(material, AmountType.SHIPLOCKER), dataStyle);
                 createCell(sheetData, dataRow, 4, StorageService.getMaterialCount(material, AmountType.FLEETCARRIER), dataStyle);
-                createCell(sheetData, dataRow, 5, StorageService.getMaterialCount(material, AmountType.TOTAL), dataStyle);
+                createCell(sheetData, dataRow, 5, StorageService.getMaterialCount(material, AmountType.SQUADRONCARRIER), dataStyle);
+                createCell(sheetData, dataRow, 6, StorageService.getMaterialCount(material, AmountType.TOTAL), dataStyle);
             }
         });
         rowNumber.set(1);
@@ -250,13 +263,15 @@ public class XlsExporter {
         Stream.concat(Arrays.stream(RegularCommodity.values()), Arrays.stream(RareCommodity.values())).forEach((commodity) -> {
             final Integer shipAmount = StorageService.getCommodityCount(commodity, StoragePool.SHIP);
             final Integer fcAmount = StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER);
+            final Integer scAmount = StorageService.getCommodityCount(commodity, StoragePool.SQUADRONCARRIER);
             if (shipAmount + fcAmount > 0) {
                 final String materialName = LocaleService.getLocalizedStringForCurrentLocale(commodity.getLocalizationKey());
                 final Row dataRow = sheetCommodity.createRow(rowNumber.getAndIncrement());
                 createCell(sheetCommodity, dataRow, 0, materialName, dataStyle);
                 createCell(sheetCommodity, dataRow, 1, shipAmount, dataStyle);
                 createCell(sheetCommodity, dataRow, 2, fcAmount, dataStyle);
-                createCell(sheetCommodity, dataRow, 3, shipAmount + fcAmount, dataStyle);
+                createCell(sheetCommodity, dataRow, 3, scAmount, dataStyle);
+                createCell(sheetCommodity, dataRow, 4, shipAmount + fcAmount + scAmount, dataStyle);
             }
         });
         return workbook;
@@ -274,7 +289,8 @@ public class XlsExporter {
         createCell(sheet, row, 2, "Amount Backpack", style);
         createCell(sheet, row, 3, "Amount Ship", style);
         createCell(sheet, row, 4, "Amount Fleetcarrier", style);
-        createCell(sheet, row, 5, "Amount Total", style);
+        createCell(sheet, row, 5, "Amount Squadroncarrier", style);
+        createCell(sheet, row, 6, "Amount Total", style);
     }
 
     private static void createHeaderHorizons(final XSSFWorkbook workbook, final XSSFSheet sheet) {
@@ -298,6 +314,7 @@ public class XlsExporter {
         createCell(sheet, row, 0, "Material", style);
         createCell(sheet, row, 1, "Amount Ship", style);
         createCell(sheet, row, 2, "Amount Fleetcarrier", style);
-        createCell(sheet, row, 3, "Amount Total", style);
+        createCell(sheet, row, 3, "Amount Squadroncarrier", style);
+        createCell(sheet, row, 4, "Amount Total", style);
     }
 }

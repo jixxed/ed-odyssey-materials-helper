@@ -41,6 +41,7 @@ public class TextExporter {
         textBuilder.append(String.format(materialColumnWidth, "Material"));
         textBuilder.append(String.format("%18s", "Available BP+S"));
         textBuilder.append(String.format("%18s", "Available FC"));
+        textBuilder.append(String.format("%18s", "Available SC"));
         textBuilder.append(String.format("%18s", "Available Total"));
         textBuilder.append(String.format("%12s", "Required"));
         textBuilder.append(String.format("%12s", "Need"));
@@ -60,6 +61,11 @@ public class TextExporter {
                                         StorageService.getMaterialCount(item.getKey(), AmountType.FLEETCARRIER);
                                 case CONSUMABLE, OTHER -> 0;
                             };
+                            final Integer sc = switch (item.getKey().getStorageType()) {
+                                case GOOD, DATA, ASSET ->
+                                        StorageService.getMaterialCount(item.getKey(), AmountType.SQUADRONCARRIER);
+                                case CONSUMABLE, OTHER -> 0;
+                            };
                             final Integer total = switch (item.getKey().getStorageType()) {
                                 case GOOD, DATA, ASSET ->
                                         StorageService.getMaterialCount(item.getKey(), AmountType.TOTAL);
@@ -67,6 +73,7 @@ public class TextExporter {
                             };
                             textBuilder.append(String.format("%18s", ship));
                             textBuilder.append(String.format("%18s", fc));
+                            textBuilder.append(String.format("%18s", sc));
                             textBuilder.append(String.format("%18s", total));
                             textBuilder.append(String.format("%12s", item.getValue()));
                             textBuilder.append(String.format("%12s", Math.max(0, item.getValue() - ship)));
@@ -95,6 +102,7 @@ public class TextExporter {
         textBuilder.append(String.format(materialColumnWidth, "Material"));
         textBuilder.append(String.format("%18s", "Available S"));
         textBuilder.append(String.format("%18s", "Available FC"));
+        textBuilder.append(String.format("%18s", "Available SC"));
         textBuilder.append(String.format("%18s", "Available Total"));
         textBuilder.append(String.format("%14s", "Required min"));
         textBuilder.append(String.format("%14s", "Required cur"));
@@ -113,6 +121,7 @@ public class TextExporter {
                                 default -> 0;
                             };
                             final Integer fc = item.getKey() instanceof Commodity commodity ? StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER) : 0;
+                            final Integer sc = item.getKey() instanceof Commodity commodity ? StorageService.getCommodityCount(commodity, StoragePool.SQUADRONCARRIER) : 0;
                             final Integer total = switch (item.getKey().getStorageType()) {
                                 case RAW, ENCODED, MANUFACTURED -> StorageService.getMaterialCount(item.getKey());
                                 case COMMODITY ->
@@ -121,11 +130,12 @@ public class TextExporter {
                             };
                             textBuilder.append(String.format("%18s", ship));
                             textBuilder.append(String.format("%18s", fc));
+                            textBuilder.append(String.format("%18s", sc));
                             textBuilder.append(String.format("%18s", total));
-                            textBuilder.append(String.format("%12s", item.getValue().getMinimum()));
-                            textBuilder.append(String.format("%12s", item.getValue().getRequired()));
-                            textBuilder.append(String.format("%12s", item.getValue().getMaximum()));
-                            textBuilder.append(String.format("%12s", Math.max(0, item.getValue().getRequired() - ship)));
+                            textBuilder.append(String.format("%14s", item.getValue().getMinimum()));
+                            textBuilder.append(String.format("%14s", item.getValue().getRequired()));
+                            textBuilder.append(String.format("%14s", item.getValue().getMaximum()));
+                            textBuilder.append(String.format("%14s", Math.max(0, item.getValue().getRequired() - ship)));
                             textBuilder.append("\n");
                         })
         );

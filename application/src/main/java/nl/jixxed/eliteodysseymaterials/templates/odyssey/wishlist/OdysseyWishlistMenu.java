@@ -43,6 +43,7 @@ import java.util.function.Supplier;
 
 public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    private static final String FX_FONT_SIZE_DPX = "-fx-font-size: %dpx";
     private DestroyableComboBox<Wishlist> wishlistSelect;
     private DestroyableMenuButton menuButton;
     private OdysseyWishlistMaterialSearch currentSearch = new OdysseyWishlistMaterialSearch("", OdysseyWishlistMaterialSort.ALPHABETICAL, WishlistMaterialGrouping.CATEGORY);
@@ -56,7 +57,6 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
         initComponents();
         initEventHandling();
     }
-
 
     @Override
     public void initComponents() {
@@ -221,11 +221,11 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander ->
                 WishlistService.getOdysseyWishlists(commander).getSelectedWishlist().getItems().stream()
                         .filter(OdysseyWishlistBlueprint::isVisible)
-                        .map((OdysseyWishlistBlueprint odysseyWishlistBlueprint) -> OdysseyBlueprintConstants.getRecipe(odysseyWishlistBlueprint.getRecipeName()))
-                        .forEach(recipe -> {
-                                    recipe.getMaterialCollection(Data.class).forEach((key, value1) -> wishlistNeededDatas.merge((Data) key, value1, Integer::sum));
-                                    recipe.getMaterialCollection(Good.class).forEach((key, value1) -> wishlistNeededGoods.merge((Good) key, value1, Integer::sum));
-                                    recipe.getMaterialCollection(Asset.class).forEach((key, value1) -> wishlistNeededAssets.merge((Asset) key, value1, Integer::sum));
+                        .forEach((OdysseyWishlistBlueprint odysseyWishlistBlueprint) -> {
+                                    var recipe = OdysseyBlueprintConstants.getRecipe(odysseyWishlistBlueprint.getRecipeName());
+                                    recipe.getMaterialCollection(Data.class).forEach((key, value1) -> wishlistNeededDatas.merge((Data) key, odysseyWishlistBlueprint.getQuantity() * value1, Integer::sum));
+                                    recipe.getMaterialCollection(Good.class).forEach((key, value1) -> wishlistNeededGoods.merge((Good) key, odysseyWishlistBlueprint.getQuantity() * value1, Integer::sum));
+                                    recipe.getMaterialCollection(Asset.class).forEach((key, value1) -> wishlistNeededAssets.merge((Asset) key, odysseyWishlistBlueprint.getQuantity() * value1, Integer::sum));
                                 }
                         ));
         return exporter.apply(wishlistNeededDatas, wishlistNeededGoods, wishlistNeededAssets);
@@ -285,8 +285,6 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
             this.wishlistSelect.getSelectionModel().select(wishlists.getSelectedWishlist());
         });
     }
-
-    private static final String FX_FONT_SIZE_DPX = "-fx-font-size: %dpx";
 
     private void applyFontSizingHack(final Integer fontSize) {
         //hack for component resizing on other fontsizes

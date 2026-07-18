@@ -29,7 +29,7 @@ public class CsvExporter {
 
     public static String createCsvWishlist(final Map<Data, Integer> wishlistNeededDatas, final Map<Good, Integer> wishlistNeededGoods, final Map<Asset, Integer> wishlistNeededAssets) {
         final StringBuilder textBuilder = new StringBuilder();
-        textBuilder.append(String.join(",", "Material", "Available BP+S", "Available FC", "Available Total", "Required", "Need"));
+        textBuilder.append(String.join(",", "Material", "Available BP+S", "Available FC", "Available SC", "Available Total", "Required", "Need"));
         textBuilder.append("\n");
         List.of(wishlistNeededDatas, wishlistNeededGoods, wishlistNeededAssets).forEach(wishlistNeededMaterials ->
                 wishlistNeededMaterials.entrySet().stream()
@@ -46,12 +46,17 @@ public class CsvExporter {
                                         StorageService.getMaterialCount(item.getKey(), AmountType.FLEETCARRIER);
                                 case CONSUMABLE, OTHER -> 0;
                             };
+                            final Integer sc = switch (item.getKey().getStorageType()) {
+                                case GOOD, DATA, ASSET ->
+                                        StorageService.getMaterialCount(item.getKey(), AmountType.SQUADRONCARRIER);
+                                case CONSUMABLE, OTHER -> 0;
+                            };
                             final Integer total = switch (item.getKey().getStorageType()) {
                                 case GOOD, DATA, ASSET ->
                                         StorageService.getMaterialCount(item.getKey(), AmountType.TOTAL);
                                 case CONSUMABLE, OTHER -> 0;
                             };
-                            textBuilder.append(String.join(",", materialName, String.valueOf(ship), String.valueOf(fc), String.valueOf(total), String.valueOf(item.getValue()), String.valueOf(Math.max(0, item.getValue() - ship))));
+                            textBuilder.append(String.join(",", materialName, String.valueOf(ship), String.valueOf(fc), String.valueOf(sc), String.valueOf(total), String.valueOf(item.getValue()), String.valueOf(Math.max(0, item.getValue() - ship))));
                             textBuilder.append("\n");
                         })
         );
@@ -60,7 +65,7 @@ public class CsvExporter {
 
     public static String createCsvWishlist(final Map<Raw, WishlistMaterial> wishlistNeededRaw, final Map<Encoded, WishlistMaterial> wishlistNeededEncoded, final Map<Manufactured, WishlistMaterial> wishlistNeededManufactured, final Map<Commodity, WishlistMaterial> wishlistNeededCommodity) {
         final StringBuilder textBuilder = new StringBuilder();
-        textBuilder.append(String.join(",", "Material", "Available S", "Available FC", "Available Total", "Required minimum", "Required current", "Required maximum", "Need"));
+        textBuilder.append(String.join(",", "Material", "Available S", "Available FC", "Available SC", "Available Total", "Required minimum", "Required current", "Required maximum", "Need"));
         textBuilder.append("\n");
         ((List<Map<HorizonsMaterial, WishlistMaterial>>) (List<?>) List.of(wishlistNeededRaw, wishlistNeededEncoded, wishlistNeededManufactured, wishlistNeededCommodity)).forEach(wishlistNeededMaterials ->
                 wishlistNeededMaterials.entrySet().stream()
@@ -74,13 +79,14 @@ public class CsvExporter {
                                 default -> 0;
                             };
                             final Integer fc = item.getKey() instanceof Commodity commodity ? StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER) : 0;
+                            final Integer sc = item.getKey() instanceof Commodity commodity ? StorageService.getCommodityCount(commodity, StoragePool.SQUADRONCARRIER) : 0;
                             final Integer total = switch (item.getKey().getStorageType()) {
                                 case RAW, ENCODED, MANUFACTURED -> StorageService.getMaterialCount(item.getKey());
                                 case COMMODITY ->
-                                        StorageService.getCommodityCount((Commodity) item.getKey(), StoragePool.SHIP) + StorageService.getCommodityCount((Commodity) item.getKey(), StoragePool.FLEETCARRIER);
+                                        StorageService.getCommodityCount((Commodity) item.getKey(), StoragePool.SHIP) + StorageService.getCommodityCount((Commodity) item.getKey(), StoragePool.FLEETCARRIER) + StorageService.getCommodityCount((Commodity) item.getKey(), StoragePool.SQUADRONCARRIER);
                                 default -> 0;
                             };
-                            textBuilder.append(String.join(",", materialName, String.valueOf(ship), String.valueOf(fc), String.valueOf(total), String.valueOf(item.getValue().getMinimum()), String.valueOf(item.getValue().getRequired()), String.valueOf(item.getValue().getMaximum()), String.valueOf(Math.max(0, item.getValue().getRequired() - ship))));
+                            textBuilder.append(String.join(",", materialName, String.valueOf(ship), String.valueOf(fc), String.valueOf(sc), String.valueOf(total), String.valueOf(item.getValue().getMinimum()), String.valueOf(item.getValue().getRequired()), String.valueOf(item.getValue().getMaximum()), String.valueOf(Math.max(0, item.getValue().getRequired() - ship))));
                             textBuilder.append("\n");
                         })
         );
@@ -89,7 +95,7 @@ public class CsvExporter {
 
     public static String createCsvInventory() {
         final StringBuilder textBuilder = new StringBuilder();
-        textBuilder.append(String.join(",", "Material", "Relevant", "Amount Backpack", "Amount Ship", "Amount Fleetcarrier", "Amount Total"));
+        textBuilder.append(String.join(",", "Material", "Relevant", "Amount Backpack", "Amount Ship", "Amount Fleetcarrier", "Amount Squadroncarrier", "Amount Total"));
         textBuilder.append("\n");
 
         Arrays.stream(Good.values()).forEach(material -> addMaterialLine(material, textBuilder));
@@ -103,8 +109,9 @@ public class CsvExporter {
         Stream.concat(Arrays.stream(RegularCommodity.values()), Arrays.stream(RareCommodity.values())).forEach((commodity) -> {
             final Integer shipAmount = StorageService.getCommodityCount(commodity, StoragePool.SHIP);
             final Integer fcAmount = StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER);
+            final Integer scAmount = StorageService.getCommodityCount(commodity, StoragePool.SQUADRONCARRIER);
             if (shipAmount + fcAmount > 0) {
-                textBuilder.append(String.join(",", LocaleService.getLocalizedStringForCurrentLocale(commodity.getLocalizationKey()), "", "", String.valueOf(shipAmount), String.valueOf(fcAmount), String.valueOf(shipAmount + fcAmount)));
+                textBuilder.append(String.join(",", LocaleService.getLocalizedStringForCurrentLocale(commodity.getLocalizationKey()), "", "", String.valueOf(shipAmount), String.valueOf(fcAmount), String.valueOf(scAmount), String.valueOf(shipAmount + fcAmount)));
                 textBuilder.append("\n");
             }
         });
@@ -125,7 +132,8 @@ public class CsvExporter {
             final String backpack = String.valueOf(StorageService.getMaterialCount(material, AmountType.BACKPACK));
             final String shiplocker = String.valueOf(StorageService.getMaterialCount(material, AmountType.SHIPLOCKER));
             final String fleetcarrier = String.valueOf(StorageService.getMaterialCount(material, AmountType.FLEETCARRIER));
-            textBuilder.append(String.join(",", LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()), OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(material) ? "Yes" : "No", backpack, shiplocker, fleetcarrier, String.valueOf(total)));
+            final String squadroncarrier = String.valueOf(StorageService.getMaterialCount(material, AmountType.SQUADRONCARRIER));
+            textBuilder.append(String.join(",", LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()), OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(material) ? "Yes" : "No", backpack, shiplocker, fleetcarrier, squadroncarrier, String.valueOf(total)));
             textBuilder.append("\n");
         }
     }
