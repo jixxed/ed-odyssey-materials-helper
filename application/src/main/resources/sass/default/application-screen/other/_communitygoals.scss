@@ -29,7 +29,7 @@
       -fx-spacing: 0.25em;
 
       .community-goal {
-        -fx-max-width: 133.25em;
+        -fx-max-width: 133.9em;
         -fx-background-color: $background-color-dark;
         -fx-border-color: $border-color-black;
         -fx-padding: 0.25em;
@@ -115,7 +115,8 @@
           //-fx-padding: 0.25em;
           .material-card {
             -fx-background-color: $background-color-light;
-            //-fx-border-color: $border-color-black;
+            -fx-border-width: 0.05em;
+            -fx-border-color: $border-color-black;
 
             //&:live {
             //  -fx-background-color: linear-gradient(from 0 0 to 0.5em 0.5em, repeat, $background-color-dark 0%, lighten($background-color-dark, 6.25%) 25%, $background-color-dark 50%, lighten($background-color-dark, 6.25%) 75%, $background-color-dark 100%);
