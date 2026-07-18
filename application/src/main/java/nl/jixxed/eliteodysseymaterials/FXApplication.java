@@ -219,6 +219,12 @@ public class FXApplication extends Application {
             primaryStage.setTitle(AppConstants.APP_TITLE);
             addIconsToStage(primaryStage);
             if (OsCheck.isWindows()) {
+                if (GraphicsEnvironment.isHeadless()) {
+                    log.error("System appears to be running headless. exiting...");
+                    exit();
+                    System.exit(0);
+                    return;
+                }
                 Image fxImage = new Image(FXApplication.class.getResourceAsStream("/images/application/appicon16.png"));
                 java.awt.Image image = SwingFXUtils.fromFXImage(fxImage, null);
 
