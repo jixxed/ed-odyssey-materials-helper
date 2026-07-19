@@ -230,7 +230,7 @@ ext {
     version_guava = "33.6.0-jre"
     version_j2objc_annotations = "3.1"
     version_mockito = "5.23.0"
-    version_sentry = "8.44.1"
+    version_sentry = "8.48.0"
     version_github_classgraph = "4.8.184"
     version_ebean = "19.2.0"
 }
