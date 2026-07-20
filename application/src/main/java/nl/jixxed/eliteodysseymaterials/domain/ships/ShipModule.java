@@ -383,7 +383,7 @@ public abstract class ShipModule implements Serializable {
                         : Math.ceil(toReturn / burstSize) * burstSize;
             }
             if (HorizonsModifier.AMMO_MAXIMUM.equals(moduleAttribute)) {
-                toReturn = (double)Math.round(toReturn);
+                toReturn = toReturn.isInfinite() ? toReturn : (double)Math.round(toReturn);
             }
             if (HorizonsModifier.CARGO_CAPACITY.equals(moduleAttribute)) {
                 toReturn = (double)Math.round(toReturn);
