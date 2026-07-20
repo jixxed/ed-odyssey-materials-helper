@@ -29,15 +29,13 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableChart;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
+import java.math.BigInteger;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
@@ -110,13 +108,13 @@ public class BandChart extends DestroyableHBox implements DestroyableTemplate {
             for (int i = 0; i < max.size(); i++) {
                 ReportModels.BandMax bandMax = max.get(i);
                 var x = data.hourUtc().toEpochMilli();
-                Dataset dataset = datasets.computeIfAbsent(bandMax.band(), (band) -> this.create(band, BandDataSetRenderer::new, previouslyEnabledBands));
+                Dataset dataset = datasets.computeIfAbsent(bandMax.band(), (band) -> this.create(report.cgid(), band, BandDataSetRenderer::new, previouslyEnabledBands));
                 long bandMaxVal = Math.max(previous, bandMax.max());
                 dataset.dataSet.add(x, previous, bandMaxVal);
                 previous = bandMaxVal;
             }
         });
-        Dataset myContribution = datasets.computeIfAbsent("My progress", (band) -> this.create(band, ProgressDataSetRenderer::new, previouslyEnabledBands));
+        Dataset myContribution = datasets.computeIfAbsent("My progress", (band) -> this.create(report.cgid(), band, ProgressDataSetRenderer::new, previouslyEnabledBands));
         myContribution.dataSet.getStyleClasses().add("dataset-progress");
         AtomicLong progress = new AtomicLong(-1);
         AtomicLong lastTimestampEntry = new AtomicLong(-1);
@@ -179,7 +177,7 @@ public class BandChart extends DestroyableHBox implements DestroyableTemplate {
                 .toList();
     }
 
-    private Dataset create(String band, Function<DataSet, AbstractRendererXY<?>> rendererFunction, List<String> previouslyEnabledBands) {
+    private Dataset create(long cgid, String band, Function<DataSet, AbstractRendererXY<?>> rendererFunction, List<String> previouslyEnabledBands) {
         BandDataSet dataSet = new BandDataSet(band);
         if (band.contains("top")) {
             dataSet.nameProperty().bind(LocaleService.getStringBinding("community.goal.band.chart.top", band.replace("top", "")));
@@ -191,7 +189,26 @@ public class BandChart extends DestroyableHBox implements DestroyableTemplate {
         AbstractRendererXY<?> renderer = rendererFunction.apply(dataSet);
 
         if (previouslyEnabledBands == null) {//first render, set defaults
-            if ((band.startsWith("top") || band.equals("25%") || band.equals("10%"))) {
+            Long currentBand = ApplicationState.getInstance().getPreferredCommander().map(_ -> {//database must be initialized with a commander
+                Optional<CommunityGoalModel> communityGoalModel = new QCommunityGoalModel()
+                        .cgid.eq((int) cgid)
+                        .orderBy()
+                        .timestamp.desc()
+                        .setMaxRows(1)
+                        .findOneOrEmpty();
+                Long currentBandValue = communityGoalModel
+                        .map(CommunityGoalModel::getPlayerPercentileBand)
+                        .map(BigInteger::longValue)
+                        .orElse(-1L);
+                return currentBandValue;
+            }).orElse(100L);
+            if (band.equals("25%") && currentBand > 25) {
+                renderer.getDatasetNodes().forEach(dataSetNode -> dataSetNode.setVisible(false));
+            }
+            if (band.equals("10%") && currentBand > 10) {
+                renderer.getDatasetNodes().forEach(dataSetNode -> dataSetNode.setVisible(false));
+            }
+            if ((band.startsWith("top")) && currentBand > 0) {
                 renderer.getDatasetNodes().forEach(dataSetNode -> dataSetNode.setVisible(false));
             }
         } else if (!previouslyEnabledBands.contains(band)) {//subsequent render, set previous selected
