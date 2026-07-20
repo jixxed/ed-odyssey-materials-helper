@@ -16,6 +16,7 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.SingleMessageProcessor;
 import nl.jixxed.eliteodysseymaterials.persistence.common.model.StarSystemModel;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.FSDJump.FSDJump;
+import nl.jixxed.eliteodysseymaterials.service.DatabaseService;
 import nl.jixxed.eliteodysseymaterials.service.EDDNService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.FSDJumpJournalEvent;
@@ -45,8 +46,7 @@ public class FSDJumpSingleMessageProcessor implements SingleMessageProcessor<FSD
                     event.getStarPos().get(1).doubleValue(),
                     event.getStarPos().get(2).doubleValue()
             );
-//            DatabaseService.getCommonDatabase().insert(starSystemModel, InsertOptions.ON_CONFLICT_UPDATE);
-            upsert(starSystemModel);
+            DatabaseService.getCommonDatabase().insert(starSystemModel, DatabaseService.onConflictUpdate("address"));
         }
         EDDNService.fsdjump(event);
     }

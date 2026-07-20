@@ -10,7 +10,6 @@
 
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor.journal;
 
-import io.ebean.InsertOptions;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.enums.*;
@@ -64,8 +63,7 @@ public class LocationSingleMessageProcessor implements SingleMessageProcessor<Lo
                     event.getStarPos().get(1).doubleValue(),
                     event.getStarPos().get(2).doubleValue()
             );
-//            DatabaseService.getCommonDatabase().insert(starSystemModel, InsertOptions.ON_CONFLICT_UPDATE);
-            upsert(starSystemModel);
+            DatabaseService.getCommonDatabase().insert(starSystemModel, DatabaseService.onConflictUpdate("address"));
 
         }
         EDDNService.location(event);

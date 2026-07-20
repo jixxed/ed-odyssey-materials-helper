@@ -10,7 +10,6 @@
 
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor.journal;
 
-import io.ebean.InsertOptions;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.enums.*;
@@ -47,8 +46,7 @@ public class CarrierJumpSingleMessageProcessor implements SingleMessageProcessor
                     event.getStarPos().get(1).doubleValue(),
                     event.getStarPos().get(2).doubleValue()
             );
-//            DatabaseService.getCommonDatabase().insert(starSystemModel, InsertOptions.ON_CONFLICT_UPDATE);
-            upsert(starSystemModel);
+            DatabaseService.getCommonDatabase().insert(starSystemModel, DatabaseService.onConflictUpdate("address"));
         }
         EDDNService.carrierjump(event);
         event.getMarketID().ifPresent(marketID -> {

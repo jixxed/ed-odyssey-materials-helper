@@ -13,6 +13,7 @@ package nl.jixxed.eliteodysseymaterials.parser.messageprocessor.batch;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.persistence.common.model.StarSystemModel;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Location.Location;
+import nl.jixxed.eliteodysseymaterials.service.DatabaseService;
 
 import java.util.List;
 
@@ -30,8 +31,8 @@ public class LocationBatchMessageProcessor implements BatchMessageProcessor<Loca
                       event.getStarPos().get(1).doubleValue(),
                       event.getStarPos().get(2).doubleValue()
               );
-//              DatabaseService.getCommonDatabase().insert(starSystemModel, InsertOptions.ON_CONFLICT_UPDATE);
-              upsert(starSystemModel);
+
+              DatabaseService.getCommonDatabase().insert(starSystemModel, DatabaseService.onConflictUpdate("address"));
           }
           //save(starSystemModel);
       });

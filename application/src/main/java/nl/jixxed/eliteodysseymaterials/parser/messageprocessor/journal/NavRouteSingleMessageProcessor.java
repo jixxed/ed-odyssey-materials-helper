@@ -10,7 +10,6 @@
 
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor.journal;
 
-import io.ebean.InsertOptions;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.SingleMessageProcessor;
 import nl.jixxed.eliteodysseymaterials.persistence.common.model.StarSystemModel;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.NavRoute.NavRoute;
@@ -37,8 +36,7 @@ public class NavRouteSingleMessageProcessor implements SingleMessageProcessor<Na
                     route.getStarPos().get(1).doubleValue(),
                     route.getStarPos().get(2).doubleValue()
             );
-//            DatabaseService.getCommonDatabase().insert(starSystemModel, InsertOptions.ON_CONFLICT_UPDATE);
-            upsert(starSystemModel);
+            DatabaseService.getCommonDatabase().insert(starSystemModel, DatabaseService.onConflictUpdate("address"));
         }));
     }
 

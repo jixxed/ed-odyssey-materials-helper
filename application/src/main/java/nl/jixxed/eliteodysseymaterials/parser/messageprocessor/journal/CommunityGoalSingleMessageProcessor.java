@@ -16,6 +16,7 @@ import nl.jixxed.eliteodysseymaterials.persistence.commander.helper.CommunityGoa
 import nl.jixxed.eliteodysseymaterials.persistence.commander.model.CommunityGoalModel;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.CommunityGoal.CommunityGoal;
 import nl.jixxed.eliteodysseymaterials.service.DatabaseException;
+import nl.jixxed.eliteodysseymaterials.service.DatabaseService;
 import nl.jixxed.eliteodysseymaterials.service.EliteMQService;
 import nl.jixxed.eliteodysseymaterials.service.event.CommunityGoalEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -50,8 +51,7 @@ public class CommunityGoalSingleMessageProcessor implements SingleMessageProcess
                         .playerPercentileBand(goal.getPlayerPercentileBand())
                         .bonus(goal.getBonus().orElse(BigInteger.ZERO))
                         .build();
-                //                        DatabaseService.getCommanderDatabase().insert(cgGoal, InsertOptions.ON_CONFLICT_UPDATE);
-                upsert(cgGoal);
+                DatabaseService.getCommanderDatabase().insert(cgGoal, DatabaseService.onConflictUpdate("id"));
 
             } catch (DatabaseException ex) {
                 log.error("Failed to add CommunityGoal to database", ex);

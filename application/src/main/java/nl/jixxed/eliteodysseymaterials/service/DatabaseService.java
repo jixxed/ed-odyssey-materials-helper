@@ -11,6 +11,7 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
 import io.ebean.Database;
+import io.ebean.InsertOptions;
 import io.ebean.datasource.DataSourceConfig;
 import io.ebean.migration.MigrationConfig;
 import io.ebean.migration.MigrationResource;
@@ -46,13 +47,12 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DatabaseService {
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
-
+    private static final List<String> commonResets = new ArrayList<>();
     private static Database commanderDatabase;
     private static Database commonDatabase;
     private static boolean initialized = false;
     private static boolean initializedCommon = false;
     private static boolean resetCommonDates = false;
-    private static final List<String> commonResets = new ArrayList<>();
     private static boolean resetCommanderDates = false;
 
     public static void init() {
@@ -220,5 +220,12 @@ public class DatabaseService {
         }
 
         return tempDir;
+    }
+
+    public static InsertOptions onConflictUpdate(String column) {
+        return InsertOptions.builder()
+                .onConflictUpdate()
+                .uniqueColumns(column)
+                .build();
     }
 }
