@@ -16,7 +16,7 @@ plugins {
     id 'application'
     id 'io.freefair.lombok' version '9.5.0'
     id 'idea' // optional (to generate IntelliJ IDEA project files)
-    id 'org.beryx.jlink' version '4.0.2'
+    id 'org.beryx.jlink' version '4.1.0'
     id 'org.gradlex.extra-java-module-info'
 }
 
