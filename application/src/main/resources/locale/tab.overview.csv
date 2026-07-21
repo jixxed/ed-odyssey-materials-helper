@@ -21,4 +21,4 @@
 "tab.trader.distance.in.system","({0}Ls ±{1}Ls)","","","({0}sl ±{1}sl)","({0}sl ±{1}sl)","","({0}Св.с ±{1}Св.с)","({0}Ls ±{1}Ls)",""
 "quantity.header.collected","Available","","","Disponible","Disponible","","Доступно","可用",""
 "quantity.header.free","Free space","","","Espacio libre","Espace libre","","Свободно","剩余空间",""
-"storage.type.horizons.name.currency","Currency","","","","","","","",""
+"storage.type.horizons.name.currency","Currency","","","Divisa","","","Валюта","",""
