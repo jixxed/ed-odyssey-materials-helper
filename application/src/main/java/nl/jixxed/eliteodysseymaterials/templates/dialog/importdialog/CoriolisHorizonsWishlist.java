@@ -18,6 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
@@ -55,6 +56,8 @@ public class CoriolisHorizonsWishlist extends DestroyableVBox implements Destroy
     @Override
     public void initComponents() {
         this.getStyleClass().add("wishlist");
+        var warning = LabelBuilder.builder().withStyleClass("warning").withText("notification.imported.coriolis.error.text").build();
+        this.getNodes().add(warning);
         try {
             final CoriolisWishlist coriolisWishlist = OBJECT_MAPPER.readValue(json, CoriolisWishlist.class);
             final List<WishlistBlueprint<HorizonsBlueprintName>> wishlistBlueprintList = coriolisWishlist.getItems().stream().map(coriolisWishlistItem -> {

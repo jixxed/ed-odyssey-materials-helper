@@ -18,6 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
@@ -54,6 +55,8 @@ public class EdsyHorizonsWishlist extends DestroyableVBox implements Destroyable
     @Override
     public void initComponents() {
         this.getStyleClass().add("wishlist");
+        var warning = LabelBuilder.builder().withStyleClass("warning").withText("notification.imported.edsy.error.text").build();
+        this.getNodes().add(warning);
         try {
             final EdsyWishlist edsyWishlist = OBJECT_MAPPER.readValue(json, EdsyWishlist.class);
             final List<WishlistBlueprint<HorizonsBlueprintName>> wishlistBlueprintList = edsyWishlist.getItems().stream().map(edsyWishlistItem -> {

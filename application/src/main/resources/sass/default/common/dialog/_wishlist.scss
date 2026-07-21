@@ -1,4 +1,13 @@
 .wishlist {
+  -fx-spacing: 0.25em;
+  .warning {
+    -fx-text-fill: $text-color-red;
+    -fx-wrap-text: true;
+    -fx-background-color: $background-color-dark;
+    -fx-border-width: 0.05em;
+    -fx-border-color: $border-color-black;
+    -fx-padding: 0.25em;
+  }
   .list {
     @include hvGap(0.25em);
 
