@@ -179,6 +179,22 @@ class OdysseyBlueprintContent extends DestroyableVBox implements DestroyableEven
     }
 
     private void initAsEngineerMission() {
+
+        this.addToWishlist = new AddToWishlistMenuButton();
+        this.countLabel = LabelBuilder.builder()
+                .withStyleClass("wishlist-count")
+                .build();
+        this.countLabel.addBinding(this.countLabel.textProperty(), LocaleService.getStringBinding("blueprint.on.wishlist", 0));
+        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+            updateWishlistsAndCount(commander);
+        });
+        final DestroyableHBox box = BoxBuilder.builder()
+                .withStyleClass("wishlist-count-box")
+                .withNodes(this.countLabel, this.addToWishlist)
+                .buildHBox();
+        HBox.setHgrow(this.addToWishlist, Priority.ALWAYS);
+        this.recipeHeader.getNodes().add(box);
+
         final DestroyableLabel objectivesTitle = LabelBuilder.builder()
                 .withStyleClasses(TITLE_STYLE_CLASS, SPACING)
                 .withText("blueprint.header.objective")

@@ -99,7 +99,7 @@ public class PathService {
         final StarSystem finalCurrentStarSystem1 = currentStarSystem;
         final Set<Engineer> allowedEngineers = Arrays.stream(Engineer.values())
                 .filter(engineer -> engineer.getDistance(finalCurrentStarSystem1) < MAX_ENGINEER_DISTANCE)
-                .filter(engineer -> (isOdyssey) ? APPLICATION_STATE.isEngineerUnlocked(engineer) : APPLICATION_STATE.isEngineerUnlockedExact(engineer))
+                .filter(engineer -> isAvailable(isOdyssey, engineer, wishlistBlueprints))
                 .collect(Collectors.toSet());
         allowedEngineers.add(Engineer.REMOTE_WORKSHOP);
         distinctRecipes.forEach(recipe -> {
@@ -175,6 +175,22 @@ public class PathService {
             sortedPathItems.add(pathItem);
         }
         return sortedPathItems;
+    }
+
+    private static <T extends BlueprintName<T>> boolean isAvailable(boolean isOdyssey, Engineer engineer, final List<? extends WishlistBlueprint<T>> wishlistBlueprints) {
+        boolean unlocked = isOdyssey ? APPLICATION_STATE.isEngineerUnlocked(engineer) : APPLICATION_STATE.isEngineerUnlockedExact(engineer);
+        if (!unlocked) {
+            return isEngineerUnlockOnWishlist(isOdyssey, engineer, wishlistBlueprints);
+        }
+        return unlocked;
+    }
+
+    private static <T extends BlueprintName<T>> boolean isEngineerUnlockOnWishlist(boolean isOdyssey, Engineer engineer, List<? extends WishlistBlueprint<T>> wishlistBlueprints) {
+        if (Engineer.UNKNOWN.equals(engineer) || Engineer.REMOTE_WORKSHOP.equals(engineer) || !Objects.equals(isOdyssey, engineer.isOdyssey())) {
+            return false;
+        }
+        BlueprintName<?> engineerBlueprintName = (isOdyssey) ? OdysseyBlueprintName.forEngineer(engineer) : HorizonsBlueprintName.forEngineer(engineer);
+        return wishlistBlueprints.stream().anyMatch(wishlistBlueprint -> wishlistBlueprint.getRecipeName().equals(engineerBlueprintName));
     }
 
     @SuppressWarnings("unchecked")

@@ -76,8 +76,8 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
             initObjectivesLabel();
             initObjectives();
         }
+        initRecipe();
         if (!this.ingredients.isEmpty() && !this.ingredients.stream().allMatch(ingredient -> ingredient.getType().equals(HorizonsStorageType.OTHER))) {
-            initRecipe();
             initIngredients();
         }
         if (this.blueprint instanceof HorizonsEngineerBlueprint engineerBlueprint) {
@@ -186,6 +186,11 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
     }
 
     private void initIngredients() {
+        final DestroyableLabel materialHeader = LabelBuilder.builder()
+                .withStyleClasses(TITLE_STYLE_CLASS, SPACING)
+                .withText("blueprint.header.material")
+                .build();
+        this.getNodes().add(materialHeader);
         final DestroyableFlowPane ingredientFlow = FlowPaneBuilder.builder()
                 .withStyleClass("ingredient-flow")
                 .withNodes(this.ingredients.stream().filter(ingredient -> !ingredient.getType().equals(HorizonsStorageType.OTHER)).toList())
@@ -275,11 +280,6 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
                 .buildHBox();
         HBox.setHgrow(this.addToWishlist, Priority.ALWAYS);
         this.recipeHeader.getNodes().add(box);
-        final DestroyableLabel materialHeader = LabelBuilder.builder()
-                .withStyleClasses(TITLE_STYLE_CLASS, SPACING)
-                .withText("blueprint.header.material")
-                .build();
-        this.getNodes().add(materialHeader);
     }
 
     private void updateWishlistsAndCount(Commander commander) {

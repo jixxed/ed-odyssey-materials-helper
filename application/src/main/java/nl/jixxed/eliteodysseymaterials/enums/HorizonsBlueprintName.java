@@ -345,7 +345,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
             case HERA_TANI -> ENGINEER_E2;
             case BROO_TARQUIN -> ENGINEER_E2A;
             case TIANA_FORTUNE -> ENGINEER_E2B;
-            case UNKNOWN -> throw new IllegalArgumentException("unknown engineer");
+            case UNKNOWN -> throw new IllegalArgumentException("unknown engineer: " + engineer.name());
             default -> null;
         };
     }
