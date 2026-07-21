@@ -19,7 +19,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.util.Duration;
-import nl.jixxed.eliteodysseymaterials.FXApplication;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
@@ -111,26 +110,26 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
                 .withText("horizons.wishlist.shipbuilder")
                 .withOnAction(_ -> EventService.publish(new HorizonsWishlistOpenShipBuilderEvent()))
                 .build();
-        DestroyableButton edsyButton = ButtonBuilder.builder()
-                .withText("horizons.wishlist.edsy")
-                .withOnAction(_ -> FXApplication.getInstance().getHostServices().showDocument("https://edsy.org"))
-                .build();
-        DestroyableButton coriolisButton = ButtonBuilder.builder()
-                .withText("horizons.wishlist.coriolis")
-                .withOnAction(_ -> FXApplication.getInstance().getHostServices().showDocument("https://coriolis.io"))
-                .build();
+//        DestroyableButton edsyButton = ButtonBuilder.builder()
+//                .withText("horizons.wishlist.edsy")
+//                .withOnAction(_ -> FXApplication.getInstance().getHostServices().showDocument("https://edsy.org"))
+//                .build();
+//        DestroyableButton coriolisButton = ButtonBuilder.builder()
+//                .withText("horizons.wishlist.coriolis")
+//                .withOnAction(_ -> FXApplication.getInstance().getHostServices().showDocument("https://coriolis.io"))
+//                .build();
         final DestroyableTooltip edsyTooltip = TooltipBuilder.builder()
                 .withShowDelay(Duration.millis(100D))
                 .withText("horizons.wishlist.edsy.tooltip")
                 .build();
-        edsyTooltip.install(edsyButton);
+//        edsyTooltip.install(edsyButton);
         final DestroyableTooltip coriolisTooltip = TooltipBuilder.builder()
                 .withShowDelay(Duration.millis(100D))
                 .withText("horizons.wishlist.coriolis.tooltip")
                 .build();
-        coriolisTooltip.install(coriolisButton);
+//        coriolisTooltip.install(coriolisButton);
 
-        this.getNodes().addAll(this.wishlistSelect, this.menuButton, shipBuilderButton, edsyButton, coriolisButton);
+        this.getNodes().addAll(this.wishlistSelect, this.menuButton, shipBuilderButton/*, edsyButton, coriolisButton*/);
     }
 
     private EventHandler<ActionEvent> getExportHandler() {
