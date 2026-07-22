@@ -202,13 +202,13 @@ public class BandChart extends DestroyableHBox implements DestroyableTemplate {
                         .orElse(-1L);
                 return currentBandValue;
             }).orElse(100L);
-            if (band.equals("25%") && currentBand > 25) {
+            if (band.equals("25%") && (currentBand > 25 || currentBand == -1)) {
                 renderer.getDatasetNodes().forEach(dataSetNode -> dataSetNode.setVisible(false));
             }
-            if (band.equals("10%") && currentBand > 10) {
+            if (band.equals("10%") && (currentBand > 10 || currentBand == -1)) {
                 renderer.getDatasetNodes().forEach(dataSetNode -> dataSetNode.setVisible(false));
             }
-            if ((band.startsWith("top")) && currentBand > 0) {
+            if ((band.startsWith("top")) && (currentBand > 0 || currentBand == -1)) {
                 renderer.getDatasetNodes().forEach(dataSetNode -> dataSetNode.setVisible(false));
             }
         } else if (!previouslyEnabledBands.contains(band)) {//subsequent render, set previous selected
