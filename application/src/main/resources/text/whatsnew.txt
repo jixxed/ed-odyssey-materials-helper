@@ -1,3 +1,10 @@
+Version 3.13.12
+-------------
+Fix Encoded material trader title
+Disable overlay from showing at fleetcarrier
+Activate higher bands in band chart if commander achieved those bands
+Fix for infinite ammo maximum being rounded to a very large value
+
 Version 3.13.11
 -------------
 Fix wishlist and inventory export to txt,csv,xls to include quantity multiplication and squadron carrier amounts

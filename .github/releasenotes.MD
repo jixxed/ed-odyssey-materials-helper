@@ -21,7 +21,8 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Fix wishlist and inventory export to txt,csv,xls to include quantity multiplication and squadron carrier amounts
-Update border styling issue in community goals when docked at a market
-Update ship builder thermal tooltips and labels to match ingame behavior
+Fix Encoded material trader title
+Disable overlay from showing at fleetcarrier
+Activate higher bands in band chart if commander achieved those bands
+Fix for infinite ammo maximum being rounded to a very large value
 ```
