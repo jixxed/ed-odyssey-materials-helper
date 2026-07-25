@@ -165,7 +165,7 @@ tasks.register('createSignCert') {
         if(base64.isEmpty()){
             println("base64_pfx is empty")
         }else {
-            byte[] decoded = Base64.getDecoder().decode(base64)
+            byte[] decoded = Base64.getUrlDecoder().decode(base64)
 
             new File("./edomh_codesigning.pfx").withOutputStream { stream ->
                 stream.write(decoded)
