@@ -167,7 +167,7 @@ tasks.register('createSignCert') {
     doLast {
         String base64 = System.getProperty("base64_pfx") ?: ""
 
-        byte[] decoded = Base64.getDecoder().decode(base64)
+        byte[] decoded = Base64.getUrlDecoder().decode(base64)
 
         new File("./edomh_codesigning.pfx").withOutputStream { stream ->
             stream.write(decoded)
