@@ -437,6 +437,8 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
             return CARGO_RACK;
         } else if (nameLowerCase.startsWith("int_fueltank")) {
             return FUEL_TANK;
+        } else if (nameLowerCase.startsWith("int_modulereinforcement")) {
+            return MODULE_REINFORCEMENT_PACKAGE;
         }
         throw new IllegalArgumentException("Unknown module name: " + internalModuleName);
     }
