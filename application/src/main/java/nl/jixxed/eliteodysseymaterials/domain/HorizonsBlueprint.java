@@ -53,6 +53,9 @@ public class HorizonsBlueprint implements Blueprint<HorizonsBlueprintName> {
     public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final Map<? extends Material, Integer> materials) {
         this(horizonsBlueprintName, HorizonsBlueprintType.ENGINEER, HorizonsBlueprintGrade.NONE, materials, Collections.emptyMap(), List.of());
     }
+    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final Map<? extends Material, Integer> materials, final List<Engineer> engineers) {
+        this(horizonsBlueprintName, HorizonsBlueprintType.ENGINEER, HorizonsBlueprintGrade.NONE, materials, Collections.emptyMap(), engineers);
+    }
 
     public HorizonsBlueprint(final boolean isMerc, final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<? extends Material, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers) {
         this(horizonsBlueprintName, horizonsBlueprintType, HorizonsBlueprintGrade.NONE, materials, modifiers, engineers, GameVersion.LEGACY, false, isMerc);

@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class HorizonsEngineerBlueprint extends HorizonsBlueprint {
+public class HorizonsEngineerBlueprint extends HorizonsBlueprint implements EngineeringBlueprint<HorizonsBlueprintName> {
     @Getter
     private final List<String> other;
     @Getter
@@ -37,7 +37,7 @@ public class HorizonsEngineerBlueprint extends HorizonsBlueprint {
     }
 
     public HorizonsEngineerBlueprint(final Engineer engineer, final HorizonsBlueprintName blueprintName, final Map<? extends HorizonsMaterial, Integer> materials, final List<String> other, final List<String> leveling, final Supplier<Boolean> isCompletedSupplier) {
-        super(blueprintName, materials);
+        super(blueprintName, materials, List.of(engineer));
         this.engineer = engineer;
         this.other = other;
         this.leveling = leveling;

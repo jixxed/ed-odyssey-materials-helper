@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.EngineerBlueprint;
-import nl.jixxed.eliteodysseymaterials.domain.ModuleBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.OdysseyEngineerBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.OdysseyModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.UpgradeBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.Craftability;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
@@ -27,14 +27,14 @@ public class BlueprintHelper {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
     public static Craftability getCraftabilityForModuleOrUpgradeRecipe(final OdysseyBlueprintName odysseyBlueprintName) {
-        if (!(OdysseyBlueprintConstants.getRecipe(odysseyBlueprintName) instanceof ModuleBlueprint) && !(OdysseyBlueprintConstants.getRecipe(odysseyBlueprintName) instanceof UpgradeBlueprint)) {
+        if (!(OdysseyBlueprintConstants.getRecipe(odysseyBlueprintName) instanceof OdysseyModuleBlueprint) && !(OdysseyBlueprintConstants.getRecipe(odysseyBlueprintName) instanceof UpgradeBlueprint)) {
             return Craftability.NOT_CRAFTABLE;
         }
         return OdysseyBlueprintConstants.getCraftability(1, odysseyBlueprintName);
     }
 
     public static boolean isCompletedEngineerRecipe(final OdysseyBlueprintName odysseyBlueprintName) {
-        return OdysseyBlueprintConstants.getRecipe(odysseyBlueprintName) instanceof EngineerBlueprint engineerRecipe && engineerRecipe.isCompleted();
+        return OdysseyBlueprintConstants.getRecipe(odysseyBlueprintName) instanceof OdysseyEngineerBlueprint engineerRecipe && engineerRecipe.isCompleted();
     }
 
     public static boolean isCompletedEngineerRecipe(final HorizonsBlueprintName horizonsBlueprintName) {

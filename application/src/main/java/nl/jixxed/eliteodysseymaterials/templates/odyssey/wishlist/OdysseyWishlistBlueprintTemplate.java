@@ -117,7 +117,7 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableVBox
                 .build();
         removeBlueprintTooltip.install(removeBlueprint);
 
-        if (this.blueprint instanceof ModuleBlueprint moduleRecipe) {
+        if (this.blueprint instanceof OdysseyModuleBlueprint moduleRecipe) {
             tooltip = TooltipBuilder.builder()
                     .withStyleClass("wishlist-tooltip")
                     .withText(LocaleService.getToolTipStringBinding(moduleRecipe, "tab.wishlist.blueprint.tooltip"))

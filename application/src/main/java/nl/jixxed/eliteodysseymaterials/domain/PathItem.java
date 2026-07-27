@@ -55,11 +55,17 @@ public class PathItem<E extends BlueprintName<E>> {
 
     public String getRecipesString() {
         return this.recipes.entrySet().stream().map(recipe -> {
-            if (recipe.getKey() instanceof ModuleBlueprint moduleBlueprint) {
-                return LocaleService.getLocalizedStringForCurrentLocale(moduleBlueprint.getBlueprintName().getLocalizationKey()) + ((recipe.getValue() > 1) ? "(" + recipe.getValue() + ")" : "");
+            if (recipe.getKey() instanceof OdysseyModuleBlueprint odysseyModuleBlueprint) {
+                return LocaleService.getLocalizedStringForCurrentLocale(odysseyModuleBlueprint.getBlueprintName().getLocalizationKey()) + ((recipe.getValue() > 1) ? "(" + recipe.getValue() + ")" : "");
+            }
+            if (recipe.getKey() instanceof OdysseyEngineerBlueprint engineerBlueprint) {
+                return LocaleService.getLocalizedStringForCurrentLocale(engineerBlueprint.getBlueprintName().getLocalizationKey()) + ((recipe.getValue() > 1) ? "(" + recipe.getValue() + ")" : "");
             }
             if (recipe.getKey() instanceof HorizonsModuleBlueprint horizonsModuleBlueprint) {
                 return LocaleService.getLocalizedStringForCurrentLocale(horizonsModuleBlueprint.getHorizonsBlueprintName().getLocalizationKey()) + ((recipe.getValue() > 1) ? "(" + recipe.getValue() + ")" : "");
+            }
+            if (recipe.getKey() instanceof HorizonsEngineerBlueprint engineerBlueprint) {
+                return LocaleService.getLocalizedStringForCurrentLocale(engineerBlueprint.getHorizonsBlueprintName().getLocalizationKey()) + ((recipe.getValue() > 1) ? "(" + recipe.getValue() + ")" : "");
             }
             return "";
         }).collect(Collectors.joining(", "));
@@ -67,14 +73,20 @@ public class PathItem<E extends BlueprintName<E>> {
 
     public Double getAndSetDistanceToClosestEngineer(final StarSystem starSystem) {
         final List<Engineer> potentialEngineers = this.getEngineers().stream().filter(eng -> this.recipes.keySet().stream().allMatch(moduleRecipe -> {
-            if (moduleRecipe instanceof ModuleBlueprint moduleBlueprint) {
+            if (moduleRecipe instanceof OdysseyModuleBlueprint moduleBlueprint) {
                 return moduleBlueprint.getEngineers().contains(eng);
+            }
+            if (moduleRecipe instanceof OdysseyEngineerBlueprint engineerBlueprint) {
+                return engineerBlueprint.getEngineers().contains(eng);
             }
             if (moduleRecipe instanceof HorizonsModuleBlueprint horizonsModuleBlueprint) {
                 return horizonsModuleBlueprint.getEngineers().contains(eng);
             }
             if (moduleRecipe instanceof HorizonsExperimentalEffectBlueprint experimentalEffectBlueprint) {
                 return experimentalEffectBlueprint.getEngineers().contains(eng);
+            }
+            if (moduleRecipe instanceof HorizonsEngineerBlueprint engineerBlueprint) {
+                return engineerBlueprint.getEngineers().contains(eng);
             }
             return false;
         })).toList();

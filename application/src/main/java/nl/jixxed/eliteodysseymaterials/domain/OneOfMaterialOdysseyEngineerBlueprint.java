@@ -20,15 +20,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class OneOfMaterialEngineerBlueprint extends EngineerBlueprint {
+public class OneOfMaterialOdysseyEngineerBlueprint extends OdysseyEngineerBlueprint {
 
 
-    public OneOfMaterialEngineerBlueprint(final BlueprintName<OdysseyBlueprintName> blueprintName, final Map<? extends OdysseyMaterial, Integer> materials, final Supplier<Boolean> isCompletedSupplier) {
-        super(blueprintName, materials, isCompletedSupplier);
+    public OneOfMaterialOdysseyEngineerBlueprint(final BlueprintName<OdysseyBlueprintName> blueprintName, final Map<? extends OdysseyMaterial, Integer> materials, final Supplier<Boolean> isCompletedSupplier, final List<Engineer> unlockAtEngineer) {
+        super(blueprintName, materials, isCompletedSupplier, unlockAtEngineer);
 
     }
 
-    public OneOfMaterialEngineerBlueprint(final BlueprintName<OdysseyBlueprintName> blueprintName, final List<String> other, final Supplier<Boolean> isCompletedSupplier) {
+    public OneOfMaterialOdysseyEngineerBlueprint(final BlueprintName<OdysseyBlueprintName> blueprintName, final List<String> other, final Supplier<Boolean> isCompletedSupplier) {
         super(blueprintName, other, isCompletedSupplier);
 
     }

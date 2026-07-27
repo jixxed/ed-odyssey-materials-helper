@@ -16,13 +16,13 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-class EngineerBlueprintTest {
+class OdysseyEngineerBlueprintTest {
 
     @Test
     void isCompleted() {
-        final EngineerBlueprint engineerRecipeTrue = new EngineerBlueprint(OdysseyBlueprintName.ENGINEER_B1, List.of(), () -> true);
+        final OdysseyEngineerBlueprint engineerRecipeTrue = new OdysseyEngineerBlueprint(OdysseyBlueprintName.ENGINEER_B1, List.of(), () -> true);
         Assertions.assertTrue(engineerRecipeTrue.isCompleted());
-        final EngineerBlueprint engineerRecipeFalse = new EngineerBlueprint(OdysseyBlueprintName.ENGINEER_B1, List.of(), () -> false);
+        final OdysseyEngineerBlueprint engineerRecipeFalse = new OdysseyEngineerBlueprint(OdysseyBlueprintName.ENGINEER_B1, List.of(), () -> false);
         Assertions.assertFalse(engineerRecipeFalse.isCompleted());
     }
 }

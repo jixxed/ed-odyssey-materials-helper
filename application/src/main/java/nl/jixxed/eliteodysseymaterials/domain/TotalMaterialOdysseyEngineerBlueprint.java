@@ -11,10 +11,7 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
 import lombok.EqualsAndHashCode;
-import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
-import nl.jixxed.eliteodysseymaterials.enums.Craftability;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 
 import java.util.List;
@@ -22,17 +19,17 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class TotalMaterialEngineerBlueprint extends EngineerBlueprint {
+public class TotalMaterialOdysseyEngineerBlueprint extends OdysseyEngineerBlueprint {
     private final Integer totalRequired;
 
-    public TotalMaterialEngineerBlueprint(final BlueprintName<OdysseyBlueprintName> blueprintName, final Map<? extends OdysseyMaterial, Integer> materials, final Supplier<Boolean> isCompletedSupplier, final Integer totalRequired) {
-        super(blueprintName, materials, isCompletedSupplier);
+    public TotalMaterialOdysseyEngineerBlueprint(final BlueprintName<OdysseyBlueprintName> blueprintName, final Map<? extends OdysseyMaterial, Integer> materials, final Supplier<Boolean> isCompletedSupplier, final Integer totalRequired, final List<Engineer> unlockAtEngineer) {
+        super(blueprintName, materials, isCompletedSupplier, unlockAtEngineer);
         this.totalRequired = totalRequired;
 
 
     }
 
-    public TotalMaterialEngineerBlueprint(final BlueprintName<OdysseyBlueprintName> blueprintName, final List<String> other, final Supplier<Boolean> isCompletedSupplier, final Integer totalRequired) {
+    public TotalMaterialOdysseyEngineerBlueprint(final BlueprintName<OdysseyBlueprintName> blueprintName, final List<String> other, final Supplier<Boolean> isCompletedSupplier, final Integer totalRequired) {
         super(blueprintName, other, isCompletedSupplier);
 
 

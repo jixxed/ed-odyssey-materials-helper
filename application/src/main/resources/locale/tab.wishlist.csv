@@ -73,3 +73,4 @@
 "wishlist.blueprint.odyssey.title.weapon.upgrade.manticore","Manticore (plasma)","","","Manticore (plasma)","Manticore (plasma)","","Manticore (плазма)","Manticore (等离子)","Manticore (plasma)"
 "wishlist.blueprint.odyssey.title.weapon.module","Weapon module","","","Módulos de Arma","Module d’arme","","Оружейный модуль","武器模组","იარაღის მოდული"
 "wishlist.blueprint.odyssey.title.suit.module","Suit module","","","Módulo de traje","Module de combinaison","","Модуль костюма","套装模组","სკაფანდრის მოდული"
+"tab.wishlist.travel.path.column.blueprints.blueprint.horizons.engineer","{0}{1,choice,1#|1< ({1})}","","","","","","","",""

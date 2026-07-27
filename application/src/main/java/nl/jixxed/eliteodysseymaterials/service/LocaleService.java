@@ -21,7 +21,7 @@ import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsEngineeringBlueprint;
-import nl.jixxed.eliteodysseymaterials.domain.ModuleBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.OdysseyModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
@@ -111,7 +111,7 @@ public class LocaleService {
         return ObservableResourceFactory.getStringBinding(function);
     }
 
-    public static synchronized StringBinding getToolTipStringBinding(final ModuleBlueprint recipe, final String localizationKey) {
+    public static synchronized StringBinding getToolTipStringBinding(final OdysseyModuleBlueprint recipe, final String localizationKey) {
         return ObservableResourceFactory.getStringBinding(() -> MessageFormat.format(ObservableResourceFactory.getResources().getString(localizationKey).translateEscapes(), recipe.getEngineers().stream().map(engineer -> ObservableResourceFactory.getResources().getString(engineer.getLocalizationKey())).collect(Collectors.joining(", "))));
     }
 

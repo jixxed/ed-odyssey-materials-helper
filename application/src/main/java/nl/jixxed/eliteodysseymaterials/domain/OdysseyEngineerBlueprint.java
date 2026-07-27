@@ -21,20 +21,23 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class EngineerBlueprint extends OdysseyBlueprint {
+public class OdysseyEngineerBlueprint extends OdysseyBlueprint implements EngineeringBlueprint<OdysseyBlueprintName> {
     private final List<String> other;
     private final Supplier<Boolean> isCompletedSupplier;
+    private final List<Engineer> unlockAtEngineer;
 
-    public EngineerBlueprint(final BlueprintName<OdysseyBlueprintName> blueprintName, final Map<? extends OdysseyMaterial, Integer> materials, final Supplier<Boolean> isCompletedSupplier) {
+    public OdysseyEngineerBlueprint(final BlueprintName<OdysseyBlueprintName> blueprintName, final Map<? extends OdysseyMaterial, Integer> materials, final Supplier<Boolean> isCompletedSupplier, final List<Engineer> unlockAtEngineer) {
         super(blueprintName, materials);
         this.other = Collections.emptyList();
         this.isCompletedSupplier = isCompletedSupplier;
+        this.unlockAtEngineer = unlockAtEngineer;
     }
 
-    public EngineerBlueprint(final BlueprintName<OdysseyBlueprintName> blueprintName, final List<String> other, final Supplier<Boolean> isCompletedSupplier) {
+    public OdysseyEngineerBlueprint(final BlueprintName<OdysseyBlueprintName> blueprintName, final List<String> other, final Supplier<Boolean> isCompletedSupplier) {
         super(blueprintName, Collections.emptyMap());
         this.other = other;
         this.isCompletedSupplier = isCompletedSupplier;
+        this.unlockAtEngineer = List.of();
     }
 
     public List<String> getOther() {
@@ -63,5 +66,10 @@ public class EngineerBlueprint extends OdysseyBlueprint {
 
     public String getTipsLocalizationKey() {
         return "blueprint.tips." + this.getBlueprintName().lcName();
+    }
+
+    @Override
+    public List<Engineer> getEngineers() {
+        return unlockAtEngineer;
     }
 }

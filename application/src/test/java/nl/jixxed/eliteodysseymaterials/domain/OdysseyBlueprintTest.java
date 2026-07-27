@@ -21,7 +21,7 @@ class OdysseyBlueprintTest {
 
     @Test
     void getMaterialCollection() {
-        final OdysseyBlueprint blueprint = new ModuleBlueprint(OdysseyBlueprintName.ADDED_MELEE_DAMAGE, Map.of(
+        final OdysseyBlueprint blueprint = new OdysseyModuleBlueprint(OdysseyBlueprintName.ADDED_MELEE_DAMAGE, Map.of(
                 Good.IONISEDGAS, 10,
                 Data.BIOMETRICDATA, 5,
                 Data.COMBATANTPERFORMANCE, 10,

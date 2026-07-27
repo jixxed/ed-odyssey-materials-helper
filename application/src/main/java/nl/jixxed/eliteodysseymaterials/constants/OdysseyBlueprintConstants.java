@@ -26,9 +26,9 @@ public abstract class OdysseyBlueprintConstants {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final Map<OdysseyBlueprintName, UpgradeBlueprint> SUIT_UPGRADES = new EnumMap<>(OdysseyBlueprintName.class);
     private static final Map<OdysseyBlueprintName, UpgradeBlueprint> WEAPON_UPGRADES = new EnumMap<>(OdysseyBlueprintName.class);
-    private static final Map<OdysseyBlueprintName, ModuleBlueprint> SUIT_MODULE_BLUEPRINTS = new EnumMap<>(OdysseyBlueprintName.class);
-    private static final Map<OdysseyBlueprintName, ModuleBlueprint> WEAPON_MODULE_BLUEPRINTS = new EnumMap<>(OdysseyBlueprintName.class);
-    private static final Map<OdysseyBlueprintName, EngineerBlueprint> ENGINEER_UNLOCK_REQUIREMENTS = new EnumMap<>(OdysseyBlueprintName.class);
+    private static final Map<OdysseyBlueprintName, OdysseyModuleBlueprint> SUIT_MODULE_BLUEPRINTS = new EnumMap<>(OdysseyBlueprintName.class);
+    private static final Map<OdysseyBlueprintName, OdysseyModuleBlueprint> WEAPON_MODULE_BLUEPRINTS = new EnumMap<>(OdysseyBlueprintName.class);
+    private static final Map<OdysseyBlueprintName, OdysseyEngineerBlueprint> ENGINEER_UNLOCK_REQUIREMENTS = new EnumMap<>(OdysseyBlueprintName.class);
     public static final Map<BlueprintCategory, Map<OdysseyBlueprintName, ? extends OdysseyBlueprint>> RECIPES = Map.of(
             BlueprintCategory.SUIT_GRADES, SUIT_UPGRADES,
             BlueprintCategory.WEAPON_GRADES, WEAPON_UPGRADES,
@@ -76,8 +76,8 @@ public abstract class OdysseyBlueprintConstants {
 
     public static Craftability getCraftability(final int quantity, final OdysseyBlueprintName odysseyBlueprintName) {
         final OdysseyBlueprint blueprint = OdysseyBlueprintConstants.getRecipe(odysseyBlueprintName);
-        if (blueprint instanceof EngineerBlueprint engineerBlueprint) {
-            return engineerBlueprint.getCraftability();
+        if (blueprint instanceof OdysseyEngineerBlueprint odysseyEngineerBlueprint) {
+            return odysseyEngineerBlueprint.getCraftability();
         } else {
             final AtomicBoolean hasGoods = new AtomicBoolean(true);
             final AtomicBoolean hasData = new AtomicBoolean(true);
@@ -144,61 +144,66 @@ public abstract class OdysseyBlueprintConstants {
         return Arrays.stream(irrelevantValues.split(",")).filter(string -> !string.isEmpty()).map(OdysseyMaterial::subtypeForName).anyMatch(mat -> mat.equals(odysseyMaterial));
     }
 
-    public static Map<OdysseyBlueprintName, ModuleBlueprint> getSuitModuleBlueprints() {
+    public static Map<OdysseyBlueprintName, OdysseyModuleBlueprint> getSuitModuleBlueprints() {
         return SUIT_MODULE_BLUEPRINTS;
     }
 
-    public static Map<OdysseyBlueprintName, ModuleBlueprint> getWeaponModuleBlueprints() {
+    public static Map<OdysseyBlueprintName, OdysseyModuleBlueprint> getWeaponModuleBlueprints() {
         return WEAPON_MODULE_BLUEPRINTS;
     }
 
     static {
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_A1, new EngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_A1, new OdysseyEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_A1,
                 List.of("ingredient.a1.fly"),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.DOMINO_GREEN)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_A2, new EngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_A2, new OdysseyEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_A2,
                 Map.of(
                         Good.PUSH, 5
                 ),
-                () -> APPLICATION_STATE.isEngineerKnown(Engineer.KIT_FOWLER)
+                () -> APPLICATION_STATE.isEngineerKnown(Engineer.KIT_FOWLER),
+                List.of(Engineer.DOMINO_GREEN)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_A3, new EngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_A3, new OdysseyEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_A3,
                 Map.of(
                         Data.OPINIONPOLLS, 5
                 ),
-                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.KIT_FOWLER)
+                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.KIT_FOWLER),
+                List.of()
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_A4, new EngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_A4, new OdysseyEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_A4,
                 Map.of(
                         Good.SURVEILLANCEEQUIPMENT, 5
                 ),
-                () -> APPLICATION_STATE.isEngineerKnown(Engineer.YARDEN_BOND)
+                () -> APPLICATION_STATE.isEngineerKnown(Engineer.YARDEN_BOND),
+                List.of(Engineer.KIT_FOWLER)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_A5, new EngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_A5, new OdysseyEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_A5,
                 Map.of(
                         Data.SMEARCAMPAIGNPLANS, 5
                 ),
-                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.YARDEN_BOND)
+                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.YARDEN_BOND),
+                List.of()
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_B1, new EngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_B1, new OdysseyEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_B1,
                 List.of("ingredient.b1.conflict"),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.HERO_FERRARI)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_B2, new EngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_B2, new OdysseyEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_B2,
                 Map.of(
                         Data.SETTLEMENTDEFENCEPLANS, 5
                 ),
-                () -> APPLICATION_STATE.isEngineerKnown(Engineer.WELLINGTON_BECK)
+                () -> APPLICATION_STATE.isEngineerKnown(Engineer.WELLINGTON_BECK),
+                List.of(Engineer.HERO_FERRARI)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_B3, new TotalMaterialEngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_B3, new TotalMaterialOdysseyEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_B3,
                 Map.of(
                         Data.CLASSICENTERTAINMENT, 15,
@@ -206,45 +211,49 @@ public abstract class OdysseyBlueprintConstants {
                         Data.CATMEDIA, 15
                 ),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.WELLINGTON_BECK),
-                15
+                15,
+                List.of()
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_B4, new EngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_B4, new OdysseyEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_B4,
                 Map.of(
                         Good.INSIGHTENTERTAINMENTSUITE, 5
                 ),
-                () -> APPLICATION_STATE.isEngineerKnown(Engineer.UMA_LASZLO)
+                () -> APPLICATION_STATE.isEngineerKnown(Engineer.UMA_LASZLO),
+                List.of(Engineer.WELLINGTON_BECK)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_B5, new EngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_B5, new OdysseyEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_B5,
                 List.of("ingredient.b5.sirius"),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.UMA_LASZLO)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_C1, new EngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_C1, new OdysseyEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_C1,
                 List.of("ingredient.c1.restore"),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.JUDE_NAVARRO)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_C2, new EngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_C2, new OdysseyEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_C2,
                 Map.of(
                         Good.GENETICREPAIRMEDS, 5
                 ),
-                () -> APPLICATION_STATE.isEngineerKnown(Engineer.TERRA_VELASQUEZ)
+                () -> APPLICATION_STATE.isEngineerKnown(Engineer.TERRA_VELASQUEZ),
+                List.of(Engineer.JUDE_NAVARRO)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_C3, new EngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_C3, new OdysseyEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_C3,
                 List.of("ingredient.c3.covert"),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.TERRA_VELASQUEZ)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_C4, new EngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_C4, new OdysseyEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_C4,
                 Map.of(
                         Data.FINANCIALPROJECTIONS, 15
                 ),
-                () -> APPLICATION_STATE.isEngineerKnown(Engineer.ODEN_GEIGER)
+                () -> APPLICATION_STATE.isEngineerKnown(Engineer.ODEN_GEIGER),
+                List.of(Engineer.TERRA_VELASQUEZ)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_C5, new TotalMaterialEngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_C5, new TotalMaterialOdysseyEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_C5,
                 Map.of(
                         Good.GENETICSAMPLE, 20,
@@ -252,44 +261,48 @@ public abstract class OdysseyBlueprintConstants {
                         Data.GENETICRESEARCH, 20
                 ),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.ODEN_GEIGER),
-                20
+                20,
+                List.of()
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_D1_1, new EngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_D1_1, new OdysseyEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_D1_1,
                 List.of("ingredient.d1.1.colonia.rep"),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.BALTANOS)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_D1_2, new TotalMaterialEngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_D1_2, new TotalMaterialOdysseyEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_D1_2,
                 Map.of(
                         Data.CULINARYRECIPES, 10,
                         Data.COCKTAILRECIPES, 10
                 ),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.ROSA_DAYETTE),
-                10
+                10,
+                List.of()
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_D1_3, new EngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_D1_3, new OdysseyEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_D1_3,
                 List.of("ingredient.d1.3.colonia.travel"),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.ELEANOR_BRESA)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_D2, new OneOfMaterialEngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_D2, new OneOfMaterialOdysseyEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_D2,
                 Map.of(
                         Data.FACTIONASSOCIATES, 10,
                         Data.MANUFACTURINGINSTRUCTIONS, 10,
                         Data.DIGITALDESIGNS, 10
                 ),
-                () -> APPLICATION_STATE.isEngineerKnown(Engineer.YI_SHEN)
+                () -> APPLICATION_STATE.isEngineerKnown(Engineer.YI_SHEN),
+                List.of(Engineer.ROSA_DAYETTE, Engineer.BALTANOS, Engineer.ELEANOR_BRESA)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_D3, new EngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_D3, new OdysseyEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_D3,
                 Map.of(
                         Data.FACTIONASSOCIATES, 10,
                         Data.MANUFACTURINGINSTRUCTIONS, 10,
                         Data.DIGITALDESIGNS, 10
                 ),
-                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.YI_SHEN)
+                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.YI_SHEN),
+                List.of(Engineer.ROSA_DAYETTE, Engineer.BALTANOS, Engineer.ELEANOR_BRESA)
         ));
         SUIT_UPGRADES.put(OdysseyBlueprintName.MAVERICK_SUIT_GRADE_1_2, new UpgradeBlueprint(
                 OdysseyBlueprintName.MAVERICK_SUIT_GRADE_1_2,
@@ -519,7 +532,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.EXPLOSIVE_DAMAGE_RESISTANCE, "50%"//OK
                 )
         ));
-        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.ADDED_MELEE_DAMAGE, new ModuleBlueprint(
+        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.ADDED_MELEE_DAMAGE, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.ADDED_MELEE_DAMAGE,
                 Map.of(
                         Data.COMBATTRAININGMATERIAL, 5,
@@ -532,7 +545,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.FISTS_MELEE_DAMAGE_MULTIPLIER, "+150%"
                 )
         ));
-        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.COMBAT_MOVEMENT_SPEED, new ModuleBlueprint(
+        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.COMBAT_MOVEMENT_SPEED, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.COMBAT_MOVEMENT_SPEED,
                 Map.of(
                         Data.EVACUATIONPROTOCOLS, 5,
@@ -544,7 +557,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.MOVEMENT_SPEED_PENALTY, "-100%"
                 )
         ));
-        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.DAMAGE_RESISTANCE, new ModuleBlueprint(
+        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.DAMAGE_RESISTANCE, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.DAMAGE_RESISTANCE,
                 Map.of(
                         Data.WEAPONINVENTORY, 5,
@@ -560,7 +573,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.THERMAL_DAMAGE_REDUCTION, "+10%"
                 )
         ));
-        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.ENHANCED_TRACKING, new ModuleBlueprint(
+        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.ENHANCED_TRACKING, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.ENHANCED_TRACKING,
                 Map.of(
                         Data.TOPOGRAPHICALSURVEYS, 5,
@@ -574,7 +587,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.LOS_ANALYSIS_TIME, "-100%"
                 )
         ));
-        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.EXTRA_AMMO_CAPACITY, new ModuleBlueprint(
+        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.EXTRA_AMMO_CAPACITY, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.EXTRA_AMMO_CAPACITY,
                 Map.of(
                         Data.RECYCLINGLOGS, 8,
@@ -586,7 +599,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.AMMO_CAPACITY_MULTIPLIER, "+50%"
                 )
         ));
-        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.EXTRA_BACKPACK_CAPACITY, new ModuleBlueprint(
+        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.EXTRA_BACKPACK_CAPACITY, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.EXTRA_BACKPACK_CAPACITY,
                 Map.of(
                         Data.WEAPONINVENTORY, 5,
@@ -601,7 +614,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.BACKPACK_DATA_CAPACITY, "+100%"
                 )
         ));
-        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.FASTER_SHIELD_REGEN, new ModuleBlueprint(
+        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.FASTER_SHIELD_REGEN, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.FASTER_SHIELD_REGEN,
                 Map.of(
                         Data.REACTOROUTPUTREVIEW, 5,
@@ -613,7 +626,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.SHIELD_REGENERATION_RATE, "+25%"
                 )
         ));
-        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.IMPROVED_BATTERY_CAPACITY, new ModuleBlueprint(
+        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.IMPROVED_BATTERY_CAPACITY, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.IMPROVED_BATTERY_CAPACITY,
                 Map.of(
                         Data.REACTOROUTPUTREVIEW, 5,
@@ -626,7 +639,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.BATTERY_ENERGY_CAPACITY, "+50%"
                 )
         ));
-        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.IMPROVED_JUMP_ASSIST, new ModuleBlueprint(
+        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.IMPROVED_JUMP_ASSIST, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.IMPROVED_JUMP_ASSIST,
                 Map.of(
                         Good.GMEDS, 5,
@@ -640,7 +653,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.JUMP_ASSIST_BATTERY_CONSUMPTION, "-50%"
                 )
         ));
-        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.INCREASED_AIR_RESERVES, new ModuleBlueprint(
+        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.INCREASED_AIR_RESERVES, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.INCREASED_AIR_RESERVES,
                 Map.of(
                         Data.PHARMACEUTICALPATENTS, 3,
@@ -652,7 +665,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.AIR_CAPACITY, "+400%"
                 )
         ));
-        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.INCREASED_SPRINT_DURATION, new ModuleBlueprint(
+        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.INCREASED_SPRINT_DURATION, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.INCREASED_SPRINT_DURATION,
                 Map.of(
                         Data.TROOPDEPLOYMENTRECORDS, 3,
@@ -665,7 +678,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.SPRINT_DURATION, "+100%"
                 )
         ));
-        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.NIGHT_VISION, new ModuleBlueprint(
+        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.NIGHT_VISION, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.NIGHT_VISION,
                 Map.of(
                         Good.SURVEILLANCEEQUIPMENT, 5,
@@ -676,7 +689,7 @@ public abstract class OdysseyBlueprintConstants {
                 ), List.of(Engineer.ODEN_GEIGER, Engineer.YI_SHEN),
                 Collections.emptyMap()
         ));
-        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.QUIETER_FOOTSTEPS, new ModuleBlueprint(
+        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.QUIETER_FOOTSTEPS, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.QUIETER_FOOTSTEPS,
                 Map.of(
                         Data.SETTLEMENTASSAULTPLANS, 3,
@@ -689,7 +702,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.FOOTSTEP_AUDIBLE_RANGE_MULTIPLIER, "-50%"
                 )
         ));
-        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.REDUCED_TOOL_BATTERY_CONSUMPTION, new ModuleBlueprint(
+        SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.REDUCED_TOOL_BATTERY_CONSUMPTION, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.REDUCED_TOOL_BATTERY_CONSUMPTION,
                 Map.of(
                         Data.REACTOROUTPUTREVIEW, 5,
@@ -864,7 +877,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "4"
                 )
         ));
-        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.AUDIO_MASKING, new ModuleBlueprint(
+        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.AUDIO_MASKING, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.AUDIO_MASKING,
                 Map.of(
                         Data.AUDIOLOGS, 3,
@@ -874,7 +887,7 @@ public abstract class OdysseyBlueprintConstants {
                         Asset.CIRCUITBOARD, 3
                 ), List.of(Engineer.YARDEN_BOND, Engineer.YI_SHEN)
         ));
-        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.FASTER_HANDLING, new ModuleBlueprint(
+        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.FASTER_HANDLING, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.FASTER_HANDLING,
                 Map.of(
                         Data.OPERATIONALMANUAL, 5,
@@ -886,7 +899,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.HANDLING_SPEED, "+30-50%"
                 )
         ));
-        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.GREATER_RANGE_KINETIC, new ModuleBlueprint(
+        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.GREATER_RANGE_KINETIC, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.GREATER_RANGE_KINETIC,
                 Map.of(
                         Data.BALLISTICSDATA, 10,
@@ -900,7 +913,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.WEAPON_EFFECTIVE_RANGE, "+50%"
                 )
         ));
-        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.GREATER_RANGE_LASER, new ModuleBlueprint(
+        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.GREATER_RANGE_LASER, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.GREATER_RANGE_LASER,
                 Map.of(
                         Data.STELLARACTIVITYLOGS, 5,
@@ -913,7 +926,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.WEAPON_EFFECTIVE_RANGE, "+50%"
                 )
         ));
-        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.GREATER_RANGE_PLASMA, new ModuleBlueprint(
+        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.GREATER_RANGE_PLASMA, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.GREATER_RANGE_PLASMA,
                 Map.of(
                         Data.CHEMICALFORMULAE, 10,
@@ -927,7 +940,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.WEAPON_EFFECTIVE_RANGE, "+50%"
                 )
         ));
-        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HEADSHOT_DAMAGE_KINETIC, new ModuleBlueprint(
+        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HEADSHOT_DAMAGE_KINETIC, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.HEADSHOT_DAMAGE_KINETIC,
                 Map.of(
                         Data.WEAPONTESTDATA, 10,
@@ -940,7 +953,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.HEADSHOT_DAMAGE_MULTIPLIER, "+50%"
                 )
         ));
-        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HEADSHOT_DAMAGE_LASER, new ModuleBlueprint(
+        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HEADSHOT_DAMAGE_LASER, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.HEADSHOT_DAMAGE_LASER,
                 Map.of(
                         Data.SPECTRALANALYSISDATA, 5,
@@ -953,7 +966,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.HEADSHOT_DAMAGE_MULTIPLIER, "+50%"
                 )
         ));
-        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HEADSHOT_DAMAGE_PLASMA, new ModuleBlueprint(
+        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HEADSHOT_DAMAGE_PLASMA, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.HEADSHOT_DAMAGE_PLASMA,
                 Map.of(
                         Data.CHEMICALEXPERIMENTDATA, 10,
@@ -966,7 +979,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.HEADSHOT_DAMAGE_MULTIPLIER, "+50%"
                 )
         ));
-        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HIGHER_ACCURACY_KINETIC, new ModuleBlueprint(
+        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HIGHER_ACCURACY_KINETIC, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.HIGHER_ACCURACY_KINETIC,
                 Map.of(
                         Data.EXTRACTIONYIELDDATA, 10,
@@ -979,7 +992,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.HIP_FIRE_ACCURACY, "40-43%"
                 )
         ));
-        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HIGHER_ACCURACY_LASER, new ModuleBlueprint(
+        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HIGHER_ACCURACY_LASER, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.HIGHER_ACCURACY_LASER,
                 Map.of(
                         Data.RADIOACTIVITYDATA, 3,
@@ -992,7 +1005,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.HIP_FIRE_ACCURACY, "40-43%"
                 )
         ));
-        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HIGHER_ACCURACY_PLASMA, new ModuleBlueprint(
+        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HIGHER_ACCURACY_PLASMA, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.HIGHER_ACCURACY_PLASMA,
                 Map.of(
                         Data.CHEMICALPATENTS, 5,
@@ -1005,7 +1018,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.HIP_FIRE_ACCURACY, "40-43%"
                 )
         ));
-        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.MAGAZINE_SIZE, new ModuleBlueprint(
+        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.MAGAZINE_SIZE, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.MAGAZINE_SIZE,
                 Map.of(
                         Data.WEAPONTESTDATA, 5,
@@ -1019,7 +1032,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.MAGAZINE_SIZE, "+50%"
                 )
         ));
-        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.NOISE_SUPPRESSOR, new ModuleBlueprint(
+        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.NOISE_SUPPRESSOR, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.NOISE_SUPPRESSOR,
                 Map.of(
                         Data.ATMOSPHERICDATA, 5,
@@ -1028,7 +1041,7 @@ public abstract class OdysseyBlueprintConstants {
                         Asset.WEAPONCOMPONENT, 3
                 ), List.of(Engineer.HERO_FERRARI, Engineer.TERRA_VELASQUEZ, Engineer.BALTANOS)
         ));
-        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.RELOAD_SPEED, new ModuleBlueprint(
+        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.RELOAD_SPEED, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.RELOAD_SPEED,
                 Map.of(
                         Data.OPERATIONALMANUAL, 5,
@@ -1042,7 +1055,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.RELOAD_SPEED_APHELION, "+20%"
                 )
         ));
-        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.SCOPE, new ModuleBlueprint(
+        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.SCOPE, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.SCOPE,
                 Map.of(
                         Data.SPECTRALANALYSISDATA, 5,
@@ -1051,7 +1064,7 @@ public abstract class OdysseyBlueprintConstants {
                         Asset.OPTICALFIBRE, 3
                 ), List.of(Engineer.ODEN_GEIGER, Engineer.WELLINGTON_BECK, Engineer.ROSA_DAYETTE)
         ));
-        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.STABILITY, new ModuleBlueprint(
+        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.STABILITY, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.STABILITY,
                 Map.of(
                         Data.MININGANALYTICS, 5,
@@ -1063,7 +1076,7 @@ public abstract class OdysseyBlueprintConstants {
                         OdysseyModifier.INSTABILITY, "-50%"
                 )
         ));
-        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.STOWED_RELOADING, new ModuleBlueprint(
+        WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.STOWED_RELOADING, new OdysseyModuleBlueprint(
                 OdysseyBlueprintName.STOWED_RELOADING,
                 Map.of(
                         Data.DIGITALDESIGNS, 5,

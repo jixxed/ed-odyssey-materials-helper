@@ -60,20 +60,20 @@ class OdysseyBlueprintContent extends DestroyableVBox implements DestroyableEven
         initHeader();
         initDescription();
 
-        if (!(this.blueprint instanceof EngineerBlueprint) || this.ingredients.stream().noneMatch(ingredient -> OdysseyStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
+        if (!(this.blueprint instanceof OdysseyEngineerBlueprint) || this.ingredients.stream().noneMatch(ingredient -> OdysseyStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
             initAsRecipe();
         } else {//mission based recipes
             initAsEngineerMission();
         }
         initIngredients();
-        if (this.blueprint instanceof EngineerBlueprint engineerBlueprint) {
+        if (this.blueprint instanceof OdysseyEngineerBlueprint odysseyEngineerBlueprint) {
 
-            initTips(engineerBlueprint);
-            if (engineerBlueprint.getBlueprintName().equals(OdysseyBlueprintName.ENGINEER_D3)) {
+            initTips(odysseyEngineerBlueprint);
+            if (odysseyEngineerBlueprint.getBlueprintName().equals(OdysseyBlueprintName.ENGINEER_D3)) {
                 initReferrals();
             }
         }
-        if (this.blueprint instanceof ModuleBlueprint) {
+        if (this.blueprint instanceof OdysseyModuleBlueprint) {
             initEngineers();
         }
         initModifiers();
@@ -122,7 +122,7 @@ class OdysseyBlueprintContent extends DestroyableVBox implements DestroyableEven
         this.ingredients.addAll(getRecipeIngredients(Good.class, OdysseyStorageType.GOOD));
         this.ingredients.addAll(getRecipeIngredients(Asset.class, OdysseyStorageType.ASSET));
         this.ingredients.addAll(getRecipeIngredients(Data.class, OdysseyStorageType.DATA));
-        if (this.blueprint instanceof EngineerBlueprint engineerRecipe) {
+        if (this.blueprint instanceof OdysseyEngineerBlueprint engineerRecipe) {
             this.ingredients.addAll(engineerRecipe.getOther().stream()
                     .sorted(Comparator.comparing(LocaleService::getLocalizedStringForCurrentLocale))
                     .map(text -> new MissionIngredient(text, OdysseyStorageType.OTHER))
@@ -138,7 +138,7 @@ class OdysseyBlueprintContent extends DestroyableVBox implements DestroyableEven
         this.getNodes().add(ingredientFlow);
     }
 
-    private void initTips(final EngineerBlueprint engineerBlueprint) {
+    private void initTips(final OdysseyEngineerBlueprint odysseyEngineerBlueprint) {
         final DestroyableLabel tipsTitle = LabelBuilder.builder()
                 .withStyleClasses(TITLE_STYLE_CLASS, SPACING)
                 .withText("blueprint.label.tips")
@@ -146,7 +146,7 @@ class OdysseyBlueprintContent extends DestroyableVBox implements DestroyableEven
 
         final DestroyableLabel description = LabelBuilder.builder()
                 .withStyleClass("description")
-                .withText(engineerBlueprint.getTipsLocalizationKey())
+                .withText(odysseyEngineerBlueprint.getTipsLocalizationKey())
                 .build();
         this.getNodes().addAll(tipsTitle, description);
     }
@@ -208,7 +208,7 @@ class OdysseyBlueprintContent extends DestroyableVBox implements DestroyableEven
                 .withText("blueprint.label.engineers")
                 .build();
         this.getNodes().add(engineersTitle);
-        final EngineerBlueprintLabel[] engineerLabels = ((ModuleBlueprint) this.blueprint).getEngineers().stream()
+        final EngineerBlueprintLabel[] engineerLabels = ((OdysseyModuleBlueprint) this.blueprint).getEngineers().stream()
                 .map(EngineerBlueprintLabel::new)
                 .sorted(Comparator.comparing(EngineerBlueprintLabel::getEngineerName))
                 .toArray(EngineerBlueprintLabel[]::new);
@@ -246,7 +246,7 @@ class OdysseyBlueprintContent extends DestroyableVBox implements DestroyableEven
 
     public void initEventHandling() {
         register(EventService.addListener(true, this, OdysseyWishlistSelectedEvent.class, wishlistSelectedEvent -> {
-            if (!(this.blueprint instanceof EngineerBlueprint) || this.ingredients.stream().noneMatch(ingredient -> OdysseyStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
+            if (!(this.blueprint instanceof OdysseyEngineerBlueprint) || this.ingredients.stream().noneMatch(ingredient -> OdysseyStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
                 APPLICATION_STATE.getPreferredCommander().ifPresent(this::updateWishlistsAndCount);
             }
         }));

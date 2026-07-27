@@ -10,6 +10,7 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.generic;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -31,6 +32,7 @@ import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPan
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import org.jspecify.annotations.NonNull;
 
 import java.util.*;
 
@@ -77,26 +79,35 @@ public class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBo
                             //.orElse(Collections.emptyList());
 //                            final Integer amount = entry.getValue();
                             if (Expansion.HORIZONS.equals(this.expansion)) {
-                                if((HorizonsBlueprintConstants.getRecipe(((HorizonsBlueprint) blueprint).getBlueprintName(), ((HorizonsBlueprint) blueprint).getHorizonsBlueprintType(), ((HorizonsBlueprint) blueprint).getHorizonsBlueprintGrade())) instanceof HorizonsExperimentalEffectBlueprint){
+                                Blueprint<HorizonsBlueprintName> blueprint1 = HorizonsBlueprintConstants.getRecipe(((HorizonsBlueprint) blueprint).getBlueprintName(), ((HorizonsBlueprint) blueprint).getHorizonsBlueprintType(), ((HorizonsBlueprint) blueprint).getHorizonsBlueprintGrade());
+                                if(blueprint1 instanceof HorizonsExperimentalEffectBlueprint){
                                     final String localeKey = "tab.wishlist.travel.path.column.blueprints.blueprint.horizons.experimental";
                                     stringBinding = LocaleService.getStringBinding(localeKey,
                                             LocaleService.LocalizationKey.of(blueprint.getBlueprintName().getLocalizationKey()),
                                             LocaleService.LocalizationKey.of(getBlueprintType((EngineeringBlueprint<T>) blueprint).getLocalizationKey()),
                                             amount);
-                                }else{
+                                }else if (blueprint1 instanceof HorizonsModuleBlueprint){
                                     final String localeKey = "tab.wishlist.travel.path.column.blueprints.blueprint.horizons";
                                     stringBinding = LocaleService.getStringBinding(localeKey,
                                             LocaleService.LocalizationKey.of(blueprint.getBlueprintName().getLocalizationKey()),
                                             LocaleService.LocalizationKey.of(getBlueprintType((EngineeringBlueprint<T>) blueprint).getLocalizationKey()),
                                             amount,
                                             ((HorizonsBlueprint) blueprint).getHorizonsBlueprintGrade().getGrade());
+                                }else if (blueprint1 instanceof HorizonsEngineerBlueprint){
+                                    final String localeKey = "tab.wishlist.travel.path.column.blueprints.blueprint.horizons.engineer";
+                                    StringBinding binding = LocaleService.getStringBinding(localeKey,
+                                            LocaleService.LocalizationKey.of(blueprint.getBlueprintName().getLocalizationKey()),
+                                            amount);
+                                    stringBinding = Bindings.createStringBinding(() -> binding.get().replaceAll("^[ ├└\\s]+", ""), binding);
+                                } else {
+                                    throw new IllegalArgumentException("Unsupported blueprint type");
                                 }
                             } else {
                                 stringBinding = LocaleService.getStringBinding("tab.wishlist.travel.path.column.blueprints.blueprint.odyssey", LocaleService.LocalizationKey.of(blueprint.getBlueprintName().getLocalizationKey()), amount);
                             }
                             EdAwesomeIconViewPane icon = EdAwesomeIconViewPaneBuilder.builder()
                                     .withStyleClass("type-icon")
-                                    .withIcons(blueprint instanceof HorizonsExperimentalEffectBlueprint ? EdAwesomeIcon.SHIPS_EXPERIMENTAL_EFFECT : EdAwesomeIcon.SHIPS_ENGINEER)
+                                    .withIcons(getIcon(blueprint))
                                     .build();
                             return BoxBuilder.builder()
                                     .withStyleClass("blueprints-line")
@@ -152,6 +163,15 @@ public class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBo
         }
     }
 
+    private static <T extends BlueprintName<T>> @NonNull EdAwesomeIcon getIcon(Blueprint<T> blueprint) {
+        return switch(blueprint ) {
+            case  HorizonsExperimentalEffectBlueprint _ ->  EdAwesomeIcon.SHIPS_EXPERIMENTAL_EFFECT;
+            case  HorizonsEngineerBlueprint _, OdysseyEngineerBlueprint _ ->  EdAwesomeIcon.OTHER_COMMANDER;
+            case  HorizonsModuleBlueprint _ ->  EdAwesomeIcon.SHIPS_ENGINEER;
+            default -> EdAwesomeIcon.SHIPS_ENGINEER;
+        };
+    }
+
     private static <T extends BlueprintName<T>> Integer calculateAmount(HorizonsWishlist horizonsWishlist, Blueprint<T> blueprint) {
         return horizonsWishlist.getItems().stream()
                 .filter(bp -> bp.getRecipeName().equals(blueprint.getBlueprintName())
@@ -163,15 +183,21 @@ public class ShortestPathItem<T extends BlueprintName<T>> extends DestroyableVBo
     }
 
     private static <T extends BlueprintName<T>> boolean sameMaxGrade(HorizonsBlueprint blueprint, WishlistBlueprint<HorizonsBlueprintName> bp) {
-        return bp instanceof HorizonsModuleWishlistBlueprint hmwb && hmwb.getMaxSelectedGrade().equals(blueprint.getHorizonsBlueprintGrade());
+        return bp instanceof HorizonsEngineerWishlistBlueprint
+                || bp instanceof HorizonsExperimentalWishlistBlueprint
+                || (bp instanceof HorizonsModuleWishlistBlueprint hmwb && hmwb.getMaxSelectedGrade().equals(blueprint.getHorizonsBlueprintGrade()));
     }
 
     private static <T extends BlueprintName<T>> boolean sameEffect(HorizonsBlueprint blueprint, WishlistBlueprint<HorizonsBlueprintName> bp) {
-        return bp instanceof HorizonsModuleWishlistBlueprint hmwb && hmwb.getExperimentalEffect() != null && hmwb.getExperimentalEffect().equals(blueprint.getHorizonsBlueprintType());
+        return bp instanceof HorizonsEngineerWishlistBlueprint
+                || (bp instanceof HorizonsExperimentalWishlistBlueprint hewb && hewb.getBlueprintType().equals(blueprint.getHorizonsBlueprintType()))
+                || (bp instanceof HorizonsModuleWishlistBlueprint hmwb && hmwb.getExperimentalEffect() != null && hmwb.getExperimentalEffect().equals(blueprint.getHorizonsBlueprintType()));
     }
 
     private static <T extends BlueprintName<T>> boolean sameType(HorizonsBlueprint blueprint, WishlistBlueprint<HorizonsBlueprintName> bp) {
-        return ((HorizonsBlueprint) bp.getBlueprint()).getHorizonsBlueprintType().equals(blueprint.getHorizonsBlueprintType());
+        return bp instanceof HorizonsEngineerWishlistBlueprint
+                || (bp instanceof HorizonsExperimentalWishlistBlueprint hewb && hewb.getBlueprintType().equals(blueprint.getHorizonsBlueprintType()))
+                || ((HorizonsBlueprint) bp.getBlueprint()).getHorizonsBlueprintType().equals(blueprint.getHorizonsBlueprintType());
     }
 
     private static <T extends BlueprintName<T>> Integer calculateAmount(Wishlist odysseyWishlist, Blueprint<T> blueprint) {

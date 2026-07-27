@@ -22,15 +22,15 @@ import java.util.Map;
 
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class ModuleBlueprint extends OdysseyBlueprint implements EngineeringBlueprint<OdysseyBlueprintName> {
+public class OdysseyModuleBlueprint extends OdysseyBlueprint implements EngineeringBlueprint<OdysseyBlueprintName> {
     private final List<Engineer> engineers;
 
-    public ModuleBlueprint(final OdysseyBlueprintName odysseyBlueprintName, final Map<? extends OdysseyMaterial, Integer> materials, final List<Engineer> engineers) {
+    public OdysseyModuleBlueprint(final OdysseyBlueprintName odysseyBlueprintName, final Map<? extends OdysseyMaterial, Integer> materials, final List<Engineer> engineers) {
         super(odysseyBlueprintName, materials);
         this.engineers = engineers;
     }
 
-    public ModuleBlueprint(final OdysseyBlueprintName odysseyBlueprintName, final Map<? extends OdysseyMaterial, Integer> materials, final List<Engineer> engineers, final Map<OdysseyModifier, String> modifiers) {
+    public OdysseyModuleBlueprint(final OdysseyBlueprintName odysseyBlueprintName, final Map<? extends OdysseyMaterial, Integer> materials, final List<Engineer> engineers, final Map<OdysseyModifier, String> modifiers) {
         super(odysseyBlueprintName, materials, modifiers);
         this.engineers = engineers;
     }
