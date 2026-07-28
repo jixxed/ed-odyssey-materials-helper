@@ -21,8 +21,11 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Fix Encoded material trader title
-Disable overlay from showing at fleetcarrier
-Activate higher bands in band chart if commander achieved those bands
-Fix for infinite ammo maximum being rounded to a very large value
+Add blueprint priority system
+- This allows you to prioritize blueprints in the shortest path calculation, so for example to get the FSD upgraded before any other modules.
+- Only blueprints that require visits to an engineer can have a priority configured
+Add engineer unlocks in shortest path when relevant
+- (Added in 3.13.12) When adding an engineer unlock to the wishlist, this engineer becomes available in the shortest path
+Bugfix for mapping merc module reinforcement
+Bugfix for Invalid material collection type for synthesis blueprints
 ```
