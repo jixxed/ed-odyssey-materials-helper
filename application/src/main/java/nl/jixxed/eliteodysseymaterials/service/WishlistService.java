@@ -80,6 +80,7 @@ public class WishlistService {
                     .findFirst();
             existingRecipe.ifPresent(recipe -> {
                 recipe.setQuantity(wishlistBlueprint.getQuantity());
+                recipe.setPriority(wishlistBlueprint.getPriority());
                 saveOdysseyWishlists(commander, wishlists);
                 EventService.publish(new OdysseyWishlistChangedEvent(wishlistUUID));
             });
@@ -313,6 +314,7 @@ public class WishlistService {
                     moduleWishlistBlueprint.setBlueprintType(((HorizonsModuleWishlistBlueprint) wishlistBlueprint).getBlueprintType());
                 }
                 recipe.setQuantity(wishlistBlueprint.getQuantity());
+                recipe.setPriority(wishlistBlueprint.getPriority());
                 saveHorizonsWishlists(commander, wishlists);
                 EventService.publish(new HorizonsWishlistChangedEvent(wishlistUUID));
             });

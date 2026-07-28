@@ -70,7 +70,7 @@ public class Wishlist {
         for (OdysseyWishlistBlueprint item : blueprints) {
             boolean found = false;
             for (OdysseyWishlistBlueprint existing : aggregated) {
-                if (existing.getRecipeName().equals(item.getRecipeName())) {
+                if (existing.getRecipeName().equals(item.getRecipeName()) && existing.getPriority() == item.getPriority()) {
                     existing.setQuantity(existing.getQuantity() + item.getQuantity());
                     found = true;
                     break;

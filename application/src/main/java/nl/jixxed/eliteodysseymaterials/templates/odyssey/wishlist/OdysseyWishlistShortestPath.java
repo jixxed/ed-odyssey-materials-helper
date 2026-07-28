@@ -16,9 +16,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.scene.input.MouseEvent;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ShortestPathFlowBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.OdysseyWishlistBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.PathItem;
@@ -28,11 +28,10 @@ import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 import nl.jixxed.eliteodysseymaterials.service.PathService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.ShortestPathFlow;
 import nl.jixxed.eliteodysseymaterials.templates.generic.ShortestPathItem;
+import org.controlsfx.control.PopOver;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,6 +40,7 @@ import java.util.Optional;
 @Slf4j
 public class OdysseyWishlistShortestPath extends DestroyableVBox implements DestroyableEventTemplate {
 
+    private DestroyableResizableImageView pathHelp;
     private ShortestPathFlow<OdysseyBlueprintName> shortestPathFlow;
     private static final PublishSubject<Boolean> updatePathItems = PublishSubject.create();
     private Disposable subscribe;
@@ -69,7 +69,18 @@ public class OdysseyWishlistShortestPath extends DestroyableVBox implements Dest
                 .withManagedProperty(Bindings.greaterThan(Bindings.size(this.shortestPathFlow.getItems()), 0))
                 .build();
 
-        this.getNodes().addAll(travelPathLabel, this.shortestPathFlow);
+        this.pathHelp = ResizableImageViewBuilder.builder()
+                .withOnMouseClicked(this::showHelp)
+                .withStyleClass("help-image")
+                .withImage("/images/other/help.png")
+                .build();
+
+        DestroyableHBox titleBar = BoxBuilder.builder()
+                .withStyleClass("title-bar")
+                .withNodes(travelPathLabel, this.pathHelp)
+                .buildHBox();
+
+        this.getNodes().addAll(titleBar, this.shortestPathFlow);
 
         Observable<Boolean> debouncedFleetCarrier = updatePathItems.observeOn(Schedulers.computation());
         subscribe = debouncedFleetCarrier.subscribe(force -> {
@@ -92,6 +103,30 @@ public class OdysseyWishlistShortestPath extends DestroyableVBox implements Dest
         register(EventService.addListener(true, this, LocationChangedEvent.class, _ -> update(false)));
         register(EventService.addListener(true, this, EngineerPinEvent.class, _ -> update(false)));
         register(EventService.addListener(true, this, EngineerEvent.class, _ -> update(true)));
+    }
+
+    private void showHelp(MouseEvent event) {
+        DestroyableLabel hintDistance = LabelBuilder.builder()
+                .withStyleClass("wishlist-path-explain")
+                .withText("tab.wishlist.path.hint.distance")
+                .build();
+        DestroyableLabel hintPriority = LabelBuilder.builder()
+                .withStyleClass("wishlist-path-explain")
+                .withText("tab.wishlist.path.hint.priority")
+                .build();
+        final DestroyableVBox contentNodepath = BoxBuilder.builder()
+                .withStyleClass("help-popover")
+                .withNodes(hintDistance, hintPriority)
+                .buildVBox();
+        final DestroyablePopOver popOverPath = PopOverBuilder.builder()
+                .withStyleClass("odyssey-wishlist-path-help-popover")
+                .withContent(contentNodepath)
+                .withDetachable(false)
+                .withHeaderAlwaysVisible(false)
+                .withCornerRadius(0)
+                .withArrowLocation(PopOver.ArrowLocation.TOP_LEFT)
+                .build();
+        popOverPath.show(this.pathHelp, event.getScreenX(), event.getScreenY());
     }
 
     private void update(boolean force) {

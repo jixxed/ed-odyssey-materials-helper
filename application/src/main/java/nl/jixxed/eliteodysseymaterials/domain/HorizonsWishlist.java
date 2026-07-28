@@ -76,33 +76,33 @@ public class HorizonsWishlist {
                 if (item instanceof HorizonsExperimentalWishlistBlueprint exwb &&
                         existing instanceof HorizonsExperimentalWishlistBlueprint existingExwb &&
                         exwb.getRecipeName().equals(existingExwb.getRecipeName()) &&
-                        exwb.getBlueprintType().equals(existingExwb.getBlueprintType())) {
+                        exwb.getBlueprintType().equals(existingExwb.getBlueprintType()) && exwb.getPriority() == existingExwb.getPriority()) {
                     existingExwb.setQuantity(existingExwb.getQuantity() + exwb.getQuantity());
                     found = true;
                     break;
                 } else if (item instanceof HorizonsTechBrokerWishlistBlueprint tbwb &&
                         existing instanceof HorizonsTechBrokerWishlistBlueprint existingTbwb &&
                         tbwb.getRecipeName().equals(existingTbwb.getRecipeName()) &&
-                        tbwb.getBlueprintType().equals(existingTbwb.getBlueprintType())) {
+                        tbwb.getBlueprintType().equals(existingTbwb.getBlueprintType()) && tbwb.getPriority() == existingTbwb.getPriority()) {
                     existingTbwb.setQuantity(existingTbwb.getQuantity() + tbwb.getQuantity());
                     found = true;
                     break;
                 } else if (item instanceof HorizonsEngineerWishlistBlueprint ewb &&
                         existing instanceof HorizonsEngineerWishlistBlueprint existingEwb &&
-                        ewb.getRecipeName().equals(existingEwb.getRecipeName())) {
+                        ewb.getRecipeName().equals(existingEwb.getRecipeName()) && ewb.getPriority() == existingEwb.getPriority()) {
                     existingEwb.setQuantity(existingEwb.getQuantity() + ewb.getQuantity());
                     found = true;
                     break;
-                } else if (item instanceof HorizonsOutfittingWishlistBlueprint ewb &&
-                        existing instanceof HorizonsOutfittingWishlistBlueprint existingEwb &&
-                        ewb.getRecipeName().equals(existingEwb.getRecipeName())) {
-                    existingEwb.setQuantity(existingEwb.getQuantity() + ewb.getQuantity());
+                } else if (item instanceof HorizonsOutfittingWishlistBlueprint owb &&
+                        existing instanceof HorizonsOutfittingWishlistBlueprint existingOwb &&
+                        owb.getRecipeName().equals(existingOwb.getRecipeName()) && owb.getPriority() == existingOwb.getPriority()) {
+                    existingOwb.setQuantity(existingOwb.getQuantity() + owb.getQuantity());
                     found = true;
                     break;
                 } else if (item instanceof HorizonsSynthesisWishlistBlueprint swb &&
                         existing instanceof HorizonsSynthesisWishlistBlueprint existingSwb &&
                         swb.getRecipeName().equals(existingSwb.getRecipeName()) &&
-                        swb.getBlueprintGrade().equals(existingSwb.getBlueprintGrade())) {
+                        swb.getBlueprintGrade().equals(existingSwb.getBlueprintGrade()) && swb.getPriority() == existingSwb.getPriority()) {
                     existingSwb.setQuantity(existingSwb.getQuantity() + swb.getQuantity());
                     found = true;
                     break;
@@ -111,7 +111,7 @@ public class HorizonsWishlist {
                         mwp.getRecipeName().equals(existingMwp.getRecipeName()) &&
                         mwp.getBlueprintType().equals(existingMwp.getBlueprintType()) &&
                         Objects.equals(mwp.getExperimentalEffect(), existingMwp.getExperimentalEffect()) &&
-                        mwp.getPercentageToComplete().equals(existingMwp.getPercentageToComplete())) {
+                        mwp.getPercentageToComplete().equals(existingMwp.getPercentageToComplete()) && mwp.getPriority() == existingMwp.getPriority()) {
                     existingMwp.setQuantity(existingMwp.getQuantity() + mwp.getQuantity());
                     found = true;
                     break;

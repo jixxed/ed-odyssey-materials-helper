@@ -160,6 +160,16 @@
             .title-line {
               -fx-spacing: 0.25em;
 
+              .priority-container{
+                -fx-spacing: 0.25em;
+                .priority-icon{
+                  -fx-font-size: 1.2em !important;
+                  -fx-fill: $text-color-red;
+                }
+                .priority-text{
+                  -fx-text-fill: $text-color-red;
+                }
+              }
               .visible-container {
                 -fx-font-size: 1.2em !important;
                 -fx-cursor: hand;
@@ -292,6 +302,16 @@
                     -fx-font-style: italic;
                     -fx-max-width: 21.5em;
                     -fx-wrap-text: true;
+                  }
+                  .priority-select-box{
+                    .priority-slider{
+
+                    }
+                  }
+                  .priority-labels{
+                    .priority-subtitle{
+
+                    }
                   }
 
                   .grade-selects {
@@ -537,12 +557,38 @@
     }
 
     .shortest-path {
-      .title {
-        -fx-font-size: 1.35em;
-        -fx-min-height: 2em;
-        -fx-font-weight: bold;
-      }
+      .title-bar {
+        @include fixedHeight(3em);
+        -fx-spacing: 0.5em;
+        -fx-alignment: center-left;
 
+        .title {
+          -fx-font-size: 1.35em;
+          -fx-font-weight: bold;
+          -fx-text-alignment: center;
+        }
+
+        .help-image {
+          @include fixedHeight(2em);
+          @include fixedWidth(2em);
+          -fx-cursor: hand;
+        }
+
+        @at-root {
+          .horizons-wishlist-path-help-popover {
+            @include popover-style;
+
+            .help-popover {
+              .wishlist-path-explain {
+                -fx-text-fill: $text-color-white;
+                -fx-max-width: 30em;
+                -fx-wrap-text: true;
+                -fx-font-style: italic;
+              }
+            }
+          }
+        }
+      }
       .shortest-path-flow {
         -fx-hgap: 0.25em;
         -fx-vgap: 0.25em;

@@ -21,6 +21,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public final class OdysseyWishlistBlueprint implements WishlistBlueprint<OdysseyBlueprintName> {
 
     @EqualsAndHashCode.Include
@@ -31,6 +32,8 @@ public final class OdysseyWishlistBlueprint implements WishlistBlueprint<Odyssey
     private boolean visible = true;
 
     private int quantity = 1;
+    @EqualsAndHashCode.Include
+    private int priority = 1;
 
     public OdysseyWishlistBlueprint(OdysseyBlueprintName recipeName) {
         this.recipeName = recipeName;

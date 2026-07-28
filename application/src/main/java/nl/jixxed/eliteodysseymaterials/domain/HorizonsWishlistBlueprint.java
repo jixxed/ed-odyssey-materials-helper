@@ -38,6 +38,8 @@ public abstract sealed class HorizonsWishlistBlueprint implements WishlistBluepr
     private boolean visible = true;
 
     private int quantity = 1;
+    @EqualsAndHashCode.Include
+    private int priority = 1;
 
     public HorizonsWishlistBlueprint(final HorizonsBlueprintName recipeName, final boolean visible) {
         this.recipeName = recipeName;

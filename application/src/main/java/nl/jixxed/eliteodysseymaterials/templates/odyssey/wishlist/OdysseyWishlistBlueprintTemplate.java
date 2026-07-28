@@ -15,6 +15,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.css.PseudoClass;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.Priority;
 import javafx.util.Duration;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -30,14 +31,17 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyWishlistBlueprintEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.components.PrioritySlider;
 import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.ControllableQuantitySelect;
 import nl.jixxed.eliteodysseymaterials.templates.generic.QuantitySelect;
 import nl.jixxed.eliteodysseymaterials.templates.generic.QuantitySelectable;
 import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTemplate;
+import org.controlsfx.control.PopOver;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
 public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableVBox implements WishlistBlueprintTemplate<OdysseyBlueprintName>, DestroyableEventTemplate {
@@ -57,6 +61,13 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableVBox
     private DestroyableTooltip tooltip;
     private QuantitySelectable quantityLine;
     private DestroyableFontAwesomeIconView eyeIcon;
+    private DestroyableFontAwesomeIconView prioIcon;
+    private DestroyableLabel prioLabel;
+    private DestroyableHBox prioBox;
+
+    private DestroyableHBox settingsButton;
+    private DestroyableFontAwesomeIconView settingsIcon;
+    private AtomicReference<PopOver> popOverRef = new AtomicReference<>();
 
     public OdysseyWishlistBlueprintTemplate(final String wishlistUUID, final WishlistBlueprint<OdysseyBlueprintName> wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
@@ -70,6 +81,26 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableVBox
     public void initComponents() {
         this.getStyleClass().add("blueprint");
 
+        prioIcon = FontAwesomeIconViewBuilder.builder()
+                .withStyleClasses("priority-icon")
+                .withIcon(FontAwesomeIcon.EXCLAMATION)
+                .build();
+        prioLabel = LabelBuilder.builder()
+                .withStyleClasses("priority-text")
+                .withNonLocalizedText(String.valueOf(wishlistBlueprint.getPriority()))
+                .build();
+        DestroyableTooltip prioTooltip = TooltipBuilder.builder()
+                .withStyleClass("action-tooltip")
+                .withShowDelay(Duration.millis(100))
+                .withText("wishlist.tooltip.priority")
+                .build();
+        prioBox = BoxBuilder.builder()
+                .withStyleClasses("priority-container")
+                .withNodes(prioIcon, prioLabel)
+                .withVisibility(wishlistBlueprint.getPriority() > 1)
+                .withManaged(wishlistBlueprint.getPriority() > 1)
+                .buildHBox();
+        prioTooltip.install(prioBox);
         eyeIcon = FontAwesomeIconViewBuilder.builder()
                 .withStyleClasses("visible-button")
                 .withIcon(FontAwesomeIcon.EYE)
@@ -136,8 +167,33 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableVBox
                 .withManaged(this.wishlistUUID.equals(Wishlist.ALL.getUuid()) && wishlistBlueprint.getQuantity() > 10)
                 .withVisibility(this.wishlistUUID.equals(Wishlist.ALL.getUuid()) && wishlistBlueprint.getQuantity() > 10)
                 .build();
-        final DestroyableHBox titleLine = BoxBuilder.builder().withStyleClass("title-line").withNodes(title, new GrowingRegion(), quantityLabel, visibility, removeBlueprint).buildHBox();
-        final DestroyableHBox moduleLine = BoxBuilder.builder().withStyleClass("blueprint-line").withNodes(this.blueprintName).buildHBox();
+
+
+        this.settingsIcon = FontAwesomeIconViewBuilder.builder()
+                .withStyleClass("config-icon")
+                .withIcon(FontAwesomeIcon.ANGLE_DOWN)
+                .withManaged(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()))
+                .withVisibility(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()))
+//                .withOnMouseClicked(_ -> showGradeSettings())
+                .build();
+        DestroyableTooltip settingsIconTooltip = TooltipBuilder.builder()
+                .withStyleClass("action-tooltip")
+                .withShowDelay(Duration.millis(100))
+                .withText("wishlist.tooltip.configure")
+                .build();
+        settingsIconTooltip.install(this.settingsIcon);
+        this.settingsButton = BoxBuilder.builder()
+                .withStyleClass("settings-button")
+                .withNode(this.settingsIcon)
+                .withManaged(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()) && this.blueprint instanceof EngineeringBlueprint<?> ebp && !ebp.getEngineers().isEmpty())
+                .withVisibility(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()) && this.blueprint instanceof EngineeringBlueprint<?> ebp && !ebp.getEngineers().isEmpty())
+                .withOnMouseClicked(_ -> showSettings())
+                .buildHBox();
+
+
+
+        final DestroyableHBox titleLine = BoxBuilder.builder().withStyleClass("title-line").withNodes(title, new GrowingRegion(), quantityLabel, prioBox, visibility, removeBlueprint).buildHBox();
+        final DestroyableHBox moduleLine = BoxBuilder.builder().withStyleClass("blueprint-line").withNodes(this.blueprintName, new GrowingRegion(), this.settingsButton).buildHBox();
         quantityLine = (HorizonsWishlist.ALL.getUuid().equals(wishlistUUID)) ? new QuantitySelect(wishlistBlueprint.getQuantity(), visible, wishlistBlueprint) : new ControllableQuantitySelect(wishlistBlueprint.getQuantity(), visible, wishlistBlueprint);
         quantityLine.addChangeListener(quantityLine.getQuantity(), (_, _, quantity) -> updateQuantity(quantity.intValue()));
         this.getNodes().addAll(titleLine, moduleLine, (Node & Destroyable) quantityLine);
@@ -145,6 +201,56 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableVBox
 //        this.getNodes().addAll(visibilityButton, wishlistRecipeName, removeBlueprint);
     }
 
+    private void showSettings() {
+        if (popOverRef.get() == null || !popOverRef.get().isShowing()) {
+
+
+            final PrioritySlider priorityControl = new PrioritySlider(1D,10D, (double)this.wishlistBlueprint.getPriority(), (newValue) -> {
+                wishlistBlueprint.setPriority((int)newValue);
+                modify();
+                update();
+            });
+            DestroyableHBox.setHgrow(priorityControl, Priority.ALWAYS);
+            final DestroyableHBox prioritySelect = BoxBuilder.builder()
+                    .withStyleClasses("priority-select-box")
+                    .withNodes(priorityControl)
+                    .buildHBox();
+            final DestroyableLabel priorityTitle = LabelBuilder.builder()
+                    .withStyleClass("title")
+                    .withText("wishlist.priority.title")
+                    .build();
+            var low = LabelBuilder.builder()
+                    .withStyleClass("priority-subtitle")
+                    .withText("wishlist.priority.subtitle.low")
+                    .build();
+            var high = LabelBuilder.builder()
+                    .withStyleClass("priority-subtitle")
+                    .withText("wishlist.priority.subtitle.high")
+                    .build();
+            final DestroyableHBox subPriorityLabels = BoxBuilder.builder()
+                    .withStyleClasses("priority-labels")
+                    .withNodes(low, new GrowingRegion(), high)
+                    .buildHBox();
+
+            final DestroyableVBox content = BoxBuilder.builder()
+                    .withStyleClass("content")
+                    .withNodes(priorityTitle, prioritySelect, subPriorityLabels)
+                    .buildVBox();
+            final DestroyablePopOver popOver = PopOverBuilder.builder()
+                    .withStyleClass("horizons-wishlist-blueprints-module-popover")
+                    .withContent(content)
+                    .withDetachable(false)
+                    .withHeaderAlwaysVisible(false)
+                    .withArrowLocation(PopOver.ArrowLocation.TOP_CENTER)
+                    .withCornerRadius(0)
+                    .build();
+            popOverRef.set(popOver);
+            popOver.show(this.settingsButton);
+        } else {
+            popOverRef.get().hide();
+            popOverRef.set(null);
+        }
+    }
     private void updateQuantity(Integer quantity) {
         //update quantity
         this.wishlistBlueprint.setQuantity(quantity);
@@ -162,6 +268,9 @@ public non-sealed class OdysseyWishlistBlueprintTemplate extends DestroyableVBox
 
     private void update() {
         canCraft();
+        this.prioLabel.setText(String.valueOf(wishlistBlueprint.getPriority()));
+        this.prioBox.setVisible(wishlistBlueprint.getPriority() > 1);
+        this.prioBox.setManaged(wishlistBlueprint.getPriority() > 1);
     }
 
     //    private void updateStyle() {

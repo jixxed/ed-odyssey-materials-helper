@@ -58,7 +58,7 @@ public class ClipboardHelper {
     public static String createClipboardHorizonsWishlist() {
         return APPLICATION_STATE.getPreferredCommander().map(commander -> {
             try {
-                final ClipboardHorizonsWishlist wishlist = new ClipboardHorizonsWishlist("wishlist", 1, WishlistService.getHorizonsWishlists(commander).getSelectedWishlist());
+                final ClipboardHorizonsWishlist wishlist = new ClipboardHorizonsWishlist("wishlist", 2, WishlistService.getHorizonsWishlists(commander).getSelectedWishlist());
                 wishlist.getWishlist().optimizeUUIDs();
                 final String wishlistJson = OBJECT_MAPPER.writeValueAsString(wishlist);
                 final String wishlist64 = convertJsonToBase64Compressed(wishlistJson);
@@ -77,7 +77,7 @@ public class ClipboardHelper {
     public static String createClipboardOdysseyWishlist() {
         return APPLICATION_STATE.getPreferredCommander().map(commander -> {
             try {
-                final String wishlistJson = OBJECT_MAPPER.writeValueAsString(new ClipboardWishlist("wishlist", 1, WishlistService.getOdysseyWishlists(commander).getSelectedWishlist()));
+                final String wishlistJson = OBJECT_MAPPER.writeValueAsString(new ClipboardWishlist("wishlist", 2, WishlistService.getOdysseyWishlists(commander).getSelectedWishlist()));
                 final String wishlist64 = convertJsonToBase64Compressed(wishlistJson);
                 final String url = "edomh://wishlist/?" + wishlist64;
                 if (url.length() > 2048) {

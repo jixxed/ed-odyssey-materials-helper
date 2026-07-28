@@ -10,10 +10,12 @@
 
 package nl.jixxed.eliteodysseymaterials.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public final class HorizonsEngineerWishlistBlueprint extends HorizonsWishlistBlueprint {
     public HorizonsEngineerWishlistBlueprint(final HorizonsBlueprintName recipeName, final boolean visible) {
         super(recipeName, visible);

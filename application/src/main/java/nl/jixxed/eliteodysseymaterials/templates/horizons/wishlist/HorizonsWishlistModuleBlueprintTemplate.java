@@ -17,6 +17,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
 import javafx.scene.Node;
+import javafx.scene.layout.Priority;
 import javafx.util.Duration;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,7 @@ import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.CompletionSlider;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.components.PrioritySlider;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.ControllableQuantitySelect;
 import nl.jixxed.eliteodysseymaterials.templates.generic.QuantitySelect;
@@ -69,6 +71,9 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
     private DestroyableLabel removeBlueprint;
     private QuantitySelectable quantityLine;
     private DestroyableFontAwesomeIconView eyeIcon;
+    private DestroyableFontAwesomeIconView prioIcon;
+    private DestroyableLabel prioLabel;
+    private DestroyableHBox prioBox;
 
     public HorizonsWishlistModuleBlueprintTemplate(final String wishlistUUID, final HorizonsModuleWishlistBlueprint wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
@@ -80,6 +85,26 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
 
     public void initComponents() {
         this.getStyleClass().add("blueprint");
+        prioIcon = FontAwesomeIconViewBuilder.builder()
+                .withStyleClasses("priority-icon")
+                .withIcon(FontAwesomeIcon.EXCLAMATION)
+                .build();
+        prioLabel = LabelBuilder.builder()
+                .withStyleClasses("priority-text")
+                .withNonLocalizedText(String.valueOf(wishlistBlueprint.getPriority()))
+                .build();
+        DestroyableTooltip prioTooltip = TooltipBuilder.builder()
+                .withStyleClass("action-tooltip")
+                .withShowDelay(Duration.millis(100))
+                .withText("wishlist.tooltip.priority")
+                .build();
+        prioBox = BoxBuilder.builder()
+                .withStyleClasses("priority-container")
+                .withNodes(prioIcon, prioLabel)
+                .withVisibility(wishlistBlueprint.getPriority() > 1)
+                .withManaged(wishlistBlueprint.getPriority() > 1)
+                .buildHBox();
+        prioTooltip.install(prioBox);
 
         eyeIcon = FontAwesomeIconViewBuilder.builder()
                 .withStyleClasses("visible-button")
@@ -131,7 +156,7 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
                 .withIcon(FontAwesomeIcon.EXPAND)
                 .withOnMouseClicked(_ -> splitBlueprint())
                 .build();
-        if (Wishlist.ALL.getUuid().equals(this.wishlistUUID)) {
+        if (HorizonsWishlist.ALL.getUuid().equals(this.wishlistUUID)) {
             setVisibilityValue(true);
             visibility.setVisible(false);
             visibility.setManaged(false);
@@ -149,13 +174,13 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
         tooltipEffect.install(experimentalEffectName);
         experimentalEffectName.addBinding(experimentalEffectName.visibleProperty(), this.experimentalEffectName.textProperty().isNotEmpty());
         experimentalEffectName.addBinding(experimentalEffectName.managedProperty(), this.experimentalEffectName.textProperty().isNotEmpty());
-        split.addBinding(split.visibleProperty(), this.experimentalEffectName.textProperty().isNotEmpty());
-        split.addBinding(split.managedProperty(), this.experimentalEffectName.textProperty().isNotEmpty());
+        split.addBinding(split.visibleProperty(), this.experimentalEffectName.textProperty().isNotEmpty().and(visibility.visibleProperty()));
+        split.addBinding(split.managedProperty(), this.experimentalEffectName.textProperty().isNotEmpty().and(visibility.managedProperty()));
         removeBlueprint = LabelBuilder.builder()
                 .withStyleClass("remove")
                 .withNonLocalizedText("\u274C")
-                .withManaged(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()))
-                .withVisibility(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()))
+                .withManaged(!this.wishlistUUID.equals(HorizonsWishlist.ALL.getUuid()))
+                .withVisibility(!this.wishlistUUID.equals(HorizonsWishlist.ALL.getUuid()))
                 .withOnMouseClicked(_ -> {
                     //deleted by parent category
                     this.deleted = true;
@@ -170,14 +195,14 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
         removeBlueprintTooltip.install(this.removeBlueprint);
         final DestroyableLabel quantityLabel = LabelBuilder.builder().withText("wishlist.blueprint.horizons.quantity", this.wishlistBlueprint.getQuantity())
                 .withStyleClass("quantity-text")
-                .withManaged(this.wishlistUUID.equals(Wishlist.ALL.getUuid()) && wishlistBlueprint.getQuantity() > 10)
-                .withVisibility(this.wishlistUUID.equals(Wishlist.ALL.getUuid()) && wishlistBlueprint.getQuantity() > 10)
+                .withManaged(this.wishlistUUID.equals(HorizonsWishlist.ALL.getUuid()) && wishlistBlueprint.getQuantity() > 10)
+                .withVisibility(this.wishlistUUID.equals(HorizonsWishlist.ALL.getUuid()) && wishlistBlueprint.getQuantity() > 10)
                 .build();
         this.settingsIcon = FontAwesomeIconViewBuilder.builder()
                 .withStyleClass("config-icon")
                 .withIcon(FontAwesomeIcon.ANGLE_DOWN)
-                .withManaged(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()))
-                .withVisibility(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()))
+                .withManaged(!this.wishlistUUID.equals(HorizonsWishlist.ALL.getUuid()))
+                .withVisibility(!this.wishlistUUID.equals(HorizonsWishlist.ALL.getUuid()))
 //                .withOnMouseClicked(_ -> showGradeSettings())
                 .build();
         DestroyableTooltip settingsIconTooltip = TooltipBuilder.builder()
@@ -189,11 +214,11 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
         this.settingsButton = BoxBuilder.builder()
                 .withStyleClass("settings-button")
                 .withNode(this.settingsIcon)
-                .withManaged(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()))
-                .withVisibility(!this.wishlistUUID.equals(Wishlist.ALL.getUuid()))
+                .withManaged(!this.wishlistUUID.equals(HorizonsWishlist.ALL.getUuid()))
+                .withVisibility(!this.wishlistUUID.equals(HorizonsWishlist.ALL.getUuid()))
                 .withOnMouseClicked(_ -> showGradeSettings())
                 .buildHBox();
-        final DestroyableHBox titleLine = BoxBuilder.builder().withStyleClass("title-line").withNodes(title, new GrowingRegion(), quantityLabel, visibility, removeBlueprint).buildHBox();
+        final DestroyableHBox titleLine = BoxBuilder.builder().withStyleClass("title-line").withNodes(title, new GrowingRegion(), quantityLabel, prioBox, visibility, removeBlueprint).buildHBox();
         final DestroyableHBox moduleLine = BoxBuilder.builder().withStyleClass("blueprint-line").withNodes(this.blueprintName, new GrowingRegion(), this.settingsButton).buildHBox();
         final DestroyableHBox effectLine = BoxBuilder.builder().withStyleClass("blueprint-line").withNodes(this.experimentalEffectName, new GrowingRegion(), this.split).buildHBox();
         quantityLine = (HorizonsWishlist.ALL.getUuid().equals(wishlistUUID)) ? new QuantitySelect(wishlistBlueprint.getQuantity(), visible, wishlistBlueprint) : new ControllableQuantitySelect(wishlistBlueprint.getQuantity(), visible, wishlistBlueprint);
@@ -251,6 +276,9 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
                 .withShowDelay(Duration.millis(100))
                 .build();
         this.tooltipEffect.install(experimentalEffectName);
+        this.prioLabel.setText(String.valueOf(wishlistBlueprint.getPriority()));
+        this.prioBox.setVisible(wishlistBlueprint.getPriority() > 1);
+        this.prioBox.setManaged(wishlistBlueprint.getPriority() > 1);
         EventService.publish(new HorizonsWishlistBlueprintAlteredEvent(this.wishlistUUID));
         //update styles
         canCraft();
@@ -326,9 +354,41 @@ public final class HorizonsWishlistModuleBlueprintTemplate extends DestroyableVB
             experimentalEffectSelect.setVisible(hasEffects);
             experimentalEffectSelectTitle.setManaged(hasEffects);
             experimentalEffectSelect.setManaged(hasEffects);
+
+
+            final PrioritySlider priorityControl = new PrioritySlider(1D,10D, (double)this.wishlistBlueprint.getPriority(), (newValue) -> {
+                        wishlistBlueprint.setPriority((int)newValue);
+                        modify();
+                        update();
+                    });
+//                    .build();
+//                    .withStyleClass("priority-select")
+//            priorityControl.sett(1)
+            DestroyableHBox.setHgrow(priorityControl, Priority.ALWAYS);
+            final DestroyableHBox prioritySelect = BoxBuilder.builder()
+                    .withStyleClasses("priority-select-box")
+                    .withNodes(priorityControl)
+                    .buildHBox();
+            final DestroyableLabel priorityTitle = LabelBuilder.builder()
+                    .withStyleClass("title")
+                    .withText("wishlist.priority.title")
+                    .build();
+            var low = LabelBuilder.builder()
+                    .withStyleClass("priority-subtitle")
+                    .withText("wishlist.priority.subtitle.low")
+                    .build();
+            var high = LabelBuilder.builder()
+                    .withStyleClass("priority-subtitle")
+                    .withText("wishlist.priority.subtitle.high")
+                    .build();
+            final DestroyableHBox subPriorityLabels = BoxBuilder.builder()
+                    .withStyleClasses("priority-labels")
+                    .withNodes(low, new GrowingRegion(), high)
+                    .buildHBox();
+
             final DestroyableVBox content = BoxBuilder.builder()
                     .withStyleClass("content")
-                    .withNodes(blueprintSelectTitle, blueprintSelect, experimentalEffectSelectTitle, experimentalEffectSelect, title, explain, grades)
+                    .withNodes(blueprintSelectTitle, blueprintSelect, experimentalEffectSelectTitle, experimentalEffectSelect, title, explain, grades, priorityTitle, prioritySelect, subPriorityLabels)
                     .buildVBox();
             final DestroyablePopOver popOver = PopOverBuilder.builder()
                     .withStyleClass("horizons-wishlist-blueprints-module-popover")

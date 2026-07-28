@@ -11,16 +11,14 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Getter
@@ -28,29 +26,36 @@ import java.util.stream.Collectors;
 @ToString
 public class PathItem<E extends BlueprintName<E>> {
     private final List<Engineer> engineers;
-    //    private final List<WishlistBlueprintTemplate<E>> blueprints;
     private Map<Blueprint<E>, Integer> recipes;
     private Engineer engineer;
     private List<Engineer> alternateEngineers = new ArrayList<>();
     private double distance;
+    private Map<Blueprint<E>, Integer> priorities = new HashMap<>();
 
-    public PathItem(final List<Engineer> engineers, final List<? extends Blueprint<E>> blueprints) {
+    public PathItem(final List<Engineer> engineers, final @NonNull List<? extends Blueprint<E>> blueprints, @NonNull List<Integer> bpPriorities) {
+        if (blueprints.size() != bpPriorities.size()) {
+            throw new IllegalArgumentException("priorities size does not equal blueprints size");
+        }
         this.engineers = engineers;
-//        this.blueprints = (List<WishlistBlueprintTemplate<E>>) blueprints;
         this.recipes = blueprints.stream().collect(Collectors.groupingBy(
                 recipe -> recipe,
                 Collectors.summingInt(value -> 1))
         );
+        for (int i = 0; i < blueprints.size(); i++) {
+            var blueprint = blueprints.get(i);
+            int finalI = i;
+            this.priorities.compute(blueprint, (bp, x) -> Math.max(bpPriorities.get(finalI), x != null ? x : 1));
+        }
+
     }
 
-    public void addBlueprint(final Blueprint<E> blueprint) {
-//        this.blueprints.add(blueprint);
-        this.recipes.compute(blueprint, (key, value) -> value != null ? value + 1 : 1);
+    public Integer getHighestPriority() {
+        return priorities.values().stream().max(Comparator.naturalOrder()).orElse(1);
+    }
 
-//                = this.blueprints.stream().map(WishlistBlueprintTemplate::getPrimaryRecipe).collect(Collectors.groupingBy(
-//                recipe -> recipe,
-//                Collectors.summingInt(value -> 1))
-//        );
+    public void addBlueprint(final Blueprint<E> blueprint, final int priority) {
+        this.recipes.compute(blueprint, (key, value) -> value != null ? value + 1 : 1);
+        this.priorities.compute(blueprint, (bp, x) -> Math.max(x != null ? x : 1, priority));
     }
 
     public String getRecipesString() {
@@ -69,6 +74,31 @@ public class PathItem<E extends BlueprintName<E>> {
             }
             return "";
         }).collect(Collectors.joining(", "));
+    }
+
+    public Double getDistanceToClosestEngineer(final StarSystem starSystem) {
+        final List<Engineer> potentialEngineers = this.getEngineers().stream().filter(eng -> this.recipes.keySet().stream().allMatch(moduleRecipe -> {
+            if (moduleRecipe instanceof OdysseyModuleBlueprint moduleBlueprint) {
+                return moduleBlueprint.getEngineers().contains(eng);
+            }
+            if (moduleRecipe instanceof OdysseyEngineerBlueprint engineerBlueprint) {
+                return engineerBlueprint.getEngineers().contains(eng);
+            }
+            if (moduleRecipe instanceof HorizonsModuleBlueprint horizonsModuleBlueprint) {
+                return horizonsModuleBlueprint.getEngineers().contains(eng);
+            }
+            if (moduleRecipe instanceof HorizonsExperimentalEffectBlueprint experimentalEffectBlueprint) {
+                return experimentalEffectBlueprint.getEngineers().contains(eng);
+            }
+            if (moduleRecipe instanceof HorizonsEngineerBlueprint engineerBlueprint) {
+                return engineerBlueprint.getEngineers().contains(eng);
+            }
+            return false;
+        })).toList();
+        return potentialEngineers.stream()
+                .min(Comparator.comparingDouble(value -> value.getDistance(starSystem)))
+                .orElseThrow(IllegalArgumentException::new)
+                .getDistance(starSystem);
     }
 
     public Double getAndSetDistanceToClosestEngineer(final StarSystem starSystem) {

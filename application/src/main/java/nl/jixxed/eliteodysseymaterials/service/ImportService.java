@@ -330,7 +330,7 @@ public class ImportService {
         }
         try {
             final ClipboardWishlist clipboardWishlist = OBJECT_MAPPER.readValue(decoded, ClipboardWishlist.class);
-            if (Objects.equals(clipboardWishlist.getVersion(), 1)) {
+            if (clipboardWishlist.getVersion() >= 1) {
 
                 final Wishlist wishlist = new Wishlist();
                 final String name = clipboardWishlist.getWishlist().getName() + LocaleService.getLocalizedStringForCurrentLocale("imported.partial.name");
@@ -359,7 +359,7 @@ public class ImportService {
         }
         try {
             final ClipboardHorizonsWishlist clipboardWishlist = OBJECT_MAPPER.readValue(decoded, ClipboardHorizonsWishlist.class);
-            if (Objects.equals(clipboardWishlist.getVersion(), 1)) {
+            if (clipboardWishlist.getVersion() >= 1) {
 
                 final HorizonsWishlist wishlist = new HorizonsWishlist();
                 final String name = clipboardWishlist.getWishlist().getName() + LocaleService.getLocalizedStringForCurrentLocale("imported.partial.name");

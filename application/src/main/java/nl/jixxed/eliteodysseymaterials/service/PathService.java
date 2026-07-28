@@ -145,7 +145,7 @@ public class PathService {
                                 });
                         final List<? extends WishlistBlueprint<T>> blueprintsForEngineer = getBlueprintsForEngineer(wishlistBlueprints, pathItems, selectedEngineer, allowedEngineers, isOdyssey);
                         if (!blueprintsForEngineer.isEmpty()) {
-                            final PathItem<T> e = new PathItem<>(engineers, blueprintsForEngineer.stream().map(WishlistBlueprint::getBlueprint).toList());
+                            final PathItem<T> e = new PathItem<>(engineers, blueprintsForEngineer.stream().map(WishlistBlueprint::getBlueprint).toList(), blueprintsForEngineer.stream().map(WishlistBlueprint::getPriority).toList());
                             pathItems.add(e);
                         }
                     }
@@ -157,8 +157,12 @@ public class PathService {
             final StarSystem finalCurrentStarSystem = currentStarSystem;
             if (pathItems.size() > 1) {
                 final PathItem<T> closest = pathItems.stream()
-                        .min(Comparator.comparingDouble(pathItem -> pathItem.getAndSetDistanceToClosestEngineer(finalCurrentStarSystem)))
+                        .min(Comparator
+                                .comparing((PathItem pathItem) -> pathItem.getEngineers().contains(Engineer.REMOTE_WORKSHOP))
+                                .thenComparingInt((PathItem pathItem) -> pathItem.getHighestPriority()).reversed()
+                                .thenComparingDouble((PathItem pathItem) -> pathItem.getDistanceToClosestEngineer(finalCurrentStarSystem)))
                         .orElseThrow(IllegalArgumentException::new);
+                closest.getAndSetDistanceToClosestEngineer(finalCurrentStarSystem);
                 sortedPathItems.add(closest);
                 currentStarSystem = closest.getEngineer().getStarSystem();
                 pathItems.remove(closest);
@@ -176,7 +180,7 @@ public class PathService {
                 .filter(bp -> ((EngineeringBlueprint<T>) bp.getBlueprint()).getEngineers().stream().noneMatch(engineerPreference::containsKey))
                 .toList();
         if (!unCraftable.isEmpty()) {
-            final PathItem<T> pathItem = new PathItem<>(List.of(Engineer.UNKNOWN), unCraftable.stream().map(WishlistBlueprint::getBlueprint).toList());
+            final PathItem<T> pathItem = new PathItem<>(List.of(Engineer.UNKNOWN), unCraftable.stream().map(WishlistBlueprint::getBlueprint).toList(), unCraftable.stream().map(WishlistBlueprint::getPriority).toList());
             pathItem.setEngineer(Engineer.UNKNOWN);
             pathItem.setDistance(0.0);
             sortedPathItems.add(pathItem);
@@ -236,7 +240,6 @@ public class PathService {
                 .concat(engineerUnlocks, modules)
                 .map(EngineeringBlueprint.class::cast);
     }
-
 
     private static Predicate<HorizonsEngineeringBlueprint> distinctByKey2(final Function<HorizonsEngineeringBlueprint, Object> keyExtractor) {
         final Set<Object> seen = ConcurrentHashMap.newKeySet();
@@ -326,13 +329,13 @@ public class PathService {
                         final PathItem<T> toMoveTo = pathItems.get(index2);
                         if (bp instanceof OdysseyModuleBlueprint mbp) {
                             if (mbp.getEngineers().stream().anyMatch(eng -> toMoveTo.getEngineer().equals(eng))) {
-                                toMoveTo.addBlueprint(bp);
+                                toMoveTo.addBlueprint(bp, toMove.getPriorities().get(bp));
                                 break;
                             }
                         }
                         if (bp instanceof HorizonsBlueprint hbp) {
                             if (hbp.getEngineers().stream().anyMatch(eng -> toMoveTo.getEngineer().equals(eng))) {
-                                toMoveTo.addBlueprint(bp);
+                                toMoveTo.addBlueprint(bp, toMove.getPriorities().get(bp));
                                 break;
                             }
                         }
@@ -371,7 +374,9 @@ public class PathService {
                     shortestPath = engineers;
                 }
             }
-            setShortestPath(sortedPathItems, shortestPath);
+            if (!shortestPath.isEmpty()) {
+                setShortestPath(sortedPathItems, shortestPath);
+            }
         }
     }
 
@@ -384,8 +389,8 @@ public class PathService {
     }
 
     private static <T extends BlueprintName<T>> List<List<Engineer>> getPossiblePathsForItem(final List<PathItem<T>> sortedPathItems) {
-        final List<Engineer> engineers = new ArrayList<>(sortedPathItems.get(0).getAlternateEngineers());
-        engineers.add(sortedPathItems.get(0).getEngineer());
+        final List<Engineer> engineers = new ArrayList<>(sortedPathItems.getFirst().getAlternateEngineers());
+        engineers.add(sortedPathItems.getFirst().getEngineer());
         final List<List<Engineer>> paths = new ArrayList<>();
         engineers.forEach(engineer -> {
             final List<Engineer> path = new ArrayList<>();
@@ -416,7 +421,6 @@ public class PathService {
     }
 
     private static <T extends BlueprintName<T>> List<? extends WishlistBlueprint<T>> getBlueprintsForEngineer(final List<? extends WishlistBlueprint<T>> wishlistBlueprints, final List<PathItem<T>> pathItems, final Engineer engineer, final Set<Engineer> allowedEngineers, boolean isOdyssey) {
-
         return wishlistBlueprints.stream()
                 .filter(WishlistBlueprint::isVisible)
                 .filter(bp -> bp instanceof HorizonsModuleWishlistBlueprint || bp instanceof HorizonsExperimentalWishlistBlueprint || bp instanceof OdysseyWishlistBlueprint || bp instanceof HorizonsEngineerWishlistBlueprint)
@@ -436,7 +440,6 @@ public class PathService {
                         )
                 )
                 .collect(Collectors.toList());
-
     }
 
     public static <E extends BlueprintName<E>> List<Engineer> getEngineers(Blueprint<E> blueprint, boolean isOdyssey) {
@@ -471,7 +474,5 @@ public class PathService {
                 .filter(allowedEngineers::contains)
                 .filter(engineer -> Objects.equals(engineerPreference.get(engineer), highestPreference))
                 .toList();
-
-
     }
 }

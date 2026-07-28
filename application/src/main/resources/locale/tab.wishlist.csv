@@ -74,3 +74,8 @@
 "wishlist.blueprint.odyssey.title.weapon.module","Weapon module","","","Módulos de Arma","Module d’arme","","Оружейный модуль","武器模组","იარაღის მოდული"
 "wishlist.blueprint.odyssey.title.suit.module","Suit module","","","Módulo de traje","Module de combinaison","","Модуль костюма","套装模组","სკაფანდრის მოდული"
 "tab.wishlist.travel.path.column.blueprints.blueprint.horizons.engineer","{0}{1,choice,1#|1< ({1})}","","","","","","","",""
+"wishlist.priority.title","Priority","","","","","","","",""
+"wishlist.priority.subtitle.low","Low","","","","","","","",""
+"wishlist.priority.subtitle.high","High","","","","","","","",""
+"tab.wishlist.path.hint.distance","Only engineers within a 10 kLy range are considered for the shortest path. You can pin blueprints in the app so you can make use of the remote workshop.","","","","","","","",""
+"tab.wishlist.path.hint.priority","You can prioritize blueprints so they are visited first. Shortest path calculations do not consider the engineer unlock order, so you can use priority to order them. Adding an engineer unlock to the wishlist makes the engineer also available to craft blueprints.","","","","","","","",""

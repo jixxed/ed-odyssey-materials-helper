@@ -18,19 +18,18 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.IntegerBinding;
+import javafx.scene.input.MouseEvent;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ShortestPathFlowBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.Expansion;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.service.PathService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.ShortestPathFlow;
+import org.controlsfx.control.PopOver;
 
 import java.util.Collections;
 import java.util.List;
@@ -39,6 +38,8 @@ import java.util.Optional;
 @Slf4j
 public class HorizonsWishlistShortestPath extends DestroyableVBox implements DestroyableEventTemplate {
 
+
+    private DestroyableResizableImageView pathHelp;
     private ShortestPathFlow<HorizonsBlueprintName> shortestPathFlow;
 
     private static final PublishSubject<Object> updatePathItems = PublishSubject.create();
@@ -70,7 +71,18 @@ public class HorizonsWishlistShortestPath extends DestroyableVBox implements Des
                 .withManagedProperty(listNotEmptyBinding)
                 .build();
 
-        this.getNodes().addAll(travelPathLabel, this.shortestPathFlow);
+        this.pathHelp = ResizableImageViewBuilder.builder()
+                .withOnMouseClicked(this::showHelp)
+                .withStyleClass("help-image")
+                .withImage("/images/other/help.png")
+                .build();
+
+        DestroyableHBox titleBar = BoxBuilder.builder()
+                .withStyleClass("title-bar")
+                .withNodes(travelPathLabel, this.pathHelp)
+                .buildHBox();
+
+        this.getNodes().addAll(titleBar, this.shortestPathFlow);
         Observable<Object> debouncedFleetCarrier = updatePathItems.observeOn(Schedulers.computation());
         subscribe = debouncedFleetCarrier.subscribe(_ -> {
             final List<PathItem<HorizonsBlueprintName>> pathItems2 = getPathItems();
@@ -90,6 +102,30 @@ public class HorizonsWishlistShortestPath extends DestroyableVBox implements Des
         register(EventService.addListener(true, this, LocationChangedEvent.class, _ -> update()));
         register(EventService.addListener(true, this, EngineerPinEvent.class, _ -> update()));
         register(EventService.addListener(true, this, EngineerEvent.class, _ -> update()));
+    }
+
+    private void showHelp(MouseEvent event) {
+        DestroyableLabel hintDistance = LabelBuilder.builder()
+                .withStyleClass("wishlist-path-explain")
+                .withText("tab.wishlist.path.hint.distance")
+                .build();
+        DestroyableLabel hintPriority = LabelBuilder.builder()
+                .withStyleClass("wishlist-path-explain")
+                .withText("tab.wishlist.path.hint.priority")
+                .build();
+        final DestroyableVBox contentNodepath = BoxBuilder.builder()
+                .withStyleClass("help-popover")
+                .withNodes(hintDistance, hintPriority)
+                .buildVBox();
+        final DestroyablePopOver popOverPath = PopOverBuilder.builder()
+                .withStyleClass("horizons-wishlist-path-help-popover")
+                .withContent(contentNodepath)
+                .withDetachable(false)
+                .withHeaderAlwaysVisible(false)
+                .withCornerRadius(0)
+                .withArrowLocation(PopOver.ArrowLocation.TOP_LEFT)
+                .build();
+        popOverPath.show(this.pathHelp, event.getScreenX(), event.getScreenY());
     }
 
     private void update() {

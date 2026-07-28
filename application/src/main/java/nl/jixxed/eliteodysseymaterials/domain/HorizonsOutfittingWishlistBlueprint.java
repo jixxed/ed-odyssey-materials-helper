@@ -11,7 +11,9 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 
 @NoArgsConstructor
@@ -19,6 +21,9 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 //@Data
 @EqualsAndHashCode(callSuper = true)
 public final class HorizonsOutfittingWishlistBlueprint extends HorizonsWishlistBlueprint {
+    @Getter
+    @Setter
+    private int priority = 1;
     public HorizonsOutfittingWishlistBlueprint(final HorizonsBlueprintName recipeName, final boolean visible) {
         super(recipeName, visible);
     }
