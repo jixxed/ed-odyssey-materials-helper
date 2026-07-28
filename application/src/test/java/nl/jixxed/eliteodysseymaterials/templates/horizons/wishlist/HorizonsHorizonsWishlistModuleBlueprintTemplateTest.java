@@ -123,7 +123,7 @@ class HorizonsHorizonsWishlistModuleBlueprintTemplateTest {
     public void testMemoryLeakDestroyableShortestPathItem() {
 
         ApplicationState.getInstance().addCommander("unittest", "F0000000", GameVersion.LIVE, LocalDateTime.of(2024,12,12,12,12,12));
-        final PathItem<HorizonsBlueprintName> pathItem = new PathItem<>(List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO), List.of(HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.DOUBLE_SHOT, HorizonsBlueprintGrade.GRADE_3)));
+        final PathItem<HorizonsBlueprintName> pathItem = new PathItem<>(List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO), List.of(HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.DOUBLE_SHOT, HorizonsBlueprintGrade.GRADE_3)), List.of(1));
         pathItem.setEngineer(Engineer.UNKNOWN);
         pathItem.setDistance(100D);
 //        ShortestPathItem subject = new ShortestPathItem(pathItem, 1, Expansion.HORIZONS);
