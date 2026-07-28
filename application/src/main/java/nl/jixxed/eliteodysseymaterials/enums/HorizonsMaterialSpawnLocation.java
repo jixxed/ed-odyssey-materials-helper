@@ -161,26 +161,6 @@ public enum HorizonsMaterialSpawnLocation implements SpawnLocation {
     private static List<Location> loadFromFile(Raw raw, String file) {
         final ObjectMapper mapper = new ObjectMapper();
         List<Location> locations = new ArrayList<>();
-        //load csv file with format
-        // braintrees.csv: system,body,distance,material,x,y,z
-        // crystalshards.csv: system,body,distance,x,y,z,material
-//        try (final CSVParser csvParser = CSVFormat.DEFAULT.withHeader().parse(new InputStreamReader(Objects.requireNonNull(HorizonsMaterialSpawnLocation.class.getResourceAsStream("/poi/" + file)), StandardCharsets.UTF_8))) {
-//
-//            StreamSupport.stream(csvParser.spliterator(), false).forEach(csvRecord -> {
-//                final String material = csvRecord.get("material");
-//                if (material.equalsIgnoreCase(raw.name())) {
-//                    final String system = csvRecord.get("system");
-//                    final String body = csvRecord.get("body");
-//                    final double x = Double.parseDouble(csvRecord.get("x"));
-//                    final double y = Double.parseDouble(csvRecord.get("y"));
-//                    final double z = Double.parseDouble(csvRecord.get("z"));
-//                    final Location location = new Location(new StarSystem(system, x, y, z), body, null, null, null, null);
-//                    locations.add(location);
-//                }
-//            });
-//        } catch (final IOException e) {
-//            throw new IllegalArgumentException(e);
-//        }
         final InputStream inputStream = Objects.requireNonNull(HorizonsMaterialSpawnLocation.class.getResourceAsStream("/poi/" + file));
         try (final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             while (reader.ready()) {
