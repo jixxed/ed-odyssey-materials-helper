@@ -43,12 +43,11 @@ import java.util.concurrent.atomic.AtomicReference;
 public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableVBox implements WishlistBlueprintTemplate<HorizonsBlueprintName>, DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static int counter = 0;
-
-    private SimpleBooleanProperty visible = new SimpleBooleanProperty();
     private final Integer sequenceID;
     private final HorizonsWishlistBlueprint wishlistBlueprint;
     private final HorizonsBlueprint blueprint;
     private final String wishlistUUID;
+    private SimpleBooleanProperty visible = new SimpleBooleanProperty();
     private DestroyableHBox settingsButton;
     private DestroyableFontAwesomeIconView settingsIcon;
 
@@ -155,9 +154,17 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableVBo
                 .build();
         removeBlueprintTooltip.install(removeBlueprint);
 
+        String titleKey;
+        if (this.wishlistBlueprint instanceof HorizonsEngineerWishlistBlueprint) {
+            titleKey = "wishlist.blueprint.horizons.title.engineerunlock";
+        } else if (this.wishlistBlueprint instanceof HorizonsOutfittingWishlistBlueprint obp && obp.getRecipeName().isMerc()) {
+            titleKey = "wishlist.blueprint.horizons.title.mercmodule";
+        } else {
+            titleKey = this.wishlistBlueprint.getRecipeName().getLocalizationKey();
+        }
         this.title = LabelBuilder.builder()
                 .withStyleClass("module")
-                .withText(this.wishlistBlueprint instanceof HorizonsEngineerWishlistBlueprint ? "wishlist.blueprint.horizons.title.engineerunlock" : this.wishlistBlueprint.getRecipeName().getLocalizationKey())
+                .withText(titleKey)
                 .build();
         if (this.blueprint instanceof HorizonsExperimentalEffectBlueprint moduleRecipe) {
             tooltip = TooltipBuilder.builder()
@@ -206,8 +213,8 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableVBo
         if (popOverRef.get() == null || !popOverRef.get().isShowing()) {
 
 
-            final PrioritySlider priorityControl = new PrioritySlider(1D,10D, (double)this.wishlistBlueprint.getPriority(), (newValue) -> {
-                wishlistBlueprint.setPriority((int)newValue);
+            final PrioritySlider priorityControl = new PrioritySlider(1D, 10D, (double) this.wishlistBlueprint.getPriority(), (newValue) -> {
+                wishlistBlueprint.setPriority((int) newValue);
                 modify();
                 update();
             });
@@ -252,6 +259,7 @@ public non-sealed class HorizonsWishlistBlueprintTemplate extends DestroyableVBo
             popOverRef.set(null);
         }
     }
+
     public void initEventHandling() {
         register(EventService.addListener(true, this, StorageEvent.class, _ -> {
             this.canCraft();
