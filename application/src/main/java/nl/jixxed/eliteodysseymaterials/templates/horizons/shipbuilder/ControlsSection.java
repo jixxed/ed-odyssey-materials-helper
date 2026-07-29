@@ -17,6 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.input.Clipboard;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.MouseEvent;
@@ -46,6 +47,8 @@ import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper.slefConsumer;
 
 @Slf4j
 public class ControlsSection extends DestroyableHBox implements DestroyableEventTemplate {
@@ -556,7 +559,9 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
                                 "tab.ships.rename", getRenameHandler(),
                                 "tab.ships.delete", getDeleteHandler(),
                                 "tab.ships.reset", getResetHandler(),
-                                "tab.ships.copy", getCopyHandler()
+                                "tab.ships.copy", getCopyHandler(),
+                                "tab.ships.paste", getPasteHandler(),
+                                "tab.ships.import", getImportHandler()
                         ),
                         Map.of(
                                 "tab.ships.clone", Bindings.createBooleanBinding(() -> this.shipSelect.getSelectionModel().getSelectedItem() == null || this.shipSelect.getSelectionModel().getSelectedItem().getShipType() == null, this.shipSelect.getSelectionModel().selectedItemProperty()),
@@ -571,7 +576,8 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
                                 "tab.ships.delete", new KeyCodeCombination(KeyCode.DELETE),
                                 "tab.ships.copy", new KeyCodeCombination(KeyCode.C, KeyCodeCombination.CONTROL_DOWN),
                                 "tab.ships.clone", new KeyCodeCombination(KeyCode.D, KeyCodeCombination.CONTROL_DOWN),
-                                "tab.ships.reset", new KeyCodeCombination(KeyCode.R, KeyCodeCombination.CONTROL_DOWN)
+                                "tab.ships.reset", new KeyCodeCombination(KeyCode.R, KeyCodeCombination.CONTROL_DOWN),
+                                "tab.ships.paste", new KeyCodeCombination(KeyCode.V, KeyCodeCombination.CONTROL_DOWN)
                         ))
                 .build();
         this.menuButton.setFocusTraversable(false);
@@ -626,6 +632,7 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
         this.plotSpansh = ButtonBuilder.builder()
                 .withText("tab.ships.plot")
                 .withDisableProperty(Bindings.createBooleanBinding(() -> this.shipSelect.getSelectionModel().getSelectedItem() == null || this.shipSelect.getSelectionModel().getSelectedItem().getShipType() == null, this.shipSelect.getSelectionModel().selectedItemProperty()).or(SpanshService.isWorking()))
+                .withVisibilityProperty(Bindings.createBooleanBinding(() -> this.shipSelect.getSelectionModel().getSelectedItem() != null && this.shipSelect.getSelectionModel().getSelectedItem().getShipType() != null, this.shipSelect.getSelectionModel().selectedItemProperty()).or(SpanshService.isWorking()))
                 .withOnAction(_ -> {
                     final ShipConfiguration shipConfiguration = this.shipSelect.getSelectionModel().getSelectedItem();
                     Slef slef = SlefMapper.map(shipConfiguration);
@@ -669,6 +676,19 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
         return _ -> {
             copyShipToClipboard();
             NotificationService.showInformation(NotificationType.COPY, LocaleService.LocaleString.of("notification.clipboard.title"), LocaleService.LocaleString.of("notification.clipboard.ship.copied.text"));
+        };
+    }
+    private EventHandler<ActionEvent> getPasteHandler() {
+        return _ -> {
+            ClipboardHelper.importFromClipboard();
+        };
+    }
+    private EventHandler<ActionEvent> getImportHandler() {
+        return _ -> {
+            final String clipboard = Clipboard.getSystemClipboard().getString();
+            if (clipboard != null && !clipboard.startsWith("edomh://")) {
+                slefConsumer.accept(clipboard);
+            }
         };
     }
 

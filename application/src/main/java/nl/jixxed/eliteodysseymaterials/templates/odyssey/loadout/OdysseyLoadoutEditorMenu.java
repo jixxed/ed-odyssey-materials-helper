@@ -117,6 +117,7 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
                                 "tab.loadout.rename", getRenameHandler(),
                                 "tab.loadout.delete", getDeleteHandler(),
                                 "tab.loadout.clone", getCloneHandler(),
+                                "tab.loadout.paste", getPasteHandler(),
                                 "tab.loadout.copy", getCopyHandler()),
                         Map.of(
                                 "tab.loadout.delete", this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isEqualTo(LoadoutSet.CURRENT),
@@ -128,7 +129,8 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
                                 "tab.loadout.rename", new KeyCodeCombination(KeyCode.F2),
                                 "tab.loadout.delete", new KeyCodeCombination(KeyCode.DELETE),
                                 "tab.loadout.copy", new KeyCodeCombination(KeyCode.C, KeyCodeCombination.CONTROL_DOWN),
-                                "tab.loadout.clone", new KeyCodeCombination(KeyCode.D, KeyCodeCombination.CONTROL_DOWN)
+                                "tab.loadout.clone", new KeyCodeCombination(KeyCode.D, KeyCodeCombination.CONTROL_DOWN),
+                                "tab.loadout.paste", new KeyCodeCombination(KeyCode.V, KeyCodeCombination.CONTROL_DOWN)
                         ))
                 .withFocusTraversable(false)
                 .build();
@@ -151,6 +153,11 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
         return _ -> {
             copyLoadoutSetToClipboard();
             NotificationService.showInformation(NotificationType.COPY, LocaleService.LocaleString.of("notification.clipboard.title"), LocaleService.LocaleString.of("notification.clipboard.loadout.copied.text"));
+        };
+    }
+    private EventHandler<ActionEvent> getPasteHandler() {
+        return _ -> {
+            ClipboardHelper.importFromClipboard();
         };
     }
 

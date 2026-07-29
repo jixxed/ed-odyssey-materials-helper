@@ -79,3 +79,4 @@
 "wishlist.priority.subtitle.high","High","","","","","","","",""
 "tab.wishlist.path.hint.distance","Only engineers within a 10 kLy range are considered for the shortest path. You can pin blueprints in the app so you can make use of the remote workshop.","","","","","","","",""
 "tab.wishlist.path.hint.priority","You can prioritize blueprints so they are visited first. Shortest path calculations do not consider the engineer unlock order, so you can use priority to order them. Adding an engineer unlock to the wishlist makes the engineer also available to craft blueprints.","","","","","","","",""
+"tab.wishlist.paste","Paste wishlist from clipboard","","","","","","","",""

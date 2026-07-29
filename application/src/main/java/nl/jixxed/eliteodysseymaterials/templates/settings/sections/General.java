@@ -109,8 +109,8 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
         final DestroyableHBox urlSchemeLinkingSetting = createUrlSchemeLinkingSetting();
         final DestroyableHBox exportInventory = createExportInventorySetting();
         final DestroyableHBox blueprintExpandedSetting = createBlueprintExpandedSetting();
-        final DestroyableHBox importFromClipboardSetting = createImportFromClipboardSetting();
-        final DestroyableHBox importSlefFromClipboardSetting = createImportSlefFromClipboardSetting();
+//        final DestroyableHBox importFromClipboardSetting = createImportFromClipboardSetting();
+//        final DestroyableHBox importSlefFromClipboardSetting = createImportSlefFromClipboardSetting();
         final DestroyableHBox supportPackageSetting = createSupportPackageSetting();
         final DestroyableHBox sponsorSetting = createSponsorSetting();
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
@@ -128,8 +128,8 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
         this.getNodes().addAll(
                 exportInventory,
                 blueprintExpandedSetting,
-                importFromClipboardSetting,
-                importSlefFromClipboardSetting,
+//                importFromClipboardSetting,
+//                importSlefFromClipboardSetting,
                 supportPackageSetting,
                 sponsorSetting
         );

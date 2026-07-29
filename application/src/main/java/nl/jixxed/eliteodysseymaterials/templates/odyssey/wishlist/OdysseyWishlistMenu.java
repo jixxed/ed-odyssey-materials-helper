@@ -85,6 +85,7 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
                                 "tab.wishlist.rename", getRenameHandler(),
                                 "tab.wishlist.delete", getDeleteHandler(),
                                 "tab.wishlist.copy", getCopyHandler(),
+                                "tab.wishlist.paste", getPasteHandler(),
                                 "tab.wishlist.export", getExportHandler()
                         ),
                         Map.of(
@@ -97,7 +98,8 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
                                 "tab.wishlist.rename", new KeyCodeCombination(KeyCode.F2),
                                 "tab.wishlist.delete", new KeyCodeCombination(KeyCode.DELETE),
                                 "tab.wishlist.copy", new KeyCodeCombination(KeyCode.C, KeyCodeCombination.CONTROL_DOWN),
-                                "tab.wishlist.export", new KeyCodeCombination(KeyCode.E, KeyCodeCombination.CONTROL_DOWN)
+                                "tab.wishlist.export", new KeyCodeCombination(KeyCode.E, KeyCodeCombination.CONTROL_DOWN),
+                                "tab.wishlist.paste", new KeyCodeCombination(KeyCode.V, KeyCodeCombination.CONTROL_DOWN)
                         ))
                 .build();
         this.menuButton.setFocusTraversable(false);
@@ -124,6 +126,11 @@ public class OdysseyWishlistMenu extends DestroyableHBox implements DestroyableE
         return _ -> {
             copyWishListToClipboard();
             NotificationService.showInformation(NotificationType.COPY, LocaleService.LocaleString.of("notification.clipboard.title"), LocaleService.LocaleString.of("notification.clipboard.wishlist.copied.text"));
+        };
+    }
+    private EventHandler<ActionEvent> getPasteHandler() {
+        return _ -> {
+            ClipboardHelper.importFromClipboard();
         };
     }
 
