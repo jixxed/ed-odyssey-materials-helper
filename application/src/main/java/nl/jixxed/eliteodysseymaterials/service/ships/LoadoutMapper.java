@@ -46,6 +46,7 @@ public class LoadoutMapper {
     private static final Set<String> SLF_SLOT_NAMES = Set.of("FighterBay");
     private static final Set<String> LIMPET_SLOT_NAMES = Set.of("LimpetController");
     private static final Set<String> OPTIONAL_SLOT_NAMES = Set.of("Slot");
+    public static final String CARGO_HATCH = "CargoHatch";
 
     static {
         OBJECT_MAPPER.registerModule(new JavaTimeModule());
@@ -256,26 +257,27 @@ public class LoadoutMapper {
 
 
     public static Slot getShipSlot(Ship ship, String slotName) {
+        String slotNameLC = slotName.toLowerCase();
         try {
-            if ("CargoHatch".equals(slotName)) {
+            if (CARGO_HATCH.equalsIgnoreCase(slotNameLC)) {
                 return ship.getCargoHatch();
             }
-            if (HARDPOINT_SLOT_NAMES.stream().anyMatch(slotName::contains) || MINING_HARDPOINT_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
-                return getSlot(ship.getHardpointSlots(), slotName);
+            if (HARDPOINT_SLOT_NAMES.stream().map(String::toLowerCase).anyMatch(slotNameLC::contains) || MINING_HARDPOINT_SLOT_NAMES.stream().map(String::toLowerCase).anyMatch(slotNameLC::contains)) {
+                return getSlot(ship.getHardpointSlots(), slotNameLC);
             }
-            if (UTILITY_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
-                return getSlot(ship.getUtilitySlots(), slotName);
+            if (UTILITY_SLOT_NAMES.stream().map(String::toLowerCase).anyMatch(slotNameLC::contains)) {
+                return getSlot(ship.getUtilitySlots(), slotNameLC);
             }
-            if (CORE_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
-                return getSlot(ship.getCoreSlots(), slotName);
+            if (CORE_SLOT_NAMES.stream().map(String::toLowerCase).anyMatch(slotNameLC::contains)) {
+                return getSlot(ship.getCoreSlots(), slotNameLC);
             }
-            if (OPTIONAL_SLOT_NAMES.stream().anyMatch(slotName::contains)
-                    || MILITARY_SLOT_NAMES.stream().anyMatch(slotName::contains)
-                    || CARGO_SLOT_NAMES.stream().anyMatch(slotName::startsWith)
-                    || PASSENGER_SLOT_NAMES.stream().anyMatch(slotName::startsWith)
-                    || SLF_SLOT_NAMES.stream().anyMatch(slotName::startsWith)
-                    || LIMPET_SLOT_NAMES.stream().anyMatch(slotName::startsWith)) {//Limpet
-                return getSlot(ship.getOptionalSlots(), slotName);
+            if (OPTIONAL_SLOT_NAMES.stream().map(String::toLowerCase).anyMatch(slotNameLC::contains)
+                    || MILITARY_SLOT_NAMES.stream().map(String::toLowerCase).anyMatch(slotNameLC::contains)
+                    || CARGO_SLOT_NAMES.stream().map(String::toLowerCase).anyMatch(slotNameLC::startsWith)
+                    || PASSENGER_SLOT_NAMES.stream().map(String::toLowerCase).anyMatch(slotNameLC::startsWith)
+                    || SLF_SLOT_NAMES.stream().map(String::toLowerCase).anyMatch(slotNameLC::startsWith)
+                    || LIMPET_SLOT_NAMES.stream().map(String::toLowerCase).anyMatch(slotNameLC::startsWith)) {//Limpet
+                return getSlot(ship.getOptionalSlots(), slotNameLC);
             }
         } catch (IndexOutOfBoundsException | IllegalArgumentException e) {
             log.error(e.getMessage(), e);
