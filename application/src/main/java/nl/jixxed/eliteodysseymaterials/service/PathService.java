@@ -62,6 +62,7 @@ public class PathService {
                     blueprint.setQuantity(bp.getQuantity());
                     blueprint.setVisible(bp.isVisible());
                     blueprint.setUuid("-1");
+                    blueprint.setPriority(bp.getPriority());
                     return blueprint;
                 })
                 .toList();
