@@ -21,11 +21,12 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Add blueprint priority system
-- This allows you to prioritize blueprints in the shortest path calculation, so for example to get the FSD upgraded before any other modules.
-- Only blueprints that require visits to an engineer can have a priority configured
-Add engineer unlocks in shortest path when relevant
-- (Added in 3.13.12) When adding an engineer unlock to the wishlist, this engineer becomes available in the shortest path
-Bugfix for mapping merc module reinforcement
-Bugfix for Invalid material collection type for synthesis blueprints
+Make SLEF import slot names case-insensitive
+Move SLEF import from Settings to Ship Editor tab
+Add paste ship/loadout/wishlist option to dedicated tab and remove from Settings
+Fix experimental effect part of a blueprint on the wishlist not sharing the same priority
+Add new commodity for CG: Curated Commodity Package 
+Fix material cost on G5 Merc enhanced scoop rate blueprint 
+Fixed price of Limpet Control module
+Set a title for Merc modules on the wishlist
 ```

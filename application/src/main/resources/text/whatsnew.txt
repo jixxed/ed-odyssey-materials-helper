@@ -1,3 +1,14 @@
+Version 3.14.1
+-------------
+Make SLEF import slot names case-insensitive
+Move SLEF import from Settings to Ship Editor tab
+Add paste ship/loadout/wishlist option to dedicated tab and remove from Settings
+Fix experimental effect part of a blueprint on the wishlist not sharing the same priority
+Add new commodity for CG: Curated Commodity Package
+Fix material cost on G5 Merc enhanced scoop rate blueprint
+Fixed price of Limpet Control module
+Set a title for Merc modules on the wishlist
+
 Version 3.14.0
 -------------
 Add blueprint priority system
