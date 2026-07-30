@@ -77,6 +77,7 @@ public enum RegularCommodity implements Commodity {
     COPPER(CommodityType.METALS),
     CROPHARVESTERS(CommodityType.MACHINERY),
     CRYOLITE(CommodityType.MINERALS),
+    CURATEDCOMMODITY(CommodityType.INDUSTRIAL_MATERIALS),//Colonia CG 30-7-2026
     DAMAGEDESCAPEPOD(CommodityType.SALVAGE),
     DATACORE(CommodityType.SALVAGE),
     DIAGNOSTICSENSOR(CommodityType.TECHNOLOGY),
@@ -319,6 +320,7 @@ public enum RegularCommodity implements Commodity {
     KAINEAIDSUPPLIES(CommodityType.POWERPLAY),
     KAINELOBBYINGMATERIAL(CommodityType.POWERPLAY),
     LAVIGNYSTRATEGICREPORTS(CommodityType.POWERPLAY),
+
     UNKNOWN(CommodityType.UNKNOWN);
     private final CommodityType commodityType;
     private final GameVersion gameVersion;
