@@ -12,10 +12,21 @@ package nl.jixxed.eliteodysseymaterials.templates.destroyables;
 
 import io.fair_acc.chartfx.XYChart;
 import io.fair_acc.chartfx.axes.Axis;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class DestroyableChart extends XYChart implements DestroyableComponent {
 
     public DestroyableChart(final Axis... axes) {
         super(axes);
+    }
+
+    @Override
+    protected void runPostLayout() {
+        try{
+            super.runPostLayout();
+        }catch (NullPointerException ex){
+            log.error("Error post layout chart", ex);
+        }
     }
 }

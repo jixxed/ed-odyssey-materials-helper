@@ -14,6 +14,7 @@ import javafx.application.Platform;
 import javafx.beans.binding.StringBinding;
 import javafx.geometry.Orientation;
 import javafx.scene.layout.Region;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
@@ -34,6 +35,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.CopyableLocation;
 
 import java.math.BigInteger;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -46,10 +48,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class CommunityGoal extends DestroyableVBox implements DestroyableEventTemplate {
 
     private final Goal goal;
     private final int index;
+    private final ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
     private ProgressChart progressChart;
     private BandChart bandChart;
     private RewardsTable rewardsTable;
@@ -68,7 +72,15 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
     private DestroyableLabel contribution;
     private BandPredictionTable bandPredictionTable;
 
-    private final ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
+    public CommunityGoal(Goal goal, int index) {
+        this.goal = goal;
+        this.index = index;
+        initComponents();
+        initEventHandling();
+        refreshContent();
+
+        scheduledExecutor.scheduleWithFixedDelay(this::smallUpdate, 1, 1, TimeUnit.MINUTES);
+    }
 
     private static String lookupLocalized(Map<String, Object> localized, Locale locale, String key, String fallback) {
         if (localized == null) return fallback;
@@ -78,16 +90,6 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
             return value != null ? value.toString() : fallback;
         }
         return fallback;
-    }
-
-    public CommunityGoal(Goal goal, int index) {
-        this.goal = goal;
-        this.index = index;
-        initComponents();
-        initEventHandling();
-        refreshContent();
-
-        scheduledExecutor.scheduleWithFixedDelay(this::smallUpdate, 1, 1, TimeUnit.MINUTES);
     }
 
     @Override
@@ -183,111 +185,115 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
     }
 
     private void refreshContent() {
-        CommunityGoalsService.getReport(goal.getId())
-                .flatMap(report -> report.goals().stream()
-                        .filter(g -> goal.getId().equals((int) g.cgid()))
-                        .findFirst())
-                .ifPresent(goalReport -> {
-                    commodityList.update(goalReport);
-                    progressChart.update(goalReport);
-                    bandChart.update(goalReport);
-                    rewardsTable.update(goalReport, goalReport.currentAchievedTier(), null);
-                    progressStats.update(goalReport);
-                    currentTier.setText(Optional.ofNullable(goalReport.currentAchievedTier())
-                            .map(Object::toString).orElse(""));
-                    maxTier.setText(Optional.ofNullable(goalReport.currentTopTier())
-                            .map(Object::toString).orElse(""));
-                    Map<String, Object> localized = (Map<String, Object>) goalReport.metadata().get("localized");
-                    String fallbackActivityType = Optional.ofNullable(goalReport.metadata().get("activityType"))
-                            .map(Object::toString).orElse("");
-                    activityType.addBinding(activityType.textProperty(),
-                        LocaleService.getStringBinding(locale -> lookupLocalized(localized, locale, "activityType", fallbackActivityType)));
+        try {
+            CommunityGoalsService.getReport(goal.getId())
+                    .flatMap(report -> report.goals().stream()
+                            .filter(g -> goal.getId().equals((int) g.cgid()))
+                            .findFirst())
+                    .ifPresent(goalReport -> {
+                        commodityList.update(goalReport);
+                        progressChart.update(goalReport);
+                        bandChart.update(goalReport);
+                        rewardsTable.update(goalReport, goalReport.currentAchievedTier(), null);
+                        progressStats.update(goalReport);
+                        currentTier.setText(Optional.ofNullable(goalReport.currentAchievedTier())
+                                .map(Object::toString).orElse(""));
+                        maxTier.setText(Optional.ofNullable(goalReport.currentTopTier())
+                                .map(Object::toString).orElse(""));
+                        Map<String, Object> localized = (Map<String, Object>) goalReport.metadata().get("localized");
+                        String fallbackActivityType = Optional.ofNullable(goalReport.metadata().get("activityType"))
+                                .map(Object::toString).orElse("");
+                        activityType.addBinding(activityType.textProperty(),
+                                LocaleService.getStringBinding(locale -> lookupLocalized(localized, locale, "activityType", fallbackActivityType)));
 
-                    ZonedDateTime localExpiry = toLocalExpiry(
-                            Optional.ofNullable(goalReport.metadata().get("expiry"))
-                                    .map(Object::toString).orElse(""));
-                    String formatKey = localExpiry.getYear() == ZonedDateTime.now().getYear() ? "community.goal.date.format.currentyear" : "community.goal.date.format.previousyear";
-                    StringBinding formattedDate = LocaleService.getStringBinding(locale -> {
-                        String pattern = LocaleService.getLocalizedStringForLocale(locale, formatKey);
-                        return DateTimeFormatter.ofPattern(pattern).withLocale(locale).format(localExpiry);
-                    });
-                    expires.addBinding(expires.textProperty(), formattedDate);
-                    if (localExpiry.isAfter(ZonedDateTime.now())) {
-                        expiresTimer.addBinding(expiresTimer.textProperty(), LocaleService.getStringBinding(() -> Formatters.timeUntil(localExpiry)));
-                        expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expires"));
-                    } else {
-                        expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expired"));
-                        expiresTimer.setVisible(false);
-                        expiresTimer.setManaged(false);
-                    }
+                        ZonedDateTime localExpiry = toLocalExpiry(
+                                Optional.ofNullable(goalReport.metadata().get("expiry"))
+                                        .map(Object::toString).orElse(""));
+                        String formatKey = localExpiry.getYear() == ZonedDateTime.now().getYear() ? "community.goal.date.format.currentyear" : "community.goal.date.format.previousyear";
+                        StringBinding formattedDate = LocaleService.getStringBinding(locale -> {
+                            String pattern = LocaleService.getLocalizedStringForLocale(locale, formatKey);
+                            return DateTimeFormatter.ofPattern(pattern).withLocale(locale).format(localExpiry);
+                        });
+                        expires.addBinding(expires.textProperty(), formattedDate);
+                        if (localExpiry.isAfter(ZonedDateTime.now())) {
+                            expiresTimer.addBinding(expiresTimer.textProperty(), LocaleService.getStringBinding(() -> Formatters.timeUntil(localExpiry)));
+                            expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expires"));
+                        } else {
+                            expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expired"));
+                            expiresTimer.setVisible(false);
+                            expiresTimer.setManaged(false);
+                        }
 
-                    StarSystem starSystem = LocationService.getStarSystem(
-                            Optional.ofNullable(goalReport.metadata().get("starsystem_name"))
-                                    .map(Object::toString).orElse(""));
-                    location.getNodes().clear();
-                    location.setVisible(false);
-                    location.setManaged(false);
-                    if (starSystem != null) {
-                        location.getNodes().add(new CopyableLocation(starSystem,
+                        StarSystem starSystem = LocationService.getStarSystem(
+                                Optional.ofNullable(goalReport.metadata().get("starsystem_name"))
+                                        .map(Object::toString).orElse(""));
+                        location.getNodes().clear();
+                        location.setVisible(false);
+                        location.setManaged(false);
+                        if (starSystem != null) {
+                            location.getNodes().add(new CopyableLocation(starSystem,
                                     Optional.ofNullable(goalReport.metadata().get("market_name"))
                                             .map(Object::toString).orElse("")));
-                        location.setVisible(true);
-                        location.setManaged(true);
-                    }
-                    String fallbackBulletin = Optional.ofNullable(goalReport.metadata().get("bulletin"))
-                            .map(Object::toString).orElse("");
-                    goalText.addBinding(goalText.textProperty(),
-                        LocaleService.getStringBinding(locale -> lookupLocalized(localized, locale, "bulletin", fallbackBulletin)));
-                    String fallbackTitle = Optional.ofNullable(goalReport.metadata().get("title"))
-                            .map(Object::toString).orElse("");
-                    title.addBinding(title.textProperty(),
-                        LocaleService.getStringBinding(locale -> lookupLocalized(localized, locale, "title", fallbackTitle)));
-                    ApplicationState.getInstance().getPreferredCommander().ifPresent(_ -> {//database must be initialized with a commander
-                        Optional<CommunityGoalModel> communityGoalModel = new QCommunityGoalModel()
-                                .cgid.eq((int) goalReport.cgid())
-                                .orderBy()
-                                .timestamp.desc()
-                                .setMaxRows(1)
-                                .findOneOrEmpty();
-                        Long contributionValue = communityGoalModel
-                                .map(CommunityGoalModel::getPlayerContribution)
-                                .map(BigInteger::longValue)
-                                .orElse(-1L);
-                        Long currentBandValue = communityGoalModel
-                                .map(CommunityGoalModel::getPlayerPercentileBand)
-                                .map(BigInteger::longValue)
-                                .orElse(-1L);
-                        String currentBandStr = null;
-                        if (currentBandValue < 0L) {//no journal events, not signed up
-                            currentBand.addBinding(currentBand.textProperty(), LocaleService.getStringBinding("community.goal.information.currentband.none"));
-                        } else if (goalReport.hourlyData().isEmpty()) {//no data, set to highest from journal
-                            String band = currentBandValue.toString();
-                            currentBandStr = band;
-                            String label = (band.contains("top")) ? "community.goal.reward.table.top" : "community.goal.reward.table.percent";
-                            StringBinding title = LocaleService.getStringBinding(label, band.replace("top", ""));
-                            currentBand.addBinding(currentBand.textProperty(), title);
-                        } else {
-                            Optional<ReportModels.BandMax> lowestMax = goalReport.hourlyData().getLast().bandMax().stream()
-                                    .filter(bandMax -> bandMax.max() >= contributionValue)
-                                    .max(new BandComparator());
-                            String band = lowestMax.map(ReportModels.BandMax::band).orElse("top10");
-                            currentBandStr = band;
-                            String label = (band.contains("top")) ? "community.goal.reward.table.top" : "community.goal.reward.table.percent";
-                            StringBinding title = LocaleService.getStringBinding(label, band.replace("top", "").replace("%", ""));
-                            currentBand.addBinding(currentBand.textProperty(), title);
+                            location.setVisible(true);
+                            location.setManaged(true);
                         }
+                        String fallbackBulletin = Optional.ofNullable(goalReport.metadata().get("bulletin"))
+                                .map(Object::toString).orElse("");
+                        goalText.addBinding(goalText.textProperty(),
+                                LocaleService.getStringBinding(locale -> lookupLocalized(localized, locale, "bulletin", fallbackBulletin)));
+                        String fallbackTitle = Optional.ofNullable(goalReport.metadata().get("title"))
+                                .map(Object::toString).orElse("");
+                        title.addBinding(title.textProperty(),
+                                LocaleService.getStringBinding(locale -> lookupLocalized(localized, locale, "title", fallbackTitle)));
+                        ApplicationState.getInstance().getPreferredCommander().ifPresent(_ -> {//database must be initialized with a commander
+                            Optional<CommunityGoalModel> communityGoalModel = new QCommunityGoalModel()
+                                    .cgid.eq((int) goalReport.cgid())
+                                    .orderBy()
+                                    .timestamp.desc()
+                                    .setMaxRows(1)
+                                    .findOneOrEmpty();
+                            Long contributionValue = communityGoalModel
+                                    .map(CommunityGoalModel::getPlayerContribution)
+                                    .map(BigInteger::longValue)
+                                    .orElse(-1L);
+                            Long currentBandValue = communityGoalModel
+                                    .map(CommunityGoalModel::getPlayerPercentileBand)
+                                    .map(BigInteger::longValue)
+                                    .orElse(-1L);
+                            String currentBandStr = null;
+                            if (currentBandValue < 0L) {//no journal events, not signed up
+                                currentBand.addBinding(currentBand.textProperty(), LocaleService.getStringBinding("community.goal.information.currentband.none"));
+                            } else if (goalReport.hourlyData().isEmpty()) {//no data, set to highest from journal
+                                String band = currentBandValue.toString();
+                                currentBandStr = band;
+                                String label = (band.contains("top")) ? "community.goal.reward.table.top" : "community.goal.reward.table.percent";
+                                StringBinding title = LocaleService.getStringBinding(label, band.replace("top", ""));
+                                currentBand.addBinding(currentBand.textProperty(), title);
+                            } else {
+                                Optional<ReportModels.BandMax> lowestMax = goalReport.hourlyData().getLast().bandMax().stream()
+                                        .filter(bandMax -> bandMax.max() >= contributionValue)
+                                        .max(new BandComparator());
+                                String band = lowestMax.map(ReportModels.BandMax::band).orElse("top10");
+                                currentBandStr = band;
+                                String label = (band.contains("top")) ? "community.goal.reward.table.top" : "community.goal.reward.table.percent";
+                                StringBinding title = LocaleService.getStringBinding(label, band.replace("top", "").replace("%", ""));
+                                currentBand.addBinding(currentBand.textProperty(), title);
+                            }
 
-                        if (contributionValue < 0L) {//no journal events, not signed up
-                            contribution.setText("-");
-                        } else {//no data, set to highest from journal
-                            contribution.setText(Formatters.NUMBER_FORMAT_0.format(contributionValue));
-                        }
-                        bandPredictionTable.update(goalReport, contributionValue);
-                        rewardsTable.update(goalReport, goalReport.currentAchievedTier(), currentBandStr);
+                            if (contributionValue < 0L) {//no journal events, not signed up
+                                contribution.setText("-");
+                            } else {//no data, set to highest from journal
+                                contribution.setText(Formatters.NUMBER_FORMAT_0.format(contributionValue));
+                            }
+                            bandPredictionTable.update(goalReport, contributionValue);
+                            rewardsTable.update(goalReport, goalReport.currentAchievedTier(), currentBandStr);
+                        });
+                        this.setManaged(true);
+                        this.setVisible(true);
                     });
-                    this.setManaged(true);
-                    this.setVisible(true);
-                });
+        } catch (SQLException ex) {
+            log.error("Error updating communityGoal", ex);
+        }
     }
 
     private ZonedDateTime toLocalExpiry(String expiryUtc) {
@@ -298,26 +304,30 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
 
     private void smallUpdate() {
         Platform.runLater(() -> {
-            CommunityGoalsService.getReport(goal.getId())
-                    .flatMap(report -> report.goals().stream()
-                            .filter(g -> goal.getId().equals((int) g.cgid()))
-                            .findFirst())
-                    .ifPresent(goalReport -> {
-                        String expiryStr = Optional.ofNullable(goalReport.metadata().get("expiry"))
-                                .map(Object::toString).orElse(null);
-                        if (expiryStr != null) {
-                            ZonedDateTime localExpiry = toLocalExpiry(expiryStr);
-                            if (localExpiry.isAfter(ZonedDateTime.now())) {
-                            expiresTimer.addBinding(expiresTimer.textProperty(), LocaleService.getStringBinding(() -> Formatters.timeUntil(localExpiry)));
-                            expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expires"));
-                        } else {
-                            expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expired"));
-                            expiresTimer.setVisible(false);
-                            expiresTimer.setManaged(false);
-                        }
-                        }
-                        bandChart.update(goalReport);
-                    });
+            try {
+                CommunityGoalsService.getReport(goal.getId())
+                        .flatMap(report -> report.goals().stream()
+                                .filter(g -> goal.getId().equals((int) g.cgid()))
+                                .findFirst())
+                        .ifPresent(goalReport -> {
+                            String expiryStr = Optional.ofNullable(goalReport.metadata().get("expiry"))
+                                    .map(Object::toString).orElse(null);
+                            if (expiryStr != null) {
+                                ZonedDateTime localExpiry = toLocalExpiry(expiryStr);
+                                if (localExpiry.isAfter(ZonedDateTime.now())) {
+                                    expiresTimer.addBinding(expiresTimer.textProperty(), LocaleService.getStringBinding(() -> Formatters.timeUntil(localExpiry)));
+                                    expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expires"));
+                                } else {
+                                    expiresTitle.addBinding(expiresTitle.textProperty(), LocaleService.getStringBinding("community.goal.information.expired"));
+                                    expiresTimer.setVisible(false);
+                                    expiresTimer.setManaged(false);
+                                }
+                            }
+                            bandChart.update(goalReport);
+                        });
+            } catch (SQLException ex) {
+                log.error("Error updating communityGoal", ex);
+            }
         });
     }
 
