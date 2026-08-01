@@ -71,7 +71,8 @@ public class ProgressStats extends DestroyableVBox implements DestroyableTemplat
                 String formatKey = "community.goal.date.format.currentyear";
                 StringBinding formattedDate = LocaleService.getStringBinding(locale -> {
                     String pattern = LocaleService.getLocalizedStringForLocale(locale, formatKey);
-                    return LocaleService.getLocalizedStringForCurrentLocale("community.goal.progress.estimate", DateTimeFormatter.ofPattern(pattern).withLocale(locale).format(zoned));
+                    String key = (zoned.isBefore(ZonedDateTime.now())) ? "community.goal.progress.finished" : "community.goal.progress.estimate";
+                    return LocaleService.getLocalizedStringForCurrentLocale(key, DateTimeFormatter.ofPattern(pattern).withLocale(locale).format(zoned));
                 });
                 this.estimate.addBinding(this.estimate.textProperty(), formattedDate);
 
