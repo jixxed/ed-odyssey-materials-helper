@@ -304,7 +304,7 @@ allprojects {
                 implementation 'org.apache.maven:maven-artifact:3.9.16'
                 implementation 'org.xerial:sqlite-jdbc:3.53.2.0'
                 implementation "io.ebean:ebean:${version_ebean}"
-                implementation "io.ebean:ebean-migration:14.3.0"
+                implementation "io.ebean:ebean-migration:14.4.0"
 
                 implementation 'io.fair-acc:chartfx:11.3.1'
                 annotationProcessor "io.ebean:querybean-generator:${version_ebean}"
