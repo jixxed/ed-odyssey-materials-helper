@@ -26,12 +26,12 @@ public class DiscoveryScanner extends OptionalModule {
     // the Basic Discovery Scanner, Intermediate Discovery Scanner, and Advanced Discovery Scanner.
     // Each variant offered a different scanning range, with the Advanced Discovery Scanner or ADS being comparable to
     // the current integrated Discovery Scanner. The old variants were removed with the Beyond Chapter Four update.
-    public static final DiscoveryScanner DISCOVERY_SCANNER_1_E = new DiscoveryScanner("DISCOVERY_SCANNER_1_E", HorizonsBlueprintName.BASIC_DISCOVERY_SCANNER, ModuleSize.SIZE_1, ModuleClass.E, false, 0, "Int_StellarBodyDiscoveryScanner_Standard", Map.ofEntries(Map.entry(HorizonsModifier.DISCOVERY_SCANNER_RANGE, 500.0)));
+    public static final DiscoveryScanner DISCOVERY_SCANNER_0_I = new DiscoveryScanner("DISCOVERY_SCANNER_0_I", HorizonsBlueprintName.ADVANCED_DISCOVERY_SCANNER, ModuleSize.SIZE_0, ModuleClass.I, false, 1000, "Int_StellarBodyDiscoveryScanner_Standard", Map.ofEntries(Map.entry(HorizonsModifier.DISCOVERY_SCANNER_RANGE, Double.POSITIVE_INFINITY)));
     public static final DiscoveryScanner DISCOVERY_SCANNER_1_E_FREE = new DiscoveryScanner("DISCOVERY_SCANNER_1_E_FREE", HorizonsBlueprintName.BASIC_DISCOVERY_SCANNER, ModuleSize.SIZE_1, ModuleClass.E, false, 0, "Int_StellarBodyDiscoveryScanner_Standard_free", Map.ofEntries(Map.entry(HorizonsModifier.DISCOVERY_SCANNER_RANGE, 500.0)));
     public static final DiscoveryScanner DISCOVERY_SCANNER_1_D = new DiscoveryScanner("DISCOVERY_SCANNER_1_D", HorizonsBlueprintName.INTERMEDIATE_DISCOVERY_SCANNER, ModuleSize.SIZE_1, ModuleClass.D, false, 0, "Int_StellarBodyDiscoveryScanner_Intermediate", Map.ofEntries(Map.entry(HorizonsModifier.DISCOVERY_SCANNER_RANGE, 1000.0)));
     public static final DiscoveryScanner DISCOVERY_SCANNER_1_C = new DiscoveryScanner("DISCOVERY_SCANNER_1_C", HorizonsBlueprintName.ADVANCED_DISCOVERY_SCANNER, ModuleSize.SIZE_1, ModuleClass.C, false, 0, "Int_StellarBodyDiscoveryScanner_Advanced", Map.ofEntries(Map.entry(HorizonsModifier.DISCOVERY_SCANNER_RANGE, Double.POSITIVE_INFINITY)));
     public static final List<DiscoveryScanner> DISCOVERY_SCANNERS = List.of(
-            DISCOVERY_SCANNER_1_E,
+            DISCOVERY_SCANNER_0_I,
             DISCOVERY_SCANNER_1_E_FREE,
             DISCOVERY_SCANNER_1_D,
             DISCOVERY_SCANNER_1_C
