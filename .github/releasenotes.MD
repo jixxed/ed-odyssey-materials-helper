@@ -21,12 +21,7 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Make SLEF import slot names case-insensitive
-Move SLEF import from Settings to Ship Editor tab
-Add paste ship/loadout/wishlist option to dedicated tab and remove from Settings
-Fix experimental effect part of a blueprint on the wishlist not sharing the same priority
-Add new commodity for CG: Curated Commodity Package 
-Fix material cost on G5 Merc enhanced scoop rate blueprint 
-Fixed price of Limpet Control module
-Set a title for Merc modules on the wishlist
+Hide blueprints on the ALL wishlist if they are hidden on the defining wishlist
+Fix processing of EngineerProgress events so engineer rank updates while crafting
+Fix label on CG progress for early completion
 ```
