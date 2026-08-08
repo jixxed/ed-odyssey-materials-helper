@@ -35,7 +35,6 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.CopyableLocation;
 
 import java.math.BigInteger;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -291,7 +290,7 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                         this.setManaged(true);
                         this.setVisible(true);
                     });
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             log.error("Error updating communityGoal", ex);
         }
     }
@@ -325,7 +324,7 @@ public class CommunityGoal extends DestroyableVBox implements DestroyableEventTe
                             }
                             bandChart.update(goalReport);
                         });
-            } catch (SQLException ex) {
+            } catch (Exception ex) {
                 log.error("Error updating communityGoal", ex);
             }
         });
