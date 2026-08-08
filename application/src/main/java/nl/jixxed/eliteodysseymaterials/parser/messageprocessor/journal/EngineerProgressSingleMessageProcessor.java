@@ -43,9 +43,9 @@ public class EngineerProgressSingleMessageProcessor implements SingleMessageProc
     }
 
     private static void processEngineerProgressItem(final Optional<String> engineer, final Optional<String> progress, final Optional<BigInteger> rankProgress, final Optional<BigInteger> engineerRank) {
-        if (engineer.isPresent() && progress.isPresent()) {
+        if (engineer.isPresent()) {
             final String engineerName = engineer.get();
-            final EngineerState engineerState = EngineerState.forName(progress.get());
+            final EngineerState engineerState = EngineerState.forName(progress.orElse("Unlocked"));//single engineer message excludes these on higher ranks
             final Integer rank = engineerRank.map(BigInteger::intValue).orElseGet(() -> {
                 if (EngineerState.INVITED.equals(engineerState)) {
                     return  -1;
