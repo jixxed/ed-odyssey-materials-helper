@@ -58,7 +58,7 @@ public class HorizonsWishlist {
             var allItems = APPLICATION_STATE.getPreferredCommander()
                     .map(commander -> WishlistService.getHorizonsWishlists(commander).getAllWishlists().stream()
                             .filter(wishlist -> wishlist != HorizonsWishlist.ALL)
-                            .flatMap(wishlist -> wishlist.getItems().stream())
+                            .flatMap(wishlist -> wishlist.getItems().stream().filter(WishlistBlueprint::isVisible))
                             .collect(Collectors.toList()))
                     .orElseGet(() -> new ArrayList<>(this.items));
             return aggregateBlueprints(allItems);

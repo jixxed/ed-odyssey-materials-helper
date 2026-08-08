@@ -55,7 +55,7 @@ public class Wishlist {
             var allItems = APPLICATION_STATE.getPreferredCommander()
                     .map(commander -> WishlistService.getOdysseyWishlists(commander).getAllWishlists().stream()
                             .filter(wishlist -> wishlist != ALL)
-                            .flatMap(wishlist -> wishlist.getItems().stream())
+                            .flatMap(wishlist -> wishlist.getItems().stream().filter(OdysseyWishlistBlueprint::isVisible))
                             .collect(Collectors.toList()))
                     .orElseGet(() -> new ArrayList<>(this.items));
             return aggregateBlueprints(allItems);
