@@ -10,10 +10,11 @@
 
 package nl.jixxed.eliteodysseymaterials.enums;
 
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.edomh.core.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.CommoditiesSearch;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.MarketService;
+import nl.edomh.core.enums.CommodityType;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.MarketService;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.commodities.HorizonsCommodityCard;
 
 import java.util.function.Predicate;

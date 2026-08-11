@@ -19,19 +19,22 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.util.Duration;
+import nl.edomh.core.domain.*;
+import nl.edomh.core.enums.*;
+import nl.edomh.core.service.event.*;
 import nl.jixxed.eliteodysseymaterials.builder.*;
-import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.domain.*;
+import nl.edomh.core.constants.HorizonsBlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsWishlistMaterialSearch;
 import nl.jixxed.eliteodysseymaterials.enums.*;
-import nl.jixxed.eliteodysseymaterials.export.CsvExporter;
-import nl.jixxed.eliteodysseymaterials.export.TextExporter;
-import nl.jixxed.eliteodysseymaterials.export.XlsExporter;
+import nl.edomh.core.export.CsvExporter;
+import nl.edomh.core.export.TextExporter;
+import nl.edomh.core.export.XlsExporter;
 import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
-import nl.jixxed.eliteodysseymaterials.helper.QuadFunction;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.edomh.core.helper.QuadFunction;
+import nl.edomh.core.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.WishlistService;
+import nl.edomh.core.service.PreferencesService;
+import nl.edomh.core.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
@@ -114,11 +117,11 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
                 .build();
 //        DestroyableButton edsyButton = ButtonBuilder.builder()
 //                .withText("horizons.wishlist.edsy")
-//                .withOnAction(_ -> FXApplication.getInstance().getHostServices().showDocument("https://edsy.org"))
+//                .withOnAction(_ -> WebBrowserProvider.showDocument("https://edsy.org"))
 //                .build();
 //        DestroyableButton coriolisButton = ButtonBuilder.builder()
 //                .withText("horizons.wishlist.coriolis")
-//                .withOnAction(_ -> FXApplication.getInstance().getHostServices().showDocument("https://coriolis.io"))
+//                .withOnAction(_ -> WebBrowserProvider.showDocument("https://coriolis.io"))
 //                .build();
         final DestroyableTooltip edsyTooltip = TooltipBuilder.builder()
                 .withShowDelay(Duration.millis(100D))

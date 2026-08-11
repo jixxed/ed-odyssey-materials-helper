@@ -27,7 +27,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.helper.Formatters;
+import nl.edomh.core.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.time.Instant;

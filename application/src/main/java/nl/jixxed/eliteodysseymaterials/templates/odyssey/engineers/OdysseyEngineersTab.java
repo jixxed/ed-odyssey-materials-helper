@@ -12,9 +12,9 @@ package nl.jixxed.eliteodysseymaterials.templates.odyssey.engineers;
 
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.enums.Engineer;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabType;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.edomh.core.enums.Engineer;
+import nl.edomh.core.enums.OdysseyTabType;
+import nl.edomh.core.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableScrollPane;

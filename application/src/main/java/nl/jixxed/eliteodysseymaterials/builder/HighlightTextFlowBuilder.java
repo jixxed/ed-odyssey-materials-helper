@@ -13,7 +13,7 @@ package nl.jixxed.eliteodysseymaterials.builder;
 import javafx.scene.Node;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.edomh.core.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHighlightTextFlow;
 

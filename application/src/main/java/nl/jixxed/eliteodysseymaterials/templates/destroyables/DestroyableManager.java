@@ -22,7 +22,7 @@ import javafx.event.EventType;
 import javafx.scene.Node;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
+import nl.edomh.core.service.event.EventListener;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -39,14 +39,14 @@ public class DestroyableManager {
     private static final Map<Destroyable, Map<EventType<? extends Event>, List<EventHandler<? super Event>>>> EVENT_FILTERS = new ConcurrentHashMap<>();
 
     private static final Map<Destroyable, Set<Destroyable>> DESTROYABLES = new ConcurrentHashMap<>();
-    private static final Map<Destroyable, List<EventListener<? extends nl.jixxed.eliteodysseymaterials.service.event.Event>>> EVENT_LISTENERS = new ConcurrentHashMap<>();
+    private static final Map<Destroyable, List<EventListener<? extends nl.edomh.core.service.event.Event>>> EVENT_LISTENERS = new ConcurrentHashMap<>();
 
     public static Set<Destroyable> getDestroyables(Destroyable d) {
         return DestroyableManager.DESTROYABLES.computeIfAbsent(d, _ -> new HashSet<>());
     }
 
     @SuppressWarnings("java:S1452")
-    public static List<EventListener<? extends nl.jixxed.eliteodysseymaterials.service.event.Event>> getEventListeners(Destroyable d) {
+    public static List<EventListener<? extends nl.edomh.core.service.event.Event>> getEventListeners(Destroyable d) {
         return DestroyableManager.EVENT_LISTENERS.computeIfAbsent(d, _ -> new ArrayList<>());
     }
 

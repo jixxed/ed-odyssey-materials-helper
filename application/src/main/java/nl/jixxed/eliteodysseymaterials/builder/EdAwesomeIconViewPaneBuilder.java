@@ -11,7 +11,7 @@
 package nl.jixxed.eliteodysseymaterials.builder;
 
 import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
-import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
+import nl.edomh.core.enums.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIconView;
 
 import java.util.Arrays;

@@ -12,15 +12,15 @@ package nl.jixxed.eliteodysseymaterials.templates.dialog.importdialog;
 
 import javafx.geometry.Orientation;
 import javafx.util.Duration;
+import nl.edomh.core.domain.ships.*;
+import nl.edomh.core.enums.EdAwesomeIcon;
+import nl.edomh.core.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.ships.*;
-import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIconView;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.BlueprintsTextFlow;

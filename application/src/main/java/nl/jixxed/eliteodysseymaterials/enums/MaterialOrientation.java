@@ -13,7 +13,7 @@ package nl.jixxed.eliteodysseymaterials.enums;
 import javafx.geometry.Orientation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.edomh.core.service.LocaleService;
 
 @AllArgsConstructor
 @Getter

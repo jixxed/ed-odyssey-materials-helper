@@ -11,7 +11,9 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsWishlistMaterialSearch;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.edomh.core.enums.HorizonsMaterial;
+import nl.edomh.core.enums.Rarity;
+import nl.edomh.core.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishlistIngredient;
 
 import java.util.Comparator;

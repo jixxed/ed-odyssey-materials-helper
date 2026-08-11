@@ -14,7 +14,7 @@ import javafx.beans.binding.StringBinding;
 import javafx.geometry.NodeOrientation;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.edomh.core.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableText;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

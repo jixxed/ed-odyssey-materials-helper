@@ -12,8 +12,8 @@ package nl.jixxed.eliteodysseymaterials.templates.odyssey.bartender;
 
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.enums.Asset;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.edomh.core.enums.Asset;
+import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyBartenderAmountSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyBartenderMaterialSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;

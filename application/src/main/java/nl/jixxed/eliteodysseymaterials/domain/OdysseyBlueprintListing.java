@@ -11,10 +11,10 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
 import javafx.beans.binding.StringBinding;
-import nl.jixxed.eliteodysseymaterials.enums.BlueprintCategory;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.ObservableResourceFactory;
+import nl.edomh.core.enums.BlueprintCategory;
+import nl.edomh.core.enums.OdysseyBlueprintName;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.ObservableResourceFactory;
 
 public record OdysseyBlueprintListing(BlueprintCategory category, OdysseyBlueprintName name,
                                       Integer amount) implements Comparable<OdysseyBlueprintListing> {

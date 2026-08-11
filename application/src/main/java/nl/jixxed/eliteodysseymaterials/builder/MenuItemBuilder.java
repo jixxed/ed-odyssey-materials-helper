@@ -17,7 +17,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyCombination;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.edomh.core.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableMenuItem;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 

@@ -12,8 +12,9 @@ package nl.jixxed.eliteodysseymaterials.service.event;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.domain.Loadout;
-import nl.jixxed.eliteodysseymaterials.domain.ModificationChange;
+import nl.edomh.core.domain.Loadout;
+import nl.edomh.core.domain.ModificationChange;
+import nl.edomh.core.service.event.Event;
 
 @RequiredArgsConstructor
 @Getter

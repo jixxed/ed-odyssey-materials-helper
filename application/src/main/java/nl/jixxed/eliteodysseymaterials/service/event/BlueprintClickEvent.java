@@ -13,7 +13,8 @@ package nl.jixxed.eliteodysseymaterials.service.event;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
+import nl.edomh.core.enums.BlueprintName;
+import nl.edomh.core.service.event.Event;
 
 @RequiredArgsConstructor
 @AllArgsConstructor

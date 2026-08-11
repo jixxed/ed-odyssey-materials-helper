@@ -11,17 +11,17 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.engineers;
 
 import javafx.beans.binding.StringBinding;
-import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
-import nl.jixxed.eliteodysseymaterials.enums.Engineer;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.PinnedBlueprintService;
+import nl.edomh.core.constants.HorizonsBlueprintConstants;
+import nl.edomh.core.domain.ApplicationState;
+import nl.edomh.core.domain.HorizonsBlueprint;
+import nl.edomh.core.enums.Engineer;
+import nl.edomh.core.enums.HorizonsBlueprintGrade;
+import nl.edomh.core.enums.HorizonsBlueprintName;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.PinnedBlueprintService;
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerPinEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
+import nl.edomh.core.service.event.EventService;
+import nl.edomh.core.service.event.JournalInitEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 
 public class PinnedBlueprint extends Blueprint implements DestroyableEventTemplate {

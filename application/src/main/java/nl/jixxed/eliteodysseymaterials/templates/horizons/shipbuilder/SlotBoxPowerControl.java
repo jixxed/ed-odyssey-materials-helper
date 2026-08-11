@@ -15,10 +15,10 @@ import javafx.css.PseudoClass;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.FontAwesomeIconViewBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
-import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
+import nl.edomh.core.domain.ApplicationState;
+import nl.edomh.core.domain.ShipConfiguration;
+import nl.edomh.core.domain.ships.ShipModule;
+import nl.edomh.core.service.ships.ShipService;
 import nl.jixxed.eliteodysseymaterials.templates.components.FontAwesomeIconViewPane;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 

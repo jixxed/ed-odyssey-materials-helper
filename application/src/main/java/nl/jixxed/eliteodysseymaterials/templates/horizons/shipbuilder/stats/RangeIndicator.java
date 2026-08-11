@@ -14,11 +14,11 @@ import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.PaneBuilder;
-import nl.jixxed.eliteodysseymaterials.helper.Formatters;
+import nl.edomh.core.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.edomh.core.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 

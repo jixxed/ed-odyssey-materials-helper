@@ -12,13 +12,14 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.materials;
 
 import javafx.application.Platform;
 import javafx.geometry.Orientation;
+import nl.edomh.core.enums.*;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.constants.SpawnConstants;
+import nl.edomh.core.constants.SpawnConstants;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsMaterialsSearch;
 import nl.jixxed.eliteodysseymaterials.enums.*;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.PreferencesService;
+import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsMaterialSearchEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;

@@ -10,7 +10,7 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.other.communitygoal;
 
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.edomh.core.service.LocaleService;
 
 import java.util.Comparator;
 import java.util.regex.Matcher;

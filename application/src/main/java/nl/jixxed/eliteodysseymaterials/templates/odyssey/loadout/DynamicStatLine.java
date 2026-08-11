@@ -11,10 +11,11 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.loadout;
 
 import javafx.css.PseudoClass;
+import nl.edomh.core.enums.*;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.Loadout;
-import nl.jixxed.eliteodysseymaterials.domain.LoadoutSet;
-import nl.jixxed.eliteodysseymaterials.domain.SelectedModification;
+import nl.edomh.core.domain.Loadout;
+import nl.edomh.core.domain.LoadoutSet;
+import nl.edomh.core.domain.SelectedModification;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;

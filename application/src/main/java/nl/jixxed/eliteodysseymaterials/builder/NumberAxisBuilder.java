@@ -11,7 +11,7 @@
 package nl.jixxed.eliteodysseymaterials.builder;
 
 import javafx.scene.chart.NumberAxis;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.edomh.core.service.LocaleService;
 
 public class NumberAxisBuilder {
     private Double min;

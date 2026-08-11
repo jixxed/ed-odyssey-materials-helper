@@ -13,10 +13,10 @@ package nl.jixxed.eliteodysseymaterials.service.ar;
 import javafx.scene.paint.Color;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.enums.DataPortType;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.edomh.core.constants.PreferenceConstants;
+import nl.edomh.core.enums.DataPortType;
+import nl.edomh.core.enums.OdysseyMaterial;
+import nl.edomh.core.service.PreferencesService;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

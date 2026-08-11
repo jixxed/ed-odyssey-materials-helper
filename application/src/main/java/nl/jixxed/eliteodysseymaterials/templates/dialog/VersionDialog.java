@@ -12,7 +12,7 @@ package nl.jixxed.eliteodysseymaterials.templates.dialog;
 
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.FXApplication;
+import nl.edomh.core.service.WebBrowserProvider;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.HyperlinkBuilder;
@@ -38,7 +38,7 @@ public class VersionDialog extends DestroyableVBox implements DestroyableTemplat
                 .withStyleClass("download-link")
                 .withText("version.dialog.download")
                 .withOnAction(_ -> {
-                    FXApplication.getInstance().getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/releases/latest");
+                    WebBrowserProvider.openUrl("https://github.com/jixxed/ed-odyssey-materials-helper/releases/latest");
                     System.exit(0);
                 })
                 .build();

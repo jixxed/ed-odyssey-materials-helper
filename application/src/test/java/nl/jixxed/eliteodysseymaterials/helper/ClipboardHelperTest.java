@@ -10,6 +10,7 @@
 
 package nl.jixxed.eliteodysseymaterials.helper;
 
+import nl.edomh.core.helper.Base64Helper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +35,7 @@ class ClipboardHelperTest {
 
     @Test
     public void testCompress() {
-        final String s = ClipboardHelper.convertJsonToBase64Compressed(this.testmessage);
+        final String s = Base64Helper.convertJsonToBase64Compressed(this.testmessage);
         Assertions.assertThat(s).isEqualTo("eNqljssKwjAQRdftV5Ssi-hCkC4FHwsXggsXImFMp-lA0oYkPqD0353Y_oGbC_dwmLlDXmTihT5Q34lqVaZKEW0QVXHjkg0pJsZIHF2UWwR7goBe7umDtbxYMEaUk_gwT3SeupjsK4LrO7lrGlKEzGZJe6iRhfXcW9IthnhI-IxesQqaheVik4Sx_HtJcKgIjHxPi2qw6cHvOMc9H7-R-kuw");
 
     }

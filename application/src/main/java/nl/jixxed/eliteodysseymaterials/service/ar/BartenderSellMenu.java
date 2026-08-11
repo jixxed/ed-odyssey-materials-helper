@@ -13,10 +13,10 @@ package nl.jixxed.eliteodysseymaterials.service.ar;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.enums.Asset;
-import nl.jixxed.eliteodysseymaterials.enums.Data;
-import nl.jixxed.eliteodysseymaterials.enums.Good;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
+import nl.edomh.core.enums.Asset;
+import nl.edomh.core.enums.Data;
+import nl.edomh.core.enums.Good;
+import nl.edomh.core.enums.OdysseyMaterial;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

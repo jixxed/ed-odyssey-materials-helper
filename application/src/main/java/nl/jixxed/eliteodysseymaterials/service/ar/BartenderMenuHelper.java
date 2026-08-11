@@ -11,7 +11,7 @@
 package nl.jixxed.eliteodysseymaterials.service.ar;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.enums.BartenderMenuType;
+import nl.edomh.core.enums.BartenderMenuType;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

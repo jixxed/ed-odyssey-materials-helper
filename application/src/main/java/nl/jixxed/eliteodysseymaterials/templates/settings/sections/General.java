@@ -10,7 +10,6 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
-import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
@@ -19,20 +18,21 @@ import javafx.scene.Node;
 import javafx.scene.input.Clipboard;
 import javafx.stage.DirectoryChooser;
 import lombok.extern.slf4j.Slf4j;
+import nl.edomh.core.service.*;
+import nl.edomh.core.service.event.*;
 import nl.jixxed.eliteodysseymaterials.FXApplication;
 import nl.jixxed.eliteodysseymaterials.builder.*;
-import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
-import nl.jixxed.eliteodysseymaterials.enums.FontSize;
-import nl.jixxed.eliteodysseymaterials.enums.StyleSheet;
-import nl.jixxed.eliteodysseymaterials.export.CsvExporter;
-import nl.jixxed.eliteodysseymaterials.export.TextExporter;
-import nl.jixxed.eliteodysseymaterials.export.XlsExporter;
+import nl.edomh.core.constants.OsConstants;
+import nl.edomh.core.constants.PreferenceConstants;
+import nl.edomh.core.domain.ApplicationState;
+import nl.edomh.core.enums.ApplicationLocale;
+import nl.edomh.core.enums.FontSize;
+import nl.edomh.core.enums.StyleSheet;
+import nl.edomh.core.export.CsvExporter;
+import nl.edomh.core.export.TextExporter;
+import nl.edomh.core.export.XlsExporter;
 import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
-import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
-import nl.jixxed.eliteodysseymaterials.service.*;
+import nl.edomh.core.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.window.FXWinUtil;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
@@ -502,8 +502,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 .withText("settings.button.support.package.create")
                 .withOnAction(event -> {
                     final String supportPackageFile = SupportService.createSupportPackage();
-                    HostServices host = FXApplication.getInstance().getHostServices();
-                    host.showDocument(Path.of(supportPackageFile).toFile().getAbsoluteFile().getParent());
+                    WebBrowserProvider.openUrl(Path.of(supportPackageFile).toFile().getAbsoluteFile().getParent());
                 })
                 .withDisableProperty(BooleanBinding.booleanExpression(ApplicationState.getInstance().getCommandersProperty().map(Set::isEmpty)))
                 .build();
@@ -536,7 +535,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 .withManaged(!connected)
                 .withOnAction(e -> {
                     String authUrl = SponsorService.authUrl();
-                    FXApplication.getInstance().getHostServices().showDocument(authUrl);
+                    WebBrowserProvider.openUrl(authUrl);
                 })
                 .build();
         disconnectButton = ButtonBuilder.builder()

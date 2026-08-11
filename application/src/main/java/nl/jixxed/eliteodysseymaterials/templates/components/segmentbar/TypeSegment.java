@@ -11,7 +11,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.components.segmentbar;
 
 import lombok.Getter;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.edomh.core.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
 import org.controlsfx.control.SegmentedBar;
 

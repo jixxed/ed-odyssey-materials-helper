@@ -11,8 +11,8 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey;
 
 import javafx.geometry.Orientation;
-import nl.jixxed.eliteodysseymaterials.enums.MaterialTotalType;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
+import nl.edomh.core.enums.MaterialTotalType;
+import nl.edomh.core.enums.OdysseyStorageType;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 

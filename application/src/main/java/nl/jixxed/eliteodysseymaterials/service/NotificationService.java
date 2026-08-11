@@ -15,11 +15,14 @@ import javafx.util.Duration;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
+import nl.edomh.core.constants.PreferenceConstants;
+import nl.edomh.core.enums.NotificationType;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.PreferencesService;
+import nl.edomh.core.service.event.EventListener;
+import nl.edomh.core.service.event.EventService;
+import nl.edomh.core.service.event.JournalInitEvent;
+import nl.edomh.core.service.event.NotificationEvent;
 import org.controlsfx.control.Notifications;
 
 import javax.sound.sampled.*;
@@ -44,6 +47,15 @@ public class NotificationService {
 
     public static void init() {
         EVENT_LISTENERS.add(EventService.addStaticListener(JournalInitEvent.class, journalInitEvent -> enabled = journalInitEvent.isInitialised()));
+        EVENT_LISTENERS.add(EventService.addStaticListener(true, NotificationEvent.class, NotificationService::handleNotificationEvent));
+    }
+
+    private static void handleNotificationEvent(NotificationEvent notificationEvent) {
+        switch (notificationEvent.getLevel()){
+            case INFO -> showInformation(notificationEvent.getType(), notificationEvent.getTitle(), notificationEvent.getText(), notificationEvent.isSilent());
+            case WARNING -> showWarning(notificationEvent.getType(), notificationEvent.getTitle(), notificationEvent.getText(), notificationEvent.isSilent());
+            case ERROR -> showError(notificationEvent.getType(), notificationEvent.getTitle(), notificationEvent.getText(), notificationEvent.isSilent());
+        }
     }
 
     public static void showInformation(final NotificationType notificationType, final LocaleService.LocaleString title, final LocaleService.LocaleString text) {

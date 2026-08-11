@@ -12,7 +12,8 @@ package nl.jixxed.eliteodysseymaterials.service.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabType;
+import nl.edomh.core.enums.HorizonsTabType;
+import nl.edomh.core.service.event.Event;
 
 @AllArgsConstructor
 @Getter

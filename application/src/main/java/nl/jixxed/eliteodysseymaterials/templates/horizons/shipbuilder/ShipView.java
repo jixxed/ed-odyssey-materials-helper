@@ -18,10 +18,10 @@ import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.PaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ImageSlot;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
-import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
+import nl.edomh.core.domain.ApplicationState;
+import nl.edomh.core.domain.ships.ImageSlot;
+import nl.edomh.core.domain.ships.Ship;
+import nl.edomh.core.domain.ships.SlotType;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 @Slf4j

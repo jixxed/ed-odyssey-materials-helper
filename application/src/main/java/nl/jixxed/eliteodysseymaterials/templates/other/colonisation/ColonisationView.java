@@ -12,13 +12,17 @@ package nl.jixxed.eliteodysseymaterials.templates.other.colonisation;
 
 import javafx.collections.FXCollections;
 import javafx.scene.Node;
+import nl.edomh.core.service.event.*;
 import nl.jixxed.eliteodysseymaterials.builder.*;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.ColonisationItem;
-import nl.jixxed.eliteodysseymaterials.domain.ColonisationItems;
-import nl.jixxed.eliteodysseymaterials.service.ColonisationService;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.edomh.core.domain.ApplicationState;
+import nl.edomh.core.domain.ColonisationItem;
+import nl.edomh.core.domain.ColonisationItems;
+import nl.edomh.core.service.ColonisationService;
+import nl.edomh.core.service.PreferencesService;
+import nl.edomh.core.service.event.ColonisationConstructionDepotEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.ColonisationRefreshEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.ColonisationSelectedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.LanguageChangedEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.Collections;

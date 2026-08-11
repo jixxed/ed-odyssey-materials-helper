@@ -12,7 +12,8 @@ package nl.jixxed.eliteodysseymaterials.service.event;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.enums.HardpointGroup;
+import nl.edomh.core.enums.HardpointGroup;
+import nl.edomh.core.service.event.Event;
 
 @RequiredArgsConstructor
 @Getter

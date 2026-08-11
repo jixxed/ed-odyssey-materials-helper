@@ -11,11 +11,14 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 
 import javafx.scene.Node;
-import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.domain.*;
+import nl.edomh.core.constants.HorizonsBlueprintConstants;
+import nl.edomh.core.domain.*;
+import nl.edomh.core.enums.*;
+import nl.edomh.core.service.event.*;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsWishlistMaterialSearch;
 import nl.jixxed.eliteodysseymaterials.enums.*;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.WishlistService;
+import nl.edomh.core.service.PreferencesService;
+import nl.edomh.core.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;

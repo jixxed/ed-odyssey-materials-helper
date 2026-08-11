@@ -12,7 +12,7 @@ package nl.jixxed.eliteodysseymaterials.builder;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
+import nl.edomh.core.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.ShipModuleButton;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.SlotBox;
 

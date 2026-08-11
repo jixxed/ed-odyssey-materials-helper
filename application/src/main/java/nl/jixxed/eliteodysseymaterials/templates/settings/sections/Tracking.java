@@ -14,8 +14,8 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.CheckBoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ToggleSwitchBuilder;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.edomh.core.constants.PreferenceConstants;
+import nl.edomh.core.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;

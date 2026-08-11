@@ -13,16 +13,18 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 import de.saxsys.mvvmfx.testingutils.JfxToolkitExtension;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
-import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.Armour;
-import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military.HullReinforcementPackage;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.edomh.core.domain.ApplicationState;
+import nl.edomh.core.domain.ships.Ship;
+import nl.edomh.core.domain.ships.Slot;
+import nl.edomh.core.domain.ships.core_internals.Armour;
+import nl.edomh.core.domain.ships.optional_internals.military.HullReinforcementPackage;
+import nl.edomh.core.enums.HorizonsBlueprintGrade;
+import nl.edomh.core.enums.HorizonsBlueprintType;
+import nl.edomh.core.enums.HorizonsModifier;
+import nl.edomh.core.helper.CSVResourceBundle;
+import nl.jixxed.eliteodysseymaterials.FXApplication;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.edomh.core.service.LocaleService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -40,9 +42,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.math.BigDecimal.ONE;
-import static nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military.HullReinforcementPackage.*;
-import static nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade.*;
-import static nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType.*;
+import static nl.edomh.core.domain.ships.optional_internals.military.HullReinforcementPackage.*;
+import static nl.edomh.core.enums.HorizonsBlueprintGrade.*;
+import static nl.edomh.core.enums.HorizonsBlueprintType.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -117,6 +119,7 @@ class ArmourStatsTest {
     @BeforeEach
     void setUp() {
         ScalingHelper.init();
+        CSVResourceBundle.setResourceProvider(bundle -> FXApplication.class.getResourceAsStream("/" + bundle));
         LocaleService.setCurrentLocale(Locale.ENGLISH);
         armourStats = new ArmourStats();
 

@@ -38,22 +38,28 @@ import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
-import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.Commander;
-import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
-import nl.jixxed.eliteodysseymaterials.enums.FontSize;
-import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
-import nl.jixxed.eliteodysseymaterials.enums.StyleSheet;
+import nl.edomh.core.constants.AppConstants;
+import nl.edomh.core.constants.OsConstants;
+import nl.edomh.core.constants.PreferenceConstants;
+import nl.edomh.core.domain.ApplicationState;
+import nl.edomh.core.domain.Commander;
+import nl.edomh.core.enums.ApplicationLocale;
+import nl.edomh.core.enums.FontSize;
+import nl.edomh.core.enums.JournalEventType;
+import nl.edomh.core.enums.StyleSheet;
+import nl.edomh.core.helper.CSVResourceBundle;
+import nl.edomh.core.helper.OsCheck;
+import nl.edomh.core.parser.FileProcessor;
+import nl.edomh.core.service.*;
+import nl.edomh.core.service.eddn.ScanOrganicMapper;
+import nl.edomh.core.service.event.*;
+import nl.edomh.core.watchdog.*;
+import nl.edomh.core.watchdog.FileService;
 import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
 import nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper;
-import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
-import nl.jixxed.eliteodysseymaterials.parser.FileProcessor;
-import nl.jixxed.eliteodysseymaterials.service.*;
-import nl.jixxed.eliteodysseymaterials.service.eddn.ScanOrganicMapper;
+import nl.jixxed.eliteodysseymaterials.service.ARService;
+import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.window.FXWinUtil;
 import nl.jixxed.eliteodysseymaterials.templates.ApplicationScreen;
@@ -62,8 +68,6 @@ import nl.jixxed.eliteodysseymaterials.templates.dialog.EDDNDialog;
 import nl.jixxed.eliteodysseymaterials.templates.dialog.StartDialog;
 import nl.jixxed.eliteodysseymaterials.templates.dialog.URLSchemeDialog;
 import nl.jixxed.eliteodysseymaterials.templates.dialog.VersionDialog;
-import nl.jixxed.eliteodysseymaterials.watchdog.*;
-import nl.jixxed.eliteodysseymaterials.watchdog.FileService;
 import nl.jixxed.github.sponsor.SponsorService;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.controlsfx.control.Notifications;
@@ -129,6 +133,8 @@ public class FXApplication extends Application {
 
     @Override
     public void start(final Stage primaryStage) {
+        WebBrowserProvider.init(url -> getHostServices().showDocument(url));
+        EventService.setFxEventConsumer(Platform::runLater);
         System.setProperty("de.jensd.fx.glyphs.fontawesome.disableCSS", "true");
 //        DeeplinkHelper.setFxApplication(this);
         SponsorService.init(OsConstants.getSponsorToken());
@@ -926,6 +932,7 @@ public class FXApplication extends Application {
     static void launchFx(final String[] args) {
         Locale.setDefault(Locale.ENGLISH);
         final ApplicationLocale applicationLocale = ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.LANGUAGE, "ENGLISH"));
+        ResourceProvider.setResourceProvider(bundle -> FXApplication.class.getResourceAsStream("/" + bundle));
         LocaleService.setCurrentLocale(applicationLocale.getLocale());
         launch(args);
     }

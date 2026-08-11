@@ -12,11 +12,10 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
-import nl.jixxed.eliteodysseymaterials.helper.Formatters;
-import static nl.jixxed.eliteodysseymaterials.helper.ShipMathHelper.*;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.edomh.core.helper.Formatters;
+import static nl.edomh.core.helper.ShipMathHelper.*;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
 
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;

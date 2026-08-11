@@ -11,14 +11,14 @@
 package nl.jixxed.eliteodysseymaterials.templates.generic.menu;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.FXApplication;
+import nl.edomh.core.service.WebBrowserProvider;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.HyperlinkBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.PinnedBlueprintService;
-import nl.jixxed.eliteodysseymaterials.service.VersionService;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.PinnedBlueprintService;
+import nl.edomh.core.service.VersionService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
@@ -56,7 +56,7 @@ class About extends DestroyableVBox implements DestroyableTemplate {
                 .withStyleClass("about-download-link")
                 .withText(LocaleService.getStringBinding("menu.about.pinplanner"))
                 .withOnAction(_ ->
-                        FXApplication.getInstance().getHostServices().showDocument("https://pinplanner.edomh.nl/?config=" + PinnedBlueprintService.getPinConfigForUrl()))
+                        WebBrowserProvider.openUrl("https://pinplanner.edomh.nl/?config=" + PinnedBlueprintService.getPinConfigForUrl()))
                 .build();
         return BoxBuilder.builder().withNodes(new GrowingRegion(), linkPinPlanner, new GrowingRegion()).buildHBox();
     }
@@ -66,7 +66,7 @@ class About extends DestroyableVBox implements DestroyableTemplate {
                 .withStyleClass("about-download-link")
                 .withText(LocaleService.getStringBinding("menu.about.tutorial"))
                 .withOnAction(_ ->
-                        FXApplication.getInstance().getHostServices().showDocument("https://www.youtube.com/playlist?list=PLg3S2KmbzGpPvHqMJrP2yFKEyUr8Axn0T"))
+                        WebBrowserProvider.openUrl("https://www.youtube.com/playlist?list=PLg3S2KmbzGpPvHqMJrP2yFKEyUr8Axn0T"))
                 .build();
         return BoxBuilder.builder().withNodes(new GrowingRegion(), linkTutorial, new GrowingRegion()).buildHBox();
     }
@@ -79,7 +79,7 @@ class About extends DestroyableVBox implements DestroyableTemplate {
         DestroyableHyperlink discord = HyperlinkBuilder.builder()
                 .withStyleClass("about-discord")
                 .withOnAction(_ ->
-                        FXApplication.getInstance().getHostServices().showDocument("https://discord.gg/M8Rgz4AmmA"))
+                        WebBrowserProvider.openUrl("https://discord.gg/M8Rgz4AmmA"))
                 .withGraphic(discordImage)
                 .build();
         return BoxBuilder.builder().withNodes(new GrowingRegion(), discord, new GrowingRegion()).buildHBox();
@@ -90,7 +90,7 @@ class About extends DestroyableVBox implements DestroyableTemplate {
                 .withStyleClass("about-download-link")
                 .withText(LocaleService.getStringBinding("menu.about.download"))
                 .withOnAction(_ ->
-                        FXApplication.getInstance().getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/releases"))
+                        WebBrowserProvider.openUrl("https://github.com/jixxed/ed-odyssey-materials-helper/releases"))
                 .build();
         return BoxBuilder.builder().withNodes(new GrowingRegion(), this.downloadLink, new GrowingRegion()).buildHBox();
     }
@@ -138,7 +138,7 @@ class About extends DestroyableVBox implements DestroyableTemplate {
         DestroyableHyperlink donate = HyperlinkBuilder.builder()
                 .withStyleClass("about-donate-button")
                 .withOnAction(_ ->
-                        FXApplication.getInstance().getHostServices().showDocument("https://github.com/sponsors/jixxed"))
+                        WebBrowserProvider.openUrl("https://github.com/sponsors/jixxed"))
                 .withGraphic(donateImage)
                 .build();
         return BoxBuilder.builder()

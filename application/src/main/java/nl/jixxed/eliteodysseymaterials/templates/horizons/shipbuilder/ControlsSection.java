@@ -23,21 +23,27 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.MouseEvent;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import nl.edomh.core.constants.HorizonsBlueprintConstants;
+import nl.edomh.core.constants.PreferenceConstants;
+import nl.edomh.core.domain.*;
+import nl.edomh.core.domain.ships.*;
+import nl.edomh.core.domain.ships.core_internals.*;
+import nl.edomh.core.enums.*;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.PreferencesService;
+import nl.edomh.core.service.UserPreferencesService;
+import nl.edomh.core.service.WishlistService;
+import nl.edomh.core.service.event.EventService;
+import nl.edomh.core.service.event.HorizonsWishlistBlueprintEvent;
+import nl.edomh.core.service.event.ImportResultEvent;
+import nl.edomh.core.service.event.ShipLoadoutEvent;
+import nl.edomh.core.service.ships.ShipMapper;
+import nl.edomh.core.service.ships.ShipService;
+import nl.edomh.core.service.spansh.SpanshService;
 import nl.jixxed.eliteodysseymaterials.builder.*;
-import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.domain.*;
-import nl.jixxed.eliteodysseymaterials.domain.ships.*;
-import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.*;
-import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
-import nl.jixxed.eliteodysseymaterials.schemas.slef.Slef;
-import nl.jixxed.eliteodysseymaterials.service.*;
+import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
-import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
-import nl.jixxed.eliteodysseymaterials.service.ships.SlefMapper;
-import nl.jixxed.eliteodysseymaterials.service.spansh.SpanshService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import org.controlsfx.control.PopOver;
@@ -49,6 +55,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper.slefConsumer;
+
+//import nl.edomh.schemas.slef.Slef;
 
 @Slf4j
 public class ControlsSection extends DestroyableHBox implements DestroyableEventTemplate {
@@ -635,8 +643,7 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
                 .withVisibilityProperty(Bindings.createBooleanBinding(() -> this.shipSelect.getSelectionModel().getSelectedItem() != null && this.shipSelect.getSelectionModel().getSelectedItem().getShipType() != null, this.shipSelect.getSelectionModel().selectedItemProperty()).or(SpanshService.isWorking()))
                 .withOnAction(_ -> {
                     final ShipConfiguration shipConfiguration = this.shipSelect.getSelectionModel().getSelectedItem();
-                    Slef slef = SlefMapper.map(shipConfiguration);
-                    SpanshService.openPlotter(slef);
+                    SpanshService.openPlotter(shipConfiguration);
                 })
                 .build();
 

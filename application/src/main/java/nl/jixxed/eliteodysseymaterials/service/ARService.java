@@ -21,12 +21,13 @@ import javafx.stage.StageStyle;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.FXApplication;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.edomh.core.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.ar.*;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.TerminateApplicationEvent;
+import nl.jixxed.eliteodysseymaterials.FXApplication;
+import nl.edomh.core.constants.PreferenceConstants;
+import nl.edomh.core.service.event.EventListener;
+import nl.edomh.core.service.event.EventService;
+import nl.edomh.core.service.event.TerminateApplicationEvent;
 import nl.jixxed.eliteodysseymaterials.templates.overlay.ar.AROverlay;
 import nu.pattern.OpenCV;
 
@@ -129,7 +130,7 @@ public class ARService {
     }
 
     private static void positionWindow() {
-        final nl.jixxed.eliteodysseymaterials.service.ar.Rectangle scaledRectForRealRect = ScreenHelper.getScaledRectForRealRect(contentX, contentY, contentX + contentWidth, contentY + contentHeight);
+        final Rectangle scaledRectForRealRect = ScreenHelper.getScaledRectForRealRect(contentX, contentY, contentX + contentWidth, contentY + contentHeight);
         if (scaledRectForRealRect != null) {
             arStage.setX(scaledRectForRealRect.getX());
             arStage.setY(scaledRectForRealRect.getY());

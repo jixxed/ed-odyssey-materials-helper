@@ -10,5 +10,7 @@
 
 package nl.jixxed.eliteodysseymaterials.service.event;
 
-public class HorizonsWishlistOpenShipBuilderEvent implements Event{
+import nl.edomh.core.service.event.Event;
+
+public class HorizonsWishlistOpenShipBuilderEvent implements Event {
 }

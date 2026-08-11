@@ -16,11 +16,11 @@ import javafx.util.StringConverter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.FXApplication;
 import nl.jixxed.eliteodysseymaterials.builder.*;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.edomh.core.constants.PreferenceConstants;
+import nl.edomh.core.enums.NotificationType;
+import nl.edomh.core.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.edomh.core.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.io.File;

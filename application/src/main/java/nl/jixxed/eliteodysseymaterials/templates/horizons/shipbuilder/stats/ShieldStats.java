@@ -12,21 +12,22 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
+import nl.edomh.core.domain.ModuleProfile;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
-import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
-import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.ShieldGenerator;
-import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military.GuardianShieldReinforcementPackage;
-import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military.ShieldCellBank;
-import nl.jixxed.eliteodysseymaterials.domain.ships.utility.ShieldBooster;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
-import nl.jixxed.eliteodysseymaterials.helper.Formatters;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.edomh.core.domain.ApplicationState;
+import nl.edomh.core.domain.ships.ShipModule;
+import nl.edomh.core.domain.ships.Slot;
+import nl.edomh.core.domain.ships.SlotType;
+import nl.edomh.core.domain.ships.optional_internals.ShieldGenerator;
+import nl.edomh.core.domain.ships.optional_internals.military.GuardianShieldReinforcementPackage;
+import nl.edomh.core.domain.ships.optional_internals.military.ShieldCellBank;
+import nl.edomh.core.domain.ships.utility.ShieldBooster;
+import nl.edomh.core.enums.HorizonsModifier;
+import nl.edomh.core.helper.Formatters;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
@@ -37,7 +38,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier.*;
+import static nl.edomh.core.enums.HorizonsModifier.*;
 
 @Slf4j
 public class ShieldStats extends Stats implements DestroyableEventTemplate {

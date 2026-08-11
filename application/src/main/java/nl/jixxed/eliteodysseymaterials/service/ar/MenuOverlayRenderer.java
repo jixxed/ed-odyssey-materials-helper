@@ -11,15 +11,15 @@
 package nl.jixxed.eliteodysseymaterials.service.ar;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.enums.Asset;
-import nl.jixxed.eliteodysseymaterials.enums.Data;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.StorageService;
-import nl.jixxed.eliteodysseymaterials.service.WishlistService;
+import nl.edomh.core.constants.OdysseyBlueprintConstants;
+import nl.edomh.core.constants.PreferenceConstants;
+import nl.edomh.core.enums.Asset;
+import nl.edomh.core.enums.Data;
+import nl.edomh.core.enums.OdysseyMaterial;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.PreferencesService;
+import nl.edomh.core.service.StorageService;
+import nl.edomh.core.service.WishlistService;
 import org.jspecify.annotations.NonNull;
 
 import java.awt.*;

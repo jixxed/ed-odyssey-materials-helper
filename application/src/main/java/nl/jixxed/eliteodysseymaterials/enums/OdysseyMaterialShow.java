@@ -10,13 +10,15 @@
 
 package nl.jixxed.eliteodysseymaterials.enums;
 
-import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.edomh.core.constants.OdysseyBlueprintConstants;
+import nl.edomh.core.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Search;
-import nl.jixxed.eliteodysseymaterials.domain.Wishlist;
-import nl.jixxed.eliteodysseymaterials.service.FavouriteService;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.edomh.core.domain.Wishlist;
+import nl.edomh.core.enums.AmountType;
+import nl.edomh.core.enums.OdysseyMaterial;
+import nl.edomh.core.service.FavouriteService;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.StorageService;
 
 import java.util.function.Predicate;
 

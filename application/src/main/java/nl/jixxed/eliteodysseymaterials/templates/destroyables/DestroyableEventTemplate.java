@@ -10,9 +10,9 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.destroyables;
 
-import nl.jixxed.eliteodysseymaterials.service.event.Event;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.edomh.core.service.event.Event;
+import nl.edomh.core.service.event.EventListener;
+import nl.edomh.core.service.event.EventService;
 
 import java.util.List;
 

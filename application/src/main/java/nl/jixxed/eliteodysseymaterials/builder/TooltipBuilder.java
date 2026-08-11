@@ -17,7 +17,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.edomh.core.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTooltip;
 
 import java.util.ArrayList;

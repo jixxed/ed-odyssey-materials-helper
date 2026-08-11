@@ -12,8 +12,9 @@ package nl.jixxed.eliteodysseymaterials.service.event;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.domain.Blueprint;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsExperimentalEffectBlueprint;
+import nl.edomh.core.domain.Blueprint;
+import nl.edomh.core.domain.HorizonsExperimentalEffectBlueprint;
+import nl.edomh.core.service.event.Event;
 
 @RequiredArgsConstructor
 @Getter

@@ -10,8 +10,8 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.other.communitygoal;
 
-import nl.jixxed.eliteodysseymaterials.enums.Material;
-import nl.jixxed.eliteodysseymaterials.service.cg.ReportModels;
+import nl.edomh.core.enums.Material;
+import nl.edomh.core.service.cg.ReportModels;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 

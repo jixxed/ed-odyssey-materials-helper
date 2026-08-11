@@ -12,6 +12,7 @@ package nl.jixxed.eliteodysseymaterials.service.event;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import nl.edomh.core.service.event.Event;
 
 import java.util.Locale;
 

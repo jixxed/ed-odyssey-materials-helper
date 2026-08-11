@@ -13,24 +13,24 @@ package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.FXApplication;
+import nl.edomh.core.constants.OsConstants;
+import nl.edomh.core.constants.PreferenceConstants;
+import nl.edomh.core.enums.ApplicationLocale;
+import nl.edomh.core.enums.ArMatchMethod;
+import nl.edomh.core.enums.NotificationType;
+import nl.edomh.core.helper.OsCheck;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.PreferencesService;
+import nl.edomh.core.service.WebBrowserProvider;
+import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.builder.*;
-import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
-import nl.jixxed.eliteodysseymaterials.enums.ArMatchMethod;
-import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
-import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.service.ARService;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.ar.BartenderSellARMenu;
 import nl.jixxed.eliteodysseymaterials.service.ar.BartenderTradeARMenu;
 import nl.jixxed.eliteodysseymaterials.service.event.ARDisableEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.ARLocaleChangeEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.ARWhitelistChangeEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.io.*;
@@ -72,7 +72,7 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableEven
                 .build();
         final DestroyableHyperlink vccLink = HyperlinkBuilder.builder()
                 .withStyleClass(SETTINGS_LINK_CLASS)
-                .withOnAction(_ -> FXApplication.getInstance().getHostServices().showDocument("https://aka.ms/vs/17/release/vc_redist.x64.exe"))
+                .withOnAction(_ -> WebBrowserProvider.openUrl("https://aka.ms/vs/17/release/vc_redist.x64.exe"))
                 .withText("tab.settings.ar.link")
                 .build();
         final DestroyableHBox arSetting = createARSetting();

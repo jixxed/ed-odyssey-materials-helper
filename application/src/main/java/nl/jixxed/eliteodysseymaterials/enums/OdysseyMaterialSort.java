@@ -10,10 +10,12 @@
 
 package nl.jixxed.eliteodysseymaterials.enums;
 
-import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
+import nl.edomh.core.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.Search;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.edomh.core.enums.AmountType;
+import nl.edomh.core.enums.OdysseyMaterial;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.StorageService;
 
 import java.util.Comparator;
 
@@ -38,7 +40,7 @@ public enum OdysseyMaterialSort {
             case ALPHABETICAL ->
                     Comparator.comparing((OdysseyMaterial material) -> LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()));
             case QUANTITY ->
-                    Comparator.comparing((OdysseyMaterial material) -> StorageService.getMaterialCount(material,AmountType.TOTAL)).reversed();
+                    Comparator.comparing((OdysseyMaterial material) -> StorageService.getMaterialCount(material, AmountType.TOTAL)).reversed();
             case RELEVANT_IRRELEVANT ->
                     Comparator.comparing((OdysseyMaterial material) -> OdysseyBlueprintConstants.isEngineeringIngredient(material) || OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(material))
                             .reversed()

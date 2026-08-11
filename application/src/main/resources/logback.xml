@@ -1,7 +1,7 @@
 <configuration>
     <timestamp key="startTimestamp" datePattern="HHmmssSSS"/>
 
-    <contextListener class="nl.jixxed.eliteodysseymaterials.log.listener.LoggerStartupListener"/>
+    <contextListener class="nl.edomh.core.log.listener.LoggerStartupListener"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <target>System.out</target>
@@ -19,7 +19,7 @@
             <maxIndex>14</maxIndex>
         </rollingPolicy>
 
-        <triggeringPolicy class="nl.jixxed.eliteodysseymaterials.log.RollOncePerSessionTriggeringPolicy"/>
+        <triggeringPolicy class="nl.edomh.core.log.RollOncePerSessionTriggeringPolicy"/>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <charset>UTF-8</charset>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{35} - %msg%n

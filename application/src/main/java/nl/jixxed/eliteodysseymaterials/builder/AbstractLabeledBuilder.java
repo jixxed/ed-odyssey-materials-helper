@@ -15,7 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Labeled;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.edomh.core.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 
 @NoArgsConstructor(access = AccessLevel.PACKAGE)

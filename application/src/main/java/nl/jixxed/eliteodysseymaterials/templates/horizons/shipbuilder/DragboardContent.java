@@ -10,7 +10,7 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
-import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
+import nl.edomh.core.domain.ships.ShipModule;
 
 import java.io.Serializable;
 

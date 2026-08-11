@@ -73,7 +73,3 @@ application {
 ebean {
     debugLevel = 0 //0 - 9
 }
-
-afterEvaluate {
-    generateEffectiveLombokConfig.mustRunAfter generateJsonSchema2Pojo
-}

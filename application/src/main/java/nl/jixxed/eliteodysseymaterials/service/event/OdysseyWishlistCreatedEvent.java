@@ -10,5 +10,7 @@
 
 package nl.jixxed.eliteodysseymaterials.service.event;
 
+import nl.edomh.core.service.event.Event;
+
 public class OdysseyWishlistCreatedEvent implements Event {
 }

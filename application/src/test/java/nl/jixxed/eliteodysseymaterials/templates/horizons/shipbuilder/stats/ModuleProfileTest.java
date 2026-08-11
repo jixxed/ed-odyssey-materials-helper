@@ -10,6 +10,7 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
+import nl.edomh.core.domain.ModuleProfile;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

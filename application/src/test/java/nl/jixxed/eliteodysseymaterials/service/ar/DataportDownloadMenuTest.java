@@ -11,10 +11,10 @@
 package nl.jixxed.eliteodysseymaterials.service.ar;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
-import nl.jixxed.eliteodysseymaterials.enums.Data;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.edomh.core.enums.ApplicationLocale;
+import nl.edomh.core.enums.Data;
+import nl.edomh.core.enums.OdysseyMaterial;
+import nl.edomh.core.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.OCRService;
 import nl.jixxed.tess4j.TesseractException;
 import nu.pattern.OpenCV;
@@ -88,7 +88,7 @@ class DataportDownloadMenuTest {
             g2d.drawRect(visibleViewPortRect.x, visibleViewPortRect.y, visibleViewPortRect.width, visibleViewPortRect.height);
 
             g2d.setColor(Color.GREEN);
-            for (Rectangle r : downloadMenu.menuItems.values()) {
+            for (nl.jixxed.eliteodysseymaterials.service.ar.Rectangle r : downloadMenu.menuItems.values()) {
                 var r1 = r.getAwtRectangle();
                 g2d.drawRect((int) r1.x, (int) r1.y, (int) r1.width, (int) r1.height);
             }
@@ -177,11 +177,11 @@ class DataportDownloadMenuTest {
             g2d.drawRect(visibleViewPortRect.x, visibleViewPortRect.y, visibleViewPortRect.width, visibleViewPortRect.height);
 
             g2d.setColor(Color.GREEN);
-            for (Rectangle r : downloadMenu.menuItems.values()) {
+            for (nl.jixxed.eliteodysseymaterials.service.ar.Rectangle r : downloadMenu.menuItems.values()) {
                 var r1 = r.getAwtRectangle();
                 double x = downloadMenu.getMenuTextReadOffset().getX() + r.getX();
                 double y = r.getY() + downloadMenu.getMenuTextReadOffset().getY();
-                Rectangle menuItemOCRRect = new Rectangle(x, y,
+                nl.jixxed.eliteodysseymaterials.service.ar.Rectangle menuItemOCRRect = new Rectangle(x, y,
                         x+downloadMenu.getMenuTextReadOffset().getWidth(), y+downloadMenu.getMenuTextReadOffset().getHeight());
                 g2d.drawRect((int) r1.x, (int) r1.y, (int) r1.width, (int) r1.height);
             }

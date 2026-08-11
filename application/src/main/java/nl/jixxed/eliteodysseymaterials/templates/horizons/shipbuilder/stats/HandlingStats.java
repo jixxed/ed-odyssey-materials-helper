@@ -20,15 +20,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
+import nl.edomh.core.domain.ModuleProfile;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.NumberAxisBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
-import nl.jixxed.eliteodysseymaterials.helper.Formatters;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.edomh.core.domain.ApplicationState;
+import nl.edomh.core.domain.ships.Ship;
+import nl.edomh.core.helper.Formatters;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.HoverableLineChart;
@@ -39,7 +40,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import static nl.jixxed.eliteodysseymaterials.helper.ShipMathHelper.*;
+import static nl.edomh.core.helper.ShipMathHelper.*;
 
 @Slf4j
 public class HandlingStats extends Stats implements DestroyableTemplate {

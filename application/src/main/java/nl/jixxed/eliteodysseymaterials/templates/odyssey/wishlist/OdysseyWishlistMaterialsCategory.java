@@ -11,14 +11,16 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist;
 
 import javafx.scene.Node;
-import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.OdysseyBlueprint;
-import nl.jixxed.eliteodysseymaterials.domain.OdysseyWishlistBlueprint;
+import nl.edomh.core.constants.OdysseyBlueprintConstants;
+import nl.edomh.core.domain.ApplicationState;
+import nl.edomh.core.domain.OdysseyBlueprint;
+import nl.edomh.core.domain.OdysseyWishlistBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.OdysseyWishlistMaterialSearch;
+import nl.edomh.core.enums.*;
+import nl.edomh.core.service.event.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.WishlistService;
+import nl.edomh.core.service.PreferencesService;
+import nl.edomh.core.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;

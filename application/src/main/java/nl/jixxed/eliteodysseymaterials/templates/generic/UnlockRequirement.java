@@ -11,12 +11,12 @@
 package nl.jixxed.eliteodysseymaterials.templates.generic;
 
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.constants.UTF8Constants;
-import nl.jixxed.eliteodysseymaterials.enums.EngineerPrerequisite;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.edomh.core.constants.UTF8Constants;
+import nl.edomh.core.enums.EngineerPrerequisite;
+import nl.edomh.core.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.edomh.core.service.event.EngineerEvent;
+import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;

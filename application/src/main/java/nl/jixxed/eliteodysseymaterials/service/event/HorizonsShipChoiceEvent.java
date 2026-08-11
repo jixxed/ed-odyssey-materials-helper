@@ -12,6 +12,7 @@ package nl.jixxed.eliteodysseymaterials.service.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import nl.edomh.core.service.event.Event;
 
 /**
  * Event to indicate a ship has been chosen in the ship list

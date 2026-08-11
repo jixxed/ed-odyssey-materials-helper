@@ -10,10 +10,11 @@
 
 package nl.jixxed.eliteodysseymaterials.enums;
 
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.edomh.core.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ColonisationSearch;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.edomh.core.enums.StoragePool;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.templates.other.colonisation.BillOfMaterialsEntry;
 
 import java.util.function.Predicate;

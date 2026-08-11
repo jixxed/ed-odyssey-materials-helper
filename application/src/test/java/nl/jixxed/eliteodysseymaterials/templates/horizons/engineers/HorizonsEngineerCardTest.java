@@ -10,20 +10,16 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.horizons.engineers;
 
-import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
-import nl.jixxed.eliteodysseymaterials.enums.Engineer;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import org.junit.jupiter.api.Disabled;
+import nl.edomh.core.constants.HorizonsBlueprintConstants;
+import nl.edomh.core.domain.HorizonsBlueprint;
+import nl.edomh.core.enums.Engineer;
+import nl.edomh.core.enums.HorizonsBlueprintGrade;
+import nl.edomh.core.enums.HorizonsBlueprintName;
+import nl.edomh.core.enums.HorizonsBlueprintType;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class HorizonsEngineerCardTest {
     @Tag("manual")

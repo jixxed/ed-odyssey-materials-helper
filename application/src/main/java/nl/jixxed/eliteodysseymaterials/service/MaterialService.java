@@ -24,22 +24,25 @@ import javafx.util.Pair;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nl.edomh.core.constants.*;
+import nl.edomh.core.domain.*;
+import nl.edomh.core.enums.*;
+import nl.edomh.core.enums.Currency;
+import nl.edomh.core.service.*;
 import nl.jixxed.eliteodysseymaterials.builder.*;
-import nl.jixxed.eliteodysseymaterials.constants.*;
-import nl.jixxed.eliteodysseymaterials.domain.*;
-import nl.jixxed.eliteodysseymaterials.enums.*;
-import nl.jixxed.eliteodysseymaterials.enums.Currency;
 import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
-import nl.jixxed.eliteodysseymaterials.helper.Formatters;
-import nl.jixxed.eliteodysseymaterials.helper.POIHelper;
+import nl.edomh.core.helper.Formatters;
+import nl.edomh.core.helper.POIHelper;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsBlueprintClickEvent;
-import nl.jixxed.eliteodysseymaterials.service.market.MarketAPIService;
+import nl.edomh.core.service.market.MarketAPIService;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprintListing;
+import nl.jixxed.eliteodysseymaterials.domain.OdysseyBlueprintListing;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.LandingPadSelect;
-import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
+import nl.edomh.core.enums.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.CopyableLocation;
 import org.controlsfx.control.PopOver;
@@ -53,7 +56,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static nl.jixxed.eliteodysseymaterials.enums.Rarity.UNKNOWN;
+import static nl.edomh.core.enums.Rarity.UNKNOWN;
 
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

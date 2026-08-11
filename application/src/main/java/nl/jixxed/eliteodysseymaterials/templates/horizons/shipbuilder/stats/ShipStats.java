@@ -11,14 +11,14 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Mark;
-import nl.jixxed.eliteodysseymaterials.domain.ships.PowerProfile;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ShipType;
-import nl.jixxed.eliteodysseymaterials.enums.PassengerCabinType;
-import nl.jixxed.eliteodysseymaterials.helper.Formatters;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.edomh.core.domain.ships.Mark;
+import nl.edomh.core.domain.ships.PowerProfile;
+import nl.edomh.core.domain.ships.Ship;
+import nl.edomh.core.domain.ships.ShipType;
+import nl.edomh.core.enums.PassengerCabinType;
+import nl.edomh.core.helper.Formatters;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;

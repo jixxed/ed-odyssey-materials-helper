@@ -15,7 +15,7 @@ import javafx.css.PseudoClass;
 import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.StackPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
+import nl.edomh.core.enums.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableStackPane;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;

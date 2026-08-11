@@ -18,7 +18,7 @@ import javafx.application.Platform;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.SliderBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TextFieldBuilder;
-import nl.jixxed.eliteodysseymaterials.helper.Formatters;
+import nl.edomh.core.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableSlider;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;

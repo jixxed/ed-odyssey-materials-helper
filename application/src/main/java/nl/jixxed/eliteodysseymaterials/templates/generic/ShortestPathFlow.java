@@ -14,9 +14,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.domain.PathItem;
-import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
-import nl.jixxed.eliteodysseymaterials.enums.Expansion;
+import nl.edomh.core.domain.PathItem;
+import nl.edomh.core.enums.BlueprintName;
+import nl.edomh.core.enums.Expansion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 

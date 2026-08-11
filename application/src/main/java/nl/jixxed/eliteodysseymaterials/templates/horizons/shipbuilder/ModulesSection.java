@@ -12,12 +12,12 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.edomh.core.domain.ApplicationState;
+import nl.edomh.core.domain.ships.Slot;
+import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsShipSelectedEvent;
-import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
-import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
+import nl.edomh.core.service.ships.ShipMapper;
+import nl.edomh.core.service.ships.ShipService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;

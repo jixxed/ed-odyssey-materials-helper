@@ -14,11 +14,11 @@ import javafx.scene.layout.AnchorPane;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.enums.LoadingStage;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventProcessedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.LoadingEvent;
+import nl.edomh.core.enums.LoadingStage;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.event.EventProcessedEvent;
+import nl.edomh.core.service.event.EventService;
+import nl.edomh.core.service.event.LoadingEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 

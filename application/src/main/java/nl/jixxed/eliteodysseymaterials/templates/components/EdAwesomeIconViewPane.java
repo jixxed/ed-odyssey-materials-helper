@@ -12,7 +12,7 @@ package nl.jixxed.eliteodysseymaterials.templates.components;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
-import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIcon;
+import nl.edomh.core.enums.EdAwesomeIcon;
 import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIconView;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableStackPane;
 

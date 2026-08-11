@@ -16,8 +16,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprintJson;
-import nl.jixxed.eliteodysseymaterials.enums.Engineer;
+import nl.edomh.core.domain.HorizonsBlueprintJson;
+import nl.edomh.core.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 

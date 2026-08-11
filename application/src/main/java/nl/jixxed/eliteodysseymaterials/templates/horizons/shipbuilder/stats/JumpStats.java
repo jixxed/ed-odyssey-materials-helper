@@ -19,9 +19,9 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.NumberAxisBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
-import nl.jixxed.eliteodysseymaterials.helper.Formatters;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.edomh.core.helper.Formatters;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.HoverableLineChart;
@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import static nl.jixxed.eliteodysseymaterials.helper.ShipMathHelper.*;
+import static nl.edomh.core.helper.ShipMathHelper.*;
 
 @Slf4j
 public class JumpStats extends Stats implements DestroyableTemplate {

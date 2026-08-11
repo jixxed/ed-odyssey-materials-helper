@@ -12,9 +12,9 @@ package nl.jixxed.eliteodysseymaterials.builder;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.domain.PathItem;
-import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
-import nl.jixxed.eliteodysseymaterials.enums.Expansion;
+import nl.edomh.core.domain.PathItem;
+import nl.edomh.core.enums.BlueprintName;
+import nl.edomh.core.enums.Expansion;
 import nl.jixxed.eliteodysseymaterials.templates.generic.ShortestPathFlow;
 
 import java.util.List;

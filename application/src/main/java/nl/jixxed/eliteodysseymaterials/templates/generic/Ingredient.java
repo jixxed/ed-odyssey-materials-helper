@@ -10,7 +10,7 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.generic;
 
-import nl.jixxed.eliteodysseymaterials.enums.StorageType;
+import nl.edomh.core.enums.StorageType;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
 public abstract class Ingredient extends DestroyableVBox {

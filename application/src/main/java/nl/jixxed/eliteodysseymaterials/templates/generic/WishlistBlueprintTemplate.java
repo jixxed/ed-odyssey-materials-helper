@@ -10,8 +10,8 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.generic;
 
-import nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint;
-import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
+import nl.edomh.core.domain.WishlistBlueprint;
+import nl.edomh.core.enums.BlueprintName;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishlistBlueprintTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishlistModuleBlueprintTemplate;

@@ -12,12 +12,12 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.engineers;
 
 import javafx.geometry.Orientation;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
-import nl.jixxed.eliteodysseymaterials.enums.Engineer;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
-import nl.jixxed.eliteodysseymaterials.service.PinnedBlueprintService;
+import nl.edomh.core.constants.HorizonsBlueprintConstants;
+import nl.edomh.core.domain.ApplicationState;
+import nl.edomh.core.domain.HorizonsBlueprint;
+import nl.edomh.core.enums.Engineer;
+import nl.edomh.core.enums.HorizonsBlueprintGrade;
+import nl.edomh.core.service.PinnedBlueprintService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableSeparator;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;

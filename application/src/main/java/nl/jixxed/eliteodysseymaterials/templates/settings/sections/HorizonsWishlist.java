@@ -13,10 +13,10 @@ package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.CheckBoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.enums.Expansion;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.edomh.core.constants.PreferenceConstants;
+import nl.edomh.core.enums.Expansion;
+import nl.edomh.core.service.PreferencesService;
+import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.FlipRemainingAvailableEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 

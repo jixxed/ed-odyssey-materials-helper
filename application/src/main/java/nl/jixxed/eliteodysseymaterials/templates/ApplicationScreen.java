@@ -15,18 +15,18 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Side;
 import nl.jixxed.eliteodysseymaterials.builder.MainTabBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TabPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
-import nl.jixxed.eliteodysseymaterials.enums.MainTabType;
-import nl.jixxed.eliteodysseymaterials.enums.TabType;
+import nl.edomh.core.constants.PreferenceConstants;
+import nl.edomh.core.domain.ApplicationState;
+import nl.edomh.core.enums.ImportResult;
+import nl.edomh.core.enums.MainTabType;
+import nl.edomh.core.enums.TabType;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.FontSizeEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.ImportResultEvent;
+import nl.edomh.core.service.event.ImportResultEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableAnchorPane;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTab;
@@ -39,7 +39,7 @@ import nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab;
 
 import java.util.Set;
 
-import static nl.jixxed.eliteodysseymaterials.enums.MainTabType.*;
+import static nl.edomh.core.enums.MainTabType.*;
 
 public class ApplicationScreen extends DestroyableAnchorPane implements DestroyableEventTemplate {
 

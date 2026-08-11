@@ -16,11 +16,11 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Orientation;
 import javafx.scene.control.skin.ScrollPaneSkin;
 import nl.jixxed.eliteodysseymaterials.builder.*;
-import nl.jixxed.eliteodysseymaterials.enums.Asset;
-import nl.jixxed.eliteodysseymaterials.enums.AssetType;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabType;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.edomh.core.enums.Asset;
+import nl.edomh.core.enums.AssetType;
+import nl.edomh.core.enums.OdysseyTabType;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyBartenderMaterialSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
@@ -28,7 +28,7 @@ import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyTab;
 
 import java.util.*;
 
-import static nl.jixxed.eliteodysseymaterials.enums.OdysseyTabType.BARTENDER;
+import static nl.edomh.core.enums.OdysseyTabType.BARTENDER;
 
 public class OdysseyBartenderTab extends OdysseyTab implements DestroyableEventTemplate {
     private OdysseyBartenderMaterial selectedMaterial;

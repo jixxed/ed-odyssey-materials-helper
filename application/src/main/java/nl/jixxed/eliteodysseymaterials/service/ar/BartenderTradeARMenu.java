@@ -15,14 +15,14 @@ import javafx.scene.image.Image;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import me.xdrop.fuzzywuzzy.model.BoundExtractedResult;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
-import nl.jixxed.eliteodysseymaterials.enums.Asset;
-import nl.jixxed.eliteodysseymaterials.enums.BartenderMenuType;
+import nl.edomh.core.constants.PreferenceConstants;
+import nl.edomh.core.enums.ApplicationLocale;
+import nl.edomh.core.enums.Asset;
+import nl.edomh.core.enums.BartenderMenuType;
 import nl.jixxed.eliteodysseymaterials.service.ARService;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.edomh.core.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.OCRService;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.edomh.core.service.PreferencesService;
 import nl.jixxed.tess4j.TesseractException;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
@@ -253,7 +253,7 @@ public class BartenderTradeARMenu implements ARMenu {
             boolean fuzzy = PreferencesService.getPreference(PreferenceConstants.AR_SEARCH_METHOD, "EXACT").equals("FUZZY");
             int fuzzyScore = PreferencesService.getPreference(PreferenceConstants.AR_FUZZY_SCORE, 90);
             for (int index = 0; index < lines; index++) {
-                final nl.jixxed.eliteodysseymaterials.service.ar.Rectangle textArea = (bartenderTradeMenu.getSubMenu().equals(BartenderMenuType.SUBMENU)) ? bartenderTradeMenu.getSubMenuEntryText(index) : bartenderTradeMenu.getMenuEntryText(index);
+                final Rectangle textArea = (bartenderTradeMenu.getSubMenu().equals(BartenderMenuType.SUBMENU)) ? bartenderTradeMenu.getSubMenuEntryText(index) : bartenderTradeMenu.getMenuEntryText(index);
                 BufferedImage textImage = bartenderMenuCapture.getSubimage((int) textArea.getX(), (int) textArea.getY(), (int) textArea.getWidth(), (int) textArea.getHeight());
 
                 final Mat image = CvHelper.convertToMat(textImage, null);

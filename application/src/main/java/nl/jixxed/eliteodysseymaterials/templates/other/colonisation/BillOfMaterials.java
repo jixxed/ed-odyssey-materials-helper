@@ -10,15 +10,15 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.other.colonisation;
 
-import nl.jixxed.eliteodysseymaterials.domain.ColonisationItem;
+import nl.edomh.core.domain.ColonisationItem;
 import nl.jixxed.eliteodysseymaterials.domain.ColonisationSearch;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsColonisationShow;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsColonisationSort;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.edomh.core.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.ColonisationSelectedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsColonisationSearchEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
+import nl.edomh.core.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;

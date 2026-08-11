@@ -12,9 +12,9 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 
 import javafx.scene.input.MouseEvent;
 import nl.jixxed.eliteodysseymaterials.builder.*;
-import nl.jixxed.eliteodysseymaterials.enums.Expansion;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.edomh.core.enums.Expansion;
+import nl.edomh.core.service.PreferencesService;
+import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.WishlistHideCompletedEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import org.controlsfx.control.PopOver;

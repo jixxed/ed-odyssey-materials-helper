@@ -19,9 +19,9 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.ClipboardShip;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
-import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
+import nl.edomh.core.domain.ClipboardShip;
+import nl.edomh.core.domain.ships.Ship;
+import nl.edomh.core.service.ships.ShipMapper;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 @Slf4j

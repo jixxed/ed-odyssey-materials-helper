@@ -11,7 +11,7 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsEngineersSearch;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.edomh.core.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.engineers.HorizonsEngineerCard;
 
 import java.util.function.Predicate;

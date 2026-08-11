@@ -10,9 +10,10 @@
 
 package nl.jixxed.eliteodysseymaterials.enums;
 
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.edomh.core.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsMaterialsSearch;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.edomh.core.enums.*;
+import nl.edomh.core.service.LocaleService;
 
 import java.util.function.Predicate;
 

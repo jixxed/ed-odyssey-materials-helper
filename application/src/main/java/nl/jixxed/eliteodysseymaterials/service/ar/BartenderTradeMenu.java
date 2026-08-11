@@ -12,8 +12,8 @@ package nl.jixxed.eliteodysseymaterials.service.ar;
 
 import lombok.Getter;
 import lombok.Setter;
-import nl.jixxed.eliteodysseymaterials.enums.Asset;
-import nl.jixxed.eliteodysseymaterials.enums.BartenderMenuType;
+import nl.edomh.core.enums.Asset;
+import nl.edomh.core.enums.BartenderMenuType;
 
 import java.awt.*;
 import java.util.ArrayList;

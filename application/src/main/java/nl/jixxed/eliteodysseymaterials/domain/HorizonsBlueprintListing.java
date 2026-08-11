@@ -12,12 +12,12 @@ package nl.jixxed.eliteodysseymaterials.domain;
 
 import javafx.beans.binding.StringBinding;
 import javafx.util.Pair;
-import nl.jixxed.eliteodysseymaterials.enums.BlueprintCategory;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.ObservableResourceFactory;
+import nl.edomh.core.enums.BlueprintCategory;
+import nl.edomh.core.enums.HorizonsBlueprintGrade;
+import nl.edomh.core.enums.HorizonsBlueprintName;
+import nl.edomh.core.enums.HorizonsBlueprintType;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.ObservableResourceFactory;
 
 import java.util.Comparator;
 import java.util.List;

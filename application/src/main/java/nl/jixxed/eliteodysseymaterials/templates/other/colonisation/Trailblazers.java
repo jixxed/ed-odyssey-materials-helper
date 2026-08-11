@@ -11,7 +11,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.other.colonisation;
 
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.service.TrailblazerService;
+import nl.edomh.core.service.TrailblazerService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;

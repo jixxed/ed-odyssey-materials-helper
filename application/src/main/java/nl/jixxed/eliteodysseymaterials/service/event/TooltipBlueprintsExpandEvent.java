@@ -12,9 +12,10 @@ package nl.jixxed.eliteodysseymaterials.service.event;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import nl.edomh.core.service.event.Event;
 
 @RequiredArgsConstructor
 @Getter
-public class TooltipBlueprintsExpandEvent implements Event{
+public class TooltipBlueprintsExpandEvent implements Event {
     private final boolean expanded;
 }

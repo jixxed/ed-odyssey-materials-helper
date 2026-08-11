@@ -12,9 +12,9 @@ package nl.jixxed.eliteodysseymaterials.templates.other.communitygoal;
 
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.Band;
-import nl.jixxed.eliteodysseymaterials.helper.Formatters;
-import nl.jixxed.eliteodysseymaterials.service.cg.ReportModels;
+import nl.edomh.core.domain.Band;
+import nl.edomh.core.helper.Formatters;
+import nl.edomh.core.service.cg.ReportModels;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;

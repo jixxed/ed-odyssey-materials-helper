@@ -20,22 +20,24 @@ import javafx.scene.input.ClipboardContent;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.domain.*;
-import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
-import nl.jixxed.eliteodysseymaterials.service.*;
-import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
-import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
-import nl.jixxed.eliteodysseymaterials.service.shortlink.ShortLinkService;
+import nl.edomh.core.domain.*;
+import nl.edomh.core.enums.NotificationType;
+import nl.edomh.core.helper.Base64Helper;
+import nl.edomh.core.service.LoadoutService;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.VersionService;
+import nl.edomh.core.service.WishlistService;
+import nl.edomh.core.service.ships.ShipMapper;
+import nl.edomh.core.service.ships.ShipService;
+import nl.edomh.core.service.shortlink.ShortLinkService;
+import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.Objects;
-import java.util.zip.Deflater;
 
 import static nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper.deeplinkConsumer;
 
@@ -61,7 +63,7 @@ public class ClipboardHelper {
                 final ClipboardHorizonsWishlist wishlist = new ClipboardHorizonsWishlist("wishlist", 2, WishlistService.getHorizonsWishlists(commander).getSelectedWishlist());
                 wishlist.getWishlist().optimizeUUIDs();
                 final String wishlistJson = OBJECT_MAPPER.writeValueAsString(wishlist);
-                final String wishlist64 = convertJsonToBase64Compressed(wishlistJson);
+                final String wishlist64 = Base64Helper.convertJsonToBase64Compressed(wishlistJson);
                 final String url = "edomh://horizonswishlist/?" + wishlist64;
                 if (url.length() > 2048) {
                     NotificationService.showWarning(NotificationType.COPY, LocaleService.LocaleString.of("notification.clipboard.title"), LocaleService.LocaleString.of("notification.clipboard.url.length.text"));
@@ -78,7 +80,7 @@ public class ClipboardHelper {
         return APPLICATION_STATE.getPreferredCommander().map(commander -> {
             try {
                 final String wishlistJson = OBJECT_MAPPER.writeValueAsString(new ClipboardWishlist("wishlist", 2, WishlistService.getOdysseyWishlists(commander).getSelectedWishlist()));
-                final String wishlist64 = convertJsonToBase64Compressed(wishlistJson);
+                final String wishlist64 = Base64Helper.convertJsonToBase64Compressed(wishlistJson);
                 final String url = "edomh://wishlist/?" + wishlist64;
                 if (url.length() > 2048) {
                     NotificationService.showWarning(NotificationType.COPY, LocaleService.LocaleString.of("notification.clipboard.title"), LocaleService.LocaleString.of("notification.clipboard.url.length.text"));
@@ -95,7 +97,7 @@ public class ClipboardHelper {
         return APPLICATION_STATE.getPreferredCommander().map(commander -> {
             try {
                 final String loadoutJson = OBJECT_MAPPER.writeValueAsString(new ClipboardLoadout("loadout", 1, LoadoutService.getLoadoutSetList(commander).getSelectedLoadoutSet()));
-                final String loadout64 = convertJsonToBase64Compressed(loadoutJson);
+                final String loadout64 = Base64Helper.convertJsonToBase64Compressed(loadoutJson);
                 final String url = "edomh://loadout/?" + loadout64;
                 if (url.length() > 2048) {
                     NotificationService.showWarning(NotificationType.COPY, LocaleService.LocaleString.of("notification.clipboard.title"), LocaleService.LocaleString.of("notification.clipboard.url.length.text"));
@@ -108,16 +110,6 @@ public class ClipboardHelper {
         }).orElse("");
     }
 
-    public static String convertJsonToBase64Compressed(final String wishlistJson) {
-        final Deflater def = new Deflater(9);
-        def.setInput(wishlistJson.getBytes(StandardCharsets.UTF_8));
-        def.finish();
-        final byte[] compressedBuffer = new byte[wishlistJson.length() * 2];
-        final int numberOfBytesAfterCompression = def.deflate(compressedBuffer, 0, compressedBuffer.length, Deflater.FULL_FLUSH);
-        final byte[] wishListBytes = new byte[numberOfBytesAfterCompression];
-        System.arraycopy(compressedBuffer, 0, wishListBytes, 0, numberOfBytesAfterCompression);
-        return Base64.getUrlEncoder().encodeToString(wishListBytes);
-    }
 
     public static String createClipboardShipConfiguration() {
         return APPLICATION_STATE.getPreferredCommander().map(commander ->
@@ -126,7 +118,7 @@ public class ClipboardHelper {
                         //this mapping is a bit double, but it makes sure the variables are set, since the configurations come directly from disk and might be v1
                         ShipMapper.toShipConfiguration(Objects.requireNonNull(ShipMapper.toShip(configuration)), configuration, configuration.getName());
                         final String shipJson = OBJECT_MAPPER.writeValueAsString(new ClipboardShip("ship", 2, configuration));
-                        final String ship64 = convertJsonToBase64Compressed(shipJson);
+                        final String ship64 = Base64Helper.convertJsonToBase64Compressed(shipJson);
                         final String url = "edomh://ship/?" + ship64;
                         if (url.length() > 2048) {
                             NotificationService.showWarning(NotificationType.COPY, LocaleService.LocaleString.of("notification.clipboard.title"), LocaleService.LocaleString.of("notification.clipboard.url.length.text"));

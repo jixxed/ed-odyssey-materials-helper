@@ -12,10 +12,10 @@ package nl.jixxed.eliteodysseymaterials.templates.other.communitygoal;
 
 import javafx.collections.FXCollections;
 import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.Goal;
-import nl.jixxed.eliteodysseymaterials.service.cg.CommunityGoalsService;
-import nl.jixxed.eliteodysseymaterials.service.event.AvailableCommunityGoalsEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.edomh.core.domain.Goal;
+import nl.edomh.core.service.cg.CommunityGoalsService;
+import nl.edomh.core.service.event.AvailableCommunityGoalsEvent;
+import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.GoalSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComboBox;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;

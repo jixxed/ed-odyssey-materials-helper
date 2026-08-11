@@ -11,14 +11,15 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.loadout;
 
 import javafx.scene.control.ScrollPane;
+import nl.edomh.core.service.event.*;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.LoadoutSet;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabType;
-import nl.jixxed.eliteodysseymaterials.service.LoadoutService;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.edomh.core.domain.ApplicationState;
+import nl.edomh.core.domain.LoadoutSet;
+import nl.edomh.core.enums.OdysseyTabType;
+import nl.edomh.core.service.LoadoutService;
+import nl.edomh.core.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;

@@ -12,7 +12,7 @@ package nl.jixxed.eliteodysseymaterials.templates.components;
 
 import javafx.beans.property.IntegerProperty;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
-import nl.jixxed.eliteodysseymaterials.constants.UTF8Constants;
+import nl.edomh.core.constants.UTF8Constants;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableButton;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;

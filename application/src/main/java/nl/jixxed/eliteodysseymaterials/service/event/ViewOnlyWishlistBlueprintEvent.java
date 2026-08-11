@@ -12,8 +12,9 @@ package nl.jixxed.eliteodysseymaterials.service.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import nl.jixxed.eliteodysseymaterials.domain.OdysseyWishlistBlueprint;
-import nl.jixxed.eliteodysseymaterials.enums.Action;
+import nl.edomh.core.domain.OdysseyWishlistBlueprint;
+import nl.edomh.core.enums.Action;
+import nl.edomh.core.service.event.Event;
 
 @AllArgsConstructor
 @Getter

@@ -12,7 +12,8 @@ package nl.jixxed.eliteodysseymaterials.service.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import nl.jixxed.eliteodysseymaterials.domain.Goal;
+import nl.edomh.core.domain.Goal;
+import nl.edomh.core.service.event.Event;
 
 @AllArgsConstructor
 @Getter

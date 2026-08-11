@@ -13,7 +13,8 @@ package nl.jixxed.eliteodysseymaterials.service.event;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
+import nl.edomh.core.domain.ships.ShipModule;
+import nl.edomh.core.service.event.Event;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.SlotBox;
 
 @AllArgsConstructor

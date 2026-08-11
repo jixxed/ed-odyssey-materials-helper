@@ -12,8 +12,9 @@ package nl.jixxed.eliteodysseymaterials.service.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import nl.jixxed.eliteodysseymaterials.domain.PathItem;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
+import nl.edomh.core.domain.PathItem;
+import nl.edomh.core.enums.OdysseyBlueprintName;
+import nl.edomh.core.service.event.Event;
 
 import java.util.List;
 

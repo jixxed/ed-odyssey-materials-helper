@@ -15,7 +15,7 @@ import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef;
 import javafx.stage.Stage;
 import lombok.val;
-import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
+import nl.edomh.core.constants.AppConstants;
 import nl.jixxed.eliteodysseymaterials.service.ar.WindowInfoUtil;
 
 public class FXWinUtil {

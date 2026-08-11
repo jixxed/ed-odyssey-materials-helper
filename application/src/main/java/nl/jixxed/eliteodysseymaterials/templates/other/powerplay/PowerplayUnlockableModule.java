@@ -12,12 +12,12 @@ package nl.jixxed.eliteodysseymaterials.templates.other.powerplay;
 
 import javafx.css.PseudoClass;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
-import nl.jixxed.eliteodysseymaterials.enums.Power;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.PowerplayEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.PowerplayLeaveEvent;
+import nl.edomh.core.domain.ApplicationState;
+import nl.edomh.core.domain.ships.ShipModule;
+import nl.edomh.core.enums.Power;
+import nl.edomh.core.service.event.EventService;
+import nl.edomh.core.service.event.PowerplayEvent;
+import nl.edomh.core.service.event.PowerplayLeaveEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;

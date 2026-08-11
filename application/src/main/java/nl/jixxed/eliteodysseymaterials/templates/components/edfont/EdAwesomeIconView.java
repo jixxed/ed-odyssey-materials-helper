@@ -12,6 +12,7 @@ package nl.jixxed.eliteodysseymaterials.templates.components.edfont;
 
 import de.jensd.fx.glyphs.GlyphIcon;
 import lombok.extern.slf4j.Slf4j;
+import nl.edomh.core.enums.EdAwesomeIcon;
 import nl.jixxed.ed.awesome.api.FontLoader;
 import nl.jixxed.ed.awesome.api.NoOpFontLoader;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;

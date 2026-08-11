@@ -10,7 +10,7 @@
 
 package nl.jixxed.eliteodysseymaterials.service.ar;
 
-import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
+import nl.edomh.core.constants.OsConstants;
 
 import java.io.File;
 

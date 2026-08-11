@@ -12,6 +12,7 @@ package nl.jixxed.eliteodysseymaterials.service.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import nl.edomh.core.service.event.Event;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsEngineersSearch;
 
 @AllArgsConstructor

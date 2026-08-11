@@ -14,7 +14,7 @@ import javafx.beans.binding.StringBinding;
 import javafx.util.Subscription;
 import lombok.Getter;
 import lombok.Setter;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.edomh.core.service.LocaleService;
 
 import java.util.ArrayList;
 import java.util.List;
