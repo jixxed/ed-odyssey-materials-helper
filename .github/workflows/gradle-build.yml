@@ -30,6 +30,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DISPLAY: :99
+      NEXUS_REPO_USER: "${{secrets.NEXUS_REPO_USER}}"
+      NEXUS_REPO_PASS: "${{secrets.NEXUS_REPO_PASS}}"
     steps:
       - uses: actions/checkout@v6
 
@@ -92,6 +94,9 @@ jobs:
 
   build-windows:
     if: ${{ github.event.inputs.platform == 'all' || !github.event.inputs.platform || github.event.inputs.platform == 'windows' }}
+    env:
+      NEXUS_REPO_USER: "${{secrets.NEXUS_REPO_USER}}"
+      NEXUS_REPO_PASS: "${{secrets.NEXUS_REPO_PASS}}"
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v6
@@ -149,6 +154,9 @@ jobs:
 
   build-macos:
     if: ${{ github.event.inputs.platform == 'all' || !github.event.inputs.platform || github.event.inputs.platform == 'macos' }}
+    env:
+      NEXUS_REPO_USER: "${{secrets.NEXUS_REPO_USER}}"
+      NEXUS_REPO_PASS: "${{secrets.NEXUS_REPO_PASS}}"
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v6

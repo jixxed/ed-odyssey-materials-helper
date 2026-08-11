@@ -12,22 +12,21 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 
 import de.saxsys.mvvmfx.testingutils.JfxToolkitExtension;
 import javafx.embed.swing.JFXPanel;
-import nl.edomh.core.enums.*;
-import nl.edomh.core.helper.CSVResourceBundle;
-import nl.jixxed.eliteodysseymaterials.FXApplication;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.edomh.core.ResourceProvider;
 import nl.edomh.core.constants.HorizonsBlueprintConstants;
 import nl.edomh.core.constants.OsConstants;
 import nl.edomh.core.constants.PathConfiguration;
 import nl.edomh.core.domain.ApplicationState;
 import nl.edomh.core.domain.HorizonsModuleWishlistBlueprint;
 import nl.edomh.core.domain.PathItem;
+import nl.edomh.core.enums.*;
 import nl.edomh.core.helper.OsCheck;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.WishlistService;
+import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableButton;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
@@ -55,7 +54,7 @@ class HorizonsHorizonsWishlistModuleBlueprintTemplateTest {
     static void beforeAll() {
         fxPanel = new JFXPanel();
         Locale.setDefault(Locale.ENGLISH);
-        CSVResourceBundle.setResourceProvider(bundle -> FXApplication.class.getResourceAsStream("/" + bundle));
+        ResourceProvider.setResourceProvider(bundle -> HorizonsHorizonsWishlistModuleBlueprintTemplateTest.class.getResourceAsStream("/" + bundle));
         LocaleService.setCurrentLocale(LocaleService.getCurrentLocale());
         OsConstants.setPathConfiguration(new PathConfiguration() {
             @Override

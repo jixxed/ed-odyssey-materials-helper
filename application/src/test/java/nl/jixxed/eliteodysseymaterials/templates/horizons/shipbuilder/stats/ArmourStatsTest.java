@@ -13,6 +13,7 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 import de.saxsys.mvvmfx.testingutils.JfxToolkitExtension;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nl.edomh.core.ResourceProvider;
 import nl.edomh.core.domain.ApplicationState;
 import nl.edomh.core.domain.ships.Ship;
 import nl.edomh.core.domain.ships.Slot;
@@ -21,10 +22,8 @@ import nl.edomh.core.domain.ships.optional_internals.military.HullReinforcementP
 import nl.edomh.core.enums.HorizonsBlueprintGrade;
 import nl.edomh.core.enums.HorizonsBlueprintType;
 import nl.edomh.core.enums.HorizonsModifier;
-import nl.edomh.core.helper.CSVResourceBundle;
-import nl.jixxed.eliteodysseymaterials.FXApplication;
-import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.edomh.core.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -119,7 +118,7 @@ class ArmourStatsTest {
     @BeforeEach
     void setUp() {
         ScalingHelper.init();
-        CSVResourceBundle.setResourceProvider(bundle -> FXApplication.class.getResourceAsStream("/" + bundle));
+        ResourceProvider.setResourceProvider(bundle -> ArmourStatsTest.class.getResourceAsStream("/" + bundle));
         LocaleService.setCurrentLocale(Locale.ENGLISH);
         armourStats = new ArmourStats();
 

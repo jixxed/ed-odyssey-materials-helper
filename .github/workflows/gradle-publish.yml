@@ -22,6 +22,8 @@ jobs:
       CCID: "${{secrets.CCID}}"
       PROPRIETARY_REPO_USER: "${{secrets.PROPRIETARY_REPO_USER}}"
       PROPRIETARY_REPO_PASS: "${{secrets.PROPRIETARY_REPO_PASS}}"
+      NEXUS_REPO_USER: "${{secrets.NEXUS_REPO_USER}}"
+      NEXUS_REPO_PASS: "${{secrets.NEXUS_REPO_PASS}}"
 
 #Downloading JDK from: https://cdn.azul.com/zulu/bin/zulu25.32.21-ca-jdk25.0.2-linux_x64.zip
 #Downloading JDK from: https://cdn.azul.com/zulu/bin/zulu25.32.21-ca-jdk25.0.2-win_x64.zip
@@ -88,6 +90,8 @@ jobs:
       CCID: "${{secrets.CCID}}"
       PROPRIETARY_REPO_USER: "${{secrets.PROPRIETARY_REPO_USER}}"
       PROPRIETARY_REPO_PASS: "${{secrets.PROPRIETARY_REPO_PASS}}"
+      NEXUS_REPO_USER: "${{secrets.NEXUS_REPO_USER}}"
+      NEXUS_REPO_PASS: "${{secrets.NEXUS_REPO_PASS}}"
 
     steps:
       - uses: jixxed/get-tag@3.0.1
@@ -163,6 +167,8 @@ jobs:
       CCID: "${{secrets.CCID}}"
       PROPRIETARY_REPO_USER: "${{secrets.PROPRIETARY_REPO_USER}}"
       PROPRIETARY_REPO_PASS: "${{secrets.PROPRIETARY_REPO_PASS}}"
+      NEXUS_REPO_USER: "${{secrets.NEXUS_REPO_USER}}"
+      NEXUS_REPO_PASS: "${{secrets.NEXUS_REPO_PASS}}"
 
     steps:
       - uses: jixxed/get-tag@3.0.1

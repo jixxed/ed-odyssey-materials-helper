@@ -9,6 +9,10 @@ repositories {
         maven {
             name = 'nexus'
             url = "https://nexus.jixxed.nl/content/repositories/releases"
+            credentials {
+                username = project.ext.nexusUser
+                password = project.ext.nexusPass
+            }
         }
     }
     if (project.ext.proprietaryUser && project.ext.proprietaryPass) {
