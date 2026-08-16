@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import me.xdrop.fuzzywuzzy.model.BoundExtractedResult;
+import nl.edomh.core.ResourceProvider;
 import nl.edomh.core.constants.PreferenceConstants;
 import nl.edomh.core.enums.*;
 import nl.edomh.core.service.*;
@@ -73,10 +74,10 @@ public class BartenderSellARMenu implements ARMenu {
 
     public BartenderSellARMenu() {
 
-        cocktailTemplate = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail.png")));
-        cocktailTemplateScaled = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail.png")));
-        cocktailMask = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail_tp.png")));
-        cocktailMaskScaled = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_cocktail_tp.png")));
+        cocktailTemplate = CvHelper.convertToMat(new Image(ResourceProvider.getResourceAsStream("images/opencv/cv_template_cocktail.png")));
+        cocktailTemplateScaled = CvHelper.convertToMat(new Image(ResourceProvider.getResourceAsStream("images/opencv/cv_template_cocktail.png")));
+        cocktailMask = CvHelper.convertToMat(new Image(ResourceProvider.getResourceAsStream("images/opencv/cv_template_cocktail_tp.png")));
+        cocktailMaskScaled = CvHelper.convertToMat(new Image(ResourceProvider.getResourceAsStream("images/opencv/cv_template_cocktail_tp.png")));
         //greyscale templates
         Imgproc.cvtColor(cocktailTemplate, cocktailTemplate, Imgproc.COLOR_BGRA2GRAY);
         Imgproc.cvtColor(cocktailTemplateScaled, cocktailTemplateScaled, Imgproc.COLOR_BGRA2GRAY);

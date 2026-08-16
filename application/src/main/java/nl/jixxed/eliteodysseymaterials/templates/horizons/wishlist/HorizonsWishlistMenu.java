@@ -22,22 +22,26 @@ import javafx.util.Duration;
 import nl.edomh.core.domain.*;
 import nl.edomh.core.enums.*;
 import nl.edomh.core.service.event.*;
-import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.edomh.core.constants.HorizonsBlueprintConstants;
+import nl.edomh.ui.shared.builder.*;
+import nl.edomh.ui.shared.service.event.AfterFontSizeSetEvent;
+import nl.edomh.ui.shared.service.event.LanguageChangedEvent;
+import nl.edomh.ui.shared.templates.destroyables.*;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsWishlistMaterialSort;
+import nl.jixxed.eliteodysseymaterials.enums.WishlistMaterialGrouping;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsWishlistMaterialSearch;
-import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.edomh.core.export.CsvExporter;
 import nl.edomh.core.export.TextExporter;
 import nl.edomh.core.export.XlsExporter;
-import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
+import nl.edomh.ui.shared.helper.ClipboardHelper;
 import nl.edomh.core.helper.QuadFunction;
 import nl.edomh.core.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.NotificationService;
+import nl.edomh.ui.shared.service.NotificationService;
 import nl.edomh.core.service.PreferencesService;
 import nl.edomh.core.service.WishlistService;
+import nl.edomh.ui.shared.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.controlsfx.control.PopOver;
 
@@ -156,7 +160,7 @@ public class HorizonsWishlistMenu extends DestroyableHBox implements Destroyable
     }
     private EventHandler<ActionEvent> getPasteHandler() {
         return _ -> {
-            ClipboardHelper.importFromClipboard();
+            DeeplinkHelper.importFromClipboard();
         };
     }
 

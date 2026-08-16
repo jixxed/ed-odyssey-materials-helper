@@ -10,14 +10,14 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.engineers;
 
-import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
+import nl.edomh.ui.shared.builder.FlowPaneBuilder;
+import nl.edomh.ui.shared.builder.ScrollPaneBuilder;
 import nl.edomh.core.enums.Engineer;
 import nl.edomh.core.enums.OdysseyTabType;
 import nl.edomh.core.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableScrollPane;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableEventTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableFlowPane;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableScrollPane;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyTab;
 
 import java.util.Arrays;

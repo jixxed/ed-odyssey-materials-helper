@@ -19,7 +19,6 @@ import javafx.beans.binding.Bindings;
 import javafx.scene.input.MouseEvent;
 import lombok.extern.slf4j.Slf4j;
 import nl.edomh.core.service.event.*;
-import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.edomh.core.domain.ApplicationState;
 import nl.edomh.core.domain.OdysseyWishlistBlueprint;
 import nl.edomh.core.domain.PathItem;
@@ -28,10 +27,14 @@ import nl.edomh.core.enums.Expansion;
 import nl.edomh.core.enums.OdysseyBlueprintName;
 import nl.edomh.core.service.PathService;
 import nl.edomh.core.service.WishlistService;
+import nl.edomh.ui.shared.builder.*;
+import nl.edomh.ui.shared.service.event.EngineerPinEvent;
+import nl.edomh.ui.shared.service.event.HideWishlistShortestPathItemEvent;
+import nl.edomh.ui.shared.service.event.RemoveWishlistShortestPathItemEvent;
+import nl.edomh.ui.shared.templates.destroyables.*;
+import nl.edomh.ui.shared.templates.generic.ShortestPathFlow;
+import nl.edomh.ui.shared.templates.generic.ShortestPathItem;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
-import nl.jixxed.eliteodysseymaterials.templates.generic.ShortestPathFlow;
-import nl.jixxed.eliteodysseymaterials.templates.generic.ShortestPathItem;
 import org.controlsfx.control.PopOver;
 
 import java.util.Collections;
@@ -73,7 +76,7 @@ public class OdysseyWishlistShortestPath extends DestroyableVBox implements Dest
         this.pathHelp = ResizableImageViewBuilder.builder()
                 .withOnMouseClicked(this::showHelp)
                 .withStyleClass("help-image")
-                .withImage("/images/other/help.png")
+                .withImage("nl/edomh/ui/shared/images/other/help.png")
                 .build();
 
         DestroyableHBox titleBar = BoxBuilder.builder()

@@ -18,23 +18,23 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import nl.edomh.core.enums.*;
-import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.edomh.core.constants.HorizonsBlueprintConstants;
 import nl.edomh.core.domain.HorizonsBlueprint;
+import nl.edomh.ui.shared.builder.*;
+import nl.edomh.ui.shared.templates.destroyables.*;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsEngineersShow;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsEngineersSearch;
-import nl.jixxed.eliteodysseymaterials.enums.*;
-import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
-import nl.jixxed.eliteodysseymaterials.service.ImageService;
+import nl.edomh.ui.shared.helper.ScalingHelper;
+import nl.edomh.ui.shared.service.ImageService;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.PreferencesService;
 import nl.edomh.core.service.event.EngineerEvent;
 import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsEngineerSearchEvent;
-import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
-import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
-import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegmentView;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
-import nl.jixxed.eliteodysseymaterials.templates.generic.EngineerCard;
+import nl.edomh.ui.shared.templates.components.segmentbar.SegmentType;
+import nl.edomh.ui.shared.templates.components.segmentbar.TypeSegment;
+import nl.edomh.ui.shared.templates.components.segmentbar.TypeSegmentView;
+import nl.edomh.ui.shared.templates.generic.EngineerCard;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -66,9 +66,9 @@ public class HorizonsEngineerCard extends EngineerCard implements DestroyableEve
         this.getStyleClass().add("engineer-card");
 
         if (APPLICATION_STATE.isEngineerUnlockedExact(engineer)) {
-            this.image.setImage(ImageService.getImage("/images/engineer/" + engineer.name().toLowerCase() + ".jpg"));
+            this.image.setImage(ImageService.getImage("nl/edomh/ui/shared/images/engineer/" + engineer.name().toLowerCase() + ".jpg"));
         } else {
-            this.image.setImage(ImageService.getImage("/images/engineer/locked.png"));
+            this.image.setImage(ImageService.getImage("nl/edomh/ui/shared/images/engineer/locked.png"));
         }
         DestroyableLabel hardpointTitle = register(getHardpointTitle());
         DestroyableLabel utilityMountTitle = register(getUtilityMountTitle());
@@ -139,11 +139,11 @@ public class HorizonsEngineerCard extends EngineerCard implements DestroyableEve
         final int engineerProgress = rank.equals(5) ? 100 : APPLICATION_STATE.getEngineerProgress(this.engineer);
         this.present.setValue(engineerProgress);
         this.notPresent.setValue(100.0 - engineerProgress);
-        this.gradeIcon.setImage(ImageService.getImage("/images/ships/engineers/ranks/" + getGradeImage() + ".png"));
+        this.gradeIcon.setImage(ImageService.getImage("nl/edomh/ui/shared/images/ships/engineers/ranks/" + getGradeImage() + ".png"));
         if (APPLICATION_STATE.isEngineerUnlockedExact(engineer)) {
-            this.image.setImage(ImageService.getImage("/images/engineer/" + engineer.name().toLowerCase() + ".jpg"));
+            this.image.setImage(ImageService.getImage("nl/edomh/ui/shared/images/engineer/" + engineer.name().toLowerCase() + ".jpg"));
         } else {
-            this.image.setImage(ImageService.getImage("/images/engineer/locked.png"));
+            this.image.setImage(ImageService.getImage("nl/edomh/ui/shared/images/engineer/locked.png"));
         }
     }
 
@@ -188,7 +188,7 @@ public class HorizonsEngineerCard extends EngineerCard implements DestroyableEve
     private DestroyableResizableImageView getEngineerGrade() {
         this.gradeIcon = ResizableImageViewBuilder.builder()
                 .withStyleClass("grade-bar-image")
-                .withImage("/images/ships/engineers/ranks/" + getGradeImage() + ".png")
+                .withImage("nl/edomh/ui/shared/images/ships/engineers/ranks/" + getGradeImage() + ".png")
                 .build();
         return this.gradeIcon;
     }

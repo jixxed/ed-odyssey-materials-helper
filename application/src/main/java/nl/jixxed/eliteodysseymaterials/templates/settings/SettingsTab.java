@@ -12,14 +12,14 @@ package nl.jixxed.eliteodysseymaterials.templates.settings;
 
 import javafx.scene.control.ScrollPane;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.ScrollPaneBuilder;
 import nl.edomh.core.enums.MainTabType;
 import nl.edomh.core.helper.OsCheck;
 import nl.edomh.core.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
-import nl.jixxed.eliteodysseymaterials.templates.generic.MainTab;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableVBox;
+import nl.edomh.ui.shared.templates.generic.MainTab;
 import nl.jixxed.eliteodysseymaterials.templates.settings.sections.*;
 
 @Slf4j

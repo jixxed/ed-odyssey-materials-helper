@@ -14,14 +14,14 @@ import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.util.StringConverter;
 import lombok.extern.slf4j.Slf4j;
+import nl.edomh.ui.shared.builder.*;
+import nl.edomh.ui.shared.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.FXApplication;
-import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.edomh.core.constants.PreferenceConstants;
 import nl.edomh.core.enums.NotificationType;
 import nl.edomh.core.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.NotificationService;
+import nl.edomh.ui.shared.service.NotificationService;
 import nl.edomh.core.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.io.File;
 import java.util.Arrays;

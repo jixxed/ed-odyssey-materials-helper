@@ -55,11 +55,13 @@ import nl.edomh.core.service.eddn.ScanOrganicMapper;
 import nl.edomh.core.service.event.*;
 import nl.edomh.core.watchdog.*;
 import nl.edomh.core.watchdog.FileService;
-import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
+import nl.edomh.ui.shared.helper.ScalingHelper;
+import nl.edomh.ui.shared.service.NotificationService;
+import nl.edomh.ui.shared.service.event.AfterFontSizeSetEvent;
+import nl.edomh.ui.shared.service.event.ApplicationLifeCycleEvent;
+import nl.edomh.ui.shared.service.event.FontSizeEvent;
 import nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper;
-import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.ARService;
-import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.window.FXWinUtil;
 import nl.jixxed.eliteodysseymaterials.templates.ApplicationScreen;
@@ -161,8 +163,8 @@ public class FXApplication extends Application {
             try {
                 final GraphicsEnvironment ge =
                         GraphicsEnvironment.getLocalGraphicsEnvironment();
-                ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/fonts/eurocaps.ttf")));
-                ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/fonts/832-font.ttf")));
+                ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, ResourceProvider.getResourceAsStream("nl/edomh/ui/shared/fonts/eurocaps.ttf")));
+                ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, ResourceProvider.getResourceAsStream("nl/edomh/ui/shared/fonts/832-font.ttf")));
             } catch (final IOException | FontFormatException e) {
                 //Handle exception
             }
@@ -231,7 +233,7 @@ public class FXApplication extends Application {
                     System.exit(0);
                     return;
                 }
-                Image fxImage = new Image(FXApplication.class.getResourceAsStream("/images/application/appicon16.png"));
+                Image fxImage = new Image(ResourceProvider.getResourceAsStream("nl/edomh/ui/shared/images/application/appicon16.png"));
                 java.awt.Image image = SwingFXUtils.fromFXImage(fxImage, null);
 
                 TrayIcon trayIcon = new TrayIcon(image, "EDOMH");
@@ -359,7 +361,7 @@ public class FXApplication extends Application {
                 new KeyCodeCombination(KeyCode.R, KeyCombination.CONTROL_DOWN), () -> Optional.ofNullable(applicationScreen).ifPresent(applicationScreen -> EventService.publish(new ResetSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab()))),
                 new KeyCodeCombination(KeyCode.D, KeyCombination.CONTROL_DOWN), () -> Optional.ofNullable(applicationScreen).ifPresent(applicationScreen -> EventService.publish(new CloneSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab()))),
                 new KeyCodeCombination(KeyCode.F2), () -> Optional.ofNullable(applicationScreen).ifPresent(applicationScreen -> EventService.publish(new RenameSelectedItemEvent(applicationScreen.getSelectedTab(), applicationScreen.getSelectedChildTab()))),
-                new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN), ClipboardHelper::importFromClipboard);
+                new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN), DeeplinkHelper::importFromClipboard);
         //configure all accelerators
         keyCodeActions.forEach(this::addKeyEvent);
 
@@ -787,7 +789,7 @@ public class FXApplication extends Application {
 
     private static void addIconsToStage(Stage stage) {
         for (int res : new int[]{16, 32, 48, 64, 128, 256, 512}) {
-            stage.getIcons().add(new Image(FXApplication.class.getResourceAsStream("/images/application/appicon" + res + ".png")));
+            stage.getIcons().add(new Image(ResourceProvider.getResourceAsStream("nl/edomh/ui/shared/images/application/appicon" + res + ".png")));
         }
     }
 
@@ -932,7 +934,6 @@ public class FXApplication extends Application {
     static void launchFx(final String[] args) {
         Locale.setDefault(Locale.ENGLISH);
         final ApplicationLocale applicationLocale = ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.LANGUAGE, "ENGLISH"));
-        ResourceProvider.setResourceProvider(bundle -> FXApplication.class.getResourceAsStream("/" + bundle));
         LocaleService.setCurrentLocale(applicationLocale.getLocale());
         launch(args);
     }

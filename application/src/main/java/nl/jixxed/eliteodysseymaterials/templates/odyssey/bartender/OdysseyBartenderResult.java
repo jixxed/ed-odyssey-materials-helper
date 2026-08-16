@@ -10,16 +10,16 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.bartender;
 
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
 import nl.edomh.core.enums.Asset;
 import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyBartenderAmountSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyBartenderMaterialSelectedEvent;
-import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
+import nl.edomh.ui.shared.templates.components.GrowingRegion;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableEventTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableLabel;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableVBox;
 
 import java.util.HashMap;
 import java.util.Map;

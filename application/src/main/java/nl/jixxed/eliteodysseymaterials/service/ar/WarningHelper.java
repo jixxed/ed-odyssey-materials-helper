@@ -11,6 +11,7 @@
 package nl.jixxed.eliteodysseymaterials.service.ar;
 
 import javafx.scene.image.Image;
+import nl.edomh.core.ResourceProvider;
 import nl.jixxed.eliteodysseymaterials.service.ARService;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -29,8 +30,8 @@ public class WarningHelper {
     private static Mat alertCaptureMatGray;
 
     static {
-        alertTemplate = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_alert_small.png")));
-        alertTemplateScaled = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_alert_small.png")));
+        alertTemplate = CvHelper.convertToMat(new Image(ResourceProvider.getResourceAsStream("images/opencv/cv_template_alert_small.png")));
+        alertTemplateScaled = CvHelper.convertToMat(new Image(ResourceProvider.getResourceAsStream("images/opencv/cv_template_alert_small.png")));
         Imgproc.cvtColor(alertTemplate, alertTemplate, Imgproc.COLOR_BGRA2GRAY);
         Imgproc.cvtColor(alertTemplateScaled, alertTemplateScaled, Imgproc.COLOR_BGRA2GRAY);
 

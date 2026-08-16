@@ -14,15 +14,15 @@ import javafx.css.PseudoClass;
 import javafx.geometry.Orientation;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
 import nl.edomh.core.domain.Loadout;
 import nl.edomh.core.enums.StaticStat;
 import nl.edomh.core.enums.Suit;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableSeparator;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableHBox;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableLabel;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableSeparator;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableTemplate;
 
 public class StaticStatLine extends DestroyableHBox implements DestroyableTemplate {
 

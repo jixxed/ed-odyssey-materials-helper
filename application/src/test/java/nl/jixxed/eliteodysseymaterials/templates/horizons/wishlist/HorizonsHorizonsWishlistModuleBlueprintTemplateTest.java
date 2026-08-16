@@ -23,14 +23,14 @@ import nl.edomh.core.enums.*;
 import nl.edomh.core.helper.OsCheck;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.WishlistService;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableButton;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.generic.ShortestPathFlow;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.ButtonBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.ResizableImageViewBuilder;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableButton;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableHBox;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableLabel;
+import nl.edomh.ui.shared.templates.generic.ShortestPathFlow;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -54,7 +54,7 @@ class HorizonsHorizonsWishlistModuleBlueprintTemplateTest {
     static void beforeAll() {
         fxPanel = new JFXPanel();
         Locale.setDefault(Locale.ENGLISH);
-        ResourceProvider.setResourceProvider(bundle -> HorizonsHorizonsWishlistModuleBlueprintTemplateTest.class.getResourceAsStream("/" + bundle));
+        ResourceProvider.add(bundle -> HorizonsHorizonsWishlistModuleBlueprintTemplateTest.class.getResourceAsStream("/" + bundle));
         LocaleService.setCurrentLocale(LocaleService.getCurrentLocale());
         OsConstants.setPathConfiguration(new PathConfiguration() {
             @Override
@@ -167,7 +167,7 @@ class HorizonsHorizonsWishlistModuleBlueprintTemplateTest {
         ApplicationState.getInstance().addCommander("unittest", "F0000000", GameVersion.LIVE, LocalDateTime.of(2024,12,12,12,12,12));
         var graphic = ResizableImageViewBuilder.builder()
                 .withStyleClass("market-copy-icon")
-                .withImage("/images/other/help.png")
+                .withImage("nl/edomh/ui/shared/images/other/help.png")
                 .build();
         DestroyableButton subject = ButtonBuilder.builder()
                 .withText("blank")

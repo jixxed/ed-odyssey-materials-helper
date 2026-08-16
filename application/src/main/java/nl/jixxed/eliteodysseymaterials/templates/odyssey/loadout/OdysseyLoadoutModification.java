@@ -23,16 +23,16 @@ import javafx.util.Duration;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import nl.edomh.core.enums.*;
-import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.edomh.core.domain.Loadout;
 import nl.edomh.core.domain.LoadoutSet;
 import nl.edomh.core.domain.ModificationChange;
 import nl.edomh.core.domain.SelectedModification;
-import nl.jixxed.eliteodysseymaterials.service.ImageService;
+import nl.edomh.ui.shared.builder.*;
+import nl.edomh.ui.shared.service.ImageService;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.event.EventService;
+import nl.edomh.ui.shared.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.service.event.ModificationChangedEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import org.controlsfx.control.PopOver;
 
 import java.util.Arrays;
@@ -65,7 +65,7 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
         this.getStyleClass().add(LOADOUT_MODIFICATION_STYLE_CLASS);
         this.imageView = ResizableImageViewBuilder.builder()
                 .withStyleClasses(LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS)
-                .withImage((this.loadout.getModifications()[this.position] != null) ? this.loadout.getModifications()[this.position].getImage() : "/images/modification/empty.png")
+                .withImage((this.loadout.getModifications()[this.position] != null) ? getImage(this.loadout.getModifications()[this.position]) : "nl/edomh/ui/shared/images/modification/empty.png")
                 .build();
         final boolean hasModification = this.loadout.getModifications()[this.position] != null && this.loadout.getModifications()[this.position].getModification() != null;
         this.label = LabelBuilder.builder()
@@ -157,7 +157,7 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
     private void togglePresent() {
         if (this.loadout.getModifications()[this.position] != null) {
             this.loadout.getModifications()[this.position].setPresent(!this.loadout.getModifications()[this.position].isPresent());
-            this.imageView.setImage(ImageService.getImage(this.loadout.getModifications()[this.position].getImage()));
+            this.imageView.setImage(ImageService.getImage(getImage(this.loadout.getModifications()[this.position])));
             final ModificationChange modificationChange = new ModificationChange(this.loadout.getModifications()[this.position], this.loadout.getModifications()[this.position]);
             EventService.publish(new ModificationChangedEvent(this.loadout, modificationChange));
         }
@@ -245,7 +245,7 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
     private void addMod(@NonNull final Modification modification, final DestroyableFlowPane flowPane) {
         final DestroyableResizableImageView modSelectImage = ResizableImageViewBuilder.builder()
                 .withStyleClass(LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS)
-                .withImage(modification.getImage(false))
+                .withImage(getImage(modification,false))
                 .build();
         modSelectImage.pseudoClassStateChanged(PseudoClass.getPseudoClass("modifiable"), true);
         if (Arrays.stream(this.loadout.getModifications()).map(SelectedModification::getModification).anyMatch(modification::equals)) {
@@ -266,7 +266,7 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
     private void createCancelCell(final DestroyableFlowPane flowPane) {
         final DestroyableResizableImageView modSelectImage = ResizableImageViewBuilder.builder()
                 .withStyleClass(LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS)
-                .withImage("/images/modification/cancel.png")
+                .withImage("nl/edomh/ui/shared/images/modification/cancel.png")
                 .withOnMouseClicked(getClearEventHandler())
                 .build();
         modSelectImage.pseudoClassStateChanged(PseudoClass.getPseudoClass("modifiable"), true);
@@ -290,7 +290,7 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
     }
 
     private void clear() {
-        this.imageView.setImage(ImageService.getImage("/images/modification/empty.png"));
+        this.imageView.setImage(ImageService.getImage("nl/edomh/ui/shared/images/modification/empty.png"));
         this.label.addBinding(this.label.textProperty(), LocaleService.getStringBinding("loadout.modification.name.none"));
         final SelectedModification newModification = new SelectedModification(null, false);
         final ModificationChange modificationChange = new ModificationChange(this.loadout.getModifications()[this.position], newModification);
@@ -301,7 +301,7 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
 
     private EventHandler<MouseEvent> getModificationSelectedEventHandler(final Modification modification) {
         return e -> {
-            this.imageView.setImage(ImageService.getImage(modification.getImage(false)));
+            this.imageView.setImage(ImageService.getImage(getImage(modification, false)));
             this.label.addBinding(this.label.textProperty(), LocaleService.getStringBinding(modification.getLocalizationKey()));
             final SelectedModification newModification = new SelectedModification(modification, false);
             final ModificationChange modificationChange = new ModificationChange(this.loadout.getModifications()[this.position], newModification);
@@ -319,6 +319,25 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
         setEquiped.setManaged(equiped);
         setEquiped.setText("Set equiped");
         changeMod.setText(equiped ? "Change mod" : "Select mod");
+    }
+    private String getImage(Modification modification, boolean present) {
+        return switch (modification) {
+            case SuitModification _ -> "nl/edomh/ui/shared/images/modification/" + modification.name().toLowerCase() + (present ? "_active" : "") + ".png";
+            case WeaponModification _ -> {
+                String name = modification.name();
+                name = name.endsWith("_KINETIC") ? name.substring(0, name.indexOf("_KINETIC")) : name;
+                name = name.endsWith("_LASER") ? name.substring(0, name.indexOf("_LASER")) : name;
+                name = name.endsWith("_PLASMA") ? name.substring(0, name.indexOf("_PLASMA")) : name;
+                yield "nl/edomh/ui/shared/images/modification/" + name.toLowerCase() + (present ? "_active" : "") + ".png";
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + modification);
+        };
+    }
+    private String getImage(SelectedModification selectedModification) {
+            if (selectedModification.getModification() == null) {
+                return "nl/edomh/ui/shared/images/modification/empty.png";
+            }
+            return getImage(selectedModification.getModification(), selectedModification.isPresent());
     }
 
     @Override

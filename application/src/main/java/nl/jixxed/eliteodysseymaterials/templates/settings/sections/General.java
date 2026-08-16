@@ -20,8 +20,13 @@ import javafx.stage.DirectoryChooser;
 import lombok.extern.slf4j.Slf4j;
 import nl.edomh.core.service.*;
 import nl.edomh.core.service.event.*;
+import nl.edomh.ui.shared.builder.*;
+import nl.edomh.ui.shared.service.event.AfterFontSizeSetEvent;
+import nl.edomh.ui.shared.service.event.ApplicationRegisteredEvent;
+import nl.edomh.ui.shared.service.event.FontSizeEvent;
+import nl.edomh.ui.shared.service.event.LanguageChangedEvent;
+import nl.edomh.ui.shared.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.FXApplication;
-import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.edomh.core.constants.OsConstants;
 import nl.edomh.core.constants.PreferenceConstants;
 import nl.edomh.core.domain.ApplicationState;
@@ -31,11 +36,10 @@ import nl.edomh.core.enums.StyleSheet;
 import nl.edomh.core.export.CsvExporter;
 import nl.edomh.core.export.TextExporter;
 import nl.edomh.core.export.XlsExporter;
-import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
 import nl.edomh.core.helper.OsCheck;
+import nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.window.FXWinUtil;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.github.sponsor.SponsorService;
 
 import java.io.File;
@@ -454,7 +458,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 .build();
         final DestroyableButton importClipboard = ButtonBuilder.builder()
                 .withText("settings.button.import.clipboard.import")
-                .withOnAction(_ -> ClipboardHelper.importFromClipboard())
+                .withOnAction(_ -> DeeplinkHelper.importFromClipboard())
                 .withDisableProperty(BooleanBinding.booleanExpression(ApplicationState.getInstance().getCommandersProperty().map(Set::isEmpty)))
                 .build();
         return BoxBuilder.builder()

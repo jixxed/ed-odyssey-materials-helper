@@ -16,20 +16,22 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.Clipboard;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 import lombok.extern.slf4j.Slf4j;
+import nl.edomh.core.ResourceProvider;
 import nl.edomh.core.service.*;
 import nl.edomh.core.service.exception.*;
+import nl.edomh.ui.shared.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.FXApplication;
 import nl.edomh.core.constants.PreferenceConstants;
 import nl.edomh.core.enums.ImportResult;
 import nl.edomh.core.enums.ImportType;
 import nl.edomh.core.enums.NotificationType;
 import nl.edomh.core.enums.StyleSheet;
-import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.edomh.core.service.event.EventService;
 import nl.edomh.core.service.event.ImportResultEvent;
 import nl.jixxed.eliteodysseymaterials.templates.dialog.ImportDialog;
@@ -39,6 +41,10 @@ import nl.edomh.core.watchdog.FileService;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
@@ -219,7 +225,7 @@ public class DeeplinkHelper {
 
     private static void addIconsToStage(Stage stage) {
         for (int res : new int[]{16, 32, 48, 64, 128, 256, 512}) {
-            stage.getIcons().add(new Image(FXApplication.class.getResourceAsStream("/images/application/appicon" + res + ".png")));
+            stage.getIcons().add(new Image(ResourceProvider.getResourceAsStream("nl/edomh/ui/shared/images/application/appicon" + res + ".png")));
         }
     }
 
@@ -229,4 +235,30 @@ public class DeeplinkHelper {
         }
     }
 
+    public static void importFromClipboard() {
+        Platform.runLater(() -> {
+            final String clipboard = Clipboard.getSystemClipboard().getString();
+            if (clipboard != null && clipboard.startsWith("edomh://")) {
+                deeplinkConsumer.accept(clipboard);
+            }
+            if (clipboard != null && clipboard.startsWith("https://link.edomh.nl/")) {
+                try (HttpClient httpClient = HttpClient.newBuilder()
+                        .followRedirects(HttpClient.Redirect.NEVER)
+                        .build()) {
+                    final HttpRequest request = HttpRequest.newBuilder()
+                            .uri(URI.create(clipboard))
+                            .header("User-Agent", VersionService.getUserAgent())
+                            .GET()
+                            .build();
+                    final HttpResponse<Void> response = httpClient.send(request, HttpResponse.BodyHandlers.discarding());
+                    String edomhUrl = response.headers()
+                            .firstValue("location")
+                            .orElse(null);
+                    deeplinkConsumer.accept(edomhUrl);
+                } catch (InterruptedException | IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
 }

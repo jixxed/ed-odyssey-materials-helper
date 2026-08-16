@@ -19,23 +19,24 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.edomh.core.enums.*;
 import nl.edomh.core.service.*;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.EdAwesomeIconViewPaneBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.ResizableImageViewBuilder;
 import nl.edomh.core.constants.PreferenceConstants;
 import nl.edomh.core.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
-import nl.jixxed.eliteodysseymaterials.service.*;
-import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
+import nl.edomh.ui.shared.helper.ScalingHelper;
+import nl.edomh.ui.shared.service.ImageService;
+import nl.edomh.ui.shared.service.MaterialService;
+import nl.edomh.ui.shared.service.event.AfterFontSizeSetEvent;
 import nl.edomh.core.service.event.EventService;
 import nl.edomh.core.service.event.MarketUpdatedEvent;
 import nl.edomh.core.service.event.StorageEvent;
-import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
-import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.edomh.ui.shared.templates.components.EdAwesomeIconViewPane;
+import nl.edomh.ui.shared.templates.components.GrowingRegion;
 import nl.edomh.core.enums.EdAwesomeIcon;
-import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIconView;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.edomh.ui.shared.templates.components.edfont.EdAwesomeIconView;
+import nl.edomh.ui.shared.templates.destroyables.*;
 
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -196,7 +197,7 @@ public class MaterialCard extends DestroyableStackPane implements DestroyableEve
         if (this.material instanceof RareCommodity) {
             rareImage = ResizableImageViewBuilder.builder()
                     .withStyleClass("rare-image")
-                    .withImage("/images/material/stock/rare_right.png")
+                    .withImage("nl/edomh/ui/shared/images/material/stock/rare_right.png")
                     .build();
             var rareContainer = BoxBuilder.builder()
                     .withStyleClass("rare-container")
@@ -284,7 +285,7 @@ public class MaterialCard extends DestroyableStackPane implements DestroyableEve
 
         register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             if (this.material instanceof RareCommodity) {
-                rareImage.setImage(ImageService.getImage("/images/material/stock/rare_right.png"));
+                rareImage.setImage(ImageService.getImage("nl/edomh/ui/shared/images/material/stock/rare_right.png"));
                 rareImage.requestLayout();
             }
         }));

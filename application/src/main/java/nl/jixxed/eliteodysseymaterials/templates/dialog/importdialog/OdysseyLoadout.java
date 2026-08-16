@@ -17,11 +17,11 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
+import nl.edomh.ui.shared.builder.FlowPaneBuilder;
 import nl.edomh.core.domain.ClipboardLoadout;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableFlowPane;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableVBox;
 
 @Slf4j
 public class OdysseyLoadout extends DestroyableVBox implements DestroyableTemplate {

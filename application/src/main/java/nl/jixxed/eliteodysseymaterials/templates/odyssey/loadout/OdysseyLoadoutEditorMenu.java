@@ -21,15 +21,16 @@ import javafx.scene.input.KeyCodeCombination;
 import nl.edomh.core.domain.*;
 import nl.edomh.core.enums.*;
 import nl.edomh.core.service.event.*;
-import nl.jixxed.eliteodysseymaterials.builder.*;
-import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
+import nl.edomh.ui.shared.builder.*;
+import nl.edomh.ui.shared.helper.ClipboardHelper;
 import nl.edomh.core.service.LoadoutService;
 import nl.edomh.core.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.NotificationService;
+import nl.edomh.ui.shared.service.NotificationService;
 import nl.edomh.core.service.WishlistService;
+import nl.edomh.ui.shared.templates.components.GrowingRegion;
+import nl.edomh.ui.shared.templates.destroyables.*;
+import nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import org.controlsfx.control.PopOver;
 
 import java.util.*;
@@ -158,7 +159,7 @@ public class OdysseyLoadoutEditorMenu extends DestroyableHBox implements Destroy
     }
     private EventHandler<ActionEvent> getPasteHandler() {
         return _ -> {
-            ClipboardHelper.importFromClipboard();
+            DeeplinkHelper.importFromClipboard();
         };
     }
 

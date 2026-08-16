@@ -13,20 +13,20 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.css.PseudoClass;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.FontAwesomeIconViewBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.FontAwesomeIconViewBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
 import nl.edomh.core.domain.ApplicationState;
 import nl.edomh.core.domain.ShipConfiguration;
 import nl.edomh.core.domain.ships.ShipModule;
 import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipBuilderEvent;
 import nl.edomh.core.service.ships.ShipService;
-import nl.jixxed.eliteodysseymaterials.templates.components.FontAwesomeIconViewPane;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFontAwesomeIconView;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.edomh.ui.shared.templates.components.FontAwesomeIconViewPane;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableEventTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableFontAwesomeIconView;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableHBox;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableLabel;
 
 @Slf4j
 public class ConfigPowerControl extends DestroyableHBox implements DestroyableEventTemplate {

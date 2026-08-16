@@ -10,8 +10,8 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.other.colonisation;
 
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
 import nl.edomh.core.domain.ApplicationState;
 import nl.edomh.core.domain.ColonisationItem;
 import nl.edomh.core.domain.ColonisationItems;
@@ -26,10 +26,10 @@ import nl.edomh.core.service.event.EventService;
 import nl.edomh.core.service.event.ShipLoadoutEvent;
 import nl.edomh.core.service.event.StorageEvent;
 import nl.edomh.core.service.ships.ShipMapper;
-import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
+import nl.edomh.ui.shared.templates.components.GrowingRegion;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableEventTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableLabel;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableVBox;
 
 import java.text.MessageFormat;
 import java.util.Objects;

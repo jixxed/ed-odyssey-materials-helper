@@ -8,29 +8,34 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package nl.jixxed.eliteodysseymaterials.templates.overlay.ar;
+package nl.jixxed.eliteodysseymaterials.service;
 
-import lombok.Getter;
-import nl.edomh.ui.shared.builder.ResizableImageViewBuilder;
-import nl.edomh.ui.shared.helper.AnchorPaneHelper;
-import nl.edomh.ui.shared.templates.destroyables.DestroyableAnchorPane;
-import nl.edomh.ui.shared.templates.destroyables.DestroyableResizableImageView;
-import nl.edomh.ui.shared.templates.destroyables.DestroyableTemplate;
+import lombok.extern.slf4j.Slf4j;
+import nl.edomh.core.ResourceProvider;
+import nl.edomh.core.domain.ships.ShipModule;
+import nl.edomh.core.enums.ApplicationLocale;
+import nl.edomh.core.service.LocaleService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class AROverlay extends DestroyableAnchorPane implements DestroyableTemplate {
-    @Getter
-    private DestroyableResizableImageView resizableImageView;
+import java.util.Locale;
 
-    public AROverlay() {
-        super();
-        initComponents();
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+@Slf4j
+class LocaleServiceTest {
+
+    @BeforeEach
+    public void init(){
+        ResourceProvider.add(bundle -> LocaleServiceTest.class.getResourceAsStream("/" + bundle));
     }
 
-    @Override
-    public void initComponents() {
-        this.resizableImageView = ResizableImageViewBuilder.builder()
-                .build();
-        AnchorPaneHelper.setAnchor(this.resizableImageView, 0D, 0D, 0D, 0D);
-        this.getNodes().add(this.resizableImageView);
+    @Test
+    void testAllCSVColumnsPresent() {
+        ShipModule.getBasicModules();
+        //set to last locale to ensure all locales are present
+        Locale locale = ApplicationLocale.values()[ApplicationLocale.values().length - 1].getLocale();
+        log.info("Locale = {}", locale);
+        assertDoesNotThrow(() -> LocaleService.setCurrentLocale(locale));
     }
 }

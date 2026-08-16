@@ -10,13 +10,13 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.CheckBoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ToggleSwitchBuilder;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.CheckBoxBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.ToggleSwitchBuilder;
 import nl.edomh.core.constants.PreferenceConstants;
 import nl.edomh.core.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.edomh.ui.shared.templates.destroyables.*;
 
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 

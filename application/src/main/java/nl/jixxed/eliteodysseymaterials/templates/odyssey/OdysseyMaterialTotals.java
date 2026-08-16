@@ -13,8 +13,8 @@ package nl.jixxed.eliteodysseymaterials.templates.odyssey;
 import javafx.geometry.Orientation;
 import nl.edomh.core.enums.MaterialTotalType;
 import nl.edomh.core.enums.OdysseyStorageType;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableFlowPane;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableTemplate;
 
 public class OdysseyMaterialTotals extends DestroyableFlowPane implements DestroyableTemplate {
 

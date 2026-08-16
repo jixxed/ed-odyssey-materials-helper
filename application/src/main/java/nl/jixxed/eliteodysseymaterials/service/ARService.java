@@ -21,6 +21,7 @@ import javafx.stage.StageStyle;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nl.edomh.core.ResourceProvider;
 import nl.edomh.core.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.ar.*;
 import nl.jixxed.eliteodysseymaterials.FXApplication;
@@ -148,7 +149,7 @@ public class ARService {
 
             arStage = new Stage();
             for (int res : new int[]{16, 32, 48, 64, 128, 256, 512}) {
-                arStage.getIcons().add(new Image(FXApplication.class.getResourceAsStream("/images/application/appicon" + res + ".png")));
+                arStage.getIcons().add(new Image(ResourceProvider.getResourceAsStream("nl/edomh/ui/shared/images/application/appicon" + res + ".png")));
             }
             arOverlay = new AROverlay();
             Scene arScene = new Scene(arOverlay, 640, 480);

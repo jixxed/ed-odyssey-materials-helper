@@ -11,12 +11,12 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 
 import javafx.scene.input.MouseEvent;
-import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.edomh.core.enums.Expansion;
 import nl.edomh.core.service.PreferencesService;
 import nl.edomh.core.service.event.EventService;
+import nl.edomh.ui.shared.builder.*;
+import nl.edomh.ui.shared.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.service.event.WishlistHideCompletedEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import org.controlsfx.control.PopOver;
 
 public class HorizonsWishlistMaterials extends DestroyableVBox implements DestroyableTemplate {
@@ -51,7 +51,7 @@ public class HorizonsWishlistMaterials extends DestroyableVBox implements Destro
         this.materialsHelp = ResizableImageViewBuilder.builder()
                 .withOnMouseClicked(this::showHelp)
                 .withStyleClass("help-image")
-                .withImage("/images/other/help.png")
+                .withImage("nl/edomh/ui/shared/images/other/help.png")
                 .build();
 
         DestroyableLabel requiredMaterialsLabel = LabelBuilder.builder()

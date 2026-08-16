@@ -22,9 +22,9 @@ import nl.jixxed.eliteodysseymaterials.service.event.ModuleSelectHoverEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.SlotboxEngineeringEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.SlotboxHoverEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.SlotboxOpenEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyablePopOver;
+import nl.edomh.ui.shared.templates.destroyables.Destroyable;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableEventTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyablePopOver;
 
 import java.util.NoSuchElementException;
 

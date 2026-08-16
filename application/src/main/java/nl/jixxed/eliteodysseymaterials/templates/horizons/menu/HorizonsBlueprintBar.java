@@ -23,7 +23,6 @@ import javafx.util.Callback;
 import lombok.extern.slf4j.Slf4j;
 import nl.edomh.core.domain.*;
 import nl.edomh.core.service.event.*;
-import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.edomh.core.constants.HorizonsBlueprintConstants;
 import nl.edomh.core.constants.UTF8Constants;
 import nl.edomh.core.enums.BlueprintCategory;
@@ -33,10 +32,11 @@ import nl.edomh.core.enums.HorizonsBlueprintType;
 import nl.edomh.core.helper.BlueprintHelper;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.enums.EdAwesomeIcon;
-import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.HorizonsBlueprintClickEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
-import nl.jixxed.eliteodysseymaterials.templates.generic.menu.About;
+import nl.edomh.ui.shared.builder.*;
+import nl.edomh.ui.shared.service.event.BlueprintClickEvent;
+import nl.edomh.ui.shared.service.event.HorizonsBlueprintClickEvent;
+import nl.edomh.ui.shared.templates.destroyables.*;
+import nl.edomh.ui.shared.templates.generic.menu.About;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -692,7 +692,7 @@ public class HorizonsBlueprintBar extends DestroyableAccordion implements Destro
         final DestroyableToggleButton toggleButton = ToggleButtonBuilder.builder()
                 .withStyleClass("blueprint-grade-togglebutton")
                 .withGraphic(ResizableImageViewBuilder.builder()
-                        .withImage("/images/ships/engineers/ranks/" + grade.getGrade() + ".png")
+                        .withImage("nl/edomh/ui/shared/images/ships/engineers/ranks/" + grade.getGrade() + ".png")
                         .withStyleClasses("blueprint-grade-image")
                         .build())
                 .build();

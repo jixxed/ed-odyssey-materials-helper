@@ -24,8 +24,8 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
 import nl.edomh.core.helper.Formatters;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableChart;
+import nl.edomh.ui.shared.templates.destroyables.Destroyable;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableChart;
 
 import java.util.List;
 import java.util.Optional;

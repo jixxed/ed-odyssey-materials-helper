@@ -16,7 +16,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.css.PseudoClass;
-import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.edomh.core.constants.PreferenceConstants;
 import nl.edomh.core.domain.ApplicationState;
 import nl.edomh.core.domain.Commander;
@@ -25,10 +24,11 @@ import nl.edomh.core.service.CAPIService;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.RegistryService;
 import nl.edomh.core.service.UserPreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.ApplicationRegisteredEvent;
+import nl.edomh.ui.shared.builder.*;
+import nl.edomh.ui.shared.service.event.ApplicationRegisteredEvent;
 import nl.edomh.core.service.event.EventService;
 import nl.edomh.core.service.event.SquadronCarrierStorageConfigurationEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.edomh.ui.shared.templates.destroyables.*;
 
 import java.util.Set;
 

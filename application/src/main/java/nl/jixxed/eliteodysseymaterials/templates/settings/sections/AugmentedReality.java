@@ -23,15 +23,15 @@ import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.PreferencesService;
 import nl.edomh.core.service.WebBrowserProvider;
 import nl.edomh.core.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.builder.*;
+import nl.edomh.ui.shared.builder.*;
+import nl.edomh.ui.shared.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.service.ARService;
-import nl.jixxed.eliteodysseymaterials.service.NotificationService;
+import nl.edomh.ui.shared.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.ar.BartenderSellARMenu;
 import nl.jixxed.eliteodysseymaterials.service.ar.BartenderTradeARMenu;
 import nl.jixxed.eliteodysseymaterials.service.event.ARDisableEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.ARLocaleChangeEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.ARWhitelistChangeEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.io.*;
 import java.net.HttpURLConnection;

@@ -10,12 +10,12 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.other.colonisation;
 
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
 import nl.edomh.core.service.TrailblazerService;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
-import nl.jixxed.eliteodysseymaterials.templates.generic.CopyableLocation;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableLabel;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableVBox;
+import nl.edomh.ui.shared.templates.generic.CopyableLocation;
 
 import java.util.List;
 

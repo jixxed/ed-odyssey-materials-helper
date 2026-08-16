@@ -17,7 +17,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableBooleanValue;
 import nl.edomh.core.domain.ships.optional_internals.*;
 import nl.edomh.core.domain.ships.utility.*;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
 import nl.edomh.core.domain.ships.Ship;
 import nl.edomh.core.domain.ships.ShipModule;
 import nl.edomh.core.domain.ships.Slot;
@@ -25,7 +25,7 @@ import nl.edomh.core.domain.ships.SlotType;
 import nl.edomh.core.enums.HorizonsModifier;
 import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableTemplate;
 
 import java.util.Arrays;
 import java.util.List;

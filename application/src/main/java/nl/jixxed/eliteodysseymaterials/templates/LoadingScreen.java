@@ -12,15 +12,15 @@ package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.scene.layout.AnchorPane;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
 import nl.edomh.core.enums.LoadingStage;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.event.EventProcessedEvent;
 import nl.edomh.core.service.event.EventService;
 import nl.edomh.core.service.event.LoadingEvent;
-import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.edomh.ui.shared.templates.components.GrowingRegion;
+import nl.edomh.ui.shared.templates.destroyables.*;
 
 @Slf4j
 public class LoadingScreen extends DestroyableAnchorPane implements DestroyableEventTemplate {

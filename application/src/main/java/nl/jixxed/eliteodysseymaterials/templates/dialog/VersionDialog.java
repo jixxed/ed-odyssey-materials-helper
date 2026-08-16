@@ -13,12 +13,12 @@ package nl.jixxed.eliteodysseymaterials.templates.dialog;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import nl.edomh.core.service.WebBrowserProvider;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.HyperlinkBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.ButtonBuilder;
+import nl.edomh.ui.shared.builder.HyperlinkBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
+import nl.edomh.ui.shared.templates.components.GrowingRegion;
+import nl.edomh.ui.shared.templates.destroyables.*;
 
 @Slf4j
 public class VersionDialog extends DestroyableVBox implements DestroyableTemplate {

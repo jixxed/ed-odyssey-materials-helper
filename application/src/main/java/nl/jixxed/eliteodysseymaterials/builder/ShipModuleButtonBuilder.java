@@ -13,6 +13,7 @@ package nl.jixxed.eliteodysseymaterials.builder;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.edomh.core.domain.ships.ShipModule;
+import nl.edomh.ui.shared.builder.AbstractButtonBaseBuilder;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.ShipModuleButton;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.SlotBox;
 
@@ -24,7 +25,6 @@ public class ShipModuleButtonBuilder extends AbstractButtonBaseBuilder<ShipModul
     public static ShipModuleButtonBuilder builder() {
         return new ShipModuleButtonBuilder();
     }
-
 
     public ShipModuleButtonBuilder withShipModule(final ShipModule shipModule) {
         this.shipModule = shipModule;

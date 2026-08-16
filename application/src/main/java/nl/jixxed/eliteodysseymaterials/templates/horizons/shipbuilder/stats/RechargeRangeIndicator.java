@@ -11,16 +11,16 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
 import javafx.css.PseudoClass;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.PaneBuilder;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.PaneBuilder;
 import nl.edomh.core.helper.Formatters;
-import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
+import nl.edomh.ui.shared.helper.ScalingHelper;
 import nl.edomh.core.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
+import nl.edomh.ui.shared.service.event.AfterFontSizeSetEvent;
 import nl.edomh.core.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.edomh.ui.shared.templates.components.GrowingRegion;
+import nl.edomh.ui.shared.templates.destroyables.*;
 
 public class RechargeRangeIndicator extends DestroyableVBox implements DestroyableEventTemplate {
 

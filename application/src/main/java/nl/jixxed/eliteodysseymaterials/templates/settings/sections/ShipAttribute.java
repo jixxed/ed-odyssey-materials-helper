@@ -12,17 +12,17 @@ package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
 import javafx.css.PseudoClass;
 import lombok.Getter;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.CheckBoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.TextFieldBuilder;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.CheckBoxBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.TextFieldBuilder;
 import nl.edomh.core.domain.ships.ShipModule;
 import nl.edomh.core.enums.HorizonsModifier;
 import nl.edomh.core.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableCheckBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTextField;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableCheckBox;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableHBox;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableLabel;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableTextField;
 
 //todo refactor this into a component instead of a container
 public class ShipAttribute {

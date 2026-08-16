@@ -11,10 +11,10 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.materials;
 
 import javafx.scene.control.ScrollPane;
-import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
+import nl.edomh.ui.shared.builder.ScrollPaneBuilder;
 import nl.edomh.core.enums.HorizonsTabType;
 import nl.edomh.core.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsTab;
 
 public class HorizonsMaterialTab extends HorizonsTab implements DestroyableTemplate {

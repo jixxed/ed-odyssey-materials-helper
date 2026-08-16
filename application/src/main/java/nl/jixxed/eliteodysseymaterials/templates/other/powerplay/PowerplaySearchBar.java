@@ -19,19 +19,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.TextFieldBuilder;
+import nl.edomh.ui.shared.builder.TextFieldBuilder;
 import nl.edomh.core.constants.PreferenceConstants;
 import nl.edomh.core.enums.FontSize;
 import nl.edomh.core.enums.OtherTabType;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
+import nl.edomh.ui.shared.service.event.AfterFontSizeSetEvent;
 import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OtherTabSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.PowerSearchEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTextField;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableEventTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableHBox;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableTextField;
 
 import java.util.concurrent.TimeUnit;
 

@@ -10,7 +10,7 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.other;
 
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTab;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableTab;
 
 public abstract class OtherTab extends DestroyableTab {
 }

@@ -20,10 +20,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import lombok.extern.slf4j.Slf4j;
 import nl.edomh.core.service.event.*;
-import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.TextFieldBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
+import nl.edomh.ui.shared.builder.ComboBoxBuilder;
+import nl.edomh.ui.shared.builder.TextFieldBuilder;
+import nl.edomh.ui.shared.builder.TooltipBuilder;
 import nl.edomh.core.constants.PreferenceConstants;
+import nl.edomh.ui.shared.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.domain.Search;
 import nl.edomh.core.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterialShow;
@@ -31,11 +32,10 @@ import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterialSort;
 import nl.edomh.core.enums.OdysseyTabType;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
+import nl.edomh.ui.shared.service.event.AfterFontSizeSetEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyTabSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.SearchEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.SoloModeEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.concurrent.TimeUnit;
 

@@ -67,18 +67,12 @@ module nl.jixxed.eliteodysseymaterials {
     requires nl.jixxed.github.sponsor;
     requires nl.jixxed.ed.data.api;
     requires nl.edomh.core;
+    requires nl.edomh.ui.shared;
 
     uses nl.jixxed.ed.awesome.api.FontLoader;
 
     exports nl.jixxed.eliteodysseymaterials.service.ar;
-    exports nl.jixxed.eliteodysseymaterials.templates.components.edfont;
-    exports nl.jixxed.eliteodysseymaterials.templates.components.segmentbar;
-    exports nl.jixxed.eliteodysseymaterials.templates.components.slider;
-    exports nl.jixxed.eliteodysseymaterials.templates.components;
-    exports nl.jixxed.eliteodysseymaterials.templates.destroyables;
     exports nl.jixxed.eliteodysseymaterials.templates.dialog;
-    exports nl.jixxed.eliteodysseymaterials.templates.generic.menu;
-    exports nl.jixxed.eliteodysseymaterials.templates.generic;
     exports nl.jixxed.eliteodysseymaterials.templates.other.colonisation;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons.commodities;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons.engineers;
@@ -103,16 +97,9 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.templates;
     exports nl.jixxed.eliteodysseymaterials;
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics, java.desktop;
-    opens nl.jixxed.eliteodysseymaterials.builder to javafx.graphics, java.desktop, javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates to java.desktop, javafx.fxml, javafx.graphics, org.controlsfx.controls;
-    opens nl.jixxed.eliteodysseymaterials.templates.components to javafx.fxml, org.controlsfx.controls;
-    opens nl.jixxed.eliteodysseymaterials.templates.components.segmentbar to javafx.fxml, org.controlsfx.controls;
-    opens nl.jixxed.eliteodysseymaterials.templates.components.slider to javafx.fxml, org.controlsfx.controls;
-    opens nl.jixxed.eliteodysseymaterials.templates.destroyables to javafx.graphics, java.desktop, javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.dialog to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.dialog.importdialog to javafx.fxml, org.controlsfx.controls;
-    opens nl.jixxed.eliteodysseymaterials.templates.generic to javafx.fxml, org.controlsfx.controls;
-    opens nl.jixxed.eliteodysseymaterials.templates.generic.menu to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.horizons to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.horizons.commodities to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.horizons.engineers to javafx.fxml, org.controlsfx.controls;
@@ -131,10 +118,11 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.service;
     exports nl.jixxed.eliteodysseymaterials.domain;
     opens nl.jixxed.eliteodysseymaterials.domain to com.fasterxml.jackson.databind, javafx.fxml, org.controlsfx.controls;
-    exports nl.jixxed.eliteodysseymaterials.helper;
-    opens nl.jixxed.eliteodysseymaterials.helper to com.fasterxml.jackson.databind, org.hibernate.validator;
     exports nl.jixxed.eliteodysseymaterials.enums;
     opens nl.jixxed.eliteodysseymaterials.enums to com.fasterxml.jackson.databind, org.hibernate.validator;
     exports nl.jixxed.eliteodysseymaterials.service.event;
-
+    opens nl.jixxed.eliteodysseymaterials.service.event to com.fasterxml.jackson.databind, org.hibernate.validator;
+    opens nl.jixxed.eliteodysseymaterials.builder to java.desktop, javafx.fxml, javafx.graphics, org.controlsfx.controls;
+    exports nl.jixxed.eliteodysseymaterials.helper;
+    opens nl.jixxed.eliteodysseymaterials.helper to com.fasterxml.jackson.databind, org.hibernate.validator;
 }

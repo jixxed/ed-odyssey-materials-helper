@@ -83,7 +83,8 @@ dependencies {
     testImplementation 'io.ebean:ebean-test'
     implementation "nl.jixxed.ed.data:ed-data-api:1.7"
     implementation "nl.jixxed.github.sponsor:github-sponsor:1.4"
-    implementation "nl.edomh.core:edomh-core:1.11"
+    implementation "nl.edomh.core:edomh-core:1.15"
+    implementation 'nl.edomh.ui:edomh-ui-shared:1.2'
 
     if (project.ext.proprietary) {
         implementation 'nl.jixxed.ed.awesome:ed-awesome-impl:1.26'

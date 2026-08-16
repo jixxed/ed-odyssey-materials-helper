@@ -12,14 +12,14 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
 import javafx.beans.binding.StringBinding;
 import javafx.css.PseudoClass;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
 import nl.edomh.core.domain.ships.ShipModule;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.LanguageChangedEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.edomh.ui.shared.service.event.LanguageChangedEvent;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableEventTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableFlowPane;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableLabel;
 
 import java.util.ArrayList;
 import java.util.List;

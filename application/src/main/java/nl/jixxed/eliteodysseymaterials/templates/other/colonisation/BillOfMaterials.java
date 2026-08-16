@@ -19,9 +19,9 @@ import nl.jixxed.eliteodysseymaterials.service.event.ColonisationSelectedEvent;
 import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsColonisationSearchEvent;
 import nl.edomh.core.service.event.StorageEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableComponent;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableEventTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableFlowPane;
 
 import java.util.List;
 

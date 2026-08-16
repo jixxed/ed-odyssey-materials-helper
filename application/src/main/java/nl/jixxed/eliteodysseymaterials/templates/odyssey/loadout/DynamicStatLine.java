@@ -12,14 +12,13 @@ package nl.jixxed.eliteodysseymaterials.templates.odyssey.loadout;
 
 import javafx.css.PseudoClass;
 import nl.edomh.core.enums.*;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
 import nl.edomh.core.domain.Loadout;
 import nl.edomh.core.domain.LoadoutSet;
 import nl.edomh.core.domain.SelectedModification;
-import nl.jixxed.eliteodysseymaterials.enums.*;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableHBox;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableLabel;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;

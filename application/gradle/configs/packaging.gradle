@@ -34,18 +34,18 @@ jlink {
         skipInstaller = true
 
         if (project.ext.os.isLinux()) {
-            imageOptions.addAll('--icon', 'src/main/resources/images/application/appicon512.png')
+            imageOptions.addAll('--icon', 'src/main/resources/icons/appicon512.png')
         } else if (project.ext.os.isMacOsX()) {
             imageOptions.addAll(
-                '--icon', 'src/main/resources/images/application/appicon.icns',
+                '--icon', 'src/main/resources/icons/appicon.icns',
                 '--mac-package-identifier', 'nl.jixxed.ed.edomh'
             )
         } else {
-            imageOptions.addAll('--icon', 'src/main/resources/images/application/appicon.ico')
+            imageOptions.addAll('--icon', 'src/main/resources/icons/appicon.ico')
         }
     }
-    addExtraDependencies("javafx", "jackson", "log4j", "jdk.accessibility")
-    forceMerge("j2objc", "sqlite-jdbc"/*, "logback"*/)
+    addExtraDependencies("javafx", "jackson", "log4j", "jdk.accessibility", "logback")
+    forceMerge("j2objc", "sqlite-jdbc")
     if (project.ext.proprietary) {
 //        addExtraDependencies("nl.jixxed.ed.awesome.impl")
 //        forceMerge("nl.jixxed.ed.awesome.impl")

@@ -10,16 +10,16 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.CheckBoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.CheckBoxBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
 import nl.edomh.core.constants.PreferenceConstants;
 import nl.edomh.core.enums.Expansion;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.PreferencesService;
 import nl.edomh.core.service.event.EventService;
+import nl.edomh.ui.shared.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.service.event.FlipRemainingAvailableEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 

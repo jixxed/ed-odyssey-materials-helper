@@ -40,12 +40,14 @@ import nl.edomh.core.service.event.ShipLoadoutEvent;
 import nl.edomh.core.service.ships.ShipMapper;
 import nl.edomh.core.service.ships.ShipService;
 import nl.edomh.core.service.spansh.SpanshService;
-import nl.jixxed.eliteodysseymaterials.builder.*;
-import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
-import nl.jixxed.eliteodysseymaterials.service.NotificationService;
+import nl.edomh.ui.shared.builder.*;
+import nl.edomh.ui.shared.helper.ClipboardHelper;
+import nl.edomh.ui.shared.service.NotificationService;
+import nl.edomh.ui.shared.service.event.AfterFontSizeSetEvent;
+import nl.edomh.ui.shared.templates.components.GrowingRegion;
+import nl.edomh.ui.shared.templates.destroyables.*;
+import nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import org.controlsfx.control.PopOver;
 
 import java.math.BigDecimal;
@@ -632,7 +634,7 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
 
         this.shipsHelp = ResizableImageViewBuilder.builder()
                 .withStyleClasses("help-image")
-                .withImage("/images/other/help.png")
+                .withImage("nl/edomh/ui/shared/images/other/help.png")
                 .withOnMouseClicked(this::showHelp)
                 .withVisibilityProperty(this.shipSelect.getSelectionModel().selectedItemProperty().map(s -> s.getShipType() != null))
                 .build();
@@ -687,7 +689,7 @@ public class ControlsSection extends DestroyableHBox implements DestroyableEvent
     }
     private EventHandler<ActionEvent> getPasteHandler() {
         return _ -> {
-            ClipboardHelper.importFromClipboard();
+            DeeplinkHelper.importFromClipboard();
         };
     }
     private EventHandler<ActionEvent> getImportHandler() {

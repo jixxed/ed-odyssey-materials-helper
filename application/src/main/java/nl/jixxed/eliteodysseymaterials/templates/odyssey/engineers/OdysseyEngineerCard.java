@@ -12,21 +12,21 @@ package nl.jixxed.eliteodysseymaterials.templates.odyssey.engineers;
 
 import javafx.css.PseudoClass;
 import javafx.geometry.Orientation;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.EdAwesomeIconViewPaneBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
 import nl.edomh.core.constants.OdysseyBlueprintConstants;
 import nl.edomh.core.enums.Engineer;
 import nl.edomh.core.enums.OdysseyBlueprintName;
-import nl.jixxed.eliteodysseymaterials.service.ImageService;
+import nl.edomh.ui.shared.service.ImageService;
 import nl.edomh.core.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
+import nl.edomh.ui.shared.service.event.BlueprintClickEvent;
 import nl.edomh.core.service.event.EngineerEvent;
 import nl.edomh.core.service.event.EventService;
+import nl.edomh.ui.shared.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyEngineerSearchEvent;
-import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
-import nl.jixxed.eliteodysseymaterials.templates.generic.EngineerCard;
+import nl.edomh.ui.shared.templates.components.EdAwesomeIconViewPane;
+import nl.edomh.ui.shared.templates.generic.EngineerCard;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -66,9 +66,9 @@ class OdysseyEngineerCard extends EngineerCard implements DestroyableEventTempla
     public void initComponents() {
         super.initComponents();
         if (APPLICATION_STATE.isEngineerUnlocked(engineer)) {
-            this.image.setImage(ImageService.getImage("/images/engineer/" + engineer.name().toLowerCase() + ".jpg"));
+            this.image.setImage(ImageService.getImage("nl/edomh/ui/shared/images/engineer/" + engineer.name().toLowerCase() + ".jpg"));
         } else {
-            this.image.setImage(ImageService.getImage("/images/engineer/locked.png"));
+            this.image.setImage(ImageService.getImage("nl/edomh/ui/shared/images/engineer/locked.png"));
         }
         this.suitModulesTitle = getSuitModulesTitle();
         this.suitBlueprintLabels = getSuitBlueprints();
@@ -97,9 +97,9 @@ class OdysseyEngineerCard extends EngineerCard implements DestroyableEventTempla
 //            this.getNodes().removeAll(this.unlockSeparator, this.unlockRequirementsTitle);
 //            this.getNodes().removeAll(this.unlockRequirementsLabels);
             if (APPLICATION_STATE.isEngineerUnlocked(engineer)) {
-                this.image.setImage(ImageService.getImage("/images/engineer/" + engineer.name().toLowerCase() + ".jpg"));
+                this.image.setImage(ImageService.getImage("nl/edomh/ui/shared/images/engineer/" + engineer.name().toLowerCase() + ".jpg"));
             } else {
-                this.image.setImage(ImageService.getImage("/images/engineer/locked.png"));
+                this.image.setImage(ImageService.getImage("nl/edomh/ui/shared/images/engineer/locked.png"));
 //                this.unlockRequirementsLabels = getUnlockRequirements();
 //                this.getNodes().addAll(this.unlockSeparator, this.unlockRequirementsTitle);
 //                this.getNodes().addAll(this.unlockRequirementsLabels);

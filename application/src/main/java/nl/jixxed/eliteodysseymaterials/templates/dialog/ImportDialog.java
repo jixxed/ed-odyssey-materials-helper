@@ -16,15 +16,15 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.edomh.core.constants.PreferenceConstants;
 import nl.edomh.core.enums.FontSize;
 import nl.edomh.core.enums.ImportType;
-import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
+import nl.edomh.ui.shared.builder.*;
+import nl.edomh.ui.shared.helper.AnchorPaneHelper;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.edomh.ui.shared.templates.components.GrowingRegion;
+import nl.edomh.ui.shared.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.dialog.importdialog.*;
 
 public class ImportDialog extends DestroyableVBox implements DestroyableTemplate {

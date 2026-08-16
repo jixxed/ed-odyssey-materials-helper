@@ -18,14 +18,15 @@ import javafx.scene.layout.VBox;
 import lombok.Getter;
 import nl.edomh.core.domain.*;
 import nl.edomh.core.enums.*;
-import nl.edomh.core.service.event.*;
-import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.edomh.core.service.LoadoutService;
 import nl.edomh.core.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.edomh.core.service.WishlistService;
+import nl.edomh.core.service.event.EventService;
+import nl.edomh.core.service.event.OdysseyWishlistBlueprintEvent;
+import nl.edomh.ui.shared.builder.*;
+import nl.edomh.ui.shared.service.NotificationService;
+import nl.edomh.ui.shared.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.*;
 
@@ -133,7 +134,7 @@ public class OdysseyLoadoutItem extends DestroyableVBox implements DestroyableEv
         //image
         final DestroyableResizableImageView image = ResizableImageViewBuilder.builder()
                 .withStyleClass("loadout-image")
-                .withImage(this.loadout.getEquipment().getImage())
+                .withImage(getImage(this.loadout.getEquipment()))
                 .build();
         DestroyableStackPane pane = StackPaneBuilder.builder()
                 .withNode(image)
@@ -236,17 +237,13 @@ public class OdysseyLoadoutItem extends DestroyableVBox implements DestroyableEv
         wishlistBlueprints.addAll(Arrays.stream(this.loadout.getModifications()).filter(modification -> modification.getModification() != null && !WeaponModification.NONE.equals(modification.getModification())).filter(SelectedModification::isNotPresent).map(modification -> new OdysseyWishlistBlueprint(modification.getModification().getRecipe())).toList());
         return wishlistBlueprints;
     }
-//
-//    private DestroyableHBox centerImage(final DestroyableResizableImageView resizableImageView) {
-//        final DestroyableHBox hBox = BoxBuilder.builder()
-//                .buildHBox();
-//        final DestroyableVBox vBox = BoxBuilder.builder()
-//                .buildVBox();
-//        hBox.setStyle("-fx-alignment: center;-fx-min-height: 22em");
-//        vBox.setStyle("-fx-alignment: center;-fx-min-height: 22em");
-//        vBox.getNodes().add(resizableImageView);
-//        hBox.getNodes().addAll(vBox);
-//        return hBox;
-//    }
 
+    private String getImage(Equipment equipment){
+        return switch (equipment){
+            case Suit s -> "nl/edomh/ui/shared/images/suit/" + equipment.name().toLowerCase() + ".png";
+            case Weapon w -> "nl/edomh/ui/shared/images/weapon/" + equipment.name().toLowerCase() + ".png";
+            default -> throw new IllegalStateException("Unexpected value: " + equipment);
+        };
+
+    }
 }

@@ -23,7 +23,7 @@ import nl.edomh.core.enums.HorizonsBlueprintGrade;
 import nl.edomh.core.enums.HorizonsBlueprintType;
 import nl.edomh.core.enums.HorizonsModifier;
 import nl.edomh.core.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
+import nl.edomh.ui.shared.helper.ScalingHelper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -118,7 +118,7 @@ class ArmourStatsTest {
     @BeforeEach
     void setUp() {
         ScalingHelper.init();
-        ResourceProvider.setResourceProvider(bundle -> ArmourStatsTest.class.getResourceAsStream("/" + bundle));
+        ResourceProvider.add(bundle -> ArmourStatsTest.class.getResourceAsStream("/" + bundle));
         LocaleService.setCurrentLocale(Locale.ENGLISH);
         armourStats = new ArmourStats();
 

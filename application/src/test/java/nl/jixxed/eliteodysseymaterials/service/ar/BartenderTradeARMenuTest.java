@@ -11,6 +11,7 @@
 package nl.jixxed.eliteodysseymaterials.service.ar;
 
 import lombok.extern.slf4j.Slf4j;
+import nl.edomh.core.ResourceProvider;
 import nl.jixxed.eliteodysseymaterials.service.ARService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
@@ -29,7 +30,7 @@ public class BartenderTradeARMenuTest {
     public void isBartenderMenu() {
         // Load the test image resource
 //        try (InputStream resourceAsStream = this.getClass().getResourceAsStream("/ar/3840x1600.png")) {
-        try (InputStream resourceAsStream = this.getClass().getResourceAsStream("/ar/2560x1440.png")) {
+        try (InputStream resourceAsStream = this.getClass().getResourceAsStream("ar/2560x1440.png")) {
             Assertions.assertNotNull(resourceAsStream, "Test image resource not found.");
             BufferedImage image = ImageIO.read(resourceAsStream);
             ARService.debug = true;

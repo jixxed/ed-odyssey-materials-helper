@@ -29,11 +29,11 @@ import nl.edomh.core.service.cg.ReportModels;
 import nl.edomh.core.service.event.CommunityGoalEvent;
 import nl.edomh.core.service.event.CommunityGoalReportEvent;
 import nl.edomh.core.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
-import nl.jixxed.eliteodysseymaterials.templates.generic.CopyableLocation;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
+import nl.edomh.ui.shared.templates.components.GrowingRegion;
+import nl.edomh.ui.shared.templates.destroyables.*;
+import nl.edomh.ui.shared.templates.generic.CopyableLocation;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;

@@ -12,8 +12,8 @@ package nl.jixxed.eliteodysseymaterials.templates.other.communitygoal;
 
 import nl.edomh.core.enums.Material;
 import nl.edomh.core.service.cg.ReportModels;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableFlowPane;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableTemplate;
 
 import java.util.Arrays;
 

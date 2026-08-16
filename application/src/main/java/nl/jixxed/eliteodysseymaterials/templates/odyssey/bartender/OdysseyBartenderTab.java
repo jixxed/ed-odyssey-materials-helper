@@ -15,15 +15,15 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Orientation;
 import javafx.scene.control.skin.ScrollPaneSkin;
-import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.edomh.core.enums.Asset;
 import nl.edomh.core.enums.AssetType;
 import nl.edomh.core.enums.OdysseyTabType;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.event.EventService;
+import nl.edomh.ui.shared.builder.*;
+import nl.edomh.ui.shared.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyBartenderMaterialSelectedEvent;
-import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.edomh.ui.shared.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyTab;
 
 import java.util.*;

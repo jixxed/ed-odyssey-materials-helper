@@ -11,15 +11,15 @@
 package nl.jixxed.eliteodysseymaterials.templates.other.communitygoal;
 
 import javafx.collections.FXCollections;
-import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
+import nl.edomh.ui.shared.builder.ComboBoxBuilder;
 import nl.edomh.core.domain.Goal;
 import nl.edomh.core.service.cg.CommunityGoalsService;
 import nl.edomh.core.service.event.AvailableCommunityGoalsEvent;
 import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.GoalSelectedEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComboBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableComboBox;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableEventTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableHBox;
 
 import java.util.ArrayList;
 import java.util.Comparator;

@@ -10,12 +10,14 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.dialog.importdialog;
 
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.edomh.core.domain.SelectedModification;
+import nl.edomh.core.enums.*;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.ResizableImageViewBuilder;
 import nl.edomh.core.domain.Loadout;
-import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.edomh.ui.shared.templates.components.GrowingRegion;
+import nl.edomh.ui.shared.templates.destroyables.*;
 
 public class LoadoutItem extends DestroyableHBox implements DestroyableTemplate {
 
@@ -32,7 +34,7 @@ public class LoadoutItem extends DestroyableHBox implements DestroyableTemplate 
 
         final DestroyableResizableImageView image = ResizableImageViewBuilder.builder()
                 .withStyleClass("loadout-image")
-                .withImage(this.loadout.getEquipment().getImage())
+                .withImage(getImage(this.loadout.getEquipment()))
                 .build();
 
         var imageBox = BoxBuilder.builder()
@@ -71,7 +73,7 @@ public class LoadoutItem extends DestroyableHBox implements DestroyableTemplate 
     private DestroyableVBox createModSlot(int position) {
         var imageView = ResizableImageViewBuilder.builder()
                 .withStyleClasses("mod-image")
-                .withImage((this.loadout.getModifications()[position] != null) ? this.loadout.getModifications()[position].getImage() : "/images/modification/empty.png")
+                .withImage((this.loadout.getModifications()[position] != null) ? getImage(this.loadout.getModifications()[position]) : "nl/edomh/ui/shared/images/modification/empty.png")
                 .build();
         final boolean hasModification = this.loadout.getModifications()[position] != null && this.loadout.getModifications()[position].getModification() != null;
         var label = LabelBuilder.builder()
@@ -112,5 +114,33 @@ public class LoadoutItem extends DestroyableHBox implements DestroyableTemplate 
                 .withStyleClass("grade-line")
                 .withNodes(targetLevelLabel, new GrowingRegion(), targetLevel)
                 .buildHBox();
+    }
+
+    private String getImage(Equipment equipment){
+        return switch (equipment){
+            case Suit s -> "nl/edomh/ui/shared/images/suit/" + equipment.name().toLowerCase() + ".png";
+            case Weapon w -> "nl/edomh/ui/shared/images/weapon/" + equipment.name().toLowerCase() + ".png";
+            default -> throw new IllegalStateException("Unexpected value: " + equipment);
+        };
+    }
+
+    private String getImage(Modification modification, boolean present) {
+        return switch (modification) {
+            case SuitModification _ -> "nl/edomh/ui/shared/images/modification/" + modification.name().toLowerCase() + (present ? "_active" : "") + ".png";
+            case WeaponModification _ -> {
+                String name = modification.name();
+                name = name.endsWith("_KINETIC") ? name.substring(0, name.indexOf("_KINETIC")) : name;
+                name = name.endsWith("_LASER") ? name.substring(0, name.indexOf("_LASER")) : name;
+                name = name.endsWith("_PLASMA") ? name.substring(0, name.indexOf("_PLASMA")) : name;
+                yield "nl/edomh/ui/shared/images/modification/" + name.toLowerCase() + (present ? "_active" : "") + ".png";
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + modification);
+        };
+    }
+    private String getImage(SelectedModification selectedModification) {
+        if (selectedModification.getModification() == null) {
+            return "nl/edomh/ui/shared/images/modification/empty.png";
+        }
+        return getImage(selectedModification.getModification(), selectedModification.isPresent());
     }
 }

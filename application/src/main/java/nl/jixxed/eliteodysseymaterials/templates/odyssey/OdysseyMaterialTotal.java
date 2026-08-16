@@ -15,14 +15,14 @@ import javafx.beans.value.ObservableValue;
 import javafx.geometry.Orientation;
 import nl.edomh.core.enums.*;
 import nl.edomh.core.service.event.*;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
 import nl.edomh.core.constants.OdysseyBlueprintConstants;
 import nl.edomh.core.domain.ApplicationState;
 import nl.edomh.core.service.StorageService;
+import nl.edomh.ui.shared.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.service.event.SoloModeEvent;
-import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.edomh.ui.shared.templates.components.GrowingRegion;
 
 import java.util.Arrays;
 import java.util.EnumMap;

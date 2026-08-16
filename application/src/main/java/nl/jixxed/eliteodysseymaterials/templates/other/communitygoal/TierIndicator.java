@@ -16,7 +16,7 @@ import io.fair_acc.chartfx.plugins.ValueIndicator;
 import io.fair_acc.chartfx.ui.geometry.Side;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
-import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
+import nl.edomh.ui.shared.helper.ScalingHelper;
 
 /**
  * A vertical line drawn on the plot area, indicating specified X value, with an optional {@link #textProperty() text

@@ -8,29 +8,23 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package nl.jixxed.eliteodysseymaterials.templates.overlay.ar;
+package nl.jixxed.eliteodysseymaterials.templates;
 
-import lombok.Getter;
-import nl.edomh.ui.shared.builder.ResizableImageViewBuilder;
-import nl.edomh.ui.shared.helper.AnchorPaneHelper;
-import nl.edomh.ui.shared.templates.destroyables.DestroyableAnchorPane;
-import nl.edomh.ui.shared.templates.destroyables.DestroyableResizableImageView;
-import nl.edomh.ui.shared.templates.destroyables.DestroyableTemplate;
+import nl.edomh.core.domain.WishlistBlueprint;
+import nl.edomh.core.enums.BlueprintName;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableComponent;
+import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishlistBlueprintTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishlistModuleBlueprintTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist.OdysseyWishlistBlueprintTemplate;
 
-public class AROverlay extends DestroyableAnchorPane implements DestroyableTemplate {
-    @Getter
-    private DestroyableResizableImageView resizableImageView;
+public sealed interface WishlistBlueprintTemplate<E extends BlueprintName<E>> extends DestroyableComponent permits HorizonsWishlistBlueprintTemplate, OdysseyWishlistBlueprintTemplate, HorizonsWishlistModuleBlueprintTemplate {
+    Integer getSequenceID();
 
-    public AROverlay() {
-        super();
-        initComponents();
-    }
+    boolean isVisibleBlueprint();
 
-    @Override
-    public void initComponents() {
-        this.resizableImageView = ResizableImageViewBuilder.builder()
-                .build();
-        AnchorPaneHelper.setAnchor(this.resizableImageView, 0D, 0D, 0D, 0D);
-        this.getNodes().add(this.resizableImageView);
-    }
+    WishlistBlueprint<E> getWishlistRecipe();
+
+    void setVisibility(boolean b);
+
+    boolean isDeleted();
 }

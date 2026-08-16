@@ -20,9 +20,9 @@ import javafx.util.StringConverter;
 import lombok.extern.slf4j.Slf4j;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.cg.ReportModels;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableChart;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableChart;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableHBox;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableTemplate;
 
 import java.time.Instant;
 import java.time.LocalDateTime;

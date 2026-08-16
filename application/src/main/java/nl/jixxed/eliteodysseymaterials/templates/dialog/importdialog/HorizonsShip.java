@@ -15,14 +15,14 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.FlowPaneBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.ResizableImageViewBuilder;
 import nl.edomh.core.domain.ClipboardShip;
 import nl.edomh.core.domain.ships.Ship;
 import nl.edomh.core.service.ships.ShipMapper;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.edomh.ui.shared.templates.destroyables.*;
 
 @Slf4j
 public class HorizonsShip extends DestroyableVBox implements DestroyableTemplate {
@@ -104,7 +104,7 @@ public class HorizonsShip extends DestroyableVBox implements DestroyableTemplate
                     .withNodes(shipType, shipName)
                     .buildVBox();
             var shipImage = ResizableImageViewBuilder.builder()
-                    .withImage("/images/ships/ship/" + ship.getShipType().name().toLowerCase() + ".1.png")
+                    .withImage("nl/edomh/ui/shared/images/ships/ship/" + ship.getShipType().name().toLowerCase() + ".1.png")
                     .withStyleClass("ship-image")
                     .withPreserveRatio(true)
                     .build();

@@ -15,9 +15,8 @@ import javafx.css.PseudoClass;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import nl.edomh.core.domain.*;
-import nl.jixxed.eliteodysseymaterials.builder.MenuItemBuilder;
+import nl.edomh.ui.shared.builder.MenuItemBuilder;
 import nl.edomh.core.constants.HorizonsBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.edomh.core.enums.Action;
 import nl.edomh.core.enums.BlueprintCategory;
 import nl.edomh.core.enums.HorizonsBlueprintGrade;
@@ -25,9 +24,9 @@ import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.WishlistService;
 import nl.edomh.core.service.event.EventService;
 import nl.edomh.core.service.event.HorizonsWishlistBlueprintEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableMenuButton;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableMenuItem;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableEventTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableMenuButton;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableMenuItem;
 
 import java.util.*;
 

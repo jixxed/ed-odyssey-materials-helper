@@ -18,6 +18,7 @@ import io.sentry.Attachment;
 import io.sentry.Sentry;
 import io.sentry.protocol.OperatingSystem;
 import lombok.extern.slf4j.Slf4j;
+import nl.edomh.core.ResourceProvider;
 import nl.edomh.core.constants.OsConstants;
 import nl.edomh.core.domain.ApplicationState;
 import nl.edomh.core.helper.OsCheck;
@@ -25,6 +26,7 @@ import nl.edomh.core.service.RegistryService;
 import nl.edomh.core.service.Secrets;
 import nl.edomh.core.service.SupportService;
 import nl.edomh.core.service.VersionService;
+import nl.edomh.ui.shared.Shared;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -43,6 +45,8 @@ public class Main {
     private static Instant lastSentTime = Instant.MIN;
 
     public static void main(final String[] args) {
+        ResourceProvider.add(name -> Main.class.getResourceAsStream("/" + name));
+        Shared.init();
         configurePaths();
         //check if running as admin
         if (OsCheck.isWindows() && isRunningAsAdmin() && RegistryService.isUACEnabled()) {

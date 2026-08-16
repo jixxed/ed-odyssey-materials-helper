@@ -11,12 +11,12 @@
 package nl.jixxed.eliteodysseymaterials.templates.overlay.ar;
 
 import lombok.Getter;
-import nl.jixxed.eliteodysseymaterials.builder.AnchorPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
+import nl.edomh.ui.shared.builder.AnchorPaneBuilder;
+import nl.edomh.ui.shared.builder.ResizableImageViewBuilder;
+import nl.edomh.ui.shared.helper.AnchorPaneHelper;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableResizableImageView;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableVBox;
 
 @Getter
 public class ARDebugOverlay extends DestroyableVBox implements DestroyableTemplate {

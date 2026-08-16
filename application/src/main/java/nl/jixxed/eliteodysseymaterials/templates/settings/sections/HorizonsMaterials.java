@@ -10,16 +10,16 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ToggleSwitchBuilder;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.ToggleSwitchBuilder;
 import nl.edomh.core.constants.PreferenceConstants;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.PreferencesService;
+import nl.edomh.ui.shared.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.service.event.CollectorModeEvent;
 import nl.edomh.core.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.templates.components.ButtonIntField;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.edomh.ui.shared.templates.components.ButtonIntField;
 
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 

@@ -26,9 +26,9 @@ import nl.edomh.core.persistence.commander.model.CommunityGoalModel;
 import nl.edomh.core.persistence.commander.model.query.QCommunityGoalModel;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.cg.ReportModels;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableChart;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableChart;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableHBox;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableTemplate;
 
 import java.math.BigInteger;
 import java.time.Instant;

@@ -11,17 +11,17 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
 import javafx.css.PseudoClass;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.EdAwesomeIconViewPaneBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
 import nl.edomh.core.helper.Formatters;
-import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
-import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.edomh.ui.shared.templates.components.EdAwesomeIconViewPane;
+import nl.edomh.ui.shared.templates.components.GrowingRegion;
 import nl.edomh.core.enums.EdAwesomeIcon;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableStackPane;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableLabel;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableStackPane;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableVBox;
 
 public class Shield extends DestroyableStackPane implements DestroyableTemplate {
 

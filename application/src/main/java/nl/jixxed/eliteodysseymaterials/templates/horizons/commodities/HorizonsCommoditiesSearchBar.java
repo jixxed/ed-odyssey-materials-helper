@@ -19,10 +19,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.TextFieldBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
+import nl.edomh.ui.shared.builder.ComboBoxBuilder;
+import nl.edomh.ui.shared.builder.TextFieldBuilder;
+import nl.edomh.ui.shared.builder.TooltipBuilder;
 import nl.edomh.core.constants.PreferenceConstants;
+import nl.edomh.ui.shared.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.domain.CommoditiesSearch;
 import nl.edomh.core.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsCommoditiesShow;
@@ -31,7 +32,6 @@ import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.PreferencesService;
 import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsCommoditiesSearchEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.concurrent.TimeUnit;
 

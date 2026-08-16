@@ -14,21 +14,21 @@ import javafx.geometry.Orientation;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.ResizableImageViewBuilder;
 import nl.edomh.core.domain.ApplicationState;
 import nl.edomh.core.domain.ships.ModuleSize;
 import nl.edomh.core.enums.HorizonsBlueprintName;
 import nl.edomh.core.enums.Power;
-import nl.jixxed.eliteodysseymaterials.service.ImageService;
+import nl.edomh.ui.shared.service.ImageService;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.event.EventService;
 import nl.edomh.core.service.event.PowerplayEvent;
 import nl.edomh.core.service.event.PowerplayLeaveEvent;
-import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
-import nl.jixxed.eliteodysseymaterials.templates.generic.CopyableLocation;
+import nl.edomh.ui.shared.templates.components.GrowingRegion;
+import nl.edomh.ui.shared.templates.destroyables.*;
+import nl.edomh.ui.shared.templates.generic.CopyableLocation;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -163,7 +163,7 @@ public class PowerplayCard extends DestroyableVBox implements DestroyableEventTe
         return ResizableImageViewBuilder.builder()
                 .withStyleClass("photo")
                 .withPreserveRatio(true)
-                .withImage(ImageService.getImage("/images/power/" + power.name().toLowerCase() + ".png"))
+                .withImage(ImageService.getImage("nl/edomh/ui/shared/images/power/" + power.name().toLowerCase() + ".png"))
                 .build();
 
     }

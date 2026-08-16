@@ -11,12 +11,12 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist;
 
 import javafx.scene.input.MouseEvent;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.PopOverBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.PopOverBuilder;
+import nl.edomh.ui.shared.builder.ResizableImageViewBuilder;
 import nl.edomh.core.enums.BlueprintCategory;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.edomh.ui.shared.templates.destroyables.*;
 import org.controlsfx.control.PopOver;
 
 public class OdysseyWishlistBlueprints extends DestroyableVBox implements DestroyableTemplate {
@@ -50,7 +50,7 @@ public class OdysseyWishlistBlueprints extends DestroyableVBox implements Destro
 
         this.blueprintsHelp = ResizableImageViewBuilder.builder()
                 .withStyleClass("help-image")
-                .withImage("/images/other/help.png")
+                .withImage("nl/edomh/ui/shared/images/other/help.png")
                 .withOnMouseClicked(this::showHelp)
                 .build();
         final DestroyableHBox titleBar = BoxBuilder.builder()

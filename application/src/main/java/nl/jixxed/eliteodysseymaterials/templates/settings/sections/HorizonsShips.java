@@ -37,10 +37,10 @@ import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.UserPreferencesService;
 import nl.edomh.core.service.event.EngineerEvent;
 import nl.edomh.core.service.event.EventService;
+import nl.edomh.ui.shared.builder.*;
+import nl.edomh.ui.shared.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.service.event.LegacyModuleSavedEvent;
 import nl.edomh.core.service.ships.LegacyModuleService;
-import nl.jixxed.eliteodysseymaterials.builder.*;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;

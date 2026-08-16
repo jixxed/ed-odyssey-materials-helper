@@ -21,26 +21,26 @@ import javafx.scene.layout.Priority;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.edomh.core.service.event.*;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.EdAwesomeIconViewPaneBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
 import nl.edomh.core.constants.OdysseyBlueprintConstants;
 import nl.edomh.core.domain.ApplicationState;
 import nl.edomh.core.domain.Storage;
 import nl.edomh.core.domain.Wishlist;
 import nl.edomh.core.enums.Asset;
 import nl.edomh.core.enums.OdysseyMaterial;
+import nl.edomh.ui.shared.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterialShow;
 import nl.edomh.core.enums.StoragePool;
 import nl.edomh.core.service.FavouriteService;
 import nl.edomh.core.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.MaterialService;
+import nl.edomh.ui.shared.service.MaterialService;
 import nl.edomh.core.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.IrrelevantMaterialOverrideEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.SearchEvent;
-import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
+import nl.edomh.ui.shared.templates.components.EdAwesomeIconViewPane;
 import nl.edomh.core.enums.EdAwesomeIcon;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 @Slf4j
 public class OdysseyMaterialCard extends DestroyableVBox implements DestroyableEventTemplate {

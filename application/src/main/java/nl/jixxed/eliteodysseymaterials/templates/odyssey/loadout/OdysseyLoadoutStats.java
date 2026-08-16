@@ -12,9 +12,9 @@ package nl.jixxed.eliteodysseymaterials.templates.odyssey.loadout;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ToggleSwitchBuilder;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.ToggleSwitchBuilder;
 import nl.edomh.core.domain.ApplicationState;
 import nl.edomh.core.domain.Loadout;
 import nl.edomh.core.domain.LoadoutSet;
@@ -23,8 +23,8 @@ import nl.edomh.core.enums.StatGroup;
 import nl.edomh.core.enums.Suit;
 import nl.edomh.core.service.LoadoutService;
 import nl.edomh.core.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.edomh.ui.shared.templates.components.GrowingRegion;
+import nl.edomh.ui.shared.templates.destroyables.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;

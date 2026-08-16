@@ -11,19 +11,19 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import nl.jixxed.eliteodysseymaterials.builder.EdAwesomeIconViewPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.FontAwesomeIconViewBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.EdAwesomeIconViewPaneBuilder;
+import nl.edomh.ui.shared.builder.FontAwesomeIconViewBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
 import nl.edomh.core.domain.ApplicationState;
 import nl.edomh.core.domain.ShipConfiguration;
 import nl.edomh.core.domain.ships.HardpointModule;
 import nl.edomh.core.domain.ships.ShipModule;
 import nl.edomh.core.service.ships.ShipService;
-import nl.jixxed.eliteodysseymaterials.templates.components.EdAwesomeIconViewPane;
-import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.edomh.ui.shared.templates.components.EdAwesomeIconViewPane;
+import nl.edomh.ui.shared.templates.components.GrowingRegion;
 import nl.edomh.core.enums.EdAwesomeIcon;
-import nl.jixxed.eliteodysseymaterials.templates.components.edfont.EdAwesomeIconView;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.edomh.ui.shared.templates.components.edfont.EdAwesomeIconView;
+import nl.edomh.ui.shared.templates.destroyables.*;
 
 public class SlotBoxMountingControl extends DestroyableVBox implements DestroyableEventTemplate {
     private DestroyableLabel mountingLabel;

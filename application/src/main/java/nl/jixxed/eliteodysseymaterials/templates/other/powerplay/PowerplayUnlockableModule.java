@@ -11,16 +11,16 @@
 package nl.jixxed.eliteodysseymaterials.templates.other.powerplay;
 
 import javafx.css.PseudoClass;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
 import nl.edomh.core.domain.ApplicationState;
 import nl.edomh.core.domain.ships.ShipModule;
 import nl.edomh.core.enums.Power;
 import nl.edomh.core.service.event.EventService;
 import nl.edomh.core.service.event.PowerplayEvent;
 import nl.edomh.core.service.event.PowerplayLeaveEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableEventTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableHBox;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableLabel;
 
 public class PowerplayUnlockableModule extends DestroyableHBox implements DestroyableEventTemplate {
 

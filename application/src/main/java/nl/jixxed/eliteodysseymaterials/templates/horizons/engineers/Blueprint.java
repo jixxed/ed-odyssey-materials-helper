@@ -11,14 +11,14 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.engineers;
 
 import javafx.beans.binding.StringBinding;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
 import nl.edomh.core.domain.HorizonsBlueprint;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.HorizonsBlueprintClickEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.edomh.ui.shared.service.event.HorizonsBlueprintClickEvent;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableHBox;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableLabel;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableTemplate;
 
 public class Blueprint extends DestroyableHBox implements DestroyableTemplate {
     private HorizonsBlueprint blueprint;

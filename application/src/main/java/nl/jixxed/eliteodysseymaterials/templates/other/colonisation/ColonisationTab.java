@@ -10,11 +10,11 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.other.colonisation;
 
-import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
+import nl.edomh.ui.shared.builder.ScrollPaneBuilder;
 import nl.edomh.core.enums.OtherTabType;
 import nl.edomh.core.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableScrollPane;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableScrollPane;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.other.OtherTab;
 
 public class ColonisationTab extends OtherTab implements DestroyableTemplate {

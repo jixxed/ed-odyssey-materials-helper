@@ -16,13 +16,13 @@ import javafx.geometry.Point2D;
 import javafx.scene.transform.Scale;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.PaneBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.edomh.ui.shared.builder.PaneBuilder;
+import nl.edomh.ui.shared.builder.ResizableImageViewBuilder;
 import nl.edomh.core.domain.ApplicationState;
 import nl.edomh.core.domain.ships.ImageSlot;
 import nl.edomh.core.domain.ships.Ship;
 import nl.edomh.core.domain.ships.SlotType;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.edomh.ui.shared.templates.destroyables.*;
 
 @Slf4j
 public class ShipView extends DestroyableStackPane implements DestroyableTemplate {
@@ -51,7 +51,7 @@ public class ShipView extends DestroyableStackPane implements DestroyableTemplat
         }
         final int imageIndex = getImageIndex();
         shipImage = ResizableImageViewBuilder.builder()
-                .withImage("/images/ships/ship/" + ship.getShipType().name().toLowerCase() + "." + imageIndex + ".png")
+                .withImage("nl/edomh/ui/shared/images/ships/ship/" + ship.getShipType().name().toLowerCase() + "." + imageIndex + ".png")
                 .withStyleClass("ship-view-image")
                 .withPreserveRatio(true)
                 .build();

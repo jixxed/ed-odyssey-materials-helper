@@ -11,7 +11,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.materials;
 
 import javafx.css.PseudoClass;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
 import nl.edomh.core.domain.Location;
 import nl.edomh.core.enums.HorizonsStorageType;
 import nl.edomh.core.enums.MaterialTrader;
@@ -20,11 +20,11 @@ import nl.edomh.core.service.LocationService;
 import nl.edomh.core.service.MaterialTraderService;
 import nl.edomh.core.service.event.EventService;
 import nl.edomh.core.service.event.LocationChangedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.PermitEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
-import nl.jixxed.eliteodysseymaterials.templates.generic.CopyableLocation;
+import nl.edomh.ui.shared.service.event.PermitEvent;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableEventTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableLabel;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableVBox;
+import nl.edomh.ui.shared.templates.generic.CopyableLocation;
 
 public class HorizonsNearestTrader extends DestroyableVBox implements DestroyableEventTemplate {
 

@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import me.xdrop.fuzzywuzzy.model.BoundExtractedResult;
+import nl.edomh.core.ResourceProvider;
 import nl.edomh.core.constants.PreferenceConstants;
 import nl.edomh.core.enums.ApplicationLocale;
 import nl.edomh.core.enums.Data;
@@ -74,8 +75,8 @@ public class DataportDownloadARMenu implements ARMenu {
     private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     public DataportDownloadARMenu() {
-        arrowTemplate = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_download.png")));
-        arrowTemplateScaled = CvHelper.convertToMat(new Image(ARService.class.getResourceAsStream("/images/opencv/cv_template_download.png")));
+        arrowTemplate = CvHelper.convertToMat(new Image(ResourceProvider.getResourceAsStream("images/opencv/cv_template_download.png")));
+        arrowTemplateScaled = CvHelper.convertToMat(new Image(ResourceProvider.getResourceAsStream("images/opencv/cv_template_download.png")));
         Imgproc.cvtColor(arrowTemplate, arrowTemplate, Imgproc.COLOR_BGRA2GRAY);
         Imgproc.cvtColor(arrowTemplateScaled, arrowTemplateScaled, Imgproc.COLOR_BGRA2GRAY);
         eventListeners.add(EventService.addListener(this, TerminateApplicationEvent.class, event -> {

@@ -12,15 +12,15 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.css.PseudoClass;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.FontAwesomeIconViewBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.FontAwesomeIconViewBuilder;
+import nl.edomh.ui.shared.builder.LabelBuilder;
 import nl.edomh.core.domain.ApplicationState;
 import nl.edomh.core.domain.ShipConfiguration;
 import nl.edomh.core.domain.ships.ShipModule;
 import nl.edomh.core.service.ships.ShipService;
-import nl.jixxed.eliteodysseymaterials.templates.components.FontAwesomeIconViewPane;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
+import nl.edomh.ui.shared.templates.components.FontAwesomeIconViewPane;
+import nl.edomh.ui.shared.templates.destroyables.*;
 
 public class SlotBoxPowerControl extends DestroyableVBox implements DestroyableEventTemplate {
 

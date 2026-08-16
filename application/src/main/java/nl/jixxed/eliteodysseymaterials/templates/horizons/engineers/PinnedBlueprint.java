@@ -19,10 +19,10 @@ import nl.edomh.core.enums.HorizonsBlueprintGrade;
 import nl.edomh.core.enums.HorizonsBlueprintName;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.PinnedBlueprintService;
-import nl.jixxed.eliteodysseymaterials.service.event.EngineerPinEvent;
+import nl.edomh.ui.shared.service.event.EngineerPinEvent;
 import nl.edomh.core.service.event.EventService;
 import nl.edomh.core.service.event.JournalInitEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
+import nl.edomh.ui.shared.templates.destroyables.DestroyableEventTemplate;
 
 public class PinnedBlueprint extends Blueprint implements DestroyableEventTemplate {
 
