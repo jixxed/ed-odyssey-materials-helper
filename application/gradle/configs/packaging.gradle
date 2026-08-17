@@ -47,8 +47,6 @@ jlink {
     addExtraDependencies("javafx", "jackson", "log4j", "jdk.accessibility", "logback")
     forceMerge("j2objc", "sqlite-jdbc")
     if (project.ext.proprietary) {
-//        addExtraDependencies("nl.jixxed.ed.awesome.impl")
-//        forceMerge("nl.jixxed.ed.awesome.impl")
         addOptions '--bind-services'
     }
     addOptions('--strip-debug', '--compress', 'zip-0', '--no-header-files', '--no-man-pages')

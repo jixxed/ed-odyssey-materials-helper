@@ -10,9 +10,9 @@
 
 package nl.jixxed.bootstrap;
 
-import nu.redpois0n.oslib.AbstractOperatingSystem;
-import nu.redpois0n.oslib.Arch;
-import nu.redpois0n.oslib.OperatingSystem;
+import nl.jixxed.util.oslib.AbstractOperatingSystem;
+import nl.jixxed.util.oslib.Arch;
+import nl.jixxed.util.oslib.OperatingSystem;
 
 class OsConstants {
 

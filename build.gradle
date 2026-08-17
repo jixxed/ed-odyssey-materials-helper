@@ -299,7 +299,6 @@ allprojects {
 
                 implementation 'org.apache.logging.log4j:log4j-api:2.26.1'
 
-                implementation "com.github.wille:oslib:master-SNAPSHOT"
                 implementation 'me.xdrop:fuzzywuzzy:1.4.0'
                 implementation 'org.apache.maven:maven-artifact:3.9.16'
                 implementation 'org.xerial:sqlite-jdbc:3.53.2.0'

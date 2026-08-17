@@ -22,6 +22,8 @@ plugins {
 
 group = 'nl.jixxed'
 
+def nexusUser = System.getenv('NEXUS_REPO_USER')
+def nexusPass = System.getenv('NEXUS_REPO_PASS')
 
 java {
     toolchain {
@@ -57,6 +59,15 @@ repositories {
         name = 'repsy'
         url = "https://repo.repsy.io/mvn/jixxed/maven/"
     }
+    maven {
+        name = 'nexus'
+        url = "https://nexus.jixxed.nl/content/repositories/releases"
+        credentials {
+            username = nexusUser
+            password = nexusPass
+        }
+    }
+
 //    maven { url = 'https://jitpack.io' }
 }
 
@@ -226,7 +237,7 @@ dependencies {
     implementation "ch.qos.logback:logback-core"
     implementation "ch.qos.logback:logback-classic"
     implementation "org.slf4j:slf4j-api"
-    implementation "com.github.wille:oslib"
+    implementation 'nl.jixxed.util:oslib:1.0'
 
     implementation "org.openjfx:javafx-base::${platform}"
     implementation "org.openjfx:javafx-controls::${platform}"

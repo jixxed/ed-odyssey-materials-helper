@@ -36,7 +36,6 @@ module nl.jixxed.eliteodysseymaterials {
     requires org.leadpony.justify;
     requires org.openpnp;
     requires org.slf4j;
-    requires oslib.master.SNAPSHOT;
     requires scribejava.core;
     requires sentry;
     requires static lombok;
@@ -69,7 +68,6 @@ module nl.jixxed.eliteodysseymaterials {
     requires nl.edomh.core;
     requires nl.edomh.ui.shared;
 
-    uses nl.jixxed.ed.awesome.api.FontLoader;
 
     exports nl.jixxed.eliteodysseymaterials.service.ar;
     exports nl.jixxed.eliteodysseymaterials.templates.dialog;
