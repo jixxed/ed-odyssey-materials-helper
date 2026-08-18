@@ -10,12 +10,12 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.materials;
 
-import nl.edomh.ui.shared.builder.ScrollPaneBuilder;
-import nl.edomh.core.enums.OdysseyTabType;
 import nl.edomh.core.service.LocaleService;
+import nl.edomh.ui.shared.builder.ScrollPaneBuilder;
+import nl.edomh.ui.shared.enums.OdysseyTabType;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableScrollPane;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyTab;
+import nl.edomh.ui.shared.templates.generic.OdysseyTab;
 
 public class OdysseyMaterialTab extends OdysseyTab implements DestroyableTemplate {
 

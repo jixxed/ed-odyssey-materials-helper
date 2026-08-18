@@ -14,7 +14,7 @@ import javafx.scene.control.ScrollPane;
 import lombok.extern.slf4j.Slf4j;
 import nl.edomh.ui.shared.builder.BoxBuilder;
 import nl.edomh.ui.shared.builder.ScrollPaneBuilder;
-import nl.edomh.core.enums.MainTabType;
+import nl.edomh.ui.shared.enums.MainTabType;
 import nl.edomh.core.helper.OsCheck;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableTemplate;

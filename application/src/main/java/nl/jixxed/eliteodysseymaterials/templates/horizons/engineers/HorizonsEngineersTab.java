@@ -13,12 +13,12 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.engineers;
 import nl.edomh.ui.shared.builder.FlowPaneBuilder;
 import nl.edomh.ui.shared.builder.ScrollPaneBuilder;
 import nl.edomh.core.enums.Engineer;
-import nl.edomh.core.enums.HorizonsTabType;
 import nl.edomh.core.service.LocaleService;
+import nl.edomh.ui.shared.enums.HorizonsTabType;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableFlowPane;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableScrollPane;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsTab;
+import nl.edomh.ui.shared.templates.generic.HorizonsTab;
 
 import java.util.Arrays;
 

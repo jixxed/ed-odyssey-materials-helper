@@ -11,16 +11,16 @@
 package nl.jixxed.eliteodysseymaterials.templates.other.communitygoal;
 
 import javafx.scene.control.ScrollPane;
-import nl.edomh.ui.shared.builder.BoxBuilder;
-import nl.edomh.ui.shared.builder.ScrollPaneBuilder;
 import nl.edomh.core.domain.Goal;
-import nl.edomh.core.enums.OtherTabType;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.cg.CommunityGoalsService;
 import nl.edomh.core.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.GoalSelectedEvent;
+import nl.edomh.ui.shared.builder.BoxBuilder;
+import nl.edomh.ui.shared.builder.ScrollPaneBuilder;
+import nl.edomh.ui.shared.enums.OtherTabType;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableEventTemplate;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableVBox;
+import nl.jixxed.eliteodysseymaterials.service.event.GoalSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.templates.other.OtherTab;
 
 import java.util.ArrayList;

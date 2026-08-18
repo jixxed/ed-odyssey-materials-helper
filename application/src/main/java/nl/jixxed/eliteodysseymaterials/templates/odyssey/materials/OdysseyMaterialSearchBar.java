@@ -29,11 +29,11 @@ import nl.jixxed.eliteodysseymaterials.domain.Search;
 import nl.edomh.core.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterialShow;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterialSort;
-import nl.edomh.core.enums.OdysseyTabType;
+import nl.edomh.ui.shared.enums.OdysseyTabType;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.PreferencesService;
 import nl.edomh.ui.shared.service.event.AfterFontSizeSetEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.OdysseyTabSelectedEvent;
+import nl.edomh.ui.shared.service.event.OdysseyTabSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.SearchEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.SoloModeEvent;
 

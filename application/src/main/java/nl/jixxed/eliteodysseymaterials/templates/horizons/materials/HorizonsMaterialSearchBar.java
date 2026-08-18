@@ -28,13 +28,13 @@ import nl.edomh.ui.shared.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsMaterialsSearch;
 import nl.edomh.core.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterialsShow;
-import nl.edomh.core.enums.HorizonsTabType;
+import nl.edomh.ui.shared.enums.HorizonsTabType;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.PreferencesService;
 import nl.edomh.ui.shared.service.event.AfterFontSizeSetEvent;
 import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsMaterialSearchEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.HorizonsTabSelectedEvent;
+import nl.edomh.ui.shared.service.event.HorizonsTabSelectedEvent;
 
 import java.util.concurrent.TimeUnit;
 

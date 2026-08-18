@@ -10,18 +10,18 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.other.powerplay;
 
-import nl.edomh.ui.shared.builder.FlowPaneBuilder;
-import nl.edomh.ui.shared.builder.ScrollPaneBuilder;
 import nl.edomh.core.domain.ApplicationState;
-import nl.edomh.core.enums.OtherTabType;
 import nl.edomh.core.enums.Power;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.PowerSearchEvent;
 import nl.edomh.core.service.event.PowerplayEvent;
+import nl.edomh.ui.shared.builder.FlowPaneBuilder;
+import nl.edomh.ui.shared.builder.ScrollPaneBuilder;
+import nl.edomh.ui.shared.enums.OtherTabType;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableEventTemplate;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableFlowPane;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableScrollPane;
+import nl.jixxed.eliteodysseymaterials.service.event.PowerSearchEvent;
 import nl.jixxed.eliteodysseymaterials.templates.other.OtherTab;
 
 import java.util.Arrays;

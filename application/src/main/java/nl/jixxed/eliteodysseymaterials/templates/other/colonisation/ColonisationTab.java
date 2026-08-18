@@ -10,9 +10,9 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.other.colonisation;
 
-import nl.edomh.ui.shared.builder.ScrollPaneBuilder;
-import nl.edomh.core.enums.OtherTabType;
 import nl.edomh.core.service.LocaleService;
+import nl.edomh.ui.shared.builder.ScrollPaneBuilder;
+import nl.edomh.ui.shared.enums.OtherTabType;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableScrollPane;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.other.OtherTab;

@@ -10,19 +10,19 @@
 
 package nl.jixxed.eliteodysseymaterials.templates.other.permits;
 
-import nl.edomh.ui.shared.builder.FlowPaneBuilder;
-import nl.edomh.ui.shared.builder.ScrollPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.PermitsSearch;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsPermitsShow;
-import nl.edomh.core.enums.OtherTabType;
 import nl.edomh.core.enums.Permit;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.PreferencesService;
 import nl.edomh.core.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.PermitSearchEvent;
+import nl.edomh.ui.shared.builder.FlowPaneBuilder;
+import nl.edomh.ui.shared.builder.ScrollPaneBuilder;
+import nl.edomh.ui.shared.enums.OtherTabType;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableEventTemplate;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableFlowPane;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableScrollPane;
+import nl.jixxed.eliteodysseymaterials.domain.PermitsSearch;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsPermitsShow;
+import nl.jixxed.eliteodysseymaterials.service.event.PermitSearchEvent;
 import nl.jixxed.eliteodysseymaterials.templates.other.OtherTab;
 
 import java.util.Arrays;

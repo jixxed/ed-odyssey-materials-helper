@@ -13,20 +13,20 @@ package nl.jixxed.eliteodysseymaterials.templates;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Side;
-import nl.edomh.ui.shared.builder.MainTabBuilder;
-import nl.edomh.ui.shared.builder.TabPaneBuilder;
 import nl.edomh.core.constants.PreferenceConstants;
 import nl.edomh.core.domain.ApplicationState;
 import nl.edomh.core.enums.ImportResult;
-import nl.edomh.core.enums.MainTabType;
-import nl.edomh.core.enums.TabType;
-import nl.edomh.ui.shared.helper.AnchorPaneHelper;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.PreferencesService;
-import nl.edomh.ui.shared.service.event.AfterFontSizeSetEvent;
 import nl.edomh.core.service.event.EventService;
-import nl.edomh.ui.shared.service.event.FontSizeEvent;
 import nl.edomh.core.service.event.ImportResultEvent;
+import nl.edomh.ui.shared.builder.MainTabBuilder;
+import nl.edomh.ui.shared.builder.TabPaneBuilder;
+import nl.edomh.ui.shared.enums.MainTabType;
+import nl.edomh.ui.shared.enums.TabType;
+import nl.edomh.ui.shared.helper.AnchorPaneHelper;
+import nl.edomh.ui.shared.service.event.AfterFontSizeSetEvent;
+import nl.edomh.ui.shared.service.event.FontSizeEvent;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableAnchorPane;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableEventTemplate;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableTab;
@@ -39,7 +39,7 @@ import nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab;
 
 import java.util.Set;
 
-import static nl.edomh.core.enums.MainTabType.*;
+import static nl.edomh.ui.shared.enums.MainTabType.*;
 
 public class ApplicationScreen extends DestroyableAnchorPane implements DestroyableEventTemplate {
 

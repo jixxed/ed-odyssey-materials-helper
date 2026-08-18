@@ -11,22 +11,26 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.loadout;
 
 import javafx.scene.control.ScrollPane;
-import nl.edomh.core.service.event.*;
+import nl.edomh.core.domain.ApplicationState;
+import nl.edomh.core.domain.LoadoutSet;
+import nl.edomh.core.service.LoadoutService;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.event.EventService;
+import nl.edomh.core.service.event.LoadoutEvent;
 import nl.edomh.ui.shared.builder.BoxBuilder;
 import nl.edomh.ui.shared.builder.FlowPaneBuilder;
 import nl.edomh.ui.shared.builder.ScrollPaneBuilder;
-import nl.edomh.core.domain.ApplicationState;
-import nl.edomh.core.domain.LoadoutSet;
-import nl.edomh.core.enums.OdysseyTabType;
-import nl.edomh.core.service.LoadoutService;
-import nl.edomh.core.service.LocaleService;
+import nl.edomh.ui.shared.enums.OdysseyTabType;
 import nl.edomh.ui.shared.service.event.AfterFontSizeSetEvent;
 import nl.edomh.ui.shared.service.event.LanguageChangedEvent;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableEventTemplate;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableFlowPane;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableVBox;
-import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyTab;
+import nl.edomh.ui.shared.templates.generic.OdysseyTab;
+import nl.jixxed.eliteodysseymaterials.service.event.LoadoutAddedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.LoadoutMovedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.LoadoutRemovedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.LoadoutSetSelectedEvent;
 
 public class OdysseyLoadoutEditorTab extends OdysseyTab implements DestroyableEventTemplate {
 

@@ -13,23 +13,24 @@ package nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import lombok.extern.slf4j.Slf4j;
-import nl.edomh.core.service.event.*;
+import nl.edomh.core.domain.ApplicationState;
+import nl.edomh.core.domain.OdysseyWishlistBlueprint;
+import nl.edomh.core.service.LocaleService;
+import nl.edomh.core.service.WishlistService;
+import nl.edomh.core.service.event.EventService;
+import nl.edomh.core.service.event.OdysseyWishlistChangedEvent;
 import nl.edomh.ui.shared.builder.BoxBuilder;
 import nl.edomh.ui.shared.builder.LabelBuilder;
 import nl.edomh.ui.shared.builder.ScrollPaneBuilder;
-import nl.edomh.core.domain.ApplicationState;
-import nl.edomh.core.domain.OdysseyWishlistBlueprint;
-import nl.edomh.core.enums.OdysseyTabType;
-import nl.edomh.core.service.LocaleService;
-import nl.edomh.core.service.WishlistService;
+import nl.edomh.ui.shared.enums.OdysseyTabType;
 import nl.edomh.ui.shared.service.event.HideWishlistShortestPathItemEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.OdysseyWishlistSelectedEvent;
 import nl.edomh.ui.shared.service.event.RemoveWishlistShortestPathItemEvent;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableEventTemplate;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableLabel;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableVBox;
+import nl.edomh.ui.shared.templates.generic.OdysseyTab;
+import nl.jixxed.eliteodysseymaterials.service.event.OdysseyWishlistSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyMaterialTotals;
-import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyTab;
 
 @Slf4j
 public class OdysseyWishlistTab extends OdysseyTab implements DestroyableEventTemplate {
