@@ -41,6 +41,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires nl.edomh.ui.shared;
     requires org.jspecify;
 
+    uses nl.edomh.ui.shared.templates.generic.TabProvider;
 
     exports nl.jixxed.eliteodysseymaterials;
     exports nl.jixxed.eliteodysseymaterials.domain;

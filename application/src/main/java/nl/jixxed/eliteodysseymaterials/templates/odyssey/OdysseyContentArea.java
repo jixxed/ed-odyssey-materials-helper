@@ -21,6 +21,7 @@ import nl.edomh.core.service.event.*;
 import nl.edomh.ui.shared.builder.BoxBuilder;
 import nl.edomh.ui.shared.builder.TabPaneBuilder;
 import nl.edomh.core.constants.PreferenceConstants;
+import nl.edomh.ui.shared.enums.MainTabType;
 import nl.edomh.ui.shared.enums.OdysseyTabType;
 import nl.edomh.ui.shared.enums.TabType;
 import nl.edomh.ui.shared.helper.AnchorPaneHelper;
@@ -29,11 +30,9 @@ import nl.edomh.ui.shared.service.event.AfterFontSizeSetEvent;
 import nl.edomh.ui.shared.service.event.ApplicationLifeCycleEvent;
 import nl.edomh.ui.shared.service.event.BlueprintClickEvent;
 import nl.edomh.ui.shared.service.event.OdysseyTabSelectedEvent;
-import nl.edomh.ui.shared.templates.destroyables.DestroyableAnchorPane;
-import nl.edomh.ui.shared.templates.destroyables.DestroyableEventTemplate;
-import nl.edomh.ui.shared.templates.destroyables.DestroyableTabPane;
-import nl.edomh.ui.shared.templates.destroyables.DestroyableVBox;
+import nl.edomh.ui.shared.templates.destroyables.*;
 import nl.edomh.ui.shared.templates.generic.OdysseyTab;
+import nl.edomh.ui.shared.templates.generic.TabProvider;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.bartender.OdysseyBartenderTab;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.engineers.OdysseyEngineersTab;
@@ -41,6 +40,9 @@ import nl.jixxed.eliteodysseymaterials.templates.odyssey.loadout.OdysseyLoadoutE
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.materials.OdysseyMaterialTab;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.menu.OdysseyBlueprintBar;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist.OdysseyWishlistTab;
+
+import java.util.List;
+import java.util.ServiceLoader;
 
 @SuppressWarnings("java:S110")
 @Slf4j
@@ -77,8 +79,12 @@ class OdysseyContentArea extends DestroyableAnchorPane implements DestroyableEve
         this.odysseyBartenderTab.setClosable(false);
 
         this.odysseySearchBar = new OdysseySearchBar();
+        ServiceLoader<TabProvider> loader = ServiceLoader.load(TabProvider.class);
+        List<DestroyableTab> tabs = loader.stream().map(ServiceLoader.Provider::get).flatMap(tabProvider -> tabProvider.getTabs(MainTabType.ODYSSEY).stream()).toList();
+
         this.tabs = TabPaneBuilder.builder()
                 .withTabs(this.overview, this.wishlistTab, this.loadoutEditorTab, this.odysseyBartenderTab, this.odysseyEngineersTab)
+                .withTabs(tabs.toArray(DestroyableTab[]::new))
                 .withStyleClass("odyssey-tab-pane")
                 .withSide(Side.LEFT)
                 .withSelectedItemListener((_, _, newValue) -> {

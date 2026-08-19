@@ -15,31 +15,38 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import lombok.extern.slf4j.Slf4j;
-import nl.edomh.core.enums.*;
-import nl.edomh.core.service.event.*;
+import nl.edomh.core.constants.PreferenceConstants;
+import nl.edomh.core.enums.Action;
+import nl.edomh.core.enums.Expansion;
+import nl.edomh.core.enums.ImportResult;
+import nl.edomh.core.service.PreferencesService;
+import nl.edomh.core.service.event.EventService;
+import nl.edomh.core.service.event.HorizonsWishlistBlueprintEvent;
+import nl.edomh.core.service.event.ImportResultEvent;
 import nl.edomh.ui.shared.builder.BoxBuilder;
 import nl.edomh.ui.shared.builder.TabPaneBuilder;
-import nl.edomh.core.constants.PreferenceConstants;
 import nl.edomh.ui.shared.enums.HorizonsTabType;
+import nl.edomh.ui.shared.enums.MainTabType;
 import nl.edomh.ui.shared.enums.TabType;
 import nl.edomh.ui.shared.helper.AnchorPaneHelper;
-import nl.edomh.core.service.PreferencesService;
 import nl.edomh.ui.shared.service.event.AfterFontSizeSetEvent;
 import nl.edomh.ui.shared.service.event.ApplicationLifeCycleEvent;
 import nl.edomh.ui.shared.service.event.HorizonsBlueprintClickEvent;
 import nl.edomh.ui.shared.service.event.HorizonsTabSelectedEvent;
-import nl.edomh.ui.shared.templates.destroyables.DestroyableAnchorPane;
-import nl.edomh.ui.shared.templates.destroyables.DestroyableEventTemplate;
-import nl.edomh.ui.shared.templates.destroyables.DestroyableTabPane;
-import nl.edomh.ui.shared.templates.destroyables.DestroyableVBox;
+import nl.edomh.ui.shared.templates.destroyables.*;
 import nl.edomh.ui.shared.templates.generic.HorizonsTab;
-import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.edomh.ui.shared.templates.generic.TabProvider;
+import nl.jixxed.eliteodysseymaterials.service.event.HorizonsWishlistOpenShipBuilderEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.MenuButtonClickedEvent;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.commodities.HorizonsCommoditiesOverviewTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.engineers.HorizonsEngineersTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.materials.HorizonsMaterialTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.menu.HorizonsBlueprintBar;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.HorizonsShipBuilderTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishlistTab;
+
+import java.util.List;
+import java.util.ServiceLoader;
 
 @SuppressWarnings("java:S110")
 @Slf4j
@@ -69,10 +76,12 @@ public class HorizonsContentArea extends DestroyableAnchorPane implements Destro
         this.horizonsWishlistTab.setClosable(false);
         this.horizonsShipBuilderTab = new HorizonsShipBuilderTab();
         this.horizonsShipBuilderTab.setClosable(false);
-
+        ServiceLoader<TabProvider> loader = ServiceLoader.load(TabProvider.class);
+        List<DestroyableTab> tabs = loader.stream().map(ServiceLoader.Provider::get).flatMap(tabProvider -> tabProvider.getTabs(MainTabType.HORIZONS).stream()).toList();
         HorizonsSearchBar searchBar = new HorizonsSearchBar();
         this.tabs = TabPaneBuilder.builder()
                 .withTabs(horizonsMaterialOverview, horizonsCommoditiesOverview, this.horizonsWishlistTab, this.horizonsShipBuilderTab, horizonsEngineersTab)
+                .withTabs(tabs.toArray(DestroyableTab[]::new))
                 .withStyleClass("horizons-tab-pane")
                 .withSelectedItemListener((_, _, newValue) -> {
                     if (newValue != null) {

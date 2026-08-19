@@ -18,20 +18,22 @@ import javafx.scene.layout.VBox;
 import nl.edomh.ui.shared.builder.BoxBuilder;
 import nl.edomh.ui.shared.builder.TabPaneBuilder;
 import nl.edomh.core.constants.PreferenceConstants;
+import nl.edomh.ui.shared.enums.MainTabType;
 import nl.edomh.ui.shared.enums.OtherTabType;
 import nl.edomh.ui.shared.enums.TabType;
 import nl.edomh.ui.shared.helper.AnchorPaneHelper;
 import nl.edomh.core.service.PreferencesService;
 import nl.edomh.core.service.event.EventService;
 import nl.edomh.ui.shared.service.event.OtherTabSelectedEvent;
-import nl.edomh.ui.shared.templates.destroyables.DestroyableAnchorPane;
-import nl.edomh.ui.shared.templates.destroyables.DestroyableEventTemplate;
-import nl.edomh.ui.shared.templates.destroyables.DestroyableTabPane;
-import nl.edomh.ui.shared.templates.destroyables.DestroyableVBox;
+import nl.edomh.ui.shared.templates.destroyables.*;
+import nl.edomh.ui.shared.templates.generic.TabProvider;
 import nl.jixxed.eliteodysseymaterials.templates.other.colonisation.ColonisationTab;
 import nl.jixxed.eliteodysseymaterials.templates.other.permits.PermitsTab;
 import nl.jixxed.eliteodysseymaterials.templates.other.powerplay.PowerplayTab;
 import nl.jixxed.eliteodysseymaterials.templates.other.communitygoal.CommunityGoalTab;
+
+import java.util.List;
+import java.util.ServiceLoader;
 
 public class OtherContentArea extends DestroyableAnchorPane implements DestroyableEventTemplate {
     private CommunityGoalTab communityGoalTab;
@@ -61,8 +63,11 @@ public class OtherContentArea extends DestroyableAnchorPane implements Destroyab
         permitsTab.setClosable(false);
 
         OtherSearchBar searchBar = new OtherSearchBar();
+        ServiceLoader<TabProvider> loader = ServiceLoader.load(TabProvider.class);
+        List<DestroyableTab> tabs = loader.stream().map(ServiceLoader.Provider::get).flatMap(tabProvider -> tabProvider.getTabs(MainTabType.OTHER).stream()).toList();
         this.tabs = TabPaneBuilder.builder()
                 .withTabs(this.communityGoalTab, powerplayTab, colonisationTab, permitsTab)
+                .withTabs(tabs.toArray(DestroyableTab[]::new))
                 .withStyleClass("other-tab-pane")
                 .withSide(Side.LEFT)
                 .withSelectedItemListener((_, _, newValue) -> {
