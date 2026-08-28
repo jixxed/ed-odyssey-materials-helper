@@ -21,7 +21,5 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Hide blueprints on the ALL wishlist if they are hidden on the defining wishlist
-Fix processing of EngineerProgress events so engineer rank updates while crafting
-Fix label on CG progress for early completion
+Added new commodities and Large Planetary Vehicle Hangars for the Rhino update
 ```
