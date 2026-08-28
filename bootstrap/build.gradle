@@ -97,7 +97,7 @@ jlink {
     jpackage {
         installerType = packageType
         if (packageType == 'msi') {
-            imageOptions.addAll('--icon', 'resources/icons/appicon.ico')
+            imageOptions.addAll('--icon', project.rootDir.path + '/resources/icons/appicon.ico')
             installerOptions = [
                     '--description', 'Installer for ED Odyssey Materials Helper',
                     '--copyright', 'Copyright 2021 CMDR Jixxed',
@@ -109,7 +109,7 @@ jlink {
             ] as List<String>
         }
         if (packageType == 'deb') {
-            imageOptions.addAll('--icon', 'resources/icons/appicon512.png')
+            imageOptions.addAll('--icon', project.rootDir.path + '/resources/icons/appicon512.png')
             installerOptions = [
                     '--resource-dir', 'build/jpackage/Elite Dangerous Odyssey Materials Helper Launcher/lib',
                     '--description', 'Installer for ED Odyssey Materials Helper',
@@ -121,7 +121,7 @@ jlink {
             ] as List<String>
         }
         if (packageType == 'rpm') {
-            imageOptions.addAll('--icon', 'resources/icons/appicon512.png')
+            imageOptions.addAll('--icon', project.rootDir.path + '/resources/icons/appicon512.png')
             installerOptions = [
                     '--resource-dir', 'build/jpackage/Elite Dangerous Odyssey Materials Helper Launcher/lib',
                     '--description', 'Installer for ED Odyssey Materials Helper',
@@ -133,7 +133,7 @@ jlink {
             ] as List<String>
         }
         if (packageType == 'dmg') {
-            imageOptions.addAll('--icon', 'resources/icons/appicon.icns')
+            imageOptions.addAll('--icon', project.rootDir.path + '/resources/icons/appicon.icns')
             installerOptions = [
                 '--description', 'Installer for ED Odyssey Materials Helper',
                 '--copyright', 'Copyright 2021 CMDR Jixxed',

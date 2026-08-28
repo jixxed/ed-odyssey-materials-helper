@@ -34,14 +34,14 @@ jlink {
         skipInstaller = true
 
         if (project.ext.os.isLinux()) {
-            imageOptions.addAll('--icon', 'resources/icons/appicon512.png')
+            imageOptions.addAll('--icon', project.rootDir.path + '/resources/icons/appicon512.png')
         } else if (project.ext.os.isMacOsX()) {
             imageOptions.addAll(
-                '--icon', 'resources/icons/appicon.icns',
+                '--icon', project.rootDir.path + '/resources/icons/appicon.icns',
                 '--mac-package-identifier', 'nl.jixxed.ed.edomh'
             )
         } else {
-            imageOptions.addAll('--icon', 'resources/icons/appicon.ico')
+            imageOptions.addAll('--icon', project.rootDir.path + '/resources/icons/appicon.ico')
         }
     }
     addExtraDependencies("javafx", "jackson", "log4j", "jdk.accessibility", "logback")
