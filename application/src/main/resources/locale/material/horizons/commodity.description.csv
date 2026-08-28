@@ -442,16 +442,31 @@
 "material.commodity.description.yasokondileaf","A native plant that exhibits similar properties to tobacco, but without the harmful effects. Discovered by observing its effects on the local fauna.","","","Planta autóctona que exhibe propiedades similares al tabaco, pero sin los efectos perjudiciales. Descubierta observando sus efectos en la fauna local.","","","Натуральное растение, которое очень похоже на табак, но при этом не вредит здоровью. Было обнаружено после наблюдений за местной фауной.","一种当地植物，具有和烟草类似的性质，但并没有烟草的有害效果。通过观察其对当地动物的影响被发现。",""
 "material.commodity.description.zeesszeantglue","Stick anything to everything with this natural glue, made from the cocoons of an indigenous insects. It is non-toxic and can be easily removed using a resin secreted by the queen ant.","","","Fije cualquier cosa con este pegamento natural, hecho de capullos de insectos indígenas. No es tóxico y puede ser fácilmente eliminado usando una resina expulsada por la reina.","","","Этим природным клеем, изготовленным из коконов местных насекомых, можно приклеить что угодно к чему угодно. Он нетоксичен и легко убирается массой, выделяемой муравьиной маткой.","用这款从当地昆虫的茧制成的天然胶水把任何东西给粘起来。它是无毒的，并可以用一种蚁后珍藏的树脂轻松去除。",""
 "material.commodity.description.curatedcommodity","A selection of commodities packaged for a specific purpose.","","","","","","","",""
-"material.commodity.description.deuterium","Rhino minable resource","","","","","","","",""
-"material.commodity.description.helium3","Rhino minable resource","","","","","","","",""
-"material.commodity.description.helium","Rhino minable resource","","","","","","","",""
-"material.commodity.description.periclasedunite","Rhino minable resource","","","","","","","",""
-"material.commodity.description.thortveitite","Rhino minable resource","","","","","","","",""
-"material.commodity.description.iridium","Rhino minable resource","","","","","","","",""
-"material.commodity.description.sapphire","Rhino minable resource","","","","","","","",""
-"material.commodity.description.ruby","Rhino minable resource","","","","","","","",""
-"material.commodity.description.diamond","Rhino minable resource","","","","","","","",""
-"material.commodity.description.quartzpyroxenite","Rhino minable resource","","","","","","","",""
-"material.commodity.description.magnesite","Rhino minable resource","","","","","","","",""
-"material.commodity.description.olivine","Rhino minable resource","","","","","","","",""
-"material.commodity.description.bastnasite","Rhino minable resource","","","","","","","",""
+"material.commodity.description.deuterium","Produced by: Surface Mining only\nConsumed by: Military and Industrial\n\nChemical formula 2H). Nearly all deuterium found across the galaxy was created in the Big Bang 13.8 billion years ago. Early 21st century attempts at creating fusion energy focused on using a combination of deuterium and tritium with mixed success.","","","","","","","",""
+"material.commodity.description.helium3","Produced by: Surface Mining only\nConsumed by: Industrial\n\nChemical formula He-3. Helium-3 is a light, stable isotope of helium and was the focus of 22nd century mining across the Earth's Moon lunar surface. Once commonly found as a result of tritium decay, it is now a sought after natural element since the demand for tritium as fleet carrier fuel has increased.","","","","","","","",""
+"material.commodity.description.helium","Produced by: Surface Mining only\nConsumed by: Industrial, Military and High Tech\n\nChemical formula He. Helium is a colorless, odorless, non-toxic, inert gas. Mostly used in the manufacturing of superconductors. Liquid helium was used widely in early suspended animation experiments with little success.","","","","","","","",""
+"material.commodity.description.periclasedunite","Produced by: Surface Mining only\nConsumed by: Industrial and Tourism\n\nChemical formula MgO. Periclase dunite is an incredibly rare magnesium oxide mineral that typically takes the form of an olivinate found near volcanic areas. It is typically brownish yellow, green, or black in colour. Many tourist destinations sell local figurines made from the material.","","","","","","","",""
+"material.commodity.description.thortveitite","Produced by: Surface Mining only\nConsumed by: Industrial\n\nChemical formula (Sc,Y)2Si2O7. Thortveitite is an ultra mineral composed of scandium yttrium silicate. It is primarily used in the production of scandium for ship and vehicle paints.","","","","","","","",""
+"material.commodity.description.iridium","Produced by: Surface Mining only\nConsumed by: Military and High Tech\n\nIridium, Ir, atomic number 77. Melting Point 2719K. A hard, silvery metal. It is almost as unreactive and inert as gold. It is the most corrosion-resistant material known and commonly used in the manufacturing of ship hulls and armour.","","","","","","","",""
+"material.commodity.description.sapphire","Produced by: Surface Mining only\nConsumed by: Tourism, High Tech and Military\n\nChemical formula Al2O3. Sapphire is the blue-coloured gemstone variety of corundum. Considered more valuable than its red counterpart due to its use in military laser applications.","","","","","","","",""
+"material.commodity.description.ruby","Produced by: Surface Mining only\nConsumed by: Tourism, High Tech and Industrial\n\nChemical formula Al2O3. Ruby is the pinkish-red to blood-red-coloured gem variety of corundum. Rubies have been mined throughout Earth history for their high value in jewellery and fashion as well as for their hardness in devices used in manufacturing.","","","","","","","",""
+"material.commodity.description.diamond","Produced by: Surface Mining only\nConsumed by: Tourism, Terraforming, and Industrial\n\nChemical formula C. Diamond is a solid form of pure carbon with its atoms arranged in a crystalline structure. Still popular among socialites and the wealthy throughout occupied space, despite their common occurence across the galaxy.","","","","","","","",""
+"material.commodity.description.quartzpyroxenite","Produced by: Surface Mining only\nConsumed by: Tourism\n\nChemical formula SiO2. Quartz pyroxenite is an incredibly common mineral found throughout the galaxy near volcanic activity. Quartz itself was once commonly used in the manufacturing of electronics, now relegated to tourist shops selling them as healing crystals and volcanic rock trinkets.","","","","","","","",""
+"material.commodity.description.magnesite","Produced by: Surface Mining only\nConsumed by: Industrial and Refinery\n\nChemical formula MgCO3. Magnesite is a common mineral that typically takes the form of a colourless or pale hexagonal crystal. Used in the production of magnesium oxide found in industrial and refinery processes due to its extreme high temperature tolerance.","","","","","","","",""
+"material.commodity.description.olivine","Produced by: Surface Mining only\nConsumed by: Industrial, Refinery and Tourism\n\nChemical formula (Mg,Fe)2SiO4. Olivine is a common yellow-green mineral found across the galaxy and mostly used to produce high yields of aluminimum. In gemstone form, known as peridot, it is sold in tourism destination as a charm to ward off irrational fears and nightmares, however those claims are disputed.","","","","","","","",""
+"material.commodity.description.bastnasite","Produced by: Surface Mining only\nConsumed by: High Tech, Industrial and Refinery\n\nChemical formula (La, Ce, Y)CO3F. Bastnasite is a scarce mineral and never in great concentrations. It typically takes the form of a honey-yellow or reddish brown crystals. Bastnasite ore is commonly used to produce rare-earth metals and for use in advanced electronics.","","","","","","","",""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
