@@ -40,6 +40,9 @@ module nl.jixxed.eliteodysseymaterials {
     requires nl.edomh.core;
     requires nl.edomh.ui.shared;
     requires org.jspecify;
+    requires org.openpnp;
+    requires com.sun.jna.platform;
+    requires com.sun.jna;
 
     uses nl.edomh.ui.shared.templates.generic.TabProvider;
 

@@ -413,7 +413,7 @@ public class SlotBox extends DestroyableStackPane {
     }
 
     private boolean isSlotValid(final Slot slot, final ShipModule shipModule) {
-        return slot.getSlotType().getModuleClasses().stream().anyMatch(moduleClass -> moduleClass.isAssignableFrom(shipModule.getClass()));
+        return slot.getSlotType().getModuleClasses().stream().anyMatch(moduleClass -> moduleClass.isAssignableFrom(shipModule.getClass())) && shipModule.isAllowed(slot.getSlotType());
     }
 
     private boolean moduleCouldFit(Slot slot, ShipModule module) {

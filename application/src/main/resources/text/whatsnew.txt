@@ -1,3 +1,7 @@
+Version 3.15.0
+-------------
+Added new commodities and Large Planetary Vehicle Hangars for the Rhino update
+
 Version 3.14.2
 -------------
 Hide blueprints on the ALL wishlist if they are hidden on the defining wishlist
