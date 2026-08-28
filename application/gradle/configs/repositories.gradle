@@ -5,10 +5,10 @@ repositories {
         name = 'repsy'
         url = "https://repo.repsy.io/mvn/jixxed/maven/"
     }
-    if (project.ext.proprietary) {
+    if (project.ext.nexusUser && project.ext.nexusPass) {
         maven {
             name = 'nexus'
-            url = "https://nexus.jixxed.nl/content/repositories/releases"
+            url = "https://nexus.jixxed.nl/content/repositories/releases/"
             credentials {
                 username = project.ext.nexusUser
                 password = project.ext.nexusPass
