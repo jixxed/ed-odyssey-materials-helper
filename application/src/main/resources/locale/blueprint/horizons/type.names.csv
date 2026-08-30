@@ -230,3 +230,7 @@
 "blueprint.horizons.type.merc_lockdown_seeker_missile_rack_3a","Lockdown (3A)","","","Bloqueo (3A)","","","Блок ракет с самонаведением и блокировкой (3A)","",""
 "blueprint.horizons.type.merc_enduring_feedback_rail_gun","Enduring Feedback","","","Retroalimentación Soportable","","","Электромагнитная пушка с постоянным откликом","",""
 "blueprint.horizons.type.outfitting","Outfitting","","","Equipamiento","","","Снаряжение","",""
+"blueprint.horizons.type.merc_force_impact_cannon_4b","Force Impact","","","","","","","",""
+"blueprint.horizons.type.merc_overloaded_beam_laser_4a","Overloaded","","","","","","","",""
+"blueprint.horizons.type.merc_exposing_missiles_seeker_missile_rack_3a","Exposing Missiles","","","","","","","",""
+"blueprint.horizons.type.merc_regenerative_burst_laser_2f","Regenerative","","","","","","","",""
