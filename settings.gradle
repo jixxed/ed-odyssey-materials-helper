@@ -7,6 +7,15 @@ pluginManagement {
             url = "https://plugins.gradle.org/m2/"
         }
         gradlePluginPortal()
+        mavenLocal()
+        maven {
+            name 'nexus'
+            url "https://nexus.jixxed.nl/content/repositories/releases/"
+            credentials {
+                username = System.getenv('NEXUS_REPO_USER')
+                password = System.getenv('NEXUS_REPO_PASS')
+            }
+        }
     }
 }
 plugins {

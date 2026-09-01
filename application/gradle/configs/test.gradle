@@ -8,13 +8,13 @@ test {
 
         println "Running tests in " + (runningSingleTest ? "single-test mode" : "full-suite mode")
 
+        jvmArgs += [
+                "-javaagent:${configurations.testRuntimeClasspath.find { it.name.contains('mockito-core') }}"
+        ]
         useJUnitPlatform {
             if (!runningSingleTest) {
                 excludeTags 'manual'
             }
         }
     }
-    jvmArgs += [
-            "-javaagent:${configurations.testRuntimeClasspath.find { it.name.contains('mockito-core') }}"
-    ]
 }

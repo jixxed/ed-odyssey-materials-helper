@@ -39,7 +39,7 @@ jpackage {
     }.get().metadata.installationPath.asFile.absolutePath
 }
 tasks.register('wrapper', Wrapper) {
-    gradleVersion = "9.3.0"
+    gradleVersion = "9.7.0"
 }
 
 OperatingSystem os = OperatingSystem.current();
@@ -218,17 +218,19 @@ tasks.register('signInstallerMsi') {
     }
 }
 def arch = System.getProperty("os.arch")
-def platform = 'linux'
+def osplatform = 'linux'
 if (os.isWindows()) {
-    platform = 'win'
+    osplatform = 'win'
 } else if (os.isMacOsX()) {
-    platform = 'mac'
+    osplatform = 'mac'
 }
 if (arch == "aarch64") {
-    platform += "-aarch64"
+    osplatform += "-aarch64"
 }
 
 dependencies {
+    implementation platform("nl.edomh.bom:edomh-bom")
+    implementation(platform("com.fasterxml.jackson:jackson-bom"))
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation 'com.fasterxml.jackson.core:jackson-core'
     implementation 'commons-io:commons-io'
@@ -239,10 +241,10 @@ dependencies {
     implementation "org.slf4j:slf4j-api"
     implementation 'nl.jixxed.util:oslib:1.0'
 
-    implementation "org.openjfx:javafx-base::${platform}"
-    implementation "org.openjfx:javafx-controls::${platform}"
-    implementation "org.openjfx:javafx-fxml::${platform}"
-    implementation "org.openjfx:javafx-graphics::${platform}"
+    implementation "org.openjfx:javafx-base::${osplatform}"
+    implementation "org.openjfx:javafx-controls::${osplatform}"
+    implementation "org.openjfx:javafx-fxml::${osplatform}"
+    implementation "org.openjfx:javafx-graphics::${osplatform}"
 }
 
 extraJavaModuleInfo {

@@ -26,13 +26,13 @@ def isRepoReachable(String url) {
 }
 
 def arch = System.getProperty("os.arch")
-def platform = 'linux'
+def osplatform = 'linux'
 if (project.ext.os.isWindows()) {
-    platform = 'win'
+    osplatform = 'win'
 } else if (project.ext.os.isMacOsX()) {
-    platform = 'mac'
+    osplatform = 'mac'
 }
 if (arch == "aarch64") {
-    platform += "-aarch64"
+    osplatform += "-aarch64"
 }
-project.ext.platform = platform
+project.ext.osplatform = osplatform
