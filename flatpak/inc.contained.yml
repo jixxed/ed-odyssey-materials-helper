@@ -1,0 +1,16 @@
+command: edomh
+
+entrypoint:
+  - ln -sf "/app/share/applications/$FLATPAK_ID.desktop" "$HOME/.local/share/applications/edomh.desktop"
+
+finish-args: []
+build-commands: []
+post-install: []
+
+sources:
+  - { type: file, dest-filename: program.zip, path: ../artifacts/update.zip }
+
+  - type: script
+    dest-filename: edomh
+    commands:
+      - /app/entrypoint "/app/bin/Elite Dangerous Odyssey Materials Helper" "$@"

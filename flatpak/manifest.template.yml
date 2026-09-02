@@ -1,0 +1,62 @@
+id: nl.jixxed.edomh
+runtime: org.freedesktop.Platform
+runtime-version: "25.08"
+sdk: org.freedesktop.Sdk
+command: entrypoint
+
+finish-args:
+  - --socket=x11
+  - --socket=wayland
+  - --share=network
+
+  - --filesystem=~/.steam/steam/steamapps/compatdata/359320/pfx/drive_c/users/steamuser/Saved Games/Frontier Developments/Elite Dangerous:ro
+  - --filesystem=~/.config/odyssey-materials-helper:create
+
+modules:
+  - name: ed-odyssey-materials-helper
+    buildsystem: simple
+    build-commands:
+      # install files
+      - bsdunzip -d "$FLATPAK_DEST" program.zip
+      - install -Dm755 entrypoint "$FLATPAK_DEST/entrypoint"
+      - install -Dm755 -t "$FLATPAK_DEST/bin/" {{binfiles}}
+
+    post-install:
+      # Desktop integration (AppStream)
+      - install -Dm644 metainfo.xml "$FLATPAK_DEST/share/metainfo/$FLATPAK_ID.metainfo.xml"
+      - install -Dm644 releases.xml "$FLATPAK_DEST/share/metainfo/$FLATPAK_ID.releases.xml"
+      - |
+        for i in {16,32,48,64,128,256,512}; do
+          install -Dm644 "appicon$i.png" "$FLATPAK_DEST/share/icons/hicolor/${i}x${i}/apps/$FLATPAK_ID.png"
+        done
+
+      - mkdir -p "$FLATPAK_DEST/share/applications"
+      - appstreamcli make-desktop-file --exec="{{command}} %u" metainfo.xml "$FLATPAK_DEST/share/applications/$FLATPAK_ID.desktop"
+
+    sources:
+      - { type: file, dest-filename: metainfo.xml, path: "{{metainfo-path}}" }
+      - { type: file, dest-filename: releases.xml, path: "{{releases-path}}" }
+
+      - { type: file, dest: ., path: ../bootstrap/src/main/resources/images/appicon16.png }
+      - { type: file, dest: ., path: ../bootstrap/src/main/resources/images/appicon32.png }
+      - { type: file, dest: ., path: ../bootstrap/src/main/resources/images/appicon48.png }
+      - { type: file, dest: ., path: ../bootstrap/src/main/resources/images/appicon64.png }
+      - { type: file, dest: ., path: ../bootstrap/src/main/resources/images/appicon128.png }
+      - { type: file, dest: ., path: ../bootstrap/src/main/resources/images/appicon256.png }
+      - { type: file, dest: ., path: ../bootstrap/src/main/resources/images/appicon512.png }
+
+      - type: script
+        dest-filename: entrypoint
+        commands:
+          - |
+            mkdir -p \
+              "$HOME/.local/share/applications/" \
+              "$XDG_STATE_HOME/log" \
+              "$XDG_CACHE_HOME/javafx-cache-program" \
+              "$HOME/.ed-odyssey-materials-helper"
+
+          - |
+            ln -sft \
+            "$HOME/.ed-odyssey-materials-helper" \
+            "$XDG_STATE_HOME/log" \
+            "$XDG_CACHE_HOME/javafx-cache-program"
