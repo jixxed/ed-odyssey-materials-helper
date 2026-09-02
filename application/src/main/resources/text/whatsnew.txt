@@ -1,3 +1,8 @@
+Version 3.15.3
+-------------
+Bugfix to remap existing G5 cargo racks to G4
+Restrict sending to EDDN when not in the main game (operations/etc)
+
 Version 3.15.2
 -------------
 Add handling for new journal events
