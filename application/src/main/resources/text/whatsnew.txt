@@ -1,3 +1,8 @@
+Version 3.15.2
+-------------
+Add handling for new journal events
+Update merc cargo rack blueprints (now restricted to G4, but a little bit cheaper)
+
 Version 3.15.1
 -------------
 Swap anti guardian zone resistance onto Guardian power plant/distributor instead of Power plant/distributor

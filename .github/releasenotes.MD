@@ -21,11 +21,6 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Swap anti guardian zone resistance onto Guardian power plant/distributor instead of Power plant/distributor
-- This splits Guardian power plant/distributor and Power plant/distributor blueprints
-- Ram Tah will show the Guardian Power plant/distributor blueprints
-Add Rhino update merc modules(WIP)
-Add new synthesis option for mining rigs
-Add POI for mining locations
-Updated Rhino update commodity descriptions
+Add handling for new journal events
+Update merc cargo rack blueprints (now restricted to G4, but a little bit cheaper)
 ```
