@@ -14,7 +14,7 @@
 "community.goal.progress.value","Progress: {0} / {1}","","","Progreso: {0} / {1}","","","Прогресс: {0} / {1}","",""
 "community.goal.progress.percent","{0}%","","","{0}%","","","{0}%","",""
 "community.goal.progress.estimate","Estimated completion: {0}","","","Finalización estimada: {0}","","","Ожидаемое завершение: {0}","",""
-"community.goal.progress.finished","Completed at: {0}","","","","","","","",""
+"community.goal.progress.finished","Completed at: {0}","","","Completado el: {0}","","","Завершено: {0}","",""
 "community.goal.reward.table.top","Top {0}","","","Top {0}","","","Топ {0}","",""
 "community.goal.reward.table.percent","{0}%","","","{0}%","","","{0}%","",""
 "community.goal.reward.table.tier","Tier","","","Nivel","","","Уровень","",""

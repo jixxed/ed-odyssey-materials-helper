@@ -132,5 +132,5 @@
 "power.level.reason.destroyed","Power output when destroyed","","","Energía disponible cuando está destruido","","","Выработка энергии при разрушении","发电机被毁时电力输出",""
 "power.level.reason.normal","Maximum power output","","","Energía disponible máxima","","","Максимальная выработка энергии","最大电力输出",""
 "tab.ships.plot","Plot on Spansh","","","Enviar a Spansh","","","Путь в Spansh","",""
-"tab.ships.paste","Paste ship from clipboard","","","","","","","",""
-"tab.ships.import","Import SLEF from clipboard","","","","","","","",""
+"tab.ships.paste","Paste ship from clipboard","","","Pegar nave desde el portapapeles","","","Вставить корабль из буфера обмена","",""
+"tab.ships.import","Import SLEF from clipboard","","","Importar SLEF del portapapeles","","","Импортировать SLEF из буфера обмена","",""
