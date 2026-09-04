@@ -1,3 +1,9 @@
+Version 3.15.4
+-------------
+Added Rhino update merc module blueprints (available to sponsors in early access, backers: Sept. 11)
+Added free planetary hangar modules
+Corrected force shell experimental effect: 17% -> 16.666%
+
 Version 3.15.3
 -------------
 Bugfix to remap existing G5 cargo racks to G4

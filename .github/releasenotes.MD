@@ -21,6 +21,7 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Bugfix to remap existing G5 cargo racks to G4
-Restrict sending to EDDN when not in the main game (operations/etc)
+Added Rhino update merc module blueprints (available to sponsors in early access, backers: Sept. 11)
+Added free planetary hangar modules
+Corrected force shell experimental effect: 17% -> 16.666%
 ```
