@@ -1,3 +1,8 @@
+Version 3.15.5
+-------------
+Added Petra Olmanova to Merc Seeker Missiles
+Updated localizations
+
 Version 3.15.4
 -------------
 Added Rhino update merc module blueprints (available to sponsors in early access, backers: Sept. 11)
