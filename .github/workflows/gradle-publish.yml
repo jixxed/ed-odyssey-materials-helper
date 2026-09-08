@@ -6,7 +6,7 @@ on:
       - "*"
 
 env:
-  JAVA_VERSION: 25.0.2
+  JAVA_VERSION: 25.0.4
 
 jobs:
   build-ubuntu:
