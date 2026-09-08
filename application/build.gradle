@@ -24,6 +24,7 @@ plugins {
 //    id 'org.jsonschema2pojo'
     id 'net.rdrei.android.buildtimetracker' version '0.11.0'
     id('io.ebean') version "$version_ebean"
+    id "nl.edomh.plugin.versioning" version '1.0.1'
 }
 
 // Configure toolchain before apply from: to prevent plugins from locking it during dependency resolution
