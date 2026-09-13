@@ -20,8 +20,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.MapChangeListener;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.geometry.BoundingBox;
-import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -77,12 +76,15 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.*;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -92,6 +94,7 @@ import static nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper.deeplinkCons
 public class FXApplication extends Application {
 
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    private static final ScheduledExecutorService SCHEDULED_EXECUTOR = Executors.newSingleThreadScheduledExecutor();
 
     private ApplicationScreen applicationScreen;
     private TimeStampedGameStateWatcher timeStampedCargoWatcher;
@@ -319,7 +322,9 @@ public class FXApplication extends Application {
 
             setupStyling(scene);
             primaryStage.setScene(scene);
+
             primaryStage.show();
+            resize();
             if (OsCheck.isWindows() && PreferencesService.getPreference(PreferenceConstants.DARK_MODE, Boolean.FALSE)) {
                 FXWinUtil.setDarkMode(primaryStage, PreferencesService.getPreference(PreferenceConstants.DARK_MODE, Boolean.FALSE));
             }
@@ -602,63 +607,68 @@ public class FXApplication extends Application {
 
     }
 
+    /**
+     * The application is a little bit off after restoring, this method restores the original width and height after
+     * the application has become visible and starts listening for changes.
+     */
+    private void resize(){
+        eventListeners.add(EventService.addStaticListener(TerminateApplicationEvent.class, _ -> {
+            SCHEDULED_EXECUTOR.shutdownNow();
+        }));
+
+        SCHEDULED_EXECUTOR.schedule(() -> {
+            Platform.runLater(() -> {
+                this.primaryStage.xProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(this.primaryStage, PreferenceConstants.APP_X, (Double) newValue));
+                this.primaryStage.yProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(this.primaryStage, PreferenceConstants.APP_Y, (Double) newValue));
+                this.primaryStage.widthProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(this.primaryStage, PreferenceConstants.APP_WIDTH, Math.max((Double) newValue, 175.0D)));
+                this.primaryStage.heightProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(this.primaryStage, PreferenceConstants.APP_HEIGHT, Math.max((Double) newValue, 175.0D)));
+                final double appWidth = PreferencesService.getPreference(PreferenceConstants.APP_WIDTH, 800D);
+                final double appHeight = PreferencesService.getPreference(PreferenceConstants.APP_HEIGHT, 600D);
+
+                this.primaryStage.setWidth(appWidth);
+                this.primaryStage.setHeight(appHeight);
+
+            });
+        }, 1000, TimeUnit.MILLISECONDS);
+        SCHEDULED_EXECUTOR.schedule(() -> {
+            Platform.runLater(() -> {
+                this.primaryStage.maximizedProperty().addListener((observable, oldValue, newValue) -> PreferencesService.setPreference(PreferenceConstants.APP_MAXIMIZED, newValue));
+                Boolean appMaximized = PreferencesService.getPreference(PreferenceConstants.APP_MAXIMIZED, Boolean.FALSE);
+                this.primaryStage.setMaximized(appMaximized);
+            });
+        }, 1250, TimeUnit.MILLISECONDS);
+    }
+
     private Scene createApplicationScene() {
         content = new StackPane(/*this.applicationLayout,*/ this.loadingScreen);
         content.getStyleClass().add("app");
-        scene = new Scene(content, PreferencesService.getPreference(PreferenceConstants.APP_WIDTH, 800D), PreferencesService.getPreference(PreferenceConstants.APP_HEIGHT, 600D));
+        final double appX = PreferencesService.getPreference(PreferenceConstants.APP_X, 0D);
+        final double appY = PreferencesService.getPreference(PreferenceConstants.APP_Y, 0D);
+        final double appWidth = PreferencesService.getPreference(PreferenceConstants.APP_WIDTH, 800D);
+        final double appHeight = PreferencesService.getPreference(PreferenceConstants.APP_HEIGHT, 600D);
+
+        Point2D position = computeRestoredPosition(appX, appY);
+        this.primaryStage.setX(position.getX());
+        this.primaryStage.setY(position.getY());
+
+        scene = new Scene(content, appWidth, appHeight);
 
         // configureHotKeys() must be done before initApplicationScreen()
         configureHotKeys();
-
-
-        scene.widthProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(this.primaryStage, PreferenceConstants.APP_WIDTH, Math.max((Double) newValue, 175.0D)));
-        scene.heightProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(this.primaryStage, PreferenceConstants.APP_HEIGHT, Math.max((Double) newValue, 175.0D)));
-        final Bounds allScreenBounds = computeAllScreenBounds();
-        final double minX = allScreenBounds.getMinX() - 8.0D;
-        final double minY = allScreenBounds.getMinY() - 8.0D;
-        final double maxX = allScreenBounds.getMaxX();
-        final double maxY = allScreenBounds.getMaxY();
-
-        this.primaryStage.xProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(this.primaryStage, PreferenceConstants.APP_X, Math.max((Double) newValue, minX)));
-        this.primaryStage.yProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(this.primaryStage, PreferenceConstants.APP_Y, Math.max((Double) newValue, minY)));
-        this.primaryStage.maximizedProperty().addListener((observable, oldValue, newValue) -> PreferencesService.setPreference(PreferenceConstants.APP_MAXIMIZED, newValue));
-        final Double savedX = PreferencesService.getPreference(PreferenceConstants.APP_X, 0D);
-        final Double savedY = PreferencesService.getPreference(PreferenceConstants.APP_Y, 0D);
-        double x = savedX;
-        double y = savedY;
-        if (savedX < minX || savedX > maxX) {
-            x = 0D;
-        }
-        if (savedY < minY || savedY > maxY) {
-            y = 0D;
-        }
-        this.primaryStage.setX(x);
-        this.primaryStage.setY(y);
-        this.primaryStage.setMaximized(PreferencesService.getPreference(PreferenceConstants.APP_MAXIMIZED, Boolean.FALSE));
         return scene;
     }
 
-    private Bounds computeAllScreenBounds() {
-        double minX = Double.POSITIVE_INFINITY;
-        double minY = Double.POSITIVE_INFINITY;
-        double maxX = Double.NEGATIVE_INFINITY;
-        double maxY = Double.NEGATIVE_INFINITY;
+    private Point2D computeRestoredPosition(final double x, final double y) {
         for (final Screen screen : Screen.getScreens()) {
-            final Rectangle2D screenBounds = screen.getBounds();
-            if (screenBounds.getMinX() < minX) {
-                minX = screenBounds.getMinX();
-            }
-            if (screenBounds.getMinY() < minY) {
-                minY = screenBounds.getMinY();
-            }
-            if (screenBounds.getMaxX() > maxX) {
-                maxX = screenBounds.getMaxX();
-            }
-            if (screenBounds.getMaxY() > maxY) {
-                maxY = screenBounds.getMaxY();
+            Rectangle2D screenVisualBounds = screen.getVisualBounds();
+            final Rectangle2D visualBounds = new Rectangle2D(screenVisualBounds.getMinX() -8D,screenVisualBounds.getMinY() -8D,screenVisualBounds.getWidth() +8D,screenVisualBounds.getHeight()+8D);
+            log.info("screen " + screen.hashCode() + " visualBounds: " + visualBounds.toString() + " is on screen: " + visualBounds.contains(x, y));
+            if (visualBounds.contains(x, y)) {
+                return new Point2D(x, y);
             }
         }
-        return new BoundingBox(minX, minY, maxX - minX, maxY - minY);
+        final Rectangle2D primaryVisualBounds = Screen.getPrimary().getVisualBounds();
+        return new Point2D(primaryVisualBounds.getMinX(), primaryVisualBounds.getMinY());
     }
 
     private void setupStyling(final Scene scene) {
@@ -904,10 +914,11 @@ public class FXApplication extends Application {
     }
 
     private void setPreferenceIfNotMaximized(final Stage primaryStage, final String setting, final Double value) {
-        // x y are processed before maximized, so excluding setting it if it's -8
-        if (!primaryStage.isMaximized() && !Double.valueOf(-8.0D).equals(value)) {
-            PreferencesService.setPreference(setting, value);
-        }
+        SCHEDULED_EXECUTOR.schedule(() -> {
+            if (!primaryStage.isMaximized()) {
+                PreferencesService.setPreference(setting, value);
+            }
+        }, 100, TimeUnit.MILLISECONDS);
     }
 
     private void saveTextToFile(final String content, final File file) {
