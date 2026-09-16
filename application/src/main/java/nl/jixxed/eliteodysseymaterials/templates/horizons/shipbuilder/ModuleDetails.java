@@ -16,7 +16,7 @@ import nl.edomh.ui.shared.builder.FlowPaneBuilder;
 import nl.edomh.ui.shared.builder.LabelBuilder;
 import nl.edomh.core.domain.ships.HardpointModule;
 import nl.edomh.core.domain.ships.ShipModule;
-import nl.edomh.core.enums.HorizonsModifier;
+import nl.edomh.core.enums.ModuleAttribute;
 import nl.edomh.core.enums.NotificationType;
 import nl.edomh.core.helper.Formatters;
 import nl.edomh.core.service.LocaleService;
@@ -139,31 +139,31 @@ public class ModuleDetails extends DestroyableVBox implements DestroyableEventTe
                 type = "module.details.type.legacy";
             }
             addModuleType(LocaleService.getLocalizedStringForCurrentLocale(type), propertyIndex++, size);
-            List<HorizonsModifier> attributesList = shipModule.getAttibutes().stream().filter(Predicate.not(shipModule::isHiddenStat)).collect(Collectors.toList());
+            List<ModuleAttribute> attributesList = shipModule.getAttibutes().stream().filter(Predicate.not(shipModule::isHiddenStat)).collect(Collectors.toList());
 
-            if (shipModule instanceof HardpointModule && !attributesList.contains(HorizonsModifier.DAMAGE_PER_SECOND)) {
-                attributesList.add(HorizonsModifier.DAMAGE_PER_SECOND);
+            if (shipModule instanceof HardpointModule && !attributesList.contains(ModuleAttribute.DAMAGE_PER_SECOND)) {
+                attributesList.add(ModuleAttribute.DAMAGE_PER_SECOND);
             }
             if (shipModule instanceof HardpointModule) {
-                Stream.of(HorizonsModifier.ABSOLUTE_DAMAGE_RATIO,
-                                HorizonsModifier.THERMAL_DAMAGE_RATIO,
-                                HorizonsModifier.KINETIC_DAMAGE_RATIO,
-                                HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO,
-                                HorizonsModifier.CAUSTIC_DAMAGE_RATIO,
-                                HorizonsModifier.ANTI_XENO_DAMAGE_RATIO)
+                Stream.of(ModuleAttribute.ABSOLUTE_DAMAGE_RATIO,
+                                ModuleAttribute.THERMAL_DAMAGE_RATIO,
+                                ModuleAttribute.KINETIC_DAMAGE_RATIO,
+                                ModuleAttribute.EXPLOSIVE_DAMAGE_RATIO,
+                                ModuleAttribute.CAUSTIC_DAMAGE_RATIO,
+                                ModuleAttribute.ANTI_XENO_DAMAGE_RATIO)
                         .forEach(horizonsModifier -> {
                             if ((Double) shipModule.getOriginalAttributeValue(horizonsModifier) == 0.0 && (Double) shipModule.getAttributeValue(horizonsModifier, 1.0, true) == 0.0) {
                                 attributesList.remove(horizonsModifier);
                             }
                         });
-                attributesList.remove(HorizonsModifier.DAMAGE_TYPE);//not able to detect modifications, so we leave it out
+                attributesList.remove(ModuleAttribute.DAMAGE_TYPE);//not able to detect modifications, so we leave it out
             }
 
-            List<HorizonsModifier> sortedAttributesList = attributesList.stream().sorted(Comparator.comparing(HorizonsModifier::getOrder)).toList();
+            List<ModuleAttribute> sortedAttributesList = attributesList.stream().sorted(Comparator.comparing(ModuleAttribute::getOrder)).toList();
 
             for (int i = 0; i < sortedAttributesList.size(); i++) {
-                HorizonsModifier horizonsModifier = sortedAttributesList.get(i);
-                addAttribute(horizonsModifier, shipModule, i, sortedAttributesList.size());
+                ModuleAttribute moduleAttribute = sortedAttributesList.get(i);
+                addAttribute(moduleAttribute, shipModule, i, sortedAttributesList.size());
             }
             if (shipModule.isLegacy()) {
                 legacySaveButton.setVisible(true);
@@ -172,8 +172,8 @@ public class ModuleDetails extends DestroyableVBox implements DestroyableEventTe
         }
     }
 
-    private void addAttribute(HorizonsModifier horizonsModifier, ShipModule shipModule, int index, int size) {
-        ModuleDetailsAttribute moduleDetailsAttribute = new ModuleDetailsAttribute(horizonsModifier, shipModule, index, size);
+    private void addAttribute(ModuleAttribute moduleAttribute, ShipModule shipModule, int index, int size) {
+        ModuleDetailsAttribute moduleDetailsAttribute = new ModuleDetailsAttribute(moduleAttribute, shipModule, index, size);
         attributes.getNodes().add(moduleDetailsAttribute);
 
     }

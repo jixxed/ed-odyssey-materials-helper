@@ -32,7 +32,7 @@ import nl.edomh.core.domain.ShipLegacyModule;
 import nl.edomh.core.domain.ships.*;
 import nl.edomh.core.enums.HorizonsBlueprintGrade;
 import nl.edomh.core.enums.HorizonsBlueprintType;
-import nl.edomh.core.enums.HorizonsModifier;
+import nl.edomh.core.enums.ModuleAttribute;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.UserPreferencesService;
 import nl.edomh.core.service.event.EngineerEvent;
@@ -610,7 +610,7 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableEventTe
     private void showAttributes(ShipModule shipModule) {
 
         AtomicInteger index = new AtomicInteger(0);
-        shipModule.getAttibutes().stream().sorted(Comparator.comparing(HorizonsModifier::getOrder)).forEach(horizonsModifier -> {
+        shipModule.getAttibutes().stream().sorted(Comparator.comparing(ModuleAttribute::getOrder)).forEach(horizonsModifier -> {
             if (shipModule.getOriginalAttributeValue(horizonsModifier) instanceof Double) {
                 final ShipAttribute shipAttribute = new ShipAttribute(shipModule, horizonsModifier);
                 attributes.addRow(index.getAndIncrement(), shipAttribute.getTitle(), shipAttribute.getValuesLine(), shipAttribute.getTextField());

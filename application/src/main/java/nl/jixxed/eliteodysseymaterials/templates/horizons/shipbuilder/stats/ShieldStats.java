@@ -24,7 +24,7 @@ import nl.edomh.core.domain.ships.optional_internals.ShieldGenerator;
 import nl.edomh.core.domain.ships.optional_internals.military.GuardianShieldReinforcementPackage;
 import nl.edomh.core.domain.ships.optional_internals.military.ShieldCellBank;
 import nl.edomh.core.domain.ships.utility.ShieldBooster;
-import nl.edomh.core.enums.HorizonsModifier;
+import nl.edomh.core.enums.ModuleAttribute;
 import nl.edomh.core.helper.Formatters;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.event.EventService;
@@ -38,7 +38,7 @@ import nl.edomh.ui.shared.templates.destroyables.DestroyableVBox;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static nl.edomh.core.enums.HorizonsModifier.*;
+import static nl.edomh.core.enums.ModuleAttribute.*;
 
 @Slf4j
 public class ShieldStats extends Stats implements DestroyableEventTemplate {
@@ -151,10 +151,10 @@ public class ShieldStats extends Stats implements DestroyableEventTemplate {
         return calculateCurrentStrength(CAUSTIC_RESISTANCE);
     }
 
-    private double calculateCurrentStrength(HorizonsModifier horizonsModifier) {
+    private double calculateCurrentStrength(ModuleAttribute moduleAttribute) {
         final double multiplier = ApplicationState.getInstance().getSystemPips() / 8.0;
         double absoluteShieldResistance = 0.60 * Math.pow(multiplier, 0.85);
-        return switch (horizonsModifier) {
+        return switch (moduleAttribute) {
             case KINETIC_RESISTANCE ->
                     rawShieldStrength() / (1 - absoluteShieldResistance) / (1 - calculateResistanceKinetic() / 100);
             case THERMAL_RESISTANCE ->
@@ -201,7 +201,7 @@ public class ShieldStats extends Stats implements DestroyableEventTemplate {
                 .orElse(0D);
     }
 
-    private double calculateResistance(HorizonsModifier horizonsModifier) {
+    private double calculateResistance(ModuleAttribute moduleAttribute) {
         return getShip().map(ship -> ship.getOptionalSlots().stream()
                         .filter(slot -> slot.getShipModule() instanceof ShieldGenerator)
                         .findFirst()
@@ -212,12 +212,12 @@ public class ShieldStats extends Stats implements DestroyableEventTemplate {
                                             slot.getShipModule() instanceof ShieldBooster
                                     )
                                     .forEach(slot -> {
-                                                double moduleResistance = (double) slot.getShipModule().getAttributeValue(horizonsModifier, true);
+                                                double moduleResistance = (double) slot.getShipModule().getAttributeValue(moduleAttribute, true);
                                                 double multiplier = 1D - moduleResistance;
                                                 totalModuleMultiplier.updateAndGet(v -> v * multiplier);
                                             }
                                     );
-                            double shieldResistance = (double) shieldGeneratorSlot.getShipModule().getAttributeValue(horizonsModifier, true);
+                            double shieldResistance = (double) shieldGeneratorSlot.getShipModule().getAttributeValue(moduleAttribute, true);
                             return getEffectiveDamageResistance((1 - totalModuleMultiplier.get()), shieldResistance);
                         })
                         .orElse(0D))
@@ -289,13 +289,13 @@ public class ShieldStats extends Stats implements DestroyableEventTemplate {
         return getShip().map(ship -> {
                     double charges = ship.getOptionalSlots().stream()
                             .filter(slot -> slot.getShipModule() instanceof ShieldCellBank)
-                            .map(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.AMMO_CLIP_SIZE, true) + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.AMMO_MAXIMUM, true))
+                            .map(slot -> (double) slot.getShipModule().getAttributeValue(ModuleAttribute.AMMO_CLIP_SIZE, true) + (double) slot.getShipModule().getAttributeValue(ModuleAttribute.AMMO_MAXIMUM, true))
                             .mapToDouble(Double::doubleValue)
                             .average()
                             .orElse(0D);
                     double amount = ship.getOptionalSlots().stream()
                             .filter(slot -> slot.getShipModule() instanceof ShieldCellBank)
-                            .map(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.SHIELDBANK_DURATION, true) * (double) slot.getShipModule().getAttributeValue(HorizonsModifier.SHIELDBANK_REINFORCEMENT, true))
+                            .map(slot -> (double) slot.getShipModule().getAttributeValue(ModuleAttribute.SHIELDBANK_DURATION, true) * (double) slot.getShipModule().getAttributeValue(ModuleAttribute.SHIELDBANK_REINFORCEMENT, true))
                             .mapToDouble(Double::doubleValue)
                             .sum();
                     return new Scb(charges, amount / rawShieldStrength() * 100D);

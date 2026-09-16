@@ -23,7 +23,7 @@ import nl.edomh.core.domain.ships.hardpoint.GuardianGaussCannon;
 import nl.edomh.core.domain.ships.hardpoint.RailGun;
 import nl.edomh.core.enums.HardpointGroup;
 import nl.edomh.core.enums.HorizonsBlueprintType;
-import nl.edomh.core.enums.HorizonsModifier;
+import nl.edomh.core.enums.ModuleAttribute;
 import nl.edomh.ui.shared.helper.ScalingHelper;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.core.service.event.EventService;
@@ -204,12 +204,12 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
 
     private double calculateRawDamage() {
         return selectedHardPoints().stream()
-                .map(shipModule -> (double) shipModule.getAttributeValue(HorizonsModifier.DAMAGE_PER_SECOND, true))
+                .map(shipModule -> (double) shipModule.getAttributeValue(ModuleAttribute.DAMAGE_PER_SECOND, true))
                 .mapToDouble(Double::doubleValue)
                 .sum();
     }
 
-    private double getRatio(ShipModule shipModule, HorizonsModifier modifier) {
+    private double getRatio(ShipModule shipModule, ModuleAttribute modifier) {
         try {
             return (double) shipModule.getAttributeValue(modifier, true);
         } catch (IllegalArgumentException e) {
@@ -223,7 +223,7 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
             return 0d;
         }
         return selectedHardPoints().stream()
-                .map(shipModule -> getRatio(shipModule, HorizonsModifier.ABSOLUTE_DAMAGE_RATIO) * (double) shipModule.getAttributeValue(HorizonsModifier.DAMAGE_PER_SECOND, true))
+                .map(shipModule -> getRatio(shipModule, ModuleAttribute.ABSOLUTE_DAMAGE_RATIO) * (double) shipModule.getAttributeValue(ModuleAttribute.DAMAGE_PER_SECOND, true))
                 .mapToDouble(Double::doubleValue)
                 .sum() / calculatedRawDamage * 100d;
     }
@@ -234,7 +234,7 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
             return 0d;
         }
         return selectedHardPoints().stream()
-                .map(shipModule -> getRatio(shipModule, HorizonsModifier.KINETIC_DAMAGE_RATIO) * (double) shipModule.getAttributeValue(HorizonsModifier.DAMAGE_PER_SECOND, true))
+                .map(shipModule -> getRatio(shipModule, ModuleAttribute.KINETIC_DAMAGE_RATIO) * (double) shipModule.getAttributeValue(ModuleAttribute.DAMAGE_PER_SECOND, true))
                 .mapToDouble(Double::doubleValue)
                 .sum() / calculatedRawDamage * 100d;
     }
@@ -245,7 +245,7 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
             return 0d;
         }
         return selectedHardPoints().stream()
-                .map(shipModule -> getRatio(shipModule, HorizonsModifier.THERMAL_DAMAGE_RATIO) * (double) shipModule.getAttributeValue(HorizonsModifier.DAMAGE_PER_SECOND, true))
+                .map(shipModule -> getRatio(shipModule, ModuleAttribute.THERMAL_DAMAGE_RATIO) * (double) shipModule.getAttributeValue(ModuleAttribute.DAMAGE_PER_SECOND, true))
                 .mapToDouble(Double::doubleValue)
                 .sum() / calculatedRawDamage * 100d;
     }
@@ -256,7 +256,7 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
             return 0d;
         }
         return selectedHardPoints().stream()
-                .map(shipModule -> getRatio(shipModule, HorizonsModifier.EXPLOSIVE_DAMAGE_RATIO) * (double) shipModule.getAttributeValue(HorizonsModifier.DAMAGE_PER_SECOND, true))
+                .map(shipModule -> getRatio(shipModule, ModuleAttribute.EXPLOSIVE_DAMAGE_RATIO) * (double) shipModule.getAttributeValue(ModuleAttribute.DAMAGE_PER_SECOND, true))
                 .mapToDouble(Double::doubleValue)
                 .sum() / calculatedRawDamage * 100d;
     }
@@ -267,7 +267,7 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
             return 0d;
         }
         return selectedHardPoints().stream()
-                .map(shipModule -> getRatio(shipModule, HorizonsModifier.CAUSTIC_DAMAGE_RATIO) * (double) shipModule.getAttributeValue(HorizonsModifier.DAMAGE_PER_SECOND, true))
+                .map(shipModule -> getRatio(shipModule, ModuleAttribute.CAUSTIC_DAMAGE_RATIO) * (double) shipModule.getAttributeValue(ModuleAttribute.DAMAGE_PER_SECOND, true))
                 .mapToDouble(Double::doubleValue)
                 .sum() / calculatedRawDamage * 100d;
     }
@@ -278,7 +278,7 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
             return 0d;
         }
         return selectedHardPoints().stream()
-                .map(shipModule -> getRatio(shipModule, HorizonsModifier.ANTI_XENO_DAMAGE_RATIO) * (double) shipModule.getAttributeValue(HorizonsModifier.DAMAGE_PER_SECOND, true))
+                .map(shipModule -> getRatio(shipModule, ModuleAttribute.ANTI_XENO_DAMAGE_RATIO) * (double) shipModule.getAttributeValue(ModuleAttribute.DAMAGE_PER_SECOND, true))
                 .mapToDouble(Double::doubleValue)
                 .sum() / calculatedRawDamage * 100d;
     }
@@ -294,8 +294,8 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
         final Optional<Slot> powerDistributor = getShip().flatMap(ship -> ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION)).findFirst().filter(Slot::isOccupied));
 
         final double multiplier = Math.pow(pips / 8.0, 1.1);
-        final double weaponCapacity = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.WEAPONS_CAPACITY, true)).orElse(0D);
-        final double weaponRecharge = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.WEAPONS_RECHARGE, true)).orElse(0D);
+        final double weaponCapacity = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(ModuleAttribute.WEAPONS_CAPACITY, true)).orElse(0D);
+        final double weaponRecharge = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(ModuleAttribute.WEAPONS_RECHARGE, true)).orElse(0D);
         //fixme div by 0
         AtomicReference<Double> wepcapBurstCur = new AtomicReference<>(weaponCapacity / Math.max(0, epsCur.get() - weaponRecharge * multiplier));
         selectedHardPoints().forEach(shipModule -> {
@@ -311,14 +311,14 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
     private double secondsPerClip(ShipModule shipModule, boolean sustained) {
         double duration = 0D;
         if ((shipModule instanceof RailGun || shipModule instanceof GuardianGaussCannon) && !(shipModule.equals(RailGun.IMPERIAL_HAMMER_RAIL_GUN_2_B_F) && sustained)) {
-            duration = shipModule.getAttributeValueOrDefault(HorizonsModifier.CHARGE_TIME, 0D, true);
+            duration = shipModule.getAttributeValueOrDefault(ModuleAttribute.CHARGE_TIME, 0D, true);
         }
-        double burstSize = shipModule.getAttributeValueOrDefault(HorizonsModifier.BURST_SIZE, 1D, true);
-        double burstRateOfFire = shipModule.getAttributeValueOrDefault(HorizonsModifier.BURST_RATE_OF_FIRE, 1D, true);
-        double burstInterval = shipModule.getAttributeValueOrDefault(HorizonsModifier.BURST_INTERVAL, 0D, true);
+        double burstSize = shipModule.getAttributeValueOrDefault(ModuleAttribute.BURST_SIZE, 1D, true);
+        double burstRateOfFire = shipModule.getAttributeValueOrDefault(ModuleAttribute.BURST_RATE_OF_FIRE, 1D, true);
+        double burstInterval = shipModule.getAttributeValueOrDefault(ModuleAttribute.BURST_INTERVAL, 0D, true);
         double secondsPerClip = (duration + (burstSize - 1) / burstRateOfFire + burstInterval);
-        double ammoClipSize = shipModule.getAttributeValueOrDefault(HorizonsModifier.AMMO_CLIP_SIZE, Double.POSITIVE_INFINITY, true);
-        double reloadTime = sustained ? shipModule.getAttributeValueOrDefault(HorizonsModifier.RELOAD_TIME, 0D, true) : 0D;
+        double ammoClipSize = shipModule.getAttributeValueOrDefault(ModuleAttribute.AMMO_CLIP_SIZE, Double.POSITIVE_INFINITY, true);
+        double reloadTime = sustained ? shipModule.getAttributeValueOrDefault(ModuleAttribute.RELOAD_TIME, 0D, true) : 0D;
         if (Double.isFinite(ammoClipSize)) {
             if (shipModule.getExperimentalEffects().contains(HorizonsBlueprintType.AUTO_LOADER)) {
                 ammoClipSize += ammoClipSize - 1;
@@ -329,14 +329,14 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
     }
 
     private double shotsFiredPerClip(ShipModule shipModule) {
-        double ammoClipSize = shipModule.getAttributeValueOrDefault(HorizonsModifier.AMMO_CLIP_SIZE, Double.POSITIVE_INFINITY, true);
+        double ammoClipSize = shipModule.getAttributeValueOrDefault(ModuleAttribute.AMMO_CLIP_SIZE, Double.POSITIVE_INFINITY, true);
         if (Double.isFinite(ammoClipSize)) {
             if (shipModule.getExperimentalEffects().contains(HorizonsBlueprintType.AUTO_LOADER)) {
                 return ammoClipSize + ammoClipSize - 1;
             }
             return ammoClipSize;
         }
-        return shipModule.getAttributeValueOrDefault(HorizonsModifier.BURST_SIZE, 1D, true);
+        return shipModule.getAttributeValueOrDefault(ModuleAttribute.BURST_SIZE, 1D, true);
     }
 
     private double rateOfFire(ShipModule shipModule, boolean sustained) {
@@ -344,14 +344,14 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
     }
 
     private double energyPerSecond(ShipModule shipModule, boolean sustained) {
-        final double distributorDraw = shipModule.getAttributeValueOrDefault(HorizonsModifier.DISTRIBUTOR_DRAW, 0D, true);
+        final double distributorDraw = shipModule.getAttributeValueOrDefault(ModuleAttribute.DISTRIBUTOR_DRAW, 0D, true);
         final double rateOfFire = rateOfFire(shipModule, sustained);
         return distributorDraw * (Double.isFinite(rateOfFire) ? rateOfFire : 1);
     }
 
     private double dps(ShipModule shipModule, boolean sustained) {
-        final double damage = shipModule.getAttributeValueOrDefault(HorizonsModifier.DAMAGE, 0D, true);
-        final double rounds = shipModule.getAttributeValueOrDefault(HorizonsModifier.ROUNDS_PER_SHOT, 1D, true);
+        final double damage = shipModule.getAttributeValueOrDefault(ModuleAttribute.DAMAGE, 0D, true);
+        final double rounds = shipModule.getAttributeValueOrDefault(ModuleAttribute.ROUNDS_PER_SHOT, 1D, true);
         final double rateOfFire = rateOfFire(shipModule, sustained);
         return damage * rounds * (Double.isFinite(rateOfFire) ? rateOfFire : 1);
     }
@@ -408,8 +408,8 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
         final Optional<Slot> powerDistributor = getShip().flatMap(ship -> ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION)).findFirst());
 
         final double multiplier = Math.pow(pips / 8.0, 1.1);
-        final double weaponCapacity = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.WEAPONS_CAPACITY, true)).orElse(0D);
-        final double weaponRecharge = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.WEAPONS_RECHARGE, true)).orElse(0D);
+        final double weaponCapacity = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(ModuleAttribute.WEAPONS_CAPACITY, true)).orElse(0D);
+        final double weaponRecharge = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(ModuleAttribute.WEAPONS_RECHARGE, true)).orElse(0D);
         //fixme div by 0
         AtomicReference<Double> weaponCapBurstCurrent = new AtomicReference<>(weaponCapacity / Math.max(0, epsCurrent.get() - weaponRecharge * multiplier));
         selectedHardPoints().forEach(shipModule2 -> {
@@ -420,9 +420,9 @@ public class WeaponStats extends Stats implements DestroyableTemplate {
         });
 
         var weaponChargeSustainedCurrent = Math.clamp(weaponRecharge * multiplier / totalEpsSustained, 0, 1);
-        double distdraw = shipModule.getAttributeValueOrDefault(HorizonsModifier.DISTRIBUTOR_DRAW, 0D, true);
-        double ammoClipSize = shipModule.getAttributeValueOrDefault(HorizonsModifier.AMMO_CLIP_SIZE, Double.POSITIVE_INFINITY, true);
-        double ammoMaximum = shipModule.getAttributeValueOrDefault(HorizonsModifier.AMMO_MAXIMUM, Double.POSITIVE_INFINITY, true);
+        double distdraw = shipModule.getAttributeValueOrDefault(ModuleAttribute.DISTRIBUTOR_DRAW, 0D, true);
+        double ammoClipSize = shipModule.getAttributeValueOrDefault(ModuleAttribute.AMMO_CLIP_SIZE, Double.POSITIVE_INFINITY, true);
+        double ammoMaximum = shipModule.getAttributeValueOrDefault(ModuleAttribute.AMMO_MAXIMUM, Double.POSITIVE_INFINITY, true);
         var ammotime = Double.isFinite(ammoClipSize) ? (secondsPerClip(shipModule, true) * ((ammoClipSize + ammoMaximum) / shotsFiredPerClip(shipModule))) : Double.POSITIVE_INFINITY;
         if (distdraw > 0D) {
             dpsDistributorDraw += dps(shipModule, true);

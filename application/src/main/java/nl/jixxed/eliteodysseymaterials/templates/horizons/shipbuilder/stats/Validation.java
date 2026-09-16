@@ -22,7 +22,7 @@ import nl.edomh.core.domain.ships.Ship;
 import nl.edomh.core.domain.ships.ShipModule;
 import nl.edomh.core.domain.ships.Slot;
 import nl.edomh.core.domain.ships.SlotType;
-import nl.edomh.core.enums.HorizonsModifier;
+import nl.edomh.core.enums.ModuleAttribute;
 import nl.edomh.core.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableTemplate;
@@ -177,7 +177,7 @@ public class Validation extends Stats implements DestroyableTemplate {
 
     private void testPowerDeliveryBoost(Ship ship) {
         final Optional<Slot> powerDistributor = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION)).findFirst().filter(Slot::isOccupied);
-        final double engineCapacity = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.ENGINES_CAPACITY, true)).orElse(0D);
+        final double engineCapacity = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(ModuleAttribute.ENGINES_CAPACITY, true)).orElse(0D);
         final double boostCost = ship.getShipSpecs().getBoostCost();
         final boolean engineCapacityEnough = engineCapacity < boostCost;
         isMaxBoostPowerExceeded.set(engineCapacityEnough);
@@ -186,7 +186,7 @@ public class Validation extends Stats implements DestroyableTemplate {
     private void testThrusterMass(Ship ship) {
         final Optional<Slot> thrusters = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_THRUSTERS)).findFirst().filter(Slot::isOccupied);
         double shipMaxMass = ship.getMaximumMass();
-        final double maxMassForModule = (double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.MAXIMUM_MASS, true)).orElse(0D);
+        final double maxMassForModule = (double) thrusters.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(ModuleAttribute.MAXIMUM_MASS, true)).orElse(0D);
         isMaxThrusterMassExceeded.set(maxMassForModule < shipMaxMass);//tested: exact match does not give error
     }
 
@@ -194,7 +194,7 @@ public class Validation extends Stats implements DestroyableTemplate {
         AtomicBoolean exceeded = new AtomicBoolean(false);
         ship.getOptionalSlots().forEach(slot -> {
             if (slot.getShipModule() instanceof ShieldGenerator shieldGenerator) {
-                exceeded.set(exceeded.get() || (double) shieldGenerator.getAttributeValue(HorizonsModifier.SHIELDGEN_MAXIMUM_MASS, true) < ship.getShipSpecs().getMass());
+                exceeded.set(exceeded.get() || (double) shieldGenerator.getAttributeValue(ModuleAttribute.SHIELDGEN_MAXIMUM_MASS, true) < ship.getShipSpecs().getMass());
             }
         });
         isMaxShieldGeneratorHullMassExceeded.set(exceeded.get());

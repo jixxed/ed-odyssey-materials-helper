@@ -21,7 +21,7 @@ import nl.edomh.core.domain.ships.core_internals.Armour;
 import nl.edomh.core.domain.ships.optional_internals.military.HullReinforcementPackage;
 import nl.edomh.core.enums.HorizonsBlueprintGrade;
 import nl.edomh.core.enums.HorizonsBlueprintType;
-import nl.edomh.core.enums.HorizonsModifier;
+import nl.edomh.core.enums.ModuleAttribute;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.ui.shared.helper.ScalingHelper;
 import org.junit.jupiter.api.Assertions;
@@ -295,9 +295,9 @@ class ArmourStatsTest {
         ApplicationState.getInstance().setShip(ship);
         double delta = 0.051;
         Assertions.assertAll(
-                () -> assertEquals(expectedKinetic, armourStats.calculateResistance(HorizonsModifier.KINETIC_RESISTANCE), delta),
-                () -> assertEquals(expectedThermic, armourStats.calculateResistance(HorizonsModifier.THERMAL_RESISTANCE), delta),
-                () -> assertEquals(expectedExplosive, armourStats.calculateResistance(HorizonsModifier.EXPLOSIVE_RESISTANCE), delta)
+                () -> assertEquals(expectedKinetic, armourStats.calculateResistance(ModuleAttribute.KINETIC_RESISTANCE), delta),
+                () -> assertEquals(expectedThermic, armourStats.calculateResistance(ModuleAttribute.THERMAL_RESISTANCE), delta),
+                () -> assertEquals(expectedExplosive, armourStats.calculateResistance(ModuleAttribute.EXPLOSIVE_RESISTANCE), delta)
         );
     }
 
@@ -330,23 +330,23 @@ class ArmourStatsTest {
                     //chain sorts
                     Comparator<Slot> kineticSortChain = sorts.stream()
                             .filter(Objects::nonNull)
-                            .map(c -> c.getComparator(HorizonsModifier.KINETIC_RESISTANCE))
+                            .map(c -> c.getComparator(ModuleAttribute.KINETIC_RESISTANCE))
                             .reduce(Comparator::thenComparing)
                             .orElse((a, b) -> 0);
                     Comparator<Slot> thermalSortChain = sorts.stream()
                             .filter(Objects::nonNull)
-                            .map(c -> c.getComparator(HorizonsModifier.THERMAL_RESISTANCE))
+                            .map(c -> c.getComparator(ModuleAttribute.THERMAL_RESISTANCE))
                             .reduce(Comparator::thenComparing)
                             .orElse((a, b) -> 0);
                     Comparator<Slot> explosiveSortChain = sorts.stream()
                             .filter(Objects::nonNull)
-                            .map(c -> c.getComparator(HorizonsModifier.EXPLOSIVE_RESISTANCE))
+                            .map(c -> c.getComparator(ModuleAttribute.EXPLOSIVE_RESISTANCE))
                             .reduce(Comparator::thenComparing)
                             .orElse((a, b) -> 0);
 
-                    assertEquals((Double) arg.get()[0], armourStats.calculateResistance(HorizonsModifier.KINETIC_RESISTANCE, kineticSortChain), delta);
-                    assertEquals((Double) arg.get()[1], armourStats.calculateResistance(HorizonsModifier.THERMAL_RESISTANCE, thermalSortChain), delta);
-                    assertEquals((Double) arg.get()[2], armourStats.calculateResistance(HorizonsModifier.EXPLOSIVE_RESISTANCE, explosiveSortChain), delta);
+                    assertEquals((Double) arg.get()[0], armourStats.calculateResistance(ModuleAttribute.KINETIC_RESISTANCE, kineticSortChain), delta);
+                    assertEquals((Double) arg.get()[1], armourStats.calculateResistance(ModuleAttribute.THERMAL_RESISTANCE, thermalSortChain), delta);
+                    assertEquals((Double) arg.get()[2], armourStats.calculateResistance(ModuleAttribute.EXPLOSIVE_RESISTANCE, explosiveSortChain), delta);
                 })
                 .toList();
 
@@ -370,10 +370,10 @@ class ArmourStatsTest {
     @AllArgsConstructor
     private static class Comp {
         String name;
-        Function<HorizonsModifier, Comparator<Slot>> comparator;
+        Function<ModuleAttribute, Comparator<Slot>> comparator;
         boolean reversed;
 
-        Comparator<Slot> getComparator(HorizonsModifier mod) {
+        Comparator<Slot> getComparator(ModuleAttribute mod) {
             return (reversed) ? comparator.apply(mod).reversed() : comparator.apply(mod);
         }
 
@@ -384,13 +384,13 @@ class ArmourStatsTest {
     }
 
     private static Stream<Arguments> sorts() {
-        Function<HorizonsModifier, Comparator<Slot>> MOD = _ -> Comparator.comparing((Slot slot) -> !slot.getShipModule().getModifications().isEmpty());
-        Function<HorizonsModifier, Comparator<Slot>> EXP = _ -> Comparator.comparing((Slot slot) -> !slot.getShipModule().getExperimentalEffects().isEmpty());
-        Function<HorizonsModifier, Comparator<Slot>> SIZE = _ -> Comparator.comparing((Slot slot) -> slot.getShipModule().getModuleSize().intValue());
-        Function<HorizonsModifier, Comparator<Slot>> VALUE = (mod) -> Comparator.comparing((Slot slot) -> (double) slot.getShipModule().getAttributeValue(mod, true));
+        Function<ModuleAttribute, Comparator<Slot>> MOD = _ -> Comparator.comparing((Slot slot) -> !slot.getShipModule().getModifications().isEmpty());
+        Function<ModuleAttribute, Comparator<Slot>> EXP = _ -> Comparator.comparing((Slot slot) -> !slot.getShipModule().getExperimentalEffects().isEmpty());
+        Function<ModuleAttribute, Comparator<Slot>> SIZE = _ -> Comparator.comparing((Slot slot) -> slot.getShipModule().getModuleSize().intValue());
+        Function<ModuleAttribute, Comparator<Slot>> VALUE = (mod) -> Comparator.comparing((Slot slot) -> (double) slot.getShipModule().getAttributeValue(mod, true));
 
         List<String> keys = List.of("MOD", "EXP", "SIZE", "VALUE");
-        Map<String, Function<HorizonsModifier, Comparator<Slot>>> normalMap = Map.of(
+        Map<String, Function<ModuleAttribute, Comparator<Slot>>> normalMap = Map.of(
                 "MOD", MOD,
                 "EXP", EXP,
                 "SIZE", SIZE,
@@ -409,7 +409,7 @@ class ArmourStatsTest {
         });
     }
 
-    private static void permute(List<String> keys, Map<String, Function<HorizonsModifier, Comparator<Slot>>> normalMap, int targetLen,
+    private static void permute(List<String> keys, Map<String, Function<ModuleAttribute, Comparator<Slot>>> normalMap, int targetLen,
                                 boolean[] used, List<String> path, List<Arguments> out) {
         if (path.size() == targetLen) {
             int orientations = 1 << targetLen; // each bit chooses normal (0) or reversed (1)
@@ -417,7 +417,7 @@ class ArmourStatsTest {
                 List<Comp> comps = new ArrayList<>(targetLen);
                 for (int i = 0; i < targetLen; i++) {
                     String key = path.get(i);
-                    Function<HorizonsModifier, Comparator<Slot>> chosen = normalMap.get(key);
+                    Function<ModuleAttribute, Comparator<Slot>> chosen = normalMap.get(key);
                     comps.add(new Comp(key, chosen, ((mask >> i) & 1) == 0));
                 }
                 out.add(Arguments.of(comps));

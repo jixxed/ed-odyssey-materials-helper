@@ -26,7 +26,7 @@ import nl.edomh.core.domain.ApplicationState;
 import nl.edomh.core.domain.ships.PowerProfile;
 import nl.edomh.core.domain.ships.Ship;
 import nl.edomh.core.domain.ships.SlotType;
-import nl.edomh.core.enums.HorizonsModifier;
+import nl.edomh.core.enums.ModuleAttribute;
 import nl.edomh.core.helper.Formatters;
 import nl.edomh.ui.shared.helper.ScalingHelper;
 import nl.edomh.core.service.LocaleService;
@@ -211,7 +211,7 @@ public class PowerStats extends DestroyableVBox implements DestroyableEventTempl
                 .map(ship -> ship.getCoreSlots().stream()
                         .filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION))
                         .findFirst()
-                        .map(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_BOOST, true))
+                        .map(slot -> (double) slot.getShipModule().getAttributeValue(ModuleAttribute.POWER_BOOST, true))
                         .orElse(0.0))
                 .orElse(0.0);
     }

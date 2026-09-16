@@ -24,7 +24,7 @@ import nl.edomh.core.domain.ships.PowerProfile;
 import nl.edomh.core.domain.ships.Ship;
 import nl.edomh.core.domain.ships.Slot;
 import nl.edomh.core.domain.ships.SlotType;
-import nl.edomh.core.enums.HorizonsModifier;
+import nl.edomh.core.enums.ModuleAttribute;
 import nl.edomh.core.helper.Formatters;
 import nl.edomh.ui.shared.service.event.AfterFontSizeSetEvent;
 import nl.edomh.core.service.event.EventService;
@@ -203,7 +203,7 @@ public class PowerBar extends DestroyableHBox implements DestroyableEventTemplat
                         .filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION))
                         .findFirst()
                         .map(Slot::getShipModule)
-                        .map(module -> (double) module.getAttributeValue(HorizonsModifier.POWER_BOOST, true))
+                        .map(module -> (double) module.getAttributeValue(ModuleAttribute.POWER_BOOST, true))
                         .orElse(0.0))
                 .orElse(0.0);
     }

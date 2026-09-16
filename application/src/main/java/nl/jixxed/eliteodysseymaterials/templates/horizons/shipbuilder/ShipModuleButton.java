@@ -19,7 +19,7 @@ import nl.edomh.core.domain.ships.core_internals.PowerPlant;
 import nl.edomh.core.domain.ships.core_internals.Thrusters;
 import nl.edomh.core.domain.ships.optional_internals.ShieldGenerator;
 import nl.edomh.core.enums.EdAwesomeIcon;
-import nl.edomh.core.enums.HorizonsModifier;
+import nl.edomh.core.enums.ModuleAttribute;
 import nl.edomh.core.service.event.EventService;
 import nl.edomh.ui.shared.builder.BoxBuilder;
 import nl.edomh.ui.shared.builder.EdAwesomeIconViewPaneBuilder;
@@ -61,22 +61,22 @@ public class ShipModuleButton extends DestroyableButton {
         switch (shipModule) {
             case ShieldGenerator shieldGenerator -> {
                 double maxMass = ApplicationState.getInstance().getShip().getMaximumMass();
-                final double maxMassForModule = (double) shieldGenerator.getAttributeValue(HorizonsModifier.SHIELDGEN_MAXIMUM_MASS, false);
+                final double maxMassForModule = (double) shieldGenerator.getAttributeValue(ModuleAttribute.SHIELDGEN_MAXIMUM_MASS, false);
                 this.pseudoClassStateChanged(PseudoClass.getPseudoClass("overload"), maxMass > maxMassForModule);
             }
             case Thrusters thrusters -> {
                 double maxMass = ApplicationState.getInstance().getShip().getMaximumMass();
-                final double maxMassForModule = (double) thrusters.getAttributeValue(HorizonsModifier.MAXIMUM_MASS, false);
+                final double maxMassForModule = (double) thrusters.getAttributeValue(ModuleAttribute.MAXIMUM_MASS, false);
                 this.pseudoClassStateChanged(PseudoClass.getPseudoClass("overload"), maxMass > maxMassForModule);
             }
             case PowerPlant powerPlant -> {
                 final PowerProfile powerProfile = ApplicationState.getInstance().getShip().getRetractedPower();
                 double usedPower = powerProfile.usedPower();
-                final double available = (double) powerPlant.getAttributeValue(HorizonsModifier.POWER_CAPACITY, false) - usedPower;
+                final double available = (double) powerPlant.getAttributeValue(ModuleAttribute.POWER_CAPACITY, false) - usedPower;
                 this.pseudoClassStateChanged(PseudoClass.getPseudoClass("overload"), available < 0D);
             }
             case PowerDistributor powerDistributor -> {
-                final double engineCapacity = (double) powerDistributor.getAttributeValue(HorizonsModifier.ENGINES_CAPACITY, false);
+                final double engineCapacity = (double) powerDistributor.getAttributeValue(ModuleAttribute.ENGINES_CAPACITY, false);
                 final double boostCost = (double) ApplicationState.getInstance().getShip().getShipSpecs().getBoostCost();
                 final boolean engineCapacityEnough = engineCapacity > boostCost + BOOST_MARGIN;
                 this.pseudoClassStateChanged(PseudoClass.getPseudoClass("overload"), !engineCapacityEnough);

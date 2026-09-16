@@ -17,7 +17,7 @@ import nl.edomh.ui.shared.builder.CheckBoxBuilder;
 import nl.edomh.ui.shared.builder.LabelBuilder;
 import nl.edomh.ui.shared.builder.TextFieldBuilder;
 import nl.edomh.core.domain.ships.ShipModule;
-import nl.edomh.core.enums.HorizonsModifier;
+import nl.edomh.core.enums.ModuleAttribute;
 import nl.edomh.core.service.LocaleService;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableCheckBox;
 import nl.edomh.ui.shared.templates.destroyables.DestroyableHBox;
@@ -35,11 +35,11 @@ public class ShipAttribute {
     @Getter
     private DestroyableCheckBox checkBox;
 
-    public ShipAttribute(ShipModule shipModule, HorizonsModifier modifier) {
+    public ShipAttribute(ShipModule shipModule, ModuleAttribute modifier) {
         addAttribute(shipModule, modifier);
     }
 
-    private void addAttribute(ShipModule shipModule, HorizonsModifier modifier) {
+    private void addAttribute(ShipModule shipModule, ModuleAttribute modifier) {
         final Object originalAttributeValue = shipModule.getOriginalAttributeValue(modifier);
         valuesLine = BoxBuilder.builder()
                 .withStyleClass("settings-legacy-module-details-label-values")

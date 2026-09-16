@@ -340,7 +340,7 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
     }
 
     private void initModifiers() {
-        final Map<HorizonsModifier, HorizonsModifierValue> modifierMap = this.blueprint.getModifiers();
+        final Map<ModuleAttribute, HorizonsModifierValue> modifierMap = this.blueprint.getModifiers();
         if (!modifierMap.isEmpty()) {
             final DestroyableLabel modifierTitle = LabelBuilder.builder()
                     .withStyleClasses(TITLE_STYLE_CLASS, SPACING)
