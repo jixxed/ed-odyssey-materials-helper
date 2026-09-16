@@ -1,3 +1,9 @@
+Version 3.15.6
+-------------
+Add Cobra Mk IV rotation profiles (Big thanks to Cashiot!)
+Fix bugs with window position and size restore on launch due to scaling
+Fix market data loading in commodity tooltips
+
 Version 3.15.5
 -------------
 Added Petra Olmanova to Merc Seeker Missiles

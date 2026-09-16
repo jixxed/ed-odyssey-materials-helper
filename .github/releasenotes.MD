@@ -21,6 +21,7 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Added Petra Olmanova to Merc Seeker Missiles
-Updated localizations
+Add Cobra Mk IV rotation profiles (Big thanks to Cashiot!)
+Fix bugs with window position and size restore on launch due to scaling
+Fix market data loading in commodity tooltips
 ```
