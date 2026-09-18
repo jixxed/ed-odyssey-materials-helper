@@ -13,6 +13,7 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.menu;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import lombok.extern.slf4j.Slf4j;
 import nl.edomh.core.domain.*;
 import nl.edomh.core.enums.*;
 import nl.edomh.ui.shared.builder.BoxBuilder;
@@ -36,6 +37,8 @@ import nl.edomh.ui.shared.templates.generic.Ingredient;
 import nl.edomh.ui.shared.templates.generic.MissionIngredient;
 import nl.edomh.ui.shared.templates.generic.menu.Modifier;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsMaterialIngredient;
+import nl.jixxed.github.sponsor.SponsorService;
+import nl.jixxed.github.sponsor.SponsorTier;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -43,7 +46,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
+@Slf4j
 class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEventTemplate {
     private static final String TITLE_STYLE_CLASS = "title";
     private static final String SPACING = "spacing";
@@ -71,6 +74,9 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
 
 
         initDescription();
+        if(this.blueprint.isMerc()) {
+            initSponsor();
+        }
         if (this.blueprint instanceof HorizonsEngineerBlueprint engineerBlueprint) {
             initPermit(engineerBlueprint);
             initObjectivesLabel();
@@ -101,6 +107,23 @@ class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableEve
             initClosestGuardianStructure(getLayoutsForName(blueprint.getBlueprintName()));
         }
 
+    }
+
+    private void initSponsor() {
+        if(this.blueprint.getModifiers().isEmpty()) {
+            final DestroyableLabel sponsorTitle = LabelBuilder.builder()
+                    .withStyleClasses(TITLE_STYLE_CLASS, SPACING)
+                    .withText("blueprint.label.sponsor")
+                    .build();
+            this.getNodes().add(sponsorTitle);
+            final DestroyableLabel sponsorText = LabelBuilder.builder()
+                    .withStyleClass("description")
+                    .withText("blueprint.text.sponsor")
+                    .build();
+            this.getNodes().addAll(sponsorText);
+            HBox.setHgrow(sponsorText, Priority.ALWAYS);
+            VBox.setVgrow(sponsorText, Priority.ALWAYS);
+        }
     }
 
     private List<GuardianStructureLayout> getLayoutsForName(HorizonsBlueprintName blueprintName) {
