@@ -79,3 +79,6 @@
 "loadout.stat.name.jump_assist_recharge","Jump assist recharge duration","Jump assist recharge duration","Aufladen der Sprunghilfe","Duración de recarga de asistencia de salto","Durée de recharge de saut","Jump Assist Recarrege Duration","Кулдаун для прыжков","跳跃辅助回充时间",""
 "loadout.stat.name.melee_shield_damage","Melee shield damage","Melee shield damage","Nahkampfschildschaden","Daño del escudo cuerpo a cuerpo","Dégâts du bouclier de mêlée","Dano de Escudo Corpo a Corpo","Урон по щиту в ближнем бою","近战护盾伤害",""
 "loadout.stat.name.melee_health_damage","Melee health damage","Melee health damage","Nahkampfschaden","Daño a la salud cuerpo a cuerpo","Dommages causés par la santé en mêlée","Dano de Saúde Corpo a Corpo","Урон здоровью в ближнем бою","近战生命伤害",""
+"loadout.stat.name.burst_interval","Shot interval","","","","","","","",""
+"loadout.stat.name.rounds_per_shot","Rounds per shot","","","","","","","",""
+"loadout.stat.name.damage_per_second","Damage per second","","","","","","","",""
