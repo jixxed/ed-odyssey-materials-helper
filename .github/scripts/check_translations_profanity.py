@@ -20,6 +20,7 @@ LANG_MAP = {
     "portuguese": "pt",
     "russian": "ru",
     "chinese": "zh",
+    "italian": "it",
 #     "georgian": "ka",
 }
 
