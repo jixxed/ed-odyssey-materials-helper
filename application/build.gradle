@@ -17,7 +17,7 @@ plugins {
     id "nl.edomh.plugin.versioning" version '1.0.1'
     id 'java'
     id("nl.jixxed.gradle.jsass-java") version '1.0.3'
-    id 'io.freefair.lombok' version '9.5.0'
+    id 'io.freefair.lombok' version '9.8.0'
     id 'idea' // optional (to generate IntelliJ IDEA project files)
     id 'application'
     id 'org.beryx.jlink' version '4.1.0'
