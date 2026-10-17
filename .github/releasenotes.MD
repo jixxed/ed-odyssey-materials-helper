@@ -21,7 +21,12 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Add Cobra Mk IV rotation profiles (Big thanks to Cashiot!)
-Fix bugs with window position and size restore on launch due to scaling
-Fix market data loading in commodity tooltips
+Updated ship stats, all stats should now be 100% in sync with the game before the Anaconda Mk2 update
+Moved setting: AR Language (Augmented Reality) -> Game Language (General)
+Added Italian language (WIP)
+Added EDDN message signing
+Added access available to sponsors indicator on new merc modules
+Added more accurate numbers for suits
+Added more accurate numbers for Weapons + additional damage stats(Shot interval, Rounds per shot, Damage per second)
+Removed target module damage effect from pre-engineered Guardian Shard Cannon
 ```

@@ -1,3 +1,14 @@
+Version 3.15.7
+-------------
+Updated ship stats, all stats should now be 100% in sync with the game before the Anaconda Mk2 update
+Moved setting: AR Language (Augmented Reality) -> Game Language (General)
+Added Italian language
+Added EDDN message signing
+Added access available to sponsors indicator on new merc modules
+Added more accurate numbers for suits
+Added more accurate numbers for Weapons + additional damage stats(Shot interval, Rounds per shot, Damage per second)
+Removed target module damage effect from pre-engineered Guardian Shard Cannon
+
 Version 3.15.6
 -------------
 Add Cobra Mk IV rotation profiles (Big thanks to Cashiot!)
