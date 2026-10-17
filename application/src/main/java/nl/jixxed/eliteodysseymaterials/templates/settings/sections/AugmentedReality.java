@@ -46,7 +46,6 @@ import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 
 @Slf4j
 public class AugmentedReality extends DestroyableVBox implements DestroyableEventTemplate {
-    private static final String TESS4J_DIR = new File(OsConstants.getTess4j()).getPath();
 
     private DestroyableLabel arOverlayLabel;
     private DestroyableLabel arDetectLabel;
@@ -77,7 +76,6 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableEven
                 .build();
         final DestroyableHBox arSetting = createARSetting();
         final DestroyableHBox arForceVisibleSetting = createARForceVisibleSetting();
-        final DestroyableHBox arLocaleSetting = createARLocaleSetting();
         final DestroyableHBox arMatchSetting = createARMatchMethodSetting();
         final DestroyableHBox arFuzzyScoreSetting = createARFuzzyScoreSetting();
         final DestroyableHBox arBartenderTradeSetting = createARBartenderTradeEnabledSetting();
@@ -92,7 +90,7 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableEven
 
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
         this.getNodes().addAll(arLabel, BoxBuilder.builder()
-                .withNodes(arExplainLabel, vccLink).buildHBox(), arSetting, arForceVisibleSetting, arLocaleSetting, arMatchSetting, arFuzzyScoreSetting, arDataportDetectSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting, arColorPowerplaySetting, arBartenderTradeSetting, arBartenderSellSetting, arBartenderSellNamesSetting, arColorBartenderSetting);
+                .withNodes(arExplainLabel, vccLink).buildHBox(), arSetting, arForceVisibleSetting, arMatchSetting, arFuzzyScoreSetting, arDataportDetectSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting, arColorPowerplaySetting, arBartenderTradeSetting, arBartenderSellSetting, arBartenderSellNamesSetting, arColorBartenderSetting);
     }
 
     private DestroyableHBox createARFuzzyScoreSetting() {
@@ -292,52 +290,6 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableEven
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)
                 .withNodes(arCharacterWhitelistLabel, this.arCharacterWhitelistTextField, arCharacterWhitelistSaveButton)
                 .buildHBox();
-    }
-
-    private DestroyableHBox createARLocaleSetting() {
-        DestroyableLabel arLocaleLabel = LabelBuilder.builder()
-                .withStyleClass(SETTINGS_LABEL_CLASS)
-                .withText("tab.settings.ar.locale")
-                .build();
-
-        DestroyableComboBox<ApplicationLocale> arLocaleSelect = ComboBoxBuilder.builder(ApplicationLocale.class)
-                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
-                .withItemsProperty(LocaleService.getListBinding(Arrays.stream(ApplicationLocale.values()).filter(ApplicationLocale::isAr).toArray(ApplicationLocale[]::new)))
-                .withSelected(ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")))
-                .withValueChangeListener((_, _, newValue) -> {
-                    if (newValue != null) {
-                        final File tessdataPath = new File(TESS4J_DIR, "tessdata");
-                        final File targetFile = new File(tessdataPath.getPath(), newValue.getIso6392B() + ".traineddata");
-                        if (targetFile.exists() || newValue == ApplicationLocale.ENGLISH) {
-                            PreferencesService.setPreference(PreferenceConstants.AR_LOCALE, newValue.name());
-                            EventService.publish(new ARLocaleChangeEvent(newValue));
-                        } else {//download
-                            tessdataPath.mkdirs();
-                            try (final OutputStream output = new FileOutputStream(targetFile)) {
-                                final String downloadUrl = "https://github.com/tesseract-ocr/tessdata/raw/main/" + newValue.getIso6392B() + ".traineddata";
-                                final URL url = new URI(downloadUrl).toURL();
-                                final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                                final InputStream responseStream = connection.getInputStream();
-                                output.write(responseStream.readAllBytes());
-                                NotificationService.showInformation(NotificationType.SUCCESS, LocaleService.LocaleString.of("notification.ar.download.complete.title"), LocaleService.LocaleString.of("notification.ar.download.complete.text"));
-                            } catch (final IOException | URISyntaxException e) {
-                                log.error("error downloading OCR languagedata", e);
-                                NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.ar.download.failed.title"), LocaleService.LocaleString.of("notification.ar.download.failed.text"));
-                            }
-                        }
-
-//
-                    }
-                })
-                .asLocalized()
-                .build();
-
-
-        return BoxBuilder.builder()
-                .withStyleClass(SETTINGS_SPACING_10_CLASS)
-                .withNodes(arLocaleLabel, arLocaleSelect)
-                .buildHBox();
-
     }
 
     private DestroyableHBox createARColorSetting(final String preferenceName, final String localizationKey, final Color defaultColor) {

@@ -18,9 +18,11 @@ import javafx.scene.Node;
 import javafx.scene.input.Clipboard;
 import javafx.stage.DirectoryChooser;
 import lombok.extern.slf4j.Slf4j;
+import nl.edomh.core.enums.NotificationType;
 import nl.edomh.core.service.*;
 import nl.edomh.core.service.event.*;
 import nl.edomh.ui.shared.builder.*;
+import nl.edomh.ui.shared.service.NotificationService;
 import nl.edomh.ui.shared.service.event.AfterFontSizeSetEvent;
 import nl.edomh.ui.shared.service.event.ApplicationRegisteredEvent;
 import nl.edomh.ui.shared.service.event.FontSizeEvent;
@@ -42,9 +44,10 @@ import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.window.FXWinUtil;
 import nl.jixxed.github.sponsor.SponsorService;
 
-import java.io.File;
-import java.net.MalformedURLException;
+import java.io.*;
+import java.net.*;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -96,6 +99,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 .withText("tab.settings.title.general")
                 .build();
         final DestroyableHBox langSetting = createLangSetting();
+        final DestroyableHBox arLocaleSetting = createARLocaleSetting();
         final DestroyableHBox fontSetting = creatFontSetting();
         final DestroyableHBox styleSheetSetting = creatStyleSheetSetting();
         final DestroyableHBox customJournalFolderSetting = createCustomJournalFolderSetting();
@@ -103,6 +107,7 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
         this.getNodes().addAll(
                 generalLabel,
                 langSetting,
+                arLocaleSetting,
                 fontSetting,
                 styleSheetSetting
         );
@@ -243,6 +248,53 @@ public class General extends DestroyableVBox implements DestroyableEventTemplate
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)
                 .withNodes(languageLabel, this.languageSelect)
                 .buildHBox();
+    }
+
+    private DestroyableHBox createARLocaleSetting() {
+        DestroyableLabel arLocaleLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ar.locale")
+                .build();
+
+        DestroyableComboBox<ApplicationLocale> arLocaleSelect = ComboBoxBuilder.builder(ApplicationLocale.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(LocaleService.getListBinding(Arrays.stream(ApplicationLocale.values()).filter(ApplicationLocale::isGameLanguage).toArray(ApplicationLocale[]::new)))
+                .withSelected(ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")))
+                .withValueChangeListener((_, _, newValue) -> {
+                    if (newValue != null) {
+                        final String tess4JDir = new File(OsConstants.getTess4j()).getPath();
+                        final File tessdataPath = new File(tess4JDir, "tessdata");
+                        final File targetFile = new File(tessdataPath.getPath(), newValue.getIso6392B() + ".traineddata");
+                        if (targetFile.exists() || newValue == ApplicationLocale.ENGLISH) {
+                            PreferencesService.setPreference(PreferenceConstants.AR_LOCALE, newValue.name());
+                            EventService.publish(new ARLocaleChangeEvent(newValue));
+                        } else {//download
+                            tessdataPath.mkdirs();
+                            try (final OutputStream output = new FileOutputStream(targetFile)) {
+                                final String downloadUrl = "https://github.com/tesseract-ocr/tessdata/raw/main/" + newValue.getIso6392B() + ".traineddata";
+                                final URL url = new URI(downloadUrl).toURL();
+                                final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                                final InputStream responseStream = connection.getInputStream();
+                                output.write(responseStream.readAllBytes());
+                                NotificationService.showInformation(NotificationType.SUCCESS, LocaleService.LocaleString.of("notification.ar.download.complete.title"), LocaleService.LocaleString.of("notification.ar.download.complete.text"));
+                            } catch (final IOException | URISyntaxException e) {
+                                log.error("error downloading OCR languagedata", e);
+                                NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.ar.download.failed.title"), LocaleService.LocaleString.of("notification.ar.download.failed.text"));
+                            }
+                        }
+
+//
+                    }
+                })
+                .asLocalized()
+                .build();
+
+
+        return BoxBuilder.builder()
+                .withStyleClass(SETTINGS_SPACING_10_CLASS)
+                .withNodes(arLocaleLabel, arLocaleSelect)
+                .buildHBox();
+
     }
 
     private DestroyableHBox createBlueprintExpandedSetting() {
