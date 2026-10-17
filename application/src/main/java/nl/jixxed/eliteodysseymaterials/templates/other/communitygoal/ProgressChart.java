@@ -106,27 +106,30 @@ public class ProgressChart extends DestroyableHBox implements DestroyableTemplat
     }
 
     public void update(ReportModels.CommunityGoalReport report) {
+        try {
+            chart.getPlugins().removeIf(plugin -> plugin instanceof TierIndicator);
+            for (var unlock : report.tierUnlocks()) {
+                TierIndicator tierLine = new TierIndicator(xAxis, unlock.tier(), unlock.earliestOccurrence().toEpochMilli());
+                chart.getPlugins().addFirst(tierLine);
+            }
+            totalProgress.clearData();
+            commanders.clearData();
+            hourlyContribution.clearData();
+            report.hourlyData().forEach(data -> {
 
-        chart.getPlugins().removeIf(plugin -> plugin instanceof TierIndicator);
-        for (var unlock : report.tierUnlocks()) {
-            TierIndicator tierLine = new TierIndicator(xAxis, unlock.tier(), unlock.earliestOccurrence().toEpochMilli());
-            chart.getPlugins().addFirst(tierLine);
+                var x = data.hourUtc().toEpochMilli();
+                totalProgress.add(x, data.currentTotal());
+                commanders.add(x, data.numContributors());
+                hourlyContribution.add(x, data.delta());
+            });
+            chart.fireInvalidated(() -> Arrays.stream(ChartBits.values()).mapToInt(ChartBits::getAsInt).reduce(0, (a, b) -> a | b));
+
+            boolean emptyDataset = !report.hourlyData().isEmpty() && report.hourlyData().size() != 1;
+            chart.setVisible(emptyDataset);
+            chart.setManaged(emptyDataset);
+        } catch (IllegalArgumentException exception) {
+            log.error("error updating the progress chart", exception);
         }
-        totalProgress.clearData();
-        commanders.clearData();
-        hourlyContribution.clearData();
-        report.hourlyData().forEach(data -> {
-
-            var x = data.hourUtc().toEpochMilli();
-            totalProgress.add(x, data.currentTotal());
-            commanders.add(x, data.numContributors());
-            hourlyContribution.add(x, data.delta());
-        });
-        chart.fireInvalidated(() -> Arrays.stream(ChartBits.values()).mapToInt(ChartBits::getAsInt).reduce(0, (a, b) -> a | b));
-
-        boolean emptyDataset = !report.hourlyData().isEmpty() && report.hourlyData().size() != 1;
-        chart.setVisible(emptyDataset);
-        chart.setManaged(emptyDataset);
 
     }
 

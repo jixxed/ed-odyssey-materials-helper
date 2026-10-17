@@ -20,6 +20,7 @@ import javafx.scene.Node;
 import javafx.util.StringConverter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import nl.edomh.core.domain.ApplicationState;
 import nl.edomh.core.domain.BandComparator;
 import nl.edomh.core.persistence.commander.model.CommunityGoalModel;
@@ -41,6 +42,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
+@Slf4j
 public class BandChart extends DestroyableHBox implements DestroyableTemplate {
 
     Map<String, Dataset> datasets = new HashMap<>();
@@ -99,73 +101,77 @@ public class BandChart extends DestroyableHBox implements DestroyableTemplate {
     }
 
     public void update(ReportModels.CommunityGoalReport report) {
-        List<String> previouslyEnabledBands = visibleBands();
-        datasets.values().forEach(Dataset::clearData);
+        try {
+            List<String> previouslyEnabledBands = visibleBands();
+            datasets.values().forEach(Dataset::clearData);
 
-        BandComparator bandComparator = new BandComparator();
-        report.hourlyData().forEach(data -> {
-            List<ReportModels.BandMax> max = data.bandMax().stream().sorted(bandComparator.reversed()).toList();
-            long previous = 0;
-            for (int i = 0; i < max.size(); i++) {
-                ReportModels.BandMax bandMax = max.get(i);
-                var x = data.hourUtc().toEpochMilli();
-                Dataset dataset = datasets.computeIfAbsent(bandMax.band(), (band) -> this.create(report.cgid(), band, BandDataSetRenderer::new, previouslyEnabledBands));
-                long bandMaxVal = Math.max(previous, bandMax.max());
-                dataset.dataSet.add(x, previous, bandMaxVal);
-                previous = bandMaxVal;
-            }
-        });
-        Dataset myContribution = datasets.computeIfAbsent("My progress", (band) -> this.create(report.cgid(), band, ProgressDataSetRenderer::new, previouslyEnabledBands));
-        myContribution.dataSet.getStyleClasses().add("dataset-progress");
-        AtomicLong progress = new AtomicLong(-1);
-        AtomicLong lastTimestampEntry = new AtomicLong(-1);
-        AtomicReference<CommunityGoalModel> lastModel = new AtomicReference<>();
-
-        LocalDateTime expiry = LocalDateTime.parse(report.metadata().get("expiry").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).plusHours(2);
-        ApplicationState.getInstance().getPreferredCommander().ifPresent(_ -> {//database must be initialized with a commander
-            new QCommunityGoalModel()
-                    .cgid.eq((int) report.cgid())
-                    .timestamp.le(expiry)
-                    .orderBy("timestamp")
-                    .findStream()
-                    .forEach(model -> {
-                        lastModel.set(model);
-
-                        if (model.getPlayerContribution().longValue() > progress.get()) { // remove duplicates
-                            progress.set(model.getPlayerContribution().longValue());
-                            long timestampMilli = model.getTimestamp().toInstant(ZoneOffset.UTC).toEpochMilli();
-                            lastTimestampEntry.set(timestampMilli);
-                            myContribution.dataSet.add(
-                                    timestampMilli,
-                                    model.getPlayerContribution().longValue(),
-                                    model.getPlayerContribution().longValue()
-                            );
-                        }
-                    });
-            CommunityGoalModel last = lastModel.get();
-            if (last != null) {
-                long lastTimestamp = last.getTimestamp().toInstant(ZoneOffset.UTC).toEpochMilli();
-                if (lastTimestampEntry.get() < lastTimestamp) {
-
-                    long timestampMilli = Math.min(Instant.now().toEpochMilli(), expiry.toInstant(ZoneOffset.UTC).toEpochMilli());
-                    long lastContribution = last.getPlayerContribution().longValue();
-                    myContribution.dataSet.add(timestampMilli, lastContribution, lastContribution);
+            BandComparator bandComparator = new BandComparator();
+            report.hourlyData().forEach(data -> {
+                List<ReportModels.BandMax> max = data.bandMax().stream().sorted(bandComparator.reversed()).toList();
+                long previous = 0;
+                for (int i = 0; i < max.size(); i++) {
+                    ReportModels.BandMax bandMax = max.get(i);
+                    var x = data.hourUtc().toEpochMilli();
+                    Dataset dataset = datasets.computeIfAbsent(bandMax.band(), (band) -> this.create(report.cgid(), band, BandDataSetRenderer::new, previouslyEnabledBands));
+                    long bandMaxVal = Math.max(previous, bandMax.max());
+                    dataset.dataSet.add(x, previous, bandMaxVal);
+                    previous = bandMaxVal;
                 }
+            });
+            Dataset myContribution = datasets.computeIfAbsent("My progress", (band) -> this.create(report.cgid(), band, ProgressDataSetRenderer::new, previouslyEnabledBands));
+            myContribution.dataSet.getStyleClasses().add("dataset-progress");
+            AtomicLong progress = new AtomicLong(-1);
+            AtomicLong lastTimestampEntry = new AtomicLong(-1);
+            AtomicReference<CommunityGoalModel> lastModel = new AtomicReference<>();
+
+            LocalDateTime expiry = LocalDateTime.parse(report.metadata().get("expiry").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).plusHours(2);
+            ApplicationState.getInstance().getPreferredCommander().ifPresent(_ -> {//database must be initialized with a commander
+                new QCommunityGoalModel()
+                        .cgid.eq((int) report.cgid())
+                        .timestamp.le(expiry)
+                        .orderBy("timestamp")
+                        .findStream()
+                        .forEach(model -> {
+                            lastModel.set(model);
+
+                            if (model.getPlayerContribution().longValue() > progress.get()) { // remove duplicates
+                                progress.set(model.getPlayerContribution().longValue());
+                                long timestampMilli = model.getTimestamp().toInstant(ZoneOffset.UTC).toEpochMilli();
+                                lastTimestampEntry.set(timestampMilli);
+                                myContribution.dataSet.add(
+                                        timestampMilli,
+                                        model.getPlayerContribution().longValue(),
+                                        model.getPlayerContribution().longValue()
+                                );
+                            }
+                        });
+                CommunityGoalModel last = lastModel.get();
+                if (last != null) {
+                    long lastTimestamp = last.getTimestamp().toInstant(ZoneOffset.UTC).toEpochMilli();
+                    if (lastTimestampEntry.get() < lastTimestamp) {
+
+                        long timestampMilli = Math.min(Instant.now().toEpochMilli(), expiry.toInstant(ZoneOffset.UTC).toEpochMilli());
+                        long lastContribution = last.getPlayerContribution().longValue();
+                        myContribution.dataSet.add(timestampMilli, lastContribution, lastContribution);
+                    }
+                }
+            });
+
+            chart.getPlugins().removeIf(plugin -> plugin instanceof TierIndicator);
+
+            for (var unlock : report.tierUnlocks()) {
+                TierIndicator tierLine = new TierIndicator(xAxis, unlock.tier(), unlock.earliestOccurrence().toEpochMilli());
+                chart.getPlugins().addFirst(tierLine);
             }
-        });
+            chart.fireInvalidated(() -> Arrays.stream(ChartBits.values()).mapToInt(ChartBits::getAsInt).reduce(0, (a, b) -> a | b));
 
-        chart.getPlugins().removeIf(plugin -> plugin instanceof TierIndicator);
+            boolean emptyDataset = !report.hourlyData().isEmpty() && report.hourlyData().size() != 1;
+            this.setVisible(emptyDataset);
+            this.setManaged(emptyDataset);
 
-        for (var unlock : report.tierUnlocks()) {
-            TierIndicator tierLine = new TierIndicator(xAxis, unlock.tier(), unlock.earliestOccurrence().toEpochMilli());
-            chart.getPlugins().addFirst(tierLine);
+        } catch (IllegalArgumentException exception) {
+            log.error("error updating the band chart", exception);
         }
-        chart.fireInvalidated(() -> Arrays.stream(ChartBits.values()).mapToInt(ChartBits::getAsInt).reduce(0, (a, b) -> a | b));
-
-        boolean emptyDataset = !report.hourlyData().isEmpty() && report.hourlyData().size() != 1;
-        this.setVisible(emptyDataset);
-        this.setManaged(emptyDataset);
-
     }
 
     private List<String> visibleBands() {
