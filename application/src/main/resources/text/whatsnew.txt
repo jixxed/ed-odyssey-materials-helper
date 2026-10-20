@@ -1,3 +1,7 @@
+Version 3.15.9
+-------------
+Enable the rotational profile graphs for the Anaconda Mk2
+
 Version 3.15.8
 -------------
 Added Anaconda Mk II (images pending)

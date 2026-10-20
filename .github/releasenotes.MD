@@ -21,8 +21,5 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Added Anaconda Mk II (images pending)
-Updated several ships with new stats and additional slots
-Bugfix where fighter modules could be applied to regular ships
-Added 2 new Operations related materials
+Enable the rotational profile graphs for the Anaconda Mk2
 ```
