@@ -97,6 +97,7 @@ public class SlotBox extends DestroyableStackPane {
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("fighter"), SlotType.SLF.equals(slot.getSlotType()));
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("limpet"), SlotType.LIMPET.equals(slot.getSlotType()));
         this.pseudoClassStateChanged(PseudoClass.getPseudoClass("mining-hardpoint"), SlotType.MINING_HARDPOINT.equals(slot.getSlotType()));
+        this.pseudoClassStateChanged(PseudoClass.getPseudoClass("mining-hardpoint"), SlotType.MVR_PLUS_HARDPOINT.equals(slot.getSlotType()));
 
         this.iconBox = BoxBuilder.builder()
                 .withStyleClass("module-icons")
@@ -105,7 +106,7 @@ public class SlotBox extends DestroyableStackPane {
                 .withStyleClass("module-data")
                 .buildVBox();
         this.slot = slot;
-        if (SlotType.HARDPOINT.equals(slot.getSlotType()) || SlotType.MINING_HARDPOINT.equals(slot.getSlotType())) {
+        if (SlotType.HARDPOINT.equals(slot.getSlotType()) || SlotType.MINING_HARDPOINT.equals(slot.getSlotType()) || SlotType.MVR_PLUS_HARDPOINT.equals(slot.getSlotType())) {
             this.slot.setHardpointGroup(HardpointGroup.A);
         }
         this.modulesSection = modulesSection;
@@ -141,6 +142,14 @@ public class SlotBox extends DestroyableStackPane {
         if (SlotType.HARDPOINT.equals(slot.getSlotType())) {
             tagKey = this.slot.getHardpointGroup().getLocalizationKey();
         } else if (SlotType.MINING_HARDPOINT.equals(slot.getSlotType())) {
+//            tagKey = "ships.slot.type.mining.hardpoint";
+            tagKey = this.slot.getHardpointGroup().getLocalizationKey();
+            EdAwesomeIconViewPane image = EdAwesomeIconViewPaneBuilder.builder()
+                    .withStyleClass("background-image")
+                    .withIcons(EdAwesomeIcon.OTHER_MINING)
+                    .build();
+            bg.getNodes().addAll(new GrowingRegion(), image);
+        } else if (SlotType.MVR_PLUS_HARDPOINT.equals(slot.getSlotType())) {
 //            tagKey = "ships.slot.type.mining.hardpoint";
             tagKey = this.slot.getHardpointGroup().getLocalizationKey();
             EdAwesomeIconViewPane image = EdAwesomeIconViewPaneBuilder.builder()

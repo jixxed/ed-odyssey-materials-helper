@@ -86,7 +86,7 @@ public class ShipView extends DestroyableStackPane implements DestroyableTemplat
         final Ship ship = APPLICATION_STATE.getShip();
         int index = slotBox.getSlot().getIndex();
         int imageIndex = -1;
-        if (slotBox.getSlot().getSlotType() == SlotType.HARDPOINT || slotBox.getSlot().getSlotType() == SlotType.MINING_HARDPOINT) {
+        if (slotBox.getSlot().getSlotType() == SlotType.HARDPOINT || slotBox.getSlot().getSlotType() == SlotType.MINING_HARDPOINT || slotBox.getSlot().getSlotType() == SlotType.MVR_PLUS_HARDPOINT) {
             imageIndex = ship.getHardpointSlots().get(Math.min(index, ship.getHardpointSlots().size() - 1)).getImageIndex();
         } else if (slotBox.getSlot().getSlotType() == SlotType.UTILITY) {
             imageIndex = ship.getUtilitySlots().get(Math.min(index, ship.getUtilitySlots().size() - 1)).getImageIndex();
