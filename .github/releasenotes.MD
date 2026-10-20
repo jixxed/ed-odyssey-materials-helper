@@ -21,5 +21,7 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Enable the rotational profile graphs for the Anaconda Mk2
+Corrected prices for Anaconda Mk II and new modules
+Added Size 6 slot to Type 7 (It got 2 new slots?)
+Added images for the Anaconda Mk II
 ```

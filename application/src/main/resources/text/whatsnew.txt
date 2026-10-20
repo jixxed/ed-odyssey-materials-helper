@@ -1,3 +1,9 @@
+Version 3.15.10
+-------------
+Corrected prices for Anaconda Mk II and new modules
+Added Size 6 slot to Type 7 (It got 2 new slots?)
+Added images for the Anaconda Mk II
+
 Version 3.15.9
 -------------
 Enable the rotational profile graphs for the Anaconda Mk2
