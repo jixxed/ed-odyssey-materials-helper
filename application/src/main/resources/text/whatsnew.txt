@@ -1,3 +1,10 @@
+Version 3.15.8
+-------------
+Added Anaconda Mk II (images pending)
+Updated several ships with new stats and additional slots
+Bugfix where fighter modules could be applied to regular ships
+Added 2 new Operations related materials
+
 Version 3.15.7
 -------------
 Updated ship stats, all stats should now be 100% in sync with the game before the Anaconda Mk2 update
