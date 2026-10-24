@@ -495,12 +495,51 @@ class BottomBar extends DestroyableHBox implements DestroyableEventTemplate {
         }
     }
 
-    private static boolean isPreferredCommander(final Commander addedCommander, final String preferredName) {
-        final String[] commanderFidVersion = preferredName.split(":");
-        final String name = commanderFidVersion[0];
-        final String version = (commanderFidVersion.length > 2) ? commanderFidVersion[2] : "LIVE";
-        final String fid = (commanderFidVersion.length > 2) ? commanderFidVersion[1] : "0";
-        return addedCommander.getName().equals(name) && addedCommander.getFid().equals(fid) && addedCommander.getGameVersion().name().equals(version);
+    private static boolean isPreferredCommander(
+            final Commander addedCommander,
+            final String preferredName) {
+
+        if (preferredName == null || preferredName.isBlank()) {
+            return false;
+        }
+
+        String name = preferredName;
+        String fid = null;
+        String version = null;
+
+        final int lastColon = preferredName.lastIndexOf(':');
+
+        if (lastColon >= 0) {
+            final String lastPart = preferredName.substring(lastColon + 1);
+
+            if (lastPart.equals("LIVE") || lastPart.equals("LEGACY")) {
+                version = lastPart;
+
+                final String remaining = preferredName.substring(0, lastColon);
+                final int previousColon = remaining.lastIndexOf(':');
+
+                if (previousColon >= 0) {
+                    final String possibleFid = remaining.substring(previousColon + 1);
+
+                    if (possibleFid.matches("F\\d+")) {
+                        name = remaining.substring(0, previousColon);
+                        fid = possibleFid;
+                    } else {
+                        name = remaining;
+                    }
+                } else {
+                    name = remaining;
+                }
+            } else if (lastPart.matches("F\\d+")) {
+                name = preferredName.substring(0, lastColon);
+                fid = lastPart;
+            }
+        }
+
+        return addedCommander.getName().equals(name)
+                && (fid == null || addedCommander.getFid().equals(fid))
+                && (version == null
+                || addedCommander.getGameVersion().name().equals(version));
     }
 
     private void handleLoadGame(final LoadGameEvent loadGameEvent) {
