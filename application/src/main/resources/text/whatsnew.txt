@@ -1,3 +1,9 @@
+Version 3.15.11
+-------------
+Bugfix for semicolons in usernames
+Update localizations
+Correct type-6 slot size (5 -> 6)
+
 Version 3.15.10
 -------------
 Corrected prices for Anaconda Mk II and new modules

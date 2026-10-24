@@ -21,7 +21,7 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Corrected prices for Anaconda Mk II and new modules
-Added Size 6 slot to Type 7 (It got 2 new slots?)
-Added images for the Anaconda Mk II
+Bugfix for semicolons in usernames
+Update localizations
+Correct type-6 slot size (5 -> 6)
 ```
