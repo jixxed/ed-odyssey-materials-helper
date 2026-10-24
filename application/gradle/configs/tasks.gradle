@@ -6,7 +6,7 @@ tasks.register("addLanguageColumn") {
     doLast {
         // Configuration - update these values as needed
         def targetFolder = file('src/main/resources/locale')  // Hardcoded folder path
-        def languageTag = 'it'  // Hardcoded language tag (e.g., 'it' for Italian)
+        def languageTag = 'pl'  // Hardcoded language tag (e.g., 'it' for Italian)
         def columnHeader = languageTag  // Header name for the new column
 
         // Validate folder exists

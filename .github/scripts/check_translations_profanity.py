@@ -8,7 +8,7 @@ import requests
 from glin_profanity import Filter
 
 # ---------------- CONFIG ----------------
-SUPPORTED_LANGS = ["en", "de", "es", "fr", "pt", "ru", "zh", "it"] #, "ka"
+SUPPORTED_LANGS = ["en", "de", "es", "fr", "pt", "ru", "zh", "it", "pl"] #, "ka"
 LDNOOBW_BASE = "https://raw.githubusercontent.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words/master"
 
 # Mapping of language names (glin-profanity expects filenames like english.json)
@@ -21,6 +21,7 @@ LANG_MAP = {
     "russian": "ru",
     "chinese": "zh",
     "italian": "it",
+    "polish": "pl",
 #     "georgian": "ka",
 }
 
