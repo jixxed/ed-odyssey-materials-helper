@@ -27,6 +27,7 @@ import nl.edomh.core.service.Secrets;
 import nl.edomh.core.service.SupportService;
 import nl.edomh.core.service.VersionService;
 import nl.edomh.ui.shared.Shared;
+import nl.jixxed.eliteodysseymaterials.helper.DesktopDeeplinkHandler;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -53,6 +54,8 @@ public class Main {
             log.error("This application should not be started with elevated privileges. Please restart the app without elevated privileges.");
             AdminError.launchFx(args);
         } else {
+            DesktopDeeplinkHandler.register(Main::handleDeeplink);
+
             //handle deeplinks
             if (args.length > 0 && args[0].startsWith("edomh://")) {
                 handleDeeplink(args[0]);
@@ -138,7 +141,7 @@ public class Main {
         return VersionService.getBuildVersion();
     }
 
-    private static void handleDeeplink(final String arg) {
+    private static synchronized void handleDeeplink(final String arg) {
         try (final OutputStream output = new FileOutputStream(OsConstants.getDeeplink() + ".tmp")) {
             output.write(arg.getBytes(StandardCharsets.UTF_8));
         } catch (final IOException e) {
