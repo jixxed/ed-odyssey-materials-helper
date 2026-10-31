@@ -15,8 +15,11 @@ import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinNT;
 import com.sun.jna.ptr.IntByReference;
 import io.sentry.Attachment;
+import io.sentry.Hint;
 import io.sentry.Sentry;
+import io.sentry.SentryEvent;
 import io.sentry.protocol.OperatingSystem;
+import jakarta.persistence.PersistenceException;
 import lombok.extern.slf4j.Slf4j;
 import nl.edomh.core.ResourceProvider;
 import nl.edomh.core.constants.OsConstants;
@@ -28,6 +31,7 @@ import nl.edomh.core.service.SupportService;
 import nl.edomh.core.service.VersionService;
 import nl.edomh.ui.shared.Shared;
 
+import java.awt.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -38,6 +42,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 public class Main {
@@ -79,6 +85,9 @@ public class Main {
                         if (Duration.between(lastSentTime, Instant.now()).getSeconds() < 30) {
                             return null;  // Throttle if less than 30 seconds have passed
                         }
+                        if (excluded(event, hint)){
+                            return null;
+                        }
                         lastSentTime = Instant.now();
                         String supportFile = "";
                         try {
@@ -107,6 +116,38 @@ public class Main {
             }
             FXApplication.launchFx(args);
         }
+    }
+    private static final Map<Class<? extends Throwable>, Integer> ERROR_CAP = new HashMap<>();
+    private static boolean excluded(SentryEvent event, Hint hint) {
+        if(event.getThrowable() instanceof AWTError){
+            Integer errorCap = ERROR_CAP.getOrDefault(AWTError.class, 0);
+            ERROR_CAP.put(AWTError.class, errorCap < 1000 ? errorCap + 1 : errorCap);
+            return errorCap < 1;
+        }
+        if(event.getThrowable() instanceof PersistenceException){
+            Integer errorCap = ERROR_CAP.getOrDefault(AWTError.class, 0);
+            ERROR_CAP.put(AWTError.class, errorCap < 1000 ? errorCap + 1 : errorCap);
+            return errorCap < 2;
+        }
+        if(event.getThrowable() instanceof OutOfMemoryError){
+            Integer errorCap = ERROR_CAP.getOrDefault(AWTError.class, 0);
+            ERROR_CAP.put(AWTError.class, errorCap < 1000 ? errorCap + 1 : errorCap);
+            return errorCap < 1;
+        }
+        if(event.getThrowable() instanceof IllegalArgumentException){
+            Integer errorCap = ERROR_CAP.getOrDefault(AWTError.class, 0);
+            ERROR_CAP.put(AWTError.class, errorCap < 1000 ? errorCap + 1 : errorCap);
+            return errorCap < 3;
+        }
+        if(event.getThrowable() instanceof NullPointerException){
+            Integer errorCap = ERROR_CAP.getOrDefault(AWTError.class, 0);
+            ERROR_CAP.put(AWTError.class, errorCap < 1000 ? errorCap + 1 : errorCap);
+            return errorCap < 3;
+        }
+
+        Integer errorCap = ERROR_CAP.getOrDefault(Exception.class, 0);
+        ERROR_CAP.put(Exception.class, errorCap < 1000 ? errorCap + 1 : errorCap);
+        return errorCap < 5;
     }
 
     private static void configurePaths() {
