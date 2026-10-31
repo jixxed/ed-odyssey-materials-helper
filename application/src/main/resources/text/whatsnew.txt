@@ -1,3 +1,8 @@
+Version 3.15.12
+-------------
+Add LFT 509 permit
+Add Polish locale
+
 Version 3.15.11
 -------------
 Bugfix for semicolons in usernames

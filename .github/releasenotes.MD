@@ -21,7 +21,6 @@ $ xattr -d com.apple.quarantine "/Applications/Elite Dangerous Odyssey Materials
 
 :page_facing_up: **Release notes for this version:**
 ```
-Bugfix for semicolons in usernames
-Update localizations
-Correct type-6 slot size (5 -> 6)
+Add LFT 509 permit
+Add Polish locale
 ```
